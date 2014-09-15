@@ -483,74 +483,6 @@
 		</execute>
 	</command>
 
-	<command name="AddUserSegmentToSiteHierarchy" priority="5">
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Audience Targeting" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
-		<execute macro="ContentTargetingUserSegment#addCP">
-			<var name="userSegmentDescription" value="User Segment Description" />
-			<var name="userSegmentName" value="User Segment Name" />
-		</execute>
-
-		<execute macro="ContentTargetingUserSegment#addUserAttributesGenderRuleCP">
-			<var name="genderRadio" value="Male" />
-		</execute>
-
-		<execute macro="ContentTargetingUserSegment#saveCP" />
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="parentSiteName" value="Site Name" />
-			<var name="siteName" value="Child Site Name" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
-		</execute>
-
-		<execute macro="SitePage#addCP">
-			<var name="siteName" value="Child Site Name" />
-			<var name="sitePageName" value="Page Name" />
-			<var name="sitePagePrivacy" value="Public" />
-		</execute>
-
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Audience Targeting" />
-			<var name="siteScopeName" value="Child Site Name" />
-		</execute>
-
-		<execute macro="ContentTargetingCampaign#addCP">
-			<var name="campaignDescription" value="Campaign Description" />
-			<var name="campaignEndDate" value="1/1/2015" />
-			<var name="campaignEndTime" value="12:00 PM" />
-			<var name="campaignName" value="Campaign Name" />
-			<var name="campaignPrioritySelect" value="2" />
-			<var name="campaignStartDate" value="1/1/2014" />
-			<var name="campaignStartTime" value="12:00 AM" />
-			<var name="userSegmentSelect" value="User Segment Name (Site Name)" />
-		</execute>
-
-		<execute macro="ContentTargetingCampaign#saveCP" />
-
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Audience Targeting" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
-		<execute macro="ContentTargetingCampaign#viewCampaignCP">
-			<var name="campaignDescription" value="Campaign Description" />
-			<var name="campaignName" value="Campaign Name" />
-			<var name="campaignPriority" value="2" />
-			<var name="campaignStatus" value="Started" />
-			<var name="userSegmentSelect" value="User Segment Name (Site Name)" />
-		</execute>
-	</command>
-
 	<command name="AddUserSegmentUserAttributesAgeCP" priority="5">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
@@ -902,55 +834,6 @@
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
 			<var name="userSegmentName" value="User Segment Name Edit" />
 			<var name="viewUserSegmentRuleList" value="Site Role,UserGroup Member" />
-		</execute>
-	</command>
-
-	<command name="UserSegmentFromGlobalSiteAvailableToUseOnRegularSites" priority="5">
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Audience Targeting" />
-			<var name="siteScopeName" value="Global" />
-		</execute>
-
-		<execute macro="ContentTargetingUserSegment#addCP">
-			<var name="userSegmentDescription" value="User Segment Description" />
-			<var name="userSegmentName" value="User Segment Name" />
-		</execute>
-
-		<execute macro="ContentTargetingUserSegment#addUserAttributesGenderRuleCP">
-			<var name="genderRadio" value="Female" />
-		</execute>
-
-		<execute macro="ContentTargetingUserSegment#saveCP" />
-
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Audience Targeting" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
-		<execute macro="ContentTargetingCampaign#addCP">
-			<var name="campaignDescription" value="Campaign Description" />
-			<var name="campaignEndDate" value="1/1/2015" />
-			<var name="campaignEndTime" value="12:00 PM" />
-			<var name="campaignName" value="Campaign Name" />
-			<var name="campaignPrioritySelect" value="3" />
-			<var name="campaignStartDate" value="1/1/2014" />
-			<var name="campaignStartTime" value="12:00 AM" />
-			<var name="userSegmentSelect" value="User Segment Name (Global)" />
-		</execute>
-
-		<execute macro="ContentTargetingCampaign#saveCP" />
-
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Audience Targeting" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
-		<execute macro="ContentTargetingCampaign#viewCampaignCP">
-			<var name="campaignDescription" value="Campaign Description" />
-			<var name="campaignName" value="Campaign Name" />
-			<var name="campaignPriority" value="3" />
-			<var name="campaignStatus" value="Started" />
-			<var name="userSegmentSelect" value="User Segment Name (Global)" />
 		</execute>
 	</command>
 </definition>

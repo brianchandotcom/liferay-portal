@@ -9,9 +9,9 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
 >
 	<bean id="counterHibernateSessionFactory" class="com.liferay.portal.spring.hibernate.PortalHibernateConfiguration">
-		<property name="customContextSessionEnabled" value="false" />
 		<property name="dataSource" ref="counterDataSource" />
 		<property name="mvccEnabled" value="false" />
+		<property name="shardEnabled" value="false" />
 	</bean>
 	<bean id="counterSessionFactory" class="com.liferay.portal.dao.orm.hibernate.SessionFactoryImpl">
 		<property name="sessionFactoryClassLoader">

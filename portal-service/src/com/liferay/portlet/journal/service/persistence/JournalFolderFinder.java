@@ -21,19 +21,19 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface JournalFolderFinder {
-	public int countF_A_ByG_F(long groupId, long folderId,
+	public int countF_A_ByG_U_F(long groupId, long userId, long folderId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
-	public int filterCountF_A_ByG_F(long groupId, long folderId,
+	public int filterCountF_A_ByG_U_F(long groupId, long userId, long folderId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
-	public java.util.List<java.lang.Object> filterFindF_A_ByG_F(long groupId,
-		long folderId,
+	public java.util.List<java.lang.Object> filterFindF_A_ByG_U_F(
+		long groupId, long userId, long folderId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findF_ByNoAssets();
 
-	public java.util.List<java.lang.Object> findF_A_ByG_F(long groupId,
-		long folderId,
+	public java.util.List<java.lang.Object> findF_A_ByG_U_F(long groupId,
+		long userId, long folderId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 }

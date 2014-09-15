@@ -24,32 +24,38 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class JournalFolderFinderUtil {
-	public static int countF_A_ByG_F(long groupId, long folderId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
-		return getFinder().countF_A_ByG_F(groupId, folderId, queryDefinition);
-	}
-
-	public static int filterCountF_A_ByG_F(long groupId, long folderId,
+	public static int countF_A_ByG_U_F(long groupId, long userId,
+		long folderId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
 		return getFinder()
-				   .filterCountF_A_ByG_F(groupId, folderId, queryDefinition);
+				   .countF_A_ByG_U_F(groupId, userId, folderId, queryDefinition);
 	}
 
-	public static java.util.List<java.lang.Object> filterFindF_A_ByG_F(
-		long groupId, long folderId,
+	public static int filterCountF_A_ByG_U_F(long groupId, long userId,
+		long folderId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
 		return getFinder()
-				   .filterFindF_A_ByG_F(groupId, folderId, queryDefinition);
+				   .filterCountF_A_ByG_U_F(groupId, userId, folderId,
+			queryDefinition);
+	}
+
+	public static java.util.List<java.lang.Object> filterFindF_A_ByG_U_F(
+		long groupId, long userId, long folderId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+		return getFinder()
+				   .filterFindF_A_ByG_U_F(groupId, userId, folderId,
+			queryDefinition);
 	}
 
 	public static java.util.List<com.liferay.portlet.journal.model.JournalFolder> findF_ByNoAssets() {
 		return getFinder().findF_ByNoAssets();
 	}
 
-	public static java.util.List<java.lang.Object> findF_A_ByG_F(long groupId,
-		long folderId,
+	public static java.util.List<java.lang.Object> findF_A_ByG_U_F(
+		long groupId, long userId, long folderId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
-		return getFinder().findF_A_ByG_F(groupId, folderId, queryDefinition);
+		return getFinder()
+				   .findF_A_ByG_U_F(groupId, userId, folderId, queryDefinition);
 	}
 
 	public static JournalFolderFinder getFinder() {

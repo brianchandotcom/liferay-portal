@@ -2652,8 +2652,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			versionPage.setTitle(page.getTitle());
 
 			trashVersion = trashVersionLocalService.fetchVersion(
-				WikiPage.class.getName(),
-				versionPage.getPageId());
+				WikiPage.class.getName(), versionPage.getPageId());
 
 			int versionPageOldStatus = WorkflowConstants.STATUS_APPROVED;
 
@@ -2893,10 +2892,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			page.setParentTitle(StringPool.BLANK);
 		}
 
-		WikiPage newParentPage = fetchPage(newNodeId, newParentTitle);
+		if (Validator.isNotNull(newParentTitle)) {
+			WikiPage newParentPage = getPage(newNodeId, newParentTitle);
 
-		if ((newParentPage != null) && !newParentPage.isInTrash()) {
-			page.setParentTitle(newParentTitle);
+			if (!newParentPage.isInTrash()) {
+				page.setParentTitle(newParentTitle);
+			}
 		}
 
 		WikiPage redirectPage = page.getRedirectPage();

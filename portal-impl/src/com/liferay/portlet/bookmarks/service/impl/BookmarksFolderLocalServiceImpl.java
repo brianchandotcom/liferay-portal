@@ -360,12 +360,8 @@ public class BookmarksFolderLocalServiceImpl
 
 			// Folder
 
-			TrashEntry trashEntry = folder.getTrashEntry();
-
-			TrashVersion trashVersion =
-				trashVersionLocalService.fetchVersion(
-					trashEntry.getEntryId(), BookmarksFolder.class.getName(),
-					folderId);
+			TrashVersion trashVersion = trashVersionLocalService.fetchVersion(
+				BookmarksFolder.class.getName(), folderId);
 
 			int status = WorkflowConstants.STATUS_APPROVED;
 
@@ -388,8 +384,7 @@ public class BookmarksFolderLocalServiceImpl
 					folder.getGroupId(), folder.getFolderId(),
 					WorkflowConstants.STATUS_IN_TRASH);
 
-			restoreDependentsFromTrash(
-				foldersAndEntries, trashEntry.getEntryId());
+			restoreDependentsFromTrash(foldersAndEntries);
 		}
 
 		return bookmarksFolderLocalService.moveFolder(folderId, parentFolderId);
@@ -518,7 +513,7 @@ public class BookmarksFolderLocalServiceImpl
 				folder.getGroupId(), folder.getFolderId(),
 				WorkflowConstants.STATUS_IN_TRASH);
 
-		restoreDependentsFromTrash(foldersAndEntries, trashEntry.getEntryId());
+		restoreDependentsFromTrash(foldersAndEntries);
 
 		// Trash
 
@@ -834,8 +829,7 @@ public class BookmarksFolderLocalServiceImpl
 		}
 	}
 
-	protected void restoreDependentsFromTrash(
-			List<Object> foldersAndEntries, long trashEntryId)
+	protected void restoreDependentsFromTrash(List<Object> foldersAndEntries)
 		throws PortalException {
 
 		for (Object object : foldersAndEntries) {
@@ -851,8 +845,7 @@ public class BookmarksFolderLocalServiceImpl
 
 				TrashVersion trashVersion =
 					trashVersionLocalService.fetchVersion(
-						trashEntryId, BookmarksEntry.class.getName(),
-						entry.getEntryId());
+						BookmarksEntry.class.getName(), entry.getEntryId());
 
 				int oldStatus = WorkflowConstants.STATUS_APPROVED;
 
@@ -897,8 +890,7 @@ public class BookmarksFolderLocalServiceImpl
 
 				TrashVersion trashVersion =
 					trashVersionLocalService.fetchVersion(
-						trashEntryId, BookmarksFolder.class.getName(),
-						folder.getFolderId());
+						BookmarksFolder.class.getName(), folder.getFolderId());
 
 				int oldStatus = WorkflowConstants.STATUS_APPROVED;
 
@@ -916,7 +908,7 @@ public class BookmarksFolderLocalServiceImpl
 					folder.getGroupId(), folder.getFolderId(),
 					WorkflowConstants.STATUS_IN_TRASH);
 
-				restoreDependentsFromTrash(curFoldersAndEntries, trashEntryId);
+				restoreDependentsFromTrash(curFoldersAndEntries);
 
 				// Trash
 

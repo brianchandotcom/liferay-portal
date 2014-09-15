@@ -44,7 +44,9 @@ TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(entry.getCl
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="className" value="<%= entry.getClassName() %>" />
 			<portlet:param name="classPK" value="<%= String.valueOf(entry.getClassPK()) %>" />
-			<portlet:param name="containerModelClassName" value="<%= trashHandler.getContainerModelClassName() %>" />
+			<portlet:param name="containerModelClassName" value="<%= trashHandler.getRootContainerModelClassName() %>" />
+			<portlet:param name="containerModelId" value="<%= String.valueOf(trashHandler.getRootContainerModelId(entry.getClassPK())) %>" />
+			<portlet:param name="rootContainerModelMovable" value="<%= String.valueOf(trashHandler.isRootContainerModelMovable()) %>" />
 		</portlet:renderURL>
 
 		<%

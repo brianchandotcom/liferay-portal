@@ -187,19 +187,6 @@ public class TrashVersionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByE_C_C() {
-		try {
-			_persistence.countByE_C_C(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
-
-			_persistence.countByE_C_C(0L, 0L, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
-	}
-
-	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		TrashVersion newTrashVersion = addTrashVersion();
 
@@ -444,13 +431,6 @@ public class TrashVersionPersistenceTest {
 
 		TrashVersionModelImpl existingTrashVersionModelImpl = (TrashVersionModelImpl)_persistence.findByPrimaryKey(newTrashVersion.getPrimaryKey());
 
-		Assert.assertEquals(existingTrashVersionModelImpl.getClassNameId(),
-			existingTrashVersionModelImpl.getOriginalClassNameId());
-		Assert.assertEquals(existingTrashVersionModelImpl.getClassPK(),
-			existingTrashVersionModelImpl.getOriginalClassPK());
-
-		Assert.assertEquals(existingTrashVersionModelImpl.getEntryId(),
-			existingTrashVersionModelImpl.getOriginalEntryId());
 		Assert.assertEquals(existingTrashVersionModelImpl.getClassNameId(),
 			existingTrashVersionModelImpl.getOriginalClassNameId());
 		Assert.assertEquals(existingTrashVersionModelImpl.getClassPK(),

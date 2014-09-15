@@ -54,7 +54,7 @@
 	containerModelURL.setParameter("redirect", redirect);
 	containerModelURL.setParameter("className", trashHandler.getContainerModelClassName(classPK));
 
-	TrashUtil.addBaseModelBreadcrumbEntries(request, className, classPK, containerModelURL);
+	TrashUtil.addBaseModelBreadcrumbEntries(request, renderResponse, className, classPK, containerModelURL);
 	%>
 
 	<liferay-ui:breadcrumb
@@ -105,7 +105,9 @@
 										<portlet:param name="redirect" value="<%= backURL %>" />
 										<portlet:param name="className" value="<%= entry.getClassName() %>" />
 										<portlet:param name="classPK" value="<%= String.valueOf(entry.getClassPK()) %>" />
-										<portlet:param name="containerModelClassName" value="<%= trashHandler.getContainerModelClassName() %>" />
+										<portlet:param name="containerModelClassName" value="<%= trashHandler.getContainerModelClassName(entry.getClassPK()) %>" />
+										<portlet:param name="containerModelId" value="<%= String.valueOf(trashHandler.getRootContainerModelId(entry.getClassPK())) %>" />
+										<portlet:param name="rootContainerModelMovable" value="<%= String.valueOf(trashHandler.isRootContainerModelMovable()) %>" />
 									</portlet:renderURL>
 
 									<%

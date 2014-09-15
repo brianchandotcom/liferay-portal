@@ -354,12 +354,8 @@ public class BookmarksEntryLocalServiceImpl
 
 			// Entry
 
-			TrashEntry trashEntry = entry.getTrashEntry();
-
-			TrashVersion trashVersion =
-				trashVersionLocalService.fetchVersion(
-					trashEntry.getEntryId(), BookmarksEntry.class.getName(),
-					entryId);
+			TrashVersion trashVersion = trashVersionLocalService.fetchVersion(
+				BookmarksEntry.class.getName(), entryId);
 
 			int status = WorkflowConstants.STATUS_APPROVED;
 

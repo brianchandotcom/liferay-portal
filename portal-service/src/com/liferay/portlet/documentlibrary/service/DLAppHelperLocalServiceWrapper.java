@@ -243,6 +243,18 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 
 	@Override
 	public void restoreDependentsFromTrash(
+		java.util.List<java.lang.Object> dlFileEntriesAndDLFolders)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlAppHelperLocalService.restoreDependentsFromTrash(dlFileEntriesAndDLFolders);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #restoreDependentsFromTrash(
+	List)}
+	*/
+	@Deprecated
+	@Override
+	public void restoreDependentsFromTrash(
 		java.util.List<java.lang.Object> dlFileEntriesAndDLFolders,
 		long trashEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {

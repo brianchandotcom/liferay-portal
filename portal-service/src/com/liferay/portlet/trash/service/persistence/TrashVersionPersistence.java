@@ -340,64 +340,6 @@ public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 	public int countByC_C(long classNameId, long classPK);
 
 	/**
-	* Returns the trash version where entryId = &#63; and classNameId = &#63; and classPK = &#63; or throws a {@link com.liferay.portlet.trash.NoSuchVersionException} if it could not be found.
-	*
-	* @param entryId the entry ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the matching trash version
-	* @throws com.liferay.portlet.trash.NoSuchVersionException if a matching trash version could not be found
-	*/
-	public com.liferay.portlet.trash.model.TrashVersion findByE_C_C(
-		long entryId, long classNameId, long classPK)
-		throws com.liferay.portlet.trash.NoSuchVersionException;
-
-	/**
-	* Returns the trash version where entryId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param entryId the entry ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the matching trash version, or <code>null</code> if a matching trash version could not be found
-	*/
-	public com.liferay.portlet.trash.model.TrashVersion fetchByE_C_C(
-		long entryId, long classNameId, long classPK);
-
-	/**
-	* Returns the trash version where entryId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param entryId the entry ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching trash version, or <code>null</code> if a matching trash version could not be found
-	*/
-	public com.liferay.portlet.trash.model.TrashVersion fetchByE_C_C(
-		long entryId, long classNameId, long classPK, boolean retrieveFromCache);
-
-	/**
-	* Removes the trash version where entryId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
-	*
-	* @param entryId the entry ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the trash version that was removed
-	*/
-	public com.liferay.portlet.trash.model.TrashVersion removeByE_C_C(
-		long entryId, long classNameId, long classPK)
-		throws com.liferay.portlet.trash.NoSuchVersionException;
-
-	/**
-	* Returns the number of trash versions where entryId = &#63; and classNameId = &#63; and classPK = &#63;.
-	*
-	* @param entryId the entry ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the number of matching trash versions
-	*/
-	public int countByE_C_C(long entryId, long classNameId, long classPK);
-
-	/**
 	* Caches the trash version in the entity cache if it is enabled.
 	*
 	* @param trashVersion the trash version

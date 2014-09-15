@@ -609,12 +609,9 @@ public class DLAppHelperLocalServiceImpl
 
 			// File shortcut
 
-			TrashEntry trashEntry = dlFileShortcut.getTrashEntry();
-
-			TrashVersion trashVersion =
-				trashVersionLocalService.fetchVersion(
-					trashEntry.getEntryId(), DLFileShortcut.class.getName(),
-					dlFileShortcut.getFileShortcutId());
+			TrashVersion trashVersion = trashVersionLocalService.fetchVersion(
+				DLFileShortcut.class.getName(),
+				dlFileShortcut.getFileShortcutId());
 
 			int status = WorkflowConstants.STATUS_APPROVED;
 
@@ -758,7 +755,7 @@ public class DLAppHelperLocalServiceImpl
 
 	@Override
 	public void restoreDependentsFromTrash(
-			List<Object> dlFileEntriesAndDLFolders, long trashEntryId)
+			List<Object> dlFileEntriesAndDLFolders)
 		throws PortalException {
 
 		for (Object object : dlFileEntriesAndDLFolders) {
@@ -790,7 +787,7 @@ public class DLAppHelperLocalServiceImpl
 
 					TrashVersion trashVersion =
 						trashVersionLocalService.fetchVersion(
-							trashEntryId, DLFileVersion.class.getName(),
+							DLFileVersion.class.getName(),
 							dlFileVersion.getFileVersionId());
 
 					int oldStatus = WorkflowConstants.STATUS_APPROVED;
@@ -841,7 +838,7 @@ public class DLAppHelperLocalServiceImpl
 
 				TrashVersion trashVersion =
 					trashVersionLocalService.fetchVersion(
-						trashEntryId, DLFileShortcut.class.getName(),
+						DLFileShortcut.class.getName(),
 						dlFileShortcut.getFileShortcutId());
 
 				int oldStatus = WorkflowConstants.STATUS_APPROVED;
@@ -870,8 +867,7 @@ public class DLAppHelperLocalServiceImpl
 
 				TrashVersion trashVersion =
 					trashVersionLocalService.fetchVersion(
-						trashEntryId, DLFolder.class.getName(),
-						dlFolder.getFolderId());
+						DLFolder.class.getName(), dlFolder.getFolderId());
 
 				int oldStatus = WorkflowConstants.STATUS_APPROVED;
 
@@ -896,7 +892,7 @@ public class DLAppHelperLocalServiceImpl
 							false, queryDefinition);
 
 				restoreDependentsFromTrash(
-					foldersAndFileEntriesAndFileShortcuts, trashEntryId);
+					foldersAndFileEntriesAndFileShortcuts);
 
 				// Trash
 
@@ -918,6 +914,19 @@ public class DLAppHelperLocalServiceImpl
 				indexer.reindex(dlFolder);
 			}
 		}
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #restoreDependentsFromTrash(
+	 *             List)}
+	 */
+	@Deprecated
+	@Override
+	public void restoreDependentsFromTrash(
+			List<Object> dlFileEntriesAndDLFolders, long trashEntryId)
+		throws PortalException {
+
+		restoreDependentsFromTrash(dlFileEntriesAndDLFolders);
 	}
 
 	@Override
@@ -1062,7 +1071,7 @@ public class DLAppHelperLocalServiceImpl
 				queryDefinition);
 
 		dlAppHelperLocalService.restoreDependentsFromTrash(
-			foldersAndFileEntriesAndFileShortcuts, trashEntry.getEntryId());
+			foldersAndFileEntriesAndFileShortcuts);
 
 		// Sync
 
@@ -1472,8 +1481,6 @@ public class DLAppHelperLocalServiceImpl
 			return fileEntry;
 		}
 
-		TrashEntry trashEntry = dlFileEntry.getTrashEntry();
-
 		List<DLFileVersion> dlFileVersions =
 			dlFileVersionLocalService.getFileVersions(
 				fileEntry.getFileEntryId(), WorkflowConstants.STATUS_IN_TRASH);
@@ -1484,8 +1491,7 @@ public class DLAppHelperLocalServiceImpl
 		FileVersion fileVersion = new LiferayFileVersion(dlFileVersions.get(0));
 
 		TrashVersion trashVersion = trashVersionLocalService.fetchVersion(
-			trashEntry.getEntryId(), DLFileVersion.class.getName(),
-			fileVersion.getFileVersionId());
+			DLFileVersion.class.getName(), fileVersion.getFileVersionId());
 
 		int oldStatus = WorkflowConstants.STATUS_APPROVED;
 
@@ -1504,7 +1510,7 @@ public class DLAppHelperLocalServiceImpl
 			// File version
 
 			trashVersion = trashVersionLocalService.fetchVersion(
-				trashEntry.getEntryId(), DLFileVersion.class.getName(),
+				DLFileVersion.class.getName(),
 				dlFileVersion.getFileVersionId());
 
 			oldStatus = WorkflowConstants.STATUS_APPROVED;
@@ -1686,12 +1692,8 @@ public class DLAppHelperLocalServiceImpl
 
 			// Folder
 
-			TrashEntry trashEntry = dlFolder.getTrashEntry();
-
-			TrashVersion trashVersion =
-				trashVersionLocalService.fetchVersion(
-					trashEntry.getEntryId(), DLFolder.class.getName(),
-					dlFolder.getFolderId());
+			TrashVersion trashVersion = trashVersionLocalService.fetchVersion(
+				DLFolder.class.getName(), dlFolder.getFolderId());
 
 			int status = WorkflowConstants.STATUS_APPROVED;
 
@@ -1725,7 +1727,7 @@ public class DLAppHelperLocalServiceImpl
 					queryDefinition);
 
 			dlAppHelperLocalService.restoreDependentsFromTrash(
-				foldersAndFileEntriesAndFileShortcuts, trashEntry.getEntryId());
+				foldersAndFileEntriesAndFileShortcuts);
 
 			// Sync
 

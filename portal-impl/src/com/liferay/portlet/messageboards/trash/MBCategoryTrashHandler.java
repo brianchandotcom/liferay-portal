@@ -15,6 +15,7 @@
 package com.liferay.portlet.messageboards.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -39,6 +40,7 @@ import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -75,7 +77,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public String getContainerModelName() {
+	public String getContainerModelName(long classPK) {
 		return "category";
 	}
 
@@ -180,7 +182,20 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public String getRootContainerModelName() {
-		return "home";
+		return "category";
+	}
+
+	@Override
+	public String getRootContainerModelTitle(
+			long containerModelId, Locale locale)
+		throws PortalException {
+
+		return LanguageUtil.get(locale, "home");
+	}
+
+	@Override
+	public String getSubcontainerModelName() {
+		return "category";
 	}
 
 	@Override

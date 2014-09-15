@@ -17,7 +17,7 @@
 
 	<command name="AddConditionNodeEditNameAndDesciptionAndDeleteViaViewTab" priority="5">
 		<var name="nodeNodeLabel" value="Condition" />
-		<var name="nodeType" value="contiion" />
+		<var name="nodeType" value="condition" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Workflow" />
@@ -132,7 +132,7 @@
 	</command>
 
 	<command name="AddJoinXORNodeEditNameAndDesciptionAndDeleteViaViewTab" priority="5">
-		<var name="nodeNodeLabel" value="JoinXOR" />
+		<var name="nodeNodeLabel" value="Join XOR" />
 		<var name="nodeType" value="join-xor" />
 
 		<execute macro="Page#gotoCP">

@@ -60,83 +60,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NODE_CONDITION</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Condition']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NODE_CONDITION_PNG</td>
-	<td>portal/screenshots/kaleodesigner/node_condition.png</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NODE_END</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='End']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NODE_END_PNG</td>
-	<td>portal/screenshots/kaleodesigner/node_end.png</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NODE_FORK</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Fork']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NODE_FORK_PNG</td>
-	<td>portal/screenshots/kaleodesigner/node_fork.png</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NODE_JOIN</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Join']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NODE_JOIN_PNG</td>
-	<td>portal/screenshots/kaleodesigner/node_join.png</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NODE_JOIN_XOR</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Join XOR']/div</td>
+	<td>NODE_PNG</td>
+	<td>portal/screenshots/kaleodesigner/node_${key_nodeType}.png</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NODE_JOIN_XOR_PNG</td>
 	<td>portal/screenshots/kaleodesigner/node_join_xor.png</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NODE_START</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Start']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NODE_START_PNG</td>
-	<td>portal/screenshots/kaleodesigner/node_start.png</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NODE_STATE</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='State']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NODE_STATE_PNG</td>
-	<td>portal/screenshots/kaleodesigner/node_state.png</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NODE_TASK</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Task']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NODE_TASK_PNG</td>
-	<td>portal/screenshots/kaleodesigner/node_task.png</td>
 	<td></td>
 </tr>
 <tr>
@@ -324,8 +254,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIEW_FORM_NODE_DEFAULT</td>
+	<td>//div[@class='diagram-node-label' and contains(.,'${key_nodeType}')]/../div/div/div</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEW_FORM_NODE</td>
-	<td>//div[contains(@data-nodeid,'${key_nodeNodeLabel}')]/div/div/div</td>
+	<td>//div[@class='diagram-node-label' and .='${key_nodeNodeLabel}']/../div/div/div</td>
 	<td></td>
 </tr>
 <tr>
@@ -335,47 +270,7 @@
 </tr>
 <tr>
 	<td>VIEW_FORM_NODE_DELETE_ICON</td>
-	<td>//div[contains(@data-nodeid,'${key_nodeNodeLabel}')]/div[3]/div/button</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VIEW_FORM_NODE_CONDITION</td>
-	<td>//div[@class='diagram-node-label' and contains(.,'condition')]/../div/div/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VIEW_FORM_NODE_END</td>
-	<td>//div[@class='diagram-node-label' and contains(.,'end')]/../div/div/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VIEW_FORM_NODE_FORK</td>
-	<td>//div[@class='diagram-node-label' and contains(.,'fork')]/../div/div/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VIEW_FORM_NODE_JOIN</td>
-	<td>//div[@class='diagram-node-label' and contains(.,'join')]/../div/div/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VIEW_FORM_NODE_JOIN_XOR</td>
-	<td>//div[@class='diagram-node-label' and contains(.,'join-xor')]/../div/div/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VIEW_FORM_NODE_START</td>
-	<td>//div[@class='diagram-node-label' and contains(.,'start')]/../div/div/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VIEW_FORM_NODE_STATE</td>
-	<td>//div[@class='diagram-node-label' and contains(.,'state')]/../div/div/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VIEW_FORM_NODE_TASK</td>
-	<td>//div[@class='diagram-node-label' and contains(.,'task')]/../div/div/div</td>
+	<td>//div[@class='diagram-node-label' and contains(.,'${key_nodeNodeLabel}')]/../div[3]/div/button</td>
 	<td></td>
 </tr>
 <tr>

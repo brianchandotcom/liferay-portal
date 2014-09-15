@@ -562,15 +562,6 @@ public abstract class BaseIndexer implements Indexer {
 		}
 	}
 
-	protected void addDefaultHighlightFieldNames(QueryConfig queryConfig) {
-		queryConfig.addHighlightFieldNames(Field.ASSET_CATEGORY_TITLES);
-
-		if (queryConfig.isHighlightEnabled()) {
-			queryConfig.addHighlightFieldNames(
-				Field.CONTENT, Field.DESCRIPTION, Field.TITLE);
-		}
-	}
-
 	@Override
 	public Hits search(
 			SearchContext searchContext, String... selectedFieldNames)
@@ -663,6 +654,15 @@ public abstract class BaseIndexer implements Indexer {
 		document.addLocalizedKeyword(
 			"localized_title", assetEntry.getTitleMap(), true, true);
 		document.addKeyword("visible", assetEntry.isVisible());
+	}
+
+	protected void addDefaultHighlightFieldNames(QueryConfig queryConfig) {
+		queryConfig.addHighlightFieldNames(Field.ASSET_CATEGORY_TITLES);
+
+		if (queryConfig.isHighlightEnabled()) {
+			queryConfig.addHighlightFieldNames(
+				Field.CONTENT, Field.DESCRIPTION, Field.TITLE);
+		}
 	}
 
 	protected void addDefaultSelectedFieldNames(SearchContext searchContext) {

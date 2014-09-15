@@ -163,7 +163,6 @@ public class IPGeocoderImpl implements IPGeocoder {
 
 		}
 
-
 		try (BufferedInputStream bufferedInputStream = new BufferedInputStream(
 				inputStream)) {
 

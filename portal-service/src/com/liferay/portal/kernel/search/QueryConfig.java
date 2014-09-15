@@ -235,7 +235,9 @@ public class QueryConfig implements Serializable {
 			highlightFragmentSize);
 	}
 
-	public void setHighlightRequireFieldMatch(boolean highlightRequireFieldMatch) {
+	public void setHighlightRequireFieldMatch(
+		boolean highlightRequireFieldMatch) {
+
 		if (_INDEX_SEARCH_HIGHLIGHT_REQUIRE_FIELD_MATCH) {
 			_attributes.put(
 				PropsKeys.INDEX_SEARCH_HIGHLIGHT_REQUIRE_FIELD_MATCH,
@@ -302,8 +304,7 @@ public class QueryConfig implements Serializable {
 		_attributes.put(_SELECTED_FIELD_NAMES, selectedFieldNames);
 	}
 
-	private static final String _HIGHLIGHT_FIELD_NAMES =
-		"highlightFieldNames";
+	private static final String _HIGHLIGHT_FIELD_NAMES = "highlightFieldNames";
 
 	private static final String _HITS_PROCESSING_ENABLED =
 		"hitsProcessingEnabled";
@@ -333,7 +334,8 @@ public class QueryConfig implements Serializable {
 
 	private static final boolean _INDEX_SEARCH_HIGHLIGHT_REQUIRE_FIELD_MATCH =
 		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.INDEX_SEARCH_HIGHLIGHT_REQUIRE_FIELD_MATCH));
+			PropsUtil.get(
+				PropsKeys.INDEX_SEARCH_HIGHLIGHT_REQUIRE_FIELD_MATCH));
 
 	private static final int _INDEX_SEARCH_HIGHLIGHT_SNIPPET_SIZE =
 		GetterUtil.getInteger(

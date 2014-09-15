@@ -736,6 +736,11 @@ public class ShoppingItemWrapper implements ShoppingItem,
 		return _shoppingItem.isFields();
 	}
 
+	@Override
+	public boolean isInfiniteStock() {
+		return _shoppingItem.isInfiniteStock();
+	}
+
 	/**
 	* Returns <code>true</code> if this shopping item is large image.
 	*

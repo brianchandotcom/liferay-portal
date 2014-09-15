@@ -40,15 +40,6 @@ import java.util.Map;
  */
 public class UpgradeDefaultDataTranslations extends UpgradeProcess {
 
-	protected void doUpgradeTranslations(long companyId, long groupId) throws SQLException {
-		for (Map.Entry<String, String> nameAndKey :
-			_DEFAULT_FILE_ENTRY_TYPE_MAP.entrySet()) {
-
-			upgradeGroupDLFileEntryTypes(
-				companyId, groupId, nameAndKey.getKey(), nameAndKey.getValue());
-		}
-	}
-
 	@Override
 	protected void doUpgrade() throws Exception {
 		Connection con = null;
@@ -127,9 +118,17 @@ public class UpgradeDefaultDataTranslations extends UpgradeProcess {
 		}
 	}
 
-	protected void upgradeTranslations(long companyId, long groupId) throws PortalException {
+	protected void upgradeTranslations(long companyId, long groupId)
+		throws PortalException {
+
 		try {
-			doUpgradeTranslations(companyId, groupId);
+			for (Map.Entry<String, String> nameAndKey :
+				_DEFAULT_FILE_ENTRY_TYPE_MAP.entrySet()) {
+
+				upgradeGroupDLFileEntryTypes(
+					companyId, groupId, nameAndKey.getKey(),
+					nameAndKey.getValue());
+			}
 		}
 		catch (SQLException sqle) {
 			throw new UpgradeException(sqle);
@@ -154,10 +153,10 @@ public class UpgradeDefaultDataTranslations extends UpgradeProcess {
 
 			String languageId = LanguageUtil.getLanguageId(defaultLocale);
 
-			String name = updateLocalizationXML(
+			String name = LocalizationUtil.updateLocalization(
 				nameMap, dlFileEntryTypeData.getName(), "Name", languageId);
 
-			String description = updateLocalizationXML(
+			String description = LocalizationUtil.updateLocalization(
 				descriptionMap, dlFileEntryTypeData.getDescription(),
 				"Description", languageId);
 
@@ -231,14 +230,6 @@ public class UpgradeDefaultDataTranslations extends UpgradeProcess {
 			upgradeDLFileEntryType(
 				dlFileEntryTypeData, nameMap, descriptionMap, defaultLocale);
 		}
-	}
-
-	protected String updateLocalizationXML(
-		Map<Locale, String> localizationMap, String xml, String key,
-		String languageId) {
-
-		return LocalizationUtil.updateLocalization(
-			localizationMap, xml, key, languageId);
 	}
 
 	protected class DLFileEntryTypeData {

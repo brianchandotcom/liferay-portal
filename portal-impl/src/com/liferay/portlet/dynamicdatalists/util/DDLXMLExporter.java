@@ -39,7 +39,7 @@ import java.util.List;
 public class DDLXMLExporter extends BaseDDLExporter {
 
 	protected void addFieldElement(
-		Element fieldsElement, String label, Serializable value) {
+		Element fieldsElement, String label, Serializable value, int status) {
 
 		Element fieldElement = fieldsElement.addElement("field");
 
@@ -50,6 +50,10 @@ public class DDLXMLExporter extends BaseDDLExporter {
 		Element valueElement = fieldElement.addElement("value");
 
 		valueElement.addText(String.valueOf(value));
+
+		Element statusElement = fieldElement.addElement("status");
+
+		statusElement.addText(getStatusMessage(status));
 	}
 
 	@Override
@@ -89,7 +93,8 @@ public class DDLXMLExporter extends BaseDDLExporter {
 				}
 
 				addFieldElement(
-					fieldsElement, label.getString(getLocale()), value);
+					fieldsElement, label.getString(getLocale()), value,
+					recordVersion.getStatus());
 			}
 		}
 

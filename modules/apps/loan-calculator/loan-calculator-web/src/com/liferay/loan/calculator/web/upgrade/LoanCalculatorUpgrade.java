@@ -32,13 +32,17 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  * @author Peter Fellwock
  */
-@Component(
-	immediate = true, service = LoanCalculatorUpgrade.class
-)
+@Component(immediate = true, service = LoanCalculatorUpgrade.class)
 public class LoanCalculatorUpgrade {
 
-	public static void main(String[] args) {
-	} @Reference(target = "(original.bean=true)", unbind = "-")
+	@Reference(unbind = "-")
+	protected void setReleaseLocalService(
+		ReleaseLocalService releaseLocalService) {
+
+		_releaseLocalService = releaseLocalService;
+	}
+
+	@Reference(target = "(original.bean=true)", unbind = "-")
 	protected void setServletContext(ServletContext servletContext) {
 	}
 
@@ -60,18 +64,11 @@ public class LoanCalculatorUpgrade {
 		};
 
 		_releaseLocalService.updateRelease(
-				LoanCalculatorPortlet.class.getName(),
-				Collections.<UpgradeProcess> singletonList(upgradePortletId), 1,
-				0, false);
+			LoanCalculatorPortlet.class.getName(),
+			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 0,
+			false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;
-
-	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = releaseLocalService;
-	}
 
 }

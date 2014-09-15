@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Peter Fellwock
 */
-
 @Component(
 	immediate = true,
 	property = {
@@ -47,8 +46,8 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Portlet.class
 )
-
 public class LoanCalculatorPortlet extends MVCPortlet {
+
 	/**
 	* Force upgrades to register before the portlet is registered to prevent
 	* race conditions.

@@ -270,12 +270,12 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 				</div>
 			</c:if>
 
-			<aui:button disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "saveEntry(false, false);" %>' type="submit" value="<%= publishButtonLabel %>" />
+			<aui:button disabled="<%= pending %>" name="publishButton"  type="submit" value="<%= publishButtonLabel %>" />
 
-			<aui:button name="saveButton" onClick='<%= renderResponse.getNamespace() + "saveEntry(true, false);" %>' primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
+			<aui:button name="saveButton"  primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
 
 			<c:if test="<%= (entry == null) || entry.isDraft() || preview %>">
-				<aui:button name="previewButton" onClick='<%= renderResponse.getNamespace() + "previewEntry();" %>' value="preview" />
+				<aui:button name="previewButton" value="preview" />
 			</c:if>
 
 			<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
@@ -283,206 +283,43 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 	</aui:fieldset>
 </aui:form>
 
-<aui:script>
-	var <portlet:namespace />saveDraftIntervalId = null;
-	var <portlet:namespace />oldTitle = null;
-	var <portlet:namespace />oldSubtitle = null;
-	var <portlet:namespace />oldContent = null;
-
-	function <portlet:namespace />clearSaveDraftIntervalId() {
-		if (<portlet:namespace />saveDraftIntervalId != null) {
-			clearInterval(<portlet:namespace />saveDraftIntervalId);
-		}
-	}
-
-	function <portlet:namespace />getSuggestionsContent() {
-		return document.<portlet:namespace />fm.<portlet:namespace />title.value + ' ' + window.<portlet:namespace />editor.getHTML();
-	}
-
-	function <portlet:namespace />previewEntry() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (entry == null) ? Constants.ADD : Constants.UPDATE %>';
-		document.<portlet:namespace />fm.<portlet:namespace />preview.value = 'true';
-		document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>';
-
-		if (window.<portlet:namespace />editor) {
-			document.<portlet:namespace />fm.<portlet:namespace />content.value = window.<portlet:namespace />editor.getHTML();
-		}
-
-		submitForm(document.<portlet:namespace />fm);
-	}
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveEntry',
-		function(draft, ajax) {
-			var A = AUI();
-
-			var title = window['<portlet:namespace />title'].getHTML();
-			var subtitle = window['<portlet:namespace />subtitle'].getHTML();
-			var content = window['<portlet:namespace />content'].getHTML();
-
-			var publishButton = A.one('#<portlet:namespace />publishButton');
-			var cancelButton = A.one('#<portlet:namespace />cancelButton');
-
-			var saveStatus = A.one('#<portlet:namespace />saveStatus');
-			var saveText = '<%= UnicodeLanguageUtil.format(request, ((entry != null) && entry.isPending()) ? "entry-saved-at-x" : "draft-saved-at-x", "[TIME]", false) %>';
-
-			if (draft && ajax) {
-				if ((title == '') || (content == '')) {
-					return;
-				}
-
-				if ((<portlet:namespace />oldTitle == title) &&
-					(<portlet:namespace />oldSubtitle == subtitle) &&
-					(<portlet:namespace />oldContent == content)) {
-
-					return;
-				}
-
-				<portlet:namespace />oldTitle = title;
-				<portlet:namespace />oldContent = content;
-
-				var url = '<portlet:actionURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/blogs/edit_entry" /><portlet:param name="ajax" value="true" /><portlet:param name="preview" value="false" /></portlet:actionURL>';
-
-				var data = {
-					<portlet:namespace />assetTagNames: document.<portlet:namespace />fm.<portlet:namespace />assetTagNames.value,
-					<portlet:namespace /><%= Constants.CMD %>: '<%= Constants.ADD %>',
-					<portlet:namespace />content: content,
-					<portlet:namespace />displayDateAmPm: document.<portlet:namespace />fm.<portlet:namespace />displayDateAmPm.value,
-					<portlet:namespace />displayDateDay: document.<portlet:namespace />fm.<portlet:namespace />displayDateDay.value,
-					<portlet:namespace />displayDateHour: document.<portlet:namespace />fm.<portlet:namespace />displayDateHour.value,
-					<portlet:namespace />displayDateMinute: document.<portlet:namespace />fm.<portlet:namespace />displayDateMinute.value,
-					<portlet:namespace />displayDateMonth: document.<portlet:namespace />fm.<portlet:namespace />displayDateMonth.value,
-					<portlet:namespace />displayDateYear: document.<portlet:namespace />fm.<portlet:namespace />displayDateYear.value,
-					<portlet:namespace />entryId: document.<portlet:namespace />fm.<portlet:namespace />entryId.value,
-					<portlet:namespace />redirect: document.<portlet:namespace />fm.<portlet:namespace />redirect.value,
-					<portlet:namespace />referringPortletResource: document.<portlet:namespace />fm.<portlet:namespace />referringPortletResource.value,
-					<portlet:namespace />subtitle: subtitle,
-					<portlet:namespace />title: title,
-					<portlet:namespace />workflowAction: <%= WorkflowConstants.ACTION_SAVE_DRAFT %>
-				};
-
-				var customAttributes = A.one(document.<portlet:namespace />fm).all('[name^=<portlet:namespace />ExpandoAttribute]');
-
-				customAttributes.each(
-					function(item, index, collection) {
-						data[item.attr('name')] = item.val();
-					}
-				);
-
-				A.io.request(
-					url,
-					{
-						data: data,
-						dataType: 'JSON',
-						on: {
-							failure: function() {
-								if (saveStatus) {
-									saveStatus.attr('className', 'alert alert-danger save-status');
-									saveStatus.html('<%= UnicodeLanguageUtil.get(request, "could-not-save-draft-to-the-server") %>');
-								}
-							},
-							start: function() {
-								Liferay.Util.toggleDisabled(publishButton, true);
-
-								if (saveStatus) {
-									saveStatus.attr('className', 'alert alert-info save-status pending');
-									saveStatus.html('<%= UnicodeLanguageUtil.get(request, "saving-draft") %>');
-								}
-							},
-							success: function(event, id, obj) {
-								var instance = this;
-
-								var message = instance.get('responseData');
-
-								if (message) {
-									document.<portlet:namespace />fm.<portlet:namespace />entryId.value = message.entryId;
-									document.<portlet:namespace />fm.<portlet:namespace />redirect.value = message.redirect;
-
-									var tabs1BackButton = A.one('#<portlet:namespace />tabs1TabsBack');
-
-									if (tabs1BackButton) {
-										tabs1BackButton.attr('href', message.redirect);
-									}
-
-									if (cancelButton) {
-										cancelButton.detach('click');
-
-										cancelButton.on(
-											'click',
-											function() {
-												location.href = message.redirect;
-											}
-										);
-									}
-
-									var now = saveText.replace(/\[TIME\]/gim, (new Date()).toString());
-
-									if (saveStatus) {
-										saveStatus.attr('className', 'alert alert-success save-status');
-										saveStatus.html(now);
-									}
-								}
-								else {
-									saveStatus.hide();
-								}
-
-								Liferay.Util.toggleDisabled(publishButton, false);
-							}
-						}
-					}
-				);
-			}
-			else {
-				<portlet:namespace />clearSaveDraftIntervalId();
-
-				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (entry == null) ? Constants.ADD : Constants.UPDATE %>';
-				document.<portlet:namespace />fm.<portlet:namespace />title.value = title;
-				document.<portlet:namespace />fm.<portlet:namespace />subtitle.value = subtitle;
-				document.<portlet:namespace />fm.<portlet:namespace />content.value = content;
-
-				if (draft) {
-					document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = <%= WorkflowConstants.ACTION_SAVE_DRAFT %>;
-				}
-				else {
-					document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = <%= WorkflowConstants.ACTION_PUBLISH %>;
-				}
-
-				submitForm(document.<portlet:namespace />fm);
-			}
+<aui:script use="liferay-blogs">
+	var blogs = new Liferay.Blogs({
+		cmdValue: '<%= (entry == null) ? Constants.ADD : Constants.UPDATE %>',
+		constants: {
+			'ACTION_PUBLISH': '<%= WorkflowConstants.ACTION_PUBLISH %>',
+			'ACTION_SAVE_DRAFT': '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>',
+			'ADD' : '<%= Constants.ADD %>',
+			'CMD' : '<%= Constants.CMD %>',
+			'UPDATE' : '<%= Constants.UPDATE %>'
 		},
-		['aui-io']
-	);
+		content: '<%= UnicodeFormatter.toString(content) %>',
+		namespace: '<portlet:namespace />',
+		redirect: '<%= HtmlUtil.escapeJS(PortalUtil.escapeRedirect(redirect)) %>',
+		selectedCheckbox: <%= (entry != null) && Validator.isNotNull(entry.getSmallImageURL()) ? 0 : 1 %>,
+		smallImage: <%= smallImage %>,
+		text: {
+			saveDraftError: '<%= UnicodeLanguageUtil.get(request, "could-not-save-draft-to-the-server") %>',
+			saveDraftMessage: '<%= UnicodeLanguageUtil.get(request, "saving-draft") %>',
+			saveText: '<%= UnicodeLanguageUtil.format(request, ((entry != null) && entry.isPending()) ? "entry-saved-at-x" : "draft-saved-at-x", "[TIME]", false) %>'
+		},
+		url: '<portlet:actionURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/blogs/edit_entry" /><portlet:param name="ajax" value="true" /><portlet:param name="preview" value="false" /></portlet:actionURL>'
+	});
 
 	var clearSaveDraftHandle = function(event) {
 		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
-			<portlet:namespace />clearSaveDraftIntervalId();
+			blogs.clearSaveDraftIntervalId();
+
+			blogs.destroy();
 
 			Liferay.detach('destroyPortlet', clearSaveDraftHandle);
 		}
 	};
 
 	Liferay.on('destroyPortlet', clearSaveDraftHandle);
-</aui:script>
-
-<aui:script use="aui-base">
-	var cancelButton = A.one('#<portlet:namespace />cancelButton');
-
-	if (cancelButton) {
-		cancelButton.on(
-			'click',
-			function() {
-				<portlet:namespace />clearSaveDraftIntervalId();
-
-				location.href = '<%= HtmlUtil.escapeJS(PortalUtil.escapeRedirect(redirect)) %>';
-			}
-		);
-	}
 
 	<c:if test="<%= (entry == null) || ((entry.getUserId() == user.getUserId()) && (entry.getStatus() == WorkflowConstants.STATUS_DRAFT)) %>">
-		<portlet:namespace />saveDraftIntervalId = setInterval('<portlet:namespace />saveEntry(true, true)', 30000);
-		<portlet:namespace />oldTitle = document.<portlet:namespace />fm.<portlet:namespace />title.value;
-		<portlet:namespace />oldContent = '<%= UnicodeFormatter.toString(content) %>';
+		blogs.initDraftSaveInterval();
 	</c:if>
 </aui:script>
 

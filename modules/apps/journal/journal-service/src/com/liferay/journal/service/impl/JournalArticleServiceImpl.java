@@ -1047,11 +1047,10 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		}
 
 		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
-			status, start, end, orderByComparator);
+			status, userId, includeOwner, start, end, orderByComparator);
 
 		return journalArticleFinder.filterFindByG_U_F_C(
-			groupId, userId, folderIds,
-			JournalArticleConstants.CLASSNAME_ID_DEFAULT, includeOwner,
+			groupId, folderIds, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
 			queryDefinition);
 	}
 
@@ -1215,11 +1214,10 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		}
 
 		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
-			status);
+			status, userId, includeOwner);
 
 		return journalArticleFinder.filterCountByG_U_F_C(
-			groupId, userId, folderIds,
-			JournalArticleConstants.CLASSNAME_ID_DEFAULT, includeOwner,
+			groupId, folderIds, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
 			queryDefinition);
 	}
 

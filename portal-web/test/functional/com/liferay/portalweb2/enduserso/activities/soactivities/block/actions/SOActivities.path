@@ -67,6 +67,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ACTIVITIES_OPTIONS</td>
+	<td>//header[contains(.,'Activities')]//menu//a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ACTIVITIES_USER_PICTURE</td>
 	<td>//div[contains(@class,'activity-item')][${key_row}]//img[contains(@alt,'${key_userName}')]</td>
 	<td></td>

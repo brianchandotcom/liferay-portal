@@ -46,8 +46,9 @@ public class ModuleSessionFactory
 	@Override
 	protected SessionFactory createSessionFactory(DataSource dataSource) {
 		ModuleHibernateConfiguration moduleHibernateConfiguration =
-			new ModuleHibernateConfiguration();
+			new ModuleHibernateConfiguration(_classLoader);
 
+		moduleHibernateConfiguration.setBeanFactory(getBeanFactory());
 		moduleHibernateConfiguration.setDataSource(dataSource);
 
 		try {

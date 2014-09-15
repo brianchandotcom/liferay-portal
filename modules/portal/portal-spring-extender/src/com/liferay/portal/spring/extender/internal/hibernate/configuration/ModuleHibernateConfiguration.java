@@ -26,6 +26,13 @@ import org.springframework.context.ApplicationContextAware;
 public class ModuleHibernateConfiguration
 	extends PortletHibernateConfiguration implements ApplicationContextAware {
 
+	public ModuleHibernateConfiguration() {
+	}
+
+	public ModuleHibernateConfiguration(ClassLoader classLoader) {
+		_classLoader = classLoader;
+	}
+
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext)
 		throws BeansException {

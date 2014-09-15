@@ -14,10 +14,31 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ taglib uri="/META-INF/aui.tld" prefix="aui" %>
+<%@ taglib uri="/META-INF/c.tld" prefix="c" %>
+<%@ taglib uri="/META-INF/liferay-portlet-ext.tld" prefix="liferay-portlet" %>
+<%@ taglib uri="/META-INF/liferay-portlet_2_0.tld" prefix="portlet" %>
+<%@ taglib uri="/META-INF/liferay-theme.tld" prefix="liferay-theme" %>
+<%@ taglib uri="/META-INF/liferay-ui.tld" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portlet.network.model.DNSLookup" %><%@
-page import="com.liferay.portlet.network.model.Whois" %><%@
-page import="com.liferay.portlet.network.util.NetworkUtil" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
-<%@ include file="/html/portlet/network/init-ext.jsp" %>
+<%@ page import="com.liferay.network.web.model.DNSLookup" %><%@
+page import="com.liferay.network.web.model.Whois" %><%@
+page import="com.liferay.network.web.util.NetworkUtil" %><%@
+page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@
+page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %>
+
+<%@ page import="javax.portlet.PortletURL" %><%@
+page import="javax.portlet.WindowState" %>
+
+<liferay-theme:defineObjects />
+<portlet:defineObjects />
+
+<%
+WindowState windowState = liferayPortletRequest.getWindowState();
+%>
+
+<%@ include file="/init-ext.jsp" %>

@@ -136,8 +136,13 @@ public class BlogsTestUtil {
 
 			if (smallImage) {
 				String smallImageFileName = "image.jpg";
+
+				Class<?> clazz = BlogsTestUtil.class;
+
+				ClassLoader classLoader = clazz.getClassLoader();
+
 				InputStream smallImageInputStream =
-					BlogsTestUtil.class.getResourceAsStream(
+					classLoader.getResourceAsStream(
 						"com/liferay/portal/util/dependencies/test.jpg");
 
 				FileEntry smallImageFileEntry = null;

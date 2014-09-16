@@ -71,11 +71,18 @@ public class WikiPageDependentsTrashHandlerTest {
 
 		WikiPage childPage = relatedPages.getChildPage();
 
+		String childPageOriginalTitle = childPage.getTitle();
+
 		movePageToTrash(relatedPages.getPage());
+
+		childPage = WikiPageLocalServiceUtil.getPage(
+			relatedPages.getChildPageResourcePrimKey());
+
+		Assert.assertNotEquals(childPageOriginalTitle, childPage.getTitle());
 
 		WikiPage newPage = WikiTestUtil.addPage(
 			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
-			childPage.getTitle(), true);
+			childPageOriginalTitle, true);
 
 		Assert.assertNotNull(newPage);
 	}

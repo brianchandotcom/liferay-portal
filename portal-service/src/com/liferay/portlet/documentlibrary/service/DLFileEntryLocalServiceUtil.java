@@ -653,12 +653,6 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().getFileEntryByName(groupId, folderId, name);
 	}
 
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntry getFileEntryByTitle(
-		long groupId, long folderId, java.lang.String title)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getFileEntryByTitle(groupId, folderId, title);
-	}
-
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry getFileEntryByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {

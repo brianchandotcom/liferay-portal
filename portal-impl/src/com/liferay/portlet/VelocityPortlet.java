@@ -14,6 +14,7 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
@@ -26,6 +27,7 @@ import com.liferay.portal.struts.StrutsUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -191,50 +193,18 @@ public class VelocityPortlet extends GenericPortlet {
 			PortletResponse portletResponse)
 		throws Exception {
 
+		Writer writer = null;
 		if (portletResponse instanceof MimeResponse) {
 			MimeResponse mimeResponse = (MimeResponse)portletResponse;
 
-			mimeResponse.setContentType(
-				portletRequest.getResponseContentType());
+			writer = mimeResponse.getWriter();
+		}
+		else {
+			writer = new UnsyncStringWriter();
 		}
 
-		VelocityWriter velocityWriter = null;
+		template.processTemplate(writer);
 
-		try {
-			velocityWriter = (VelocityWriter)_writerPool.get();
-
-			PrintWriter output = null;
-
-			if (portletResponse instanceof MimeResponse) {
-				MimeResponse mimeResponse = (MimeResponse)portletResponse;
-
-				output = mimeResponse.getWriter();
-			}
-			else {
-				output = UnsyncPrintWriterPool.borrow(System.out);
-			}
-
-			if (velocityWriter == null) {
-				velocityWriter = new VelocityWriter(output, 4 * 1024, true);
-			}
-			else {
-				velocityWriter.recycle(output);
-			}
-
-			template.processTemplate(velocityWriter);
-		}
-		finally {
-			try {
-				if (velocityWriter != null) {
-					velocityWriter.flush();
-					velocityWriter.recycle(null);
-
-					_writerPool.put(velocityWriter);
-				}
-			}
-			catch (Exception e) {
-			}
-		}
 	}
 
 	protected void prepareTemplate(
@@ -271,8 +241,6 @@ public class VelocityPortlet extends GenericPortlet {
 			template.put("resourceResponse", portletResponse);
 		}
 	}
-
-	private static SimplePool _writerPool = new SimplePool(40);
 
 	private String _actionTemplateId;
 	private String _editTemplateId;

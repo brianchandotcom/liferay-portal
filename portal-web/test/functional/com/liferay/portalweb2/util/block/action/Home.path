@@ -223,7 +223,7 @@
 </tr>
 <tr>
 	<td>PAGE_1</td>
-	<td>xpath=(//li[contains(@class,'lfr-nav-deletable')])[1]/a</td>
+	<td>//ul[@aria-label='Site Pages' and @role='menubar']/li[1]/a</td>
 	<td>1st Page</td>
 </tr>
 <tr>
@@ -258,7 +258,7 @@
 </tr>
 <tr>
 	<td>PAGE_2</td>
-	<td>xpath=(//li[contains(@class,'lfr-nav-deletable')])[2]/a</td>
+	<td>//ul[@aria-label='Site Pages' and @role='menubar']/li[2]/a</td>
 	<td>2nd Page</td>
 </tr>
 <tr>
@@ -278,7 +278,7 @@
 </tr>
 <tr>
 	<td>PAGE_3</td>
-	<td>xpath=(//li[contains(@class,'lfr-nav-deletable')])[3]/a</td>
+	<td>//ul[@aria-label='Site Pages' and @role='menubar']/li[3]/a</td>
 	<td>3rd Page</td>
 </tr>
 <tr>

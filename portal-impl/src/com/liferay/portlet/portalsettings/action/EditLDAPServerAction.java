@@ -209,10 +209,15 @@ public class EditLDAPServerAction extends PortletAction {
 		validateLDAPServerName(
 			ldapServerId, themeDisplay.getCompanyId(), properties);
 
-		String filter = ParamUtil.getString(
+		String userFilter = ParamUtil.getString(
 			actionRequest, "importUserSearchFilter");
 
-		LDAPUtil.validateFilter(filter);
+		LDAPUtil.validateFilter(userFilter);
+
+		String groupFilter = ParamUtil.getString(
+			actionRequest, "importGroupSearchFilter");
+
+		LDAPUtil.validateFilter(groupFilter);
 
 		if (ldapServerId <= 0) {
 			properties = addLDAPServer(themeDisplay.getCompanyId(), properties);

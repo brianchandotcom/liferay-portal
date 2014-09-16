@@ -596,13 +596,15 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		String baseDN = PrefsPropsUtil.getString(
 			companyId, PropsKeys.LDAP_BASE_DN + postfix);
 
+		String importGroupSearchFilter = PrefsPropsUtil.getString(
+			companyId, PropsKeys.LDAP_IMPORT_GROUP_SEARCH_FILTER + postfix);
+
+		LDAPUtil.validateFilter(importGroupSearchFilter);
+
 		StringBundler sb = new StringBundler(7);
 
 		sb.append("(&");
-		sb.append(
-			PrefsPropsUtil.getString(
-				companyId,
-				PropsKeys.LDAP_IMPORT_GROUP_SEARCH_FILTER + postfix));
+		sb.append(importGroupSearchFilter);
 		sb.append(StringPool.OPEN_PARENTHESIS);
 		sb.append(groupMappings.getProperty("groupName"));
 		sb.append("=");
@@ -814,14 +816,16 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			String fullUserDN = PortalLDAPUtil.getNameInNamespace(
 				ldapServerId, companyId, binding);
 
+			String importGroupSearchFilter = PrefsPropsUtil.getString(
+				companyId, PropsKeys.LDAP_IMPORT_GROUP_SEARCH_FILTER + postfix);
+
+			LDAPUtil.validateFilter(importGroupSearchFilter);
+
 			StringBundler sb = new StringBundler(9);
 
 			sb.append(StringPool.OPEN_PARENTHESIS);
 			sb.append(StringPool.AMPERSAND);
-			sb.append(
-				PrefsPropsUtil.getString(
-					companyId,
-					PropsKeys.LDAP_IMPORT_GROUP_SEARCH_FILTER + postfix));
+			sb.append(importGroupSearchFilter);
 			sb.append(StringPool.OPEN_PARENTHESIS);
 			sb.append(groupMappingsUser);
 			sb.append(StringPool.EQUAL);

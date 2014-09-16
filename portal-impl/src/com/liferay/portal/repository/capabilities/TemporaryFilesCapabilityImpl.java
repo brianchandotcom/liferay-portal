@@ -60,8 +60,7 @@ public class TemporaryFilesCapabilityImpl implements TemporaryFilesCapability {
 			String mimeType, InputStream inputStream)
 		throws PortalException {
 
-		Folder folder = addTempFolder(
-			userId, invokerUuid, folderPath, fileName);
+		Folder folder = addTempFolder(userId, invokerUuid, folderPath);
 
 		File file = null;
 
@@ -160,7 +159,7 @@ public class TemporaryFilesCapabilityImpl implements TemporaryFilesCapability {
 	}
 
 	protected Folder addTempFolder(
-			long userId, UUID invokerUuid, String folderPath, String fileName)
+			long userId, UUID invokerUuid, String folderPath)
 		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();

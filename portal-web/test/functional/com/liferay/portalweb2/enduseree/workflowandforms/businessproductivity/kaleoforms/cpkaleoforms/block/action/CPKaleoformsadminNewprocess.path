@@ -102,12 +102,12 @@
 </tr>
 <!--FIELD_SET-->
 <tr>
-	<td>SELECTED_DEFINITION</td>
-	<td>//div[contains(.,'Selected Field Set')]//span</td>
+	<td>SELECTED_FIELD_SET</td>
+	<td>//div[contains(.,'Selected Field Set')]//span[contains(@id,'kaleoformsportlet_ddmStructureDisplay')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SELECTED_DEFINITION_ALERT</td>
+	<td>SELECTED_FIELD_SET_ALERT</td>
 	<td>//div[@class='required']</td>
 	<td></td>
 </tr>
@@ -146,6 +146,38 @@
 <tr>
 	<td>FIELD_SET_MENULIST_CHOOSE</td>
 	<td>//a[@role='menuitem' and contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FIELD_SET_PAGINATION-->
+<tr>
+	<td>FIELD_SET_PAGINATION_SELECTOR_BUTTON</td>
+	<td>//div[@class='lfr-pagination-delta-selector']/div/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_SET_PAGINATION_PREVIOUS_BUTTON</td>
+	<td>//ul[contains(@class,'pagination-buttons')]/li/a[contains(.,'Previous')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_SET_PAGINATION_NEXT_BUTTON</td>
+	<td>//ul[contains(@class,'pagination-buttons')]/li/a[contains(.,'Next')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FIELD_SET_PAGINATION_MENULIST-->
+<tr>
+	<td>FIELD_SET_PAGINATION_MENULIST_NUMBER</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'${key_paginationNumber}')]</td>
 	<td></td>
 </tr>
 <tr>

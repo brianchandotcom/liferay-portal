@@ -615,6 +615,11 @@
 			<finder-column name="parentFolderId" />
 			<finder-column name="status" comparator="!=" />
 		</finder>
+		<finder name="G_M_P" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="mountPoint" />
+			<finder-column name="parentFolderId" />
+		</finder>
 		<finder name="G_M_P_H" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="mountPoint" />

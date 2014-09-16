@@ -75,17 +75,16 @@ else {
 <aui:form action="<%= editTagURL %>" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= tag == null ? Constants.ADD : Constants.UPDATE %>" />
 
-	<c:if test="<%= SessionErrors.contains(renderRequest, AssetTagException.class.getName()) %>">
+	<liferay-ui:error exception="<%= AssetTagException.class %>">
 
 		<%
-		AssetTagException ate = (AssetTagException)SessionErrors.get(renderRequest, AssetTagException.class.getName());
+		AssetTagException ate = (AssetTagException)errorException;
 		%>
 
 		<c:if test="<%= ate.getType() == AssetTagException.INVALID_CHARACTER %>">
-			<liferay-ui:error exception="<%= AssetTagException.class %>" message="please-enter-a-valid-name" />
+			<liferay-ui:message key="please-enter-a-valid-name" />
 		</c:if>
-
-	</c:if>
+	</liferay-ui:error>
 
 	<aui:model-context bean="<%= tag %>" model="<%= AssetTag.class %>" />
 

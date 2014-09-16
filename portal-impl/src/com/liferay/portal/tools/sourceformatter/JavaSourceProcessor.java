@@ -1665,7 +1665,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						fileName, "line break: " + fileName + " " + lineCount);
 				}
 
-				if (trimmedLine.startsWith(StringPool.CLOSE_CURLY_BRACE) &&
+				if (!trimmedLine.equals("}) {") &&
+					trimmedLine.startsWith(StringPool.CLOSE_CURLY_BRACE) &&
 					line.endsWith(StringPool.OPEN_CURLY_BRACE)) {
 
 					processErrorMessage(

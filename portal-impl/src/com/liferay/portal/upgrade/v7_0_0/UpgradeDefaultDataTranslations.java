@@ -84,7 +84,7 @@ public class UpgradeDefaultDataTranslations extends UpgradeProcess {
 			ps = con.prepareStatement(
 				"select fileEntryTypeId, name, description from " +
 					"DLFileEntryType where groupId = ? and fileEntryTypeKey " +
-					"= ?");
+						"= ?");
 
 			ps.setLong(1, groupId);
 			ps.setString(2, dlFileEntryTypeKey);
@@ -104,7 +104,7 @@ public class UpgradeDefaultDataTranslations extends UpgradeProcess {
 					String.format(
 						"Found at least two rows for groupId = %s and " +
 							"fileEntryTypeKey = %s on table DLFileEntryType; " +
-							"expected 1 row",
+								"expected 1 row",
 						groupId, dlFileEntryTypeKey));
 			}
 
@@ -119,8 +119,8 @@ public class UpgradeDefaultDataTranslations extends UpgradeProcess {
 	}
 
 	protected void upgradeDLFileEntryType(
-			DLFileEntryTypeData dlFileEntryTypeData, Map<Locale,
-			String> nameMap, Map<Locale, String> descriptionMap,
+			DLFileEntryTypeData dlFileEntryTypeData,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			Locale defaultLocale)
 		throws SQLException {
 

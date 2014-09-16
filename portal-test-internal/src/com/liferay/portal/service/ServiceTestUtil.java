@@ -157,6 +157,9 @@ public class ServiceTestUtil {
 		try {
 			DBUpgrader.upgrade();
 		}
+		catch (AssertionError e) {
+			e.printStackTrace();
+		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}

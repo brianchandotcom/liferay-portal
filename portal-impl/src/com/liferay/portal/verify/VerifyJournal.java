@@ -22,11 +22,11 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -164,9 +164,7 @@ public class VerifyJournal extends VerifyProcess {
 				JournalArticle article =
 					JournalArticleLocalServiceUtil.getArticle(id);
 
-				String xml = article.getContent();
-
-				Document document = SAXReaderUtil.read(xml);
+				Document document = SAXReaderUtil.read(article.getContent());
 
 				Element rootElement = document.getRootElement();
 
@@ -182,60 +180,29 @@ public class VerifyJournal extends VerifyProcess {
 					Element dynamicContentElement = element.element(
 						"dynamic-content");
 
-					String path = (String)dynamicContentElement.getData();
+					String path = dynamicContentElement.getStringValue();
 
-					String[] pathElements = StringUtil.split(
-						path, StringPool.SLASH);
+					String[] pathArray = StringUtil.split(path, CharPool.SLASH);
 
-					if (pathElements.length != 5) {
+					if (pathArray.length != 5) {
 						continue;
 					}
 
+					long groupId = GetterUtil.getLong(pathArray[2]);
+					long folderId = GetterUtil.getLong(pathArray[3]);
 					String title = HttpUtil.decodeURL(
-						HtmlUtil.escape(pathElements[4]));
-
-					if (title.contains(StringPool.SLASH)) {
-						title = StringUtil.replace(
-							title, StringPool.SLASH, StringPool.BLANK);
-
-						StringBundler sb = new StringBundler(9);
-
-						for (int i = 0; i < 4; i++) {
-							sb.append(pathElements[i]);
-							sb.append(StringPool.SLASH);
-						}
-
-						sb.append(title);
-
-						path = sb.toString();
-					}
-
-					long folderId = GetterUtil.getLong(pathElements[3]);
-					long groupId = GetterUtil.getLong(pathElements[2]);
+						HtmlUtil.escape(pathArray[4]));
 
 					DLFileEntry dlFileEntry =
 						DLFileEntryLocalServiceUtil.fetchFileEntry(
 							groupId, folderId, title);
 
 					if (dlFileEntry == null) {
-						if (_log.isWarnEnabled()) {
-							StringBundler sb = new StringBundler(4);
-
-							sb.append("No document exists with title ");
-							sb.append(title);
-							sb.append(" for dynamic content in article ");
-							sb.append(article.getTitle());
-
-							_log.warn(sb.toString());
-						}
-
 						continue;
 					}
 
-					String uuid = dlFileEntry.getUuid();
-
 					dynamicContentElement.setText(
-						path + StringPool.SLASH + uuid);
+						path + StringPool.SLASH + dlFileEntry.getUuid());
 				}
 
 				article.setContent(document.asXML());

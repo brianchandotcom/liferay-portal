@@ -1082,10 +1082,6 @@ public abstract class BaseDB implements DB {
 	private static Pattern _timestampPattern = Pattern.compile(
 		"SPECIFIC_TIMESTAMP_\\d+");
 
-	private boolean _supportsStringCaseSensitiveQuery;
-	private Map<String, String> _templateMap = new HashMap<String, String>();
-	private String _type;
-
 	static {
 		StringBundler sb = new StringBundler(TEMPLATE.length * 3 - 3);
 
@@ -1110,5 +1106,9 @@ public abstract class BaseDB implements DB {
 
 		_templatePattern = Pattern.compile(sb.toString());
 	}
+
+	private boolean _supportsStringCaseSensitiveQuery;
+	private Map<String, String> _templateMap = new HashMap<String, String>();
+	private String _type;
 
 }

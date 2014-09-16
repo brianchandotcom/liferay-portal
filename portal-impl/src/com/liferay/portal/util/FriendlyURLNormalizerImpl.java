@@ -125,6 +125,11 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 
 	private static final char[] _REPLACE_CHARS;
 
+	private static Pattern _friendlyURLHyphenPattern = Pattern.compile(
+		"(-)\\1+");
+	private static Pattern _friendlyURLPattern = Pattern.compile(
+		"[^a-z0-9./_-]");
+
 	static {
 		char[] replaceChars = new char[] {
 			' ', ',', '\\', '\'', '\"', '(', ')', '[', ']', '{', '}', '?', '#',
@@ -136,10 +141,5 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 
 		_REPLACE_CHARS = replaceChars;
 	}
-
-	private static Pattern _friendlyURLHyphenPattern = Pattern.compile(
-		"(-)\\1+");
-	private static Pattern _friendlyURLPattern = Pattern.compile(
-		"[^a-z0-9./_-]");
 
 }

@@ -357,30 +357,6 @@ public class Serializer {
 
 	protected static final int THREADLOCAL_BUFFER_SIZE_MIN = 16 * 1024;
 
-	static {
-		int threadLocalBufferCountLimit = GetterUtil.getInteger(
-			System.getProperty(
-				Serializer.class.getName() +
-					".thread.local.buffer.count.limit"));
-
-		if (threadLocalBufferCountLimit < THREADLOCAL_BUFFER_COUNT_MIN) {
-			threadLocalBufferCountLimit = THREADLOCAL_BUFFER_COUNT_MIN;
-		}
-
-		THREADLOCAL_BUFFER_COUNT_LIMIT = threadLocalBufferCountLimit;
-
-		int threadLocalBufferSizeLimit = GetterUtil.getInteger(
-			System.getProperty(
-				Serializer.class.getName() +
-					".thread.local.buffer.size.limit"));
-
-		if (threadLocalBufferSizeLimit < THREADLOCAL_BUFFER_SIZE_MIN) {
-			threadLocalBufferSizeLimit = THREADLOCAL_BUFFER_SIZE_MIN;
-		}
-
-		THREADLOCAL_BUFFER_SIZE_LIMIT = threadLocalBufferSizeLimit;
-	}
-
 	/**
 	 * Softens the local thread's pooled buffer memory.
 	 *
@@ -407,6 +383,30 @@ public class Serializer {
 		}
 
 	};
+
+	static {
+		int threadLocalBufferCountLimit = GetterUtil.getInteger(
+			System.getProperty(
+				Serializer.class.getName() +
+					".thread.local.buffer.count.limit"));
+
+		if (threadLocalBufferCountLimit < THREADLOCAL_BUFFER_COUNT_MIN) {
+			threadLocalBufferCountLimit = THREADLOCAL_BUFFER_COUNT_MIN;
+		}
+
+		THREADLOCAL_BUFFER_COUNT_LIMIT = threadLocalBufferCountLimit;
+
+		int threadLocalBufferSizeLimit = GetterUtil.getInteger(
+			System.getProperty(
+				Serializer.class.getName() +
+					".thread.local.buffer.size.limit"));
+
+		if (threadLocalBufferSizeLimit < THREADLOCAL_BUFFER_SIZE_MIN) {
+			threadLocalBufferSizeLimit = THREADLOCAL_BUFFER_SIZE_MIN;
+		}
+
+		THREADLOCAL_BUFFER_SIZE_LIMIT = threadLocalBufferSizeLimit;
+	}
 
 	protected byte[] buffer;
 	protected int index;

@@ -128,6 +128,16 @@ public class ProxyUtil {
 			FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private static Field _invocationHandlerField;
 
+	static {
+		try {
+			_invocationHandlerField = ReflectionUtil.getDeclaredField(
+				Proxy.class, "h");
+		}
+		catch (Exception e) {
+			throw new ExceptionInInitializerError(e);
+		}
+	}
+
 	private static class LookupKey {
 
 		public LookupKey(Class<?>[] interfaces) {
@@ -167,16 +177,6 @@ public class ProxyUtil {
 		private int _hashCode;
 		private final Class<?>[] _interfaces;
 
-	}
-
-	static {
-		try {
-			_invocationHandlerField = ReflectionUtil.getDeclaredField(
-				Proxy.class, "h");
-		}
-		catch (Exception e) {
-			throw new ExceptionInInitializerError(e);
-		}
 	}
 
 }

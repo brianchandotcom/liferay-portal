@@ -130,6 +130,8 @@ public class QueryTranslatorImpl implements QueryTranslator {
 
 	private static final Field _TEXT_FIELD;
 
+	private static Log _log = LogFactoryUtil.getLog(QueryTranslatorImpl.class);
+
 	static {
 		try {
 			_TEXT_FIELD = Term.class.getDeclaredField("text");
@@ -140,7 +142,5 @@ public class QueryTranslatorImpl implements QueryTranslator {
 			throw new LoggedExceptionInInitializerError(e);
 		}
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(QueryTranslatorImpl.class);
 
 }

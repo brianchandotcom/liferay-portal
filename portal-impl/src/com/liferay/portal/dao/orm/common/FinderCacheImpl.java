@@ -343,6 +343,8 @@ public class FinderCacheImpl
 
 	private static final boolean _LOCAL_CACHE_AVAILABLE;
 
+	private static final ThreadLocal<LRUMap> _localCache;
+
 	static {
 		if (PropsValues.VALUE_OBJECT_FINDER_THREAD_LOCAL_CACHE_MAX_SIZE > 0) {
 			_LOCAL_CACHE_AVAILABLE = true;
@@ -359,8 +361,6 @@ public class FinderCacheImpl
 			_localCache = null;
 		}
 	}
-
-	private static final ThreadLocal<LRUMap> _localCache;
 
 	private MultiVMPool _multiVMPool;
 	private final ConcurrentMap<String, PortalCache<Serializable, Serializable>>

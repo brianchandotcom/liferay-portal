@@ -413,6 +413,10 @@ public class EntityCacheImpl
 
 	private static final boolean _LOCAL_CACHE_AVAILABLE;
 
+	private static Log _log = LogFactoryUtil.getLog(EntityCacheImpl.class);
+
+	private static final ThreadLocal<LRUMap> _localCache;
+
 	static {
 		if (PropsValues.VALUE_OBJECT_ENTITY_THREAD_LOCAL_CACHE_MAX_SIZE > 0) {
 			_LOCAL_CACHE_AVAILABLE = true;
@@ -429,10 +433,6 @@ public class EntityCacheImpl
 			_localCache = null;
 		}
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(EntityCacheImpl.class);
-
-	private static final ThreadLocal<LRUMap> _localCache;
 
 	private MultiVMPool _multiVMPool;
 	private final ConcurrentMap<String, PortalCache<Serializable, Serializable>>

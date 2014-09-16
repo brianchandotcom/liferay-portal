@@ -331,6 +331,8 @@ public class InstrumentationAgent {
 	private static String[] _includes;
 	private static Instrumentation _instrumentation;
 	private static File _lockFile;
+	private static List<OriginalClassDefinition> _originalClassDefinitions;
+	private static boolean _staticallyInstrumented;
 
 	static {
 		File dataFile = CoverageDataFileHandler.getDefaultDataFile();
@@ -354,9 +356,6 @@ public class InstrumentationAgent {
 			throw new ExceptionInInitializerError(ioe);
 		}
 	}
-
-	private static List<OriginalClassDefinition> _originalClassDefinitions;
-	private static boolean _staticallyInstrumented;
 
 	private static class OriginalClassDefinition {
 

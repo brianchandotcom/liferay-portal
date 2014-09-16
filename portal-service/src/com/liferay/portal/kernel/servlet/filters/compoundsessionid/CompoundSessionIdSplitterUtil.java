@@ -53,6 +53,7 @@ public class CompoundSessionIdSplitterUtil {
 	}
 
 	private static final boolean _HAS_SESSION_DELIMITER;
+
 	private static final String _SESSION_ID_DELIMITER;
 
 	static {

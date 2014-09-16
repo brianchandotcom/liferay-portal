@@ -986,7 +986,6 @@ public class LanguageImpl implements Language, Serializable {
 		new ConcurrentHashMap<Long, LanguageImpl>();
 	private static Pattern _pattern = Pattern.compile(
 		"Liferay\\.Language\\.get\\([\"']([^)]+)[\"']\\)");
-
 	private static PortalCache<Long, Serializable> _portalCache =
 		MultiVMPoolUtil.getCache(LanguageImpl.class.getName());
 

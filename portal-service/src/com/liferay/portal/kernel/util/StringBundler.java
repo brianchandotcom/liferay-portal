@@ -294,7 +294,6 @@ public class StringBundler implements Serializable {
 	private static final int _THREAD_LOCAL_BUFFER_LIMIT;
 
 	private static final ThreadLocal<StringBuilder> _stringBuilderThreadLocal;
-
 	private static final long serialVersionUID = 1L;
 
 	static {

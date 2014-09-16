@@ -424,15 +424,6 @@ public class MPIHelperUtil {
 	private static ThreadLocal<SPI> _unregisteringSPIThreadLocal =
 		new CentralizedThreadLocal<SPI>(true);
 
-	private static class MPIImpl implements MPI {
-
-		@Override
-		public boolean isAlive() {
-			return true;
-		}
-
-	}
-
 	static {
 
 		// Keep strong reference to prevent garbage collection
@@ -463,6 +454,15 @@ public class MPIHelperUtil {
 		catch (Exception e) {
 			throw new ExceptionInInitializerError(e);
 		}
+	}
+
+	private static class MPIImpl implements MPI {
+
+		@Override
+		public boolean isAlive() {
+			return true;
+		}
+
 	}
 
 	private static class SPIProviderContainer {

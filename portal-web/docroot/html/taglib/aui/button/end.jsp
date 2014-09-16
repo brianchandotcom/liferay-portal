@@ -92,8 +92,8 @@
 			{
 				boundingBox: '#<%= id %>BtnGroup',
 				contentBox: '#<%= id %>BtnGroup',
-				trigger: '#<%= id %>',
-				render: true
+				render: true,
+				trigger: '#<%= id %>'
 			}
 		);
 	</aui:script>

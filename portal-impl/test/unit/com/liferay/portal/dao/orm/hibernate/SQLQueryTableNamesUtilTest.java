@@ -65,44 +65,44 @@ public class SQLQueryTableNamesUtilTest {
 
 	@Test
 	public void testGetTableNames() throws Exception {
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new InputStreamReader(
-				SQLQueryTableNamesUtilTest.class.getResourceAsStream(
-					"dependencies/sql.txt")));
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(
+					new InputStreamReader(
+						SQLQueryTableNamesUtilTest.class.getResourceAsStream(
+							"dependencies/sql.txt")))) {
 
-		String line = null;
+			String line = null;
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			int index = line.indexOf(CharPool.POUND);
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				int index = line.indexOf(CharPool.POUND);
 
-			if (index == -1) {
-				continue;
+				if (index == -1) {
+					continue;
+				}
+
+				String sql = line.substring(0, index);
+
+				String[] expectedTableNames = StringUtil.split(
+					line.substring(index + 1), CharPool.COMMA);
+
+				String[] actualTableNames =
+					SQLQueryTableNamesUtil.getTableNames(sql);
+
+				Arrays.sort(actualTableNames);
+
+				Assert.assertArrayEquals(
+					"For SQL " + sql, expectedTableNames, actualTableNames);
+
+				// Access from cache
+
+				actualTableNames = SQLQueryTableNamesUtil.getTableNames(sql);
+
+				Arrays.sort(actualTableNames);
+
+				Assert.assertArrayEquals(
+					"For SQL " + sql, expectedTableNames, actualTableNames);
 			}
-
-			String sql = line.substring(0, index);
-
-			String[] expectedTableNames = StringUtil.split(
-				line.substring(index + 1), CharPool.COMMA);
-
-			String[] actualTableNames = SQLQueryTableNamesUtil.getTableNames(
-				sql);
-
-			Arrays.sort(actualTableNames);
-
-			Assert.assertArrayEquals(
-				"For SQL " + sql, expectedTableNames, actualTableNames);
-
-			// Access from cache
-
-			actualTableNames = SQLQueryTableNamesUtil.getTableNames(sql);
-
-			Arrays.sort(actualTableNames);
-
-			Assert.assertArrayEquals(
-				"For SQL " + sql, expectedTableNames, actualTableNames);
 		}
-
-		unsyncBufferedReader.close();
 	}
 
 }

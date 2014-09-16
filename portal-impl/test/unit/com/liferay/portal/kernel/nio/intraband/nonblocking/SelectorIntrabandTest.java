@@ -813,102 +813,103 @@ public class SelectorIntrabandTest {
 
 		Pipe pipe = Pipe.open();
 
-		SourceChannel sourceChannel = pipe.source();
-		SinkChannel sinkChannel = pipe.sink();
+		try (SourceChannel sourceChannel = pipe.source();
+			SinkChannel sinkChannel = pipe.sink()) {
 
-		final Thread mainThread = Thread.currentThread();
+			final Thread mainThread = Thread.currentThread();
 
-		Thread wakeUpThread = new Thread(
-			new WakeUpRunnable(_selectorIntraband));
+			Thread wakeUpThread = new Thread(
+				new WakeUpRunnable(_selectorIntraband));
 
-		Thread interruptThread = new Thread() {
+			Thread interruptThread = new Thread() {
 
-			@Override
-			public void run() {
-				while (mainThread.getState() != Thread.State.WAITING);
+				@Override
+				public void run() {
+					while (mainThread.getState() != Thread.State.WAITING);
 
-				mainThread.interrupt();
+					mainThread.interrupt();
+				}
+
+			};
+
+			wakeUpThread.start();
+
+			Selector selector = _selectorIntraband.selector;
+
+			synchronized (selector) {
+				wakeUpThread.interrupt();
+				wakeUpThread.join();
+
+				interruptThread.start();
+
+				try {
+					_selectorIntraband.registerChannel(
+						sourceChannel, sinkChannel);
+
+					Assert.fail();
+				}
+				catch (IOException ioe) {
+					Throwable cause = ioe.getCause();
+
+					Assert.assertTrue(cause instanceof InterruptedException);
+				}
+
+				interruptThread.join();
 			}
 
-		};
+			_selectorIntraband.close();
 
-		wakeUpThread.start();
+			// Normal register
 
-		Selector selector = _selectorIntraband.selector;
+			_selectorIntraband = new SelectorIntraband(_DEFAULT_TIMEOUT);
 
-		synchronized (selector) {
-			wakeUpThread.interrupt();
-			wakeUpThread.join();
+			SelectionKeyRegistrationReference
+				selectionKeyRegistrationReference =
+					(SelectionKeyRegistrationReference)
+						_selectorIntraband.registerChannel(
+							sourceChannel, sinkChannel);
 
-			interruptThread.start();
+			Assert.assertNotNull(selectionKeyRegistrationReference);
+
+			SelectionKey readSelectionKey =
+				selectionKeyRegistrationReference.readSelectionKey;
+
+			Assert.assertTrue(readSelectionKey.isValid());
+			Assert.assertEquals(
+				SelectionKey.OP_READ, readSelectionKey.interestOps());
+			Assert.assertNotNull(readSelectionKey.attachment());
+
+			SelectionKey writeSelectionKey =
+				selectionKeyRegistrationReference.writeSelectionKey;
+
+			Assert.assertTrue(writeSelectionKey.isValid());
+			Assert.assertEquals(0, writeSelectionKey.interestOps());
+			Assert.assertNotNull(writeSelectionKey.attachment());
+			Assert.assertSame(
+				readSelectionKey.attachment(), writeSelectionKey.attachment());
+
+			writeSelectionKey.interestOps(SelectionKey.OP_WRITE);
+
+			selector = _selectorIntraband.selector;
+
+			selector.wakeup();
+
+			while (writeSelectionKey.interestOps() != 0);
+
+			unregisterChannels(selectionKeyRegistrationReference);
+
+			// Register after close
+
+			_selectorIntraband.close();
 
 			try {
 				_selectorIntraband.registerChannel(sourceChannel, sinkChannel);
 
 				Assert.fail();
 			}
-			catch (IOException ioe) {
-				Throwable cause = ioe.getCause();
-
-				Assert.assertTrue(cause instanceof InterruptedException);
+			catch (ClosedIntrabandException cibe) {
 			}
-
-			interruptThread.join();
 		}
-
-		_selectorIntraband.close();
-
-		// Normal register
-
-		_selectorIntraband = new SelectorIntraband(_DEFAULT_TIMEOUT);
-
-		SelectionKeyRegistrationReference selectionKeyRegistrationReference =
-			(SelectionKeyRegistrationReference)
-				_selectorIntraband.registerChannel(sourceChannel, sinkChannel);
-
-		Assert.assertNotNull(selectionKeyRegistrationReference);
-
-		SelectionKey readSelectionKey =
-			selectionKeyRegistrationReference.readSelectionKey;
-
-		Assert.assertTrue(readSelectionKey.isValid());
-		Assert.assertEquals(
-			SelectionKey.OP_READ, readSelectionKey.interestOps());
-		Assert.assertNotNull(readSelectionKey.attachment());
-
-		SelectionKey writeSelectionKey =
-			selectionKeyRegistrationReference.writeSelectionKey;
-
-		Assert.assertTrue(writeSelectionKey.isValid());
-		Assert.assertEquals(0, writeSelectionKey.interestOps());
-		Assert.assertNotNull(writeSelectionKey.attachment());
-		Assert.assertSame(
-			readSelectionKey.attachment(), writeSelectionKey.attachment());
-
-		writeSelectionKey.interestOps(SelectionKey.OP_WRITE);
-
-		selector = _selectorIntraband.selector;
-
-		selector.wakeup();
-
-		while (writeSelectionKey.interestOps() != 0);
-
-		unregisterChannels(selectionKeyRegistrationReference);
-
-		// Register after close
-
-		_selectorIntraband.close();
-
-		try {
-			_selectorIntraband.registerChannel(sourceChannel, sinkChannel);
-
-			Assert.fail();
-		}
-		catch (ClosedIntrabandException cibe) {
-		}
-
-		sourceChannel.close();
-		sinkChannel.close();
 	}
 
 	@AdviseWith(adviceClasses = {Jdk14LogImplAdvice.class})
@@ -1063,138 +1064,90 @@ public class SelectorIntrabandTest {
 		Pipe readPipe = Pipe.open();
 		Pipe writePipe = Pipe.open();
 
-		GatheringByteChannel gatheringByteChannel = writePipe.sink();
-		ScatteringByteChannel scatteringByteChannel = readPipe.source();
+		try (GatheringByteChannel gatheringByteChannel = writePipe.sink();
+			ScatteringByteChannel scatteringByteChannel =
+				readPipe.source()) {
 
-		SelectionKeyRegistrationReference registrationReference =
-			(SelectionKeyRegistrationReference)
-				_selectorIntraband.registerChannel(
-					writePipe.source(), readPipe.sink());
+			SelectionKeyRegistrationReference registrationReference =
+				(SelectionKeyRegistrationReference)
+					_selectorIntraband.registerChannel(
+						writePipe.source(), readPipe.sink());
 
-		Thread wakeUpThread = new Thread(
-			new WakeUpRunnable(_selectorIntraband));
+			Thread wakeUpThread = new Thread(
+				new WakeUpRunnable(_selectorIntraband));
 
-		wakeUpThread.start();
+			wakeUpThread.start();
 
-		Selector selector = _selectorIntraband.selector;
+			Selector selector = _selectorIntraband.selector;
 
-		synchronized (selector) {
-			wakeUpThread.interrupt();
-			wakeUpThread.join();
+			synchronized (selector) {
+				wakeUpThread.interrupt();
+				wakeUpThread.join();
 
-			Datagram requestDatagram = Datagram.createRequestDatagram(
+				Datagram requestDatagram = Datagram.createRequestDatagram(
+					_type, _data);
+
+				_selectorIntraband.sendDatagram(
+					registrationReference, requestDatagram);
+
+				SelectionKey writeSelectionKey =
+					registrationReference.writeSelectionKey;
+
+				ChannelContext channelContext =
+					(ChannelContext)writeSelectionKey.attachment();
+
+				Queue<Datagram> sendingQueue = channelContext.getSendingQueue();
+
+				Assert.assertEquals(1, sendingQueue.size());
+				Assert.assertSame(requestDatagram, sendingQueue.peek());
+			}
+
+			Datagram receiveDatagram = IntrabandTestUtil.readDatagramFully(
+				scatteringByteChannel);
+
+			Assert.assertEquals(_type, receiveDatagram.getType());
+
+			ByteBuffer dataByteBuffer = receiveDatagram.getDataByteBuffer();
+
+			Assert.assertArrayEquals(_data, dataByteBuffer.array());
+
+			// Two datagrams continuous sending
+
+			Datagram requestDatagram1 = Datagram.createRequestDatagram(
+				_type, _data);
+			Datagram requestDatagram2 = Datagram.createRequestDatagram(
 				_type, _data);
 
-			_selectorIntraband.sendDatagram(
-				registrationReference, requestDatagram);
+			wakeUpThread = new Thread(new WakeUpRunnable(_selectorIntraband));
 
-			SelectionKey writeSelectionKey =
-				registrationReference.writeSelectionKey;
+			wakeUpThread.start();
 
-			ChannelContext channelContext =
-				(ChannelContext)writeSelectionKey.attachment();
-
-			Queue<Datagram> sendingQueue = channelContext.getSendingQueue();
-
-			Assert.assertEquals(1, sendingQueue.size());
-			Assert.assertSame(requestDatagram, sendingQueue.peek());
-		}
-
-		Datagram receiveDatagram = IntrabandTestUtil.readDatagramFully(
-			scatteringByteChannel);
-
-		Assert.assertEquals(_type, receiveDatagram.getType());
-
-		ByteBuffer dataByteBuffer = receiveDatagram.getDataByteBuffer();
-
-		Assert.assertArrayEquals(_data, dataByteBuffer.array());
-
-		// Two datagrams continuous sending
-
-		Datagram requestDatagram1 = Datagram.createRequestDatagram(
-			_type, _data);
-		Datagram requestDatagram2 = Datagram.createRequestDatagram(
-			_type, _data);
-
-		wakeUpThread = new Thread(new WakeUpRunnable(_selectorIntraband));
-
-		wakeUpThread.start();
-
-		synchronized (selector) {
-			wakeUpThread.interrupt();
-			wakeUpThread.join();
-
-			_selectorIntraband.sendDatagram(
-				registrationReference, requestDatagram1);
-			_selectorIntraband.sendDatagram(
-				registrationReference, requestDatagram2);
-
-			SelectionKey writeSelectionKey =
-				registrationReference.writeSelectionKey;
-
-			ChannelContext channelContext =
-				(ChannelContext)writeSelectionKey.attachment();
-
-			Queue<Datagram> sendingQueue = channelContext.getSendingQueue();
-
-			Assert.assertEquals(2, sendingQueue.size());
-
-			Datagram[] datagrams = sendingQueue.toArray(new Datagram[2]);
-
-			Assert.assertSame(requestDatagram1, datagrams[0]);
-			Assert.assertSame(requestDatagram2, datagrams[1]);
-		}
-
-		Datagram receiveDatagram1 = IntrabandTestUtil.readDatagramFully(
-			scatteringByteChannel);
-
-		Assert.assertEquals(_type, receiveDatagram1.getType());
-
-		dataByteBuffer = receiveDatagram1.getDataByteBuffer();
-
-		Assert.assertArrayEquals(_data, dataByteBuffer.array());
-
-		Datagram receiveDatagram2 = IntrabandTestUtil.readDatagramFully(
-			scatteringByteChannel);
-
-		Assert.assertEquals(_type, receiveDatagram2.getType());
-
-		dataByteBuffer = receiveDatagram2.getDataByteBuffer();
-
-		Assert.assertArrayEquals(_data, dataByteBuffer.array());
-
-		// Two datagrams delay sending
-
-		requestDatagram1 = Datagram.createRequestDatagram(_type, _data);
-		requestDatagram2 = Datagram.createRequestDatagram(_type, _data);
-
-		wakeUpThread = new Thread(new WakeUpRunnable(_selectorIntraband));
-
-		wakeUpThread.start();
-
-		SelectionKey writeSelectionKey =
-			registrationReference.writeSelectionKey;
-
-		ChannelContext channelContext =
-			(ChannelContext)writeSelectionKey.attachment();
-
-		Queue<Datagram> sendingQueue = channelContext.getSendingQueue();
-
-		while ((writeSelectionKey.interestOps() & SelectionKey.OP_WRITE) != 0);
-
-		synchronized (writeSelectionKey) {
 			synchronized (selector) {
 				wakeUpThread.interrupt();
 				wakeUpThread.join();
 
 				_selectorIntraband.sendDatagram(
 					registrationReference, requestDatagram1);
+				_selectorIntraband.sendDatagram(
+					registrationReference, requestDatagram2);
 
-				Assert.assertEquals(1, sendingQueue.size());
-				Assert.assertSame(requestDatagram1, sendingQueue.peek());
+				SelectionKey writeSelectionKey =
+					registrationReference.writeSelectionKey;
+
+				ChannelContext channelContext =
+					(ChannelContext)writeSelectionKey.attachment();
+
+				Queue<Datagram> sendingQueue = channelContext.getSendingQueue();
+
+				Assert.assertEquals(2, sendingQueue.size());
+
+				Datagram[] datagrams = sendingQueue.toArray(new Datagram[2]);
+
+				Assert.assertSame(requestDatagram1, datagrams[0]);
+				Assert.assertSame(requestDatagram2, datagrams[1]);
 			}
 
-			receiveDatagram1 = IntrabandTestUtil.readDatagramFully(
+			Datagram receiveDatagram1 = IntrabandTestUtil.readDatagramFully(
 				scatteringByteChannel);
 
 			Assert.assertEquals(_type, receiveDatagram1.getType());
@@ -1203,66 +1156,115 @@ public class SelectorIntrabandTest {
 
 			Assert.assertArrayEquals(_data, dataByteBuffer.array());
 
-			Thread pollingThread = _selectorIntraband.pollingThread;
+			Datagram receiveDatagram2 = IntrabandTestUtil.readDatagramFully(
+				scatteringByteChannel);
 
-			while (pollingThread.getState() == Thread.State.RUNNABLE);
+			Assert.assertEquals(_type, receiveDatagram2.getType());
+
+			dataByteBuffer = receiveDatagram2.getDataByteBuffer();
+
+			Assert.assertArrayEquals(_data, dataByteBuffer.array());
+
+			// Two datagrams delay sending
+
+			requestDatagram1 = Datagram.createRequestDatagram(_type, _data);
+			requestDatagram2 = Datagram.createRequestDatagram(_type, _data);
+
+			wakeUpThread = new Thread(new WakeUpRunnable(_selectorIntraband));
+
+			wakeUpThread.start();
+
+			SelectionKey writeSelectionKey =
+				registrationReference.writeSelectionKey;
+
+			ChannelContext channelContext =
+				(ChannelContext)writeSelectionKey.attachment();
+
+			Queue<Datagram> sendingQueue = channelContext.getSendingQueue();
+
+			while ((writeSelectionKey.interestOps() & SelectionKey.OP_WRITE) !=
+				0);
+
+			synchronized (writeSelectionKey) {
+				synchronized (selector) {
+					wakeUpThread.interrupt();
+					wakeUpThread.join();
+
+					_selectorIntraband.sendDatagram(
+						registrationReference, requestDatagram1);
+
+					Assert.assertEquals(1, sendingQueue.size());
+					Assert.assertSame(requestDatagram1, sendingQueue.peek());
+				}
+
+				receiveDatagram1 = IntrabandTestUtil.readDatagramFully(
+					scatteringByteChannel);
+
+				Assert.assertEquals(_type, receiveDatagram1.getType());
+
+				dataByteBuffer = receiveDatagram1.getDataByteBuffer();
+
+				Assert.assertArrayEquals(_data, dataByteBuffer.array());
+
+				Thread pollingThread = _selectorIntraband.pollingThread;
+
+				while (pollingThread.getState() == Thread.State.RUNNABLE);
+
+				_selectorIntraband.sendDatagram(
+					registrationReference, requestDatagram2);
+
+				Assert.assertEquals(1, sendingQueue.size());
+				Assert.assertSame(requestDatagram2, sendingQueue.peek());
+			}
+
+			receiveDatagram2 = IntrabandTestUtil.readDatagramFully(
+				scatteringByteChannel);
+
+			Assert.assertEquals(_type, receiveDatagram2.getType());
+
+			dataByteBuffer = receiveDatagram2.getDataByteBuffer();
+
+			Assert.assertArrayEquals(_data, dataByteBuffer.array());
+
+			// Huge datagram sending
+
+			int hugeBufferSize = 1024 * 1024 * 10;
+
+			ByteBuffer hugeBuffer = ByteBuffer.allocate(hugeBufferSize);
+
+			for (int i = 0; i < hugeBufferSize; i++) {
+				hugeBuffer.put(i, (byte)i);
+			}
 
 			_selectorIntraband.sendDatagram(
-				registrationReference, requestDatagram2);
+				registrationReference,
+				Datagram.createRequestDatagram(_type, hugeBuffer));
 
-			Assert.assertEquals(1, sendingQueue.size());
-			Assert.assertSame(requestDatagram2, sendingQueue.peek());
+			receiveDatagram = DatagramHelper.createReceiveDatagram();
+
+			channelContext = (ChannelContext)writeSelectionKey.attachment();
+
+			int count = 0;
+
+			while (!DatagramHelper.readFrom(
+						receiveDatagram, scatteringByteChannel)) {
+
+				count++;
+			}
+
+			Assert.assertTrue(count > 0);
+
+			sendingQueue = channelContext.getSendingQueue();
+
+			Assert.assertTrue(sendingQueue.isEmpty());
+
+			dataByteBuffer = receiveDatagram.getDataByteBuffer();
+
+			Assert.assertArrayEquals(
+				hugeBuffer.array(), dataByteBuffer.array());
+
+			unregisterChannels(registrationReference);
 		}
-
-		receiveDatagram2 = IntrabandTestUtil.readDatagramFully(
-			scatteringByteChannel);
-
-		Assert.assertEquals(_type, receiveDatagram2.getType());
-
-		dataByteBuffer = receiveDatagram2.getDataByteBuffer();
-
-		Assert.assertArrayEquals(_data, dataByteBuffer.array());
-
-		// Huge datagram sending
-
-		int hugeBufferSize = 1024 * 1024 * 10;
-
-		ByteBuffer hugeBuffer = ByteBuffer.allocate(hugeBufferSize);
-
-		for (int i = 0; i < hugeBufferSize; i++) {
-			hugeBuffer.put(i, (byte)i);
-		}
-
-		_selectorIntraband.sendDatagram(
-			registrationReference,
-			Datagram.createRequestDatagram(_type, hugeBuffer));
-
-		receiveDatagram = DatagramHelper.createReceiveDatagram();
-
-		channelContext = (ChannelContext)writeSelectionKey.attachment();
-
-		int count = 0;
-
-		while (!DatagramHelper.readFrom(
-					receiveDatagram, scatteringByteChannel)) {
-
-			count++;
-		}
-
-		Assert.assertTrue(count > 0);
-
-		sendingQueue = channelContext.getSendingQueue();
-
-		Assert.assertTrue(sendingQueue.isEmpty());
-
-		dataByteBuffer = receiveDatagram.getDataByteBuffer();
-
-		Assert.assertArrayEquals(hugeBuffer.array(), dataByteBuffer.array());
-
-		unregisterChannels(registrationReference);
-
-		gatheringByteChannel.close();
-		scatteringByteChannel.close();
 	}
 
 	@Aspect
@@ -1346,14 +1348,14 @@ public class SelectorIntrabandTest {
 		SelectionKey writeSelectionKey =
 			registrationReference.writeSelectionKey;
 
-		SelectableChannel readSelectableChannel = readSelectionKey.channel();
-		SelectableChannel writeSelectableChannel = writeSelectionKey.channel();
+		try (SelectableChannel readSelectableChannel =
+			readSelectionKey.channel();
+			SelectableChannel writeSelectableChannel =
+				writeSelectionKey.channel()) {
 
-		while (readSelectableChannel.keyFor(selector) != null);
-		while (writeSelectableChannel.keyFor(selector) != null);
-
-		writeSelectableChannel.close();
-		readSelectableChannel.close();
+			while (readSelectableChannel.keyFor(selector) != null);
+			while (writeSelectableChannel.keyFor(selector) != null);
+		}
 	}
 
 	private static final String _DATA_STRING =

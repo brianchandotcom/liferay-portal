@@ -427,20 +427,22 @@ public class UpgradePortletId extends UpgradeProcess {
 						PortletConstants.LAYOUT_SEPARATOR);
 
 					if (pos != -1) {
-					long plid = GetterUtil.getLong(primKey.substring(0, pos));
+						long plid = GetterUtil.getLong(
+							primKey.substring(0, pos));
 
-					String portletId = primKey.substring(
-						pos + PortletConstants.LAYOUT_SEPARATOR.length());
+						String portletId = primKey.substring(
+							pos + PortletConstants.LAYOUT_SEPARATOR.length());
 
-					String instanceId = PortletConstants.getInstanceId(
-						portletId);
-					long userId = PortletConstants.getUserId(portletId);
+						String instanceId = PortletConstants.getInstanceId(
+							portletId);
+						long userId = PortletConstants.getUserId(portletId);
 
-					String newPortletId = PortletConstants.assemblePortletId(
-						newRootPortletId, userId, instanceId);
+						String newPortletId =
+							PortletConstants.assemblePortletId(
+								newRootPortletId, userId, instanceId);
 
-					primKey = PortletPermissionUtil.getPrimaryKey(
-						plid, newPortletId);
+						primKey = PortletPermissionUtil.getPrimaryKey(
+							plid, newPortletId);
 					}
 
 					if (name.equals(primKey)) {

@@ -337,9 +337,14 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 		DLSettings dlSettings = DLSettings.getInstance(groupId);
 
-		return dlFolderPersistence.filterFindByG_M_P_H(
-			groupId, true, parentFolderId,
-			dlSettings.isShowHiddenMountFolders(), start, end, obc);
+		if (dlSettings.isShowHiddenMountFolders()) {
+			return dlFolderPersistence.filterFindByG_M_P(
+				groupId, true, parentFolderId, start, end, obc);
+		}
+		else {
+			return dlFolderPersistence.filterFindByG_M_P_H(
+				groupId, true, parentFolderId, false, start, end, obc);
+		}
 	}
 
 	@Override

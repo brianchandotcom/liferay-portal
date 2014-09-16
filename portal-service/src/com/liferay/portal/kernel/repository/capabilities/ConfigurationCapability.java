@@ -12,21 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.repository.registry;
-
-import com.liferay.portal.kernel.repository.capabilities.Capability;
-
-import java.util.Map;
-import java.util.Set;
+package com.liferay.portal.kernel.repository.capabilities;
 
 /**
  * @author Iván Zaera
  */
-public interface RepositoryInstanceDefinition {
+public interface ConfigurationCapability extends Capability {
 
-	public Set<Class<? extends Capability>> getExportedCapabilities();
+	public String getProperty(Class<? extends Capability> owner, String key);
 
-	public Map<Class<? extends Capability>, Capability>
-		getSupportedCapabilities();
+	public void setProperty(
+		Class<? extends Capability> owner, String key, String value);
 
 }

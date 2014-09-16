@@ -28,7 +28,9 @@ import javax.portlet.PortletURL;
  */
 public class EntrySearch extends SearchContainer<BlogsEntry> {
 
-	static List<String> headerNames = new ArrayList<String>();
+	public static final String EMPTY_RESULTS_MESSAGE = "no-entries-were-found";
+
+	public static List<String> headerNames = new ArrayList<String>();
 
 	static {
 		headerNames.add("title");
@@ -36,8 +38,6 @@ public class EntrySearch extends SearchContainer<BlogsEntry> {
 		headerNames.add("createDate");
 		headerNames.add("status");
 	}
-
-	public static final String EMPTY_RESULTS_MESSAGE = "no-entries-were-found";
 
 	public EntrySearch(PortletRequest portletRequest, PortletURL iteratorURL) {
 		super(

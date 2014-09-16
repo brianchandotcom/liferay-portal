@@ -39,8 +39,12 @@ import javax.portlet.PortletURL;
  */
 public class OrganizationSearch extends SearchContainer<Organization> {
 
-	static List<String> headerNames = new ArrayList<String>();
-	static Map<String, String> orderableHeaders = new HashMap<String, String>();
+	public static final String EMPTY_RESULTS_MESSAGE =
+		"no-organizations-were-found";
+
+	public static List<String> headerNames = new ArrayList<String>();
+	public static Map<String, String> orderableHeaders =
+		new HashMap<String, String>();
 
 	static {
 		headerNames.add("name");
@@ -53,9 +57,6 @@ public class OrganizationSearch extends SearchContainer<Organization> {
 		orderableHeaders.put("name", "name");
 		orderableHeaders.put("type", "type");
 	}
-
-	public static final String EMPTY_RESULTS_MESSAGE =
-		"no-organizations-were-found";
 
 	public OrganizationSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {

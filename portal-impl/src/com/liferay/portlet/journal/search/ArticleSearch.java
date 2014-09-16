@@ -43,8 +43,9 @@ import javax.portlet.PortletURL;
  */
 public class ArticleSearch extends SearchContainer<JournalArticle> {
 
-	static List<String> headerNames = new ArrayList<String>();
-	static Map<String, String> orderableHeaders = new HashMap<String, String>();
+	public static List<String> headerNames = new ArrayList<String>();
+	public static Map<String, String> orderableHeaders =
+		new HashMap<String, String>();
 
 	static {
 		headerNames.add("id");

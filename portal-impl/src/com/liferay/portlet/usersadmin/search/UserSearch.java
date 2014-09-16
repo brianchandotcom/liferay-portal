@@ -42,8 +42,11 @@ import javax.portlet.PortletURL;
  */
 public class UserSearch extends SearchContainer<User> {
 
-	static List<String> headerNames = new ArrayList<String>();
-	static Map<String, String> orderableHeaders = new HashMap<String, String>();
+	public static final String EMPTY_RESULTS_MESSAGE = "no-users-were-found";
+
+	public static List<String> headerNames = new ArrayList<String>();
+	public static Map<String, String> orderableHeaders =
+		new HashMap<String, String>();
 
 	static {
 		headerNames.add("first-name");
@@ -59,8 +62,6 @@ public class UserSearch extends SearchContainer<User> {
 		//orderableHeaders.put("email-address", "email-address");
 		orderableHeaders.put("job-title", "job-title");
 	}
-
-	public static final String EMPTY_RESULTS_MESSAGE = "no-users-were-found";
 
 	public UserSearch(PortletRequest portletRequest, PortletURL iteratorURL) {
 		this(portletRequest, DEFAULT_CUR_PARAM, iteratorURL);

@@ -28,14 +28,14 @@ import javax.portlet.PortletURL;
  */
 public class FeedSearch extends SearchContainer<JournalFeed> {
 
-	static List<String> headerNames = new ArrayList<String>();
+	public static final String EMPTY_RESULTS_MESSAGE = "no-feeds-were-found";
+
+	public static List<String> headerNames = new ArrayList<String>();
 
 	static {
 		headerNames.add("id");
 		headerNames.add("description");
 	}
-
-	public static final String EMPTY_RESULTS_MESSAGE = "no-feeds-were-found";
 
 	public FeedSearch(PortletRequest portletRequest, PortletURL iteratorURL) {
 		super(

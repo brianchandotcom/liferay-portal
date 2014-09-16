@@ -28,7 +28,9 @@ import javax.portlet.PortletURL;
  */
 public class RecordSetSearch extends SearchContainer<DDLRecordSet> {
 
-	static List<String> headerNames = new ArrayList<String>();
+	public static final String EMPTY_RESULTS_MESSAGE = "no-entries-were-found";
+
+	public static List<String> headerNames = new ArrayList<String>();
 
 	static {
 		headerNames.add("id");
@@ -36,8 +38,6 @@ public class RecordSetSearch extends SearchContainer<DDLRecordSet> {
 		headerNames.add("description");
 		headerNames.add("modified-date");
 	}
-
-	public static final String EMPTY_RESULTS_MESSAGE = "no-entries-were-found";
 
 	public RecordSetSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {

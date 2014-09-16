@@ -28,7 +28,9 @@ import javax.portlet.PortletURL;
  */
 public class OrderSearch extends SearchContainer<ShoppingOrder> {
 
-	static List<String> headerNames = new ArrayList<String>();
+	public static final String EMPTY_RESULTS_MESSAGE = "no-orders-were-found";
+
+	public static List<String> headerNames = new ArrayList<String>();
 
 	static {
 		headerNames.add("number");
@@ -36,8 +38,6 @@ public class OrderSearch extends SearchContainer<ShoppingOrder> {
 		headerNames.add("status");
 		headerNames.add("customer");
 	}
-
-	public static final String EMPTY_RESULTS_MESSAGE = "no-orders-were-found";
 
 	public OrderSearch(PortletRequest portletRequest, PortletURL iteratorURL) {
 		super(

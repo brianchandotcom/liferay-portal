@@ -2787,4 +2787,57 @@
 			<var name="kfStatus" value="Pending" />
 		</execute>
 	</command>
+
+	<command name="viewSelectedFieldSetDuringPagination" priority="4">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Kaleo Forms Admin" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#addProcess" />
+
+		<execute macro="KaleoFormsAdmin#addProcessDetails">
+			<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#next" />
+
+		<execute macro="KaleoFormsAdmin#chooseFieldSet">
+			<var name="kfFieldSetName" value="To Do" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#editFieldSetPagination">
+			<var name="paginationNumber" value="5" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#viewNextFieldSetPage" />
+
+		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="SELECTED_FIELD_SET" value1="To Do" />
+
+		<execute macro="KaleoFormsAdmin#viewPreviousFieldSetPage" />
+
+		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="SELECTED_FIELD_SET" value1="To Do" />
+
+		<execute macro="KaleoFormsAdmin#chooseFieldSet">
+			<var name="kfFieldSetName" value="Inventory" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#viewNextFieldSetPage" />
+
+		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="SELECTED_FIELD_SET" value1="Inventory" />
+
+		<execute macro="KaleoFormsAdmin#chooseFieldSet">
+			<var name="kfFieldSetName" value="Contacts" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#viewPreviousFieldSetPage" />
+
+		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="SELECTED_FIELD_SET" value1="Contacts" />
+
+		<execute macro="KaleoFormsAdmin#viewNextFieldSetPage" />
+
+		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="SELECTED_FIELD_SET" value1="Contacts" />
+
+		<execute macro="KaleoFormsAdmin#next" />
+	</command>
 </definition>

@@ -573,6 +573,13 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getRepositoryFileEntries(
+		long repositoryId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRepositoryFileEntriesCount(long repositoryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasExtraSettings();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

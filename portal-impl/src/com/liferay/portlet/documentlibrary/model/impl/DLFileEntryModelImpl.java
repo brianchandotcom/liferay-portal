@@ -133,9 +133,10 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	public static final long GROUPID_COLUMN_BITMASK = 16L;
 	public static final long MIMETYPE_COLUMN_BITMASK = 32L;
 	public static final long NAME_COLUMN_BITMASK = 64L;
-	public static final long TITLE_COLUMN_BITMASK = 128L;
-	public static final long USERID_COLUMN_BITMASK = 256L;
-	public static final long UUID_COLUMN_BITMASK = 512L;
+	public static final long REPOSITORYID_COLUMN_BITMASK = 128L;
+	public static final long TITLE_COLUMN_BITMASK = 256L;
+	public static final long USERID_COLUMN_BITMASK = 512L;
+	public static final long UUID_COLUMN_BITMASK = 1024L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -665,7 +666,19 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	@Override
 	public void setRepositoryId(long repositoryId) {
+		_columnBitmask |= REPOSITORYID_COLUMN_BITMASK;
+
+		if (!_setOriginalRepositoryId) {
+			_setOriginalRepositoryId = true;
+
+			_originalRepositoryId = _repositoryId;
+		}
+
 		_repositoryId = repositoryId;
+	}
+
+	public long getOriginalRepositoryId() {
+		return _originalRepositoryId;
 	}
 
 	@JSON
@@ -1265,6 +1278,10 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 		dlFileEntryModelImpl._setOriginalUserId = false;
 
+		dlFileEntryModelImpl._originalRepositoryId = dlFileEntryModelImpl._repositoryId;
+
+		dlFileEntryModelImpl._setOriginalRepositoryId = false;
+
 		dlFileEntryModelImpl._originalFolderId = dlFileEntryModelImpl._folderId;
 
 		dlFileEntryModelImpl._setOriginalFolderId = false;
@@ -1648,6 +1665,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	private long _classNameId;
 	private long _classPK;
 	private long _repositoryId;
+	private long _originalRepositoryId;
+	private boolean _setOriginalRepositoryId;
 	private long _folderId;
 	private long _originalFolderId;
 	private boolean _setOriginalFolderId;

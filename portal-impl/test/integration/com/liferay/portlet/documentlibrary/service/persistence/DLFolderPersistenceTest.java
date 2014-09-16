@@ -324,6 +324,19 @@ public class DLFolderPersistenceTest {
 	}
 
 	@Test
+	public void testCountByR_M() {
+		try {
+			_persistence.countByR_M(RandomTestUtil.nextLong(),
+				RandomTestUtil.randomBoolean());
+
+			_persistence.countByR_M(0L, RandomTestUtil.randomBoolean());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testCountByP_N() {
 		try {
 			_persistence.countByP_N(RandomTestUtil.nextLong(), StringPool.BLANK);
@@ -693,6 +706,8 @@ public class DLFolderPersistenceTest {
 
 		Assert.assertEquals(existingDLFolderModelImpl.getRepositoryId(),
 			existingDLFolderModelImpl.getOriginalRepositoryId());
+		Assert.assertEquals(existingDLFolderModelImpl.getMountPoint(),
+			existingDLFolderModelImpl.getOriginalMountPoint());
 
 		Assert.assertEquals(existingDLFolderModelImpl.getGroupId(),
 			existingDLFolderModelImpl.getOriginalGroupId());

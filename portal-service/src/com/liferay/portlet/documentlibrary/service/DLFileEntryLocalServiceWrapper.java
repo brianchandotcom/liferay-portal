@@ -793,6 +793,18 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getRepositoryFileEntries(
+		long repositoryId, int start, int end) {
+		return _dlFileEntryLocalService.getRepositoryFileEntries(repositoryId,
+			start, end);
+	}
+
+	@Override
+	public int getRepositoryFileEntriesCount(long repositoryId) {
+		return _dlFileEntryLocalService.getRepositoryFileEntriesCount(repositoryId);
+	}
+
+	@Override
 	public boolean hasExtraSettings() {
 		return _dlFileEntryLocalService.hasExtraSettings();
 	}

@@ -874,7 +874,7 @@
 			<var name="ddlListRecordName" value="Text" />
 		</execute>
 
-		<execute action="CPUsersandorganizationsViewusers#selectWindow" locator1="title=Users and Organizations - Liferay" />
+		<execute action="CPUsersandorganizationsViewusers#selectWindow" locator1="title=Users and Organizations - Control Panel - Liferay" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -898,7 +898,7 @@
 
 		<execute action="CPUsersandorganizationsViewusers#close" locator1="title=Data Definition Page Page Name - Liferay" />
 
-		<execute action="CPUsersandorganizationsViewusers#selectWindow" locator1="title=Dynamic Data Lists - Liferay" />
+		<execute action="CPUsersandorganizationsViewusers#selectWindow" locator1="title=Dynamic Data Lists - Control Panel - Liferay" />
 	</command>
 
 	<command name="AssertUserUpdateRejectedRecord" priority="4">

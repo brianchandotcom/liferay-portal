@@ -705,6 +705,18 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getRepositoryFolders(
+		long repositoryId, int start, int end) {
+		return _dlFolderLocalService.getRepositoryFolders(repositoryId, start,
+			end);
+	}
+
+	@Override
+	public int getRepositoryFoldersCount(long repositoryId) {
+		return _dlFolderLocalService.getRepositoryFoldersCount(repositoryId);
+	}
+
+	@Override
 	public void getSubfolderIds(java.util.List<java.lang.Long> folderIds,
 		long groupId, long folderId) {
 		_dlFolderLocalService.getSubfolderIds(folderIds, groupId, folderId);

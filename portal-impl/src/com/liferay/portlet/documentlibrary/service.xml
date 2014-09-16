@@ -163,6 +163,9 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
+		<finder name="RepositoryId" return-type="Collection">
+			<finder-column name="repositoryId" />
+		</finder>
 		<finder name="MimeType" return-type="Collection">
 			<finder-column name="mimeType" />
 		</finder>
@@ -589,7 +592,7 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="RepositoryId" return-type="DLFolder">
+		<finder name="RepositoryId" return-type="Collection">
 			<finder-column name="repositoryId" />
 		</finder>
 		<finder name="G_P" return-type="Collection">
@@ -599,6 +602,10 @@
 		<finder name="C_NotS" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="status" comparator="!=" />
+		</finder>
+		<finder name="R_M" return-type="DLFolder">
+			<finder-column name="repositoryId" />
+			<finder-column name="mountPoint" />
 		</finder>
 		<finder name="P_N" return-type="Collection">
 			<finder-column name="parentFolderId" />

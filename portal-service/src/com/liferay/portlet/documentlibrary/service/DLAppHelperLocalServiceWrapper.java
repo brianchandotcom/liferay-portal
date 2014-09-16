@@ -249,8 +249,8 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #restoreDependentsFromTrash(
-	List)}
+	* @deprecated As of 7.0.0, replaced by {@link
+	#restoreDependentsFromTrash(List)}
 	*/
 	@Deprecated
 	@Override

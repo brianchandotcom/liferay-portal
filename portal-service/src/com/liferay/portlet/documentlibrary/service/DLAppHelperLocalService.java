@@ -187,8 +187,8 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #restoreDependentsFromTrash(
-	List)}
+	* @deprecated As of 7.0.0, replaced by {@link
+	#restoreDependentsFromTrash(List)}
 	*/
 	@java.lang.Deprecated
 	public void restoreDependentsFromTrash(

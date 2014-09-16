@@ -12,33 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository.model;
+package com.liferay.portal.kernel.repository.capabilities;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.StagedGroupedModel;
-
-import java.io.Serializable;
-
-import java.util.Map;
+import com.liferay.portal.kernel.repository.model.RepositoryModelOperation;
 
 /**
- * @author Alexander Chow
+ * @author Adolfo Pérez
  */
-public interface RepositoryModel<T> extends StagedGroupedModel, Serializable {
+public interface BulkOperationCapability extends Capability {
 
 	public void execute(RepositoryModelOperation repositoryModelOperation)
 		throws PortalException;
-
-	public Map<String, Serializable> getAttributes();
-
-	public Object getModel();
-
-	public long getPrimaryKey();
-
-	public boolean isEscapedModel();
-
-	public T toEscapedModel();
-
-	public T toUnescapedModel();
 
 }

@@ -179,6 +179,7 @@ create unique index IX_5391712 on DLFileEntry (groupId, folderId, name);
 create unique index IX_ED5CA615 on DLFileEntry (groupId, folderId, title);
 create index IX_D20C434D on DLFileEntry (groupId, userId, folderId);
 create index IX_D9492CF6 on DLFileEntry (mimeType);
+create index IX_9EE96CAD on DLFileEntry (repositoryId);
 create index IX_31079DE8 on DLFileEntry (uuid_, companyId);
 create unique index IX_BC2E7E6A on DLFileEntry (uuid_, groupId);
 
@@ -223,7 +224,7 @@ create index IX_C88430AB on DLFolder (groupId, mountPoint, parentFolderId, hidde
 create index IX_CE360BF6 on DLFolder (groupId, parentFolderId, hidden_, status);
 create unique index IX_902FD874 on DLFolder (groupId, parentFolderId, name);
 create index IX_51556082 on DLFolder (parentFolderId, name);
-create index IX_EE29C715 on DLFolder (repositoryId);
+create index IX_6F63F140 on DLFolder (repositoryId, mountPoint);
 create index IX_DA448450 on DLFolder (uuid_, companyId);
 create unique index IX_3CC1DED2 on DLFolder (uuid_, groupId);
 

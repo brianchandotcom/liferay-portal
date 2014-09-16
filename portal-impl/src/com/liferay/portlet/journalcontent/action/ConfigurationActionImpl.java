@@ -96,10 +96,6 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		String[] extensions = actionRequest.getParameterValues("extensions");
-
-		setPreference(actionRequest, "extensions", extensions);
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

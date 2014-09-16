@@ -1,3 +1,4 @@
+alter table BlogsEntry add smallImageFileEntryId LONG;
 alter table BlogsEntry add subtitle STRING null;
 
 create table ExportImportConfiguration (

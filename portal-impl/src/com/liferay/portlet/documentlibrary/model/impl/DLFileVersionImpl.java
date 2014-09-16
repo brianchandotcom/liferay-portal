@@ -34,7 +34,6 @@ import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -67,19 +66,11 @@ public class DLFileVersionImpl extends DLFileVersionBaseImpl {
 
 	@Override
 	public List<DDMStructure> getDDMStructures() throws PortalException {
-		List<DDMStructure> ddmStructures = Collections.emptyList();
+		DLFileEntryType dlFileEntryType =
+			DLFileEntryTypeLocalServiceUtil.getFileEntryType(
+				getFileEntryTypeId());
 
-		long fileEntryTypeId = getFileEntryTypeId();
-
-		if (fileEntryTypeId != -1) {
-			DLFileEntryType dlFileEntryType =
-				DLFileEntryTypeLocalServiceUtil.getFileEntryType(
-					fileEntryTypeId);
-
-			ddmStructures = dlFileEntryType.getDDMStructures();
-		}
-
-		return ddmStructures;
+		return dlFileEntryType.getDDMStructures();
 	}
 
 	@Override

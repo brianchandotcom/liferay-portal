@@ -94,19 +94,19 @@
 		</if>
 
 		<if>
-			<equals arg1="${belongsTo}" arg2="true" />
+			<equals arg1="${belongsTo}" arg2="false" />
 			<then>
+				<var name="key_userSegmentName" value="${userSegmentName}" />
+
+				<execute action="PGUsersegmentcontentdisplay#assertElementPresent" locator-key1="PREVIEW_DOES_NOT_BELONG" />
+				<execute action="PGUsersegmentcontentdisplay#assertElementPresent" locator-key1="PREVIEW_SELECTED_OTHERWISE" />
+			</then>
+			<else>
 				<var name="key_userSegmentName" value="${userSegmentName}" />
 
 				<execute action="PGUsersegmentcontentdisplay#mouseOver" locator-key1="PREVIEW_1" />
 				<execute action="PGUsersegmentcontentdisplay#assertElementPresent" locator-key1="PREVIEW_SELECTED_BELONGS" />
 				<execute action="PGUsersegmentcontentdisplay#assertElementPresent" locator-key1="PREVIEW_OTHERWISE" />
-			</then>
-			<else>
-				<var name="key_userSegmentName" value="${userSegmentName}" />
-
-				<execute action="PGUsersegmentcontentdisplay#assertElementPresent" locator-key1="PREVIEW_DOES_NOT_BELONG" />
-				<execute action="PGUsersegmentcontentdisplay#assertElementPresent" locator-key1="PREVIEW_SELECTED_OTHERWISE" />
 			</else>
 		</if>
 	</command>

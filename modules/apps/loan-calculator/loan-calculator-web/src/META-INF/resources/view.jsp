@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/loan_calculator/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String loanAmountString = ParamUtil.get(request, "loanAmount", "200000");

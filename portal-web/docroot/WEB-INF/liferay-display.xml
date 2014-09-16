@@ -45,7 +45,7 @@
 	</category>
 	<category name="category.entertainment" />
 	<category name="category.finance">
-		<portlet id="61" />
+		<portlet id="16" />
 	</category>
 	<category name="category.hidden">
 		<portlet id="9" />

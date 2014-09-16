@@ -563,16 +563,6 @@
 		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<portlet>
-		<portlet-name>61</portlet-name>
-		<icon>/html/icons/loan_calculator.png</icon>
-		<struts-path>loan_calculator</struts-path>
-		<remoteable>true</remoteable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<css-class-wrapper>portlet-loan-calculator</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>62</portlet-name>
 		<icon>/html/icons/journal_articles.png</icon>
 		<struts-path>journal_articles</struts-path>

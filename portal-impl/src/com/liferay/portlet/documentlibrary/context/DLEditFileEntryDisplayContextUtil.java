@@ -40,7 +40,7 @@ public class DLEditFileEntryDisplayContextUtil {
 				request, response, dlFileEntryType);
 
 		return _chainDLEditFileEntryDisplayContexts(
-			request, response, dlFileEntryType, dlEditFileEntryDisplayContext);
+			dlEditFileEntryDisplayContext, request, response, dlFileEntryType);
 	}
 
 	public static DLEditFileEntryDisplayContext
@@ -53,14 +53,14 @@ public class DLEditFileEntryDisplayContextUtil {
 				request, response, fileEntry);
 
 		return _chainDLEditFileEntryDisplayContexts(
-			request, response, fileEntry, dlEditFileEntryDisplayContext);
+			dlEditFileEntryDisplayContext, request, response, fileEntry);
 	}
 
 	private static DLEditFileEntryDisplayContext
 	_chainDLEditFileEntryDisplayContexts(
+		DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
-		DLFileEntryType dlFileEntryType,
-		DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext) {
+		DLFileEntryType dlFileEntryType) {
 
 		Collection<DLEditFileEntryDisplayContextFactory>
 			dlEditFileEntryDisplayContextFactories =
@@ -82,9 +82,9 @@ public class DLEditFileEntryDisplayContextUtil {
 
 	private static DLEditFileEntryDisplayContext
 	_chainDLEditFileEntryDisplayContexts(
+		DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
-		FileEntry fileEntry,
-		DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext) {
+		FileEntry fileEntry) {
 
 		Collection<DLEditFileEntryDisplayContextFactory>
 			dlEditFileEntryDisplayContextFactories =

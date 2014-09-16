@@ -16,6 +16,8 @@ package com.liferay.portal.service;
 
 import com.liferay.portal.jcr.JCRFactoryUtil;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseDestination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBus;
@@ -124,7 +126,7 @@ public class ServiceTestUtil {
 			setUser(TestPropsValues.getUser());
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			_log.warn(e.getMessage(), e);
 		}
 	}
 
@@ -136,7 +138,7 @@ public class ServiceTestUtil {
 			JCRFactoryUtil.prepare();
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			_log.warn(e.getMessage(), e);
 		}
 
 		// Template manager
@@ -145,7 +147,7 @@ public class ServiceTestUtil {
 			TemplateManagerUtil.init();
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			_log.warn(e.getMessage(), e);
 		}
 
 		// Indexers
@@ -158,10 +160,10 @@ public class ServiceTestUtil {
 			DBUpgrader.upgrade();
 		}
 		catch (AssertionError e) {
-			e.printStackTrace();
+			_log.warn(e.getMessage(), e);
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			_log.warn(e.getMessage(), e);
 		}
 
 		// Messaging
@@ -199,7 +201,7 @@ public class ServiceTestUtil {
 			SchedulerEngineHelperUtil.start();
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			_log.warn(e.getMessage(), e);
 		}
 
 		// Verify
@@ -208,7 +210,7 @@ public class ServiceTestUtil {
 			DBUpgrader.verify();
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			_log.warn(e.getMessage(), e);
 		}
 
 		// Class names
@@ -221,7 +223,7 @@ public class ServiceTestUtil {
 			_checkResourceActions();
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			_log.warn(e.getMessage(), e);
 		}
 
 		// Trash
@@ -247,7 +249,7 @@ public class ServiceTestUtil {
 				TestPropsValues.COMPANY_WEB_ID);
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			_log.warn(e.getMessage(), e);
 		}
 
 		// Directories
@@ -263,7 +265,7 @@ public class ServiceTestUtil {
 			SearchEngineUtil.initialize(TestPropsValues.getCompanyId());
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			_log.warn(e.getMessage(), e);
 		}
 	}
 
@@ -337,7 +339,7 @@ public class ServiceTestUtil {
 				PropsValues.LUCENE_DIR + TestPropsValues.getCompanyId());
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			_log.warn(e.getMessage(), e);
 		}
 	}
 
@@ -362,4 +364,5 @@ public class ServiceTestUtil {
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 	}
 
+	private static Log _log = LogFactoryUtil.getLog(ServiceTestUtil.class);
 }

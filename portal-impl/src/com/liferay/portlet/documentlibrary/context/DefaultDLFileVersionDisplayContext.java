@@ -43,7 +43,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
-import com.liferay.portlet.documentlibrary.context.util.JspRenderer;
+import com.liferay.portlet.documentlibrary.context.util.JSPRenderer;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
@@ -413,7 +413,7 @@ public class DefaultDLFileVersionDisplayContext
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
-		JspRenderer jspRenderer = new JspRenderer(
+		JSPRenderer jspRenderer = new JSPRenderer(
 			"/html/portlet/document_library/view_file_entry_preview.jsp");
 
 		jspRenderer.setAttribute(

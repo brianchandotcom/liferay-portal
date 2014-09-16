@@ -777,6 +777,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				"private static Log _log"
 			});
 
+		newContent = StringUtil.replace(
+			newContent,
+			new String[] {
+				StringPool.TAB + "static ", StringPool.TAB + "public static {"
+			},
+			new String[] {
+				StringPool.TAB + "public static ", StringPool.TAB + "static {"
+			});
+
 		newContent = fixCompatClassImports(absolutePath, newContent);
 
 		newContent = stripJavaImports(newContent, packagePath, className);

@@ -38,7 +38,6 @@ import com.liferay.portal.util.PortalInstances;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
@@ -211,20 +210,14 @@ public class VerifyJournal extends VerifyProcess {
 						path = sb.toString();
 					}
 
-					try {
-						long folderId = GetterUtil.getLong(pathElements[3]);
-						long groupId = GetterUtil.getLong(pathElements[2]);
+					long folderId = GetterUtil.getLong(pathElements[3]);
+					long groupId = GetterUtil.getLong(pathElements[2]);
 
-						DLFileEntry dlFileEntry =
-							DLFileEntryLocalServiceUtil.getFileEntryByTitle(
-								groupId, folderId, title);
+					DLFileEntry dlFileEntry =
+						DLFileEntryLocalServiceUtil.fetchFileEntry(
+							groupId, folderId, title);
 
-						String uuid = dlFileEntry.getUuid();
-
-						dynamicContentElement.setText(
-							path + StringPool.SLASH + uuid);
-					}
-					catch (NoSuchFileEntryException nsfee) {
+					if (dlFileEntry == null) {
 						if (_log.isWarnEnabled()) {
 							StringBundler sb = new StringBundler(4);
 
@@ -235,7 +228,14 @@ public class VerifyJournal extends VerifyProcess {
 
 							_log.warn(sb.toString());
 						}
+
+						continue;
 					}
+
+					String uuid = dlFileEntry.getUuid();
+
+					dynamicContentElement.setText(
+						path + StringPool.SLASH + uuid);
 				}
 
 				article.setContent(document.asXML());

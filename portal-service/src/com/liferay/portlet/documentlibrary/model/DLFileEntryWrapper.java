@@ -365,6 +365,12 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType getDLFileEntryType()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntry.getDLFileEntryType();
+	}
+
+	@Override
 	public long getDataRepositoryId() {
 		return _dlFileEntry.getDataRepositoryId();
 	}

@@ -140,6 +140,7 @@ public class LiferayIntegrationJUnitTestRunner
 	private static final Field _INHERITABLE_THREAD_LOCALS_FIELD;
 
 	private static final Class<?> _THREAD_LOCAL_MAP_CLASS;
+
 	private static final Field _THREAD_LOCALS_FIELD;
 
 	static {

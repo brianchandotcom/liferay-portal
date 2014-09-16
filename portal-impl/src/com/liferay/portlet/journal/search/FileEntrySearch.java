@@ -29,7 +29,9 @@ import javax.portlet.PortletURL;
  */
 public class FileEntrySearch extends SearchContainer<FileEntry> {
 
-	static List<String> headerNames = new ArrayList<String>();
+	public static final String EMPTY_RESULTS_MESSAGE = "there-are-no-documents";
+
+	public static List<String> headerNames = new ArrayList<String>();
 
 	static {
 		headerNames.add("document");
@@ -37,8 +39,6 @@ public class FileEntrySearch extends SearchContainer<FileEntry> {
 		headerNames.add("downloads");
 		headerNames.add("locked");
 	}
-
-	public static final String EMPTY_RESULTS_MESSAGE = "there-are-no-documents";
 
 	public FileEntrySearch(
 		PortletRequest portletRequest, FileEntryDisplayTerms displayTerms,

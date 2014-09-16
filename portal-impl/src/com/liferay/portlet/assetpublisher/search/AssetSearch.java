@@ -29,7 +29,9 @@ import javax.portlet.PortletURL;
  */
 public class AssetSearch extends SearchContainer<AssetEntry> {
 
-	static List<String> headerNames = new ArrayList<String>();
+	public static final String EMPTY_RESULTS_MESSAGE = "there-are-no-results";
+
+	public static List<String> headerNames = new ArrayList<String>();
 
 	static {
 		headerNames.add("title");
@@ -38,8 +40,6 @@ public class AssetSearch extends SearchContainer<AssetEntry> {
 		headerNames.add("modified-date");
 		headerNames.add("scope");
 	}
-
-	public static final String EMPTY_RESULTS_MESSAGE = "there-are-no-results";
 
 	public AssetSearch(
 		PortletRequest portletRequest, int delta, PortletURL iteratorURL) {

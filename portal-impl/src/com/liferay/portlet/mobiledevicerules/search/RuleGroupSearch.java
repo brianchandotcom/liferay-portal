@@ -28,15 +28,15 @@ import javax.portlet.PortletURL;
  */
 public class RuleGroupSearch extends SearchContainer<MDRRuleGroup> {
 
-	static List<String> headerNames = new ArrayList<String>();
+	public static final String EMPTY_RESULTS_MESSAGE =
+		"no-device-families-are-configured";
+
+	public static List<String> headerNames = new ArrayList<String>();
 
 	static {
 		headerNames.add("name");
 		headerNames.add("description");
 	}
-
-	public static final String EMPTY_RESULTS_MESSAGE =
-		"no-device-families-are-configured";
 
 	public RuleGroupSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {

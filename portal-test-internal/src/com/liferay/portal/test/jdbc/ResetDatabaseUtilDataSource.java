@@ -64,6 +64,8 @@ public class ResetDatabaseUtilDataSource extends DataSourceWrapper {
 
 		};
 
+	private static Field _paclField;
+
 	static {
 		try {
 			_paclField = ReflectionUtil.getDeclaredField(
@@ -73,7 +75,5 @@ public class ResetDatabaseUtilDataSource extends DataSourceWrapper {
 			throw new ExceptionInInitializerError(e);
 		}
 	}
-
-	private static Field _paclField;
 
 }

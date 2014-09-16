@@ -173,10 +173,6 @@ public class CodeCoverageAssertor implements TestRule {
 
 	private static final Method _DYNAMICALLY_INSTRUMENT_METHOD;
 
-	private final String[] _excludes;
-	private final boolean _includeInnerClasses;
-	private final String[] _includes;
-
 	static {
 		ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
 
@@ -194,5 +190,9 @@ public class CodeCoverageAssertor implements TestRule {
 			throw new ExceptionInInitializerError(e);
 		}
 	}
+
+	private final String[] _excludes;
+	private final boolean _includeInnerClasses;
+	private final String[] _includes;
 
 }

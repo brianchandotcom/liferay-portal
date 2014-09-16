@@ -40,7 +40,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class NamespaceServletRequest extends DynamicServletRequest {
 
-	static Set<String> reservedAttrs = new HashSet<String>();
+	public static Set<String> reservedAttrs = new HashSet<String>();
 
 	static {
 		reservedAttrs.add(JavaConstants.JAVAX_PORTLET_CONFIG);

@@ -55,6 +55,26 @@ public class TestPropsValues {
 	public static final String USER_PASSWORD = TestPropsUtil.get(
 		"user.password");
 
+	static {
+		String companyWebId = TestPropsUtil.get("company.web.id");
+
+		try {
+			if (Validator.isNull(companyWebId)) {
+				companyWebId = GetterUtil.getString(
+					PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
+
+				TestPropsUtil.set("company.web.id", companyWebId);
+			}
+		}
+		catch (Exception e) {
+			throw new LoggedExceptionInInitializerError(e);
+		}
+
+		TestPropsUtil.printProperties();
+
+		COMPANY_WEB_ID = companyWebId;
+	}
+
 	public static long getCompanyId() throws PortalException {
 		if (_companyId > 0) {
 			return _companyId;
@@ -120,25 +140,5 @@ public class TestPropsValues {
 	private static long _plid;
 	private static User _user;
 	private static long _userId;
-
-	static {
-		String companyWebId = TestPropsUtil.get("company.web.id");
-
-		try {
-			if (Validator.isNull(companyWebId)) {
-				companyWebId = GetterUtil.getString(
-					PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
-
-				TestPropsUtil.set("company.web.id", companyWebId);
-			}
-		}
-		catch (Exception e) {
-			throw new LoggedExceptionInInitializerError(e);
-		}
-
-		TestPropsUtil.printProperties();
-
-		COMPANY_WEB_ID = companyWebId;
-	}
 
 }

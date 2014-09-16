@@ -377,9 +377,6 @@ public class DLContentLocalServiceTest {
 
 	private static final byte[] _DATA_VERSION_2 = new byte[_DATA_SIZE];
 
-	private long _companyId;
-	private DLContentLocalService _dlContentLocalService;
-
 	static {
 		for (int i = 0; i < _DATA_SIZE; i++) {
 			_DATA_VERSION_1[i] = (byte)i;
@@ -387,6 +384,8 @@ public class DLContentLocalServiceTest {
 		}
 	}
 
+	private long _companyId;
+	private DLContentLocalService _dlContentLocalService;
 	private long _repositoryId;
 
 }

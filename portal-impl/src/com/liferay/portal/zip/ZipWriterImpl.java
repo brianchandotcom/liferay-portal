@@ -43,13 +43,6 @@ import java.io.OutputStream;
  */
 public class ZipWriterImpl implements ZipWriter {
 
-	static {
-		File.setDefaultArchiveDetector(
-			new DefaultArchiveDetector(
-				ArchiveDetector.ALL, "lar|" + ArchiveDetector.ALL.getSuffixes(),
-				new ZipDriver()));
-	}
-
 	public ZipWriterImpl() {
 		_file = new File(
 			SystemProperties.get(SystemProperties.TMP_DIR) + StringPool.SLASH +
@@ -156,6 +149,13 @@ public class ZipWriterImpl implements ZipWriter {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ZipWriterImpl.class);
+
+	static {
+		File.setDefaultArchiveDetector(
+			new DefaultArchiveDetector(
+				ArchiveDetector.ALL, "lar|" + ArchiveDetector.ALL.getSuffixes(),
+				new ZipDriver()));
+	}
 
 	private File _file;
 

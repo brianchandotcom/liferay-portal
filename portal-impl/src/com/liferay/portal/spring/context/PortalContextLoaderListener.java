@@ -357,6 +357,12 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 	private static final Field _FILTERED_PROPERTY_DESCRIPTORS_CACHE_FIELD;
 
+	private static Log _log = LogFactoryUtil.getLog(
+		PortalContextLoaderListener.class);
+
+	private static String _portalServletContextName = StringPool.BLANK;
+	private static String _portalServletContextPath = StringPool.SLASH;
+
 	static {
 		try {
 			_FILTERED_PROPERTY_DESCRIPTORS_CACHE_FIELD =
@@ -368,12 +374,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			throw new LoggedExceptionInInitializerError(e);
 		}
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(
-		PortalContextLoaderListener.class);
-
-	private static String _portalServletContextName = StringPool.BLANK;
-	private static String _portalServletContextPath = StringPool.SLASH;
 
 	private IndexerPostProcessorRegistry _indexerPostProcessorRegistry;
 	private SchedulerEntryRegistry _schedulerEntryRegistry;

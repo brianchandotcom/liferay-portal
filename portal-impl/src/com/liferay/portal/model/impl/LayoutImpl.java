@@ -1278,12 +1278,12 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	private static String[] _friendlyURLKeywords;
 
-	private LayoutSet _layoutSet;
-	private LayoutType _layoutType;
-	private UnicodeProperties _typeSettingsProperties;
-
 	static {
 		_initFriendlyURLKeywords();
 	}
+
+	private LayoutSet _layoutSet;
+	private LayoutType _layoutType;
+	private UnicodeProperties _typeSettingsProperties;
 
 }

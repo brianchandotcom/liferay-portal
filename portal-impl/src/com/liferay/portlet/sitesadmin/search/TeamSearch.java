@@ -28,14 +28,14 @@ import javax.portlet.PortletURL;
  */
 public class TeamSearch extends SearchContainer<Role> {
 
-	static List<String> headerNames = new ArrayList<String>();
+	public static final String EMPTY_RESULTS_MESSAGE = "no-teams-were-found";
+
+	public static List<String> headerNames = new ArrayList<String>();
 
 	static {
 		headerNames.add("name");
 		headerNames.add("description");
 	}
-
-	public static final String EMPTY_RESULTS_MESSAGE = "no-teams-were-found";
 
 	public TeamSearch(PortletRequest portletRequest, PortletURL iteratorURL) {
 		super(

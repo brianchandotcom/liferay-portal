@@ -28,6 +28,10 @@ public class TimeZoneUtil {
 
 	public static TimeZone GMT;
 
+	static {
+		GMT = getTimeZone("GMT");
+	}
+
 	public static TimeZone getDefault() {
 		return getInstance()._getDefault();
 	}
@@ -81,10 +85,6 @@ public class TimeZoneUtil {
 	}
 
 	private static TimeZoneUtil _instance = new TimeZoneUtil();
-
-	static {
-		GMT = getTimeZone("GMT");
-	}
 
 	private TimeZone _timeZone;
 	private Map<String, TimeZone> _timeZones = new HashMap<String, TimeZone>();

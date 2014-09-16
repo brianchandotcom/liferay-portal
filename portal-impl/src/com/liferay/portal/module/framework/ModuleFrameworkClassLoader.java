@@ -29,10 +29,6 @@ import java.util.List;
  */
 public class ModuleFrameworkClassLoader extends URLClassLoader {
 
-	static {
-		ClassLoader.registerAsParallelCapable();
-	}
-
 	public ModuleFrameworkClassLoader(URL[] urls, ClassLoader parent) {
 		super(urls, parent);
 	}
@@ -122,6 +118,10 @@ public class ModuleFrameworkClassLoader extends URLClassLoader {
 		}
 
 		return urls;
+	}
+
+	static {
+		ClassLoader.registerAsParallelCapable();
 	}
 
 }

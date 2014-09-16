@@ -28,7 +28,9 @@ import javax.portlet.PortletURL;
  */
 public class TemplateSearch extends SearchContainer<DDMTemplate> {
 
-	static List<String> headerNames = new ArrayList<String>();
+	public static final String EMPTY_RESULTS_MESSAGE = "there-are-no-templates";
+
+	public static List<String> headerNames = new ArrayList<String>();
 
 	static {
 		headerNames.add("id");
@@ -37,8 +39,6 @@ public class TemplateSearch extends SearchContainer<DDMTemplate> {
 		headerNames.add("language");
 		headerNames.add("modified-date");
 	}
-
-	public static final String EMPTY_RESULTS_MESSAGE = "there-are-no-templates";
 
 	public TemplateSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {

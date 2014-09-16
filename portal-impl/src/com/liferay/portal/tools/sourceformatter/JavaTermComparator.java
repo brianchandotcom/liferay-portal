@@ -25,8 +25,69 @@ import java.util.List;
  */
 public class JavaTermComparator implements Comparator<JavaTerm> {
 
+	public JavaTermComparator() {
+		this(true);
+	}
+
+	public JavaTermComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
 	@Override
 	public int compare(JavaTerm javaTerm1, JavaTerm javaTerm2) {
+		int value = doCompare(javaTerm1, javaTerm2);
+
+		if (_ascending) {
+			return value;
+		}
+		else {
+			return -value;
+		}
+	}
+
+	protected int compareParameterTypes(
+		JavaTerm javaTerm1, JavaTerm javaTerm2) {
+
+		List<String> parameterTypes2 = javaTerm2.getParameterTypes();
+
+		if (parameterTypes2.isEmpty()) {
+			return 1;
+		}
+
+		List<String> parameterTypes1 = javaTerm1.getParameterTypes();
+
+		if (parameterTypes1.isEmpty()) {
+			return -1;
+		}
+
+		for (int i = 0; i < parameterTypes1.size(); i++) {
+			if (parameterTypes2.size() < (i + 1)) {
+				return 1;
+			}
+
+			String parameterType1 = parameterTypes1.get(i);
+			String parameterType2 = parameterTypes2.get(i);
+
+			if ((parameterTypes1.size() != parameterTypes2.size()) &&
+				(parameterType1.equals(parameterType2.concat("...")) ||
+				 parameterType2.equals(parameterType1.concat("...")))) {
+
+				continue;
+			}
+
+			if (parameterType1.compareToIgnoreCase(parameterType2) != 0) {
+				return parameterType1.compareToIgnoreCase(parameterType2);
+			}
+
+			if (parameterType1.compareTo(parameterType2) != 0) {
+				return -parameterType1.compareTo(parameterType2);
+			}
+		}
+
+		return -1;
+	}
+
+	protected int doCompare(JavaTerm javaTerm1, JavaTerm javaTerm2) {
 		int type1 = javaTerm1.getType();
 		int type2 = javaTerm2.getType();
 
@@ -83,49 +144,9 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 			return -naturalOrderStringComparator.compare(name1, name2);
 		}
 
-		return _compareParameterTypes(javaTerm1, javaTerm2);
+		return compareParameterTypes(javaTerm1, javaTerm2);
 	}
 
-	private static int _compareParameterTypes(
-		JavaTerm javaTerm1, JavaTerm javaTerm2) {
-
-		List<String> parameterTypes2 = javaTerm2.getParameterTypes();
-
-		if (parameterTypes2.isEmpty()) {
-			return 1;
-		}
-
-		List<String> parameterTypes1 = javaTerm1.getParameterTypes();
-
-		if (parameterTypes1.isEmpty()) {
-			return -1;
-		}
-
-		for (int i = 0; i < parameterTypes1.size(); i++) {
-			if (parameterTypes2.size() < (i + 1)) {
-				return 1;
-			}
-
-			String parameterType1 = parameterTypes1.get(i);
-			String parameterType2 = parameterTypes2.get(i);
-
-			if ((parameterTypes1.size() != parameterTypes2.size()) &&
-				(parameterType1.equals(parameterType2.concat("...")) ||
-				 parameterType2.equals(parameterType1.concat("...")))) {
-
-				continue;
-			}
-
-			if (parameterType1.compareToIgnoreCase(parameterType2) != 0) {
-				return parameterType1.compareToIgnoreCase(parameterType2);
-			}
-
-			if (parameterType1.compareTo(parameterType2) != 0) {
-				return -parameterType1.compareTo(parameterType2);
-			}
-		}
-
-		return -1;
-	}
+	private boolean _ascending;
 
 }

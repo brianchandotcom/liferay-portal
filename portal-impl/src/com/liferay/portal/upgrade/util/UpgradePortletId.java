@@ -426,6 +426,7 @@ public class UpgradePortletId extends UpgradeProcess {
 					int pos = primKey.indexOf(
 						PortletConstants.LAYOUT_SEPARATOR);
 
+					if (pos != -1) {
 					long plid = GetterUtil.getLong(primKey.substring(0, pos));
 
 					String portletId = primKey.substring(
@@ -440,6 +441,11 @@ public class UpgradePortletId extends UpgradeProcess {
 
 					primKey = PortletPermissionUtil.getPrimaryKey(
 						plid, newPortletId);
+					}
+
+					if (name.equals(primKey)) {
+						primKey = newName;
+					}
 				}
 
 				updateResourcePermission(

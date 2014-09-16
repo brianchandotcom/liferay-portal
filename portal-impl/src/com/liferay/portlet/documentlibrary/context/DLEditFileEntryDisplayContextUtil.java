@@ -31,9 +31,9 @@ import javax.servlet.http.HttpServletResponse;
 public class DLEditFileEntryDisplayContextUtil {
 
 	public static DLEditFileEntryDisplayContext
-	getDLEditFileEntryDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
-		DLFileEntryType dlFileEntryType) {
+		getDLEditFileEntryDisplayContext(
+			HttpServletRequest request, HttpServletResponse response,
+			DLFileEntryType dlFileEntryType) {
 
 		DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext =
 			new DefaultDLEditFileEntryDisplayContext(
@@ -44,9 +44,9 @@ public class DLEditFileEntryDisplayContextUtil {
 	}
 
 	public static DLEditFileEntryDisplayContext
-	getDLEditFileEntryDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
-		FileEntry fileEntry) {
+		getDLEditFileEntryDisplayContext(
+			HttpServletRequest request, HttpServletResponse response,
+			FileEntry fileEntry) {
 
 		DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext =
 			new DefaultDLEditFileEntryDisplayContext(
@@ -57,18 +57,18 @@ public class DLEditFileEntryDisplayContextUtil {
 	}
 
 	private static DLEditFileEntryDisplayContext
-	_chainDLEditFileEntryDisplayContexts(
-		DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		DLFileEntryType dlFileEntryType) {
+		_chainDLEditFileEntryDisplayContexts(
+			DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext,
+			HttpServletRequest request, HttpServletResponse response,
+			DLFileEntryType dlFileEntryType) {
 
 		Collection<DLEditFileEntryDisplayContextFactory>
 			dlEditFileEntryDisplayContextFactories =
 				_getDLEditFileEntryDisplayContextFactories();
 
 		for (DLEditFileEntryDisplayContextFactory
-			dlEditFileEntryDisplayContextFactory :
-			dlEditFileEntryDisplayContextFactories) {
+				dlEditFileEntryDisplayContextFactory :
+					dlEditFileEntryDisplayContextFactories) {
 
 			dlEditFileEntryDisplayContext =
 				dlEditFileEntryDisplayContextFactory.
@@ -81,18 +81,18 @@ public class DLEditFileEntryDisplayContextUtil {
 	}
 
 	private static DLEditFileEntryDisplayContext
-	_chainDLEditFileEntryDisplayContexts(
-		DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		FileEntry fileEntry) {
+		_chainDLEditFileEntryDisplayContexts(
+			DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext,
+			HttpServletRequest request, HttpServletResponse response,
+			FileEntry fileEntry) {
 
 		Collection<DLEditFileEntryDisplayContextFactory>
 			dlEditFileEntryDisplayContextFactories =
 				_getDLEditFileEntryDisplayContextFactories();
 
 		for (DLEditFileEntryDisplayContextFactory
-			dlEditFileEntryDisplayContextFactory :
-			dlEditFileEntryDisplayContextFactories) {
+				dlEditFileEntryDisplayContextFactory :
+					dlEditFileEntryDisplayContextFactories) {
 
 			dlEditFileEntryDisplayContext =
 				dlEditFileEntryDisplayContextFactory.
@@ -105,7 +105,7 @@ public class DLEditFileEntryDisplayContextUtil {
 	}
 
 	private static Collection<DLEditFileEntryDisplayContextFactory>
-	_getDLEditFileEntryDisplayContextFactories() {
+		_getDLEditFileEntryDisplayContextFactories() {
 
 		try {
 			Registry registry = RegistryUtil.getRegistry();

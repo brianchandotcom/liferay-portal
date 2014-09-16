@@ -19,6 +19,6 @@ package com.liferay.portlet.documentlibrary.context;
  */
 public interface DLEditFileEntryDisplayContext extends DLDisplayContext {
 
-	long getMaximumUploadSize();
+	public long getMaximumUploadSize();
 
 }

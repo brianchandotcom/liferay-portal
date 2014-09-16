@@ -26,13 +26,11 @@
 			<var name="ddlDataDefinitionName" value="Process Field Set" />
 		</execute>
 
-		<execute macro="Workflow#tearDownWorkflowDefinition">
+		<execute macro="Workflow#tearDownSpecificWorkflowDefinition">
 			<var name="workflowDefinitionTitle" value="Single Approver Edited" />
 		</execute>
 
-		<execute macro="Workflow#tearDownWorkflowDefinition">
-			<var name="workflowDefinitionTitle" value="Workflow Definition Title" />
-		</execute>
+		<execute macro="Workflow#tearDownWorkflowDefinitions" />
 
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
@@ -150,7 +148,7 @@
 			<var name="workflowDefinitionTitle" value="Workflow Definition Title" />
 		</execute>
 
-		<execute macro="KaleoDesigner#addSourceXML" />
+		<execute macro="KaleoDesigner#addSourceXMLBasicDefinition" />
 
 		<execute macro="KaleoFormsAdmin#publishWorkflow" />
 
@@ -1517,7 +1515,7 @@
 			<var name="workflowDefinitionTitle" value="Workflow Definition Title" />
 		</execute>
 
-		<execute macro="KaleoDesigner#addSourceXML" />
+		<execute macro="KaleoDesigner#addSourceXMLBasicDefinition" />
 
 		<execute macro="KaleoFormsAdmin#publishWorkflow" />
 
@@ -1592,7 +1590,7 @@
 			<var name="workflowDefinitionTitleEdit" value="Single Approver Edit" />
 		</execute>
 
-		<execute macro="KaleoDesigner#addSourceXML" />
+		<execute macro="KaleoDesigner#addSourceXMLBasicDefinition" />
 
 		<execute macro="KaleoFormsAdmin#publishWorkflow" />
 
@@ -1663,7 +1661,7 @@
 			<var name="workflowDefinitionTitleEdit" value="Single Approver Edit" />
 		</execute>
 
-		<execute macro="Workflow#editWorkflowDefinitionDeleteNode">
+		<execute macro="KaleoDesigner#deleteNode">
 			<var name="nodeNodeLabel" value="update" />
 		</execute>
 
@@ -1758,7 +1756,7 @@
 			<var name="workflowDefinitionTitleEdit" value="${workflowDefinitionTitleEdit}" />
 		</execute>
 
-		<execute macro="Workflow#editWorkflowDefinitionDeleteNode">
+		<execute macro="KaleoDesigner#deleteNode">
 			<var name="nodeNodeLabel" value="update" />
 		</execute>
 

@@ -61,7 +61,7 @@
 		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FIELD_SET_TABLE_NAME" value1="${kfFieldSetName}" />
 		<execute action="CPKaleoformsadminNewprocess#click" locator-key1="FIELD_SET_TABLE_ACTIONS" />
 		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FIELD_SET_MENULIST_CHOOSE" value1="Choose" />
-		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="SELECTED_DEFINITION" value1="${kfFieldSetName}" />
+		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="SELECTED_FIELD_SET" value1="${kfFieldSetName}" />
 	</command>
 
 	<command name="chooseForm">
@@ -167,6 +167,15 @@
 		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FIELD_SET_MENULIST_EDIT" value1="Edit" />
 
 		<execute action="CPKaleoformsadminNewprocessEditfieldset#type" locator-key1="NAME_FIELD" value1="${kfFieldSetNameEdit}" />
+	</command>
+
+	<command name="editFieldSetPagination">
+		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FIELD_SET_PAGINATION_SELECTOR_BUTTON" value1="20 Items per Page" />
+
+		<var name="key_paginationNumber" value="${paginationNumber}" />
+
+		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FIELD_SET_PAGINATION_MENULIST_NUMBER" value1="${paginationNumber}" />
+		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="FIELD_SET_PAGINATION_SELECTOR_BUTTON" value1="${paginationNumber} Items per Page" />
 	</command>
 
 	<command name="editForm">
@@ -405,9 +414,17 @@
 		<execute action="CPKaleoformsadminNewprocessAddfieldset#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter a valid XML schema definition." />
 	</command>
 
+	<command name="viewNextFieldSetPage">
+		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FIELD_SET_PAGINATION_NEXT_BUTTON" value1="Next" />
+	</command>
+
 	<command name="viewNoUnpublishedWorkflows">
 		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="WORKFLOW_NAVIGATION_UNPUBLISHED_TAB" value1="Unpublished" />
 		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no unpublished definitions." />
+	</command>
+
+	<command name="viewPreviousFieldSetPage">
+		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FIELD_SET_PAGINATION_PREVIOUS_BUTTON" value1="Previous" />
 	</command>
 
 	<command name="viewProcess">
@@ -429,7 +446,7 @@
 	</command>
 
 	<command name="viewProcessFieldSet">
-		<execute action="CPKaleoformsadminEditprocess#assertTextEquals" locator-key1="SELECTED_DEFINITION" value1="${kfFieldSetName}" />
+		<execute action="CPKaleoformsadminEditprocess#assertTextEquals" locator-key1="SELECTED_FIELD_SET" value1="${kfFieldSetName}" />
 
 		<execute macro="KaleoFormsAdmin#next" />
 	</command>

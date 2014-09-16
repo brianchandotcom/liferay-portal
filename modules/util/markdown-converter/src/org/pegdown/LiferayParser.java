@@ -47,8 +47,9 @@ public class LiferayParser extends Parser {
 			arrayBuilder.addNonNulls(Abbreviation());
 		}
 
-		arrayBuilder.add(PictureWithCaption(), Reference(), HorizontalRule(),
-				Heading(), OrderedList(), BulletList(), HtmlBlock());
+		arrayBuilder.add(
+			PictureWithCaption(), Reference(), HorizontalRule(), Heading(),
+			OrderedList(), BulletList(), HtmlBlock());
 
 		if (ext(TABLES)) {
 			arrayBuilder.addNonNulls(Table());

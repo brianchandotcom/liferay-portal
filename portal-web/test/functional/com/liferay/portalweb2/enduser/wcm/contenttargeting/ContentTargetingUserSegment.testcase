@@ -70,6 +70,7 @@
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
 			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Content Visited" />
+			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 	</command>
 
@@ -127,7 +128,7 @@
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
 			<var name="scorePoints" value="100" />
 			<var name="userSegmentName" value="User Segment Name" />
-			<var name="viewUserSegmentRuleList" value="Score Pointes" />
+			<var name="viewUserSegmentRuleList" value="Score Points" />
 		</execute>
 	</command>
 
@@ -199,6 +200,7 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
+			<var name="facebookCity" value="Diamond Bar" />
 			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Facebook City" />
 		</execute>
@@ -544,6 +546,15 @@
 	</command>
 
 	<command name="AddUserSegmentUserAttributesOrganizationMemberCP" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="orgType" value="Regular Organization" />
+		</execute>
+
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Site Name" />
@@ -635,6 +646,7 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
+			<var name="regularRole" value="Guest" />
 			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Regular Role" />
 		</execute>
@@ -820,7 +832,7 @@
 			<var name="userSegmentDescriptionEdit" value="User Segment Description Edit" />
 			<var name="userSegmentName" value="User Segment Name" />
 			<var name="userSegmentNameEdit" value="User Segment Name Edit" />
-			<var name="userSegmentRuleAddList" value="Site Role,UserGroup Member" />
+			<var name="userSegmentRuleAddList" value="Site Role,Regular Role" />
 			<var name="userSegmentRuleDeleteList" value="UserLoggedRule,GenderRule" />
 		</execute>
 
@@ -832,8 +844,11 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
+			<var name="regularRole" value="Administrator" />
+			<var name="siteRole" value="Site Administrator" />
+			<var name="siteRoleSite" value="Global" />
 			<var name="userSegmentName" value="User Segment Name Edit" />
-			<var name="viewUserSegmentRuleList" value="Site Role,UserGroup Member" />
+			<var name="viewUserSegmentRuleList" value="Site Role,Regular Role" />
 		</execute>
 	</command>
 </definition>

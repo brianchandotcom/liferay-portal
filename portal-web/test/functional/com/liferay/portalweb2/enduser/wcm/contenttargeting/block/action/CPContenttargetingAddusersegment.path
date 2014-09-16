@@ -387,12 +387,12 @@
 <!--USER_SEGMENT_RULE_SESSION_ATTRIBUTES_LOCATION-->
 <tr>
 	<td>USER_SEGMENT_RULE_SESSION_ATTRIBUTES_LOCATION_COUNTRY_SELECT</td>
-	<td>//div[@id='fields_field_IpGeocodeRule']//select[contains(@id,'countryId')]</td>
+	<td>//select[contains(@id,'countryId')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_SEGMENT_RULE_SESSION_ATTRIBUTES_LOCATION_REGION_SELECT</td>
-	<td>//div[@id='fields_field_IpGeocodeRule']//select[contains(@id,'regionId')]</td>
+	<td>//select[contains(@id,'regionId')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -441,7 +441,7 @@
 <!--USER_SEGMENT_RULE_SESSION_ATTRIBUTES_DEVICE-->
 <tr>
 	<td>USER_SEGMENT_RULE_SESSION_ATTRIBUTES_DEVICE_SELECT</td>
-	<td>//select[contains(@id,'device')]</td>
+	<td>//select[contains(@id,'RuleGroupId')]</td>
 	<td></td>
 </tr>
 </tbody>

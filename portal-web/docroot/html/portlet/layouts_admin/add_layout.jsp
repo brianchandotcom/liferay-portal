@@ -43,6 +43,17 @@ else {
 String[] types = LayoutTypeControllerTracker.getTypes();
 %>
 
+<c:if test="<%= !portletName.equals(PortletKeys.DOCKBAR) %>">
+	<portlet:renderURL var="backURL">
+		<portlet:param name="struts_action" value="/layouts_admin/edit_layout_set" />
+	</portlet:renderURL>
+
+	<liferay-ui:header
+		backURL="<%= backURL %>"
+		title="add-new-layout"
+	/>
+</c:if>
+
 <portlet:actionURL var="editLayoutActionURL" windowState="<%= themeDisplay.isStateExclusive() ? LiferayWindowState.EXCLUSIVE.toString() : WindowState.NORMAL.toString() %>">
 	<portlet:param name="struts_action" value='<%= portletName.equals(PortletKeys.DOCKBAR) ? "/layouts_admin/add_layout" : "/layouts_admin/edit_layouts" %>' />
 </portlet:actionURL>

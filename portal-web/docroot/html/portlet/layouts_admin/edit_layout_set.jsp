@@ -69,21 +69,41 @@ boolean hasAddPageLayoutsPermission = GroupPermissionUtil.contains(permissionChe
 boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || selGroup.isLayoutSetPrototype() || selGroup.isStagingGroup() || portletName.equals(PortletKeys.MY_SITES) || portletName.equals(PortletKeys.GROUP_PAGES) || portletName.equals(PortletKeys.SITES_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN));
 %>
 
-<div class="add-content-menu hide" id="<portlet:namespace />addLayout">
-	<liferay-util:include page="/html/portlet/layouts_admin/add_layout.jsp" />
-</div>
-
 <aui:nav-bar>
-	<aui:nav cssClass="navbar-nav" id="layoutsNav">
+	<aui:nav cssClass="navbar-nav">
 		<c:if test="<%= hasViewPagesPermission %>">
-			<aui:nav-item data-value="view-pages" iconCssClass="icon-file" label="view-pages" />
+			<aui:nav-item iconCssClass="icon-file" id="viewPages" label="view-pages" />
 		</c:if>
 		<c:if test="<%= hasAddPageLayoutsPermission %>">
-			<aui:nav-item data-value="add-page" iconCssClass="icon-plus" label="add-page" />
+			<portlet:renderURL var="addPagesURL">
+				<portlet:param name="struts_action" value="/layouts_admin/add_layout" />
+				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+			</portlet:renderURL>
+
+			<aui:nav-item href="<%= addPagesURL %>" iconCssClass="icon-plus" label="add-page" />
 		</c:if>
 		<c:if test="<%= hasExportImportLayoutsPermission %>">
-			<aui:nav-item data-value="export" iconCssClass="icon-arrow-down" label="export" />
-			<aui:nav-item data-value="import" iconCssClass="icon-arrow-up" label="import" />
+			<portlet:renderURL var="exportPagesURL">
+				<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
+				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+				<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
+				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+				<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
+			</portlet:renderURL>
+
+			<aui:nav-item href="<%= exportPagesURL %>" iconCssClass="icon-arrow-down" label="export" />
+
+			<portlet:renderURL var="importPagesURL">
+				<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
+				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+				<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
+			</portlet:renderURL>
+
+			<aui:nav-item href="<%= importPagesURL %>" iconCssClass="icon-arrow-up" label="import" />
 		</c:if>
 	</aui:nav>
 </aui:nav-bar>
@@ -134,48 +154,10 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 	}
 </aui:script>
 
-<aui:script use="liferay-util-window">
-	var popup;
-
-	var clickHandler = function(event) {
-		var dataValue = event.target.ancestor('li').attr('data-value');
-
-		processDataValue(dataValue);
-	};
-
-	var processDataValue = function(dataValue) {
-		if (dataValue === 'add-page' || dataValue === 'add-child-page') {
-			var content = A.one('#<portlet:namespace />addLayout');
-
-			if (!popup) {
-				popup = Liferay.Util.Window.getWindow(
-					{
-						dialog: {
-							bodyContent: content.show(),
-							cssClass: 'lfr-add-dialog',
-							width: 600
-						},
-						title: '<%= UnicodeLanguageUtil.get(request, "add-page") %>'
-					}
-				);
-			}
-
-			popup.show();
-
-			var cancelButton = popup.get('contentBox').one('#<portlet:namespace />cancelAddOperation');
-
-			if (cancelButton) {
-				cancelButton.on(
-					'click',
-					function(event) {
-						popup.hide();
-					}
-				);
-			}
-
-			Liferay.Util.focusFormField(content.one('input:text'));
-		}
-		else if (dataValue === 'view-pages') {
+<aui:script use="aui-base">
+	A.one('#<portlet:namespace />viewPages').on(
+		'click',
+		function(event) {
 			<liferay-portlet:actionURL plid="<%= layoutsAdminDisplayContext.getSelPlid() %>" portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="viewPagesURL">
 				<portlet:param name="struts_action" value="/my_sites/view" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
@@ -184,36 +166,7 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 
 			window.open('<%= viewPagesURL %>').focus();
 		}
-		else if (dataValue === 'import') {
-			<portlet:renderURL var="importPagesURL">
-				<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
-				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-				<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
-			</portlet:renderURL>
-
-			location.href = '<%= importPagesURL %>';
-		}
-		else if (dataValue === 'export') {
-			<portlet:renderURL var="exportPagesURL">
-				<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
-				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-				<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
-				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-				<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
-			</portlet:renderURL>
-
-			location.href = '<%= exportPagesURL %>';
-		}
-	};
-
-	A.one('#<portlet:namespace />layoutsNav').delegate('click', clickHandler, 'li a');
-
-	<c:if test='<%= layout.isTypeControlPanel() && (SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "addError") != null) %>'>
-		processDataValue('add-page');
-	</c:if>
+	);
 </aui:script>
 
 <%!

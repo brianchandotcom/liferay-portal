@@ -30,6 +30,10 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
 
+		<execute macro="DMDocument#gotoCP">
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		</execute>
+
 		<execute macro="DMDocument#viewCP">
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
@@ -69,6 +73,10 @@
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocumentFile" value="${dmDocumentFile}" />
 			<var name="dmDocumentSize" value="${dmDocumentSize}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		</execute>
+
+		<execute macro="DMDocument#gotoCP">
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
 
@@ -146,6 +154,10 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
 
+		<execute macro="DMDocument#gotoCP">
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		</execute>
+
 		<execute macro="DMDocument#viewCP">
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
@@ -168,6 +180,11 @@
 		</execute>
 
 		<execute macro="DMDocument#moveToFolderCP">
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#viewMovedToFolderCP">
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>

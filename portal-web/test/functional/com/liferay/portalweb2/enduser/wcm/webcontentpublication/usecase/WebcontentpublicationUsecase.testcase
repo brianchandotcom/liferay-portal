@@ -1197,6 +1197,10 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
+		<execute macro="DMDocument#gotoCP">
+			<var name="dmDocumentTitle" value="DM Document1 Image Title" />
+		</execute>
+
 		<execute macro="DMDocument#viewCP">
 			<var name="dmDocumentTitle" value="DM Document1 Image Title" />
 		</execute>
@@ -1215,6 +1219,10 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
+		<execute macro="DMDocument#gotoCP">
+			<var name="dmDocumentTitle" value="DM Document2 Image Title" />
+		</execute>
+
 		<execute macro="DMDocument#viewCP">
 			<var name="dmDocumentTitle" value="DM Document2 Image Title" />
 		</execute>
@@ -1231,6 +1239,10 @@
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#gotoCP">
+			<var name="dmDocumentTitle" value="DM Document3 Document Title" />
 		</execute>
 
 		<execute macro="DMDocument#viewCP">

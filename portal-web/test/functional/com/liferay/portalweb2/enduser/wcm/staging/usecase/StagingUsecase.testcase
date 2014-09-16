@@ -3215,6 +3215,10 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
+		<execute macro="DMDocument#gotoCP">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
 		<execute macro="DMDocument#viewCP">
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>

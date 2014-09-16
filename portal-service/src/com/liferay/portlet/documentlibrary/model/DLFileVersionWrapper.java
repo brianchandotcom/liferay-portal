@@ -322,6 +322,18 @@ public class DLFileVersionWrapper implements DLFileVersion,
 		return _dlFileVersion.getCreateDate();
 	}
 
+	@Override
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDDMStructures()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileVersion.getDDMStructures();
+	}
+
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType getDLFileEntryType()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileVersion.getDLFileEntryType();
+	}
+
 	/**
 	* Returns the description of this document library file version.
 	*

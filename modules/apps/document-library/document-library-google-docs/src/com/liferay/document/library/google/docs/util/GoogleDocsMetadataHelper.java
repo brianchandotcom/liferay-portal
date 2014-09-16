@@ -16,12 +16,11 @@ package com.liferay.document.library.google.docs.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
@@ -38,33 +37,29 @@ import java.util.Map;
  */
 public class GoogleDocsMetadataHelper {
 
-	public GoogleDocsMetadataHelper(FileVersion fileVersion)
-		throws PortalException {
+	public GoogleDocsMetadataHelper(DLFileEntry dlFileEntry) {
+		try {
+			_dlFileVersion = dlFileEntry.getFileVersion();
 
-		_fileVersion = fileVersion;
+			initDDMStructure(dlFileEntry.getDLFileEntryType());
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
+	}
 
-		if (_fileVersion.getModel() instanceof DLFileVersion) {
-			DLFileVersion dlFileVersion = (DLFileVersion)fileVersion.getModel();
+	public GoogleDocsMetadataHelper(DLFileEntryType dlFileEntryType) {
+		initDDMStructure(dlFileEntryType);
+	}
 
-			long fileEntryTypeId = dlFileVersion.getFileEntryTypeId();
+	public GoogleDocsMetadataHelper(DLFileVersion dlFileVersion) {
+		_dlFileVersion = dlFileVersion;
 
-			DLFileEntryType dlFileEntryType =
-				DLFileEntryTypeServiceUtil.getFileEntryType(fileEntryTypeId);
-
-			List<DDMStructure> ddmStructures =
-				dlFileEntryType.getDDMStructures();
-
-			for (DDMStructure ddmStructure : ddmStructures) {
-				String structureKey = ddmStructure.getStructureKey();
-
-				if (structureKey.equals(
-						GoogleDocsConstants.DDM_STRUCTURE_KEY_GOOGLE_DOCS)) {
-
-					_ddmStructure = ddmStructure;
-
-					break;
-				}
-			}
+		try {
+			initDDMStructure(dlFileVersion.getDLFileEntryType());
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
 		}
 	}
 
@@ -72,6 +67,10 @@ public class GoogleDocsMetadataHelper {
 		initFields();
 
 		Field field = _fields.get(fieldName);
+
+		if (field == null) {
+			throw new IllegalArgumentException("Unknown field " + fieldName);
+		}
 
 		Serializable value = field.getValue();
 
@@ -90,15 +89,33 @@ public class GoogleDocsMetadataHelper {
 		return false;
 	}
 
+	protected void initDDMStructure(DLFileEntryType dlFileEntryType) {
+		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+
+		for (DDMStructure ddmStructure : ddmStructures) {
+			String structureKey = ddmStructure.getStructureKey();
+
+			if (structureKey.equals(
+					GoogleDocsConstants.DDM_STRUCTURE_KEY_GOOGLE_DOCS)) {
+
+				_ddmStructure = ddmStructure;
+			}
+		}
+	}
+
 	protected void initFields() {
 		if (_fields == null) {
 			_fields = new HashMap<>();
+
+			if (_dlFileVersion == null) {
+				return;
+			}
 
 			try {
 				DLFileEntryMetadata dlFileEntryMetadata =
 					DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
 						_ddmStructure.getStructureId(),
-						_fileVersion.getFileVersionId());
+						_dlFileVersion.getFileVersionId());
 
 				Fields fields = StorageEngineUtil.getFields(
 					dlFileEntryMetadata.getDDMStorageId());
@@ -110,14 +127,14 @@ public class GoogleDocsMetadataHelper {
 			catch (PortalException pe) {
 				throw new SystemException(
 					"Unable to load DDM fields for file version " +
-						_fileVersion.getFileVersionId(),
+						_dlFileVersion.getFileVersionId(),
 					pe);
 			}
 		}
 	}
 
 	private DDMStructure _ddmStructure;
+	private DLFileVersion _dlFileVersion;
 	private Map<String, Field> _fields;
-	private FileVersion _fileVersion;
 
 }

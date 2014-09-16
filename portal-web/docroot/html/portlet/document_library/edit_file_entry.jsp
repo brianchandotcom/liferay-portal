@@ -113,6 +113,15 @@ if ((checkedOut || pending) && !PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED) {
 }
 
 DLFileVersionDisplayContext dlFileVersionDisplayContext = DLFileVersionDisplayContextUtil.getDLFileVersionActionsDisplayContext(request, response, fileVersion);
+
+DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext = null;
+
+if (fileEntry == null) {
+	dlEditFileEntryDisplayContext = DLEditFileEntryDisplayContextUtil.getDLEditFileEntryDisplayContext(request, response, dlFileEntryType);
+}
+else {
+	dlEditFileEntryDisplayContext = DLEditFileEntryDisplayContextUtil.getDLEditFileEntryDisplayContext(request, response, fileEntry);
+}
 %>
 
 <c:if test="<%= Validator.isNull(referringPortletResource) %>">
@@ -215,11 +224,7 @@ DLFileVersionDisplayContext dlFileVersionDisplayContext = DLFileVersionDisplayCo
 	</liferay-ui:error>
 
 	<%
-	long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
-
-	if (fileMaxSize == 0) {
-		fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
-	}
+	long fileMaxSize = dlEditFileEntryDisplayContext.getMaximumUploadSize();
 	%>
 
 	<liferay-ui:error exception="<%= FileSizeException.class %>">

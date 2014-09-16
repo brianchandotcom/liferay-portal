@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME</td>
-	<td>//iframe[contains(@src,'contenttargetingportlet')]</td>
+	<td>//iframe[contains(@src,'usersegmentcontentdisplay')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -56,6 +56,47 @@
 <tr>
 	<td>ENTRY_CONTENT</td>
 	<td>//div[@class='asset-content']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PREVIEW-->
+<tr>
+	<td>PREVIEW_SELECTED_BELONGS</td>
+	<td>//div[@class='content-preview selected']/div[contains(.,'${key_userSegmentName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_DOES_NOT_BELONG</td>
+	<td>//div[@class='content-preview']/div[contains(.,'${key_userSegmentName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_OTHERWISE</td>
+	<td>//div[contains(@class,'content-preview')]/div[contains(.,'Default')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_SELECTED_OTHERWISE</td>
+	<td>//div[@class='content-preview selected']/div[contains(.,'Default')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_1</td>
+	<td>//div[@data-index='0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_2</td>
+	<td>//div[@data-index='1']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_DOCUMENT_1_PNG</td>
+	<td>portal/portlets/user_segment_content_display_document.png</td>
 	<td></td>
 </tr>
 <tr>
@@ -129,6 +170,37 @@
 <tr>
 	<td>RULE_PANEL_DISPLAY_CONTENT_SELECT_CONTENT_CHOOSE_BUTTON</td>
 	<td>//tr[contains(.,'${key_contentTitle}')]//button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--OTHERWISE_PANEL-->
+<tr>
+	<td>OTHERWISE_PANEL</td>
+	<td>//div[contains(@class,'field-row')]//div[contains(.,'Otherwise')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO</td>
+	<td>//label[contains(.,'Display this content')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OTHERWISE_PANEL_SELECT_CONTENT_BUTTON</td>
+	<td>//div[contains(@class,'field-row')]//div[contains(.,'Otherwise')]//div/a[@title='Select Content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OTHERWISE_PANEL_CONTENT_DROPDOWN_MENULIST</td>
+	<td>//li/a[@data-type='${key_contentType}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_1</td>
+	<td>//div[@data-index='0']</td>
 	<td></td>
 </tr>
 </tbody>

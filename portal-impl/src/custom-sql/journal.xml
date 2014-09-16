@@ -295,10 +295,10 @@
 						([$STATUS$])
 						[$ARTICLE_FOLDER_ID$]
 					GROUP BY
-						JournalArticle.folderId, JournalArticle.articleId, JournalArticle.resourcePrimKey
+						JournalArticle.resourcePrimKey, JournalArticle.folderId, JournalArticle.articleId
 				) TEMP_TABLE
 				INNER JOIN
-					JournalArticle ON (TEMP_TABLE.version = JournalArticle.version and TEMP_TABLE.resourcePrimKey = JournalArticle.resourcePrimKey)
+					JournalArticle ON (TEMP_TABLE.resourcePrimKey = JournalArticle.resourcePrimKey and TEMP_TABLE.version = JournalArticle.version)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.findByF_ByNoAssets">

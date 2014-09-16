@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.repository.capabilities.TemporaryFilesCapabilit
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -45,7 +47,7 @@ public class TemporaryFilesCapabilityImpl implements TemporaryFilesCapability {
 	public static final long DEFAULT_TEMPORARY_FILES_TIMEOUT =
 		12 * 60 * 60 * 1000;
 
-	public static final String FOLDER_NAME_TMP = "tmp";
+	public static final String FOLDER_NAME_TEMP = "temp";
 
 	public static final String PROPERTY_TEMPORARY_FILES_TIMEOUT =
 		"temporaryFilesTimeout";
@@ -73,8 +75,8 @@ public class TemporaryFilesCapabilityImpl implements TemporaryFilesCapability {
 			serviceContext.setAddGuestPermissions(true);
 
 			return _localRepository.addFileEntry(
-				userId, folder.getFolderId(), fileName, mimeType, fileName, "",
-				"", file, serviceContext);
+				userId, folder.getFolderId(), fileName, mimeType, fileName,
+				StringPool.BLANK, StringPool.BLANK, file, serviceContext);
 		}
 		catch (IOException ioe) {
 			throw new SystemException("Unable to write temporary file", ioe);
@@ -145,7 +147,7 @@ public class TemporaryFilesCapabilityImpl implements TemporaryFilesCapability {
 			return DEFAULT_TEMPORARY_FILES_TIMEOUT;
 		}
 
-		return Long.valueOf(minimumLifespanMilliseconds);
+		return GetterUtil.getLong(minimumLifespanMilliseconds);
 	}
 
 	@Override
@@ -167,16 +169,16 @@ public class TemporaryFilesCapabilityImpl implements TemporaryFilesCapability {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		Folder tmpFolder = _addFolder(
-			userId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, FOLDER_NAME_TMP,
-			serviceContext);
+		Folder tempFolder = _addFolder(
+			userId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			FOLDER_NAME_TEMP, serviceContext);
 
-		Folder callerFolder = _addFolder(
-			userId, tmpFolder.getFolderId(), invokerUuid.toString(),
+		Folder invokerFolder = _addFolder(
+			userId, tempFolder.getFolderId(), invokerUuid.toString(),
 			serviceContext);
 
 		return _addFolders(
-			userId, callerFolder.getFolderId(), folderPath, serviceContext);
+			userId, invokerFolder.getFolderId(), folderPath, serviceContext);
 	}
 
 	protected Folder getTempFolder(UUID invokerUuid, String folderPath)
@@ -187,13 +189,13 @@ public class TemporaryFilesCapabilityImpl implements TemporaryFilesCapability {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		Folder tmpFolder = _getFolder(
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, FOLDER_NAME_TMP);
+		Folder tempFolder = _getFolder(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, FOLDER_NAME_TEMP);
 
-		Folder callerFolder = _getFolder(
-			tmpFolder.getFolderId(), invokerUuid.toString());
+		Folder invokerFolder = _getFolder(
+			tempFolder.getFolderId(), invokerUuid.toString());
 
-		return _getFolders(callerFolder.getFolderId(), folderPath);
+		return _getFolders(invokerFolder.getFolderId(), folderPath);
 	}
 
 	private Folder _addFolder(
@@ -206,7 +208,8 @@ public class TemporaryFilesCapabilityImpl implements TemporaryFilesCapability {
 		}
 		catch (NoSuchFolderException nsfe) {
 			return _localRepository.addFolder(
-				userId, parentFolderId, folderName, "", serviceContext);
+				userId, parentFolderId, folderName, StringPool.BLANK,
+				serviceContext);
 		}
 	}
 

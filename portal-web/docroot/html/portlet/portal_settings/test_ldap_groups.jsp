@@ -54,6 +54,15 @@ if (Validator.isNull(ParamUtil.getString(request, "groupMappingGroupName")) ||
 
 String groupFilter = ParamUtil.getString(request, "importGroupSearchFilter");
 
+if (!LDAPUtil.isValidFilter(groupFilter)) {
+%>
+
+	<liferay-ui:message key="please-enter-a-valid-ldap-search-filter" />
+
+<%
+	return;
+}
+
 String groupMappingsParam =
 	"groupName=" + ParamUtil.getString(request, "groupMappingGroupName") +
 	"\ndescription=" + ParamUtil.getString(request, "groupMappingDescription") +

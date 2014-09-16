@@ -25,8 +25,27 @@ import java.util.List;
  */
 public class JavaTermComparator implements Comparator<JavaTerm> {
 
+	public JavaTermComparator() {
+		this(true);
+	}
+
+	public JavaTermComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
 	@Override
 	public int compare(JavaTerm javaTerm1, JavaTerm javaTerm2) {
+		int value = doCompare(javaTerm1, javaTerm2);
+
+		if (_ascending) {
+			return value;
+		}
+		else {
+			return -value;
+		}
+	}
+
+	protected int doCompare(JavaTerm javaTerm1, JavaTerm javaTerm2) {
 		int type1 = javaTerm1.getType();
 		int type2 = javaTerm2.getType();
 
@@ -83,10 +102,10 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 			return -naturalOrderStringComparator.compare(name1, name2);
 		}
 
-		return _compareParameterTypes(javaTerm1, javaTerm2);
+		return compareParameterTypes(javaTerm1, javaTerm2);
 	}
 
-	private static int _compareParameterTypes(
+	protected int compareParameterTypes(
 		JavaTerm javaTerm1, JavaTerm javaTerm2) {
 
 		List<String> parameterTypes2 = javaTerm2.getParameterTypes();
@@ -127,5 +146,7 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 
 		return -1;
 	}
+
+	private boolean _ascending;
 
 }

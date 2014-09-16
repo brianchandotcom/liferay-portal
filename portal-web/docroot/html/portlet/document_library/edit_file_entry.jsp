@@ -112,8 +112,6 @@ if ((checkedOut || pending) && !PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED) {
 	saveAsDraft = true;
 }
 
-DLFileVersionDisplayContext dlFileVersionDisplayContext = DLFileVersionDisplayContextUtil.getDLFileVersionActionsDisplayContext(request, response, fileVersion);
-
 DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext = null;
 
 if (fileEntry == null) {
@@ -122,6 +120,8 @@ if (fileEntry == null) {
 else {
 	dlEditFileEntryDisplayContext = DLEditFileEntryDisplayContextUtil.getDLEditFileEntryDisplayContext(request, response, fileEntry);
 }
+
+DLFileVersionDisplayContext dlFileVersionDisplayContext = DLFileVersionDisplayContextUtil.getDLFileVersionActionsDisplayContext(request, response, fileVersion);
 %>
 
 <c:if test="<%= Validator.isNull(referringPortletResource) %>">

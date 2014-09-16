@@ -14,12 +14,9 @@
 
 package com.liferay.portlet.documentlibrary.context;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 
 import java.util.UUID;
@@ -36,27 +33,11 @@ public class DefaultDLEditFileEntryDisplayContext
 	public DefaultDLEditFileEntryDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
 		DLFileEntryType dlFileEntryType) {
-
-		_dlFileEntryType = dlFileEntryType;
-		_fileEntry = null;
 	}
 
 	public DefaultDLEditFileEntryDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
 		FileEntry fileEntry) {
-
-		_fileEntry = fileEntry;
-
-		if (fileEntry.getModel() instanceof DLFileEntry) {
-			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
-
-			try {
-				_dlFileEntryType = dlFileEntry.getDLFileEntryType();
-			}
-			catch (PortalException pe) {
-				throw new SystemException(pe);
-			}
-		}
 	}
 
 	@Override
@@ -78,8 +59,5 @@ public class DefaultDLEditFileEntryDisplayContext
 
 	private static final UUID _UUID = UUID.fromString(
 		"63326141-02F6-42B5-AE38-ABC73FA72BB5");
-
-	private DLFileEntryType _dlFileEntryType;
-	private FileEntry _fileEntry;
 
 }

@@ -342,7 +342,7 @@
 		</execute>
 
 		<execute macro="KaleoDesigner#viewSourceXML">
-			<var name="kdsourceXML" ><![CDATA[<![CDATA[The file sent by ${userName} on the ${siteName} website has been submitted.]]></var>
+			<var name="kdsourceXML" ><![CDATA[<![CDATA[The file sent by ${userName} on the ${siteName}  website has been submitted.]]></var>
 			<var name="line" value="16" />
 		</execute>
 	</command>
@@ -398,7 +398,7 @@
 		</execute>
 
 		<execute macro="KaleoDesigner#viewSourceXML">
-			<var name="kdsourceXML" ><![CDATA[<![CDATA[The file sent by ${userName} on the ${siteName} website has been submitted.]]></var>
+			<var name="kdsourceXML" ><![CDATA[<![CDATA[The file sent by ${userName} on the ${siteName}  website has been submitted.]]></var>
 			<var name="line" value="16" />
 		</execute>
 	</command>

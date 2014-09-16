@@ -177,12 +177,12 @@
 <!--WORKFLOW_TABLE-->
 <tr>
 	<td>WORKFLOW_TABLE_TITLE</td>
-	<td>xpath=(//div[contains(@id,'kaleoformsportlet_workflowDefinitions')]//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[1])[1]</td>
+	<td>//div[contains(@id,'kaleoformsportlet_workflowDefinitions')]//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>WORKFLOW_TABLE_ACTIONS</td>
-	<td>xpath=(//div[contains(@id,'kaleoformsportlet_workflowDefinitions')]//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[3]/div/a[@title='Actions'])[1]</td>
+	<td>//div[contains(@id,'kaleoformsportlet_workflowDefinitions')]//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[3]/div/a[@title='Actions']</td>
 	<td></td>
 </tr>
 <tr>

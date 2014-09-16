@@ -20,12 +20,11 @@ import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.NewClassLoaderJUnitTestRunner;
+import com.liferay.portal.kernel.test.SwappableSecurityManager;
 import com.liferay.portal.kernel.util.OSDetector;
 
 import java.io.File;
 import java.io.IOException;
-
-import java.security.Permission;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -103,52 +102,47 @@ public class FIFOUtilTest {
 		final AtomicInteger checkDeleteCount = new AtomicInteger();
 		final AtomicBoolean checkFlag = new AtomicBoolean();
 
-		SecurityManager securityManager = new SecurityManager() {
+		try (SwappableSecurityManager swappableSecurityManager =
+				new SwappableSecurityManager() {
 
-			@Override
-			public void checkDelete(String fileName) {
-				if (!checkFlag.get() && fileName.contains("temp-fifo-")) {
-					checkFlag.set(true);
+					@Override
+					public void checkDelete(String fileName) {
+						if (!checkFlag.get() &&
+							fileName.contains("temp-fifo-")) {
 
-					if (checkDeleteCount.getAndIncrement() == 0) {
-						File file = new File(fileName);
+							checkFlag.set(true);
 
-						Assert.assertTrue(file.delete());
+							if (checkDeleteCount.getAndIncrement() == 0) {
+								File file = new File(fileName);
+
+								Assert.assertTrue(file.delete());
+							}
+
+							checkFlag.set(false);
+						}
 					}
 
-					checkFlag.set(false);
-				}
-			}
+					@Override
+					public void checkRead(String file) {
+						if (!checkFlag.get() && file.contains("temp-fifo-")) {
+							try {
+								checkFlag.set(true);
 
-			@Override
-			public void checkRead(String file) {
-				if (!checkFlag.get() && file.contains("temp-fifo-")) {
-					try {
-						checkFlag.set(true);
+								new File(file).createNewFile();
 
-						new File(file).createNewFile();
-
-						checkFlag.set(false);
+								checkFlag.set(false);
+							}
+							catch (IOException ioe) {
+								Assert.fail(ioe.getMessage());
+							}
+						}
 					}
-					catch (IOException ioe) {
-						Assert.fail(ioe.getMessage());
-					}
-				}
-			}
 
-			@Override
-			public void checkPermission(Permission permission) {
-			}
+				}) {
 
-		};
+			swappableSecurityManager.install();
 
-		System.setSecurityManager(securityManager);
-
-		try {
 			Assert.assertTrue(FIFOUtil.isFIFOSupported());
-		}
-		finally {
-			System.setSecurityManager(null);
 		}
 
 		Assert.assertEquals(2, checkDeleteCount.get());

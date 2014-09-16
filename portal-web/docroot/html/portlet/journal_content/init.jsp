@@ -33,7 +33,7 @@ String articleId = PrefsParamUtil.getString(portletPreferences, renderRequest, "
 String ddmTemplateKey = PrefsParamUtil.getString(portletPreferences, renderRequest, "ddmTemplateKey");
 
 boolean showAvailableLocales = GetterUtil.getBoolean(portletPreferences.getValue("showAvailableLocales", StringPool.BLANK));
-String[] extensions = portletPreferences.getValues("extensions", null);
+String[] extensions = StringUtil.split(PrefsParamUtil.getString(portletPreferences, renderRequest, "extensions"));
 boolean enablePrint = GetterUtil.getBoolean(portletPreferences.getValue("enablePrint", null));
 boolean enableRelatedAssets = GetterUtil.getBoolean(portletPreferences.getValue("enableRelatedAssets", null), true);
 boolean enableRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableRatings", null));

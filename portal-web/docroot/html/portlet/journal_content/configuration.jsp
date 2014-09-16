@@ -41,7 +41,7 @@ catch (NoSuchArticleException nsae) {
 
 <liferay-portlet:renderURL portletConfiguration="true" varImpl="configurationRenderURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm1">
+<aui:form action="<%= configurationActionURL %>" method="post" name="fm1" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value='<%= configurationRenderURL + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur %>' />
 
@@ -218,12 +218,13 @@ catch (NoSuchArticleException nsae) {
 	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
 </aui:form>
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
+<aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value='<%= configurationRenderURL + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur" + cur %>' />
 	<aui:input name="preferences--groupId--" type="hidden" value="<%= articleGroupId %>" />
 	<aui:input name="preferences--articleId--" type="hidden" value="<%= articleId %>" />
 	<aui:input name="preferences--ddmTemplateKey--" type="hidden" value="<%= ddmTemplateKey %>" />
+	<aui:input name="preferences--extensions--" type="hidden" value="<%= extensions %>" />
 
 	<aui:fieldset>
 		<aui:input name="portletId" type="resource" value="<%= portletResource %>" />
@@ -234,18 +235,40 @@ catch (NoSuchArticleException nsae) {
 			<aui:input name="preferences--showAvailableLocales--" type="checkbox" value="<%= showAvailableLocales %>" />
 		</aui:field-wrapper>
 
-		<aui:field-wrapper helpMessage='<%= !openOfficeServerEnabled ? "enabling-openoffice-integration-provides-document-conversion-functionality" : StringPool.BLANK %>' label="enable-conversion-to">
+		<%
+		List<KeyValuePair> currentExtensions = new ArrayList<KeyValuePair>();
 
-			<%
-			for (String conversion : conversions) {
-			%>
+		if (extensions == null) {
+			extensions = new String[0];
+		}
 
-				<aui:input checked="<%= ArrayUtil.contains(extensions, conversion) %>" disabled="<%= !openOfficeServerEnabled %>" id='<%= "extensions" + conversion %>' inlineField="<%= true %>" label="<%= StringUtil.toUpperCase(conversion) %>" name="extensions" type="checkbox" value="<%= conversion %>" />
+		for (String extension : extensions) {
+			currentExtensions.add(new KeyValuePair(extension, StringUtil.toUpperCase(extension)));
+		}
 
-			<%
+		Arrays.sort(extensions);
+
+		List<KeyValuePair> availableExtensions = new ArrayList<KeyValuePair>();
+
+		for (String conversion : conversions) {
+			if (Arrays.binarySearch(extensions, conversion) < 0) {
+				availableExtensions.add(new KeyValuePair(conversion, StringUtil.toUpperCase(conversion)));
 			}
-			%>
+		}
 
+		availableExtensions = ListUtil.sort(availableExtensions, new KeyValuePairComparator(false, true));
+		%>
+
+		<aui:field-wrapper helpMessage='<%= !openOfficeServerEnabled ? "enabling-openoffice-integration-provides-document-conversion-functionality" : StringPool.BLANK %>' label="enable-conversion-to">
+			<liferay-ui:input-move-boxes
+				leftBoxName="currentExtensions"
+				leftList="<%= currentExtensions %>"
+				leftReorder="true"
+				leftTitle="current"
+				rightBoxName="availableExtensions"
+				rightList="<%= availableExtensions %>"
+				rightTitle="available"
+			/>
 		</aui:field-wrapper>
 
 		<aui:field-wrapper>
@@ -291,5 +314,16 @@ catch (NoSuchArticleException nsae) {
 			displayArticleId.addClass('modified');
 		},
 		['aui-base']
+	);
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />saveConfiguration',
+		function() {
+			document.<portlet:namespace />fm.<portlet:namespace />extensions.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentExtensions);
+
+			submitForm(document.<portlet:namespace />fm);
+		},
+		['liferay-util-list-fields']
 	);
 </aui:script>

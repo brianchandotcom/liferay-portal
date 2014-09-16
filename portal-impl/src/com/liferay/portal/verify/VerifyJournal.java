@@ -75,9 +75,9 @@ public class VerifyJournal extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
+		verifyContent();
 		verifyCreateDate();
 		updateFolderAssets();
-		verifyContent();
 		verifyOracleNewLine();
 		verifyPermissionsAndAssets();
 		verifySearch();
@@ -167,74 +167,78 @@ public class VerifyJournal extends VerifyProcess {
 
 				String xml = article.getContent();
 
-				Document doc = SAXReaderUtil.read(xml);
+				Document document = SAXReaderUtil.read(xml);
 
-				Element root = doc.getRootElement();
+				Element rootElement = document.getRootElement();
 
-				List<Element> rootElements = root.elements();
+				List<Element> elements = rootElement.elements();
 
-				for (Element element : rootElements) {
-					if (element.attributeValue("type").equals(
-							"document_library")) {
+				for (Element element : elements) {
+					String type = element.attributeValue("type");
 
-						Element dynamicContent = element.element(
-							"dynamic-content");
+					if (!type.equals("document_library")) {
+						continue;
+					}
 
-						String path = (String)dynamicContent.getData();
+					Element dynamicContentElement = element.element(
+						"dynamic-content");
 
-						String[] pathElements = StringUtil.split(
-							path, StringPool.SLASH);
+					String path = (String)dynamicContentElement.getData();
 
-						if (pathElements.length == 5) {
-							long groupId = GetterUtil.getLong(pathElements[2]);
-							long folderId = GetterUtil.getLong(pathElements[3]);
-							String title = HttpUtil.decodeURL(
-								HtmlUtil.escape(pathElements[4]));
+					String[] pathElements = StringUtil.split(
+						path, StringPool.SLASH);
 
-							if (title.contains(StringPool.SLASH)) {
-								title = StringUtil.replace(
-									title, StringPool.SLASH, StringPool.BLANK);
+					if (pathElements.length != 5) {
+						continue;
+					}
 
-								StringBundler sb = new StringBundler(9);
+					String title = HttpUtil.decodeURL(
+						HtmlUtil.escape(pathElements[4]));
 
-								for (int i = 0; i < 4; i++) {
-									sb.append(pathElements[i]);
-									sb.append(StringPool.SLASH);
-								}
+					if (title.contains(StringPool.SLASH)) {
+						title = StringUtil.replace(
+							title, StringPool.SLASH, StringPool.BLANK);
 
-								sb.append(title);
-								path = sb.toString();
-							}
+						StringBundler sb = new StringBundler(9);
 
-							try {
-								DLFileEntry dlFileEntry =
-									DLFileEntryLocalServiceUtil.
-										getFileEntryByTitle(
-											groupId, folderId, title);
+						for (int i = 0; i < 4; i++) {
+							sb.append(pathElements[i]);
+							sb.append(StringPool.SLASH);
+						}
 
-								String uuid = dlFileEntry.getUuid();
+						sb.append(title);
 
-								dynamicContent.setText(
-									path + StringPool.SLASH + uuid);
-							}
-							catch (NoSuchFileEntryException nsfee) {
-								if (_log.isWarnEnabled()) {
-									StringBundler sb = new StringBundler(4);
+						path = sb.toString();
+					}
 
-									sb.append("No document exists with title ");
-									sb.append(title);
-									sb.append(
-										" for dynamic content in article");
-									sb.append(article.getTitle());
+					try {
+						long folderId = GetterUtil.getLong(pathElements[3]);
+						long groupId = GetterUtil.getLong(pathElements[2]);
 
-									_log.warn(sb.toString());
-								}
-							}
+						DLFileEntry dlFileEntry =
+							DLFileEntryLocalServiceUtil.getFileEntryByTitle(
+								groupId, folderId, title);
+
+						String uuid = dlFileEntry.getUuid();
+
+						dynamicContentElement.setText(
+							path + StringPool.SLASH + uuid);
+					}
+					catch (NoSuchFileEntryException nsfee) {
+						if (_log.isWarnEnabled()) {
+							StringBundler sb = new StringBundler(4);
+
+							sb.append("No document exists with title ");
+							sb.append(title);
+							sb.append(" for dynamic content in article ");
+							sb.append(article.getTitle());
+
+							_log.warn(sb.toString());
 						}
 					}
 				}
 
-				article.setContent(doc.asXML());
+				article.setContent(document.asXML());
 
 				JournalArticleLocalServiceUtil.updateJournalArticle(article);
 			}

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -80,6 +81,8 @@ public class JavaClass {
 
 	public static final int TYPE_METHOD_PUBLIC_STATIC = 2;
 
+	public static final int TYPE_STATIC_BLOCK = -1;
+
 	public static final int[] TYPE_VARIABLE = {
 		JavaClass.TYPE_VARIABLE_PRIVATE, JavaClass.TYPE_VARIABLE_PRIVATE_STATIC,
 		JavaClass.TYPE_VARIABLE_PROTECTED,
@@ -107,6 +110,8 @@ public class JavaClass {
 		_absolutePath = absolutePath;
 		_content = content;
 		_indent = indent;
+
+		_staticBlocks = new ArrayList<JavaTerm>();
 	}
 
 	public String formatJavaTerms(
@@ -262,9 +267,7 @@ public class JavaClass {
 
 			String javaTermContent = javaTerm.getContent();
 
-			if (javaTermContent.startsWith(_indent + "//") ||
-				javaTermContent.contains(_indent + "static {")) {
-
+			if (javaTermContent.startsWith(_indent + "//")) {
 				previousJavaTerm = javaTerm;
 
 				continue;
@@ -272,9 +275,7 @@ public class JavaClass {
 
 			String previousJavaTermContent = previousJavaTerm.getContent();
 
-			if (previousJavaTermContent.startsWith(_indent + "//") ||
-				previousJavaTermContent.contains(_indent + "static {")) {
-
+			if (previousJavaTermContent.startsWith(_indent + "//")) {
 				previousJavaTerm = javaTerm;
 
 				continue;
@@ -571,7 +572,8 @@ public class JavaClass {
 				line.startsWith(_indent + "protected ") ||
 				line.equals(_indent + "protected") ||
 				line.startsWith(_indent + "public ") ||
-				line.equals(_indent + "public")) {
+				line.equals(_indent + "public") ||
+				line.equals(_indent + "static {")) {
 
 				Tuple tuple = getJavaTermTuple(line, _content, index, 1, 3);
 
@@ -603,7 +605,12 @@ public class JavaClass {
 							javaTermName, javaTermType, javaTermContent,
 							javaTermLineCount);
 
-						javaTerms.add(javaTerm);
+						if (javaTermType == JavaClass.TYPE_STATIC_BLOCK) {
+							_staticBlocks.add(javaTerm);
+						}
+						else {
+							javaTerms.add(javaTerm);
+						}
 					}
 				}
 
@@ -638,7 +645,12 @@ public class JavaClass {
 			javaTerm = new JavaTerm(
 				javaTermName, javaTermType, javaTermContent, javaTermLineCount);
 
-			javaTerms.add(javaTerm);
+			if (javaTermType == JavaClass.TYPE_STATIC_BLOCK) {
+				_staticBlocks.add(javaTerm);
+			}
+			else {
+				javaTerms.add(javaTerm);
+			}
 		}
 
 		return javaTerms;
@@ -794,6 +806,9 @@ public class JavaClass {
 				}
 			}
 		}
+		else if (line.startsWith(_indent + "static {")) {
+			return new Tuple("static", TYPE_STATIC_BLOCK);
+		}
 
 		if (numLines < maxLines) {
 			int posStartNextLine =
@@ -852,6 +867,10 @@ public class JavaClass {
 	}
 
 	protected boolean isValidJavaTerm(String content) {
+		if (content.startsWith(_indent + "static {")) {
+			return true;
+		}
+
 		while (!content.startsWith(_indent + "private") &&
 			   !content.startsWith(_indent + "protected") &&
 			   !content.startsWith(_indent + "public")) {
@@ -936,5 +955,6 @@ public class JavaClass {
 	private String _content;
 	private String _fileName;
 	private String _indent;
+	private List<JavaTerm> _staticBlocks;
 
 }

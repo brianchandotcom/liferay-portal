@@ -36,6 +36,12 @@ public interface DLFileVersion extends DLFileVersionModel, PersistedModel,
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDDMStructures()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType getDLFileEntryType()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	@Override
 	public java.lang.String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException;

@@ -143,7 +143,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	@Override
 	public void checkPortlet(Portlet portlet) throws PortalException {
 		long companyId = portlet.getCompanyId();
-		String name = portlet.getPortletId();
+		String name = portlet.getRootPortletId();
 
 		int resourcePermissionsCount =
 			resourcePermissionLocalService.getResourcePermissionsCount(

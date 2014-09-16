@@ -615,9 +615,9 @@ public class ResourcePermissionLocalServiceImpl
 				"The list of resources must contain at least two values");
 		}
 
-		Resource fristResource = resources.get(0);
+		Resource firstResource = resources.get(0);
 
-		if (fristResource.getScope() != ResourceConstants.SCOPE_INDIVIDUAL) {
+		if (firstResource.getScope() != ResourceConstants.SCOPE_INDIVIDUAL) {
 			throw new IllegalArgumentException(
 				"The first resource must be individual scope");
 		}
@@ -632,8 +632,8 @@ public class ResourcePermissionLocalServiceImpl
 		// See LPS-47464
 
 		if (resourcePermissionPersistence.countByC_N_S_P(
-				fristResource.getCompanyId(), fristResource.getName(),
-				fristResource.getScope(), fristResource.getPrimKey()) < 1) {
+				firstResource.getCompanyId(), firstResource.getName(),
+				firstResource.getScope(), firstResource.getPrimKey()) < 1) {
 
 			return false;
 		}

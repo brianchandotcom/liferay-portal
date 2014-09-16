@@ -16,10 +16,6 @@
 		<var name="key_dmRepositoryName" value="${dmRepositoryName}" />
 
 		<execute action="CPDocumentsandmedia#assertClick" locator-key1="FILTER_REPOSITORY" value1="${dmRepositoryName}" />
-
-		<var name="key_dmFolderName" value="${dmRepositoryName}" />
-
-		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="BREADCRUMB_LAST" value1="${dmRepositoryName}" />
 	</command>
 
 	<command name="tearDownCP">
@@ -50,5 +46,11 @@
 				<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 		</while>
+	</command>
+
+	<command name="viewCP">
+		<var name="key_dmFolderName" value="${dmRepositoryName}" />
+
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="BREADCRUMB_LAST" value1="${dmRepositoryName}" />
 	</command>
 </definition>

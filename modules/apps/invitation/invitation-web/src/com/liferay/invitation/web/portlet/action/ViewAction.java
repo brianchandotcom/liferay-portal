@@ -53,7 +53,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Charles May
  * @author Peter Fellwock
  */
-
 @Component(
 	immediate = true,
 	property = {
@@ -65,8 +64,9 @@ import org.osgi.service.component.annotations.Component;
 public class ViewAction implements ActionCommand {
 
 	@Override
-	public boolean processCommand(PortletRequest portletRequest,
-		PortletResponse portletResponse) throws PortletException {
+	public boolean processCommand(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws PortletException {
 
 		Set<String> invalidEmailAddresses = new HashSet<String>();
 		Set<String> validEmailAddresses = new HashSet<String>();
@@ -107,10 +107,12 @@ public class ViewAction implements ActionCommand {
 		String fromAddress = user.getEmailAddress();
 		String fromName = user.getFullName();
 
-		InternetAddress from;
+		InternetAddress from = null;
+
 		try {
 			from = new InternetAddress(fromAddress, fromName);
-		} catch (UnsupportedEncodingException uee) {
+		}
+		catch (UnsupportedEncodingException uee) {
 			throw new PortletException(uee);
 		}
 
@@ -118,10 +120,12 @@ public class ViewAction implements ActionCommand {
 
 		String portalURL = PortalUtil.getPortalURL(portletRequest);
 
-		String layoutFullURL;
+		String layoutFullURL = null;
+
 		try {
 			layoutFullURL = PortalUtil.getLayoutFullURL(layout, themeDisplay);
-		} catch (PortalException pe) {
+		}
+		catch (PortalException pe) {
 			throw new PortletException(pe);
 		}
 
@@ -153,7 +157,8 @@ public class ViewAction implements ActionCommand {
 			},
 			new String[] {
 				fromAddress, fromName, layoutFullURL, portalURL
-			});
+			}
+		);
 
 		body = StringUtil.replace(
 			body,
@@ -163,13 +168,16 @@ public class ViewAction implements ActionCommand {
 			},
 			new String[] {
 				fromAddress, fromName, layoutFullURL, portalURL
-			});
+			}
+		);
 
 		for (String emailAddress : validEmailAddresses) {
-			InternetAddress to;
+			InternetAddress to = null;
+
 			try {
 				to = new InternetAddress(emailAddress);
-			} catch (AddressException ae) {
+			}
+			catch (AddressException ae) {
 				throw new PortletException(ae);
 			}
 
@@ -196,4 +204,5 @@ public class ViewAction implements ActionCommand {
 
 		return true;
 	}
+
 }

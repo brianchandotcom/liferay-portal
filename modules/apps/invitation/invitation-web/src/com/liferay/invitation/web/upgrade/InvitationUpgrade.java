@@ -64,10 +64,11 @@ public class InvitationUpgrade {
 		};
 
 		_releaseLocalService.updateRelease(
-				InvitationPortlet.class.getName(),
-				Collections.<UpgradeProcess> singletonList(upgradePortletId), 1,
-				0, false);
+			InvitationPortlet.class.getName(),
+			Collections.<UpgradeProcess> singletonList(upgradePortletId), 1, 0,
+			false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;
+
 }

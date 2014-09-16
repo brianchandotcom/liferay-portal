@@ -32,6 +32,10 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
+		<execute macro="DMDocument#gotoCP">
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		</execute>
+
 		<execute macro="DMDocument#viewCP">
 			<var name="dmDocumentSize" value="${dmDocumentSize}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
@@ -60,6 +64,10 @@
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#gotoCP">
+			<var name="dmDocumentTitle" value="${dmDocumentTitle} New" />
 		</execute>
 
 		<execute macro="DMDocument#viewCP">

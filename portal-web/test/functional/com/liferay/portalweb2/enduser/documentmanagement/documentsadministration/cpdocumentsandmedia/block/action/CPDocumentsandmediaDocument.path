@@ -18,6 +18,21 @@
 	<td></td>
 	<td></td>
 </tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='portlet-body']/div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE_DOCUMENT_VIEW</td>
+	<td>//div[@class='view']//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_DOWNLOAD_BUTTON</td>
@@ -37,6 +52,16 @@
 <tr>
 	<td>TOOLBAR_CHECKOUT_BUTTON</td>
 	<td>//div[@id='_199_fileEntryToolbar']/div/button[contains(.,'Checkout')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_CANCEL_CHECKOUT_BUTTON</td>
+	<td>//div[@id='_199_fileEntryToolbar']/div/button[contains(.,'Cancel Checkout')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_CHECKIN_BUTTON</td>
+	<td>//div[@id='_199_fileEntryToolbar']/div/button[contains(.,'Checkin')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -139,6 +164,33 @@
 <tr>
 	<td>COMMENTS_SUCCESS_MESSAGE</td>
 	<td>//div[contains(@class,'lfr-message-response') and contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DOCUMENT_DETAILS-->
+<tr>
+	<td>DOCUMENT_DETAILS_VERSION</td>
+	<td>//h3[contains(@class,'version') and not(contains(@class,'icon-lock'))]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_DETAILS_VERSION_LOCKED</td>
+	<td>//h3[contains(@class,'version') and contains(@class,'icon-lock')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DOCUMENT_EXTRACTED_METADATA-->
+<tr>
+	<td>DOCUMENT_EXTRACTED_METADATA_FIELD</td>
+	<td>//div[@id='documentLibraryAssetMetadataPanelContent']/div/div/div/label[contains(.,'${key_metadataLabel}')]/../../div[contains(.,'${key_metadataData}')]</td>
 	<td></td>
 </tr>
 <tr>

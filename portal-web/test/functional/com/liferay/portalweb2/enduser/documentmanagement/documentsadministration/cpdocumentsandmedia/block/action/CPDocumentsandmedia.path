@@ -70,7 +70,7 @@
 </tr>
 <tr>
 	<td>SEARCH_FIELD</td>
-	<td>//input[@id='_199_keywords']</td>
+	<td>//input[contains(@id,'keywords')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -350,8 +350,8 @@
 </tr>
 <!--BREADCRUMB-->
 <tr>
-	<td>BREADCRUMB_FIRST</td>
-	<td>//ul[@class='breadcrumb']/li/a[contains(.,'Home')]</td>
+	<td>BREADCRUMB_HOME</td>
+	<td>//ul[contains(@class,'breadcrumb')]/li/a[contains(.,'Home')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -373,6 +373,16 @@
 <tr>
 	<td>DOCUMENT_CONTAINER_DOCUMENT</td>
 	<td>//div[contains(@id,'entriesContainer')]//div[contains(.,'${key_dmDocumentTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONTAINER_DOCUMENT_ICON_LOCKED</td>
+	<td>//div[contains(@id,'entriesContainer')]//div[contains(.,'${key_dmDocumentTitle}')]//img[@alt='Locked']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONTAINER_DOCUMENT_ICON_NOT_LOCKED</td>
+	<td>//div[contains(@id,'entriesContainer')]//div[contains(.,'${key_dmDocumentTitle}')]//img[not(contains(@alt,'Locked'))]</td>
 	<td></td>
 </tr>
 <tr>
@@ -454,6 +464,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FOLDER_MENULIST_DELETE</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FOLDER_MENULIST_MOVE</td>
 	<td>//a[@role='menuitem' and contains(.,'Move')]</td>
 	<td></td>
@@ -484,6 +499,11 @@
 	<td></td>
 </tr>
 <!--DOCUMENT_MENULIST-->
+<tr>
+	<td>DOCUMENT_MENULIST_DELETE</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>DOCUMENT_MENULIST_DOWNLOAD</td>
 	<td>//a[@role='menuitem' and contains(.,'Download')]</td>

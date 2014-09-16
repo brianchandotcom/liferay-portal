@@ -3,6 +3,10 @@
 		<case comparator="startsWith" locator-key1="TOOLBAR_">
 			<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" />
 		</case>
+
+		<case locator-key1="BREADCRUMB_HOME">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
 	</command>
 
 	<command name="assertTextEquals">

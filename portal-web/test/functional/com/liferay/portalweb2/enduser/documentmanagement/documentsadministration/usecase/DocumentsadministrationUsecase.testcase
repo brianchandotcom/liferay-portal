@@ -365,6 +365,10 @@
 			<var name="dmFolderName" value="Folder1" />
 		</execute>
 
+		<execute macro="DMDocument#gotoCP">
+			<var name="dmDocumentTitle" value="Zero Document File" />
+		</execute>
+
 		<execute macro="DMDocument#viewCP">
 			<var name="dmDocumentSize" value="0k" />
 			<var name="dmDocumentTitle" value="Zero Document File" />
@@ -496,6 +500,10 @@
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="DMDocument#gotoCP">
+			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 
 		<execute macro="DMDocument#viewCP">

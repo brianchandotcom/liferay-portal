@@ -559,7 +559,7 @@ public class CMISStore extends BaseStore {
 
 	private static class SessionHolder {
 
-		private final static Session session;
+		private static final Session session;
 
 		static {
 			Map<String, String> parameters = new HashMap<String, String>();

@@ -174,7 +174,7 @@ public class FindActionTest {
 		return themeDisplay;
 	}
 
-	private final static String[] _PORTLET_IDS = {
+	private static final String[] _PORTLET_IDS = {
 		PortletKeys.BLOGS_ADMIN, PortletKeys.BLOGS, PortletKeys.BLOGS_AGGREGATOR
 	};
 

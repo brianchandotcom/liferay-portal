@@ -46,7 +46,7 @@ public class ServletServiceContextComponentConfiguration
 	@Override
 	public InputStream getModelHintsExtInputStream() {
 		return _servletContext.getResourceAsStream(
-			"META-INF/portlet-model-hints-ext.xml");
+			"/WEB-INF/classes/META-INF/portlet-model-hints-ext.xml");
 	}
 
 	@Override

@@ -81,13 +81,19 @@ public class JavaClass {
 
 	public static final int TYPE_METHOD_PUBLIC_STATIC = 3;
 
-	public static final int TYPE_STATIC_BLOCK = -1;
+	public static final int TYPE_STATIC_BLOCK = 21;
 
 	public static final int[] TYPE_VARIABLE = {
 		JavaClass.TYPE_VARIABLE_PRIVATE, JavaClass.TYPE_VARIABLE_PRIVATE_STATIC,
 		JavaClass.TYPE_VARIABLE_PROTECTED,
 		JavaClass.TYPE_VARIABLE_PROTECTED_STATIC,
 		JavaClass.TYPE_VARIABLE_PUBLIC, JavaClass.TYPE_VARIABLE_PUBLIC_STATIC,
+	};
+
+	public static final int[] TYPE_VARIABLE_STATIC = {
+		JavaClass.TYPE_VARIABLE_PRIVATE_STATIC,
+		JavaClass.TYPE_VARIABLE_PROTECTED_STATIC,
+		JavaClass.TYPE_VARIABLE_PUBLIC_STATIC
 	};
 
 	public static final int TYPE_VARIABLE_PRIVATE = 22;
@@ -126,6 +132,12 @@ public class JavaClass {
 		}
 
 		String originalContent = _content;
+
+		javaTerms = addStaticBlocks(javaTerms);
+
+		if (!originalContent.equals(_content)) {
+			return _content;
+		}
 
 		JavaTerm previousJavaTerm = null;
 
@@ -184,6 +196,49 @@ public class JavaClass {
 		}
 
 		return false;
+	}
+
+	protected Set<JavaTerm> addStaticBlocks(Set<JavaTerm> javaTerms) {
+		Set<JavaTerm> newJavaTerms = new TreeSet<JavaTerm>(
+			new JavaTermComparator());
+
+		Iterator<JavaTerm> javaTermsIterator = javaTerms.iterator();
+
+		while (javaTermsIterator.hasNext()) {
+			JavaTerm javaTerm = javaTermsIterator.next();
+
+			if (!isInJavaTermTypeGroup(
+				javaTerm.getType(), TYPE_VARIABLE_STATIC)) {
+
+				newJavaTerms.add(javaTerm);
+
+				continue;
+			}
+
+			Iterator<JavaTerm> staticBlocksIterator = _staticBlocks.iterator();
+
+			while (staticBlocksIterator.hasNext()) {
+				JavaTerm staticBlock = staticBlocksIterator.next();
+
+				String staticBlockContent = staticBlock.getContent();
+
+				if (staticBlockContent.contains(javaTerm.getName())) {
+					staticBlock.setType(javaTerm.getType() + 1);
+
+					newJavaTerms.add(staticBlock);
+
+					staticBlocksIterator.remove();
+				}
+			}
+
+			newJavaTerms.add(javaTerm);
+		}
+
+		if (!_staticBlocks.isEmpty()) {
+			newJavaTerms.addAll(_staticBlocks);
+		}
+
+		return newJavaTerms;
 	}
 
 	protected void checkAnnotationForMethod(
@@ -545,7 +600,7 @@ public class JavaClass {
 
 	protected Set<JavaTerm> getJavaTerms() throws Exception {
 		Set<JavaTerm> javaTerms = new TreeSet<JavaTerm>(
-			new JavaTermComparator());
+			new JavaTermComparator(false));
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(_content));

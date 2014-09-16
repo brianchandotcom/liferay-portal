@@ -886,8 +886,6 @@ public class JavaClass {
 		JavaTerm previousJavaTerm, JavaTerm javaTerm,
 		List<String> javaTermSortExclusions) {
 
-		String javaTermContent = javaTerm.getContent();
-
 		if (previousJavaTerm == null) {
 			return;
 		}
@@ -899,8 +897,6 @@ public class JavaClass {
 
 			return;
 		}
-
-			String previousJavaTermContent = previousJavaTerm.getContent();
 
 		if (previousJavaTerm.getLineCount() <= javaTerm.getLineCount()) {
 			return;
@@ -928,11 +924,11 @@ public class JavaClass {
 		}
 		else {
 			_content = StringUtil.replaceFirst(
-				_content, "\n" + javaTermContent,
-				"\n" + previousJavaTermContent);
+				_content, "\n" + javaTerm.getContent(),
+				"\n" + previousJavaTerm.getContent());
 			_content = StringUtil.replaceLast(
-				_content, "\n" + previousJavaTermContent,
-				"\n" + javaTermContent);
+				_content, "\n" + previousJavaTerm.getContent(),
+				"\n" + javaTerm.getContent());
 		}
 	}
 

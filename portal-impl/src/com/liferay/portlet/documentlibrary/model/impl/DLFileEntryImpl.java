@@ -92,6 +92,12 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 	}
 
 	@Override
+	public DLFileEntryType getDLFileEntryType() throws PortalException {
+		return DLFileEntryTypeLocalServiceUtil.getDLFileEntryType(
+			getFileEntryTypeId());
+	}
+
+	@Override
 	public ExpandoBridge getExpandoBridge() {
 		try {
 			DLFileVersion dlFileVersion = getFileVersion();
@@ -146,8 +152,7 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 			return fieldsMap;
 		}
 
-		DLFileEntryType dlFileEntryType =
-			DLFileEntryTypeLocalServiceUtil.getFileEntryType(fileEntryTypeId);
+		DLFileEntryType dlFileEntryType = getDLFileEntryType();
 
 		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
 

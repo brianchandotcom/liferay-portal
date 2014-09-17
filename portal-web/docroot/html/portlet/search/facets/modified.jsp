@@ -221,12 +221,11 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 
 	var REGEX_DATE = /^\d{4}(-)(0[1-9]|1[012])\1(0[1-9]|[12][0-9]|3[01])$/;
 
-	var customRangeFrom = A.one('#<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>from');
-	var customRangeTo = A.one('#<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>to');
-
 	var dateFrom = null;
 	var dateTo = null;
 
+	var customRangeFrom = A.one('#<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>from');
+	var customRangeTo = A.one('#<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>to');
 	var searchButton = A.one('#<portlet:namespace />searchCustomRangeButton');
 
 	A.mix(
@@ -299,6 +298,13 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 		}
 	);
 
+	var calendarStrings = {
+		next: '<liferay-ui:message key="next" />',
+		none: '<liferay-ui:message key="none" />',
+		previous: '<liferay-ui:message key="previous" />',
+		today: '<liferay-ui:message key="today" />'
+	};
+
 	var fromDatepicker = new A.DatePicker(
 		{
 			after: {
@@ -323,18 +329,13 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 					],
 				</c:if>
 
-				selectionMode: 'single',
-
-				strings: {
-					next: '<liferay-ui:message key="next" />',
-					none: '<liferay-ui:message key="none" />',
-					previous: '<liferay-ui:message key="previous" />',
-					today: '<liferay-ui:message key="today" />'
-				}
+				selectionMode: 'single'
 			},
 			trigger: '#<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>from'
 		}
 	).render('#<%= randomNamespace %>custom-range-from');
+
+	fromDatepicker.set('strings', calendarStrings);
 
 	var toDatepicker = new A.DatePicker(
 		{
@@ -359,18 +360,13 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 					],
 				</c:if>
 
-				selectionMode: 'single',
-
-				strings: {
-					next: '<liferay-ui:message key="next" />',
-					none: '<liferay-ui:message key="none" />',
-					previous: '<liferay-ui:message key="previous" />',
-					today: '<liferay-ui:message key="today" />'
-				}
+				selectionMode: 'single'
 			},
 			trigger: '#<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>to'
 		}
 	).render('#<%= randomNamespace %>custom-range-to');
+
+	toDatepicker.set('strings', calendarStrings);
 
 	A.one('.<%= randomNamespace %>custom-range-toggle').on(
 		'click',

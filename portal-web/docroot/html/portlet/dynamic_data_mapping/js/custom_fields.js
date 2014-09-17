@@ -897,17 +897,21 @@ AUI.add(
 						instance.datePicker = new A.DatePicker(
 							{
 								calendar: {
-									locale: Liferay.ThemeDisplay.getLanguageId(),
-									strings: {
-										next: Liferay.Language.get('next'),
-										none: Liferay.Language.get('none'),
-										previous: Liferay.Language.get('previous'),
-										today: Liferay.Language.get('today')
-									}
+									locale: Liferay.ThemeDisplay.getLanguageId()
 								},
 								trigger: instance.get('templateNode')
 							}
 						).render();
+
+						instance.datePicker.calendar.set(
+							'strings',
+							{
+								next: Liferay.Language.get('next'),
+								none: Liferay.Language.get('none'),
+								previous: Liferay.Language.get('previous'),
+								today: Liferay.Language.get('today')
+							}
+						);
 					},
 
 					getPropertyModel: function() {

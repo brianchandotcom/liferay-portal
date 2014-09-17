@@ -180,13 +180,17 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 			minDate: A.DataType.DateMath.subtract(now, A.DataType.DateMath.YEAR, 2),
 			selectMultipleDates: true,
 			setValue: true,
-			showToday: true,
-			strings: {
-				next: '<liferay-ui:message key="next" />',
-				none: '<liferay-ui:message key="none" />',
-				previous: '<liferay-ui:message key="previous" />',
-				today: '<liferay-ui:message key="today" />'
-			}
+			showToday: true
 		}
 	).render('#<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>PlaceHolder');
+
+	dateSelection.set(
+		'strings',
+		{
+			next: '<liferay-ui:message key="next" />',
+			none: '<liferay-ui:message key="none" />',
+			previous: '<liferay-ui:message key="previous" />',
+			today: '<liferay-ui:message key="today" />'
+		}
+	);
 </aui:script>

@@ -30,6 +30,19 @@ import java.util.List;
  */
 public class SanitizerLogWrapper extends LogWrapper {
 
+	public static Log allowCRLF(Log log) {
+		if (!(log instanceof SanitizerLogWrapper)) {
+			return log;
+		}
+
+		SanitizerLogWrapper sanitizerLog = new SanitizerLogWrapper(
+			((SanitizerLogWrapper)log).getWrappedLog());
+
+		sanitizerLog._allowCRLF = true;
+
+		return sanitizerLog;
+	}
+
 	public static void init() {
 		if (!_LOG_SANITIZER_ENABLED) {
 			return;
@@ -180,11 +193,20 @@ public class SanitizerLogWrapper extends LogWrapper {
 		}
 
 		char[] chars = message.toCharArray();
+		boolean hasCRLF = false;
 		boolean hasLessThanCharacter = false;
 		boolean sanitized = false;
 
 		for (int i = 0; i < chars.length; i++) {
 			int c = chars[i];
+
+			if (_allowCRLF &&
+				((c == CharPool.NEW_LINE) || (c == CharPool.RETURN))) {
+
+				hasCRLF = true;
+
+				continue;
+			}
 
 			if ((c >= 0) && (c < _whitelistCharacters.length) &&
 				(_whitelistCharacters[c] != 0)) {
@@ -204,7 +226,7 @@ public class SanitizerLogWrapper extends LogWrapper {
 			escapeHTML = true;
 		}
 
-		if (sanitized || escapeHTML) {
+		if (sanitized || escapeHTML || hasCRLF) {
 			String sanitizedMessage = new String(chars);
 
 			if (escapeHTML) {
@@ -212,7 +234,13 @@ public class SanitizerLogWrapper extends LogWrapper {
 					sanitizedMessage, StringPool.LESS_THAN, _LESS_THAN_ESCAPED);
 			}
 
-			sanitizedMessage = sanitizedMessage.concat(_SANITIZED);
+			if (sanitized) {
+				sanitizedMessage = sanitizedMessage.concat(_SANITIZED);
+			}
+
+			if (hasCRLF) {
+				sanitizedMessage = _CRLF_WARNING.concat(sanitizedMessage);
+			}
 
 			return sanitizedMessage;
 		}
@@ -262,6 +290,10 @@ public class SanitizerLogWrapper extends LogWrapper {
 		return resultThrowable;
 	}
 
+	private static final String _CRLF_WARNING =
+		"SanitizerLogWrapper warning: Following message contains CRLF " +
+			"characters\n";
+
 	private static final String _LESS_THAN_ESCAPED = "&lt;";
 
 	private static boolean _LOG_SANITIZER_ENABLED = GetterUtil.getBoolean(
@@ -275,5 +307,7 @@ public class SanitizerLogWrapper extends LogWrapper {
 	private static final String _SANITIZED = " [Sanitized]";
 
 	private static int[] _whitelistCharacters = new int[128];
+
+	private boolean _allowCRLF;
 
 }

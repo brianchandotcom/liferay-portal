@@ -22,15 +22,24 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
@@ -65,6 +74,7 @@ public class VerifyJournal extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
+		verifyContent();
 		verifyCreateDate();
 		updateFolderAssets();
 		verifyOracleNewLine();
@@ -132,6 +142,77 @@ public class VerifyJournal extends VerifyProcess {
 		}
 		finally {
 			DataAccess.cleanUp(con, ps);
+		}
+	}
+
+	protected void verifyContent() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select id_ from JournalArticle where structureId != '' and " +
+					"content like '%document_library%'");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long id = rs.getLong("id_");
+
+				JournalArticle article =
+					JournalArticleLocalServiceUtil.getArticle(id);
+
+				Document document = SAXReaderUtil.read(article.getContent());
+
+				Element rootElement = document.getRootElement();
+
+				List<Element> elements = rootElement.elements();
+
+				for (Element element : elements) {
+					String type = element.attributeValue("type");
+
+					if (!type.equals("document_library")) {
+						continue;
+					}
+
+					Element dynamicContentElement = element.element(
+						"dynamic-content");
+
+					String path = dynamicContentElement.getStringValue();
+
+					String[] pathArray = StringUtil.split(path, CharPool.SLASH);
+
+					if (pathArray.length != 5) {
+						continue;
+					}
+
+					long groupId = GetterUtil.getLong(pathArray[2]);
+					long folderId = GetterUtil.getLong(pathArray[3]);
+					String title = HttpUtil.decodeURL(
+						HtmlUtil.escape(pathArray[4]));
+
+					DLFileEntry dlFileEntry =
+						DLFileEntryLocalServiceUtil.fetchFileEntry(
+							groupId, folderId, title);
+
+					if (dlFileEntry == null) {
+						continue;
+					}
+
+					dynamicContentElement.setText(
+						path + StringPool.SLASH + dlFileEntry.getUuid());
+				}
+
+				article.setContent(document.asXML());
+
+				JournalArticleLocalServiceUtil.updateJournalArticle(article);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 

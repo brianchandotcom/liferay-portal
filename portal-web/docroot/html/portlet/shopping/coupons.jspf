@@ -52,11 +52,13 @@ portletURL.setParameter("tabs1", tabs1);
 	searchContainer.setResults(results);
 	%>
 
-	<div class="separator"><!-- --></div>
+	<c:if test="<%= !results.isEmpty() %>">
+		<div class="separator"><!-- --></div>
 
-	<aui:button-row>
-		<aui:button disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteCoupons();" %>' value="delete" />
-	</aui:button-row>
+		<aui:button-row>
+			<aui:button disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteCoupons();" %>' value="delete" />
+		</aui:button-row>
+	</c:if>
 
 	<%
 	List resultRows = searchContainer.getResultRows();

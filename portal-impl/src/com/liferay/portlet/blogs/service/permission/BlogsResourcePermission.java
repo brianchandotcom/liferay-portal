@@ -15,22 +15,24 @@
 package com.liferay.portlet.blogs.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.ResourcePermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 
 /**
- * @author     Jorge Ferrer
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.portlet.blogs.service.permission.BlogsResourcePermission}
+ * @author Jorge Ferrer
  */
-@Deprecated
-public class BlogsPermission {
+@OSGiBeanProperties(
+	property = {"resource.name=com.liferay.portlet.blogs"}
+)
+public class BlogsResourcePermission implements ResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME = "com.liferay.portlet.blogs";
 
-	public static void check(
+	public void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)
 		throws PortalException {
 
@@ -39,7 +41,7 @@ public class BlogsPermission {
 		}
 	}
 
-	public static boolean contains(
+	public boolean contains(
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(

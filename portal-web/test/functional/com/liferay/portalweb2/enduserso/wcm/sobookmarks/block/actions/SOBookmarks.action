@@ -1,0 +1,21 @@
+<definition>
+	<command name="assertTextEquals">
+		<case locator-key1="BOOKMARKS_NO_ENTRIES_MESSAGE">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+
+	<command name="close">
+		<case locator-key1="BOOKMARKS_POP_UP_GOOGLE">
+			<execute function="Close#closeWindow" />
+		</case>
+
+		<case locator-key1="BOOKMARKS_POP_UP_MSN">
+			<execute function="Close#closeWindow" />
+		</case>
+
+		<case locator-key1="BOOKMARKS_POP_UP_YAHOO">
+			<execute function="Close#closeWindow" />
+		</case>
+	</command>
+</definition>

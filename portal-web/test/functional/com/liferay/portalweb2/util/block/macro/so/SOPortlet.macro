@@ -13,8 +13,8 @@
 			<elseif>
 				<equals arg1="${portletName}" arg2="Members" />
 				<then>
-					<execute action="SOMembers#makeVisible" locator-key1="MEMBERS_PORTLET_CONFIGURATION_BAR" />
-					<execute action="SOMembers#click" locator-key1="MEMBERS_PORTLET_OPTIONS_ICON" />
+					<execute action="SOMembersPortlet#makeVisible" locator-key1="MEMBERS_PORTLET_CONFIGURATION_BAR" />
+					<execute action="SOMembersPortlet#click" locator-key1="MEMBERS_PORTLET_OPTIONS_ICON" />
 				</then>
 			</elseif>
 			<elseif>

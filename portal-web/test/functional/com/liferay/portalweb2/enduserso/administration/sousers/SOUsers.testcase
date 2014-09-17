@@ -523,7 +523,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOSiteHome#assertTextNotPresent" value1="${pageName}" />
+		<execute action="SOSite#assertTextNotPresent" value1="${pageName}" />
 	</command>
 
 	<command name="ViewSiteRoleSOUser" priority="4">

@@ -218,6 +218,22 @@
 		<execute action="CPKaleoformsadminNewprocessEditworkflow#type" locator-key1="TITLE_FIELD" value1="${workflowDefinitionTitleEdit}" />
 	</command>
 
+	<command name="exportRecords">
+		<execute action="CPKaleoformsadminViewprocessrecords#assertClick" locator-key1="EXPORT" value1="Export" />
+		<execute action="CPKaleoformsadminViewprocessrecords#select" locator-key1="EXPORT_DIALOG_BOX_FILE_EXTENSION_SELECT" value1="${fileExtension}" />
+
+		<if>
+			<equals arg1="${approvedOnly}" arg2="true" />
+			<then>
+				<execute action="CPKaleoformsadminViewprocessrecords#check" locator-key1="EXPORT_DIALOG_BOX_APPROVED_SUBMISSIONS_CHECKBOX" />
+			</then>
+		</if>
+
+		<execute action="CPKaleoformsadminViewprocessrecords#assertClick" locator-key1="EXPORT_DIALOG_BOX_OK_BUTTON" value1="OK" />
+
+		<execute action="BasePortletExport#downloadTempFile" />
+	</command>
+
 	<command name="next">
 		<execute action="CPKaleoformsadminNewprocess#assertElementNotPresent" locator-key1="NEXT_BUTTON_INACTIVE" />
 		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="NEXT_BUTTON" value1="Next" />

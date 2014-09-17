@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.arquillian.extension.observer;
+package com.liferay.arquillian.extension.internal.observer;
 
-import com.liferay.arquillian.extension.descriptor.SpringDescriptor;
-import com.liferay.arquillian.extension.event.LiferayContextCreatedEvent;
+import com.liferay.arquillian.extension.internal.descriptor.SpringDescriptor;
+import com.liferay.arquillian.extension.internal.event.LiferayContextCreatedEvent;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.test.jdbc.ResetDatabaseUtilDataSource;
 import com.liferay.portal.util.InitUtil;
@@ -42,38 +42,37 @@ public class InitializeLiferayTestEnvironment {
 
 		ResetDatabaseUtilDataSource.initialize();
 
-		List<String> configLocalions = configLocations();
+		List<String> configLocations = configLocations();
 
 		InitUtil.initWithSpringAndModuleFramework(
-			false, configLocalions, false);
+			false, configLocations, false);
 
 		if (System.getProperty("external-properties") == null) {
 			System.setProperty("external-properties", "portal-test.properties");
 		}
 
-		_liferayContextCreatedEvent.fire(
-			new LiferayContextCreatedEvent(beforeClass.getTestClass()));
+		_event.fire(new LiferayContextCreatedEvent(beforeClass.getTestClass()));
 	}
 
-	private List<String> configLocations() {
-		ServiceLoader serviceLoader = _serviceLoaderInstance.get();
+	protected List<String> configLocations() {
+		ServiceLoader serviceLoader = _instance.get();
 
 		List<SpringDescriptor> springDescriptors =
 			(List<SpringDescriptor>)serviceLoader.all(SpringDescriptor.class);
 
-		List<String> configLocalions = new ArrayList<String>();
+		List<String> configLocations = new ArrayList<String>();
 
 		for (SpringDescriptor springDescriptor : springDescriptors) {
-			configLocalions.addAll(springDescriptor.getConfigLocations());
+			configLocations.addAll(springDescriptor.getConfigLocations());
 		}
 
-		return configLocalions;
+		return configLocations;
 	}
 
 	@Inject
-	private Event<LiferayContextCreatedEvent> _liferayContextCreatedEvent;
+	private Event<LiferayContextCreatedEvent> _event;
 
 	@Inject
-	private Instance<ServiceLoader> _serviceLoaderInstance;
+	private Instance<ServiceLoader> _instance;
 
 }

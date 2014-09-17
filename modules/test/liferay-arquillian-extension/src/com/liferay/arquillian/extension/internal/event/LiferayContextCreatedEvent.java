@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.arquillian.extension.event;
+package com.liferay.arquillian.extension.internal.event;
 
 import org.jboss.arquillian.core.spi.event.Event;
 import org.jboss.arquillian.test.spi.TestClass;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.arquillian.extension.descriptor;
+package com.liferay.arquillian.extension.internal.descriptor;
 
 import java.util.List;
 

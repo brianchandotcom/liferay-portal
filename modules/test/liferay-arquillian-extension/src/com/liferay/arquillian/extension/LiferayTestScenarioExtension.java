@@ -14,9 +14,9 @@
 
 package com.liferay.arquillian.extension;
 
-import com.liferay.arquillian.extension.descriptor.SpringDescriptor;
-import com.liferay.arquillian.extension.descriptor.SpringDescriptorImpl;
-import com.liferay.arquillian.extension.observer.InitializeLiferayTestEnvironment;
+import com.liferay.arquillian.extension.internal.descriptor.SpringDescriptor;
+import com.liferay.arquillian.extension.internal.descriptor.impl.SpringDescriptorImpl;
+import com.liferay.arquillian.extension.internal.observer.InitializeLiferayTestEnvironment;
 
 import org.jboss.arquillian.core.spi.LoadableExtension;
 

@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.arquillian.extension.descriptor;
+package com.liferay.arquillian.extension.internal.descriptor.impl;
 
+import com.liferay.arquillian.extension.internal.descriptor.SpringDescriptor;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PropsUtil;

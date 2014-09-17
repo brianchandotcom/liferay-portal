@@ -53,6 +53,8 @@ import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.concurrent.Future;
 
 import javax.imageio.ImageIO;
@@ -457,6 +459,8 @@ public class ImageToolImpl implements ImageTool {
 
 		ImageInputStream imageInputStream = null;
 
+		Queue<ImageReader> imageReaders = new LinkedList<ImageReader>();
+
 		RenderedImage renderedImage = null;
 
 		try {
@@ -466,16 +470,31 @@ public class ImageToolImpl implements ImageTool {
 			Iterator<ImageReader> iterator = ImageIO.getImageReaders(
 				imageInputStream);
 
-			if (iterator.hasNext()) {
+			boolean firstImageReader = true;
+
+			while (iterator.hasNext()) {
 				ImageReader imageReader = iterator.next();
 
-				imageReader.setInput(imageInputStream);
+				imageReaders.offer(imageReader);
 
-				renderedImage = imageReader.read(0);
-				formatName = imageReader.getFormatName();
+				if (firstImageReader) {
+					imageReader.setInput(imageInputStream);
+
+					renderedImage = imageReader.read(0);
+
+					formatName = imageReader.getFormatName();
+
+					firstImageReader = false;
+				}
 			}
 		}
 		finally {
+			while (!imageReaders.isEmpty()) {
+				ImageReader imageReader = imageReaders.poll();
+
+				imageReader.dispose();
+			}
+
 			if (imageInputStream != null) {
 				imageInputStream.close();
 			}

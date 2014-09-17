@@ -1808,7 +1808,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						}
 
 						if ((diff == 2) && (previousLineLeadingTabCount > 0) &&
-							line.endsWith(StringPool.SEMICOLON)) {
+							line.endsWith(StringPool.SEMICOLON) &&
+							!previousLine.contains(StringPool.TAB + "try (")) {
 
 							line = StringUtil.replaceFirst(
 								line, StringPool.TAB, StringPool.BLANK);

@@ -20,9 +20,12 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portlet.asset.AssetTagException;
+import com.liferay.portlet.asset.NoSuchTagException;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.model.AssetTagConstants;
 import com.liferay.portlet.asset.service.AssetTagServiceUtil;
@@ -62,14 +65,24 @@ public class EditTagAction extends PortletAction {
 			else if (cmd.equals(Constants.MERGE)) {
 				mergeTag(actionRequest);
 			}
+
+			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
-			SessionErrors.add(actionRequest, e.getClass());
+			if (e instanceof AssetTagException) {
+				SessionErrors.add(actionRequest, e.getClass(), e);
+			}
+			else if (e instanceof NoSuchTagException ||
+					 e instanceof PrincipalException) {
 
-			setForward(actionRequest, "portlet.asset_tag_admin.error");
+				SessionErrors.add(actionRequest, e.getClass());
+
+				setForward(actionRequest, "portlet.asset_tag_admin.error");
+			}
+			else {
+				throw e;
+			}
 		}
-
-		sendRedirect(actionRequest, actionResponse);
 	}
 
 	@Override

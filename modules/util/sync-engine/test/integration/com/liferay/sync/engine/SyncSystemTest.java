@@ -73,6 +73,22 @@ import org.slf4j.LoggerFactory;
 @RunWith(Parameterized.class)
 public class SyncSystemTest {
 
+	@Parameters
+	public static Collection<Object[]> getTestFilePaths() throws Exception {
+		Collection<Object[]> testFilePaths = new LinkedList<Object[]>();
+
+		Path testsFilePath = getResourceFilePath("tests");
+
+		DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+			testsFilePath, "*.json");
+
+		for (Path testFilePath : directoryStream) {
+			testFilePaths.add(new Object[] {testFilePath});
+		}
+
+		return testFilePaths;
+	}
+
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		PropsUtil.set(PropsKeys.SYNC_DATABASE_NAME, "sync-test");
@@ -93,28 +109,12 @@ public class SyncSystemTest {
 		}
 	}
 
-	@Parameters
-	public static Collection<Object[]> testFilePaths() throws Exception {
-		Collection<Object[]> testFilePaths = new LinkedList<Object[]>();
-
-		Path testsFilePath = getResourceFilePath("tests");
-
-		DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
-			testsFilePath, "*.json");
-
-		for (Path testFilePath : directoryStream) {
-			testFilePaths.add(new Object[] {testFilePath});
-		}
-
-		return testFilePaths;
-	}
-
 	public SyncSystemTest(Path testFilePath) {
 		_testFilePath = testFilePath;
 	}
 
 	@Test
-	public void run() throws Exception {
+	public void testRun() throws Exception {
 		SyncEngine.start();
 
 		_rootFilePathName = FileUtil.getFilePathName(

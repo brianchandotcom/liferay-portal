@@ -60,28 +60,28 @@ public class TCKtoJUnitConverter {
 
 			String s = StringPool.BLANK;
 
-			while ((s = unsyncBufferedReader.readLine()) != null) {
-				if (s.startsWith("Test finished: ")) {
-					int x = s.indexOf(StringPool.POUND);
-					int y = s.lastIndexOf(StringPool.SLASH, x);
+			while (((s = unsyncBufferedReader.readLine()) != null) &&
+				   s.startsWith("Test finished: ")) {
 
-					String className = s.substring(15, y);
+				int x = s.indexOf(StringPool.POUND);
+				int y = s.lastIndexOf(StringPool.SLASH, x);
 
-					className = StringUtil.replace(
-						className, StringPool.SLASH, StringPool.PERIOD);
+				String className = s.substring(15, y);
 
-					y = s.indexOf(StringPool.COLON, y);
+				className = StringUtil.replace(
+					className, StringPool.SLASH, StringPool.PERIOD);
 
-					if (y == -1) {
-						y = s.length();
-					}
+				y = s.indexOf(StringPool.COLON, y);
 
-					className += StringPool.PERIOD + s.substring(x + 1, y);
-
-					String message = s.substring(y + 2);
-
-					_convert(className, message, outputDir);
+				if (y == -1) {
+					y = s.length();
 				}
+
+				className += StringPool.PERIOD + s.substring(x + 1, y);
+
+				String message = s.substring(y + 2);
+
+				_convert(className, message, outputDir);
 			}
 		}
 	}

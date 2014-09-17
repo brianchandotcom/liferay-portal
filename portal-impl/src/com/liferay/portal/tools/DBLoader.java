@@ -14,9 +14,9 @@
 
 package com.liferay.portal.tools;
 
+import com.liferay.portal.kernel.io.DummyOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -51,27 +51,27 @@ public class DBLoader {
 
 			String line = null;
 
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				if (!line.startsWith("//")) {
-					sb.append(line);
+			while (((line = unsyncBufferedReader.readLine()) != null) &&
+				   !line.startsWith("//")) {
 
-					if (line.endsWith(";")) {
-						String sql = sb.toString();
+				sb.append(line);
 
-						sql = StringUtil.replace(
-							sql, new String[] {"\\\"", "\\\\", "\\n", "\\r"},
-							new String[] {"\"", "\\", "\\u000a", "\\u000a"});
+				if (line.endsWith(";")) {
+					String sql = sb.toString();
 
-						sb.setIndex(0);
+					sql = StringUtil.replace(
+						sql, new String[] {"\\\"", "\\\\", "\\n", "\\r"},
+						new String[] {"\"", "\\", "\\u000a", "\\u000a"});
 
-						try (PreparedStatement ps = con.prepareStatement(sql)) {
-							ps.executeUpdate();
-						}
-						catch (Exception e) {
-							System.out.println(sql);
+					sb.setIndex(0);
 
-							throw e;
-						}
+					try (PreparedStatement ps = con.prepareStatement(sql)) {
+						ps.executeUpdate();
+					}
+					catch (Exception e) {
+						System.out.println(sql);
+
+						throw e;
 					}
 				}
 			}
@@ -164,33 +164,33 @@ public class DBLoader {
 
 			String line = null;
 
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				if (!line.startsWith("--")) {
-					sb.append(line);
+			while (((line = unsyncBufferedReader.readLine()) != null) &&
+				   !line.startsWith("--")) {
 
-					if (line.endsWith(";")) {
-						String sql = sb.toString();
+				sb.append(line);
 
-						sql = StringUtil.replace(
-							sql,
-							new String[] {"\\'", "\\\"", "\\\\", "\\n", "\\r"},
-							new String[] {"''", "\"", "\\", "\n", "\r"});
+				if (line.endsWith(";")) {
+					String sql = sb.toString();
 
-						sql = sql.substring(0, sql.length() - 1);
+					sql = StringUtil.replace(
+						sql,
+						new String[] {"\\'", "\\\"", "\\\\", "\\n", "\\r"},
+						new String[] {"''", "\"", "\\", "\n", "\r"});
 
-						sb.setIndex(0);
+					sql = sql.substring(0, sql.length() - 1);
 
-						if (sql.startsWith("commit")) {
-							continue;
-						}
+					sb.setIndex(0);
 
-						ij.runScript(
-							con,
-							new UnsyncByteArrayInputStream(
-								sql.getBytes(StringPool.UTF8)),
-							StringPool.UTF8, new UnsyncByteArrayOutputStream(),
-							StringPool.UTF8);
+					if (sql.startsWith("commit")) {
+						continue;
 					}
+
+					ij.runScript(
+						con,
+						new UnsyncByteArrayInputStream(
+							sql.getBytes(StringPool.UTF8)),
+						StringPool.UTF8, new DummyOutputStream(),
+						StringPool.UTF8);
 				}
 			}
 		}

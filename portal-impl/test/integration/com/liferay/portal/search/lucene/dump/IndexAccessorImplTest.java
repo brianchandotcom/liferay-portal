@@ -210,7 +210,7 @@ public class IndexAccessorImplTest {
 
 	private void _assertHits(String key, boolean expectHit) throws Exception {
 		try (IndexReader indexReader = IndexReader.open(
-			_indexAccessorImpl.getLuceneDir());
+				_indexAccessorImpl.getLuceneDir());
 			IndexSearcher indexSearcher = new IndexSearcher(indexReader)) {
 
 			for (int i = 0; i < _documentsCount * 2; i++) {

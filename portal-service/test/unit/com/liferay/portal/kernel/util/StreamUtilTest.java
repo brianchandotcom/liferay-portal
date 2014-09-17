@@ -55,7 +55,7 @@ public class StreamUtilTest {
 	@Test
 	public void testTransferFileChannel() throws Exception {
 		try (FileChannel fromFileChannel = FileChannel.open(
-			_fromFilePath, StandardOpenOption.READ);
+				_fromFilePath, StandardOpenOption.READ);
 			FileChannel toFileChannel = FileChannel.open(
 				_toFilePath, StandardOpenOption.CREATE,
 				StandardOpenOption.WRITE)) {

@@ -1349,7 +1349,7 @@ public class SelectorIntrabandTest {
 			registrationReference.writeSelectionKey;
 
 		try (SelectableChannel readSelectableChannel =
-			readSelectionKey.channel();
+				readSelectionKey.channel();
 			SelectableChannel writeSelectableChannel =
 				writeSelectionKey.channel()) {
 

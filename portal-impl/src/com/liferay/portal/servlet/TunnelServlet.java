@@ -107,8 +107,6 @@ public class TunnelServlet extends HttpServlet {
 					response.getOutputStream())) {
 
 				oos.writeObject(returnObj);
-
-				oos.flush();
 			}
 			catch (IOException ioe) {
 				_log.error(ioe, ioe);

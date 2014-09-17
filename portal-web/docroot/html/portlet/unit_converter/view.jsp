@@ -61,19 +61,19 @@ Conversion conversion = ConverterUtil.getConversion(type, fromId, toId, fromValu
 					<aui:option label="acre" selected="<%= (fromId == 9) %>" value="9" />
 				</c:if>
 				<c:if test="<%= type == 2 %>">
-					<aui:option label="Liter" selected="<%= (fromId == 0) %>" value="0" />
-					<aui:option label="Cubic Centimeter" selected="<%= (fromId == 1) %>" value="1" />
-					<aui:option label="Cubic Inch (Liquid Measure)" selected="<%= (fromId == 2) %>" value="2" />
-					<aui:option label="Pint (Dry Measure)" selected="<%= (fromId == 3) %>" value="3" />
-					<aui:option label="Cor (Homer)" selected="<%= (fromId == 4) %>" value="4" />
-					<aui:option label="Lethek" selected="<%= (fromId == 5) %>" value="5" />
-					<aui:option label="Ephah" selected="<%= (fromId == 6) %>" value="6" />
-					<aui:option label="Seah" selected="<%= (fromId == 7) %>" value="7" />
-					<aui:option label="Omer" selected="<%= (fromId == 8) %>" value="8" />
-					<aui:option label="Cab" selected="<%= (fromId == 9) %>" value="9" />
-					<aui:option label="Bath" selected="<%= (fromId == 10) %>" value="10" />
-					<aui:option label="Hin" selected="<%= (fromId == 11) %>" value="11" />
-					<aui:option label="Log" selected="<%= (fromId == 12) %>" value="12" />
+					<aui:option label="liter" selected="<%= (fromId == 0) %>" value="0" />
+					<aui:option label="cubic-centimeter" selected="<%= (fromId == 1) %>" value="1" />
+					<aui:option label="cubic-inch" selected="<%= (fromId == 2) %>" value="2" />
+					<aui:option label="pint" selected="<%= (fromId == 3) %>" value="3" />
+					<aui:option label="cor" selected="<%= (fromId == 4) %>" value="4" />
+					<aui:option label="lethek" selected="<%= (fromId == 5) %>" value="5" />
+					<aui:option label="ephah" selected="<%= (fromId == 6) %>" value="6" />
+					<aui:option label="seah" selected="<%= (fromId == 7) %>" value="7" />
+					<aui:option label="omer" selected="<%= (fromId == 8) %>" value="8" />
+					<aui:option label="cab" selected="<%= (fromId == 9) %>" value="9" />
+					<aui:option label="bath" selected="<%= (fromId == 10) %>" value="10" />
+					<aui:option label="hin" selected="<%= (fromId == 11) %>" value="11" />
+					<aui:option label="log" selected="<%= (fromId == 12) %>" value="12" />
 				</c:if>
 				<c:if test="<%= type == 3 %>">
 					<aui:option label="kilogram" selected="<%= (fromId == 0) %>" value="0" />
@@ -87,17 +87,17 @@ Conversion conversion = ConverterUtil.getConversion(type, fromId, toId, fromValu
 					<aui:option label="gerah" selected="<%= (fromId == 8) %>" value="8" />
 				</c:if>
 				<c:if test="<%= type == 4 %>">
-					<aui:option label="Kelvin" selected="<%= (fromId == 0) %>" value="0" />
-					<aui:option label="Celcius" selected="<%= (fromId == 1) %>" value="1" />
-					<aui:option label="Fahrenheit" selected="<%= (fromId == 2) %>" value="2" />
-					<aui:option label="Rankine" selected="<%= (fromId == 3) %>" value="3" />
-					<aui:option label="Réaumure" selected="<%= (fromId == 4) %>" value="4" />
+					<aui:option label="kelvin" selected="<%= (fromId == 0) %>" value="0" />
+					<aui:option label="celsius" selected="<%= (fromId == 1) %>" value="1" />
+					<aui:option label="fahrenheit" selected="<%= (fromId == 2) %>" value="2" />
+					<aui:option label="rankine" selected="<%= (fromId == 3) %>" value="3" />
+					<aui:option label="reaumure" selected="<%= (fromId == 4) %>" value="4" />
 				</c:if>
 			</aui:select>
 		</aui:col>
 
 		<aui:col xs="6">
-			<aui:input label="To" name="to_value" size="30" type="number" value="<%= conversion.getToValue() %>" />
+			<aui:input disabled="<%= true %>" label="To" name="toValue" size="30" type="input" value="<%= conversion.getToValue() %>" />
 
 			<aui:select label="" name="toId">
 				<c:if test="<%= type == 0 %>">
@@ -126,19 +126,19 @@ Conversion conversion = ConverterUtil.getConversion(type, fromId, toId, fromValu
 					<aui:option label="acre" selected="<%= (toId == 9) %>" value="9" />
 				</c:if>
 				<c:if test="<%= type == 2 %>">
-					<aui:option label="Liter" selected="<%= (toId == 0) %>" value="0" />
-					<aui:option label="Cubic Centimeter" selected="<%= (toId == 1) %>" value="1" />
-					<aui:option label="Cubic Inch (Liquid Measure)" selected="<%= (toId == 2) %>" value="2" />
-					<aui:option label="Pint (Dry Measure)" selected="<%= (toId == 3) %>" value="3" />
-					<aui:option label="Cor (Homer)" selected="<%= (toId == 4) %>" value="4" />
-					<aui:option label="Lethek" selected="<%= (toId == 5) %>" value="5" />
-					<aui:option label="Ephah" selected="<%= (toId == 6) %>" value="6" />
-					<aui:option label="Seah" selected="<%= (toId == 7) %>" value="7" />
-					<aui:option label="Omer" selected="<%= (toId == 8) %>" value="8" />
-					<aui:option label="Cab" selected="<%= (toId == 9) %>" value="9" />
-					<aui:option label="Bath" selected="<%= (toId == 10) %>" value="10" />
-					<aui:option label="Hin" selected="<%= (toId == 11) %>" value="11" />
-					<aui:option label="Log" selected="<%= (toId == 12) %>" value="12" />
+					<aui:option label="liter" selected="<%= (toId == 0) %>" value="0" />
+					<aui:option label="cubic-centimeter" selected="<%= (toId == 1) %>" value="1" />
+					<aui:option label="cubic-inch" selected="<%= (toId == 2) %>" value="2" />
+					<aui:option label="pint" selected="<%= (toId == 3) %>" value="3" />
+					<aui:option label="cor" selected="<%= (toId == 4) %>" value="4" />
+					<aui:option label="lethek" selected="<%= (toId == 5) %>" value="5" />
+					<aui:option label="ephah" selected="<%= (toId == 6) %>" value="6" />
+					<aui:option label="seah" selected="<%= (toId == 7) %>" value="7" />
+					<aui:option label="omer" selected="<%= (toId == 8) %>" value="8" />
+					<aui:option label="cab" selected="<%= (toId == 9) %>" value="9" />
+					<aui:option label="bath" selected="<%= (toId == 10) %>" value="10" />
+					<aui:option label="hin" selected="<%= (toId == 11) %>" value="11" />
+					<aui:option label="log" selected="<%= (toId == 12) %>" value="12" />
 				</c:if>
 				<c:if test="<%= type == 3 %>">
 					<aui:option label="kilogram" selected="<%= (toId == 0) %>" value="0" />
@@ -152,11 +152,11 @@ Conversion conversion = ConverterUtil.getConversion(type, fromId, toId, fromValu
 					<aui:option label="gerah" selected="<%= (toId == 8) %>" value="8" />
 				</c:if>
 				<c:if test="<%= type == 4 %>">
-					<aui:option label="Kelvin" selected="<%= (toId == 0) %>" value="0" />
-					<aui:option label="Celcius" selected="<%= (toId == 1) %>" value="1" />
-					<aui:option label="Fahrenheit" selected="<%= (toId == 2) %>" value="2" />
-					<aui:option label="Rankine" selected="<%= (toId == 3) %>" value="3" />
-					<aui:option label="Réaumure" selected="<%= (toId == 4) %>" value="4" />
+					<aui:option label="kelvin" selected="<%= (toId == 0) %>" value="0" />
+					<aui:option label="celsius" selected="<%= (toId == 1) %>" value="1" />
+					<aui:option label="fahrenheit" selected="<%= (toId == 2) %>" value="2" />
+					<aui:option label="rankine" selected="<%= (toId == 3) %>" value="3" />
+					<aui:option label="reaumure" selected="<%= (toId == 4) %>" value="4" />
 				</c:if>
 			</aui:select>
 		</aui:col>
@@ -173,7 +173,25 @@ Conversion conversion = ConverterUtil.getConversion(type, fromId, toId, fromValu
 	<aui:button type="submit" value="convert" />
 </aui:form>
 
-<aui:script use="aui-node">
+<aui:script>
+	Liferay.provide(
+		window,
+		'<portlet:namespace />setBox',
+		function(oldBox, newBox) {
+			for (var i = oldBox.length - 1; i > -1; i--) {
+				oldBox.options[i] = null;
+			}
+
+			for (i = 0; i < newBox.length; i++) {
+				oldBox.options[i] = new Option(newBox[i].value, i);
+			}
+
+			oldBox.options[0].selected = true;
+		}
+	);
+</aui:script>
+
+<aui:script use="aui-io-request,aui-node,aui-parse-content">
 	var lengthArray = [
 		new Option(0, '<%= UnicodeLanguageUtil.get(request, "meter") %>'),
 		new Option(1, '<%= UnicodeLanguageUtil.get(request, "millimeter") %>'),
@@ -202,19 +220,19 @@ Conversion conversion = ConverterUtil.getConversion(type, fromId, toId, fromValu
 	];
 
 	var volumeArray = [
-		new Option(0, 'Liter'),
-		new Option(1, 'Cubic Centimeter'),
-		new Option(2, 'Cubic Inch (Liquid Measure)'),
-		new Option(3, 'Pint (Dry Measure)'),
-		new Option(4, 'Cor (Homer)'),
-		new Option(5, 'Lethek'),
-		new Option(6, 'Ephah'),
-		new Option(7, 'Seah'),
-		new Option(8, 'Omer'),
-		new Option(9, 'Cab'),
-		new Option(10, 'Bath'),
-		new Option(11, 'Hin'),
-		new Option(12, 'Log')
+		new Option(0, '<%= UnicodeLanguageUtil.get(request, "liter") %>'),
+		new Option(1, '<%= UnicodeLanguageUtil.get(request, "cubic-centimeter") %>'),
+		new Option(2, '<%= UnicodeLanguageUtil.get(request, "cubic-inch") %>'),
+		new Option(3, '<%= UnicodeLanguageUtil.get(request, "pint") %>'),
+		new Option(4, '<%= UnicodeLanguageUtil.get(request, "cor") %>'),
+		new Option(5, '<%= UnicodeLanguageUtil.get(request, "lethek") %>'),
+		new Option(6, '<%= UnicodeLanguageUtil.get(request, "ephah") %>'),
+		new Option(7, '<%= UnicodeLanguageUtil.get(request, "seah") %>'),
+		new Option(8, '<%= UnicodeLanguageUtil.get(request, "omer") %>'),
+		new Option(9, '<%= UnicodeLanguageUtil.get(request, "cab") %>'),
+		new Option(10, '<%= UnicodeLanguageUtil.get(request, "bath") %>'),
+		new Option(11, '<%= UnicodeLanguageUtil.get(request, "hin") %>'),
+		new Option(12, '<%= UnicodeLanguageUtil.get(request, "log") %>')
 	];
 
 	var massArray = [
@@ -230,11 +248,11 @@ Conversion conversion = ConverterUtil.getConversion(type, fromId, toId, fromValu
 	];
 
 	var temperatureArray = [
-		new Option(0, 'Kelvin'),
-		new Option(1, 'Celcius'),
-		new Option(2, 'Fahrenheit'),
-		new Option(3, 'Rankine'),
-		new Option(4, 'Réaumure')
+		new Option(0, '<%= UnicodeLanguageUtil.get(request, "kelvin") %>'),
+		new Option(1, '<%= UnicodeLanguageUtil.get(request, "celsius") %>'),
+		new Option(2, '<%= UnicodeLanguageUtil.get(request, "fahrenheit") %>'),
+		new Option(3, '<%= UnicodeLanguageUtil.get(request, "rankine") %>'),
+		new Option(4, '<%= UnicodeLanguageUtil.get(request, "reaumure") %>')
 	];
 
 	var selectType = A.one('#<portlet:namespace />type');
@@ -245,24 +263,24 @@ Conversion conversion = ConverterUtil.getConversion(type, fromId, toId, fromValu
 			var selectTypeTarget = event.currentTarget;
 
 			if (selectTypeTarget.get('value') == 0) {
-				Liferay.Util.setBox(document.<portlet:namespace />fm.<portlet:namespace />fromId, lengthArray);
-				Liferay.Util.setBox(document.<portlet:namespace />fm.<portlet:namespace />toId, lengthArray);
+				<portlet:namespace />setBox(document.<portlet:namespace />fm.<portlet:namespace />fromId, lengthArray);
+				<portlet:namespace />setBox(document.<portlet:namespace />fm.<portlet:namespace />toId, lengthArray);
 			}
 			else if (selectTypeTarget.get('value') == 1) {
-				Liferay.Util.setBox(document.<portlet:namespace />fm.<portlet:namespace />fromId, areaArray);
-				Liferay.Util.setBox(document.<portlet:namespace />fm.<portlet:namespace />toId, areaArray);
+				<portlet:namespace />setBox(document.<portlet:namespace />fm.<portlet:namespace />fromId, areaArray);
+				<portlet:namespace />setBox(document.<portlet:namespace />fm.<portlet:namespace />toId, areaArray);
 			}
 			else if (selectTypeTarget.get('value') == 2) {
-				Liferay.Util.setBox(document.<portlet:namespace />fm.<portlet:namespace />fromId, volumeArray);
-				Liferay.Util.setBox(document.<portlet:namespace />fm.<portlet:namespace />toId, volumeArray);
+				<portlet:namespace />setBox(document.<portlet:namespace />fm.<portlet:namespace />fromId, volumeArray);
+				<portlet:namespace />setBox(document.<portlet:namespace />fm.<portlet:namespace />toId, volumeArray);
 			}
 			else if (selectTypeTarget.get('value') == 3) {
-				Liferay.Util.setBox(document.<portlet:namespace />fm.<portlet:namespace />fromId, massArray);
-				Liferay.Util.setBox(document.<portlet:namespace />fm.<portlet:namespace />toId, massArray);
+				<portlet:namespace />setBox(document.<portlet:namespace />fm.<portlet:namespace />fromId, massArray);
+				<portlet:namespace />setBox(document.<portlet:namespace />fm.<portlet:namespace />toId, massArray);
 			}
 			else if (selectTypeTarget.get('value') == 4) {
-				Liferay.Util.setBox(document.<portlet:namespace />fm.<portlet:namespace />fromId, temperatureArray);
-				Liferay.Util.setBox(document.<portlet:namespace />fm.<portlet:namespace />toId, temperatureArray);
+				<portlet:namespace />setBox(document.<portlet:namespace />fm.<portlet:namespace />fromId, temperatureArray);
+				<portlet:namespace />setBox(document.<portlet:namespace />fm.<portlet:namespace />toId, temperatureArray);
 			}
 		}
 	);
@@ -270,15 +288,13 @@ Conversion conversion = ConverterUtil.getConversion(type, fromId, toId, fromValu
 	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
 		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />fromValue);
 	</c:if>
-</aui:script>
 
-<aui:script use="aui-io-request,aui-parse-content">
 	var form = A.one('#<portlet:namespace />fm');
 
 	form.on(
 		'submit',
 		function(event) {
-			var uri = form.getAttribute('action');
+			var uri = form.attr('action');
 			var parentNode = form.get('parentNode');
 
 			parentNode.plug(A.Plugin.ParseContent);

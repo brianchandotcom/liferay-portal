@@ -577,7 +577,7 @@
 		</execute>
 	</command>
 
-	<command name="OrganizationAdministratorActivate" priority="3">
+	<command known-issues="LPS-44878" name="OrganizationAdministratorActivate" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
@@ -877,7 +877,7 @@
 		</execute>
 	</command>
 
-	<command name="OrganizationUserManagement" priority="3">
+	<command known-issues="LPS-49879" name="OrganizationUserManagement" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>

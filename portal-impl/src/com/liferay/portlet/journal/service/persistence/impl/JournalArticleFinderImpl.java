@@ -145,11 +145,11 @@ public class JournalArticleFinderImpl
 
 	@Override
 	public int countByG_U_F_C(
-		long groupId, long userId, List<Long> folderIds, long classNameId,
+		long groupId, List<Long> folderIds, long classNameId,
 		QueryDefinition<JournalArticle> queryDefinition) {
 
 		return doCountByG_U_F_C(
-			groupId, userId, folderIds, classNameId, queryDefinition, false);
+			groupId, folderIds, classNameId, queryDefinition, false);
 	}
 
 	@Override
@@ -266,11 +266,11 @@ public class JournalArticleFinderImpl
 
 	@Override
 	public int filterCountByG_U_F_C(
-		long groupId, long userId, List<Long> folderIds, long classNameId,
+		long groupId, List<Long> folderIds, long classNameId,
 		QueryDefinition<JournalArticle> queryDefinition) {
 
 		return doCountByG_U_F_C(
-			groupId, userId, folderIds, classNameId, queryDefinition, true);
+			groupId, folderIds, classNameId, queryDefinition, true);
 	}
 
 	@Override
@@ -389,11 +389,11 @@ public class JournalArticleFinderImpl
 
 	@Override
 	public List<JournalArticle> filterFindByG_U_F_C(
-		long groupId, long userId, List<Long> folderIds, long classNameId,
+		long groupId, List<Long> folderIds, long classNameId,
 		QueryDefinition<JournalArticle> queryDefinition) {
 
 		return doFindByG_U_F_C(
-			groupId, userId, folderIds, classNameId, queryDefinition, true);
+			groupId, folderIds, classNameId, queryDefinition, true);
 	}
 
 	@Override
@@ -631,11 +631,11 @@ public class JournalArticleFinderImpl
 
 	@Override
 	public List<JournalArticle> findByG_U_F_C(
-		long groupId, long userId, List<Long> folderIds, long classNameId,
+		long groupId, List<Long> folderIds, long classNameId,
 		QueryDefinition<JournalArticle> queryDefinition) {
 
 		return doFindByG_U_F_C(
-			groupId, userId, folderIds, classNameId, queryDefinition, false);
+			groupId, folderIds, classNameId, queryDefinition, false);
 	}
 
 	@Override
@@ -829,7 +829,7 @@ public class JournalArticleFinderImpl
 	}
 
 	protected int doCountByG_U_F_C(
-		long groupId, long userId, List<Long> folderIds, long classNameId,
+		long groupId, List<Long> folderIds, long classNameId,
 		QueryDefinition<JournalArticle> queryDefinition,
 		boolean inlineSQLHelper) {
 
@@ -853,11 +853,6 @@ public class JournalArticleFinderImpl
 					getFolderIds(folderIds, JournalArticleImpl.TABLE_NAME));
 			}
 
-			if (userId <= 0) {
-				sql = StringUtil.replace(
-					sql, "(JournalArticle.userId = ?) AND", StringPool.BLANK);
-			}
-
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
 					sql, JournalArticle.class.getName(),
@@ -873,8 +868,12 @@ public class JournalArticleFinderImpl
 			qPos.add(groupId);
 			qPos.add(classNameId);
 
-			if (userId > 0) {
-				qPos.add(userId);
+			if (queryDefinition.getUserId() > 0) {
+				qPos.add(queryDefinition.getUserId());
+
+				if (queryDefinition.isIncludeOwner()) {
+					qPos.add(WorkflowConstants.STATUS_IN_TRASH);
+				}
 			}
 
 			for (long folderId : folderIds) {
@@ -1186,7 +1185,7 @@ public class JournalArticleFinderImpl
 	}
 
 	protected List<JournalArticle> doFindByG_U_F_C(
-		long groupId, long userId, List<Long> folderIds, long classNameId,
+		long groupId, List<Long> folderIds, long classNameId,
 		QueryDefinition<JournalArticle> queryDefinition,
 		boolean inlineSQLHelper) {
 
@@ -1213,11 +1212,6 @@ public class JournalArticleFinderImpl
 					getFolderIds(folderIds, JournalArticleImpl.TABLE_NAME));
 			}
 
-			if (userId <= 0) {
-				sql = StringUtil.replace(
-					sql, "(JournalArticle.userId = ?) AND", StringPool.BLANK);
-			}
-
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
 					sql, JournalArticle.class.getName(),
@@ -1234,8 +1228,12 @@ public class JournalArticleFinderImpl
 			qPos.add(groupId);
 			qPos.add(classNameId);
 
-			if (userId > 0) {
-				qPos.add(userId);
+			if (queryDefinition.getUserId() > 0) {
+				qPos.add(queryDefinition.getUserId());
+
+				if (queryDefinition.isIncludeOwner()) {
+					qPos.add(WorkflowConstants.STATUS_IN_TRASH);
+				}
 			}
 
 			for (long folderId : folderIds) {

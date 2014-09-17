@@ -97,43 +97,39 @@ AUI.add(
 					_afterMoveClick: function(event) {
 						var instance = this;
 
-						var cssClass;
 						var target = event.domEvent.target;
 						var targetBtn = target.ancestor('.btn', true);
 
 						if (targetBtn) {
-							cssClass = targetBtn.get('className');
+							var cssClass = targetBtn.get('className');
+							var from = instance._leftBox;
+							var to = instance._rightBox;
+							var sort = !instance.get('leftReorder');
+
+							if (cssClass.indexOf('move-right') !== -1) {
+								from = instance._rightBox;
+								to = instance._leftBox;
+								sort = !instance.get('rightReorder');
+							}
+
+							instance._moveItem(from, to, sort);
 						}
-
-						var from = instance._leftBox;
-						var to = instance._rightBox;
-						var sort = !instance.get('leftReorder');
-
-						if (cssClass.indexOf('move-right') !== -1) {
-							from = instance._rightBox;
-							to = instance._leftBox;
-							sort = !instance.get('rightReorder');
-						}
-
-						instance._moveItem(from, to, sort);
 					},
 
 					_afterOrderClick: function(event, box) {
-						var cssClass;
 						var target = event.domEvent.target;
 						var targetBtn = target.ancestor('.btn', true);
 
 						if (targetBtn) {
-							cssClass = targetBtn.get('className');
+							var cssClass = targetBtn.get('className');
+							var direction = 1;
+
+							if (cssClass.indexOf('reorder-up') !== -1) {
+								direction = 0;
+							}
+
+							Util.reorder(box, direction);
 						}
-
-						var direction = 1;
-
-						if (cssClass.indexOf('reorder-up') !== -1) {
-							direction = 0;
-						}
-
-						Util.reorder(box, direction);
 					},
 
 					_moveItem: function(from, to, sort) {

@@ -159,8 +159,8 @@ public class ServiceTestUtil {
 		try {
 			DBUpgrader.upgrade();
 		}
-		catch (AssertionError e) {
-			_log.warn(e.getMessage(), e);
+		catch (AssertionError ae) {
+			_log.warn(ae.getMessage(), ae);
 		}
 		catch (Exception e) {
 			_log.warn(e.getMessage(), e);

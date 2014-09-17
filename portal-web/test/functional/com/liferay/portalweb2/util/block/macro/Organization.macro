@@ -47,10 +47,14 @@
 
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertClick" locator-key1="ORGANIZATION_INFORMATION_CATEGORIZATION" value1="Categorization" />
 
-		<execute action="CPUsersandorganizationsOrganizationEdit#type" locator-key1="CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
-		<execute action="CPUsersandorganizationsOrganizationEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-
 		<var name="key_tagName" value="${tagName}" />
+
+		<execute action="CPUsersandorganizationsOrganizationEdit#click" locator-key1="CATEGORIZATION_TAGS_FIELD" />
+		<execute action="CPUsersandorganizationsOrganizationEdit#type" locator-key1="CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
+		<execute action="CPUsersandorganizationsOrganizationEdit#assertClick" locator-key1="CATEGORIZATION_TAGS_ADD_BUTTON" value1="Add" />
+		<execute action="CPUsersandorganizationsOrganizationEdit#assertElementPresent" locator-key1="CATEGORIZATION_TAG" value1="${tagName}" />
+
+		<execute action="CPUsersandorganizationsOrganizationEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="CATEGORIZATION_TAG" value1="${tagName}" />

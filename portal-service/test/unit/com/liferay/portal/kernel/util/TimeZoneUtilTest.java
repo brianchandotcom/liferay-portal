@@ -37,7 +37,7 @@ public class TimeZoneUtilTest {
 		new CodeCoverageAssertor();
 
 	@Test
-	public void testGetDefaultTimeZone() {
+	public void testGetDefault() {
 		Assert.assertEquals(
 			TimeZone.getTimeZone("UTC"), TimeZoneUtil.getDefault());
 
@@ -68,13 +68,12 @@ public class TimeZoneUtilTest {
 			TimeZone.getTimeZone("PST"), TimeZone.getTimeZone("PST"));
 		Assert.assertSame(
 			TimeZoneUtil.getTimeZone("PST"), TimeZoneUtil.getTimeZone("PST"));
-
 		Assert.assertEquals(
 			TimeZone.getTimeZone("PST"), TimeZoneUtil.getTimeZone("PST"));
 	}
 
 	@Test
-	public void testNewDefaultTimeZone() {
+	public void testSetDefault() {
 		TimeZoneUtil.setDefault("PST");
 
 		Assert.assertEquals(
@@ -87,7 +86,7 @@ public class TimeZoneUtilTest {
 	}
 
 	@Test
-	public void testTimeZoneStorage() {
+	public void testTimeZonesCache() {
 		Map<String, TimeZone> timeZones = ReflectionTestUtil.getFieldValue(
 			TimeZoneUtil.class, "_timeZones");
 

@@ -453,10 +453,11 @@ public class ImageToolImpl implements ImageTool {
 
 	@Override
 	public ImageBag read(byte[] bytes) throws IOException {
-		BufferedImage bufferedImage = null;
 		String formatName = null;
 
 		ImageInputStream imageInputStream = null;
+
+		RenderedImage renderedImage = null;
 
 		try {
 			imageInputStream = ImageIO.createImageInputStream(
@@ -470,7 +471,7 @@ public class ImageToolImpl implements ImageTool {
 
 				imageReader.setInput(imageInputStream);
 
-				bufferedImage = imageReader.read(0);
+				renderedImage = imageReader.read(0);
 				formatName = imageReader.getFormatName();
 			}
 		}
@@ -503,7 +504,7 @@ public class ImageToolImpl implements ImageTool {
 			throw new IllegalArgumentException(type + " is not supported");
 		}
 
-		return new ImageBag(bufferedImage, type);
+		return new ImageBag(renderedImage, type);
 	}
 
 	@Override

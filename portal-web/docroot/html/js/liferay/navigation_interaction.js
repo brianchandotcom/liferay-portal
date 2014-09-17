@@ -261,7 +261,7 @@ AUI.add(
 					_isTriggerVisible: function() {
 						var instance = this;
 
-						return instance._triggerNode.test(':visible');
+						return !!(instance._triggerNode && instance._triggerNode.test(':visible'));
 					},
 
 					_onMouseToggle: function(event) {

@@ -175,12 +175,11 @@ public class ThreadLocalDistributorTest {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
-		ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-			unsyncByteArrayOutputStream);
+		try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+				unsyncByteArrayOutputStream)) {
 
-		threadLocalDistributor.writeExternal(objectOutputStream);
-
-		objectOutputStream.close();
+			threadLocalDistributor.writeExternal(objectOutputStream);
+		}
 
 		byte[] data = unsyncByteArrayOutputStream.toByteArray();
 

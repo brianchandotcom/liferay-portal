@@ -135,9 +135,7 @@ public class LocalProcessExecutorTest {
 				InetAddressUtil.getLoopbackInetAddress(), 12342,
 				_serverSocketConfigurator);
 
-		ServerSocket serverSocket = serverSocketChannel.socket();
-
-		try {
+		try (ServerSocket serverSocket = serverSocketChannel.socket()) {
 			int port = serverSocket.getLocalPort();
 
 			_localProcessExecutor.execute(
@@ -169,9 +167,6 @@ public class LocalProcessExecutorTest {
 
 			ServerThread.exit(childSocket);
 		}
-		finally {
-			serverSocket.close();
-		}
 	}
 
 	@Test
@@ -184,9 +179,7 @@ public class LocalProcessExecutorTest {
 				InetAddressUtil.getLoopbackInetAddress(), 12342,
 				_serverSocketConfigurator);
 
-		ServerSocket serverSocket = serverSocketChannel.socket();
-
-		try {
+		try (ServerSocket serverSocket = serverSocketChannel.socket()) {
 			int port = serverSocket.getLocalPort();
 
 			_localProcessExecutor.execute(
@@ -227,9 +220,6 @@ public class LocalProcessExecutorTest {
 				}
 			}
 		}
-		finally {
-			serverSocket.close();
-		}
 	}
 
 	@Test
@@ -242,9 +232,7 @@ public class LocalProcessExecutorTest {
 				InetAddressUtil.getLoopbackInetAddress(), 12342,
 				_serverSocketConfigurator);
 
-		ServerSocket serverSocket = serverSocketChannel.socket();
-
-		try {
+		try (ServerSocket serverSocket = serverSocketChannel.socket()) {
 			int port = serverSocket.getLocalPort();
 
 			_localProcessExecutor.execute(
@@ -285,9 +273,6 @@ public class LocalProcessExecutorTest {
 				}
 			}
 		}
-		finally {
-			serverSocket.close();
-		}
 	}
 
 	@Test
@@ -300,9 +285,7 @@ public class LocalProcessExecutorTest {
 				InetAddressUtil.getLoopbackInetAddress(), 12342,
 				_serverSocketConfigurator);
 
-		ServerSocket serverSocket = serverSocketChannel.socket();
-
-		try {
+		try (ServerSocket serverSocket = serverSocketChannel.socket()) {
 			int port = serverSocket.getLocalPort();
 
 			_localProcessExecutor.execute(
@@ -326,9 +309,6 @@ public class LocalProcessExecutorTest {
 
 			ServerThread.exit(parentSocket);
 		}
-		finally {
-			serverSocket.close();
-		}
 	}
 
 	@Test
@@ -341,9 +321,7 @@ public class LocalProcessExecutorTest {
 				InetAddressUtil.getLoopbackInetAddress(), 12342,
 				_serverSocketConfigurator);
 
-		ServerSocket serverSocket = serverSocketChannel.socket();
-
-		try {
+		try (ServerSocket serverSocket = serverSocketChannel.socket()) {
 			int port = serverSocket.getLocalPort();
 
 			_localProcessExecutor.execute(
@@ -367,9 +345,6 @@ public class LocalProcessExecutorTest {
 
 			ServerThread.exit(parentSocket);
 		}
-		finally {
-			serverSocket.close();
-		}
 	}
 
 	@Test
@@ -382,9 +357,7 @@ public class LocalProcessExecutorTest {
 				InetAddressUtil.getLoopbackInetAddress(), 12342,
 				_serverSocketConfigurator);
 
-		ServerSocket serverSocket = serverSocketChannel.socket();
-
-		try {
+		try (ServerSocket serverSocket = serverSocketChannel.socket()) {
 			int port = serverSocket.getLocalPort();
 
 			_localProcessExecutor.execute(
@@ -428,9 +401,6 @@ public class LocalProcessExecutorTest {
 			// Kill parent
 
 			ServerThread.exit(parentSocket);
-		}
-		finally {
-			serverSocket.close();
 		}
 	}
 
@@ -1770,12 +1740,11 @@ public class LocalProcessExecutorTest {
 			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 				new UnsyncByteArrayOutputStream();
 
-			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-				unsyncByteArrayOutputStream);
+			try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+					unsyncByteArrayOutputStream)) {
 
-			objectOutputStream.writeObject(dummyReturnProcessCallable);
-
-			objectOutputStream.close();
+				objectOutputStream.writeObject(dummyReturnProcessCallable);
+			}
 
 			byte[] serializedData = unsyncByteArrayOutputStream.toByteArray();
 

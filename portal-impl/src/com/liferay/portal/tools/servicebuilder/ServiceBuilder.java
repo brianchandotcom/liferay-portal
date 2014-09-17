@@ -3410,13 +3410,13 @@ public class ServiceBuilder {
 			}
 		}
 		else if (addMissingTables) {
-			StringBundler sb = new StringBundler();
-
-			String line = null;
-			boolean appendNewTable = true;
-
 			try (UnsyncBufferedReader unsyncBufferedReader =
 					new UnsyncBufferedReader(new UnsyncStringReader(content))) {
+
+				StringBundler sb = new StringBundler();
+
+				String line = null;
+				boolean appendNewTable = true;
 
 				while ((line = unsyncBufferedReader.readLine()) != null) {
 					if (appendNewTable && line.startsWith(_SQL_CREATE_TABLE)) {
@@ -3441,9 +3441,9 @@ public class ServiceBuilder {
 					sb.append("\n");
 					sb.append(newCreateTableString);
 				}
-			}
 
-			FileUtil.write(sqlFile, sb.toString(), true);
+				FileUtil.write(sqlFile, sb.toString(), true);
+			}
 		}
 	}
 
@@ -3605,13 +3605,13 @@ public class ServiceBuilder {
 			}
 		}
 		else if (addMissingTables) {
-			StringBundler sb = new StringBundler();
-
-			String line = null;
-			boolean appendNewTable = true;
-
 			try (UnsyncBufferedReader unsyncBufferedReader =
 					new UnsyncBufferedReader(new UnsyncStringReader(content))) {
+
+				StringBundler sb = new StringBundler();
+
+				String line = null;
+				boolean appendNewTable = true;
 
 				while ((line = unsyncBufferedReader.readLine()) != null) {
 					if (appendNewTable && line.startsWith(_SQL_CREATE_TABLE)) {
@@ -3636,9 +3636,9 @@ public class ServiceBuilder {
 					sb.append("\n");
 					sb.append(newCreateTableString);
 				}
-			}
 
-			FileUtil.write(sqlFile, sb.toString(), true);
+				FileUtil.write(sqlFile, sb.toString(), true);
+			}
 		}
 	}
 
@@ -3669,12 +3669,12 @@ public class ServiceBuilder {
 	}
 
 	private String _fixHbmXml(String content) throws IOException {
-		StringBundler sb = new StringBundler();
-
-		String line = null;
-
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
+
+			StringBundler sb = new StringBundler();
+
+			String line = null;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				if (line.startsWith("\t<class name=\"")) {
@@ -3704,9 +3704,9 @@ public class ServiceBuilder {
 				sb.append(line);
 				sb.append('\n');
 			}
-		}
 
-		return sb.toString().trim();
+			return sb.toString().trim();
+		}
 	}
 
 	private String _fixSpringXml(String content) {

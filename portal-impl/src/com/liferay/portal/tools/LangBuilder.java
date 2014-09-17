@@ -195,7 +195,7 @@ public class LangBuilder {
 		}
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
-			new UnsyncBufferedReader(new UnsyncStringReader(content));
+				new UnsyncBufferedReader(new UnsyncStringReader(content));
 			UnsyncBufferedWriter unsyncBufferedWriter =
 				new UnsyncBufferedWriter(
 					new OutputStreamWriter(

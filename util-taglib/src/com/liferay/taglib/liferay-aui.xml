@@ -68,6 +68,50 @@
 			</attribute>
 		</attributes>
 	</component>
+	<component name="Alert" bodyContent="true">
+		<attributes>
+			<attribute>
+				<name>animated</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>false</defaultValue>
+			</attribute>
+			<attribute>
+				<name>closeable</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>true</defaultValue>
+			</attribute>
+			<attribute>
+				<name>cssClass</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>destroyOnHide</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>false</defaultValue>
+			</attribute>
+			<attribute>
+				<name>duration</name>
+				<inputType>java.lang.Object</inputType>
+				<outputType>java.lang.Number</outputType>
+				<defaultValue>0.15</defaultValue>
+			</attribute>
+			<attribute>
+				<name>id</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>type</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<defaultValue>info</defaultValue>
+			</attribute>
+		</attributes>
+	</component>
 	<component name="Button" alloyComponent="false" bodyContent="true">
 		<attributes>
 			<attribute>

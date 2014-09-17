@@ -132,12 +132,6 @@ public class RollingChecksum {
 
 	private static MessageDigest _messageDigest;
 
-	private int _a;
-	private int _b;
-	private int _blockLength;
-	private ByteChannelReader _byteChannelReader;
-	private int _filePosition;
-
 	static {
 		try {
 			_messageDigest = MessageDigest.getInstance("MD5");
@@ -146,5 +140,11 @@ public class RollingChecksum {
 			throw new ExceptionInInitializerError(nsae);
 		}
 	}
+
+	private int _a;
+	private int _b;
+	private int _blockLength;
+	private ByteChannelReader _byteChannelReader;
+	private int _filePosition;
 
 }

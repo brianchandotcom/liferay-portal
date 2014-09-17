@@ -258,6 +258,12 @@ public class FileEntryStagedModelDataHandler
 
 		FileEntry existingFileEntry = fetchMissingReference(uuid, groupId);
 
+		Map<Long, Long> dlFileEntryIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				DLFileEntry.class);
+
+		dlFileEntryIds.put(fileEntryId, existingFileEntry.getFileEntryId());
+
 		Map<Long, Long> fileEntryIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				FileEntry.class);

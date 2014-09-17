@@ -91,25 +91,13 @@ public class TimeZoneUtilTest {
 		Map<String, TimeZone> timeZones = ReflectionTestUtil.getFieldValue(
 			TimeZoneUtil.class, "_timeZones");
 
-		Assert.assertEquals(0, timeZones.size());
+		timeZones.clear();
 
-		TimeZone timeZone1 = TimeZoneUtil.getTimeZone("PST");
+		TimeZone timeZone = TimeZoneUtil.getTimeZone("PST");
 
-		timeZones = ReflectionTestUtil.getFieldValue(
-			TimeZoneUtil.class, "_timeZones");
-
+		Assert.assertSame(timeZone, TimeZoneUtil.getTimeZone("PST"));
 		Assert.assertEquals(1, timeZones.size());
-
-		TimeZone timeZone2 = TimeZoneUtil.getTimeZone("PST");
-
-		timeZones = ReflectionTestUtil.getFieldValue(
-			TimeZoneUtil.class, "_timeZones");
-
-		Assert.assertEquals(1, timeZones.size());
-
-		Assert.assertSame(timeZone1, timeZone2);
-
-		Assert.assertEquals(timeZone1, timeZones.get("PST"));
+		Assert.assertSame(timeZone, timeZones.get("PST"));
 	}
 
 }

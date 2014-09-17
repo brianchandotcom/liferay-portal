@@ -15,7 +15,6 @@
 package com.liferay.markdown.converter.internal.pegdown.serializer;
 
 import com.liferay.markdown.converter.internal.pegdown.ast.PicWithCaptionNode;
-import com.liferay.markdown.converter.internal.pegdown.ast.SidebarNode;
 
 import java.util.List;
 
@@ -101,17 +100,10 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 		print(picWithCaptionNode);
 	}
 
-	public void visit(SidebarNode sidebarNode) {
-		print(sidebarNode);
-	}
-
 	@Override
 	public void visit(SuperNode superNode) {
 		if (superNode instanceof PicWithCaptionNode) {
 			visit((PicWithCaptionNode)superNode);
-		}
-		else if (superNode instanceof SidebarNode) {
-			visit((SidebarNode)superNode);
 		}
 		else {
 			visitChildren(superNode);
@@ -148,52 +140,6 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 		visitChildren(picWithCaptionNode);
 
 		printer.print("</p>");
-	}
-
-	protected void print(SidebarNode sidebarNode) {
-		String alt = sidebarNode.getAlt();
-
-		if (alt.equalsIgnoreCase("note")) {
-			printer.print("<div class=\"sidebar-note\">");
-			printer.print("<div class=\"sidebar-note-image\"></div>");
-			printer.print("<div class=\"sidebar-note-text\">");
-
-			visitChildren(sidebarNode);
-
-			printer.print("</div>");
-			printer.print("</div>");
-		}
-		else if (alt.equalsIgnoreCase("tip")) {
-			printer.print("<div class=\"sidebar-tip\">");
-			printer.print("<div class=\"sidebar-tip-image\"></div>");
-			printer.print("<div class=\"sidebar-tip-text\">");
-
-			visitChildren(sidebarNode);
-
-			printer.print("</div>");
-			printer.print("</div>");
-		}
-		else if (alt.equalsIgnoreCase("warning")) {
-			printer.print("<div class=\"sidebar-warning\">");
-			printer.print("<div class=\"sidebar-warning-image\"></div>");
-			printer.print("<div class=\"sidebar-warning-text\">");
-
-			visitChildren(sidebarNode);
-
-			printer.print("</div>");
-			printer.print("</div>");
-		}
-		else {
-			printer.print("<p><img src=\"");
-			printer.print(sidebarNode.getSrc());
-			printer.print("\" alt=\"");
-			printer.print(alt);
-			printer.print("\"/>");
-
-			visitChildren(sidebarNode);
-
-			printer.print("</p>");
-		}
 	}
 
 }

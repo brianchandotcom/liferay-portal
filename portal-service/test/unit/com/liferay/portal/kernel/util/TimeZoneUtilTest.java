@@ -32,7 +32,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Will Newbury
  */
-@RunWith(NewClassLoaderJUnitTestRunner.class)
 public class TimeZoneUtilTest {
 
 	@ClassRule

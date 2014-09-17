@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
@@ -600,8 +601,15 @@ public class ClusterSchedulerEngine
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Unable to obtain memory scheduler cluster lock. " +
-							"Trying again.");
+						"Could not acquire memory scheduler cluster lock", e);
+				}
+			}
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Could not acquire scheduler cluster lock, retrying");
+
+				if (Validator.isNotNull(owner)) {
+					_log.info("Lock currently held by " + owner);
 				}
 			}
 		}

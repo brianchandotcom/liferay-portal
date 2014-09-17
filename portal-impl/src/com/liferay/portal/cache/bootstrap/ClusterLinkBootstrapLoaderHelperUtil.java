@@ -38,6 +38,7 @@ import com.liferay.portal.util.PropsValues;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 
 import java.net.ServerSocket;
@@ -369,9 +370,9 @@ public class ClusterLinkBootstrapLoaderHelperUtil {
 
 				socket.shutdownInput();
 
-				try (ObjectOutputStream objectOutputStream =
-						new AnnotatedObjectOutputStream(
-							socket.getOutputStream())) {
+				try (OutputStream outputStream = socket.getOutputStream();
+					ObjectOutputStream objectOutputStream =
+						new AnnotatedObjectOutputStream(outputStream)) {
 
 					PortalCacheManager<? extends Serializable, ?>
 						portalCacheManager =

@@ -18,6 +18,7 @@ import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.service.impl.ExpandoValueLocalServiceImpl;
 
 import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -34,19 +35,18 @@ public class ExpandoValueConversionTest {
 
 	@Test
 	public void testBoolean1() {
-		Boolean convertedBooolean =
-			_converter.convertType(ExpandoColumnConstants.BOOLEAN, "true");
+		Boolean convertedBooolean = _converter.convertType(
+			ExpandoColumnConstants.BOOLEAN, "true");
 
 		Assert.assertTrue(convertedBooolean);
 	}
 
 	@Test
 	public void testBoolean2() {
-		Boolean convertedBooolean =
-			_converter.convertType(ExpandoColumnConstants.BOOLEAN, "false");
+		Boolean convertedBooolean = _converter.convertType(
+			ExpandoColumnConstants.BOOLEAN, "false");
 
 		Assert.assertFalse(convertedBooolean);
-
 	}
 
 	@Test(expected = TypeConversionException.class)
@@ -138,8 +138,7 @@ public class ExpandoValueConversionTest {
 		booleans.add("true");
 		booleans.add("other");
 
-		_converter.convertType(
-			ExpandoColumnConstants.BOOLEAN_ARRAY, booleans);
+		_converter.convertType(ExpandoColumnConstants.BOOLEAN_ARRAY, booleans);
 	}
 
 	@Test
@@ -163,12 +162,11 @@ public class ExpandoValueConversionTest {
 		long time2 = System.currentTimeMillis();
 
 		String[] dates = new String[] {
-			String.valueOf(time1),
-			String.valueOf(time2)
+			String.valueOf(time1), String.valueOf(time2)
 		};
 
-		Date[] convertedDates =
-			_converter.convertType(ExpandoColumnConstants.DATE_ARRAY, dates);
+		Date[] convertedDates = _converter.convertType(
+			ExpandoColumnConstants.DATE_ARRAY, dates);
 
 		Assert.assertEquals(2, convertedDates.length);
 		Assert.assertEquals(time1, convertedDates[0].getTime());
@@ -209,7 +207,8 @@ public class ExpandoValueConversionTest {
 		Date[] convertedDates =
 			_converter.convertType(
 				ExpandoColumnConstants.DATE_ARRAY,
-				"[" + String.valueOf(time1) + ", " + String.valueOf(time2) + "]");
+				"[" + String.valueOf(time1) + ", " +
+					String.valueOf(time2) + "]");
 
 		Assert.assertEquals(2, convertedDates.length);
 		Assert.assertEquals(time1, convertedDates[0].getTime());
@@ -239,9 +238,8 @@ public class ExpandoValueConversionTest {
 	public void testDateArray8() {
 		long time = 1376510136750L;
 
-		Date[] datesConverted =
-			_converter.convertType(
-				ExpandoColumnConstants.DATE_ARRAY, time);
+		Date[] datesConverted = _converter.convertType(
+			ExpandoColumnConstants.DATE_ARRAY, time);
 
 		Assert.assertEquals(1, datesConverted.length);
 		Assert.assertEquals(time, datesConverted[0].getTime());
@@ -251,8 +249,8 @@ public class ExpandoValueConversionTest {
 	public void testDateArray9() {
 		long[] times = new long[] {1376510136750L, 1376510136560L};
 
-		Date[] datesConverted =
-			_converter.convertType(ExpandoColumnConstants.DATE_ARRAY, times);
+		Date[] datesConverted = _converter.convertType(
+			ExpandoColumnConstants.DATE_ARRAY, times);
 
 		Assert.assertEquals(2, datesConverted.length);
 		Assert.assertEquals(times[0], datesConverted[0].getTime());
@@ -272,7 +270,7 @@ public class ExpandoValueConversionTest {
 
 		Double doubleConverted =
 			_converter.convertType(
-				ExpandoColumnConstants.DOUBLE,negativeDouble.toString());
+				ExpandoColumnConstants.DOUBLE, negativeDouble.toString());
 
 		Assert.assertEquals(negativeDouble, doubleConverted);
 	}
@@ -381,8 +379,7 @@ public class ExpandoValueConversionTest {
 		booleans.add("12.5");
 		booleans.add("other");
 
-		_converter.convertType(
-			ExpandoColumnConstants.DOUBLE_ARRAY, booleans);
+		_converter.convertType(ExpandoColumnConstants.DOUBLE_ARRAY, booleans);
 	}
 
 	@Test
@@ -464,16 +461,8 @@ public class ExpandoValueConversionTest {
 
 	@Test(expected = TypeConversionException.class)
 	public void testFloatArray6() {
-		float float1 = 34.67f;
-		float float2 = 12.45f;
-
-		float[] convertedFloats = _converter.convertType(
-			ExpandoColumnConstants.FLOAT_ARRAY,
-			"[\"" + float1 + "\", " + float2 + "]");
-
-		Assert.assertEquals(2, convertedFloats.length);
-		Assert.assertEquals(float1, convertedFloats[0], 0);
-		Assert.assertEquals(float2, convertedFloats[1], 0);
+		_converter.convertType(
+			ExpandoColumnConstants.FLOAT_ARRAY,"[\"34.67f\",12.45f]");
 	}
 
 	@Test(expected = TypeConversionException.class)
@@ -489,8 +478,8 @@ public class ExpandoValueConversionTest {
 		floats.add(String.valueOf(Float.MAX_VALUE));
 		floats.add(String.valueOf(Integer.MAX_VALUE));
 
-		float[] convertedFloats =
-			_converter.convertType(ExpandoColumnConstants.FLOAT_ARRAY, floats);
+		float[] convertedFloats = _converter.convertType(
+			ExpandoColumnConstants.FLOAT_ARRAY, floats);
 
 		Assert.assertEquals(2, convertedFloats.length);
 		Assert.assertEquals(Float.MAX_VALUE, convertedFloats[0], 0);
@@ -504,8 +493,8 @@ public class ExpandoValueConversionTest {
 		floats.add(String.valueOf(Double.MAX_VALUE));
 		floats.add(String.valueOf(Integer.MAX_VALUE));
 
-		float[] convertedFloats =
-			_converter.convertType(ExpandoColumnConstants.FLOAT_ARRAY, floats);
+		float[] convertedFloats = _converter.convertType(
+			ExpandoColumnConstants.FLOAT_ARRAY, floats);
 
 		Assert.assertEquals(2, convertedFloats.length);
 		Assert.assertEquals(Float.POSITIVE_INFINITY, convertedFloats[0], 0);
@@ -595,17 +584,8 @@ public class ExpandoValueConversionTest {
 
 	@Test(expected = TypeConversionException.class)
 	public void testIntegerArray6() {
-		Integer integer1 = 34;
-		Integer integer2 = 12;
-
-		int[] convertedIntegers =
-			_converter.convertType(
-				ExpandoColumnConstants.INTEGER_ARRAY,
-				"[\"" + integer1 + "\"," + integer2 + "]");
-
-		Assert.assertEquals(2, convertedIntegers.length);
-		Assert.assertEquals(integer1.intValue(), convertedIntegers[0]);
-		Assert.assertEquals(integer2.intValue(), convertedIntegers[1]);
+		_converter.convertType(
+			ExpandoColumnConstants.INTEGER_ARRAY, "[\"34\",12]");
 	}
 
 	@Test(expected = TypeConversionException.class)
@@ -621,8 +601,8 @@ public class ExpandoValueConversionTest {
 		ints.add(String.valueOf(Integer.MIN_VALUE));
 		ints.add(String.valueOf(Integer.MAX_VALUE));
 
-		int[] convertedIntegers =
-			_converter.convertType(ExpandoColumnConstants.INTEGER_ARRAY, ints);
+		int[] convertedIntegers = _converter.convertType(
+			ExpandoColumnConstants.INTEGER_ARRAY, ints);
 
 		Assert.assertEquals(2, convertedIntegers.length);
 		Assert.assertEquals(Integer.MIN_VALUE, convertedIntegers[0]);
@@ -695,8 +675,7 @@ public class ExpandoValueConversionTest {
 
 	@Test(expected = TypeConversionException.class)
 	public void testLongArray3() {
-		_converter.convertType(
-			ExpandoColumnConstants.LONG_ARRAY, "675,23.4");
+		_converter.convertType(ExpandoColumnConstants.LONG_ARRAY, "675,23.4");
 	}
 
 	@Test
@@ -716,23 +695,12 @@ public class ExpandoValueConversionTest {
 
 	@Test(expected = TypeConversionException.class)
 	public void testLongArray5() {
-		_converter.convertType(
-			ExpandoColumnConstants.LONG_ARRAY, "[0,56.23]");
+		_converter.convertType(ExpandoColumnConstants.LONG_ARRAY, "[0,56.23]");
 	}
 
 	@Test(expected = TypeConversionException.class)
 	public void testLongArray6() {
-		Long long1 = 34L;
-		Long long2 = 12L;
-
-		long[] convertedLongs =
-			_converter.convertType(
-				ExpandoColumnConstants.LONG_ARRAY,
-				"[\"" + long1 + "\", " + long2 + "]");
-
-		Assert.assertEquals(2, convertedLongs.length);
-		Assert.assertEquals(long1.longValue(), convertedLongs[0]);
-		Assert.assertEquals(long2.longValue(), convertedLongs[1]);
+		_converter.convertType(ExpandoColumnConstants.LONG_ARRAY,"[\"34\",12]");
 	}
 
 	@Test(expected = TypeConversionException.class)
@@ -748,8 +716,8 @@ public class ExpandoValueConversionTest {
 		longs.add(String.valueOf(Long.MIN_VALUE));
 		longs.add(String.valueOf(Long.MAX_VALUE));
 
-		long[] convertedLongs =
-			_converter.convertType(ExpandoColumnConstants.LONG_ARRAY, longs);
+		long[] convertedLongs = _converter.convertType(
+			ExpandoColumnConstants.LONG_ARRAY, longs);
 
 		Assert.assertEquals(2, convertedLongs.length);
 		Assert.assertEquals(Long.MIN_VALUE, convertedLongs[0]);
@@ -888,8 +856,10 @@ public class ExpandoValueConversionTest {
 				ExpandoColumnConstants.NUMBER_ARRAY, numbers);
 
 		Assert.assertEquals(2, convertedNumber.length);
-		Assert.assertEquals(Double.MIN_VALUE, convertedNumber[0].doubleValue(), 0);
-		Assert.assertEquals(Double.MAX_VALUE, convertedNumber[1].doubleValue(), 0);
+		Assert.assertEquals(
+			Double.MIN_VALUE, convertedNumber[0].doubleValue(), 0);
+		Assert.assertEquals(
+			Double.MAX_VALUE, convertedNumber[1].doubleValue(), 0);
 	}
 
 	@Test
@@ -904,8 +874,10 @@ public class ExpandoValueConversionTest {
 				ExpandoColumnConstants.NUMBER_ARRAY, numbers);
 
 		Assert.assertEquals(2, convertedNumber.length);
-		Assert.assertEquals(Double.MAX_VALUE, convertedNumber[0].doubleValue(), 0);
-		Assert.assertEquals(Long.MAX_VALUE, convertedNumber[1].doubleValue(), 0);
+		Assert.assertEquals(
+			Double.MAX_VALUE, convertedNumber[0].doubleValue(), 0);
+		Assert.assertEquals(
+			Long.MAX_VALUE, convertedNumber[1].doubleValue(), 0);
 	}
 
 	@Test
@@ -916,8 +888,7 @@ public class ExpandoValueConversionTest {
 			_converter.convertType(
 				ExpandoColumnConstants.SHORT, positiveShort.toString());
 
-		Assert.assertEquals(
-			positiveShort, convertedShort);
+		Assert.assertEquals(positiveShort, convertedShort);
 	}
 
 	@Test
@@ -928,8 +899,7 @@ public class ExpandoValueConversionTest {
 			_converter.convertType(
 				ExpandoColumnConstants.SHORT, negativeShort.toString());
 
-		Assert.assertEquals(
-			negativeShort, convertedShort);
+		Assert.assertEquals(negativeShort, convertedShort);
 	}
 
 	@Test(expected = TypeConversionException.class)
@@ -1019,8 +989,8 @@ public class ExpandoValueConversionTest {
 		shorts.add(String.valueOf(Short.MIN_VALUE));
 		shorts.add(String.valueOf(Short.MAX_VALUE));
 
-		short[] convertedShorts =
-			_converter.convertType(ExpandoColumnConstants.SHORT_ARRAY, shorts);
+		short[] convertedShorts = _converter.convertType(
+			ExpandoColumnConstants.SHORT_ARRAY, shorts);
 
 		Assert.assertEquals(2, convertedShorts.length);
 		Assert.assertEquals(Short.MIN_VALUE, convertedShorts[0]);

@@ -23,7 +23,7 @@ for (int i = 0; i < availableLanguageIds.length; i++) {
 	availableLocales[i] = LocaleUtil.fromLanguageId(availableLanguageIds[i]);
 }
 
-String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(script);
+String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(script, LocaleUtil.getSiteDefault());
 %>
 
 <div class="separator"><!-- --></div>

@@ -90,6 +90,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PREVIEW_USER_SEGMENT_SELECTED</td>
+	<td>//div[@class='content-preview selected']//div[contains(.,'${key_viewUserSegmentSelected}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

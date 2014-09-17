@@ -160,55 +160,55 @@ public class SQLServerDB extends BaseDB {
 
 	@Override
 	protected String reword(String data) throws IOException {
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(data));
-
 		StringBundler sb = new StringBundler();
 
-		String line = null;
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(data))) {
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (line.startsWith(ALTER_COLUMN_NAME)) {
-				String[] template = buildColumnNameTokens(line);
+			String line = null;
 
-				line = StringUtil.replace(
-					"exec sp_rename '@table@.@old-column@', '@new-column@', " +
-						"'column';",
-					REWORD_TEMPLATE, template);
-			}
-			else if (line.startsWith(ALTER_COLUMN_TYPE)) {
-				String[] template = buildColumnTypeTokens(line);
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				if (line.startsWith(ALTER_COLUMN_NAME)) {
+					String[] template = buildColumnNameTokens(line);
 
-				line = StringUtil.replace(
-					"alter table @table@ alter column @old-column@ @type@;",
-					REWORD_TEMPLATE, template);
-			}
-			else if (line.startsWith(ALTER_TABLE_NAME)) {
-				String[] template = buildTableNameTokens(line);
+					line = StringUtil.replace(
+						"exec sp_rename '@table@.@old-column@', " +
+							"'@new-column@', 'column';",
+						REWORD_TEMPLATE, template);
+				}
+				else if (line.startsWith(ALTER_COLUMN_TYPE)) {
+					String[] template = buildColumnTypeTokens(line);
 
-				line = StringUtil.replace(
-					"exec sp_rename '@old-table@', '@new-table@';",
-					RENAME_TABLE_TEMPLATE, template);
-			}
-			else if (line.contains(DROP_INDEX)) {
-				String[] tokens = StringUtil.split(line, ' ');
+					line = StringUtil.replace(
+						"alter table @table@ alter column @old-column@ @type@;",
+						REWORD_TEMPLATE, template);
+				}
+				else if (line.startsWith(ALTER_TABLE_NAME)) {
+					String[] template = buildTableNameTokens(line);
 
-				String tableName = tokens[4];
+					line = StringUtil.replace(
+						"exec sp_rename '@old-table@', '@new-table@';",
+						RENAME_TABLE_TEMPLATE, template);
+				}
+				else if (line.contains(DROP_INDEX)) {
+					String[] tokens = StringUtil.split(line, ' ');
 
-				if (tableName.endsWith(StringPool.SEMICOLON)) {
-					tableName = tableName.substring(0, tableName.length() - 1);
+					String tableName = tokens[4];
+
+					if (tableName.endsWith(StringPool.SEMICOLON)) {
+						tableName = tableName.substring(
+							0, tableName.length() - 1);
+					}
+
+					line = StringUtil.replace(
+						"drop index @table@.@index@;", "@table@", tableName);
+					line = StringUtil.replace(line, "@index@", tokens[2]);
 				}
 
-				line = StringUtil.replace(
-					"drop index @table@.@index@;", "@table@", tableName);
-				line = StringUtil.replace(line, "@index@", tokens[2]);
+				sb.append(line);
+				sb.append("\n");
 			}
-
-			sb.append(line);
-			sb.append("\n");
 		}
-
-		unsyncBufferedReader.close();
 
 		return sb.toString();
 	}

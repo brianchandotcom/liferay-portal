@@ -89,7 +89,7 @@ public class ZipWriterImpl implements ZipWriter {
 		FileUtil.mkdirs(getPath());
 
 		try (OutputStream outputStream = new FileOutputStream(
-			new File(getPath() + StringPool.SLASH + name))) {
+				new File(getPath() + StringPool.SLASH + name))) {
 
 			File.cat(inputStream, outputStream);
 		}

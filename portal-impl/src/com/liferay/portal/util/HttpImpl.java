@@ -1214,8 +1214,8 @@ public class HttpImpl implements Http {
 		URLConnection urlConnection = url.openConnection();
 
 		try (InputStream inputStream = urlConnection.getInputStream();
-				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-					new UnsyncByteArrayOutputStream()) {
+			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+				new UnsyncByteArrayOutputStream()) {
 
 			byte[] bytes = new byte[512];
 
@@ -1565,16 +1565,14 @@ public class HttpImpl implements Http {
 								new UnsyncByteArrayOutputStream(
 									contentLength)) {
 
-						try {
-							progressInputStream.readAll(
-								unsyncByteArrayOutputStream);
-						}
-						finally {
-							progressInputStream.clearProgress();
-						}
+						progressInputStream.readAll(
+							unsyncByteArrayOutputStream);
 
 						bytes =
 							unsyncByteArrayOutputStream.unsafeGetByteArray();
+					}
+					finally {
+						progressInputStream.clearProgress();
 					}
 				}
 				else {

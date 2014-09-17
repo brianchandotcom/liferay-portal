@@ -1247,11 +1247,12 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				portletDataContext, entityStagedModel, DLFileEntry.class,
 				classPK);
 
-			Map<Long, Long> fileEntryIds =
+			Map<Long, Long> dlFileEntryIds =
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 					DLFileEntry.class);
 
-			long fileEntryId = MapUtil.getLong(fileEntryIds, classPK, classPK);
+			long fileEntryId = MapUtil.getLong(
+				dlFileEntryIds, classPK, classPK);
 
 			FileEntry importedFileEntry = null;
 

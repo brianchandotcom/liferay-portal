@@ -59,29 +59,19 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--PREVIEW-->
 <tr>
-	<td>PREVIEW_SELECTED_BELONGS</td>
-	<td>//div[@class='content-preview selected']/div[contains(.,'${key_userSegmentName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIEW_DOES_NOT_BELONG</td>
-	<td>//div[@class='content-preview']/div[contains(.,'${key_userSegmentName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIEW_OTHERWISE</td>
-	<td>//div[contains(@class,'content-preview')]/div[contains(.,'Default')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIEW_SELECTED_OTHERWISE</td>
-	<td>//div[@class='content-preview selected']/div[contains(.,'Default')]</td>
+	<td>PREVIEW_USER_SEGMENT_SELECTED</td>
+	<td>//div[@class='content-preview selected']//div[contains(.,'${key_viewUserSegmentSelected}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -148,7 +138,7 @@
 <!--RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT-->
 <tr>
 	<td>RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CHECKBOX</td>
-	<td>//div[contains(.,'${key_userSegmentName}')]//i[contains(@class,'icon-check')]</td>
+	<td>//li/div[contains(.,'${key_userSegmentName}')]//i[contains(@class,'icon-check')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -181,6 +171,11 @@
 <tr>
 	<td>OTHERWISE_PANEL</td>
 	<td>//div[contains(@class,'field-row')]//div[contains(.,'Otherwise')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OTHERWISE_PANEL_DONT_DISPLAY_ANYTHING_RADIO</td>
+	<td>//input[contains(@id,'DefaultValueDont')]</td>
 	<td></td>
 </tr>
 <tr>

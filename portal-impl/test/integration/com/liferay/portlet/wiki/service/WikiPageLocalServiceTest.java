@@ -745,7 +745,7 @@ public class WikiPageLocalServiceTest {
 			addExpandoValueToPage(page);
 		}
 
-		WikiPageLocalServiceUtil.movePageToTrash(
+		page = WikiPageLocalServiceUtil.movePageToTrash(
 			TestPropsValues.getUserId(), _node.getNodeId(), page.getTitle());
 
 		WikiPageLocalServiceUtil.restorePageFromTrash(

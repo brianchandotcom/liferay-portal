@@ -65,7 +65,9 @@ public class TimeZoneUtilTest {
 	@Test
 	public void testGetTimeZone() {
 		Assert.assertNotSame(
-			TimeZone.getTimeZone("PST"), TimeZoneUtil.getTimeZone("PST"));
+			TimeZone.getTimeZone("PST"), TimeZone.getTimeZone("PST"));
+		Assert.assertSame(
+			TimeZoneUtil.getTimeZone("PST"), TimeZoneUtil.getTimeZone("PST"));
 
 		Assert.assertEquals(
 			TimeZone.getTimeZone("PST"), TimeZoneUtil.getTimeZone("PST"));

@@ -45,7 +45,7 @@ public class BaseVideoTag extends com.liferay.taglib.util.IncludeTag {
 		return _flashPlayerVersion;
 	}
 
-	public java.lang.Integer getHeight() {
+	public java.lang.Object getHeight() {
 		return _height;
 	}
 
@@ -69,7 +69,7 @@ public class BaseVideoTag extends com.liferay.taglib.util.IncludeTag {
 		return _url;
 	}
 
-	public java.lang.Integer getWidth() {
+	public java.lang.Object getWidth() {
 		return _width;
 	}
 
@@ -91,7 +91,7 @@ public class BaseVideoTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("flashPlayerVersion", flashPlayerVersion);
 	}
 
-	public void setHeight(java.lang.Integer height) {
+	public void setHeight(java.lang.Object height) {
 		_height = height;
 
 		setScopedAttribute("height", height);
@@ -127,7 +127,7 @@ public class BaseVideoTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("url", url);
 	}
 
-	public void setWidth(java.lang.Integer width) {
+	public void setWidth(java.lang.Object width) {
 		_width = width;
 
 		setScopedAttribute("width", width);
@@ -137,7 +137,7 @@ public class BaseVideoTag extends com.liferay.taglib.util.IncludeTag {
 	protected void cleanUp() {
 		_boundingBox = null;
 		_cssClass = null;
-		_flashPlayerVersion = null;
+		_flashPlayerVersion = "9,0,0,0";
 		_height = null;
 		_id = null;
 		_ogvUrl = null;
@@ -173,13 +173,13 @@ public class BaseVideoTag extends com.liferay.taglib.util.IncludeTag {
 
 	private java.lang.String _boundingBox = null;
 	private java.lang.String _cssClass = null;
-	private java.lang.String _flashPlayerVersion = null;
-	private java.lang.Integer _height = null;
+	private java.lang.String _flashPlayerVersion = "9,0,0,0";
+	private java.lang.Object _height = null;
 	private java.lang.String _id = null;
 	private java.lang.String _ogvUrl = null;
 	private java.lang.String _poster = null;
 	private java.lang.String _swfUrl = null;
 	private java.lang.String _url = null;
-	private java.lang.Integer _width = null;
+	private java.lang.Object _width = null;
 
 }

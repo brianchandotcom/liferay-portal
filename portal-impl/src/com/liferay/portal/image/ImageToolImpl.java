@@ -205,7 +205,21 @@ public class ImageToolImpl implements ImageTool {
 					protected RenderedImage convert(Object obj)
 						throws IOException {
 
-						return read(_fileUtil.getBytes(outputFile), type);
+						RenderedImage renderedImage = null;
+
+						try {
+							ImageBag imageBag = read(
+								_fileUtil.getBytes(outputFile));
+
+							renderedImage = imageBag.getRenderedImage();
+						}
+						catch (IOException ioe) {
+							if (_log.isDebugEnabled()) {
+								_log.debug(type + ": " + ioe.getMessage());
+							}
+						}
+
+						return renderedImage;
 					}
 
 				};
@@ -650,39 +664,6 @@ public class ImageToolImpl implements ImageTool {
 		}
 
 		return _imageMagick;
-	}
-
-	protected RenderedImage read(byte[] bytes, String type) {
-		RenderedImage renderedImage = null;
-
-		try {
-			if (type.equals(TYPE_JPEG)) {
-				type = "jpeg";
-			}
-
-			InputStream inputStream = new ByteArrayInputStream(bytes);
-
-			ImageInputStream imageInputStream = ImageIO.createImageInputStream(
-				inputStream);
-
-			Iterator<ImageReader> iterator = ImageIO.getImageReaders(
-				imageInputStream);
-
-			if (iterator.hasNext()) {
-				ImageReader imageReader = iterator.next();
-
-				imageReader.setInput(imageInputStream);
-
-				renderedImage = imageReader.read(0);
-			}
-		}
-		catch (IOException ioe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(type + ": " + ioe.getMessage());
-			}
-		}
-
-		return renderedImage;
 	}
 
 	protected byte[] toMultiByte(int intValue) {

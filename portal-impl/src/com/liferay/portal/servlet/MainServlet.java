@@ -17,6 +17,7 @@ package com.liferay.portal.servlet;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.dao.shard.ShardDataSourceTargetSource;
 import com.liferay.portal.events.EventsProcessorUtil;
+import com.liferay.portal.events.PostStartupAction;
 import com.liferay.portal.events.StartupAction;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.cache.Lifecycle;
@@ -341,6 +342,17 @@ public class MainServlet extends ActionServlet {
 
 		try {
 			initPlugins();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Process post initialize events");
+		}
+
+		try {
+			processPostStartupEvents();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -1097,6 +1109,12 @@ public class MainServlet extends ActionServlet {
 		requestDispatcher.include(request, response);
 
 		return true;
+	}
+
+	protected void processPostStartupEvents() throws Exception {
+		PostStartupAction postStartupAction = new PostStartupAction();
+
+		postStartupAction.run(null);
 	}
 
 	protected void processServicePost(

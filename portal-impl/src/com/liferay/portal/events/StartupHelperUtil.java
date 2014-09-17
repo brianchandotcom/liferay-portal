@@ -47,6 +47,13 @@ public class StartupHelperUtil {
 		return getStartupHelper().isVerified();
 	}
 
+	public static void postStartupVerifyProcess(
+			boolean newBuildNumber, boolean verified)
+		throws VerifyException {
+
+		getStartupHelper().postStartupVerifyProcess(newBuildNumber, verified);
+	}
+
 	public static void setDropIndexes(boolean dropIndexes) {
 		getStartupHelper().setDropIndexes(dropIndexes);
 	}

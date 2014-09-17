@@ -20,7 +20,8 @@
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_image_selector") + StringPool.UNDERLINE;
 
 long fileEntryId = GetterUtil.getLong(request.getAttribute("liferay-ui:image-selector:fileEntryId"));
-String paramName = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:paramName"));
+String paramName = GetterUtil.getString((String) request.getAttribute("liferay-ui:image-selector:paramName"));
+String resourceName = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:resourceName"));
 String validExtensions = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:validExtensions"));
 
 String imageURL = null;
@@ -65,7 +66,7 @@ if (fileEntryId != 0) {
 </liferay-portlet:renderURL>
 
 <%
-String uploadImageURL = themeDisplay.getPathMain() + "/portal/image_selector?p_auth=" + AuthTokenUtil.getToken(request);
+String uploadImageURL = themeDisplay.getPathMain() + "/portal/image_selector?p_auth=" + AuthTokenUtil.getToken(request) + "&resourceName=" + resourceName;
 %>
 
 <aui:script use="liferay-image-selector">

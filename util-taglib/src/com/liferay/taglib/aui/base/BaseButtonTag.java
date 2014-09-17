@@ -170,8 +170,13 @@ public class BaseButtonTag extends com.liferay.taglib.util.IncludeTag {
 	}
 
 	@Override
-	protected String getPage() {
-		return _PAGE;
+	protected String getEndPage() {
+		return _END_PAGE;
+	}
+
+	@Override
+	protected String getStartPage() {
+		return _START_PAGE;
 	}
 
 	@Override
@@ -192,8 +197,11 @@ public class BaseButtonTag extends com.liferay.taglib.util.IncludeTag {
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:button:";
 
-	private static final String _PAGE =
-		"/html/taglib/aui/button/page.jsp";
+	private static final String _END_PAGE =
+		"/html/taglib/aui/button/end.jsp";
+
+	private static final String _START_PAGE =
+		"/html/taglib/aui/button/start.jsp";
 
 	private java.lang.String _cssClass = null;
 	private java.lang.Object _data = null;

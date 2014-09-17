@@ -65,4 +65,20 @@ if (primary == Boolean.TRUE) {
 if (type.equals("cancel")) {
 	cssClass += " btn-cancel btn-default";
 }
+
+Object bodyContent = request.getAttribute("aui:button:bodyContent");
+
+String bodyContentString = StringPool.BLANK;
+
+if (bodyContent != null) {
+	bodyContentString = bodyContent.toString();
+}
+
+boolean dropdown = Validator.isNotNull(bodyContentString.trim());
+
+String id = namespace + name;
+
+if (Validator.isNull(name)) {
+	id = namespace + StringUtil.randomId();
+}
 %>

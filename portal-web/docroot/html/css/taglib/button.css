@@ -5,7 +5,6 @@
 	.aui {
 		.btn-group, .button-holder {
 			@include respond-to(phone) {
-				display: block;
 				width: 100%;
 			}
 

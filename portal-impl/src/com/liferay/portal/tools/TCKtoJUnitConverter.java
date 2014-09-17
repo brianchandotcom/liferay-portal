@@ -55,13 +55,14 @@ public class TCKtoJUnitConverter {
 	}
 
 	private void _convert(File inputFile, File outputDir) throws Exception {
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new FileReader(inputFile));
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new FileReader(inputFile))) {
 
-		String s = StringPool.BLANK;
+			String s = StringPool.BLANK;
 
-		while ((s = unsyncBufferedReader.readLine()) != null) {
-			if (s.startsWith("Test finished: ")) {
+			while (((s = unsyncBufferedReader.readLine()) != null) &&
+				   s.startsWith("Test finished: ")) {
+
 				int x = s.indexOf(StringPool.POUND);
 				int y = s.lastIndexOf(StringPool.SLASH, x);
 
@@ -83,8 +84,6 @@ public class TCKtoJUnitConverter {
 				_convert(className, message, outputDir);
 			}
 		}
-
-		unsyncBufferedReader.close();
 	}
 
 	private void _convert(String className, String message, File outputDir)

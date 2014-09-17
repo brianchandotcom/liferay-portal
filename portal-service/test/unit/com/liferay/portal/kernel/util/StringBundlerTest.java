@@ -516,24 +516,24 @@ public class StringBundlerTest {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
-		ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-			unsyncByteArrayOutputStream);
+		try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+				unsyncByteArrayOutputStream)) {
 
-		objectOutputStream.writeObject(sb);
-
-		objectOutputStream.close();
+			objectOutputStream.writeObject(sb);
+		}
 
 		byte[] bytes = unsyncByteArrayOutputStream.toByteArray();
 
 		UnsyncByteArrayInputStream unsyncByteArrayInputStream =
 			new UnsyncByteArrayInputStream(bytes);
 
-		ObjectInputStream objectInputStream = new ObjectInputStream(
-			unsyncByteArrayInputStream);
+		StringBundler cloneSB = null;
 
-		StringBundler cloneSB = (StringBundler)objectInputStream.readObject();
+		try (ObjectInputStream objectInputStream = new ObjectInputStream(
+				unsyncByteArrayInputStream)) {
 
-		objectInputStream.close();
+			cloneSB = (StringBundler)objectInputStream.readObject();
+		}
 
 		Assert.assertEquals(sb.capacity(), cloneSB.capacity());
 		Assert.assertEquals(sb.index(), cloneSB.index());

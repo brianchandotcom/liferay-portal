@@ -28,14 +28,13 @@ public class Base64InputStreamTest {
 	public void testAvailable() throws Exception {
 		byte[] bytes = {'a', 'b', 'c', 'd'};
 
-		Base64InputStream base64InputStream = new Base64InputStream(
-			new ByteArrayInputStream(bytes));
+		try (Base64InputStream base64InputStream = new Base64InputStream(
+				new ByteArrayInputStream(bytes))) {
 
-		int returnValue = base64InputStream.available();
+			int returnValue = base64InputStream.available();
 
-		Assert.assertEquals(3, returnValue);
-
-		base64InputStream.close();
+			Assert.assertEquals(3, returnValue);
+		}
 	}
 
 	@Test
@@ -43,22 +42,25 @@ public class Base64InputStreamTest {
 		try {
 			byte[] bytes = {'a', 'b', 'c', 'd'};
 
-			Base64InputStream base64InputStream = new Base64InputStream(
-				new ByteArrayInputStream(bytes));
+			try (Base64InputStream base64InputStream = new Base64InputStream(
+					new ByteArrayInputStream(bytes))) {
 
-			byte[] outputBuffer = new byte[3];
-			int position = 0;
+				byte[] outputBuffer = new byte[3];
+				int position = 0;
 
-			Assert.assertEquals(
-				3, base64InputStream.decode(bytes, outputBuffer, position, 0));
-			Assert.assertEquals(
-				2, base64InputStream.decode(bytes, outputBuffer, position, 1));
-			Assert.assertEquals(
-				1, base64InputStream.decode(bytes, outputBuffer, position, 2));
-			Assert.assertEquals(
-				-1, base64InputStream.decode(bytes, outputBuffer, position, 3));
-
-			base64InputStream.close();
+				Assert.assertEquals(
+					3,
+					base64InputStream.decode(bytes, outputBuffer, position, 0));
+				Assert.assertEquals(
+					2,
+					base64InputStream.decode(bytes, outputBuffer, position, 1));
+				Assert.assertEquals(
+					1,
+					base64InputStream.decode(bytes, outputBuffer, position, 2));
+				Assert.assertEquals(
+					-1,
+					base64InputStream.decode(bytes, outputBuffer, position, 3));
+			}
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -71,26 +73,25 @@ public class Base64InputStreamTest {
 			'a', 'b', 'c', 'd', 'e', 'f', 'h', '=', 'e', 'f', '=', '=', 'e',
 			'=', 'e', 'f', '=', 'a'};
 
-		Base64InputStream base64InputStream = new Base64InputStream(
-			new ByteArrayInputStream(bytes));
+		try (Base64InputStream base64InputStream = new Base64InputStream(
+				new ByteArrayInputStream(bytes))) {
 
-		byte[] outputBuffer = new byte[3];
-		int position = 0;
+			byte[] outputBuffer = new byte[3];
+			int position = 0;
 
-		Assert.assertEquals(
-			3, base64InputStream.decodeUnit(outputBuffer, position));
-		Assert.assertEquals(
-			2, base64InputStream.decodeUnit(outputBuffer, position));
-		Assert.assertEquals(
-			1, base64InputStream.decodeUnit(outputBuffer, position));
-		Assert.assertEquals(
-			-1, base64InputStream.decodeUnit(outputBuffer, position));
-		Assert.assertEquals(
-			-1, base64InputStream.decodeUnit(outputBuffer, position));
-		Assert.assertEquals(
-			-1, base64InputStream.decodeUnit(outputBuffer, position));
-
-		base64InputStream.close();
+			Assert.assertEquals(
+				3, base64InputStream.decodeUnit(outputBuffer, position));
+			Assert.assertEquals(
+				2, base64InputStream.decodeUnit(outputBuffer, position));
+			Assert.assertEquals(
+				1, base64InputStream.decodeUnit(outputBuffer, position));
+			Assert.assertEquals(
+				-1, base64InputStream.decodeUnit(outputBuffer, position));
+			Assert.assertEquals(
+				-1, base64InputStream.decodeUnit(outputBuffer, position));
+			Assert.assertEquals(
+				-1, base64InputStream.decodeUnit(outputBuffer, position));
+		}
 	}
 
 	@Test
@@ -98,15 +99,14 @@ public class Base64InputStreamTest {
 		try {
 			byte[] bytes = {'a'};
 
-			Base64InputStream base64InputStream = new Base64InputStream(
-				new ByteArrayInputStream(bytes));
+			try (Base64InputStream base64InputStream = new Base64InputStream(
+					new ByteArrayInputStream(bytes))) {
 
-			Assert.assertEquals(0, base64InputStream.getByte('A'));
-			Assert.assertEquals(0, base64InputStream.getByte('='));
-			Assert.assertEquals(-1, base64InputStream.getByte('\n'));
-			Assert.assertEquals(62, base64InputStream.getByte('+'));
-
-			base64InputStream.close();
+				Assert.assertEquals(0, base64InputStream.getByte('A'));
+				Assert.assertEquals(0, base64InputStream.getByte('='));
+				Assert.assertEquals(-1, base64InputStream.getByte('\n'));
+				Assert.assertEquals(62, base64InputStream.getByte('+'));
+			}
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -118,15 +118,14 @@ public class Base64InputStreamTest {
 		try {
 			byte[] bytes = {'A', '=', 'B', '\n'};
 
-			Base64InputStream base64InputStream = new Base64InputStream(
-				new ByteArrayInputStream(bytes));
+			try (Base64InputStream base64InputStream = new Base64InputStream(
+					new ByteArrayInputStream(bytes))) {
 
-			Assert.assertEquals(0, base64InputStream.getEncodedByte());
-			Assert.assertEquals(-2, base64InputStream.getEncodedByte());
-			Assert.assertEquals(1, base64InputStream.getEncodedByte());
-			Assert.assertEquals(-1, base64InputStream.getEncodedByte());
-
-			base64InputStream.close();
+				Assert.assertEquals(0, base64InputStream.getEncodedByte());
+				Assert.assertEquals(-2, base64InputStream.getEncodedByte());
+				Assert.assertEquals(1, base64InputStream.getEncodedByte());
+				Assert.assertEquals(-1, base64InputStream.getEncodedByte());
+			}
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -137,17 +136,16 @@ public class Base64InputStreamTest {
 	public void testRead_0args() throws Exception {
 		byte[] bytes = {'a', 'b', 'c', 'd'};
 
-		Base64InputStream base64InputStream = new Base64InputStream(
-			new ByteArrayInputStream(bytes));
+		try (Base64InputStream base64InputStream = new Base64InputStream(
+				new ByteArrayInputStream(bytes))) {
 
-		Assert.assertEquals(105, base64InputStream.read());
+			Assert.assertEquals(105, base64InputStream.read());
 
-		base64InputStream.read();
-		base64InputStream.read();
+			base64InputStream.read();
+			base64InputStream.read();
 
-		Assert.assertEquals(-1, base64InputStream.read());
-
-		base64InputStream.close();
+			Assert.assertEquals(-1, base64InputStream.read());
+		}
 	}
 
 	@Test
@@ -155,32 +153,30 @@ public class Base64InputStreamTest {
 		byte[] bytes = {
 			'a', 'b', 'c', 'd', 'a', 'b', 'c', 'd', 'e', 'f', 'g', '='};
 
-		Base64InputStream base64InputStream = new Base64InputStream(
-			new ByteArrayInputStream(bytes));
+		try (Base64InputStream base64InputStream = new Base64InputStream(
+				new ByteArrayInputStream(bytes))) {
 
-		byte[] buffer = new byte[5];
-		int offset = 0;
+			byte[] buffer = new byte[5];
+			int offset = 0;
 
-		Assert.assertEquals(1, base64InputStream.read(buffer, offset, 1));
-		Assert.assertEquals(2, base64InputStream.read(buffer, offset, 2));
-		Assert.assertEquals(5, base64InputStream.read(buffer, offset, 6));
-		Assert.assertEquals(-1, base64InputStream.read(buffer, offset, 3));
-		Assert.assertEquals(-1, base64InputStream.read(buffer, offset, 1));
-		Assert.assertEquals(-1, base64InputStream.read(buffer, offset, 0));
-
-		base64InputStream.close();
+			Assert.assertEquals(1, base64InputStream.read(buffer, offset, 1));
+			Assert.assertEquals(2, base64InputStream.read(buffer, offset, 2));
+			Assert.assertEquals(5, base64InputStream.read(buffer, offset, 6));
+			Assert.assertEquals(-1, base64InputStream.read(buffer, offset, 3));
+			Assert.assertEquals(-1, base64InputStream.read(buffer, offset, 1));
+			Assert.assertEquals(-1, base64InputStream.read(buffer, offset, 0));
+		}
 	}
 
 	@Test
 	public void testSkip() throws Exception {
 		byte[] bytes = {'a', 'b', 'c', 'd'};
 
-		Base64InputStream base64InputStream = new Base64InputStream(
-			new ByteArrayInputStream(bytes));
+		try (Base64InputStream base64InputStream = new Base64InputStream(
+				new ByteArrayInputStream(bytes))) {
 
-		Assert.assertEquals(3L, base64InputStream.skip(4L));
-
-		base64InputStream.close();
+			Assert.assertEquals(3L, base64InputStream.skip(4L));
+		}
 	}
 
 }

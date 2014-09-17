@@ -46,12 +46,11 @@ public class OutputStreamWriterTest {
 	public void testClose() throws IOException {
 		MarkerOutputStream markerOutputStream = new MarkerOutputStream();
 
-		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
-			markerOutputStream);
+		try (OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
+				markerOutputStream)) {
 
-		Assert.assertFalse(markerOutputStream._closed);
-
-		outputStreamWriter.close();
+			Assert.assertFalse(markerOutputStream._closed);
+		}
 
 		Assert.assertTrue(markerOutputStream._closed);
 	}

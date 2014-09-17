@@ -243,7 +243,7 @@
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
 	</command>
 
-	<command known-issues="LPS-45435" name="AddSOBlogsEntryCategories" priority="4">
+	<command name="AddSOBlogsEntryCategories" priority="4">
 		<var name="categoryName" value="Category Name" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -1313,7 +1313,7 @@
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_AVERAGE_RATING" value1="Average (0 Votes)" />
 	</command>
 
-	<command known-issues="LPS-45435" name="ImportLarSOBlogsEntry" priority="4">
+	<command name="ImportLarSOBlogsEntry" priority="4">
 		<var name="categoryName" value="Category Name" />
 		<var name="entryComment" value="Blogs Entry Comment" />
 		<var name="entryContent1" value="Blogs Entry1 Content" />

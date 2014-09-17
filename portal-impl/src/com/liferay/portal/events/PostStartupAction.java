@@ -26,7 +26,7 @@ public class PostStartupAction extends SimpleAction {
 	@Override
 	public void run(String[] ids) throws ActionException {
 		try {
-			doRun(ids);
+			DBUpgrader.postStartupVerify();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -34,13 +34,6 @@ public class PostStartupAction extends SimpleAction {
 		catch (Exception e) {
 			throw new ActionException(e);
 		}
-	}
-
-	protected void doRun(String[] ids) throws Exception {
-
-		// Post Verify Process
-
-		DBUpgrader.postStartupVerify();
 	}
 
 }

@@ -101,6 +101,7 @@ public class VerifyGroupPostStartup extends VerifyProcess {
 		}
 	}
 
-	Log _log = LogFactoryUtil.getLog(VerifyGroupPostStartup.class);
+	private static Log _log = LogFactoryUtil.getLog(
+		VerifyGroupPostStartup.class);
 
 }

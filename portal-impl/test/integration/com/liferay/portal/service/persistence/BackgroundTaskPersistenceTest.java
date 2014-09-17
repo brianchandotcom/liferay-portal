@@ -49,6 +49,7 @@ import org.junit.runner.RunWith;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -139,7 +140,7 @@ public class BackgroundTaskPersistenceTest {
 
 		newBackgroundTask.setTaskExecutorClassName(RandomTestUtil.randomString());
 
-		newBackgroundTask.setTaskContext(RandomTestUtil.randomString());
+		newBackgroundTask.setTaskContextMap(new HashMap());
 
 		newBackgroundTask.setCompleted(RandomTestUtil.randomBoolean());
 
@@ -177,8 +178,8 @@ public class BackgroundTaskPersistenceTest {
 			newBackgroundTask.getServletContextNames());
 		Assert.assertEquals(existingBackgroundTask.getTaskExecutorClassName(),
 			newBackgroundTask.getTaskExecutorClassName());
-		Assert.assertEquals(existingBackgroundTask.getTaskContext(),
-			newBackgroundTask.getTaskContext());
+		Assert.assertEquals(existingBackgroundTask.getTaskContextMap(),
+			newBackgroundTask.getTaskContextMap());
 		Assert.assertEquals(existingBackgroundTask.getCompleted(),
 			newBackgroundTask.getCompleted());
 		Assert.assertEquals(Time.getShortTimestamp(
@@ -426,7 +427,7 @@ public class BackgroundTaskPersistenceTest {
 			"mvccVersion", true, "backgroundTaskId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "name", true, "servletContextNames",
-			true, "taskExecutorClassName", true, "taskContext", true,
+			true, "taskExecutorClassName", true, "taskContextMap", true,
 			"completed", true, "completionDate", true, "status", true,
 			"statusMessage", true);
 	}
@@ -652,7 +653,7 @@ public class BackgroundTaskPersistenceTest {
 
 		backgroundTask.setTaskExecutorClassName(RandomTestUtil.randomString());
 
-		backgroundTask.setTaskContext(RandomTestUtil.randomString());
+		backgroundTask.setTaskContextMap(new HashMap());
 
 		backgroundTask.setCompleted(RandomTestUtil.randomBoolean());
 

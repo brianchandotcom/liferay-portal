@@ -453,8 +453,8 @@ public interface MBThreadLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #restoreDependentsFromTrash(
-	long, long)}
+	* @deprecated As of 7.0.0, replaced by {@link
+	#restoreDependentsFromTrash(long, long)}
 	*/
 	@java.lang.Deprecated
 	public void restoreDependentsFromTrash(long groupId, long threadId,

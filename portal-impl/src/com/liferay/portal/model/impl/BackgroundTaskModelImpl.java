@@ -80,13 +80,13 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 			{ "name", Types.VARCHAR },
 			{ "servletContextNames", Types.VARCHAR },
 			{ "taskExecutorClassName", Types.VARCHAR },
-			{ "taskContext", Types.CLOB },
+			{ "taskContextMap", Types.VARCHAR },
 			{ "completed", Types.BOOLEAN },
 			{ "completionDate", Types.TIMESTAMP },
 			{ "status", Types.INTEGER },
 			{ "statusMessage", Types.CLOB }
 		};
-	public static final String TABLE_SQL_CREATE = "create table BackgroundTask (mvccVersion LONG default 0,backgroundTaskId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,servletContextNames VARCHAR(255) null,taskExecutorClassName VARCHAR(200) null,taskContext TEXT null,completed BOOLEAN,completionDate DATE null,status INTEGER,statusMessage TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table BackgroundTask (mvccVersion LONG default 0,backgroundTaskId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,servletContextNames VARCHAR(255) null,taskExecutorClassName VARCHAR(200) null,taskContextMap TEXT null,completed BOOLEAN,completionDate DATE null,status INTEGER,statusMessage TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table BackgroundTask";
 	public static final String ORDER_BY_JPQL = " ORDER BY backgroundTask.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY BackgroundTask.createDate ASC";
@@ -134,7 +134,7 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 		model.setName(soapModel.getName());
 		model.setServletContextNames(soapModel.getServletContextNames());
 		model.setTaskExecutorClassName(soapModel.getTaskExecutorClassName());
-		model.setTaskContext(soapModel.getTaskContext());
+		model.setTaskContextMap(soapModel.getTaskContextMap());
 		model.setCompleted(soapModel.getCompleted());
 		model.setCompletionDate(soapModel.getCompletionDate());
 		model.setStatus(soapModel.getStatus());
@@ -214,7 +214,7 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 		attributes.put("name", getName());
 		attributes.put("servletContextNames", getServletContextNames());
 		attributes.put("taskExecutorClassName", getTaskExecutorClassName());
-		attributes.put("taskContext", getTaskContext());
+		attributes.put("taskContextMap", getTaskContextMap());
 		attributes.put("completed", getCompleted());
 		attributes.put("completionDate", getCompletionDate());
 		attributes.put("status", getStatus());
@@ -296,10 +296,10 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 			setTaskExecutorClassName(taskExecutorClassName);
 		}
 
-		String taskContext = (String)attributes.get("taskContext");
+		Map taskContextMap = (Map)attributes.get("taskContextMap");
 
-		if (taskContext != null) {
-			setTaskContext(taskContext);
+		if (taskContextMap != null) {
+			setTaskContextMap(taskContextMap);
 		}
 
 		Boolean completed = (Boolean)attributes.get("completed");
@@ -532,18 +532,13 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 
 	@JSON
 	@Override
-	public String getTaskContext() {
-		if (_taskContext == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _taskContext;
-		}
+	public Map getTaskContextMap() {
+		return _taskContextMap;
 	}
 
 	@Override
-	public void setTaskContext(String taskContext) {
-		_taskContext = taskContext;
+	public void setTaskContextMap(Map taskContextMap) {
+		_taskContextMap = taskContextMap;
 	}
 
 	@JSON
@@ -666,7 +661,7 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 		backgroundTaskImpl.setName(getName());
 		backgroundTaskImpl.setServletContextNames(getServletContextNames());
 		backgroundTaskImpl.setTaskExecutorClassName(getTaskExecutorClassName());
-		backgroundTaskImpl.setTaskContext(getTaskContext());
+		backgroundTaskImpl.setTaskContextMap(getTaskContextMap());
 		backgroundTaskImpl.setCompleted(getCompleted());
 		backgroundTaskImpl.setCompletionDate(getCompletionDate());
 		backgroundTaskImpl.setStatus(getStatus());
@@ -821,13 +816,7 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 			backgroundTaskCacheModel.taskExecutorClassName = null;
 		}
 
-		backgroundTaskCacheModel.taskContext = getTaskContext();
-
-		String taskContext = backgroundTaskCacheModel.taskContext;
-
-		if ((taskContext != null) && (taskContext.length() == 0)) {
-			backgroundTaskCacheModel.taskContext = null;
-		}
+		backgroundTaskCacheModel.taskContextMap = getTaskContextMap();
 
 		backgroundTaskCacheModel.completed = getCompleted();
 
@@ -879,8 +868,8 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 		sb.append(getServletContextNames());
 		sb.append(", taskExecutorClassName=");
 		sb.append(getTaskExecutorClassName());
-		sb.append(", taskContext=");
-		sb.append(getTaskContext());
+		sb.append(", taskContextMap=");
+		sb.append(getTaskContextMap());
 		sb.append(", completed=");
 		sb.append(getCompleted());
 		sb.append(", completionDate=");
@@ -947,8 +936,8 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 		sb.append(getTaskExecutorClassName());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>taskContext</column-name><column-value><![CDATA[");
-		sb.append(getTaskContext());
+			"<column><column-name>taskContextMap</column-name><column-value><![CDATA[");
+		sb.append(getTaskContextMap());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>completed</column-name><column-value><![CDATA[");
@@ -993,7 +982,7 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 	private String _servletContextNames;
 	private String _taskExecutorClassName;
 	private String _originalTaskExecutorClassName;
-	private String _taskContext;
+	private Map _taskContextMap;
 	private boolean _completed;
 	private boolean _originalCompleted;
 	private boolean _setOriginalCompleted;

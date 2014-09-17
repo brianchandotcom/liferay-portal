@@ -234,7 +234,7 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="servletContextNames" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="taskExecutorClassName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="taskContext" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="taskContextMap" type="com.liferay.portal.dao.orm.hibernate.MapType" />
 		<property name="completed" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="completionDate" type="org.hibernate.type.TimestampType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />

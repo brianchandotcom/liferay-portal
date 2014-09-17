@@ -366,108 +366,108 @@ public abstract class BaseDB implements DB {
 			}
 		}
 
-		StringBundler sb = new StringBundler();
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(template))) {
 
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(template));
+			StringBundler sb = new StringBundler();
 
-		String line = null;
+			String line = null;
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (!line.startsWith("##")) {
-				if (line.startsWith("@include ")) {
-					int pos = line.indexOf(" ");
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				if (!line.startsWith("##")) {
+					if (line.startsWith("@include ")) {
+						int pos = line.indexOf(" ");
 
-					String includeFileName = line.substring(pos + 1);
+						String includeFileName = line.substring(pos + 1);
 
-					ClassLoader classLoader =
-						ClassLoaderUtil.getContextClassLoader();
+						ClassLoader classLoader =
+							ClassLoaderUtil.getContextClassLoader();
 
-					InputStream is = classLoader.getResourceAsStream(
-						"com/liferay/portal/tools/sql/dependencies/" +
-							includeFileName);
+						InputStream is = classLoader.getResourceAsStream(
+							"com/liferay/portal/tools/sql/dependencies/" +
+								includeFileName);
 
-					if (is == null) {
-						is = classLoader.getResourceAsStream(includeFileName);
-					}
-
-					String include = StringUtil.read(is);
-
-					if (includeFileName.endsWith(".vm")) {
-						try {
-							include = evaluateVM(include);
+						if (is == null) {
+							is = classLoader.getResourceAsStream(
+								includeFileName);
 						}
-						catch (Exception e) {
-							_log.error(e, e);
-						}
-					}
 
-					include = convertTimestamp(include);
-					include = replaceTemplate(include, getTemplate());
+						String include = StringUtil.read(is);
 
-					runSQLTemplateString(include, false, true);
-				}
-				else {
-					sb.append(line);
-
-					if (line.endsWith(";")) {
-						String sql = sb.toString();
-
-						sb.setIndex(0);
-
-						try {
-							if (!sql.equals("COMMIT_TRANSACTION;")) {
-								runSQL(sql);
+						if (includeFileName.endsWith(".vm")) {
+							try {
+								include = evaluateVM(include);
 							}
-							else {
-								if (_log.isDebugEnabled()) {
-									_log.debug("Skip commit sql");
+							catch (Exception e) {
+								_log.error(e, e);
+							}
+						}
+
+						include = convertTimestamp(include);
+						include = replaceTemplate(include, getTemplate());
+
+						runSQLTemplateString(include, false, true);
+					}
+					else {
+						sb.append(line);
+
+						if (line.endsWith(";")) {
+							String sql = sb.toString();
+
+							sb.setIndex(0);
+
+							try {
+								if (!sql.equals("COMMIT_TRANSACTION;")) {
+									runSQL(sql);
+								}
+								else {
+									if (_log.isDebugEnabled()) {
+										_log.debug("Skip commit sql");
+									}
 								}
 							}
-						}
-						catch (IOException ioe) {
-							if (failOnError) {
-								throw ioe;
+							catch (IOException ioe) {
+								if (failOnError) {
+									throw ioe;
+								}
+								else if (_log.isWarnEnabled()) {
+									_log.warn(ioe.getMessage());
+								}
 							}
-							else if (_log.isWarnEnabled()) {
-								_log.warn(ioe.getMessage());
+							catch (SecurityException se) {
+								if (failOnError) {
+									throw se;
+								}
+								else if (_log.isWarnEnabled()) {
+									_log.warn(se.getMessage());
+								}
 							}
-						}
-						catch (SecurityException se) {
-							if (failOnError) {
-								throw se;
-							}
-							else if (_log.isWarnEnabled()) {
-								_log.warn(se.getMessage());
-							}
-						}
-						catch (SQLException sqle) {
-							if (failOnError) {
-								throw sqle;
-							}
+							catch (SQLException sqle) {
+								if (failOnError) {
+									throw sqle;
+								}
 
-							String message = GetterUtil.getString(
-								sqle.getMessage());
+								String message = GetterUtil.getString(
+									sqle.getMessage());
 
-							if (!message.startsWith("Duplicate key name") &&
-								_log.isWarnEnabled()) {
+								if (!message.startsWith("Duplicate key name") &&
+									_log.isWarnEnabled()) {
 
-								_log.warn(message + ": " + buildSQL(sql));
-							}
+									_log.warn(message + ": " + buildSQL(sql));
+								}
 
-							if (message.startsWith("Duplicate entry") ||
-								message.startsWith(
-									"Specified key was too long")) {
+								if (message.startsWith("Duplicate entry") ||
+									message.startsWith(
+										"Specified key was too long")) {
 
-								_log.error(line);
+									_log.error(line);
+								}
 							}
 						}
 					}
 				}
 			}
 		}
-
-		unsyncBufferedReader.close();
 	}
 
 	@Override
@@ -582,49 +582,51 @@ public abstract class BaseDB implements DB {
 		if (fileName.equals("portal") ||
 			fileName.equals("update-5.0.1-5.1.0")) {
 
-			UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(template));
-
 			StringBundler sb = new StringBundler();
 
-			String line = null;
 
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				if (line.startsWith("@include ")) {
-					int pos = line.indexOf(" ");
+			try (UnsyncBufferedReader unsyncBufferedReader =
+					new UnsyncBufferedReader(
+						new UnsyncStringReader(template))) {
 
-					String includeFileName = line.substring(pos + 1);
+				String line = null;
 
-					File includeFile = new File(sqlDir + "/" + includeFileName);
+				while ((line = unsyncBufferedReader.readLine()) != null) {
+					if (line.startsWith("@include ")) {
+						int pos = line.indexOf(" ");
 
-					if (!includeFile.exists()) {
-						continue;
-					}
+						String includeFileName = line.substring(pos + 1);
 
-					String include = FileUtil.read(includeFile);
+						File includeFile = new File(
+							sqlDir + "/" + includeFileName);
 
-					if (includeFileName.endsWith(".vm")) {
-						try {
-							include = evaluateVM(include);
+						if (!includeFile.exists()) {
+							continue;
 						}
-						catch (Exception e) {
-							_log.error(e, e);
+
+						String include = FileUtil.read(includeFile);
+
+						if (includeFileName.endsWith(".vm")) {
+							try {
+								include = evaluateVM(include);
+							}
+							catch (Exception e) {
+								_log.error(e, e);
+							}
 						}
+
+						include = convertTimestamp(include);
+						include = replaceTemplate(include, getTemplate());
+
+						sb.append(include);
+						sb.append("\n\n");
 					}
-
-					include = convertTimestamp(include);
-					include = replaceTemplate(include, getTemplate());
-
-					sb.append(include);
-					sb.append("\n\n");
-				}
-				else {
-					sb.append(line);
-					sb.append("\n");
+					else {
+						sb.append(line);
+						sb.append("\n");
+					}
 				}
 			}
-
-			unsyncBufferedReader.close();
 
 			template = sb.toString();
 		}
@@ -750,23 +752,22 @@ public abstract class BaseDB implements DB {
 			ClassLoaderUtil.setContextClassLoader(classLoader);
 		}
 
-		// Trim insert statements because it breaks MySQL Query Browser
-
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(template));
-
 		StringBundler sb = new StringBundler();
 
-		String line = null;
+		// Trim insert statements because it breaks MySQL Query Browser
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			line = line.trim();
+		try (UnsyncBufferedReader unsyncBufferedReader =
+			new UnsyncBufferedReader(new UnsyncStringReader(template))) {
 
-			sb.append(line);
-			sb.append("\n");
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				line = line.trim();
+
+				sb.append(line);
+				sb.append("\n");
+			}
 		}
-
-		unsyncBufferedReader.close();
 
 		template = sb.toString();
 		template = StringUtil.replace(template, "\n\n\n", "\n\n");
@@ -855,29 +856,28 @@ public abstract class BaseDB implements DB {
 			return StringPool.BLANK;
 		}
 
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new FileReader(new File(fileName)));
-
 		StringBundler sb = new StringBundler();
 
-		String line = null;
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new FileReader(new File(fileName)))) {
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (!line.startsWith(comments)) {
-				line = StringUtil.replace(
-					line, new String[] {"\n", "\t"}, new String[] {"", ""});
+			String line = null;
 
-				if (line.endsWith(";")) {
-					sb.append(line.substring(0, line.length() - 1));
-					sb.append(eol);
-				}
-				else {
-					sb.append(line);
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				if (!line.startsWith(comments)) {
+					line = StringUtil.replace(
+						line, new String[] {"\n", "\t"}, new String[] {"", ""});
+
+					if (line.endsWith(";")) {
+						sb.append(line.substring(0, line.length() - 1));
+						sb.append(eol);
+					}
+					else {
+						sb.append(line);
+					}
 				}
 			}
 		}
-
-		unsyncBufferedReader.close();
 
 		return sb.toString();
 	}
@@ -891,95 +891,91 @@ public abstract class BaseDB implements DB {
 			return StringPool.BLANK;
 		}
 
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(data));
-
 		StringBundler sb = new StringBundler();
 
-		String line = null;
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(data))) {
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			boolean append = true;
+			String line = null;
 
-			int x = line.indexOf(" on ");
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				boolean append = true;
 
-			if (x != -1) {
-				int y = line.indexOf(" (", x);
+				int x = line.indexOf(" on ");
 
-				String table = line.substring(x + 4, y);
+				if (x != -1) {
+					int y = line.indexOf(" (", x);
 
-				x = y + 2;
-				y = line.indexOf(")", x);
+					String table = line.substring(x + 4, y);
 
-				String[] columns = StringUtil.split(line.substring(x, y));
+					x = y + 2;
+					y = line.indexOf(")", x);
 
-				x = portalData.indexOf("create table " + table + " (");
-				y = portalData.indexOf(");", x);
+					String[] columns = StringUtil.split(line.substring(x, y));
 
-				String portalTableData = portalData.substring(x, y);
+					x = portalData.indexOf("create table " + table + " (");
+					y = portalData.indexOf(");", x);
 
-				for (int i = 0; i < columns.length; i++) {
-					if (portalTableData.contains(
-							columns[i].trim() + " BOOLEAN")) {
+					String portalTableData = portalData.substring(x, y);
 
-						append = false;
+					for (int i = 0; i < columns.length; i++) {
+						if (portalTableData.contains(
+								columns[i].trim() + " BOOLEAN")) {
 
-						break;
+							append = false;
+
+							break;
+						}
 					}
 				}
-			}
 
-			if (append) {
-				sb.append(line);
-				sb.append("\n");
+				if (append) {
+					sb.append(line);
+					sb.append("\n");
+				}
 			}
 		}
-
-		unsyncBufferedReader.close();
 
 		return sb.toString();
 	}
 
 	protected String removeInserts(String data) throws IOException {
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(data));
-
 		StringBundler sb = new StringBundler();
 
-		String line = null;
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(data))) {
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (!line.startsWith("insert into ") &&
-				!line.startsWith("update ")) {
+			String line = null;
 
-				sb.append(line);
-				sb.append("\n");
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				if (!line.startsWith("insert into ") &&
+					!line.startsWith("update ")) {
+
+					sb.append(line);
+					sb.append("\n");
+				}
 			}
 		}
-
-		unsyncBufferedReader.close();
 
 		return sb.toString();
 	}
 
 	protected String removeLongInserts(String data) throws IOException {
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(data));
-
 		StringBundler sb = new StringBundler();
 
-		String line = null;
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(data))) {
+			String line = null;
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (!line.startsWith("insert into Image (") &&
-				!line.startsWith("insert into JournalArticle (")) {
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				if (!line.startsWith("insert into Image (") &&
+					!line.startsWith("insert into JournalArticle (")) {
 
-				sb.append(line);
-				sb.append("\n");
+					sb.append(line);
+					sb.append("\n");
+				}
 			}
 		}
-
-		unsyncBufferedReader.close();
 
 		return sb.toString();
 	}

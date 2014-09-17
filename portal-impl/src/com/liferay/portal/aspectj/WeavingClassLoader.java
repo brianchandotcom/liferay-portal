@@ -98,12 +98,11 @@ public class WeavingClassLoader extends URLClassLoader {
 
 				dumpDir.mkdirs();
 
-				FileOutputStream fileOutputStream = new FileOutputStream(
-					dumpFile);
+				try (FileOutputStream fileOutputStream = new FileOutputStream(
+						dumpFile)) {
 
-				fileOutputStream.write(data);
-
-				fileOutputStream.close();
+					fileOutputStream.write(data);
+				}
 
 				if (_log.isInfoEnabled()) {
 					_log.info(

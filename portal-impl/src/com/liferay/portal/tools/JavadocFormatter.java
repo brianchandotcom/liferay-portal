@@ -772,13 +772,15 @@ public class JavadocFormatter {
 	}
 
 	private void _format(String fileName) throws Exception {
-		InputStream inputStream = new FileInputStream(_inputDir + fileName);
+		byte[] bytes = null;
 
-		byte[] bytes = new byte[inputStream.available()];
+		try (InputStream inputStream = new FileInputStream(
+				_inputDir + fileName)) {
 
-		inputStream.read(bytes);
+			bytes = new byte[inputStream.available()];
 
-		inputStream.close();
+			inputStream.read(bytes);
+		}
 
 		String originalContent = new String(bytes, StringPool.UTF8);
 
@@ -1879,9 +1881,6 @@ public class JavadocFormatter {
 	private void _updateLanguageProperties(String key, String value)
 		throws IOException {
 
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new FileReader(_languagePropertiesFile));
-
 		StringBundler sb = new StringBundler();
 
 		boolean begin = false;
@@ -1890,36 +1889,38 @@ public class JavadocFormatter {
 
 		String line = null;
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (line.equals(StringPool.BLANK)) {
-				begin = !begin;
-			}
+		try (UnsyncBufferedReader unsyncBufferedReader = 
+				new UnsyncBufferedReader(
+					new FileReader(_languagePropertiesFile))) {
 
-			if (firstLine) {
-				firstLine = false;
-			}
-			else {
-				sb.append(StringPool.NEW_LINE);
-			}
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				if (line.equals(StringPool.BLANK)) {
+					begin = !begin;
+				}
 
-			if (line.startsWith(linePrefix)) {
-				sb.append(linePrefix);
-				sb.append(value);
-			}
-			else {
-				sb.append(line);
+				if (firstLine) {
+					firstLine = false;
+				}
+				else {
+					sb.append(StringPool.NEW_LINE);
+				}
+
+				if (line.startsWith(linePrefix)) {
+					sb.append(linePrefix);
+					sb.append(value);
+				}
+				else {
+					sb.append(line);
+				}
 			}
 		}
 
-		unsyncBufferedReader.close();
+		try (Writer writer = new OutputStreamWriter(
+				new FileOutputStream(_languagePropertiesFile, false),
+				StringPool.UTF8)) {
 
-		Writer writer = new OutputStreamWriter(
-			new FileOutputStream(_languagePropertiesFile, false),
-			StringPool.UTF8);
-
-		writer.write(sb.toString());
-
-		writer.close();
+			writer.write(sb.toString());
+		}
 
 		System.out.println(
 			"Updating " + _languagePropertiesFile + " key " + key);

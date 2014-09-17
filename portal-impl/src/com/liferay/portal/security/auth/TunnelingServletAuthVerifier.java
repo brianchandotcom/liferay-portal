@@ -77,14 +77,13 @@ public class TunnelingServletAuthVerifier implements AuthVerifier {
 			HttpServletResponse response = accessControlContext.getResponse();
 
 			try {
-				ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-					response.getOutputStream());
+				try (ObjectOutputStream objectOutputStream =
+						new ObjectOutputStream(response.getOutputStream())) {
 
-				objectOutputStream.writeObject(ae);
+					objectOutputStream.writeObject(ae);
 
-				objectOutputStream.flush();
-
-				objectOutputStream.close();
+					objectOutputStream.flush();
+				}
 
 				authVerifierResult.setState(
 					AuthVerifierResult.State.INVALID_CREDENTIALS);

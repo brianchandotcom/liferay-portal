@@ -63,14 +63,10 @@ public class ZipWriterImpl implements ZipWriter {
 
 	@Override
 	public void addEntry(String name, byte[] bytes) throws IOException {
-		UnsyncByteArrayInputStream unsyncByteArrayInputStream =
-			new UnsyncByteArrayInputStream(bytes);
+		try (UnsyncByteArrayInputStream unsyncByteArrayInputStream =
+				new UnsyncByteArrayInputStream(bytes)) {
 
-		try {
 			addEntry(name, unsyncByteArrayInputStream);
-		}
-		finally {
-			unsyncByteArrayInputStream.close();
 		}
 	}
 
@@ -92,14 +88,10 @@ public class ZipWriterImpl implements ZipWriter {
 
 		FileUtil.mkdirs(getPath());
 
-		OutputStream outputStream = new FileOutputStream(
-			new File(getPath() + StringPool.SLASH + name));
+		try (OutputStream outputStream = new FileOutputStream(
+			new File(getPath() + StringPool.SLASH + name))) {
 
-		try {
 			File.cat(inputStream, outputStream);
-		}
-		finally {
-			outputStream.close();
 		}
 	}
 

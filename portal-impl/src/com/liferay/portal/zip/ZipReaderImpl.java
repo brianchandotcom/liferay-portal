@@ -46,13 +46,10 @@ public class ZipReaderImpl implements ZipReader {
 	public ZipReaderImpl(InputStream inputStream) throws IOException {
 		_zipFile = new File(FileUtil.createTempFile("zip"));
 
-		OutputStream outputStream = new FileOutputStream(_zipFile);
-
-		try {
+		try (OutputStream outputStream = new FileOutputStream(_zipFile)) {
 			File.cat(inputStream, outputStream);
 		}
 		finally {
-			outputStream.close();
 			inputStream.close();
 		}
 	}

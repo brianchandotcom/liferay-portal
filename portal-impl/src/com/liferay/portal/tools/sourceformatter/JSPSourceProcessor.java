@@ -502,174 +502,158 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		StringBundler sb = new StringBundler();
 
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(content));
-
-		_checkedForIncludesFileNames = new HashSet<String>();
-		_includeFileNames = new HashSet<String>();
-
-		int lineCount = 0;
-
-		String line = null;
-
-		String previousLine = StringPool.BLANK;
-
 		String currentAttributeAndValue = null;
 		String previousAttribute = null;
 		String previousAttributeAndValue = null;
-
-		boolean readAttributes = false;
 
 		String currentException = null;
 		String previousException = null;
 
 		boolean hasUnsortedExceptions = false;
 
-		boolean javaSource = false;
+		try (UnsyncBufferedReader unsyncBufferedReader = 
+				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			lineCount++;
+			_checkedForIncludesFileNames = new HashSet<String>();
+			_includeFileNames = new HashSet<String>();
 
-			if (portalSource && hasUnusedTaglib(fileName, line)) {
-				continue;
-			}
+			int lineCount = 0;
 
-			if (!fileName.contains("jsonw") ||
-				!fileName.endsWith("action.jsp")) {
+			String line = null;
 
-				line = trimLine(line, false);
-			}
+			String previousLine = StringPool.BLANK;
 
-			if (line.contains("<aui:button ") &&
-				line.contains("type=\"button\"")) {
+			boolean readAttributes = false;
 
-				processErrorMessage(
-					fileName, "aui:button " + fileName + " " + lineCount);
-			}
+			boolean javaSource = false;
 
-			if (line.contains("debugger.")) {
-				processErrorMessage(
-					fileName, "debugger " + fileName + " " + lineCount);
-			}
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				lineCount++;
 
-			String trimmedLine = StringUtil.trimLeading(line);
-			String trimmedPreviousLine = StringUtil.trimLeading(previousLine);
-
-			checkStringBundler(trimmedLine, fileName, lineCount);
-
-			checkEmptyCollection(trimmedLine, fileName, lineCount);
-
-			if (trimmedLine.equals("<%") || trimmedLine.equals("<%!")) {
-				javaSource = true;
-			}
-			else if (trimmedLine.equals("%>")) {
-				javaSource = false;
-			}
-
-			if (javaSource || trimmedLine.contains("<%= ")) {
-				checkInefficientStringMethods(
-					line, fileName, absolutePath, lineCount);
-			}
-
-			if (javaSource && portalSource &&
-				!isExcluded(
-					_unusedVariablesExclusions, absolutePath, lineCount) &&
-				!_jspContents.isEmpty() &&
-				hasUnusedVariable(fileName, trimmedLine)) {
-
-				continue;
-			}
-
-			// LPS-47179
-
-			if (line.contains(".sendRedirect(") &&
-				!fileName.endsWith("_jsp.jsp")) {
-
-				processErrorMessage(
-					fileName,
-					"Do not use sendRedirect in jsp: " + fileName + " " +
-						lineCount);
-			}
-
-			if (!trimmedLine.equals("%>") && line.contains("%>") &&
-				!line.contains("--%>") && !line.contains(" %>")) {
-
-				line = StringUtil.replace(line, "%>", " %>");
-			}
-
-			if (line.contains("<%=") && !line.contains("<%= ")) {
-				line = StringUtil.replace(line, "<%=", "<%= ");
-			}
-
-			if (trimmedPreviousLine.equals("%>") && Validator.isNotNull(line) &&
-				!trimmedLine.equals("-->")) {
-
-				sb.append("\n");
-			}
-			else if (Validator.isNotNull(previousLine) &&
-					 !trimmedPreviousLine.equals("<!--") &&
-					 trimmedLine.equals("<%")) {
-
-				sb.append("\n");
-			}
-			else if (trimmedPreviousLine.equals("<%") &&
-					 Validator.isNull(line)) {
-
-				continue;
-			}
-			else if (trimmedPreviousLine.equals("<%") &&
-					 trimmedLine.startsWith("//")) {
-
-				sb.append("\n");
-			}
-			else if (Validator.isNull(previousLine) &&
-					 trimmedLine.equals("%>") && (sb.index() > 2)) {
-
-				String lineBeforePreviousLine = sb.stringAt(sb.index() - 3);
-
-				if (!lineBeforePreviousLine.startsWith("//")) {
-					sb.setIndex(sb.index() - 1);
+				if (portalSource && hasUnusedTaglib(fileName, line)) {
+					continue;
 				}
-			}
 
-			if ((trimmedLine.startsWith("if (") ||
-				 trimmedLine.startsWith("else if (") ||
-				 trimmedLine.startsWith("while (")) &&
-				trimmedLine.endsWith(") {")) {
+				if (!fileName.contains("jsonw") ||
+					!fileName.endsWith("action.jsp")) {
 
-				checkIfClauseParentheses(trimmedLine, fileName, lineCount);
-			}
+					line = trimLine(line, false);
+				}
 
-			if (readAttributes) {
-				if (!trimmedLine.startsWith(StringPool.FORWARD_SLASH) &&
-					!trimmedLine.startsWith(StringPool.GREATER_THAN)) {
+				if (line.contains("<aui:button ") &&
+					line.contains("type=\"button\"")) {
 
-					int pos = trimmedLine.indexOf(StringPool.EQUAL);
+					processErrorMessage(
+						fileName, "aui:button " + fileName + " " + lineCount);
+				}
 
-					if (pos != -1) {
-						String attribute = trimmedLine.substring(0, pos);
+				if (line.contains("debugger.")) {
+					processErrorMessage(
+						fileName, "debugger " + fileName + " " + lineCount);
+				}
 
-						if (!trimmedLine.endsWith(StringPool.APOSTROPHE) &&
-							!trimmedLine.endsWith(StringPool.GREATER_THAN) &&
-							!trimmedLine.endsWith(StringPool.QUOTE)) {
+				String trimmedLine = StringUtil.trimLeading(line);
+				String trimmedPreviousLine = StringUtil.trimLeading(
+					previousLine);
 
-							processErrorMessage(
-								fileName,
-								"attribute: " + fileName + " " + lineCount);
+				checkStringBundler(trimmedLine, fileName, lineCount);
 
-							readAttributes = false;
-						}
-						else if (trimmedLine.endsWith(StringPool.APOSTROPHE) &&
-								 !trimmedLine.contains(StringPool.QUOTE)) {
+				checkEmptyCollection(trimmedLine, fileName, lineCount);
 
-							line = StringUtil.replace(
-								line, StringPool.APOSTROPHE, StringPool.QUOTE);
+				if (trimmedLine.equals("<%") || trimmedLine.equals("<%!")) {
+					javaSource = true;
+				}
+				else if (trimmedLine.equals("%>")) {
+					javaSource = false;
+				}
 
-							readAttributes = false;
-						}
-						else if (Validator.isNotNull(previousAttribute)) {
-							if (!isAttributName(attribute) &&
-								!attribute.startsWith(StringPool.LESS_THAN)) {
+				if (javaSource || trimmedLine.contains("<%= ")) {
+					checkInefficientStringMethods(
+						line, fileName, absolutePath, lineCount);
+				}
+
+				if (javaSource && portalSource &&
+					!isExcluded(
+						_unusedVariablesExclusions, absolutePath, lineCount) &&
+					!_jspContents.isEmpty() &&
+					hasUnusedVariable(fileName, trimmedLine)) {
+
+					continue;
+				}
+
+				// LPS-47179
+
+				if (line.contains(".sendRedirect(") &&
+					!fileName.endsWith("_jsp.jsp")) {
+
+					processErrorMessage(
+						fileName,
+						"Do not use sendRedirect in jsp: " + fileName + " " +
+							lineCount);
+				}
+
+				if (!trimmedLine.equals("%>") && line.contains("%>") &&
+					!line.contains("--%>") && !line.contains(" %>")) {
+
+					line = StringUtil.replace(line, "%>", " %>");
+				}
+
+				if (line.contains("<%=") && !line.contains("<%= ")) {
+					line = StringUtil.replace(line, "<%=", "<%= ");
+				}
+
+				if (trimmedPreviousLine.equals("%>") && 
+					Validator.isNotNull(line) &&  !trimmedLine.equals("-->")) {
+
+					sb.append("\n");
+				}
+				else if (Validator.isNotNull(previousLine) &&
+						 !trimmedPreviousLine.equals("<!--") &&
+						 trimmedLine.equals("<%")) {
+
+					sb.append("\n");
+				}
+				else if (trimmedPreviousLine.equals("<%") &&
+						 Validator.isNull(line)) {
+
+					continue;
+				}
+				else if (trimmedPreviousLine.equals("<%") &&
+						 trimmedLine.startsWith("//")) {
+
+					sb.append("\n");
+				}
+				else if (Validator.isNull(previousLine) &&
+						 trimmedLine.equals("%>") && (sb.index() > 2)) {
+
+					String lineBeforePreviousLine = sb.stringAt(sb.index() - 3);
+
+					if (!lineBeforePreviousLine.startsWith("//")) {
+						sb.setIndex(sb.index() - 1);
+					}
+				}
+
+				if ((trimmedLine.startsWith("if (") ||
+					 trimmedLine.startsWith("else if (") ||
+					 trimmedLine.startsWith("while (")) &&
+					 trimmedLine.endsWith(") {")) {
+
+					checkIfClauseParentheses(trimmedLine, fileName, lineCount);
+				}
+
+				if (readAttributes) {
+					if (!trimmedLine.startsWith(StringPool.FORWARD_SLASH) &&
+						!trimmedLine.startsWith(StringPool.GREATER_THAN)) {
+
+						int pos = trimmedLine.indexOf(StringPool.EQUAL);
+
+						if (pos != -1) {
+							String attribute = trimmedLine.substring(0, pos);
+
+							if (!trimmedLine.endsWith(StringPool.APOSTROPHE) &&
+								!trimmedLine.endsWith(
+									StringPool.GREATER_THAN) &&
+								!trimmedLine.endsWith(StringPool.QUOTE)) {
 
 								processErrorMessage(
 									fileName,
@@ -677,130 +661,152 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 								readAttributes = false;
 							}
-							else if (Validator.isNull(
-										previousAttributeAndValue) &&
-									 (previousAttribute.compareTo(
-										 attribute) > 0)) {
+							else if (trimmedLine.endsWith(
+								StringPool.APOSTROPHE) &&
+								!trimmedLine.contains(StringPool.QUOTE)) {
 
-								previousAttributeAndValue = previousLine;
-								currentAttributeAndValue = line;
+								line = StringUtil.replace(
+									line, StringPool.APOSTROPHE, 
+										StringPool.QUOTE);
+
+								readAttributes = false;
+							}
+							else if (Validator.isNotNull(previousAttribute)) {
+								if (!isAttributName(attribute) &&
+									!attribute.startsWith(
+										StringPool.LESS_THAN)) {
+
+									processErrorMessage(
+										fileName,
+										"attribute: " + fileName + " " + 
+											lineCount);
+
+									readAttributes = false;
+								}
+								else if (Validator.isNull(
+										   previousAttributeAndValue) &&
+										 (previousAttribute.compareTo(
+											 attribute) > 0)) {
+
+									previousAttributeAndValue = previousLine;
+									currentAttributeAndValue = line;
+								}
+							}
+
+							if (!readAttributes) {
+								previousAttribute = null;
+								previousAttributeAndValue = null;
+							}
+							else {
+								previousAttribute = attribute;
 							}
 						}
-
-						if (!readAttributes) {
-							previousAttribute = null;
-							previousAttributeAndValue = null;
-						}
-						else {
-							previousAttribute = attribute;
-						}
 					}
-				}
-				else {
-					previousAttribute = null;
+					else {
+						previousAttribute = null;
 
-					readAttributes = false;
-				}
-			}
-
-			if (!hasUnsortedExceptions) {
-				int x = line.indexOf("<liferay-ui:error exception=\"<%=");
-
-				if (x != -1) {
-					int y = line.indexOf(".class %>", x);
-
-					if (y != -1) {
-						currentException = line.substring(x, y);
-
-						if (Validator.isNotNull(previousException) &&
-							(previousException.compareTo(currentException) >
-								0)) {
-
-							currentException = line;
-							previousException = previousLine;
-
-							hasUnsortedExceptions = true;
-						}
+						readAttributes = false;
 					}
 				}
 
 				if (!hasUnsortedExceptions) {
-					previousException = currentException;
-					currentException = null;
-				}
-			}
+					int x = line.indexOf("<liferay-ui:error exception=\"<%=");
 
-			if (trimmedLine.startsWith(StringPool.LESS_THAN) &&
-				!trimmedLine.startsWith("<%") &&
-				!trimmedLine.startsWith("<!")) {
+					if (x != -1) {
+						int y = line.indexOf(".class %>", x);
 
-				if (!trimmedLine.contains(StringPool.GREATER_THAN) &&
-					!trimmedLine.contains(StringPool.SPACE)) {
+						if (y != -1) {
+							currentException = line.substring(x, y);
 
-					readAttributes = true;
-				}
-				else {
-					line = sortAttributes(fileName, line, lineCount, true);
-				}
-			}
+							if (Validator.isNotNull(previousException) &&
+								(previousException.compareTo(currentException) >
+									0)) {
 
-			if (!trimmedLine.contains(StringPool.DOUBLE_SLASH) &&
-				!trimmedLine.startsWith(StringPool.STAR)) {
+								currentException = line;
+								previousException = previousLine;
 
-				while (trimmedLine.contains(StringPool.TAB)) {
-					line = StringUtil.replaceLast(
-						line, StringPool.TAB, StringPool.SPACE);
+								hasUnsortedExceptions = true;
+							}
+						}
+					}
 
-					trimmedLine = StringUtil.replaceLast(
-						trimmedLine, StringPool.TAB, StringPool.SPACE);
+					if (!hasUnsortedExceptions) {
+						previousException = currentException;
+						currentException = null;
+					}
 				}
 
-				while (trimmedLine.contains(StringPool.DOUBLE_SPACE) &&
-					   !trimmedLine.contains(
-						   StringPool.QUOTE + StringPool.DOUBLE_SPACE) &&
-					   !fileName.endsWith(".vm")) {
+				if (trimmedLine.startsWith(StringPool.LESS_THAN) &&
+					!trimmedLine.startsWith("<%") &&
+					!trimmedLine.startsWith("<!")) {
 
-					line = StringUtil.replaceLast(
-						line, StringPool.DOUBLE_SPACE, StringPool.SPACE);
+					if (!trimmedLine.contains(StringPool.GREATER_THAN) &&
+						!trimmedLine.contains(StringPool.SPACE)) {
 
-					trimmedLine = StringUtil.replaceLast(
-						trimmedLine, StringPool.DOUBLE_SPACE, StringPool.SPACE);
+						readAttributes = true;
+					}
+					else {
+						line = sortAttributes(fileName, line, lineCount, true);
+					}
 				}
-			}
 
-			if (!fileName.endsWith("/touch.jsp")) {
-				int x = line.indexOf("<%@ include file");
+				if (!trimmedLine.contains(StringPool.DOUBLE_SLASH) &&
+					!trimmedLine.startsWith(StringPool.STAR)) {
 
-				if (x != -1) {
-					x = line.indexOf(StringPool.QUOTE, x);
+					while (trimmedLine.contains(StringPool.TAB)) {
+						line = StringUtil.replaceLast(
+							line, StringPool.TAB, StringPool.SPACE);
 
-					int y = line.indexOf(StringPool.QUOTE, x + 1);
+						trimmedLine = StringUtil.replaceLast(
+							trimmedLine, StringPool.TAB, StringPool.SPACE);
+					}
 
-					if (y != -1) {
-						String includeFileName = line.substring(x + 1, y);
+					while (trimmedLine.contains(StringPool.DOUBLE_SPACE) &&
+						   !trimmedLine.contains(
+							   StringPool.QUOTE + StringPool.DOUBLE_SPACE) &&
+						   !fileName.endsWith(".vm")) {
 
-						Matcher matcher = _jspIncludeFilePattern.matcher(
-							includeFileName);
+						line = StringUtil.replaceLast(
+							line, StringPool.DOUBLE_SPACE, StringPool.SPACE);
 
-						if (!matcher.find()) {
-							processErrorMessage(
-								fileName,
-								"include: " + fileName + " " + lineCount);
+						trimmedLine = StringUtil.replaceLast(
+							trimmedLine, StringPool.DOUBLE_SPACE, 
+							StringPool.SPACE);
+					}
+				}
+
+				if (!fileName.endsWith("/touch.jsp")) {
+					int x = line.indexOf("<%@ include file");
+
+					if (x != -1) {
+						x = line.indexOf(StringPool.QUOTE, x);
+
+						int y = line.indexOf(StringPool.QUOTE, x + 1);
+
+						if (y != -1) {
+							String includeFileName = line.substring(x + 1, y);
+
+							Matcher matcher = _jspIncludeFilePattern.matcher(
+								includeFileName);
+
+							if (!matcher.find()) {
+								processErrorMessage(
+									fileName,
+									"include: " + fileName + " " + lineCount);
+							}
 						}
 					}
 				}
+
+				line = replacePrimitiveWrapperInstantiation(
+					fileName, line, lineCount);
+
+				previousLine = line;
+
+				sb.append(line);
+				sb.append("\n");
 			}
-
-			line = replacePrimitiveWrapperInstantiation(
-				fileName, line, lineCount);
-
-			previousLine = line;
-
-			sb.append(line);
-			sb.append("\n");
 		}
-
-		unsyncBufferedReader.close();
 
 		content = sb.toString();
 

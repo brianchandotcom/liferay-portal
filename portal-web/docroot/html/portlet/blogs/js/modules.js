@@ -1,8 +1,5 @@
 ;(function() {
-
-	var LiferayAUI = Liferay.AUI;
-
-	var PATH_PORTLET = LiferayAUI.getPortletRootPath();
+	var PATH_PORTLET = Liferay.AUI.getPortletRootPath();
 
 	AUI().applyConfig(
 		{
@@ -11,10 +8,10 @@
 					base: PATH_PORTLET + '/blogs/js/',
 					modules: {
 						'liferay-blogs': {
-							path: 'blog.js',
+							path: 'blogs.js',
 							requires: [
 								'aui-base',
-								'aui-toggler',
+								'aui-io-request',
 								'liferay-portlet-base'
 							]
 						}
@@ -24,5 +21,4 @@
 			}
 		}
 	);
-
 })();

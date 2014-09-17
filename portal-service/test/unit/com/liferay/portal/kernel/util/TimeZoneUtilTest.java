@@ -74,15 +74,22 @@ public class TimeZoneUtilTest {
 
 	@Test
 	public void testSetDefault() {
-		TimeZoneUtil.setDefault("PST");
+		TimeZone timeZone = TimeZoneUtil.getDefault();
 
-		Assert.assertEquals(
-			TimeZone.getTimeZone("PST"), TimeZoneUtil.getDefault());
+		try {
+			TimeZoneUtil.setDefault("PST");
 
-		TimeZoneUtil.setDefault(null);
+			Assert.assertEquals(
+				TimeZone.getTimeZone("PST"), TimeZoneUtil.getDefault());
 
-		Assert.assertEquals(
-			TimeZone.getTimeZone("PST"), TimeZoneUtil.getDefault());
+			TimeZoneUtil.setDefault(null);
+
+			Assert.assertEquals(
+				TimeZone.getTimeZone("PST"), TimeZoneUtil.getDefault());
+		}
+		finally {
+			TimeZoneUtil.setDefault(timeZone.getID());
+		}
 	}
 
 	@Test

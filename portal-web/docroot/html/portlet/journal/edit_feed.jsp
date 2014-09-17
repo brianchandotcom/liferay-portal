@@ -407,7 +407,7 @@ if (feed != null) {
 	Liferay.Util.disableToggleBoxes('<portlet:namespace />autoFeedId','<portlet:namespace />newFeedId', true);
 </aui:script>
 
-<aui:script use="aui-base">
+<aui:script use="aui-base,aui-selector">
 	var feedItemContentSelector = A.one('select#<portlet:namespace />contentFieldSelector');
 
 	var changeFeedItemContent = function() {

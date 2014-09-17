@@ -299,9 +299,58 @@
 		</if>
 	</command>
 
+	<command name="gotoSimulatorPG">
+		<execute action="PGContentTargetingSimulator#click" locator-key1="DOCKBAR_SIMULATOR" />
+	</command >
+
+	<command name="simulateUserSegmentPG">
+		<if>
+			<equals arg1="${simulationbutton}" arg2="Simulate" />
+			<then>
+				<execute action="PGContentTargetingSimulator#assertClick" locator-key1="SIMULATE_BUTTON" value1="Simulate" />
+			</then>
+			<elseif>
+				<equals arg1="${simulationbutton}" arg2="Stop Simulation" />
+				<then>
+					<execute action="PGContentTargetingSimulator#assertClick" locator-key1="STOP_SIMULATION_BUTTON" value1="Stop Simulation" />
+				</then>
+			</elseif>
+		</if>
+	</command>
+
 	<command name="saveCP">
 		<execute action="CPContenttargetingAddusersegment#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPContenttargetingAddusersegment#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="viewMatchedUserSegmentPG">
+		<var name="key_userSegment" value="${userSegmentName}" />
+
+		<execute action="PGContentTargetingSimulator#assertClick" locator-key1="SIMULATOR_USER_SEGMENTS" value1="User Segments" />
+		<execute action="PGContentTargetingSimulator#assertTextEquals" locator-key1="MATCHED_USER_SEGMENT_LABEL" value1="${userSegmentName}" />
+		<execute action="PGContentTargetingSimulator#assertChecked" locator-key1="MATCHED_USER_SEGMENT_CHECKBOX" value1="${userSegmentName}" />
+
+		<if>
+			<isset var="userSegmentSimulation" />
+			<then>
+				<execute action="PGContentTargetingSimulator#uncheck" locator-key1="MATCHED_USER_SEGMENT_CHECKBOX" value1="${userSegmentName}" />
+			</then>
+		</if>
+	</command>
+
+	<command name="viewOtherUserSegmentPG">
+		<var name="key_userSegment" value="${userSegmentName}" />
+
+		<execute action="PGContentTargetingSimulator#assertClick" locator-key1="SIMULATOR_USER_SEGMENTS" value1="User Segments" />
+		<execute action="PGContentTargetingSimulator#assertTextEquals" locator-key1="OTHER_USER_SEGMENT_LABEL" value1="${userSegmentName}" />
+		<execute action="PGContentTargetingSimulator#assertNotChecked" locator-key1="OTHER_USER_SEGMENT_CHECKBOX" value1="${userSegmentName}" />
+
+		<if>
+			<isset var="userSegmentSimulation" />
+			<then>
+				<execute action="PGContentTargetingSimulator#check" locator-key1="OTHER_USER_SEGMENT_CHECKBOX" value1="${userSegmentName}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="viewRulesCP">

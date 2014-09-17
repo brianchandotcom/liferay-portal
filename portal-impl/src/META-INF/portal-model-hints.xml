@@ -94,7 +94,7 @@
 		<field name="taskExecutorClassName" type="String">
 			<hint name="max-length">200</hint>
 		</field>
-		<field name="taskContext" type="String">
+		<field name="taskContext" type="Map">
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="completed" type="boolean" />

@@ -49,11 +49,12 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -772,17 +773,8 @@ public class JavadocFormatter {
 	}
 
 	private void _format(String fileName) throws Exception {
-		byte[] bytes = null;
-
-		try (InputStream inputStream = new FileInputStream(
-				_inputDir + fileName)) {
-
-			bytes = new byte[inputStream.available()];
-
-			inputStream.read(bytes);
-		}
-
-		String originalContent = new String(bytes, StringPool.UTF8);
+		String originalContent = new String(Files.readAllBytes(
+			Paths.get(_inputDir + fileName)), StringPool.UTF8);
 
 		if (fileName.endsWith("JavadocFormatter.java") ||
 			fileName.endsWith("SourceFormatter.java") ||
@@ -1919,7 +1911,7 @@ public class JavadocFormatter {
 				new FileOutputStream(_languagePropertiesFile, false),
 				StringPool.UTF8)) {
 
-			writer.write(sb.toString());
+			sb.writeTo(writer);
 		}
 
 		System.out.println(

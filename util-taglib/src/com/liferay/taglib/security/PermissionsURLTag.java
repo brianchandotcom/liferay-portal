@@ -40,32 +40,29 @@ import javax.servlet.jsp.tagext.TagSupport;
  */
 public class PermissionsURLTag extends TagSupport {
 
-    /**
-     * Return an URL to be able to configure the permissions of a resource.
-     * @param redirect
-     * 		The redirect parameter. If it is null and the dialog is not open as
-     * 		a popup, the current URL as obtained by
-     * 		{@link PortalUtil#getCurrentURL(HttpServletRequest)} is used.
-     * @param modelResource
-     * 		A String describing the class of the resource for which we want to
-     * 		configure permissions.
-     * @param modelResourceDescription
-     *      The human friendly description of the resource.
-     * @param resourceGroupId
-     * 		The group id to which the resource belongs. Can be a number, a
-     * 		string containing a number, or a substitution string. If it is null,
-     * 		it is obtained from {@link ThemeDisplay#getScopeGroupId()})
-     * @param resourcePrimKey The primary key of the resource.
-     * @param windowState
-     * 		The window state to use when opening the permissions configuration
-     * 	   	dialog (see {@link LiferayWindowState})
-     * @param roleTypes
-     * @param request The current request.
-     * @return
-     * 		An URL that can be used to open the permissions configuration
-     * 	   	dialog.
-     * @see LiferayWindowState
-     */
+	/**
+	 * Return an URL to be able to configure the permissions of a resource.
+	 *
+	 * @param  redirect The redirect parameter. If it is <code>null</code> and
+	 *         the dialog is not open as a popup, the current URL as obtained by
+	 *         {@link PortalUtil#getCurrentURL(HttpServletRequest)} is used.
+	 * @param  modelResource A String describing the class of the resource for
+	 *         which we want to configure permissions.
+	 * @param  modelResourceDescription The human friendly description of the
+	 *         resource.
+	 * @param  resourceGroupId The group ID to which the resource belongs. Can
+	 *         be a number, a string containing a number, or a substitution
+	 *         string. If it is <code>null</code>, it is obtained from {@link
+	 *         ThemeDisplay#getScopeGroupId()})
+	 * @param  resourcePrimKey The primary key of the resource.
+	 * @param  windowState The window state to use when opening the permissions
+	 *         configuration dialog (see {@link LiferayWindowState})
+	 * @param  roleTypes
+	 * @param  request The current request.
+	 * @return An URL that can be used to open the permissions configuration
+	 *         dialog.
+	 * @see    LiferayWindowState
+	 */
 	public static String doTag(
 			String redirect, String modelResource,
 			String modelResourceDescription, Object resourceGroupId,

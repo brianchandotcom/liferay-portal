@@ -56,12 +56,11 @@ public class WriterOutputStreamTest {
 
 		};
 
-		WriterOutputStream writerOutputStream = new WriterOutputStream(
-			dummyWriter);
+		try (WriterOutputStream writerOutputStream = new WriterOutputStream(
+				dummyWriter)) {
 
-		Assert.assertFalse(closeAtomicBoolean.get());
-
-		writerOutputStream.close();
+			Assert.assertFalse(closeAtomicBoolean.get());
+		}
 
 		Assert.assertTrue(closeAtomicBoolean.get());
 	}
@@ -240,17 +239,18 @@ public class WriterOutputStreamTest {
 	public void testWriteBlockUnaligned() throws IOException {
 		CharArrayWriter charArrayWriter = new CharArrayWriter();
 
-		WriterOutputStream writerOutputStream = new WriterOutputStream(
-			charArrayWriter, StringPool.UTF8, true);
-
 		String unalignedOutput = "非对齐测试中文输出";
-		byte[] unalignedInput = unalignedOutput.getBytes(StringPool.UTF8);
 
-		writerOutputStream.write(unalignedInput[0]);
-		writerOutputStream.write(unalignedInput, 1, unalignedInput.length - 2);
-		writerOutputStream.write(unalignedInput[unalignedInput.length - 1]);
+		try (WriterOutputStream writerOutputStream = new WriterOutputStream(
+				charArrayWriter, StringPool.UTF8, true)) {
 
-		writerOutputStream.close();
+			byte[] unalignedInput = unalignedOutput.getBytes(StringPool.UTF8);
+
+			writerOutputStream.write(unalignedInput[0]);
+			writerOutputStream.write(
+				unalignedInput, 1, unalignedInput.length - 2);
+			writerOutputStream.write(unalignedInput[unalignedInput.length - 1]);
+		}
 
 		Assert.assertEquals(unalignedOutput, charArrayWriter.toString());
 	}

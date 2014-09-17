@@ -34,9 +34,12 @@
 
 		<execute action="PGUsersegmentcontentdisplay#click" locator-key1="RULE_PANEL_USER_SEGMENT_SELECT_BUTTON" />
 
-		<var name="key_userSegmentName" value="${userSegmentName}" />
+		<for list="${userSegmentName}" param="userSegmentName">
+			<var name="key_userSegmentName" value="${userSegmentName}" />
 
-		<execute action="PGUsersegmentcontentdisplay#click" locator-key1="RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CHECKBOX" />
+			<execute action="PGUsersegmentcontentdisplay#click" locator-key1="RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CHECKBOX" />
+		</for>
+
 		<execute action="PGUsersegmentcontentdisplay#click" locator-key1="RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CLOSE_BUTTON" />
 		<execute action="PGUsersegmentcontentdisplay#click" locator-key1="RULE_PANEL_DISPLAY_CONTENT_DROPDOWN" />
 
@@ -76,6 +79,10 @@
 				<execute action="PGUsersegmentcontentdisplay#selectFrame" value1="relative=top" />
 				<execute action="PGUsersegmentcontentdisplay#selectFrame" locator-key1="USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
 			</then>
+			<else>
+				<execute action="PGUsersegmentcontentdisplay#click" locator-key1="OTHERWISE_PANEL" />
+				<execute action="PGUsersegmentcontentdisplay#click" locator-key1="OTHERWISE_PANEL_DONT_DISPLAY_ANYTHING_RADIO" />
+			</else>
 		</if>
 
 		<execute action="PGUsersegmentcontentdisplay#click" locator-key1="SAVE_BUTTON" />
@@ -83,6 +90,14 @@
 	</command>
 
 	<command name="viewEntryPG">
+		<if>
+			<isset var="viewUserSegmentSelected" />
+			<then>
+				<var name="key_viewUserSegmentSelected" value="${viewUserSegmentSelected}" />
+				<execute action="PGUsersegmentcontentdisplay#assertElementPresent" locator-key1="PREVIEW_USER_SEGMENT_SELECTED" value1="${viewUserSegmentSelected}" />
+			</then>
+		</if>
+
 		<if>
 			<isset var="entryContentText" />
 			<then>
@@ -94,20 +109,27 @@
 		</if>
 
 		<if>
-			<equals arg1="${belongsTo}" arg2="false" />
+			<isset var="preview1Text" />
 			<then>
-				<var name="key_userSegmentName" value="${userSegmentName}" />
-
-				<execute action="PGUsersegmentcontentdisplay#assertElementPresent" locator-key1="PREVIEW_DOES_NOT_BELONG" />
-				<execute action="PGUsersegmentcontentdisplay#assertElementPresent" locator-key1="PREVIEW_SELECTED_OTHERWISE" />
-			</then>
-			<else>
-				<var name="key_userSegmentName" value="${userSegmentName}" />
-
 				<execute action="PGUsersegmentcontentdisplay#mouseOver" locator-key1="PREVIEW_1" />
-				<execute action="PGUsersegmentcontentdisplay#assertElementPresent" locator-key1="PREVIEW_SELECTED_BELONGS" />
-				<execute action="PGUsersegmentcontentdisplay#assertElementPresent" locator-key1="PREVIEW_OTHERWISE" />
-			</else>
+				<execute action="PGUsersegmentcontentdisplay#assertTextEquals" locator-key1="PREVIEW_1" value1="${preview1Text}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="preview2Text" />
+			<then>
+				<execute action="PGUsersegmentcontentdisplay#mouseOver" locator-key1="PREVIEW_2" />
+				<execute action="PGUsersegmentcontentdisplay#assertTextEquals" locator-key1="PREVIEW_2" value1="${preview2Text}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="viewDontDisplay" />
+			<then>
+				<execute action="PGUsersegmentcontentdisplay#mouseOver" locator-key1="${viewDontDisplay}" />
+				<execute action="PGUsersegmentcontentdisplay#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no matching rules" />
+			</then>
 		</if>
 	</command>
 </definition>

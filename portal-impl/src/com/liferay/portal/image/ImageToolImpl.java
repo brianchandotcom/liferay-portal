@@ -458,19 +458,27 @@ public class ImageToolImpl implements ImageTool {
 
 		InputStream inputStream = new ByteArrayInputStream(bytes);
 
-		ImageInputStream imageInputStream = ImageIO.createImageInputStream(
-			inputStream);
+		ImageInputStream imageInputStream = null;
 
-		Iterator<ImageReader> iterator = ImageIO.getImageReaders(
-			imageInputStream);
+		try {
+			imageInputStream = ImageIO.createImageInputStream(inputStream);
 
-		if (iterator.hasNext()) {
-			ImageReader imageReader = iterator.next();
+			Iterator<ImageReader> iterator = ImageIO.getImageReaders(
+				imageInputStream);
 
-			imageReader.setInput(imageInputStream);
+			if (iterator.hasNext()) {
+				ImageReader imageReader = iterator.next();
 
-			bufferedImage = imageReader.read(0);
-			formatName = imageReader.getFormatName();
+				imageReader.setInput(imageInputStream);
+
+				bufferedImage = imageReader.read(0);
+				formatName = imageReader.getFormatName();
+			}
+		}
+		finally {
+			if (imageInputStream != null) {
+				imageInputStream.close();
+			}
 		}
 
 		formatName = StringUtil.toLowerCase(formatName);

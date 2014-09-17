@@ -107,10 +107,10 @@ public class SybaseDB extends BaseDB {
 
 	@Override
 	protected String reword(String data) throws IOException {
-		StringBundler sb = new StringBundler();
-
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(data))) {
+
+			StringBundler sb = new StringBundler();
 
 			String line = null;
 
@@ -160,9 +160,9 @@ public class SybaseDB extends BaseDB {
 				sb.append(line);
 				sb.append("\n");
 			}
-		}
 
-		return sb.toString();
+			return sb.toString();
+		}
 	}
 
 	protected static final String DROP_COLUMN = "drop column";

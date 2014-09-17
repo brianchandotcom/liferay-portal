@@ -101,10 +101,10 @@ public class FirebirdDB extends BaseDB {
 
 	@Override
 	protected String reword(String data) throws IOException {
-		StringBundler sb = new StringBundler();
-
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(data))) {
+
+			StringBundler sb = new StringBundler();
 
 			String line = null;
 
@@ -135,9 +135,9 @@ public class FirebirdDB extends BaseDB {
 				sb.append(line);
 				sb.append("\n");
 			}
-		}
 
-		return sb.toString();
+			return sb.toString();
+		}
 	}
 
 	private static final String[] _FIREBIRD = {

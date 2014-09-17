@@ -46,10 +46,6 @@ public class EhcacheStreamBootstrapCacheLoader implements BootstrapCacheLoader {
 	}
 
 	public void doLoad(Ehcache ehcache) {
-		if (ClusterLinkBootstrapLoaderHelperUtil.isSkipped()) {
-			return;
-		}
-
 		if (_log.isDebugEnabled()) {
 			_log.debug("Bootstraping " + ehcache.getName());
 		}
@@ -74,6 +70,10 @@ public class EhcacheStreamBootstrapCacheLoader implements BootstrapCacheLoader {
 
 	@Override
 	public void load(Ehcache ehcache) {
+		if (ClusterLinkBootstrapLoaderHelperUtil.isSkipped()) {
+			return;
+		}
+
 		if (_bootstrapAsynchronously) {
 			EhcacheStreamClientThread streamBootstrapThread =
 				new EhcacheStreamClientThread(ehcache);

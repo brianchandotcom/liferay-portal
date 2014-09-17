@@ -456,12 +456,11 @@ public class ImageToolImpl implements ImageTool {
 		BufferedImage bufferedImage = null;
 		String formatName = null;
 
-		InputStream inputStream = new ByteArrayInputStream(bytes);
-
 		ImageInputStream imageInputStream = null;
 
 		try {
-			imageInputStream = ImageIO.createImageInputStream(inputStream);
+			imageInputStream = ImageIO.createImageInputStream(
+				new ByteArrayInputStream(bytes));
 
 			Iterator<ImageReader> iterator = ImageIO.getImageReaders(
 				imageInputStream);

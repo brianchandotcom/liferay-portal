@@ -120,7 +120,7 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 		GroovyShell groovyShell = _groovyShells.get(aggregateClassLoader);
 
 		if (groovyShell == null) {
-			groovyShell = _groovyShells.get(aggregateClassLoader);
+			groovyShell = new GroovyShell(aggregateClassLoader);
 
 			GroovyShell oldGroovyShell = _groovyShells.putIfAbsent(
 				aggregateClassLoader, groovyShell);

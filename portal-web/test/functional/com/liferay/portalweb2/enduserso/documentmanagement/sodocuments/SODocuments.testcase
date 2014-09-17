@@ -1348,7 +1348,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-42206" name="AddDocumentType" priority="4">
+	<command name="AddDocumentType" priority="4">
 		<var name="dmDocumentDescription" value="DM Folder Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentTitle" value="DM Folder Document Title" />
@@ -1403,7 +1403,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-42206" name="AddDocumentTypeAndMetadata" priority="3">
+	<command name="AddDocumentTypeAndMetadata" priority="3">
 		<var name="dmDocumentDescription" value="DM Document Type Contract Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentTitle" value="DM Document Type Contract Title" />
@@ -2262,7 +2262,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-42206" name="DeleteDocumentType" priority="4">
+	<command name="DeleteDocumentType" priority="4">
 		<var name="dmDocumentTypeDescription" value="DM Document Type Description" />
 		<var name="dmDocumentTypeName" value="DM Document Type Name" />
 
@@ -2818,7 +2818,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-42206" name="EditDocumentType" priority="4">
+	<command name="EditDocumentType" priority="4">
 		<var name="dmDocumentDescription" value="DM Folder Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentTitle" value="DM Folder Document Title" />

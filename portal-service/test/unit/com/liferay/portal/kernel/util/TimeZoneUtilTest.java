@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
-import com.liferay.portal.kernel.test.NewClassLoaderJUnitTestRunner;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
 import java.lang.reflect.Constructor;
@@ -27,7 +26,6 @@ import java.util.TimeZone;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Will Newbury
@@ -52,13 +50,14 @@ public class TimeZoneUtilTest {
 
 	@Test
 	public void testGetInstance() throws NoSuchMethodException {
-		TimeZoneUtil timeZoneUtilInstance1 = TimeZoneUtil.getInstance();
+		TimeZoneUtil timeZoneUtil1 = TimeZoneUtil.getInstance();
 
-		TimeZoneUtil timeZoneUtilInstance2 = TimeZoneUtil.getInstance();
+		TimeZoneUtil timeZoneUtil2 = TimeZoneUtil.getInstance();
 
-		Assert.assertNotEquals(timeZoneUtilInstance1, timeZoneUtilInstance2);
+		Assert.assertNotSame(timeZoneUtil1, timeZoneUtil2);
 
-		Constructor constructor = TimeZoneUtil.class.getDeclaredConstructor();
+		Constructor<TimeZoneUtil> constructor =
+			TimeZoneUtil.class.getDeclaredConstructor();
 
 		Assert.assertTrue(Modifier.isPrivate(constructor.getModifiers()));
 	}

@@ -102,7 +102,7 @@ if (Validator.isNotNull(historyKey)) {
 					String contentCssClass = "form-navigator-content";
 
 					if (!displayStyle.equals("steps")) {
-						contentCssClass += " col-md-8";
+						contentCssClass += " col-md-8 col-md-pull-4";
 					}
 					%>
 
@@ -111,7 +111,15 @@ if (Validator.isNotNull(historyKey)) {
 					</div>
 				</liferay-util:buffer>
 
-				<ul class="col-md-4 form-navigator list-group nav">
+				<%
+				String listGroupCssClass = "form-navigator list-group nav";
+
+				if (!displayStyle.equals("steps")) {
+					listGroupCssClass += " col-md-4 col-md-push-8";
+				}
+				%>
+
+				<ul class="<%= listGroupCssClass %>">
 					<%= Validator.isNotNull(htmlTop) ? htmlTop : StringPool.BLANK %>
 
 					<%

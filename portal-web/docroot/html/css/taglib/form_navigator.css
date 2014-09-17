@@ -2,12 +2,6 @@
 @import "mixins";
 
 .taglib-form-navigator {
-	ul.form-navigator.list-group {
-		@include respond-to(desktop) {
-			float: right;
-		}
-	}
-
 	.error-notice, .modified-notice {
 		display: none;
 	}

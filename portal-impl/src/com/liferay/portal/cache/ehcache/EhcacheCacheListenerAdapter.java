@@ -17,11 +17,9 @@ package com.liferay.portal.cache.ehcache;
 import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheException;
-import com.liferay.portal.kernel.cache.PortalCacheWrapper;
 
 import java.io.Serializable;
 
-import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 import net.sf.ehcache.event.CacheEventListener;
 
@@ -47,7 +45,7 @@ public class EhcacheCacheListenerAdapter<K extends Serializable, V>
 		}
 
 		_cacheEventListener.notifyElementEvicted(
-			getEhcache(portalCache), element);
+			EhcacheUnwrapUtil.getEhcache(portalCache), element);
 	}
 
 	@Override
@@ -62,7 +60,7 @@ public class EhcacheCacheListenerAdapter<K extends Serializable, V>
 		}
 
 		_cacheEventListener.notifyElementExpired(
-			getEhcache(portalCache), element);
+			EhcacheUnwrapUtil.getEhcache(portalCache), element);
 	}
 
 	@Override
@@ -76,7 +74,8 @@ public class EhcacheCacheListenerAdapter<K extends Serializable, V>
 			element.setTimeToLive(timeToLive);
 		}
 
-		_cacheEventListener.notifyElementPut(getEhcache(portalCache), element);
+		_cacheEventListener.notifyElementPut(
+			EhcacheUnwrapUtil.getEhcache(portalCache), element);
 	}
 
 	@Override
@@ -91,7 +90,7 @@ public class EhcacheCacheListenerAdapter<K extends Serializable, V>
 		}
 
 		_cacheEventListener.notifyElementRemoved(
-			getEhcache(portalCache), element);
+			EhcacheUnwrapUtil.getEhcache(portalCache), element);
 	}
 
 	@Override
@@ -106,37 +105,15 @@ public class EhcacheCacheListenerAdapter<K extends Serializable, V>
 		}
 
 		_cacheEventListener.notifyElementUpdated(
-			getEhcache(portalCache), element);
+			EhcacheUnwrapUtil.getEhcache(portalCache), element);
 	}
 
 	@Override
 	public void notifyRemoveAll(PortalCache<K, V> portalCache)
 		throws PortalCacheException {
 
-		_cacheEventListener.notifyRemoveAll(getEhcache(portalCache));
-	}
-
-	protected Ehcache getEhcache(PortalCache<K, V> portalCache) {
-		while (true) {
-			if (portalCache instanceof PortalCacheWrapper) {
-				PortalCacheWrapper<K, V> portalCacheWrapper =
-					(PortalCacheWrapper<K, V>)portalCache;
-
-				portalCache = portalCacheWrapper.getWrappedPortalCache();
-			}
-			else if (portalCache instanceof EhcachePortalCache) {
-				EhcachePortalCache<K, V> ehcachePortalCache =
-					(EhcachePortalCache<K, V>)portalCache;
-
-				return ehcachePortalCache.ehcache;
-			}
-			else {
-				throw new IllegalArgumentException(
-					"PortalCache is not a " +
-						EhcachePortalCache.class.getName() + " or a " +
-							PortalCacheWrapper.class.getName());
-			}
-		}
+		_cacheEventListener.notifyRemoveAll(
+			EhcacheUnwrapUtil.getEhcache(portalCache));
 	}
 
 	private final CacheEventListener _cacheEventListener;

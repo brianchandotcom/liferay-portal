@@ -18,11 +18,9 @@ import com.liferay.portal.kernel.cache.BootstrapLoader;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheProvider;
-import com.liferay.portal.kernel.cache.PortalCacheWrapper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.bootstrap.BootstrapCacheLoader;
 
 /**
@@ -57,30 +55,7 @@ public class EhcacheBootstrapLoaderAdapter implements BootstrapLoader {
 		PortalCache<?, ?> portalCache = portalCacheManager.getCache(
 			portalCacheName);
 
-		_bootstrapCacheLoader.load(getEhcache(portalCache));
-	}
-
-	protected Ehcache getEhcache(PortalCache<?, ?> portalCache) {
-		while (true) {
-			if (portalCache instanceof PortalCacheWrapper) {
-				PortalCacheWrapper<?, ?> portalCacheWrapper =
-					(PortalCacheWrapper<?, ?>)portalCache;
-
-				portalCache = portalCacheWrapper.getWrappedPortalCache();
-			}
-			else if (portalCache instanceof EhcachePortalCache) {
-				EhcachePortalCache<?, ?> ehcachePortalCache =
-					(EhcachePortalCache<?, ?>)portalCache;
-
-				return ehcachePortalCache.ehcache;
-			}
-			else {
-				throw new IllegalArgumentException(
-					"PortalCache is not a " +
-						EhcachePortalCache.class.getName() + " or a " +
-							PortalCacheWrapper.class.getName());
-			}
-		}
+		_bootstrapCacheLoader.load(EhcacheUnwrapUtil.getEhcache(portalCache));
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

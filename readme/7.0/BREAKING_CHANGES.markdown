@@ -432,3 +432,32 @@ This change was made to allow different kinds of repositories to support trash
 operations in a uniform way.
 
 ---------------------------------------
+
+### Removed Sync Logic from `DLAppHelperLocalService` Methods
+- **Date:** 2014-Sep-5
+- **JIRA Ticket:** LPS-48895
+
+#### What changed?
+
+The `moveFileEntry()` and `moveFolder()` methods in `DLAppHelperLocalService`
+fired Liferay Sync events. These methods have been removed.
+
+#### Who is affected?
+
+Every caller of the `moveFileEntry()` and `moveFolder()` methods is affected.
+
+#### How should I update my code?
+
+There is no direct replacement. Trash operations are now accessible through the
+`TrashCapability` implementations for each repository. The following code
+demonstrates using a `TrashCapability` instance to delete a `FileEntry`:
+
+In case a Liferay Sync event must be triggered you can always use the Liferay
+Sync services. See method
+DLAppHelperLocalServiceImpl.registerDLSyncEventCallback
+
+#### Why was this change made?
+
+There are repositories that don't support Liferay Sync operations.
+
+---------------------------------------

@@ -42,6 +42,8 @@ import java.io.InputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerMap;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
@@ -65,12 +67,8 @@ public class ImageSelectorAction extends JSONAction {
 		String resourceName = ParamUtil.getString(
 			uploadPortletRequest, "resourceName");
 
-		Registry registry = RegistryUtil.getRegistry();
-
 		ResourcePermissionChecker resourcePermissionChecker =
-			registry.getServices(
-				ResourcePermissionChecker.class,
-				"(resource.name=" + resourceName + ")").iterator().next();
+			_serviceTrackerMap.getService(resourceName);
 
 		resourcePermissionChecker.check(
 			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
@@ -127,5 +125,9 @@ public class ImageSelectorAction extends JSONAction {
 
 		return jsonObject.toString();
 	}
+
+	private ServiceTrackerMap<String, ResourcePermissionChecker>
+		_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
+			ResourcePermissionChecker.class, "resource.name");
 
 }

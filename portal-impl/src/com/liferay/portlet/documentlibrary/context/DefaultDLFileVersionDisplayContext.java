@@ -43,16 +43,23 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
-import com.liferay.portlet.documentlibrary.context.util.FileVersionMetadataHelper;
+import com.liferay.portlet.documentlibrary.context.util.JSPRenderer;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,6 +69,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -105,9 +113,6 @@ public class DefaultDLFileVersionDisplayContext
 
 		_fileEntryTypeId = fileEntryTypeId;
 
-		_fileVersionMetadataHelper = new FileVersionMetadataHelper(
-			_fileVersion);
-
 		_folderId = BeanParamUtil.getLong(_fileEntry, request, "folderId");
 
 		PortletRequest portletRequest =
@@ -130,12 +135,24 @@ public class DefaultDLFileVersionDisplayContext
 
 	@Override
 	public List<DDMStructure> getDDMStructures() throws PortalException {
-		return _fileVersionMetadataHelper.getDDMStructures();
+		if (_fileVersion.getModel() instanceof DLFileVersion) {
+			DLFileVersion dlFileVersion =
+				(DLFileVersion)_fileVersion.getModel();
+
+			return dlFileVersion.getDDMStructures();
+		}
+
+		return Collections.emptyList();
 	}
 
 	@Override
 	public Fields getFields(DDMStructure ddmStructure) throws PortalException {
-		return _fileVersionMetadataHelper.getFields(ddmStructure);
+		DLFileEntryMetadata dlFileEntryMetadata =
+			DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
+				ddmStructure.getStructureId(), _fileVersion.getFileVersionId());
+
+		return StorageEngineUtil.getFields(
+			dlFileEntryMetadata.getDDMStorageId());
 	}
 
 	@Override
@@ -389,6 +406,20 @@ public class DefaultDLFileVersionDisplayContext
 	public boolean isViewOriginalFileButtonVisible() throws PortalException {
 		return _defaultDLFileEntryActionsDisplayContextHelper.
 			hasViewPermission();
+	}
+
+	@Override
+	public void renderPreview(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException, ServletException {
+
+		JSPRenderer jspRenderer = new JSPRenderer(
+			"/html/portlet/document_library/view_file_entry_preview.jsp");
+
+		jspRenderer.setAttribute(
+			WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, _fileVersion);
+
+		jspRenderer.render(request, response);
 	}
 
 	private void _addCancelCheckoutMenuItem(List<MenuItem> menuItems)
@@ -831,7 +862,6 @@ public class DefaultDLFileVersionDisplayContext
 	private FileEntry _fileEntry;
 	private long _fileEntryTypeId;
 	private FileVersion _fileVersion;
-	private FileVersionMetadataHelper _fileVersionMetadataHelper;
 	private long _folderId;
 	private Boolean _ieOnWin32;
 	private LiferayPortletRequest _liferayPortletRequest;

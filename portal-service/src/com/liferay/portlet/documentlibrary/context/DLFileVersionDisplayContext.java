@@ -19,7 +19,13 @@ import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
+import java.io.IOException;
+
 import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Iván Zaera
@@ -77,5 +83,9 @@ public interface DLFileVersionDisplayContext extends DLDisplayContext {
 	public boolean isViewButtonVisible() throws PortalException;
 
 	public boolean isViewOriginalFileButtonVisible() throws PortalException;
+
+	public void renderPreview(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException, ServletException;
 
 }

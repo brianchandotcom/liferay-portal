@@ -27,6 +27,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.context.BaseDLFileVersionDisplayContext;
 import com.liferay.portlet.documentlibrary.context.DLFileVersionDisplayContext;
 import com.liferay.portlet.documentlibrary.context.DLMenuItemKeys;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
 import java.util.Iterator;
@@ -125,15 +126,17 @@ public class GoogleDocsDLFileVersionDisplayContext
 
 		urlMenuItem.setTarget("_blank");
 
+		DLFileVersion dlFileVersion = (DLFileVersion)fileVersion.getModel();
+
 		GoogleDocsMetadataHelper googleDocsMetadataHelper =
-			new GoogleDocsMetadataHelper(fileVersion);
+			new GoogleDocsMetadataHelper(dlFileVersion);
 
 		String editURL = googleDocsMetadataHelper.getFieldValue(
 			GoogleDocsConstants.DDM_FIELD_NAME_EDIT_URL);
 
 		urlMenuItem.setURL(editURL);
 
-		menuItems.set(index, urlMenuItem);
+		menuItems.add(index, urlMenuItem);
 	}
 
 	private void _removeMenuItem(List<MenuItem> menuItems, String key) {

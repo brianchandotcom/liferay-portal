@@ -2097,8 +2097,7 @@ public class DLFileEntryLocalServiceImpl
 		// File entry type
 
 		DLFileEntryType dlFileEntryType =
-			dlFileEntryTypeLocalService.getFileEntryType(
-				lastDLFileVersion.getFileEntryTypeId());
+			lastDLFileVersion.getDLFileEntryType();
 
 		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
 

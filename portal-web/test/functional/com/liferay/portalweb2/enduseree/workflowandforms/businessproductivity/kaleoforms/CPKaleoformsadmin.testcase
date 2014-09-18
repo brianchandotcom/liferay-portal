@@ -1792,6 +1792,8 @@
 	</command>
 
 	<command name="ExportAllProcessRecordsCSV" priority="5">
+		<description message="This is a use case for LPS-49107." />
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Kaleo Forms Admin" />
 		</execute>
@@ -1918,6 +1920,8 @@
 	</command>
 
 	<command name="ExportAllProcessRecordsXML" priority="5">
+		<description message="This is a use case for LPS-49107." />
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Kaleo Forms Admin" />
 		</execute>
@@ -2044,6 +2048,8 @@
 	</command>
 
 	<command name="ExportApprovedProcessRecordsCSV" priority="5">
+		<description message="This is a use case for LPS-49107." />
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Kaleo Forms Admin" />
 		</execute>
@@ -2171,6 +2177,8 @@
 	</command>
 
 	<command name="ExportApprovedProcessRecordsXML" priority="5">
+		<description message="This is a use case for LPS-49107." />
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Kaleo Forms Admin" />
 		</execute>

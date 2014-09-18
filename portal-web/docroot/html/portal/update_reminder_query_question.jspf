@@ -14,7 +14,7 @@
  */
 --%>
 
-<aui:select cssClass="reminder-query-question" label="question" name="reminderQueryQuestion">
+<aui:select autoFocus="<%= true %>" cssClass="reminder-query-question" label="question" name="reminderQueryQuestion">
 
 	<%
 	for (String question : user.getReminderQueryQuestions()) {

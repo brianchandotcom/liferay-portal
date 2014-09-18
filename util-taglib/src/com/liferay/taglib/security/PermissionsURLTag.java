@@ -54,7 +54,7 @@ public class PermissionsURLTag extends TagSupport {
 	 * @param  resourceGroupId the group ID to which the resource belongs, which
 	 *         can be a number, string containing a number, or substitution
 	 *         string. If the resource group ID is <code>null</code>, it is
-	 *         obtained from {@link ThemeDisplay#getScopeGroupId()}).
+	 *         obtained from {@link ThemeDisplay#getScopeGroupId()}.
 	 * @param  resourcePrimKey the primary key of the resource
 	 * @param  windowState the window state to use when opening the permissions
 	 *         configuration dialog. For more information, see {@link

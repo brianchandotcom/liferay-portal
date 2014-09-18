@@ -51,8 +51,10 @@ public class DBLoader {
 
 			String line = null;
 
-			while (((line = unsyncBufferedReader.readLine()) != null) &&
-				   !line.startsWith("//")) {
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				if (line.startsWith("//")) {
+					continue;
+				}
 
 				sb.append(line);
 
@@ -164,8 +166,10 @@ public class DBLoader {
 
 			String line = null;
 
-			while (((line = unsyncBufferedReader.readLine()) != null) &&
-				   !line.startsWith("--")) {
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				if (line.startsWith("--")) {
+					continue;
+				}
 
 				sb.append(line);
 

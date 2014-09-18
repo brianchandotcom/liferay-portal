@@ -107,62 +107,62 @@ public class SybaseDB extends BaseDB {
 
 	@Override
 	protected String reword(String data) throws IOException {
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(data));
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(data))) {
 
-		StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler();
 
-		String line = null;
+			String line = null;
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (line.contains(DROP_COLUMN)) {
-				line = StringUtil.replace(line, " drop column ", " drop ");
-			}
-
-			if (line.startsWith(ALTER_COLUMN_NAME)) {
-				String[] template = buildColumnNameTokens(line);
-
-				line = StringUtil.replace(
-					"exec sp_rename '@table@.@old-column@', '@new-column@', " +
-						"'column';",
-					REWORD_TEMPLATE, template);
-			}
-			else if (line.startsWith(ALTER_COLUMN_TYPE)) {
-				String[] template = buildColumnTypeTokens(line);
-
-				line = StringUtil.replace(
-					"alter table @table@ modify @old-column@ @type@;",
-					REWORD_TEMPLATE, template);
-			}
-
-			else if (line.startsWith(ALTER_TABLE_NAME)) {
-				String[] template = buildTableNameTokens(line);
-
-				line = StringUtil.replace(
-					"exec sp_rename @old-table@, @new-table@;",
-					RENAME_TABLE_TEMPLATE, template);
-			}
-			else if (line.contains(DROP_INDEX)) {
-				String[] tokens = StringUtil.split(line, ' ');
-
-				String tableName = tokens[4];
-
-				if (tableName.endsWith(StringPool.SEMICOLON)) {
-					tableName = tableName.substring(0, tableName.length() - 1);
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				if (line.contains(DROP_COLUMN)) {
+					line = StringUtil.replace(line, " drop column ", " drop ");
 				}
 
-				line = StringUtil.replace(
-					"drop index @table@.@index@;", "@table@", tableName);
-				line = StringUtil.replace(line, "@index@", tokens[2]);
+				if (line.startsWith(ALTER_COLUMN_NAME)) {
+					String[] template = buildColumnNameTokens(line);
+
+					line = StringUtil.replace(
+						"exec sp_rename '@table@.@old-column@', " +
+							"'@new-column@', 'column';",
+						REWORD_TEMPLATE, template);
+				}
+				else if (line.startsWith(ALTER_COLUMN_TYPE)) {
+					String[] template = buildColumnTypeTokens(line);
+
+					line = StringUtil.replace(
+						"alter table @table@ modify @old-column@ @type@;",
+						REWORD_TEMPLATE, template);
+				}
+
+				else if (line.startsWith(ALTER_TABLE_NAME)) {
+					String[] template = buildTableNameTokens(line);
+
+					line = StringUtil.replace(
+						"exec sp_rename @old-table@, @new-table@;",
+						RENAME_TABLE_TEMPLATE, template);
+				}
+				else if (line.contains(DROP_INDEX)) {
+					String[] tokens = StringUtil.split(line, ' ');
+
+					String tableName = tokens[4];
+
+					if (tableName.endsWith(StringPool.SEMICOLON)) {
+						tableName = tableName.substring(
+							0, tableName.length() - 1);
+					}
+
+					line = StringUtil.replace(
+						"drop index @table@.@index@;", "@table@", tableName);
+					line = StringUtil.replace(line, "@index@", tokens[2]);
+				}
+
+				sb.append(line);
+				sb.append("\n");
 			}
 
-			sb.append(line);
-			sb.append("\n");
+			return sb.toString();
 		}
-
-		unsyncBufferedReader.close();
-
-		return sb.toString();
 	}
 
 	protected static final String DROP_COLUMN = "drop column";

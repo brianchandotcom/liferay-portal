@@ -101,44 +101,43 @@ public class FirebirdDB extends BaseDB {
 
 	@Override
 	protected String reword(String data) throws IOException {
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(data));
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(data))) {
 
-		StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler();
 
-		String line = null;
+			String line = null;
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (line.startsWith(ALTER_COLUMN_NAME)) {
-				String[] template = buildColumnNameTokens(line);
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				if (line.startsWith(ALTER_COLUMN_NAME)) {
+					String[] template = buildColumnNameTokens(line);
 
-				line = StringUtil.replace(
-					"alter table @table@ alter column \"@old-column@\" to " +
-						"\"@new-column@\";",
-					REWORD_TEMPLATE, template);
+					line = StringUtil.replace(
+						"alter table @table@ alter column \"@old-column@\" " +
+							"to \"@new-column@\";",
+						REWORD_TEMPLATE, template);
+				}
+				else if (line.startsWith(ALTER_COLUMN_TYPE)) {
+					String[] template = buildColumnTypeTokens(line);
+
+					line = StringUtil.replace(
+						"alter table @table@ alter column \"@old-column@\" " +
+							"type @type@;",
+						REWORD_TEMPLATE, template);
+				}
+				else if (line.contains(DROP_INDEX)) {
+					String[] tokens = StringUtil.split(line, ' ');
+
+					line = StringUtil.replace(
+						"drop index @index@;", "@index@", tokens[2]);
+				}
+
+				sb.append(line);
+				sb.append("\n");
 			}
-			else if (line.startsWith(ALTER_COLUMN_TYPE)) {
-				String[] template = buildColumnTypeTokens(line);
 
-				line = StringUtil.replace(
-					"alter table @table@ alter column \"@old-column@\" " +
-						"type @type@;",
-					REWORD_TEMPLATE, template);
-			}
-			else if (line.contains(DROP_INDEX)) {
-				String[] tokens = StringUtil.split(line, ' ');
-
-				line = StringUtil.replace(
-					"drop index @index@;", "@index@", tokens[2]);
-			}
-
-			sb.append(line);
-			sb.append("\n");
+			return sb.toString();
 		}
-
-		unsyncBufferedReader.close();
-
-		return sb.toString();
 	}
 
 	private static final String[] _FIREBIRD = {

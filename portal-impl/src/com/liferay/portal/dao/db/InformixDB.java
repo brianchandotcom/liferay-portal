@@ -99,88 +99,88 @@ public class InformixDB extends BaseDB {
 
 	@Override
 	protected String reword(String data) throws IOException {
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(data));
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(data))) {
 
-		StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler();
 
-		String line = null;
+			String line = null;
 
-		boolean createTable = false;
+			boolean createTable = false;
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (line.startsWith(ALTER_COLUMN_NAME)) {
-				String[] template = buildColumnNameTokens(line);
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				if (line.startsWith(ALTER_COLUMN_NAME)) {
+					String[] template = buildColumnNameTokens(line);
 
-				line = StringUtil.replace(
-					"rename column @table@.@old-column@ TO @new-column@;",
-					REWORD_TEMPLATE, template);
-			}
-			else if (line.startsWith(ALTER_COLUMN_TYPE)) {
-				String[] template = buildColumnTypeTokens(line);
+					line = StringUtil.replace(
+						"rename column @table@.@old-column@ TO @new-column@;",
+						REWORD_TEMPLATE, template);
+				}
+				else if (line.startsWith(ALTER_COLUMN_TYPE)) {
+					String[] template = buildColumnTypeTokens(line);
 
-				line = StringUtil.replace(
-					"alter table @table@ modify (@old-column@ @type@);",
-					REWORD_TEMPLATE, template);
-			}
-			else if (line.startsWith(ALTER_TABLE_NAME)) {
-				String[] template = buildTableNameTokens(line);
+					line = StringUtil.replace(
+						"alter table @table@ modify (@old-column@ @type@);",
+						REWORD_TEMPLATE, template);
+				}
+				else if (line.startsWith(ALTER_TABLE_NAME)) {
+					String[] template = buildTableNameTokens(line);
 
-				line = StringUtil.replace(
-					"rename table @old-table@ to @new-table@;",
-					RENAME_TABLE_TEMPLATE, template);
-			}
-			else if (line.contains(DROP_INDEX)) {
-				String[] tokens = StringUtil.split(line, ' ');
+					line = StringUtil.replace(
+						"rename table @old-table@ to @new-table@;",
+						RENAME_TABLE_TEMPLATE, template);
+				}
+				else if (line.contains(DROP_INDEX)) {
+					String[] tokens = StringUtil.split(line, ' ');
 
-				line = StringUtil.replace(
-					"drop index @index@;", "@index@", tokens[2]);
-			}
-			else if (line.indexOf("typeSettings text") > 0) {
-				line = StringUtil.replace(
-					line, "typeSettings text", "typeSettings lvarchar(4096)");
-			}
-			else if (line.indexOf("varchar(300)") > 0) {
-				line = StringUtil.replace(
-					line, "varchar(300)", "lvarchar(300)");
-			}
-			else if (line.indexOf("varchar(500)") > 0) {
-				line = StringUtil.replace(
-					line, "varchar(500)", "lvarchar(500)");
-			}
-			else if (line.indexOf("varchar(1000)") > 0) {
-				line = StringUtil.replace(
-					line, "varchar(1000)", "lvarchar(1000)");
-			}
-			else if (line.indexOf("varchar(1024)") > 0) {
-				line = StringUtil.replace(
-					line, "varchar(1024)", "lvarchar(1024)");
-			}
-			else if (line.indexOf("1970-01-01") > 0) {
-				line = StringUtil.replace(
-					line, "1970-01-01", "1970-01-01 00:00:00.0");
-			}
-			else if (line.contains("create table")) {
-				createTable = true;
-			}
-			else if (line.contains(");") && createTable) {
-				line = StringUtil.replace(
-					line, ");",
-					")\nextent size 16 next size 16\nlock mode row;");
+					line = StringUtil.replace(
+						"drop index @index@;", "@index@", tokens[2]);
+				}
+				else if (line.indexOf("typeSettings text") > 0) {
+					line = StringUtil.replace(
+						line, "typeSettings text",
+						"typeSettings lvarchar(4096)");
+				}
+				else if (line.indexOf("varchar(300)") > 0) {
+					line = StringUtil.replace(
+						line, "varchar(300)", "lvarchar(300)");
+				}
+				else if (line.indexOf("varchar(500)") > 0) {
+					line = StringUtil.replace(
+						line, "varchar(500)", "lvarchar(500)");
+				}
+				else if (line.indexOf("varchar(1000)") > 0) {
+					line = StringUtil.replace(
+						line, "varchar(1000)", "lvarchar(1000)");
+				}
+				else if (line.indexOf("varchar(1024)") > 0) {
+					line = StringUtil.replace(
+						line, "varchar(1024)", "lvarchar(1024)");
+				}
+				else if (line.indexOf("1970-01-01") > 0) {
+					line = StringUtil.replace(
+						line, "1970-01-01", "1970-01-01 00:00:00.0");
+				}
+				else if (line.contains("create table")) {
+					createTable = true;
+				}
+				else if (line.contains(");") && createTable) {
+					line = StringUtil.replace(
+						line, ");",
+						")\nextent size 16 next size 16\nlock mode row;");
 
-				createTable = false;
-			}
-			else if (line.contains("commit;")) {
-				line = StringPool.BLANK;
+					createTable = false;
+				}
+				else if (line.contains("commit;")) {
+					line = StringPool.BLANK;
+				}
+
+				sb.append(line);
+				sb.append("\n");
 			}
 
-			sb.append(line);
-			sb.append("\n");
+			return sb.toString();
 		}
-
-		unsyncBufferedReader.close();
-
-		return sb.toString();
 	}
 
 	private static final String[] _INFORMIX_TEMPLATE = {

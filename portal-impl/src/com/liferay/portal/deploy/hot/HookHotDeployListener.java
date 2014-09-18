@@ -1249,11 +1249,9 @@ public class HookHotDeployListener
 					continue;
 				}
 
-				InputStream is = url.openStream();
-
-				properties = PropertiesUtil.load(is, StringPool.UTF8);
-
-				is.close();
+				try (InputStream is = url.openStream()) {
+					properties = PropertiesUtil.load(is, StringPool.UTF8);
+				}
 			}
 			catch (Exception e) {
 				_log.error("Unable to read " + languagePropertiesLocation, e);

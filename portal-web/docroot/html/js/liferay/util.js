@@ -22,7 +22,7 @@
 
 	var STR_CHECKED = 'checked';
 
-	var REGEX_DIALOG_ID = /^_(.*)_(.*)$/;
+	var REGEX_PORTLET_ID = /^(?:p_p_id)?_(.*)_.*$/;
 
 	var Window = {
 		_map: {}
@@ -307,10 +307,7 @@
 		},
 
 		getPortletId: function(portletId) {
-			portletId = portletId.replace(/^p_p_id_/i, '');
-			portletId = portletId.replace(/_$/, '');
-
-			return portletId;
+			return String(portletId).replace(REGEX_PORTLET_ID, '$1');
 		},
 
 		getPortletNamespace: function(portletId) {
@@ -1449,7 +1446,7 @@
 
 					var dialogWindow = Util.getWindow(dialogId);
 
-					if (dialogWindow && dialogId.replace(REGEX_DIALOG_ID, '$1') === event.portletId) {
+					if (dialogWindow && Util.getPortletId(dialogId) === event.portletId) {
 						dialogWindow.destroy();
 
 						Liferay.detach('destroyPortlet', destroyDialog);

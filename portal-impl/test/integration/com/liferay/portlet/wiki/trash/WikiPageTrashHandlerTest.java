@@ -385,7 +385,7 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Test
-	public void testPageNodeChangeOnRestore() throws Exception {
+	public void testRestorePageToADifferentNode() throws Exception {
 		WikiPage[] pages = addPageWithChildAndRedirectPage();
 
 		WikiPage page = pages[0];
@@ -427,7 +427,7 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Test
-	public void testPageParentAndNodeChangeOnRestore() throws Exception {
+	public void testRestoreParentPageToADifferentNode() throws Exception {
 		WikiPage[] pages = addPageWithChildAndRedirectPage();
 
 		WikiPage page = pages[0];

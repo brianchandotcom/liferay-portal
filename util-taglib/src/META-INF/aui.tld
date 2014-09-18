@@ -1769,6 +1769,12 @@
 			<type>java.lang.Object</type>
 		</attribute>
 		<attribute>
+			<name>wrappedField</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<name>wrapperCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

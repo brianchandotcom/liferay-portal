@@ -765,6 +765,12 @@
 				<outputType>java.lang.Object</outputType>
 			</attribute>
 			<attribute>
+				<name>wrappedField</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>false</defaultValue>
+			</attribute>
+			<attribute>
 				<name>wrapperCssClass</name>
 				<required>false</required>
 				<rtexprvalue>true</rtexprvalue>

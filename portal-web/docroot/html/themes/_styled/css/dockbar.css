@@ -1043,6 +1043,10 @@ $editLayoutPanelWidth: 460px;
 				}
 			}
 		}
+
+		.lfr-page-layouts {
+			margin-left: 0;
+		}
 	}
 
 	.lfr-has-add-content {

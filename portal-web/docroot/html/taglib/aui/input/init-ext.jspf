@@ -21,7 +21,6 @@ if (!useNamespace) {
 
 String baseType = GetterUtil.getString((String)request.getAttribute("aui:input:baseType"));
 String forLabel = namespace + GetterUtil.getString((String)request.getAttribute("aui:input:forLabel"));
-boolean wrappedField = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:wrappedField")));
 
 if (Validator.isNull(label) && changesContext) {
 	StringBundler sb = new StringBundler(5);
@@ -64,6 +63,16 @@ String fieldCssClass = AUIUtil.buildCss(AUIUtil.FIELD_PREFIX, disabled, first, l
 
 if (baseType.equals("email") || baseType.equals("password") || baseType.equals("text") || baseType.equals("textarea")) {
 	fieldCssClass += " form-control";
+}
+
+String inputWrapperClass = controlGroupCssClass;
+
+if (choiceField) {
+	inputWrapperClass = baseTypeCssClass;
+}
+
+if (inputWrapperClass.equals("boolean")) {
+	inputWrapperClass = "checkbox";
 }
 
 String labelTag = AUIUtil.buildLabel(baseTypeCssClass, inlineField, showForLabel, forLabel);

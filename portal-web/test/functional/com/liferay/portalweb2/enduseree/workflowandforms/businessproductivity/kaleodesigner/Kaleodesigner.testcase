@@ -402,4 +402,18 @@
 			<var name="line" value="16" />
 		</execute>
 	</command>
+
+	<command name="ViewWorkflowPublishButton" priority="5">
+		<description message="This is a use case for LPS-47352." />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionName" value="New Workflow Definition Name" />
+		</execute>
+
+		<execute action="CPPortalWorkflowconfigurationAddworkflow#assertTextEquals" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+	</command>
 </definition>

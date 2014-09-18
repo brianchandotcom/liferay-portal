@@ -14,6 +14,7 @@
 
 package com.liferay.portal.spring.aop;
 
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -28,6 +29,9 @@ import java.util.List;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
+
+import org.springframework.aop.TargetSource;
+import org.springframework.aop.framework.AdvisedSupport;
 
 /**
  * @author Shuyang Zhou
@@ -46,6 +50,12 @@ public class ServiceBeanMethodInvocation
 
 		if (!_method.isAccessible()) {
 			_method.setAccessible(true);
+		}
+
+		if ((_method.getDeclaringClass() == Object.class) &&
+			"equals".equals(_method.getName())) {
+
+			_equalsMethod = true;
 		}
 	}
 
@@ -111,6 +121,28 @@ public class ServiceBeanMethodInvocation
 			return methodInterceptor.invoke(this);
 		}
 
+		if (_equalsMethod) {
+			Object argument = _arguments[0];
+
+			if (argument == null) {
+				return false;
+			}
+
+			if (ProxyUtil.isProxyClass(argument.getClass())) {
+				AdvisedSupport advisedSupport =
+					ServiceBeanAopProxy.getAdvisedSupport(argument);
+
+				if (advisedSupport != null) {
+					TargetSource targetSource =
+						advisedSupport.getTargetSource();
+
+					argument = targetSource.getTarget();
+				}
+			}
+
+			return _target.equals(argument);
+		}
+
 		try {
 			return _method.invoke(_target, _arguments);
 		}
@@ -129,6 +161,7 @@ public class ServiceBeanMethodInvocation
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
 			new ServiceBeanMethodInvocation(null, null, _method, null);
 
+		serviceBeanMethodInvocation._equalsMethod = _equalsMethod;
 		serviceBeanMethodInvocation._hashCode = _hashCode;
 
 		return serviceBeanMethodInvocation;
@@ -175,6 +208,7 @@ public class ServiceBeanMethodInvocation
 	}
 
 	private Object[] _arguments;
+	private boolean _equalsMethod;
 	private int _hashCode;
 	private int _index;
 	private Method _method;

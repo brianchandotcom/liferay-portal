@@ -732,4 +732,241 @@
 			<var name="viewUserSegmentSelected" value="Default" />
 		</execute>
 	</command>
+
+	<command name="UserSegmentSimulateRulesViaSimulatorPG" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="Web Content Content Male" />
+			<var name="webContentTitle" value="Web Content Title Male" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="Web Content Content Female" />
+			<var name="webContentTitle" value="Web Content Title Female" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="Male User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addUserAttributesGenderRuleCP">
+			<var name="genderRadio" value="Male" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="Female User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addUserAttributesGenderRuleCP">
+			<var name="genderRadio" value="Female" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="User Segment Content Display" />
+		</execute>
+
+		<execute action="Home#refresh" />
+
+		<execute macro="UserSegmentContentDisplayPortlet#configureDisplayContent">
+			<var name="belongs" value="true" />
+			<var name="contentTitle" value="Web Content Title Male" />
+			<var name="contentType" value="Web Content Article" />
+			<var name="otherwiseContentTitle" value="Web Content Title Female" />
+			<var name="otherwiseContentType" value="Web Content Article" />
+			<var name="toAll" value="true" />
+			<var name="userSegmentName" value="Male User Segment Name" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
+			<var name="entryContentText" value="Web Content Content Male" />
+			<var name="viewUserSegmentSelected" value="Male User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingSimulator#gotoPG" />
+
+		<execute macro="ContentTargetingSimulator#viewUserSegmentsViaSimulatorPG">
+			<var name="viewUserSegmentMatched" value="Male User Segment Name" />
+			<var name="viewUserSegmentsOther" value="Female User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingSimulator#configureUserSegmentMatchedPG">
+			<var name="uncheckUserSegmentMatchedList" value="Male User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingSimulator#configureUserSegmentOtherPG">
+			<var name="checkUserSegmentOtherList" value="Female User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingSimulator#simulateUserSegmentPG">
+			<var name="simulationbutton" value="Simulate" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
+			<var name="entryContentText" value="Web Content Content Female" />
+			<var name="viewUserSegmentSelected" value="Default" />
+		</execute>
+
+		<execute macro="ContentTargetingSimulator#gotoPG" />
+
+		<execute macro="ContentTargetingSimulator#simulateUserSegmentPG">
+			<var name="simulationbutton" value="Stop Simulation" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
+			<var name="entryContentText" value="Web Content Content Male" />
+			<var name="viewUserSegmentSelected" value="Male User Segment Name" />
+		</execute>
+	</command>
+
+	<command name="UserSegmentViewInSimulatorPG" priority="5">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="Female User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addUserAttributesGenderRuleCP">
+			<var name="genderRadio" value="Female" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="Male User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addUserAttributesGenderRuleCP">
+			<var name="genderRadio" value="Male" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="Age 18 - 25" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addUserAttributesAgeRuleCP">
+			<var name="olderThanAge" value="18" />
+			<var name="userSegmentName" value="Age 18 - 25" />
+			<var name="youngerThanAge" value="25" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="Age 25 - 50" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addUserAttributesAgeRuleCP">
+			<var name="olderThanAge" value="25" />
+			<var name="youngerThanAge" value="50" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="Age 50 - 100" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addUserAttributesAgeRuleCP">
+			<var name="olderThanAge" value="50" />
+			<var name="userSegmentName" value="Age 50 - 100" />
+			<var name="youngerThanAge" value="100" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="Site Member Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addUserAttributesSiteMemberRuleCP">
+			<var name="selectSiteMemberSite" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="Site Admin Role Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addUserAttributesSiteRoleRuleCP">
+			<var name="siteRole" value="Site Administrator" />
+			<var name="siteRoleSite" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="ContentTargetingSimulator#gotoPG" />
+
+		<execute macro="ContentTargetingSimulator#viewUserSegmentsViaSimulatorPG">
+			<var name="viewUserSegmentMatched" value="Site Member Name,Male User Segment Name,Age 25 - 50" />
+			<var name="viewUserSegmentOther" value="Site Admin Role Name,Female User Segment Name,Age 50 - 100,Age 18 - 25" />
+		</execute>
+	</command>
 </definition>

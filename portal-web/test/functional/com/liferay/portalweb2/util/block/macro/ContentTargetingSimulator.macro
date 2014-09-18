@@ -1,0 +1,86 @@
+<definition>
+	<command name="configureUserSegmentMatchedPG">
+		<if>
+			<isset var="checkUserSegmentMatchedList" />
+			<then>
+				<for list="${checkUserSegmentMatchedList}" param="userSegmentMatched">
+					<var name="key_userSegmentMatched" value="${userSegmentMatched}" />
+
+					<execute action="PGContentTargetingSimulator#check" locator-key1="USER_SEGMENTS_MATCHED_CHECKBOX" />
+				</for>
+			</then>
+		</if>
+
+		<if>
+			<isset var="uncheckUserSegmentMatchedList" />
+			<then>
+				<for list="${uncheckUserSegmentMatchedList}" param="userSegmentMatched">
+					<var name="key_userSegmentMatched" value="${userSegmentMatched}" />
+
+					<execute action="PGContentTargetingSimulator#uncheck" locator-key1="USER_SEGMENTS_MATCHED_CHECKBOX" />
+				</for>
+			</then>
+		</if>
+	</command>
+
+	<command name="configureUserSegmentOtherPG">
+		<if>
+			<isset var="checkUserSegmentOtherList" />
+			<then>
+				<for list="${checkUserSegmentOtherList}" param="userSegmentOther">
+					<var name="key_userSegmentOther" value="${userSegmentOther}" />
+
+					<execute action="PGContentTargetingSimulator#check" locator-key1="USER_SEGMENTS_OTHER_CHECKBOX" />
+				</for>
+			</then>
+		</if>
+
+		<if>
+			<isset var="uncheckUserSegmentOtherList" />
+			<then>
+				<for list="${uncheckUserSegmentOtherList}" param="userSegmentOther">
+					<var name="key_userSegmentOther" value="${userSegmentOther}" />
+
+					<execute action="PGContentTargetingSimulator#uncheck" locator-key1="USER_SEGMENTS_OTHER_CHECKBOX" />
+				</for>
+			</then>
+		</if>
+	</command>
+
+	<command name="gotoPG">
+		<execute action="PGContentTargetingSimulator#click" locator-key1="DOCKBAR_SIMULATOR_BUTTON" />
+	</command >
+
+	<command name="simulateUserSegmentPG">
+		<if>
+			<equals arg1="${simulationbutton}" arg2="Simulate" />
+			<then>
+				<execute action="PGContentTargetingSimulator#assertClick" locator-key1="SIMULATE_BUTTON" value1="Simulate" />
+			</then>
+			<elseif>
+				<equals arg1="${simulationbutton}" arg2="Stop Simulation" />
+				<then>
+					<execute action="PGContentTargetingSimulator#assertClick" locator-key1="STOP_SIMULATION_BUTTON" value1="Stop Simulation" />
+				</then>
+			</elseif>
+		</if>
+	</command>
+
+	<command name="viewUserSegmentsViaSimulatorPG">
+		<execute action="PGContentTargetingSimulator#assertClick" locator-key1="SIMULATOR_USER_SEGMENTS_NAVIGATION" value1="User Segments" />
+
+		<for list="${viewUserSegmentMatched}" param="userSegmentMatched">
+			<var name="key_userSegmentMatched" value="${userSegmentMatched}" />
+
+			<execute action="PGContentTargetingSimulator#assertTextEquals" locator-key1="USER_SEGMENTS_MATCHED_LABEL" value1="${userSegmentMatched}" />
+			<execute action="PGContentTargetingSimulator#assertChecked" locator-key1="USER_SEGMENTS_MATCHED_CHECKBOX" />
+		</for>
+
+		<for list="${viewUserSegmentOther}" param="userSegmentOther">
+			<var name="key_userSegmentOther" value="${userSegmentOther}" />
+
+			<execute action="PGContentTargetingSimulator#assertTextEquals" locator-key1="USER_SEGMENTS_OTHER_LABEL" value1="${userSegmentOther}" />
+			<execute action="PGContentTargetingSimulator#assertNotChecked" locator-key1="USER_SEGMENTS_OTHER_CHECKBOX" />
+		</for>
+	</command>
+</definition>

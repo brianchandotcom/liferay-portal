@@ -32,7 +32,7 @@
 	</c:if>
 </liferay-util:buffer>
 
-<c:if test='<%= !type.equals("hidden") && !wrappedField && (choiceField && Validator.isNotNull(label)) %>'>
+<c:if test='<%= !type.equals("hidden") && !wrappedField && useInputWrapper %>'>
 	<div class="<%= inputWrapperClass %>">
 </c:if>
 
@@ -271,7 +271,7 @@
 	</c:if>
 </c:if>
 
-<c:if test='<%= !type.equals("hidden") && !wrappedField && (choiceField && Validator.isNotNull(label)) %>'>
+<c:if test='<%= !type.equals("hidden") && !wrappedField && useInputWrapper %>'>
 	</div>
 </c:if>
 

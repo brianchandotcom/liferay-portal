@@ -174,9 +174,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 		var onDestroyPortlet = function(event) {
 			if (event.portletId === '<%= portletDisplay.getId() %>') {
 				Liferay.detach(handleOnSelect);
-
 				Liferay.detach(handleOnModifyLink);
-
 				Liferay.detach(handleEnableRemoveSite);
 
 				Liferay.detach('destroyPortlet', onDestroyPortlet);

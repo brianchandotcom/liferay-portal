@@ -14,27 +14,14 @@
 
 package com.liferay.sync.engine.service;
 
-import com.liferay.sync.engine.documentlibrary.event.AddFileEntryEvent;
-import com.liferay.sync.engine.documentlibrary.event.AddFolderEvent;
-import com.liferay.sync.engine.documentlibrary.event.CancelCheckOutEvent;
-import com.liferay.sync.engine.documentlibrary.event.CheckInFileEntryEvent;
-import com.liferay.sync.engine.documentlibrary.event.CheckOutFileEntryEvent;
-import com.liferay.sync.engine.documentlibrary.event.MoveFileEntryEvent;
-import com.liferay.sync.engine.documentlibrary.event.MoveFileEntryToTrashEvent;
-import com.liferay.sync.engine.documentlibrary.event.MoveFolderEvent;
-import com.liferay.sync.engine.documentlibrary.event.MoveFolderToTrashEvent;
-import com.liferay.sync.engine.documentlibrary.event.PatchFileEntryEvent;
-import com.liferay.sync.engine.documentlibrary.event.UpdateFileEntryEvent;
-import com.liferay.sync.engine.documentlibrary.event.UpdateFolderEvent;
+import com.liferay.sync.engine.documentlibrary.util.FileEventUtil;
 import com.liferay.sync.engine.model.ModelListener;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.model.SyncFileModelListener;
-import com.liferay.sync.engine.model.SyncSite;
 import com.liferay.sync.engine.service.persistence.SyncFilePersistence;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.IODeltaUtil;
 import com.liferay.sync.engine.util.OSDetector;
-import com.liferay.sync.engine.util.PropsValues;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -43,9 +30,7 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,36 +60,9 @@ public class SyncFileService {
 
 		// Remote sync file
 
-		Map<String, Object> parameters = new HashMap<String, Object>();
-
-		parameters.put("changeLog", "");
-		parameters.put("checksum", checksum);
-		parameters.put("description", "");
-		parameters.put("filePath", filePath);
-		parameters.put("folderId", folderId);
-		parameters.put("mimeType", mimeType);
-		parameters.put("repositoryId", repositoryId);
-
-		SyncSite syncSite = SyncSiteService.fetchSyncSite(
-			repositoryId, syncAccountId);
-
-		if (syncSite.getType() != SyncSite.TYPE_SYSTEM) {
-			parameters.put("serviceContext.addGroupPermissions", true);
-		}
-
-		if (syncSite.getType() == SyncSite.TYPE_OPEN) {
-			parameters.put("serviceContext.addGuestPermissions", true);
-		}
-
-		parameters.put("serviceContext.attributes.overwrite", true);
-		parameters.put("sourceFileName", name);
-		parameters.put("syncFile", syncFile);
-		parameters.put("title", name);
-
-		AddFileEntryEvent addFileEntryEvent = new AddFileEntryEvent(
-			syncAccountId, parameters);
-
-		addFileEntryEvent.run();
+		FileEventUtil.addFile(
+			filePath, folderId, repositoryId, syncAccountId, checksum, name,
+			mimeType, syncFile);
 
 		return syncFile;
 	}
@@ -129,31 +87,8 @@ public class SyncFileService {
 
 		// Remote sync file
 
-		Map<String, Object> parameters = new HashMap<String, Object>();
-
-		parameters.put("description", "");
-		parameters.put("name", name);
-		parameters.put("parentFolderId", parentFolderId);
-		parameters.put("repositoryId", repositoryId);
-
-		SyncSite syncSite = SyncSiteService.fetchSyncSite(
-			repositoryId, syncAccountId);
-
-		if (syncSite.getType() != SyncSite.TYPE_SYSTEM) {
-			parameters.put("serviceContext.addGroupPermissions", true);
-		}
-
-		if (syncSite.getType() == SyncSite.TYPE_OPEN) {
-			parameters.put("serviceContext.addGuestPermissions", true);
-		}
-
-		parameters.put("serviceContext.attributes.overwrite", true);
-		parameters.put("syncFile", syncFile);
-
-		AddFolderEvent addFolderEvent = new AddFolderEvent(
-			syncAccountId, parameters);
-
-		addFolderEvent.run();
+		FileEventUtil.addFolder(
+			parentFolderId, repositoryId, syncAccountId, name, syncFile);
 
 		return syncFile;
 	}
@@ -193,21 +128,11 @@ public class SyncFileService {
 
 		// Local sync file
 
-		syncFile.setUiEvent(SyncFile.UI_EVENT_UPDATED_LOCAL);
-
 		update(syncFile);
 
 		// Remote sync file
 
-		Map<String, Object> parameters = new HashMap<String, Object>();
-
-		parameters.put("fileEntryId", syncFile.getTypePK());
-		parameters.put("syncFile", syncFile);
-
-		CancelCheckOutEvent cancelCheckOutEvent = new CancelCheckOutEvent(
-			syncAccountId, parameters);
-
-		cancelCheckOutEvent.run();
+		FileEventUtil.cancelCheckOut(syncAccountId, syncFile);
 
 		return syncFile;
 	}
@@ -218,23 +143,11 @@ public class SyncFileService {
 
 		// Local sync file
 
-		syncFile.setUiEvent(SyncFile.UI_EVENT_UPDATED_LOCAL);
-
 		update(syncFile);
 
 		// Remote sync file
 
-		Map<String, Object> parameters = new HashMap<String, Object>();
-
-		parameters.put("changeLog", syncFile.getChangeLog());
-		parameters.put("fileEntryId", syncFile.getTypePK());
-		parameters.put("majorVersion", false);
-		parameters.put("syncFile", syncFile);
-
-		CheckInFileEntryEvent checkInFileEntryEvent = new CheckInFileEntryEvent(
-			syncAccountId, parameters);
-
-		checkInFileEntryEvent.run();
+		FileEventUtil.checkInFile(syncAccountId, syncFile);
 
 		return syncFile;
 	}
@@ -245,21 +158,11 @@ public class SyncFileService {
 
 		// Local sync file
 
-		syncFile.setUiEvent(SyncFile.UI_EVENT_UPDATED_LOCAL);
-
 		update(syncFile);
 
 		// Remote sync file
 
-		Map<String, Object> parameters = new HashMap<String, Object>();
-
-		parameters.put("fileEntryId", syncFile.getTypePK());
-		parameters.put("syncFile", syncFile);
-
-		CheckOutFileEntryEvent checkOutFileEntryEvent =
-			new CheckOutFileEntryEvent(syncAccountId, parameters);
-
-		checkOutFileEntryEvent.run();
+		FileEventUtil.checkOutFile(syncAccountId, syncFile);
 
 		return syncFile;
 	}
@@ -280,19 +183,9 @@ public class SyncFileService {
 
 		// Remote sync file
 
-		if (syncFile.getState() == SyncFile.STATE_ERROR) {
-			return syncFile;
+		if (syncFile.getState() != SyncFile.STATE_ERROR) {
+			FileEventUtil.deleteFile(syncAccountId, syncFile);
 		}
-
-		Map<String, Object> parameters = new HashMap<String, Object>();
-
-		parameters.put("fileEntryId", syncFile.getTypePK());
-		parameters.put("syncFile", syncFile);
-
-		MoveFileEntryToTrashEvent moveFileEntryToTrashEvent =
-			new MoveFileEntryToTrashEvent(syncAccountId, parameters);
-
-		moveFileEntryToTrashEvent.run();
 
 		return syncFile;
 	}
@@ -313,19 +206,9 @@ public class SyncFileService {
 
 		// Remote sync file
 
-		if (syncFile.getState() == SyncFile.STATE_ERROR) {
-			return syncFile;
+		if (syncFile.getState() != SyncFile.STATE_ERROR) {
+			FileEventUtil.deleteFolder(syncAccountId, syncFile);
 		}
-
-		Map<String, Object> parameters = new HashMap<String, Object>();
-
-		parameters.put("folderId", syncFile.getTypePK());
-		parameters.put("syncFile", syncFile);
-
-		MoveFolderToTrashEvent moveFolderToTrashEvent =
-			new MoveFolderToTrashEvent(syncAccountId, parameters);
-
-		moveFolderToTrashEvent.run();
 
 		return syncFile;
 	}
@@ -520,22 +403,9 @@ public class SyncFileService {
 
 		// Remote sync file
 
-		if (syncFile.getState() == SyncFile.STATE_ERROR) {
-			return syncFile;
+		if (syncFile.getState() != SyncFile.STATE_ERROR) {
+			FileEventUtil.moveFile(folderId, syncAccountId, syncFile);
 		}
-
-		Map<String, Object> parameters = new HashMap<String, Object>();
-
-		parameters.put("fileEntryId", syncFile.getTypePK());
-		parameters.put("newFolderId", folderId);
-		parameters.put(
-			"serviceContext.scopeGroupId", syncFile.getRepositoryId());
-		parameters.put("syncFile", syncFile);
-
-		MoveFileEntryEvent moveFileEntryEvent = new MoveFileEntryEvent(
-			syncAccountId, parameters);
-
-		moveFileEntryEvent.run();
 
 		return syncFile;
 	}
@@ -553,22 +423,9 @@ public class SyncFileService {
 
 		// Remote sync file
 
-		if (syncFile.getState() == SyncFile.STATE_ERROR) {
-			return syncFile;
+		if (syncFile.getState() != SyncFile.STATE_ERROR) {
+			FileEventUtil.moveFolder(parentFolderId, syncAccountId, syncFile);
 		}
-
-		Map<String, Object> parameters = new HashMap<String, Object>();
-
-		parameters.put("folderId", syncFile.getTypePK());
-		parameters.put("parentFolderId", parentFolderId);
-		parameters.put(
-			"serviceContext.scopeGroupId", syncFile.getRepositoryId());
-		parameters.put("syncFile", syncFile);
-
-		MoveFolderEvent moveFolderEvent = new MoveFolderEvent(
-			syncAccountId, parameters);
-
-		moveFolderEvent.run();
 
 		return syncFile;
 	}
@@ -618,7 +475,7 @@ public class SyncFileService {
 	}
 
 	public static SyncFile updateFileSyncFile(
-			Path filePath, long syncAccountId, SyncFile syncFile, boolean force)
+			Path filePath, long syncAccountId, SyncFile syncFile)
 		throws Exception {
 
 		// Local sync file
@@ -650,55 +507,16 @@ public class SyncFileService {
 		syncFile.setChecksum(targetChecksum);
 		syncFile.setFilePathName(filePath.toString());
 		syncFile.setName(name);
-		syncFile.setUiEvent(SyncFile.UI_EVENT_UPDATED_LOCAL);
 
 		update(syncFile);
 
 		// Remote sync file
 
-		if (syncFile.getState() == SyncFile.STATE_ERROR) {
-			return syncFile;
+		if (syncFile.getState() != SyncFile.STATE_ERROR) {
+			FileEventUtil.updateFile(
+				filePath, syncAccountId, syncFile, deltaFilePath, name,
+				sourceChecksum, sourceFileName, sourceVersion, targetChecksum);
 		}
-
-		Map<String, Object> parameters = new HashMap<String, Object>();
-
-		parameters.put("changeLog", syncFile.getChangeLog());
-		parameters.put("checksum", targetChecksum);
-		parameters.put("description", syncFile.getDescription());
-		parameters.put("fileEntryId", syncFile.getTypePK());
-		parameters.put("majorVersion", false);
-		parameters.put("mimeType", syncFile.getMimeType());
-		parameters.put("sourceFileName", name);
-		parameters.put("syncFile", syncFile);
-		parameters.put("title", name);
-
-		if (sourceChecksum.equals(targetChecksum) && !force) {
-			parameters.put("-file", null);
-		}
-		else {
-			if ((deltaFilePath != null) &&
-				(Files.size(filePath) / Files.size(deltaFilePath)) >=
-					PropsValues.SYNC_FILE_PATCHING_THRESHOLD_SIZE_RATIO) {
-
-				parameters.put("deltaFilePath", deltaFilePath);
-				parameters.put("sourceFileName", sourceFileName);
-				parameters.put("sourceVersion", sourceVersion);
-
-				PatchFileEntryEvent patchFileEntryEvent =
-					new PatchFileEntryEvent(syncAccountId, parameters);
-
-				patchFileEntryEvent.run();
-
-				return syncFile;
-			}
-
-			parameters.put("filePath", filePath);
-		}
-
-		UpdateFileEntryEvent updateFileEntryEvent = new UpdateFileEntryEvent(
-			syncAccountId, parameters);
-
-		updateFileEntryEvent.run();
 
 		return syncFile;
 	}
@@ -713,21 +531,9 @@ public class SyncFileService {
 
 		// Remote sync file
 
-		if (syncFile.getState() == SyncFile.STATE_ERROR) {
-			return syncFile;
+		if (syncFile.getState() != SyncFile.STATE_ERROR) {
+			FileEventUtil.updateFolder(filePath, syncAccountId, syncFile);
 		}
-
-		Map<String, Object> parameters = new HashMap<String, Object>();
-
-		parameters.put("description", syncFile.getDescription());
-		parameters.put("folderId", syncFile.getTypePK());
-		parameters.put("name", filePath.getFileName());
-		parameters.put("syncFile", syncFile);
-
-		UpdateFolderEvent updateFolderEvent = new UpdateFolderEvent(
-			syncAccountId, parameters);
-
-		updateFolderEvent.run();
 
 		return syncFile;
 	}

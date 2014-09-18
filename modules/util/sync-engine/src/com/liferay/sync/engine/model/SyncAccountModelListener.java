@@ -57,6 +57,9 @@ public class SyncAccountModelListener implements ModelListener<SyncAccount> {
 			originalValues.containsKey("password")) {
 
 			SessionManager.removeSession(syncAccount.getSyncAccountId());
+
+			SyncAccountService.synchronizeSyncAccount(
+				syncAccount.getSyncAccountId(), 0);
 		}
 	}
 

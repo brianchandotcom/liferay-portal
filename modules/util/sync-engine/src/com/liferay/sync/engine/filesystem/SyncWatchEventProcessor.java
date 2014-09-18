@@ -184,7 +184,7 @@ public class SyncWatchEventProcessor implements Runnable {
 		}
 		else if (parentTargetFilePath.equals(sourceFilePath.getParent())) {
 			SyncFileService.updateFileSyncFile(
-				targetFilePath, _syncAccountId, syncFile, false);
+				targetFilePath, _syncAccountId, syncFile);
 		}
 		else {
 			SyncFileService.moveFileSyncFile(
@@ -195,7 +195,7 @@ public class SyncWatchEventProcessor implements Runnable {
 
 			if (!sourceFileNameFilePath.equals(targetFilePath.getFileName())) {
 				SyncFileService.updateFileSyncFile(
-					targetFilePath, _syncAccountId, syncFile, false);
+					targetFilePath, _syncAccountId, syncFile);
 			}
 		}
 
@@ -315,8 +315,7 @@ public class SyncWatchEventProcessor implements Runnable {
 			return;
 		}
 
-		SyncFileService.updateFileSyncFile(
-			filePath, _syncAccountId, syncFile, false);
+		SyncFileService.updateFileSyncFile(filePath, _syncAccountId, syncFile);
 	}
 
 	private static Logger _logger = LoggerFactory.getLogger(

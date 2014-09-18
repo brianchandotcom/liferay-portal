@@ -112,6 +112,8 @@ public class Session {
 
 		_httpHost = new HttpHost(
 			url.getHost(), url.getPort(), url.getProtocol());
+
+		_token = null;
 	}
 
 	public HttpResponse execute(HttpRequest httpRequest) throws Exception {

@@ -774,7 +774,7 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		Assert.assertEquals(_node.getNodeId(), page.getNodeId());
 		Assert.assertEquals(newNode.getNodeId(), childPage.getNodeId());
-		Assert.assertEquals(newNode.getNodeId(), redirectPage.getNodeId());
+		Assert.assertEquals(_node.getNodeId(), redirectPage.getNodeId());
 
 		Assert.assertNull(childPage.getParentPage());
 
@@ -791,7 +791,7 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 		Assert.assertEquals(_node.getNodeId(), pageResource.getNodeId());
 		Assert.assertEquals(newNode.getNodeId(), childPageResource.getNodeId());
 		Assert.assertEquals(
-			newNode.getNodeId(), redirectPageResource.getNodeId());
+			_node.getNodeId(), redirectPageResource.getNodeId());
 	}
 
 	@Test
@@ -849,7 +849,7 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		Assert.assertEquals(_node.getNodeId(), page.getNodeId());
 		Assert.assertEquals(newNode.getNodeId(), childPage.getNodeId());
-		Assert.assertEquals(newNode.getNodeId(), redirectPage.getNodeId());
+		Assert.assertEquals(_node.getNodeId(), redirectPage.getNodeId());
 
 		Assert.assertEquals(
 			newParentPage.getTitle(), childPage.getParentTitle());

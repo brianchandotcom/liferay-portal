@@ -187,6 +187,33 @@ public class WikiTestUtil {
 		return new WikiPage[] {childPage, finalParentPage, initialParentPage};
 	}
 
+	public static WikiPage[] addPageWithChildAndRedirectPage(
+			long groupId, long nodeId)
+		throws Exception {
+
+		WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), groupId, nodeId, "TestPage", true);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), nodeId, "TestChildPage",
+			RandomTestUtil.randomString(), "TestPage", true, serviceContext);
+
+		WikiPageLocalServiceUtil.renamePage(
+			TestPropsValues.getUserId(), nodeId, "TestPage", "B",
+			serviceContext);
+
+		WikiPage page = WikiPageLocalServiceUtil.getPage(nodeId, "B");
+		WikiPage redirectPage = WikiPageLocalServiceUtil.getPage(
+			nodeId, "TestPage");
+		WikiPage childPage = WikiPageLocalServiceUtil.getPage(
+			nodeId, "TestChildPage");
+
+		return new WikiPage[]{page, childPage, redirectPage};
+	}
+
 	public static WikiPage[] addRenamedParentPageWithChildPageAndGrandchildPage(
 			long groupId, long nodeId)
 		throws Exception {
@@ -220,33 +247,6 @@ public class WikiTestUtil {
 
 		return new WikiPage[] {
 			page, redirectPage, childPage, grandchildPage};
-	}
-
-	public static WikiPage[] addPageWithChildAndRedirectPage(
-			long groupId, long nodeId)
-		throws Exception {
-
-		WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), groupId, nodeId, "TestPage", true);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), nodeId, "TestChildPage",
-			RandomTestUtil.randomString(), "TestPage", true, serviceContext);
-
-		WikiPageLocalServiceUtil.renamePage(
-			TestPropsValues.getUserId(), nodeId, "TestPage", "B",
-			serviceContext);
-
-		WikiPage page = WikiPageLocalServiceUtil.getPage(nodeId, "B");
-		WikiPage redirectPage = WikiPageLocalServiceUtil.getPage(
-			nodeId, "TestPage");
-		WikiPage childPage = WikiPageLocalServiceUtil.getPage(
-			nodeId, "TestChildPage");
-
-		return new WikiPage[]{page, childPage, redirectPage};
 	}
 
 	public static WikiPage[] addRenamedTrashedPage(

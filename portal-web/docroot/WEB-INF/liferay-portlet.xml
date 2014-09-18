@@ -814,18 +814,6 @@
 		<css-class-wrapper>portlet-asset-tag-admin</css-class-wrapper>
 	</portlet>
 	<portlet>
-		<portlet-name>100</portlet-name>
-		<icon>/html/icons/default.png</icon>
-		<struts-path>invitation</struts-path>
-		<configuration-action-class>com.liferay.portlet.invitation.action.ConfigurationActionImpl</configuration-action-class>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<css-class-wrapper>portlet-invitation</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>101</portlet-name>
 		<icon>/html/icons/asset_publisher.png</icon>
 		<struts-path>asset_publisher</struts-path>

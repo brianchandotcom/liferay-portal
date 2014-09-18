@@ -99,8 +99,6 @@ public class PortletKeys {
 
 	public static final String IMAGE_UPLOADER = "195";
 
-	public static final String INVITATION = "100";
-
 	public static final String JOURNAL = "15";
 
 	public static final String JOURNAL_CONTENT = "56";

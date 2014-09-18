@@ -14,22 +14,29 @@
  */
 --%>
 
-<%@ include file="/html/portlet/invitation/init.jsp" %>
+<%@ include file="/init.jsp" %>
+
+<%
+	WindowState windowState = liferayPortletRequest.getWindowState();
+
+	int emailMessageMaxRecipients = InvitationUtil.getEmailMessageMaxRecipients(liferayPortletRequest.getPreferences());
+
+	PortletURL actionURL = renderResponse.createActionURL();
+	actionURL.setParameter(ActionRequest.ACTION_NAME, "view");
+	actionURL.setWindowState(WindowState.NORMAL);
+	String portletURL = actionURL.toString();
+%>
 
 <c:choose>
 	<c:when test="<%= windowState.equals(WindowState.NORMAL) %>">
 		<liferay-ui:success key="invitationSent" message="your-invitations-have-been-sent" />
 
 		<portlet:renderURL var="viewURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-			<portlet:param name="struts_action" value="/invitation/view" />
 		</portlet:renderURL>
 
 		<aui:a href="<%= viewURL %>" label="invite-friends" />
 	</c:when>
 	<c:otherwise>
-		<portlet:actionURL var="portletURL">
-			<portlet:param name="struts_action" value="/invitation/view" />
-		</portlet:actionURL>
 
 		<portlet:renderURL var="redirectURL" windowState="<%= WindowState.NORMAL.toString() %>" />
 
@@ -37,13 +44,11 @@
 			<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
 
 			<div class="alert alert-info">
-				<liferay-ui:message arguments="<%= InvitationUtil.getEmailMessageMaxRecipients() %>" key="enter-up-to-x-email-addresses-of-friends-you-would-like-to-invite" translateArguments="<%= false %>" />
+				<liferay-ui:message arguments="<%= emailMessageMaxRecipients %>" key="enter-up-to-x-email-addresses-of-friends-you-would-like-to-invite" translateArguments="<%= false %>" />
 			</div>
 
 			<%
 			Set invalidEmailAddresses = (Set)SessionErrors.get(renderRequest, "emailAddresses");
-
-			int emailMessageMaxRecipients = InvitationUtil.getEmailMessageMaxRecipients();
 
 			for (int i = 0; i < emailMessageMaxRecipients; i++) {
 				String emailAddress = ParamUtil.getString(request, "emailAddress" + i);

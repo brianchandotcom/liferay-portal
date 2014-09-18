@@ -56,7 +56,6 @@
 	.alloy-editor-placeholder {
 		color: #222D3E;
 		min-height: 40px;
-		outline: 0;
 		padding-left: 10px;
 
 		&:empty:not(:focus) {

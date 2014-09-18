@@ -505,6 +505,15 @@
 		<execute action="CPWebcontentAddwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContent}" />
 		<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="MENU_CATEGORIZATION" value1="Categorization" />
 
+		<if>
+			<isset var="userSegmentDetailTitle" />
+			<then>
+				<var name="key_userSegmentDetailTitle" value="${userSegmentDetailTitle}" />
+
+				<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="USER_SEGMENT_DETAIL_TITLE" value1="${userSegmentDetailTitle}" />
+			</then>
+		</if>
+
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 

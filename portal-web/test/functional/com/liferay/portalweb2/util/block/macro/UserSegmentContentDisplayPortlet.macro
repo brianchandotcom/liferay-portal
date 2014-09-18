@@ -40,6 +40,17 @@
 			<execute action="PGUsersegmentcontentdisplay#click" locator-key1="RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CHECKBOX" />
 		</for>
 
+		<execute action="PGUsersegmentcontentdisplay#click" locator-key1="RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CHECKBOX" />
+
+		<if>
+			<isset var="siteScope" />
+			<then>
+				<var name="key_siteScope" value="${siteScope}" />
+
+				<execute action="PGUsersegmentcontentdisplay#assertTextEquals" locator-key1="RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_SCOPE" value1="User Segment (${siteScope})" />
+			</then>
+		</if>
+
 		<execute action="PGUsersegmentcontentdisplay#click" locator-key1="RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CLOSE_BUTTON" />
 		<execute action="PGUsersegmentcontentdisplay#click" locator-key1="RULE_PANEL_DISPLAY_CONTENT_DROPDOWN" />
 
@@ -87,6 +98,68 @@
 
 		<execute action="PGUsersegmentcontentdisplay#click" locator-key1="SAVE_BUTTON" />
 		<execute action="PGUsersegmentcontentdisplay#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="viewConfiguredDisplayContent">
+		<execute action="PGUsersegmentcontentdisplay#click" locator-key1="CONFIGURATION_LINK" />
+
+		<execute action="PGUsersegmentcontentdisplay#selectFrame" locator-key1="USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
+
+		<if>
+			<equals arg1="${belongs}" arg2="true" />
+			<then>
+				<execute action="PGUsersegmentcontentdisplay#assertChecked" locator-key1="RULE_PANEL_BELONGS_RADIO" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${doesNotBelong}" arg2="true" />
+			<then>
+				<execute action="PGUsersegmentcontentdisplay#assertChecked" locator-key1="RULE_PANEL_DOES_NOT_BELONG_RADIO" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${toAll}" arg2="true" />
+			<then>
+				<execute action="PGUsersegmentcontentdisplay#assertChecked" locator-key1="RULE_PANEL_ALL_RADIO" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${toAny}" arg2="true" />
+			<then>
+				<execute action="PGUsersegmentcontentdisplay#assertChecked" locator-key1="RULE_PANEL_ANY_RADIO" />
+			</then>
+		</if>
+
+		<var name="key_userSegmentName" value="${userSegmentName}" />
+
+		<execute action="PGUsersegmentcontentdisplay#assertTextEquals" locator-key1="RULE_PANEL_SELECTED_USER_SEGMENT" value1="${userSegmentName}" />
+
+		<var name="key_contentTitle" value="${contentTitle}" />
+
+		<execute action="PGUsersegmentcontentdisplay#assertTextEquals" locator-key1="RULE_PANEL_SELECTED_DISPLAY_CONTENT_TITLE" value1="${contentTitle}" />
+
+		<var name="key_contentType" value="${contentType}" />
+
+		<execute action="PGUsersegmentcontentdisplay#assertTextEquals" locator-key1="RULE_PANEL_SELECTED_DISPLAY_CONTENT_TYPE" value1="Type: ${contentType}" />
+
+		<if>
+			<isset var="otherwiseContentType" />
+			<then>
+				<execute action="PGUsersegmentcontentdisplay#click" locator-key1="OTHERWISE_PANEL" />
+				<execute action="PGUsersegmentcontentdisplay#assertChecked" locator-key1="OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO" />
+
+				<var name="key_contentType" value="${otherwiseContentType}" />
+
+				<execute action="PGUsersegmentcontentdisplay#assertTextEquals" locator-key1="OTHERWISE_PANEL_SELECTED_CONTENT_TYPE" value1="Type: ${otherwiseContentType}" />
+
+				<var name="key_contentTitle" value="${otherwiseContentTitle}" />
+
+				<execute action="PGUsersegmentcontentdisplay#assertTextEquals" locator-key1="OTHERWISE_PANEL_SELECTED_CONTENT_TITLE" value1="${otherwiseContentTitle}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="viewEntryPG">

@@ -75,21 +75,22 @@ public class VerifySystemEvent extends VerifyProcess {
 				continue;
 			}
 
-			JournalArticleResource articleResource =
+			JournalArticleResource journalArticleResource =
 				JournalArticleResourceLocalServiceUtil.
 					fetchJournalArticleResourceByUuidAndGroupId(
 						systemEvent.getClassUuid(), systemEvent.getGroupId());
 
-			if (articleResource == null) {
+			if (journalArticleResource == null) {
 				continue;
 			}
 
-			JournalArticle article =
+			JournalArticle journalArticle =
 				JournalArticleLocalServiceUtil.fetchArticle(
-					systemEvent.getGroupId(), articleResource.getArticleId(),
+					systemEvent.getGroupId(),
+					journalArticleResource.getArticleId(),
 					extraDataJSONObject.getDouble("version"));
 
-			if ((article == null) || article.isInTrash()) {
+			if ((journalArticle == null) || journalArticle.isInTrash()) {
 				continue;
 			}
 

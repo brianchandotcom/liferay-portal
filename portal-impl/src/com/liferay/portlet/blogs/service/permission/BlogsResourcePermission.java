@@ -26,7 +26,7 @@ import com.liferay.portal.util.PortletKeys;
  * @author Jorge Ferrer
  */
 @OSGiBeanProperties(
-	property = {"resource.name=com.liferay.portlet.blogs"}
+	property = {"resource.name=" + BlogsResourcePermission.RESOURCE_NAME}
 )
 public class BlogsResourcePermission implements ResourcePermissionChecker {
 

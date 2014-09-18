@@ -458,14 +458,6 @@ public class SeleniumBuilder {
 			}
 		}
 
-		sb.append("\nTEST_CASE_METHOD_NAMES=");
-
-		String testCaseMethodNamesString = StringUtil.merge(
-			testCaseMethodNames.toArray(new String[testCaseMethodNames.size()]),
-			StringPool.SPACE);
-
-		sb.append(testCaseMethodNamesString);
-
 		_seleniumBuilderFileUtil.writeFile(
 			"../../../test.case.method.names.properties", sb.toString(), false);
 	}

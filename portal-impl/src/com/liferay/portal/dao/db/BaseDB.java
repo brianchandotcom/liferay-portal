@@ -373,7 +373,7 @@ public abstract class BaseDB implements DB {
 
 			String line = null;
 
-			while (((line = unsyncBufferedReader.readLine()) != null)) {
+			while ((line = unsyncBufferedReader.readLine()) != null) {
 				if (line.startsWith("##")) {
 					continue;
 				}

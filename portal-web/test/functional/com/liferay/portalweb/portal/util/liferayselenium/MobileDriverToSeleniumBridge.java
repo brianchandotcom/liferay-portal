@@ -878,4 +878,8 @@ public class MobileDriverToSeleniumBridge
 		return WebDriverHelper.getWebElements(this, locator, timeout);
 	}
 
+	protected void scrollWebElementIntoView(WebElement webElement) {
+		WebDriverHelper.scrollWebElementIntoView(this, webElement);
+	}
+
 }

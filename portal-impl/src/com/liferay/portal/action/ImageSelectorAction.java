@@ -22,21 +22,29 @@ import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.ResourcePermissionChecker;
 import com.liferay.portal.struts.JSONAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.FileSizeException;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 import java.io.InputStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerMap;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
@@ -56,6 +64,22 @@ public class ImageSelectorAction extends JSONAction {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		String resourceName = ParamUtil.getString(
+			uploadPortletRequest, "resourceName");
+
+		ResourcePermissionChecker resourcePermissionChecker =
+			_serviceTrackerMap.getService(resourceName);
+
+		if (resourcePermissionChecker == null) {
+			throw new PrincipalException(
+				"Access denied. There is no resource permission checker " +
+					"registered for the resource " + resourceName);
+		}
+
+		resourcePermissionChecker.check(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
+			ActionKeys.ADD_ENTRY);
 
 		UploadException uploadException = (UploadException)request.getAttribute(
 			WebKeys.UPLOAD_EXCEPTION);
@@ -108,5 +132,9 @@ public class ImageSelectorAction extends JSONAction {
 
 		return jsonObject.toString();
 	}
+
+	private ServiceTrackerMap<String, ResourcePermissionChecker>
+		_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
+			ResourcePermissionChecker.class, "resource.name");
 
 }

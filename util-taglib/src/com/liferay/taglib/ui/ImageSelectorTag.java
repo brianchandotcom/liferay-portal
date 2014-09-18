@@ -31,6 +31,10 @@ public class ImageSelectorTag extends IncludeTag {
 		_paramName = paramName;
 	}
 
+	public void setResourceName(String resourceName) {
+		_resourceName = resourceName;
+	}
+
 	public void setValidExtensions(String validExtensions) {
 		_validExtensions = validExtensions;
 	}
@@ -39,6 +43,7 @@ public class ImageSelectorTag extends IncludeTag {
 	protected void cleanUp() {
 		_fileEntryId = 0;
 		_paramName = "imageSelectorFileEntryId";
+		_resourceName = null;
 		_validExtensions = null;
 	}
 
@@ -53,6 +58,8 @@ public class ImageSelectorTag extends IncludeTag {
 			"liferay-ui:image-selector:fileEntryId", _fileEntryId);
 		request.setAttribute("liferay-ui:image-selector:paramName", _paramName);
 		request.setAttribute(
+			"liferay-ui:image-selector:resourceName", _resourceName);
+		request.setAttribute(
 			"liferay-ui:image-selector:validExtensions", _validExtensions);
 	}
 
@@ -61,6 +68,7 @@ public class ImageSelectorTag extends IncludeTag {
 
 	private long _fileEntryId;
 	private String _paramName = "imageSelectorFileEntryId";
+	private String _resourceName;
 	private String _validExtensions;
 
 }

@@ -60,8 +60,10 @@ public class TCKtoJUnitConverter {
 
 			String s = StringPool.BLANK;
 
-			while (((s = unsyncBufferedReader.readLine()) != null) &&
-				   s.startsWith("Test finished: ")) {
+			while ((s = unsyncBufferedReader.readLine()) != null) {
+				if (!s.startsWith("Test finished: ")) {
+					continue;
+				}
 
 				int x = s.indexOf(StringPool.POUND);
 				int y = s.lastIndexOf(StringPool.SLASH, x);

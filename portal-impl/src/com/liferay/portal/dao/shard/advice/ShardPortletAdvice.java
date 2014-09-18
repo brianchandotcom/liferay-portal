@@ -53,6 +53,7 @@ public class ShardPortletAdvice implements MethodInterceptor {
 				methodName.equals("getPortletByStrutsPath") ||
 				methodName.equals("getPortlets") ||
 				methodName.equals("hasPortlet") ||
+				methodName.equals("loadGetPortletsPool") ||
 				methodName.equals("updatePortlet")) {
 
 				companyId = (Long)argument;

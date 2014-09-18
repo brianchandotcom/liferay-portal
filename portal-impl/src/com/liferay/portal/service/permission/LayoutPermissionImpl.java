@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.LayoutType;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
@@ -35,7 +36,6 @@ import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.sites.util.SitesUtil;
 
@@ -232,11 +232,16 @@ public class LayoutPermissionImpl
 			layout = virtualLayout.getWrappedModel();
 		}
 
-		if (actionId.equals(ActionKeys.ADD_LAYOUT) &&
-			(!PortalUtil.isLayoutParentable(layout.getType()) ||
-			 !SitesUtil.isLayoutSortable(layout))) {
+		if (actionId.equals(ActionKeys.ADD_LAYOUT)) {
+			if (!SitesUtil.isLayoutSortable(layout)) {
+				return false;
+			}
 
-			return false;
+			LayoutType layoutType = layout.getLayoutType();
+
+			if (!layoutType.isParentable()) {
+				return false;
+			}
 		}
 
 		if (actionId.equals(ActionKeys.DELETE) &&

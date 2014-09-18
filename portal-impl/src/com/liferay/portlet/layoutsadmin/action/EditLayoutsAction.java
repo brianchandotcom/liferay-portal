@@ -87,7 +87,6 @@ import com.liferay.portal.service.permission.LayoutSetPrototypePermissionUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.LayoutSettings;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
@@ -1001,10 +1000,10 @@ public class EditLayoutsAction extends PortletAction {
 				PropertiesParamUtil.getProperties(
 					actionRequest, "TypeSettingsProperties--");
 
-			if (type.equals(LayoutConstants.TYPE_PORTLET)) {
-				LayoutTypePortlet layoutTypePortlet =
-					(LayoutTypePortlet)layout.getLayoutType();
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)layout.getLayoutType();
 
+			if (type.equals(LayoutConstants.TYPE_PORTLET)) {
 				String layoutTemplateId = ParamUtil.getString(
 					uploadPortletRequest, "layoutTemplateId",
 					PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
@@ -1063,14 +1062,12 @@ public class EditLayoutsAction extends PortletAction {
 					layout.getPlid());
 			}
 
-			LayoutSettings layoutSettings = LayoutSettings.getInstance(layout);
-
 			HttpServletResponse response = PortalUtil.getHttpServletResponse(
 				actionResponse);
 
 			EventsProcessorUtil.process(
 				PropsKeys.LAYOUT_CONFIGURATION_ACTION_UPDATE,
-				layoutSettings.getConfigurationActionUpdate(),
+				layoutTypePortlet.getConfigurationActionUpdate(),
 				uploadPortletRequest, response);
 		}
 

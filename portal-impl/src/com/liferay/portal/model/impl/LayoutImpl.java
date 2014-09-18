@@ -41,6 +41,7 @@ import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutFriendlyURL;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutType;
+import com.liferay.portal.model.LayoutTypeController;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.Theme;
@@ -55,6 +56,7 @@ import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.LayoutClone;
 import com.liferay.portal.util.LayoutCloneFactory;
+import com.liferay.portal.util.LayoutTypePortletFactoryUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
@@ -75,6 +77,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Represents a portal layout, providing access to the layout's URLs, parent
@@ -565,7 +568,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	@Override
 	public LayoutType getLayoutType() {
 		if (_layoutType == null) {
-			_layoutType = new LayoutTypePortletImpl(this);
+			_layoutType = LayoutTypePortletFactoryUtil.create(this);
 		}
 
 		return _layoutType;
@@ -804,6 +807,20 @@ public class LayoutImpl extends LayoutBaseImpl {
 		else {
 			return false;
 		}
+	}
+
+	@Override
+	public boolean includeLayoutContent(
+			HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
+
+		LayoutType layoutType = getLayoutType();
+
+		LayoutTypeController layoutTypeController =
+			layoutType.getLayoutTypeController();
+
+		return layoutTypeController.includeLayoutContent(
+			request, response, this);
 	}
 
 	@Override
@@ -1064,6 +1081,16 @@ public class LayoutImpl extends LayoutBaseImpl {
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean matches(HttpServletRequest request, String friendlyURL) {
+		LayoutType layoutType = getLayoutType();
+
+		LayoutTypeController layoutTypeController =
+			layoutType.getLayoutTypeController();
+
+		return layoutTypeController.matches(request, friendlyURL, this);
 	}
 
 	@Override

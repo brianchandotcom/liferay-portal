@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.ResourceConstants;
-import com.liferay.portal.model.impl.LayoutTypePortletImpl;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 
 import java.sql.Connection;
@@ -69,7 +68,7 @@ public class UpgradePortletId extends UpgradeProcess {
 				continue;
 			}
 
-			String instanceId = LayoutTypePortletImpl.generateInstanceId();
+			String instanceId = PortletConstants.generateInstanceId();
 
 			String newPortletId = PortletConstants.assemblePortletId(
 				portletId, instanceId);

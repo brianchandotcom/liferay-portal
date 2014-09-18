@@ -781,10 +781,6 @@ public interface Portal {
 			Map<String, Object> requestContext)
 		throws PortalException;
 
-	public String getLayoutEditPage(Layout layout);
-
-	public String getLayoutEditPage(String type);
-
 	public String getLayoutFriendlyURL(Layout layout, ThemeDisplay themeDisplay)
 		throws PortalException;
 
@@ -840,10 +836,6 @@ public interface Portal {
 
 	public String getLayoutURL(ThemeDisplay themeDisplay)
 		throws PortalException;
-
-	public String getLayoutViewPage(Layout layout);
-
-	public String getLayoutViewPage(String type);
 
 	public LiferayPortletRequest getLiferayPortletRequest(
 		PortletRequest portletRequest);
@@ -1303,18 +1295,6 @@ public interface Portal {
 
 	public boolean isLayoutDescendant(Layout layout, long layoutId)
 		throws PortalException;
-
-	public boolean isLayoutFirstPageable(Layout layout);
-
-	public boolean isLayoutFirstPageable(String type);
-
-	public boolean isLayoutFriendliable(Layout layout);
-
-	public boolean isLayoutFriendliable(String type);
-
-	public boolean isLayoutParentable(Layout layout);
-
-	public boolean isLayoutParentable(String type);
 
 	public boolean isLayoutSitemapable(Layout layout);
 

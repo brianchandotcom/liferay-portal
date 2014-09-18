@@ -329,6 +329,11 @@ public interface Layout extends LayoutModel, PersistedModel {
 	public boolean hasScopeGroup()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public boolean includeLayoutContent(
+		javax.servlet.http.HttpServletRequest request,
+		javax.servlet.http.HttpServletResponse response)
+		throws java.lang.Exception;
+
 	public boolean isChildSelected(boolean selectable,
 		com.liferay.portal.model.Layout layout)
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -436,6 +441,9 @@ public interface Layout extends LayoutModel, PersistedModel {
 	public boolean isTypePortlet();
 
 	public boolean isTypeURL();
+
+	public boolean matches(javax.servlet.http.HttpServletRequest request,
+		java.lang.String friendlyURL);
 
 	public void setLayoutSet(com.liferay.portal.model.LayoutSet layoutSet);
 

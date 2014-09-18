@@ -1371,6 +1371,14 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	@Override
+	public boolean includeLayoutContent(
+		javax.servlet.http.HttpServletRequest request,
+		javax.servlet.http.HttpServletResponse response)
+		throws java.lang.Exception {
+		return _layout.includeLayoutContent(request, response);
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _layout.isCachedModel();
 	}
@@ -1578,6 +1586,12 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	@Override
 	public boolean isTypeURL() {
 		return _layout.isTypeURL();
+	}
+
+	@Override
+	public boolean matches(javax.servlet.http.HttpServletRequest request,
+		java.lang.String friendlyURL) {
+		return _layout.matches(request, friendlyURL);
 	}
 
 	@Override

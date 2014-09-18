@@ -20,7 +20,9 @@
 Group group = layoutsAdminDisplayContext.getGroup();
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
-LayoutTypePortletImpl selLayoutTypePortlet = new LayoutTypePortletImpl(selLayout);
+LayoutType selLayoutType = selLayout.getLayoutType();
+
+String[] layoutTypes = LayoutTypeControllerTracker.getTypes();
 
 Locale defaultLocale = LocaleUtil.getDefault();
 String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
@@ -36,7 +38,7 @@ String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 StringBuilder friendlyURLBase = new StringBuilder();
 %>
 
-<c:if test="<%= !group.isLayoutPrototype() && PortalUtil.isLayoutFriendliable(selLayout) %>">
+<c:if test="<%= !group.isLayoutPrototype() && selLayoutType.isURLFriendliable() %>">
 
 	<%
 	friendlyURLBase.append(themeDisplay.getPortalURL());
@@ -94,7 +96,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 			</div>
 
 			<c:choose>
-				<c:when test="<%= PortalUtil.isLayoutFriendliable(selLayout) %>">
+				<c:when test="<%= selLayoutType.isURLFriendliable() %>">
 					<aui:field-wrapper cssClass="input-flex-add-on" helpMessage='<%= LanguageUtil.format(request, "for-example-x", "<em>/news</em>", false) %>' label="friendly-url" name="friendlyURL">
 						<span class="input-group-addon" id="<portlet:namespace />urlBase"><liferay-ui:message key="<%= StringUtil.shorten(friendlyURLBase.toString(), 40) %>" /></span>
 
@@ -112,7 +114,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 				LayoutSetPrototype layoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(group.getClassPK());
 
 				boolean layoutSetPrototypeUpdateable = GetterUtil.getBoolean(layoutSetPrototype.getSettingsProperty("layoutsUpdateable"), true);
-				boolean layoutUpdateable = GetterUtil.getBoolean(selLayoutTypePortlet.getTypeSettingsProperty("layoutUpdateable"), true);
+				boolean layoutUpdateable = GetterUtil.getBoolean(selLayoutType.getTypeSettingsProperty("layoutUpdateable"), true);
 				%>
 
 				<aui:input disabled="<%= !layoutSetPrototypeUpdateable %>" helpMessage="allow-site-administrators-to-modify-this-page-for-their-site-help" label="allow-site-administrators-to-modify-this-page-for-their-site" name="TypeSettingsProperties--layoutUpdateable--" type="checkbox" value="<%= layoutUpdateable %>" />
@@ -150,16 +152,18 @@ StringBuilder friendlyURLBase = new StringBuilder();
 		<aui:select name="type">
 
 			<%
-			for (int i = 0; i < PropsValues.LAYOUT_TYPES.length; i++) {
-				if (PropsValues.LAYOUT_TYPES[i].equals("article") && (group.isLayoutPrototype() || group.isLayoutSetPrototype())) {
-					continue;
-				}
+				for (String curLayoutType : layoutTypes) {
+					if (curLayoutType.equals("article") && (group.isLayoutPrototype() || group.isLayoutSetPrototype())) {
+						continue;
+					}
+
+					LayoutTypeController layoutTypeController = LayoutTypeControllerTracker.getLayoutTypeController(curLayoutType);
 			%>
 
-				<aui:option disabled="<%= selLayout.isFirstParent() && !PortalUtil.isLayoutFirstPageable(PropsValues.LAYOUT_TYPES[i]) %>" label='<%= "layout.types." + PropsValues.LAYOUT_TYPES[i] %>' selected="<%= selLayout.getType().equals(PropsValues.LAYOUT_TYPES[i]) %>" value="<%= PropsValues.LAYOUT_TYPES[i] %>" />
+				<aui:option disabled="<%= selLayout.isFirstParent() && !layoutTypeController.isFirstPageable() %>" label='<%= "layout.types." + curLayoutType %>' selected="<%= selLayout.getType().equals(curLayoutType) %>" value="<%= curLayoutType %>" />
 
 			<%
-			}
+				}
 			%>
 
 		</aui:select>
@@ -167,21 +171,21 @@ StringBuilder friendlyURLBase = new StringBuilder();
 		<div id="<portlet:namespace />layoutTypeForm">
 
 			<%
-			for (int i = 0; i < PropsValues.LAYOUT_TYPES.length; i++) {
-				String curLayoutType = PropsValues.LAYOUT_TYPES[i];
+				for (String curLayoutType : layoutTypes) {
+					if (curLayoutType.equals("article") && (group.isLayoutPrototype() || group.isLayoutSetPrototype())) {
+						continue;
+					}
 
-				if (PropsValues.LAYOUT_TYPES[i].equals("article") && (group.isLayoutPrototype() || group.isLayoutSetPrototype())) {
-					continue;
-				}
+					LayoutTypeController layoutTypeController = LayoutTypeControllerTracker.getLayoutTypeController(curLayoutType);
 			%>
 
-				<div class="layout-type-form layout-type-form-<%= curLayoutType %> <%= selLayout.getType().equals(PropsValues.LAYOUT_TYPES[i]) ? "" : "hide" %>">
+				<div class="layout-type-form layout-type-form-<%= curLayoutType %> <%= selLayout.getType().equals(curLayoutType) ? "" : "hide" %>">
 
 					<%
 					request.setAttribute(WebKeys.SEL_LAYOUT, selLayout);
 					%>
 
-					<liferay-util:include page="<%= StrutsUtil.TEXT_HTML_DIR + PortalUtil.getLayoutEditPage(curLayoutType) %>">
+					<liferay-util:include page="<%= layoutTypeController.getEditPage() %>">
 						<liferay-util:param name="idPrefix" value="details" />
 					</liferay-util:include>
 				</div>

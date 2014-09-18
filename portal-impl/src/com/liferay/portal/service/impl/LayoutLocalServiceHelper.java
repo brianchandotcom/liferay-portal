@@ -36,6 +36,8 @@ import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutFriendlyURL;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
+import com.liferay.portal.model.LayoutType;
+import com.liferay.portal.model.LayoutTypeController;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
@@ -47,6 +49,7 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.persistence.LayoutFriendlyURLPersistence;
 import com.liferay.portal.service.persistence.LayoutPersistence;
 import com.liferay.portal.service.persistence.LayoutSetPersistence;
+import com.liferay.portal.util.LayoutTypeControllerTracker;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.comparator.LayoutPriorityComparator;
@@ -260,7 +263,10 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 			validateFirstLayout(type);
 		}
 
-		if (!PortalUtil.isLayoutParentable(type)) {
+		LayoutTypeController layoutTypeController =
+			LayoutTypeControllerTracker.getLayoutTypeController(type);
+
+		if (!layoutTypeController.isParentable()) {
 			if (layoutPersistence.countByG_P_P(
 					groupId, privateLayout, layoutId) > 0) {
 
@@ -288,7 +294,10 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 	}
 
 	public void validateFirstLayout(String type) throws PortalException {
-		if (Validator.isNull(type) || !PortalUtil.isLayoutFirstPageable(type)) {
+		LayoutTypeController layoutTypeController =
+			LayoutTypeControllerTracker.getLayoutTypeController(type);
+
+		if (Validator.isNull(type) || !layoutTypeController.isFirstPageable()) {
 			LayoutTypeException lte = new LayoutTypeException(
 				LayoutTypeException.FIRST_LAYOUT);
 
@@ -480,7 +489,9 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 		Layout parentLayout = layoutPersistence.findByG_P_L(
 			groupId, privateLayout, parentLayoutId);
 
-		if (!PortalUtil.isLayoutParentable(parentLayout)) {
+		LayoutType parentLayoutType = parentLayout.getLayoutType();
+
+		if (!parentLayoutType.isParentable()) {
 			throw new LayoutParentLayoutIdException(
 				LayoutParentLayoutIdException.NOT_PARENTABLE);
 		}
@@ -517,8 +528,10 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 			if (firstLayoutId == layoutId) {
 				Layout secondLayout = layouts.get(1);
 
+				LayoutType layoutType = secondLayout.getLayoutType();
+
 				if (Validator.isNull(secondLayout.getType()) ||
-					!PortalUtil.isLayoutFirstPageable(secondLayout.getType())) {
+					!layoutType.isFirstPageable()) {
 
 					throw new LayoutParentLayoutIdException(
 						LayoutParentLayoutIdException.FIRST_LAYOUT_TYPE);

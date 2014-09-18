@@ -14,36 +14,26 @@
 
 package com.liferay.portal.model;
 
-import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.portal.kernel.util.UnicodeProperties;
-
-import java.io.Serializable;
-
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Brian Wing Shun Chan
  * @author Raymond Augé
  */
-@ProviderType
-public interface LayoutType extends Serializable {
+public interface LayoutTypeController {
 
 	public String[] getConfigurationActionDelete();
 
 	public String[] getConfigurationActionUpdate();
 
-	public Layout getLayout();
+	public String getEditPage();
 
-	public LayoutTypeController getLayoutTypeController();
+	public String getURL();
 
-	public UnicodeProperties getTypeSettingsProperties();
-
-	public String getTypeSettingsProperty(String key);
-
-	public String getTypeSettingsProperty(String key, String defaultValue);
-
-	public String getURL(Map<String, String> variables);
+	public boolean includeLayoutContent(
+			HttpServletRequest request, HttpServletResponse response,
+			Layout layout)
+		throws Exception;
 
 	public boolean isFirstPageable();
 
@@ -53,11 +43,7 @@ public interface LayoutType extends Serializable {
 
 	public boolean isURLFriendliable();
 
-	/**
-	 * @deprecated As of 7.0.0 with no replacement. This method has no effect.
-	 */
-	public void setLayout(Layout layout);
-
-	public void setTypeSettingsProperty(String key, String value);
+	public boolean matches(
+		HttpServletRequest request, String friendlyURL, Layout layout);
 
 }

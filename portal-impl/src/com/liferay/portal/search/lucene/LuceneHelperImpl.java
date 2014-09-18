@@ -245,8 +245,12 @@ public class LuceneHelperImpl implements LuceneHelper {
 		}
 
 		if (like) {
-			value = StringUtil.replace(
+			String replacedValue = StringUtil.replace(
 				value, StringPool.PERCENT, StringPool.BLANK);
+
+			if (Validator.isNotNull(replacedValue)) {
+				value = replacedValue;
+			}
 		}
 
 		try {

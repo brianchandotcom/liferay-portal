@@ -192,8 +192,10 @@
 						path: 'ddm_form.js',
 						requires: [
 							'aui-base',
+							'aui-datatype',
 							'aui-io-request',
-							'aui-parse-content'
+							'aui-parse-content',
+							'liferay-translation-manager'
 						]
 					},
 					'liferay-diff-version-comparator': {

@@ -11,6 +11,10 @@ AUI.add(
 
 		var EMPTY_FN = A.Lang.emptyFn;
 
+		var FIELDS_DISPLAY_INSTANCE_SEPARATOR = '_INSTANCE_';
+
+		var FIELDS_DISPLAY_NAME = '_fieldsDisplay';
+
 		var JSON = A.JSON;
 
 		var STR_EMPTY = '';
@@ -150,6 +154,7 @@ AUI.add(
 
 						var structure = instance.get('structure');
 
+						var fieldsDisplayValues = [];
 						var normalized = {};
 
 						A.each(
@@ -174,8 +179,12 @@ AUI.add(
 								}
 
 								normalized[item.name] = instance._normalizeValue(value);
+
+								fieldsDisplayValues.push(item.name + FIELDS_DISPLAY_INSTANCE_SEPARATOR + instance._randomString(8));
 							}
 						);
+
+						normalized[FIELDS_DISPLAY_NAME] = fieldsDisplayValues.join(',');
 
 						delete normalized.displayIndex;
 						delete normalized.recordId;
@@ -263,6 +272,14 @@ AUI.add(
 								);
 							}
 						}
+					},
+
+					_randomString: function(length) {
+						var random = Math.random();
+
+						var randomString = random.toString(36);
+
+						return randomString.substring(length)
 					},
 
 					_setDataStableSort: function(data) {

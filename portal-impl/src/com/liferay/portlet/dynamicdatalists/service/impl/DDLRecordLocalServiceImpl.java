@@ -149,7 +149,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		Fields fields = toFields(
 			ddmStructure.getStructureId(), fieldsMap,
-			serviceContext.getLocale(), LocaleUtil.getSiteDefault());
+			serviceContext.getLocale(), LocaleUtil.getSiteDefault(), true);
 
 		return ddlRecordLocalService.addRecord(
 			userId, groupId, recordSetId, displayIndex, fields, serviceContext);
@@ -578,7 +578,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		Fields fields = toFields(
 			ddmStructure.getStructureId(), fieldsMap,
-			serviceContext.getLocale(), oldFields.getDefaultLocale());
+			serviceContext.getLocale(), oldFields.getDefaultLocale(), false);
 
 		return ddlRecordLocalService.updateRecord(
 			userId, recordId, false, displayIndex, fields, mergeFields,
@@ -753,7 +753,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	protected Fields toFields(
 		long ddmStructureId, Map<String, Serializable> fieldsMap,
-		Locale locale, Locale defaultLocale) {
+		Locale locale, Locale defaultLocale, boolean create) {
 
 		Fields fields = new Fields();
 
@@ -764,7 +764,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			field.setName(entry.getKey());
 			field.addValue(locale, String.valueOf(entry.getValue()));
 
-			if (!locale.equals(defaultLocale)) {
+			if (create && !locale.equals(defaultLocale)) {
 				field.addValue(defaultLocale, String.valueOf(entry.getValue()));
 			}
 

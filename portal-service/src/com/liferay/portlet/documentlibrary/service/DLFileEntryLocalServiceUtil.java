@@ -848,6 +848,13 @@ public class DLFileEntryLocalServiceUtil {
 			workflowContext);
 	}
 
+	public static void validateFile(long groupId, long folderId,
+		long fileEntryId, java.lang.String fileName, java.lang.String title)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.validateFile(groupId, folderId, fileEntryId, fileName, title);
+	}
+
 	public static boolean verifyFileEntryCheckOut(long fileEntryId,
 		java.lang.String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -16,7 +16,10 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.upgrade.v7_0_0.util.DLFileEntryTable;
 import com.liferay.portal.upgrade.v7_0_0.util.DLFileVersionTable;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
@@ -63,6 +66,42 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		updateFileVersionFileNames();
 	}
 
+	protected boolean hasFileNameFileEntry(
+			long groupId, long folderId, String fileName)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select count(*) from DLFileEntry where groupId = ? and " +
+					"folderId = ? and fileName = ?");
+
+			ps.setLong(1, groupId);
+			ps.setLong(2, folderId);
+			ps.setString(3, fileName);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				int count = rs.getInt(1);
+
+				if (count > 0) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
 	protected void updateFileEntryFileName(long fileEntryId, String fileName)
 		throws Exception {
 
@@ -94,23 +133,96 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select fileEntryId, extension, title from DLFileEntry");
+				"select fileEntryId, groupId, folderId, extension, title, " +
+					"version from DLFileEntry");
 
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
 				long fileEntryId = rs.getLong("fileEntryId");
+				long groupId = rs.getLong("groupId");
+				long folderId = rs.getLong("folderId");
 				String extension = GetterUtil.getString(
 					rs.getString("extension"));
 				String title = GetterUtil.getString(rs.getString("title"));
+				String version = rs.getString("version");
 
-				String fileName = DLUtil.getSanitizedFileName(title, extension);
+				String uniqueFileName = DLUtil.getSanitizedFileName(
+					title, extension);
 
-				updateFileEntryFileName(fileEntryId, fileName);
+				String titleWithoutExtension = title;
+
+				String titleExtension = StringPool.BLANK;
+
+				if (title.endsWith(StringPool.PERIOD + extension)) {
+					titleWithoutExtension = FileUtil.stripExtension(title);
+
+					titleExtension = extension;
+				}
+
+				String uniqueTitle = StringPool.BLANK;
+
+				int count = 0;
+
+				while (hasFileNameFileEntry(
+							groupId, folderId, uniqueFileName)) {
+
+					count++;
+
+					uniqueTitle =
+						titleWithoutExtension + StringPool.UNDERLINE +
+							String.valueOf(count);
+
+					if (Validator.isNotNull(titleExtension)) {
+						uniqueTitle += StringPool.PERIOD.concat(titleExtension);
+					}
+
+					uniqueFileName = DLUtil.getSanitizedFileName(
+						uniqueTitle, extension);
+				}
+
+				updateFileEntryFileName(fileEntryId, uniqueFileName);
+
+				if (Validator.isNotNull(uniqueTitle)) {
+					updateFileEntryTitle(fileEntryId, uniqueTitle, version);
+				}
 			}
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void updateFileEntryTitle(
+			long fileEntryId, String title, String version)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"update DLFileEntry set title = ? where fileEntryId = ?");
+
+			ps.setString(1, title);
+			ps.setLong(2, fileEntryId);
+
+			ps.executeUpdate();
+
+			ps = con.prepareStatement(
+				"update DLFileVersion set title = ? where fileEntryId = " +
+					"? and version = ?");
+
+			ps.setString(1, title);
+			ps.setLong(2, fileEntryId);
+			ps.setString(3, version);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
 		}
 	}
 

@@ -172,8 +172,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 		);
 
 		var onDestroyPortlet = function(event) {
-			var REGEX_DELIMITER_NS = /_/g;
-			if ('<portlet:namespace />'.replace(REGEX_DELIMITER_NS, '') === event.portletId) {
+			if (event.portletId === '<%= portletDisplay.getId() %>') {
 				Liferay.detach(handleOnSelect);
 
 				Liferay.detach(handleOnModifyLink);
@@ -184,7 +183,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 			}
 		}
 
-		Liferay.on('destroyPortlet',onDestroyPortlet);
+		Liferay.on('destroyPortlet', onDestroyPortlet);
 	</aui:script>
 </c:if>
 

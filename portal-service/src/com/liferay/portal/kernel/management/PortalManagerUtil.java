@@ -35,7 +35,7 @@ public class PortalManagerUtil {
 	public static MethodHandler createManageActionMethodHandler(
 		ManageAction<?> manageAction) {
 
-		return new MethodHandler(_manageMethod, manageAction);
+		return new MethodHandler(_MANAGE_METHOD, manageAction);
 	}
 
 	public static PortalManager getPortalManager() {
@@ -99,12 +99,13 @@ public class PortalManagerUtil {
 		_portalManager = portalManager;
 	}
 
-	private static Method _manageMethod;
+	private static final Method _MANAGE_METHOD;
+
 	private static PortalManager _portalManager;
 
 	static {
 		try {
-			_manageMethod = PortalManagerUtil.class.getDeclaredMethod(
+			_MANAGE_METHOD = PortalManagerUtil.class.getDeclaredMethod(
 				"manage", ManageAction.class);
 		}
 		catch (Exception e) {

@@ -38,7 +38,7 @@ public class PortalLoginModule implements LoginModule {
 			_loginModule = (LoginModule)clazz.newInstance();
 		}
 		catch (Exception e) {
-			_log.error(e);
+			throw new AssertionError(e);
 		}
 	}
 
@@ -75,6 +75,6 @@ public class PortalLoginModule implements LoginModule {
 
 	private static Log _log = LogFactoryUtil.getLog(PortalLoginModule.class);
 
-	private LoginModule _loginModule;
+	private final LoginModule _loginModule;
 
 }

@@ -173,114 +173,96 @@ Conversion conversion = ConverterUtil.getConversion(type, fromId, toId, fromValu
 	<aui:button type="submit" value="convert" />
 </aui:form>
 
-<aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />setBox',
-		function(oldBox, newBox) {
-			for (var i = oldBox.length - 1; i > -1; i--) {
-				oldBox.options[i] = null;
-			}
-
-			for (i = 0; i < newBox.length; i++) {
-				oldBox.options[i] = new Option(newBox[i].value, i);
-			}
-
-			oldBox.options[0].selected = true;
-		}
-	);
-</aui:script>
-
 <aui:script use="aui-io-request,aui-node,aui-parse-content">
+	var setBox = function(oldBox, newBox) {
+		for (var i = oldBox.length - 1; i > -1; i--) {
+			oldBox.options[i] = null;
+		}
+
+		for (i = 0; i < newBox.length; i++) {
+			oldBox.options[i] = new Option(newBox[i], i);
+		}
+
+		oldBox.options[0].selected = true;
+	};
+
 	var lengthArray = [
-		new Option(0, '<%= UnicodeLanguageUtil.get(request, "meter") %>'),
-		new Option(1, '<%= UnicodeLanguageUtil.get(request, "millimeter") %>'),
-		new Option(2, '<%= UnicodeLanguageUtil.get(request, "centimeter") %>'),
-		new Option(3, '<%= UnicodeLanguageUtil.get(request, "kilometer") %>'),
-		new Option(4, '<%= UnicodeLanguageUtil.get(request, "foot") %>'),
-		new Option(5, '<%= UnicodeLanguageUtil.get(request, "inch") %>'),
-		new Option(6, '<%= UnicodeLanguageUtil.get(request, "yard") %>'),
-		new Option(7, '<%= UnicodeLanguageUtil.get(request, "mile") %>'),
-		new Option(8, '<%= UnicodeLanguageUtil.get(request, "cubit") %>'),
-		new Option(9, '<%= UnicodeLanguageUtil.get(request, "talent") %>'),
-		new Option(10, '<%= UnicodeLanguageUtil.get(request, "handbreath") %>')
+		'<liferay-ui:message key="meter" />',
+		'<liferay-ui:message key="millimeter" />',
+		'<liferay-ui:message key="centimeter" />',
+		'<liferay-ui:message key="kilometer" />',
+		'<liferay-ui:message key="foot" />',
+		'<liferay-ui:message key="inch" />',
+		'<liferay-ui:message key="yard" />',
+		'<liferay-ui:message key="mile" />',
+		'<liferay-ui:message key="cubit" />',
+		'<liferay-ui:message key="talent" />',
+		'<liferay-ui:message key="handbreath" />'
 	];
 
 	var areaArray = [
-		new Option(0, '<%= UnicodeLanguageUtil.get(request, "square-kilometer") %>'),
-		new Option(1, '<%= UnicodeLanguageUtil.get(request, "square-meter") %>'),
-		new Option(2, '<%= UnicodeLanguageUtil.get(request, "square-centimeter") %>'),
-		new Option(3, '<%= UnicodeLanguageUtil.get(request, "square-millimeter") %>'),
-		new Option(4, '<%= UnicodeLanguageUtil.get(request, "square-foot") %>'),
-		new Option(5, '<%= UnicodeLanguageUtil.get(request, "square-inch") %>'),
-		new Option(6, '<%= UnicodeLanguageUtil.get(request, "square-yard") %>'),
-		new Option(7, '<%= UnicodeLanguageUtil.get(request, "square-mile") %>'),
-		new Option(8, '<%= UnicodeLanguageUtil.get(request, "hectare") %>'),
-		new Option(9, '<%= UnicodeLanguageUtil.get(request, "acre") %>')
+		'<liferay-ui:message key="square-kilometer" />',
+		'<liferay-ui:message key="square-meter" />',
+		'<liferay-ui:message key="square-centimeter" />',
+		'<liferay-ui:message key="square-millimeter" />',
+		'<liferay-ui:message key="square-foot" />',
+		'<liferay-ui:message key="square-inch" />',
+		'<liferay-ui:message key="square-yard" />',
+		'<liferay-ui:message key="square-mile" />',
+		'<liferay-ui:message key="hectare" />',
+		'<liferay-ui:message key="acre" />'
 	];
 
 	var volumeArray = [
-		new Option(0, '<%= UnicodeLanguageUtil.get(request, "liter") %>'),
-		new Option(1, '<%= UnicodeLanguageUtil.get(request, "cubic-centimeter") %>'),
-		new Option(2, '<%= UnicodeLanguageUtil.get(request, "cubic-inch") %>'),
-		new Option(3, '<%= UnicodeLanguageUtil.get(request, "pint") %>'),
-		new Option(4, '<%= UnicodeLanguageUtil.get(request, "cor") %>'),
-		new Option(5, '<%= UnicodeLanguageUtil.get(request, "lethek") %>'),
-		new Option(6, '<%= UnicodeLanguageUtil.get(request, "ephah") %>'),
-		new Option(7, '<%= UnicodeLanguageUtil.get(request, "seah") %>'),
-		new Option(8, '<%= UnicodeLanguageUtil.get(request, "omer") %>'),
-		new Option(9, '<%= UnicodeLanguageUtil.get(request, "cab") %>'),
-		new Option(10, '<%= UnicodeLanguageUtil.get(request, "bath") %>'),
-		new Option(11, '<%= UnicodeLanguageUtil.get(request, "hin") %>'),
-		new Option(12, '<%= UnicodeLanguageUtil.get(request, "log") %>')
+		'<liferay-ui:message key="liter" />',
+		'<liferay-ui:message key="cubic-centimeter" />',
+		'<liferay-ui:message key="cubic-inch" />',
+		'<liferay-ui:message key="pint" />',
+		'<liferay-ui:message key="cor" />',
+		'<liferay-ui:message key="lethek" />',
+		'<liferay-ui:message key="ephah" />',
+		'<liferay-ui:message key="seah" />',
+		'<liferay-ui:message key="omer" />',
+		'<liferay-ui:message key="cab" />',
+		'<liferay-ui:message key="bath" />',
+		'<liferay-ui:message key="hin" />',
+		'<liferay-ui:message key="log" />'
 	];
 
 	var massArray = [
-		new Option(0, '<%= UnicodeLanguageUtil.get(request, "kilogram") %>'),
-		new Option(1, '<%= UnicodeLanguageUtil.get(request, "pound") %>'),
-		new Option(2, '<%= UnicodeLanguageUtil.get(request, "ton") %>'),
-		new Option(3, '<%= UnicodeLanguageUtil.get(request, "talent") %>'),
-		new Option(4, '<%= UnicodeLanguageUtil.get(request, "mina") %>'),
-		new Option(5, '<%= UnicodeLanguageUtil.get(request, "shekel") %>'),
-		new Option(6, '<%= UnicodeLanguageUtil.get(request, "pim") %>'),
-		new Option(7, '<%= UnicodeLanguageUtil.get(request, "beka") %>'),
-		new Option(8, '<%= UnicodeLanguageUtil.get(request, "gerah") %>')
+		'<liferay-ui:message key="kilogram" />',
+		'<liferay-ui:message key="pound" />',
+		'<liferay-ui:message key="ton" />',
+		'<liferay-ui:message key="talent" />',
+		'<liferay-ui:message key="mina" />',
+		'<liferay-ui:message key="shekel" />',
+		'<liferay-ui:message key="pim" />',
+		'<liferay-ui:message key="beka" />',
+		'<liferay-ui:message key="gerah" />'
 	];
 
 	var temperatureArray = [
-		new Option(0, '<%= UnicodeLanguageUtil.get(request, "kelvin") %>'),
-		new Option(1, '<%= UnicodeLanguageUtil.get(request, "celsius") %>'),
-		new Option(2, '<%= UnicodeLanguageUtil.get(request, "fahrenheit") %>'),
-		new Option(3, '<%= UnicodeLanguageUtil.get(request, "rankine") %>'),
-		new Option(4, '<%= UnicodeLanguageUtil.get(request, "reaumure") %>')
+		'<liferay-ui:message key="kelvin" />',
+		'<liferay-ui:message key="celsius" />',
+		'<liferay-ui:message key="fahrenheit" />',
+		'<liferay-ui:message key="rankine" />',
+		'<liferay-ui:message key="reaumure" />'
 	];
+
+	var conversionTypes = [lengthArray, areaArray, volumeArray, massArray, temperatureArray];
 
 	var selectType = A.one('#<portlet:namespace />type');
 
 	selectType.on(
 		'change',
 		function(event) {
-			var selectTypeTarget = event.currentTarget;
+			var value = event.currentTarget.val();
 
-			if (selectTypeTarget.get('value') == 0) {
-				<portlet:namespace />setBox(document.<portlet:namespace />fm.<portlet:namespace />fromId, lengthArray);
-				<portlet:namespace />setBox(document.<portlet:namespace />fm.<portlet:namespace />toId, lengthArray);
-			}
-			else if (selectTypeTarget.get('value') == 1) {
-				<portlet:namespace />setBox(document.<portlet:namespace />fm.<portlet:namespace />fromId, areaArray);
-				<portlet:namespace />setBox(document.<portlet:namespace />fm.<portlet:namespace />toId, areaArray);
-			}
-			else if (selectTypeTarget.get('value') == 2) {
-				<portlet:namespace />setBox(document.<portlet:namespace />fm.<portlet:namespace />fromId, volumeArray);
-				<portlet:namespace />setBox(document.<portlet:namespace />fm.<portlet:namespace />toId, volumeArray);
-			}
-			else if (selectTypeTarget.get('value') == 3) {
-				<portlet:namespace />setBox(document.<portlet:namespace />fm.<portlet:namespace />fromId, massArray);
-				<portlet:namespace />setBox(document.<portlet:namespace />fm.<portlet:namespace />toId, massArray);
-			}
-			else if (selectTypeTarget.get('value') == 4) {
-				<portlet:namespace />setBox(document.<portlet:namespace />fm.<portlet:namespace />fromId, temperatureArray);
-				<portlet:namespace />setBox(document.<portlet:namespace />fm.<portlet:namespace />toId, temperatureArray);
+			var conversionType = conversionTypes[value];
+
+			if (conversionType) {
+				setBox(document.<portlet:namespace />fm.<portlet:namespace />fromId, conversionType);
+				setBox(document.<portlet:namespace />fm.<portlet:namespace />toId, conversionType);
 			}
 		}
 	);
@@ -294,13 +276,12 @@ Conversion conversion = ConverterUtil.getConversion(type, fromId, toId, fromValu
 	form.on(
 		'submit',
 		function(event) {
-			var uri = form.attr('action');
-			var parentNode = form.get('parentNode');
+			var parentNode = form.attr('parentNode');
 
 			parentNode.plug(A.Plugin.ParseContent);
 
 			A.io.request(
-				uri,
+				form.attr('action'),
 				{
 					form: {
 						id: form

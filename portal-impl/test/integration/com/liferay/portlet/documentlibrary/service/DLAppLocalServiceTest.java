@@ -115,6 +115,42 @@ public class DLAppLocalServiceTest {
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	@Sync
+	public static class WhenDeletingALocalRepository {
+
+		@Before
+		public void setUp() throws Exception {
+			_group = GroupTestUtil.addGroup();
+		}
+
+		@Test
+		public void shouldFireSyncEvent() throws Exception {
+			AtomicInteger counter = registerDLSyncEventProcessorMessageListener(
+				DLSyncConstants.EVENT_DELETE);
+
+			addFolder(_group.getGroupId(), false);
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+			addFileEntry(serviceContext);
+
+			DLAppLocalServiceUtil.deleteAll(_group.getGroupId());
+
+			Assert.assertEquals(3, counter.get());
+		}
+
+		@DeleteAfterTestRun
+		private Group _group;
+
+	}
+
+	@ExecutionTestListeners(
+		listeners = {
+			MainServletExecutionTestListener.class,
+			SynchronousDestinationExecutionTestListener.class
+		})
+	@RunWith(LiferayIntegrationJUnitTestRunner.class)
+	@Sync
 	public static class WhenUpdatingAFileEntry {
 
 		@Before

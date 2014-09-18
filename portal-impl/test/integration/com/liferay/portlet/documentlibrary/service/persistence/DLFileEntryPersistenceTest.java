@@ -314,6 +314,18 @@ public class DLFileEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByRepositoryId() {
+		try {
+			_persistence.countByRepositoryId(RandomTestUtil.nextLong());
+
+			_persistence.countByRepositoryId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testCountByMimeType() {
 		try {
 			_persistence.countByMimeType(StringPool.BLANK);

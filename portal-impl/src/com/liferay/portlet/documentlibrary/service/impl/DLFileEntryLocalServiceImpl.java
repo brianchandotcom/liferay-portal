@@ -1332,6 +1332,19 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<DLFileEntry> getRepositoryFileEntries(
+		long repositoryId, int start, int end) {
+
+		return dlFileEntryPersistence.findByRepositoryId(
+			repositoryId, start, end);
+	}
+
+	@Override
+	public int getRepositoryFileEntriesCount(long repositoryId) {
+		return dlFileEntryPersistence.countByRepositoryId(repositoryId);
+	}
+
+	@Override
 	public boolean hasExtraSettings() {
 		if (dlFileEntryFinder.countByExtraSettings() > 0) {
 			return true;

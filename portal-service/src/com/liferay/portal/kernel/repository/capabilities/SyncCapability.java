@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.repository.capabilities;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 
@@ -30,6 +31,8 @@ public interface SyncCapability extends Capability {
 	public void deleteFileEntry(FileEntry fileEntry) throws PortalException;
 
 	public void deleteFolder(Folder folder) throws PortalException;
+
+	public void destroy(LocalRepository localRepository) throws PortalException;
 
 	public void moveFileEntry(FileEntry fileEntry) throws PortalException;
 

@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
 import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
 import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
@@ -27,7 +29,7 @@ import com.liferay.portal.kernel.repository.event.WorkflowRepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.repository.model.RepositoryModel;
+import com.liferay.portal.kernel.repository.model.RepositoryModelOperation;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.kernel.util.MethodKey;
@@ -69,6 +71,22 @@ public class LiferaySyncCapability implements SyncCapability {
 	@Override
 	public void deleteFolder(Folder folder) {
 		registerDLSyncEventCallback(DLSyncConstants.EVENT_DELETE, folder);
+	}
+
+	@Override
+	public void destroy(LocalRepository localRepository)
+		throws PortalException {
+
+		if (!localRepository.isCapabilityProvided(
+				BulkOperationCapability.class)) {
+
+			return;
+		}
+
+		BulkOperationCapability bulkOperationCapability =
+			localRepository.getCapability(BulkOperationCapability.class);
+
+		bulkOperationCapability.execute(new DeleteRepositoryModelOperation());
 	}
 
 	@Override
@@ -240,7 +258,26 @@ public class LiferaySyncCapability implements SyncCapability {
 			event, DLSyncConstants.TYPE_FOLDER, folder.getFolderId());
 	}
 
-	protected <S extends RepositoryEventType, T extends RepositoryModel<T>>
+	private class DeleteRepositoryModelOperation
+		implements RepositoryModelOperation {
+
+		@Override
+		public void execute(FileEntry fileEntry) throws PortalException {
+			deleteFileEntry(fileEntry);
+		}
+
+		@Override
+		public void execute(FileVersion fileVersion) throws PortalException {
+		}
+
+		@Override
+		public void execute(Folder folder) throws PortalException {
+			deleteFolder(folder);
+		}
+
+	}
+
+	protected <S extends RepositoryEventType, T>
 		void registerRepositoryEventListener(
 			RepositoryEventRegistry repositoryEventRegistry,
 			Class<S> repositoryEventTypeClass, Class<T> modelClass,
@@ -256,7 +293,7 @@ public class LiferaySyncCapability implements SyncCapability {
 	}
 
 	private class MethodKeyRepositoryEventListener
-			<S extends RepositoryEventType, T extends RepositoryModel<T>>
+			<S extends RepositoryEventType, T>
 		implements RepositoryEventListener<S, T> {
 
 		public MethodKeyRepositoryEventListener(MethodKey methodKey) {

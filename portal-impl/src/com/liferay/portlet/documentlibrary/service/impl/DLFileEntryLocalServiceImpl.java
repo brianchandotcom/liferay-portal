@@ -674,32 +674,48 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public void deleteFileEntries(
-			long groupId, long folderId, boolean includeTrashedEntries)
+			final long groupId, final long folderId,
+			final boolean includeTrashedEntries)
 		throws PortalException {
 
-		int count = dlFileEntryPersistence.countByG_F(groupId, folderId);
+		ActionableDynamicQuery actionableDynamicQuery =
+			dlFileEntryLocalService.getActionableDynamicQuery();
 
-		int pages = count / DELETE_INTERVAL;
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
 
-		int start = 0;
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Property groupIdProperty = PropertyFactoryUtil.forName(
+						"groupId");
 
-		for (int i = 0; i <= pages; i++) {
-			int end = start + DELETE_INTERVAL;
+					dynamicQuery.add(groupIdProperty.eq(groupId));
 
-			List<DLFileEntry> dlFileEntries = dlFileEntryPersistence.findByG_F(
-				groupId, folderId, start, end);
+					Property property = PropertyFactoryUtil.forName("folderId");
 
-			for (DLFileEntry dlFileEntry : dlFileEntries) {
-				if (includeTrashedEntries ||
-					!dlFileEntry.isInTrashExplicitly()) {
-
-					dlFileEntryLocalService.deleteFileEntry(dlFileEntry);
+					dynamicQuery.add(property.eq(folderId));
 				}
-				else {
-					start++;
+
+			});
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
+
+				@Override
+				public void performAction(Object object)
+					throws PortalException {
+
+					DLFileEntry dlFileEntry = (DLFileEntry)object;
+
+					if (includeTrashedEntries ||
+						!dlFileEntry.isInTrashExplicitly()) {
+
+						dlFileEntryLocalService.deleteFileEntry(dlFileEntry);
+					}
 				}
-			}
-		}
+
+			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 	@Indexable(type = IndexableType.DELETE)

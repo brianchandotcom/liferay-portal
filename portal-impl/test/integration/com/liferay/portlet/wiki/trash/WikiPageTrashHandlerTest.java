@@ -386,7 +386,8 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Test
 	public void testRestorePageToADifferentNode() throws Exception {
-		WikiPage[] pages = addPageWithChildAndRedirectPage();
+		WikiPage[] pages = WikiTestUtil.addPageWithChildAndRedirectPage(
+			group.getGroupId(), _node.getNodeId());
 
 		WikiPage page = pages[0];
 		WikiPage childPage = pages[1];
@@ -428,7 +429,8 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Test
 	public void testRestoreParentPageToADifferentNode() throws Exception {
-		WikiPage[] pages = addPageWithChildAndRedirectPage();
+		WikiPage[] pages = WikiTestUtil.addPageWithChildAndRedirectPage(
+			group.getGroupId(), _node.getNodeId());
 
 		WikiPage page = pages[0];
 		WikiPage childPage = pages[1];
@@ -1051,32 +1053,6 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			(Long)parentBaseModel.getPrimaryKeyObj(), getSearchKeywords(),
 			approved);
-	}
-
-	protected WikiPage[] addPageWithChildAndRedirectPage() throws Exception {
-		WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), group.getGroupId(), _node.getNodeId(),
-			"TestPage", true);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), _node.getNodeId(), "TestChildPage",
-			RandomTestUtil.randomString(), "TestPage", true, serviceContext);
-
-		WikiPageLocalServiceUtil.renamePage(
-			TestPropsValues.getUserId(), _node.getNodeId(), "TestPage", "B",
-			serviceContext);
-
-		WikiPage page = WikiPageLocalServiceUtil.getPage(_node.getNodeId(),
-			"B");
-		WikiPage redirectPage = WikiPageLocalServiceUtil.getPage(
-			_node.getNodeId(), "TestPage");
-		WikiPage childPage = WikiPageLocalServiceUtil.getPage(
-			_node.getNodeId(), "TestChildPage");
-
-		return new WikiPage[]{page, childPage, redirectPage};
 	}
 
 	@Override

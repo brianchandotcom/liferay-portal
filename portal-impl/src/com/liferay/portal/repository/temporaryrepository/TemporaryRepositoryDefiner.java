@@ -17,11 +17,13 @@ package com.liferay.portal.repository.temporaryrepository;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
+import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFilesCapability;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
+import com.liferay.portal.repository.capabilities.LiferayBulkOperationCapability;
 import com.liferay.portal.repository.capabilities.TemporaryFilesCapabilityImpl;
 
 /**
@@ -49,6 +51,11 @@ public class TemporaryRepositoryDefiner extends BaseRepositoryDefiner {
 				TemporaryFilesCapability.class,
 				new TemporaryFilesCapabilityImpl(
 					(LocalRepository)documentRepository));
+
+			capabilityRegistry.addExportedCapability(
+				BulkOperationCapability.class,
+				new LiferayBulkOperationCapability(
+					documentRepository.getRepositoryId()));
 		}
 	}
 

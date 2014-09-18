@@ -17,10 +17,52 @@ package com.liferay.portal.kernel.repository.capabilities;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.RepositoryModelOperation;
 
+import java.util.Date;
+
 /**
  * @author Adolfo Pérez
  */
 public interface BulkOperationCapability extends Capability {
+
+	public class Filter<T> {
+
+		public Filter(
+			Class<? extends Field<T>> field, Operator operator, T value) {
+
+			_field = field;
+			_operator = operator;
+			_value = value;
+		}
+
+		public Class<? extends Field<T>> getField() {
+			return _field;
+		}
+
+		public Operator getOperator() {
+			return _operator;
+		}
+
+		public T getValue() {
+			return _value;
+		}
+
+		private Class<? extends Field<T>> _field;
+		private Operator _operator;
+		private T _value;
+	}
+
+	enum Operator {
+		LT, LE, GT, GE, EQ
+	}
+
+	interface Field<T> {
+		interface CreateDate extends Field<Date> {
+		}
+	}
+
+	public void execute(
+			Filter<?> filter, RepositoryModelOperation repositoryModelOperation)
+		throws PortalException;
 
 	public void execute(RepositoryModelOperation repositoryModelOperation)
 		throws PortalException;

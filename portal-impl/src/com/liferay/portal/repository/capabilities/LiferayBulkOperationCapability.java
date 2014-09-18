@@ -29,6 +29,9 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Adolfo Pérez
  */
@@ -39,22 +42,31 @@ public class LiferayBulkOperationCapability implements BulkOperationCapability {
 	}
 
 	@Override
+	public void execute(
+			BulkOperationCapability.Filter<?> filter,
+			RepositoryModelOperation repositoryModelOperation)
+		throws PortalException {
+
+		executeOnAllFileEntries(filter, repositoryModelOperation);
+		executeOnAllFolders(filter, repositoryModelOperation);
+	}
+
+	@Override
 	public void execute(RepositoryModelOperation repositoryModelOperation)
 		throws PortalException {
 
-		executeOnAllFileEntries(repositoryModelOperation);
-		executeOnAllFolders(repositoryModelOperation);
+		execute(null, repositoryModelOperation);
 	}
 
 	protected void executeOnAllFileEntries(
-			RepositoryModelOperation repositoryModelOperation)
+			Filter<?> filter, RepositoryModelOperation repositoryModelOperation)
 		throws PortalException {
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			DLFileEntryLocalServiceUtil.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
-			new RepositoryModelAddCriteriaMethod());
+			new RepositoryModelAddCriteriaMethod(filter));
 		actionableDynamicQuery.setPerformActionMethod(
 			new FileEntryPerformActionMethod(repositoryModelOperation));
 
@@ -62,18 +74,25 @@ public class LiferayBulkOperationCapability implements BulkOperationCapability {
 	}
 
 	protected void executeOnAllFolders(
-			RepositoryModelOperation repositoryModelOperation)
+			Filter<?> filter, RepositoryModelOperation repositoryModelOperation)
 		throws PortalException {
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			DLFolderLocalServiceUtil.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
-			new RepositoryModelAddCriteriaMethod());
+			new RepositoryModelAddCriteriaMethod(filter));
 		actionableDynamicQuery.setPerformActionMethod(
 			new FolderPerformActionMethod(repositoryModelOperation));
 
 		actionableDynamicQuery.performActions();
+	}
+
+	private static final Map<Class<? extends Field>, String> _fieldNames =
+		new HashMap<>();
+
+	static {
+		_fieldNames.put(Field.CreateDate.class, "createDate");
 	}
 
 	private long _repositoryId;
@@ -113,6 +132,10 @@ public class LiferayBulkOperationCapability implements BulkOperationCapability {
 		public void performAction(Object object) throws PortalException {
 			DLFolder dlFolder = (DLFolder)object;
 
+			if (dlFolder.isMountPoint()) {
+				return;
+			}
+
 			Folder folder = new LiferayFolder(dlFolder);
 
 			folder.execute(_repositoryModelOperation);
@@ -125,11 +148,66 @@ public class LiferayBulkOperationCapability implements BulkOperationCapability {
 	private class RepositoryModelAddCriteriaMethod
 		implements ActionableDynamicQuery.AddCriteriaMethod {
 
+		public RepositoryModelAddCriteriaMethod(Filter<?> filter) {
+			_filter = filter;
+		}
+
 		@Override
 		public void addCriteria(DynamicQuery dynamicQuery) {
 			dynamicQuery.add(
 				RestrictionsFactoryUtil.eq("repositoryId", _repositoryId));
+
+			if (_filter != null) {
+				addFilterCriteria(dynamicQuery);
+			}
 		}
+
+		protected void addFilterCriteria(DynamicQuery dynamicQuery) {
+			Class<? extends Field> field = _filter.getField();
+
+			String fieldName = _fieldNames.get(field);
+
+			if (fieldName == null) {
+				throw new UnsupportedOperationException(
+					"Unsupported field " + field.getName());
+			}
+
+			Object value = _filter.getValue();
+
+			switch (_filter.getOperator()) {
+				case LT:
+					dynamicQuery.add(
+						RestrictionsFactoryUtil.lt(fieldName, value));
+
+					break;
+
+				case LE:
+					dynamicQuery.add(
+						RestrictionsFactoryUtil.le(fieldName, value));
+
+					break;
+
+				case GT:
+					dynamicQuery.add(
+						RestrictionsFactoryUtil.gt(fieldName, value));
+
+					break;
+
+				case GE:
+					dynamicQuery.add(
+						RestrictionsFactoryUtil.ge(fieldName, value));
+
+					break;
+
+				case EQ:
+					dynamicQuery.add(
+						RestrictionsFactoryUtil.eq(fieldName, value));
+
+					break;
+			}
+		}
+
+		private Filter<?> _filter;
 
 	}
 

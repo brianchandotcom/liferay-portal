@@ -19,8 +19,10 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
 import com.liferay.portal.kernel.repository.capabilities.ConfigurationCapability;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFilesCapability;
+import com.liferay.portal.kernel.repository.model.BaseRepositoryModelOperation;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -36,6 +38,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -79,7 +82,22 @@ public class TemporaryFilesCapabilityImpl implements TemporaryFilesCapability {
 	}
 
 	@Override
-	public void deleteExpiredTemporaryFiles() {
+	public void deleteExpiredTemporaryFiles() throws PortalException {
+		BulkOperationCapability bulkOperationCapability =
+			_localRepository.getCapability(BulkOperationCapability.class);
+
+		Date now = new Date();
+
+		Date date = new Date(now.getTime() - getTemporaryFilesTimeout());
+
+		BulkOperationCapability.Filter<Date> bulkFilter =
+			new BulkOperationCapability.Filter<>(
+				BulkOperationCapability.Field.CreateDate.class,
+				BulkOperationCapability.Operator.LT, date);
+
+		bulkOperationCapability.execute(
+			bulkFilter,
+			new DeleteExpiredTemporaryFilesRepositoryModelOperation());
 	}
 
 	@Override
@@ -115,7 +133,8 @@ public class TemporaryFilesCapabilityImpl implements TemporaryFilesCapability {
 			Folder folder = getTempFolder(callerUuid, folderPath);
 
 			return _localRepository.getRepositoryFileEntries(
-				folder.getFolderId(), 0, QueryUtil.ALL_POS, null);
+				folder.getFolderId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
 		}
 		catch (NoSuchModelException nsme) {
 			return Collections.emptyList();
@@ -250,5 +269,15 @@ public class TemporaryFilesCapabilityImpl implements TemporaryFilesCapability {
 		12 * 60 * 60 * 1000;
 
 	private LocalRepository _localRepository;
+
+	private class DeleteExpiredTemporaryFilesRepositoryModelOperation
+		extends BaseRepositoryModelOperation {
+
+		@Override
+		public void execute(FileEntry fileEntry) throws PortalException {
+			_localRepository.deleteFileEntry(fileEntry.getFileEntryId());
+		}
+
+	}
 
 }

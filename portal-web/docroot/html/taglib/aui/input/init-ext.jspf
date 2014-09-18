@@ -65,14 +65,9 @@ if (baseType.equals("email") || baseType.equals("password") || baseType.equals("
 	fieldCssClass += " form-control";
 }
 
-String labelCssClass = baseTypeCssClass;
-
 String inputWrapperClass = controlGroupCssClass;
 
-
 if (choiceField) {
-	labelCssClass = "";
-
 	inputWrapperClass = baseTypeCssClass;
 }
 
@@ -80,5 +75,5 @@ if (inputWrapperClass.equals("boolean")) {
 	inputWrapperClass = "checkbox";
 }
 
-String labelTag = AUIUtil.buildLabel(labelCssClass, inlineField, showForLabel, forLabel);
+String labelTag = AUIUtil.buildLabel(baseTypeCssClass, inlineField, showForLabel, forLabel);
 %>

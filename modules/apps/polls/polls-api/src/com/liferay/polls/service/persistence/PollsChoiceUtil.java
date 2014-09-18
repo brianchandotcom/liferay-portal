@@ -16,7 +16,6 @@ package com.liferay.polls.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.polls.exception.NoSuchChoiceException;
 import com.liferay.polls.model.PollsChoice;
 
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -166,12 +165,12 @@ public class PollsChoiceUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching polls choice
-	* @throws com.liferay.polls.exception.NoSuchChoiceException if a matching polls choice could not be found
+	* @throws com.liferay.polls.NoSuchChoiceException if a matching polls choice could not be found
 	*/
 	public static com.liferay.polls.model.PollsChoice findByUuid_First(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator)
-		throws NoSuchChoiceException {
+		throws com.liferay.polls.exception.NoSuchChoiceException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -194,12 +193,12 @@ public class PollsChoiceUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching polls choice
-	* @throws com.liferay.polls.exception.NoSuchChoiceException if a matching polls choice could not be found
+	* @throws com.liferay.polls.NoSuchChoiceException if a matching polls choice could not be found
 	*/
 	public static com.liferay.polls.model.PollsChoice findByUuid_Last(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator)
-		throws NoSuchChoiceException {
+		throws com.liferay.polls.exception.NoSuchChoiceException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -223,12 +222,12 @@ public class PollsChoiceUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next polls choice
-	* @throws com.liferay.polls.exception.NoSuchChoiceException if a polls choice with the primary key could not be found
+	* @throws com.liferay.polls.NoSuchChoiceException if a polls choice with the primary key could not be found
 	*/
 	public static com.liferay.polls.model.PollsChoice[] findByUuid_PrevAndNext(
 		long choiceId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator)
-		throws NoSuchChoiceException {
+		throws com.liferay.polls.exception.NoSuchChoiceException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(choiceId, uuid, orderByComparator);
 	}
@@ -253,16 +252,16 @@ public class PollsChoiceUtil {
 	}
 
 	/**
-	* Returns the polls choice where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.polls.exception.NoSuchChoiceException} if it could not be found.
+	* Returns the polls choice where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.polls.NoSuchChoiceException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching polls choice
-	* @throws com.liferay.polls.exception.NoSuchChoiceException if a matching polls choice could not be found
+	* @throws com.liferay.polls.NoSuchChoiceException if a matching polls choice could not be found
 	*/
 	public static com.liferay.polls.model.PollsChoice findByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws NoSuchChoiceException {
+		throws com.liferay.polls.exception.NoSuchChoiceException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -300,7 +299,7 @@ public class PollsChoiceUtil {
 	*/
 	public static com.liferay.polls.model.PollsChoice removeByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws NoSuchChoiceException {
+		throws com.liferay.polls.exception.NoSuchChoiceException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -373,12 +372,12 @@ public class PollsChoiceUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching polls choice
-	* @throws com.liferay.polls.exception.NoSuchChoiceException if a matching polls choice could not be found
+	* @throws com.liferay.polls.NoSuchChoiceException if a matching polls choice could not be found
 	*/
 	public static com.liferay.polls.model.PollsChoice findByUuid_C_First(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator)
-		throws NoSuchChoiceException {
+		throws com.liferay.polls.exception.NoSuchChoiceException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -405,12 +404,12 @@ public class PollsChoiceUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching polls choice
-	* @throws com.liferay.polls.exception.NoSuchChoiceException if a matching polls choice could not be found
+	* @throws com.liferay.polls.NoSuchChoiceException if a matching polls choice could not be found
 	*/
 	public static com.liferay.polls.model.PollsChoice findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator)
-		throws NoSuchChoiceException {
+		throws com.liferay.polls.exception.NoSuchChoiceException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -438,12 +437,12 @@ public class PollsChoiceUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next polls choice
-	* @throws com.liferay.polls.exception.NoSuchChoiceException if a polls choice with the primary key could not be found
+	* @throws com.liferay.polls.NoSuchChoiceException if a polls choice with the primary key could not be found
 	*/
 	public static com.liferay.polls.model.PollsChoice[] findByUuid_C_PrevAndNext(
 		long choiceId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator)
-		throws NoSuchChoiceException {
+		throws com.liferay.polls.exception.NoSuchChoiceException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(choiceId, uuid, companyId,
 			orderByComparator);
@@ -524,12 +523,12 @@ public class PollsChoiceUtil {
 	* @param questionId the question ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching polls choice
-	* @throws com.liferay.polls.exception.NoSuchChoiceException if a matching polls choice could not be found
+	* @throws com.liferay.polls.NoSuchChoiceException if a matching polls choice could not be found
 	*/
 	public static com.liferay.polls.model.PollsChoice findByQuestionId_First(
 		long questionId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator)
-		throws NoSuchChoiceException {
+		throws com.liferay.polls.exception.NoSuchChoiceException {
 		return getPersistence()
 				   .findByQuestionId_First(questionId, orderByComparator);
 	}
@@ -554,12 +553,12 @@ public class PollsChoiceUtil {
 	* @param questionId the question ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching polls choice
-	* @throws com.liferay.polls.exception.NoSuchChoiceException if a matching polls choice could not be found
+	* @throws com.liferay.polls.NoSuchChoiceException if a matching polls choice could not be found
 	*/
 	public static com.liferay.polls.model.PollsChoice findByQuestionId_Last(
 		long questionId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator)
-		throws NoSuchChoiceException {
+		throws com.liferay.polls.exception.NoSuchChoiceException {
 		return getPersistence()
 				   .findByQuestionId_Last(questionId, orderByComparator);
 	}
@@ -585,12 +584,12 @@ public class PollsChoiceUtil {
 	* @param questionId the question ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next polls choice
-	* @throws com.liferay.polls.exception.NoSuchChoiceException if a polls choice with the primary key could not be found
+	* @throws com.liferay.polls.NoSuchChoiceException if a polls choice with the primary key could not be found
 	*/
 	public static com.liferay.polls.model.PollsChoice[] findByQuestionId_PrevAndNext(
 		long choiceId, long questionId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator)
-		throws NoSuchChoiceException {
+		throws com.liferay.polls.exception.NoSuchChoiceException {
 		return getPersistence()
 				   .findByQuestionId_PrevAndNext(choiceId, questionId,
 			orderByComparator);
@@ -616,16 +615,16 @@ public class PollsChoiceUtil {
 	}
 
 	/**
-	* Returns the polls choice where questionId = &#63; and name = &#63; or throws a {@link com.liferay.polls.exception.NoSuchChoiceException} if it could not be found.
+	* Returns the polls choice where questionId = &#63; and name = &#63; or throws a {@link com.liferay.polls.NoSuchChoiceException} if it could not be found.
 	*
 	* @param questionId the question ID
 	* @param name the name
 	* @return the matching polls choice
-	* @throws com.liferay.polls.exception.NoSuchChoiceException if a matching polls choice could not be found
+	* @throws com.liferay.polls.NoSuchChoiceException if a matching polls choice could not be found
 	*/
 	public static com.liferay.polls.model.PollsChoice findByQ_N(
 		long questionId, java.lang.String name)
-		throws NoSuchChoiceException {
+		throws com.liferay.polls.exception.NoSuchChoiceException {
 		return getPersistence().findByQ_N(questionId, name);
 	}
 
@@ -663,7 +662,7 @@ public class PollsChoiceUtil {
 	*/
 	public static com.liferay.polls.model.PollsChoice removeByQ_N(
 		long questionId, java.lang.String name)
-		throws NoSuchChoiceException {
+		throws com.liferay.polls.exception.NoSuchChoiceException {
 		return getPersistence().removeByQ_N(questionId, name);
 	}
 
@@ -713,10 +712,10 @@ public class PollsChoiceUtil {
 	*
 	* @param choiceId the primary key of the polls choice
 	* @return the polls choice that was removed
-	* @throws com.liferay.polls.exception.NoSuchChoiceException if a polls choice with the primary key could not be found
+	* @throws com.liferay.polls.NoSuchChoiceException if a polls choice with the primary key could not be found
 	*/
 	public static com.liferay.polls.model.PollsChoice remove(long choiceId)
-		throws NoSuchChoiceException {
+		throws com.liferay.polls.exception.NoSuchChoiceException {
 		return getPersistence().remove(choiceId);
 	}
 
@@ -726,14 +725,14 @@ public class PollsChoiceUtil {
 	}
 
 	/**
-	* Returns the polls choice with the primary key or throws a {@link com.liferay.polls.exception.NoSuchChoiceException} if it could not be found.
+	* Returns the polls choice with the primary key or throws a {@link com.liferay.polls.NoSuchChoiceException} if it could not be found.
 	*
 	* @param choiceId the primary key of the polls choice
 	* @return the polls choice
-	* @throws com.liferay.polls.exception.NoSuchChoiceException if a polls choice with the primary key could not be found
+	* @throws com.liferay.polls.NoSuchChoiceException if a polls choice with the primary key could not be found
 	*/
 	public static com.liferay.polls.model.PollsChoice findByPrimaryKey(
-		long choiceId) throws NoSuchChoiceException {
+		long choiceId) throws com.liferay.polls.exception.NoSuchChoiceException {
 		return getPersistence().findByPrimaryKey(choiceId);
 	}
 

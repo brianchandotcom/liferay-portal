@@ -16,7 +16,6 @@ package com.liferay.portal.repository.capabilities;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
@@ -89,11 +88,11 @@ public class LiferayBulkOperationCapability implements BulkOperationCapability {
 		actionableDynamicQuery.performActions();
 	}
 
-	private static final Map<Class<? extends Field>, String> _fieldsNames =
+	private static final Map<Class<? extends Field>, String> _fieldNames =
 		new HashMap<>();
 
 	static {
-		_fieldsNames.put(Field.CreateDate.class, "createDate");
+		_fieldNames.put(Field.CreateDate.class, "createDate");
 	}
 
 	private long _repositoryId;
@@ -158,8 +157,6 @@ public class LiferayBulkOperationCapability implements BulkOperationCapability {
 			dynamicQuery.add(
 				RestrictionsFactoryUtil.eq("repositoryId", _repositoryId));
 
-			dynamicQuery.addOrder(OrderFactoryUtil.desc("treePath"));
-
 			if (_filter != null) {
 				addFilterCriteria(dynamicQuery);
 			}
@@ -168,7 +165,7 @@ public class LiferayBulkOperationCapability implements BulkOperationCapability {
 		protected void addFilterCriteria(DynamicQuery dynamicQuery) {
 			Class<? extends Field> field = _filter.getField();
 
-			String fieldName = _fieldsNames.get(field);
+			String fieldName = _fieldNames.get(field);
 
 			if (fieldName == null) {
 				throw new UnsupportedOperationException(
@@ -181,26 +178,31 @@ public class LiferayBulkOperationCapability implements BulkOperationCapability {
 				case LT:
 					dynamicQuery.add(
 						RestrictionsFactoryUtil.lt(fieldName, value));
+
 					break;
 
 				case LE:
 					dynamicQuery.add(
 						RestrictionsFactoryUtil.le(fieldName, value));
+
 					break;
 
 				case GT:
 					dynamicQuery.add(
 						RestrictionsFactoryUtil.gt(fieldName, value));
+
 					break;
 
 				case GE:
 					dynamicQuery.add(
 						RestrictionsFactoryUtil.ge(fieldName, value));
+
 					break;
 
 				case EQ:
 					dynamicQuery.add(
 						RestrictionsFactoryUtil.eq(fieldName, value));
+
 					break;
 			}
 		}

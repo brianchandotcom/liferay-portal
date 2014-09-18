@@ -69,11 +69,9 @@ public class TemporaryFilesCapabilityImpl implements TemporaryFilesCapability {
 			serviceContext.setAddGroupPermissions(true);
 			serviceContext.setAddGuestPermissions(true);
 
-			FileEntry fileEntry = _localRepository.addFileEntry(
+			return _localRepository.addFileEntry(
 				userId, folder.getFolderId(), fileName, mimeType, fileName,
 				StringPool.BLANK, StringPool.BLANK, file, serviceContext);
-
-			return fileEntry;
 		}
 		catch (IOException ioe) {
 			throw new SystemException("Unable to write temporary file", ioe);

@@ -42,10 +42,10 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * @author Iván Zaera
  * @author Sergio González
  * @author Matthew Kong
  * @author Alexander Chow
+ * @author Iván Zaera
  */
 public class TempFileUtil {
 
@@ -142,7 +142,7 @@ public class TempFileUtil {
 		throws PortalException {
 
 		Repository repository = RepositoryLocalServiceUtil.fetchRepository(
-			groupId, TempFileUtil.class.getName(), "");
+			groupId, TempFileUtil.class.getName(), StringPool.BLANK);
 
 		if (repository != null) {
 			return RepositoryLocalServiceUtil.getLocalRepositoryImpl(
@@ -167,8 +167,8 @@ public class TempFileUtil {
 			repository = RepositoryLocalServiceUtil.addRepository(
 				user.getUserId(), groupId, classNameId,
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				TempFileUtil.class.getName(), StringPool.BLANK, "",
-				typeSettingsProperties, true, serviceContext);
+				TempFileUtil.class.getName(), StringPool.BLANK,
+				StringPool.BLANK, typeSettingsProperties, true, serviceContext);
 
 			return RepositoryLocalServiceUtil.getLocalRepositoryImpl(
 				repository.getRepositoryId());

@@ -30,11 +30,9 @@
 	<command name="AddStatusUpdateEntry150Characters" priority="4">
 		<var name="statusUpdateEntryAuthorName" value="${adminName}" />
 		<var name="statusUpdateEntryAuthorScreenName" value="${adminScreenName}" />
-		<var name="statusUpdateEntryCharacterCountdown" value="0" />
 		<var name="statusUpdateEntryContent" value="|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15" />
 
-		<execute macro="SODashboard#addStatusUpdateEntry">
-			<var name="statusUpdateEntryCharacterCountdown" value="${statusUpdateEntryCharacterCountdown}" />
+		<execute macro="SOStatusUpdate#addStatusUpdateEntry">
 			<var name="statusUpdateEntryContent" value="${statusUpdateEntryContent}" />
 		</execute>
 
@@ -47,16 +45,13 @@
 	<command name="AddStatusUpdateEntry151Characters" priority="4">
 		<var name="statusUpdateEntryAuthorName" value="${adminName}" />
 		<var name="statusUpdateEntryAuthorScreenName" value="${adminScreenName}" />
-		<var name="statusUpdateEntryCharacterCountdown" value="-1" />
 		<var name="statusUpdateEntryContent" value="|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15|" />
 
-		<execute macro="SODashboard#addStatusUpdateEntryInvalid">
-			<var name="statusUpdateEntryCharacterCountdown" value="${statusUpdateEntryCharacterCountdown}" />
+		<execute macro="SOStatusUpdate#addStatusUpdateEntryInvalid">
 			<var name="statusUpdateEntryContent" value="${statusUpdateEntryContent}" />
 		</execute>
 
 		<execute macro="SOMicroblogs#viewMicroblogsEntryNone">
-			<var name="statusUpdateEntryCharacterCountdown" value="${statusUpdateEntryCharacterCountdown}" />
 			<var name="statusUpdateEntryContent" value="${statusUpdateEntryContent}" />
 		</execute>
 	</command>
@@ -64,7 +59,6 @@
 	<command name="AddStatusUpdateEntryViewableByConnections" priority="5">
 		<var name="statusUpdateEntryAuthorName" value="${adminName}" />
 		<var name="statusUpdateEntryAuthorScreenName" value="${adminScreenName}" />
-		<var name="statusUpdateEntryCharacterCountdown" value="135" />
 		<var name="statusUpdateEntryContent" value="Microblogs Post" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
@@ -84,8 +78,7 @@
 			<var name="userScreenName" value="socialoffice01" />
 		</execute>
 
-		<execute macro="SODashboard#addStatusUpdateEntry">
-			<var name="statusUpdateEntryCharacterCountdown" value="${statusUpdateEntryCharacterCountdown}" />
+		<execute macro="SOStatusUpdate#addStatusUpdateEntry">
 			<var name="statusUpdateEntryContent" value="${statusUpdateEntryContent}" />
 			<var name="statusUpdateEntryViewableBy" value="Connections" />
 		</execute>
@@ -145,7 +138,6 @@
 	<command name="AddStatusUpdateEntryViewableByEveryone" priority="5">
 		<var name="statusUpdateEntryAuthorName" value="${adminName}" />
 		<var name="statusUpdateEntryAuthorScreenName" value="${adminScreenName}" />
-		<var name="statusUpdateEntryCharacterCountdown" value="135" />
 		<var name="statusUpdateEntryContent" value="Microblogs Post" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
@@ -165,8 +157,7 @@
 			<var name="userScreenName" value="socialoffice01" />
 		</execute>
 
-		<execute macro="SODashboard#addStatusUpdateEntry">
-			<var name="statusUpdateEntryCharacterCountdown" value="${statusUpdateEntryCharacterCountdown}" />
+		<execute macro="SOStatusUpdate#addStatusUpdateEntry">
 			<var name="statusUpdateEntryContent" value="${statusUpdateEntryContent}" />
 		</execute>
 
@@ -177,7 +168,7 @@
 
 		<execute macro="Page#gotoMyProfile" />
 
-		<execute macro="SOProfile#configureStatusUpdateDisplayPG" />
+		<execute macro="SOStatusUpdate#configureStatusUpdateDisplayPG" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -196,7 +187,6 @@
 	<command name="AddStatusUpdateEntryViewableByFollowers" priority="5">
 		<var name="statusUpdateEntryAuthorName" value="${adminName}" />
 		<var name="statusUpdateEntryAuthorScreenName" value="${adminScreenName}" />
-		<var name="statusUpdateEntryCharacterCountdown" value="135" />
 		<var name="statusUpdateEntryContent" value="Microblogs Post" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
@@ -216,8 +206,7 @@
 			<var name="userScreenName" value="socialoffice01" />
 		</execute>
 
-		<execute macro="SODashboard#addStatusUpdateEntry">
-			<var name="statusUpdateEntryCharacterCountdown" value="${statusUpdateEntryCharacterCountdown}" />
+		<execute macro="SOStatusUpdate#addStatusUpdateEntry">
 			<var name="statusUpdateEntryContent" value="${statusUpdateEntryContent}" />
 			<var name="statusUpdateEntryViewableBy" value="Followers" />
 		</execute>
@@ -340,7 +329,7 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute macro="SODashboard#configureStatusUpdateDisplayPG" />
+		<execute macro="SOStatusUpdate#configureStatusUpdateDisplayPG" />
 
 		<execute action="SOStatusUpdate#assertTextEquals" locator-key1="STATUS_UPDATE_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
 		<execute action="SOStatusUpdate#assertTextNotPresent" value1="Microblogs Post Comment" />

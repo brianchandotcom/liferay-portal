@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.ResourcePermissionChecker;
 import com.liferay.portal.struts.JSONAction;
@@ -69,6 +70,12 @@ public class ImageSelectorAction extends JSONAction {
 
 		ResourcePermissionChecker resourcePermissionChecker =
 			_serviceTrackerMap.getService(resourceName);
+
+		if (resourcePermissionChecker == null) {
+			throw new PrincipalException(
+				"Access denied. There is no resource permission checker " +
+					"registered for the resource " + resourceName);
+		}
 
 		resourcePermissionChecker.check(
 			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),

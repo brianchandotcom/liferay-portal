@@ -434,7 +434,7 @@ operations in a uniform way.
 ---------------------------------------
 
 ### Removed Sync Logic from `DLAppHelperLocalService` Methods
-- **Date:** 2014-Sep-5
+- **Date:** 2014-Sep-05
 - **JIRA Ticket:** LPS-48895
 
 #### What changed?
@@ -448,13 +448,18 @@ Every caller of the `moveFileEntry()` and `moveFolder()` methods is affected.
 
 #### How should I update my code?
 
-There is no direct replacement. Trash operations are now accessible through the
-`TrashCapability` implementations for each repository. The following code
-demonstrates using a `TrashCapability` instance to delete a `FileEntry`:
+There is no direct replacement. Sync operations are now accessible through the
+`SyncCapability` implementations for each repository. The following code
+demonstrates using a `SyncCapability` instance to move a `FileEntry`:
 
-In case a Liferay Sync event must be triggered you can always use the Liferay
-Sync services. See method
-DLAppHelperLocalServiceImpl.registerDLSyncEventCallback
+    Repository repository = getRepository();
+
+    SyncCapability syncCapability = repository.getCapability(
+        SyncCapability.class);
+
+    FileEntry fileEntry = repository.getFileEntry(fileEntryId);
+
+    syncCapability.moveFileEntry(fileEntry);
 
 #### Why was this change made?
 

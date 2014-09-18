@@ -69,6 +69,17 @@ AUI.add(
 						value: STR_BLANK
 					},
 
+					propertyList: {
+						value: {
+							strings: {
+								asc: Liferay.Language.get('ascending'),
+								desc: Liferay.Language.get('descending'),
+								reverseSortBy: Liferay.Language.get('reverse-sort-by-x', ['{column}']),
+								sortBy: Liferay.Language.get('sort-by-x', ['{column}'])
+							}
+						}
+					},
+
 					strings: {
 						value: {
 							addNode: Liferay.Language.get('add-field'),

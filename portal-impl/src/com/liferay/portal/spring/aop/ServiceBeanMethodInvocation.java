@@ -14,6 +14,7 @@
 
 package com.liferay.portal.spring.aop;
 
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -21,15 +22,16 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.Serializable;
 
 import java.lang.reflect.AccessibleObject;
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 
 import java.util.List;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
+
+import org.springframework.aop.TargetSource;
+import org.springframework.aop.framework.AdvisedSupport;
 
 /**
  * @author Shuyang Zhou
@@ -51,12 +53,9 @@ public class ServiceBeanMethodInvocation
 		}
 
 		if ((_method.getDeclaringClass() == Object.class) &&
-			_method.getName().equals("equals")) {
+			"equals".equals(_method.getName())) {
 
-			_isEqualsMethod = true;
-		}
-		else {
-			_isEqualsMethod = false;
+			_equalsMethod = true;
 		}
 	}
 
@@ -122,27 +121,29 @@ public class ServiceBeanMethodInvocation
 			return methodInterceptor.invoke(this);
 		}
 
-		try {
-			if (_isEqualsMethod) {
-				Object argument = _arguments[0];
+		if (_equalsMethod) {
+			Object argument = _arguments[0];
 
-				if ((argument != null) &&
-					Proxy.isProxyClass(argument.getClass())) {
+			if (argument == null) {
+				return false;
+			}
 
-					InvocationHandler invocationHandler =
-						Proxy.getInvocationHandler(argument);
+			if (ProxyUtil.isProxyClass(argument.getClass())) {
+				AdvisedSupport advisedSupport =
+					ServiceBeanAopProxy.getAdvisedSupport(argument);
 
-					if (invocationHandler instanceof ServiceBeanAopProxy) {
-						ServiceBeanAopProxy serviceBeanAopProxy =
-							(ServiceBeanAopProxy)invocationHandler;
+				if (advisedSupport != null) {
+					TargetSource targetSource =
+						advisedSupport.getTargetSource();
 
-						argument = serviceBeanAopProxy.getTarget();
-
-						_arguments[0] = argument;
-					}
+					argument = targetSource.getTarget();
 				}
 			}
 
+			return _target.equals(argument);
+		}
+
+		try {
 			return _method.invoke(_target, _arguments);
 		}
 		catch (InvocationTargetException ite) {
@@ -160,6 +161,7 @@ public class ServiceBeanMethodInvocation
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
 			new ServiceBeanMethodInvocation(null, null, _method, null);
 
+		serviceBeanMethodInvocation._equalsMethod = _equalsMethod;
 		serviceBeanMethodInvocation._hashCode = _hashCode;
 
 		return serviceBeanMethodInvocation;
@@ -206,9 +208,9 @@ public class ServiceBeanMethodInvocation
 	}
 
 	private Object[] _arguments;
+	private boolean _equalsMethod;
 	private int _hashCode;
 	private int _index;
-	private boolean _isEqualsMethod;
 	private Method _method;
 	private List<MethodInterceptor> _methodInterceptors;
 	private Object _target;

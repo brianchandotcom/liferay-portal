@@ -95,7 +95,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 	<aui:script use="liferay-search-container">
 		var Util = Liferay.Util;
 
-		A.one('#<portlet:namespace />selectSiteLink').on(
+		var handleOnSelect = A.one('#<portlet:namespace />selectSiteLink').on(
 			'click',
 			function(event) {
 				Util.selectEntity(
@@ -135,7 +135,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 
 		var searchContainerContentBox = searchContainer.get('contentBox');
 
-		searchContainerContentBox.delegate(
+		var handleOnModifyLink = searchContainerContentBox.delegate(
 			'click',
 			function(event) {
 				var link = event.currentTarget;
@@ -156,7 +156,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 			'.modify-link'
 		);
 
-		Liferay.on(
+		var handleEnableRemoveSite = Liferay.on(
 			'<portlet:namespace />enableRemovedSites',
 			function(event) {
 				event.selectors.each(
@@ -170,6 +170,18 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 				);
 			}
 		);
+
+		var onDestroyPortlet = function(event) {
+			if (event.portletId === '<%= portletDisplay.getId() %>') {
+				Liferay.detach(handleOnSelect);
+				Liferay.detach(handleOnModifyLink);
+				Liferay.detach(handleEnableRemoveSite);
+
+				Liferay.detach('destroyPortlet', onDestroyPortlet);
+			}
+		}
+
+		Liferay.on('destroyPortlet', onDestroyPortlet);
 	</aui:script>
 </c:if>
 

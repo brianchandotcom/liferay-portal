@@ -16,7 +16,7 @@ package com.liferay.polls.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.polls.NoSuchQuestionException;
+import com.liferay.polls.exception.NoSuchQuestionException;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.model.impl.PollsQuestionImpl;
 import com.liferay.polls.model.impl.PollsQuestionModelImpl;

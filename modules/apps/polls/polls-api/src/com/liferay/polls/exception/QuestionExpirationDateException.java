@@ -12,28 +12,28 @@
  * details.
  */
 
-package com.liferay.polls;
+package com.liferay.polls.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class QuestionExpiredException extends PortalException {
+public class QuestionExpirationDateException extends PortalException {
 
-	public QuestionExpiredException() {
+	public QuestionExpirationDateException() {
 		super();
 	}
 
-	public QuestionExpiredException(String msg) {
+	public QuestionExpirationDateException(String msg) {
 		super(msg);
 	}
 
-	public QuestionExpiredException(String msg, Throwable cause) {
+	public QuestionExpirationDateException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public QuestionExpiredException(Throwable cause) {
+	public QuestionExpirationDateException(Throwable cause) {
 		super(cause);
 	}
 

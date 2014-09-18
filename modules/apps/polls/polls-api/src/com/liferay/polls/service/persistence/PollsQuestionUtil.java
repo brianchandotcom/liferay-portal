@@ -170,7 +170,7 @@ public class PollsQuestionUtil {
 	public static com.liferay.polls.model.PollsQuestion findByUuid_First(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsQuestion> orderByComparator)
-		throws com.liferay.polls.NoSuchQuestionException {
+		throws com.liferay.polls.exception.NoSuchQuestionException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -198,7 +198,7 @@ public class PollsQuestionUtil {
 	public static com.liferay.polls.model.PollsQuestion findByUuid_Last(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsQuestion> orderByComparator)
-		throws com.liferay.polls.NoSuchQuestionException {
+		throws com.liferay.polls.exception.NoSuchQuestionException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -227,7 +227,7 @@ public class PollsQuestionUtil {
 	public static com.liferay.polls.model.PollsQuestion[] findByUuid_PrevAndNext(
 		long questionId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsQuestion> orderByComparator)
-		throws com.liferay.polls.NoSuchQuestionException {
+		throws com.liferay.polls.exception.NoSuchQuestionException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(questionId, uuid, orderByComparator);
 	}
@@ -261,7 +261,7 @@ public class PollsQuestionUtil {
 	*/
 	public static com.liferay.polls.model.PollsQuestion findByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.polls.NoSuchQuestionException {
+		throws com.liferay.polls.exception.NoSuchQuestionException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -299,7 +299,7 @@ public class PollsQuestionUtil {
 	*/
 	public static com.liferay.polls.model.PollsQuestion removeByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.polls.NoSuchQuestionException {
+		throws com.liferay.polls.exception.NoSuchQuestionException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -377,7 +377,7 @@ public class PollsQuestionUtil {
 	public static com.liferay.polls.model.PollsQuestion findByUuid_C_First(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsQuestion> orderByComparator)
-		throws com.liferay.polls.NoSuchQuestionException {
+		throws com.liferay.polls.exception.NoSuchQuestionException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -409,7 +409,7 @@ public class PollsQuestionUtil {
 	public static com.liferay.polls.model.PollsQuestion findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsQuestion> orderByComparator)
-		throws com.liferay.polls.NoSuchQuestionException {
+		throws com.liferay.polls.exception.NoSuchQuestionException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -442,7 +442,7 @@ public class PollsQuestionUtil {
 	public static com.liferay.polls.model.PollsQuestion[] findByUuid_C_PrevAndNext(
 		long questionId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsQuestion> orderByComparator)
-		throws com.liferay.polls.NoSuchQuestionException {
+		throws com.liferay.polls.exception.NoSuchQuestionException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(questionId, uuid, companyId,
 			orderByComparator);
@@ -528,7 +528,7 @@ public class PollsQuestionUtil {
 	public static com.liferay.polls.model.PollsQuestion findByGroupId_First(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsQuestion> orderByComparator)
-		throws com.liferay.polls.NoSuchQuestionException {
+		throws com.liferay.polls.exception.NoSuchQuestionException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -556,7 +556,7 @@ public class PollsQuestionUtil {
 	public static com.liferay.polls.model.PollsQuestion findByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsQuestion> orderByComparator)
-		throws com.liferay.polls.NoSuchQuestionException {
+		throws com.liferay.polls.exception.NoSuchQuestionException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -585,7 +585,7 @@ public class PollsQuestionUtil {
 	public static com.liferay.polls.model.PollsQuestion[] findByGroupId_PrevAndNext(
 		long questionId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsQuestion> orderByComparator)
-		throws com.liferay.polls.NoSuchQuestionException {
+		throws com.liferay.polls.exception.NoSuchQuestionException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(questionId, groupId,
 			orderByComparator);
@@ -651,7 +651,7 @@ public class PollsQuestionUtil {
 	public static com.liferay.polls.model.PollsQuestion[] filterFindByGroupId_PrevAndNext(
 		long questionId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsQuestion> orderByComparator)
-		throws com.liferay.polls.NoSuchQuestionException {
+		throws com.liferay.polls.exception.NoSuchQuestionException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(questionId, groupId,
 			orderByComparator);
@@ -724,7 +724,7 @@ public class PollsQuestionUtil {
 	* @throws com.liferay.polls.NoSuchQuestionException if a polls question with the primary key could not be found
 	*/
 	public static com.liferay.polls.model.PollsQuestion remove(long questionId)
-		throws com.liferay.polls.NoSuchQuestionException {
+		throws com.liferay.polls.exception.NoSuchQuestionException {
 		return getPersistence().remove(questionId);
 	}
 
@@ -741,7 +741,8 @@ public class PollsQuestionUtil {
 	* @throws com.liferay.polls.NoSuchQuestionException if a polls question with the primary key could not be found
 	*/
 	public static com.liferay.polls.model.PollsQuestion findByPrimaryKey(
-		long questionId) throws com.liferay.polls.NoSuchQuestionException {
+		long questionId)
+		throws com.liferay.polls.exception.NoSuchQuestionException {
 		return getPersistence().findByPrimaryKey(questionId);
 	}
 

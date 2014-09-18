@@ -12,28 +12,28 @@
  * details.
  */
 
-package com.liferay.polls;
+package com.liferay.polls.exception;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.NoSuchModelException;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class QuestionTitleException extends PortalException {
+public class NoSuchQuestionException extends NoSuchModelException {
 
-	public QuestionTitleException() {
+	public NoSuchQuestionException() {
 		super();
 	}
 
-	public QuestionTitleException(String msg) {
+	public NoSuchQuestionException(String msg) {
 		super(msg);
 	}
 
-	public QuestionTitleException(String msg, Throwable cause) {
+	public NoSuchQuestionException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public QuestionTitleException(Throwable cause) {
+	public NoSuchQuestionException(Throwable cause) {
 		super(cause);
 	}
 

@@ -24,13 +24,13 @@
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %>
 
-<%@ page import="com.liferay.polls.DuplicateVoteException" %><%@
-page import="com.liferay.polls.NoSuchChoiceException" %><%@
-page import="com.liferay.polls.NoSuchQuestionException" %><%@
-page import="com.liferay.polls.QuestionChoiceException" %><%@
-page import="com.liferay.polls.QuestionDescriptionException" %><%@
-page import="com.liferay.polls.QuestionExpirationDateException" %><%@
-page import="com.liferay.polls.QuestionTitleException" %><%@
+<%@ page import="com.liferay.polls.exception.DuplicateVoteException" %><%@
+page import="com.liferay.polls.exception.NoSuchChoiceException" %><%@
+page import="com.liferay.polls.exception.NoSuchQuestionException" %><%@
+page import="com.liferay.polls.exception.QuestionChoiceException" %><%@
+page import="com.liferay.polls.exception.QuestionDescriptionException" %><%@
+page import="com.liferay.polls.exception.QuestionExpirationDateException" %><%@
+page import="com.liferay.polls.exception.QuestionTitleException" %><%@
 page import="com.liferay.polls.model.PollsChoice" %><%@
 page import="com.liferay.polls.model.PollsQuestion" %><%@
 page import="com.liferay.polls.model.PollsVote" %><%@

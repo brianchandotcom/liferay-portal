@@ -14,7 +14,7 @@
 
 package com.liferay.polls.service.persistence;
 
-import com.liferay.polls.NoSuchQuestionException;
+import com.liferay.polls.exception.NoSuchQuestionException;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.model.impl.PollsQuestionModelImpl;
 import com.liferay.polls.service.PollsQuestionLocalServiceUtil;

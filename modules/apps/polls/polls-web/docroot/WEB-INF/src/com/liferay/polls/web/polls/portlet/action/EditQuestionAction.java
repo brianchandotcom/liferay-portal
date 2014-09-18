@@ -14,14 +14,14 @@
 
 package com.liferay.polls.web.polls.portlet.action;
 
-import com.liferay.polls.DuplicateVoteException;
-import com.liferay.polls.NoSuchChoiceException;
-import com.liferay.polls.NoSuchQuestionException;
-import com.liferay.polls.QuestionChoiceException;
-import com.liferay.polls.QuestionDescriptionException;
-import com.liferay.polls.QuestionExpirationDateException;
-import com.liferay.polls.QuestionExpiredException;
-import com.liferay.polls.QuestionTitleException;
+import com.liferay.polls.exception.DuplicateVoteException;
+import com.liferay.polls.exception.NoSuchChoiceException;
+import com.liferay.polls.exception.NoSuchQuestionException;
+import com.liferay.polls.exception.QuestionChoiceException;
+import com.liferay.polls.exception.QuestionDescriptionException;
+import com.liferay.polls.exception.QuestionExpirationDateException;
+import com.liferay.polls.exception.QuestionExpiredException;
+import com.liferay.polls.exception.QuestionTitleException;
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.service.PollsQuestionServiceUtil;

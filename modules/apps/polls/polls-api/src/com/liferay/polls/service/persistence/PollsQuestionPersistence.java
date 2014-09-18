@@ -92,7 +92,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	public com.liferay.polls.model.PollsQuestion findByUuid_First(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsQuestion> orderByComparator)
-		throws com.liferay.polls.NoSuchQuestionException;
+		throws com.liferay.polls.exception.NoSuchQuestionException;
 
 	/**
 	* Returns the first polls question in the ordered set where uuid = &#63;.
@@ -116,7 +116,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	public com.liferay.polls.model.PollsQuestion findByUuid_Last(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsQuestion> orderByComparator)
-		throws com.liferay.polls.NoSuchQuestionException;
+		throws com.liferay.polls.exception.NoSuchQuestionException;
 
 	/**
 	* Returns the last polls question in the ordered set where uuid = &#63;.
@@ -141,7 +141,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	public com.liferay.polls.model.PollsQuestion[] findByUuid_PrevAndNext(
 		long questionId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsQuestion> orderByComparator)
-		throws com.liferay.polls.NoSuchQuestionException;
+		throws com.liferay.polls.exception.NoSuchQuestionException;
 
 	/**
 	* Removes all the polls questions where uuid = &#63; from the database.
@@ -168,7 +168,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	*/
 	public com.liferay.polls.model.PollsQuestion findByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.polls.NoSuchQuestionException;
+		throws com.liferay.polls.exception.NoSuchQuestionException;
 
 	/**
 	* Returns the polls question where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -200,7 +200,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	*/
 	public com.liferay.polls.model.PollsQuestion removeByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.polls.NoSuchQuestionException;
+		throws com.liferay.polls.exception.NoSuchQuestionException;
 
 	/**
 	* Returns the number of polls questions where uuid = &#63; and groupId = &#63;.
@@ -267,7 +267,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	public com.liferay.polls.model.PollsQuestion findByUuid_C_First(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsQuestion> orderByComparator)
-		throws com.liferay.polls.NoSuchQuestionException;
+		throws com.liferay.polls.exception.NoSuchQuestionException;
 
 	/**
 	* Returns the first polls question in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -293,7 +293,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	public com.liferay.polls.model.PollsQuestion findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsQuestion> orderByComparator)
-		throws com.liferay.polls.NoSuchQuestionException;
+		throws com.liferay.polls.exception.NoSuchQuestionException;
 
 	/**
 	* Returns the last polls question in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -320,7 +320,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	public com.liferay.polls.model.PollsQuestion[] findByUuid_C_PrevAndNext(
 		long questionId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsQuestion> orderByComparator)
-		throws com.liferay.polls.NoSuchQuestionException;
+		throws com.liferay.polls.exception.NoSuchQuestionException;
 
 	/**
 	* Removes all the polls questions where uuid = &#63; and companyId = &#63; from the database.
@@ -391,7 +391,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	public com.liferay.polls.model.PollsQuestion findByGroupId_First(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsQuestion> orderByComparator)
-		throws com.liferay.polls.NoSuchQuestionException;
+		throws com.liferay.polls.exception.NoSuchQuestionException;
 
 	/**
 	* Returns the first polls question in the ordered set where groupId = &#63;.
@@ -415,7 +415,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	public com.liferay.polls.model.PollsQuestion findByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsQuestion> orderByComparator)
-		throws com.liferay.polls.NoSuchQuestionException;
+		throws com.liferay.polls.exception.NoSuchQuestionException;
 
 	/**
 	* Returns the last polls question in the ordered set where groupId = &#63;.
@@ -440,7 +440,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	public com.liferay.polls.model.PollsQuestion[] findByGroupId_PrevAndNext(
 		long questionId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsQuestion> orderByComparator)
-		throws com.liferay.polls.NoSuchQuestionException;
+		throws com.liferay.polls.exception.NoSuchQuestionException;
 
 	/**
 	* Returns all the polls questions that the user has permission to view where groupId = &#63;.
@@ -495,7 +495,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	public com.liferay.polls.model.PollsQuestion[] filterFindByGroupId_PrevAndNext(
 		long questionId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsQuestion> orderByComparator)
-		throws com.liferay.polls.NoSuchQuestionException;
+		throws com.liferay.polls.exception.NoSuchQuestionException;
 
 	/**
 	* Removes all the polls questions where groupId = &#63; from the database.
@@ -551,7 +551,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @throws com.liferay.polls.NoSuchQuestionException if a polls question with the primary key could not be found
 	*/
 	public com.liferay.polls.model.PollsQuestion remove(long questionId)
-		throws com.liferay.polls.NoSuchQuestionException;
+		throws com.liferay.polls.exception.NoSuchQuestionException;
 
 	public com.liferay.polls.model.PollsQuestion updateImpl(
 		com.liferay.polls.model.PollsQuestion pollsQuestion);
@@ -564,7 +564,8 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @throws com.liferay.polls.NoSuchQuestionException if a polls question with the primary key could not be found
 	*/
 	public com.liferay.polls.model.PollsQuestion findByPrimaryKey(
-		long questionId) throws com.liferay.polls.NoSuchQuestionException;
+		long questionId)
+		throws com.liferay.polls.exception.NoSuchQuestionException;
 
 	/**
 	* Returns the polls question with the primary key or returns <code>null</code> if it could not be found.

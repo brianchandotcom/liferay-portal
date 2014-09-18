@@ -14,7 +14,7 @@
 
 package com.liferay.polls.service.impl;
 
-import com.liferay.polls.QuestionChoiceException;
+import com.liferay.polls.exception.QuestionChoiceException;
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.service.base.PollsChoiceLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;

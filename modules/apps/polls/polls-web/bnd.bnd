@@ -22,8 +22,6 @@ Import-Package: \
 	com.liferay.portal.theme,\
 	com.liferay.portal.webserver,\
 	\
-	com.liferay.polls,\
-	com.liferay.polls.*,\
 	com.liferay.polls.lar,\
 	com.liferay.polls.service.permission,\
 	com.liferay.polls.util,\

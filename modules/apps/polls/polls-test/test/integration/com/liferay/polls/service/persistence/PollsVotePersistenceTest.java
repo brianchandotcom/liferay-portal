@@ -14,7 +14,7 @@
 
 package com.liferay.polls.service.persistence;
 
-import com.liferay.polls.NoSuchVoteException;
+import com.liferay.polls.exception.NoSuchVoteException;
 import com.liferay.polls.model.PollsVote;
 import com.liferay.polls.model.impl.PollsVoteModelImpl;
 import com.liferay.polls.service.PollsVoteLocalServiceUtil;

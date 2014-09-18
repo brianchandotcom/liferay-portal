@@ -32,12 +32,12 @@ public class NoKnownDevices implements KnownDevices {
 
 	@Override
 	public Set<VersionableName> getBrands() {
-		return _brands;
+		return _unknownVersionableNames;
 	}
 
 	@Override
 	public Set<VersionableName> getBrowsers() {
-		return _browsers;
+		return _unknownVersionableNames;
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class NoKnownDevices implements KnownDevices {
 
 	@Override
 	public Set<VersionableName> getOperatingSystems() {
-		return _operatingSystems;
+		return _unknownVersionableNames;
 	}
 
 	@Override
@@ -64,13 +64,9 @@ public class NoKnownDevices implements KnownDevices {
 
 	private static final NoKnownDevices _instance = new NoKnownDevices();
 
-	private final Set<VersionableName> _brands = Collections.singleton(
-		VersionableName.UNKNOWN);
-	private final Set<VersionableName> _browsers = Collections.singleton(
-		VersionableName.UNKNOWN);
-	private final Set<VersionableName> _operatingSystems =
-		Collections.singleton(VersionableName.UNKNOWN);
 	private final Set<String> _pointingMethods = Collections.singleton(
 		VersionableName.UNKNOWN.getName());
+	private final Set<VersionableName> _unknownVersionableNames =
+		Collections.singleton(VersionableName.UNKNOWN);
 
 }

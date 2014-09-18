@@ -31,19 +31,15 @@ import javax.security.auth.spi.LoginModule;
 public class PortalLoginModule implements LoginModule {
 
 	public PortalLoginModule() {
-		LoginModule loginModule = null;
-
 		try {
 			Class<?> clazz = Class.forName(
 				_CLASS_NAME, true, PortalClassLoaderUtil.getClassLoader());
 
-			loginModule = (LoginModule)clazz.newInstance();
+			_loginModule = (LoginModule)clazz.newInstance();
 		}
 		catch (Exception e) {
 			throw new AssertionError(e);
 		}
-
-		_loginModule = loginModule;
 	}
 
 	@Override

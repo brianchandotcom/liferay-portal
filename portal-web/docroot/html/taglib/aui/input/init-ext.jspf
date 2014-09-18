@@ -65,10 +65,15 @@ if (baseType.equals("email") || baseType.equals("password") || baseType.equals("
 	fieldCssClass += " form-control";
 }
 
+boolean useInputWrapper = true;
 String inputWrapperClass = controlGroupCssClass;
 
 if (choiceField) {
 	inputWrapperClass = baseTypeCssClass;
+
+	if(Validator.isNull(label)) {
+		useInputWrapper = false;
+	}
 }
 
 if (inputWrapperClass.equals("boolean")) {

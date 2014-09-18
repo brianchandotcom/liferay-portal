@@ -475,10 +475,10 @@
 	.modal-hidden {
 		display: none;
 	}
-}
 
-.modal-open {
-	overflow: hidden;
+	.modal-open .modal {
+		overflow: hidden;
+	}
 }
 
 /* ---------- Loading mask ---------- */

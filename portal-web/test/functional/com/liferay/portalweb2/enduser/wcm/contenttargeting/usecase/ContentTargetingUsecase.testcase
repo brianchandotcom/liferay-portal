@@ -23,7 +23,7 @@
 		</execute>
 	</set-up>
 
- 	<tear-down>
+	<tear-down>
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />

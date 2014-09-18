@@ -108,7 +108,7 @@ AUI.add(
 
 					editingLocale: {
 						lazyAdd: false,
-						validator: Lang.isString,
+						setter: '_setEditingLocale',
 						valueFn: '_valueEditingLocale'
 					},
 
@@ -451,6 +451,14 @@ AUI.add(
 						var instance = this;
 
 						instance._iconMenuNode.toggle(!val);
+					},
+
+					_setEditingLocale: function(val) {
+						var instance = this;
+
+						var localesMap = instance.get('localesMap');
+
+						return A.Object.hasKey(localesMap, val) ? val : instance._valueEditingLocale();
 					},
 
 					_valueAvailableLocales: function() {

@@ -389,6 +389,11 @@
 		<execute action="CPKaleoformsadminNewprocessAddfieldset#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter a valid XML schema definition." />
 	</command>
 
+	<command name="viewNoUnpublishedWorkflows">
+		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="WORKFLOW_NAVIGATION_UNPUBLISHED_TAB" value1="Unpublished" />
+		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no unpublished definitions." />
+	</command>
+
 	<command name="viewProcess">
 		<var name="key_kfProcessName" value="${kfProcessName}" />
 

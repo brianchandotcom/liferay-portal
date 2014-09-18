@@ -182,7 +182,6 @@
 		</execute>
 
 		<execute macro="SOMicroblogs#addMicroblogsEntry">
-			<var name="microblogsEntryCharacterCountdown" value="108" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 		</execute>
 
@@ -212,7 +211,6 @@
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
-			<var name="microblogsEntryCharacterCountdown" value="100" />
 			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
 		</execute>
 
@@ -925,7 +923,6 @@
 		</execute>
 
 		<execute macro="SOMicroblogs#addMicroblogsEntry">
-			<var name="microblogsEntryCharacterCountdown" value="108" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 		</execute>
 
@@ -941,7 +938,6 @@
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="microblogsEntryAuthorName" value="${userName}" />
-			<var name="microblogsEntryCharacterCountdown" value="100" />
 			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
 		</execute>
 

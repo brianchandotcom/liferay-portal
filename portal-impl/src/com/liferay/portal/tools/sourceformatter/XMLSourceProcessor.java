@@ -968,43 +968,42 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		StringBundler sb = new StringBundler();
 
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(content));
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
-		String line = null;
+			String line = null;
 
-		int lineCount = 0;
+			int lineCount = 0;
 
-		boolean sortAttributes = true;
+			boolean sortAttributes = true;
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			lineCount++;
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				lineCount++;
 
-			String trimmedLine = StringUtil.trimLeading(line);
+				String trimmedLine = StringUtil.trimLeading(line);
 
-			if (sortAttributes) {
-				if (trimmedLine.startsWith(StringPool.LESS_THAN) &&
-					trimmedLine.endsWith(StringPool.GREATER_THAN) &&
-					!trimmedLine.startsWith("<%") &&
-					!trimmedLine.startsWith("<!")) {
+				if (sortAttributes) {
+					if (trimmedLine.startsWith(StringPool.LESS_THAN) &&
+						trimmedLine.endsWith(StringPool.GREATER_THAN) &&
+						!trimmedLine.startsWith("<%") &&
+						!trimmedLine.startsWith("<!")) {
 
-					line = sortAttributes(fileName, line, lineCount, false);
+						line = sortAttributes(fileName, line, lineCount, false);
+					}
+					else if (trimmedLine.startsWith("<![CDATA[") &&
+							 !trimmedLine.endsWith("]]>")) {
+
+						sortAttributes = false;
+					}
 				}
-				else if (trimmedLine.startsWith("<![CDATA[") &&
-						 !trimmedLine.endsWith("]]>")) {
-
-					sortAttributes = false;
+				else if (trimmedLine.endsWith("]]>")) {
+					sortAttributes = true;
 				}
-			}
-			else if (trimmedLine.endsWith("]]>")) {
-				sortAttributes = true;
-			}
 
-			sb.append(line);
-			sb.append("\n");
+				sb.append(line);
+				sb.append("\n");
+			}
 		}
-
-		unsyncBufferedReader.close();
 
 		content = sb.toString();
 

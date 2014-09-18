@@ -1213,26 +1213,22 @@ public class HttpImpl implements Http {
 
 		URLConnection urlConnection = url.openConnection();
 
-		InputStream inputStream = urlConnection.getInputStream();
+		try (InputStream inputStream = urlConnection.getInputStream();
+			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+				new UnsyncByteArrayOutputStream()) {
 
-		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-			new UnsyncByteArrayOutputStream();
+			byte[] bytes = new byte[512];
 
-		byte[] bytes = new byte[512];
-
-		for (int i = inputStream.read(bytes, 0, 512); i != -1;
+			for (int i = inputStream.read(bytes, 0, 512); i != -1;
 				i = inputStream.read(bytes, 0, 512)) {
 
-			unsyncByteArrayOutputStream.write(bytes, 0, i);
+				unsyncByteArrayOutputStream.write(bytes, 0, i);
+			}
+
+			xml = new String(
+				unsyncByteArrayOutputStream.unsafeGetByteArray(), 0,
+				unsyncByteArrayOutputStream.size());
 		}
-
-		xml = new String(
-			unsyncByteArrayOutputStream.unsafeGetByteArray(), 0,
-			unsyncByteArrayOutputStream.size());
-
-		inputStream.close();
-
-		unsyncByteArrayOutputStream.close();
 
 		return xml;
 	}
@@ -1564,20 +1560,20 @@ public class HttpImpl implements Http {
 							portletRequest, inputStream, contentLength,
 							progressId);
 
-					UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-						new UnsyncByteArrayOutputStream(contentLength);
+					try (UnsyncByteArrayOutputStream
+							unsyncByteArrayOutputStream =
+								new UnsyncByteArrayOutputStream(
+									contentLength)) {
 
-					try {
 						progressInputStream.readAll(
 							unsyncByteArrayOutputStream);
+
+						bytes =
+							unsyncByteArrayOutputStream.unsafeGetByteArray();
 					}
 					finally {
 						progressInputStream.clearProgress();
 					}
-
-					bytes = unsyncByteArrayOutputStream.unsafeGetByteArray();
-
-					unsyncByteArrayOutputStream.close();
 				}
 				else {
 					bytes = FileUtil.getBytes(inputStream);

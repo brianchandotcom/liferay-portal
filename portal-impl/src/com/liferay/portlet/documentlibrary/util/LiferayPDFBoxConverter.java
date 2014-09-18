@@ -53,11 +53,7 @@ public class LiferayPDFBoxConverter {
 	}
 
 	public void generateImagesPB() throws Exception {
-		PDDocument pdDocument = null;
-
-		try {
-			pdDocument = PDDocument.load(_inputFile);
-
+		try (PDDocument pdDocument = PDDocument.load(_inputFile)) {
 			PDDocumentCatalog pdDocumentCatalog =
 				pdDocument.getDocumentCatalog();
 
@@ -76,11 +72,6 @@ public class LiferayPDFBoxConverter {
 				}
 
 				_generateImagesPB(pdPage, i + 1, _previewFiles[i], _extension);
-			}
-		}
-		finally {
-			if (pdDocument != null) {
-				pdDocument.close();
 			}
 		}
 	}

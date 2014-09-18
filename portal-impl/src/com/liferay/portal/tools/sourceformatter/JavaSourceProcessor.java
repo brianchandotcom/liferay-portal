@@ -1242,710 +1242,734 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		StringBundler sb = new StringBundler();
 
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(content));
+		try (UnsyncBufferedReader unsyncBufferedReader = 
+				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
-		String line = null;
-		String previousLine = StringPool.BLANK;
+			String line = null;
+			String previousLine = StringPool.BLANK;
 
-		int lineCount = 0;
-		int lineToSkipIfEmpty = 0;
+			int lineCount = 0;
+			int lineToSkipIfEmpty = 0;
 
-		String ifClause = StringPool.BLANK;
-		String packageName = StringPool.BLANK;
-		String regexPattern = StringPool.BLANK;
+			String ifClause = StringPool.BLANK;
+			String packageName = StringPool.BLANK;
+			String regexPattern = StringPool.BLANK;
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			lineCount++;
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				lineCount++;
 
-			line = trimLine(line, false);
+				line = trimLine(line, false);
 
-			if (line.startsWith("package ")) {
-				packageName = line.substring(8, line.length() - 1);
-			}
-
-			if (line.startsWith("import ")) {
-				if (line.endsWith(".*;")) {
-					processErrorMessage(
-						fileName, "import: " + fileName + " " + lineCount);
+				if (line.startsWith("package ")) {
+					packageName = line.substring(8, line.length() - 1);
 				}
 
-				int pos = line.lastIndexOf(StringPool.PERIOD);
-
-				if (pos != -1) {
-					String importPackageName = line.substring(7, pos);
-
-					if (importPackageName.equals(packageName)) {
-						continue;
-					}
-				}
-			}
-
-			if (line.contains(StringPool.TAB + "for (") && line.contains(":") &&
-				!line.contains(" :")) {
-
-				line = StringUtil.replace(line, ":" , " :");
-			}
-
-			// LPS-42924
-
-			if (line.contains("PortalUtil.getClassNameId(") &&
-				fileName.endsWith("ServiceImpl.java")) {
-
-				processErrorMessage(
-					fileName,
-					"Use classNameLocalService.getClassNameId: " + fileName +
-						" " + lineCount);
-			}
-
-			// LPS-42599
-
-			if (!isExcluded(_hibernateSQLQueryExclusions, absolutePath) &&
-				line.contains("= session.createSQLQuery(") &&
-				content.contains("com.liferay.portal.kernel.dao.orm.Session")) {
-
-				line = StringUtil.replace(
-					line, "createSQLQuery", "createSynchronizedSQLQuery");
-			}
-
-			line = replacePrimitiveWrapperInstantiation(
-				fileName, line, lineCount);
-
-			String trimmedLine = StringUtil.trimLeading(line);
-
-			// LPS-45649
-
-			if (trimmedLine.startsWith("throw new IOException(") &&
-				line.contains("e.getMessage()")) {
-
-				line = StringUtil.replace(
-					line, ".getMessage()", StringPool.BLANK);
-			}
-
-			// LPS-45492
-
-			if (trimmedLine.contains("StopWatch stopWatch = null;")) {
-				processErrorMessage(
-					fileName,
-					"Do not set stopwatch to null: " + fileName + " " +
-						lineCount);
-			}
-
-			checkStringBundler(trimmedLine, fileName, lineCount);
-
-			checkEmptyCollection(trimmedLine, fileName, lineCount);
-
-			if (trimmedLine.startsWith("* @deprecated") &&
-				_addMissingDeprecationReleaseVersion) {
-
-				if (!trimmedLine.startsWith("* @deprecated As of ")) {
-					line = StringUtil.replace(
-						line, "* @deprecated",
-						"* @deprecated As of " + getMainReleaseVersion());
-				}
-				else {
-					String version = trimmedLine.substring(20);
-
-					version = StringUtil.split(version, StringPool.SPACE)[0];
-
-					version = StringUtil.replace(
-						version, StringPool.COMMA, StringPool.BLANK);
-
-					if (StringUtil.count(version, StringPool.PERIOD) == 1) {
-						line = StringUtil.replaceFirst(
-							line, version, version + ".0");
-					}
-				}
-			}
-
-			if (trimmedLine.startsWith("* @see ") &&
-				(StringUtil.count(trimmedLine, StringPool.AT) > 1)) {
-
-				processErrorMessage(
-					fileName,
-					"Do not use @see with another annotation: " + fileName +
-						" " + lineCount);
-			}
-
-			checkInefficientStringMethods(
-				line, fileName, absolutePath, lineCount);
-
-			if (trimmedLine.startsWith(StringPool.EQUAL)) {
-				processErrorMessage(
-					fileName, "line break: " + fileName + " " + lineCount);
-			}
-
-			if (line.contains("ActionForm form")) {
-				processErrorMessage(
-					fileName,
-					"Rename form to actionForm: " + fileName + " " + lineCount);
-			}
-
-			if (line.contains("ActionMapping mapping")) {
-				processErrorMessage(
-					fileName,
-					"Rename mapping to ActionMapping: " + fileName + " " +
-						lineCount);
-			}
-
-			if (fileName.contains("/upgrade/") &&
-				line.contains("rs.getDate(")) {
-
-				processErrorMessage(
-					fileName,
-					"Use rs.getTimeStamp: " + fileName + " " + lineCount);
-			}
-
-			if (!trimmedLine.equals("{") && line.endsWith("{") &&
-				!line.endsWith(" {")) {
-
-				line = StringUtil.replaceLast(line, "{", " {");
-			}
-
-			line = sortExceptions(line);
-
-			if (trimmedLine.startsWith("if (") ||
-				trimmedLine.startsWith("else if (") ||
-				trimmedLine.startsWith("while (") ||
-				Validator.isNotNull(ifClause)) {
-
-				ifClause = ifClause + line + StringPool.NEW_LINE;
-
-				if (line.endsWith(") {")) {
-					String newIfClause = checkIfClause(
-						ifClause, fileName, lineCount);
-
-					if (!ifClause.equals(newIfClause) &&
-						content.contains(ifClause)) {
-
-						return StringUtil.replace(
-							content, ifClause, newIfClause);
+				if (line.startsWith("import ")) {
+					if (line.endsWith(".*;")) {
+						processErrorMessage(
+							fileName, "import: " + fileName + " " + lineCount);
 					}
 
-					ifClause = StringPool.BLANK;
-				}
-				else if (line.endsWith(StringPool.SEMICOLON)) {
-					ifClause = StringPool.BLANK;
-				}
-			}
-
-			if (trimmedLine.startsWith("Pattern ") ||
-				Validator.isNotNull(regexPattern)) {
-
-				regexPattern = regexPattern + trimmedLine;
-
-				if (trimmedLine.endsWith(");")) {
-
-					// LPS-41084
-
-					checkRegexPattern(regexPattern, fileName, lineCount);
-
-					regexPattern = StringPool.BLANK;
-				}
-			}
-
-			if (!trimmedLine.contains(StringPool.DOUBLE_SLASH) &&
-				!trimmedLine.startsWith(StringPool.STAR)) {
-
-				String strippedQuotesLine = stripQuotes(
-					trimmedLine, CharPool.QUOTE);
-
-				for (int x = 0;;) {
-					x = strippedQuotesLine.indexOf(StringPool.EQUAL, x + 1);
-
-					if (x == -1) {
-						break;
-					}
-
-					char c = strippedQuotesLine.charAt(x - 1);
-
-					if (Character.isLetterOrDigit(c)) {
-						line = StringUtil.replace(line, c + "=", c + " =");
-
-						break;
-					}
-
-					if (x == (strippedQuotesLine.length() - 1)) {
-						break;
-					}
-
-					c = strippedQuotesLine.charAt(x + 1);
-
-					if (Character.isLetterOrDigit(c)) {
-						line = StringUtil.replace(line, "=" + c, "= " + c);
-
-						break;
-					}
-				}
-
-				while (trimmedLine.contains(StringPool.TAB)) {
-					line = StringUtil.replaceLast(
-						line, StringPool.TAB, StringPool.SPACE);
-
-					trimmedLine = StringUtil.replaceLast(
-						trimmedLine, StringPool.TAB, StringPool.SPACE);
-				}
-
-				if (line.contains(StringPool.TAB + StringPool.SPACE) &&
-					!previousLine.endsWith("&&") &&
-					!previousLine.endsWith("||") &&
-					!previousLine.contains(StringPool.TAB + "((") &&
-					!previousLine.contains(
-						StringPool.TAB + StringPool.LESS_THAN) &&
-					!previousLine.contains(StringPool.TAB + StringPool.SPACE) &&
-					!previousLine.contains(StringPool.TAB + "implements ") &&
-					!previousLine.contains(StringPool.TAB + "throws ")) {
-
-					line = StringUtil.replace(
-						line, StringPool.TAB + StringPool.SPACE,
-						StringPool.TAB);
-				}
-
-				while (trimmedLine.contains(StringPool.DOUBLE_SPACE) &&
-					   !trimmedLine.contains(
-						   StringPool.QUOTE + StringPool.DOUBLE_SPACE) &&
-					   !fileName.contains("Test")) {
-
-					line = StringUtil.replaceLast(
-						line, StringPool.DOUBLE_SPACE, StringPool.SPACE);
-
-					trimmedLine = StringUtil.replaceLast(
-						trimmedLine, StringPool.DOUBLE_SPACE, StringPool.SPACE);
-				}
-
-				if (!line.contains(StringPool.QUOTE)) {
-					int pos = line.indexOf(") ");
+					int pos = line.lastIndexOf(StringPool.PERIOD);
 
 					if (pos != -1) {
-						String linePart = line.substring(pos + 2);
+						String importPackageName = line.substring(7, pos);
 
-						if (Character.isLetter(linePart.charAt(0)) &&
-							!linePart.startsWith("default") &&
-							!linePart.startsWith("instanceof") &&
-							!linePart.startsWith("throws")) {
-
-							line = StringUtil.replaceLast(
-								line, StringPool.SPACE + linePart, linePart);
+						if (importPackageName.equals(packageName)) {
+							continue;
 						}
 					}
+				}
 
-					if ((trimmedLine.startsWith("private ") ||
-						 trimmedLine.startsWith("protected ") ||
-						 trimmedLine.startsWith("public ")) &&
-						!line.contains(StringPool.EQUAL) &&
-						line.contains(" (")) {
+				if (line.contains(StringPool.TAB + "for (") && 
+					line.contains(":") && !line.contains(" :")) {
 
-						line = StringUtil.replace(line, " (", "(");
+					line = StringUtil.replace(line, ":" , " :");
+				}
+
+				// LPS-42924
+
+				if (line.contains("PortalUtil.getClassNameId(") &&
+					fileName.endsWith("ServiceImpl.java")) {
+
+					processErrorMessage(
+						fileName,
+						"Use classNameLocalService.getClassNameId: " +
+							fileName + " " + lineCount);
+				}
+
+				// LPS-42599
+
+				if (!isExcluded(_hibernateSQLQueryExclusions, absolutePath) &&
+					line.contains("= session.createSQLQuery(") &&
+					content.contains(
+						"com.liferay.portal.kernel.dao.orm.Session")) {
+
+					line = StringUtil.replace(
+						line, "createSQLQuery", "createSynchronizedSQLQuery");
+				}
+
+				line = replacePrimitiveWrapperInstantiation(
+					fileName, line, lineCount);
+
+				String trimmedLine = StringUtil.trimLeading(line);
+
+				// LPS-45649
+
+				if (trimmedLine.startsWith("throw new IOException(") &&
+					line.contains("e.getMessage()")) {
+
+					line = StringUtil.replace(
+						line, ".getMessage()", StringPool.BLANK);
+				}
+
+				// LPS-45492
+
+				if (trimmedLine.contains("StopWatch stopWatch = null;")) {
+					processErrorMessage(
+						fileName,
+						"Do not set stopwatch to null: " + fileName + " " +
+							lineCount);
+				}
+
+				checkStringBundler(trimmedLine, fileName, lineCount);
+
+				checkEmptyCollection(trimmedLine, fileName, lineCount);
+
+				if (trimmedLine.startsWith("* @deprecated") &&
+					_addMissingDeprecationReleaseVersion) {
+
+					if (!trimmedLine.startsWith("* @deprecated As of ")) {
+						line = StringUtil.replace(
+							line, "* @deprecated",
+							"* @deprecated As of " + getMainReleaseVersion());
 					}
+					else {
+						String version = trimmedLine.substring(20);
 
-					if (line.contains(" [")) {
-						line = StringUtil.replace(line, " [", "[");
+						version = StringUtil.split(
+							version, StringPool.SPACE)[0];
+
+						version = StringUtil.replace(
+							version, StringPool.COMMA, StringPool.BLANK);
+
+						if (StringUtil.count(version, StringPool.PERIOD) == 1) {
+							line = StringUtil.replaceFirst(
+								line, version, version + ".0");
+						}
 					}
+				}
 
-					for (int x = -1;;) {
-						int posComma = line.indexOf(StringPool.COMMA, x + 1);
-						int posSemicolon = line.indexOf(
-							StringPool.SEMICOLON, x + 1);
+				if (trimmedLine.startsWith("* @see ") &&
+					(StringUtil.count(trimmedLine, StringPool.AT) > 1)) {
 
-						if ((posComma == -1) && (posSemicolon == -1)) {
+					processErrorMessage(
+						fileName,
+						"Do not use @see with another annotation: " + fileName +
+							" " + lineCount);
+				}
+
+				checkInefficientStringMethods(
+					line, fileName, absolutePath, lineCount);
+
+				if (trimmedLine.startsWith(StringPool.EQUAL)) {
+					processErrorMessage(
+						fileName, "line break: " + fileName + " " + lineCount);
+				}
+
+				if (line.contains("ActionForm form")) {
+					processErrorMessage(
+						fileName,
+						"Rename form to actionForm: " + fileName + " " +
+							lineCount);
+				}
+
+				if (line.contains("ActionMapping mapping")) {
+					processErrorMessage(
+						fileName,
+						"Rename mapping to ActionMapping: " + fileName + " " +
+							lineCount);
+				}
+
+				if (fileName.contains("/upgrade/") &&
+					line.contains("rs.getDate(")) {
+
+					processErrorMessage(
+						fileName,
+						"Use rs.getTimeStamp: " + fileName + " " + lineCount);
+				}
+
+				if (!trimmedLine.equals("{") && line.endsWith("{") &&
+					!line.endsWith(" {")) {
+
+					line = StringUtil.replaceLast(line, "{", " {");
+				}
+
+				line = sortExceptions(line);
+
+				if (trimmedLine.startsWith("if (") ||
+					trimmedLine.startsWith("else if (") ||
+					trimmedLine.startsWith("while (") ||
+					Validator.isNotNull(ifClause)) {
+
+					ifClause = ifClause + line + StringPool.NEW_LINE;
+
+					if (line.endsWith(") {")) {
+						String newIfClause = checkIfClause(
+							ifClause, fileName, lineCount);
+
+						if (!ifClause.equals(newIfClause) &&
+							content.contains(ifClause)) {
+
+							return StringUtil.replace(
+								content, ifClause, newIfClause);
+						}
+
+						ifClause = StringPool.BLANK;
+					}
+					else if (line.endsWith(StringPool.SEMICOLON)) {
+						ifClause = StringPool.BLANK;
+					}
+				}
+
+				if (trimmedLine.startsWith("Pattern ") ||
+					Validator.isNotNull(regexPattern)) {
+
+					regexPattern = regexPattern + trimmedLine;
+
+					if (trimmedLine.endsWith(");")) {
+
+						// LPS-41084
+
+						checkRegexPattern(regexPattern, fileName, lineCount);
+
+						regexPattern = StringPool.BLANK;
+					}
+				}
+
+				if (!trimmedLine.contains(StringPool.DOUBLE_SLASH) &&
+					!trimmedLine.startsWith(StringPool.STAR)) {
+
+					String strippedQuotesLine = stripQuotes(
+						trimmedLine, CharPool.QUOTE);
+
+					for (int x = 0;;) {
+						x = strippedQuotesLine.indexOf(StringPool.EQUAL, x + 1);
+
+						if (x == -1) {
 							break;
 						}
 
-						x = Math.min(posComma, posSemicolon);
+						char c = strippedQuotesLine.charAt(x - 1);
 
-						if (x == -1) {
-							x = Math.max(posComma, posSemicolon);
+						if (Character.isLetterOrDigit(c)) {
+							line = StringUtil.replace(line, c + "=", c + " =");
+
+							break;
 						}
 
-						if (line.length() > (x + 1)) {
-							char nextChar = line.charAt(x + 1);
+						if (x == (strippedQuotesLine.length() - 1)) {
+							break;
+						}
 
-							if ((nextChar != CharPool.APOSTROPHE) &&
-								(nextChar != CharPool.CLOSE_PARENTHESIS) &&
-								(nextChar != CharPool.SPACE) &&
-								(nextChar != CharPool.STAR)) {
+						c = strippedQuotesLine.charAt(x + 1);
 
-								line = StringUtil.insert(
-									line, StringPool.SPACE, x + 1);
+						if (Character.isLetterOrDigit(c)) {
+							line = StringUtil.replace(line, "=" + c, "= " + c);
+
+							break;
+						}
+					}
+
+					while (trimmedLine.contains(StringPool.TAB)) {
+						line = StringUtil.replaceLast(
+							line, StringPool.TAB, StringPool.SPACE);
+
+						trimmedLine = StringUtil.replaceLast(
+							trimmedLine, StringPool.TAB, StringPool.SPACE);
+					}
+
+					if (line.contains(StringPool.TAB + StringPool.SPACE) &&
+						!previousLine.endsWith("&&") &&
+						!previousLine.endsWith("||") &&
+						!previousLine.contains(StringPool.TAB + "((") &&
+						!previousLine.contains(
+							StringPool.TAB + StringPool.LESS_THAN) &&
+						!previousLine.contains(
+							StringPool.TAB + StringPool.SPACE) &&
+						!previousLine.contains(
+							StringPool.TAB + "implements ") &&
+						!previousLine.contains(StringPool.TAB + "throws ")) {
+
+						line = StringUtil.replace(
+							line, StringPool.TAB + StringPool.SPACE,
+							StringPool.TAB);
+					}
+
+					while (trimmedLine.contains(StringPool.DOUBLE_SPACE) &&
+						   !trimmedLine.contains(
+							   StringPool.QUOTE + StringPool.DOUBLE_SPACE) &&
+						   !fileName.contains("Test")) {
+
+						line = StringUtil.replaceLast(
+							line, StringPool.DOUBLE_SPACE, StringPool.SPACE);
+
+						trimmedLine = StringUtil.replaceLast(
+							trimmedLine, StringPool.DOUBLE_SPACE, 
+							StringPool.SPACE);
+					}
+
+					if (!line.contains(StringPool.QUOTE)) {
+						int pos = line.indexOf(") ");
+
+						if (pos != -1) {
+							String linePart = line.substring(pos + 2);
+
+							if (Character.isLetter(linePart.charAt(0)) &&
+								!linePart.startsWith("default") &&
+								!linePart.startsWith("instanceof") &&
+								!linePart.startsWith("throws")) {
+
+								line = StringUtil.replaceLast(
+									line, StringPool.SPACE + linePart, 
+									linePart);
 							}
 						}
 
-						if (x > 0) {
-							char previousChar = line.charAt(x - 1);
+						if ((trimmedLine.startsWith("private ") ||
+							 trimmedLine.startsWith("protected ") ||
+							 trimmedLine.startsWith("public ")) &&
+							!line.contains(StringPool.EQUAL) &&
+							line.contains(" (")) {
 
-							if (previousChar == CharPool.SPACE) {
-								line = line.substring(0, x - 1).concat(
-									line.substring(x));
+							line = StringUtil.replace(line, " (", "(");
+						}
+
+						if (line.contains(" [")) {
+							line = StringUtil.replace(line, " [", "[");
+						}
+
+						for (int x = -1;;) {
+							int posComma = line.indexOf(
+								StringPool.COMMA, x + 1);
+							int posSemicolon = line.indexOf(
+								StringPool.SEMICOLON, x + 1);
+
+							if ((posComma == -1) && (posSemicolon == -1)) {
+								break;
+							}
+
+							x = Math.min(posComma, posSemicolon);
+
+							if (x == -1) {
+								x = Math.max(posComma, posSemicolon);
+							}
+
+							if (line.length() > (x + 1)) {
+								char nextChar = line.charAt(x + 1);
+
+								if ((nextChar != CharPool.APOSTROPHE) &&
+									(nextChar != CharPool.CLOSE_PARENTHESIS) &&
+									(nextChar != CharPool.SPACE) &&
+									(nextChar != CharPool.STAR)) {
+
+									line = StringUtil.insert(
+										line, StringPool.SPACE, x + 1);
+								}
+							}
+
+							if (x > 0) {
+								char previousChar = line.charAt(x - 1);
+
+								if (previousChar == CharPool.SPACE) {
+									line = line.substring(0, x - 1).concat(
+										line.substring(x));
+								}
 							}
 						}
 					}
-				}
 
-				if ((line.contains(" && ") || line.contains(" || ")) &&
-					line.endsWith(StringPool.OPEN_PARENTHESIS)) {
+					if ((line.contains(" && ") || line.contains(" || ")) &&
+						line.endsWith(StringPool.OPEN_PARENTHESIS)) {
 
-					processErrorMessage(
-						fileName, "line break: " + fileName + " " + lineCount);
-				}
-
-				if (trimmedLine.endsWith(StringPool.PLUS) &&
-					!trimmedLine.startsWith(StringPool.OPEN_PARENTHESIS)) {
-
-					int closeParenthesisCount = StringUtil.count(
-						strippedQuotesLine, StringPool.CLOSE_PARENTHESIS);
-					int openParenthesisCount = StringUtil.count(
-						strippedQuotesLine, StringPool.OPEN_PARENTHESIS);
-
-					if (openParenthesisCount > closeParenthesisCount) {
 						processErrorMessage(
-							fileName,
-							"line break: " + fileName + " " + lineCount);
+							fileName, "line break: " + fileName + " " +
+								lineCount);
 					}
-				}
 
-				int x = strippedQuotesLine.indexOf(", ");
+					if (trimmedLine.endsWith(StringPool.PLUS) &&
+						!trimmedLine.startsWith(StringPool.OPEN_PARENTHESIS)) {
 
-				if (x != -1) {
-					String linePart = strippedQuotesLine.substring(0, x);
+						int closeParenthesisCount = StringUtil.count(
+							strippedQuotesLine, StringPool.CLOSE_PARENTHESIS);
+						int openParenthesisCount = StringUtil.count(
+							strippedQuotesLine, StringPool.OPEN_PARENTHESIS);
 
-					int closeParenthesisCount = StringUtil.count(
-						linePart, StringPool.CLOSE_PARENTHESIS);
-					int openParenthesisCount = StringUtil.count(
-						linePart, StringPool.OPEN_PARENTHESIS);
-
-					if (closeParenthesisCount > openParenthesisCount) {
-						processErrorMessage(
-							fileName,
-							"line break: " + fileName + " " + lineCount);
-					}
-				}
-				else if (trimmedLine.endsWith(StringPool.COMMA) &&
-						 !trimmedLine.startsWith("for (")) {
-
-					int closeParenthesisCount = StringUtil.count(
-						strippedQuotesLine, StringPool.CLOSE_PARENTHESIS);
-					int openParenthesisCount = StringUtil.count(
-						strippedQuotesLine, StringPool.OPEN_PARENTHESIS);
-
-					if (closeParenthesisCount < openParenthesisCount) {
-						processErrorMessage(
-							fileName,
-							"line break: " + fileName + " " + lineCount);
-					}
-				}
-
-				if (line.contains(StringPool.COMMA) &&
-					!line.contains(StringPool.CLOSE_PARENTHESIS) &&
-					!line.contains(StringPool.GREATER_THAN) &&
-					!line.contains(StringPool.QUOTE) &&
-					line.endsWith(StringPool.OPEN_PARENTHESIS)) {
-
-					processErrorMessage(
-						fileName, "line break: " + fileName + " " + lineCount);
-				}
-
-				if (line.endsWith(" +") || line.endsWith(" -") ||
-					line.endsWith(" *") || line.endsWith(" /")) {
-
-					x = line.indexOf(" = ");
-
-					if (x != -1) {
-						int y = line.indexOf(StringPool.QUOTE);
-
-						if ((y == -1) || (x < y)) {
+						if (openParenthesisCount > closeParenthesisCount) {
 							processErrorMessage(
 								fileName,
 								"line break: " + fileName + " " + lineCount);
 						}
 					}
-				}
 
-				if (line.endsWith(" throws") ||
-					(previousLine.endsWith(
-						StringPool.OPEN_PARENTHESIS) &&
-					 line.contains(" throws " ) &&
-					 line.endsWith(StringPool.OPEN_CURLY_BRACE))) {
+					int x = strippedQuotesLine.indexOf(", ");
 
-					processErrorMessage(
-						fileName, "line break: " + fileName + " " + lineCount);
-				}
+					if (x != -1) {
+						String linePart = strippedQuotesLine.substring(0, x);
 
-				if (trimmedLine.startsWith(StringPool.PERIOD) ||
-					(line.endsWith(StringPool.PERIOD) &&
-					 line.contains(StringPool.EQUAL))) {
+						int closeParenthesisCount = StringUtil.count(
+							linePart, StringPool.CLOSE_PARENTHESIS);
+						int openParenthesisCount = StringUtil.count(
+							linePart, StringPool.OPEN_PARENTHESIS);
 
-					processErrorMessage(
-						fileName, "line break: " + fileName + " " + lineCount);
-				}
+						if (closeParenthesisCount > openParenthesisCount) {
+							processErrorMessage(
+								fileName,
+								"line break: " + fileName + " " + lineCount);
+						}
+					}
+					else if (trimmedLine.endsWith(StringPool.COMMA) &&
+							 !trimmedLine.startsWith("for (")) {
 
-				if (!trimmedLine.equals("}) {") &&
-					trimmedLine.startsWith(StringPool.CLOSE_CURLY_BRACE) &&
-					line.endsWith(StringPool.OPEN_CURLY_BRACE)) {
+						int closeParenthesisCount = StringUtil.count(
+							strippedQuotesLine, StringPool.CLOSE_PARENTHESIS);
+						int openParenthesisCount = StringUtil.count(
+							strippedQuotesLine, StringPool.OPEN_PARENTHESIS);
 
-					processErrorMessage(
-						fileName, "line break: " + fileName + " " + lineCount);
-				}
-			}
+						if (closeParenthesisCount < openParenthesisCount) {
+							processErrorMessage(
+								fileName,
+								"line break: " + fileName + " " + lineCount);
+						}
+					}
 
-			if (line.contains("    ") && !line.matches("\\s*\\*.*")) {
-				if (!fileName.endsWith("StringPool.java")) {
-					processErrorMessage(
-						fileName, "tab: " + fileName + " " + lineCount);
-				}
-			}
-
-			if (line.contains("  {") && !line.matches("\\s*\\*.*")) {
-				processErrorMessage(
-					fileName, "{:" + fileName + " " + lineCount);
-			}
-
-			Tuple combinedLines = null;
-			int lineLength = getLineLength(line);
-
-			if (!line.startsWith("import ") && !line.startsWith("package ") &&
-				!line.matches("\\s*\\*.*")) {
-
-				if (fileName.endsWith("Table.java") &&
-					line.contains("String TABLE_SQL_CREATE = ")) {
-				}
-				else if (fileName.endsWith("Table.java") &&
-						 line.contains("String TABLE_SQL_DROP = ")) {
-				}
-				else if (fileName.endsWith("Table.java") &&
-						 line.contains(" index IX_")) {
-				}
-				else if (lineLength > 80) {
-					if (!isExcluded(
-							_lineLengthExclusions, absolutePath, lineCount) &&
-						!isAnnotationParameter(content, trimmedLine)) {
+					if (line.contains(StringPool.COMMA) &&
+						!line.contains(StringPool.CLOSE_PARENTHESIS) &&
+						!line.contains(StringPool.GREATER_THAN) &&
+						!line.contains(StringPool.QUOTE) &&
+						line.endsWith(StringPool.OPEN_PARENTHESIS)) {
 
 						processErrorMessage(
-							fileName, "> 80: " + fileName + " " + lineCount);
+							fileName, "line break: " + fileName + " " +
+								lineCount);
+					}
+
+					if (line.endsWith(" +") || line.endsWith(" -") ||
+						line.endsWith(" *") || line.endsWith(" /")) {
+
+						x = line.indexOf(" = ");
+
+						if (x != -1) {
+							int y = line.indexOf(StringPool.QUOTE);
+
+							if ((y == -1) || (x < y)) {
+								processErrorMessage(
+									fileName,
+									"line break: " + fileName + " " +
+										lineCount);
+							}
+						}
+					}
+
+					if (line.endsWith(" throws") ||
+						(previousLine.endsWith(
+							StringPool.OPEN_PARENTHESIS) &&
+						 line.contains(" throws " ) &&
+						 line.endsWith(StringPool.OPEN_CURLY_BRACE))) {
+
+						processErrorMessage(
+							fileName, "line break: " + fileName + " " +
+								lineCount);
+					}
+
+					if (trimmedLine.startsWith(StringPool.PERIOD) ||
+						(line.endsWith(StringPool.PERIOD) &&
+						 line.contains(StringPool.EQUAL))) {
+
+						processErrorMessage(
+							fileName, "line break: " + fileName + " " +
+								lineCount);
+					}
+
+					if (!trimmedLine.equals("}) {") &&
+						trimmedLine.startsWith(StringPool.CLOSE_CURLY_BRACE) &&
+						line.endsWith(StringPool.OPEN_CURLY_BRACE)) {
+
+						processErrorMessage(
+							fileName, "line break: " + fileName + " " +
+								lineCount);
+					}
+				}
+
+				if (line.contains("    ") && !line.matches("\\s*\\*.*")) {
+					if (!fileName.endsWith("StringPool.java")) {
+						processErrorMessage(
+							fileName, "tab: " + fileName + " " + lineCount);
+					}
+				}
+
+				if (line.contains("  {") && !line.matches("\\s*\\*.*")) {
+					processErrorMessage(
+						fileName, "{:" + fileName + " " + lineCount);
+				}
+
+				Tuple combinedLines = null;
+				int lineLength = getLineLength(line);
+
+				if (!line.startsWith("import ") && 
+					!line.startsWith("package ") &&
+					!line.matches("\\s*\\*.*")) {
+
+					if (fileName.endsWith("Table.java") &&
+						line.contains("String TABLE_SQL_CREATE = ")) {
+					}
+					else if (fileName.endsWith("Table.java") &&
+							 line.contains("String TABLE_SQL_DROP = ")) {
+					}
+					else if (fileName.endsWith("Table.java") &&
+							 line.contains(" index IX_")) {
+					}
+					else if (lineLength > 80) {
+						if (!isExcluded(
+								_lineLengthExclusions, absolutePath, 
+								lineCount) &&
+							!isAnnotationParameter(content, trimmedLine)) {
+
+							processErrorMessage(
+								fileName, "> 80: " + fileName + " " +
+									lineCount);
+						}
+					}
+					else {
+						int lineLeadingTabCount = getLeadingTabCount(line);
+						int previousLineLeadingTabCount = getLeadingTabCount(
+							previousLine);
+
+						if (!trimmedLine.startsWith("//")) {
+							if (previousLine.endsWith(StringPool.COMMA) &&
+								 previousLine.contains(
+									 StringPool.OPEN_PARENTHESIS) &&
+								!previousLine.contains("for (") &&
+								(lineLeadingTabCount >
+									previousLineLeadingTabCount)) {
+
+								processErrorMessage(
+									fileName,
+									"line break: " + fileName + " " +
+										lineCount);
+							}
+
+							if ((lineLeadingTabCount ==
+									previousLineLeadingTabCount) &&
+								(previousLine.endsWith(StringPool.EQUAL) ||
+								 previousLine.endsWith(
+									 StringPool.OPEN_PARENTHESIS))) {
+
+								processErrorMessage(
+									fileName, "tab: " + fileName + " " +
+										lineCount);
+							}
+
+							if (Validator.isNotNull(trimmedLine)) {
+								if (((previousLine.endsWith(StringPool.COLON) &&
+									  previousLine.contains(
+										  StringPool.TAB + "for ")) ||
+									 (previousLine.endsWith(
+										 StringPool.OPEN_PARENTHESIS) &&
+									  previousLine.contains(
+										  StringPool.TAB + "if "))) &&
+									((previousLineLeadingTabCount + 2) !=
+										lineLeadingTabCount)) {
+
+									processErrorMessage(
+										fileName,
+										"line break: " + fileName + " " +
+											lineCount);
+								}
+
+								if (previousLine.endsWith(
+										StringPool.OPEN_CURLY_BRACE) &&
+									!trimmedLine.startsWith(
+										StringPool.CLOSE_CURLY_BRACE) &&
+									((previousLineLeadingTabCount + 1) !=
+										lineLeadingTabCount)) {
+
+									processErrorMessage(
+										fileName,
+										"tab: " + fileName + " " + lineCount);
+								}
+							}
+
+							if (previousLine.endsWith(StringPool.PERIOD)) {
+								int x = trimmedLine.indexOf(
+									StringPool.OPEN_PARENTHESIS);
+
+								if ((x != -1) &&
+									((getLineLength(previousLine) + x) < 80) &&
+									(trimmedLine.endsWith(
+										StringPool.OPEN_PARENTHESIS) ||
+									 (trimmedLine.charAt(x + 1) !=
+										 CharPool.CLOSE_PARENTHESIS))) {
+
+									processErrorMessage(
+										fileName,
+										"line break: " + fileName + " " +
+											lineCount);
+								}
+							}
+
+							int diff =
+								lineLeadingTabCount -
+								previousLineLeadingTabCount;
+
+							if (trimmedLine.startsWith("throws ") &&
+								((diff == 0) || (diff > 1))) {
+
+								processErrorMessage(
+									fileName, "tab: " + fileName + " " +
+										lineCount);
+							}
+
+							if ((diff == 2) && 
+								(previousLineLeadingTabCount > 0) &&
+								line.endsWith(StringPool.SEMICOLON) &&
+								!previousLine.contains(
+									StringPool.TAB + "try (")) {
+
+								line = StringUtil.replaceFirst(
+									line, StringPool.TAB, StringPool.BLANK);
+							}
+
+							if ((previousLine.contains(" class " ) ||
+								 previousLine.contains(" enum ")) &&
+								previousLine.endsWith(
+									StringPool.OPEN_CURLY_BRACE) &&
+								Validator.isNotNull(line) &&
+								!trimmedLine.startsWith(
+									StringPool.CLOSE_CURLY_BRACE)) {
+
+								processErrorMessage(
+									fileName,
+									"line break: " + fileName + " " +
+										lineCount);
+							}
+						}
+
+						if (!isExcluded(
+								_fitOnSingleLineExclusions, absolutePath,
+								lineCount)) {
+
+							combinedLines = getCombinedLines(
+								trimmedLine, previousLine, lineLeadingTabCount,
+								previousLineLeadingTabCount);
+						}
+					}
+				}
+
+				if (combinedLines != null) {
+					previousLine = (String)combinedLines.getObject(0);
+
+					if (combinedLines.getSize() > 1) {
+						String linePart = (String)combinedLines.getObject(1);
+						boolean addToPreviousLine =
+							(Boolean)combinedLines.getObject(2);
+
+						if (addToPreviousLine) {
+							previousLine = previousLine + linePart;
+							line = StringUtil.replaceFirst(
+								line, linePart, StringPool.BLANK);
+						}
+						else {
+							if (((linePart.length() + lineLength) <= 80) &&
+								(line.endsWith(StringPool.OPEN_CURLY_BRACE) ||
+								 line.endsWith(StringPool.SEMICOLON))) {
+
+								previousLine = StringUtil.replaceLast(
+									previousLine, StringUtil.trim(linePart),
+									StringPool.BLANK);
+
+								line = StringUtil.replaceLast(
+									line, StringPool.TAB,
+									StringPool.TAB + linePart);
+							}
+							else {
+								processErrorMessage(
+									fileName,
+									"line break: " + fileName + " " +
+										lineCount);
+							}
+						}
+
+						sb.append(previousLine);
+						sb.append("\n");
+
+						previousLine = line;
+					}
+					else if (line.endsWith(StringPool.OPEN_CURLY_BRACE) &&
+							 !previousLine.contains(" class ")) {
+
+						lineToSkipIfEmpty = lineCount + 1;
 					}
 				}
 				else {
-					int lineLeadingTabCount = getLeadingTabCount(line);
-					int previousLineLeadingTabCount = getLeadingTabCount(
-						previousLine);
+					if ((lineCount > 1) &&
+						(Validator.isNotNull(previousLine) ||
+						 (lineToSkipIfEmpty != (lineCount - 1)))) {
 
-					if (!trimmedLine.startsWith("//")) {
-						if (previousLine.endsWith(StringPool.COMMA) &&
-							previousLine.contains(
-								StringPool.OPEN_PARENTHESIS) &&
-							!previousLine.contains("for (") &&
-							(lineLeadingTabCount >
-								previousLineLeadingTabCount)) {
+						sb.append(previousLine);
 
-							processErrorMessage(
-								fileName,
-								"line break: " + fileName + " " + lineCount);
-						}
+						if (Validator.isNotNull(previousLine) &&
+							Validator.isNotNull(trimmedLine) &&
+							!previousLine.contains("/*") &&
+							!previousLine.endsWith("*/")) {
 
-						if ((lineLeadingTabCount ==
-								previousLineLeadingTabCount) &&
-							(previousLine.endsWith(StringPool.EQUAL) ||
-							 previousLine.endsWith(
-								 StringPool.OPEN_PARENTHESIS))) {
+							String trimmedPreviousLine = StringUtil.trimLeading(
+								previousLine);
 
-							processErrorMessage(
-								fileName, "tab: " + fileName + " " + lineCount);
-						}
+							if ((trimmedPreviousLine.startsWith("// ") &&
+								 !trimmedLine.startsWith("// ")) ||
+								(!trimmedPreviousLine.startsWith("// ") &&
+								 trimmedLine.startsWith("// "))) {
 
-						if (Validator.isNotNull(trimmedLine)) {
-							if (((previousLine.endsWith(StringPool.COLON) &&
-								  previousLine.contains(
-									  StringPool.TAB + "for ")) ||
-								 (previousLine.endsWith(
-									 StringPool.OPEN_PARENTHESIS) &&
-								  previousLine.contains(
-									  StringPool.TAB + "if "))) &&
-								((previousLineLeadingTabCount + 2) !=
-									lineLeadingTabCount)) {
-
-								processErrorMessage(
-									fileName,
-									"line break: " + fileName + " " +
-										lineCount);
+								sb.append("\n");
 							}
+							else if (!trimmedPreviousLine.endsWith(
+										StringPool.OPEN_CURLY_BRACE) &&
+									 !trimmedPreviousLine.endsWith(
+										StringPool.COLON) &&
+									 (trimmedLine.startsWith("for (") ||
+									  trimmedLine.startsWith("if ("))) {
 
-							if (previousLine.endsWith(
-									StringPool.OPEN_CURLY_BRACE) &&
-								!trimmedLine.startsWith(
-									StringPool.CLOSE_CURLY_BRACE) &&
-								((previousLineLeadingTabCount + 1) !=
-									lineLeadingTabCount)) {
+								sb.append("\n");
+							}
+							else if (previousLine.endsWith(
+										StringPool.TAB +
+											StringPool.CLOSE_CURLY_BRACE) &&
+									 !trimmedLine.startsWith(
+										 StringPool.CLOSE_CURLY_BRACE) &&
+									 !trimmedLine.startsWith(
+										 StringPool.CLOSE_PARENTHESIS) &&
+									 !trimmedLine.startsWith(
+										 StringPool.DOUBLE_SLASH) &&
+									 !trimmedLine.equals("*/") &&
+									 !trimmedLine.startsWith("catch ") &&
+									 !trimmedLine.startsWith("else ") &&
+									 !trimmedLine.startsWith("finally ") &&
+									 !trimmedLine.startsWith("while ")) {
 
-								processErrorMessage(
-									fileName,
-									"tab: " + fileName + " " + lineCount);
+								sb.append("\n");
 							}
 						}
 
-						if (previousLine.endsWith(StringPool.PERIOD)) {
-							int x = trimmedLine.indexOf(
-								StringPool.OPEN_PARENTHESIS);
-
-							if ((x != -1) &&
-								((getLineLength(previousLine) + x) < 80) &&
-								(trimmedLine.endsWith(
-									StringPool.OPEN_PARENTHESIS) ||
-								 (trimmedLine.charAt(x + 1) !=
-									 CharPool.CLOSE_PARENTHESIS))) {
-
-								processErrorMessage(
-									fileName,
-									"line break: " + fileName + " " +
-										lineCount);
-							}
-						}
-
-						int diff =
-							lineLeadingTabCount - previousLineLeadingTabCount;
-
-						if (trimmedLine.startsWith("throws ") &&
-							((diff == 0) || (diff > 1))) {
-
-							processErrorMessage(
-								fileName, "tab: " + fileName + " " + lineCount);
-						}
-
-						if ((diff == 2) && (previousLineLeadingTabCount > 0) &&
-							line.endsWith(StringPool.SEMICOLON) &&
-							!previousLine.contains(StringPool.TAB + "try (")) {
-
-							line = StringUtil.replaceFirst(
-								line, StringPool.TAB, StringPool.BLANK);
-						}
-
-						if ((previousLine.contains(" class " ) ||
-							 previousLine.contains(" enum ")) &&
-							previousLine.endsWith(
-								StringPool.OPEN_CURLY_BRACE) &&
-							Validator.isNotNull(line) &&
-							!trimmedLine.startsWith(
-								StringPool.CLOSE_CURLY_BRACE)) {
-
-							processErrorMessage(
-								fileName,
-								"line break: " + fileName + " " + lineCount);
-						}
+						sb.append("\n");
 					}
-
-					if (!isExcluded(
-							_fitOnSingleLineExclusions, absolutePath,
-							lineCount)) {
-
-						combinedLines = getCombinedLines(
-							trimmedLine, previousLine, lineLeadingTabCount,
-							previousLineLeadingTabCount);
-					}
-				}
-			}
-
-			if (combinedLines != null) {
-				previousLine = (String)combinedLines.getObject(0);
-
-				if (combinedLines.getSize() > 1) {
-					String linePart = (String)combinedLines.getObject(1);
-					boolean addToPreviousLine =
-						(Boolean)combinedLines.getObject(2);
-
-					if (addToPreviousLine) {
-						previousLine = previousLine + linePart;
-						line = StringUtil.replaceFirst(
-							line, linePart, StringPool.BLANK);
-					}
-					else {
-						if (((linePart.length() + lineLength) <= 80) &&
-							(line.endsWith(StringPool.OPEN_CURLY_BRACE) ||
-							 line.endsWith(StringPool.SEMICOLON))) {
-
-							previousLine = StringUtil.replaceLast(
-								previousLine, StringUtil.trim(linePart),
-								StringPool.BLANK);
-
-							line = StringUtil.replaceLast(
-								line, StringPool.TAB,
-								StringPool.TAB + linePart);
-						}
-						else {
-							processErrorMessage(
-								fileName,
-								"line break: " + fileName + " " + lineCount);
-						}
-					}
-
-					sb.append(previousLine);
-					sb.append("\n");
 
 					previousLine = line;
 				}
-				else if (line.endsWith(StringPool.OPEN_CURLY_BRACE) &&
-						 !previousLine.contains(" class ")) {
-
-					lineToSkipIfEmpty = lineCount + 1;
-				}
 			}
-			else {
-				if ((lineCount > 1) &&
-					(Validator.isNotNull(previousLine) ||
-					 (lineToSkipIfEmpty != (lineCount - 1)))) {
 
-					sb.append(previousLine);
-
-					if (Validator.isNotNull(previousLine) &&
-						Validator.isNotNull(trimmedLine) &&
-						!previousLine.contains("/*") &&
-						!previousLine.endsWith("*/")) {
-
-						String trimmedPreviousLine = StringUtil.trimLeading(
-							previousLine);
-
-						if ((trimmedPreviousLine.startsWith("// ") &&
-							 !trimmedLine.startsWith("// ")) ||
-							(!trimmedPreviousLine.startsWith("// ") &&
-							 trimmedLine.startsWith("// "))) {
-
-							sb.append("\n");
-						}
-						else if (!trimmedPreviousLine.endsWith(
-									StringPool.OPEN_CURLY_BRACE) &&
-								 !trimmedPreviousLine.endsWith(
-									StringPool.COLON) &&
-								 (trimmedLine.startsWith("for (") ||
-								  trimmedLine.startsWith("if ("))) {
-
-							sb.append("\n");
-						}
-						else if (previousLine.endsWith(
-									StringPool.TAB +
-										StringPool.CLOSE_CURLY_BRACE) &&
-								 !trimmedLine.startsWith(
-									 StringPool.CLOSE_CURLY_BRACE) &&
-								 !trimmedLine.startsWith(
-									 StringPool.CLOSE_PARENTHESIS) &&
-								 !trimmedLine.startsWith(
-									 StringPool.DOUBLE_SLASH) &&
-								 !trimmedLine.equals("*/") &&
-								 !trimmedLine.startsWith("catch ") &&
-								 !trimmedLine.startsWith("else ") &&
-								 !trimmedLine.startsWith("finally ") &&
-								 !trimmedLine.startsWith("while ")) {
-
-							sb.append("\n");
-						}
-					}
-
-					sb.append("\n");
-				}
-
-				previousLine = line;
-			}
+			sb.append(previousLine);
 		}
-
-		sb.append(previousLine);
-
-		unsyncBufferedReader.close();
 
 		String newContent = sb.toString();
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb2.util.block.action;
+package com.liferay.portalweb.portal.util.block.action;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;

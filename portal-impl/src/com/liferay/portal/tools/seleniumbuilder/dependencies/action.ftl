@@ -1,7 +1,7 @@
 package ${seleniumBuilderContext.getActionPackageName(actionName)};
 
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
-import com.liferay.portalweb2.util.block.action.BaseAction;
+import com.liferay.portalweb.portal.util.block.action.BaseAction;
 import com.liferay.portalweb2.util.block.action.BaseLiferayAction;
 
 <#if seleniumBuilderContext.getActionRootElement(actionName)??>

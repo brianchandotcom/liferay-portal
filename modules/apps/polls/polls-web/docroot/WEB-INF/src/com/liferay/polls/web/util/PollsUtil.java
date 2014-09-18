@@ -14,7 +14,7 @@
 
 package com.liferay.polls.web.util;
 
-import com.liferay.polls.NoSuchVoteException;
+import com.liferay.polls.exception.NoSuchVoteException;
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.service.PollsChoiceLocalServiceUtil;

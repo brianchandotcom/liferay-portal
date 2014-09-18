@@ -14,9 +14,9 @@
 
 package com.liferay.polls.service.impl;
 
-import com.liferay.polls.DuplicateVoteException;
-import com.liferay.polls.NoSuchQuestionException;
-import com.liferay.polls.QuestionExpiredException;
+import com.liferay.polls.exception.DuplicateVoteException;
+import com.liferay.polls.exception.NoSuchQuestionException;
+import com.liferay.polls.exception.QuestionExpiredException;
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.model.PollsVote;

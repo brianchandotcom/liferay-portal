@@ -14,10 +14,10 @@
 
 package com.liferay.polls.service.impl;
 
-import com.liferay.polls.QuestionChoiceException;
-import com.liferay.polls.QuestionDescriptionException;
-import com.liferay.polls.QuestionExpirationDateException;
-import com.liferay.polls.QuestionTitleException;
+import com.liferay.polls.exception.QuestionChoiceException;
+import com.liferay.polls.exception.QuestionDescriptionException;
+import com.liferay.polls.exception.QuestionExpirationDateException;
+import com.liferay.polls.exception.QuestionTitleException;
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.service.base.PollsQuestionLocalServiceBaseImpl;

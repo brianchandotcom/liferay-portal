@@ -21,8 +21,10 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.Serializable;
 
 import java.lang.reflect.AccessibleObject;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 
 import java.util.List;
 
@@ -46,6 +48,15 @@ public class ServiceBeanMethodInvocation
 
 		if (!_method.isAccessible()) {
 			_method.setAccessible(true);
+		}
+
+		if ((_method.getDeclaringClass() == Object.class) &&
+			_method.getName().equals("equals")) {
+
+			_isEqualsMethod = true;
+		}
+		else {
+			_isEqualsMethod = false;
 		}
 	}
 
@@ -112,6 +123,26 @@ public class ServiceBeanMethodInvocation
 		}
 
 		try {
+			if (_isEqualsMethod) {
+				Object argument = _arguments[0];
+
+				if ((argument != null) &&
+					Proxy.isProxyClass(argument.getClass())) {
+
+					InvocationHandler invocationHandler =
+						Proxy.getInvocationHandler(argument);
+
+					if (invocationHandler instanceof ServiceBeanAopProxy) {
+						ServiceBeanAopProxy serviceBeanAopProxy =
+							(ServiceBeanAopProxy)invocationHandler;
+
+						argument = serviceBeanAopProxy.getTarget();
+
+						_arguments[0] = argument;
+					}
+				}
+			}
+
 			return _method.invoke(_target, _arguments);
 		}
 		catch (InvocationTargetException ite) {
@@ -177,6 +208,7 @@ public class ServiceBeanMethodInvocation
 	private Object[] _arguments;
 	private int _hashCode;
 	private int _index;
+	private boolean _isEqualsMethod;
 	private Method _method;
 	private List<MethodInterceptor> _methodInterceptors;
 	private Object _target;

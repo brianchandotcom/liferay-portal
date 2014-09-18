@@ -149,6 +149,10 @@ public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
 			classLoader, proxiedInterfaces, invocationHandler);
 	}
 
+	public Object getTarget() throws Exception {
+		return _advisedSupport.getTargetSource().getTarget();
+	}
+
 	@Override
 	public Object invoke(Object proxy, Method method, Object[] arguments)
 		throws Throwable {

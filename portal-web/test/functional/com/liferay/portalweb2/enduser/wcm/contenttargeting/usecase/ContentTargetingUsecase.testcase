@@ -23,7 +23,7 @@
 		</execute>
 	</set-up>
 
-	<tear-down>
+ 	<tear-down>
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
@@ -733,20 +733,25 @@
 		</execute>
 	</command>
 
-	<command name="UserSegmentSimulatorViaSimulatorPG" priority="5">
+	<command name="UserSegmentSimulateRulesViaSimulatorPG" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Web Content journal article 1" />
-			<var name="webContentTitle" value="Web Content Title 1" />
+			<var name="webContentContent" value="Web Content Content Male" />
+			<var name="webContentTitle" value="Web Content Title Male" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Web Content journal article 2" />
-			<var name="webContentTitle" value="Web Content Title 2" />
+			<var name="webContentContent" value="Web Content Content Female" />
+			<var name="webContentTitle" value="Web Content Title Female" />
 		</execute>
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -764,6 +769,11 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
 
 		<execute macro="ContentTargetingUserSegment#addCP">
 			<var name="userSegmentDescription" value="User Segment Description" />
@@ -789,9 +799,9 @@
 
 		<execute macro="UserSegmentContentDisplayPortlet#configureDisplayContent">
 			<var name="belongs" value="true" />
-			<var name="contentTitle" value="Web Content Title 1" />
+			<var name="contentTitle" value="Web Content Title Male" />
 			<var name="contentType" value="Web Content Article" />
-			<var name="otherwiseContentTitle" value="Web Content Title 2" />
+			<var name="otherwiseContentTitle" value="Web Content Title Female" />
 			<var name="otherwiseContentType" value="Web Content Article" />
 			<var name="toAll" value="true" />
 			<var name="userSegmentName" value="Male User Segment Name" />
@@ -803,23 +813,26 @@
 		</execute>
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
-			<var name="entryContentText" value="Web Content journal article 1" />
+			<var name="entryContentText" value="Web Content Content Male" />
 			<var name="viewUserSegmentSelected" value="Male User Segment Name" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#gotoSimulatorPG" />
+		<execute macro="ContentTargetingSimulator#gotoPG" />
 
-		<execute macro="ContentTargetingUserSegment#viewMatchedUserSegmentPG">
-			<var name="userSegmentName" value="Male User Segment Name" />
-			<var name="userSegmentSimulation" value="true" />
+		<execute macro="ContentTargetingSimulator#viewUserSegmentsViaSimulatorPG">
+			<var name="viewUserSegmentMatched" value="Male User Segment Name" />
+			<var name="viewUserSegmentsOther" value="Female User Segment Name" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#viewOtherUserSegmentPG">
-			<var name="userSegmentName" value="Female User Segment Name" />
-			<var name="userSegmentSimulation" value="true" />
+		<execute macro="ContentTargetingSimulator#configureUserSegmentMatchedPG">
+			<var name="uncheckUserSegmentMatchedList" value="Male User Segment Name" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#simulateUserSegmentPG">
+		<execute macro="ContentTargetingSimulator#configureUserSegmentOtherPG">
+			<var name="checkUserSegmentOtherList" value="Female User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingSimulator#simulateUserSegmentPG">
 			<var name="simulationbutton" value="Simulate" />
 		</execute>
 
@@ -829,13 +842,13 @@
 		</execute>
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
-			<var name="entryContentText" value="Web Content journal article 2" />
+			<var name="entryContentText" value="Web Content Content Female" />
 			<var name="viewUserSegmentSelected" value="Default" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#gotoSimulatorPG" />
+		<execute macro="ContentTargetingSimulator#gotoPG" />
 
-		<execute macro="ContentTargetingUserSegment#simulateUserSegmentPG">
+		<execute macro="ContentTargetingSimulator#simulateUserSegmentPG">
 			<var name="simulationbutton" value="Stop Simulation" />
 		</execute>
 
@@ -845,15 +858,12 @@
 		</execute>
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
-			<var name="entryContentText" value="Web Content journal article 1" />
+			<var name="entryContentText" value="Web Content Content Male" />
 			<var name="viewUserSegmentSelected" value="Male User Segment Name" />
 		</execute>
 	</command>
 
 	<command name="UserSegmentViewInSimulatorPG" priority="5">
-		<var name="matchedUserSegmentLists" value="Site Member Name,Male User Segment Name,Age 25 - 50" />
-		<var name="otherUserSegmentLists" value="Site Admin Role Name,Female User Segment Name,Age 50 - 100,Age 18 - 25" />
-
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Site Name" />
@@ -952,20 +962,11 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#gotoSimulatorPG" />
+		<execute macro="ContentTargetingSimulator#gotoPG" />
 
-		<for list="${matchedUserSegmentLists}" param="matchedUserSegmentListsCount" >
-
-			<execute macro="ContentTargetingUserSegment#viewMatchedUserSegmentPG">
-				<var name="userSegmentName" value="${matchedUserSegmentListsCount}" />
-			</execute>
-		</for>
-
-		<for list="${otherUserSegmentLists}" param="otherUserSegmentListsCount" >
-
-			<execute macro="ContentTargetingUserSegment#viewOtherUserSegmentPG">
-				<var name="userSegmentName" value="${otherUserSegmentListsCount}" />
-			</execute>
-		</for>
+		<execute macro="ContentTargetingSimulator#viewUserSegmentsViaSimulatorPG">
+			<var name="viewUserSegmentMatched" value="Site Member Name,Male User Segment Name,Age 25 - 50" />
+			<var name="viewUserSegmentOther" value="Site Admin Role Name,Female User Segment Name,Age 50 - 100,Age 18 - 25" />
+		</execute>
 	</command>
 </definition>

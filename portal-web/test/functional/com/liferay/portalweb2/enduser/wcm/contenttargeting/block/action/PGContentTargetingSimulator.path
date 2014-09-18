@@ -19,7 +19,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DOCKBAR_SIMULATOR</td>
+	<td>DOCKBAR_SIMULATOR_BUTTON</td>
 	<td>//a[@id='_145_simulatorPanel']</td>
 	<td></td>
 </tr>
@@ -40,12 +40,12 @@
 </tr>
 <!--SIMULATOR-->
 <tr>
-	<td>SIMULATOR_USER_SEGMENTS</td>
+	<td>SIMULATOR_USER_SEGMENTS_NAVIGATION</td>
 	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'User Segments')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SIMULATOR_CAMPAIGNS</td>
+	<td>SIMULATOR_CAMPAIGNS_NAVIGATION</td>
 	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Campaigns')]</td>
 	<td></td>
 </tr>
@@ -54,27 +54,27 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--MATCHED_USER_SEGMENT-->
+<!--USER_SEGMENTS_MATCHED-->
 <tr>
-	<td>MATCHED_USER_SEGMENT_LABEL</td>
-	<td>//div[@class='category-content']/label[contains(.,'${key_userSegment}')]</td>
+	<td>USER_SEGMENTS_MATCHED_LABEL</td>
+	<td>//div[@class='category-content']/label[contains(.,'${key_userSegmentMatched}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>MATCHED_USER_SEGMENT_CHECKBOX</td>
-	<td>//label[contains(.,'${key_userSegment}')]/input[@class='field element matched']</td>
+	<td>USER_SEGMENTS_MATCHED_CHECKBOX</td>
+	<td>//label[contains(.,'${key_userSegmentMatched}')]/input[@class='field element matched']</td>
 	<td></td>
 </tr>
 <!---->
-<!--OTHER_USER_SEGMENT-->
+<!--USER_SEGMENTS_OTHER-->
 <tr>
-	<td>OTHER_USER_SEGMENT_LABEL</td>
-	<td>//div[@class='category-content']/label[contains(.,'${key_userSegment}')]</td>
+	<td>USER_SEGMENTS_OTHER_LABEL</td>
+	<td>//div[@class='category-content']/label[contains(.,'${key_userSegmentOther}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>OTHER_USER_SEGMENT_CHECKBOX</td>
-	<td>//label[contains(.,'${key_userSegment}')]/input[@class='field element not-matched']</td>
+	<td>USER_SEGMENTS_OTHER_CHECKBOX</td>
+	<td>//label[contains(.,'${key_userSegmentOther}')]/input[@class='field element not-matched']</td>
 	<td></td>
 </tr>
 </tbody>

@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.mobile.device;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -61,29 +60,17 @@ public class NoKnownDevices implements KnownDevices {
 	}
 
 	private NoKnownDevices() {
-		_brands.add(VersionableName.UNKNOWN);
-
-		_brands = Collections.unmodifiableSet(_brands);
-
-		_browsers.add(VersionableName.UNKNOWN);
-
-		_browsers = Collections.unmodifiableSet(_browsers);
-
-		_operatingSystems.add(VersionableName.UNKNOWN);
-
-		_operatingSystems = Collections.unmodifiableSet(_operatingSystems);
-
-		_pointingMethods.add(VersionableName.UNKNOWN.getName());
-
-		_pointingMethods = Collections.unmodifiableSet(_pointingMethods);
 	}
 
-	private static NoKnownDevices _instance = new NoKnownDevices();
+	private static final NoKnownDevices _instance = new NoKnownDevices();
 
-	private Set<VersionableName> _brands = new HashSet<VersionableName>();
-	private Set<VersionableName> _browsers = new HashSet<VersionableName>();
-	private Set<VersionableName> _operatingSystems =
-		new HashSet<VersionableName>();
-	private Set<String> _pointingMethods = new HashSet<String>();
+	private final Set<VersionableName> _brands = Collections.singleton(
+		VersionableName.UNKNOWN);
+	private final Set<VersionableName> _browsers = Collections.singleton(
+		VersionableName.UNKNOWN);
+	private final Set<VersionableName> _operatingSystems =
+		Collections.singleton(VersionableName.UNKNOWN);
+	private final Set<String> _pointingMethods = Collections.singleton(
+		VersionableName.UNKNOWN.getName());
 
 }

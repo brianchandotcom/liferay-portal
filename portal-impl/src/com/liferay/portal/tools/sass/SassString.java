@@ -36,7 +36,7 @@ public class SassString implements SassFragment {
 			_ltrContent = cssContent;
 
 			if (!RTLCSSUtil.isExcludedPath(fileName)) {
-				_rtlContent = RTLCSSUtil.getRtlCss(cssContent);
+				_rtlContent = RTLCSSUtil.getRtlCss(fileName, cssContent);
 			}
 			else {
 				_rtlContent = null;

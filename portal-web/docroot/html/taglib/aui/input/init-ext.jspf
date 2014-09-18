@@ -66,6 +66,7 @@ if (baseType.equals("email") || baseType.equals("password") || baseType.equals("
 }
 
 boolean useInputWrapper = true;
+
 String inputWrapperClass = controlGroupCssClass;
 
 if (choiceField) {

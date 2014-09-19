@@ -9,7 +9,7 @@
 		}
 
 		.liferay-rating-vote, .liferay-rating-score {
-			float: left;
+			display: inline-block;
 		}
 	}
 

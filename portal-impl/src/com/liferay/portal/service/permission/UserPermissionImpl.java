@@ -133,7 +133,7 @@ public class UserPermissionImpl
 					 actionId.equals(ActionKeys.PERMISSIONS) ||
 					 actionId.equals(ActionKeys.UPDATE)) &&
 					!permissionChecker.isOmniadmin() &&
-					(PortalUtil.isOmniadmin(userId) ||
+					(PortalUtil.isOmniadmin(user) ||
 					 (!permissionChecker.isCompanyAdmin() &&
 					  PortalUtil.isCompanyAdmin(user)))) {
 

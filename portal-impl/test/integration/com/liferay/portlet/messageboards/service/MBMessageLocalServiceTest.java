@@ -28,8 +28,6 @@ import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 
 import java.text.DateFormat;
 
-import java.util.Date;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -66,18 +64,14 @@ public class MBMessageLocalServiceTest {
 		MBMessageLocalServiceUtil.deleteMessage(
 			secondReplyMessage.getMessageId());
 
-		Date lastMessageModifiedDate = firstReplyMessage.getModifiedDate();
-
 		MBThread mbThread = parentMessage.getThread();
-
-		Date mbThreadLastPostDate = mbThread.getLastPostDate();
 
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			PropsValues.INDEX_DATE_FORMAT_PATTERN);
 
-		Assert.assertTrue(
-			dateFormat.format(mbThreadLastPostDate) == dateFormat.format(
-				lastMessageModifiedDate));
+		Assert.assertEquals(
+			dateFormat.format(firstReplyMessage.getModifiedDate()),
+			dateFormat.format(mbThread.getLastPostDate()));
 	}
 
 	@DeleteAfterTestRun

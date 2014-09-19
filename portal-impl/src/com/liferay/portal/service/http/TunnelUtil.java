@@ -66,7 +66,9 @@ public class TunnelUtil {
 			throw authException;
 		}
 
-		if ((sharedSecret.length() != 16) && (sharedSecret.length() != 32) &&
+		if ((sharedSecret.length() != 8) && (sharedSecret.length() != 16) &&
+			(sharedSecret.length() != 24) && (sharedSecret.length() != 32) &&
+			(sharedSecret.length() != 48) && (sharedSecret.length() != 56) &&
 			(sharedSecret.length() != 64)) {
 
 			AuthException authException = new AuthException();
@@ -77,7 +79,8 @@ public class TunnelUtil {
 		}
 
 		return new SecretKeySpec(
-			sharedSecret.getBytes(), _TUNNEL_ENCRYPTION_ALGORITHM);
+			sharedSecret.getBytes(),
+			PropsValues.TUNNELING_SERVLET_ENCRYPTION_ALGORITHM);
 	}
 
 	public static Object invoke(
@@ -186,8 +189,6 @@ public class TunnelUtil {
 
 		return httpURLConnection;
 	}
-
-	private static final String _TUNNEL_ENCRYPTION_ALGORITHM = "AES";
 
 	private static final boolean _VERIFY_SSL_HOSTNAME = GetterUtil.getBoolean(
 		PropsUtil.get(TunnelUtil.class.getName() + ".verify.ssl.hostname"));

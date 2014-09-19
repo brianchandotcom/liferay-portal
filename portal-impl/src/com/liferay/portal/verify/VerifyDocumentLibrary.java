@@ -144,9 +144,7 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 			new ActionableDynamicQuery.PerformActionMethod() {
 
 				@Override
-				public void performAction(Object object)
-					throws PortalException {
-
+				public void performAction(Object object) {
 					DLFileEntry dlFileEntry = (DLFileEntry)object;
 
 					if (dlFileEntry.isInTrash()) {
@@ -163,7 +161,7 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 						if (!(pe instanceof DuplicateFileException) &&
 							!(pe instanceof DuplicateFolderNameException)) {
 
-							throw pe;
+							return;
 						}
 
 						try {

@@ -41,20 +41,16 @@ public class BaseAudioTag extends com.liferay.taglib.util.IncludeTag {
 		return _cssClass;
 	}
 
-	public java.lang.Object getFixedAttributes() {
-		return _fixedAttributes;
-	}
-
-	public java.lang.Object getFlashVars() {
-		return _flashVars;
-	}
-
 	public java.lang.String getId() {
 		return _id;
 	}
 
 	public java.lang.String getOggUrl() {
 		return _oggUrl;
+	}
+
+	public java.lang.String getSwfUrl() {
+		return _swfUrl;
 	}
 
 	public java.lang.String getType() {
@@ -77,18 +73,6 @@ public class BaseAudioTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("cssClass", cssClass);
 	}
 
-	public void setFixedAttributes(java.lang.Object fixedAttributes) {
-		_fixedAttributes = fixedAttributes;
-
-		setScopedAttribute("fixedAttributes", fixedAttributes);
-	}
-
-	public void setFlashVars(java.lang.Object flashVars) {
-		_flashVars = flashVars;
-
-		setScopedAttribute("flashVars", flashVars);
-	}
-
 	public void setId(java.lang.String id) {
 		_id = id;
 
@@ -99,6 +83,12 @@ public class BaseAudioTag extends com.liferay.taglib.util.IncludeTag {
 		_oggUrl = oggUrl;
 
 		setScopedAttribute("oggUrl", oggUrl);
+	}
+
+	public void setSwfUrl(java.lang.String swfUrl) {
+		_swfUrl = swfUrl;
+
+		setScopedAttribute("swfUrl", swfUrl);
 	}
 
 	public void setType(java.lang.String type) {
@@ -117,50 +107,39 @@ public class BaseAudioTag extends com.liferay.taglib.util.IncludeTag {
 	protected void cleanUp() {
 		_boundingBox = null;
 		_cssClass = null;
-		_fixedAttributes = null;
-		_flashVars = null;
 		_id = null;
 		_oggUrl = null;
+		_swfUrl = null;
 		_type = "mp3";
 		_url = null;
 	}
 
 	@Override
-	protected String getEndPage() {
-		return _END_PAGE;
-	}
-
-	@Override
-	protected String getStartPage() {
-		return _START_PAGE;
+	protected String getPage() {
+		return _PAGE;
 	}
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		setNamespacedAttribute(request, "boundingBox", _boundingBox);
 		setNamespacedAttribute(request, "cssClass", _cssClass);
-		setNamespacedAttribute(request, "fixedAttributes", _fixedAttributes);
-		setNamespacedAttribute(request, "flashVars", _flashVars);
 		setNamespacedAttribute(request, "id", _id);
 		setNamespacedAttribute(request, "oggUrl", _oggUrl);
+		setNamespacedAttribute(request, "swfUrl", _swfUrl);
 		setNamespacedAttribute(request, "type", _type);
 		setNamespacedAttribute(request, "url", _url);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:audio:";
 
-	private static final String _END_PAGE =
-		"/html/taglib/aui/audio/end.jsp";
-
-	private static final String _START_PAGE =
-		"/html/taglib/aui/audio/start.jsp";
+	private static final String _PAGE =
+		"/html/taglib/aui/audio/page.jsp";
 
 	private java.lang.String _boundingBox = null;
 	private java.lang.String _cssClass = null;
-	private java.lang.Object _fixedAttributes = null;
-	private java.lang.Object _flashVars = null;
 	private java.lang.String _id = null;
 	private java.lang.String _oggUrl = null;
+	private java.lang.String _swfUrl = null;
 	private java.lang.String _type = "mp3";
 	private java.lang.String _url = null;
 

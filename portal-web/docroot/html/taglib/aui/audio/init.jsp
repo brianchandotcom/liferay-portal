@@ -20,10 +20,9 @@
 
 <%
 java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:audio:cssClass"));
-java.lang.Object fixedAttributes = (java.lang.Object)request.getAttribute("aui:audio:fixedAttributes");
-java.lang.Object flashVars = (java.lang.Object)request.getAttribute("aui:audio:flashVars");
 java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribute("aui:audio:id"));
 java.lang.String oggUrl = GetterUtil.getString((java.lang.String)request.getAttribute("aui:audio:oggUrl"));
+java.lang.String swfUrl = GetterUtil.getString((java.lang.String)request.getAttribute("aui:audio:swfUrl"));
 java.lang.String type = GetterUtil.getString((java.lang.String)request.getAttribute("aui:audio:type"), "mp3");
 java.lang.String url = GetterUtil.getString((java.lang.String)request.getAttribute("aui:audio:url"));
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:audio:dynamicAttributes");

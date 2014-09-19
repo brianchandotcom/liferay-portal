@@ -15,14 +15,18 @@
 package com.liferay.portlet.messageboards.service;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
+
+import java.text.DateFormat;
 
 import java.util.Date;
 
@@ -68,9 +72,12 @@ public class MBMessageLocalServiceTest {
 
 		Date mbThreadLastPostDate = mbThread.getLastPostDate();
 
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			PropsValues.INDEX_DATE_FORMAT_PATTERN);
+
 		Assert.assertTrue(
-			mbThreadLastPostDate.getTime() ==
-				(lastMessageModifiedDate.getTime() / 1000) * 1000);
+			dateFormat.format(mbThreadLastPostDate) == dateFormat.format(
+				lastMessageModifiedDate));
 	}
 
 	@DeleteAfterTestRun

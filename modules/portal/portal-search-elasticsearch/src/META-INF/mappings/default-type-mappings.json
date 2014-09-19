@@ -14,7 +14,7 @@
 			},
 			{
 				"template_expando": {
-					"match": "expando_*",
+					"match": "expando__*",
 					"match_mapping_type": "string",
 					"mapping": {
 						"index": "not_analyzed",

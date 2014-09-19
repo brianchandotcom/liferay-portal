@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibraryadmin.messaging;
+package com.liferay.portlet.documentlibrary.messaging;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;

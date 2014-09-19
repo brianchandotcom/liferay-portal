@@ -46,8 +46,9 @@ public class TemporaryFilesMessageListener implements MessageListener {
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Unable to try to cleanup temporary files in "+
-							"repository " + repository.getRepositoryId(), e);
+						"Unable to try to cleanup temporary files in " +
+							"repository " + repository.getRepositoryId(),
+						e);
 				}
 			}
 		}

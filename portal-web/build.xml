@@ -496,6 +496,7 @@
 		>
 			<jvmarg value="-Xmx1024m" />
 			<jvmarg value="-Djava.io.tmpdir=${sass.tmp.dir}" />
+			<jvmarg value="-Djava.util.logging.config.file=${project.dir}/portal-impl/src/com/liferay/portal/tools/dependencies/portal-tools-logging.properties" />
 			<jvmarg value="-Dliferay.lib.portal.dir=${basedir}/../lib/portal" />
 			<arg value="sass.dir.0=/html/css" />
 			<arg value="sass.dir.1=/html/portlet" />

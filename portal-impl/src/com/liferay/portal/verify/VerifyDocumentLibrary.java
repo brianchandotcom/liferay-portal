@@ -145,7 +145,6 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 
 				@Override
 				public void performAction(Object object) {
-
 					DLFileEntry dlFileEntry = (DLFileEntry)object;
 
 					if (dlFileEntry.isInTrash()) {
@@ -153,33 +152,30 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 					}
 
 					try {
+						DLFileEntryLocalServiceUtil.validateFile(
+							dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
+							dlFileEntry.getFileEntryId(),
+							dlFileEntry.getFileName(), dlFileEntry.getTitle());
+					}
+					catch (PortalException pe) {
+						if (!(pe instanceof DuplicateFileException) &&
+							!(pe instanceof DuplicateFolderNameException)) {
+
+							return;
+						}
 
 						try {
-							DLFileEntryLocalServiceUtil.validateFile(
-								dlFileEntry.getGroupId(), 
-								dlFileEntry.getFolderId(),
-								dlFileEntry.getFileEntryId(),
-								dlFileEntry.getFileName(), 
-								dlFileEntry.getTitle());
-						}
-						catch (PortalException pe) {
-							if (!(pe instanceof DuplicateFileException) &&
-								!(pe instanceof DuplicateFolderNameException)) {
-	
-								throw pe;
-							}
-
 							renameDuplicateTitle(dlFileEntry);
 						}
-					}
-					catch (Exception e) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to rename duplicate title for " +
-									"file entry " +
-										dlFileEntry.getFileEntryId() +
-											": " + e.getMessage(),
-								e);
+						catch (Exception e) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(
+									"Unable to rename duplicate title for " +
+										"file entry " +
+											dlFileEntry.getFileEntryId() +
+												": " + e.getMessage(),
+									e);
+							}
 						}
 					}
 				}

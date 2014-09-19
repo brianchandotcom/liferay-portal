@@ -14,124 +14,25 @@
 
 package com.liferay.portlet.wiki.trash;
 
-import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.test.Sync;
-import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
-import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
-import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
 import com.liferay.portlet.trash.util.TrashUtil;
-import com.liferay.portlet.wiki.asset.WikiPageAssetRenderer;
-import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.portlet.wiki.util.test.WikiTestUtil;
 
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
- * @author Eudaldo Alonso
  * @author Roberto Díaz
  */
-@ExecutionTestListeners(listeners = {
-	MainServletExecutionTestListener.class,
-	SynchronousDestinationExecutionTestListener.class
-})
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
-@Sync
-public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
+public class WikiPageTrashHandlerTestUtil {
 
-	@Ignore()
-	@Override
-	@Test
-	public void testTrashAndDeleteDraft() throws Exception {
-	}
-
-	@Ignore()
-	@Override
-	@Test
-	public void testTrashAndRestoreDraft() throws Exception {
-	}
-
-	@Ignore()
-	@Override
-	@Test
-	public void testTrashGrandparentBaseModelAndRestoreParentModel()
-		throws Exception {
-	}
-
-	@Ignore()
-	@Override
-	@Test
-	public void testTrashIsRestorableBaseModel() throws Exception {
-	}
-
-	@Ignore()
-	@Override
-	@Test
-	public void testTrashIsRestorableBaseModelWithParent1() throws Exception {
-	}
-
-	@Ignore()
-	@Override
-	@Test
-	public void testTrashIsRestorableBaseModelWithParent2() throws Exception {
-	}
-
-	@Ignore()
-	@Override
-	@Test
-	public void testTrashIsRestorableBaseModelWithParent3() throws Exception {
-	}
-
-	@Ignore()
-	@Override
-	@Test
-	public void testTrashIsRestorableBaseModelWithParent4() throws Exception {
-	}
-
-	@Ignore()
-	@Override
-	@Test
-	public void testTrashMoveBaseModel() throws Exception {
-	}
-
-	@Ignore()
-	@Override
-	@Test
-	public void testTrashMyBaseModel() throws Exception {
-	}
-
-	@Ignore()
-	@Override
-	@Test
-	public void testTrashRecentBaseModel() throws Exception {
-	}
-
-	@Ignore()
-	@Override
-	@Test
-	public void testTrashVersionParentBaseModel() throws Exception {
-	}
-
-	@Ignore()
-	@Override
-	@Test
-	public void testTrashVersionParentBaseModelAndRestore() throws Exception {
-	}
-
-	@Override
-	protected BaseModel<?> addBaseModelWithWorkflow(
+	protected static BaseModel<?> addBaseModelWithWorkflow(
 			BaseModel<?> parentBaseModel, boolean approved,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -146,30 +47,24 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 			approved);
 	}
 
-	@Override
-	protected Long getAssetClassPK(ClassedModel classedModel) {
-		return WikiPageAssetRenderer.getClassPK((WikiPage)classedModel);
-	}
+	protected static BaseModel<?> getBaseModel(long primaryKey)
+		throws Exception {
 
-	@Override
-	protected BaseModel<?> getBaseModel(long primaryKey) throws Exception {
 		return WikiPageLocalServiceUtil.getPageByPageId(primaryKey);
 	}
 
-	@Override
-	protected Class<?> getBaseModelClass() {
+	protected static Class<?> getBaseModelClass() {
 		return WikiPage.class;
 	}
 
-	@Override
-	protected String getBaseModelName(ClassedModel classedModel) {
+	protected static String getBaseModelName(ClassedModel classedModel) {
 		WikiPage page = (WikiPage)classedModel;
 
 		return page.getTitle();
 	}
 
-	@Override
-	protected int getNotInTrashBaseModelsCount(BaseModel<?> parentBaseModel)
+	protected static int getNotInTrashBaseModelsCount(
+			BaseModel<?> parentBaseModel)
 		throws Exception {
 
 		return WikiPageLocalServiceUtil.getPagesCount(
@@ -177,8 +72,7 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 			WorkflowConstants.STATUS_ANY);
 	}
 
-	@Override
-	protected BaseModel<?> getParentBaseModel(
+	protected static BaseModel<?> getParentBaseModel(
 			Group group, ServiceContext serviceContext)
 		throws Exception {
 
@@ -192,25 +86,17 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 			RandomTestUtil.randomString(), serviceContext);
 	}
 
-	@Override
-	protected Class<?> getParentBaseModelClass() {
-		return WikiNode.class;
-	}
-
-	@Override
-	protected String getSearchKeywords() {
+	protected static String getSearchKeywords() {
 		return _PAGE_TITLE;
 	}
 
-	@Override
-	protected long getTrashEntryClassPK(ClassedModel classedModel) {
+	protected static long getTrashEntryClassPK(ClassedModel classedModel) {
 		WikiPage page = (WikiPage)classedModel;
 
 		return page.getResourcePrimKey();
 	}
 
-	@Override
-	protected String getUniqueTitle(BaseModel<?> baseModel) {
+	protected static String getUniqueTitle(BaseModel<?> baseModel) {
 		WikiPage page = (WikiPage)baseModel;
 
 		String title = page.getTitle();
@@ -218,29 +104,23 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 		return TrashUtil.getOriginalTitle(title);
 	}
 
-	@Override
-	protected boolean isBaseModelMoveableFromTrash() {
-		return false;
-	}
+	protected static void moveBaseModelToTrash(long primaryKey)
+		throws Exception {
 
-	@Override
-	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
 		WikiPage page = WikiPageLocalServiceUtil.getPageByPageId(primaryKey);
 
 		WikiPageLocalServiceUtil.movePageToTrash(
 			TestPropsValues.getUserId(), page.getNodeId(), page.getTitle());
 	}
 
-	@Override
-	protected void moveParentBaseModelToTrash(long primaryKey)
+	protected static void moveParentBaseModelToTrash(long primaryKey)
 		throws Exception {
 
 		WikiNodeLocalServiceUtil.moveNodeToTrash(
 			TestPropsValues.getUserId(), primaryKey);
 	}
 
-	@Override
-	protected BaseModel<?> updateBaseModel(
+	protected static BaseModel<?> updateBaseModel(
 			long primaryKey, ServiceContext serviceContext)
 		throws Exception {
 

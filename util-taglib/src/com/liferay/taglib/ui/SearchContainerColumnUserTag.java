@@ -17,6 +17,7 @@ package com.liferay.taglib.ui;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.SearchEntry;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.search.UserSearchEntry;
@@ -48,12 +49,14 @@ public class SearchContainerColumnUserTag<R> extends SearchContainerColumnTag {
 
 			if ((_userId == 0) && (resultRow.getObject() != null)) {
 				if (Validator.isNull(_property)) {
-					_userId = (Long)BeanPropertiesUtil.getObject(
-						resultRow.getObject(), "userId");
+					_userId = GetterUtil.getLong(
+						BeanPropertiesUtil.getObjectSilent(
+							resultRow.getObject(), "userId"));
 				}
 				else {
-					_userId = (Integer)BeanPropertiesUtil.getObject(
-						resultRow.getObject(), _property);
+					_userId = GetterUtil.getLong(
+						BeanPropertiesUtil.getObjectSilent(
+							resultRow.getObject(), _property));
 				}
 			}
 

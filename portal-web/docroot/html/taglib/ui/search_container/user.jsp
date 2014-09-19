@@ -23,24 +23,22 @@ long userId = GetterUtil.getLong(request.getAttribute("liferay-ui:search-contain
 User user2 = UserLocalServiceUtil.fetchUser(userId);
 %>
 
-<c:if test="<%= user2 != null %>">
-	<div class="user-info">
-		<div class="user-avatar">
-			<img alt="<%= HtmlUtil.escapeAttribute(user2.getFullName()) %>" class="avatar img-circle" src="<%= HtmlUtil.escape(user2.getPortraitURL(themeDisplay)) %>" />
-		</div>
-
-		<div class="user-details">
-			<div class="row <%= (date == null) ? "line" : StringPool.BLANK %>">
-				<span class="col-md-12 user-name"><%= HtmlUtil.escapeAttribute(user2.getFullName()) %></span>
-			</div>
-
-			<c:if test="<%= date != null %>">
-				<div class="row">
-					<span class="col-md-12 date-info">
-						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - date.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-					</span>
-				</div>
-			</c:if>
-		</div>
+<div class="user-info">
+	<div class="user-avatar">
+		<img alt="<%= HtmlUtil.escapeAttribute((user2 != null) ? user2.getFullName() : LanguageUtil.get(request, "anonymous")) %>" class="avatar img-circle" src="<%= HtmlUtil.escape((user2 != null) ? user2.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, StringPool.BLANK)) %>" />
 	</div>
-</c:if>
+
+	<div class="user-details">
+		<div class="row <%= (date == null) ? "line" : StringPool.BLANK %>">
+			<span class="col-md-12 user-name"><%= HtmlUtil.escapeAttribute((user2 != null) ? user2.getFullName() : LanguageUtil.get(request, "anonymous")) %></span>
+		</div>
+
+		<c:if test="<%= date != null %>">
+			<div class="row">
+				<span class="col-md-12 date-info">
+					<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - date.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+				</span>
+			</div>
+		</c:if>
+	</div>
+</div>

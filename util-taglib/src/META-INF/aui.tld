@@ -2490,7 +2490,7 @@
 		</attribute>
 		<attribute>
 			<name>url</name>
-			<required>false</required>
+			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>

@@ -134,7 +134,6 @@
 /* ---------- General navigation ---------- */
 
 .navigation-pane {
-
 	.body-row {
 		height: 100%;
 		overflow: hidden;
@@ -177,7 +176,7 @@
 				padding: 11px 14px;
 
 				@include respond-to(desktop) {
-					padding: 14px 10px;
+					padding: 11px;
 				}
 			}
 		}

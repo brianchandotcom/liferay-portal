@@ -224,13 +224,13 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(PortletKeys.DO
 	var documentLibrary = new Liferay.Portlet.DocumentLibrary(
 		{
 			columnNames: ['<%= StringUtil.merge(escapedEntryColumns, "','") %>'],
-			displayStyle: '<%= HtmlUtil.escapeJS(displayStyle) %>',
 
 			<%
 			DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
 			%>
 
 			decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
+			displayStyle: '<%= HtmlUtil.escapeJS(displayStyle) %>',
 
 			folders: {
 				defaultParams: {
@@ -257,8 +257,8 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(PortletKeys.DO
 			move: {
 				allRowIds: '<%= RowChecker.ALL_ROW_IDS %>',
 				editEntryUrl: '<portlet:actionURL><portlet:param name="struts_action" value="/document_library/edit_entry" /></portlet:actionURL>',
-				folderIdRegEx: /&?<portlet:namespace />folderId=([\d]+)/i,
 				folderIdHashRegEx: /#.*&?<portlet:namespace />folderId=([\d]+)/i,
+				folderIdRegEx: /&?<portlet:namespace />folderId=([\d]+)/i,
 				form: {
 					method: 'POST',
 					node: A.one(document.<portlet:namespace />fm2)

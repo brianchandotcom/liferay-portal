@@ -533,6 +533,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 		.overlay.entry-action {
 			.btn {
 				background: transparent;
+
+				@include respond-to(desktop) {
+					padding: 14px 10px;
+				}
 			}
 		}
 	}

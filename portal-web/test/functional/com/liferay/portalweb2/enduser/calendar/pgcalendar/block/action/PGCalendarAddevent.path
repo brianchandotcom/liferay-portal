@@ -127,13 +127,33 @@
 	<td></td>
 </tr>
 <tr>
-	<td>REPEAT_ENDS_NEVER_CHECKBOX</td>
+	<td>REPEAT_REPEAT_ON_DAY_OF_THE_MONTH_RADIO</td>
+	<td>//label[@class='radio-inline' and contains(.,'Day of the Month')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_RADIO</td>
+	<td>//label[@class='radio-inline' and contains(.,'Day of the Week')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_POSITION_DROPDOWN</td>
+	<td>//div[contains(@id,'calendarportlet_viewPositionalWeekday')]//select[@title='Position']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_WEEKDAY_DROPDOWN</td>
+	<td>//div[contains(@id,'calendarportlet_viewPositionalWeekday')]//select[@title='Weekday']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_ENDS_NEVER_RADIO</td>
 	<td>//input[contains(@name,'calendarportlet_ends') and @value='never']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>REPEAT_ENDS_AFTER_CHECKBOX</td>
-	<td>//input[contains(@name,'calendarportlet_ends') and @value='after']</td>
+	<td>REPEAT_ENDS_AFTER_RADIO</td>
+	<td>//td[contains(@class,'calendar-portlet-recurrence-content')]//input[contains(@name,'calendarportlet_ends') and @value='after']</td>
 	<td></td>
 </tr>
 <tr>
@@ -142,13 +162,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>REPEAT_ENDS_ON</td>
+	<td>REPEAT_ENDS_ON_RADIO</td>
 	<td>//input[contains(@name,'calendarportlet_ends') and @value='on']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REPEAT_ENDS_ON_FIELD</td>
-	<td>//input[contains(@id,'calendarportlet_untilDate')]</td>
 	<td></td>
 </tr>
 <tr>

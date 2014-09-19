@@ -516,16 +516,8 @@ DLFileVersionDisplayContext dlFileVersionDisplayContext = DLFileVersionDisplayCo
 	function <portlet:namespace />saveFileEntry(draft) {
 		<%= HtmlUtil.escape(uploadProgressId) %>.startProgress();
 
-		if (!draft) {
-			document.<portlet:namespace />fm.action = '<%= editFileEntryURL.toString() %>';
-		}
-		else {
-
-			<%
-			editFileEntryURL.setParameter("workflowAction", String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT));
-			%>
-
-			document.<portlet:namespace />fm.action = '<%= editFileEntryURL.toString() %>';
+		if (draft) {
+			document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>';
 		}
 
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (fileEntry == null) ? Constants.ADD : Constants.UPDATE %>';

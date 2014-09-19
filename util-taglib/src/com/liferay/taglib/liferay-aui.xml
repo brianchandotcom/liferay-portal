@@ -1378,6 +1378,7 @@
 				<name>url</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
+				<required>true</required>
 			</attribute>
 			<attribute>
 				<name>width</name>

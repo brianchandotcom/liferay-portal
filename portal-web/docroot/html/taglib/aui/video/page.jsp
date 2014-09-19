@@ -26,7 +26,6 @@
 			height: <%= height %>,
 			ogvUrl: '<%= ogvUrl %>',
 			poster: '<%= poster %>',
-			render: true,
 			swfUrl: '<%= swfUrl %>',
 			url: '<%= url %>',
 			width: <%= width %>

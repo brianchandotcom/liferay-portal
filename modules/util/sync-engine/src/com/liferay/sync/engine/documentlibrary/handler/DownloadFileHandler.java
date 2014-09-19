@@ -15,6 +15,8 @@
 package com.liferay.sync.engine.documentlibrary.handler;
 
 import com.liferay.sync.engine.documentlibrary.event.Event;
+import com.liferay.sync.engine.filesystem.Watcher;
+import com.liferay.sync.engine.filesystem.WatcherRegistry;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.service.SyncAccountService;
@@ -31,6 +33,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+
+import java.util.List;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -100,9 +104,13 @@ public class DownloadFileHandler extends BaseHandler {
 
 		SyncFile syncFile = (SyncFile)getParameterValue("syncFile");
 
-		try {
-			Path filePath = Paths.get(syncFile.getFilePathName());
+		Path filePath = Paths.get(syncFile.getFilePathName());
 
+		Watcher watcher = WatcherRegistry.getWatcher(getSyncAccountId());
+
+		List<String> downloadedFiles = watcher.getDownloadedFiles();
+
+		try {
 			HttpEntity httpEntity = httpResponse.getEntity();
 
 			inputStream = httpEntity.getContent();
@@ -125,6 +133,8 @@ public class DownloadFileHandler extends BaseHandler {
 					StandardCopyOption.REPLACE_EXISTING);
 			}
 
+			downloadedFiles.add(filePath.toString());
+
 			Files.move(
 				tempFilePath, filePath, StandardCopyOption.ATOMIC_MOVE,
 				StandardCopyOption.REPLACE_EXISTING);
@@ -143,6 +153,8 @@ public class DownloadFileHandler extends BaseHandler {
 			SyncFileService.updateFileKeySyncFile(syncFile);
 		}
 		catch (FileSystemException fse) {
+			downloadedFiles.remove(filePath.toString());
+
 			String message = fse.getMessage();
 
 			if (message.contains("File name too long")) {

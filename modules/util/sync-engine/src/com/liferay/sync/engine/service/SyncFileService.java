@@ -113,7 +113,6 @@ public class SyncFileService {
 		syncFile.setRepositoryId(repositoryId);
 		syncFile.setSyncAccountId(syncAccountId);
 		syncFile.setType(type);
-		syncFile.setUiEvent(SyncFile.UI_EVENT_ADDED_LOCAL);
 
 		_syncFilePersistence.create(syncFile);
 
@@ -397,7 +396,6 @@ public class SyncFileService {
 
 		syncFile.setFilePathName(filePath.toString());
 		syncFile.setParentFolderId(folderId);
-		syncFile.setUiEvent(SyncFile.UI_EVENT_MOVED_LOCAL);
 
 		update(syncFile);
 
@@ -416,8 +414,6 @@ public class SyncFileService {
 		throws Exception {
 
 		// Local sync file
-
-		syncFile.setUiEvent(SyncFile.UI_EVENT_MOVED_LOCAL);
 
 		updateSyncFile(filePath, parentFolderId, syncFile);
 

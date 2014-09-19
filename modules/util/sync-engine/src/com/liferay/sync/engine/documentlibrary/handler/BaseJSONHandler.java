@@ -128,7 +128,16 @@ public class BaseJSONHandler extends BaseHandler {
 			return exceptionJsonNode.asText();
 		}
 
-		JsonNode typeJsonNode = errorJsonNode.get("type");
+		JsonNode typeJsonNode = null;
+
+		JsonNode rootCauseJsonNode = responseJsonNode.get("rootCause");
+
+		if (rootCauseJsonNode != null) {
+			typeJsonNode = rootCauseJsonNode.get("type");
+		}
+		else {
+			typeJsonNode = errorJsonNode.get("type");
+		}
 
 		return typeJsonNode.asText();
 	}
@@ -180,7 +189,10 @@ public class BaseJSONHandler extends BaseHandler {
 			SyncFileService.update(syncFile);
 		}
 		else if (exception.equals(
-					"com.liferay.portlet.documentlibrary.FileNameException")) {
+					"com.liferay.portlet.documentlibrary.FileNameException") ||
+				 exception.equals(
+					"com.liferay.portlet.documentlibrary." +
+						"FolderNameException")) {
 
 			SyncFile syncFile = (SyncFile)getParameterValue("syncFile");
 

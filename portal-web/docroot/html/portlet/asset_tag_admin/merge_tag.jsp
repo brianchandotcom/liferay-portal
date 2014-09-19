@@ -87,7 +87,7 @@ long[] mergeTagIds = StringUtil.split(ParamUtil.getString(renderRequest, "mergeT
 	</aui:button-row>
 </aui:form>
 
-<aui:script use="aui-base">
+<aui:script use="aui-base,aui-selector">
 	A.one('#<portlet:namespace />mergeTagsContainer').delegate(
 		'click',
 		function(event) {

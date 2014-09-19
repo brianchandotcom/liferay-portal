@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,12 +11,41 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+package com.liferay.network.web.model;
 
-<%@ page import="com.liferay.portlet.network.model.DNSLookup" %><%@
-page import="com.liferay.portlet.network.model.Whois" %><%@
-page import="com.liferay.portlet.network.util.NetworkUtil" %>
+import java.io.Serializable;
 
-<%@ include file="/html/portlet/network/init-ext.jsp" %>
+/**
+ * @author Brian Wing Shun Chan
+ */
+public class Whois implements Serializable {
+
+	public Whois() {
+	}
+
+	public Whois(String domain, String results) {
+		_domain = domain;
+		_results = results;
+	}
+
+	public String getDomain() {
+		return _domain;
+	}
+
+	public String getResults() {
+		return _results;
+	}
+
+	public void setDomain(String domain) {
+		_domain = domain;
+	}
+
+	public void setResults(String results) {
+		_results = results;
+	}
+
+	private String _domain;
+	private String _results;
+
+}

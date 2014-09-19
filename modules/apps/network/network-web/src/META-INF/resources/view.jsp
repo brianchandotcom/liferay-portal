@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/network/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String cmd = ParamUtil.getString(request, Constants.CMD);
@@ -23,11 +23,10 @@ String tabs1 = ParamUtil.getString(request, "tabs1", "dns-lookup");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/network/view");
 portletURL.setParameter("tabs1", tabs1);
 %>
 
-<form action="<portlet:renderURL><portlet:param name="struts_action" value="/network/view" /></portlet:renderURL>" method="post" name="<portlet:namespace />fm" onSubmit="submitForm(this); return false;">
+<form action="<portlet:renderURL />" method="post" name="<portlet:namespace />fm" onSubmit="submitForm(this); return false;">
 <input name="<portlet:namespace /><%= Constants.CMD %>" type="hidden" value="<%= Constants.SEARCH %>" />
 <input name="<portlet:namespace />tabs1" type="hidden" value="<%= HtmlUtil.escapeAttribute(tabs1) %>" />
 

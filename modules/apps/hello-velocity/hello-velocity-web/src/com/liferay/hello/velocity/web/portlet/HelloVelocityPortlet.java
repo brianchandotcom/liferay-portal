@@ -1,16 +1,17 @@
 /**
-* Copyright (c) 2000-present Liferay, Inc. All rights reserved.
-*
-* This library is free software; you can redistribute it and/or modify it under
-* the terms of the GNU Lesser General Public License as published by the Free
-* Software Foundation; either version 2.1 of the License, or (at your option)
-* any later version.
-*
-* This library is distributed in the hope that it will be useful, but WITHOUT
-* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-* FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
-* details.
-*/
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.hello.velocity.web.portlet;
 
 import com.liferay.hello.velocity.web.upgrade.HelloVelocityUpgrade;
@@ -44,10 +45,12 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.display-category=category.sample",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
-		"com.liferay.portlet.remoteable=true", "com.liferay.portlet.render-weight=50",
+		"com.liferay.portlet.remoteable=true",
+		"com.liferay.portlet.render-weight=50",
 		"com.liferay.portlet.struts-path=hello_velocity",
 		"com.liferay.portlet.use-default-template=true",
-		"javax.portlet.display-name=Hello Velocity", "javax.portlet.expiration-cache=0",
+		"javax.portlet.display-name=Hello Velocity",
+		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.vm",
 		"javax.portlet.portlet.info.keywords=Hello Velocity",
@@ -61,8 +64,9 @@ import org.osgi.service.component.annotations.Reference;
 public class HelloVelocityPortlet extends VelocityPortlet {
 
 	protected String getTemplateResource(String templateId) {
-		InputStream stream = HelloVelocityPortlet.class.getClassLoader().
-			getResourceAsStream(templateId);
+		ClassLoader classLoader = HelloVelocityPortlet.class.getClassLoader();
+
+		InputStream stream = classLoader.getResourceAsStream(templateId);
 
 		if (stream == null) {
 			if (_log.isInfoEnabled()) {
@@ -81,12 +85,14 @@ public class HelloVelocityPortlet extends VelocityPortlet {
 			while (scanner.hasNext()) {
 				sb.append(scanner.next());
 			}
-		}catch (Exception e) {
+		}
+		catch (Exception e) {
 			if (_log.isInfoEnabled()) {
 				_log.info("Exception caught loading template:" + templateId +
 					": " + e.getMessage());
 			}
-		}finally {
+		}
+		finally {
 			scanner.close();
 		}
 

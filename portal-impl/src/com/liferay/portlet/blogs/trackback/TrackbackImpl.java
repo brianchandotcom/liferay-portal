@@ -17,6 +17,7 @@ package com.liferay.portlet.blogs.trackback;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Function;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -76,7 +77,7 @@ public class TrackbackImpl implements Trackback {
 		sb.append("[...] ");
 		sb.append(excerpt);
 		sb.append(" [...] [url=");
-		sb.append(url);
+		sb.append(HtmlUtil.escapeURL(url));
 		sb.append("]");
 		sb.append(themeDisplay.translate("read-more"));
 		sb.append("[/url]");

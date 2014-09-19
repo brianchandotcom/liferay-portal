@@ -1058,14 +1058,6 @@
 		<put name="portlet_content" value="/portlet/nested_portlets/view.jsp" />
 	</definition>
 
-	<!-- Network -->
-
-	<definition name="portlet.network" extends="portlet" />
-
-	<definition name="portlet.network.view" extends="portlet.network">
-		<put name="portlet_content" value="/portlet/network/view.jsp" />
-	</definition>
-
 	<!-- News -->
 
 	<definition name="portlet.news" extends="portlet" />

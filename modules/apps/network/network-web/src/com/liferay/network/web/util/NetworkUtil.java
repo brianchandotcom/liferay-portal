@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portlet.network.util;
+package com.liferay.network.web.util;
 
+import com.liferay.network.web.model.DNSLookup;
+import com.liferay.network.web.model.Whois;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
-import com.liferay.portlet.network.model.DNSLookup;
-import com.liferay.portlet.network.model.Whois;
 
 /**
  * @author Brian Wing Shun Chan

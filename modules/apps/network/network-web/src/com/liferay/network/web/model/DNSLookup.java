@@ -12,19 +12,19 @@
  * details.
  */
 
-package com.liferay.portlet.network.model;
+package com.liferay.network.web.model;
 
 import java.io.Serializable;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class Whois implements Serializable {
+public class DNSLookup implements Serializable {
 
-	public Whois() {
+	public DNSLookup() {
 	}
 
-	public Whois(String domain, String results) {
+	public DNSLookup(String domain, String results) {
 		_domain = domain;
 		_results = results;
 	}

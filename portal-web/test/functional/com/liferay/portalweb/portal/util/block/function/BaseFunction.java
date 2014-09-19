@@ -12,10 +12,19 @@
  * details.
  */
 
-package com.liferay.portalweb2.util;
+package com.liferay.portalweb.portal.util.block.function;
+
+import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Michael Hashimoto
  */
-public class BaseTestCase {
+public class BaseFunction {
+
+	public BaseFunction(LiferaySelenium liferaySelenium) {
+		this.liferaySelenium = liferaySelenium;
+	}
+
+	protected LiferaySelenium liferaySelenium;
+
 }

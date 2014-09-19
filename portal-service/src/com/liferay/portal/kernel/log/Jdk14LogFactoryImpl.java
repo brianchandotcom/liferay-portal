@@ -25,6 +25,10 @@ import java.util.logging.Logger;
 public class Jdk14LogFactoryImpl implements LogFactory {
 
 	public Jdk14LogFactoryImpl() {
+		if (System.getProperty("java.util.logging.config.file") != null) {
+			return;
+		}
+
 		try {
 			Class<?> clazz = getClass();
 

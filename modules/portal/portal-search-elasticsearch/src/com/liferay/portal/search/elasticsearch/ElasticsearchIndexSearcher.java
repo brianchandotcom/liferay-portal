@@ -32,11 +32,11 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
+import com.liferay.portal.kernel.search.util.SearchUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.facet.ElasticsearchFacetFieldCollector;
 import com.liferay.portal.search.elasticsearch.facet.FacetProcessor;
@@ -49,8 +49,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -240,6 +238,12 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 		searchRequestBuilder.setHighlighterRequireFieldMatch(
 			queryConfig.isHighlightRequireFieldMatch());
+
+		searchRequestBuilder.setHighlighterPreTags(
+			SearchUtil.HIGHLIGHT_TAG_OPEN);
+
+		searchRequestBuilder.setHighlighterPostTags(
+			SearchUtil.HIGHLIGHT_TAG_CLOSE);
 	}
 
 	protected void addPagination(
@@ -296,21 +300,9 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			snippet = sb.toString();
 		}
 
-		if (!snippet.equals(StringPool.BLANK)) {
-			Matcher matcher = _pattern.matcher(snippet);
-
-			while (matcher.find()) {
-				queryTerms.add(matcher.group(1));
-			}
-
-			snippet = StringUtil.replace(snippet, "<em>", StringPool.BLANK);
-			snippet = StringUtil.replace(snippet, "</em>", StringPool.BLANK);
-		}
-
-		document.addText(
-			Field.SNIPPET.concat(StringPool.UNDERLINE).concat(snippetFieldName),
-			snippet);
+		SearchUtil.addSnippet(document, queryTerms, snippet, snippetFieldName);
 	}
+
 
 	protected void addSnippets(
 		SearchHit hit, Document document, QueryConfig queryConfig,
@@ -527,7 +519,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 	private FacetProcessor<SearchRequestBuilder> _facetProcessor;
-	private Pattern _pattern = Pattern.compile("<em>(.*?)</em>");
 	private boolean _swallowException;
 
 }

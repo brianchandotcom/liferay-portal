@@ -102,6 +102,7 @@ AUI.add(
 
 						if (targetBtn) {
 							var cssClass = targetBtn.get('className');
+
 							var from = instance._leftBox;
 							var to = instance._rightBox;
 							var sort = !instance.get('leftReorder');
@@ -122,6 +123,7 @@ AUI.add(
 
 						if (targetBtn) {
 							var cssClass = targetBtn.get('className');
+
 							var direction = 1;
 
 							if (cssClass.indexOf('reorder-up') !== -1) {

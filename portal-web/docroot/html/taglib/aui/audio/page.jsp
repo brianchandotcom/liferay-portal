@@ -14,19 +14,17 @@
  */
 --%>
 
-<%@ include file="html/taglib/aui/audio/init.jsp" %>
+<%@ include file="/html/taglib/aui/audio/init.jsp" %>
 
 <div class="<%= cssClass %>" id="<%= id %>"></div>
 
 <aui:script use="aui-audio">
 	new A.Audio(
 		{
+			boundingBox: '#<%= id %>',
 			cssClass: '<%= cssClass %>',
-			fixedAttributes: <%= fixedAttributes %>,
-			flashVars: <%= flashVars %>,
-			id: '#<%= id %>',
 			oggUrl: '<%= oggUrl %>',
-			render: true,
+			swfUrl: '<%= swfUrl %>',
 			type: '<%= type %>',
 			url: '<%= url %>'
 		}

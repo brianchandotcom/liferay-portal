@@ -96,6 +96,8 @@ public class DDMImpl implements DDM {
 
 	public static final String TYPE_DDM_LINK_TO_PAGE = "ddm-link-to-page";
 
+	public static final String TYPE_DDM_TEXT_HTML = "ddm-text-html";
+
 	public static final String TYPE_RADIO = "radio";
 
 	public static final String TYPE_SELECT = "select";

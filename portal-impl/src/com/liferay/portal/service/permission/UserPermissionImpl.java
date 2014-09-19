@@ -139,15 +139,15 @@ public class UserPermissionImpl
 				user = UserLocalServiceUtil.getUserById(userId);
 
 				if ((actionId.equals(ActionKeys.DELETE) ||
-						 actionId.equals(ActionKeys.IMPERSONATE) ||
-						 actionId.equals(ActionKeys.PERMISSIONS) ||
-						 actionId.equals(ActionKeys.UPDATE)) &&
-						 PortalUtil.isCompanyAdmin(user) &&
-						 !(permissionChecker.isOmniadmin() ||
-						 permissionChecker.isCompanyAdmin())) {
+					 actionId.equals(ActionKeys.IMPERSONATE) ||
+					 actionId.equals(ActionKeys.PERMISSIONS) ||
+					 actionId.equals(ActionKeys.UPDATE)) &&
+					PortalUtil.isCompanyAdmin(user) &&
+					!(permissionChecker.isOmniadmin() ||
+					  permissionChecker.isCompanyAdmin())) {
 
-						return false;
-					}
+					return false;
+				}
 
 				Contact contact = user.getContact();
 

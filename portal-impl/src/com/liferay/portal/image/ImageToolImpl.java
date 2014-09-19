@@ -30,6 +30,7 @@ import com.liferay.portal.model.Image;
 import com.liferay.portal.model.impl.ImageImpl;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.awt.AlphaComposite;
 import java.awt.Graphics;
@@ -53,6 +54,8 @@ import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.concurrent.Future;
 
 import javax.imageio.ImageIO;
@@ -203,7 +206,21 @@ public class ImageToolImpl implements ImageTool {
 					protected RenderedImage convert(Object obj)
 						throws IOException {
 
-						return read(_fileUtil.getBytes(outputFile), type);
+						RenderedImage renderedImage = null;
+
+						try {
+							ImageBag imageBag = read(
+								_fileUtil.getBytes(outputFile));
+
+							renderedImage = imageBag.getRenderedImage();
+						}
+						catch (IOException ioe) {
+							if (_log.isDebugEnabled()) {
+								_log.debug(type + ": " + ioe.getMessage());
+							}
+						}
+
+						return renderedImage;
 					}
 
 				};
@@ -453,24 +470,49 @@ public class ImageToolImpl implements ImageTool {
 
 	@Override
 	public ImageBag read(byte[] bytes) throws IOException {
-		BufferedImage bufferedImage = null;
 		String formatName = null;
 
-		InputStream inputStream = new ByteArrayInputStream(bytes);
+		ImageInputStream imageInputStream = null;
 
-		ImageInputStream imageInputStream = ImageIO.createImageInputStream(
-			inputStream);
+		Queue<ImageReader> imageReaders = new LinkedList<ImageReader>();
 
-		Iterator<ImageReader> iterator = ImageIO.getImageReaders(
-			imageInputStream);
+		RenderedImage renderedImage = null;
 
-		if (iterator.hasNext()) {
-			ImageReader imageReader = iterator.next();
+		try {
+			imageInputStream = ImageIO.createImageInputStream(
+				new ByteArrayInputStream(bytes));
 
-			imageReader.setInput(imageInputStream);
+			Iterator<ImageReader> iterator = ImageIO.getImageReaders(
+				imageInputStream);
 
-			bufferedImage = imageReader.read(0);
-			formatName = imageReader.getFormatName();
+			boolean firstImageReader = true;
+
+			while (iterator.hasNext()) {
+				ImageReader imageReader = iterator.next();
+
+				imageReaders.offer(imageReader);
+
+				if (firstImageReader) {
+					imageReader.setInput(imageInputStream);
+
+					renderedImage = imageReader.read(0);
+
+					formatName = imageReader.getFormatName();
+
+					firstImageReader = false;
+				}
+			}
+		}
+		finally {
+			while (!imageReaders.isEmpty()) {
+				ImageReader imageReader = imageReaders.poll();
+
+				imageReader.dispose();
+			}
+
+			if (imageInputStream != null) {
+				imageInputStream.close();
+			}
 		}
 
 		formatName = StringUtil.toLowerCase(formatName);
@@ -496,7 +538,7 @@ public class ImageToolImpl implements ImageTool {
 			throw new IllegalArgumentException(type + " is not supported");
 		}
 
-		return new ImageBag(bufferedImage, type);
+		return new ImageBag(renderedImage, type);
 	}
 
 	@Override
@@ -625,39 +667,6 @@ public class ImageToolImpl implements ImageTool {
 		return _imageMagick;
 	}
 
-	protected RenderedImage read(byte[] bytes, String type) {
-		RenderedImage renderedImage = null;
-
-		try {
-			if (type.equals(TYPE_JPEG)) {
-				type = "jpeg";
-			}
-
-			InputStream inputStream = new ByteArrayInputStream(bytes);
-
-			ImageInputStream imageInputStream = ImageIO.createImageInputStream(
-				inputStream);
-
-			Iterator<ImageReader> iterator = ImageIO.getImageReaders(
-				imageInputStream);
-
-			if (iterator.hasNext()) {
-				ImageReader imageReader = iterator.next();
-
-				imageReader.setInput(imageInputStream);
-
-				renderedImage = imageReader.read(0);
-			}
-		}
-		catch (IOException ioe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(type + ": " + ioe.getMessage());
-			}
-		}
-
-		return renderedImage;
-	}
-
 	protected byte[] toMultiByte(int intValue) {
 		int numBits = 32;
 		int mask = 0x80000000;
@@ -681,6 +690,10 @@ public class ImageToolImpl implements ImageTool {
 		}
 
 		return multiBytes;
+	}
+
+	private ImageToolImpl() {
+		ImageIO.setUseCache(PropsValues.IMAGE_USE_DISK_CACHE);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ImageToolImpl.class);

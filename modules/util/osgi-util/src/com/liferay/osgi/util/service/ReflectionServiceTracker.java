@@ -48,10 +48,10 @@ public class ReflectionServiceTracker implements Closeable {
 
 		List<InjectionPoint> injectionPoints = getInjectionPoints(targetObject);
 
-		_serviceTrackers = new ArrayList<ServiceTracker>();
+		_serviceTrackers = new ArrayList<ServiceTracker<?,?>>();
 
 		for (InjectionPoint injectionPoint : injectionPoints) {
-			ServiceTracker serviceTracker = track(
+			ServiceTracker<?,?> serviceTracker = track(
 				bundleContext, targetObject, injectionPoint);
 
 			_serviceTrackers.add(serviceTracker);
@@ -60,7 +60,7 @@ public class ReflectionServiceTracker implements Closeable {
 
 	@Override
 	public void close() throws IOException {
-		for (ServiceTracker serviceTracker : _serviceTrackers) {
+		for (ServiceTracker<?,?> serviceTracker : _serviceTrackers) {
 			try {
 				serviceTracker.close();
 			}
@@ -146,7 +146,7 @@ public class ReflectionServiceTracker implements Closeable {
 		return injectionPoints;
 	}
 
-	protected ServiceTracker track(
+	protected ServiceTracker<?, ?> track(
 		final BundleContext bundleContext, final Object target,
 		final InjectionPoint injectionPoint) {
 
@@ -159,11 +159,12 @@ public class ReflectionServiceTracker implements Closeable {
 					injectionPoint.getName() + " on "+ target, e);
 		}
 
-		ServiceTracker serviceTracker = new ServiceTracker(
-			bundleContext, injectionPoint.getParameterType(), null) {
+		ServiceTracker<?, ?> serviceTracker = new ServiceTracker<Object,Object>(
+			bundleContext, (Class<Object>)injectionPoint.getParameterType(),
+            null) {
 
 			@Override
-			public Object addingService(ServiceReference reference) {
+			public Object addingService(ServiceReference<Object> reference) {
 				Object service = super.addingService(reference);
 
 				ServiceReference currentServiceReference =
@@ -187,7 +188,7 @@ public class ReflectionServiceTracker implements Closeable {
 
 			@Override
 			public void modifiedService(
-				ServiceReference reference, Object service) {
+				ServiceReference<Object> reference, Object service) {
 
 				super.modifiedService(reference, service);
 
@@ -208,7 +209,7 @@ public class ReflectionServiceTracker implements Closeable {
 
 			@Override
 			public void removedService(
-				ServiceReference serviceReference, Object service) {
+				ServiceReference<Object> serviceReference, Object service) {
 
 				try {
 					super.removedService(serviceReference, service);
@@ -307,7 +308,7 @@ public class ReflectionServiceTracker implements Closeable {
 			}
 	};
 
-	private final ArrayList<ServiceTracker> _serviceTrackers;
+	private final ArrayList<ServiceTracker<?,?>> _serviceTrackers;
 	private Object _unavailableServiceProxy;
 
 }

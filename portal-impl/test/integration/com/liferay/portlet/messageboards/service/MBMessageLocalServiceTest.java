@@ -73,6 +73,8 @@ public class MBMessageLocalServiceTest {
 		MBMessageLocalServiceUtil.deleteMessage(
 			secondReplyMessage.getMessageId());
 
+		mbThread = parentMessage.getThread();
+
 		Assert.assertEquals(
 			dateFormat.format(mbThread.getLastPostDate()),
 			dateFormat.format(firstReplyMessage.getModifiedDate()));

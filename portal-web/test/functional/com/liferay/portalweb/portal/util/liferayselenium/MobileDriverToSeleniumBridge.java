@@ -264,7 +264,7 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public String getAttribute(String attributeLocator) {
-		throw new UnsupportedOperationException();
+		return WebDriverHelper.getAttribute(this, attributeLocator);
 	}
 
 	@Override
@@ -329,7 +329,7 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public String getEval(String script) {
-		throw new UnsupportedOperationException();
+		return WebDriverHelper.getEval(this, script);
 	}
 
 	@Override
@@ -435,11 +435,11 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public String getText(String locator) {
-		throw new UnsupportedOperationException();
+		return getText(locator, null);
 	}
 
 	public String getText(String locator, String timeout) {
-		throw new UnsupportedOperationException();
+		return WebDriverHelper.getText(this, locator, timeout);
 	}
 
 	@Override
@@ -692,7 +692,7 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public void runScript(String script) {
-		throw new UnsupportedOperationException();
+		getEval(script);
 	}
 
 	@Override

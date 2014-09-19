@@ -16,7 +16,6 @@ package com.liferay.portalweb.portal.util.liferayselenium;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -49,7 +48,6 @@ import javax.xml.xpath.XPathFactory;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
@@ -501,15 +499,7 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public String getAttribute(String attributeLocator) {
-		int pos = attributeLocator.lastIndexOf(CharPool.AT);
-
-		String locator = attributeLocator.substring(0, pos);
-
-		WebElement webElement = getWebElement(locator);
-
-		String attribute = attributeLocator.substring(pos + 1);
-
-		return webElement.getAttribute(attribute);
+		return WebDriverHelper.getAttribute(this, attributeLocator);
 	}
 
 	@Override
@@ -592,15 +582,7 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public String getEval(String script) {
-		WebElement webElement = getWebElement("//body");
-
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		JavascriptExecutor javascriptExecutor = (JavascriptExecutor)webDriver;
-
-		return (String)javascriptExecutor.executeScript(script);
+		return WebDriverHelper.getEval(this, script);
 	}
 
 	@Override
@@ -781,17 +763,7 @@ public class WebDriverToSeleniumBridge
 			return getHtmlNodeText(locator);
 		}
 
-		WebElement webElement = getWebElement(locator, timeout);
-
-		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webElement);
-		}
-
-		String text = webElement.getText();
-
-		text = text.trim();
-
-		return text.replace("\n", " ");
+		return WebDriverHelper.getText(this, locator, timeout);
 	}
 
 	@Override

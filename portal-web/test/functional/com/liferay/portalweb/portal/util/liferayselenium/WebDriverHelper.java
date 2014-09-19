@@ -14,6 +14,7 @@
 
 package com.liferay.portalweb.portal.util.liferayselenium;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -122,12 +123,55 @@ public class WebDriverHelper {
 		}
 	}
 
+	public static String getAttribute(
+		WebDriver webDriver, String attributeLocator) {
+
+		int pos = attributeLocator.lastIndexOf(CharPool.AT);
+
+		String locator = attributeLocator.substring(0, pos);
+
+		WebElement webElement = getWebElement(webDriver, locator);
+
+		String attribute = attributeLocator.substring(pos + 1);
+
+		return webElement.getAttribute(attribute);
+	}
+
 	public static String getDefaultWindowHandle() {
 		return _defaultWindowHandle;
 	}
 
+	public static String getEval(WebDriver webDriver, String script) {
+		WebElement webElement = getWebElement(webDriver, "//body");
+
+		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+
+		JavascriptExecutor javascriptExecutor =
+			(JavascriptExecutor)wrappedWebDriver;
+
+		return (String)javascriptExecutor.executeScript(script);
+	}
+
 	public static String getLocation(WebDriver webDriver) {
 		return webDriver.getCurrentUrl();
+	}
+
+	public static String getText(
+		WebDriver webDriver, String locator, String timeout) {
+
+		WebElement webElement = getWebElement(webDriver, locator, timeout);
+
+		if (!webElement.isDisplayed()) {
+			scrollWebElementIntoView(webDriver, webElement);
+		}
+
+		String text = webElement.getText();
+
+		text = text.trim();
+
+		return text.replace("\n", " ");
 	}
 
 	public static boolean isElementPresent(

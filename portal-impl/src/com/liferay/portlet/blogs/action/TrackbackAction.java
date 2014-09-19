@@ -218,8 +218,7 @@ public class TrackbackAction extends PortletAction {
 
 		if (!remoteIP.equals(trackbackIP)) {
 			throw new TrackbackValidationException(
-				"Remote IP does not match the trackback URL's IP " +
-					trackbackIP);
+				"Remote IP does not match the trackback URL's IP");
 		}
 	}
 

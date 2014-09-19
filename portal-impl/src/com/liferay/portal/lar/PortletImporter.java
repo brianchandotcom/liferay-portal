@@ -277,7 +277,7 @@ public class PortletImporter {
 		String xml = deletePortletData(
 			portletDataContext, portletId, portletPreferences);
 
-		if (xml != null) {
+		if (Validator.isNotNull(xml)) {
 			PortletPreferencesLocalServiceUtil.updatePreferences(
 				ownerId, ownerType, plid, portletId, xml);
 		}

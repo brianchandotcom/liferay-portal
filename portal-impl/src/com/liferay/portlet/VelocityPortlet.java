@@ -21,12 +21,10 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.struts.StrutsUtil;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.Writer;
 
 import javax.portlet.ActionRequest;
@@ -42,9 +40,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-
-import org.apache.velocity.io.VelocityWriter;
-import org.apache.velocity.util.SimplePool;
 
 /**
  * @author Brian Wing Shun Chan
@@ -194,6 +189,7 @@ public class VelocityPortlet extends GenericPortlet {
 		throws Exception {
 
 		Writer writer = null;
+
 		if (portletResponse instanceof MimeResponse) {
 			MimeResponse mimeResponse = (MimeResponse)portletResponse;
 
@@ -204,7 +200,6 @@ public class VelocityPortlet extends GenericPortlet {
 		}
 
 		template.processTemplate(writer);
-
 	}
 
 	protected void prepareTemplate(

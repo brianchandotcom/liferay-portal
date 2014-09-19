@@ -3,6 +3,10 @@
 		border-bottom: 1px solid #DDD;
 		padding: 0.6em 0;
 
+		&:last-child {
+			border-bottom-width: 0;
+		}
+
 		.asset-content p {
 			margin-bottom: 0;
 		}

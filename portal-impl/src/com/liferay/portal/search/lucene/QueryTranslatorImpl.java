@@ -17,14 +17,14 @@ package com.liferay.portal.search.lucene;
 import com.liferay.portal.kernel.exception.LoggedExceptionInInitializerError;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryTranslator;
 import com.liferay.portal.kernel.search.StringQueryImpl;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.StringPool;
-
-import java.lang.reflect.Field;
+import com.liferay.portal.kernel.util.Validator;
 
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.QueryParser;
@@ -116,6 +116,11 @@ public class QueryTranslatorImpl implements QueryTranslator {
 			try {
 				String text = term.text();
 
+				if (Validator.equals(term.field(), Field.TREE_PATH)) {
+
+					text = text.replaceAll("/", "\\\\/");
+				}
+
 				if (text.matches("^\\s*\\*.*(?m)")) {
 					text = text.replaceFirst("\\*", StringPool.BLANK);
 
@@ -128,7 +133,7 @@ public class QueryTranslatorImpl implements QueryTranslator {
 		}
 	}
 
-	private static final Field _TEXT_FIELD;
+	private static final java.lang.reflect.Field _TEXT_FIELD;
 
 	private static Log _log = LogFactoryUtil.getLog(QueryTranslatorImpl.class);
 

@@ -42,7 +42,8 @@ import org.springframework.util.ClassUtils;
 /**
  * @author Shuyang Zhou
  */
-public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
+public class ServiceBeanAopProxy
+	implements AdvisableSupportProxy, AopProxy, InvocationHandler {
 
 	public static AdvisedSupport getAdvisedSupport(Object proxy)
 		throws Exception {
@@ -50,11 +51,11 @@ public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
 		InvocationHandler invocationHandler = ProxyUtil.getInvocationHandler(
 			proxy);
 
-		if (invocationHandler instanceof ServiceBeanAopProxy) {
-			ServiceBeanAopProxy serviceBeanAopProxy =
-				(ServiceBeanAopProxy)invocationHandler;
+		if (invocationHandler instanceof AdvisableSupportProxy) {
+			AdvisableSupportProxy advisableSupportProxy =
+				(AdvisableSupportProxy)invocationHandler;
 
-			return serviceBeanAopProxy._advisedSupport;
+			return advisableSupportProxy.getAdvisedSupport();
 		}
 
 		return null;
@@ -129,6 +130,11 @@ public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
 		_fullMethodInterceptors = fullMethodInterceptors;
 
 		_serviceBeanAopCacheManager = serviceBeanAopCacheManager;
+	}
+
+	@Override
+	public AdvisedSupport getAdvisedSupport() {
+		return _advisedSupport;
 	}
 
 	@Override

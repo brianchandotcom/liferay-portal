@@ -15,18 +15,14 @@
 package com.liferay.hello.velocity.web.portlet;
 
 import com.liferay.hello.velocity.web.upgrade.HelloVelocityUpgrade;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.VelocityPortlet;
-
-import java.io.InputStream;
-
-import java.util.Scanner;
+import com.liferay.util.ContentUtil;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletRequest;
@@ -63,40 +59,19 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class HelloVelocityPortlet extends VelocityPortlet {
 
-	protected String getTemplateResource(String templateId) {
-		ClassLoader classLoader = HelloVelocityPortlet.class.getClassLoader();
+	@Override
+	protected String getTemplateId(String name) {
+		return name;
+	}
 
-		InputStream stream = classLoader.getResourceAsStream(templateId);
-
-		if (stream == null) {
-			if (_log.isInfoEnabled()) {
-				_log.info("Unable to open resource template:" + templateId +
-					" from classloader");
-			}
+	protected TemplateResource getTemplateResource(String templateId) {
+		if (templateId.indexOf(StringPool.SLASH) != 0) {
+			templateId = StringPool.SLASH.concat(templateId);
 		}
 
-		StringBuilder sb = new StringBuilder();
+		String content = ContentUtil.get("META-INF/resources" + templateId);
 
-		Scanner scanner = null;
-
-		try {
-			scanner = new Scanner(stream);
-			scanner.useDelimiter("\\n");
-			while (scanner.hasNext()) {
-				sb.append(scanner.next());
-			}
-		}
-		catch (Exception e) {
-			if (_log.isInfoEnabled()) {
-				_log.info("Exception caught loading template:" + templateId +
-					": " + e.getMessage());
-			}
-		}
-		finally {
-			scanner.close();
-		}
-
-		return sb.toString();
+		return new StringTemplateResource(templateId, content);
 	}
 
 	@Override
@@ -105,9 +80,7 @@ public class HelloVelocityPortlet extends VelocityPortlet {
 			PortletResponse portletResponse)
 		throws Exception {
 
-		templateId = _templateId;
-		TemplateResource templateResource = new StringTemplateResource(
-			templateId, getTemplateResource(templateId));
+		TemplateResource templateResource = getTemplateResource(templateId);
 
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_VM, templateResource, false);
@@ -121,9 +94,5 @@ public class HelloVelocityPortlet extends VelocityPortlet {
 	protected void setHelloVelocityUpgrade(
 		HelloVelocityUpgrade helloVelocityUpgrade) {
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(HelloVelocityPortlet.class);
-
-	private static String _templateId = "META-INF/resources/view.vm";
 
 }

@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Hello Velocity Web
-Bundle-SymbolicName: com.liferay.hello.velocity
+Bundle-SymbolicName: com.liferay.hello.velocity.web
 Bundle-Version: 1.0.0
 Import-Package:\
 	${bnd.jsp.support.imports},\

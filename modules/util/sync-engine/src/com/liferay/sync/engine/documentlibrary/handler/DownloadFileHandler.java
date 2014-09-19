@@ -108,7 +108,8 @@ public class DownloadFileHandler extends BaseHandler {
 
 		Watcher watcher = WatcherRegistry.getWatcher(getSyncAccountId());
 
-		List<String> downloadedFileNames = watcher.getDownloadedFileNames();
+		List<String> downloadedFilePathNames =
+			watcher.getDownloadedFilePathNames();
 
 		try {
 			HttpEntity httpEntity = httpResponse.getEntity();
@@ -133,7 +134,7 @@ public class DownloadFileHandler extends BaseHandler {
 					StandardCopyOption.REPLACE_EXISTING);
 			}
 
-			downloadedFileNames.add(filePath.toString());
+			downloadedFilePathNames.add(filePath.toString());
 
 			Files.move(
 				tempFilePath, filePath, StandardCopyOption.ATOMIC_MOVE,
@@ -153,7 +154,7 @@ public class DownloadFileHandler extends BaseHandler {
 			SyncFileService.updateFileKeySyncFile(syncFile);
 		}
 		catch (FileSystemException fse) {
-			downloadedFileNames.remove(filePath.toString());
+			downloadedFilePathNames.remove(filePath.toString());
 
 			String message = fse.getMessage();
 

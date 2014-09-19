@@ -85,8 +85,8 @@ public class Watcher implements Runnable {
 		}
 	}
 
-	public List<String> getDownloadedFileNames() {
-		return _downloadedFileNames;
+	public List<String> getDownloadedFilePathNames() {
+		return _downloadedFilePathNames;
 	}
 
 	@Override
@@ -301,7 +301,7 @@ public class Watcher implements Runnable {
 	}
 
 	protected boolean isIgnoredFilePath(Path filePath) {
-		if (_downloadedFileNames.remove(filePath.toString())) {
+		if (_downloadedFilePathNames.remove(filePath.toString())) {
 			return true;
 		}
 
@@ -370,7 +370,7 @@ public class Watcher implements Runnable {
 
 	private static Logger _logger = LoggerFactory.getLogger(Watcher.class);
 
-	private List<String> _downloadedFileNames = new ArrayList<String>();
+	private List<String> _downloadedFilePathNames = new ArrayList<String>();
 	private BidirectionalMap<WatchKey, Path> _filePaths =
 		new BidirectionalMap<WatchKey, Path>();
 	private boolean _recursive;

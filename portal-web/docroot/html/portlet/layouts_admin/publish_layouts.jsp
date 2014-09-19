@@ -348,9 +348,9 @@ else {
 									<aui:button href="<%= renderURL.toString() %>" type="reset" value="cancel" />
 								</c:when>
 								<c:otherwise>
-									<aui:button id="addButton" name="addButton" onClick='<%= renderResponse.getNamespace() + "schedulePublishEvent();" %>' value="add-event" />
+									<aui:button id="addButton" onClick='<%= renderResponse.getNamespace() + "schedulePublishEvent();" %>' value="add-event" />
 
-									<aui:button id="publishButton" name="publishButton" type="submit" value="<%= publishActionKey %>" />
+									<aui:button id="publishButton" type="submit" value="<%= publishActionKey %>" />
 								</c:otherwise>
 							</c:choose>
 						</aui:button-row>

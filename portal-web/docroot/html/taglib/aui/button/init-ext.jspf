@@ -15,6 +15,10 @@
 --%>
 
 <%
+if (!useNamespace) {
+	namespace = StringPool.BLANK;
+}
+
 Object bodyContent = request.getAttribute("aui:button:bodyContent");
 
 String bodyContentString = StringPool.BLANK;
@@ -56,11 +60,16 @@ if (useDialog && Validator.isNotNull(escapedHREF)) {
 	}
 }
 
-String id = namespace + name;
-
-if (Validator.isNull(name)) {
-	id = namespace + StringUtil.randomId();
+if (Validator.isNull(id)) {
+	if (Validator.isNotNull(name)) {
+		id = name;
+	}
+	else {
+		id = StringUtil.randomId();
+	}
 }
+
+id = namespace + id;
 
 if (primary == null) {
 	if (type.equals("submit")) {

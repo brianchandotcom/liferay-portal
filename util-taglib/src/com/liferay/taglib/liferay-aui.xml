@@ -146,6 +146,11 @@
 				<defaultValue>left</defaultValue>
 			</attribute>
 			<attribute>
+				<name>id</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
 				<name>name</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -172,6 +177,12 @@
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 				<defaultValue>false</defaultValue>
+			</attribute>
+			<attribute>
+				<name>useNamespace</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>true</defaultValue>
 			</attribute>
 			<attribute>
 				<name>value</name>

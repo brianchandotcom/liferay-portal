@@ -128,7 +128,7 @@
 		color: #444;
 		font-style: italic;
 
-		@include hyphenation;
+		@include hyphens;
 	}
 
 	.lfr-asset-icon {

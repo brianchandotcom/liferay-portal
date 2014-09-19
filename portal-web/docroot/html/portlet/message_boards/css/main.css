@@ -141,7 +141,7 @@
 		padding: 5px;
 
 		.user-name {
-			@include hyphenation;
+			@include hyphens;
 		}
 	}
 
@@ -299,7 +299,7 @@
 	}
 
 	.category-description {
-		@include hyphenation;
+		@include hyphens;
 	}
 
 	.category-title {

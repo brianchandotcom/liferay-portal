@@ -12,7 +12,7 @@
 		}
 
 		.entry-description {
-			@include hyphenation;
+			@include hyphens;
 		}
 	}
 

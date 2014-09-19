@@ -3,7 +3,7 @@
 
 .portlet-wiki {
 	.wiki-body {
-		@include hyphenation;
+		@include hyphens;
 
 		overflow: auto;
 

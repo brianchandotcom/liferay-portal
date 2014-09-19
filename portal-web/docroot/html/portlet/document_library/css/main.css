@@ -48,7 +48,7 @@
 		.search-info {
 			background-color: #D3E8F1;
 
-			@include hyphenation;
+			@include hyphens;
 
 			margin-bottom: 0.5em;
 			padding: 0.5em 0.75em;
@@ -410,7 +410,7 @@
 		.document-description {
 			display: block;
 
-			@include hyphenation;
+			@include hyphens;
 
 			margin: 8px 0;
 		}
@@ -458,7 +458,7 @@
 		}
 
 		.lfr-asset-description {
-			@include hyphenation;
+			@include hyphens;
 		}
 	}
 

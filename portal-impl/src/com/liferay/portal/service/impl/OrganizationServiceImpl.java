@@ -490,8 +490,16 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 	public List<Organization> getOrganizations(
 		long companyId, long parentOrganizationId) {
 
-		return organizationPersistence.filterFindByC_P(
-			companyId, parentOrganizationId);
+		if (parentOrganizationId ==
+				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID) {
+
+			return organizationPersistence.filterFindByCompanyId(
+				companyId);
+		}
+		else {
+			return organizationPersistence.filterFindByC_P(
+				companyId, parentOrganizationId);
+		}
 	}
 
 	/**
@@ -520,8 +528,16 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 	public List<Organization> getOrganizations(
 		long companyId, long parentOrganizationId, int start, int end) {
 
-		return organizationPersistence.filterFindByC_P(
-			companyId, parentOrganizationId, start, end);
+		if (parentOrganizationId ==
+				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID) {
+
+			return organizationPersistence.filterFindByCompanyId(
+				companyId, start, end);
+		}
+		else {
+			return organizationPersistence.filterFindByC_P(
+				companyId, parentOrganizationId, start, end);
+		}
 	}
 
 	/**
@@ -536,8 +552,15 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 	public int getOrganizationsCount(
 		long companyId, long parentOrganizationId) {
 
-		return organizationPersistence.filterCountByC_P(
-			companyId, parentOrganizationId);
+		if (parentOrganizationId ==
+				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID) {
+
+			return organizationPersistence.filterCountByCompanyId(companyId);
+		}
+		else {
+			return organizationPersistence.filterCountByC_P(
+						companyId, parentOrganizationId);
+		}
 	}
 
 	/**

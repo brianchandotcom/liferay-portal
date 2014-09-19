@@ -61,17 +61,21 @@ public class MBMessageLocalServiceTest {
 			_group.getGroupId(), parentMessage.getCategoryId(),
 			parentMessage.getThreadId(), parentMessage.getMessageId());
 
-		MBMessageLocalServiceUtil.deleteMessage(
-			secondReplyMessage.getMessageId());
-
-		MBThread mbThread = parentMessage.getThread();
-
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			PropsValues.INDEX_DATE_FORMAT_PATTERN);
 
+		MBThread mbThread = parentMessage.getThread();
+
 		Assert.assertEquals(
-			dateFormat.format(firstReplyMessage.getModifiedDate()),
-			dateFormat.format(mbThread.getLastPostDate()));
+			dateFormat.format(mbThread.getLastPostDate()),
+			dateFormat.format(secondReplyMessage.getModifiedDate()));
+
+		MBMessageLocalServiceUtil.deleteMessage(
+			secondReplyMessage.getMessageId());
+
+		Assert.assertEquals(
+			dateFormat.format(mbThread.getLastPostDate()),
+			dateFormat.format(firstReplyMessage.getModifiedDate()));
 	}
 
 	@DeleteAfterTestRun

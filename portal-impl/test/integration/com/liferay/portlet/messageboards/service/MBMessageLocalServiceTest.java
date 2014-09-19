@@ -47,30 +47,30 @@ public class MBMessageLocalServiceTest {
 	public void testThreadLastPostDate() throws Exception {
 		MBMessage parentMessage = MBTestUtil.addMessage(_group.getGroupId());
 
-		long categoryId = parentMessage.getCategoryId();
-		long threadId = parentMessage.getThreadId();
-		long parentMessageId = parentMessage.getMessageId();
+		Thread.sleep(2000);
+
+		MBMessage firstReplyMessage = MBTestUtil.addMessage(
+			_group.getGroupId(), parentMessage.getCategoryId(),
+			parentMessage.getThreadId(), parentMessage.getMessageId());
 
 		Thread.sleep(2000);
 
-		MBMessage firstReply = MBTestUtil.addMessage(
-			_group.getGroupId(), categoryId, threadId, parentMessageId);
+		MBMessage secondReplyMessage = MBTestUtil.addMessage(
+			_group.getGroupId(), parentMessage.getCategoryId(),
+			parentMessage.getThreadId(), parentMessage.getMessageId());
 
-		Thread.sleep(2000);
+		MBMessageLocalServiceUtil.deleteMessage(
+			secondReplyMessage.getMessageId());
 
-		MBMessage secondReply = MBTestUtil.addMessage(
-			_group.getGroupId(), categoryId, threadId, parentMessageId);
-
-		MBMessageLocalServiceUtil.deleteMessage(secondReply.getMessageId());
+		Date lastMessageModifiedDate = firstReplyMessage.getModifiedDate();
 
 		MBThread mbThread = parentMessage.getThread();
 
-		Date mbThreadLastPost = mbThread.getLastPostDate();
-		Date lastModifiedMessage = firstReply.getModifiedDate();
+		Date mbThreadLastPostDate = mbThread.getLastPostDate();
 
 		Assert.assertTrue(
-			mbThreadLastPost.getTime() ==
-				(lastModifiedMessage.getTime() / 1000) * 1000);
+			mbThreadLastPostDate.getTime() ==
+				(lastMessageModifiedDate.getTime() / 1000) * 1000);
 	}
 
 	@DeleteAfterTestRun

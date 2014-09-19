@@ -122,21 +122,23 @@ public class UserPermissionImpl
 		PermissionChecker permissionChecker, long userId,
 		long[] organizationIds, String actionId) {
 
-		if ((actionId.equals(ActionKeys.DELETE) ||
-			 actionId.equals(ActionKeys.IMPERSONATE) ||
-			 actionId.equals(ActionKeys.PERMISSIONS) ||
-			 actionId.equals(ActionKeys.UPDATE)) &&
-			PortalUtil.isOmniadmin(userId) &&
-			!permissionChecker.isOmniadmin()) {
-
-			return false;
-		}
-
 		try {
 			User user = null;
 
 			if (userId != ResourceConstants.PRIMKEY_DNE) {
 				user = UserLocalServiceUtil.getUserById(userId);
+
+				if ((actionId.equals(ActionKeys.DELETE) ||
+					 actionId.equals(ActionKeys.IMPERSONATE) ||
+					 actionId.equals(ActionKeys.PERMISSIONS) ||
+					 actionId.equals(ActionKeys.UPDATE)) &&
+					!permissionChecker.isOmniadmin() &&
+					(PortalUtil.isOmniadmin(user) ||
+					 (!permissionChecker.isCompanyAdmin() &&
+					  PortalUtil.isCompanyAdmin(user)))) {
+
+					return false;
+				}
 
 				Contact contact = user.getContact();
 

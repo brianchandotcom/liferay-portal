@@ -2098,6 +2098,15 @@
 		<struts-path>document_library_admin</struts-path>
 		<parent-struts-path>document_library</parent-struts-path>
 		<configuration-action-class>com.liferay.portlet.documentlibraryadmin.action.ConfigurationActionImpl</configuration-action-class>
+		<scheduler-entry>
+			<scheduler-event-listener-class>com.liferay.portlet.documentlibrary.messaging.TemporaryFilesMessageListener</scheduler-event-listener-class>
+			<trigger>
+				<simple>
+					<property-key>dl.temp.file.cleanup.check.interval</property-key>
+					<time-unit>hour</time-unit>
+				</simple>
+			</trigger>
+		</scheduler-entry>
 		<portlet-data-handler-class>com.liferay.portlet.documentlibrary.lar.DLPortletDataHandler</portlet-data-handler-class>
 		<control-panel-entry-category>site_administration.content</control-panel-entry-category>
 		<control-panel-entry-weight>3.0</control-panel-entry-weight>

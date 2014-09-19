@@ -1636,6 +1636,18 @@ create database lportal2 character set utf8;</echo>
 			<report format="frames" todir="test-results/html" />
 		</junitreport>
 
+		<loadfile property="test.suites.xml.content" srcfile="test-results/TESTS-TestSuites.xml" />
+
+		<propertyregex
+			input="${test.suites.xml.content}"
+			override="true"
+			property="test.suites.xml.content"
+			regexp="&lt;properties[\s\S.]*?&lt;testcase"
+			replace="&lt;testcase"
+		/>
+
+		<echo file="test-results/TESTS-TestSuites.xml">${test.suites.xml.content}</echo>
+
 		<echo message="A report with all the test results can be found at test-results/html/index.html." />
 	</target>
 

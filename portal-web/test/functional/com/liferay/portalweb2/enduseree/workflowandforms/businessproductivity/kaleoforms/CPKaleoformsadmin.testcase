@@ -2796,7 +2796,7 @@
 		</execute>
 	</command>
 
-	<command name="viewSelectedFieldSetWithPagination" priority="4">
+	<command name="ViewSelectedFieldSetWithPagination" priority="4">
 		<description message="This is a use case for LPS-49475." />
 
 		<execute macro="Page#gotoContentCP">

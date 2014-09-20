@@ -132,6 +132,28 @@ public class Watcher implements Runnable {
 					pathImpl.toString());
 
 				if (kind == StandardWatchEventKind.ENTRY_CREATE) {
+					if ((i + 1) < watchEvents.size()) {
+						WatchEvent<Path> nextWatchEvent =
+							(WatchEvent<Path>)watchEvents.get(i + 1);
+
+						if ((nextWatchEvent != null) &&
+							((WatchEvent.Kind<?>)nextWatchEvent.kind() ==
+								StandardWatchEventKind.ENTRY_MODIFY)) {
+
+							PathImpl nextPathImpl =
+								(PathImpl)nextWatchEvent.context();
+
+							if (nextPathImpl != null) {
+								Path nextFilePath = parentFilePath.resolve(
+									nextPathImpl.toString());
+
+								if (childFilePath.equals(nextFilePath)) {
+									i++;
+								}
+							}
+						}
+					}
+
 					if (isIgnoredFilePath(childFilePath)) {
 						continue;
 					}

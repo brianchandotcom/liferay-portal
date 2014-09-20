@@ -1287,14 +1287,14 @@
 
 		<execute action="SOUserBar#assertAlertNotPresent" />
 
-		<execute macro="SOMembersPortlet#confirmMemberInvite">
+		<execute macro="SOMembersAdministration#confirmMemberInvite">
 			<var name="senderName" value="${adminName}" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute action="SOUserBar#assertAlertNotPresent" />
 
-		<execute macro="SOMembersPortlet#viewConfirmMemberInvite">
+		<execute macro="SOMembersAdministration#viewConfirmMemberInvite">
 			<var name="siteDescription" value="${siteDescription}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="userEmailAddress" value="${userEmailAddress2}" />
@@ -1353,14 +1353,14 @@
 
 		<execute action="SOUserBar#assertAlertNotPresent" />
 
-		<execute macro="SOMembersPortlet#ignoreMemberInvite">
+		<execute macro="SOMembersAdministration#ignoreMemberInvite">
 			<var name="senderName" value="${adminName}" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute action="SOUserBar#assertAlertNotPresent" />
 
-		<execute macro="SOMembersPortlet#viewIgnoreMemberInvite">
+		<execute macro="SOMembersAdministration#viewIgnoreMemberInvite">
 			<var name="numberOfMembers" value="2" />
 			<var name="siteDescription" value="${siteDescription}" />
 			<var name="siteName" value="${siteName}" />
@@ -1410,7 +1410,7 @@
 
 		<execute action="SOMembersPortlet#assertAlertNotPresent" />
 
-		<execute macro="SOMembersPortlet#viewConfirmMemberInvite">
+		<execute macro="SOMembersAdministration#viewConfirmMemberInvite">
 			<var name="numberOfMembers" value="3" />
 			<var name="siteDescription" value="${siteDescription}" />
 			<var name="siteName" value="${siteName}" />

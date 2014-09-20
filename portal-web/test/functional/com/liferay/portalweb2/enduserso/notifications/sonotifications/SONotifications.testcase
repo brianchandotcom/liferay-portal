@@ -1353,7 +1353,7 @@
 
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="1" />
 
-		<execute macro="SOMembersPortlet#viewIgnoreMemberInvite" />
+		<execute macro="SOMembersAdministration#viewIgnoreMemberInvite" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />

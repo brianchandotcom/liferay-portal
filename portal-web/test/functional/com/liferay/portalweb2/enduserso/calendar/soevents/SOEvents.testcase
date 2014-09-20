@@ -56,10 +56,11 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="SODashboard#viewTodaysEvent">
+		<execute macro="SOEvents#viewTodaysEventDashboardEvent">
 			<var name="allDayEvent" value="true" />
 			<var name="eventDescription" value="${eventDescription}" />
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="schedulerEventDialogBox" value="true" />
 			<var name="userName" value="${adminName}" />
 		</execute>
 
@@ -336,6 +337,7 @@
 
 		<execute macro="SOEvents#viewUpcomingEventSiteEvent">
 			<var name="eventTitle" value="${eventTitle2}" />
+			<var name="schedulerEventDialogBox" value="true" />
 		</execute>
 
 		<execute macro="Page#openURL">
@@ -374,6 +376,7 @@
 
 		<execute macro="SOEvents#viewUpcomingEventSiteEvent">
 			<var name="eventTitle" value="${eventTitle3}" />
+			<var name="schedulerEventDialogBox" value="true" />
 		</execute>
 
 		<execute macro="Page#openURL">
@@ -417,6 +420,7 @@
 
 		<execute macro="SOEvents#viewUpcomingEventSiteEvent">
 			<var name="eventTitle" value="${eventTitle4}" />
+			<var name="schedulerEventDialogBox" value="true" />
 		</execute>
 
 		<execute macro="Page#openURL">
@@ -465,6 +469,7 @@
 
 		<execute macro="SOEvents#viewUpcomingEventSiteEvent">
 			<var name="eventTitle" value="${eventTitle5}" />
+			<var name="schedulerEventDialogBox" value="true" />
 		</execute>
 
 		<execute macro="Page#openURL">
@@ -513,6 +518,7 @@
 
 		<execute macro="SOEvents#viewUpcomingEventSiteEvent">
 			<var name="eventTitle" value="${eventTitle6}" />
+			<var name="schedulerEventDialogBox" value="true" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -634,9 +640,10 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="SODashboard#viewTodaysEvent">
+		<execute macro="SOEvents#viewTodaysEventDashboardEvent">
 			<var name="eventDescription" value="${eventDescription}" />
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="schedulerEventDialogBox" value="true" />
 			<var name="userName" value="${adminName}" />
 		</execute>
 
@@ -722,8 +729,9 @@
 			<var name="maxDisplayDays" value="2" />
 		</execute>
 
-		<execute macro="SODashboard#viewUpcomingEvent">
+		<execute macro="SOEvents#viewUpcomingEventDashboardEvent">
 			<var name="eventTitle" value="${eventTitle3}" />
+			<var name="schedulerEventDialogBox" value="true" />
 			<var name="userName" value="${adminName}" />
 		</execute>
 
@@ -950,22 +958,25 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="SODashboard#viewTodaysEvent">
+		<execute macro="SOEvents#viewTodaysEventDashboardEvent">
 			<var name="eventTitle" value="${eventTitle1}" />
+			<var name="schedulerEventDialogBox" value="true" />
 			<var name="userName" value="${adminName}" />
 		</execute>
 
 		<execute action="SOSite#assertElementNotPresent" locator-key1="SITE_NAME" />
 
-		<execute macro="SODashboard#viewTodaysEvent">
+		<execute macro="SOEvents#viewTodaysEventDashboardEvent">
 			<var name="eventTitle" value="${eventTitle2}" />
+			<var name="schedulerEventDialogBox" value="true" />
 			<var name="userName" value="${adminName}" />
 		</execute>
 
 		<execute action="SOSite#assertElementNotPresent" locator-key1="SITE_NAME" />
 
-		<execute macro="SODashboard#viewTodaysEvent">
+		<execute macro="SOEvents#viewTodaysEventDashboardEvent">
 			<var name="eventTitle" value="${eventTitle3}" />
+			<var name="schedulerEventDialogBox" value="true" />
 			<var name="userName" value="${adminName}" />
 		</execute>
 
@@ -1521,10 +1532,11 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="SODashboard#viewTodaysEvent">
+		<execute macro="SOEvents#viewTodaysEventDashboardEvent">
 			<var name="endDateTime" value="${endDateTime}" />
 			<var name="eventDescription" value="${eventDescription}" />
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="schedulerEventDialogBox" value="true" />
 			<var name="startDateTime" value="${startDateTime}" />
 			<var name="userName" value="${adminName}" />
 		</execute>
@@ -1751,12 +1763,9 @@
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="soDashboard" value="true" />
-		</execute>
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute macro="SODashboard#viewTodaysEventDeletedEvent">
+		<execute macro="SOEvents#viewTodaysEventDeletedEvent">
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 	</command>
@@ -1799,7 +1808,9 @@
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 
-		<execute macro="SODashboard#viewTodaysEventDeletedEvent">
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOEvents#viewTodaysEventDeletedEvent">
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 	</command>
@@ -1963,6 +1974,7 @@
 		<execute macro="SOEvents#viewUpcomingEventSiteEvent">
 			<var name="endDateTime" value="${endDateTimeEdit}" />
 			<var name="eventTitle" value="${eventTitle3Edit}" />
+			<var name="schedulerEventDialogBox" value="true" />
 			<var name="startDateTime" value="${startDateTimeEdit}" />
 		</execute>
 
@@ -2758,7 +2770,9 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="SODashboard#viewTodaysEventSiteEvent">
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOEvents#viewTodaysEventSiteEvent">
 			<var name="endDateTime" value="${endDateTime}" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="schedulerEventDialogBox" value="true" />
@@ -2824,21 +2838,27 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="SODashboard#viewTodaysEventSiteEvent">
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOEvents#viewTodaysEventSiteEvent">
 			<var name="eventTitle" value="${eventTitle1}" />
 			<var name="schedulerEventDialogBox" value="true" />
 		</execute>
 
 		<execute action="SOSite#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
 
-		<execute macro="SODashboard#viewTodaysEventSiteEvent">
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOEvents#viewTodaysEventSiteEvent">
 			<var name="eventTitle" value="${eventTitle2}" />
 			<var name="schedulerEventDialogBox" value="true" />
 		</execute>
 
 		<execute action="SOSite#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
 
-		<execute macro="SODashboard#viewTodaysEventSiteEvent">
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOEvents#viewTodaysEventSiteEvent">
 			<var name="eventTitle" value="${eventTitle3}" />
 			<var name="schedulerEventDialogBox" value="true" />
 		</execute>
@@ -2874,7 +2894,9 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="SODashboard#viewTodaysEventSiteEvent">
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOEvents#viewTodaysEventSiteEvent">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="schedulerEventDialogBox" value="true" />
 		</execute>

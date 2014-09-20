@@ -53,6 +53,136 @@
 		<execute action="SOEventsConfiguration#selectFrameTop" />
 	</command>
 
+	<command name="viewTodaysEventDashboardEvent">
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<if>
+			<isset var="eventTitleShort" />
+			<then>
+				<var name="key_eventTitle" value="${eventTitleShort}" />
+
+				<execute action="SOEvents#assertTextEquals" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitleShort}" />
+			</then>
+			<else>
+				<var name="key_eventTitle" value="${eventTitle}" />
+
+				<execute action="SOEvents#assertTextEquals" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
+			</else>
+		</if>
+
+		<if>
+			<isset var="startDateTime" />
+			<then>
+				<execute action="SOEvents#assertTextEquals" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" value1="${startDateTime}" />
+			</then>
+			<elseif>
+				<equals arg1="${allDayEvent}" arg2="true" />
+				<then>
+					<execute action="SOEvents#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
+				</then>
+			</elseif>
+			<else>
+				<execute action="SOEvents#assertElementPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
+			</else>
+		</if>
+
+		<execute action="SOEvents#assertTextEquals" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_CREATOR" value1="${userName}" />
+		<execute action="SOEvents#click" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" />
+
+		<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="EVENT_TITLE" value1="${eventTitle}" />
+
+		<if>
+			<isset var="startDateTime" />
+			<then>
+				<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="START_DATE_FIELD" value1="${startDateTime}" />
+			</then>
+			<elseif>
+				<equals arg1="${allDayEvent}" arg2="true" />
+				<then>
+					<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="START_DATE_FIELD" value1="12:00 AM" />
+				</then>
+			</elseif>
+			<else>
+				<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="START_DATE_FIELD" />
+			</else>
+		</if>
+
+		<if>
+			<isset var="endDateTime" />
+			<then>
+				<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="END_DATE_FIELD" value1="${endDateTime}" />
+			</then>
+			<elseif>
+				<equals arg1="${allDayEvent}" arg2="true" />
+				<then>
+					<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="END_DATE_FIELD" value1="11:59 PM" />
+				</then>
+			</elseif>
+			<else>
+				<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="END_DATE_FIELD" />
+			</else>
+		</if>
+
+		<if>
+			<not>
+				<equals arg1="${invitedToEvent}" arg2="true"  />
+			</not>
+			<then>
+				<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="RESOURCES_FIELD" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${schedulerEventDialogBox}" arg2="true" />
+			<then>
+				<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="MAYBE_BUTTON" />
+				<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="DECLINE_BUTTON" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="eventCommentList" />
+			<then>
+				<for list="${eventCommentList}" param="eventComment">
+					<var name="key_eventComment" value="${eventComment}" />
+					<var name="key_user" value="${user}" />
+
+					<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="COMMENTS_USER_NAME" value1="${user}" />
+					<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="COMMENTS_BODY" value1="${eventComment}" />
+				</for>
+			</then>
+			<elseif>
+				<isset var="eventComment" />
+				<then>
+					<var name="key_eventComment" value="${eventComment}" />
+					<var name="key_user" value="${user}" />
+
+					<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="COMMENTS_USER_NAME" value1="${user}" />
+					<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="COMMENTS_BODY" value1="${eventComment}" />
+				</then>
+			</elseif>
+		</if>
+	</command>
+
+	<command name="viewTodaysEventDeletedEvent">
+		<var name="key_eventTitle" value="${eventTitle}" />
+
+		<if>
+			<and>
+				<condition action="SOEvents#isElementNotPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE_GENERIC" />
+				<condition action="SOEvents#isElementNotPresent" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE_GENERIC" />
+			</and>
+			<then>
+				<execute action="SOEvents#assertTextEquals" locator-key1="EVENTS_DISPLAY_NO_EVENTS_MESSAGE" value1="There are no more events today." />
+			</then>
+		</if>
+
+		<execute action="SOEvents#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
+		<execute action="SOEvents#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_CREATOR" value1="${userName}" />
+		<execute action="SOEvents#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
+		<execute action="SOEvents#assertTextNotPresent" value1="${eventTitle}" />
+	</command>
+
 	<command name="viewTodaysEventSiteEvent">
 		<if>
 			<isset var="eventTitleShort" />
@@ -120,7 +250,113 @@
 			</else>
 		</if>
 
-		<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="RESOURCES_FIELD" />
+		<if>
+			<not>
+				<equals arg1="${invitedToEvent}" arg2="true"  />
+			</not>
+			<then>
+				<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="RESOURCES_FIELD" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${schedulerEventDialogBox}" arg2="true" />
+			<then>
+				<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="MAYBE_BUTTON" />
+				<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="DECLINE_BUTTON" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="eventCommentList" />
+			<then>
+				<for list="${eventCommentList}" param="eventComment">
+					<var name="key_eventComment" value="${eventComment}" />
+					<var name="key_user" value="${user}" />
+
+					<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="COMMENTS_USER_NAME" value1="${user}" />
+					<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="COMMENTS_BODY" value1="${eventComment}" />
+				</for>
+			</then>
+			<elseif>
+				<isset var="eventComment" />
+				<then>
+					<var name="key_eventComment" value="${eventComment}" />
+					<var name="key_user" value="${user}" />
+
+					<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="COMMENTS_USER_NAME" value1="${user}" />
+					<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="COMMENTS_BODY" value1="${eventComment}" />
+				</then>
+			</elseif>
+		</if>
+	</command>
+
+	<command name="viewUpcomingEventDashboardEvent">
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<if>
+			<isset var="eventTitleShort" />
+			<then>
+				<var name="key_eventTitle" value="${eventTitleShort}" />
+
+				<execute action="SOEvents#assertTextEquals" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" value1="${eventTitleShort}" />
+			</then>
+			<else>
+				<var name="key_eventTitle" value="${eventTitle}" />
+
+				<execute action="SOEvents#assertTextEquals" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
+			</else>
+		</if>
+
+		<if>
+			<isset var="startDateTime" />
+			<then>
+				<execute action="SOEvents#assertTextEquals" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TIME" value1="${startDateTime}" />
+			</then>
+			<elseif>
+				<equals arg1="${allDayEvent}" arg2="true" />
+				<then>
+					<execute action="SOEvents#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TIME" />
+				</then>
+			</elseif>
+			<else>
+				<execute action="SOEvents#assertElementPresent" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TIME" />
+			</else>
+		</if>
+
+		<execute action="SOEvents#assertTextEquals" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_CREATOR" value1="${userName}" />
+		<execute action="SOEvents#click" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" />
+
+		<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="EVENT_TITLE" value1="${eventTitle}" />
+
+		<if>
+			<isset var="startDateTime" />
+			<then>
+				<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="START_DATE_FIELD" value1="${startDateTime}" />
+			</then>
+			<else>
+				<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="START_DATE_FIELD" />
+			</else>
+		</if>
+
+		<if>
+			<isset var="endDateTime" />
+			<then>
+				<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="END_DATE_FIELD" value1="${endDateTime}" />
+			</then>
+			<else>
+				<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="END_DATE_FIELD" />
+			</else>
+		</if>
+
+		<if>
+			<not>
+				<equals arg1="${invitedToEvent}" arg2="true"  />
+			</not>
+			<then>
+				<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="RESOURCES_FIELD" />
+			</then>
+		</if>
 
 		<if>
 			<equals arg1="${schedulerEventDialogBox}" arg2="true" />
@@ -194,6 +430,44 @@
 			</else>
 		</if>
 
-		<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="RESOURCES_FIELD" />
+		<if>
+			<not>
+				<equals arg1="${invitedToEvent}" arg2="true"  />
+			</not>
+			<then>
+				<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="RESOURCES_FIELD" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${schedulerEventDialogBox}" arg2="true" />
+			<then>
+				<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="MAYBE_BUTTON" />
+				<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="DECLINE_BUTTON" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="eventCommentList" />
+			<then>
+				<for list="${eventCommentList}" param="eventComment">
+					<var name="key_eventComment" value="${eventComment}" />
+					<var name="key_user" value="${user}" />
+
+					<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="COMMENTS_USER_NAME" value1="${user}" />
+					<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="COMMENTS_BODY" value1="${eventComment}" />
+				</for>
+			</then>
+			<elseif>
+				<isset var="eventComment" />
+				<then>
+					<var name="key_eventComment" value="${eventComment}" />
+					<var name="key_user" value="${user}" />
+
+					<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="COMMENTS_USER_NAME" value1="${user}" />
+					<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="COMMENTS_BODY" value1="${eventComment}" />
+				</then>
+			</elseif>
+		</if>
 	</command>
 </definition>

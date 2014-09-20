@@ -51,7 +51,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="SODashboard#viewUpcomingTaskNone">
+		<execute macro="SOUpcomingTasks#viewUpcomingTaskNone">
 			<var name="taskDescription" value="${taskDescription}" />
 		</execute>
 	</command>
@@ -82,7 +82,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="SODashboard#viewUpcomingTask">
+		<execute macro="SOUpcomingTasks#viewUpcomingTask">
 			<var name="percentCompletion" value="100" />
 			<var name="taskAssignee" value="${adminName}" />
 			<var name="taskDescription" value="${taskDescription}" />
@@ -129,7 +129,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="SODashboard#viewUpcomingTask">
+		<execute macro="SOUpcomingTasks#viewUpcomingTask">
 			<var name="taskAssignee" value="${userName}" />
 			<var name="taskDescription" value="${taskDescription}" />
 			<var name="taskReporter" value="${adminName}" />
@@ -140,7 +140,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="SODashboard#viewUpcomingTask">
+		<execute macro="SOUpcomingTasks#viewUpcomingTask">
 			<var name="taskAssignee" value="${userName}" />
 			<var name="taskDescription" value="${taskDescription}" />
 			<var name="taskReporter" value="${adminName}" />
@@ -162,7 +162,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="SODashboard#viewUpcomingTask">
+		<execute macro="SOUpcomingTasks#viewUpcomingTask">
 			<var name="taskAssignee" value="${adminName}" />
 			<var name="taskDescription" value="${taskDescription}" />
 			<var name="taskReporter" value="${adminName}" />
@@ -186,7 +186,7 @@
 			<var name="taskReporter" value="${adminName}" />" />
 		</execute>
 
-		<execute macro="SODashboard#viewUpcomingTask">
+		<execute macro="SOUpcomingTasks#viewUpcomingTask">
 			<var name="taskAssignee" value="${adminName}" />
 			<var name="taskDescription" value="${taskDescription}" />
 			<var name="taskPriority" value="${taskPriority}" />
@@ -211,7 +211,7 @@
 			<var name="taskReporter" value="${adminName}" />" />
 		</execute>
 
-		<execute macro="SODashboard#viewUpcomingTask">
+		<execute macro="SOUpcomingTasks#viewUpcomingTask">
 			<var name="taskAssignee" value="${adminName}" />
 			<var name="taskDescription" value="${taskDescription}" />
 			<var name="taskPriority" value="${taskPriority}" />
@@ -288,7 +288,7 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute macro="SODashboard#viewUpcomingTask">
+		<execute macro="SOUpcomingTasks#viewUpcomingTask">
 			<var name="percentCompletion" value="60" />
 			<var name="taskAssignee" value="${userName}" />
 			<var name="taskDescription" value="${taskDescription}" />
@@ -300,7 +300,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="SODashboard#viewUpcomingTask">
+		<execute macro="SOUpcomingTasks#viewUpcomingTask">
 			<var name="percentCompletion" value="60" />
 			<var name="taskAssignee" value="${userName}" />
 			<var name="taskDescription" value="${taskDescription}" />
@@ -347,19 +347,19 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="SODashboard#viewUpcomingTask">
+		<execute macro="SOUpcomingTasks#viewUpcomingTask">
 			<var name="taskAssignee" value="${adminName}" />
 			<var name="taskDescription" value="${taskDescription1}" />
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="SODashboard#viewUpcomingTask">
+		<execute macro="SOUpcomingTasks#viewUpcomingTask">
 			<var name="taskAssignee" value="${adminName}" />
 			<var name="taskDescription" value="${taskDescription2}" />
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="SODashboard#viewUpcomingTask">
+		<execute macro="SOUpcomingTasks#viewUpcomingTask">
 			<var name="taskAssignee" value="${adminName}" />
 			<var name="taskDescription" value="${taskDescription3}" />
 			<var name="taskReporter" value="${adminName}" />

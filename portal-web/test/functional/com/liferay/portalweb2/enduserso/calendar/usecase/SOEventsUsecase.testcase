@@ -423,12 +423,15 @@
 			<var name="userLoginFullName" value="${userName1}" />
 		</execute>
 
-		<execute macro="SODashboard#viewTodaysEventSiteEvent">
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOEvents#viewTodaysEventSiteEvent">
 			<var name="eventTitle" value="${siteEventTitle1}" />
 		</execute>
 
-		<execute macro="SODashboard#viewTodaysEvent">
+		<execute macro="SOEvents#viewTodaysEventDashboardEvent">
 			<var name="eventTitle" value="${userEventTitle1}" />
+			<var name="schedulerEventDialogBox" value="true" />
 			<var name="userName" value="${userName1}" />
 		</execute>
 
@@ -446,12 +449,15 @@
 			<var name="userLoginFullName" value="${userName2}" />
 		</execute>
 
-		<execute macro="SODashboard#viewTodaysEventSiteEvent">
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOEvents#viewTodaysEventSiteEvent">
 			<var name="eventTitle" value="${siteEventTitle2}" />
 		</execute>
 
-		<execute macro="SODashboard#viewTodaysEvent">
+		<execute macro="SOEvents#viewTodaysEventDashboardEvent">
 			<var name="eventTitle" value="${userEventTitle2}" />
+			<var name="schedulerEventDialogBox" value="true" />
 			<var name="userName" value="${userName2}" />
 		</execute>
 
@@ -469,12 +475,15 @@
 			<var name="userLoginFullName" value="${userName3}" />
 		</execute>
 
-		<execute macro="SODashboard#viewTodaysEventSiteEvent">
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOEvents#viewTodaysEventSiteEvent">
 			<var name="eventTitle" value="${siteEventTitle3}" />
 		</execute>
 
-		<execute macro="SODashboard#viewTodaysEvent">
+		<execute macro="SOEvents#viewTodaysEventDashboardEvent">
 			<var name="eventTitle" value="${userEventTitle3}" />
+			<var name="schedulerEventDialogBox" value="true" />
 			<var name="userName" value="${userName3}" />
 		</execute>
 
@@ -492,12 +501,15 @@
 			<var name="userLoginFullName" value="${userName4}" />
 		</execute>
 
-		<execute macro="SODashboard#viewTodaysEventSiteEvent">
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOEvents#viewTodaysEventSiteEvent">
 			<var name="eventTitle" value="${siteEventTitle4}" />
 		</execute>
 
-		<execute macro="SODashboard#viewTodaysEvent">
+		<execute macro="SOEvents#viewTodaysEventDashboardEvent">
 			<var name="eventTitle" value="${userEventTitle4}" />
+			<var name="schedulerEventDialogBox" value="true" />
 			<var name="userName" value="${userName4}" />
 		</execute>
 
@@ -515,22 +527,30 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="SODashboard#viewTodaysEventSiteEvent">
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOEvents#viewTodaysEventSiteEvent">
 			<var name="eventTitle" value="${siteEventTitle1}" />
 			<var name="schedulerEventDialogBox" value="true" />
 		</execute>
 
-		<execute macro="SODashboard#viewTodaysEventSiteEvent">
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOEvents#viewTodaysEventSiteEvent">
 			<var name="eventTitle" value="${siteEventTitle2}" />
 			<var name="schedulerEventDialogBox" value="true" />
 		</execute>
 
-		<execute macro="SODashboard#viewTodaysEventSiteEvent">
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOEvents#viewTodaysEventSiteEvent">
 			<var name="eventTitle" value="${siteEventTitle3}" />
 			<var name="schedulerEventDialogBox" value="true" />
 		</execute>
 
-		<execute macro="SODashboard#viewTodaysEventSiteEvent">
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOEvents#viewTodaysEventSiteEvent">
 			<var name="eventTitle" value="${siteEventTitle4}" />
 			<var name="schedulerEventDialogBox" value="true" />
 		</execute>

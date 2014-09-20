@@ -1501,9 +1501,10 @@
 			<var name="rsvp" value="Yes" />
 		</execute>
 
-		<execute macro="SODashboard#viewTodaysEvent">
+		<execute macro="SOEvents#viewTodaysEventDashboardEvent">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="invitedToEvent" value="true" />
+			<var name="schedulerEventDialogBox" value="true" />
 			<var name="userName" value="${userName}" />
 		</execute>
 

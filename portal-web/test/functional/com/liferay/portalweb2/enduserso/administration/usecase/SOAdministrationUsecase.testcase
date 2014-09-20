@@ -899,12 +899,12 @@
 			<var name="userLoginFullName" value="${userName1}" />
 		</execute>
 
-		<execute macro="SOMembersPortlet#confirmMemberInvite">
+		<execute macro="SOMembersAdministration#confirmMemberInvite">
 			<var name="senderName" value="${adminName}" />
 			<var name="siteName" value="${siteName1}" />
 		</execute>
 
-		<execute macro="SOMembersPortlet#viewConfirmMemberInvite">
+		<execute macro="SOMembersAdministration#viewConfirmMemberInvite">
 			<var name="siteDescription" value="${siteDescription1}" />
 			<var name="siteName" value="${siteName1}" />
 			<var name="userEmailAddress" value="${userEmailAddress1}" />
@@ -955,12 +955,12 @@
 			<var name="userLoginFullName" value="${userName2}" />
 		</execute>
 
-		<execute macro="SOMembersPortlet#ignoreMemberInvite">
+		<execute macro="SOMembersAdministration#ignoreMemberInvite">
 			<var name="senderName" value="${adminName}" />
 			<var name="siteName" value="${siteName1}" />
 		</execute>
 
-		<execute macro="SOMembersPortlet#viewIgnoreMemberInvite">
+		<execute macro="SOMembersAdministration#viewIgnoreMemberInvite">
 			<var name="numberOfMembers" value="2" />
 			<var name="siteDescription" value="${siteDescription1}" />
 			<var name="siteName" value="${siteName1}" />

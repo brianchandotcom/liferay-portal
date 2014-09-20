@@ -131,32 +131,36 @@ public class Watcher implements Runnable {
 				Path childFilePath = parentFilePath.resolve(
 					pathImpl.toString());
 
-				if (((kind == StandardWatchEventKind.ENTRY_CREATE) &&
-					 isIgnoredFilePath(childFilePath)) ||
-					((kind == StandardWatchEventKind.ENTRY_MODIFY) &&
-					 Files.isDirectory(childFilePath))) {
+				if (kind == StandardWatchEventKind.ENTRY_CREATE) {
+					if (isIgnoredFilePath(childFilePath)) {
+						continue;
+					}
 
-					continue;
-				}
+					fireWatchEventListener(childFilePath, watchEvent);
 
-				if (kind == StandardWatchEventKind.ENTRY_DELETE) {
-					processMissingFilePath(childFilePath);
-				}
+					if (_recursive) {
+						try {
+							if (Files.isDirectory(
+									childFilePath, LinkOption.NOFOLLOW_LINKS)) {
 
-				fireWatchEventListener(childFilePath, watchEvent);
-
-				if (_recursive &&
-					(kind == StandardWatchEventKind.ENTRY_CREATE)) {
-
-					try {
-						if (Files.isDirectory(
-								childFilePath, LinkOption.NOFOLLOW_LINKS)) {
-
-							registerFilePath(childFilePath, true);
+								registerFilePath(childFilePath, true);
+							}
+						}
+						catch (IOException ioe) {
 						}
 					}
-					catch (IOException ioe) {
+				}
+				else if (kind == StandardWatchEventKind.ENTRY_DELETE) {
+					processMissingFilePath(childFilePath);
+
+					fireWatchEventListener(childFilePath, watchEvent);
+				}
+				else if (kind == StandardWatchEventKind.ENTRY_MODIFY) {
+					if (Files.isDirectory(childFilePath)) {
+						continue;
 					}
+
+					fireWatchEventListener(childFilePath, watchEvent);
 				}
 			}
 

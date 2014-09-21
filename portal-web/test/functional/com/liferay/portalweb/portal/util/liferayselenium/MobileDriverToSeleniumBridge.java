@@ -542,7 +542,7 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public boolean isVisible(String locator) {
-		throw new UnsupportedOperationException();
+		return WebDriverHelper.isVisible(this, locator);
 	}
 
 	@Override

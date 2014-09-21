@@ -20,6 +20,8 @@
 	}
 
 	.signed-in {
-		@include hyphenation;
+		display: inline-block;
+
+		@include hyphens;
 	}
 }

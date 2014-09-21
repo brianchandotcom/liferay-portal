@@ -472,7 +472,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 	}
 
 	.portlet-asset-publisher .asset-title, .portlet-asset-publisher .header-title, .portlet-asset-publisher li.title-list, .portlet-blogs .entry-title, .portlet-blogs .header-title, .portlet-message-boards .header-title {
-		@include hyphenation;
+		@include hyphens;
 	}
 
 	.portlet-asset-publisher .asset-content, .portlet-asset-publisher .asset-summary, .portlet-blogs .entry-body, .portlet-journal .journal-article-preview, .portlet-journal-content .journal-content-article, .portlet-message-boards .thread-body {

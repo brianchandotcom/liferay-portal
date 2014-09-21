@@ -622,7 +622,6 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public void mouseOver(String locator) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override

@@ -31,32 +31,19 @@ if (Validator.isNull(displayStyle)) {
 
 String keywords = ParamUtil.getString(request, "keywords");
 
-Map<String, String> requestParams = new HashMap<String, String>();
+PortletURL displayStyleURL = renderResponse.createRenderURL();
 
-requestParams.put("struts_action", Validator.isNull(keywords) ? "/document_library/view" : "/document_library/search");
-requestParams.put("navigation", HtmlUtil.escapeJS(navigation));
-requestParams.put("folderId", String.valueOf(folderId));
-requestParams.put("saveDisplayStyle", Boolean.TRUE.toString());
-requestParams.put("searchType", String.valueOf(DLSearchConstants.FRAGMENT));
-requestParams.put("viewEntriesPage", Boolean.FALSE.toString());
-requestParams.put("viewFolders", Boolean.FALSE.toString());
-
-if (Validator.isNull(keywords)) {
-	requestParams.put("viewEntries", Boolean.TRUE.toString());
-}
-else {
-	requestParams.put("keywords", HtmlUtil.escapeJS(keywords));
-	requestParams.put("searchFolderId", String.valueOf(folderId));
-	requestParams.put("viewEntries", Boolean.FALSE.toString());
-}
+displayStyleURL.setParameter("struts_action", Validator.isNull(keywords) ? "/document_library/view" : "/document_library/search");
+displayStyleURL.setParameter("navigation", HtmlUtil.escapeJS(navigation));
+displayStyleURL.setParameter("folderId", String.valueOf(folderId));
 
 if (fileEntryTypeId != -1) {
-	requestParams.put("fileEntryTypeId", String.valueOf(fileEntryTypeId));
+	displayStyleURL.setParameter("fileEntryTypeId", String.valueOf(fileEntryTypeId));
 }
 %>
 
 <liferay-ui:app-view-display-style
 	displayStyle="<%= displayStyle %>"
+	displayStyleURL="<%= displayStyleURL %>"
 	displayStyles="<%= dlPortletInstanceSettings.getDisplayViews() %>"
-	requestParams="<%= requestParams %>"
 />

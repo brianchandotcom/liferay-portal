@@ -442,7 +442,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	/* -------- App view navigation entry --------- */
 
-	.navigation-pane .app-view-navigation-entry {
+	.navigation-pane .navigation-entry {
 		.overlay.entry-action {
 			a.btn {
 				padding: 11px 14px;

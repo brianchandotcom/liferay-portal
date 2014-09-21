@@ -44,18 +44,6 @@
 				base: PATH_JAVASCRIPT + '/liferay/',
 				combine: COMBINE,
 				modules: {
-					'liferay-app-view-folders': {
-						path: 'app_view_folders.js',
-						requires: [
-							'aui-base',
-							'aui-parse-content',
-							'liferay-app-view-move',
-							'liferay-history-manager',
-							'liferay-list-view',
-							'liferay-node',
-							'liferay-portlet-base'
-						]
-					},
 					'liferay-app-view-move': {
 						path: 'app_view_move.js',
 						plugins: {
@@ -83,15 +71,6 @@
 						path: 'app_view_move_touch.js',
 						requires: [
 							'aui-base'
-						]
-					},
-					'liferay-app-view-paginator': {
-						path: 'app_view_paginator.js',
-						requires: [
-							'aui-parse-content',
-							'liferay-history-manager',
-							'liferay-pagination',
-							'liferay-portlet-base'
 						]
 					},
 					'liferay-app-view-select': {

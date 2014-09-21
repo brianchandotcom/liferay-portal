@@ -51,8 +51,6 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 	<aui:row cssClass="lfr-app-column-view">
 		<aui:col cssClass="navigation-pane" width="<%= 25 %>">
 			<liferay-util:include page="/html/portlet/journal/view_folders.jsp" />
-
-			<div class="folder-pagination"></div>
 		</aui:col>
 
 		<aui:col cssClass="context-pane" last="<%= true %>" width="<%= 75 %>">
@@ -148,19 +146,7 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 			},
 			namespace: '<portlet:namespace />',
 			portletId: '<%= portletDisplay.getId() %>',
-			rowIds: '<%= RowChecker.ROW_IDS %>',
-			select: {
-
-				<%
-				String[] escapedDisplayViews = new String[displayViews.length];
-
-				for (int i = 0; i < displayViews.length; i++) {
-					escapedDisplayViews[i] = HtmlUtil.escapeJS(displayViews[i]);
-				}
-				%>
-
-				displayViews: ['<%= StringUtil.merge(escapedDisplayViews, "','") %>']
-			}
+			rowIds: '<%= RowChecker.ROW_IDS %>'
 		}
 	);
 

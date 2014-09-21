@@ -33,61 +33,58 @@ if (orderByType.equals("asc")) {
 %>
 
 <aui:nav-item dropdown="<%= true %>" id="sortButtonContainer" label="sort-by">
+	<portlet:renderURL var="sortTitleURL">
+		<portlet:param name="struts_action" value="/document_library/view" />
+		<portlet:param name="navigation" value="<%= navigation %>" />
+		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+		<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" />
+		<portlet:param name="orderByCol" value="title" />
+		<portlet:param name="orderByType" value="<%= reverseOrderByType %>" />
+	</portlet:renderURL>
 
-	<%
-	String taglibURL = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'title','" + reverseOrderByType + "')";
-	%>
+	<aui:nav-item href="<%= sortTitleURL %>" iconCssClass="icon-calendar" label="title" />
 
-	<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-calendar" label="title" />
+	<portlet:renderURL var="sortDisplayDateURL">
+		<portlet:param name="struts_action" value="/document_library/view" />
+		<portlet:param name="navigation" value="<%= navigation %>" />
+		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+		<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" />
+		<portlet:param name="orderByCol" value="creationDate" />
+		<portlet:param name="orderByType" value="<%= reverseOrderByType %>" />
+	</portlet:renderURL>
 
-	<%
-	taglibURL = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'creationDate','" + reverseOrderByType + "')";
-	%>
+	<aui:nav-item href="<%= sortDisplayDateURL %>" iconCssClass="icon-calendar" label="create-date" />
 
-	<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-calendar" label="create-date" />
+	<portlet:renderURL var="sortModifiedDateURL">
+		<portlet:param name="struts_action" value="/document_library/view" />
+		<portlet:param name="navigation" value="<%= navigation %>" />
+		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+		<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" />
+		<portlet:param name="orderByCol" value="modifiedDate" />
+		<portlet:param name="orderByType" value="<%= reverseOrderByType %>" />
+	</portlet:renderURL>
 
-	<%
-	taglibURL = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'modifiedDate','" + reverseOrderByType + "')";
-	%>
+	<aui:nav-item href="<%= sortModifiedDateURL %>" iconCssClass="icon-calendar" label="modified-date" />
 
-	<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-calendar" label="modified-date" />
+	<portlet:renderURL var="sortDownloadsURL">
+		<portlet:param name="struts_action" value="/document_library/view" />
+		<portlet:param name="navigation" value="<%= navigation %>" />
+		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+		<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" />
+		<portlet:param name="orderByCol" value="downloads" />
+		<portlet:param name="orderByType" value="<%= reverseOrderByType %>" />
+	</portlet:renderURL>
 
-	<%
-	taglibURL = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'downloads','" + reverseOrderByType + "')";
-	%>
+	<aui:nav-item href="<%= sortDownloadsURL %>" iconCssClass="icon-calendar" label="downloads" />
 
-	<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-calendar" label="downloads" />
+	<portlet:renderURL var="sortSizeURL">
+		<portlet:param name="struts_action" value="/document_library/view" />
+		<portlet:param name="navigation" value="<%= navigation %>" />
+		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+		<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" />
+		<portlet:param name="orderByCol" value="size" />
+		<portlet:param name="orderByType" value="<%= reverseOrderByType %>" />
+	</portlet:renderURL>
 
-	<%
-	taglibURL = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'size','" + reverseOrderByType + "')";
-	%>
-
-	<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-calendar" label="size" />
+	<aui:nav-item href="<%= sortSizeURL %>" iconCssClass="icon-calendar" label="size" />
 </aui:nav-item>
-
-<aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />sortEntries',
-		function(folderId, orderByCol, reverseOrderByType) {
-			Liferay.fire(
-				'<portlet:namespace />dataRequest',
-				{
-					requestParams: {
-						'<portlet:namespace />folderId': folderId,
-						'<portlet:namespace />navigation': '<%= HtmlUtil.escape(navigation) %>',
-						'<portlet:namespace />struts_action': '/document_library/view',
-						'<portlet:namespace />fileEntryTypeId': <%= fileEntryTypeId %>,
-						'<portlet:namespace />viewEntries': <%= Boolean.FALSE.toString() %>,
-						'<portlet:namespace />viewEntriesPage': <%= Boolean.TRUE.toString() %>,
-						'<portlet:namespace />viewFolders': <%= Boolean.FALSE.toString() %>,
-						'<portlet:namespace />orderByCol': orderByCol,
-						'<portlet:namespace />orderByType': reverseOrderByType,
-						'<portlet:namespace />saveOrderBy': <%= Boolean.TRUE.toString() %>
-					}
-				}
-			);
-		},
-		['aui-base']
-	);
-</aui:script>

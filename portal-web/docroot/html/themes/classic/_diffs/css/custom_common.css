@@ -524,6 +524,23 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 	}
 
+	.navigation-pane .navigation-entry {
+		&.folder.error {
+			color: #34404F;
+			text-decoration: none;
+		}
+
+		.overlay.entry-action {
+			.btn {
+				background: transparent;
+
+				@include respond-to(desktop) {
+					padding: 14px 10px;
+				}
+			}
+		}
+	}
+
 	/* ---------- Site navigation ---------- */
 
 	.modify-pages .delete-tab {

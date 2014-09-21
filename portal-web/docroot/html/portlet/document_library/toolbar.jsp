@@ -19,6 +19,8 @@
 <%
 String strutsAction = ParamUtil.getString(request, "struts_action");
 
+String keywords = ParamUtil.getString(request, "keywords");
+
 Folder folder = (Folder)request.getAttribute("view.jsp-folder");
 
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
@@ -102,19 +104,20 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 	<c:if test="<%= dlPortletInstanceSettings.isShowFoldersSearch() %>">
 		<aui:nav-bar-search>
 			<div class="form-search">
-				<liferay-portlet:resourceURL varImpl="searchURL">
+				<liferay-portlet:renderURL varImpl="searchURL">
 					<portlet:param name="struts_action" value="/document_library/search" />
 					<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-					<portlet:param name="searchRepositoryId" value="<%= String.valueOf(folderId) %>" />
+					<portlet:param name="searchRepositoryId" value="<%= String.valueOf(repositoryId) %>" />
 					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 					<portlet:param name="searchFolderId" value="<%= String.valueOf(folderId) %>" />
-				</liferay-portlet:resourceURL>
+					<portlet:param name="keywords" value="<%= String.valueOf(keywords) %>" />
+					<portlet:param name="showRepositoryTabs" value="<% (folderId == 0) %>" />
+					<portlet:param name="showSearchInfo" value="<%= Boolean.TRUE.toString() %>" />
+				</liferay-portlet:renderURL>
 
-				<aui:form action="<%= searchURL.toString() %>" method="get" name="fm1" onSubmit="event.preventDefault();">
+				<aui:form action="<%= searchURL %>" method="get" name="fm1">
 					<liferay-portlet:renderURLParams varImpl="searchURL" />
 					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-					<aui:input name="breadcrumbsFolderId" type="hidden" value="<%= folderId %>" />
-					<aui:input name="searchFolderIds" type="hidden" value="<%= folderId %>" />
 
 					<liferay-ui:input-search />
 				</aui:form>
@@ -138,6 +141,16 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 	function <portlet:namespace />openFileEntryTypeView() {
 		Liferay.Util.openWindow(
 			{
+				dialog: {
+					destroyOnHide: true,
+					on: {
+						visibleChange: function(event) {
+							if (!event.newVal) {
+								Liferay.Portlet.refresh('#p_p_id_' + <%= portletDisplay.getId() %> + '_');
+							}
+						}
+					}
+				},
 				id: '<portlet:namespace />openFileEntryTypeView',
 				title: '<%= UnicodeLanguageUtil.get(request, "document-types") %>',
 				uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/document_library/view_file_entry_type" /><portlet:param name="redirect" value="<%= currentURL %>" /></liferay-portlet:renderURL>'

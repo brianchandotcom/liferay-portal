@@ -339,6 +339,18 @@ public class WebDriverHelper {
 			GetterUtil.getInteger(timeout), TimeUnit.MILLISECONDS);
 	}
 
+	public static void type(WebDriver webDriver, String locator, String value) {
+		WebElement webElement = getWebElement(webDriver, locator);
+
+		if (!webElement.isEnabled()) {
+			return;
+		}
+
+		webElement.clear();
+
+		webElement.sendKeys(value);
+	}
+
 	protected static WebElement getWebElement(
 		WebDriver webDriver, String locator) {
 

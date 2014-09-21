@@ -810,7 +810,7 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public void type(String locator, String value) {
-		throw new UnsupportedOperationException();
+		WebDriverHelper.type(this, locator, value);
 	}
 
 	@Override

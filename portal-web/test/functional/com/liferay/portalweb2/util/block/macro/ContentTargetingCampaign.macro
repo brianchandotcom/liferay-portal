@@ -67,7 +67,6 @@
 
 		<execute action="CPContenttargetingAddcampaign#type" locator-key1="CAMPAIGN_TRACKING_ACTIONS_PAGE_ALIAS_FIELD" value1="${pageAlias}" />
 		<execute action="CPContenttargetingAddcampaign#type" locator-key1="CAMPAIGN_TRACKING_ACTIONS_PAGE_FRIENDLY_URL_FIELD" value1="${pageFriendlyURL}" />
-		<execute action="CPContenttargetingAddcampaign#select" locator-key1="CAMPAIGN_TRACKING_ACTIONS_PAGE_TRACKING_ACTION_SELECT" value1="${pageTrackingActionSelect}" />
 	</command>
 
 	<command name="addTrackingActionsCmd">

@@ -153,7 +153,15 @@ if (alloyEditorMode.equals("text")) {
 				<c:when test='<%= alloyEditorMode.equals("text") %>'>
 					var editorElement = CKEDITOR.instances['<%= name %>'].element.$;
 
-					return editorElement.childElementCount ? editorElement.children[0].innerText : '';
+					var text = '';
+
+					if (editorElement.childElementCount) {
+						var childElement = editorElement.children[0];
+
+						text = childElement.textContent || childElement.innerText;
+					}
+
+					return text;
 				</c:when>
 				<c:otherwise>
 					return window['<%= name %>'].getCkData();

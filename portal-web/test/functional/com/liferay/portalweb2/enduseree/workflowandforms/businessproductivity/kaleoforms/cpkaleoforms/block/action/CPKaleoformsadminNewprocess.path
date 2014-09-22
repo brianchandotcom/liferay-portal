@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td>CANCEL_BUTTON</td>
 	<td>//a[contains(.,'Cancel')]</td>
 	<td></td>
@@ -199,6 +204,27 @@
 <tr>
 	<td>ADD_WORKFLOW_BUTTON</td>
 	<td>//button[contains(.,'Add Workflow')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_MENULIST_DEACTIVATE</td>
+	<td>//a[@role='menuitem' and contains(.,'Deactivate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WORKFLOW_NAVIGATION-->
+<tr>
+	<td>WORKFLOW_NAVIGATION_PUBLISHED_TAB</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Published')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_NAVIGATION_UNPUBLISHED_TAB</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Unpublished')]</td>
 	<td></td>
 </tr>
 <tr>

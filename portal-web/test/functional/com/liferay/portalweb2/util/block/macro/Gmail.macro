@@ -29,7 +29,10 @@
 		<var name="key_userEmailAddress" value="${userEmailAddress}" />
 
 		<if>
-			<condition action="Gmail#isElementNotPresent" locator-key1="GMAIL_NORMAL_MODE_USER_SCREENNAME" />
+			<and>
+				<condition action="Gmail#isElementNotPresent" locator-key1="GMAIL_NORMAL_MODE_USER_SCREENNAME" />
+				<condition action="Gmail#isElementNotPresent" locator-key1="GMAIL_HTML_MODE_USER_SCREENNAME" />
+			</and>
 			<then>
 				<if>
 					<condition action="Gmail#isElementPresent" locator-key1="LOGIN_EMAIL_FIELD" />
@@ -43,6 +46,12 @@
 				<execute action="Gmail#click" locator-key1="LOGIN_SIGN_IN_BUTTON" />
 				<execute action="Gmail#pause" locator1="5000" />
 			</then>
+			<elseif>
+				<condition action="Gmail#isElementPresent" locator-key1="GMAIL_HTML_MODE_USER_SCREENNAME" />
+				<then>
+					<execute action="Gmail#assertElementPresent" locator-key1="GMAIL_HTML_MODE_USER_SCREENNAME" />
+				</then>
+			</elseif>
 			<else>
 				<execute action="Gmail#assertElementPresent" locator-key1="GMAIL_NORMAL_MODE_USER_SCREENNAME" />
 			</else>

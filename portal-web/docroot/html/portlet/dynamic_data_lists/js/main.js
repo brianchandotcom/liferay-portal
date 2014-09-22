@@ -15,7 +15,7 @@ AUI.add(
 
 		var FIELDS_DISPLAY_NAME = '_fieldsDisplay';
 
-		var JSON = A.JSON;
+		var AJSON = A.JSON;
 
 		var STR_EMPTY = '';
 
@@ -108,7 +108,7 @@ AUI.add(
 							{
 								minDisplayRows: minDisplayRows,
 								recordSetId: recordsetId,
-								serviceContext: JSON.stringify(
+								serviceContext: AJSON.stringify(
 									{
 										scopeGroupId: themeDisplay.getScopeGroupId(),
 										userId: themeDisplay.getUserId()
@@ -168,14 +168,14 @@ AUI.add(
 
 									delete value.name;
 
-									value = JSON.stringify(value);
+									value = AJSON.stringify(value);
 								}
 								else if ((type === 'radio') || (type === 'select')) {
 									if (!isArray(value)) {
 										value = AArray(value);
 									}
 
-									value = JSON.stringify(value);
+									value = AJSON.stringify(value);
 								}
 
 								normalized[item.name] = instance._normalizeValue(value);
@@ -279,7 +279,7 @@ AUI.add(
 
 						var randomString = random.toString(36);
 
-						return randomString.substring(length)
+						return randomString.substring(length);
 					},
 
 					_setDataStableSort: function(data) {
@@ -323,10 +323,10 @@ AUI.add(
 						'/ddlrecord/add-record',
 						{
 							displayIndex: displayIndex,
-							fieldsMap: JSON.stringify(fieldsMap),
+							fieldsMap: AJSON.stringify(fieldsMap),
 							groupId: themeDisplay.getScopeGroupId(),
 							recordSetId: recordsetId,
-							serviceContext: JSON.stringify(
+							serviceContext: AJSON.stringify(
 								{
 									scopeGroupId: themeDisplay.getScopeGroupId(),
 									userId: themeDisplay.getUserId(),
@@ -608,10 +608,10 @@ AUI.add(
 						'/ddlrecord/update-record',
 						{
 							displayIndex: displayIndex,
-							fieldsMap: JSON.stringify(fieldsMap),
+							fieldsMap: AJSON.stringify(fieldsMap),
 							mergeFields: merge,
 							recordId: recordId,
-							serviceContext: JSON.stringify(
+							serviceContext: AJSON.stringify(
 								{
 									scopeGroupId: themeDisplay.getScopeGroupId(),
 									userId: themeDisplay.getUserId(),

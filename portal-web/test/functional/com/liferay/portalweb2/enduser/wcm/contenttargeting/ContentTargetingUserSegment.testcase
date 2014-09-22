@@ -42,11 +42,11 @@
 
 		<execute macro="ContentTargetingUserSegment#addCP">
 			<var name="userSegmentDescription" value="User Segment Description" />
-			<var name="userSegmentName" value="Female Users" />
+			<var name="userSegmentName" value="Male Users" />
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#addUserAttributesGenderRuleCP">
-			<var name="genderRadio" value="Female" />
+			<var name="genderRadio" value="Male" />
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#saveCP" />
@@ -57,7 +57,7 @@
 		</execute>
 
 		<execute macro="WebContent#addWithCategoryCP">
-			<var name="categoryName" value="Female Users" />
+			<var name="categoryName" value="Male Users" />
 			<var name="vocabularyName" value="User Segment" />
 			<var name="webContentContent" value="Web Content targeted to a User Segment" />
 			<var name="webContentTitle" value="Targeted Web Content Title" />
@@ -81,7 +81,7 @@
 			<var name="contentType" value="Web Content Article" />
 			<var name="siteScope" value="Global" />
 			<var name="toAll" value="true" />
-			<var name="userSegmentName" value="Female Users" />
+			<var name="userSegmentName" value="Male Users" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -92,7 +92,7 @@
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
 			<var name="belongsTo" value="true" />
-			<var name="userSegmentName" value="Female Users" />
+			<var name="userSegmentName" value="Male Users" />
 		</execute>
 	</command>
 
@@ -123,11 +123,11 @@
 
 		<execute macro="ContentTargetingUserSegment#addCP">
 			<var name="userSegmentDescription" value="User Segment Description" />
-			<var name="userSegmentName" value="Female Users" />
+			<var name="userSegmentName" value="Male Users" />
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#addUserAttributesGenderRuleCP">
-			<var name="genderRadio" value="Female" />
+			<var name="genderRadio" value="Male" />
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#saveCP" />
@@ -139,11 +139,11 @@
 
 		<execute macro="ContentTargetingUserSegment#addCP">
 			<var name="userSegmentDescription" value="User Segment Description" />
-			<var name="userSegmentName" value="Female Non Users" />
+			<var name="userSegmentName" value="Male Non Users" />
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#addUserAttributesGenderRuleCP">
-			<var name="genderRadio" value="Female" />
+			<var name="genderRadio" value="Male" />
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#saveCP" />
@@ -154,7 +154,7 @@
 		</execute>
 
 		<execute macro="WebContent#addWithCategoryCP">
-			<var name="categoryName" value="Female Non Users" />
+			<var name="categoryName" value="Male Non Users" />
 			<var name="vocabularyName" value="User Segment" />
 			<var name="webContentContent" value="Web Content targeted to a User Segment" />
 			<var name="webContentTitle" value="Targeted Web Content Title" />
@@ -178,18 +178,18 @@
 			<var name="contentType" value="Web Content Article" />
 			<var name="siteScope" value="Site Name" />
 			<var name="toAll" value="true" />
-			<var name="userSegmentName" value="Female Users" />
+			<var name="userSegmentName" value="Male Users" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Site Name" />
+			<var name="siteName" value="Child Site" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
 			<var name="belongsTo" value="true" />
-			<var name="userSegmentName" value="Female Users" />
+			<var name="userSegmentName" value="Male Users" />
 		</execute>
 	</command>
 

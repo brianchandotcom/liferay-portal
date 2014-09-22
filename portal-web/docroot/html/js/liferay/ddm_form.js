@@ -574,6 +574,93 @@ AUI.add(
 
 		FieldTypes['ddm-date'] = DateField;
 
+		var DocumentLibraryField = A.Component.create(
+			{
+				EXTENDS: Field,
+
+				prototype: {
+					initializer: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						container.delegate('click', instance._handleButtonsClick, '.btn', instance);
+					},
+
+					_handleButtonsClick: function(event) {
+						var instance = this;
+
+						var currentTarget = event.currentTarget;
+
+						var portletNamespace = instance.get('portletNamespace');
+
+						if (currentTarget.test('.select-button')) {
+							Liferay.Util.selectEntity(
+								{
+									dialog: {
+										constrain: true,
+										destroyOnHide: true,
+										modal: true
+									},
+									eventName: portletNamespace + 'selectDocumentLibrary',
+									id: portletNamespace + 'selectDocumentLibrary',
+									title: Liferay.Language.get('select-document'),
+									uri: instance.getDocumentLibraryURL()
+								},
+								function(event) {
+									instance.setValue(
+										{
+											groupId: event.groupId,
+											title: event.title,
+											uuid: event.uuid
+										}
+									);
+								}
+							);
+						}
+						else if (currentTarget.test('.clear-button')) {
+							instance.setValue('');
+						}
+					},
+
+					getDocumentLibraryURL: function() {
+						var instance = this;
+
+						var portletNamespace = instance.get('portletNamespace');
+
+						var portletURL = Liferay.PortletURL.createURL(themeDisplay.getURLControlPanel());
+
+						portletURL.setDoAsGroupId(instance.get('doAsGroupId'));
+						portletURL.setParameter('eventName', portletNamespace + 'selectDocumentLibrary');
+						portletURL.setParameter('groupId', themeDisplay.getScopeGroupId());
+						portletURL.setParameter('refererPortletName', '');
+						portletURL.setParameter('struts_action', '/document_selector/view');
+						portletURL.setParameter('tabs1Names', 'documents');
+						portletURL.setPortletId('200');
+						portletURL.setWindowState('pop_up');
+
+						return portletURL.toString();
+					},
+
+					setValue: function(value) {
+						var instance = this;
+
+						if (Lang.isString(value) && value !== '') {
+							value = AJSON.parse(value);
+						}
+
+						var titleNode = A.one('#' + instance.getInputName() + 'Title');
+
+						titleNode.val((value && value.title) || '');
+
+						DocumentLibraryField.superclass.setValue.call(instance, AJSON.stringify(value));
+					}
+				}
+			}
+		);
+
+		FieldTypes['ddm-documentlibrary'] = DocumentLibraryField;
+
 		var Form = A.Component.create(
 			{
 				ATTRS: {

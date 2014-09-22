@@ -318,7 +318,7 @@ public class VerifyGroup extends VerifyProcess {
 			String key = iterator.next();
 
 			if (ArrayUtil.contains(
-					_LEGACY_STAGED_PORTLET_TYPE_SETTING_KEYS, key)) {
+					_LEGACY_STAGED_PORTLET_TYPE_SETTINGS_KEYS, key)) {
 
 				if (_log.isInfoEnabled()) {
 					_log.info("Removing type settings property " + key);
@@ -337,11 +337,11 @@ public class VerifyGroup extends VerifyProcess {
 		}
 	}
 
-	private static String[] _LEGACY_STAGED_PORTLET_TYPE_SETTING_KEYS =
+	private static String[] _LEGACY_STAGED_PORTLET_TYPE_SETTINGS_KEYS =
 		new String[] {
-			"staged-portlet_166", "staged-portlet_108", "staged-portlet_107",
-			"staged-portlet_56", "staged-portlet_169", "staged-portlet_39",
-			"staged-portlet_54", "staged-portlet_110", "staged-portlet_59",
+			"staged-portlet_39", "staged-portlet_54", "staged-portlet_56",
+			"staged-portlet_59", "staged-portlet_107", "staged-portlet_108",
+			"staged-portlet_110", "staged-portlet_166", "staged-portlet_169"
 		};
 
 	private static Log _log = LogFactoryUtil.getLog(VerifyGroup.class);

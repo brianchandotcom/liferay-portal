@@ -66,7 +66,7 @@
 					ddmFormValuesInput: '#<portlet:namespace /><%= ddmFormValuesInputName %>',
 					definition: <%= DDMFormJSONSerializerUtil.serialize(ddmForm) %>,
 					doAsGroupId: <%= scopeGroupId %>,
-					namespace: '<%= fieldsNamespace %>',
+					fieldsNamespace: '<%= fieldsNamespace %>',
 					p_l_id: <%= themeDisplay.getPlid() %>,
 					portletNamespace: '<portlet:namespace />',
 					repeatable: <%= repeatable %>

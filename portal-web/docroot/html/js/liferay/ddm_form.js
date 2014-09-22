@@ -930,9 +930,6 @@ AUI.add(
 						valueFn: '_valueDisplayLocale'
 					},
 
-					namespace: {
-					},
-
 					repeatable: {
 						validator: Lang.isBoolean,
 						value: false

@@ -1,4 +1,5 @@
 <#assign liferay_aui = taglibLiferayHash["/WEB-INF/tld/liferay-aui.tld"] />
+<#assign liferay_portlet = taglibLiferayHash["/WEB-INF/tld/liferay-portlet.tld"] />
 <#assign liferay_ui = taglibLiferayHash["/WEB-INF/tld/liferay-ui.tld"] />
 
 <#assign defaultLatitude = -3.6833 />
@@ -55,32 +56,32 @@
 	</#list>
 </#list>
 
-<div class="map-canvas" id="${renderResponse.getNamespace()}mapCanvas"></div>
+<div class="map-canvas" id="<@liferay_portlet.namespace />mapCanvas"></div>
 
 <#if mapsAPIProvider = "googleMaps" >
 	<style type="text/css">
-		#${renderResponse.getNamespace()}assetEntryAbstract {
+		#<@liferay_portlet.namespace />assetEntryAbstract {
 			min-width: 400px;
 		}
 
-		#${renderResponse.getNamespace()}assetEntryAbstract .asset-entry-abstract-image {
+		#<@liferay_portlet.namespace />assetEntryAbstract .asset-entry-abstract-image {
 			float: left;
 		}
 
-		#${renderResponse.getNamespace()}assetEntryAbstract .asset-entry-abstract-image img {
+		#<@liferay_portlet.namespace />assetEntryAbstract .asset-entry-abstract-image img {
 			display: block;
 			margin-right: 2em;
 		}
 
-		#${renderResponse.getNamespace()}assetEntryAbstract .taglib-icon {
+		#<@liferay_portlet.namespace />assetEntryAbstract .taglib-icon {
 			float: right;
 		}
 
-		#${renderResponse.getNamespace()}mapCanvas {
+		#<@liferay_portlet.namespace />mapCanvas {
 			min-height: 400px;
 		}
 
-		#${renderResponse.getNamespace()}mapCanvas img {
+		#<@liferay_portlet.namespace />mapCanvas img {
 			max-width: none;
 		}
 	</style>
@@ -145,7 +146,7 @@
 			};
 
 			var drawMap = function(mapOptions) {
-				var map = new google.maps.Map(document.getElementById('${renderResponse.getNamespace()}mapCanvas'), mapOptions);
+				var map = new google.maps.Map(document.getElementById('<@liferay_portlet.namespace />mapCanvas'), mapOptions);
 
 				var bounds = putMarkers(map);
 
@@ -181,25 +182,25 @@
 
 <#if mapsAPIProvider = "openStreetMap">
 	<style type="text/css">
-		#${renderResponse.getNamespace()}assetEntryAbstract {
+		#<@liferay_portlet.namespace />assetEntryAbstract {
 			min-width: 400px;
 			overflow: auto;
 		}
 
-		#${renderResponse.getNamespace()}assetEntryAbstract .asset-entry-abstract-image {
+		#<@liferay_portlet.namespace />assetEntryAbstract .asset-entry-abstract-image {
 			float: left;
 			margin-right: 2em;
 		}
 
-		#${renderResponse.getNamespace()}assetEntryAbstract .asset-entry-abstract-image img {
+		#<@liferay_portlet.namespace />assetEntryAbstract .asset-entry-abstract-image img {
 			display: block;
 		}
 
-		#${renderResponse.getNamespace()}assetEntryAbstract .taglib-icon {
+		#<@liferay_portlet.namespace />assetEntryAbstract .taglib-icon {
 			float: right;
 		}
 
-		#${renderResponse.getNamespace()}mapCanvas {
+		#<@liferay_portlet.namespace />mapCanvas {
 			min-height: 400px;
 		}
 	</style>
@@ -247,7 +248,7 @@
 			};
 
 			var drawMap = function(lat, lng) {
-				var map = L.map('${renderResponse.getNamespace()}mapCanvas').setView([lat, lng], 8);
+				var map = L.map('<@liferay_portlet.namespace />mapCanvas').setView([lat, lng], 8);
 
 				var bounds = putMarkers(map);
 
@@ -266,7 +267,7 @@
 </#if>
 
 <#macro getAbstract asset>
-	<div class="asset-entry-abstract" id="${renderResponse.getNamespace()}assetEntryAbstract">
+	<div class="asset-entry-abstract" id="<@liferay_portlet.namespace />assetEntryAbstract">
 		<#assign showEditURL = paramUtil.getBoolean(renderRequest, "showEditURL", true) />
 
 		<#assign assetRenderer = asset.getAssetRenderer() />

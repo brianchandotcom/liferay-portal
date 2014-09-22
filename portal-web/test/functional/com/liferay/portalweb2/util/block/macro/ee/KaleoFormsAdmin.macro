@@ -108,6 +108,14 @@
 		</if>
 	</command>
 
+	<command name="deactivateWorkflow">
+		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
+
+		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="WORKFLOW_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPKaleoformsadminNewprocess#assertClickNoError" locator-key1="WORKFLOW_MENULIST_DEACTIVATE" value1="Deactivate" />
+		<execute action="CPKaleoformsadminNewprocess#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to deactivate this?" />
+	</command>
+
 	<command name="deleteForm">
 		<execute action="CPKaleoformsadminNewprocessSelectform#assertElementPresent" locator-key1="BACK_BUTTON" />
 
@@ -418,7 +426,11 @@
 		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FIELD_SET_PAGINATION_NEXT_BUTTON" value1="Next" />
 	</command>
 
-	<command name="viewNoUnpublishedWorkflows">
+	<command name="viewNoPublishedWorkflowDefinitions">
+		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no published definitions." />
+	</command>
+
+	<command name="viewNoUnpublishedWorkflowDefinitions">
 		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="WORKFLOW_NAVIGATION_UNPUBLISHED_TAB" value1="Unpublished" />
 		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no unpublished definitions." />
 	</command>

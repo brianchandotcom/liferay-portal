@@ -126,6 +126,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RULE_PANEL_SELECTED_USER_SEGMENT</td>
+	<td>//span[contains(.,'${key_userSegmentName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_PANEL_SELECTED_DISPLAY_CONTENT_TITLE</td>
+	<td>//div[@class='asset-title' and contains(.,'${key_contentTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_PANEL_SELECTED_DISPLAY_CONTENT_TYPE</td>
+	<td>//div[@class='asset-type' and contains(.,'Type: ${key_contentType}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RULE_PANEL_DISPLAY_CONTENT_DROPDOWN</td>
 	<td>//div/a[@title='Select Content']</td>
 	<td></td>
@@ -144,6 +159,11 @@
 <tr>
 	<td>RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CHECKBOX</td>
 	<td>//li/div[contains(.,'${key_userSegmentName}')]//i[contains(@class,'icon-check')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_SCOPE</td>
+	<td>//div[contains(.,'${key_userSegmentName}')]//span[contains(.,'User Segment (${key_siteScope})')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -191,6 +211,16 @@
 <tr>
 	<td>OTHERWISE_PANEL_SELECT_CONTENT_BUTTON</td>
 	<td>//div[contains(@class,'field-row')]//div[contains(.,'Otherwise')]//div/a[@title='Select Content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OTHERWISE_PANEL_SELECTED_CONTENT_TYPE</td>
+	<td>//div[contains(@class,'field-row')]//div[contains(.,'Otherwise')]//div[@class='asset-type']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OTHERWISE_PANEL_SELECTED_CONTENT_TITLE</td>
+	<td>//div[contains(@class,'field-row')]//div[contains(.,'Otherwise')]//div[@class='asset-title' and contains(.,'${key_contentTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

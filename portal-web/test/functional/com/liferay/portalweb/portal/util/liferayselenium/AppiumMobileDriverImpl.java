@@ -23,9 +23,9 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 /**
  * @author Kwang Lee
  */
-public class AppiumWebDriverImpl extends BaseWebDriverImpl {
+public class AppiumMobileDriverImpl extends BaseMobileDriverImpl {
 
-	public AppiumWebDriverImpl(String projectDirName, String browserURL) {
+	public AppiumMobileDriverImpl(String projectDirName, String browserURL) {
 		super(
 			projectDirName, browserURL,
 			new AppiumDriver(_url, _desiredCapabilities));

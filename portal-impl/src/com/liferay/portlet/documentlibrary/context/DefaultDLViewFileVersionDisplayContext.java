@@ -94,9 +94,13 @@ public class DefaultDLViewFileVersionDisplayContext
 		_request = request;
 		_fileVersion = fileVersion;
 
+		FileEntry fileEntry = null;
+
 		if (fileVersion != null) {
-			_fileEntry = fileVersion.getFileEntry();
+			fileEntry = fileVersion.getFileEntry();
 		}
+
+		_fileEntry = fileEntry;
 
 		_folderId = BeanParamUtil.getLong(_fileEntry, request, "folderId");
 

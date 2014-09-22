@@ -15,6 +15,7 @@
 package com.liferay.portal.security.pacl.test.hook.indexer;
 
 import com.liferay.portal.kernel.search.BaseIndexerPostProcessor;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author Brian Wing Shun Chan
@@ -22,13 +23,12 @@ import com.liferay.portal.kernel.search.BaseIndexerPostProcessor;
 public class OrganizationIndexerPostProcessor extends BaseIndexerPostProcessor {
 
 	public static boolean isInstantiated() {
-		return _instantiated;
+		return _INSTANTIATED.get();
 	}
 
 	public OrganizationIndexerPostProcessor() {
-		_instantiated = true;
+		_INSTANTIATED.set(true);
 	}
 
-	private static boolean _instantiated;
-
+	private static final AtomicBoolean _INSTANTIATED = new AtomicBoolean();
 }

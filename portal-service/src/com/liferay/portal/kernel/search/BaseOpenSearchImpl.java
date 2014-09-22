@@ -47,6 +47,11 @@ import javax.servlet.http.HttpServletRequest;
  */
 public abstract class BaseOpenSearchImpl implements OpenSearch {
 
+	public BaseOpenSearchImpl() {
+		_enabled = GetterUtil.getBoolean(
+			PropsUtil.get(getClass().getName()), true);
+	}
+
 	@Override
 	public boolean isEnabled() {
 		return _enabled;
@@ -536,7 +541,6 @@ public abstract class BaseOpenSearchImpl implements OpenSearch {
 		return portletURL;
 	}
 
-	private boolean _enabled = GetterUtil.getBoolean(
-		PropsUtil.get(getClass().getName()), true);
+	private final boolean _enabled;
 
 }

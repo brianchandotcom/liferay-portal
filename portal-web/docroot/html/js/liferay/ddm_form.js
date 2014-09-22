@@ -69,118 +69,120 @@ AUI.add(
 			}
 		};
 
-		FieldsSupport.prototype._getField = function(fieldNode) {
-			var instance = this;
+		FieldsSupport.prototype = {
+			getFieldInfo: function(tree, key, value) {
+				var queue = new A.Queue(tree);
 
-			var fieldInstanceId = fieldNode.getData('fieldNamespace');
-
-			fieldInstanceId = fieldInstanceId.replace(INSTANCE_ID_PREFIX, '');
-
-			var fieldName = fieldNode.getData('fieldName');
-
-			var definition = instance.get('definition');
-
-			var fieldDefinition = instance.getFieldInfo(definition, 'name', fieldName);
-
-			var FieldClass = getFieldClass(fieldDefinition.type);
-
-			var field = new FieldClass(
-				A.merge(
-					instance.getAttrs(A.Object.keys(DDMPortletSupport.ATTRS)),
-					{
-						container: fieldNode,
-						definition: definition,
-						displayLocale: instance.get('displayLocale'),
-						instanceId: fieldInstanceId,
-						name: fieldName,
-						parent: instance,
-						values: instance.get('values')
+				var addToQueue = function(item) {
+					if (AArray.indexOf(queue._q, item) === -1) {
+						queue.add(item);
 					}
-				)
-			);
+				};
 
-			instance.addTarget(field);
+				var fieldInfo = {};
 
-			return field;
-		};
+				while (queue.size() > 0) {
+					var next = queue.next();
 
-		FieldsSupport.prototype._getTemplate = function(callback) {
-			var instance = this;
+					if (next[key] === value) {
+						fieldInfo = next;
+					}
+					else {
+						var children = next.fields || next.nestedFields || next.fieldValues || next.nestedFieldValues;
 
-			A.io.request(
-				themeDisplay.getPathMain() + '/dynamic_data_mapping/render_structure_field',
-				{
-					data: {
-						classNameId: instance.get('classNameId'),
-						classPK: instance.get('classPK'),
-						controlPanelCategory: 'portlet',
-						doAsGroupId: instance.get('doAsGroupId'),
-						fieldName: instance.get('name'),
-						namespace: instance.get('namespace'),
-						p_l_id: instance.get('p_l_id'),
-						p_p_id: '166',
-						p_p_isolated: true,
-						portletNamespace: instance.get('portletNamespace'),
-						readOnly: instance.get('readOnly')
-					},
-					on: {
-						success: function(event, id, xhr) {
-							if (callback) {
-								callback.call(instance, xhr.responseText);
-							}
+						if (children) {
+							AArray.each(children, addToQueue);
 						}
 					}
 				}
-			);
-		};
 
-		FieldsSupport.prototype._valueFields = function() {
-			var instance = this;
+				return fieldInfo;
+			},
 
-			var fields = [];
+			getFieldNodes: function() {
+				var instance = this;
 
-			instance.getFieldNodes().each(
-				function(item) {
-					fields.push(instance._getField(item));
-				}
-			);
+				return instance.get('container').all('> .field-wrapper');
+			},
 
-			return fields;
-		};
+			_getField: function(fieldNode) {
+				var instance = this;
 
-		FieldsSupport.prototype.getFieldInfo = function(tree, key, value) {
-			var queue = new A.Queue(tree);
+				var fieldInstanceId = fieldNode.getData('fieldNamespace');
 
-			var addToQueue = function(item) {
-				if (AArray.indexOf(queue._q, item) === -1) {
-					queue.add(item);
-				}
-			};
+				fieldInstanceId = fieldInstanceId.replace(INSTANCE_ID_PREFIX, '');
 
-			var fieldInfo = {};
+				var fieldName = fieldNode.getData('fieldName');
 
-			while (queue.size() > 0) {
-				var next = queue.next();
+				var definition = instance.get('definition');
 
-				if (next[key] === value) {
-					fieldInfo = next;
-				}
-				else {
-					var children = next.fields || next.nestedFields || next.fieldValues || next.nestedFieldValues;
+				var fieldDefinition = instance.getFieldInfo(definition, 'name', fieldName);
 
-					if (children) {
-						AArray.each(children, addToQueue);
+				var FieldClass = getFieldClass(fieldDefinition.type);
+
+				var field = new FieldClass(
+					A.merge(
+						instance.getAttrs(A.Object.keys(DDMPortletSupport.ATTRS)),
+						{
+							container: fieldNode,
+							definition: definition,
+							displayLocale: instance.get('displayLocale'),
+							instanceId: fieldInstanceId,
+							name: fieldName,
+							parent: instance,
+							values: instance.get('values')
+						}
+					)
+				);
+
+				instance.addTarget(field);
+
+				return field;
+			},
+
+			_getTemplate: function(callback) {
+				var instance = this;
+
+				A.io.request(
+					themeDisplay.getPathMain() + '/dynamic_data_mapping/render_structure_field',
+					{
+						data: {
+							classNameId: instance.get('classNameId'),
+							classPK: instance.get('classPK'),
+							controlPanelCategory: 'portlet',
+							doAsGroupId: instance.get('doAsGroupId'),
+							fieldName: instance.get('name'),
+							namespace: instance.get('namespace'),
+							p_l_id: instance.get('p_l_id'),
+							p_p_id: '166',
+							p_p_isolated: true,
+							portletNamespace: instance.get('portletNamespace'),
+							readOnly: instance.get('readOnly')
+						},
+						on: {
+							success: function(event, id, xhr) {
+								if (callback) {
+									callback.call(instance, xhr.responseText);
+								}
+							}
+						}
 					}
-				}
+				);
+			},
+
+			_valueFields: function() {
+				var instance = this;
+
+				var fields = [];
+
+				instance.getFieldNodes().each(
+					function(item) {
+						fields.push(instance._getField(item));
+					}
+				);
+
+				return fields;
 			}
-
-			return fieldInfo;
-		};
-
-		FieldsSupport.prototype.getFieldNodes = function() {
-			var instance = this;
-
-			return instance.get('container').all('> .field-wrapper');
 		};
 
 		var Field = A.Component.create(
@@ -321,7 +323,6 @@ AUI.add(
 						var instance = this;
 
 						var values = instance.get('values');
-
 						var instanceId = instance.get('instanceId');
 
 						var fieldValue = instance.getFieldInfo(values, 'instanceId', instanceId);
@@ -349,7 +350,6 @@ AUI.add(
 						var instance = this;
 
 						var portletNamespace = instance.get('portletNamespace');
-
 						var fieldsNamespace = instance.get('fieldsNamespace');
 
 						var prefix = [portletNamespace];
@@ -364,7 +364,7 @@ AUI.add(
 								INSTANCE_ID_PREFIX,
 								instance.get('instanceId')
 							]
-						) .join('');
+						).join('');
 					},
 
 					getInputNode: function() {
@@ -383,11 +383,12 @@ AUI.add(
 						var instance = this;
 
 						var parent = instance.get('parent');
+						var name = instance.get('name');
 
 						return AArray.filter(
 							parent.get('fields'),
 							function(item) {
-								return item.get('name') === instance.get('name');
+								return item.get('name') === name;
 							}
 						);
 					},

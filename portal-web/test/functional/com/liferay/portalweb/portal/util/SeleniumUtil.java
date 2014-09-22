@@ -17,7 +17,7 @@ package com.liferay.portalweb.portal.util;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portalweb.portal.util.liferayselenium.AppiumWebDriverImpl;
+import com.liferay.portalweb.portal.util.liferayselenium.AppiumMobileDriverImpl;
 import com.liferay.portalweb.portal.util.liferayselenium.ChromeWebDriverImpl;
 import com.liferay.portalweb.portal.util.liferayselenium.DefaultSeleniumImpl;
 import com.liferay.portalweb.portal.util.liferayselenium.FirefoxWebDriverImpl;
@@ -102,10 +102,11 @@ public class SeleniumUtil extends TestPropsValues {
 			if (MOBILE_DEVICE_ENABLED) {
 				if (SELENIUM_LOGGER_ENABLED) {
 					_selenium = _wrapWithLoggerHandler(
-						new AppiumWebDriverImpl(projectDir, portalURL));
+						new AppiumMobileDriverImpl(projectDir, portalURL));
 				}
 				else {
-					_selenium = new AppiumWebDriverImpl(projectDir, portalURL);
+					_selenium = new AppiumMobileDriverImpl(
+						projectDir, portalURL);
 				}
 			}
 			else {

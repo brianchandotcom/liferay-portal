@@ -508,6 +508,28 @@ AUI.add(
 
 		FieldTypes.field = Field;
 
+		var CheckboxField = A.Component.create(
+			{
+				EXTENDS: Field,
+
+				prototype: {
+					getValue: function() {
+						var instance = this;
+
+						return instance.getInputNode().test(':checked') + '';
+					},
+
+					setValue: function(value) {
+						var instance = this;
+
+						instance.getInputNode().attr('checked', value === 'true');
+					}
+				}
+			}
+		);
+
+		FieldTypes.checkbox = CheckboxField;
+
 		var Form = A.Component.create(
 			{
 				ATTRS: {

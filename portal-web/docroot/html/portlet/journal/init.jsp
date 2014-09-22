@@ -70,6 +70,7 @@ page import="com.liferay.portlet.journal.service.permission.JournalFeedPermissio
 page import="com.liferay.portlet.journal.service.permission.JournalFolderPermission" %><%@
 page import="com.liferay.portlet.journal.service.permission.JournalPermission" %><%@
 page import="com.liferay.portlet.journal.util.JournalConverterUtil" %><%@
+page import="com.liferay.portlet.journal.util.JournalDisplayContext" %><%@
 page import="com.liferay.portlet.journal.util.JournalUtil" %><%@
 page import="com.liferay.portlet.journal.util.comparator.ArticleVersionComparator" %><%@
 page import="com.liferay.util.RSSUtil" %>
@@ -77,9 +78,7 @@ page import="com.liferay.util.RSSUtil" %>
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
 
-String[] displayViews = StringUtil.split(PrefsParamUtil.getString(portletPreferences, liferayPortletRequest, "displayViews", StringUtil.merge(PropsValues.JOURNAL_DISPLAY_VIEWS)));
-
-String displayStyle = JournalUtil.getDisplayStyle(liferayPortletRequest, displayViews);
+JournalDisplayContext journalDisplayContext = new JournalDisplayContext(liferayPortletRequest, portletPreferences);
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

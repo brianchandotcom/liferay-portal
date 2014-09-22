@@ -35,7 +35,7 @@ if (!structureId.equals("0")) {
 %>
 
 <liferay-ui:app-view-display-style
-	displayStyle="<%= displayStyle %>"
+	displayStyle="<%= journalDisplayContext.getDisplayStyle() %>"
 	displayStyleURL="<%= displayStyleURL %>"
-	displayStyles="<%= displayViews %>"
+	displayStyles="<%= journalDisplayContext.getDisplayViews() %>"
 />

@@ -54,19 +54,9 @@
 		<aui:option label="view-in-context" selected="<%= assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet() %>" value="viewInPortlet" />
 	</aui:select>
 
-	<aui:select helpMessage="number-of-items-to-display-help" label="number-of-items-to-display" name="preferences--delta--">
-
-		<%
-		for (int currentDelta : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {
-		%>
-
-			<aui:option label="<%= currentDelta %>" selected="<%= (assetPublisherDisplayContext.getDelta() == currentDelta) %>" />
-
-		<%
-		}
-		%>
-
-	</aui:select>
+	<aui:input helpMessage="number-of-items-to-display-help" label="number-of-items-to-display" name="preferences--delta--" type="text" value="<%= assetPublisherDisplayContext.getDelta() %>">
+		<aui:validator name="digits" />
+	</aui:input>
 
 	<aui:select name="preferences--paginationType--">
 		<aui:option label="none" selected="<%= assetPublisherDisplayContext.isPaginationTypeNone() %>" />

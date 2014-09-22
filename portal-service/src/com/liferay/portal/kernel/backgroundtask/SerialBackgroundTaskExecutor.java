@@ -18,10 +18,8 @@ import com.liferay.portal.DuplicateLockException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.Lock;
-import com.liferay.portal.service.LockLocalServiceUtil;
 
 /**
  * @author Michael C. Han
@@ -41,13 +39,9 @@ public class SerialBackgroundTaskExecutor
 
 		Lock lock = null;
 
-		String owner =
-			backgroundTask.getName() + StringPool.POUND +
-				backgroundTask.getBackgroundTaskId();
-
 		try {
 			if (isSerial()) {
-				lock = acquireLock(backgroundTask, owner);
+				lock = acquireLock(backgroundTask);
 			}
 
 			BackgroundTaskExecutor backgroundTaskExecutor =
@@ -57,23 +51,21 @@ public class SerialBackgroundTaskExecutor
 		}
 		finally {
 			if (lock != null) {
-				LockLocalServiceUtil.unlock(
-					BackgroundTaskExecutor.class.getName(),
-					backgroundTask.getTaskExecutorClassName(), owner);
+				BackgroundTaskLockHelperUtil.unlockBackgroundTask(
+					backgroundTask);
 			}
 		}
 	}
 
-	protected Lock acquireLock(BackgroundTask backgroundTask, String owner)
+	protected Lock acquireLock(BackgroundTask backgroundTask)
 		throws DuplicateLockException {
 
 		Lock lock = null;
 
 		while (true) {
 			try {
-				lock = LockLocalServiceUtil.lock(
-					BackgroundTaskExecutor.class.getName(),
-					backgroundTask.getTaskExecutorClassName(), owner);
+				lock = BackgroundTaskLockHelperUtil.lockBackgroundTask(
+					backgroundTask);
 
 				break;
 			}

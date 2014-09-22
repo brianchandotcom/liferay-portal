@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.staging.Staging;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -37,7 +36,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
-import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.StagingLocalServiceUtil;
 import com.liferay.portal.spring.transaction.TransactionHandlerUtil;
@@ -71,9 +69,6 @@ public class LayoutStagingBackgroundTaskExecutor
 
 		long userId = MapUtil.getLong(settingsMap, "userId");
 		long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
-
-		StagingUtil.lockGroup(userId, targetGroupId);
-
 		long sourceGroupId = MapUtil.getLong(settingsMap, "sourceGroupId");
 
 		clearBackgroundTaskStatus(backgroundTask);
@@ -134,21 +129,6 @@ public class LayoutStagingBackgroundTaskExecutor
 
 		return processMissingReferences(
 			backgroundTask.getBackgroundTaskId(), missingReferences);
-	}
-
-	@Override
-	public boolean isLocked(BackgroundTask backgroundTask)
-		throws PortalException {
-
-		ExportImportConfiguration exportImportConfiguration =
-			getExportImportConfiguration(backgroundTask);
-
-		Map<String, Serializable> settingsMap =
-			exportImportConfiguration.getSettingsMap();
-
-		long groupId = MapUtil.getLong(settingsMap, "targetGroupId");
-
-		return LockLocalServiceUtil.isLocked(Staging.class.getName(), groupId);
 	}
 
 	protected void initLayoutSetBranches(

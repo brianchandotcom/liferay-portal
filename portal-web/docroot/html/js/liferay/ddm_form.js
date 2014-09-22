@@ -259,6 +259,7 @@ AUI.add(
 							container.plug(A.Plugin.ParseContent);
 						}
 
+						instance.syncLabelUI();
 						instance.syncValueUI();
 					},
 
@@ -287,27 +288,20 @@ AUI.add(
 
 						instance.set('displayLocale', event.newVal);
 
+						instance.syncLabelUI();
 						instance.syncValueUI();
 					},
 
 					_getLocalizable: function() {
 						var instance = this;
 
-						var definition = instance.get('definition');
-
-						var name = instance.get('name');
-
-						return instance.getFieldInfo(definition, 'name', name).localizable === true;
+						return instance.getFieldDefinition().localizable === true;
 					},
 
 					_getRepeatable: function() {
 						var instance = this;
 
-						var definition = instance.get('definition');
-
-						var name = instance.get('name');
-
-						return instance.getFieldInfo(definition, 'name', name).repeatable === true;
+						return instance.getFieldDefinition().repeatable === true;
 					},
 
 					_handleToolbarClick: function(event) {
@@ -341,6 +335,16 @@ AUI.add(
 						return localizationMap;
 					},
 
+					getFieldDefinition: function() {
+						var instance = this;
+
+						var definition = instance.get('definition');
+
+						var name = instance.get('name');
+
+						return instance.getFieldInfo(definition, 'name', name);
+					},
+
 					getInputName: function() {
 						var instance = this;
 
@@ -367,6 +371,12 @@ AUI.add(
 						var instance = this;
 
 						return instance.get('container').one('[name=' + instance.getInputName() + ']');
+					},
+
+					getLabelNode: function() {
+						var instance = this;
+
+						return instance.get('container').one('.control-label');
 					},
 
 					getSiblings: function() {
@@ -434,6 +444,16 @@ AUI.add(
 						);
 					},
 
+					setLabel: function(label) {
+						var instance = this;
+
+						var labelNode = instance.getLabelNode();
+
+						if (Lang.isValue(label)) {
+							labelNode.html(label);
+						}
+					},
+
 					setValue: function(value) {
 						var instance = this;
 
@@ -442,6 +462,16 @@ AUI.add(
 						if (Lang.isValue(value)) {
 							inputNode.val(value);
 						}
+					},
+
+					syncLabelUI: function() {
+						var instance = this;
+
+						var fieldDefinition = instance.getFieldDefinition();
+
+						var labelsMap = fieldDefinition.label;
+
+						instance.setLabel(labelsMap[instance.get('displayLocale')]);
 					},
 
 					syncValueUI: function() {
@@ -512,10 +542,30 @@ AUI.add(
 				EXTENDS: Field,
 
 				prototype: {
+					getLabelNode: function() {
+						var instance = this;
+
+						return instance.get('container').one('label');
+					},
+
 					getValue: function() {
 						var instance = this;
 
 						return instance.getInputNode().test(':checked') + '';
+					},
+
+					setLabel: function(label) {
+						var instance = this;
+
+						var labelNode = instance.getLabelNode();
+
+						var inputNode = instance.getInputNode();
+
+						if (Lang.isValue(label)) {
+							labelNode.html('&nbsp;' + label);
+
+							labelNode.prepend(inputNode);
+						}
 					},
 
 					setValue: function(value) {
@@ -768,6 +818,32 @@ AUI.add(
 						return AJSON.stringify([value]);
 					},
 
+					setLabel: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						var fieldDefinition = instance.getFieldDefinition();
+
+						container.all('label').each(
+							function(item, index) {
+								var optionDefinition = fieldDefinition.options[index];
+
+								var inputNode = item.one('input');
+
+								var optionLabel = optionDefinition.label[instance.get('displayLocale')];
+
+								if (Lang.isValue(optionLabel)) {
+									item.html(optionLabel);
+
+									item.prepend(inputNode);
+								}
+							}
+						);
+
+						RadioField.superclass.setLabel.apply(instance, arguments);
+					},
+
 					setValue: function(value) {
 						var instance = this;
 
@@ -802,6 +878,26 @@ AUI.add(
 						var instance = this;
 
 						return Field.prototype.getInputNode.apply(instance, arguments);
+					},
+
+					setLabel: function() {
+						var instance = this;
+
+						var fieldDefinition = instance.getFieldDefinition();
+
+						instance.getInputNode().all('option').each(
+							function(item, index) {
+								var optionDefinition = fieldDefinition.options[index];
+
+								var optionLabel = optionDefinition.label[instance.get('displayLocale')];
+
+								if (Lang.isValue(optionLabel)) {
+									item.html(optionLabel);
+								}
+							}
+						);
+
+						Field.prototype.setLabel.apply(instance, arguments);
 					},
 
 					setValue: function(value) {

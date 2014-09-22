@@ -66,11 +66,6 @@ public class StrictPortletPreferencesImpl
 		return super.equals(obj);
 	}
 
-	@Override
-	public void store() {
-		return;
-	}
-
 	private final long _companyId;
 
 }

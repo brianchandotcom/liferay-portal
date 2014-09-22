@@ -28,7 +28,7 @@ import com.liferay.portal.service.RepositoryLocalServiceUtil;
 /**
  * @author Ivan Zaera
  */
-public class TemporaryFileEntriesMessageListener extends BaseMessageListener {
+public class TempFileEntriesMessageListener extends BaseMessageListener {
 
 	protected void deleteExpiredTemporaryFileEntries(Repository repository) {
 		LocalRepository localRepository = null;
@@ -91,6 +91,6 @@ public class TemporaryFileEntriesMessageListener extends BaseMessageListener {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		TemporaryFileEntriesMessageListener.class);
+		TempFileEntriesMessageListener.class);
 
 }

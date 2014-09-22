@@ -2077,7 +2077,7 @@
 		<parent-struts-path>document_library</parent-struts-path>
 		<configuration-action-class>com.liferay.portlet.documentlibraryadmin.action.ConfigurationActionImpl</configuration-action-class>
 		<scheduler-entry>
-			<scheduler-event-listener-class>com.liferay.portlet.documentlibrary.messaging.TemporaryFileEntriesMessageListener</scheduler-event-listener-class>
+			<scheduler-event-listener-class>com.liferay.portlet.documentlibrary.messaging.TempFileEntriesMessageListener</scheduler-event-listener-class>
 			<trigger>
 				<simple>
 					<property-key>dl.temporary.file.entries.check.interval</property-key>

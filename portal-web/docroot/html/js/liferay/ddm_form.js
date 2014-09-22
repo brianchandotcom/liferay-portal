@@ -661,6 +661,52 @@ AUI.add(
 
 		FieldTypes['ddm-documentlibrary'] = DocumentLibraryField;
 
+		var GeolocationField = A.Component.create(
+			{
+				EXTENDS: Field,
+
+				prototype: {
+					initializer: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						container.one('.geolocate-button').on('click', instance.getGeolocation, instance);
+					},
+
+					getGeolocation: function() {
+						var instance = this;
+
+						var inputName = instance.getInputName();
+
+						var coordinatesNode = A.one('#' + inputName + 'Coordinates');
+						var coordinatesContainerNode = A.one('#' + inputName + 'CoordinatesContainer');
+
+						coordinatesContainerNode.show();
+
+						coordinatesNode.html(Liferay.Language.get('loading'));
+
+						Liferay.Util.getGeolocation(
+							function(latitude, longitude) {
+								instance.setValue(
+									AJSON.stringify(
+										{
+											latitude: latitude,
+											longitude: longitude
+										}
+									)
+								);
+
+								coordinatesNode.html([latitude, longitude].join(', '));
+							}
+						);
+					}
+				}
+			}
+		);
+
+		FieldTypes['ddm-geolocation'] = GeolocationField;
+
 		var Form = A.Component.create(
 			{
 				ATTRS: {

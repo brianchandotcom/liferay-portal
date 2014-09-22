@@ -926,8 +926,6 @@
 
 		<action path="/journal/view_feeds" forward="portlet.journal.view_feeds" />
 
-		<action path="/journal/view_recent" forward="portlet.journal.view_recent" />
-
 		<!-- Journal Articles -->
 
 		<action path="/journal_articles/view" type="com.liferay.portlet.journalarticles.action.ViewAction">

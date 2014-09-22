@@ -398,7 +398,7 @@
 			<var name="portletName" value="Workflow" />
 		</execute>
 
-		<execute macro="Workflow#deactivateUploadedWorkflowDefinition" />
+		<execute macro="Workflow#deactivateAddedWorkflowDefinition" />
 
 		<execute macro="Workflow#deleteWorkflowDefinition" />
 

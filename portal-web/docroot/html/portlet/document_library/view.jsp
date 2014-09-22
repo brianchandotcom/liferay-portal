@@ -128,7 +128,7 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 			%>
 
 			<div class="<%= cssClass %>" id="<portlet:namespace />showSyncMessageIconContainer">
-				<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="show-liferay-sync-tip" />" class="show-sync-message" id="<portlet:namespace />showSyncMessageIcon" src='<%= themeDisplay.getPathThemeImages() + "/common/liferay_sync.png" %>' title='<%= LanguageUtil.get(request, "liferay-sync") %>' />
+				<img alt="<liferay-ui:message escapeAttribute="<%= true %>" class="show-sync-message" id="<portlet:namespace />showSyncMessageIcon" key="show-liferay-sync-tip" />" src='<%= themeDisplay.getPathThemeImages() + "/common/liferay_sync.png" %>' title='<%= LanguageUtil.get(request, "liferay-sync") %>' />
 			</div>
 
 			<div class="document-library-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
@@ -158,7 +158,7 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 				<aui:input name="fileEntryIds" type="hidden" />
 				<aui:input name="fileShortcutIds" type="hidden" />
 
-				<div>
+				<div class="document-container">
 					<c:choose>
 						<c:when test='<%= strutsAction.equals("/document_library/search") %>'>
 							<liferay-util:include page="/html/portlet/document_library/search_resources.jsp" />
@@ -204,7 +204,6 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(PortletKeys.DO
 </aui:script>
 
 <aui:script use="liferay-document-library">
-
 	<%
 	String[] entryColumns = dlEntriesListDisplayContext.getEntryColumns();
 	String[] escapedEntryColumns = new String[entryColumns.length];

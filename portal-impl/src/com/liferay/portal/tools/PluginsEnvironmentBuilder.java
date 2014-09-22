@@ -584,6 +584,10 @@ public class PluginsEnvironmentBuilder {
 
 				addIvyCacheJar(
 					sb, ivyDirName,
+					"com.liferay.arquillian" +
+						"/arquillian-deployment-generator-bnd");
+				addIvyCacheJar(
+					sb, ivyDirName,
 					"org.apache.felix/org.apache.felix.framework");
 				addIvyCacheJar(
 					sb, ivyDirName,

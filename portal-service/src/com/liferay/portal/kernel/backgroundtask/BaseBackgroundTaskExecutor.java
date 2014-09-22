@@ -23,7 +23,6 @@ import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
-import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.io.Serializable;
@@ -45,21 +44,17 @@ public abstract class BaseBackgroundTaskExecutor
 	}
 
 	@Override
-	public String handleException(BackgroundTask backgroundTask, Exception e) {
-		return "Unable to execute background task: " + e.getMessage();
+	public int getIsolationLevel() {
+		if (_isolationLevel == 0) {
+			_isolationLevel = BackgroundTaskConstants.ISOLATION_LEVEL_CLASS;
+		}
+
+		return _isolationLevel;
 	}
 
 	@Override
-	public boolean isLocked(BackgroundTask backgroundTask)
-		throws PortalException {
-
-		if (isSerial()) {
-			return LockLocalServiceUtil.isLocked(
-				BackgroundTaskExecutor.class.getName(),
-				backgroundTask.getTaskExecutorClassName());
-		}
-
-		return false;
+	public String handleException(BackgroundTask backgroundTask, Exception e) {
+		return "Unable to execute background task: " + e.getMessage();
 	}
 
 	@Override
@@ -116,6 +111,10 @@ public abstract class BaseBackgroundTaskExecutor
 			backgroundTaskStatusMessageTranslator;
 	}
 
+	protected void setIsolationLevel(int isolationLevel) {
+		_isolationLevel = isolationLevel;
+	}
+
 	protected void setSerial(boolean serial) {
 		_serial = serial;
 	}
@@ -125,6 +124,7 @@ public abstract class BaseBackgroundTaskExecutor
 
 	private BackgroundTaskStatusMessageTranslator
 		_backgroundTaskStatusMessageTranslator;
+	private int _isolationLevel;
 	private boolean _serial;
 
 }

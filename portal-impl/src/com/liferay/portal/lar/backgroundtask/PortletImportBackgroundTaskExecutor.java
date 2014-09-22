@@ -14,16 +14,15 @@
 
 package com.liferay.portal.lar.backgroundtask;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.staging.Staging;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.LockLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -34,11 +33,13 @@ import java.util.Map;
  * @author Daniel Kocsis
  */
 public class PortletImportBackgroundTaskExecutor
-	extends BaseExportImportBackgroundTaskExecutor {
+	extends BaseBackgroundTaskExecutor {
 
 	public PortletImportBackgroundTaskExecutor() {
 		setBackgroundTaskStatusMessageTranslator(
 			new PortletExportImportBackgroundTaskStatusMessageTranslator());
+		setIsolationLevel(BackgroundTaskConstants.ISOLATION_LEVEL_GROUP);
+		setSerial(true);
 	}
 
 	@Override
@@ -49,11 +50,8 @@ public class PortletImportBackgroundTaskExecutor
 			backgroundTask.getTaskContextMap();
 
 		long userId = MapUtil.getLong(taskContextMap, "userId");
-		long groupId = MapUtil.getLong(taskContextMap, "groupId");
-
-		StagingUtil.lockGroup(userId, groupId);
-
 		long plid = MapUtil.getLong(taskContextMap, "plid");
+		long groupId = MapUtil.getLong(taskContextMap, "groupId");
 		String portletId = MapUtil.getString(taskContextMap, "portletId");
 		Map<String, String[]> parameterMap =
 			(Map<String, String[]>)taskContextMap.get("parameterMap");
@@ -61,15 +59,10 @@ public class PortletImportBackgroundTaskExecutor
 		List<FileEntry> attachmentsFileEntries =
 			backgroundTask.getAttachmentsFileEntries();
 
-		try {
-			for (FileEntry attachmentsFileEntry : attachmentsFileEntries) {
-				LayoutLocalServiceUtil.importPortletInfo(
-					userId, plid, groupId, portletId, parameterMap,
-					attachmentsFileEntry.getContentStream());
-			}
-		}
-		finally {
-			StagingUtil.unlockGroup(groupId);
+		for (FileEntry attachmentsFileEntry : attachmentsFileEntries) {
+			LayoutLocalServiceUtil.importPortletInfo(
+				userId, plid, groupId, portletId, parameterMap,
+				attachmentsFileEntry.getContentStream());
 		}
 
 		return BackgroundTaskResult.SUCCESS;
@@ -81,18 +74,6 @@ public class PortletImportBackgroundTaskExecutor
 			getLocale(backgroundTask), e, backgroundTask.getTaskContextMap());
 
 		return jsonObject.toString();
-	}
-
-	@Override
-	public boolean isLocked(BackgroundTask backgroundTask)
-		throws PortalException {
-
-		Map<String, Serializable> taskContextMap =
-			backgroundTask.getTaskContextMap();
-
-		long groupId = MapUtil.getLong(taskContextMap, "groupId");
-
-		return LockLocalServiceUtil.isLocked(Staging.class.getName(), groupId);
 	}
 
 }

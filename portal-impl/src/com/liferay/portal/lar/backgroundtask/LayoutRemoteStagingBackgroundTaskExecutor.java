@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.staging.Staging;
-import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -39,7 +37,6 @@ import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.auth.HttpPrincipal;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.service.http.LayoutServiceHttp;
 import com.liferay.portal.service.http.StagingServiceHttp;
 import com.liferay.portal.util.PropsValues;
@@ -84,11 +81,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 			"layoutIdMap");
 		Map<String, String[]> parameterMap =
 			(Map<String, String[]>)settingsMap.get("parameterMap");
-		long userId = MapUtil.getLong(settingsMap, "userId");
 		long remoteGroupId = MapUtil.getLong(settingsMap, "remoteGroupId");
-
-		StagingUtil.lockGroup(userId, remoteGroupId);
-
 		DateRange dateRange = ExportImportDateUtil.getDateRange(
 			exportImportConfiguration,
 			ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE);
@@ -211,27 +204,10 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 				StagingServiceHttp.cleanUpStagingRequest(
 					httpPrincipal, stagingRequestId);
 			}
-
-			StagingUtil.unlockGroup(remoteGroupId);
 		}
 
 		return processMissingReferences(
 			backgroundTask.getBackgroundTaskId(), missingReferences);
-	}
-
-	@Override
-	public boolean isLocked(BackgroundTask backgroundTask)
-		throws PortalException {
-
-		ExportImportConfiguration exportImportConfiguration =
-			getExportImportConfiguration(backgroundTask);
-
-		Map<String, Serializable> settingsMap =
-			exportImportConfiguration.getSettingsMap();
-
-		long groupId = MapUtil.getLong(settingsMap, "remoteGroupId");
-
-		return LockLocalServiceUtil.isLocked(Staging.class.getName(), groupId);
 	}
 
 	protected File exportLayoutsAsFile(

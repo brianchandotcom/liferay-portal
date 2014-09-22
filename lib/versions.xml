@@ -426,18 +426,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/jhighlight.jar</file-name>
-				<version>1.0</version>
-				<project-name>JHighlight</project-name>
-				<project-url>http://jhighlight.dev.java.net</project-url>
-				<licenses>
-					<license>
-						<license-name>CDDL 1.0</license-name>
-						<license-url>http://glassfish.java.net/public/CDDLv1.0.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/jms.jar</file-name>
 				<version>1.1</version>
 				<project-name>Java Message Services</project-name>
@@ -2362,6 +2350,18 @@
 				<comments>
 					See LPS-4474.
 				</comments>
+			</library>
+			<library>
+				<file-name>lib/portal/jhighlight.jar</file-name>
+				<version>1.0</version>
+				<project-name>JHighlight</project-name>
+				<project-url>http://jhighlight.dev.java.net</project-url>
+				<licenses>
+					<license>
+						<license-name>CDDL 1.0</license-name>
+						<license-url>http://glassfish.java.net/public/CDDLv1.0.html</license-url>
+					</license>
+				</licenses>
 			</library>
 			<library>
 				<file-name>lib/portal/jhlabs-filters.jar</file-name>

@@ -21,6 +21,10 @@ AUI.add(
 			return FieldTypes[type] || FieldTypes.field;
 		};
 
+		var isNode = function(node) {
+			return node && (node._node || node.nodeType);
+		};
+
 		var DDMPortletSupport = function() {};
 
 		DDMPortletSupport.ATTRS = {
@@ -706,6 +710,43 @@ AUI.add(
 		);
 
 		FieldTypes['ddm-geolocation'] = GeolocationField;
+
+		var TextHTMLField = A.Component.create(
+			{
+				EXTENDS: Field,
+
+				prototype: {
+					getEditor: function() {
+						var instance = this;
+
+						return window[instance.getInputName() + 'Editor'];
+					},
+
+					getValue: function() {
+						var instance = this;
+
+						var editor = instance.getEditor();
+
+						return isNode(editor) ? A.one(editor).val() : editor.getHTML();
+					},
+
+					setValue: function(value) {
+						var instance = this;
+
+						var editor = instance.getEditor();
+
+						if (isNode(editor)) {
+							TextHTMLField.superclass.setValue.apply(instance, arguments);
+						}
+						else {
+							editor.setHTML(value);
+						}
+					}
+				}
+			}
+		);
+
+		FieldTypes['ddm-text-html'] = TextHTMLField;
 
 		var Form = A.Component.create(
 			{

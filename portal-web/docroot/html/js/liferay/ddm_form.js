@@ -1,16 +1,13 @@
 AUI.add(
 	'liferay-ddm-form',
 	function(A) {
+		var AArray = A.Array;
 
-		var CHECKBOX_TYPE = 'checkbox';
-
-		var DDM_DATE_TYPE = 'ddm-date';
-
-		var INSTANCE_STR = '_INSTANCE_';
+		var AJSON = A.JSON;
 
 		var Lang = A.Lang;
 
-		var RADIO_TYPE = 'radio';
+		var INSTANCE_ID_PREFIX = '_INSTANCE_';
 
 		var SELECTOR_REPEAT_BUTTONS = '.lfr-ddm-repeatable-add-button, .lfr-ddm-repeatable-delete-button';
 
@@ -18,25 +15,215 @@ AUI.add(
 
 		var TPL_DELETE_REPEATABLE = '<a class="lfr-ddm-repeatable-delete-button icon-minus-sign" href="javascript:;"></a>';
 
+		var FieldTypes = Liferay.namespace('DDM.FieldTypes');
+
+		var getFieldClass = function(type) {
+			return FieldTypes[type] || FieldTypes.field;
+		};
+
+		var DDMPortletSupport = function() {};
+
+		DDMPortletSupport.ATTRS = {
+			classNameId: {
+			},
+
+			classPK: {
+			},
+
+			doAsGroupId: {
+			},
+
+			fieldsNamespace: {
+			},
+
+			p_l_id: {
+			},
+
+			portletNamespace: {
+			}
+		};
+
+		var FieldsSupport = function() {};
+
+		FieldsSupport.ATTRS = {
+			container: {
+				setter: A.one
+			},
+
+			definition: {
+			},
+
+			displayLocale: {
+			},
+
+			fields: {
+				valueFn: '_valueFields'
+			},
+
+			values: {
+				value: {}
+			}
+		};
+
+		FieldsSupport.prototype._getField = function(fieldNode) {
+			var instance = this;
+
+			var fieldInstanceId = fieldNode.getData('fieldNamespace');
+
+			fieldInstanceId = fieldInstanceId.replace(INSTANCE_ID_PREFIX, '');
+
+			var fieldName = fieldNode.getData('fieldName');
+
+			var definition = instance.get('definition');
+
+			var fieldDefinition = instance.getFieldInfo(definition, 'name', fieldName);
+
+			var FieldClass = getFieldClass(fieldDefinition.type);
+
+			var field = new FieldClass(
+				A.merge(
+					instance.getAttrs(A.Object.keys(DDMPortletSupport.ATTRS)),
+					{
+						container: fieldNode,
+						definition: definition,
+						displayLocale: instance.get('displayLocale'),
+						instanceId: fieldInstanceId,
+						name: fieldName,
+						parent: instance,
+						values: instance.get('values')
+					}
+				)
+			);
+
+			instance.addTarget(field);
+
+			return field;
+		};
+
+		FieldsSupport.prototype._getTemplate = function(callback) {
+			var instance = this;
+
+			A.io.request(
+				themeDisplay.getPathMain() + '/dynamic_data_mapping/render_structure_field',
+				{
+					data: {
+						classNameId: instance.get('classNameId'),
+						classPK: instance.get('classPK'),
+						controlPanelCategory: 'portlet',
+						doAsGroupId: instance.get('doAsGroupId'),
+						fieldName: instance.get('name'),
+						namespace: instance.get('namespace'),
+						p_l_id: instance.get('p_l_id'),
+						p_p_id: '166',
+						p_p_isolated: true,
+						portletNamespace: instance.get('portletNamespace'),
+						readOnly: instance.get('readOnly')
+					},
+					on: {
+						success: function(event, id, xhr) {
+							if (callback) {
+								callback.call(instance, xhr.responseText);
+							}
+						}
+					}
+				}
+			);
+		};
+
+		FieldsSupport.prototype._valueFields = function() {
+			var instance = this;
+
+			var fields = [];
+
+			instance.getFieldNodes().each(
+				function(item) {
+					fields.push(instance._getField(item));
+				}
+			);
+
+			return fields;
+		};
+
+		FieldsSupport.prototype.getFieldInfo = function(tree, key, value) {
+			var queue = new A.Queue();
+			var set = new A.Set();
+
+			queue.add(tree);
+			set.add(tree);
+
+			var addToQueue = function(item) {
+				if (!set.has(item)) {
+					set.add(item);
+					queue.add(item);
+				}
+			};
+
+			var fieldInfo = {};
+
+			while (queue.size() > 0) {
+				var next = queue.next();
+
+				if (next[key] === value) {
+					fieldInfo = next;
+				}
+				else {
+					var children = next.fields || next.nestedFields || next.fieldValues || next.nestedFieldValues;
+
+					if (children) {
+						AArray.each(children, addToQueue);
+					}
+				}
+			}
+
+			return fieldInfo;
+		};
+
+		FieldsSupport.prototype.getFieldNodes = function() {
+			var instance = this;
+
+			return instance.get('container').all('> .field-wrapper');
+		};
+
 		var Field = A.Component.create(
 			{
 				ATTRS: {
-					definitionFields: {
-
-					},
-					fieldsNamespace: {
-
-					},
-					nodeWrapper: {
+					container: {
 						setter: A.one
 					},
 
-					portletNamespace: {
-						value: ''
+					definition: {
+						validator: Lang.isObject
+					},
+
+					instanceId: {
+					},
+
+					localizable: {
+						getter: '_getLocalizable',
+						readOnly: true
+					},
+
+					localizationMap: {
+						valueFn: '_valueLocalizationMap'
+					},
+
+					name: {
+						validator: Lang.isString
+					},
+
+					node: {
+					},
+
+					parent: {
+					},
+
+					repeatable: {
+						getter: '_getRepeatable',
+						readOnly: true
 					}
 				},
 
-				childNode: {},
+				AUGMENTS: [DDMPortletSupport, FieldsSupport],
 
 				EXTENDS: A.Base,
 
@@ -44,184 +231,295 @@ AUI.add(
 
 				prototype: {
 					initializer: function() {
-					},
-
-					getChildNode: function() {
-
 						var instance = this;
 
-						var id = instance._getId();
-
-						var name = instance.getName();
-
-						var childType = instance._getChildType(name);
-
-						var nodeWrapper = instance.get('nodeWrapper');
-
-						if (!instance.childNode) {
-							if (childType === RADIO_TYPE) {
-								instance.childNode = nodeWrapper.all('[name="' + id + '"]');
-							}
-							else if (childType === DDM_DATE_TYPE) {
-								instance.childNode = nodeWrapper.one('[name="' + id + '"]');
-							}
-							else {
-								instance.childNode = nodeWrapper.one('#' + id);
-							}
-						}
-
-						return instance.childNode;
-					},
-
-					_getChildType: function(name) {
-						var instance = this;
-
-						var definitionFields = instance.get('definitionFields');
-
-						var type;
-
-						A.each(
-							definitionFields,
-							function(field) {
-								if (field.name === name) {
-									type = field.type;
-								}
-							}
-						);
-
-						return type;
-					},
-
-					getName: function() {
-						var instance = this;
-
-						return instance.get('nodeWrapper').getData('fieldName');
-					},
-
-					getValue: function(nodes) {
-						var instance = this;
-
-						var name = instance.getName();
-
-						var childType = instance._getChildType(name);
-
-						var value;
-
-						if (childType === RADIO_TYPE) {
-							A.each(
-								nodes,
-								function(node) {
-									if (node.get('checked') === true) {
-										value = node.get('value');
-									}
+						if (instance.get('localizable')) {
+							instance.after(
+								{
+									'translationmanager:deleteAvailableLocale': instance._afterDeleteAvailableLocale,
+									'translationmanager:editingLocaleChange': instance._afterEditingLocaleChange
 								}
 							);
 						}
-						else if (childType === CHECKBOX_TYPE) {
-							value = nodes.get('checked').toString();
-						}
-						else if (childType === DDM_DATE_TYPE) {
-							value = nodes.get('value');
-						}
-						else {
-							value = Lang.String.unescapeHTML(nodes.get('value'));
-						}
-
-						return value;
 					},
 
-					instanceSuffix: function() {
+					renderUI: function() {
 						var instance = this;
 
-						return instance.get('nodeWrapper').getData('fieldNamespace');
+						if (instance.get('repeatable')) {
+							var container = instance.get('container');
+
+							container.append(TPL_ADD_REPEATABLE);
+
+							if (AArray.indexOf(instance.getSiblings(), instance) > 0) {
+								container.append(TPL_DELETE_REPEATABLE);
+							}
+
+							container.delegate('click', instance._handleToolbarClick, SELECTOR_REPEAT_BUTTONS, instance);
+
+							container.plug(A.Plugin.ParseContent);
+						}
+
+						instance.syncValueUI();
 					},
 
-					setValue: function(fields, value) {
+					_afterDeleteAvailableLocale: function(event) {
 						var instance = this;
 
-						var name = instance.getName();
+						var localizationMap = instance.get('localizationMap');
 
-						var childType = instance._getChildType(name);
+						delete localizationMap[event.locale];
 
-						if (childType === RADIO_TYPE) {
-							A.each(
-								fields,
-								function(field) {
-									if (field.get('value') === value) {
-										field.set('checked', true);
-									}
-									else {
-										field.set('checked', false);
-									}
-								}
-							);
+						instance.set('localizationMap', localizationMap);
+					},
 
+					_afterEditingLocaleChange: function(event) {
+						var instance = this;
+
+						var translationManager = event.target;
+
+						var defaultLocale = translationManager.get('defaultLocale');
+
+						var availableLocales = translationManager.get('availableLocales');
+
+						if (AArray.indexOf([defaultLocale].concat(availableLocales), event.prevVal) > -1) {
+							instance.updateLocalizationMap(event.prevVal);
 						}
-						else if (childType === CHECKBOX_TYPE) {
-							fields.set('checked', value === 'true' ? true : false);
+
+						instance.set('displayLocale', event.newVal);
+
+						instance.syncValueUI();
+					},
+
+					_getLocalizable: function() {
+						var instance = this;
+
+						var definition = instance.get('definition');
+
+						var name = instance.get('name');
+
+						return instance.getFieldInfo(definition, 'name', name).localizable === true;
+					},
+
+					_getRepeatable: function() {
+						var instance = this;
+
+						var definition = instance.get('definition');
+
+						var name = instance.get('name');
+
+						return instance.getFieldInfo(definition, 'name', name).repeatable === true;
+					},
+
+					_handleToolbarClick: function(event) {
+						var instance = this;
+
+						var currentTarget = event.currentTarget;
+
+						if (currentTarget.hasClass('lfr-ddm-repeatable-add-button')) {
+							instance.repeat();
 						}
-						else {
-							fields.set('value', value);
+						else if (currentTarget.hasClass('lfr-ddm-repeatable-delete-button')) {
+							instance.remove();
 						}
 					},
 
-					_getId: function() {
+					_valueLocalizationMap: function() {
 						var instance = this;
 
-						var id;
+						var values = instance.get('values');
 
-						var name = instance.getName();
+						var instanceId = instance.get('instanceId');
 
-						var instanceSuffix = instance.instanceSuffix();
+						var fieldValue = instance.getFieldInfo(values, 'instanceId', instanceId);
 
-						var fieldsNamespace = instance.get('fieldsNamespace');
+						var localizationMap = {};
+
+						if (!A.Object.isEmpty(fieldValue)) {
+							localizationMap = fieldValue.value;
+						}
+
+						return localizationMap;
+					},
+
+					getInputName: function() {
+						var instance = this;
 
 						var portletNamespace = instance.get('portletNamespace');
 
+						var fieldsNamespace = instance.get('fieldsNamespace');
+
+						var prefix = [portletNamespace];
+
 						if (fieldsNamespace) {
-							id = portletNamespace + fieldsNamespace + name + instanceSuffix;
-						}
-						else {
-							id = portletNamespace + name + instanceSuffix;
+							prefix.push(fieldsNamespace);
 						}
 
-						return id;
+						return prefix.concat(
+							[
+								instance.get('name'),
+								INSTANCE_ID_PREFIX,
+								instance.get('instanceId')
+							]
+						) .join('');
+					},
+
+					getInputNode: function() {
+						var instance = this;
+
+						return instance.get('container').one('[name=' + instance.getInputName() + ']');
+					},
+
+					getSiblings: function() {
+						var instance = this;
+
+						var parent = instance.get('parent');
+
+						return AArray.filter(
+							parent.get('fields'),
+							function(item) {
+								return item.get('name') === instance.get('name');
+							}
+						);
+					},
+
+					getValue: function() {
+						var instance = this;
+
+						var inputNode = instance.getInputNode();
+
+						return Lang.String.unescapeHTML(inputNode.val());
+					},
+
+					remove: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						container.remove(true);
+
+						var parent = instance.get('parent');
+
+						var siblings = parent.get('fields');
+
+						var index = AArray.indexOf(siblings, instance);
+
+						siblings.splice(index, 1);
+
+						instance.destroy();
+					},
+
+					repeat: function() {
+						var instance = this;
+
+						instance._getTemplate(
+							function(fieldTemplate) {
+								var fieldNode = A.Node.create(fieldTemplate);
+
+								instance.get('container').insert(fieldNode, 'after');
+
+								var parent = instance.get('parent');
+
+								var siblings = parent.get('fields');
+
+								var field = instance._getField(fieldNode);
+
+								var index = AArray.indexOf(siblings, instance);
+
+								siblings.splice(++index, 0, field);
+
+								field.set('parent', parent);
+
+								field.renderUI();
+							}
+						);
+					},
+
+					setValue: function(value) {
+						var instance = this;
+
+						var inputNode = instance.getInputNode();
+
+						if (Lang.isValue(value)) {
+							inputNode.val(value);
+						}
+					},
+
+					syncValueUI: function() {
+						var instance = this;
+
+						var localizationMap = instance.get('localizationMap');
+
+						var value;
+
+						if (Lang.isString(localizationMap)) {
+							value = localizationMap;
+						}
+						else if (!A.Object.isEmpty(localizationMap)) {
+							value = localizationMap[instance.get('displayLocale')];
+						}
+
+						if (Lang.isUndefined(value)) {
+							value = instance.getValue();
+						}
+
+						instance.setValue(value);
+					},
+
+					toJSON: function() {
+						var instance = this;
+
+						instance.updateLocalizationMap(instance.get('displayLocale'));
+
+						var fieldJSON = {
+							instanceId: instance.get('instanceId'),
+							name: instance.get('name'),
+							value: instance.get('localizationMap')
+						};
+
+						var fields = instance.get('fields');
+
+						if (fields.length) {
+							fieldJSON.nestedFieldValues = AArray.invoke(fields, 'toJSON');
+						}
+
+						return fieldJSON;
+					},
+
+					updateLocalizationMap: function(locale) {
+						var instance = this;
+
+						var localizationMap = instance.get('localizationMap');
+
+						var value = instance.getValue();
+
+						if (instance.get('localizable')) {
+							localizationMap[locale] = value;
+						}
+						else {
+							localizationMap = value;
+						}
+
+						instance.set('localizationMap', localizationMap);
 					}
 				}
 			}
 		);
 
+		FieldTypes.field = Field;
+
 		var Form = A.Component.create(
 			{
 				ATTRS: {
-					classNameId: {
-					},
-
-					classPK: {
-					},
-
-					container: {
-						setter: A.one
-					},
-
 					ddmFormValuesInput: {
 						setter: A.one
 					},
 
-					definition: {
-						value: {}
-					},
-
-					doAsGroupId: {
+					displayLocale: {
+						valueFn: '_valueDisplayLocale'
 					},
 
 					namespace: {
-					},
-
-					p_l_id: {
-					},
-
-					portletNamespace: {
 					},
 
 					repeatable: {
@@ -229,39 +527,29 @@ AUI.add(
 						value: false
 					},
 
-					values: {
-						value: {}
+					translationManager: {
+						valueFn: '_valueTranslationManager'
 					}
 				},
 
+				AUGMENTS: [DDMPortletSupport, FieldsSupport],
+
 				EXTENDS: A.Base,
 
-				fieldsLocalizationMap: {},
-
-				form: {},
-
 				NAME: 'liferay-ddm-form',
-
-				translationManager: {},
 
 				prototype: {
 					initializer: function() {
 						var instance = this;
 
-						instance.translationManager = Liferay.component(instance.get('portletNamespace') + 'translationManager');
-
-						if (!instance.translationManager) {
-							instance.translationManager = new Liferay.TranslationManager(
-								{
-									defaultLocale: themeDisplay.getDefaultLanguageId()
-								}
-							);
-						}
-
-						instance.fieldsLocalizationMap = {};
-
 						instance.bindUI();
-						instance.syncUI();
+						instance.renderUI();
+					},
+
+					renderUI: function() {
+						var instance = this;
+
+						AArray.invoke(instance.get('fields'), 'renderUI');
 					},
 
 					bindUI: function() {
@@ -269,451 +557,66 @@ AUI.add(
 
 						var container = instance.get('container');
 
-						container.delegate('click', instance._onClickRepeatableButton, SELECTOR_REPEAT_BUTTONS, instance);
+						instance.formNode = container.ancestor('form', true);
 
-						instance.form = container.ancestor('form');
-
-						if (instance.form) {
-							instance.form.on('submit', instance._onSubmitForm, instance);
+						if (instance.formNode) {
+							instance.formNode.on('submit', instance._onSubmitForm, instance);
 						}
-
-						var hoverHandler = instance._onHoverRepeatableButton;
-
-						container.delegate('hover', hoverHandler, hoverHandler, SELECTOR_REPEAT_BUTTONS, instance);
-
-						var translationManager = instance.translationManager;
-
-						if (translationManager) {
-							translationManager.on('editingLocaleChange', instance._onEditingLocaleChange, instance);
-							translationManager.on('deleteAvailableLocale', instance._onDeleteAvailableLocale, instance);
-						}
-					},
-
-					syncUI: function() {
-						var instance = this;
-
-						instance._syncRepeatableFields();
-					},
-
-					_getDefinitionFieldNames: function(fields) {
-						var instance = this;
-
-						var fieldNames = [];
-
-						A.each(
-							fields,
-							function(field) {
-								fieldNames.push(field.name);
-							}
-						);
-						return fieldNames;
-					},
-
-					_getField: function(fieldName, callback) {
-						var instance = this;
-
-						A.io.request(
-							themeDisplay.getPathMain() + '/dynamic_data_mapping/render_structure_field',
-							{
-								data: {
-									classNameId: instance.get('classNameId'),
-									classPK: instance.get('classPK'),
-									controlPanelCategory: 'portlet',
-									doAsGroupId: instance.get('doAsGroupId'),
-									fieldName: fieldName,
-									namespace: instance.get('namespace'),
-									p_l_id: instance.get('p_l_id'),
-									p_p_id: '166',
-									p_p_isolated: true,
-									portletNamespace: instance.get('portletNamespace'),
-									readOnly: instance.get('readOnly')
-								},
-								on: {
-									success: function(event, id, xhr) {
-										if (callback) {
-											callback.call(instance, xhr.responseText);
-										}
-									}
-								}
-							}
-						);
-					},
-
-					_getFieldParentNode: function(fieldNode) {
-						var instance = this;
-
-						var parentNode = fieldNode.ancestor('.field-wrapper');
-
-						if (!parentNode) {
-							parentNode = instance.get('container');
-						}
-
-						return parentNode;
-					},
-
-					_getFieldsList: function(fieldName, parentNode, directChildren) {
-						var instance = this;
-
-						var container;
-
-						var selector = [' .field-wrapper'];
-
-						if (parentNode) {
-							container = parentNode;
-						}
-						else {
-							container = instance.get('container');
-						}
-
-						if (directChildren) {
-							selector.unshift('>');
-						}
-
-						if (fieldName) {
-							selector.push('[data-fieldName="' + fieldName + '"]');
-						}
-
-						return container.all(selector.join(''));
-					},
-
-					_getFieldValue: function(fieldNode) {
-						var value;
-
-						if (fieldNode.get('type') === CHECKBOX_TYPE) {
-							value = fieldNode.get('checked').toString();
-						}
-						else {
-							value = Lang.String.unescapeHTML(fieldNode.get('value'));
-						}
-
-						return value;
-					},
-
-					_getFieldValues: function(nodes, nested) {
-						var instance = this;
-
-						var definitionFields = instance.get('definition').fields;
-
-						var definitionFieldNames = instance._getDefinitionFieldNames(definitionFields);
-
-						var fieldValues = [];
-
-						var portletNamespace = instance.get('portletNamespace');
-
-						A.each(
-							nodes,
-							function(item) {
-								var fieldName = item.getData('fieldName');
-
-								var fieldNamespace = item.getData('fieldNamespace');
-
-								var instanceId = fieldNamespace.split(INSTANCE_STR)[1];
-
-								var structureField = definitionFieldNames.indexOf(fieldName) >= 0;
-
-								if (structureField || nested) {
-									var field = {
-										instanceId: instanceId,
-										name: fieldName
-									};
-
-									var nestedFields = instance._getFieldsList(null, item, true);
-
-									if (nestedFields._nodes.length) {
-										field.nestedFieldValues = instance._getFieldValues(nestedFields, true);
-									}
-
-									field.value = instance.fieldsLocalizationMap[instanceId];
-
-									fieldValues.push(field);
-								}
-							}
-						);
-
-						return fieldValues;
-					},
-
-					_insertField: function(fieldNode) {
-						var instance = this;
-
-						var fieldName = fieldNode.getData('fieldName');
-
-						instance._getField(
-							fieldName,
-							function(newFieldHTML) {
-								fieldNode.insert(newFieldHTML, 'after');
-
-								instance._syncRepeatableFields();
-							}
-						);
-					},
-
-					_isFieldLocalizable: function(fieldName, definitionFields, isFieldLocalizable) {
-						var instance = this;
-
-						A.each(
-							definitionFields,
-							function(field) {
-								if (field.name === fieldName) {
-									isFieldLocalizable = field.localizable;
-								}
-								else if (field.nestedFields) {
-									isFieldLocalizable = instance._isFieldLocalizable(fieldName, field.nestedFields, isFieldLocalizable);
-								}
-							}
-						);
-
-						return isFieldLocalizable;
-					},
-
-					_onClickRepeatableButton: function(event) {
-						var instance = this;
-
-						var currentTarget = event.currentTarget;
-
-						var fieldNode = currentTarget.ancestor('.field-wrapper');
-
-						if (currentTarget.hasClass('lfr-ddm-repeatable-add-button')) {
-							instance._insertField(fieldNode);
-						}
-						else if (currentTarget.hasClass('lfr-ddm-repeatable-delete-button')) {
-							instance._removeField(fieldNode);
-						}
-					},
-
-					_onDeleteAvailableLocale: function(event) {
-						var instance = this;
-
-						var map = instance.fieldsLocalizationMap;
-
-						for (var prop in map) {
-							if (map.hasOwnProperty(prop)) {
-								delete map[prop][event.locale];
-							}
-						}
-					},
-
-					_onEditingLocaleChange: function(event) {
-						var instance = this;
-
-						var defaultLocale = instance.translationManager.get('defaultLocale');
-
-						var editingLocale = instance.translationManager.get('editingLocale');
-
-						var locale = editingLocale || defaultLocale;
-
-						instance._registerFieldsLocalizationMap(locale);
-
-						instance._syncFieldsValues(event.newVal);
-					},
-
-					_onHoverRepeatableButton: function(event) {
-						var instance = this;
-
-						var fieldNode = event.currentTarget.ancestor('.field-wrapper');
-
-						fieldNode.toggleClass('lfr-ddm-repeatable-active', (event.phase === 'over'));
 					},
 
 					_onSubmitForm: function(event) {
 						var instance = this;
 
-						var defaultLocale = instance.translationManager.get('defaultLocale');
-
-						var editingLocale = instance.translationManager.get('editingLocale');
-
-						var locale = editingLocale || defaultLocale;
-
-						instance._registerFieldsLocalizationMap(locale);
-
-						instance._syncFieldsTreeUI();
-
-						submitForm(instance.form);
-					},
-
-					_registerFieldsLocalizationMap: function(locale) {
-						var instance = this;
-
-						var definitionFields = instance.get('definition').fields;
-
-						var fields = instance._getFieldsList(null, null, false);
-
-						var fieldsNamespace = instance.get('namespace');
-
-						var map = instance.fieldsLocalizationMap;
-
-						var portletNamespace = instance.get('portletNamespace');
-
-						A.each(
-							fields,
-							function(field) {
-
-								field = new Field(
-									{
-										definitionFields: definitionFields,
-										fieldsNamespace: fieldsNamespace,
-										nodeWrapper: field,
-										portletNamespace: portletNamespace
-									}
-								);
-
-								var fieldName = field.getName();
-
-								var fieldNamespace = field.instanceSuffix();
-
-								var instanceId = fieldNamespace.split(INSTANCE_STR)[1];
-
-								var isFieldLocalizable;
-
-								var childNode = field.getChildNode();
-
-								var value;
-
-								if (childNode) {
-									value = field.getValue(childNode);
-
-									isFieldLocalizable = instance._isFieldLocalizable(fieldName, definitionFields);
-
-									if (isFieldLocalizable) {
-										map[instanceId] = map[instanceId] || {};
-										map[instanceId][locale] = value;
-									}
-									else {
-										map[instanceId] = value;
-									}
-								}
-							}
-						);
-					},
-
-					_removeField: function(fieldNode) {
-						var instance = this;
-
-						fieldNode.remove();
-
-						instance._syncRepeatableFields();
-					},
-
-					_renderRepeatableUI: function(fieldNode) {
-						var instance = this;
-
-						var fieldRepeatable = A.DataType.Boolean.parse(fieldNode.getData('repeatable'));
-
-						if (instance.get('repeatable') && fieldRepeatable) {
-							if (!fieldNode.getData('rendered-toolbar')) {
-								var fieldName = fieldNode.getData('fieldName');
-
-								var parentNode = instance._getFieldParentNode(fieldNode);
-
-								var fieldsList = instance._getFieldsList(fieldName, parentNode);
-
-								var html = TPL_ADD_REPEATABLE;
-
-								if (fieldsList.indexOf(fieldNode) > 0) {
-									html += TPL_DELETE_REPEATABLE;
-								}
-
-								fieldNode.append(html);
-
-								fieldNode.plug(A.Plugin.ParseContent);
-
-								fieldNode.setData('rendered-toolbar', true);
-							}
-						}
-
-						instance._getFieldsList(null, fieldNode).each(
-							function(item, index) {
-								instance._renderRepeatableUI(item);
-							}
-						);
-					},
-
-					_syncFieldsTreeUI: function() {
-						var instance = this;
-
-						var defaultLocale = instance.translationManager.get('defaultLocale');
-
-						var availableLocales = instance.translationManager.get('availableLocales');
-
-						availableLocales.push(defaultLocale);
+						event.preventDefault();
 
 						var ddmFormValuesInput = instance.get('ddmFormValuesInput');
 
-						var fieldsList = instance._getFieldsList(null, null, true);
+						ddmFormValuesInput.set('value', AJSON.stringify(instance.toJSON()));
 
-						var ddmFormValuesJSON = {
-							availableLanguageIds: availableLocales,
-							defaultLanguageId: defaultLocale,
-							fieldValues: instance._getFieldValues(fieldsList, false)
+						submitForm(instance.formNode);
+					},
+
+					_valueDisplayLocale: function() {
+						var instance = this;
+
+						var translationManager = instance.get('translationManager');
+
+						return translationManager.get('editingLocale');
+					},
+
+					_valueTranslationManager: function() {
+						var instance = this;
+
+						var translationManager = Liferay.component(instance.get('portletNamespace') + 'translationManager');
+
+						if (!translationManager) {
+							translationManager = new Liferay.TranslationManager();
+						}
+
+						translationManager.addTarget(instance);
+
+						return translationManager;
+					},
+
+					toJSON: function() {
+						var instance = this;
+
+						var translationManager = instance.get('translationManager');
+
+						return {
+							availableLanguageIds: translationManager.get('availableLocales'),
+							defaultLanguageId: translationManager.get('defaultLocale'),
+							fieldValues: AArray.invoke(instance.get('fields'), 'toJSON')
 						};
-
-						ddmFormValuesInput.set('value', JSON.stringify(ddmFormValuesJSON));
-					},
-
-					_syncFieldsValues: function(locale) {
-						var instance = this;
-
-						var defaultLocale = instance.translationManager.get('defaultLocale');
-
-						var definitionFields = instance.get('definition').fields;
-
-						var fields = instance._getFieldsList(null, null, false);
-
-						var fieldsNamespace = instance.get('namespace');
-
-						var map = instance.fieldsLocalizationMap;
-
-						var portletNamespace = instance.get('portletNamespace');
-
-						A.each(
-							fields,
-							function(field) {
-								field = new Field(
-									{
-										definitionFields: definitionFields,
-										fieldsNamespace: fieldsNamespace,
-										nodeWrapper: field,
-										portletNamespace: portletNamespace
-									}
-								);
-
-								var fieldName = field.getName();
-
-								var fieldNamespace = field.instanceSuffix();
-
-								var instanceId = fieldNamespace.split(INSTANCE_STR)[1];
-
-								var fieldMap = map[instanceId];
-
-								var childNode = field.getChildNode();
-
-								var value;
-
-								if (childNode && fieldMap) {
-									value = fieldMap[locale] || fieldMap[defaultLocale];
-									field.setValue(childNode, value);
-								}
-							}
-						);
-					},
-
-					_syncRepeatableFields: function() {
-						var instance = this;
-
-						instance._getFieldsList().each(
-							function(item, index) {
-								instance._renderRepeatableUI(item);
-							}
-						);
 					}
 				}
 			}
 		);
 
-		Liferay.namespace('DDM').Form = Form;
+		Liferay.DDM.Form = Form;
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-datatype', 'aui-io-request', 'aui-parse-content', 'liferay-translation-manager']
+		requires: ['aui-base', 'aui-datatype', 'aui-io-request', 'aui-parse-content', 'aui-set', 'json', 'liferay-portlet-url', 'liferay-translation-manager']
 	}
 );

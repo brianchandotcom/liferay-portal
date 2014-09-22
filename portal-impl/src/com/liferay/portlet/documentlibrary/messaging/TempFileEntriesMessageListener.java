@@ -28,23 +28,45 @@ import com.liferay.portal.service.RepositoryLocalServiceUtil;
 /**
  * @author Ivan Zaera
  */
-public class TemporaryFileEntriesMessageListener extends BaseMessageListener {
+public class TempFileEntriesMessageListener extends BaseMessageListener {
 
-	protected void deleteExpiredTemporaryFileEntries(Repository repository)
-		throws PortalException {
+	protected void deleteExpiredTemporaryFileEntries(Repository repository) {
+		LocalRepository localRepository = null;
 
-		LocalRepository localRepository =
-			RepositoryLocalServiceUtil.getLocalRepositoryImpl(
+		try {
+			localRepository = RepositoryLocalServiceUtil.getLocalRepositoryImpl(
 				repository.getRepositoryId());
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get implementation for repository " +
+						repository.getRepositoryId(),
+					pe);
+			}
 
-		if (localRepository.isCapabilityProvided(
-				TemporaryFileEntriesCapability.class)) {
+			return;
+		}
 
-			TemporaryFileEntriesCapability temporaryFileEntriesCapability =
-				localRepository.getCapability(
-					TemporaryFileEntriesCapability.class);
+		try {
+			if (localRepository.isCapabilityProvided(
+					TemporaryFileEntriesCapability.class)) {
 
-			temporaryFileEntriesCapability.deleteExpiredTemporaryFileEntries();
+				TemporaryFileEntriesCapability temporaryFileEntriesCapability =
+					localRepository.getCapability(
+						TemporaryFileEntriesCapability.class);
+
+				temporaryFileEntriesCapability.
+					deleteExpiredTemporaryFileEntries();
+			}
+		}
+		catch (Exception pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to delete expired temporary file entries in " +
+						"repository " + repository.getRepositoryId(),
+					pe);
+			}
 		}
 	}
 
@@ -60,18 +82,7 @@ public class TemporaryFileEntriesMessageListener extends BaseMessageListener {
 				public void performAction(Object object) {
 					Repository repository = (Repository)object;
 
-					try {
-						deleteExpiredTemporaryFileEntries(repository);
-					}
-					catch (Exception e) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to delete expired temporary file " +
-									"entries in repository " +
-										repository.getRepositoryId(),
-								e);
-						}
-					}
+					deleteExpiredTemporaryFileEntries(repository);
 				}
 
 			});
@@ -80,6 +91,6 @@ public class TemporaryFileEntriesMessageListener extends BaseMessageListener {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		TemporaryFileEntriesMessageListener.class);
+		TempFileEntriesMessageListener.class);
 
 }

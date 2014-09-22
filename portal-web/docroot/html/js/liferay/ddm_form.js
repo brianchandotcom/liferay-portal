@@ -798,6 +798,36 @@ AUI.add(
 
 		FieldTypes.radio = RadioField;
 
+		var SelectField = A.Component.create(
+			{
+				EXTENDS: RadioField,
+
+				prototype: {
+					getInputNode: function() {
+						var instance = this;
+
+						return Field.prototype.getInputNode.apply(instance, arguments);
+					},
+
+					setValue: function(value) {
+						var instance = this;
+
+						if (Lang.isString(value)) {
+							value = AJSON.parse(value);
+						}
+
+						if (value.length) {
+							value = value[0];
+						}
+
+						Field.prototype.setValue.call(instance, value);
+					}
+				}
+			}
+		);
+
+		FieldTypes.select = SelectField;
+
 		var Form = A.Component.create(
 			{
 				ATTRS: {

@@ -1551,7 +1551,7 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#viewProcessWorkflow">
-			<var name="workflowDefinitionTitle" value="Workflow Definition Name" />
+			<var name="workflowDefinitionTitle" value="Workflow Definition Title" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#viewProcessForms">
@@ -1656,6 +1656,10 @@
 			<var name="workflowDefinitionTitleEdit" value="Single Approver Edit" />
 		</execute>
 
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="update" />
+		</execute>
+
 		<execute macro="KaleoDesigner#deleteNode">
 			<var name="nodeNodeLabel" value="update" />
 		</execute>
@@ -1749,6 +1753,10 @@
 		<execute macro="KaleoFormsAdmin#editWorkflow">
 			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 			<var name="workflowDefinitionTitleEdit" value="${workflowDefinitionTitleEdit}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="update" />
 		</execute>
 
 		<execute macro="KaleoDesigner#deleteNode">

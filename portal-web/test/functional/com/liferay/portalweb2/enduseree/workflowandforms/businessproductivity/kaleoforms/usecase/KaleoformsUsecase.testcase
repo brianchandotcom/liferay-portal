@@ -3312,6 +3312,10 @@
 			<var name="workflowDefinitionTitleEdit" value="Single Approver Edit" />
 		</execute>
 
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="update" />
+		</execute>
+
 		<execute macro="KaleoDesigner#deleteNode">
 			<var name="nodeNodeLabel" value="update" />
 		</execute>
@@ -5964,7 +5968,7 @@
 
 		<execute macro="KaleoFormsPortlet#populateFieldText">
 			<var name="fieldName" value="Text" />
-			<var name="kfProcessFieldData" value="Test Assigned" />
+			<var name="kfProcessFieldData" value="Test Data" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
@@ -6383,7 +6387,7 @@
 
 		<execute macro="KaleoFormsPortlet#populateFieldText">
 			<var name="fieldName" value="Text" />
-			<var name="kfProcessFieldData" value="Test Rejected" />
+			<var name="kfProcessFieldData" value="Test Data" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#saveProcessRecord" />

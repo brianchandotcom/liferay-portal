@@ -179,6 +179,10 @@
 			<var name="nodeType" value="${nodeType}" />
 		</execute>
 
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+
 		<execute macro="KaleoDesigner#viewNodeType">
 			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
 			<var name="nodeType" value="${nodeType}" />
@@ -206,6 +210,10 @@
 			<var name="nodeName" value="${nodeNodeLabel}" />
 			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
 			<var name="nodeType" value="${nodeType}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
 		</execute>
 
 		<execute macro="KaleoDesigner#viewNodeType">
@@ -237,6 +245,10 @@
 			<var name="nodeType" value="${nodeType}" />
 		</execute>
 
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+
 		<execute macro="KaleoDesigner#viewNodeType">
 			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
 			<var name="nodeType" value="${nodeType}" />
@@ -261,6 +273,10 @@
 
 		<execute macro="KaleoDesigner#addNodeViaSourceXML">
 			<var name="nodeType" value="${nodeNodeLabel}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
 		</execute>
 
 		<execute macro="KaleoDesigner#editNodeName">
@@ -312,6 +328,10 @@
 
 		<execute macro="KaleoDesigner#editWorkflowDefinitionViaWorkflowCP">
 			<var name="workflowDefinitionTitle" value="Single Approver Edited" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
 		</execute>
 
 		<execute macro="KaleoDesigner#viewNodeNotPresent">

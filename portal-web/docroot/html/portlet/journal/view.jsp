@@ -125,8 +125,6 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 </aui:script>
 
 <aui:script use="liferay-journal-navigation">
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="mainURL" />
-
 	var journalNavigation = new Liferay.Portlet.JournalNavigation(
 		{
 			advancedSearch: '<%= DisplayTerms.ADVANCED_SEARCH %>',

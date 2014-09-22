@@ -12,7 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cache;
+package com.liferay.portal.cache.cluster;
+
+import com.liferay.portal.cache.bootstrap.ClusterLinkBootstrapLoader;
+import com.liferay.portal.kernel.cache.BootstrapLoader;
+import com.liferay.portal.kernel.cache.CacheListener;
+import com.liferay.portal.kernel.cache.CacheManagerListener;
+import com.liferay.portal.kernel.cache.CallbackFactory;
 
 import java.io.Serializable;
 
@@ -21,14 +27,26 @@ import java.util.Properties;
 /**
  * @author Tina Tian
  */
-public interface ListenerFactory {
+public class ClusterLinkCallbackFactory implements CallbackFactory {
 
-	public BootstrapLoader createBootstrapLoader(Properties properties);
+	@Override
+	public BootstrapLoader createBootstrapLoader(Properties properties) {
+		return new ClusterLinkBootstrapLoader(properties);
+	}
 
+	@Override
 	public CacheListener<? extends Serializable, ?> createCacheListener(
-		Properties properties);
+		Properties properties) {
 
+		return new ClusterLinkCacheReplicator<Serializable, Serializable>(
+			properties);
+	}
+
+	@Override
 	public CacheManagerListener createCacheManagerListener(
-		Properties properties);
+		Properties properties) {
+
+		throw new UnsupportedOperationException();
+	}
 
 }

@@ -17,7 +17,7 @@ package com.liferay.portal.cache.ehcache;
 import com.liferay.portal.kernel.cache.BootstrapLoader;
 import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.CacheManagerListener;
-import com.liferay.portal.kernel.cache.ListenerFactory;
+import com.liferay.portal.kernel.cache.CallbackFactory;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheProvider;
 import com.liferay.portal.kernel.log.Log;
@@ -40,7 +40,7 @@ import net.sf.ehcache.event.CacheManagerEventListenerFactory;
 /**
  * @author Tina Tian
  */
-public class EhcacheListenerFactory implements ListenerFactory {
+public class EhcacheCallbackFactory implements CallbackFactory {
 
 	@Override
 	public BootstrapLoader createBootstrapLoader(Properties properties) {
@@ -184,7 +184,7 @@ public class EhcacheListenerFactory implements ListenerFactory {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		EhcacheListenerFactory.class);
+		EhcacheCallbackFactory.class);
 
 	private static final Map<String, BootstrapCacheLoaderFactory<?>>
 		_bootstrapCacheLoaderFactories =

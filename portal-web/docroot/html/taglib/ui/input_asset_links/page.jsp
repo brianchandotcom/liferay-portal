@@ -45,8 +45,6 @@
 
 <br />
 
-<div class="separator"><!-- --></div>
-
 <liferay-util:buffer var="removeLinkIcon">
 	<liferay-ui:icon
 		iconCssClass="icon-remove"

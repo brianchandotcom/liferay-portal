@@ -2541,8 +2541,6 @@ public interface PropsKeys {
 
 	public static final String THEME_CSS_FAST_LOAD = "theme.css.fast.load";
 
-	public static final String THEME_CSS_FAST_LOAD_CHECK_MODIFIED_DATE = "theme.css.fast.load.check.modified.date";
-
 	public static final String THEME_CSS_FAST_LOAD_CHECK_REQUEST_PARAMETER = "theme.css.fast.load.check.request.parameter";
 
 	public static final String THEME_IMAGES_FAST_LOAD = "theme.images.fast.load";

@@ -147,7 +147,7 @@ public class DynamicCSSUtil {
 		if (cacheResourceURL != null) {
 			cacheResourceURLConnection = cacheResourceURL.openConnection();
 
-			if (PropsValues.THEME_CSS_FAST_LOAD_CHECK_MODIFIED_DATE) {
+			if (!themeCssFastLoad) {
 				URL resourceURL = servletContext.getResource(resourcePath);
 
 				if (resourceURL != null) {

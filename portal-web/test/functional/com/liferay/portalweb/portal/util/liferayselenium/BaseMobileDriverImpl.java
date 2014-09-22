@@ -361,7 +361,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public boolean isNotText(String locator, String value) {
-		throw new UnsupportedOperationException();
+		return LiferaySeleniumHelper.isNotText(this, locator, value);
 	}
 
 	@Override
@@ -391,7 +391,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public boolean isText(String locator, String value) {
-		throw new UnsupportedOperationException();
+		return value.equals(getText(locator, "1"));
 	}
 
 	@Override

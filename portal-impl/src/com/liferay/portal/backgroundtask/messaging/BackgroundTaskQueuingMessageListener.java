@@ -19,12 +19,9 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.service.BackgroundTaskLocalService;
-import com.liferay.portal.util.ClassLoaderUtil;
 
 /**
  * @author Michael C. Han
@@ -77,26 +74,6 @@ public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
 
 		_backgroundTaskLocalService.resumeBackgroundTask(
 			backgroundTask.getBackgroundTaskId());
-	}
-
-	private BackgroundTaskExecutor getBackgroundTaskExecutor(
-			BackgroundTask backgroundTask)
-		throws Exception {
-
-		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
-
-		String servletContextNames = backgroundTask.getServletContextNames();
-
-		if (Validator.isNotNull(servletContextNames)) {
-			classLoader = ClassLoaderUtil.getAggregatePluginsClassLoader(
-				StringUtil.split(servletContextNames), false);
-		}
-
-		BackgroundTaskExecutor backgroundTaskExecutor =
-			(BackgroundTaskExecutor)InstanceFactory.newInstance(
-				classLoader, backgroundTask.getTaskExecutorClassName());
-
-		return backgroundTaskExecutor;
 	}
 
 	@BeanReference(type = BackgroundTaskLocalService.class)

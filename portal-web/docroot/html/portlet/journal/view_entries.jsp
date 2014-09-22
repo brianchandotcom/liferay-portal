@@ -283,6 +283,10 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(articleSearchCo
 	</div>
 </c:if>
 
+<%
+String displayStyle = journalDisplayContext.getDisplayStyle();
+%>
+
 <c:choose>
 	<c:when test='<%= !displayStyle.equals("list") %>'>
 

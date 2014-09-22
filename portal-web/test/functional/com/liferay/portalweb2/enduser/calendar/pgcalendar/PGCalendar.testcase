@@ -558,6 +558,8 @@
 		<execute macro="CalendarEvent#addPG">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="frequency" value="Daily" />
+			<var name="numberOfOccurrences" value="1" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -597,6 +599,8 @@
 			<var name="eventCommentEnabled" value="true" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="frequency" value="Daily" />
+			<var name="numberOfOccurrences" value="1" />
 			<var name="site" value="${site}" />
 			<var name="user" value="${user}" />
 		</execute>
@@ -619,6 +623,56 @@
 		</execute>
 	</command>
 
+	<command name="AddCalendarEventRepeatingMonthly2Times" priority="5">
+		<var name="eventTitle" value="Calendar Event Repeating Title" />
+		<var name="eventType" value="Repeating" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+			<var name="frequency" value="Monthly" />
+			<var name="numberOfOccurrences" value="2" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewPG">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+	</command>
+
+	<command name="AddCalendarEventRepeatingMonthlyThirdWednesday2Times" priority="5">
+		<var name="eventTitle" value="Calendar Event Repeating Title" />
+		<var name="eventType" value="Repeating" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+			<var name="frequency" value="Monthly" />
+			<var name="numberOfOccurrences" value="2" />
+			<var name="position" value="Third" />
+			<var name="weekday" value="Wednesday" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewPG">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+	</command>
+
 	<command name="AddCalendarEventRepeatingRSVPYes" priority="5">
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventType" value="Repeating" />
@@ -631,7 +685,33 @@
 			<var name="addRSVPEnabled" value="true" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="frequency" value="Daily" />
+			<var name="numberOfOccurrences" value="1" />
 			<var name="rsvp" value="Yes" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewPG">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+	</command>
+
+	<command name="AddCalendarEventRepeatingWeekly2Times" priority="5">
+		<var name="eventTitle" value="Calendar Event Repeating Title" />
+		<var name="eventType" value="Repeating" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+			<var name="frequency" value="Weekly" />
+			<var name="numberOfOccurrences" value="2" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -657,8 +737,10 @@
 			<var name="duration2" value="Minutes" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="frequency" value="Daily" />
 			<var name="number1" value="5" />
 			<var name="number2" value="10" />
+			<var name="numberOfOccurrences" value="1" />
 			<var name="optionSet" value="true" />
 			<var name="reminders" value="true" />
 		</execute>
@@ -688,6 +770,8 @@
 		<execute macro="CalendarEvent#addPG">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="frequency" value="Daily" />
+			<var name="numberOfOccurrences" value="1" />
 			<var name="optionSet" value="true" />
 			<var name="tag" value="true" />
 			<var name="tagText" value="tag1" />
@@ -716,7 +800,9 @@
 		<execute macro="CalendarEvent#addPG">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="frequency" value="Daily" />
 			<var name="inviteResource" value="true" />
+			<var name="numberOfOccurrences" value="1" />
 			<var name="optionSet" value="true" />
 			<var name="resourceNameList" value="${resourceNameList}" />
 		</execute>
@@ -787,7 +873,9 @@
 			<var name="addRSVPEnabled" value="true" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="frequency" value="Daily" />
 			<var name="inviteResource" value="true" />
+			<var name="numberOfOccurrences" value="1" />
 			<var name="optionSet" value="true" />
 			<var name="resourceNameList" value="${resourceNameList}" />
 			<var name="rsvp" value="Yes" />
@@ -1007,6 +1095,8 @@
 		<execute macro="CalendarEvent#addPG">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="frequency" value="Daily" />
+			<var name="numberOfOccurrences" value="1" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1337,6 +1427,8 @@
 		<execute macro="CalendarEvent#addPG">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="frequency" value="Daily" />
+			<var name="numberOfOccurrences" value="1" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1367,8 +1459,10 @@
 			<var name="duration2" value="Minutes" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="frequency" value="Daily" />
 			<var name="number1" value="5" />
 			<var name="number2" value="10" />
+			<var name="numberOfOccurrences" value="1" />
 			<var name="optionSet" value="true" />
 			<var name="reminders" value="true" />
 		</execute>

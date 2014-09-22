@@ -371,6 +371,8 @@
 		<execute macro="CalendarEvent#addPG">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="frequency" value="Daily" />
+			<var name="numberOfOccurrences" value="1" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>

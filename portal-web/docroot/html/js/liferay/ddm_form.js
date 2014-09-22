@@ -748,6 +748,56 @@ AUI.add(
 
 		FieldTypes['ddm-text-html'] = TextHTMLField;
 
+		var RadioField = A.Component.create(
+			{
+				EXTENDS: Field,
+
+				prototype: {
+					getInputNode: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						return container.one('[name=' + instance.getInputName() + ']:checked');
+					},
+
+					getValue: function() {
+						var instance = this;
+
+						var value = '';
+
+						if (instance.getInputNode()) {
+							value = RadioField.superclass.getValue.apply(instance, arguments);
+						}
+
+						return AJSON.stringify([value]);
+					},
+
+					setValue: function(value) {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						var radioNodes = container.all('[name=' + instance.getInputName() + ']');
+
+						radioNodes.set('checked', false);
+
+						if (Lang.isString(value)) {
+							value = AJSON.parse(value);
+						}
+
+						if (value.length) {
+							value = value[0];
+						}
+
+						radioNodes.filter('[value=' + value + ']').set('checked', true);
+					}
+				}
+			}
+		);
+
+		FieldTypes.radio = RadioField;
+
 		var Form = A.Component.create(
 			{
 				ATTRS: {

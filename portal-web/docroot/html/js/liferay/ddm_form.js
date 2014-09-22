@@ -149,15 +149,10 @@ AUI.add(
 		};
 
 		FieldsSupport.prototype.getFieldInfo = function(tree, key, value) {
-			var queue = new A.Queue();
-			var set = new A.Set();
-
-			queue.add(tree);
-			set.add(tree);
+			var queue = new A.Queue(tree);
 
 			var addToQueue = function(item) {
-				if (!set.has(item)) {
-					set.add(item);
+				if (AArray.indexOf(queue._q, item) === -1) {
 					queue.add(item);
 				}
 			};

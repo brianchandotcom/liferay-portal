@@ -34,7 +34,7 @@ Map<String, String> requestParams = (Map<String, String>)request.getAttribute("l
 				%>
 
 					<c:choose>
-						<c:when test="<%= displayStyle != null %>">
+						<c:when test="<%= displayStyleURL != null %>">
 
 							<%
 							displayStyleURL.setParameter("displayStyle", curDisplayStyle);

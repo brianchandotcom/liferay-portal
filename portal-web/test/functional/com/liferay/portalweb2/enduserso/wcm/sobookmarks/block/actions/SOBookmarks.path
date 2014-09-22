@@ -97,9 +97,9 @@
 	<td>Google</td>
 </tr>
 <tr>
-	<td>BOOKMARKS_POP_UP_YAHOO</td>
-	<td>title=Yahoo</td>
-	<td>Yahoo</td>
+	<td>BOOKMARKS_POP_UP_BING</td>
+	<td>title=Bing</td>
+	<td>Bing</td>
 </tr>
 <tr>
 	<td>BOOKMARKS_POP_UP_MSN</td>
@@ -112,9 +112,9 @@
 	<td>Google</td>
 </tr>
 <tr>
-	<td>BOOKMARKS_POP_UP_IMAGE_YAHOO</td>
-	<td>//button[@id='search-submit']</td>
-	<td>Yahoo</td>
+	<td>BOOKMARKS_POP_UP_IMAGE_BING</td>
+	<td>//div[contains(.,'Bing')]</td>
+	<td>Bing</td>
 </tr>
 <tr>
 	<td>BOOKMARKS_POP_UP_IMAGE_MSN</td>

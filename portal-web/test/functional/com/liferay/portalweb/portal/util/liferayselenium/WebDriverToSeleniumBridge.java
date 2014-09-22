@@ -199,18 +199,7 @@ public class WebDriverToSeleniumBridge
 			open(url);
 		}
 		else {
-			WebElement webElement = getWebElement(locator);
-
-			try {
-				webElement.click();
-			}
-			catch (Exception e) {
-				if (!webElement.isDisplayed()) {
-					scrollWebElementIntoView(webElement);
-				}
-
-				webElement.click();
-			}
+			WebDriverHelper.click(this, locator);
 		}
 	}
 

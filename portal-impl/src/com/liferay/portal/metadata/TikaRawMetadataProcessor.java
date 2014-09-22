@@ -59,7 +59,7 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 	}
 
 	protected static Metadata extractMetadata(
-			InputStream inputStream, Metadata metadata, Parser parser)
+			File file, Metadata metadata, Parser parser)
 		throws IOException {
 
 		if (metadata == null) {
@@ -73,7 +73,7 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 		ContentHandler contentHandler = new WriteOutContentHandler(
 			new DummyWriter());
 
-		try {
+		try (InputStream inputStream = new FileInputStream(file)) {
 			parser.parse(inputStream, contentHandler, metadata, parserContext);
 		}
 		catch (Exception e) {
@@ -145,8 +145,8 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 			}
 		}
 
-		try (InputStream inputStream = new FileInputStream(file)) {
-			return extractMetadata(inputStream, metadata, _parser);
+		try {
+			return extractMetadata(file, metadata, _parser);
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
@@ -190,33 +190,19 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 
 		@Override
 		public Metadata call() throws ProcessException {
-			InputStream inputStream = null;
-
 			try {
-				inputStream = new FileInputStream(_file);
-
-				return extractMetadata(inputStream, _metadata, _parser);
+				return extractMetadata(_file, _metadata, _parser);
 			}
 			catch (IOException ioe) {
 				throw new ProcessException(ioe);
-			}
-			finally {
-				if (inputStream != null) {
-					try {
-						inputStream.close();
-					}
-					catch (IOException ioe) {
-						throw new ProcessException(ioe);
-					}
-				}
 			}
 		}
 
 		private static final long serialVersionUID = 1L;
 
-		private File _file;
-		private Metadata _metadata;
-		private Parser _parser;
+		private final File _file;
+		private final Metadata _metadata;
+		private final Parser _parser;
 
 	}
 

@@ -530,6 +530,50 @@ AUI.add(
 
 		FieldTypes.checkbox = CheckboxField;
 
+		var DateField = A.Component.create(
+			{
+				EXTENDS: Field,
+
+				prototype: {
+					getDatePicker: function() {
+						var instance = this;
+
+						var inputNode = instance.getInputNode();
+
+						return Liferay.component(inputNode.attr('id') + 'DatePicker');
+					},
+
+					getValue: function() {
+						var instance = this;
+
+						var datePicker = instance.getDatePicker();
+
+						var timestamp = datePicker.getDate().getTime();
+
+						var inputNode = instance.getInputNode();
+
+						return inputNode.val() ? String(timestamp) : '';
+					},
+
+					setValue: function(value) {
+						var instance = this;
+
+						var datePicker = instance.getDatePicker();
+
+						datePicker.set('activeInput', instance.getInputNode());
+
+						datePicker.deselectDates();
+
+						if (value) {
+							datePicker.selectDates(new Date(Lang.toInt(value)));
+						}
+					}
+				}
+			}
+		);
+
+		FieldTypes['ddm-date'] = DateField;
+
 		var Form = A.Component.create(
 			{
 				ATTRS: {

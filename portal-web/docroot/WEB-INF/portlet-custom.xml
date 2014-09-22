@@ -124,6 +124,10 @@
 			<value>/html/portlet/journal/configuration.jsp</value>
 		</init-param>
 		<init-param>
+			<name>single-page-application-cacheable</name>
+			<value>false</value>
+		</init-param>
+		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/journal/</value>
 		</init-param>

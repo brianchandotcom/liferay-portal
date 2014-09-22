@@ -23,7 +23,6 @@ PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/journal/view");
 portletURL.setParameter("folderId", String.valueOf(folderId));
-portletURL.setParameter("displayStyle", JournalUtil.getDisplayStyle(liferayPortletRequest, displayViews));
 
 ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portletURL);
 

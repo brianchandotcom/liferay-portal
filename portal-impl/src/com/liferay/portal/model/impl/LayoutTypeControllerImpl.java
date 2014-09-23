@@ -31,6 +31,8 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
+import java.io.Serializable;
+
 import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
@@ -43,7 +45,8 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Raymond Augé
  */
-public class LayoutTypeControllerImpl implements LayoutTypeController {
+public class LayoutTypeControllerImpl
+	implements LayoutTypeController, Serializable {
 
 	public LayoutTypeControllerImpl(String type) {
 		_type = type;

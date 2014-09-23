@@ -74,6 +74,7 @@ String uploadImageURL = themeDisplay.getPathMain() + "/portal/image_selector?p_a
 			documentSelectorURL: '<%= documentSelectorURL.toString() %>',
 			namespace: '<%= randomNamespace %>',
 			paramName: '<portlet:namespace /><%= paramName %>',
+			rootNode: '#<%= randomNamespace %>taglibImageSelector',
 			uploadURL: '<%= uploadImageURL %>'
 		}
 	);

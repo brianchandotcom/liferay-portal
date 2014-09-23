@@ -35,8 +35,6 @@ AUI.add(
 					initializer: function(config) {
 						var instance = this;
 
-						instance.rootNode = instance.one('#taglibImageSelector');
-
 						instance._bindUI();
 
 						instance._renderUploader();

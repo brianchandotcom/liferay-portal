@@ -209,15 +209,7 @@ public class EditLDAPServerAction extends PortletAction {
 		validateLDAPServerName(
 			ldapServerId, themeDisplay.getCompanyId(), properties);
 
-		String userFilter = ParamUtil.getString(
-			actionRequest, "importUserSearchFilter");
-
-		LDAPUtil.validateFilter(userFilter);
-
-		String groupFilter = ParamUtil.getString(
-			actionRequest, "importGroupSearchFilter");
-
-		LDAPUtil.validateFilter(groupFilter);
+		validateSearchFilters(actionRequest);
 
 		if (ldapServerId <= 0) {
 			properties = addLDAPServer(themeDisplay.getCompanyId(), properties);
@@ -253,6 +245,20 @@ public class EditLDAPServerAction extends PortletAction {
 				throw new DuplicateLDAPServerNameException();
 			}
 		}
+	}
+
+	protected void validateSearchFilters(ActionRequest actionRequest)
+		throws Exception {
+
+		String userFilter = ParamUtil.getString(
+			actionRequest, "importUserSearchFilter");
+
+		LDAPUtil.validateFilter(userFilter);
+
+		String groupFilter = ParamUtil.getString(
+			actionRequest, "importGroupSearchFilter");
+
+		LDAPUtil.validateFilter(groupFilter);
 	}
 
 	private static final String[] _KEYS = {

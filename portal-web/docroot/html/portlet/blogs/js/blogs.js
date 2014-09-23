@@ -111,7 +111,8 @@ AUI.add(
 							30000,
 							instance,
 							instance._saveEntry,
-							[true, true]
+							[true, true],
+							true
 						);
 
 						var entry = instance.get('entry');

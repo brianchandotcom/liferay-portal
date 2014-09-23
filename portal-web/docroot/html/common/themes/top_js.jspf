@@ -25,10 +25,10 @@
 					return <%= BrowserSnifferUtil.getMajorVersion(request) %>;
 				},
 				getRevision: function() {
-					return "<%= BrowserSnifferUtil.getRevision(request) %>";
+					return '<%= BrowserSnifferUtil.getRevision(request) %>';
 				},
 				getVersion: function() {
-					return "<%= BrowserSnifferUtil.getVersion(request) %>";
+					return '<%= BrowserSnifferUtil.getVersion(request) %>';
 				},
 				isAir: function() {
 					return <%= BrowserSnifferUtil.isAir(request) %>;
@@ -115,25 +115,29 @@
 				]
 			},
 
+			PropsValues: {
+				NTLM_AUTH_ENABLED: <%= PrefsPropsUtil.getBoolean(themeDisplay.getCompanyId(), PropsKeys.NTLM_AUTH_ENABLED, PropsValues.NTLM_AUTH_ENABLED) %>
+			},
+
 			ThemeDisplay: {
 				<c:if test="<%= layout != null %>">
 					getLayoutId: function() {
-						return "<%= layout.getLayoutId() %>";
+						return '<%= layout.getLayoutId() %>';
 					},
 					getLayoutRelativeURL: function() {
-						return "<%= PortalUtil.getLayoutRelativeURL(layout, themeDisplay) %>";
+						return '<%= PortalUtil.getLayoutRelativeURL(layout, themeDisplay) %>';
 					},
 					getLayoutURL: function() {
-						return "<%= PortalUtil.getLayoutURL(layout, themeDisplay) %>";
+						return '<%= PortalUtil.getLayoutURL(layout, themeDisplay) %>';
 					},
 					getParentLayoutId: function() {
-						return "<%= layout.getParentLayoutId() %>";
+						return '<%= layout.getParentLayoutId() %>';
 					},
 					isControlPanel: function() {
 						return <%= layout.isTypeControlPanel() %>;
 					},
 					isPrivateLayout: function() {
-						return "<%= layout.isPrivateLayout() %>";
+						return '<%= layout.isPrivateLayout() %>';
 					},
 					isVirtualLayout: function() {
 						return <%= (layout instanceof VirtualLayout) %>;
@@ -141,97 +145,97 @@
 				</c:if>
 
 				getBCP47LanguageId: function() {
-					return "<%= LanguageUtil.getBCP47LanguageId(request) %>";
+					return '<%= LanguageUtil.getBCP47LanguageId(request) %>';
 				},
 				getCDNBaseURL: function() {
-					return "<%= themeDisplay.getCDNBaseURL() %>";
+					return '<%= themeDisplay.getCDNBaseURL() %>';
 				},
 				getCDNDynamicResourcesHost: function() {
-					return "<%= themeDisplay.getCDNDynamicResourcesHost() %>";
+					return '<%= themeDisplay.getCDNDynamicResourcesHost() %>';
 				},
 				getCDNHost: function() {
-					return "<%= themeDisplay.getCDNHost() %>";
-				},
-				getCompanyId: function() {
-					return "<%= themeDisplay.getCompanyId() %>";
+					return '<%= themeDisplay.getCDNHost() %>';
 				},
 				getCompanyGroupId: function() {
-					return "<%= themeDisplay.getCompanyGroupId() %>";
+					return '<%= themeDisplay.getCompanyGroupId() %>';
+				},
+				getCompanyId: function() {
+					return '<%= themeDisplay.getCompanyId() %>';
 				},
 				getDefaultLanguageId: function() {
-					return "<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>";
+					return '<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>';
 				},
 				getDoAsUserIdEncoded: function() {
-					return "<%= UnicodeFormatter.toString(themeDisplay.getDoAsUserId()) %>";
+					return '<%= UnicodeFormatter.toString(themeDisplay.getDoAsUserId()) %>';
 				},
 				getLanguageId: function() {
-					return "<%= LanguageUtil.getLanguageId(request) %>";
+					return '<%= LanguageUtil.getLanguageId(request) %>';
 				},
 				getParentGroupId: function() {
-					return "<%= themeDisplay.getSiteGroupId() %>";
+					return '<%= themeDisplay.getSiteGroupId() %>';
 				},
 				getPathContext: function() {
-					return "<%= themeDisplay.getPathContext() %>";
+					return '<%= themeDisplay.getPathContext() %>';
 				},
 				getPathImage: function() {
-					return "<%= themeDisplay.getPathImage() %>";
+					return '<%= themeDisplay.getPathImage() %>';
 				},
 				getPathJavaScript: function() {
-					return "<%= themeDisplay.getPathJavaScript() %>";
+					return '<%= themeDisplay.getPathJavaScript() %>';
 				},
 				getPathMain: function() {
-					return "<%= themeDisplay.getPathMain() %>";
+					return '<%= themeDisplay.getPathMain() %>';
 				},
 				getPathThemeImages: function() {
-					return "<%= themeDisplay.getPathThemeImages() %>";
+					return '<%= themeDisplay.getPathThemeImages() %>';
 				},
 				getPathThemeRoot: function() {
-					return "<%= themeDisplay.getPathThemeRoot() %>";
+					return '<%= themeDisplay.getPathThemeRoot() %>';
 				},
 				getPlid: function() {
-					return "<%= themeDisplay.getPlid() %>";
+					return '<%= themeDisplay.getPlid() %>';
 				},
 				getPortalURL: function() {
-					return "<%= themeDisplay.getPortalURL() %>";
+					return '<%= themeDisplay.getPortalURL() %>';
 				},
 				getPortletSetupShowBordersDefault: function() {
 					return <%= GetterUtil.getString(themeDisplay.getThemeSetting("portlet-setup-show-borders-default"), StringUtil.valueOf(PropsValues.THEME_PORTLET_DECORATE_DEFAULT)) %>;
 				},
 				getScopeGroupId: function() {
-					return "<%= themeDisplay.getScopeGroupId() %>";
+					return '<%= themeDisplay.getScopeGroupId() %>';
 				},
 				getScopeGroupIdOrLiveGroupId: function() {
-					return "<%= themeDisplay.getSiteGroupIdOrLiveGroupId() %>";
+					return '<%= themeDisplay.getSiteGroupIdOrLiveGroupId() %>';
 				},
 				getSessionId: function() {
 					<c:choose>
 						<c:when test="<%= PropsValues.SESSION_ENABLE_URL_WITH_SESSION_ID %>">
-							return "<%= session.getId() %>";
+							return '<%= session.getId() %>';
 						</c:when>
 						<c:otherwise>
-							return "";
+							return '';
 						</c:otherwise>
 					</c:choose>
 				},
 				getSiteGroupId: function() {
-					return "<%= themeDisplay.getSiteGroupId() %>";
+					return '<%= themeDisplay.getSiteGroupId() %>';
 				},
 				getURLControlPanel: function() {
-					return "<%= themeDisplay.getURLControlPanel() %>";
+					return '<%= themeDisplay.getURLControlPanel() %>';
 				},
 				getURLHome: function() {
-					return "<%= HtmlUtil.escapeJS(themeDisplay.getURLHome()) %>";
+					return '<%= HtmlUtil.escapeJS(themeDisplay.getURLHome()) %>';
 				},
 				getUserId: function() {
-					return "<%= themeDisplay.getUserId() %>";
+					return '<%= themeDisplay.getUserId() %>';
 				},
 				getUserName: function() {
 					<c:choose>
 						<c:when test="<%= themeDisplay.isSignedIn() %>">
-							return "<%= UnicodeFormatter.toString(user.getFullName()) %>";
+							return '<%= UnicodeFormatter.toString(user.getFullName()) %>';
 						</c:when>
 						<c:otherwise>
-							return "";
+							return '';
 						</c:otherwise>
 					</c:choose>
 				},
@@ -256,10 +260,6 @@
 				isStatePopUp: function() {
 					return <%= themeDisplay.isStatePopUp() %>;
 				}
-			},
-
-			PropsValues: {
-				NTLM_AUTH_ENABLED: <%= PrefsPropsUtil.getBoolean(themeDisplay.getCompanyId(), PropsKeys.NTLM_AUTH_ENABLED, PropsValues.NTLM_AUTH_ENABLED) %>
 			}
 		};
 

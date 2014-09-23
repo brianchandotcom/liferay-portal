@@ -147,6 +147,10 @@
 		padding-right: 10px;
 	}
 
+	.taglib-page-iterator .lfr-pagination {
+		margin-top: 25px;
+	}
+
 	.taglib-ratings.stars {
 		float: left;
 	}

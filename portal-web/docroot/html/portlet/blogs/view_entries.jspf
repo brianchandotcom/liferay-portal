@@ -125,6 +125,8 @@ if (portletDisplayDDMTemplateId > 0) {
 <%
 }
 else {
+	int index = 0;
+
 	for (Object result : results) {
 		BlogsEntry entry = null;
 
@@ -147,6 +149,8 @@ else {
 			continue;
 		}
 
+		index++;
+
 		request.setAttribute("view_entry_content.jsp-searchContainer", searchContainer);
 
 		request.setAttribute("view_entry_content.jsp-entry", entry);
@@ -156,6 +160,9 @@ else {
 
 	<liferay-util:include page="/html/portlet/blogs/view_entry_content.jsp" />
 
+	<c:if test='<%= index < searchContainer.getTotal() %>'>
+		<div class="separator"><!-- --></div>
+	</c:if>
 <%
 	}
 }

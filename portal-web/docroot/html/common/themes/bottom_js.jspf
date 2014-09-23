@@ -17,7 +17,6 @@
 <%@ include file="/html/portal/layout/view/portlet_js.jspf" %>
 
 <aui:script position="inline">
-	Liferay.Util.addInputFocus();
 
 	<%
 	String controlPanelCategory = ParamUtil.getString(request, "controlPanelCategory");

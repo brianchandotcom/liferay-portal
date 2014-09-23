@@ -37,6 +37,9 @@ public interface DDMTemplate extends DDMTemplateModel, PersistedModel {
 	public java.lang.String getSmallImageType()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public java.lang.String getTemplateImageURL(
+		com.liferay.portal.theme.ThemeDisplay themeDisplay);
+
 	/**
 	* Returns the WebDAV URL to access the template.
 	*

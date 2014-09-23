@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -27,6 +28,7 @@ import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.webserver.WebServerServletTokenUtil;
 
 import java.util.Locale;
 
@@ -69,6 +71,22 @@ public class DDMTemplateImpl extends DDMTemplateBaseImpl {
 		}
 
 		return _smallImageType;
+	}
+
+	@Override
+	public String getTemplateImageURL(ThemeDisplay themeDisplay) {
+		if (!isSmallImage()) {
+			return null;
+		}
+
+		if (Validator.isNotNull(getSmallImageURL())) {
+			return getSmallImageURL();
+		}
+
+		return
+			themeDisplay.getPathImage() + "/template?img_id=" +
+				getSmallImageId() + "&t=" +
+				WebServerServletTokenUtil.getToken(getSmallImageId());
 	}
 
 	/**

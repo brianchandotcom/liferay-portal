@@ -172,7 +172,7 @@ if (ddmFields != null) {
 
 									<span class="template-name-label" id="<portlet:namespace />templateNameLabel">
 										<c:if test="<%= (ddmTemplate != null) && ddmTemplate.isSmallImage() %>">
-											<img alt="" class="article-template-image" id="<portlet:namespace />templateImage" src="<%= HtmlUtil.escapeAttribute(_getTemplateImage(themeDisplay, ddmTemplate)) %>" />
+											<img alt="" class="article-template-image" id="<portlet:namespace />templateImage" src="<%= HtmlUtil.escapeAttribute(ddmTemplate.getTemplateImageURL(themeDisplay)) %>" />
 										</c:if>
 
 										<c:choose>
@@ -293,20 +293,3 @@ if (ddmFields != null) {
 
 	Liferay.Util.disableToggleBoxes('<portlet:namespace />autoArticleId','<portlet:namespace />newArticleId', true);
 </aui:script>
-
-<%!
-private String _getTemplateImage(ThemeDisplay themeDisplay, DDMTemplate ddmTemplate) {
-	String imageURL = null;
-
-	if (ddmTemplate.isSmallImage()) {
-		if (Validator.isNotNull(ddmTemplate.getSmallImageURL())) {
-			imageURL = ddmTemplate.getSmallImageURL();
-		}
-		else {
-			imageURL = themeDisplay.getPathImage() + "/journal/template?img_id=" + ddmTemplate.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(ddmTemplate.getSmallImageId());
-		}
-	}
-
-	return imageURL;
-}
-%>

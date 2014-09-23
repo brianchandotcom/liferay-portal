@@ -14,6 +14,9 @@
 
 package com.liferay.portlet.journal.model.impl;
 
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.webserver.WebServerServletTokenUtil;
 import com.liferay.portlet.journal.model.JournalArticleDisplay;
 
 /**
@@ -53,6 +56,22 @@ public class JournalArticleDisplayImpl implements JournalArticleDisplay {
 		_currentPage = currentPage;
 		_paginate = paginate;
 		_cacheable = cacheable;
+	}
+
+	@Override
+	public String getArticleDisplayImageURL(ThemeDisplay themeDisplay) {
+		if (!isSmallImage()) {
+			return null;
+		}
+
+		if (Validator.isNotNull(getSmallImageURL())) {
+			return getSmallImageURL();
+		}
+
+		return
+			themeDisplay.getPathImage() + "/journal/article?img_id=" +
+				getSmallImageId() + "&t=" +
+				WebServerServletTokenUtil.getToken(getSmallImageId());
 	}
 
 	@Override

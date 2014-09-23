@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_PLUS_LINK</td>
+	<td>xpath=(//div[contains(@class,'lfr-form-row')]//button[contains(@class,'add-row')])[${key_indexNumber}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -102,27 +107,27 @@
 <!--RULE_PANEL-->
 <tr>
 	<td>RULE_PANEL_BELONGS_RADIO</td>
-	<td>//label[contains(.,'belongs')]/input</td>
+	<td>xpath=(//label[contains(.,'belongs')]/input)[${key_rowNumber}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RULE_PANEL_DOES_NOT_BELONG_RADIO</td>
-	<td>//label[contains(.,'does not belong')]/input</td>
+	<td>xpath=(//label[contains(.,'does not belong')]/input)[${key_rowNumber}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RULE_PANEL_ANY_RADIO</td>
-	<td>//label[contains(.,'Any')]/input</td>
+	<td>xpath=(//label[contains(.,'Any')]/input)[${key_rowNumber}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RULE_PANEL_ALL_RADIO</td>
-	<td>//label[contains(.,'All')]/input</td>
+	<td>xpath=(//label[contains(.,'All')]/input)[${key_rowNumber}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RULE_PANEL_USER_SEGMENT_SELECT_BUTTON</td>
-	<td>//button[@title='Select User Segments']</td>
+	<td>xpath=(//button[@title='Select User Segments'])[${key_rowNumber}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -142,7 +147,7 @@
 </tr>
 <tr>
 	<td>RULE_PANEL_DISPLAY_CONTENT_DROPDOWN</td>
-	<td>//div/a[@title='Select Content']</td>
+	<td>xpath=(//div/a[@title='Select Content'])[${key_rowNumber}]</td>
 	<td></td>
 </tr>
 <tr>

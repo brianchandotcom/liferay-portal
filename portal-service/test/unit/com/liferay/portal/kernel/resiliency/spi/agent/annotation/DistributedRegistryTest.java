@@ -329,6 +329,9 @@ public class DistributedRegistryTest {
 
 		@Distributed
 		public static String name9 = "name9";
+
+		@Distributed
+		protected static String name15 = "name15";
 	}
 
 	private interface ParentInterface {

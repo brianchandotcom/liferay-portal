@@ -145,6 +145,12 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 			classPK, true, WorkflowConstants.STATUS_IN_TRASH, start, end);
 
 		for (WikiPage page : pages) {
+			WikiPage redirectPage = page.getRedirectPage();
+
+			if ((redirectPage != null) && redirectPage.isInTrash()) {
+				continue;
+			}
+
 			TrashHandler trashHandler =
 				TrashHandlerRegistryUtil.getTrashHandler(
 					WikiPage.class.getName());

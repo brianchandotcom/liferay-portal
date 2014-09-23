@@ -132,26 +132,11 @@ public class Watcher implements Runnable {
 					pathImpl.toString());
 
 				if (kind == StandardWatchEventKind.ENTRY_CREATE) {
-					if ((i + 1) < watchEvents.size()) {
-						WatchEvent<Path> nextWatchEvent =
-							(WatchEvent<Path>)watchEvents.get(i + 1);
+					if (skipWatchEvent(
+							childFilePath, i + 1, parentFilePath,
+							watchEvents)) {
 
-						if ((nextWatchEvent != null) &&
-							((WatchEvent.Kind<?>)nextWatchEvent.kind() ==
-								StandardWatchEventKind.ENTRY_MODIFY)) {
-
-							PathImpl nextPathImpl =
-								(PathImpl)nextWatchEvent.context();
-
-							if (nextPathImpl != null) {
-								Path nextFilePath = parentFilePath.resolve(
-									nextPathImpl.toString());
-
-								if (childFilePath.equals(nextFilePath)) {
-									i++;
-								}
-							}
-						}
+						i++;
 					}
 
 					if (isIgnoredFilePath(childFilePath)) {
@@ -392,6 +377,34 @@ public class Watcher implements Runnable {
 		}
 
 		doRegister(filePath, recursive);
+	}
+
+	protected boolean skipWatchEvent(
+		Path childFilePath, int index, Path parentFilePath,
+		List<WatchEvent<?>> watchEvents) {
+
+		if (index < watchEvents.size()) {
+			WatchEvent<Path> nextWatchEvent = (WatchEvent<Path>)watchEvents.get(
+				index);
+
+			if ((nextWatchEvent != null) &&
+				((WatchEvent.Kind<?>)nextWatchEvent.kind() ==
+					StandardWatchEventKind.ENTRY_MODIFY)) {
+
+				PathImpl nextPathImpl = (PathImpl)nextWatchEvent.context();
+
+				if (nextPathImpl != null) {
+					Path nextFilePath = parentFilePath.resolve(
+						nextPathImpl.toString());
+
+					if (childFilePath.equals(nextFilePath)) {
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
 	}
 
 	private static Logger _logger = LoggerFactory.getLogger(Watcher.class);

@@ -96,11 +96,11 @@
 				<execute action="SOBookmarks#close" locator-key1="BOOKMARKS_POP_UP_GOOGLE" />
 			</then>
 			<elseif>
-				<equals arg1="${bookmarksEntryUrl}" arg2="http://www.yahoo.com" />
+				<equals arg1="${bookmarksEntryUrl}" arg2="http://www.bing.com" />
 				<then>
-					<execute action="SOBookmarks#selectWindow" locator-key1="BOOKMARKS_POP_UP_YAHOO" />
-					<execute action="SOBookmarks#assertElementPresent" locator-key1="BOOKMARKS_POP_UP_IMAGE_YAHOO" />
-					<execute action="SOBookmarks#close" locator-key1="BOOKMARKS_POP_UP_YAHOO" />
+					<execute action="SOBookmarks#selectWindow" locator-key1="BOOKMARKS_POP_UP_BING" />
+					<execute action="SOBookmarks#assertElementPresent" locator-key1="BOOKMARKS_POP_UP_IMAGE_BING" />
+					<execute action="SOBookmarks#close" locator-key1="BOOKMARKS_POP_UP_BING" />
 				</then>
 			</elseif>
 			<else>

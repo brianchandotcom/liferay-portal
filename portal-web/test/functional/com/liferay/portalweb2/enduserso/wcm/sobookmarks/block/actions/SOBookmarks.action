@@ -14,7 +14,7 @@
 			<execute function="Close#closeWindow" />
 		</case>
 
-		<case locator-key1="BOOKMARKS_POP_UP_YAHOO">
+		<case locator-key1="BOOKMARKS_POP_UP_BING">
 			<execute function="Close#closeWindow" />
 		</case>
 	</command>

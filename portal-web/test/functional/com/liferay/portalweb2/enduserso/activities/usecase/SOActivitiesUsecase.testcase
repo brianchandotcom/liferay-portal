@@ -9,6 +9,7 @@
 	<var name="adminFirstName" value="Test" />
 	<var name="adminListName" value="Test, Test" />
 	<var name="adminName" value="Test Test" />
+	<var name="adminScreenName" value="test" />
 
 	<set-up>
 		<execute macro="SOUser#firstLoginPG" />
@@ -34,9 +35,9 @@
 		<var name="bookmarksEntryName3" value="Bookmarks Entry3 Name" />
 		<var name="bookmarksEntryName4" value="Bookmarks Entry4 Name" />
 		<var name="bookmarksEntryUrl1" value="http://www.google.com" />
-		<var name="bookmarksEntryUrl2" value="http://www.yahoo.com" />
+		<var name="bookmarksEntryUrl2" value="http://www.bing.com" />
 		<var name="bookmarksEntryUrl3" value="http://www.msn.com" />
-		<var name="bookmarksEntryUrl4" value="http://www.bing.com" />
+		<var name="bookmarksEntryUrl4" value="http://www.yahoo.com" />
 		<var name="categoryName1" value="MB Category1 Name" />
 		<var name="categoryName2" value="MB Category2 Name" />
 		<var name="categoryName3" value="MB Category3 Name" />
@@ -534,9 +535,9 @@
 		<var name="bookmarksEntryName3" value="Bookmarks Entry3 Name" />
 		<var name="bookmarksEntryName4" value="Bookmarks Entry4 Name" />
 		<var name="bookmarksEntryUrl1" value="http://www.google.com" />
-		<var name="bookmarksEntryUrl2" value="http://www.yahoo.com" />
+		<var name="bookmarksEntryUrl2" value="http://www.bing.com" />
 		<var name="bookmarksEntryUrl3" value="http://www.msn.com" />
-		<var name="bookmarksEntryUrl4" value="http://www.bing.com" />
+		<var name="bookmarksEntryUrl4" value="http://www.yahoo.com" />
 		<var name="categoryName1" value="MB Category1 Name" />
 		<var name="categoryName2" value="MB Category2 Name" />
 		<var name="categoryName3" value="MB Category3 Name" />
@@ -1860,7 +1861,7 @@
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
 		<var name="bookmarksEntryNameEdit" value="Bookmarks Entry Name Edit" />
 		<var name="bookmarksEntryUrl" value="http://www.google.com" />
-		<var name="bookmarksEntryUrlEdit" value="http://www.yahoo.com" />
+		<var name="bookmarksEntryUrlEdit" value="http://www.bing.com" />
 		<var name="categoryName" value="MB Category Name" />
 		<var name="categoryNameEdit" value="MB Category Name Edit" />
 		<var name="dmDocumentDescription" value="DM Folder Document Description" />
@@ -3076,7 +3077,7 @@
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
 		<var name="bookmarksEntryUrl1" value="http://www.google.com" />
-		<var name="bookmarksEntryUrl2" value="http://www.yahoo.com" />
+		<var name="bookmarksEntryUrl2" value="http://www.bing.com" />
 		<var name="categoryName" value="MB Category Name" />
 		<var name="dmDocumentDescription" value="DM Folder Document Description" />
 		<var name="dmDocumentFile1" value="Document_1.doc" />

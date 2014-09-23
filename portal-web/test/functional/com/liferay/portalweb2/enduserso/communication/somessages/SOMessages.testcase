@@ -21,6 +21,8 @@
 		<execute macro="SOUser#tearDownCP" />
 
 		<execute macro="Page#tearDownPG" />
+
+		<execute macro="SOSite#tearDownCP" />
 	</tear-down>
 
 	<command name="DeleteMessage" priority="5">
@@ -1457,7 +1459,7 @@
 		</execute>
 	</command>
 
-	<command name="SendMessageNonUser" priority="4">
+	<command known-issues="LIFERAYQA-11088" name="SendMessageNonUser" priority="4">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />
 		<var name="pageName" value="Messages" />
@@ -1926,6 +1928,7 @@
 		<var name="siteDescription" value="Open Site Description" />
 		<var name="siteName" value="Open Site Name" />
 		<var name="siteType" value="Open" />
+		<var name="soPage" value="true" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />
@@ -3679,6 +3682,7 @@
 	</command>
 
 	<command name="ViewMessageTextFieldsViaContactsCenter" priority="3">
+		<var name="soPage" value="true" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />
@@ -3714,6 +3718,7 @@
 		<var name="siteDescription" value="Open Site Description" />
 		<var name="siteName" value="Open Site Name" />
 		<var name="siteType" value="Open" />
+		<var name="soPage" value="true" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />

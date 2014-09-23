@@ -53,14 +53,6 @@
 </aui:script>
 
 <aui:script use="aui-base">
-	Liferay.Util.addInputType();
-
-	Liferay.Portlet.ready(
-		function(portletId, node) {
-			Liferay.Util.addInputType(node);
-		}
-	);
-
 	if (A.UA.mobile) {
 		Liferay.Util.addInputCancel();
 	}

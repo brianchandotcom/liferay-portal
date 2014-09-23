@@ -81,6 +81,35 @@
 		};
 	};
 
+	Util.addInputType = function(el) {
+		Util.addInputType = Lang.emptyFn;
+
+		if (Liferay.Browser.isIe() && Liferay.Browser.getMajorVersion() < 7) {
+			Util.addInputType = function(el) {
+				var item;
+
+				if (el) {
+					el = A.one(el);
+				}
+				else {
+					el = A.one(document.body);
+				}
+
+				var defaultType = 'text';
+
+				el.all('input').each(
+					function(item, index) {
+						var type = item.get('type') || defaultType;
+
+						item.addClass(type);
+					}
+				);
+			};
+		}
+
+		return Util.addInputType(el);
+	};
+
 	Util.camelize = function(value, separator) {
 		var regex = REGEX_DASH;
 

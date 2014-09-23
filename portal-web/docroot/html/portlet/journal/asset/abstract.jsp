@@ -39,27 +39,15 @@ else {
 %>
 
 <c:if test="<%= articleDisplay.isSmallImage() %>">
-
-	<%
-	String src = StringPool.BLANK;
-
-	if (Validator.isNotNull(articleDisplay.getSmallImageURL())) {
-		src = articleDisplay.getSmallImageURL();
-	}
-	else {
-		src = themeDisplay.getPathImage() + "/journal/article?img_id=" + articleDisplay.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(articleDisplay.getSmallImageId()) ;
-	}
-	%>
-
 	<div class="asset-small-image">
 		<c:choose>
 			<c:when test="<%= Validator.isNotNull(viewURL) %>">
 				<a href="<%= viewURL %>">
-					<img alt="<%= HtmlUtil.escapeAttribute(articleDisplay.getTitle()) %>" class="asset-small-image img-thumbnail" src="<%= HtmlUtil.escapeAttribute(src) %>" width="150" />
+					<img alt="<%= HtmlUtil.escapeAttribute(articleDisplay.getTitle()) %>" class="asset-small-image img-thumbnail" src="<%= HtmlUtil.escapeAttribute(articleDisplay.getArticleDisplayImageURL(themeDisplay)) %>" width="150" />
 				</a>
 			</c:when>
 			<c:otherwise>
-				<img alt="" class="asset-small-image img-thumbnail" src="<%= HtmlUtil.escape(src) %>" width="150" />
+				<img alt="" class="asset-small-image img-thumbnail" src="<%= HtmlUtil.escapeAttribute(articleDisplay.getArticleDisplayImageURL(themeDisplay)) %>" width="150" />
 			</c:otherwise>
 		</c:choose>
 	</div>

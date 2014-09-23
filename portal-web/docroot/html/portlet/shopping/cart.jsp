@@ -208,25 +208,14 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 
 		// SKU and small image
 
-		StringBundler sb = new StringBundler(10);
+		StringBundler sb = new StringBundler(6);
 
 		if (item.isSmallImage()) {
 			sb.append("<br />");
 			sb.append("<img alt=\"");
 			sb.append(HtmlUtil.escapeAttribute(item.getSku()));
 			sb.append("\" src=\"");
-
-			if (Validator.isNotNull(item.getSmallImageURL())) {
-				sb.append(item.getSmallImageURL());
-			}
-			else {
-				sb.append(themeDisplay.getPathImage());
-				sb.append("/shopping/item?img_id=");
-				sb.append(item.getSmallImageId());
-				sb.append("&t=");
-				sb.append(WebServerServletTokenUtil.getToken(item.getSmallImageId()));
-			}
-
+			sb.append(item.getShoppingItemImageURL(themeDisplay));
 			sb.append("\">");
 		}
 		else {

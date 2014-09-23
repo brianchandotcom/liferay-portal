@@ -20,7 +20,7 @@
 	<@aui.input name=namespacedFieldName type="hidden" value=fieldRawValue />
 
 	<@aui["button-row"]>
-		<@aui.button onClick="window['${portletNamespace}${namespacedFieldName}SetGeolocation']();" value="geolocate" />
+		<@aui.button cssClass="geolocate-button" value="geolocate" />
 	</@>
 
 	<p class="${coordinatesContainerCssClass}" id="${portletNamespace}${namespacedFieldName}CoordinatesContainer">
@@ -32,39 +32,4 @@
 	</p>
 
 	${fieldStructure.children}
-</@>
-
-<@aui.script>
-	Liferay.provide(
-		window,
-		'${portletNamespace}${namespacedFieldName}SetGeolocation',
-		function(position) {
-			var A = AUI();
-
-			var coordinatesNode = A.one('#${portletNamespace}${namespacedFieldName}Coordinates');
-			var coordinatesContainerNode = A.one('#${portletNamespace}${namespacedFieldName}CoordinatesContainer');
-
-			coordinatesContainerNode.show();
-
-			coordinatesNode.html('<@liferay_ui.message key="loading" />');
-
-			Liferay.Util.getGeolocation(
-				function(latitude, longitude) {
-					var inputNode = A.one('#${portletNamespace}${namespacedFieldName}');
-
-					inputNode.val(
-						A.JSON.stringify(
-							{
-								latitude: latitude,
-								longitude: longitude
-							}
-						)
-					);
-
-					coordinatesNode.html([latitude, longitude].join(', '));
-				}
-			);
-		},
-		['aui-base', 'json']
-	);
 </@>

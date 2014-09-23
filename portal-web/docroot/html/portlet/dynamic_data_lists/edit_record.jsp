@@ -84,7 +84,7 @@ if (translating) {
 	<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" />
 </portlet:actionURL>
 
-<aui:form action="<%= editRecordURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); submitForm(event.target);" %>'>
+<aui:form action="<%= editRecordURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="recordSetId" type="hidden" value="<%= recordSetId %>" />
@@ -124,91 +124,7 @@ if (translating) {
 				availableLocales="<%= availableLocales %>"
 				defaultLanguageId="<%= defaultLanguageId %>"
 				id="translationManager"
-				readOnly="<%= recordId <= 0 %>"
 			/>
-
-			<aui:script use="liferay-translation-manager">
-				var translationManager = Liferay.component('<portlet:namespace />translationManager');
-
-				translationManager.on(
-					'defaultLocaleChange',
-					function(event) {
-						if (!confirm('<%= UnicodeLanguageUtil.get(request, "changing-the-default-language-will-delete-all-unsaved-content") %>')) {
-							event.preventDefault();
-						}
-					}
-				);
-
-				translationManager.after(
-					{
-						defaultLocaleChange: function(event) {
-							<liferay-portlet:renderURL var="updateDefaultLanguageURL">
-								<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" />
-							</liferay-portlet:renderURL>
-
-							var url = Liferay.PortletURL.createURL('<%= updateDefaultLanguageURL %>');
-
-							url.setPortletId('<%= portletDisplay.getId() %>');
-
-							url.setParameter('defaultLanguageId', event.newVal);
-							url.setParameter('formDDMTemplateId', <%= formDDMTemplateId %>);
-							url.setParameter('recordId', <%= recordId %>);
-							url.setParameter('recordSetId', <%= recordSetId %>);
-							url.setParameter('redirect', '<%= HtmlUtil.escapeJS(redirect) %>');
-
-							window.location.href = url;
-						},
-						deleteAvailableLocale: function(event) {
-							var locale = event.locale;
-
-							Liferay.Service(
-								'/ddlrecord/delete-record-locale',
-								{
-									locale: locale,
-									recordId: <%= recordId %>,
-									serviceContext: JSON.stringify(
-										{
-											scopeGroupId: themeDisplay.getScopeGroupId(),
-											userId: themeDisplay.getUserId()
-										}
-									)
-								}
-							);
-						},
-						editingLocaleChange: function(event) {
-							var editingLocale = event.newVal;
-
-							var defaultLocale = translationManager.get('defaultLocale');
-
-							if (editingLocale !== defaultLocale) {
-								Liferay.Util.openWindow(
-									{
-										cache: false,
-										id: '<portlet:namespace />' + event.newVal,
-										title: '<%= UnicodeLanguageUtil.get(request, "record-translation") %>',
-
-										<liferay-portlet:renderURL copyCurrentRenderParameters="<%= true %>" var="translateRecordURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-											<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" />
-										</liferay-portlet:renderURL>
-
-										uri: '<%= translateRecordURL %>' + '&<portlet:namespace />languageId=' + editingLocale
-									},
-									function(translationWindow) {
-										translationWindow.once(
-											'visibleChange',
-											function(event) {
-												if (!event.newVal) {
-													translationManager.set('editingLocale', defaultLocale);
-												}
-											}
-										);
-									}
-								);
-							}
-						}
-					}
-				);
-			</aui:script>
 		</c:if>
 
 		<%
@@ -256,7 +172,7 @@ if (translating) {
 						function <portlet:namespace />saveTranslation (event) {
 							<portlet:namespace />setWorkflowAction(false);
 
-							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.TRANSLATE %>";
+							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.TRANSLATE %>';
 						}
 					</aui:script>
 				</c:when>

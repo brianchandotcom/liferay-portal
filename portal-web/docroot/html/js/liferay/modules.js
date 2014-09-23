@@ -188,12 +188,14 @@
 						path: 'browser_selectors.js',
 						requires: ['yui-base']
 					},
-					'liferay-ddm-repeatable-fields': {
-						path: 'ddm_repeatable_fields.js',
+					'liferay-ddm-form': {
+						path: 'ddm_form.js',
 						requires: [
 							'aui-base',
+							'aui-datatype',
 							'aui-io-request',
-							'aui-parse-content'
+							'aui-parse-content',
+							'liferay-translation-manager'
 						]
 					},
 					'liferay-diff-version-comparator': {

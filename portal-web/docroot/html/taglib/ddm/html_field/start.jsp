@@ -43,16 +43,17 @@
 
 		<%= ddmFormFieldRenderer.render(ddmFormField, ddmFormFieldRenderingContext) %>
 
-		<aui:input name="<%= fieldsDisplayInputName %>" type="hidden" />
+		<aui:input name="<%= ddmFormValuesInputName %>" type="hidden" />
 
-		<aui:script use="liferay-ddm-repeatable-fields">
-			new Liferay.DDM.RepeatableFields(
+		<aui:script use="liferay-ddm-form">
+			new Liferay.DDM.Form(
 				{
 					classNameId: <%= classNameId %>,
 					classPK: <%= classPK %>,
 					container: '#<%= randomNamespace %>',
+					ddmFormValuesInput: '#<portlet:namespace /><%= ddmFormValuesInputName %>',
+					definition: <%= DDMFormJSONSerializerUtil.serialize(ddmForm) %>,
 					doAsGroupId: <%= scopeGroupId %>,
-					fieldsDisplayInput: '#<portlet:namespace /><%= fieldsDisplayInputName %>',
 					namespace: '<%= fieldsNamespace %>',
 					p_l_id: <%= themeDisplay.getPlid() %>,
 					portletNamespace: '<portlet:namespace />',

@@ -45,10 +45,12 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
@@ -258,7 +260,10 @@ public class DDMImpl implements DDM {
 	public Fields getFields(long ddmStructureId, ServiceContext serviceContext)
 		throws PortalException {
 
-		return getFields(ddmStructureId, 0, serviceContext);
+		String serializedDDMFormValues = GetterUtil.getString(
+			serviceContext.getAttribute("ddmFormValues"));
+
+		return getFields(ddmStructureId, serializedDDMFormValues);
 	}
 
 	@Override
@@ -267,7 +272,10 @@ public class DDMImpl implements DDM {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return getFields(ddmStructureId, 0, fieldNamespace, serviceContext);
+		String serializedDDMFormValues = GetterUtil.getString(
+			serviceContext.getAttribute(fieldNamespace + "ddmFormValues"));
+
+		return getFields(ddmStructureId, serializedDDMFormValues);
 	}
 
 	@Override
@@ -532,6 +540,21 @@ public class DDMImpl implements DDM {
 		}
 
 		return fieldNames;
+	}
+
+	protected Fields getFields(
+			long ddmStructureId, String serializedDDMFormValues)
+		throws PortalException {
+
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
+			ddmStructureId);
+
+		DDMFormValues ddmFormValues =
+			DDMFormValuesJSONDeserializerUtil.deserialize(
+				serializedDDMFormValues);
+
+		return DDMFormValuesToFieldsConverterUtil.convert(
+			ddmStructure, ddmFormValues);
 	}
 
 	protected int getFieldValueIndex(

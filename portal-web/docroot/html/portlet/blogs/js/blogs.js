@@ -128,26 +128,26 @@ AUI.add(
 
 						var form = instance._getPrincipalForm();
 
-						instance.one('#' + constants.CMD, form).val(instance.get('entry') ? constants.UPDATE : constants.ADD);
-						instance.one('#preview', form).val('true');
-						instance.one('#workflowAction', form).val(constants.ACTION_SAVE_DRAFT);
+						instance.one('#' + constants.CMD).val(instance.get('entry') ? constants.UPDATE : constants.ADD);
+						instance.one('#preview').val('true');
+						instance.one('#workflowAction').val(constants.ACTION_SAVE_DRAFT);
 
 						var titleEditor = window[instance.ns('titleEditor')];
 
 						if (contentEditor) {
-							instance.one('#title', form).val(titleEditor.getHTML());
+							instance.one('#title').val(titleEditor.getHTML());
 						}
 
 						var subtitleEditor = window[instance.ns('subtitleEditor')];
 
 						if (subtitleEditor) {
-							instance.one('#subtitle', form).val(subtitleEditor.getHTML());
+							instance.one('#subtitle').val(subtitleEditor.getHTML());
 						}
 
 						var contentEditor = window[instance.ns('contentEditor')];
 
 						if (contentEditor) {
-							instance.one('#content', form).val(contentEditor.getHTML());
+							instance.one('#content').val(contentEditor.getHTML());
 						}
 
 						submitForm(form);
@@ -178,17 +178,17 @@ AUI.add(
 
 								var data = instance.ns(
 									{
-										'assetTagNames': instance.one('#assetTagNames', form).val(),
+										'assetTagNames': instance.one('#assetTagNames').val(),
 										'cmd': constants.ADD,
 										'content': content,
-										'displayDateAmPm': instance.one('#displayDateAmPm', form).val(),
-										'displayDateDay': instance.one('#displayDateDay', form).val(),
-										'displayDateHour': instance.one('#displayDateHour', form).val(),
-										'displayDateMinute': instance.one('#displayDateMinute', form).val(),
-										'displayDateMonth': instance.one('#displayDateMonth', form).val(),
-										'displayDateYear': instance.one('#displayDateYear', form).val(),
-										'entryId': instance.one('#entryId', form).val(),
-										'referringPortletResource': instance.one('#referringPortletResource', form).val(),
+										'displayDateAmPm': instance.one('#displayDateAmPm').val(),
+										'displayDateDay': instance.one('#displayDateDay').val(),
+										'displayDateHour': instance.one('#displayDateHour').val(),
+										'displayDateMinute': instance.one('#displayDateMinute').val(),
+										'displayDateMonth': instance.one('#displayDateMonth').val(),
+										'displayDateYear': instance.one('#displayDateYear').val(),
+										'entryId': instance.one('#entryId').val(),
+										'referringPortletResource': instance.one('#referringPortletResource').val(),
 										'subtitle': subtitle,
 										'title': title,
 										'workflowAction': constants.ACTION_SAVE_DRAFT
@@ -228,13 +228,11 @@ AUI.add(
 												instance._oldSubtitle = subtitle;
 												instance._oldTitle = title;
 
-												var _this = this;
-
-												var message = _this.get('responseData');
+												var message = this.get('responseData');
 
 												if (message) {
-													instance.one('#entryId', form).val(message.entryId);
-													instance.one('#redirect', form).val(message.redirect);
+													instance.one('#entryId').val(message.entryId);
+													instance.one('#redirect').val(message.redirect);
 
 													var tabs1BackButton = instance.one('#tabs1TabsBack');
 
@@ -271,11 +269,11 @@ AUI.add(
 							}
 						}
 						else {
-							instance.one('#' + constants.CMD, form).val(instance.get('entry') ? constants.UPDATE : constants.ADD);
-							instance.one('#title', form).val(title);
-							instance.one('#subtitle', form).val(subtitle);
-							instance.one('#content', form).val(content);
-							instance.one('#workflowAction', form).val(draft ? constants.ACTION_SAVE_DRAFT : constants.ACTION_PUBLISH);
+							instance.one('#' + constants.CMD).val(instance.get('entry') ? constants.UPDATE : constants.ADD);
+							instance.one('#title').val(title);
+							instance.one('#subtitle').val(subtitle);
+							instance.one('#content').val(content);
+							instance.one('#workflowAction').val(draft ? constants.ACTION_SAVE_DRAFT : constants.ACTION_PUBLISH);
 
 							submitForm(form);
 						}

@@ -306,8 +306,8 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 				entry: {
 					content: '<%= UnicodeFormatter.toString(content) %>',
 					pending: <%= entry.isPending() %>,
-					subtitle: '<%= UnicodeFormatter.toString(subtitle) %>',
 					status: '<%= entry.getStatus() %>',
+					subtitle: '<%= UnicodeFormatter.toString(subtitle) %>',
 					title: '<%= UnicodeFormatter.toString(title) %>',
 					userId: '<%= entry.getUserId() %>'
 				},

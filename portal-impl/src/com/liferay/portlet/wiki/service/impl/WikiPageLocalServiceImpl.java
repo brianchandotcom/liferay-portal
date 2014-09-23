@@ -2713,7 +2713,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			wikiPagePersistence.update(curPage);
 
 			if (!curPage.isInTrashExplicitly()) {
-				moveDependentFromTrash(curPage, page.getNodeId(), title);
+				moveDependentFromTrash(
+					curPage, page.getNodeId(), curPage.getParentTitle());
 			}
 		}
 	}

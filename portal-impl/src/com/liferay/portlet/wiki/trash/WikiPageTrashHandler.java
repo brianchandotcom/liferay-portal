@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ContainerModel;
@@ -38,6 +37,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.trash.RestoreEntryException;
 import com.liferay.portlet.trash.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.portlet.wiki.asset.WikiPageAssetRenderer;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -405,7 +405,8 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 			for (WikiPage curPage : pages) {
 				checkRestorableEntry(
 					curPage.getResourcePrimKey(), 0, containerModelId,
-					curPage.getTitle(), StringPool.BLANK);
+					curPage.getTitle(),
+					TrashUtil.getOriginalTitle(curPage.getTitle()));
 			}
 		}
 	}

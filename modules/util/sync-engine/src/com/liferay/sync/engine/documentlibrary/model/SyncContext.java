@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.sync.engine.model.SyncSite;
+import com.liferay.sync.engine.model.SyncUser;
 
 import java.util.List;
 import java.util.Map;

@@ -79,10 +79,6 @@ public class SyncAccount extends StateAwareModel {
 		return maxConnections;
 	}
 
-	public String getName() {
-		return name;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -105,10 +101,6 @@ public class SyncAccount extends StateAwareModel {
 
 	public String getUrl() {
 		return url;
-	}
-
-	public long getUserId() {
-		return userId;
 	}
 
 	@Override
@@ -144,10 +136,6 @@ public class SyncAccount extends StateAwareModel {
 		this.maxConnections = maxConnections;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -172,10 +160,6 @@ public class SyncAccount extends StateAwareModel {
 		this.url = url;
 	}
 
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
-
 	@DatabaseField(useGetSet = true)
 	protected boolean active;
 
@@ -187,9 +171,6 @@ public class SyncAccount extends StateAwareModel {
 
 	@DatabaseField(useGetSet = true)
 	protected int maxConnections;
-
-	@DatabaseField(useGetSet = true)
-	protected String name;
 
 	@DatabaseField(useGetSet = true, width = 16777216)
 	protected String password;
@@ -208,8 +189,5 @@ public class SyncAccount extends StateAwareModel {
 
 	@DatabaseField(useGetSet = true, width = 16777216)
 	protected String url;
-
-	@DatabaseField(useGetSet = true)
-	protected long userId;
 
 }

@@ -596,6 +596,12 @@ public class ShoppingItemWrapper implements ShoppingItem,
 		return _shoppingItem.getShipping();
 	}
 
+	@Override
+	public java.lang.String getShoppingItemImageURL(
+		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
+		return _shoppingItem.getShoppingItemImageURL(themeDisplay);
+	}
+
 	/**
 	* Returns the sku of this shopping item.
 	*

@@ -560,6 +560,12 @@ public class DDMTemplateWrapper implements DDMTemplate,
 		return _ddmTemplate.getTemplateId();
 	}
 
+	@Override
+	public java.lang.String getTemplateImageURL(
+		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
+		return _ddmTemplate.getTemplateImageURL(themeDisplay);
+	}
+
 	/**
 	* Returns the template key of this d d m template.
 	*

@@ -16,7 +16,7 @@ AUI.add(
 						validator: Lang.isString
 					},
 
-					entry:{
+					entry: {
 						validator: Lang.isObject
 					},
 
@@ -134,13 +134,14 @@ AUI.add(
 						var form = instance._getPrincipalForm();
 
 						instance.one('#' + constants.CMD).val(instance.get('entry') ? constants.UPDATE : constants.ADD);
+
 						instance.one('#preview').val('true');
 						instance.one('#workflowAction').val(constants.ACTION_SAVE_DRAFT);
 
-						var titleEditor = window[instance.ns('titleEditor')];
+						var contentEditor = window[instance.ns('contentEditor')];
 
 						if (contentEditor) {
-							instance.one('#title').val(titleEditor.getHTML());
+							instance.one('#content').val(contentEditor.getHTML());
 						}
 
 						var subtitleEditor = window[instance.ns('subtitleEditor')];
@@ -149,10 +150,10 @@ AUI.add(
 							instance.one('#subtitle').val(subtitleEditor.getHTML());
 						}
 
-						var contentEditor = window[instance.ns('contentEditor')];
+						var titleEditor = window[instance.ns('titleEditor')];
 
-						if (contentEditor) {
-							instance.one('#content').val(contentEditor.getHTML());
+						if (titleEditor) {
+							instance.one('#title').val(titleEditor.getHTML());
 						}
 
 						submitForm(form);
@@ -162,11 +163,10 @@ AUI.add(
 						var instance = this;
 
 						var constants = instance.get('constants');
+						var entry = instance.get('entry');
 
 						var title = window[instance.ns('titleEditor')].getHTML();
-
 						var subtitle = window[instance.ns('subtitleEditor')].getHTML();
-
 						var content = window[instance.ns('contentEditor')].getHTML();
 
 						var form = instance._getPrincipalForm();
@@ -215,18 +215,12 @@ AUI.add(
 										dataType: 'JSON',
 										on: {
 											failure: function() {
-												if (saveStatus) {
-													saveStatus.attr('className', 'alert alert-danger save-status');
-													saveStatus.html(strings.saveDraftError);
-												}
+												instance._updateStatus(strings.saveDraftError, 'alert alert-danger save-status');
 											},
 											start: function() {
 												Liferay.Util.toggleDisabled(instance.one('#publishButton'), true);
 
-												if (saveStatus) {
-													saveStatus.attr('className', 'alert alert-info save-status pending');
-													saveStatus.html(strings.saveDraftMessage);
-												}
+												instance._updateStatus(strings.saveDraftMessage, 'alert alert-info save-status pending');
 											},
 											success: function(event, id, obj) {
 												instance._oldContent = content;
@@ -245,7 +239,7 @@ AUI.add(
 														tabs1BackButton.attr('href', message.redirect);
 													}
 
-													var cancelButton  = instance.one('#cancelButton');
+													var cancelButton = instance.one('#cancelButton');
 
 													if (cancelButton) {
 														cancelButton.attr('href', message.redirect);
@@ -254,12 +248,11 @@ AUI.add(
 													if (saveStatus) {
 														var entry = instance.get('entry');
 
-														var saveText = (entry && entry.isPending) ? strings.savedAtMessage : strings.savedDraftAtMessage;
+														var saveText = (entry && entry.pending) ? strings.savedAtMessage : strings.savedDraftAtMessage;
 
 														var now = saveText.replace(/\{0\}/gim, (new Date()).toString());
 
-														saveStatus.attr('className', 'alert alert-success save-status');
-														saveStatus.html(now);
+														instance._updateStatus(now, 'alert alert-success save-status');
 													}
 												}
 												else {
@@ -275,12 +268,26 @@ AUI.add(
 						}
 						else {
 							instance.one('#' + constants.CMD).val(instance.get('entry') ? constants.UPDATE : constants.ADD);
+
 							instance.one('#title').val(title);
 							instance.one('#subtitle').val(subtitle);
 							instance.one('#content').val(content);
+
 							instance.one('#workflowAction').val(draft ? constants.ACTION_SAVE_DRAFT : constants.ACTION_PUBLISH);
 
 							submitForm(form);
+						}
+					},
+
+					_updateStatus: function(text, className) {
+						var instance = this;
+
+						var saveStatus = instance.one('#saveStatus');
+
+						if (saveStatus) {
+							saveStatus.html(text);
+
+							saveStatus.attr('className', className);
 						}
 					}
 				}

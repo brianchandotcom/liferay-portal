@@ -660,7 +660,7 @@ AUI.add(
 								function(event) {
 									instance.setValue(
 										{
-											groupId: event.groupId,
+											groupId: event.groupid,
 											title: event.title,
 											uuid: event.uuid
 										}

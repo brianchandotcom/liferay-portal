@@ -55,7 +55,6 @@
 
 				portletURL.setDoAsGroupId(${scopeGroupId?c});
 				portletURL.setParameter('eventName', '${portletNamespace}selectDocumentLibrary');
-				portletURL.setParameter('folderId', '${folderId}');
 				portletURL.setParameter('groupId', ${scopeGroupId?c});
 				portletURL.setParameter('refererPortletName', '${themeDisplay.getPortletDisplay().getId()}');
 				portletURL.setParameter('struts_action', '/document_selector/view');

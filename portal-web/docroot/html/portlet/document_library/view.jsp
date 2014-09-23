@@ -204,6 +204,7 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(PortletKeys.DO
 </aui:script>
 
 <aui:script use="liferay-document-library">
+
 	<%
 	String[] entryColumns = dlEntriesListDisplayContext.getEntryColumns();
 	String[] escapedEntryColumns = new String[entryColumns.length];

@@ -12,23 +12,36 @@
  * details.
  */
 
-package com.liferay.osgi.util.service;
+package com.liferay.osgi.util.test.instances;
+
+import com.liferay.osgi.util.service.Reference;
+import com.liferay.osgi.util.test.services.TrackedOne;
+import com.liferay.osgi.util.test.services.TrackedTwo;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public class ServiceUnavailableException extends RuntimeException {
+public class TestInstance {
 
-	public ServiceUnavailableException(Class<?> clazz) {
-		super(clazz.toString());
-
-		_clazz = clazz;
+	public TrackedOne getTrackedOne() {
+		return _trackedOne;
 	}
 
-	public Class<?> getUnavailableServiceClass() {
-		return _clazz;
+	public TrackedTwo getTrackedTwo() {
+		return _trackedTwo;
 	}
 
-	private Class<?> _clazz;
+	@Reference
+	public void setTrackedOne(TrackedOne trackedOne) {
+		_trackedOne = trackedOne;
+	}
+
+	@Reference
+	public void setTrackedTwo(TrackedTwo trackedTwo) {
+		_trackedTwo = trackedTwo;
+	}
+
+	private TrackedOne _trackedOne;
+	private TrackedTwo _trackedTwo;
 
 }

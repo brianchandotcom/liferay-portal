@@ -69,117 +69,122 @@ public class ListServiceTrackerMapTest {
 
 	@Test
 	public void testGestServiceWithDifferentRanking() {
-		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
-			createServiceTrackerMap();
+		try (ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
+			createServiceTrackerMap()) {
 
-		TrackedOne trackedOne1 = new TrackedOne();
+			TrackedOne trackedOne1 = new TrackedOne();
 
-		registerService(trackedOne1, 1);
+			registerService(trackedOne1, 1);
 
-		TrackedOne trackedOne3 = new TrackedOne();
+			TrackedOne trackedOne3 = new TrackedOne();
 
-		registerService(trackedOne3, 3);
+			registerService(trackedOne3, 3);
 
-		TrackedOne trackedOne2 = new TrackedOne();
+			TrackedOne trackedOne2 = new TrackedOne();
 
-		registerService(trackedOne2, 2);
+			registerService(trackedOne2, 2);
 
-		List<TrackedOne> services = serviceTrackerMap.getService("aTarget");
+			List<TrackedOne> services = serviceTrackerMap.getService("aTarget");
 
-		Assert.assertEquals(3, services.size());
+			Assert.assertEquals(3, services.size());
 
-		Iterator<? extends TrackedOne> iterator = services.iterator();
+			Iterator<? extends TrackedOne> iterator = services.iterator();
 
-		Assert.assertEquals(trackedOne3, iterator.next());
-		Assert.assertEquals(trackedOne2, iterator.next());
-		Assert.assertEquals(trackedOne1, iterator.next());
+			Assert.assertEquals(trackedOne3, iterator.next());
+			Assert.assertEquals(trackedOne2, iterator.next());
+			Assert.assertEquals(trackedOne1, iterator.next());
+		}
 	}
 
 	@Test
 	public void testGestServiceWithUnregistering() {
-		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
-			createServiceTrackerMap();
+		try (ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
+			createServiceTrackerMap()) {
 
-		TrackedOne trackedOne1 = new TrackedOne();
+			TrackedOne trackedOne1 = new TrackedOne();
 
-		registerService(trackedOne1, 1);
+			registerService(trackedOne1, 1);
 
-		TrackedOne trackedOne3 = new TrackedOne();
+			TrackedOne trackedOne3 = new TrackedOne();
 
-		registerService(trackedOne3, 3);
+			registerService(trackedOne3, 3);
 
-		TrackedOne trackedOne2 = new TrackedOne();
+			TrackedOne trackedOne2 = new TrackedOne();
 
-		ServiceRegistration<TrackedOne> serviceRegistration2 = registerService(
-			trackedOne2, 2);
+			ServiceRegistration<TrackedOne> serviceRegistration2 =
+				registerService(trackedOne2, 2);
 
-		List<TrackedOne> services = serviceTrackerMap.getService("aTarget");
+			List<TrackedOne> services = serviceTrackerMap.getService("aTarget");
 
-		Assert.assertEquals(3, services.size());
+			Assert.assertEquals(3, services.size());
 
-		Iterator<? extends TrackedOne> iterator = services.iterator();
+			Iterator<? extends TrackedOne> iterator = services.iterator();
 
-		serviceRegistration2.unregister();
+			serviceRegistration2.unregister();
 
-		// Deregistering a service should not affect an already existing
-		// collection or iterator
+			// Deregistering a service should not affect an already existing
+			// collection or iterator
 
-		Assert.assertEquals(trackedOne3, iterator.next());
-		Assert.assertEquals(trackedOne2, iterator.next());
-		Assert.assertEquals(trackedOne1, iterator.next());
+			Assert.assertEquals(trackedOne3, iterator.next());
+			Assert.assertEquals(trackedOne2, iterator.next());
+			Assert.assertEquals(trackedOne1, iterator.next());
 
-		services = serviceTrackerMap.getService("aTarget");
+			services = serviceTrackerMap.getService("aTarget");
 
-		// Getting the list of services should return a list with the affected
-		// changes
+			// Getting the list of services should return a list with the
+			// affected changes
 
-		Assert.assertEquals(2, services.size());
+			Assert.assertEquals(2, services.size());
 
-		iterator = services.iterator();
+			iterator = services.iterator();
 
-		Assert.assertEquals(trackedOne3, iterator.next());
-		Assert.assertEquals(trackedOne1, iterator.next());
+			Assert.assertEquals(trackedOne3, iterator.next());
+			Assert.assertEquals(trackedOne1, iterator.next());
+		}
 	}
 
 	@Test
 	public void testGetServicesIsNullAfterDeregistration() {
-		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
-			createServiceTrackerMap();
+		try(ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
+			createServiceTrackerMap()) {
 
-		ServiceRegistration<TrackedOne> serviceRegistration1 = registerService(
-			new TrackedOne());
-		ServiceRegistration<TrackedOne> serviceRegistration2 = registerService(
-			new TrackedOne());
+			ServiceRegistration<TrackedOne> serviceRegistration1 =
+				registerService(new TrackedOne());
+			ServiceRegistration<TrackedOne> serviceRegistration2 =
+				registerService(new TrackedOne());
 
-		Assert.assertNotNull(serviceTrackerMap.getService("aTarget"));
+			Assert.assertNotNull(serviceTrackerMap.getService("aTarget"));
 
-		serviceRegistration1.unregister();
-		serviceRegistration2.unregister();
+			serviceRegistration1.unregister();
+			serviceRegistration2.unregister();
 
-		Assert.assertNull(serviceTrackerMap.getService("aTarget"));
+			Assert.assertNull(serviceTrackerMap.getService("aTarget"));
+		}
 	}
 
 	@Test
 	public void testGetServicesWithDifferentKeys() {
-		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
-			createServiceTrackerMap();
+		try (ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
+			createServiceTrackerMap()) {
 
-		registerService(new TrackedOne(), "aTarget");
-		registerService(new TrackedOne(), "anotherTarget");
-		registerService(new TrackedOne(), "aTarget");
-		registerService(new TrackedOne(), "anotherTarget");
-		registerService(new TrackedOne(), "anotherTarget");
+			registerService(new TrackedOne(), "aTarget");
+			registerService(new TrackedOne(), "anotherTarget");
+			registerService(new TrackedOne(), "aTarget");
+			registerService(new TrackedOne(), "anotherTarget");
+			registerService(new TrackedOne(), "anotherTarget");
 
-		List<TrackedOne> aTargetList = serviceTrackerMap.getService("aTarget");
+			List<TrackedOne> aTargetList = serviceTrackerMap.getService(
+				"aTarget");
 
-		Assert.assertNotNull(aTargetList);
-		Assert.assertEquals(2, aTargetList.size());
+			Assert.assertNotNull(aTargetList);
+			Assert.assertEquals(2, aTargetList.size());
 
-		List<TrackedOne> anotherTargetList = serviceTrackerMap.getService(
-			"anotherTarget");
+			List<TrackedOne> anotherTargetList = serviceTrackerMap.getService(
+				"anotherTarget");
 
-		Assert.assertNotNull(anotherTargetList);
-		Assert.assertEquals(3, anotherTargetList.size());
+			Assert.assertNotNull(anotherTargetList);
+			Assert.assertEquals(3, anotherTargetList.size());
+		}
 	}
 
 	@Test
@@ -246,8 +251,9 @@ public class ListServiceTrackerMapTest {
 				Assert.assertEquals(0, serviceReferenceCount.get());
 			}
 		}
-
-		RegistryUtil.setRegistry(registry);
+		finally {
+			RegistryUtil.setRegistry(registry);
+		}
 	}
 
 	@Test
@@ -255,6 +261,8 @@ public class ListServiceTrackerMapTest {
 		Registry registry = RegistryUtil.getRegistry();
 
 		RegistryWrapper registryWrapper = new RegistryWrapper(registry);
+
+		RegistryUtil.setRegistry(registryWrapper);
 
 		try (ServiceTrackerMap<TrackedOne, TrackedOne> serviceTrackerMap =
 				ServiceTrackerCollections.singleValueMap(
@@ -289,6 +297,9 @@ public class ListServiceTrackerMapTest {
 			serviceRegistration2.unregister();
 
 			Assert.assertEquals(0, serviceReferenceCounts.size());
+		}
+		finally {
+			RegistryUtil.setRegistry(registry);
 		}
 	}
 

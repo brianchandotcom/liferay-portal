@@ -1,10 +1,21 @@
 <definition>
 	<command name="configureDisplayContent">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
 		<execute action="PGUsersegmentcontentdisplay#selectFrame" locator-key1="USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
+
+		<var method="selenium#getNumberDecrement(${rowNumber})" name="rowIndexNumber" />
+
+		<if>
+			<not>
+				<equals arg1="${rowIndexNumber}" arg2="0" />
+			</not>
+			<then>
+				<var name="key_indexNumber" value="${rowIndexNumber}" />
+
+				<execute action="PGUsersegmentcontentdisplay#click" locator-key1="CONTENT_PLUS_LINK" />
+			</then>
+		</if>
+
+		<var name="key_rowNumber" value="${rowNumber}" />
 
 		<if>
 			<equals arg1="${belongs}" arg2="true" />
@@ -67,6 +78,11 @@
 
 		<execute action="PGUsersegmentcontentdisplay#selectFrame" value1="relative=top" />
 		<execute action="PGUsersegmentcontentdisplay#selectFrame" locator-key1="USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
+		<execute action="PGUsersegmentcontentdisplay#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="configureOtherwiseContenDisplayRule">
+		<execute action="PGUsersegmentcontentdisplay#selectFrame" locator-key1="USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
 
 		<if>
 			<isset var="otherwiseContentType" />
@@ -95,7 +111,9 @@
 				<execute action="PGUsersegmentcontentdisplay#click" locator-key1="OTHERWISE_PANEL_DONT_DISPLAY_ANYTHING_RADIO" />
 			</else>
 		</if>
+	</command>
 
+	<command name="saveContentDisplayConfigurationPG">
 		<execute action="PGUsersegmentcontentdisplay#click" locator-key1="SAVE_BUTTON" />
 		<execute action="PGUsersegmentcontentdisplay#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>

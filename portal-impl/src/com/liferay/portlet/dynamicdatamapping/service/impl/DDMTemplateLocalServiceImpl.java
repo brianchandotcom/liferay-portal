@@ -48,6 +48,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.base.DDMTemplateLocalServiceBaseImpl;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.service.persistence.JournalArticleUtil;
 
 import java.io.File;
@@ -401,15 +402,17 @@ public class DDMTemplateLocalServiceImpl
 					template.getCompanyId());
 
 				if (template.getGroupId() == companyGroup.getGroupId()) {
-					if (JournalArticleUtil.countByTemplateId(
+					if (JournalArticleUtil.countByC_T(
+							JournalArticleConstants.CLASSNAME_ID_DEFAULT,
 							template.getTemplateKey()) > 0) {
 
 						throw new RequiredTemplateException();
 					}
 				}
 				else {
-					if (JournalArticleUtil.countByG_T(
+					if (JournalArticleUtil.countByG_C_T(
 							template.getGroupId(),
+							JournalArticleConstants.CLASSNAME_ID_DEFAULT,
 							template.getTemplateKey()) > 0) {
 
 						throw new RequiredTemplateException();

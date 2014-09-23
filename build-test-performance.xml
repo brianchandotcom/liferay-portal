@@ -4,8 +4,8 @@
 	<import file="build-test.xml" />
 
 	<target name="run-performance-test">
-		<fail unless="main.branch" message="Please set the property ${main.branch}." />
-		<fail unless="temp.branch" message="Please set the property ${temp.branch}." />
+		<fail message="Please set the property ${main.branch}." unless="main.branch" />
+		<fail message="Please set the property ${temp.branch}." unless="temp.branch" />
 
 		<ssh-execute>
 			<![CDATA[

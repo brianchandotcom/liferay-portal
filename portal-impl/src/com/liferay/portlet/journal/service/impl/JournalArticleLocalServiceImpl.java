@@ -6117,31 +6117,36 @@ public class JournalArticleLocalServiceImpl
 		newArticle.setContent(contentDocument.formattedString());
 	}
 
+	protected Map<String, String> createFieldsValuesMap(Element rootElement) {
+		Map<String, String> fieldsValuesMap = new HashMap<String, String>();
+
+		List<Element> elements = rootElement.elements("dynamic-element");
+
+		for (Element element : elements) {
+			String fieldName = element.attributeValue("name", StringPool.BLANK);
+
+			List<Element> dynamicContentElements = element.elements(
+				"dynamic-content");
+
+			for (Element dynamicContentElement : dynamicContentElements) {
+				String value = dynamicContentElement.getText();
+
+				fieldsValuesMap.put(fieldName, value);
+			}
+
+			fieldsValuesMap.putAll(createFieldsValuesMap(element));
+		}
+
+		return fieldsValuesMap;
+	}
+
 	protected Map<String, String> createFieldsValuesMap(String content) {
 		try {
-			Map<String, String> fieldsValuesMap = new HashMap<String, String>();
-
 			Document document = SAXReaderUtil.read(content);
 
 			Element rootElement = document.getRootElement();
 
-			List<Element> elements = rootElement.elements();
-
-			for (Element element : elements) {
-				String fieldName = element.attributeValue(
-					"name", StringPool.BLANK);
-
-				List<Element> dynamicContentElements = element.elements(
-					"dynamic-content");
-
-				for (Element dynamicContentElement : dynamicContentElements) {
-					String value = dynamicContentElement.getText();
-
-					fieldsValuesMap.put(fieldName, value);
-				}
-			}
-
-			return fieldsValuesMap;
+			return createFieldsValuesMap(rootElement);
 		}
 		catch (DocumentException de) {
 			throw new SystemException(de);

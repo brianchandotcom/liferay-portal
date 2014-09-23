@@ -1308,6 +1308,10 @@
 		<priority value="INFO" />
 	</category>
 
+	<category name="osgi.logging">
+		<priority value="WARN" />
+	</category>
+
 	<category name="portal-web.docroot.errors.404.jsp">
 		<priority value="WARN" />
 	</category>

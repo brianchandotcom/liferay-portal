@@ -85,7 +85,8 @@ TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler
 		'_<%= HtmlUtil.escapeJS(portletResource) %>_showGuestGroup': <%= showGuestGroup %>,
 		'_<%= HtmlUtil.escapeJS(portletResource) %>_showLayout': <%= showLayout %>,
 		'_<%= HtmlUtil.escapeJS(portletResource) %>_showParentGroups': <%= showParentGroups %>,
-		'_<%= HtmlUtil.escapeJS(portletResource) %>_showPortletBreadcrumb': <%= showPortletBreadcrumb %>
+		'_<%= HtmlUtil.escapeJS(portletResource) %>_showPortletBreadcrumb': <%= showPortletBreadcrumb %>,
+		'_<%= HtmlUtil.escapeJS(portletResource) %>_displayStyle': '<%= displayStyle %>'
 	}
 
 	var toggleCustomFields = function(event) {
@@ -97,4 +98,23 @@ TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler
 	};
 
 	A.one('.checkBoxes').delegate('change', toggleCustomFields, 'input[type="checkbox"]');
+
+	var changeDisplayStyle = function(event) {
+		var selectedIndex = event.currentTarget.get('selectedIndex');
+
+		if (selectedIndex >= 0) {
+			var selectedOption = event.currentTarget.get('options').item(selectedIndex);
+
+			data['_<%= HtmlUtil.escapeJS(portletResource) %>_displayStyle'] = selectedOption.get('value');
+
+			Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(portletResource) %>_', data);
+		}
+	};
+
+	var selectDisplayStyle = formNode.one('#<portlet:namespace />displayStyle');
+
+	if (selectDisplayStyle) {
+		selectDisplayStyle.on('change', changeDisplayStyle);
+
+	};
 </aui:script>

@@ -263,7 +263,11 @@ public class DDMImpl implements DDM {
 		String serializedDDMFormValues = GetterUtil.getString(
 			serviceContext.getAttribute("ddmFormValues"));
 
-		return getFields(ddmStructureId, serializedDDMFormValues);
+		if (Validator.isNotNull(serializedDDMFormValues)) {
+			return getFields(ddmStructureId, serializedDDMFormValues);
+		}
+
+		return getFields(ddmStructureId, 0, serviceContext);
 	}
 
 	@Override
@@ -275,7 +279,11 @@ public class DDMImpl implements DDM {
 		String serializedDDMFormValues = GetterUtil.getString(
 			serviceContext.getAttribute(fieldNamespace + "ddmFormValues"));
 
-		return getFields(ddmStructureId, serializedDDMFormValues);
+		if (Validator.isNotNull(serializedDDMFormValues)) {
+			return getFields(ddmStructureId, serializedDDMFormValues);
+		}
+
+		return getFields(ddmStructureId, 0, fieldNamespace, serviceContext);
 	}
 
 	@Override

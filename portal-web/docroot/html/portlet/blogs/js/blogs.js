@@ -20,6 +20,10 @@ AUI.add(
 						validator: Lang.isObject
 					},
 
+					saveInterval: {
+						value: 30000
+					},
+
 					strings: {
 						validator: Lang.isObject,
 						value: {
@@ -108,7 +112,7 @@ AUI.add(
 						var instance = this;
 
 						instance._saveDraftTimer = A.later(
-							30000,
+							instance.get('saveInterval'),
 							instance,
 							instance._saveEntry,
 							[true, true],

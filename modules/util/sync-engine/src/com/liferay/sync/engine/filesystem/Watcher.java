@@ -131,32 +131,43 @@ public class Watcher implements Runnable {
 				Path childFilePath = parentFilePath.resolve(
 					pathImpl.toString());
 
-				if (((kind == StandardWatchEventKind.ENTRY_CREATE) &&
-					 isIgnoredFilePath(childFilePath)) ||
-					((kind == StandardWatchEventKind.ENTRY_MODIFY) &&
-					 Files.isDirectory(childFilePath))) {
+				if (kind == StandardWatchEventKind.ENTRY_CREATE) {
+					if (skipWatchEvent(
+							childFilePath, i + 1, parentFilePath,
+							watchEvents)) {
 
-					continue;
-				}
+						i++;
+					}
 
-				if (kind == StandardWatchEventKind.ENTRY_DELETE) {
-					processMissingFilePath(childFilePath);
-				}
+					if (isIgnoredFilePath(childFilePath)) {
+						continue;
+					}
 
-				fireWatchEventListener(childFilePath, watchEvent);
+					fireWatchEventListener(childFilePath, watchEvent);
 
-				if (_recursive &&
-					(kind == StandardWatchEventKind.ENTRY_CREATE)) {
+					if (_recursive) {
+						try {
+							if (Files.isDirectory(
+									childFilePath, LinkOption.NOFOLLOW_LINKS)) {
 
-					try {
-						if (Files.isDirectory(
-								childFilePath, LinkOption.NOFOLLOW_LINKS)) {
-
-							registerFilePath(childFilePath, true);
+								registerFilePath(childFilePath, true);
+							}
+						}
+						catch (IOException ioe) {
 						}
 					}
-					catch (IOException ioe) {
+				}
+				else if (kind == StandardWatchEventKind.ENTRY_DELETE) {
+					processMissingFilePath(childFilePath);
+
+					fireWatchEventListener(childFilePath, watchEvent);
+				}
+				else if (kind == StandardWatchEventKind.ENTRY_MODIFY) {
+					if (Files.isDirectory(childFilePath)) {
+						continue;
 					}
+
+					fireWatchEventListener(childFilePath, watchEvent);
 				}
 			}
 
@@ -366,6 +377,34 @@ public class Watcher implements Runnable {
 		}
 
 		doRegister(filePath, recursive);
+	}
+
+	protected boolean skipWatchEvent(
+		Path childFilePath, int index, Path parentFilePath,
+		List<WatchEvent<?>> watchEvents) {
+
+		if (index < watchEvents.size()) {
+			WatchEvent<Path> nextWatchEvent = (WatchEvent<Path>)watchEvents.get(
+				index);
+
+			if ((nextWatchEvent != null) &&
+				((WatchEvent.Kind<?>)nextWatchEvent.kind() ==
+					StandardWatchEventKind.ENTRY_MODIFY)) {
+
+				PathImpl nextPathImpl = (PathImpl)nextWatchEvent.context();
+
+				if (nextPathImpl != null) {
+					Path nextFilePath = parentFilePath.resolve(
+						nextPathImpl.toString());
+
+					if (childFilePath.equals(nextFilePath)) {
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
 	}
 
 	private static Logger _logger = LoggerFactory.getLogger(Watcher.class);

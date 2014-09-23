@@ -277,6 +277,7 @@ create index IX_3B69160F on Groups_UserGroups (userGroupId);
 
 create index IX_6A925A4D on Image (size_);
 
+create index IX_FF0E7A72 on JournalArticle (classNameId, templateId);
 create index IX_323DF109 on JournalArticle (companyId, status);
 create index IX_E82F322B on JournalArticle (companyId, version, status);
 create index IX_EA05E9E1 on JournalArticle (displayDate, status);

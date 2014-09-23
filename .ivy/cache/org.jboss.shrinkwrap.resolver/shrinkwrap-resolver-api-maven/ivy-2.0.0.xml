@@ -4,7 +4,7 @@
 		module="shrinkwrap-resolver-api-maven"
 		revision="2.0.0"
 		status="release"
-		publication="20130619010705"
+		publication="20130619040705"
 	>
 		<description homepage="">
 		API to Resolve Dependencies from a Maven Backend

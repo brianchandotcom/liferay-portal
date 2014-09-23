@@ -4,7 +4,7 @@
 		module="shrinkwrap-impl-base"
 		revision="1.1.2"
 		status="release"
-		publication="20130307010633"
+		publication="20130307040633"
 	>
 		<description homepage="">
 		Common Base for Implementations of the ShrinkWrap Project

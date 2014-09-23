@@ -4,7 +4,7 @@
 		module="plexus-containers"
 		revision="1.0-alpha-33"
 		status="release"
-		publication="20071016125230"
+		publication="20071016155230"
 	>
 		<description homepage="" />
 		<m:dependency.management__org.codehaus.plexus__plexus-component-api__version>1.0-alpha-33</m:dependency.management__org.codehaus.plexus__plexus-component-api__version>

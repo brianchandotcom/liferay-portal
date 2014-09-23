@@ -4,7 +4,7 @@
 		module="arquillian-test-impl-base"
 		revision="1.1.2.Final"
 		status="release"
-		publication="20131115095606"
+		publication="20131115125606"
 	>
 		<description homepage="">
 		Implementation Base for the Test integration.

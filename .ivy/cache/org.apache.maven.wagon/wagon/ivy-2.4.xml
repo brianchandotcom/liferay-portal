@@ -4,7 +4,7 @@
 		module="wagon"
 		revision="2.4"
 		status="release"
-		publication="20130205011152"
+		publication="20130205041152"
 	>
 		<description homepage="http://maven.apache.org/wagon">
 		Tools to manage artifacts and deployment

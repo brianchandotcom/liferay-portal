@@ -4,7 +4,7 @@
 		module="wagon-file"
 		revision="2.4"
 		status="release"
-		publication="20130205011330"
+		publication="20130205041330"
 	>
 		<description homepage="">
 		Wagon that gets and puts artifacts using file system protocol

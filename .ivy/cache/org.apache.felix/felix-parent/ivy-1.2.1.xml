@@ -4,7 +4,7 @@
 		module="felix-parent"
 		revision="1.2.1"
 		status="release"
-		publication="20090922001744"
+		publication="20090922031744"
 	>
 		<description homepage="http://felix.apache.org/">
 		Apache Felix is an OSGi implementation.

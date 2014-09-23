@@ -4,7 +4,7 @@
 		module="lucene-core"
 		revision="4.9.0"
 		status="release"
-		publication="20140624053518"
+		publication="20140624083518"
 	>
 		<description homepage="">
 		Apache Lucene Java Core

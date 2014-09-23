@@ -4,7 +4,7 @@
 		module="jbosgi-metadata"
 		revision="4.0.0.CR1"
 		status="release"
-		publication="20131017135356"
+		publication="20131017165356"
 	>
 		<description homepage="" />
 		<m:properties__version.bundle.plugin>2.3.6</m:properties__version.bundle.plugin>

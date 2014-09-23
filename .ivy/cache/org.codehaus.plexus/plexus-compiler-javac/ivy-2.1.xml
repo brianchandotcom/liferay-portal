@@ -4,7 +4,7 @@
 		module="plexus-compiler-javac"
 		revision="2.1"
 		status="release"
-		publication="20121206015034"
+		publication="20121206045034"
 	>
 		<description homepage="">
 		Javac Compiler support for Plexus Compiler component.

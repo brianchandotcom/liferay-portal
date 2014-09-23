@@ -4,7 +4,7 @@
 		module="org.apache.felix.gogo.command"
 		revision="0.12.0"
 		status="release"
-		publication="20110922082849"
+		publication="20110922112849"
 	>
 		<description homepage="">
 		Provides basic shell commands for Gogo.

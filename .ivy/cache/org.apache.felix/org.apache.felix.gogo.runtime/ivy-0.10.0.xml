@@ -4,7 +4,7 @@
 		module="org.apache.felix.gogo.runtime"
 		revision="0.10.0"
 		status="release"
-		publication="20110616084923"
+		publication="20110616114923"
 	>
 		<description homepage="" />
 		<m:dependency.management__junit__junit__scope>test</m:dependency.management__junit__junit__scope>

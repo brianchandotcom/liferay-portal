@@ -4,7 +4,7 @@
 		module="plexus-compiler-api"
 		revision="2.1"
 		status="release"
-		publication="20121206014709"
+		publication="20121206044709"
 	>
 		<description homepage="">
 		Plexus Compilers component&apos;s API to manipulate compilers.

@@ -4,7 +4,7 @@
 		module="maven-aether-provider"
 		revision="3.0.5"
 		status="release"
-		publication="20130219055110"
+		publication="20130219085110"
 	>
 		<description homepage="">
 		This module provides extensions to Aether for utilizing the Maven POM and Maven repository metadata for artifacts resolution

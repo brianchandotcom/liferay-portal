@@ -4,7 +4,7 @@
 		module="shrinkwrap-resolver-spi"
 		revision="2.0.0"
 		status="release"
-		publication="20130619010721"
+		publication="20130619040721"
 	>
 		<description homepage="">
 		SPI to Resolve Dependencies from a Generic Backend

@@ -4,7 +4,7 @@
 		module="arquillian-junit-container"
 		revision="1.1.2.Final"
 		status="release"
-		publication="20131115095915"
+		publication="20131115125915"
 	>
 		<description homepage="">
 		JUnit Container Implementation for the Arquillian Project

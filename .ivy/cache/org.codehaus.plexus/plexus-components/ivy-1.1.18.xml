@@ -4,7 +4,7 @@
 		module="plexus-components"
 		revision="1.1.18"
 		status="release"
-		publication="20100829100335"
+		publication="20100829130335"
 	>
 		<description homepage="http://plexus.codehaus.org/plexus-components" />
 		<m:properties__project.build.sourceEncoding>UTF-8</m:properties__project.build.sourceEncoding>

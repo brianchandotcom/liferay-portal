@@ -4,7 +4,7 @@
 		module="jstl"
 		revision="1.2"
 		status="release"
-		publication="20110615083522"
+		publication="20110615113522"
 	>
 		<license name="CDDL + GPLv2 with classpath exception" url="https://glassfish.dev.java.net/nonav/public/CDDL+GPL.html" />
 		<description homepage="http://jstl.java.net" />

@@ -4,7 +4,7 @@
 		module="jalopy"
 		revision="1.5rc3"
 		status="release"
-		publication="20060703042335"
+		publication="20060703072335"
 	>
 		<license name="BSD license" url="http://www.opensource.org/licenses/bsd-license.php" />
 		<description homepage="http://jalopy.sf.net">

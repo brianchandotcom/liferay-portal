@@ -4,7 +4,7 @@
 		module="shrinkwrap-spi"
 		revision="1.1.2"
 		status="release"
-		publication="20130307010605"
+		publication="20130307040605"
 	>
 		<description homepage="">
 		Generic Service Provider Contract of the ShrinkWrap Project

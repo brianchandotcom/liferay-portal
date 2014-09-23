@@ -4,7 +4,7 @@
 		module="maven-parent"
 		revision="23"
 		status="release"
-		publication="20130117075701"
+		publication="20130117105701"
 	>
 		<description homepage="http://maven.apache.org/">
 		Maven is a software project management and comprehension tool. Based on the concept of a project object model (POM), Maven can manage a project&apos;s build, reporting and documentation from a central piece of information.

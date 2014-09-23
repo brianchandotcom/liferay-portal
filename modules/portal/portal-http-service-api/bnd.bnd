@@ -1,0 +1,13 @@
+Bundle-Description:\
+	Includes Http Service packages from osgi compendium specification.
+Bundle-Name: Liferay Portal Http Service API
+Bundle-SymbolicName: com.liferay.portal.http.service.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	org.osgi.service.http,\
+	org.osgi.service.http.context,\
+	org.osgi.service.http.runtime,\
+	org.osgi.service.http.runtime.dto,\
+	org.osgi.service.http.whiteboard
+Include-Resource:\
+	@lib/org.eclipse.osgi.services.jar!/org/osgi/service/http/**

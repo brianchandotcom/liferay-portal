@@ -4,7 +4,7 @@
 		module="mail"
 		revision="1.4"
 		status="release"
-		publication="20060502165606"
+		publication="20060502195606"
 	>
 		<license name="Common Development and Distribution License (CDDL) v1.0" url="https://glassfish.dev.java.net/public/CDDLv1.0.html" />
 		<description homepage="https://glassfish.dev.java.net/javaee5/mail/">

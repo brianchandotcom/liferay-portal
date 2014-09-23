@@ -4,7 +4,7 @@
 		module="lucene-analyzers-common"
 		revision="4.9.0"
 		status="release"
-		publication="20140624053850"
+		publication="20140624083850"
 	>
 		<description homepage="">
 		Additional Analyzers

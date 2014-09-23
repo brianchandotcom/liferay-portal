@@ -4,7 +4,7 @@
 		module="shrinkwrap-resolver-bom"
 		revision="2.2.0-alpha-2"
 		status="release"
-		publication="20140417021645"
+		publication="20140417051645"
 	>
 		<license name="Apache License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt" />
 		<description homepage="http://www.jboss.org/shrinkwrap">

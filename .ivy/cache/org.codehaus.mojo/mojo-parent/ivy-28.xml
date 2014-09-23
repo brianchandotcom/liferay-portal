@@ -4,7 +4,7 @@
 		module="mojo-parent"
 		revision="28"
 		status="release"
-		publication="20110209104403"
+		publication="20140917232641"
 	>
 		<description homepage="http://mojo.codehaus.org" />
 		<m:properties__project.build.sourceEncoding>UTF-8</m:properties__project.build.sourceEncoding>

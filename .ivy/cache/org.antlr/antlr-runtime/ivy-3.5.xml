@@ -4,7 +4,7 @@
 		module="antlr-runtime"
 		revision="3.5"
 		status="release"
-		publication="20130104193525"
+		publication="20130104223525"
 	>
 		<description homepage="http://www.antlr.org">
 		A framework for constructing recognizers, compilers, and translators from grammatical descriptions containing Java, C#, C++, or Python actions.

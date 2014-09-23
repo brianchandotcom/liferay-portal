@@ -10,6 +10,7 @@
      Igor Fedorenko - initial implementation
      Thanh Ha - improvements and maintenance
      David Williams - improvements and maintenance
+     Lars Vogel - Bug 442042
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
@@ -18,10 +19,10 @@
   <version>4.5.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <prerequisites>
-    <maven>3.0.5</maven>
+    <maven>3.1.1</maven>
   </prerequisites>
   <properties>
-    <maven.test.skip>true</maven.test.skip>
+    <skipTests>true</skipTests>
     <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
     <buildTimestamp>${maven.build.timestamp}</buildTimestamp>
     <buildType>I</buildType>
@@ -52,9 +53,9 @@
     <releaseNumberPlatform>4.5</releaseNumberPlatform>
     
 
-    <tycho.version>0.20.0</tycho.version>
-    <tycho-extras.version>0.20.0</tycho-extras.version>
-    <cbi-plugins.version>1.0.5</cbi-plugins.version>
+    <tycho.version>0.21.0</tycho.version>
+    <tycho-extras.version>0.21.0</tycho-extras.version>
+    <cbi-plugins.version>1.1.1</cbi-plugins.version>
     <!--
       The tycho-eclipserun-plugin will create its instance of Eclipse from this
       'eclipiserun-repo' repository, such as for computing .api-descriptions.
@@ -69,8 +70,8 @@
       a copy of the EMF features and ECF features into our own repository. This is required since we merely "require" EMF (not "include" it).
       And, of course, in the PDE target file, the URL is expected to be the actual URL, not a variable.
     -->
-    <emf-repo.url>http://download.eclipse.org/modeling/emf/emf/updates/2.10milestones/base/S201405141158/</emf-repo.url>
-    <ecf-repo.url>http://download.eclipse.org/rt/ecf/3.8.1.rc3/site.p2/</ecf-repo.url>
+    <emf-repo.url>http://download.eclipse.org/modeling/emf/emf/updates/2.11milestones/base/S201409160346/</emf-repo.url>
+    <ecf-repo.url>http://download.eclipse.org/rt/ecf/platform/lunasr1/site.p2/</ecf-repo.url>
 
     <tycho-repo.url>https://oss.sonatype.org/content/repositories/public/</tycho-repo.url>
 
@@ -193,7 +194,7 @@
             <artifact>
               <groupId>org.eclipse</groupId>
               <artifactId>eclipse-sdk-prereqs</artifactId>
-              <version>4.4.0-SNAPSHOT</version>
+              <version>4.5.0-SNAPSHOT</version>
             </artifact>
           </target>
           <environments>
@@ -220,6 +221,11 @@
             <environment>
               <os>linux</os>
               <ws>gtk</ws>
+              <arch>ppc64le</arch>
+            </environment>
+            <environment>
+              <os>linux</os>
+              <ws>gtk</ws>
               <arch>s390</arch>
             </environment>
             <environment>
@@ -236,11 +242,6 @@
               <os>win32</os>
               <ws>win32</ws>
               <arch>x86_64</arch>
-            </environment>
-            <environment>
-              <os>macosx</os>
-              <ws>cocoa</ws>
-              <arch>x86</arch>
             </environment>
             <environment>
               <os>macosx</os>

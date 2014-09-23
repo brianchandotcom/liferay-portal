@@ -4,7 +4,7 @@
 		module="shrinkwrap-descriptors-spi"
 		revision="2.0.0-alpha-3"
 		status="release"
-		publication="20120509234412"
+		publication="20120510024412"
 	>
 		<description homepage="">
 		Service Provider Interface of the ShrinkWrap Descriptors Project

@@ -4,7 +4,7 @@
 		module="asm"
 		revision="4.1"
 		status="release"
-		publication="20121014083745"
+		publication="20121014113745"
 	>
 		<description homepage="" />
 		<m:dependency.management__org.ow2.asm__asm-tree__version>4.1</m:dependency.management__org.ow2.asm__asm-tree__version>

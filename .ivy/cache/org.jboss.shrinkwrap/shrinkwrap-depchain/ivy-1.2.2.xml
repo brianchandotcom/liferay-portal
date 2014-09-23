@@ -4,7 +4,7 @@
 		module="shrinkwrap-depchain"
 		revision="1.2.2"
 		status="release"
-		publication="20140325073806"
+		publication="20140325103806"
 	>
 		<description homepage="">
 		Single-POM Definition to export the ShrinkWrap artifacts in proper scope

@@ -4,7 +4,7 @@
 		module="shrinkwrap-descriptors-api-base"
 		revision="2.0.0-alpha-3"
 		status="release"
-		publication="20120509234356"
+		publication="20120510024356"
 	>
 		<description homepage="">
 		Base for Client View of the ShrinkWrap Descriptors Project

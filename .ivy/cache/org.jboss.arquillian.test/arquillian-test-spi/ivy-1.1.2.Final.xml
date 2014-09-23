@@ -4,7 +4,7 @@
 		module="arquillian-test-spi"
 		revision="1.1.2.Final"
 		status="release"
-		publication="20131115095546"
+		publication="20131115125546"
 	>
 		<description homepage="">
 		SPI for the Test integration.

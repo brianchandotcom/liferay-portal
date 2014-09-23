@@ -4,7 +4,7 @@
 		module="forge-parent"
 		revision="4"
 		status="release"
-		publication="20090226205022"
+		publication="20090226235022"
 	>
 		<description homepage="http://forge.sonatype.com/" />
 		<m:properties__forgeSnapshotId>forge-snapshots</m:properties__forgeSnapshotId>

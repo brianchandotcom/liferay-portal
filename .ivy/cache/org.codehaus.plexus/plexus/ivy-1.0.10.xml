@@ -4,7 +4,7 @@
 		module="plexus"
 		revision="1.0.10"
 		status="release"
-		publication="20070216055551"
+		publication="20070216085551"
 	>
 		<description homepage="" />
 		<m:maven.plugins>org.apache.maven.plugins__maven-compiler-plugin__null</m:maven.plugins>

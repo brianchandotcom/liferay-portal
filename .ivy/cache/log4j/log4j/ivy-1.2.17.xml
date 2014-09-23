@@ -4,7 +4,7 @@
 		module="log4j"
 		revision="1.2.17"
 		status="release"
-		publication="20120526024339"
+		publication="20120526054339"
 	>
 		<license name="The Apache Software License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt" />
 		<description homepage="http://logging.apache.org/log4j/1.2/">

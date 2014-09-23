@@ -4,7 +4,7 @@
 		module="parent"
 		revision="2.3.0"
 		status="release"
-		publication="20140520105828"
+		publication="20140520135828"
 	>
 		<license name="Apache Software License 2.0" url="http://www.opensource.org/licenses/apache2.0.php" />
 		<description homepage="http://www.aQute.biz/Code/Bnd">

@@ -4,7 +4,7 @@
 		module="lucene-spatial"
 		revision="4.9.0"
 		status="release"
-		publication="20140624053820"
+		publication="20140624083820"
 	>
 		<description homepage="">
 		Spatial Strategies for Apache Lucene

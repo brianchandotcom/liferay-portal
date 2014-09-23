@@ -4,7 +4,7 @@
 		module="bsf"
 		revision="2.4.0"
 		status="release"
-		publication="20061020123351"
+		publication="20061020153351"
 	>
 		<description homepage="http://jakarta.apache.org/bsf" />
 	</info>

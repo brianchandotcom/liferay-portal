@@ -4,7 +4,7 @@
 		module="arquillian-config-api"
 		revision="1.1.2.Final"
 		status="release"
-		publication="20131115095420"
+		publication="20131115125420"
 	>
 		<description homepage="">
 		API for the Config Module.

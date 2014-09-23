@@ -4,7 +4,7 @@
 		module="lucene-analyzers-icu"
 		revision="4.9.0"
 		status="release"
-		publication="20140624053828"
+		publication="20140624083828"
 	>
 		<description homepage="">
 		Provides integration with ICU (International Components for Unicode) for

@@ -4,7 +4,7 @@
 		module="wagon-http-shared4"
 		revision="2.4"
 		status="release"
-		publication="20130205011416"
+		publication="20130205041416"
 	>
 		<description homepage="">
 		Shared Library for the wagon-http, and wagon-http-lightweight wagon

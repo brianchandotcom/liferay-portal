@@ -4,7 +4,7 @@
 		module="arquillian-container-osgi-parent"
 		revision="2.1.0.CR15"
 		status="release"
-		publication="20140325152431"
+		publication="20140325182431"
 	>
 		<description homepage="" />
 		<m:properties__version.cobertura.plugin>2.5</m:properties__version.cobertura.plugin>

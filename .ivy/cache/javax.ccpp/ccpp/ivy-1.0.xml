@@ -4,7 +4,7 @@
 		module="ccpp"
 		revision="1.0"
 		status="release"
-		publication="20070910141112"
+		publication="20070910171112"
 	>
 		<license name="Sun Microsystems, Inc. Binary Code License Agreement" url="http://java.sun.com/j2ee/ccpp" />
 		<description homepage="http://www.jcp.org/en/jsr/detail?id=188">

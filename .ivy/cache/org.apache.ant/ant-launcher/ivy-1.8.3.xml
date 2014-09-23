@@ -4,7 +4,7 @@
 		module="ant-launcher"
 		revision="1.8.3"
 		status="release"
-		publication="20120225220807"
+		publication="20120226010807"
 	>
 		<description homepage="" />
 		<m:maven.plugins>org.apache.maven.plugins__maven-compiler-plugin__null</m:maven.plugins>

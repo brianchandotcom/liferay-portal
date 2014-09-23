@@ -35,6 +35,8 @@ Import-Package:\
 	com.liferay.portal.spring.transaction,\
 	com.liferay.portal.systemevent,\
 	\
+	javax.servlet,\
+	javax.servlet.http,\
 	javax.sql,\
 	\
 	org.aopalliance.aop,\

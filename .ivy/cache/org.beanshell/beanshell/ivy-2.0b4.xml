@@ -4,7 +4,7 @@
 		module="beanshell"
 		revision="2.0b4"
 		status="release"
-		publication="20060525170121"
+		publication="20060525200121"
 	>
 		<license name="GNU LESSER GENERAL PUBLIC LICENSE" url="http://www.gnu.org/licenses/lgpl.txt" />
 		<description homepage="">

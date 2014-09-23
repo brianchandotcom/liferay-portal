@@ -4,7 +4,7 @@
 		module="org.portletbridge.portlet"
 		revision="1.1.2"
 		status="release"
-		publication="20140804110948"
+		publication="20140804140948"
 	>
 		<description homepage="">
 		POM was created by Sonatype Nexus

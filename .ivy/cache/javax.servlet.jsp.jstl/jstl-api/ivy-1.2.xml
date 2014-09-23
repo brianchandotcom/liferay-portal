@@ -4,7 +4,7 @@
 		module="jstl-api"
 		revision="1.2"
 		status="release"
-		publication="20110615083601"
+		publication="20110615113601"
 	>
 		<description homepage="http://jcp.org/en/jsr/detail?id=52" />
 		<m:properties__project.build.sourceEncoding>UTF-8</m:properties__project.build.sourceEncoding>

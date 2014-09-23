@@ -4,7 +4,7 @@
 		module="lucene-highlighter"
 		revision="4.9.0"
 		status="release"
-		publication="20140624053810"
+		publication="20140624083810"
 	>
 		<description homepage="">
 		This is the highlighter for apache lucene java

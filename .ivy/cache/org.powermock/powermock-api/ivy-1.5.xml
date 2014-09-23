@@ -4,7 +4,7 @@
 		module="powermock-api"
 		revision="1.5"
 		status="release"
-		publication="20121204020210"
+		publication="20121204050210"
 	>
 		<description homepage="">
 		The mocking framework-specific interfaces to PowerMock.

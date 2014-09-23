@@ -4,7 +4,7 @@
 		module="lucene-misc"
 		revision="4.9.0"
 		status="release"
-		publication="20140624053924"
+		publication="20140624083924"
 	>
 		<description homepage="">
 		Miscellaneous Lucene extensions

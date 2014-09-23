@@ -4,7 +4,7 @@
 		module="lucene-parent"
 		revision="4.9.0"
 		status="release"
-		publication="20140624053845"
+		publication="20140624083845"
 	>
 		<description homepage="">
 		Lucene parent POM

@@ -4,7 +4,7 @@
 		module="lucene-analyzers-kuromoji"
 		revision="4.9.0"
 		status="release"
-		publication="20140624053955"
+		publication="20140624083955"
 	>
 		<description homepage="">
 		Lucene Kuromoji Japanese Morphological Analyzer

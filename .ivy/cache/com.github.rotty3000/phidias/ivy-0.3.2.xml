@@ -4,7 +4,7 @@
 		module="phidias"
 		revision="0.3.2"
 		status="release"
-		publication="20140716122148"
+		publication="20140716152148"
 	>
 		<license name="The Apache Software License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt" />
 		<description homepage="https://github.com/rotty3000/phidias">

@@ -4,7 +4,7 @@
 		module="plexus-interpolation"
 		revision="1.14"
 		status="release"
-		publication="20100923121505"
+		publication="20100923151505"
 	>
 		<description homepage="" />
 		<m:properties__project.build.sourceEncoding>UTF-8</m:properties__project.build.sourceEncoding>

@@ -4,7 +4,7 @@
 		module="asm-commons"
 		revision="4.1"
 		status="release"
-		publication="20121014083823"
+		publication="20121014113823"
 	>
 		<description homepage="" />
 		<m:dependency.management__org.ow2.asm__asm-tree__version>4.1</m:dependency.management__org.ow2.asm__asm-tree__version>

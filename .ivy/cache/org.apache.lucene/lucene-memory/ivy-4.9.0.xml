@@ -4,7 +4,7 @@
 		module="lucene-memory"
 		revision="4.9.0"
 		status="release"
-		publication="20140624053714"
+		publication="20140624083714"
 	>
 		<description homepage="">
 		High-performance single-document index to compare against Query

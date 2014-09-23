@@ -4,7 +4,7 @@
 		module="powermock-modules"
 		revision="1.5"
 		status="release"
-		publication="20121204020252"
+		publication="20121204050252"
 	>
 		<description homepage="">
 		Aggregator for building PowerMock implementation and test modules.

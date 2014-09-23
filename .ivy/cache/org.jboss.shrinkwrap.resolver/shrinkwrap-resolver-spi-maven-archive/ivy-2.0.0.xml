@@ -4,7 +4,7 @@
 		module="shrinkwrap-resolver-spi-maven-archive"
 		revision="2.0.0"
 		status="release"
-		publication="20130619010849"
+		publication="20130619040849"
 	>
 		<description homepage="">
 		SPI for Resolving Dependencies from a Maven Backend to a ShrinkWrap Archive and Importing Maven Project

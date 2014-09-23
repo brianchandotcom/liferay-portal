@@ -4,7 +4,7 @@
 		module="org.apache.felix.main"
 		revision="4.4.0"
 		status="release"
-		publication="20140320143155"
+		publication="20140320173155"
 	>
 		<description homepage="" />
 		<m:properties__log.level>4</m:properties__log.level>

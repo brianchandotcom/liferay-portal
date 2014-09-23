@@ -4,7 +4,7 @@
 		module="plexus"
 		revision="1.0.11"
 		status="release"
-		publication="20070310084938"
+		publication="20070310114938"
 	>
 		<license name="The Apache Software License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt" />
 		<description homepage="" />

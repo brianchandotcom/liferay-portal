@@ -4,7 +4,7 @@
 		module="httpcore"
 		revision="4.2.3"
 		status="release"
-		publication="20121123132459"
+		publication="20121123162459"
 	>
 		<description homepage="http://hc.apache.org/httpcomponents-core-ga">
 		HttpComponents Core (blocking I/O)

@@ -4,7 +4,7 @@
 		module="arquillian-junit-core"
 		revision="1.1.2.Final"
 		status="release"
-		publication="20131115095835"
+		publication="20131115125835"
 	>
 		<description homepage="">
 		JUnit Implementation for the Arquillian Project

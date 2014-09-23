@@ -4,7 +4,7 @@
 		module="powermock-api-mockito"
 		revision="1.5"
 		status="release"
-		publication="20121204020247"
+		publication="20121204050247"
 	>
 		<description homepage="">
 		PowerMock API for Mockito.

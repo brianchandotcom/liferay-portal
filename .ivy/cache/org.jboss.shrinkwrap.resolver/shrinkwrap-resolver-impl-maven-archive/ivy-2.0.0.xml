@@ -4,7 +4,7 @@
 		module="shrinkwrap-resolver-impl-maven-archive"
 		revision="2.0.0"
 		status="release"
-		publication="20130619010920"
+		publication="20130619040920"
 	>
 		<description homepage="">
 		Implementation for Resolving Dependencies from a Maven Backend to a ShrinkWrap Archive

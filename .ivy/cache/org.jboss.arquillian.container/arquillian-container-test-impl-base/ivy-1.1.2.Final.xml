@@ -4,7 +4,7 @@
 		module="arquillian-container-test-impl-base"
 		revision="1.1.2.Final"
 		status="release"
-		publication="20131115095805"
+		publication="20131115125805"
 	>
 		<description homepage="">
 		Integration with the Test extention for the container extension.

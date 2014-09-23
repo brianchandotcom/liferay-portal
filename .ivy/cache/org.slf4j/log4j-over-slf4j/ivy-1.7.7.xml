@@ -4,7 +4,7 @@
 		module="log4j-over-slf4j"
 		revision="1.7.7"
 		status="release"
-		publication="20140404041420"
+		publication="20140404071420"
 	>
 		<license name="Apache Software Licenses" url="http://www.apache.org/licenses/LICENSE-2.0.txt" />
 		<description homepage="http://www.slf4j.org">

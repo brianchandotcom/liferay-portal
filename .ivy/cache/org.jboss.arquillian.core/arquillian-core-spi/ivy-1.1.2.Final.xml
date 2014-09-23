@@ -4,7 +4,7 @@
 		module="arquillian-core-spi"
 		revision="1.1.2.Final"
 		status="release"
-		publication="20131115095328"
+		publication="20131115125328"
 	>
 		<description homepage="">
 		SPI for the Core.

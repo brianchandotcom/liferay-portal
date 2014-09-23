@@ -4,7 +4,7 @@
 		module="org.apache.felix.framework"
 		revision="4.2.1"
 		status="release"
-		publication="20130308130751"
+		publication="20130308160751"
 	>
 		<description homepage="" />
 		<m:properties__project.build.sourceEncoding>UTF-8</m:properties__project.build.sourceEncoding>

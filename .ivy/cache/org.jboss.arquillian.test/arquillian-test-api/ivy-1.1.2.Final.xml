@@ -4,7 +4,7 @@
 		module="arquillian-test-api"
 		revision="1.1.2.Final"
 		status="release"
-		publication="20131115095528"
+		publication="20131115125528"
 	>
 		<description homepage="">
 		API for the Test integration.

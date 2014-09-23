@@ -4,7 +4,7 @@
 		module="plexus-compiler"
 		revision="2.1"
 		status="release"
-		publication="20121206014645"
+		publication="20121206044645"
 	>
 		<description homepage="">
 		Plexus Compiler is a Plexus component to use different compilers through a uniform API.

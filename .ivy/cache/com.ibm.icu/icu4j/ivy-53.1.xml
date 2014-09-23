@@ -4,7 +4,7 @@
 		module="icu4j"
 		revision="53.1"
 		status="release"
-		publication="20140401080659"
+		publication="20140401110659"
 	>
 		<license name="ICU License" url="http://source.icu-project.org/repos/icu/icu/trunk/license.html" />
 		<description homepage="http://icu-project.org/">

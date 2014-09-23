@@ -4,7 +4,7 @@
 		module="jboss-parent"
 		revision="8"
 		status="release"
-		publication="20111210124811"
+		publication="20111210154811"
 	>
 		<license name="Public Domain" />
 		<description homepage="http://www.jboss.org">

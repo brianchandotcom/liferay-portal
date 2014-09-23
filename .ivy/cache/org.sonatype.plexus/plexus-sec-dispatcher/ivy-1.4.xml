@@ -4,7 +4,7 @@
 		module="plexus-sec-dispatcher"
 		revision="1.4"
 		status="release"
-		publication="20091216055520"
+		publication="20091216085520"
 	>
 		<description homepage="http://spice.sonatype.org/${project.artifactId}" />
 		<m:properties__forgeSnapshotUrl>http://repository.sonatype.org/content/repositories/snapshots</m:properties__forgeSnapshotUrl>

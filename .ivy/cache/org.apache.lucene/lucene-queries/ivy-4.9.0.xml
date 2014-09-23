@@ -4,7 +4,7 @@
 		module="lucene-queries"
 		revision="4.9.0"
 		status="release"
-		publication="20140624053554"
+		publication="20140624083554"
 	>
 		<description homepage="">
 		Lucene Queries Module

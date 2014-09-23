@@ -4,7 +4,7 @@
 		module="scala-compiler"
 		revision="2.9.2"
 		status="release"
-		publication="20120413053159"
+		publication="20120413083159"
 	>
 		<license name="BSD-like" url="http://www.scala-lang.org/downloads/license.html
 			" />

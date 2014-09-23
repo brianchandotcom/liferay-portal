@@ -4,7 +4,7 @@
 		module="org.apache.felix.bundlerepository"
 		revision="1.6.0"
 		status="release"
-		publication="20100326053708"
+		publication="20100326083708"
 	>
 		<description homepage="">
 		Bundle repository service.

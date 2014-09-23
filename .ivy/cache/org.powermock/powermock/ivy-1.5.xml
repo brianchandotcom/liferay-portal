@@ -4,7 +4,7 @@
 		module="powermock"
 		revision="1.5"
 		status="release"
-		publication="20121204015629"
+		publication="20121204045629"
 	>
 		<license name="The Apache Software License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt" />
 		<description homepage="http://www.powermock.org">

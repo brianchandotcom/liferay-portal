@@ -4,7 +4,7 @@
 		module="aether-impl"
 		revision="1.13.1"
 		status="release"
-		publication="20111129053019"
+		publication="20111129083019"
 	>
 		<description homepage="">
 		An implementation of the repository system.

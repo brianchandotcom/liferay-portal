@@ -4,7 +4,7 @@
 		module="powermock-core"
 		revision="1.5"
 		status="release"
-		publication="20121204020205"
+		publication="20121204050205"
 	>
 		<description homepage="http://www.powermock.org">
 		PowerMock core functionality.

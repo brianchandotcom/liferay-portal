@@ -4,7 +4,7 @@
 		module="plexus-compilers"
 		revision="2.1"
 		status="release"
-		publication="20121206014829"
+		publication="20121206044829"
 	>
 		<description homepage="" />
 		<m:properties__forgeSnapshotUrl>https://repository.sonatype.org/content/repositories/snapshots</m:properties__forgeSnapshotUrl>

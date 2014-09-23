@@ -4,7 +4,7 @@
 		module="jbosgi-parent"
 		revision="1.0.23"
 		status="release"
-		publication="20120711070429"
+		publication="20120711100429"
 	>
 		<license name="lgpl_v2_1" url="http://repository.jboss.com/licenses/lgpl-2.1.txt" />
 		<description homepage="http://www.jboss.org/jbossas/osgi">

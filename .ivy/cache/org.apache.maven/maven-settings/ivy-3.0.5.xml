@@ -4,7 +4,7 @@
 		module="maven-settings"
 		revision="3.0.5"
 		status="release"
-		publication="20130219054954"
+		publication="20130219084954"
 	>
 		<description homepage="">
 		Maven Settings model.

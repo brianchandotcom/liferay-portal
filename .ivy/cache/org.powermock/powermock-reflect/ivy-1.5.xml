@@ -4,7 +4,7 @@
 		module="powermock-reflect"
 		revision="1.5"
 		status="release"
-		publication="20121204020150"
+		publication="20121204050150"
 	>
 		<description homepage="">
 		Various utilities for accessing internals of a class.

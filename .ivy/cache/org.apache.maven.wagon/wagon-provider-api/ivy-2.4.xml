@@ -4,7 +4,7 @@
 		module="wagon-provider-api"
 		revision="2.4"
 		status="release"
-		publication="20130205011226"
+		publication="20130205041226"
 	>
 		<description homepage="">
 		Maven Wagon API that defines the contract between different Wagon implementations

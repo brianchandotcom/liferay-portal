@@ -4,7 +4,7 @@
 		module="lucene-join"
 		revision="4.9.0"
 		status="release"
-		publication="20140624053458"
+		publication="20140624083458"
 	>
 		<description homepage="">
 		Lucene Join Module

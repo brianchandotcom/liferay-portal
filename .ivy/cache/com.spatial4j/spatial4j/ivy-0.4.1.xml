@@ -4,7 +4,7 @@
 		module="spatial4j"
 		revision="0.4.1"
 		status="release"
-		publication="20140218221135"
+		publication="20140219011135"
 	>
 		<license name="The Apache Software License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt" />
 		<description homepage="https://github.com/spatial4j/spatial4j">

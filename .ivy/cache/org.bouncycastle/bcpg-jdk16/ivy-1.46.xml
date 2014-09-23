@@ -4,7 +4,7 @@
 		module="bcpg-jdk16"
 		revision="1.46"
 		status="release"
-		publication="20110222201039"
+		publication="20110222231039"
 	>
 		<license name="Bouncy Castle Licence" url="http://www.bouncycastle.org/licence.html" />
 		<license name="Apache Software License, Version 1.1" url="http://www.apache.org/licenses/LICENSE-1.1" />

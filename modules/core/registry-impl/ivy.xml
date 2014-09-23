@@ -11,6 +11,6 @@
 	</info>
 
 	<dependencies defaultconf="default">
-		<dependency name="org.eclipse.osgi" org="org.eclipse.tycho" rev="3.9.1.v20130814-1242" />
+		<dependency name="org.eclipse.osgi" org="org.eclipse.osgi" rev="3.10.100-SNAPSHOT" />
 	</dependencies>
 </ivy-module>

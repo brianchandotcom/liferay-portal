@@ -4,7 +4,7 @@
 		module="jsoup"
 		revision="1.7.1"
 		status="release"
-		publication="20120923191436"
+		publication="20120923221436"
 	>
 		<license name="The MIT License" url="http://jsoup.com/license" />
 		<description homepage="http://jsoup.org/">

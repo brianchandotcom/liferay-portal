@@ -4,7 +4,7 @@
 		module="antlr-master"
 		revision="3.5"
 		status="release"
-		publication="20130104193358"
+		publication="20130104223358"
 	>
 		<license name="BSD licence" url="http://antlr.org/license.html" />
 		<description homepage="http://antlr.org">

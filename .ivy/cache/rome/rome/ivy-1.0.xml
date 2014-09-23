@@ -4,7 +4,7 @@
 		module="rome"
 		revision="1.0"
 		status="release"
-		publication="20100519174733"
+		publication="20100519204733"
 	>
 		<description homepage="https://rome.dev.java.net/">
 		All Roads Lead to ROME. ROME is a set of Atom/RSS Java utilities that make it

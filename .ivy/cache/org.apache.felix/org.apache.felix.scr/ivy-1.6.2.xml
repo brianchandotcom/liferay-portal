@@ -4,7 +4,7 @@
 		module="org.apache.felix.scr"
 		revision="1.6.2"
 		status="release"
-		publication="20121107034855"
+		publication="20121107064855"
 	>
 		<description homepage="">
 		Implementation of the Declarative Services specification 1.2

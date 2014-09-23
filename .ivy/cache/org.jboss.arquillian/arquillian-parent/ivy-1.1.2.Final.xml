@@ -4,7 +4,7 @@
 		module="arquillian-parent"
 		revision="1.1.2.Final"
 		status="release"
-		publication="20131115095250"
+		publication="20131115125250"
 	>
 		<license name="Apache License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt" />
 		<description homepage="http://arquillian.org">

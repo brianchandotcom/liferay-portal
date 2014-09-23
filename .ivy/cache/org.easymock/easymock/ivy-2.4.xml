@@ -4,7 +4,7 @@
 		module="easymock"
 		revision="2.4"
 		status="release"
-		publication="20080701180400"
+		publication="20140819193139"
 	>
 		<license name="MIT License" url="http://www.easymock.org/License.html" />
 		<description homepage="http://www.easymock.org">

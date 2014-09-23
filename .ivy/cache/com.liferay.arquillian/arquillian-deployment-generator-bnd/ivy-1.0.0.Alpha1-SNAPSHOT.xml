@@ -4,7 +4,7 @@
 		module="arquillian-deployment-generator-bnd"
 		revision="1.0.0.Alpha1-SNAPSHOT"
 		status="integration"
-		publication="20140915020856"
+		publication="20140915050856"
 	>
 		<description homepage="" />
 		<m:properties__version.cobertura.plugin>2.6</m:properties__version.cobertura.plugin>

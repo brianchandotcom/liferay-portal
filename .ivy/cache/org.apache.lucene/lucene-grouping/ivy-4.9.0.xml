@@ -4,7 +4,7 @@
 		module="lucene-grouping"
 		revision="4.9.0"
 		status="release"
-		publication="20140624053940"
+		publication="20140624083940"
 	>
 		<description homepage="">
 		Lucene Grouping Module

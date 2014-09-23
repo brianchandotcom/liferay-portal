@@ -4,7 +4,7 @@
 		module="org.eclipse.gemini.blueprint.core"
 		revision="2.0.0.M02"
 		status="release"
-		publication="20140521120628"
+		publication="20140521150628"
 	>
 		<description homepage="">
 		POM was created by Sonatype Nexus

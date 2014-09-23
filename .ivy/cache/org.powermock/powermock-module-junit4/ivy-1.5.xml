@@ -4,7 +4,7 @@
 		module="powermock-module-junit4"
 		revision="1.5"
 		status="release"
-		publication="20121204020311"
+		publication="20121204050311"
 	>
 		<description homepage="http://www.powermock.org">
 		PowerMock support module for JUnit 4.x.

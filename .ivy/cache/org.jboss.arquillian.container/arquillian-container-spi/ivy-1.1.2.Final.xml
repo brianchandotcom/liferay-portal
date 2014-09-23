@@ -4,7 +4,7 @@
 		module="arquillian-container-spi"
 		revision="1.1.2.Final"
 		status="release"
-		publication="20131115095636"
+		publication="20131115125636"
 	>
 		<description homepage="">
 		SPI for the container extension.

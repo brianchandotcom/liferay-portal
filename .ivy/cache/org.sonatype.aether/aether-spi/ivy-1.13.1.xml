@@ -4,7 +4,7 @@
 		module="aether-spi"
 		revision="1.13.1"
 		status="release"
-		publication="20111129052852"
+		publication="20111129082852"
 	>
 		<description homepage="">
 		The service provider interface for repository system implementations and repository connectors.

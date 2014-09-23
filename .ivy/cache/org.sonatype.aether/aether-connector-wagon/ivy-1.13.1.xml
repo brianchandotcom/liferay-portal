@@ -4,7 +4,7 @@
 		module="aether-connector-wagon"
 		revision="1.13.1"
 		status="release"
-		publication="20111129053058"
+		publication="20111129083058"
 	>
 		<description homepage="">
 		A repository connector implementation based on Maven Wagon.

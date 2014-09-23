@@ -4,7 +4,7 @@
 		module="javax.servlet.jsp-api"
 		revision="2.3.2-b01"
 		status="release"
-		publication="20140528144303"
+		publication="20140528174303"
 	>
 		<license name="CDDL + GPLv2 with classpath exception" url="http://glassfish.dev.java.net/nonav/public/CDDL+GPL.html" />
 		<description homepage="http://jsp.java.net" />

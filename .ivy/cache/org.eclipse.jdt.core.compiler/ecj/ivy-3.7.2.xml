@@ -4,7 +4,7 @@
 		module="ecj"
 		revision="3.7.2"
 		status="release"
-		publication="20120421092539"
+		publication="20120421122539"
 	>
 		<license name="Eclipse Public License v1.0" url="http://www.eclipse.org/org/documents/epl-v10.php" />
 		<description homepage="http://www.eclipse.org/jdt/">

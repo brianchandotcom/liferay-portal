@@ -4,7 +4,7 @@
 		module="gogo-parent"
 		revision="0.6.0"
 		status="release"
-		publication="20100607085855"
+		publication="20100607115855"
 	>
 		<description homepage="">
 		Apache Felix Gogo Subproject

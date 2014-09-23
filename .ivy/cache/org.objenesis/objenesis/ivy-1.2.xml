@@ -4,7 +4,7 @@
 		module="objenesis"
 		revision="1.2"
 		status="release"
-		publication="20090826155019"
+		publication="20090826185019"
 	>
 		<description homepage="http://objenesis.googlecode.com/svn/docs/index.html">
 		A library for instantiating Java objects

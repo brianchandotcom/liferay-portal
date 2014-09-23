@@ -4,7 +4,7 @@
 		module="arquillian-core-impl-base"
 		revision="1.1.2.Final"
 		status="release"
-		publication="20131115095348"
+		publication="20131115125348"
 	>
 		<description homepage="">
 		Impl Base for the Core.

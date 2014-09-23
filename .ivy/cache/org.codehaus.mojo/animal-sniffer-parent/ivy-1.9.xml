@@ -4,7 +4,7 @@
 		module="animal-sniffer-parent"
 		revision="1.9"
 		status="release"
-		publication="20121009182525"
+		publication="20121009212525"
 	>
 		<license name="MIT license" url="http://www.opensource.org/licenses/mit-license.php" />
 		<description homepage="http://mojo.codehaus.org/animal-sniffer">

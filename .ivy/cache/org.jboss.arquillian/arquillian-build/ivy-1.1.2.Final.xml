@@ -4,7 +4,7 @@
 		module="arquillian-build"
 		revision="1.1.2.Final"
 		status="release"
-		publication="20131115095258"
+		publication="20131115125258"
 	>
 		<description homepage="">
 		Arquillian Build Configuration

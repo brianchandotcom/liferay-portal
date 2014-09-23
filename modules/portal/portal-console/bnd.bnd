@@ -1,7 +1,0 @@
-Bundle-Name: Liferay Portal Console
-Bundle-SymbolicName: com.liferay.portal.console
-Bundle-Version: 1.0.0
-Include-Resource: classes
-
--include: classes/META-INF/MANIFEST.MF
--removeheaders: Bundle-ActivationPolicy

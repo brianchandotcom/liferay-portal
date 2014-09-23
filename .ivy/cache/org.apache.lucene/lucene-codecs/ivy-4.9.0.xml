@@ -4,7 +4,7 @@
 		module="lucene-codecs"
 		revision="4.9.0"
 		status="release"
-		publication="20140624053754"
+		publication="20140624083754"
 	>
 		<description homepage="">
 		Codecs and postings formats for Apache Lucene.

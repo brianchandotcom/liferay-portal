@@ -4,7 +4,7 @@
 		module="powermock-api-support"
 		revision="1.5"
 		status="release"
-		publication="20121204020218"
+		publication="20121204050218"
 	>
 		<description homepage="">
 		Utility classes.

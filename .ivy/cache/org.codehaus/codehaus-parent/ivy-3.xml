@@ -4,7 +4,7 @@
 		module="codehaus-parent"
 		revision="3"
 		status="release"
-		publication="20100906054532"
+		publication="20140917232641"
 	>
 		<description homepage="http://codehaus.org/">
 		The Codehaus is a collaborative environment for building open source projects with a strong emphasis on modern languages, focussed on quality components that meet real world needs.

@@ -4,7 +4,7 @@
 		module="arquillian-config-impl-base"
 		revision="1.1.2.Final"
 		status="release"
-		publication="20131115095501"
+		publication="20131115125501"
 	>
 		<description homepage="">
 		Implementation for the Config module.

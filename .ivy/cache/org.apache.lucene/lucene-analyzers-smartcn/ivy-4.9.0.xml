@@ -4,7 +4,7 @@
 		module="lucene-analyzers-smartcn"
 		revision="4.9.0"
 		status="release"
-		publication="20140624053656"
+		publication="20140624083656"
 	>
 		<description homepage="">
 		Smart Chinese Analyzer

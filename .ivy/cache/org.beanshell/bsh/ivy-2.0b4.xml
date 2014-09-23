@@ -4,7 +4,7 @@
 		module="bsh"
 		revision="2.0b4"
 		status="release"
-		publication="20060525181005"
+		publication="20060525211005"
 	>
 		<description homepage="">
 		BeanShell

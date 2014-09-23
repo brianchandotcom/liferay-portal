@@ -4,7 +4,7 @@
 		module="error_prone_parent"
 		revision="1.0.8"
 		status="release"
-		publication="20131120184343"
+		publication="20131120214343"
 	>
 		<description homepage="" />
 		<m:properties__project.build.sourceEncoding>UTF-8</m:properties__project.build.sourceEncoding>

@@ -4,7 +4,7 @@
 		module="arquillian-core-api"
 		revision="1.1.2.Final"
 		status="release"
-		publication="20131115095310"
+		publication="20131115125310"
 	>
 		<description homepage="">
 		API for the Core.

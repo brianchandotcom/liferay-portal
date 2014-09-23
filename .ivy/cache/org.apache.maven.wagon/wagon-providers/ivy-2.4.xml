@@ -4,7 +4,7 @@
 		module="wagon-providers"
 		revision="2.4"
 		status="release"
-		publication="20130205011315"
+		publication="20130205041315"
 	>
 		<description homepage="" />
 		<m:dependency.management__org.apache.maven.wagon__wagon-provider-api__version>2.4</m:dependency.management__org.apache.maven.wagon__wagon-provider-api__version>

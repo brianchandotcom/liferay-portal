@@ -4,7 +4,7 @@
 		module="aether-util"
 		revision="1.13.1"
 		status="release"
-		publication="20111129052939"
+		publication="20111129082939"
 	>
 		<description homepage="">
 		A collection of utility classes to ease usage of the repository system.

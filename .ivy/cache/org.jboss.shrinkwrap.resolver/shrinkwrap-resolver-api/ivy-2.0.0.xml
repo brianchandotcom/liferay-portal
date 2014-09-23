@@ -4,7 +4,7 @@
 		module="shrinkwrap-resolver-api"
 		revision="2.0.0"
 		status="release"
-		publication="20130619010648"
+		publication="20130619040648"
 	>
 		<description homepage="">
 		API to Resolve Dependencies from a Generic Backend

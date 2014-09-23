@@ -4,7 +4,7 @@
 		module="arquillian-protocol-jmx"
 		revision="1.1.2.Final"
 		status="release"
-		publication="20131115100250"
+		publication="20131115130250"
 	>
 		<description homepage="">
 		Protocol handler for communicating via JMX

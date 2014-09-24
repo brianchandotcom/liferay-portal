@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>TO_FIELD</td>
-	<td>//input[@name='_27_to_value']</td>
+	<td>//input[@name='_27_toValue']</td>
 	<td></td>
 </tr>
 <tr>
@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>CONVERT_BUTTON</td>
-	<td>//input[@value='Convert']</td>
+	<td>//button[contains(@class,'btn-primary') and contains(.,'Convert')]</td>
 	<td></td>
 </tr>
 </tbody>

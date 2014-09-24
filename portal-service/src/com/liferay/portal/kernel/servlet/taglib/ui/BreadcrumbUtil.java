@@ -283,7 +283,8 @@ public class BreadcrumbUtil {
 
 			BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
-			breadcrumbEntry.setTitle(group.getDescriptiveName());
+			breadcrumbEntry.setTitle(
+				group.getDescriptiveName(themeDisplay.getLocale()));
 			breadcrumbEntry.setURL(layoutSetFriendlyURL);
 
 			breadcrumbEntries.add(breadcrumbEntry);

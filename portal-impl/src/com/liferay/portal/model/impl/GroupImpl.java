@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.staging.StagingConstants;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -181,7 +181,7 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public String getDescriptiveName() throws PortalException {
-		return getDescriptiveName(LocaleUtil.getDefault());
+		return getDescriptiveName(LocaleThreadLocal.getThemeDisplayLocale());
 	}
 
 	@Override

@@ -111,13 +111,13 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 			Locale locale = localizedContent.getKey();
 			String content = localizedContent.getValue();
 
-			String germanSubscriptionBodyPreferencesKey =
+			String subscriptionBodyPreferencesKey =
 				LocalizationUtil.getPreferencesKey(
 					getSubscriptionBodyPreferenceName(),
 					LocaleUtil.toLanguageId(locale));
 
 			modifiableSettings.setValue(
-				germanSubscriptionBodyPreferencesKey, content);
+				subscriptionBodyPreferencesKey, content);
 		}
 
 		modifiableSettings.store();

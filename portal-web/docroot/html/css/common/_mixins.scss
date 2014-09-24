@@ -1,7 +1,79 @@
 $breakpoint_phone: 768px !default;
 $breakpoint_tablet: 980px !default;
 
+$screen-lg: 1200px !default;
+$screen-lg-min: $screen-lg;
+$screen-lg-desktop: $screen-lg-min;
+
+$screen-md: 992px !default;
+$screen-md-min: $screen-md;
+$screen-desktop: $screen-md-min;
+
+$screen-sm: 768px !default;
+$screen-sm-min: $screen-sm;
+$screen-tablet: $screen-sm-min;
+
+$screen-xs: 480px !default;
+$screen-xs-min: $screen-xs;
+$screen-phone: $screen-xs-min;
+
+$screen-md-max: ($screen-lg-min - 1) !default;
+$screen-sm-max: ($screen-md-min - 1) !default;
+$screen-xs-max: ($screen-sm-min - 1) !default;
+$screen-xxs-max: ($screen-xs-min - 1) !default;
+
 $form_text_fields: 'input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="time"], input[type="url"], input[type="week"], textarea, .uneditable-input' !default;
+
+@mixin media-query($media-queries...) {
+	$maxWidth: -1;
+	$minWidth: -1;
+
+	@each $media-query in $media-queries {
+		@if ($media-query == $screen-xs-min) or ($media-query == xs) {
+			$minWidth: $screen-xs-min;
+		}
+		@else if ($media-query == $screen-sm-min) or ($media-query == sm) {
+			$minWidth: $screen-sm-min;
+		}
+		@else if ($media-query == $screen-md-min) or ($media-query == md) {
+			$minWidth: $screen-md-min;
+		}
+		@else if ($media-query == $screen-lg-min) or ($media-query == lg) {
+			$minWidth: $screen-lg-min;
+		}
+		@else if ($media-query == $screen-xxs-max) or ($media-query == xxs-max) {
+			$maxWidth: $screen-xxs-max;
+		}
+		@else if ($media-query == $screen-xs-max) or ($media-query == xs-max) {
+			$maxWidth: $screen-xs-max;
+		}
+		@else if ($media-query == $screen-sm-max) or ($media-query == sm-max) {
+			$maxWidth: $screen-sm-max;
+		}
+		@else if ($media-query == $screen-md-max) or ($media-query == md-max) {
+			$maxWidth: $screen-md-max;
+		}
+	}
+
+	@if $maxWidth <= 0 and $minWidth <= 0 {
+		@content;
+	}
+	@else if $maxWidth <= 0 {
+		@media only screen and (min-width: $minWidth) {
+			@content;
+		}
+	}
+	@else if $minWidth <= 0 {
+		@media only screen and (max-width: $maxWidth) {
+			@content;
+		}
+	}
+	@else {
+		@media only screen and (min-width: $minWidth) and (max-width: $maxWidth) {
+			@content;
+		}
+	}
+}
 
 @mixin respond-to($types...) {
 	$maxWidth: -1;
@@ -43,4 +115,52 @@ $form_text_fields: 'input[type="color"], input[type="date"], input[type="datetim
 			@content;
 		}
 	}
+}
+
+@mixin xxs-max {
+	@include media-query(xxs-max) {
+		@content
+	};
+}
+
+@mixin xs {
+	@include media-query(xs) {
+		@content
+	};
+}
+
+@mixin xs-max {
+	@include media-query(xs-max) {
+		@content
+	};
+}
+
+@mixin sm {
+	@include media-query(sm) {
+		@content
+	};
+}
+
+@mixin sm-max {
+	@include media-query(sm-max) {
+		@content
+	};
+}
+
+@mixin md {
+	@include media-query(md) {
+		@content
+	};
+}
+
+@mixin md-max {
+	@include media-query(md-max) {
+		@content
+	};
+}
+
+@mixin lg {
+	@include media-query(lg) {
+		@content
+	};
 }

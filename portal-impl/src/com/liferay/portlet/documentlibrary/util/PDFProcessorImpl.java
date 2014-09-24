@@ -748,7 +748,7 @@ public class PDFProcessorImpl
 			Map<String, String> customLogSettings, File inputFile,
 			File thumbnailFile, File[] previewFiles, String extension,
 			String thumbnailExtension, int dpi, int height, int width,
-			boolean generateThumbnail, boolean generatePreview) {
+			boolean generatePreview, boolean generateThumbnail) {
 
 			_serverId = serverId;
 			_liferayHome = liferayHome;

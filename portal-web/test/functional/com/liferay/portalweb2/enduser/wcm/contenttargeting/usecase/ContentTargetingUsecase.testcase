@@ -646,30 +646,17 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
+		<for list="Admin,Page Visited,Male,Person" param="ruleName">
+			<execute macro="Page#gotoContentCP">
+				<var name="portletName" value="Web Content" />
+				<var name="siteScopeName" value="Site Name" />
+			</execute>
 
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC Site Role Admin View" />
-			<var name="webContentTitle" value="WC Title Admin" />
-		</execute>
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC Page Visited View" />
-			<var name="webContentTitle" value="WC Title Page Visited" />
-		</execute>
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC Male View" />
-			<var name="webContentTitle" value="WC Title Male" />
-		</execute>
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC Female View" />
-			<var name="webContentTitle" value="WC Title Female" />
-		</execute>
+			<execute macro="WebContent#addCP">
+				<var name="webContentContent" value="WC Content ${ruleName}" />
+				<var name="webContentTitle" value="WC Title ${ruleName}" />
+			</execute>
+		</for>
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
@@ -714,94 +701,39 @@
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="male@liferay.com" />
-			<var name="userFirstName" value="Male" />
-			<var name="userLastName" value="Male" />
-			<var name="userScreenName" value="male" />
+		<execute macro="User#addMultipleCP">
+			<var name="usersEmailsList" value="male@liferay.com,person@liferay.com,wcmuser@liferay.com" />
 		</execute>
+
+		<for list="male,person,wcmuser" param="userScreenName">
+			<execute macro="Page#gotoCP">
+				<var name="portletName" value="Users and Organizations" />
+			</execute>
+
+			<execute macro="User#editPasswordCP">
+				<var name="userEmailAddress" value="${userScreenName}@liferay.com" />
+				<var name="userScreenName" value="${userScreenName}" />
+			</execute>
+
+			<execute macro="Page#gotoUsersCP">
+				<var name="portletName" value="Site Memberships" />
+				<var name="siteScopeName" value="Site Name" />
+			</execute>
+
+			<execute macro="Site#addMemberCP">
+				<var name="userFirstName" value="${userScreenName}" />
+				<var name="userLastName" value="${userScreenName}" />
+				<var name="userScreenName" value="${userScreenName}" />
+			</execute>
+		</for>
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="male@liferay.com" />
-			<var name="userScreenName" value="male" />
-		</execute>
-
-		<execute macro="Page#gotoUsersCP">
-			<var name="portletName" value="Site Memberships" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
-		<execute macro="Site#addMemberCP">
-			<var name="userFirstName" value="Male" />
-			<var name="userLastName" value="Male" />
-			<var name="userScreenName" value="male" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="female@liferay.com" />
-			<var name="userFirstName" value="Female" />
+		<execute macro="User#editUserGenderCP">
 			<var name="userGender" value="Female" />
-			<var name="userLastName" value="Female" />
-			<var name="userScreenName" value="female" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="female@liferay.com" />
-			<var name="userScreenName" value="female" />
-		</execute>
-
-		<execute macro="Page#gotoUsersCP">
-			<var name="portletName" value="Site Memberships" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
-		<execute macro="Site#addMemberCP">
-			<var name="userFirstName" value="Female" />
-			<var name="userLastName" value="Female" />
-			<var name="userScreenName" value="female" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="wcmuser@liferay.com" />
-			<var name="userFirstName" value="WCM" />
-			<var name="userLastName" value="User" />
-			<var name="userScreenName" value="wcm" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="wcmuser@liferay.com" />
-			<var name="userScreenName" value="wcm" />
-		</execute>
-
-		<execute macro="Page#gotoUsersCP">
-			<var name="portletName" value="Site Memberships" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
-		<execute macro="Site#addMemberCP">
-			<var name="userFirstName" value="WCM" />
-			<var name="userLastName" value="User" />
-			<var name="userScreenName" value="wcm" />
+			<var name="userScreenName" value="person" />
 		</execute>
 
 		<execute macro="Page#openURL">
@@ -847,15 +779,15 @@
 		</execute>
 
 		<execute macro="UserSegmentContentDisplayPortlet#configureOtherwiseContenDisplayRule">
-			<var name="otherwiseContentTitle" value="WC Title Female" />
+			<var name="otherwiseContentTitle" value="WC Title Person" />
 			<var name="otherwiseContentType" value="Web Content Article" />
 		</execute>
 
-		<execute macro="UserSegmentContentDisplayPortlet#saveContentDisplayConfigurationPG" />
+		<execute macro="UserSegmentContentDisplayPortlet#savePG" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="male@liferay.com" />
-			<var name="userLoginFullName" value="Male Male" />
+			<var name="userLoginFullName" value="male male" />
 		</execute>
 
 		<execute macro="Page#openURL">
@@ -864,7 +796,7 @@
 		</execute>
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
-			<var name="entryContentText" value="WC Male View" />
+			<var name="entryContentText" value="WC Content Male" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -885,12 +817,12 @@
 		</execute>
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
-			<var name="entryContentText" value="WC Page Visited View" />
+			<var name="entryContentText" value="WC Content Page Visited" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="female@liferay.com" />
-			<var name="userLoginFullName" value="Female Female" />
+			<var name="userLoginEmailAddress" value="person@liferay.com" />
+			<var name="userLoginFullName" value="person person" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -900,7 +832,7 @@
 		</execute>
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
-			<var name="entryContentText" value="WC Female View" />
+			<var name="entryContentText" value="WC Content Person" />
 		</execute>
 	</command>
 
@@ -1014,12 +946,17 @@
 			<var name="belongs" value="true" />
 			<var name="contentTitle" value="Web Content Title All" />
 			<var name="contentType" value="Web Content Article" />
-			<var name="otherwiseContentTitle" value="Web Content Title Otherwise" />
-			<var name="otherwiseContentType" value="Web Content Article" />
 			<var name="rowNumber" value="1" />
 			<var name="toAll" value="true" />
 			<var name="userSegmentName" value="User Segment Name Age,User Segment Name Reg Role" />
 		</execute>
+
+		<execute macro="UserSegmentContentDisplayPortlet#configureOtherwiseContenDisplayRule">
+			<var name="otherwiseContentTitle" value="Web Content Title Otherwise" />
+			<var name="otherwiseContentType" value="Web Content Article" />
+		</execute>
+
+		<execute macro="UserSegmentContentDisplayPortlet#savePG" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page Name" />
@@ -1105,12 +1042,17 @@
 			<var name="belongs" value="true" />
 			<var name="contentTitle" value="Web Content Title Any" />
 			<var name="contentType" value="Web Content Article" />
-			<var name="otherwiseContentTitle" value="Web Content Title Otherwise" />
-			<var name="otherwiseContentType" value="Web Content Article" />
 			<var name="rowNumber" value="1" />
 			<var name="toAny" value="true" />
 			<var name="userSegmentName" value="User Segment Name Age,User Segment Name Reg Role" />
 		</execute>
+
+		<execute macro="UserSegmentContentDisplayPortlet#configureOtherwiseContenDisplayRule">
+			<var name="otherwiseContentTitle" value="Web Content Title Otherwise" />
+			<var name="otherwiseContentType" value="Web Content Article" />
+		</execute>
+
+		<execute macro="UserSegmentContentDisplayPortlet#savePG" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page Name" />
@@ -1180,12 +1122,17 @@
 			<var name="belongs" value="true" />
 			<var name="contentTitle" value="DM Document Title 1" />
 			<var name="contentType" value="Document" />
-			<var name="otherwiseContentTitle" value="DM Document Title 2" />
-			<var name="otherwiseContentType" value="Document" />
 			<var name="rowNumber" value="1" />
 			<var name="toAll" value="true" />
 			<var name="userSegmentName" value="User Segment Name" />
 		</execute>
+
+		<execute macro="UserSegmentContentDisplayPortlet#configureOtherwiseContenDisplayRule">
+			<var name="otherwiseContentTitle" value="DM Document Title 2" />
+			<var name="otherwiseContentType" value="Document" />
+		</execute>
+
+		<execute macro="UserSegmentContentDisplayPortlet#savePG" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page Name" />
@@ -1299,12 +1246,17 @@
 			<var name="contentTitle" value="Web Content Title Female" />
 			<var name="contentType" value="Web Content Article" />
 			<var name="doesNotBelong" value="true" />
-			<var name="otherwiseContentTitle" value="Web Content Title Male" />
-			<var name="otherwiseContentType" value="Web Content Article" />
 			<var name="rowNumber" value="1" />
 			<var name="toAll" value="true" />
 			<var name="userSegmentName" value="User Segment Name" />
 		</execute>
+
+		<execute macro="UserSegmentContentDisplayPortlet#configureOtherwiseContenDisplayRule">
+			<var name="otherwiseContentTitle" value="Web Content Title Male" />
+			<var name="otherwiseContentType" value="Web Content Article" />
+		</execute>
+
+		<execute macro="UserSegmentContentDisplayPortlet#savePG" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page Name" />
@@ -1416,6 +1368,8 @@
 			<var name="userSegmentName" value="User Segment Name" />
 		</execute>
 
+		<execute macro="UserSegmentContentDisplayPortlet#savePG" />
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page Name" />
 			<var name="siteName" value="Site Name" />
@@ -1498,12 +1452,17 @@
 			<var name="belongs" value="true" />
 			<var name="contentTitle" value="Web Content Title Male" />
 			<var name="contentType" value="Web Content Article" />
-			<var name="otherwiseContentTitle" value="Web Content Title Female" />
-			<var name="otherwiseContentType" value="Web Content Article" />
 			<var name="rowNumber" value="1" />
 			<var name="toAll" value="true" />
 			<var name="userSegmentName" value="Male User Segment Name" />
 		</execute>
+
+		<execute macro="UserSegmentContentDisplayPortlet#configureOtherwiseContenDisplayRule">
+			<var name="otherwiseContentTitle" value="Web Content Title Female" />
+			<var name="otherwiseContentType" value="Web Content Article" />
+		</execute>
+
+		<execute macro="UserSegmentContentDisplayPortlet#savePG" />
 
 		<execute macro="Page#openURL">
 			<var name="siteName" value="Site Name" />

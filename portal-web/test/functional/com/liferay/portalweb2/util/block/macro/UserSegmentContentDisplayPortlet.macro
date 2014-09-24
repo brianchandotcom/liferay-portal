@@ -104,18 +104,22 @@
 				<execute action="PGUsersegmentcontentdisplay#assertClick" locator-key1="RULE_PANEL_DISPLAY_CONTENT_SELECT_CONTENT_CHOOSE_BUTTON" value1="Choose" />
 
 				<execute action="PGUsersegmentcontentdisplay#selectFrame" value1="relative=top" />
-				<execute action="PGUsersegmentcontentdisplay#selectFrame" locator-key1="USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
 			</then>
 			<else>
 				<execute action="PGUsersegmentcontentdisplay#click" locator-key1="OTHERWISE_PANEL" />
 				<execute action="PGUsersegmentcontentdisplay#click" locator-key1="OTHERWISE_PANEL_DONT_DISPLAY_ANYTHING_RADIO" />
+				<execute action="PGUsersegmentcontentdisplay#selectFrame" value1="relative=top" />
 			</else>
 		</if>
 	</command>
 
-	<command name="saveContentDisplayConfigurationPG">
+	<command name="savePG">
+		<execute action="PGUsersegmentcontentdisplay#selectFrame" locator-key1="USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
+
 		<execute action="PGUsersegmentcontentdisplay#click" locator-key1="SAVE_BUTTON" />
 		<execute action="PGUsersegmentcontentdisplay#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute action="PGUsersegmentcontentdisplay#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewConfiguredDisplayContent">

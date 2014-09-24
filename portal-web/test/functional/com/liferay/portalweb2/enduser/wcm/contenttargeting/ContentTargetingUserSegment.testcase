@@ -1078,12 +1078,17 @@
 			<var name="contentTitle" value="Targeted Web Content Title" />
 			<var name="contentType" value="Web Content Article" />
 			<var name="doesNotBelong" value="true" />
-			<var name="otherwiseContentTitle" value="Targeted Web Content Title 2" />
-			<var name="otherwiseContentType" value="Web Content Article" />
 			<var name="toAny" value="true" />
 			<var name="userSegmentName" value="Female Users" />
 			<var name="viewEntryPG" value="Female Users" />
 		</execute>
+
+		<execute macro="UserSegmentContentDisplayPortlet#configureOtherwiseContenDisplayRule">
+			<var name="otherwiseContentTitle" value="Targeted Web Content Title 2" />
+			<var name="otherwiseContentType" value="Web Content Article" />
+		</execute>
+
+		<execute macro="UserSegmentContentDisplayPortlet#savePG" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page Name" />

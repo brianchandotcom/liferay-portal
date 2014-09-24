@@ -295,6 +295,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 				sb.append(StringPool.TRIPLE_PERIOD);
 			}
 
+			sb.setIndex(sb.index() - 1);
+
 			snippet = sb.toString();
 		}
 

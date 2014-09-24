@@ -72,4 +72,5 @@ public class MBSubscriptionLocalizedContentTest
 	protected String getServiceName() {
 		return MBConstants.SERVICE_NAME;
 	}
+
 }

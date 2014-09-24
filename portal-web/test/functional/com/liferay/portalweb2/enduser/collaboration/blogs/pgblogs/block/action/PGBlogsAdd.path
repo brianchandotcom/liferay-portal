@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>TITLE_FIELD</td>
-	<td>//input[@id='_33_title']</td>
+	<td>//div[@class='entry-title']/h2/div</td>
 	<td></td>
 </tr>
 <tr>
@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>SUBTITLE_FIELD</td>
-	<td>//textarea[contains(@id,'subtitle')]</td>
+	<td>//div[@class='entry-subtitle']/div</td>
 	<td></td>
 </tr>
 <tr>
@@ -85,7 +85,7 @@
 </tr>
 <tr>
 	<td>CONTENT_FIELD</td>
-	<td>//div[contains(@class,'cke_contents')]/iframe</td>
+	<td>//div[@class='entry-content']/div</td>
 	<td></td>
 </tr>
 <tr>

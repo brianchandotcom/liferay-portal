@@ -264,6 +264,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public void stopLogger();
 
+	public void tap(String locator);
+
 	public void typeAceEditor(String locator, String value);
 
 	public void typeFrame(String locator, String value);

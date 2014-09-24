@@ -1,4 +1,5 @@
 <definition component-name="portal-tools">
+	<property name="portal.url" value="http://the-internet.herokuapp.com/status_codes" />
 	<property name="testray.main.component.name" value="Tools" />
 
 	<command name="EchoStatement" priority="5">
@@ -19,31 +20,59 @@
 
 	<command name="IfStatements" priority="5">
 		<if>
-			<condition action="Dockbar#isElementPresent" locator-key1="USER_NAME" />
+			<condition action="ActionLog#isElementPresent" locator-key1="PAGE_TITLE" />
 			<then>
-				<echo message="" />
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Webpage title element was found: PASS" />
+				</execute>
 			</then>
+			<else>
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Webpage title element was not found: FAIL" />
+				</execute>
+			</else>
 		</if>
 
 		<if>
 			<contains string="string" substring="substring" />
 			<then>
-				<echo message="" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Matched incorrect substring to string: FAIL" />
+				</execute>
 			</then>
+			<else>
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Did not match incorrect substring: PASS" />
+				</execute>
+			</else>
 		</if>
 
 		<if>
 			<equals arg1="arg1" arg2="arg2" />
 			<then>
-				<echo message="" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Incorrectly matched arg1 to arg2: FAIL" />
+				</execute>
 			</then>
+			<else>
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Did not match arg1 to arg2: PASS" />
+				</execute>
+			</else>
 		</if>
 
 		<if>
 			<isset var="var" />
 			<then>
-				<echo message="" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Detected non-set variable var as set: FAIL" />
+				</execute>
 			</then>
+			<else>
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Detected variable var is not set: PASS" />
+				</execute>
+			</else>
 		</if>
 
 		<if>
@@ -52,37 +81,77 @@
 				<equals arg1="b" arg2="b" />
 			</and>
 			<then>
-				<echo message="" />
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Both condition cases match: PASS" />
+				</execute>
 			</then>
+			<else>
+				<execute macro="TestUtils#fail">
+					<var name="message" value="One or both condition cases did not match: FAIL" />
+				</execute>
+			</else>
 		</if>
 	</command>
 
 	<command name="WhileLoops" priority="5">
 		<while>
-			<condition action="Dockbar#isElementNotPresent" locator-key1="USER_NAME" />
+			<condition action="ActionLog#isElementNotPresent" locator-key1="PAGE_TITLE" />
 			<then>
-				<echo message="" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Element is present and should not go into this while loop: FAIL" />
+				</execute>
 			</then>
 		</while>
 
 		<while>
 			<contains string="string" substring="substring" />
 			<then>
-				<echo message="" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Matched an incorrect substring: FAIL" />
+				</execute>
 			</then>
 		</while>
 
 		<while>
 			<equals arg1="arg1" arg2="arg2" />
 			<then>
-				<echo message="" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="arg1 does not equal arg2: FAIL" />
+				</execute>
 			</then>
 		</while>
+
+		<var name="number" value="0" />
+
+		<while>
+			<not>
+				<equals arg1="${number}" arg2="4" />
+			</not>
+			<then>
+				<var method="MathUtil#sum(&quot;1&quot;, ${number})" name="number" />
+			</then>
+		</while>
+
+		<if>
+			<equals arg1="${number}" arg2="4" />
+			<then>
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Ending condition sum was 4: PASS" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Ending condition sum was NOT 4: FAIL" />
+				</execute>
+			</else>
+		</if>
 
 		<while>
 			<isset var="var" />
 			<then>
-				<echo message="" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="var is not set: FAIL" />
+				</execute>
 			</then>
 		</while>
 	</command>

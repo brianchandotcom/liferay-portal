@@ -46,7 +46,7 @@
 </tr>
 <tr>
 	<td>ASSIGNED_TO_LABEL</td>
-	<td>//div[@class='lfr-asset-assigned']//label</td>
+	<td>//div[@class='lfr-asset-assigned']//span</td>
 	<td></td>
 </tr>
 <tr>
@@ -62,7 +62,7 @@
 <!--STATE-->
 <tr>
 	<td>STATE_LABEL</td>
-	<td>//div[@class='lfr-asset-status']//label</td>
+	<td>//div[@class='lfr-asset-status']//span</td>
 	<td></td>
 </tr>
 <tr>
@@ -78,7 +78,7 @@
 <!--CREATE_DATE-->
 <tr>
 	<td>CREATE_DATE_LABEL</td>
-	<td>//div[@class='lfr-asset-date']//label</td>
+	<td>//div[@class='lfr-asset-date']//span</td>
 	<td></td>
 </tr>
 <tr>
@@ -94,7 +94,7 @@
 <!--DUE_DATE-->
 <tr>
 	<td>DUE_DATE_LABEL</td>
-	<td>//div[@class='lfr-asset-due-date']//label</td>
+	<td>//div[@class='lfr-asset-due-date']//span</td>
 	<td></td>
 </tr>
 <tr>

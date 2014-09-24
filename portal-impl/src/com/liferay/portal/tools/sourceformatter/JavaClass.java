@@ -630,7 +630,7 @@ public class JavaClass {
 				line.equals(_indent + "public") ||
 				line.equals(_indent + "static {")) {
 
-				Tuple tuple = getJavaTermTuple(line, _content, index, 1, 3);
+				Tuple tuple = getJavaTermTuple(line, _content, index);
 
 				if (tuple == null) {
 					return null;
@@ -711,8 +711,30 @@ public class JavaClass {
 		return javaTerms;
 	}
 
-	protected Tuple getJavaTermTuple(
-		String line, String content, int index, int numLines, int maxLines) {
+	protected Tuple getJavaTermTuple(String line, String content, int index) {
+		int posStartNextLine = index;
+
+		while (!line.endsWith(StringPool.OPEN_CURLY_BRACE) &&
+			   !line.endsWith(StringPool.SEMICOLON)) {
+
+			posStartNextLine =
+				content.indexOf(StringPool.NEW_LINE, posStartNextLine) + 1;
+
+			int posEndNextline = content.indexOf(
+				StringPool.NEW_LINE, posStartNextLine);
+
+			String nextLine = content.substring(
+				posStartNextLine, posEndNextline);
+
+			nextLine = StringUtil.trimLeading(nextLine);
+
+			if (line.endsWith(StringPool.OPEN_PARENTHESIS)) {
+				line += nextLine;
+			}
+			else {
+				line += StringPool.SPACE + nextLine;
+			}
+		}
 
 		line = StringUtil.replace(line, " synchronized " , StringPool.SPACE);
 
@@ -865,29 +887,7 @@ public class JavaClass {
 			return new Tuple("static", TYPE_STATIC_BLOCK);
 		}
 
-		if (numLines < maxLines) {
-			int posStartNextLine =
-				content.indexOf(StringPool.NEW_LINE, index) + 1;
-
-			int posEndNextline = content.indexOf(
-				StringPool.NEW_LINE, posStartNextLine);
-
-			String nextLine = content.substring(
-				posStartNextLine, posEndNextline);
-
-			if (Validator.isNull(nextLine)) {
-				return null;
-			}
-
-			nextLine = StringUtil.trimLeading(nextLine);
-
-			return getJavaTermTuple(
-				line + StringPool.SPACE + nextLine, content, posStartNextLine,
-				numLines + 1, maxLines);
-		}
-		else {
-			return null;
-		}
+		return null;
 	}
 
 	protected String getVariableName(String line) {

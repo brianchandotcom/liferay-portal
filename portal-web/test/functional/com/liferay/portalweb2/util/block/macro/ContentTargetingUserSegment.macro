@@ -304,6 +304,24 @@
 		<execute action="CPContenttargetingAddusersegment#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="userSegmentReports">
+		<var name="key_userSegmentName" value="${userSegmentName}" />
+
+		<execute action="CPContenttargeting#assertClick" locator-key1="USER_SEGMENT_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPContenttargeting#assertClick" locator-key1="USER_SEGMENT_TABLE_ACTIONS_MENULIST_REPORTS" value1="Reports" />
+
+		<var name="key_reportName" value="${reportName}" />
+
+		<execute action="CPContenttargetingUserSegmentReports#assertTextEquals" locator-key1="USER_SEGMENT_REPORTS_TABLE_NAME" value1="${reportName}" />
+		<execute action="CPContenttargetingUserSegmentReports#assertTextEquals" locator-key1="USER_SEGMENT_REPORTS_TABLE_DESCRIPTION" value1="Displays the number of times that content has been viewed by a user belonging to the current user segment." />
+
+		<execute action="CPContenttargetingUserSegmentReports#assertClick" locator-key1="USER_SEGMENT_REPORTS_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPContenttargetingUserSegmentReports#assertClick" locator-key1="USER_SEGMENT_REPORTS_TABLE_ACTIONS_MENULIST_VIEW_REPORT" value1="View Report" />
+
+		<execute action="CPContenttargetingUserSegmentReports#click" locator-key1="UPDATE_REPORT" />
+		<execute action="CPContenttargetingUserSegmentReports#pause" locator1="1000" />
+	</command>
+
 	<command name="viewRulesCP">
 		<var name="key_userSegment" value="${userSegmentName}" />
 
@@ -496,5 +514,14 @@
 				</elseif>
 			</if>
 		</for>
+	</command>
+
+	<command name="viewUserSegmentReportContent">
+		<var name="key_reportTitle" value="${reportTitle}" />
+
+		<execute action="CPContenttargetingUserSegmentReports#assertTextEquals" locator-key1="REPORT_TABLE_TITLE" value1="${reportTitle}" />
+		<execute action="CPContenttargetingUserSegmentReports#assertTextEquals" locator-key1="REPORT_TABLE_TYPE" value1="${reportType}" />
+		<execute action="CPContenttargetingUserSegmentReports#assertTextEquals" locator-key1="REPORT_TABLE_EVENT" value1="${reportEvent}" />
+		<execute action="CPContenttargetingUserSegmentReports#assertTextEquals" locator-key1="REPORT_TABLE_COUNT" value1="${reportCount}" />
 	</command>
 </definition>

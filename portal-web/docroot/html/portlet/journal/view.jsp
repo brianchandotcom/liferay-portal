@@ -125,12 +125,10 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 </aui:script>
 
 <aui:script use="liferay-journal-navigation">
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="mainURL" />
-
 	var journalNavigation = new Liferay.Portlet.JournalNavigation(
 		{
 			advancedSearch: '<%= DisplayTerms.ADVANCED_SEARCH %>',
-			displayStyle: '<%= HtmlUtil.escapeJS(JournalUtil.getDisplayStyle(liferayPortletRequest, displayViews)) %>',
+			displayStyle: '<%= HtmlUtil.escapeJS(journalDisplayContext.getDisplayStyle()) %>',
 			move: {
 				allRowIds: '<%= RowChecker.ALL_ROW_IDS %>',
 				editEntryUrl: '<portlet:actionURL><portlet:param name="struts_action" value="/journal/edit_entry" /></portlet:actionURL>',

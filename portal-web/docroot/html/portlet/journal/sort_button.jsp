@@ -23,8 +23,6 @@ long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folder
 
 String structureId = ParamUtil.getString(request, "structureId");
 
-String displayStyle = JournalUtil.getDisplayStyle(liferayPortletRequest, displayViews);
-
 String orderByType = ParamUtil.getString(request, "orderByType");
 
 String reverseOrderByType = "asc";
@@ -40,7 +38,6 @@ if (orderByType.equals("asc")) {
 		<portlet:param name="navigation" value="<%= navigation %>" />
 		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 		<portlet:param name="structureId" value="<%= structureId %>" />
-		<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 		<portlet:param name="orderByCol" value="display-date" />
 		<portlet:param name="orderByType" value="<%= reverseOrderByType %>" />
 	</portlet:renderURL>
@@ -52,7 +49,6 @@ if (orderByType.equals("asc")) {
 		<portlet:param name="navigation" value="<%= navigation %>" />
 		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 		<portlet:param name="structureId" value="<%= structureId %>" />
-		<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 		<portlet:param name="orderByCol" value="modified-date" />
 		<portlet:param name="orderByType" value="<%= reverseOrderByType %>" />
 	</portlet:renderURL>

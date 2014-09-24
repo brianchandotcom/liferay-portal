@@ -23,8 +23,6 @@ long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folder
 
 String structureId = ParamUtil.getString(request, "structureId");
 
-String displayStyle = JournalUtil.getDisplayStyle(liferayPortletRequest, displayViews);
-
 PortletURL displayStyleURL = renderResponse.createRenderURL();
 
 displayStyleURL.setParameter("struts_action", "/journal/view");
@@ -37,7 +35,7 @@ if (!structureId.equals("0")) {
 %>
 
 <liferay-ui:app-view-display-style
-	displayStyle="<%= displayStyle %>"
+	displayStyle="<%= journalDisplayContext.getDisplayStyle() %>"
 	displayStyleURL="<%= displayStyleURL %>"
-	displayStyles="<%= displayViews %>"
+	displayStyles="<%= journalDisplayContext.getDisplayViews() %>"
 />

@@ -232,25 +232,11 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(PortletKeys.DO
 			displayStyle: '<%= HtmlUtil.escapeJS(displayStyle) %>',
 
 			folders: {
-				defaultParams: {
-					p_p_id: <%= HtmlUtil.escapeJS(portletId) %>,
-					p_p_lifecycle: 0
-				},
 				defaultParentFolderId: '<%= folderId %>',
 				dimensions: {
 					height: '<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT) %>',
 					width: '<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH) %>'
-				},
-				'listViewConfig.useTransition': false,
-
-				<liferay-portlet:resourceURL
-					copyCurrentRenderParameters="<%= false %>"
-					varImpl="mainURL"
-				/>
-
-				mainUrl: '<%= mainURL %>',
-				rootFolderId: '<%= rootFolderId %>',
-				strutsAction: '/document_library/view'
+				}
 			},
 			maxFileSize: <%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) %>,
 			move: {

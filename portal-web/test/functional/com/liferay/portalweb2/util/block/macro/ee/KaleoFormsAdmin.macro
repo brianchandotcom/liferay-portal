@@ -114,6 +114,7 @@
 		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="WORKFLOW_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPKaleoformsadminNewprocess#assertClickNoError" locator-key1="WORKFLOW_MENULIST_DEACTIVATE" value1="Deactivate" />
 		<execute action="CPKaleoformsadminNewprocess#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to deactivate this?" />
+		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="deleteForm">

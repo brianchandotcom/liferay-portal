@@ -2764,7 +2764,7 @@
 
 		<execute macro="KaleoFormsAdmin#next" />
 
-		<execute macro="KaleoFormsAdmin#viewNoUnpublishedWorkflows" />
+		<execute macro="KaleoFormsAdmin#viewNoUnpublishedWorkflowDefinitions" />
 	</command>
 
 	<command name="ViewProcessRecordDetails" priority="5">

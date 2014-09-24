@@ -298,7 +298,7 @@
 </#if>
 
 <#if page_group.isLayoutPrototype()>
-	<#assign the_title = page_group.getDescriptiveName() />
+	<#assign the_title = page_group.getDescriptiveName(locale) />
 </#if>
 
 <#if tilesTitle == "">

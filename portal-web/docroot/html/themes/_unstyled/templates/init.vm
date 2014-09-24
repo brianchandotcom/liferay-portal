@@ -295,7 +295,7 @@
 #end
 
 #if ($page_group.isLayoutPrototype())
-	#set ($the_title = $page_group.getDescriptiveName())
+	#set ($the_title = $page_group.getDescriptiveName($locale))
 #end
 
 #if ($tilesTitle == "")

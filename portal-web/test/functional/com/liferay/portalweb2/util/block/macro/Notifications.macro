@@ -1,66 +1,89 @@
 <definition>
 	<command name="gotoDockbar">
-		<execute action="PGNotificationsdockbar#click" locator-key1="NOTIFICATION_DOCKBAR" />
+		<execute action="PGNotificationsdockbar#click" locator-key1="DOCKBAR" />
 	</command>
 
 	<command name="markAllAsRead">
-		<var name="key_notificationCount" value="${notificationCount}" />
-
-		<execute action="PGNotificationsdockbar#assertClick" locator-key1="MARK_ALL_AS_READ" value1="Mark All as Read (${notificationCount1} of ${notificationCount2})" />
+		<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATIONS_MARK_ALL_AS_READ" value1="Mark as Read" />
 	</command>
 
 	<command name="navigateToContent">
 		<var name="key_contentBody" value="${contentBody}" />
 
-		<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATION_CONTENT" value1="${contentBody}" />
+		<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATIONS_CONTENT" value1="${contentBody}" />
 	</command>
 
 	<command name="navigateToViewAllNotifications">
-		<execute action="PGNotificationsdockbar#assertClick" locator-key1="VIEW_ALL_NOTIFICATIONS" value1="View All Notifications" />
+		<if>
+			<isset var="notificationCount" />
+			<then>
+				<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATIONS_VIEW_ALL_NOTIFICATIONS" value1="notifications (${notificationCount})" />
+			</then>
+			<else>
+				<execute action="PGNotificationsdockbar#click" locator-key1="NOTIFICATIONS_VIEW_ALL_NOTIFICATIONS" />
+			</else>
+		</if>
+	</command>
+
+	<command name="tearDownUnreadNotifications">
+		<execute macro="Page#openURL" />
+
+		<execute action="PGNotificationsdockbar#click" locator-key1="DOCKBAR" />
+
+		<if>
+			<condition action="PGNotificationsdockbar#isElementPresent" locator-key1="NOTIFICATIONS_CONTENT_GENERIC" />
+			<then>
+				<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATIONS_MARK_ALL_AS_READ" value1="Mark as Read" />
+			</then>
+		</if>
 	</command>
 
 	<command name="viewCount">
-		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_COUNT" value1="${notificationCount}" />
+		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="COUNT" value1="${notificationCount}" />
 	</command>
 
 	<command name="viewCountAlert">
-		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_COUNT_ALERT" value1="${notificationCount}" />
+		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="COUNT_ALERT" value1="${notificationCount}" />
+	</command>
+
+	<command name="viewDefaultContent">
+		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATIONS_MESSAGE" value1="You do not have any notifications." />
 	</command>
 
 	<command name="viewNewComment">
 		<var name="assetType" value="${assetType?lowercase()}" />
 		<var name="key_contentBody" value="${contentBody}" />
 
-		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_CONTENT_TITLE" value1="${user} added a new ${assetType} to ${content}." />
-		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_CONTENT_BODY" value1="${contentBody}" />
+		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATIONS_CONTENT_TITLE" value1="${user} added a new ${assetType} to ${content}." />
+		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATIONS_CONTENT_BODY" value1="${contentBody}" />
 	</command>
 
 	<command name="viewNewContent">
 		<var name="assetType" value="${assetType?lowercase()}" />
 		<var name="key_contentBody" value="${contentBody}" />
 
-		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_CONTENT_TITLE" value1="${user} added a new ${assetType}." />
-		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_CONTENT_BODY" value1="${contentBody}" />
+		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATIONS_CONTENT_TITLE" value1="${user} added a new ${assetType}." />
+		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATIONS_CONTENT_BODY" value1="${contentBody}" />
 	</command>
 
 	<command name="viewNotification">
-		<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATION_COUNT" value1="${notificationCount}" />
-		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_CONTENT_GENERIC" value1="${notificationContent}" />
+		<execute action="PGNotificationsdockbar#assertClick" locator-key1="COUNT" value1="${notificationCount}" />
+		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATIONS_CONTENT_GENERIC" value1="${notificationContent}" />
 	</command>
 
 	<command name="viewUpdatedComment">
 		<var name="assetType" value="${assetType?lowercase()}" />
 		<var name="key_contentBody" value="${contentBody}" />
 
-		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_CONTENT_TITLE" value1="${user} updated a ${assetType} to ${content}." />
-		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_CONTENT_BODY" value1="${contentBody}" />
+		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATIONS_CONTENT_TITLE" value1="${user} updated a ${assetType} to ${content}." />
+		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATIONS_CONTENT_BODY" value1="${contentBody}" />
 	</command>
 
 	<command name="viewUpdatedContent">
 		<var name="assetType" value="${assetType?lowercase()}" />
 		<var name="key_contentBody" value="${contentBody}" />
 
-		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_CONTENT_TITLE" value1="${user} updated a ${assetType}." />
-		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_CONTENT_BODY" value1="${contentBody}" />
+		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATIONS_CONTENT_TITLE" value1="${user} updated a ${assetType}." />
+		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATIONS_CONTENT_BODY" value1="${contentBody}" />
 	</command>
 </definition>

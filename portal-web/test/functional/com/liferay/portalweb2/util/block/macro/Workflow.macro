@@ -112,8 +112,8 @@
 	<command name="approveTaskByNotifications">
 		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
 
-		<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATION_COUNT" value1="${notificationCount}" />
-		<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATION_CONTENT_GENERIC" value1="${notificationContent}" />
+		<execute action="PGNotificationsdockbar#assertClick" locator-key1="COUNT" value1="${notificationCount}" />
+		<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATIONS_CONTENT_GENERIC" value1="${notificationContent}" />
 
 		<execute action="CPMyworkflowtasksTask#selectFrame" locator-key1="MANAGE_MY_ACCOUNT_IFRAME" />
 		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="ASSIGNED_TO" value1="${userName}" />
@@ -229,8 +229,8 @@
 	<command name="assignToMeTaskByNotifications">
 		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
 
-		<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATION_COUNT" value1="${notificationCount}" />
-		<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATION_CONTENT_GENERIC" value1="${notificationContent}" />
+		<execute action="PGNotificationsdockbar#assertClick" locator-key1="COUNT" value1="${notificationCount}" />
+		<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATIONS_CONTENT_GENERIC" value1="${notificationContent}" />
 
 		<execute action="CPMyworkflowtasksTask#selectFrame" locator-key1="MANAGE_MY_ACCOUNT_IFRAME" />
 		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="ASSIGNED_TO" value1="Nobody" />

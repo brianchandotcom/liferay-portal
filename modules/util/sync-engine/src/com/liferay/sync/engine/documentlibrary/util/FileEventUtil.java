@@ -62,11 +62,14 @@ public class FileEventUtil {
 			repositoryId, syncAccountId);
 
 		if (syncSite.getType() != SyncSite.TYPE_SYSTEM) {
-			parameters.put("serviceContext.addGroupPermissions", true);
+			parameters.put(
+				"serviceContext.groupPermissions",
+				"ADD_DISCUSSION,DELETE,UPDATE,VIEW");
 		}
 
 		if (syncSite.getType() == SyncSite.TYPE_OPEN) {
-			parameters.put("serviceContext.addGuestPermissions", true);
+			parameters.put(
+				"serviceContext.guestPermissions", "ADD_DISCUSSION,VIEW");
 		}
 
 		parameters.put("serviceContext.attributes.overwrite", true);
@@ -95,11 +98,14 @@ public class FileEventUtil {
 			repositoryId, syncAccountId);
 
 		if (syncSite.getType() != SyncSite.TYPE_SYSTEM) {
-			parameters.put("serviceContext.addGroupPermissions", true);
+			parameters.put(
+				"serviceContext.groupPermissions",
+				"ADD_DOCUMENT,ADD_SUBFOLDER,ADD_SHORTCUT,SUBSCRIBE,UPDATE," +
+					"VIEW");
 		}
 
 		if (syncSite.getType() == SyncSite.TYPE_OPEN) {
-			parameters.put("serviceContext.addGuestPermissions", true);
+			parameters.put("serviceContext.guestPermissions", "VIEW");
 		}
 
 		parameters.put("serviceContext.attributes.overwrite", true);

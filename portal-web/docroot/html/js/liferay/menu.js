@@ -430,13 +430,15 @@ AUI.add(
 		Menu.register = function(id) {
 			var menuNode = document.getElementById(id);
 
-			if (!Menu._INSTANCE) {
-				new Menu();
+			if (menuNode) {
+				if (!Menu._INSTANCE) {
+					new Menu();
+				}
+
+				buffer.push(menuNode);
+
+				Menu._registerTask();
 			}
-
-			buffer.push(menuNode);
-
-			Menu._registerTask();
 		};
 
 		Menu._registerTask = A.debounce(

@@ -19,9 +19,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.sync.engine.documentlibrary.event.Event;
 import com.liferay.sync.engine.documentlibrary.model.SyncContext;
-import com.liferay.sync.engine.documentlibrary.model.SyncUser;
 import com.liferay.sync.engine.model.SyncAccount;
+import com.liferay.sync.engine.model.SyncUser;
 import com.liferay.sync.engine.service.SyncAccountService;
+import com.liferay.sync.engine.service.SyncUserService;
 import com.liferay.sync.engine.util.ReleaseInfo;
 import com.liferay.sync.engine.util.RetryUtil;
 
@@ -74,11 +75,16 @@ public class GetSyncContextHandler extends BaseJSONHandler {
 			syncAccount.setUiEvent(SyncAccount.UI_EVENT_SYNC_WEB_OUT_OF_DATE);
 		}
 
-		SyncUser syncUser = syncContext.getSyncUser();
-
-		syncAccount.setUserId(syncUser.getUserId());
-
 		SyncAccountService.update(syncAccount);
+
+		SyncUser remoteSyncUser = syncContext.getSyncUser();
+
+		SyncUser localSyncUser = SyncUserService.fetchSyncUser(
+			syncAccount.getSyncAccountId());
+
+		remoteSyncUser.setSyncUserId(localSyncUser.getSyncUserId());
+
+		SyncUserService.update(remoteSyncUser);
 	}
 
 }

@@ -18,11 +18,13 @@ import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.service.SyncPropService;
 import com.liferay.sync.engine.service.SyncSiteService;
+import com.liferay.sync.engine.service.SyncUserService;
 import com.liferay.sync.engine.service.SyncWatchEventService;
 import com.liferay.sync.engine.service.persistence.SyncAccountPersistence;
 import com.liferay.sync.engine.service.persistence.SyncFilePersistence;
 import com.liferay.sync.engine.service.persistence.SyncPropPersistence;
 import com.liferay.sync.engine.service.persistence.SyncSitePersistence;
+import com.liferay.sync.engine.service.persistence.SyncUserPersistence;
 import com.liferay.sync.engine.service.persistence.SyncWatchEventPersistence;
 import com.liferay.sync.engine.util.LoggerUtil;
 import com.liferay.sync.engine.util.PropsValues;
@@ -97,6 +99,13 @@ public class UpgradeUtil {
 
 		if (!syncSitePersistence.isTableExists()) {
 			syncSitePersistence.createTable();
+		}
+
+		SyncUserPersistence syncUserPersistence =
+			SyncUserService.getSyncUserPersistence();
+
+		if (!syncUserPersistence.isTableExists()) {
+			syncUserPersistence.createTable();
 		}
 
 		SyncWatchEventPersistence syncWatchEventPersistence =

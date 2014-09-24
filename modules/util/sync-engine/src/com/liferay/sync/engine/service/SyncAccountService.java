@@ -20,6 +20,7 @@ import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncAccountModelListener;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.model.SyncSite;
+import com.liferay.sync.engine.model.SyncUser;
 import com.liferay.sync.engine.service.persistence.SyncAccountPersistence;
 import com.liferay.sync.engine.util.Encryptor;
 import com.liferay.sync.engine.util.FileUtil;
@@ -71,7 +72,7 @@ public class SyncAccountService {
 	}
 
 	public static SyncAccount addSyncAccount(
-			String filePathName, String login, int maxConnections, String name,
+			String filePathName, String login, int maxConnections,
 			String password, int pollInterval, SyncSite[] syncSites,
 			boolean trustSelfSigned, String url)
 		throws Exception {
@@ -83,7 +84,6 @@ public class SyncAccountService {
 		syncAccount.setFilePathName(filePathName);
 		syncAccount.setLogin(login);
 		syncAccount.setMaxConnections(maxConnections);
-		syncAccount.setName(name);
 		syncAccount.setPassword(Encryptor.encrypt(password));
 		syncAccount.setPollInterval(pollInterval);
 		syncAccount.setTrustSelfSigned(trustSelfSigned);
@@ -146,6 +146,12 @@ public class SyncAccountService {
 			for (SyncSite syncSite : syncSites) {
 				SyncSiteService.deleteSyncSite(syncSite.getSyncSiteId());
 			}
+
+			// Sync user
+
+			SyncUser syncUser = SyncUserService.fetchSyncUser(syncAccountId);
+
+			SyncUserService.deleteSyncUser(syncUser.getSyncUserId());
 		}
 		catch (SQLException sqle) {
 			if (_logger.isDebugEnabled()) {

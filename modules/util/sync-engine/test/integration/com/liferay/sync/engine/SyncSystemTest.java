@@ -23,6 +23,7 @@ import com.liferay.sync.engine.model.SyncSite;
 import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.service.SyncSiteService;
+import com.liferay.sync.engine.service.SyncUserService;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.LoggerUtil;
 import com.liferay.sync.engine.util.PropsKeys;
@@ -207,11 +208,9 @@ public class SyncSystemTest {
 			});
 
 		for (long syncAccountId : _syncAccountIds.values()) {
-			SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
-				syncAccountId);
+			SyncUser syncUser = SyncUserService.fetchSyncUser(syncAccountId);
 
-			SyncSystemTestUtil.deleteUser(
-				syncAccount.getUserId(), _syncAccount.getSyncAccountId());
+			SyncSystemTestUtil.deleteUser(syncUser.getUserId(), syncAccountId);
 
 			SyncAccountService.deleteSyncAccount(syncAccountId);
 		}

@@ -344,7 +344,7 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
-	<command name="waitForNavigationInteractionTouchScriptClickAt">
+	<command name="waitForNavigationInteractionTouchScriptTap">
 		<execute argument1="//script[contains(@src,'html/js/liferay/navigation_interaction_touch.js')]" selenium="waitForElementPresent" />
 
 		<execute function="Click#tap" />

@@ -1421,7 +1421,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			if ((requiredElapsedTime != 0) &&
 				(elapsedTime > requiredElapsedTime)) {
 
-				user.setLastFailedLoginDate(null);
 				user.setFailedLoginAttempts(0);
 
 				userPersistence.update(user);
@@ -4565,7 +4564,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		user.setLoginIP(loginIP);
 		user.setLastLoginDate(lastLoginDate);
 		user.setLastLoginIP(user.getLoginIP());
-		user.setLastFailedLoginDate(null);
 		user.setFailedLoginAttempts(0);
 
 		userPersistence.update(user);
@@ -4601,7 +4599,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		user.setLockoutDate(lockoutDate);
 
 		if (!lockout) {
-			user.setLastFailedLoginDate(lockoutDate);
 			user.setFailedLoginAttempts(0);
 		}
 

@@ -238,15 +238,11 @@
 			<var name="workflowDefinitionVersionNumber" value="1" />
 		</execute>
 
-		<execute macro="Workflow#deactivateUploadedWorkflowDefinition" />
+		<execute macro="Workflow#deactivateAddedWorkflowDefinition" />
 
-		<var name="key_workflowDefinitionName" value="Uploaded Definition" />
-
-		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_ACTIVE" value1="No" />
-
-		<execute macro="Workflow#reactivateInactiveWorkflowDefinition" />
-
-		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_ACTIVE" value1="Yes" />
+		<execute macro="Workflow#reactivateInactiveWorkflowDefinition">
+			<var name="workflowDefinitionName" value="Uploaded Definition" />
+		</execute>
 	</command>
 
 	<command name="DeactivateAndDeleteUploadedDefinition" priority="4">
@@ -265,7 +261,7 @@
 			<var name="workflowDefinitionVersionNumber" value="1" />
 		</execute>
 
-		<execute macro="Workflow#deactivateUploadedWorkflowDefinition" />
+		<execute macro="Workflow#deactivateAddedWorkflowDefinition" />
 
 		<execute macro="Workflow#deleteWorkflowDefinition" />
 	</command>

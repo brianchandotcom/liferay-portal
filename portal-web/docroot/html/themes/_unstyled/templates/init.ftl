@@ -305,7 +305,7 @@
 	<#assign the_title = htmlUtil.escape(the_title) />
 </#if>
 
-<#if the_title != "" && company_name != site_name>
+<#if the_title != "" && company_name != site_name && !page_group.isLayoutPrototype()>
 	<#assign the_title = the_title + " - " + site_name />
 </#if>
 

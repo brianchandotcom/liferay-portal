@@ -28,10 +28,10 @@ import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermiss
 public class FileEntryDisplayContextHelper {
 
 	public FileEntryDisplayContextHelper(
-		FileEntry fileEntry, PermissionChecker permissionChecker) {
+		PermissionChecker permissionChecker, FileEntry fileEntry) {
 
-		_fileEntry = fileEntry;
 		_permissionChecker = permissionChecker;
+		_fileEntry = fileEntry;
 
 		if (_fileEntry == null) {
 			_setValuesForNullFileEntry();

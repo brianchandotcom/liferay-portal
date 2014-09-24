@@ -98,7 +98,7 @@ public class DefaultDLViewFileVersionDisplayContext
 			WebKeys.THEME_DISPLAY);
 
 		_fileEntryDisplayContextHelper = new FileEntryDisplayContextHelper(
-			_fileEntry, _themeDisplay.getPermissionChecker());
+			_themeDisplay.getPermissionChecker(), _fileEntry);
 		_fileVersionDisplayContextHelper = new FileVersionDisplayContextHelper(
 			fileVersion);
 	}

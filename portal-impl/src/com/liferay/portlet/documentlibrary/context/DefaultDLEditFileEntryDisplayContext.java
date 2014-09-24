@@ -213,7 +213,7 @@ public class DefaultDLEditFileEntryDisplayContext
 			themeDisplay.getLayout(), portletDisplay.getId());
 
 		_fileEntryDisplayContextHelper = new FileEntryDisplayContextHelper(
-			_fileEntry, themeDisplay.getPermissionChecker());
+			themeDisplay.getPermissionChecker(), _fileEntry);
 
 		_fileVersionDisplayContextHelper = new FileVersionDisplayContextHelper(
 			_fileVersion);

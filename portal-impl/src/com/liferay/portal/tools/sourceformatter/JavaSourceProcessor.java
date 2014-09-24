@@ -29,13 +29,13 @@ import com.liferay.portal.kernel.util.Validator;
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.ClassLibrary;
 import com.thoughtworks.qdox.model.JavaField;
-import com.thoughtworks.qdox.model.JavaSource;
 import com.thoughtworks.qdox.model.Type;
+import com.thoughtworks.qdox.model.JavaMethod;
+import com.thoughtworks.qdox.model.JavaSource;
 import com.thoughtworks.qdox.parser.ParseException;
 
 import java.io.File;
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -207,6 +207,79 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
+	protected String checkFinalableFieldTypes(
+		com.thoughtworks.qdox.model.JavaClass javaClass,
+		com.thoughtworks.qdox.model.JavaClass[] javaClasses,
+		com.thoughtworks.qdox.model.JavaField javaField, String content) {
+
+		com.thoughtworks.qdox.model.Type javaClassType =
+			javaClass.asType();
+
+		if (javaClass.isEnum() &&
+				(javaClassType.equals(javaField.getType()))) {
+
+			return content;
+		}
+
+		if (!javaField.isPrivate() || javaField.isFinal()) {
+			return content;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("(\\b|\\.)");
+		sb.append(javaField.getName());
+		sb.append(" (=)|(\\+\\+)|(--)|(\\+=)|(-=)|(\\*=)|(/=)|(%=)");
+		sb.append("|(\\|=)|(&=)|(^=) ");
+
+		Pattern pattern = Pattern.compile(sb.toString());
+
+		for (com.thoughtworks.qdox.model.JavaClass javaSubClass :
+				javaClasses) {
+
+			for (JavaMethod javaMethod : javaSubClass.getMethods()) {
+				if (javaMethod.isConstructor() &&
+						(javaSubClass == javaClass)) {
+
+					continue;
+				}
+
+				Matcher matcher = pattern.matcher(
+					javaMethod.getCodeBlock());
+
+				if (matcher.find()) {
+					return content;
+				}
+			}
+		}
+
+		String[] lines = StringUtil.splitLines(content);
+
+		String line = lines[javaField.getLineNumber() - 1];
+
+		if (javaField.isStatic()) {
+			lines[javaField.getLineNumber() - 1] = StringUtil.replace(
+				line, "private static ", "private static final ");
+		}
+		else {
+			lines[javaField.getLineNumber() - 1] = StringUtil.replace(
+				line, "private ", "private final ");
+		}
+
+		sb = new StringBundler(2 * lines.length);
+
+		for (String contentLine : lines) {
+			sb.append(contentLine);
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		content = sb.toString();
+
+		return content;
+	}
+
 	protected void checkFinderCacheInterfaceMethod(
 		String fileName, String content) {
 
@@ -343,6 +416,64 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String checkImmutableAndStaticableFieldTypes(
+		com.thoughtworks.qdox.model.JavaClass javaClass, JavaField javaField,
+		String content) {
+
+		Type type = javaField.getType();
+
+		String fieldTypeName = type.getFullyQualifiedName();
+
+		if (_immutableFieldTypes == null) {
+			_immutableFieldTypes = getImmutableFieldTypes();
+		}
+
+		if (!javaField.isPrivate() || !javaField.isFinal() ||
+			!_immutableFieldTypes.contains(fieldTypeName)) {
+
+			return content;
+		}
+
+		String oldName = javaField.getName();
+
+		if (!type.isArray() && javaField.isStatic() &&
+			!oldName.equals("serialVersionUID")) {
+
+			Matcher matcher = _camelCasePattern.matcher(oldName);
+
+			String newName = matcher.replaceAll("$1_$2");
+
+			newName = StringUtil.toUpperCase(newName);
+
+			if (newName.charAt(0) != CharPool.UNDERLINE) {
+				newName = StringPool.UNDERLINE.concat(newName);
+			}
+
+			content = content.replaceAll(
+				"(?<=[\\W&&[^.\"]])(" + oldName + ")\\b", newName);
+		}
+
+		String[] lines = StringUtil.splitLines(content);
+
+		String initializationExpression = StringUtil.trim(
+			javaField.getInitializationExpression());
+
+		if (javaField.isStatic() || initializationExpression.isEmpty()
+				|| type.isArray()) {
+
+			return content;
+		}
+
+		String line = lines[javaField.getLineNumber() - 1];
+
+		String newLine = StringUtil.replace(
+			line, "private final", "private static final");
+
+		content = StringUtil.replace(content, line, newLine);
+
+		return content;
+	}
+
+	protected String checkImmutableStaticableAndFinalableFieldTypes(
 		String fileName, String packagePath, String className,
 		String content) {
 
@@ -368,63 +499,18 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return content;
 		}
 
-		com.thoughtworks.qdox.model.JavaClass javaClass =
-			javaDocBuilder.getClassByName(
-				packagePath.concat(StringPool.PERIOD).concat(className));
+		com.thoughtworks.qdox.model.JavaClass[] javaClasses =
+			javaDocBuilder.getClasses();
 
-		String[] lines = null;
+		for (com.thoughtworks.qdox.model.JavaClass javaClass: javaClasses) {
 
-		for (JavaField javaField : javaClass.getFields()) {
-			Type type = javaField.getType();
+			for (JavaField javaField : javaClass.getFields()) {
+				content = checkImmutableAndStaticableFieldTypes(
+					javaClass, javaField, content);
 
-			String fieldTypeName = type.getFullyQualifiedName();
-
-			if (_immutableFieldTypes == null) {
-				_immutableFieldTypes = getImmutableFieldTypes();
+				content = checkFinalableFieldTypes(
+					javaClass, javaClasses, javaField, content);
 			}
-
-			if (!javaField.isPrivate() || !javaField.isFinal() ||
-				!_immutableFieldTypes.contains(fieldTypeName)) {
-
-				continue;
-			}
-
-			String oldName = javaField.getName();
-
-			if (!type.isArray() && javaField.isStatic() &&
-				!oldName.equals("serialVersionUID")) {
-
-				Matcher matcher = _camelCasePattern.matcher(oldName);
-
-				String newName = matcher.replaceAll("$1_$2");
-
-				newName = StringUtil.toUpperCase(newName);
-
-				if (newName.charAt(0) != CharPool.UNDERLINE) {
-					newName = StringPool.UNDERLINE.concat(newName);
-				}
-
-				content = content.replaceAll(
-					"(?<=[\\W&&[^.\"]])(" + oldName + ")\\b", newName);
-			}
-
-			String initializationExpression = StringUtil.trim(
-				javaField.getInitializationExpression());
-
-			if (javaField.isStatic() || initializationExpression.isEmpty()) {
-				continue;
-			}
-
-			if (lines == null) {
-				lines = StringUtil.splitLines(content);
-			}
-
-			String line = lines[javaField.getLineNumber() - 1];
-
-			String newLine = StringUtil.replace(
-				line, "private final", "private static final");
-
-			content = StringUtil.replace(content, line, newLine);
 		}
 
 		return content;
@@ -736,7 +822,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		String newContent = content;
+		String newContent = checkImmutableStaticableAndFinalableFieldTypes(
+			fileName, packagePath, className, content);
 
 		if (newContent.contains("$\n */")) {
 			processErrorMessage(fileName, "*: " + fileName);
@@ -767,14 +854,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			new String[] {
 				"com.liferay.portal.PortalException",
 				"com.liferay.portal.SystemException",
-				"com.liferay.util.LocalizationUtil",
-				"private static final Log _log"
+				"com.liferay.util.LocalizationUtil"
 			},
 			new String[] {
 				"com.liferay.portal.kernel.exception.PortalException",
 				"com.liferay.portal.kernel.exception.SystemException",
-				"com.liferay.portal.kernel.util.LocalizationUtil",
-				"private static Log _log"
+				"com.liferay.portal.kernel.util.LocalizationUtil"
 			});
 
 		newContent = StringUtil.replace(
@@ -823,7 +908,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		if (!isExcluded(_staticLogVariableExclusions, absolutePath)) {
 			newContent = StringUtil.replace(
-				newContent, "private Log _log", "private static Log _log");
+				newContent, "private Log _log",
+				"private static final Log _log");
 		}
 
 		if (newContent.contains("*/\npackage ")) {
@@ -1003,11 +1089,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-48153
 
 		//newContent = applyDiamondOperator(newContent);
-
-		// LPS-49294
-
-		newContent = checkImmutableAndStaticableFieldTypes(
-			fileName, packagePath, className, newContent);
 
 		// LPS-49552
 
@@ -2521,7 +2602,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _lineBreakPattern = Pattern.compile("\\}(\\)+) \\{");
 	private List<String> _lineLengthExclusions;
 	private Pattern _logPattern = Pattern.compile(
-		"\n\tprivate static Log _log = LogFactoryUtil.getLog\\(\n*" +
+		"\n\tprivate static final Log _log = LogFactoryUtil.getLog\\(\n*" +
 			"\t*(.+)\\.class\\)");
 	private List<String> _proxyExclusions;
 	private List<String> _secureRandomExclusions;

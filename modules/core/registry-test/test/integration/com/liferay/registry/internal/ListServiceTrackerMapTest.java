@@ -292,6 +292,17 @@ public class ListServiceTrackerMapTest {
 		}
 	}
 
+	protected ServiceTrackerMap<String, List<TrackedOne>>
+		createServiceTrackerMap() {
+
+		_serviceTrackerMap = ServiceTrackerCollections.multiValueMap(
+			TrackedOne.class, "target");
+
+		_serviceTrackerMap.open();
+
+		return _serviceTrackerMap;
+	}
+
 	protected ServiceRegistration<TrackedOne> registerService(
 		TrackedOne trackedOne) {
 
@@ -329,17 +340,6 @@ public class ListServiceTrackerMapTest {
 
 	@ArquillianResource
 	private Bundle _bundle;
-
-	protected ServiceTrackerMap<String, List<TrackedOne>>
-		createServiceTrackerMap() {
-
-		_serviceTrackerMap = ServiceTrackerCollections.multiValueMap(
-			TrackedOne.class, "target");
-
-		_serviceTrackerMap.open();
-
-		return _serviceTrackerMap;
-	}
 
 	private BundleContext _bundleContext;
 	private ServiceTrackerMap<String, List<TrackedOne>> _serviceTrackerMap;

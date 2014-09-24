@@ -80,6 +80,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_SEGMENT_TABLE_ACTIONS_MENULIST_REPORTS</td>
+	<td>//ul/li/a[contains(.,'Reports')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_SEGMENT_TABLE_ACTIONS_MENULIST_EDIT</td>
 	<td>//ul/li/a[contains(.,'Edit')]</td>
 	<td></td>

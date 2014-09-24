@@ -563,10 +563,10 @@ public class JavaClass {
 	}
 
 	protected String getClassName(String line) {
-		int pos = line.indexOf(" implements ");
+		int pos = line.indexOf(" extends ");
 
 		if (pos == -1) {
-			pos = line.indexOf(" extends ");
+			pos = line.indexOf(" implements ");
 		}
 
 		if (pos == -1) {

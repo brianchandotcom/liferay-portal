@@ -162,10 +162,10 @@ public class BookmarksFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 	protected int getNotInTrashBaseModelsCount(BaseModel<?> parentBaseModel)
 		throws Exception {
 
-		BookmarksFolder parentDLFolder = (BookmarksFolder)parentBaseModel;
+		BookmarksFolder parentFolder = (BookmarksFolder)parentBaseModel;
 
 		return BookmarksFolderLocalServiceUtil.getFoldersCount(
-			parentDLFolder.getGroupId(), parentDLFolder.getFolderId(),
+			parentFolder.getGroupId(), parentFolder.getFolderId(),
 			WorkflowConstants.STATUS_APPROVED);
 	}
 

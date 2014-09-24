@@ -2583,22 +2583,6 @@
 			<var name="kfStatus" value="Approved" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#viewProcessRecordTable">
-			<var name="kfAuthor" value="Test Test" />
-			<var name="kfProcessFieldData" value="Two" />
-			<var name="kfStatus" value="Pending" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#searchProcessRecords">
-			<var name="kfProcessSearchData" value="Approved" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#viewProcessRecordTable">
-			<var name="kfAuthor" value="Test Test" />
-			<var name="kfProcessFieldData" value="One" />
-			<var name="kfStatus" value="Approved" />
-		</execute>
-
 		<execute macro="KaleoFormsAdmin#viewProcessRecordTableRecordNotPresent">
 			<var name="kfProcessFieldData" value="Two" />
 		</execute>
@@ -2615,20 +2599,6 @@
 
 		<execute macro="KaleoFormsAdmin#viewProcessRecordTableRecordNotPresent">
 			<var name="kfProcessFieldData" value="Two" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#searchProcessRecords">
-			<var name="kfProcessSearchData" value="Two" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#viewProcessRecordTable">
-			<var name="kfAuthor" value="Test Test" />
-			<var name="kfProcessFieldData" value="Two" />
-			<var name="kfStatus" value="Approved" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#viewProcessRecordTableRecordNotPresent">
-			<var name="kfProcessFieldData" value="One" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#searchProcessRecords">
@@ -2899,22 +2869,6 @@
 		<execute macro="KaleoFormsAdmin#viewProcessRecordDetailsField">
 			<var name="fieldName" value="Text" />
 			<var name="kfProcessFieldData" value="One" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#cancelProcessRecordDetailsView" />
-
-		<execute macro="KaleoFormsAdmin#searchProcessRecords">
-			<var name="kfProcessSearchData" value="Two" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#viewProcessRecordDetails">
-			<var name="kfProcessFieldData" value="Two" />
-			<var name="kfStatus" value="Pending" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#viewProcessRecordDetailsField">
-			<var name="fieldName" value="Text" />
-			<var name="kfProcessFieldData" value="Two" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#cancelProcessRecordDetailsView" />

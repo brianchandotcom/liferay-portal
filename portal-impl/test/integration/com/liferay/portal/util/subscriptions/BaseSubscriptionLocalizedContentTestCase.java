@@ -16,20 +16,21 @@ package com.liferay.portal.util.subscriptions;
 
 import com.dumbster.smtp.MailMessage;
 
+import com.liferay.portal.kernel.settings.ModifiableSettings;
+import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portal.util.test.MailServiceTestUtil;
-import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-
-import javax.portlet.PortletPreferences;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -58,6 +59,9 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 
 	@Test
 	public void testSubscriptionLocalizedContent() throws Exception {
+		localizedContents.put(LocaleUtil.GERMANY, GERMAN_BODY);
+		localizedContents.put(LocaleUtil.SPAIN, SPANISH_BODY);
+
 		setAddBaseModelSubscriptionBodyPreferences();
 
 		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
@@ -85,26 +89,38 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 
 	protected abstract String getPortletId();
 
+	protected String getServiceName() {
+		return StringPool.BLANK;
+	}
+
 	protected abstract String getSubscriptionBodyPreferenceName()
 		throws Exception;
 
 	protected void setAddBaseModelSubscriptionBodyPreferences()
 		throws Exception {
 
-		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.getStrictPortletSetup(
-				layout, getPortletId());
+		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
+			group.getGroupId(), getServiceName());
 
-		LocalizationUtil.setPreferencesValue(
-			portletPreferences, getSubscriptionBodyPreferenceName(),
-			LocaleUtil.toLanguageId(LocaleUtil.GERMANY), GERMAN_BODY);
-		LocalizationUtil.setPreferencesValue(
-			portletPreferences, getSubscriptionBodyPreferenceName(),
-			LocaleUtil.toLanguageId(LocaleUtil.SPAIN), SPANISH_BODY);
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
 
-		PortletPreferencesLocalServiceUtil.updatePreferences(
-			group.getGroupId(), PortletKeys.PREFS_OWNER_TYPE_GROUP,
-			PortletKeys.PREFS_PLID_SHARED, getPortletId(), portletPreferences);
+		for (Map.Entry<Locale, String> localizedContent :
+				localizedContents.entrySet()) {
+
+			Locale locale = localizedContent.getKey();
+			String content = localizedContent.getValue();
+
+			String subscriptionBodyPreferencesKey =
+				LocalizationUtil.getPreferencesKey(
+					getSubscriptionBodyPreferenceName(),
+					LocaleUtil.toLanguageId(locale));
+
+			modifiableSettings.setValue(
+				subscriptionBodyPreferencesKey, content);
+		}
+
+		modifiableSettings.store();
 	}
 
 	protected static final String GERMAN_BODY = "Hallo Welt";
@@ -113,5 +129,6 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 
 	protected Locale defaultLocale;
 	protected Layout layout;
+	protected Map<Locale, String> localizedContents = new HashMap<>();
 
 }

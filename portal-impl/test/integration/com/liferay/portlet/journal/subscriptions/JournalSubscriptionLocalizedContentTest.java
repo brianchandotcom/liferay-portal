@@ -15,6 +15,9 @@
 package com.liferay.portlet.journal.subscriptions;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
@@ -22,9 +25,12 @@ import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.subscriptions.BaseSubscriptionLocalizedContentTestCase;
 import com.liferay.portal.util.test.TestPropsValues;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.util.test.JournalTestUtil;
+
+import javax.portlet.PortletPreferences;
 
 import org.junit.runner.RunWith;
 
@@ -66,6 +72,26 @@ public class JournalSubscriptionLocalizedContentTest
 	@Override
 	protected String getSubscriptionBodyPreferenceName() throws Exception {
 		return "emailArticleAddedBody";
+	}
+
+	@Override
+	protected void setAddBaseModelSubscriptionBodyPreferences()
+		throws Exception {
+
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.getStrictPortletSetup(
+				layout, getPortletId());
+
+		LocalizationUtil.setPreferencesValue(
+			portletPreferences, getSubscriptionBodyPreferenceName(),
+			LocaleUtil.toLanguageId(LocaleUtil.GERMANY), GERMAN_BODY);
+		LocalizationUtil.setPreferencesValue(
+			portletPreferences, getSubscriptionBodyPreferenceName(),
+			LocaleUtil.toLanguageId(LocaleUtil.SPAIN), SPANISH_BODY);
+
+		PortletPreferencesLocalServiceUtil.updatePreferences(
+			group.getGroupId(), PortletKeys.PREFS_OWNER_TYPE_GROUP,
+			PortletKeys.PREFS_PLID_SHARED, getPortletId(), portletPreferences);
 	}
 
 }

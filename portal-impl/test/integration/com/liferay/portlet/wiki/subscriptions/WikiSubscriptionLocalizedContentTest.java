@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.subscriptions;
+package com.liferay.portlet.wiki.subscriptions;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.test.Sync;
@@ -22,11 +22,13 @@ import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.subscriptions.BaseSubscriptionLocalizedContentTestCase;
 import com.liferay.portal.util.test.TestPropsValues;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
-import com.liferay.portlet.messageboards.util.MBConstants;
-import com.liferay.portlet.messageboards.util.test.MBTestUtil;
+import com.liferay.portlet.wiki.model.WikiNode;
+import com.liferay.portlet.wiki.model.WikiPage;
+import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
+import com.liferay.portlet.wiki.util.WikiConstants;
+import com.liferay.portlet.wiki.util.test.WikiTestUtil;
 
+import org.junit.Before;
 import org.junit.runner.RunWith;
 
 /**
@@ -39,38 +41,47 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class MBSubscriptionLocalizedContentTest
+public class WikiSubscriptionLocalizedContentTest
 	extends BaseSubscriptionLocalizedContentTestCase {
+
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_node = WikiTestUtil.addNode(group.getGroupId());
+	}
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {
-		MBMessage message = MBTestUtil.addMessage(
-			group.getGroupId(), containerModelId, true);
+		WikiPage page = WikiTestUtil.addPage(
+			group.getGroupId(), _node.getNodeId(), true);
 
-		return message.getMessageId();
+		return page.getResourcePrimKey();
 	}
 
 	@Override
 	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
-		MBCategoryLocalServiceUtil.subscribeCategory(
-			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
+		WikiNodeLocalServiceUtil.subscribeNode(
+			TestPropsValues.getUserId(), _node.getNodeId());
 	}
 
 	@Override
 	protected String getPortletId() {
-		return PortletKeys.MESSAGE_BOARDS;
-	}
-
-	@Override
-	protected String getSubscriptionBodyPreferenceName() throws Exception {
-		return "emailMessageAddedBody";
+		return PortletKeys.WIKI;
 	}
 
 	@Override
 	protected String getServiceName() {
-		return MBConstants.SERVICE_NAME;
+		return WikiConstants.SERVICE_NAME;
 	}
+
+	@Override
+	protected String getSubscriptionBodyPreferenceName() throws Exception {
+		return "emailPageAddedBody";
+	}
+
+	private WikiNode _node;
 
 }

@@ -233,6 +233,10 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(PortletKeys.DO
 
 			folders: {
 				defaultParentFolderId: '<%= folderId %>',
+				dimensions: {
+					height: '<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT) %>',
+					width: '<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH) %>'
+				}
 			},
 			maxFileSize: <%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) %>,
 			move: {

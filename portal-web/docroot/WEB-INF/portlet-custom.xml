@@ -181,6 +181,10 @@
 			<value>/html/portlet/document_library/configuration.jsp</value>
 		</init-param>
 		<init-param>
+			<name>single-page-application-cacheable</name>
+			<value>false</value>
+		</init-param>
+		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/document_library/</value>
 		</init-param>

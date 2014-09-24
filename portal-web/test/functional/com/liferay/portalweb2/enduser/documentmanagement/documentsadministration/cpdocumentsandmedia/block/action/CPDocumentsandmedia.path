@@ -274,47 +274,42 @@
 <!--FILTER-->
 <tr>
 	<td>FILTER_HOME</td>
-	<td>//div[@id='_199_folderContainer']/ul/li/a[contains(.,'Home')]</td>
+	<td>//div[contains(@id,'folderContainer')]/ul/li/a[contains(.,'Home')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FILTER_HOME_ACTIONS</td>
-	<td>//span[contains(@class,'entry-action') and contains(@class,'overlay')]/div/a</td>
+	<td>//div[contains(@id,'folderContainer')]/ul/li/a[contains(.,'Home')]/../span[contains(@class,'entry-action')]/div/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FILTER_RECENT</td>
-	<td>//li[contains(@class,'app-view-navigation-entry') and contains(@class,'folder')]/a[contains(.,'Recent')]</td>
+	<td>//div[contains(@id,'folderContainer')]/ul/li/a[contains(.,'Recent')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FILTER_MINE</td>
-	<td>//li[contains(@class,'app-view-navigation-entry') and contains(@class,'folder')]/a[contains(.,'Mine')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_BASIC_DOCUMENT</td>
-	<td>//li[contains(@class,'app-view-navigation-entry') and contains(@class,'folder') and contains(@class,'file-entry-type')]/a[contains(.,'Basic Document')]</td>
+	<td>//div[contains(@id,'folderContainer')]/ul/li/a[contains(.,'Mine')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FILTER_REPOSITORY</td>
-	<td>//li[contains(@class,'app-view-navigation-entry') and contains(@class,'folder')]/a[contains(.,'${key_dmRepositoryName}')]</td>
+	<td>//div[contains(@id,'folderContainer')]/ul/li/a[contains(.,'${key_dmRepositoryName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FILTER_REPOSITORY_GENERIC</td>
-	<td>xpath=(//li[contains(@class,'app-view-navigation-entry') and contains(@class,'folder')]/a)[5]</td>
+	<td>xpath=(//div[contains(@id,'folderContainer')]/ul/li/a)[5]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FILTER_REPOSITORY_ACTIONS</td>
-	<td>//a[contains(.,'${key_dmNavigationEntry}')]/../span[contains(@class,'entry-action') and contains(@class,'overlay')]/div/a</td>
+	<td>//div[contains(@id,'folderContainer')]/ul/li/a[contains(.,'Sharepoint Repository Name')]/../span[contains(@class,'entry-action')]/div/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FILTER_REPOSITORY_ACTIONS_GENERIC</td>
-	<td>xpath=(//span[contains(@class,'entry-action') and contains(@class,'overlay')]/div/a)[2]</td>
+	<td>xpath=(//div[contains(@id,'folderContainer')]/ul/li/a/../span[contains(@class,'entry-action')]/div/a)[2]</td>
 	<td></td>
 </tr>
 <tr>

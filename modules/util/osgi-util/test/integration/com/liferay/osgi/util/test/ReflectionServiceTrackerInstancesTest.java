@@ -145,6 +145,10 @@ public class ReflectionServiceTrackerInstancesTest {
 
 		sr1.unregister();
 		sr2.unregister();
+		sr3.unregister();
+		sr4.unregister();
+
+		reflectionServiceTracker.close();
 	}
 
 	public void
@@ -176,6 +180,8 @@ public class ReflectionServiceTrackerInstancesTest {
 		Assert.assertNull(testInstance.getTrackedOne());
 		Assert.assertNull(testInstance.getTrackedTwo());
 
+		sr1.unregister();
+		sr2.unregister();
 		reflectionServiceTracker.close();
 	}
 

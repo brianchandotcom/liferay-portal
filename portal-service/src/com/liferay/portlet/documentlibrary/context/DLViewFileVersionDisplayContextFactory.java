@@ -22,12 +22,12 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Iván Zaera
  */
-public interface DLFileVersionDisplayContextFactory {
+public interface DLViewFileVersionDisplayContextFactory {
 
-	public DLFileVersionDisplayContext
+	public DLViewFileVersionDisplayContext
 		getDLFileVersionActionsDisplayContext(
-			DLFileVersionDisplayContext
-				parentDLFileVersionDisplayContext,
+			DLViewFileVersionDisplayContext
+				parentDLViewFileVersionDisplayContext,
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion);
 

@@ -22,8 +22,8 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.service.ClassNameLocalService;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.UserLocalService;
-import com.liferay.portlet.documentlibrary.context.DLFileVersionDisplayContext;
-import com.liferay.portlet.documentlibrary.context.DLFileVersionDisplayContextFactory;
+import com.liferay.portlet.documentlibrary.context.DLViewFileVersionDisplayContext;
+import com.liferay.portlet.documentlibrary.context.DLViewFileVersionDisplayContextFactory;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
@@ -41,10 +41,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Iván Zaera
  */
 @Component(
-	immediate = true, service = DLFileVersionDisplayContextFactory.class
+	immediate = true, service = DLViewFileVersionDisplayContextFactory.class
 )
-public class GoogleDocsDLFileVersionDisplayContextFactory
-	implements DLFileVersionDisplayContextFactory {
+public class GoogleDocsDLViewFileVersionDisplayContextFactory
+	implements DLViewFileVersionDisplayContextFactory {
 
 	@Activate
 	public void activate() throws PortalException {
@@ -61,9 +61,9 @@ public class GoogleDocsDLFileVersionDisplayContextFactory
 	}
 
 	@Override
-	public DLFileVersionDisplayContext
+	public DLViewFileVersionDisplayContext
 		getDLFileVersionActionsDisplayContext(
-			DLFileVersionDisplayContext
+			DLViewFileVersionDisplayContext
 				parentDLFileEntryActionsDisplayContext,
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion) {
@@ -72,7 +72,7 @@ public class GoogleDocsDLFileVersionDisplayContextFactory
 			new GoogleDocsMetadataHelper((DLFileVersion)fileVersion.getModel());
 
 		if (googleDocsMetadataHelper.isGoogleDocs()) {
-			return new GoogleDocsDLFileVersionDisplayContext(
+			return new GoogleDocsDLViewFileVersionDisplayContext(
 				parentDLFileEntryActionsDisplayContext, request, response,
 				fileVersion);
 		}

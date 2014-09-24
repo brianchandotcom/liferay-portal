@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.context;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -33,7 +34,8 @@ public class DLEditFileEntryDisplayContextUtil {
 	public static DLEditFileEntryDisplayContext
 		getDLEditFileEntryDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			DLFileEntryType dlFileEntryType) {
+			DLFileEntryType dlFileEntryType)
+		throws PortalException {
 
 		DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext =
 			new DefaultDLEditFileEntryDisplayContext(
@@ -46,7 +48,8 @@ public class DLEditFileEntryDisplayContextUtil {
 	public static DLEditFileEntryDisplayContext
 		getDLEditFileEntryDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileEntry fileEntry) {
+			FileEntry fileEntry)
+		throws PortalException {
 
 		DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext =
 			new DefaultDLEditFileEntryDisplayContext(

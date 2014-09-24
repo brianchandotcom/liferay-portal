@@ -14,7 +14,7 @@
  */
 --%>
 
-<c:if test="<%= dlFileVersionDisplayContext.isDownloadButtonVisible() && DLFileShortcutPermission.contains(permissionChecker, fileShortcut, ActionKeys.VIEW) %>">
+<c:if test="<%= dlViewFileVersionDisplayContext.isDownloadButtonVisible() && DLFileShortcutPermission.contains(permissionChecker, fileShortcut, ActionKeys.VIEW) %>">
 	<liferay-ui:icon
 		iconCssClass="icon-download"
 		message='<%= LanguageUtil.get(request, "download") + " (" + TextFormatter.formatStorageSize(fileEntry.getSize(), locale) + ")" %>'

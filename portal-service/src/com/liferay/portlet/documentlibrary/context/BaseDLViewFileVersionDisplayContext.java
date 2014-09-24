@@ -32,12 +32,12 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Iván Zaera
  */
-public class BaseDLFileVersionDisplayContext
-	extends BaseDLDisplayContext<DLFileVersionDisplayContext>
-	implements DLFileVersionDisplayContext {
+public class BaseDLViewFileVersionDisplayContext
+	extends BaseDLDisplayContext<DLViewFileVersionDisplayContext>
+	implements DLViewFileVersionDisplayContext {
 
-	public BaseDLFileVersionDisplayContext(
-		UUID uuid, DLFileVersionDisplayContext parentDLDisplayContext,
+	public BaseDLViewFileVersionDisplayContext(
+		UUID uuid, DLViewFileVersionDisplayContext parentDLDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
 		FileVersion fileVersion) {
 
@@ -62,25 +62,8 @@ public class BaseDLFileVersionDisplayContext
 	}
 
 	@Override
-	public String getPublishButtonLabel() throws PortalException {
-		return parentDLDisplayContext.getPublishButtonLabel();
-	}
-
-	@Override
-	public String getSaveButtonLabel() throws PortalException {
-		return parentDLDisplayContext.getSaveButtonLabel();
-	}
-
-	@Override
 	public boolean isAssetMetadataVisible() throws PortalException {
 		return parentDLDisplayContext.isAssetMetadataVisible();
-	}
-
-	@Override
-	public boolean isCancelCheckoutDocumentButtonDisabled()
-		throws PortalException {
-
-		return parentDLDisplayContext.isCancelCheckoutDocumentButtonDisabled();
 	}
 
 	@Override
@@ -91,11 +74,6 @@ public class BaseDLFileVersionDisplayContext
 	}
 
 	@Override
-	public boolean isCheckinButtonDisabled() throws PortalException {
-		return parentDLDisplayContext.isCheckinButtonDisabled();
-	}
-
-	@Override
 	public boolean isCheckinButtonVisible() throws PortalException {
 		return parentDLDisplayContext.isCheckinButtonVisible();
 	}
@@ -103,11 +81,6 @@ public class BaseDLFileVersionDisplayContext
 	@Override
 	public boolean isCheckoutDocumentButtonVisible() throws PortalException {
 		return parentDLDisplayContext.isCheckoutDocumentButtonVisible();
-	}
-
-	@Override
-	public boolean isCheckoutDocumentDisabled() throws PortalException {
-		return parentDLDisplayContext.isCheckoutDocumentDisabled();
 	}
 
 	@Override
@@ -143,26 +116,6 @@ public class BaseDLFileVersionDisplayContext
 	@Override
 	public boolean isPermissionsButtonVisible() throws PortalException {
 		return parentDLDisplayContext.isPermissionsButtonVisible();
-	}
-
-	@Override
-	public boolean isPublishButtonDisabled() throws PortalException {
-		return parentDLDisplayContext.isPublishButtonDisabled();
-	}
-
-	@Override
-	public boolean isPublishButtonVisible() throws PortalException {
-		return parentDLDisplayContext.isPublishButtonVisible();
-	}
-
-	@Override
-	public boolean isSaveButtonDisabled() throws PortalException {
-		return parentDLDisplayContext.isSaveButtonDisabled();
-	}
-
-	@Override
-	public boolean isSaveButtonVisible() throws PortalException {
-		return parentDLDisplayContext.isSaveButtonVisible();
 	}
 
 	@Override

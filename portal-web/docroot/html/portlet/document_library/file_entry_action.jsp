@@ -105,7 +105,7 @@ if (fileShortcut != null) {
 }
 
 DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request, dlPortletInstanceSettings);
-DLFileVersionDisplayContext dlFileVersionDisplayContext = DLFileVersionDisplayContextUtil.getDLFileVersionActionsDisplayContext(request, response, fileEntry.getFileVersion());
+DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLViewFileVersionDisplayContextUtil.getDLFileVersionActionsDisplayContext(request, response, fileEntry.getFileVersion());
 %>
 
 <liferay-util:buffer var="iconMenu">
@@ -114,7 +114,7 @@ DLFileVersionDisplayContext dlFileVersionDisplayContext = DLFileVersionDisplayCo
 			<c:when test="<%= (fileShortcut == null) %>">
 
 				<%
-				for (MenuItem menuItem : dlFileVersionDisplayContext.getMenuItems()) {
+				for (MenuItem menuItem : dlViewFileVersionDisplayContext.getMenuItems()) {
 				%>
 
 					<liferay-ui:menu-item menuItem="<%= menuItem %>" />

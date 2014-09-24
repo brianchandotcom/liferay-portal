@@ -108,7 +108,7 @@ if (fileEntry != null) {
 
 boolean saveAsDraft = false;
 
-if ((checkedOut || pending) && !PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED) {
+if ((checkedOut || pending) && !dlPortletInstanceSettings.isEnableFileEntryDrafts()) {
 	saveAsDraft = true;
 }
 
@@ -120,8 +120,6 @@ if (fileEntry == null) {
 else {
 	dlEditFileEntryDisplayContext = DLEditFileEntryDisplayContextUtil.getDLEditFileEntryDisplayContext(request, response, fileEntry);
 }
-
-DLFileVersionDisplayContext dlFileVersionDisplayContext = DLFileVersionDisplayContextUtil.getDLFileVersionActionsDisplayContext(request, response, fileVersion);
 %>
 
 <c:if test="<%= Validator.isNull(referringPortletResource) %>">
@@ -377,26 +375,28 @@ DLFileVersionDisplayContext dlFileVersionDisplayContext = DLFileVersionDisplayCo
 						List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
 
 						for (DDMStructure ddmStructure : ddmStructures) {
-							Fields fields = null;
+							if (dlEditFileEntryDisplayContext.isDDMStructureVisible(ddmStructure)) {
+								Fields fields = null;
 
-							try {
-								DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
+								try {
+									DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
 
-								fields = StorageEngineUtil.getFields(fileEntryMetadata.getDDMStorageId());
-							}
-							catch (Exception e) {
-							}
+									fields = StorageEngineUtil.getFields(fileEntryMetadata.getDDMStorageId());
+								}
+								catch (Exception e) {
+								}
 				%>
 
-							<liferay-ddm:html
-								classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
-								classPK="<%= ddmStructure.getPrimaryKey() %>"
-								fields="<%= fields %>"
-								fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
-								requestedLocale="<%= locale %>"
-							/>
+								<liferay-ddm:html
+									classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
+									classPK="<%= ddmStructure.getPrimaryKey() %>"
+									fields="<%= fields %>"
+									fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
+									requestedLocale="<%= locale %>"
+								/>
 
 				<%
+							}
 						}
 					}
 					catch (Exception e) {
@@ -457,24 +457,24 @@ DLFileVersionDisplayContext dlFileVersionDisplayContext = DLFileVersionDisplayCo
 		</c:if>
 
 		<aui:button-row>
-			<c:if test="<%= dlFileVersionDisplayContext.isSaveButtonVisible() %>">
-				<aui:button disabled="<%= dlFileVersionDisplayContext.isSaveButtonDisabled() %>" name="saveButton" onClick='<%= renderResponse.getNamespace() + "saveFileEntry(true);" %>' value="<%= dlFileVersionDisplayContext.getSaveButtonLabel() %>" />
+			<c:if test="<%= dlEditFileEntryDisplayContext.isSaveButtonVisible() %>">
+				<aui:button disabled="<%= dlEditFileEntryDisplayContext.isSaveButtonDisabled() %>" name="saveButton" onClick='<%= renderResponse.getNamespace() + "saveFileEntry(true);" %>' value="<%= dlEditFileEntryDisplayContext.getSaveButtonLabel() %>" />
 			</c:if>
 
-			<c:if test="<%= dlFileVersionDisplayContext.isPublishButtonVisible() %>">
-				<aui:button disabled="<%= dlFileVersionDisplayContext.isPublishButtonDisabled() %>" name="publishButton" type="submit" value="<%= dlFileVersionDisplayContext.getPublishButtonLabel() %>" />
+			<c:if test="<%= dlEditFileEntryDisplayContext.isPublishButtonVisible() %>">
+				<aui:button disabled="<%= dlEditFileEntryDisplayContext.isPublishButtonDisabled() %>" name="publishButton" type="submit" value="<%= dlEditFileEntryDisplayContext.getPublishButtonLabel() %>" />
 			</c:if>
 
-			<c:if test="<%= dlFileVersionDisplayContext.isCheckoutDocumentButtonVisible() %>">
-				<aui:button disabled="<%= dlFileVersionDisplayContext.isCheckoutDocumentDisabled() %>" onClick='<%= renderResponse.getNamespace() + "checkOut();" %>' value="checkout[document]" />
+			<c:if test="<%= dlEditFileEntryDisplayContext.isCheckoutDocumentButtonVisible() %>">
+				<aui:button disabled="<%= dlEditFileEntryDisplayContext.isCheckoutDocumentButtonDisabled() %>" onClick='<%= renderResponse.getNamespace() + "checkOut();" %>' value="checkout[document]" />
 			</c:if>
 
-			<c:if test="<%= dlFileVersionDisplayContext.isCheckinButtonVisible() %>">
-				<aui:button disabled="<%= dlFileVersionDisplayContext.isCheckinButtonDisabled() %>" onClick='<%= renderResponse.getNamespace() + "checkIn();" %>' value="save-and-checkin" />
+			<c:if test="<%= dlEditFileEntryDisplayContext.isCheckinButtonVisible() %>">
+				<aui:button disabled="<%= dlEditFileEntryDisplayContext.isCheckinButtonDisabled() %>" onClick='<%= renderResponse.getNamespace() + "checkIn();" %>' value="save-and-checkin" />
 			</c:if>
 
-			<c:if test="<%= dlFileVersionDisplayContext.isCancelCheckoutDocumentButtonVisible() %>">
-				<aui:button disabled="<%= dlFileVersionDisplayContext.isCancelCheckoutDocumentButtonDisabled() %>" onClick='<%= renderResponse.getNamespace() + "cancelCheckOut();" %>' value="cancel-checkout[document]" />
+			<c:if test="<%= dlEditFileEntryDisplayContext.isCancelCheckoutDocumentButtonVisible() %>">
+				<aui:button disabled="<%= dlEditFileEntryDisplayContext.isCancelCheckoutDocumentButtonDisabled() %>" onClick='<%= renderResponse.getNamespace() + "cancelCheckOut();" %>' value="cancel-checkout[document]" />
 			</c:if>
 
 			<aui:button href="<%= redirect %>" type="cancel" />

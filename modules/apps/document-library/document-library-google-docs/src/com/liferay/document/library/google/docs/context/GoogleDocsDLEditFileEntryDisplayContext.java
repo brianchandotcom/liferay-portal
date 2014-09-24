@@ -14,10 +14,13 @@
 
 package com.liferay.document.library.google.docs.context;
 
+import com.liferay.document.library.google.docs.util.GoogleDocsConstants;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portlet.documentlibrary.context.BaseDLEditFileEntryDisplayContext;
 import com.liferay.portlet.documentlibrary.context.DLEditFileEntryDisplayContext;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
 import java.util.UUID;
 
@@ -53,6 +56,21 @@ public class GoogleDocsDLEditFileEntryDisplayContext
 	@Override
 	public long getMaximumUploadSize() {
 		return 0;
+	}
+
+	@Override
+	public boolean isDDMStructureVisible(DDMStructure ddmStructure)
+		throws PortalException {
+
+		String structureKey = ddmStructure.getStructureKey();
+
+		if (structureKey.equals(
+				GoogleDocsConstants.DDM_STRUCTURE_KEY_GOOGLE_DOCS)) {
+
+			return false;
+		}
+
+		return super.isDDMStructureVisible(ddmStructure);
 	}
 
 	private static final UUID _UUID = UUID.fromString(

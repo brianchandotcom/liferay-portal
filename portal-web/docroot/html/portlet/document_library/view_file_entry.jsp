@@ -85,7 +85,7 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(DLFileEntryC
 request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 
 DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request, dlPortletInstanceSettings);
-DLFileVersionDisplayContext dlFileVersionDisplayContext = DLFileVersionDisplayContextUtil.getDLFileVersionActionsDisplayContext(request, response, fileVersion);
+DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLViewFileVersionDisplayContextUtil.getDLFileVersionActionsDisplayContext(request, response, fileVersion);
 %>
 
 <portlet:actionURL var="editFileEntry">
@@ -160,7 +160,7 @@ DLFileVersionDisplayContext dlFileVersionDisplayContext = DLFileVersionDisplayCo
 
 			<div class="body-row">
 				<div class="document-info">
-					<c:if test="<%= dlFileVersionDisplayContext.isAssetMetadataVisible() %>">
+					<c:if test="<%= dlViewFileVersionDisplayContext.isAssetMetadataVisible() %>">
 						<h2 class="document-title" title="<%= HtmlUtil.escapeAttribute(documentTitle) %>">
 							<%= HtmlUtil.escape(documentTitle) %>
 						</h2>
@@ -219,7 +219,7 @@ DLFileVersionDisplayContext dlFileVersionDisplayContext = DLFileVersionDisplayCo
 						<%= HtmlUtil.escape(fileVersion.getDescription()) %>
 					</span>
 
-					<c:if test="<%= dlFileVersionDisplayContext.isAssetMetadataVisible() && fileEntry.isSupportsSocial() %>">
+					<c:if test="<%= dlViewFileVersionDisplayContext.isAssetMetadataVisible() && fileEntry.isSupportsSocial() %>">
 						<div class="lfr-asset-categories">
 							<liferay-ui:asset-categories-summary
 								className="<%= DLFileEntryConstants.getClassName() %>"
@@ -242,12 +242,12 @@ DLFileVersionDisplayContext dlFileVersionDisplayContext = DLFileVersionDisplayCo
 				<c:if test="<%= PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED %>">
 
 					<%
-					dlFileVersionDisplayContext.renderPreview(request, response);
+					dlViewFileVersionDisplayContext.renderPreview(request, response);
 					%>
 
 				</c:if>
 
-				<c:if test="<%= dlFileVersionDisplayContext.isAssetMetadataVisible() && PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED %>">
+				<c:if test="<%= dlViewFileVersionDisplayContext.isAssetMetadataVisible() && PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED %>">
 					<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-document-library-comments" extended="<%= true %>" persistState="<%= true %>" title="comments">
 						<portlet:actionURL var="discussionURL">
 							<portlet:param name="struts_action" value="/document_library/edit_file_entry_discussion" />
@@ -269,7 +269,7 @@ DLFileVersionDisplayContext dlFileVersionDisplayContext = DLFileVersionDisplayCo
 
 		<aui:col cssClass="context-pane lfr-asset-column-details" last="<%= true %>" width="<%= 30 %>">
 			<div class="asset-details body-row">
-				<c:if test="<%= dlFileVersionDisplayContext.isAssetMetadataVisible() %>">
+				<c:if test="<%= dlViewFileVersionDisplayContext.isAssetMetadataVisible() %>">
 					<div class="asset-details-content">
 						<h3 class="version <%= fileEntry.isCheckedOut() ? "icon-lock" : StringPool.BLANK %>">
 							<liferay-ui:message key="version" /> <%= HtmlUtil.escape(fileVersion.getVersion()) %>
@@ -371,13 +371,13 @@ DLFileVersionDisplayContext dlFileVersionDisplayContext = DLFileVersionDisplayCo
 
 						<%
 						try {
-							List<DDMStructure> ddmStructures = dlFileVersionDisplayContext.getDDMStructures();
+							List<DDMStructure> ddmStructures = dlViewFileVersionDisplayContext.getDDMStructures();
 
 							for (DDMStructure ddmStructure : ddmStructures) {
 								Fields fields = null;
 
 								try {
-									fields = dlFileVersionDisplayContext.getFields(ddmStructure);
+									fields = dlViewFileVersionDisplayContext.getFields(ddmStructure);
 								}
 								catch (Exception e) {
 								}
@@ -456,7 +456,7 @@ DLFileVersionDisplayContext dlFileVersionDisplayContext = DLFileVersionDisplayCo
 						}
 						%>
 
-						<c:if test="<%= dlFileVersionDisplayContext.isAssetMetadataVisible() %>">
+						<c:if test="<%= dlViewFileVersionDisplayContext.isAssetMetadataVisible() %>">
 							<liferay-ui:panel collapsible="<%= true %>" cssClass="version-history" id="documentLibraryVersionHistoryPanel" persistState="<%= true %>" title="version-history">
 
 								<%
@@ -673,7 +673,7 @@ DLFileVersionDisplayContext dlFileVersionDisplayContext = DLFileVersionDisplayCo
 
 		var fileEntryButtonGroup = [];
 
-		<c:if test="<%= dlFileVersionDisplayContext.isDownloadButtonVisible() %>">
+		<c:if test="<%= dlViewFileVersionDisplayContext.isDownloadButtonVisible() %>">
 			fileEntryButtonGroup.push(
 				{
 					icon: 'icon-download',
@@ -687,7 +687,7 @@ DLFileVersionDisplayContext dlFileVersionDisplayContext = DLFileVersionDisplayCo
 			);
 		</c:if>
 
-		<c:if test="<%= dlFileVersionDisplayContext.isOpenInMsOfficeButtonVisible() %>">
+		<c:if test="<%= dlViewFileVersionDisplayContext.isOpenInMsOfficeButtonVisible() %>">
 			fileEntryButtonGroup.push(
 				{
 					icon: 'icon-file-alt',
@@ -701,7 +701,7 @@ DLFileVersionDisplayContext dlFileVersionDisplayContext = DLFileVersionDisplayCo
 			);
 		</c:if>
 
-		<c:if test="<%= dlFileVersionDisplayContext.isEditButtonVisible() %>">
+		<c:if test="<%= dlViewFileVersionDisplayContext.isEditButtonVisible() %>">
 			fileEntryButtonGroup.push(
 				{
 
@@ -722,7 +722,7 @@ DLFileVersionDisplayContext dlFileVersionDisplayContext = DLFileVersionDisplayCo
 			);
 		</c:if>
 
-		<c:if test="<%= dlFileVersionDisplayContext.isMoveButtonVisible() %>">
+		<c:if test="<%= dlViewFileVersionDisplayContext.isMoveButtonVisible() %>">
 			fileEntryButtonGroup.push(
 				{
 
@@ -743,7 +743,7 @@ DLFileVersionDisplayContext dlFileVersionDisplayContext = DLFileVersionDisplayCo
 			);
 		</c:if>
 
-		<c:if test="<%= dlFileVersionDisplayContext.isCheckoutDocumentButtonVisible() %>">
+		<c:if test="<%= dlViewFileVersionDisplayContext.isCheckoutDocumentButtonVisible() %>">
 			fileEntryButtonGroup.push(
 				{
 
@@ -759,7 +759,7 @@ DLFileVersionDisplayContext dlFileVersionDisplayContext = DLFileVersionDisplayCo
 			);
 		</c:if>
 
-		<c:if test="<%= dlFileVersionDisplayContext.isCancelCheckoutDocumentButtonVisible() %>">
+		<c:if test="<%= dlViewFileVersionDisplayContext.isCancelCheckoutDocumentButtonVisible() %>">
 			fileEntryButtonGroup.push(
 				{
 
@@ -775,7 +775,7 @@ DLFileVersionDisplayContext dlFileVersionDisplayContext = DLFileVersionDisplayCo
 			);
 		</c:if>
 
-		<c:if test="<%= dlFileVersionDisplayContext.isCheckinButtonVisible() %>">
+		<c:if test="<%= dlViewFileVersionDisplayContext.isCheckinButtonVisible() %>">
 			fileEntryButtonGroup.push(
 				{
 
@@ -791,7 +791,7 @@ DLFileVersionDisplayContext dlFileVersionDisplayContext = DLFileVersionDisplayCo
 			);
 		</c:if>
 
-		<c:if test="<%= dlFileVersionDisplayContext.isPermissionsButtonVisible() %>">
+		<c:if test="<%= dlViewFileVersionDisplayContext.isPermissionsButtonVisible() %>">
 			fileEntryButtonGroup.push(
 				{
 					<liferay-security:permissionsURL
@@ -818,7 +818,7 @@ DLFileVersionDisplayContext dlFileVersionDisplayContext = DLFileVersionDisplayCo
 			);
 		</c:if>
 
-		<c:if test="<%= dlFileVersionDisplayContext.isMoveToTheRecycleBinButtonVisible() %>">
+		<c:if test="<%= dlViewFileVersionDisplayContext.isMoveToTheRecycleBinButtonVisible() %>">
 			fileEntryButtonGroup.push(
 				{
 					<portlet:renderURL var="viewFolderURL">
@@ -839,7 +839,7 @@ DLFileVersionDisplayContext dlFileVersionDisplayContext = DLFileVersionDisplayCo
 			);
 		</c:if>
 
-		<c:if test="<%= dlFileVersionDisplayContext.isDeleteButtonVisible() %>">
+		<c:if test="<%= dlViewFileVersionDisplayContext.isDeleteButtonVisible() %>">
 			fileEntryButtonGroup.push(
 				{
 					<portlet:renderURL var="viewFolderURL">

@@ -15,7 +15,7 @@
 --%>
 
 <c:if test="<%= (fileShortcut == null) %>">
-	<c:if test="<%= dlFileVersionDisplayContext.isViewButtonVisible() %>">
+	<c:if test="<%= dlViewFileVersionDisplayContext.isViewButtonVisible() %>">
 		<portlet:renderURL var="viewFileEntryURL">
 			<portlet:param name="struts_action" value="/document_library/view_file_entry" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

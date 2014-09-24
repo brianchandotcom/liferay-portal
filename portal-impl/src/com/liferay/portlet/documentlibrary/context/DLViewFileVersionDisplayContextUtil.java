@@ -28,60 +28,60 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Iván Zaera
  */
-public class DLFileVersionDisplayContextUtil {
+public class DLViewFileVersionDisplayContextUtil {
 
-	public static DLFileVersionDisplayContext
+	public static DLViewFileVersionDisplayContext
 		getDLFileVersionActionsDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion)
 		throws PortalException {
 
-		DLFileVersionDisplayContext dlFileVersionDisplayContext =
-			new DefaultDLFileVersionDisplayContext(
+		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
+			new DefaultDLViewFileVersionDisplayContext(
 				request, response, fileVersion);
 
 		if (fileVersion != null) {
-			dlFileVersionDisplayContext =
+			dlViewFileVersionDisplayContext =
 				_chainDLFileVersionActionsDisplayContexts(
 					request, response, fileVersion,
-					dlFileVersionDisplayContext);
+					dlViewFileVersionDisplayContext);
 		}
 
-		return dlFileVersionDisplayContext;
+		return dlViewFileVersionDisplayContext;
 	}
 
-	private static DLFileVersionDisplayContext
+	private static DLViewFileVersionDisplayContext
 		_chainDLFileVersionActionsDisplayContexts(
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion,
-			DLFileVersionDisplayContext dlFileVersionDisplayContext) {
+			DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext) {
 
-		Collection<DLFileVersionDisplayContextFactory>
+		Collection<DLViewFileVersionDisplayContextFactory>
 			dlFileVersionActionsDisplayContextFactories =
 				_getDLFileVersionActionsDisplayContextFactories();
 
-		for (DLFileVersionDisplayContextFactory
-			dlFileVersionDisplayContextFactory :
+		for (DLViewFileVersionDisplayContextFactory
+			dlViewFileVersionDisplayContextFactory :
 					dlFileVersionActionsDisplayContextFactories) {
 
-			dlFileVersionDisplayContext =
-				dlFileVersionDisplayContextFactory.
+			dlViewFileVersionDisplayContext =
+				dlViewFileVersionDisplayContextFactory.
 					getDLFileVersionActionsDisplayContext(
-						dlFileVersionDisplayContext, request, response,
+						dlViewFileVersionDisplayContext, request, response,
 						fileVersion);
 		}
 
-		return dlFileVersionDisplayContext;
+		return dlViewFileVersionDisplayContext;
 	}
 
-	private static Collection<DLFileVersionDisplayContextFactory>
+	private static Collection<DLViewFileVersionDisplayContextFactory>
 		_getDLFileVersionActionsDisplayContextFactories() {
 
 		try {
 			Registry registry = RegistryUtil.getRegistry();
 
 			return registry.getServices(
-				DLFileVersionDisplayContextFactory.class, null);
+				DLViewFileVersionDisplayContextFactory.class, null);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

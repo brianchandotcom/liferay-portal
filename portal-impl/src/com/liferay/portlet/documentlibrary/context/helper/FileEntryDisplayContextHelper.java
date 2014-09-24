@@ -12,46 +12,44 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.context;
+package com.liferay.portlet.documentlibrary.context.helper;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
-import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 /**
  * @author Iván Zaera
  */
-public class DefaultDLFileVersionDisplayContextHelper {
+public class FileEntryDisplayContextHelper {
 
-	public DefaultDLFileVersionDisplayContextHelper(
-		PermissionChecker permissionChecker, FileEntry fileEntry,
-		FileVersion fileVersion) {
-
-		if ((fileEntry != null) && (fileVersion == null)) {
-			throw new IllegalArgumentException(
-				"File version cannot be null if file entry is not null");
-		}
+	public FileEntryDisplayContextHelper(
+		PermissionChecker permissionChecker, FileEntry fileEntry) {
 
 		_permissionChecker = permissionChecker;
 		_fileEntry = fileEntry;
-		_fileVersion = fileVersion;
 
 		if (_fileEntry == null) {
 			_setValuesForNullFileEntry();
 		}
 	}
 
-	public FileEntry getFileEntry() {
-		return _fileEntry;
+	public DLFileEntryType getDLFileEntryType() throws PortalException {
+		if (isDLFileEntry()) {
+			DLFileEntry dlFileEntry = (DLFileEntry)_fileEntry.getModel();
+
+			return dlFileEntry.getDLFileEntryType();
+		}
+
+		return null;
 	}
 
-	public FileVersion getFileVersion() {
-		return _fileVersion;
+	public FileEntry getFileEntry() {
+		return _fileEntry;
 	}
 
 	public boolean hasDeletePermission() throws PortalException {
@@ -107,12 +105,16 @@ public class DefaultDLFileVersionDisplayContextHelper {
 		return _hasViewPermission;
 	}
 
-	public boolean isApproved() {
-		if (_approved == null) {
-			_approved = _fileVersion.isApproved();
+	public boolean isCancelCheckoutDocumentButtonVisible()
+		throws PortalException {
+
+		if (isCheckinButtonVisible() ||
+			(isCheckedOut() && hasOverrideCheckoutPermission())) {
+
+			return true;
 		}
 
-		return _approved;
+		return false;
 	}
 
 	public boolean isCheckedOut() {
@@ -121,6 +123,30 @@ public class DefaultDLFileVersionDisplayContextHelper {
 		}
 
 		return _checkedOut;
+	}
+
+	public boolean isCheckedOutByMe() {
+		return isCheckedOut() && isLockedByMe();
+	}
+
+	public boolean isCheckedOutByOther() {
+		return isCheckedOut() && !isLockedByMe();
+	}
+
+	public boolean isCheckinButtonVisible() throws PortalException {
+		if (hasUpdatePermission() && isLockedByMe() && isSupportsLocking()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isCheckoutDocumentButtonVisible() throws PortalException {
+		if (hasUpdatePermission() && !isCheckedOut() && isSupportsLocking()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isDLFileEntry() {
@@ -136,12 +162,12 @@ public class DefaultDLFileVersionDisplayContextHelper {
 		return _dlFileEntry;
 	}
 
-	public boolean isDraft() {
-		if (_draft == null) {
-			_draft = _fileVersion.isDraft();
+	public boolean isFileEntryDeletable() throws PortalException {
+		if (hasDeletePermission() && !isCheckedOutByOther()) {
+			return true;
 		}
 
-		return _draft;
+		return false;
 	}
 
 	public boolean isLockedByMe() {
@@ -152,22 +178,6 @@ public class DefaultDLFileVersionDisplayContextHelper {
 		return false;
 	}
 
-	public boolean isOfficeDoc() {
-		if (_officeDoc == null) {
-			_officeDoc = DLUtil.isOfficeExtension(_fileVersion.getExtension());
-		}
-
-		return _officeDoc;
-	}
-
-	public boolean isPending() {
-		if (_pending == null) {
-			_pending = _fileVersion.isPending();
-		}
-
-		return _pending;
-	}
-
 	public boolean isSupportsLocking() {
 		if (_supportsLocking == null) {
 			_supportsLocking = _fileEntry.isSupportsLocking();
@@ -176,36 +186,35 @@ public class DefaultDLFileVersionDisplayContextHelper {
 		return _supportsLocking;
 	}
 
+	public boolean isUpdatable() throws PortalException {
+		if (hasUpdatePermission() && !isCheckedOutByOther()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _setValuesForNullFileEntry() {
-		_approved = false;
 		_checkedOut = false;
 		_dlFileEntry = true;
-		_draft = false;
 		_hasDeletePermission = false;
 		_hasLock = false;
 		_hasOverrideCheckoutPermission = false;
 		_hasPermissionsPermission = true;
 		_hasUpdatePermission = true;
 		_hasViewPermission = false;
-		_officeDoc = false;
-		_pending = false;
 		_supportsLocking = false;
 	}
 
-	private Boolean _approved;
 	private Boolean _checkedOut;
 	private Boolean _dlFileEntry;
-	private Boolean _draft;
 	private FileEntry _fileEntry;
-	private FileVersion _fileVersion;
 	private Boolean _hasDeletePermission;
 	private Boolean _hasLock;
 	private Boolean _hasOverrideCheckoutPermission;
 	private Boolean _hasPermissionsPermission;
 	private Boolean _hasUpdatePermission;
 	private Boolean _hasViewPermission;
-	private Boolean _officeDoc;
-	private Boolean _pending;
 	private PermissionChecker _permissionChecker;
 	private Boolean _supportsLocking;
 

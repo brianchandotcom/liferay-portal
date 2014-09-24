@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Iván Zaera
  */
-public interface DLFileVersionDisplayContext extends DLDisplayContext {
+public interface DLViewFileVersionDisplayContext extends DLDisplayContext {
 
 	public List<DDMStructure> getDDMStructures() throws PortalException;
 
@@ -38,25 +38,14 @@ public interface DLFileVersionDisplayContext extends DLDisplayContext {
 
 	public List<MenuItem> getMenuItems() throws PortalException;
 
-	public String getPublishButtonLabel() throws PortalException;
-
-	public String getSaveButtonLabel() throws PortalException;
-
 	public boolean isAssetMetadataVisible() throws PortalException;
-
-	public boolean isCancelCheckoutDocumentButtonDisabled()
-		throws PortalException;
 
 	public boolean isCancelCheckoutDocumentButtonVisible()
 		throws PortalException;
 
-	public boolean isCheckinButtonDisabled() throws PortalException;
-
 	public boolean isCheckinButtonVisible() throws PortalException;
 
 	public boolean isCheckoutDocumentButtonVisible() throws PortalException;
-
-	public boolean isCheckoutDocumentDisabled() throws PortalException;
 
 	public boolean isDeleteButtonVisible() throws PortalException;
 
@@ -71,14 +60,6 @@ public interface DLFileVersionDisplayContext extends DLDisplayContext {
 	public boolean isOpenInMsOfficeButtonVisible() throws PortalException;
 
 	public boolean isPermissionsButtonVisible() throws PortalException;
-
-	public boolean isPublishButtonDisabled() throws PortalException;
-
-	public boolean isPublishButtonVisible() throws PortalException;
-
-	public boolean isSaveButtonDisabled() throws PortalException;
-
-	public boolean isSaveButtonVisible() throws PortalException;
 
 	public boolean isViewButtonVisible() throws PortalException;
 

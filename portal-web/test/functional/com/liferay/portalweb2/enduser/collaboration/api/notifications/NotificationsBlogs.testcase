@@ -51,11 +51,7 @@
 
 		<execute macro="Notifications#gotoDockbar" />
 
-		<execute macro="Notifications#markAllAsRead">
-			<var name="notificationCount" value="3" />
-			<var name="notificationCount1" value="${notificationCount}" />
-			<var name="notificationCount2" value="${notificationCount}" />
-		</execute>
+		<execute macro="Notifications#markAllAsRead" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blogs Page" />
@@ -64,6 +60,10 @@
 		<execute macro="Notifications#viewCount">
 			<var name="notificationCount" value="0" />
 		</execute>
+
+		<execute macro="Notifications#gotoDockbar" />
+
+		<execute macro="Notifications#viewDefaultContent" />
 	</command>
 
 	<command name="ViewNoWebsiteNotificationForNewBlogsEntry" priority="5">

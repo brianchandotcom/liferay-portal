@@ -1555,7 +1555,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#subcribePG" />
+		<execute macro="DMFolder#subscribePG" />
 
 		<execute macro="DMFolder#gotoPG">
 			<var name="dmFolderName" value="DM Folder Name" />

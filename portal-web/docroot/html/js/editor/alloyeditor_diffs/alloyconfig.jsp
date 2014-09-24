@@ -69,7 +69,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 
 	var toolbars = {
 		default: {
-			add: ['image', 'code'],
+			add: ['imageselector'],
 			image: ['left', 'right'],
 			styles: ['strong', 'em', 'u', 'h1', 'h2', 'a', 'twitter']
 		},

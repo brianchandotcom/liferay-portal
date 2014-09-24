@@ -97,6 +97,15 @@ if (alloyEditorMode.equals("text")) {
 							base: Liferay.AUI.getJavaScriptRootPath() + '/editor/alloyeditor/',
 							combine: Liferay.AUI.getCombine(),
 							comboBase: Liferay.AUI.getComboPath(),
+							modules: {
+								'button-imageselector': {
+									path: 'buttons/button_image_selector.js',
+									requires: [
+										'aui-base',
+										'button-base'
+									]
+								}
+							},
 							root: Liferay.AUI.getJavaScriptRootPath() + '/editor/alloyeditor/'
 						}
 					}

@@ -985,8 +985,6 @@
 		Util,
 		'focusFormField',
 		function(el, caretPosition) {
-			Util.addInputFocus();
-
 			var interacting = false;
 
 			var clickHandle = A.getDoc().on(

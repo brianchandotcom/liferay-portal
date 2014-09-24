@@ -258,6 +258,21 @@ public class LiferaySyncCapability implements SyncCapability {
 			event, DLSyncConstants.TYPE_FOLDER, folder.getFolderId());
 	}
 
+	protected <S extends RepositoryEventType, T>
+		void registerRepositoryEventListener(
+			RepositoryEventRegistry repositoryEventRegistry,
+			Class<S> repositoryEventTypeClass, Class<T> modelClass,
+			String methodName) {
+
+		RepositoryEventListener<S, T> repositoryEventListener =
+			new MethodKeyRepositoryEventListener<S, T>(
+				new MethodKey(
+					LiferaySyncCapability.class, methodName, modelClass));
+
+		repositoryEventRegistry.registerRepositoryEventListener(
+			repositoryEventTypeClass, modelClass, repositoryEventListener);
+	}
+
 	private class DeleteRepositoryModelOperation
 		implements RepositoryModelOperation {
 
@@ -275,21 +290,6 @@ public class LiferaySyncCapability implements SyncCapability {
 			deleteFolder(folder);
 		}
 
-	}
-
-	protected <S extends RepositoryEventType, T>
-		void registerRepositoryEventListener(
-			RepositoryEventRegistry repositoryEventRegistry,
-			Class<S> repositoryEventTypeClass, Class<T> modelClass,
-			String methodName) {
-
-		RepositoryEventListener<S, T> repositoryEventListener =
-			new MethodKeyRepositoryEventListener<S, T>(
-				new MethodKey(
-					LiferaySyncCapability.class, methodName, modelClass));
-
-		repositoryEventRegistry.registerRepositoryEventListener(
-			repositoryEventTypeClass, modelClass, repositoryEventListener);
 	}
 
 	private class MethodKeyRepositoryEventListener

@@ -88,9 +88,6 @@ public abstract class BaseDDMTemplateHandler extends BaseTemplateHandler {
 		return templateVariableGroup;
 	}
 
-	protected abstract TemplateVariableCodeHandler
-		getTemplateVariableCodeHandler();
-
 	protected TemplateVariableGroup getStructureFieldsTemplateVariableGroup(
 			long ddmStructureId, Locale locale)
 		throws PortalException {
@@ -124,6 +121,9 @@ public abstract class BaseDDMTemplateHandler extends BaseTemplateHandler {
 
 		return templateVariableGroup;
 	}
+
+	protected abstract TemplateVariableCodeHandler
+		getTemplateVariableCodeHandler();
 
 	protected TemplateVariableGroup getUtilTemplateVariableGroup() {
 		TemplateVariableGroup templateVariableGroup = new TemplateVariableGroup(

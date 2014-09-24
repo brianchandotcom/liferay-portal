@@ -59,10 +59,9 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.FileVersionVersionComparator;
 import com.liferay.portlet.documentlibrary.webdav.DLWebDAVStorageImpl;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.service.DDMContentLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 
@@ -128,39 +127,38 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 				public void performAction(Object object)
 					throws PortalException {
 
-					DLFileEntryMetadata fileEntryMetadata =
+					DLFileEntryMetadata dlFileEntryMetadata =
 						(DLFileEntryMetadata)object;
 
 					try {
-						DLFileEntry fileEntry =
+						DLFileEntry dlFileEntry =
 							DLFileEntryLocalServiceUtil.getFileEntry(
-								fileEntryMetadata.getFileEntryId());
+								dlFileEntryMetadata.getFileEntryId());
 
-						DDMStructure structure =
+						DDMStructure ddmStructure =
 							DDMStructureLocalServiceUtil.fetchStructure(
-								fileEntryMetadata.getDDMStructureId());
+								dlFileEntryMetadata.getDDMStructureId());
 
-						if (structure == null) {
+						if (ddmStructure == null) {
 							deleteRedundantDLFileEntryMetadata(
-								fileEntryMetadata);
+								dlFileEntryMetadata);
 
 							return;
 						}
 
-						if (fileEntry.getCompanyId() !=
-								structure.getCompanyId()) {
+						if (dlFileEntry.getCompanyId() !=
+								ddmStructure.getCompanyId()) {
 
 							deleteRedundantDLFileEntryMetadata(
-								fileEntryMetadata);
+								dlFileEntryMetadata);
 						}
 					}
 					catch (Exception e) {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
-								"Unable to delete redundant metadata for" +
-									"file entry" +
-										fileEntryMetadata.getFileEntryId() +
-											": " + e.getMessage(),
+								"Unable to delete redundant metadata for " +
+									"file entry " +
+										dlFileEntryMetadata.getFileEntryId(),
 								e);
 						}
 					}
@@ -511,20 +509,16 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 	}
 
 	protected void deleteRedundantDLFileEntryMetadata(
-			DLFileEntryMetadata fileEntryMetadata)
+			DLFileEntryMetadata dlFileEntryMetadata)
 		throws Exception {
 
 		DLFileEntryMetadataLocalServiceUtil.deleteDLFileEntryMetadata(
-			fileEntryMetadata);
+			dlFileEntryMetadata);
 
-		DDMContentLocalServiceUtil.deleteDDMContent(
-			fileEntryMetadata.getDDMStorageId());
-
-		DDMStorageLinkLocalServiceUtil.deleteClassStorageLink(
-			fileEntryMetadata.getDDMStorageId());
+		StorageEngineUtil.deleteByClass(dlFileEntryMetadata.getDDMStorageId());
 
 		DDMStructureLinkLocalServiceUtil.deleteClassStructureLink(
-			fileEntryMetadata.getFileEntryMetadataId());
+			dlFileEntryMetadata.getFileEntryMetadataId());
 	}
 
 	@Override

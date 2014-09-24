@@ -1021,6 +1021,93 @@
 		</execute>
 	</command>
 
+	<command name="UserSegmentContentViewReport" priority="4">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="Male Users" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addUserAttributesGenderRuleCP">
+			<var name="genderRadio" value="Male" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC Male Content View" />
+			<var name="webContentTitle" value="WC Male View Title" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="User Segment Content Display" />
+		</execute>
+
+		<execute action="Home#refresh" />
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="UserSegmentContentDisplayPortlet#configureDisplayContent">
+			<var name="belong" value="true" />
+			<var name="contentTitle" value="WC Male View Title" />
+			<var name="contentType" value="Web Content Article" />
+			<var name="rowNumber" value="1" />
+			<var name="toAny" value="true" />
+			<var name="userSegmentName" value="Male Users" />
+		</execute>
+		<!-- Uncomment this savePG when you submit it to Brian. It required the previous changes made to configureDisplayContent macro.
+		<execute macro="UserSegmentContentDisplayPortlet#savePG" />-->
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
+			<var name="entryContentText" value="WC Male Content View" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#userSegmentReports">
+			<var name="reportName" value="Content Views" />
+			<var name="userSegmentName" value="Male Users" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewUserSegmentReportContent">
+			<var name="reportCount" value="10" />
+			<var name="reportEvent" value="View" />
+			<var name="reportTitle" value="Test Page Name" />
+			<var name="reportType" value="Page" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewUserSegmentReportContent">
+			<var name="reportCount" value="2" />
+			<var name="reportEvent" value="View" />
+			<var name="reportTitle" value="WC Male View Title" />
+			<var name="reportType" value="Web Content Article" />
+		</execute>
+	</command>
+
 	<command name="ViewRulesAppliedUserSegmentContentDisplayPortlet" priority="5">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />

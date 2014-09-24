@@ -1071,8 +1071,8 @@
 			<var name="toAny" value="true" />
 			<var name="userSegmentName" value="Male Users" />
 		</execute>
-		<!-- Uncomment this savePG when you submit it to Brian. It required the previous changes made to configureDisplayContent macro.
-		<execute macro="UserSegmentContentDisplayPortlet#savePG" />-->
+
+		<execute macro="UserSegmentContentDisplayPortlet#savePG" />
 
 		<execute macro="Page#openURL">
 			<var name="siteName" value="Site Name" />
@@ -1088,19 +1088,19 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#userSegmentReports">
+		<execute macro="ContentTargetingUserSegment#viewReport">
 			<var name="reportName" value="Content Views" />
 			<var name="userSegmentName" value="Male Users" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#viewUserSegmentReportContent">
+		<execute macro="ContentTargetingUserSegment#viewReportContent">
 			<var name="reportCount" value="10" />
 			<var name="reportEvent" value="View" />
 			<var name="reportTitle" value="Test Page Name" />
 			<var name="reportType" value="Page" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#viewUserSegmentReportContent">
+		<execute macro="ContentTargetingUserSegment#viewReportContent">
 			<var name="reportCount" value="2" />
 			<var name="reportEvent" value="View" />
 			<var name="reportTitle" value="WC Male View Title" />

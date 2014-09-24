@@ -43,12 +43,14 @@ import com.liferay.portal.util.PortalInstances;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
@@ -56,6 +58,11 @@ import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.FileVersionVersionComparator;
 import com.liferay.portlet.documentlibrary.webdav.DLWebDAVStorageImpl;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.service.DDMContentLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 
@@ -108,6 +115,60 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		dlFileVersion.setStatusDate(new Date());
 
 		DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion);
+	}
+
+	protected void checkDLFileEntryMetadata() throws Exception {
+		ActionableDynamicQuery actionableDynamicQuery =
+			DLFileEntryMetadataLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
+
+				@Override
+				public void performAction(Object object)
+					throws PortalException {
+
+					DLFileEntryMetadata fileEntryMetadata =
+						(DLFileEntryMetadata)object;
+
+					try {
+						DLFileEntry fileEntry =
+							DLFileEntryLocalServiceUtil.getFileEntry(
+								fileEntryMetadata.getFileEntryId());
+
+						DDMStructure structure =
+							DDMStructureLocalServiceUtil.fetchStructure(
+								fileEntryMetadata.getDDMStructureId());
+
+						if (structure == null) {
+							deleteRedundantDLFileEntryMetadata(
+								fileEntryMetadata);
+
+							return;
+						}
+
+						if (fileEntry.getCompanyId() !=
+								structure.getCompanyId()) {
+
+							deleteRedundantDLFileEntryMetadata(
+								fileEntryMetadata);
+						}
+					}
+					catch (Exception e) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to delete redundant metadata for" +
+									"file entry" +
+										fileEntryMetadata.getFileEntryId() +
+											": " + e.getMessage(),
+								e);
+						}
+					}
+				}
+
+			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 	protected void checkDLFileEntryType() throws Exception {
@@ -449,11 +510,29 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		}
 	}
 
+	protected void deleteRedundantDLFileEntryMetadata(
+			DLFileEntryMetadata fileEntryMetadata)
+		throws Exception {
+
+		DLFileEntryMetadataLocalServiceUtil.deleteDLFileEntryMetadata(
+			fileEntryMetadata);
+
+		DDMContentLocalServiceUtil.deleteDDMContent(
+			fileEntryMetadata.getDDMStorageId());
+
+		DDMStorageLinkLocalServiceUtil.deleteClassStorageLink(
+			fileEntryMetadata.getDDMStorageId());
+
+		DDMStructureLinkLocalServiceUtil.deleteClassStructureLink(
+			fileEntryMetadata.getFileEntryMetadataId());
+	}
+
 	@Override
 	protected void doVerify() throws Exception {
 		checkMisversionedDLFileEntries();
 
 		checkDLFileEntryType();
+		checkDLFileEntryMetadata();
 		checkMimeTypes();
 		checkTitles();
 		deleteOrphanedDLFileEntries();

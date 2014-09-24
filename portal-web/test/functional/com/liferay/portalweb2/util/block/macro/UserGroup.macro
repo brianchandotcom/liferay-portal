@@ -359,7 +359,6 @@
 
 	<command name="viewPortletCP">
 		<execute action="CPUsergroups#assertTextEquals" locator-key1="ADD" value1="Add" />
-		<execute action="CPUsergroups#assertElementPresent" locator-key1="DELETE_BUTTON" value1="Delete" />
 		<execute action="CPUsergroups#assertElementPresent" locator-key1="BASIC_SEARCH_FIELD" />
 		<execute action="CPUsergroups#assertElementPresent" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
 		<execute action="CPUsergroups#assertElementPresent" locator-key1="BASIC_SEARCH_ADVANCED" />

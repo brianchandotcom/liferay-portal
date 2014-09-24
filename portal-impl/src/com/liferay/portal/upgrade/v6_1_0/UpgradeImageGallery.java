@@ -20,9 +20,11 @@ import com.liferay.portal.image.FileSystemHook;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.image.Hook;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -48,6 +50,7 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import java.util.ArrayList;
@@ -59,6 +62,7 @@ import java.util.Map;
 /**
  * @author Sergio González
  * @author Miguel Pastor
+ * @author Vilmos Papp
  */
 public class UpgradeImageGallery extends UpgradeProcess {
 
@@ -545,6 +549,39 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		}
 	}
 
+	protected byte[] getImageBytesFromDB(Image image) throws SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select text_ from Image where imageId=?");
+
+			ps.setLong(1, image.getImageId());
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				String getTextObj = rs.getString("text_");
+
+				return (byte[])Base64.stringToObject(getTextObj);
+			}
+			else {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Image not found in DB: " + image.getImageId());
+				}
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+
+		return null;
+	}
+
 	protected List<String> getResourceActionIds(
 		Map<String, Long> bitwiseValues, long actionIdsLong) {
 
@@ -565,9 +602,16 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			long repositoryId, long companyId, String name, Image image)
 		throws Exception {
 
-		InputStream is = _sourceHook.getImageAsStream(image);
+		byte[] bytes = null;
 
-		byte[] bytes = FileUtil.getBytes(is);
+		if (_sourceHook instanceof DatabaseHook) {
+			bytes = getImageBytesFromDB(image);
+		}
+		else {
+			InputStream is = _sourceHook.getImageAsStream(image);
+
+			bytes = FileUtil.getBytes(is);
+		}
 
 		if (name == null) {
 			name = image.getImageId() + StringPool.PERIOD + image.getType();
@@ -644,8 +688,6 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			ResultSet rs = null;
 
 			try {
-				InputStream is = _sourceHook.getImageAsStream(thumbnailImage);
-
 				con = DataAccess.getUpgradeOptimizedConnection();
 
 				ps = con.prepareStatement(
@@ -656,6 +698,17 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 				if (rs.next()) {
 					long fileVersionId = rs.getLong(1);
+
+					InputStream is = null;
+
+					if (_sourceHook instanceof DatabaseHook) {
+						byte[] bytes = getImageBytesFromDB(thumbnailImage);
+
+						is = new UnsyncByteArrayInputStream(bytes);
+					}
+					else {
+						is = _sourceHook.getImageAsStream(thumbnailImage);
+					}
 
 					ImageProcessorUtil.storeThumbnail(
 						companyId, groupId, fileEntryId, fileVersionId,

@@ -2,7 +2,9 @@
 	<command name="gotoNotificationDelivery">
 		<execute macro="Notifications#gotoDockbar" />
 
-		<execute macro="Notifications#navigateToViewAllNotifications" />
+		<execute macro="Notifications#navigateToViewAllNotifications">
+			<var name="notificationCount" value="${notificationCount}" />
+		</execute>
 
 		<execute action="PGNotifications#assertClick" locator-key1="NAVIGATION_NOTIFICATION_DELIVERY" value1="Notification Delivery" />
 	</command>

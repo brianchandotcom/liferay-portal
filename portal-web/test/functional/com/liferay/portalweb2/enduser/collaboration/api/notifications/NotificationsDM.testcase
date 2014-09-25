@@ -30,7 +30,9 @@
 	</tear-down>
 
 	<command name="ViewNoWebsiteNotificationForNewDocumentInFolder" priority="5">
-		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
+		<execute macro="NotificationsPortlet#gotoNotificationDelivery">
+			<var name="notificationCount" value="0" />
+		</execute>
 
 		<execute macro="NotificationsPortlet#setUserDeliveries">
 			<var name="actionType" value="adds" />
@@ -52,7 +54,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#subcribePG" />
+		<execute macro="DMFolder#subscribePG" />
 
 		<execute macro="DMDocument#addPG">
 			<var name="dmDocumentDescription" value="DM Document Description" />
@@ -70,7 +72,9 @@
 	</command>
 
 	<command name="ViewNoWebsiteNotificationForUpdatedDocumentInFolder" priority="5">
-		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
+		<execute macro="NotificationsPortlet#gotoNotificationDelivery">
+			<var name="notificationCount" value="0" />
+		</execute>
 
 		<execute macro="NotificationsPortlet#setUserDeliveries">
 			<var name="actionType" value="updates" />
@@ -92,7 +96,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#subcribePG" />
+		<execute macro="DMFolder#subscribePG" />
 
 		<execute macro="DMDocument#addPG">
 			<var name="dmDocumentDescription" value="DM Document Description" />
@@ -106,6 +110,10 @@
 
 		<execute macro="Notifications#viewCountAlert">
 			<var name="notificationCount" value="1" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
 		<execute macro="DMDocument#editPG">
@@ -136,7 +144,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#subcribePG" />
+		<execute macro="DMFolder#subscribePG" />
 
 		<execute macro="DMDocument#addPG">
 			<var name="dmDocumentDescription" value="DM Document Description" />
@@ -193,7 +201,7 @@
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 
-		<execute macro="DMFolder#subcribePG" />
+		<execute macro="DMFolder#subscribePG" />
 
 		<execute macro="DMDocument#editPG">
 			<var name="dmDocumentTitle" value="DM Document Title" />

@@ -305,7 +305,7 @@
 		<execute action="Permissions#selectFrame" value1="relative=top" />
 	</command>
 
-	<command name="subcribePG">
+	<command name="subscribePG">
 		<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="SUBSCRIBE_LINK" value1="Subscribe" />
 		<execute action="PGDocumentsandmediaFolder#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>

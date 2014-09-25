@@ -7,10 +7,6 @@
 		<case locator-key1="PERMISSIONS_HIDE_OPTIONS_LINK">
 			<execute function="AssertClick#assertPartialTextClickAt" />
 		</case>
-
-		<case locator-key1="PUBLISH_BUTTON">
-			<execute function="AssertClick#assertTextClickAtAndWaitCKEditor" />
-		</case>
 	</command>
 
 	<command name="assertTextEquals">
@@ -38,10 +34,6 @@
 	</command>
 
 	<command name="type">
-		<case locator-key1="CONTENT_FIELD">
-			<execute function="Type#typeFrameWaitForCKEditor" />
-		</case>
-
 		<case locator-key1="DISPLAY_DATE_DATE_INPUT">
 			<execute function="Type#clickAtSendKeys" />
 		</case>

@@ -278,6 +278,7 @@
 			</then>
 		</if>
 
+		<execute action="PGBlogsAdd#pause" locator1="1000" />
 		<execute action="PGBlogsAdd#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<if>

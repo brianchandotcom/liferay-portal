@@ -26,6 +26,8 @@
 
 		<execute macro="MessageboardsThread#tearDownCP" />
 
+		<execute macro="Notifications#tearDownUnreadNotifications" />
+
 		<execute macro="Page#tearDownPG" />
 
 		<execute macro="NotificationsPortlet#tearDownUserDeliveries" />
@@ -211,14 +213,6 @@
 		<execute macro="MessageboardsThread#addPG">
 			<var name="threadBody" value="MB Thread Message Body" />
 			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#subscribePG">
-			<var name="categoryName" value="MB Category Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

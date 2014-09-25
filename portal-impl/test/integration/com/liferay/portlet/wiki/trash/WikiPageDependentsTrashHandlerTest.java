@@ -838,7 +838,7 @@ public class WikiPageDependentsTrashHandlerTest {
 	}
 
 	@Test
-	public void testRestoreParentPageToADifferentNode() throws Exception {
+	public void testRestorePageToADifferentNodeAndParent() throws Exception {
 		populateRelatedPages();
 
 		WikiPageTrashHandlerTestUtil.moveParentBaseModelToTrash(

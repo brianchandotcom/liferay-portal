@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.util;
 
+import com.liferay.kernel.servlet.taglib.DynamicIncludeUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -51,9 +52,6 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.taglib.tiles.ComponentConstants;
-import org.apache.struts.tiles.ComponentContext;
 
 /**
  * @author Brian Wing Shun Chan
@@ -327,7 +325,7 @@ public class ThemeUtil {
 			HttpServletResponse response, String path, Theme theme)
 		throws Exception {
 
-		insertTilesVariables(request);
+		DynamicIncludeUtil.include(request, response, _DO_INCLUDE_JSP_KEY);
 
 		if (theme.isWARFile()) {
 			ServletContext themeServletContext = servletContext.getContext(
@@ -483,27 +481,8 @@ public class ThemeUtil {
 		}
 	}
 
-	protected static void insertTilesVariables(HttpServletRequest request) {
-		ComponentContext componentContext =
-			(ComponentContext)request.getAttribute(
-				ComponentConstants.COMPONENT_CONTEXT);
-
-		if (componentContext == null) {
-			return;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String tilesTitle = (String)componentContext.getAttribute("title");
-		String tilesContent = (String)componentContext.getAttribute("content");
-		boolean tilesSelectable = GetterUtil.getBoolean(
-			(String)componentContext.getAttribute("selectable"));
-
-		themeDisplay.setTilesTitle(tilesTitle);
-		themeDisplay.setTilesContent(tilesContent);
-		themeDisplay.setTilesSelectable(tilesSelectable);
-	}
+	private static final String _DO_INCLUDE_JSP_KEY =
+		ThemeUtil.class.getName().concat("#doIncludeJSP");
 
 	private static Log _log = LogFactoryUtil.getLog(ThemeUtil.class);
 

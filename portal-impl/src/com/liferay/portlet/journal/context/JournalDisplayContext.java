@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.journal.util;
+package com.liferay.portlet.journal.context;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.journal.util.JournalUtil;
 
 import javax.portlet.PortletPreferences;
 

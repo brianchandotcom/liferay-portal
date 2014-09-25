@@ -2595,6 +2595,8 @@ public interface PropsKeys {
 
 	public static final String TUNNELING_SERVLET_SHARED_SECRET = "tunneling.servlet.shared.secret";
 
+	public static final String TUNNELING_SERVLET_SHARED_SECRET_HEX = "tunneling.servlet.shared.secret.hex";
+
 	public static final String UPGRADE_DATABASE_TRANSACTIONS_DISABLED = "upgrade.database.transactions.disabled";
 
 	public static final String UPGRADE_PROCESSES = "upgrade.processes";

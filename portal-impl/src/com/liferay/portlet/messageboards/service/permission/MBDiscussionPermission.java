@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionCheckerUtil;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
@@ -91,8 +92,9 @@ public class MBDiscussionPermission {
 	}
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, long companyId, long groupId,
-		String className, long classPK, long ownerId, String actionId) {
+			PermissionChecker permissionChecker, long companyId, long groupId,
+			String className, long classPK, long ownerId, String actionId)
+		throws PortalException {
 
 		if (MBBanLocalServiceUtil.hasBan(
 				groupId, permissionChecker.getUserId())) {
@@ -120,6 +122,13 @@ public class MBDiscussionPermission {
 				companyId, className, classPK, ownerId, actionId)) {
 
 			return true;
+		}
+
+		hasPermission = PermissionCheckerUtil.checkResourcePermission(
+			permissionChecker, className, classPK, actionId);
+
+		if (hasPermission != null) {
+			return hasPermission.booleanValue();
 		}
 
 		return permissionChecker.hasPermission(

@@ -23,6 +23,7 @@ import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.session.Session;
 import com.liferay.sync.engine.session.SessionManager;
+import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.IODeltaUtil;
 import com.liferay.sync.engine.util.StreamUtil;
 
@@ -116,8 +117,12 @@ public class DownloadFileHandler extends BaseHandler {
 
 			inputStream = httpEntity.getContent();
 
-			Path tempFilePath = Files.createTempFile(
-				String.valueOf(syncFile.getSyncFileId()), ".tmp");
+			SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
+				getSyncAccountId());
+
+			Path tempFilePath = FileUtil.getFilePath(
+				syncAccount.getFilePathName(), ".data",
+				String.valueOf(syncFile.getSyncFileId()));
 
 			if (Files.exists(filePath)) {
 				Files.copy(

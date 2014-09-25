@@ -24,9 +24,10 @@ import com.liferay.sync.engine.model.SyncUser;
 import com.liferay.sync.engine.service.persistence.SyncAccountPersistence;
 import com.liferay.sync.engine.util.Encryptor;
 import com.liferay.sync.engine.util.FileUtil;
+import com.liferay.sync.engine.util.OSDetector;
 
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 
 import java.sql.SQLException;
 
@@ -93,7 +94,12 @@ public class SyncAccountService {
 
 		// Sync file
 
-		Files.createDirectories(Paths.get(filePathName));
+		Path dataFilePath = Files.createDirectories(
+			FileUtil.getFilePath(filePathName, ".data"));
+
+		if (OSDetector.isWindows()) {
+			Files.setAttribute(dataFilePath, "dos:hidden", true);
+		}
 
 		SyncFileService.addSyncFile(
 			null, null, null, filePathName, null, filePathName, 0, 0,

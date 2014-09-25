@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -1526,10 +1527,13 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		BlogsSettings blogsSettings = BlogsSettings.getInstance(
 			entry.getGroupId());
 
+		boolean sendEmailEntryUpdated = GetterUtil.getBoolean(
+			serviceContext.getAttribute("sendEmailEntryUpdated"));
+
 		if (serviceContext.isCommandAdd() &&
 			blogsSettings.isEmailEntryAddedEnabled()) {
 		}
-		else if (serviceContext.isCommandUpdate() &&
+		else if (sendEmailEntryUpdated && serviceContext.isCommandUpdate() &&
 				 blogsSettings.isEmailEntryUpdatedEnabled()) {
 		}
 		else {
@@ -1573,8 +1577,13 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			groupLocalService.getGroupDescriptiveName(
 				entry.getGroupId(), serviceContext.getLocale()),
 			"[$BLOGS_ENTRY_STATUS_BY_USER_NAME$]", entry.getStatusByUserName(),
-			"[$BLOGS_ENTRY_TITLE$]", entryTitle, "[$BLOGS_ENTRY_URL$]",
-			entryURL, "[$BLOGS_ENTRY_USER_PORTRAIT_URL$]",
+			"[$BLOGS_ENTRY_TITLE$]", entryTitle,
+			"[$BLOGS_ENTRY_UPDATE_COMMENT$]",
+			HtmlUtil.replaceNewLine(
+				GetterUtil.getString(
+					serviceContext.getAttribute("emailEntryUpdatedComment"))),
+			"[$BLOGS_ENTRY_URL$]", entryURL,
+			"[$BLOGS_ENTRY_USER_PORTRAIT_URL$]",
 			workflowContext.get(WorkflowConstants.CONTEXT_USER_PORTRAIT_URL),
 			"[$BLOGS_ENTRY_USER_URL$]",
 			workflowContext.get(WorkflowConstants.CONTEXT_USER_URL));

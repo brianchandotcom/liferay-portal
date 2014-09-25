@@ -1,0 +1,7 @@
+<definition>
+	<command name="assertClick">
+		<case comparator="contains" locator1="//span[@data-title=">
+			<execute function="AssertClick#assertTextClickAt" />
+		</case>
+	</command>
+</definition>

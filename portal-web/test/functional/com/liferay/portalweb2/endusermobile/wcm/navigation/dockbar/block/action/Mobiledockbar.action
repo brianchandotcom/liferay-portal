@@ -7,11 +7,11 @@
 
 	<command name="click">
 		<case locator-key1="PENCIL_ICON">
-			<execute function="Click#waitForNavigationInteractionTouchScriptClickAt" />
+			<execute function="Click#waitForNavigationInteractionTouchScriptTap" />
 		</case>
 
 		<case locator-key1="REORDER_ICON">
-			<execute function="Click#waitForNavigationInteractionTouchScriptClickAt" />
+			<execute function="Click#waitForNavigationInteractionTouchScriptTap" />
 		</case>
 	</command>
 </definition>

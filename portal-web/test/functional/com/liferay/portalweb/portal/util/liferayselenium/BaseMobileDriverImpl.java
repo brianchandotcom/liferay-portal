@@ -14,9 +14,15 @@
 
 package com.liferay.portalweb.portal.util.liferayselenium;
 
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 
 import io.appium.java_client.MobileDriver;
+
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.internal.WrapsDriver;
 
 /**
  * @author Kenji Heigel
@@ -630,6 +636,38 @@ public abstract class BaseMobileDriverImpl
 	@Override
 	public void stopLogger() {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void tap(String locator) {
+		WebElement bodyWebElement = getWebElement("//body");
+
+		WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
+
+		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+
+		JavascriptExecutor javascriptExecutor =
+			(JavascriptExecutor)wrappedWebDriver;
+
+		String cssLocator = locator;
+
+		cssLocator = cssLocator.replaceAll("\\/\\/", " ");
+		cssLocator = cssLocator.replaceAll(
+			"contains\\(@([^,]*),([^)]*)\\)", "$1*=$2");
+		cssLocator = cssLocator.replaceAll("'", "\"");
+		cssLocator = cssLocator.replaceAll("\\/", " > ");
+		cssLocator = cssLocator.replaceAll("^ ", "");
+		cssLocator = cssLocator.replaceAll(" and ","][");
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("YUI().use('node-event-simulate', function(Y) {");
+		sb.append("var node = Y.one('");
+		sb.append(cssLocator);
+		sb.append("');");
+		sb.append("node.simulateGesture('tap');});");
+
+		javascriptExecutor.executeScript(sb.toString());
 	}
 
 	@Override

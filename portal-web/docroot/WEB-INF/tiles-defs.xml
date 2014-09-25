@@ -764,10 +764,6 @@
 		<put name="portlet_content" value="/portlet/journal/view_feeds.jsp" />
 	</definition>
 
-	<definition name="portlet.journal.view_recent" extends="portlet.journal">
-		<put name="portlet_content" value="/portlet/journal/view_recent.jsp" />
-	</definition>
-
 	<!-- Journal Articles -->
 
 	<definition name="portlet.journal_articles" extends="portlet" />

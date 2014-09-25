@@ -39,8 +39,6 @@ if (folder != null) {
 
 String structureId = ParamUtil.getString(request, "structureId");
 
-String displayStyle = JournalUtil.getDisplayStyle(liferayPortletRequest, displayViews);
-
 int total = 0;
 
 long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
@@ -56,7 +54,6 @@ PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/journal/view");
 portletURL.setParameter("folderId", String.valueOf(folderId));
-portletURL.setParameter("displayStyle", displayStyle);
 
 SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
@@ -101,7 +98,6 @@ else {
 					<portlet:renderURL var="viewArticlesHomeURL">
 						<portlet:param name="struts_action" value="/journal/view" />
 						<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-						<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 					</portlet:renderURL>
 
 					<aui:nav-item
@@ -124,7 +120,6 @@ else {
 						<portlet:param name="struts_action" value="/journal/view" />
 						<portlet:param name="navigation" value="recent" />
 						<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-						<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 					</portlet:renderURL>
 
 					<aui:nav-item
@@ -141,7 +136,6 @@ else {
 							<portlet:param name="struts_action" value="/journal/view" />
 							<portlet:param name="navigation" value="mine" />
 							<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-							<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 						</portlet:renderURL>
 
 						<aui:nav-item
@@ -159,7 +153,6 @@ else {
 							<portlet:param name="struts_action" value="/journal/view" />
 							<portlet:param name="browseBy" value="structure" />
 							<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-							<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 						</portlet:renderURL>
 
 						<aui:nav-item
@@ -176,7 +169,6 @@ else {
 					<portlet:renderURL var="viewURL">
 						<portlet:param name="struts_action" value="/journal/view" />
 						<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-						<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 					</portlet:renderURL>
 
 					<aui:nav-item
@@ -200,7 +192,6 @@ else {
 								<portlet:param name="struts_action" value="/journal/view" />
 								<portlet:param name="browseBy" value="structure" />
 								<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-								<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 								<portlet:param name="structureId" value="<%= ddmStructure.getStructureKey() %>" />
 							</portlet:renderURL>
 
@@ -223,7 +214,6 @@ else {
 					<portlet:renderURL var="viewURL">
 						<portlet:param name="struts_action" value="/journal/view" />
 						<portlet:param name="folderId" value="<%= String.valueOf(parentFolderId) %>" />
-						<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 					</portlet:renderURL>
 
 					<aui:nav-item
@@ -250,7 +240,6 @@ else {
 						<portlet:renderURL var="viewURL">
 							<portlet:param name="struts_action" value="/journal/view" />
 							<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
-							<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 						</portlet:renderURL>
 
 						<aui:nav-item

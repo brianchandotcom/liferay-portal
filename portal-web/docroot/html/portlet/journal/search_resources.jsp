@@ -31,8 +31,6 @@ if (searchFolderId > 0) {
 
 String keywords = ParamUtil.getString(request, "keywords");
 
-String displayStyle = JournalUtil.getDisplayStyle(liferayPortletRequest, displayViews);
-
 int total = 0;
 
 boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisplayTerms.ADVANCED_SEARCH);
@@ -43,7 +41,6 @@ portletURL.setParameter("struts_action", "/journal/view");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("searchFolderId", String.valueOf(searchFolderId));
 portletURL.setParameter("keywords", keywords);
-portletURL.setParameter("displayStyle", displayStyle);
 
 ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portletURL);
 %>
@@ -82,7 +79,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 				<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 				<portlet:param name="searchFolderId" value="<%= (folder != null) ? String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) : String.valueOf(folderId) %>" />
 				<portlet:param name="keywords" value="<%= keywords %>" />
-				<portlet:param name="displayStyle" value="<%= displayStyle %>" />
+				<portlet:param name="displayStyle" value="<%= journalDisplayContext.getDisplayStyle() %>" />
 			</portlet:renderURL>
 
 			<aui:button href="<%= changeSearchFolderURL %>" value='<%= (folder != null) ? "search-everywhere" : "search-in-the-current-folder" %>' />
@@ -91,7 +88,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 
 	<portlet:renderURL var="closeSearchURL">
 		<portlet:param name="struts_action" value="/journal/view" />
-		<portlet:param name="displayStyle" value="<%= displayStyle %>" />
+		<portlet:param name="displayStyle" value="<%= journalDisplayContext.getDisplayStyle() %>" />
 	</portlet:renderURL>
 
 	<liferay-ui:icon

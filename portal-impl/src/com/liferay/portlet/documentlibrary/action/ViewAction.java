@@ -20,12 +20,8 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -62,22 +58,6 @@ public class ViewAction extends PortletAction {
 		}
 
 		return actionMapping.findForward("portlet.document_library.view");
-	}
-
-	@Override
-	public void serveResource(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ResourceRequest resourceRequest,
-			ResourceResponse resourceResponse)
-		throws Exception {
-
-		PortletContext portletContext = portletConfig.getPortletContext();
-
-		PortletRequestDispatcher portletRequestDispatcher =
-			portletContext.getRequestDispatcher(
-				"/html/portlet/document_library/view_resources.jsp");
-
-		portletRequestDispatcher.include(resourceRequest, resourceResponse);
 	}
 
 }

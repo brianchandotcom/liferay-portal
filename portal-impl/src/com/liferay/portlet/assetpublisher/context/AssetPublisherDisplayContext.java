@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.assetpublisher.util;
+package com.liferay.portlet.assetpublisher.context;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -42,6 +42,7 @@ import com.liferay.portlet.asset.model.ClassTypeField;
 import com.liferay.portlet.asset.model.ClassTypeReader;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.asset.util.AssetUtil;
+import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
 import com.liferay.util.RSSUtil;

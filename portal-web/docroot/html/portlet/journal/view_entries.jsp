@@ -19,8 +19,6 @@
 <%
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
-String displayStyle = JournalUtil.getDisplayStyle(liferayPortletRequest, displayViews);
-
 long ddmStructureId = 0;
 
 String ddmStructureName = LanguageUtil.get(request, "basic-web-content");
@@ -29,7 +27,6 @@ PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/journal/view");
 portletURL.setParameter("folderId", String.valueOf(folderId));
-portletURL.setParameter("displayStyle", displayStyle);
 
 ArticleSearch articleSearchContainer = new ArticleSearch(liferayPortletRequest, portletURL);
 
@@ -286,6 +283,10 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(articleSearchCo
 	</div>
 </c:if>
 
+<%
+String displayStyle = journalDisplayContext.getDisplayStyle();
+%>
+
 <c:choose>
 	<c:when test='<%= !displayStyle.equals("list") %>'>
 
@@ -339,7 +340,6 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(articleSearchCo
 					tempRowURL.setParameter("redirect", currentURL);
 					tempRowURL.setParameter("groupId", String.valueOf(curFolder.getGroupId()));
 					tempRowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
-					tempRowURL.setParameter("displayStyle", displayStyle);
 
 					request.setAttribute("view_entries.jsp-folder", curFolder);
 

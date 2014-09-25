@@ -674,13 +674,13 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLViewFileVers
 		var fileEntryButtonGroup = [];
 
 		<%
-			for (ToolbarItem toolbarItem : dlViewFileVersionDisplayContext.getToolbarItems()) {
+		for (ToolbarItem toolbarItem : dlViewFileVersionDisplayContext.getToolbarItems()) {
 		%>
 
 			<liferay-ui:toolbar-item toolbarItem="<%= toolbarItem %>" var="fileEntryButtonGroup" />
 
 		<%
-			}
+		}
 		%>
 
 		var fileEntryToolbar = new A.Toolbar(

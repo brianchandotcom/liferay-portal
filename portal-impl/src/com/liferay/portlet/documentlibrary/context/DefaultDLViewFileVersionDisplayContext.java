@@ -681,11 +681,9 @@ public class DefaultDLViewFileVersionDisplayContext
 		LiferayPortletResponse liferayPortletResponse =
 			_getLiferayPortletResponse();
 
-		String namespace = liferayPortletResponse.getNamespace();
-
 		StringBundler sb = new StringBundler(4);
 
-		sb.append(namespace);
+		sb.append(liferayPortletResponse.getNamespace());
 		sb.append("openDocument('");
 		sb.append(webDavURL);
 		sb.append("');");
@@ -776,17 +774,17 @@ public class DefaultDLViewFileVersionDisplayContext
 	}
 
 	private <T extends URLUIItem> T _addURLUIItem(
-		T urluiItem, List<? super T> urluiItems, String key, String icon,
+		T urlUIItem, List<? super T> urlUIItems, String key, String icon,
 		String label, String url ) {
 
-		urluiItem.setKey(key);
-		urluiItem.setIcon(icon);
-		urluiItem.setLabel(label);
-		urluiItem.setURL(url);
+		urlUIItem.setKey(key);
+		urlUIItem.setIcon(icon);
+		urlUIItem.setLabel(label);
+		urlUIItem.setURL(url);
 
-		urluiItems.add(urluiItem);
+		urlUIItems.add(urlUIItem);
 
-		return urluiItem;
+		return urlUIItem;
 	}
 
 	private String _getActionURL(String strutsAction, String cmd) {

@@ -117,17 +117,17 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 	}
 
 	private <T extends URLUIItem> T _insertEditInGoogleURLUIItem(
-		T urluiItem, List<? super T> urluiItems) {
+		T urlUIItem, List<? super T> urlUIItems) {
 
 		int index = _getIndex(
-			(List<? extends UIItem>)urluiItems, DLUIItemKeys.EDIT);
+			(List<? extends UIItem>)urlUIItems, DLUIItemKeys.EDIT);
 
 		if (index == -1) {
 			index = 0;
 		}
 
-		urluiItem.setIcon("icon-edit");
-		urluiItem.setKey(GoogleDocsMenuItemKeys.EDIT_IN_GOOGLE);
+		urlUIItem.setIcon("icon-edit");
+		urlUIItem.setKey(GoogleDocsMenuItemKeys.EDIT_IN_GOOGLE);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -138,9 +138,9 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 		String message = LanguageUtil.get(
 			resourceBundle, "edit-in-google-docs");
 
-		urluiItem.setLabel(message);
+		urlUIItem.setLabel(message);
 
-		urluiItem.setTarget("_blank");
+		urlUIItem.setTarget("_blank");
 
 		DLFileVersion dlFileVersion = (DLFileVersion)fileVersion.getModel();
 
@@ -150,11 +150,11 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 		String editURL = googleDocsMetadataHelper.getFieldValue(
 			GoogleDocsConstants.DDM_FIELD_NAME_EDIT_URL);
 
-		urluiItem.setURL(editURL);
+		urlUIItem.setURL(editURL);
 
-		urluiItems.add(index, urluiItem);
+		urlUIItems.add(index, urlUIItem);
 
-		return urluiItem;
+		return urlUIItem;
 	}
 
 	private void _removeNonGoogleUIItems(List<? extends UIItem> uiItems) {

@@ -17,8 +17,8 @@
 <%@ include file="/html/taglib/ui/toolbar_item/init.jsp" %>
 
 <%
-ToolbarItem toolbarItem = (ToolbarItem)request.getAttribute("liferay-ui:toolbar_item:toolbarItem");
-String var = (String)request.getAttribute("liferay-ui:toolbar_item:var");
+ToolbarItem toolbarItem = (ToolbarItem)request.getAttribute("liferay-ui:toolbar-item:toolbarItem");
+String var = (String)request.getAttribute("liferay-ui:toolbar-item:var");
 %>
 
 <c:choose>

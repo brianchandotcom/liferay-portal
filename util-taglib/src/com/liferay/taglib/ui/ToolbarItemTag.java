@@ -40,6 +40,7 @@ public class ToolbarItemTag extends IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_toolbarItem = null;
+		_var = null;
 	}
 
 	@Override
@@ -55,8 +56,8 @@ public class ToolbarItemTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-ui:toolbar_item:toolbarItem", _toolbarItem);
-		request.setAttribute("liferay-ui:toolbar_item:var", _var);
+			"liferay-ui:toolbar-item:toolbarItem", _toolbarItem);
+		request.setAttribute("liferay-ui:toolbar-item:var", _var);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;

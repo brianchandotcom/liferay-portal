@@ -49,13 +49,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SAVE_DRAFT_BUTTON</td>
-	<td>//div[contains(@class,'button-holder')]/button[contains(.,'Save Draft')]</td>
+	<td>SAVE_AS_DRAFT_BUTTON</td>
+	<td>//div[contains(@class,'button-holder')]/button[contains(.,'Save as Draft')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PUBLISH_BUTTON</td>
 	<td>//div[contains(@class,'button-holder')]/button[contains(.,'Publish')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//div[contains(@class,'button-holder')]/button[contains(.,'Cancel')]</td>
 	<td></td>
 </tr>
 <tr>

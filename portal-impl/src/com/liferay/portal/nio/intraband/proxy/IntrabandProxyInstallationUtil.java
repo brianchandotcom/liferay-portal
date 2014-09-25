@@ -104,15 +104,6 @@ public class IntrabandProxyInstallationUtil {
 	protected static class InstallSkeletonProcessCallable
 		implements ProcessCallable<String[]> {
 
-		InstallSkeletonProcessCallable(
-			ClassLoader classLoader, Class<?> clazz,
-			TargetLocator targetLocator) {
-
-			_servletContextName = ClassLoaderPool.getContextName(classLoader);
-			_skeletonId = clazz.getName();
-			_targetLocator = targetLocator;
-		}
-
 		@Override
 		public String[] call() throws ProcessException {
 			ClassLoader classLoader = ClassLoaderPool.getClassLoader(
@@ -126,6 +117,15 @@ public class IntrabandProxyInstallationUtil {
 			catch (Exception e) {
 				throw new ProcessException(e);
 			}
+		}
+
+		protected InstallSkeletonProcessCallable(
+			ClassLoader classLoader, Class<?> clazz,
+			TargetLocator targetLocator) {
+
+			_servletContextName = ClassLoaderPool.getContextName(classLoader);
+			_skeletonId = clazz.getName();
+			_targetLocator = targetLocator;
 		}
 
 		private static final long serialVersionUID = 1L;

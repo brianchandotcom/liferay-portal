@@ -498,7 +498,7 @@ public class SelectorIntrabandTest {
 			IntrabandTestUtil.assertMessageStartWith(
 				logRecords.get(0), "Unable to dispatch");
 
-			unregisterChannels(registrationReference);
+			_unregisterChannels(registrationReference);
 
 			gatheringByteChannel.close();
 			scatteringByteChannel.close();
@@ -896,7 +896,7 @@ public class SelectorIntrabandTest {
 
 			while (writeSelectionKey.interestOps() != 0);
 
-			unregisterChannels(selectionKeyRegistrationReference);
+			_unregisterChannels(selectionKeyRegistrationReference);
 
 			// Register after close
 
@@ -1263,12 +1263,19 @@ public class SelectorIntrabandTest {
 			Assert.assertArrayEquals(
 				hugeBuffer.array(), dataByteBuffer.array());
 
-			unregisterChannels(registrationReference);
+			_unregisterChannels(registrationReference);
 		}
 	}
 
 	@Aspect
 	public static class Jdk14LogImplAdvice {
+
+		public static volatile CountDownLatch _errorCalledCountDownLatch =
+			new CountDownLatch(1);
+		public static volatile CountDownLatch
+			_isWarnEnabledCalledCountDownLatch = new CountDownLatch(1);
+		public static volatile CountDownLatch
+			_warnCalledCountDownLatch = new CountDownLatch(1);
 
 		public static void reset() {
 			_errorCalledCountDownLatch = new CountDownLatch(1);
@@ -1318,16 +1325,9 @@ public class SelectorIntrabandTest {
 			_warnCalledCountDownLatch.countDown();
 		}
 
-		public static volatile CountDownLatch _errorCalledCountDownLatch =
-			new CountDownLatch(1);
-		public static volatile CountDownLatch
-			_isWarnEnabledCalledCountDownLatch = new CountDownLatch(1);
-		public static volatile CountDownLatch
-			_warnCalledCountDownLatch = new CountDownLatch(1);
-
 	}
 
-	void unregisterChannels(
+	private void _unregisterChannels(
 			SelectionKeyRegistrationReference registrationReference)
 		throws Exception {
 
@@ -1377,7 +1377,54 @@ public class SelectorIntrabandTest {
 		}
 
 		@Override
+		public Object blockingLock() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public SelectableChannel configureBlocking(boolean block) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public boolean isBlocking() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public boolean isRegistered() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public SelectionKey keyFor(Selector selector) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
 		public SelectorProvider provider() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public int read(ByteBuffer byteBuffer) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public long read(ByteBuffer[] byteBuffers) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public long read(ByteBuffer[] byteBuffers, int offset, int length) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public SelectionKey register(
+			Selector selector, int ops, Object attachment) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -1397,59 +1444,7 @@ public class SelectorIntrabandTest {
 		}
 
 		@Override
-		public boolean isRegistered() {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public SelectionKey keyFor(Selector selector) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public SelectionKey register(
-			Selector selector, int ops, Object attachment) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public SelectableChannel configureBlocking(boolean block) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public boolean isBlocking() {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public Object blockingLock() {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		protected void implCloseChannel() {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public long read(ByteBuffer[] byteBuffers, int offset, int length) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public long read(ByteBuffer[] byteBuffers) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public int read(ByteBuffer byteBuffer) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public long write(ByteBuffer[] byteBuffers, int offset, int length) {
+		public int write(ByteBuffer byteBuffer) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -1459,7 +1454,12 @@ public class SelectorIntrabandTest {
 		}
 
 		@Override
-		public int write(ByteBuffer byteBuffer) {
+		public long write(ByteBuffer[] byteBuffers, int offset, int length) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		protected void implCloseChannel() {
 			throw new UnsupportedOperationException();
 		}
 

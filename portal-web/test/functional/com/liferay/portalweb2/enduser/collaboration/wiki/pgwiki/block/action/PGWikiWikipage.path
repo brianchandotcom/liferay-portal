@@ -41,12 +41,12 @@
 </tr>
 <tr>
 	<td>WIKI_PAGE_TITLE_HEADER</td>
-	<td>//div[@class='taglib-header ']/h3[contains(.,'${key_wikiPageTitle}')]</td>
+	<td>//h3[@class='header-title']/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>WIKI_PAGE_REDIRECT_LINK</td>
-	<td>//div[@class='page-redirect' and contains(.,'${key_wikiPageTitle}')]</td>
+	<td>//div[@class='page-redirect']</td>
 	<td></td>
 </tr>
 <tr>

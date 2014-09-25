@@ -535,7 +535,7 @@
 </tr>
 <tr>
 	<td>CONTROL_PANEL_MANAGE_BUTTON</td>
-	<td>//a[@id='controlPanelHomeActionManageSite']</td>
+	<td>//a[contains(@id,'controlPanelHomeActionManageSite')]</td>
 	<td></td>
 </tr>
 <tr>

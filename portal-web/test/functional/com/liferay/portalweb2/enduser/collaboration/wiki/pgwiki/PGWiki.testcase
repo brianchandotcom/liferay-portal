@@ -536,6 +536,8 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute macro="WikiPage#gotoAllPagesCP" />
+
 		<for list="${wikiPageCounterList}" param="entryCount" >
 			<execute macro="WikiPage#addPG">
 				<var name="wikiPageContent" value="Wiki Page${entryCount} Content" />
@@ -719,11 +721,16 @@
 	</command>
 
 	<command name="LinkWikiPage1toWikiPage2" priority="5">
-		<var name="wikiPage1Content" value="Wiki Page1 Content" />
-		<var name="wikiPage1Title" value="Wiki Page1 Title" />
-		<var name="wikiPage2Content" value="Wiki Page2 Content" />
-		<var name="wikiPage2Link" value="[[Wiki Page2 Title]]" />
-		<var name="wikiPage2Title" value="Wiki Page2 Title" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WikiPage#gotoAllPagesPG" />
+
+		<execute macro="WikiPage#addPG">
+			<var name="wikiPageContent" value="Wiki Page1 Content" />
+			<var name="wikiPageTitle" value="Wiki Page1 Title" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -732,19 +739,8 @@
 		<execute macro="WikiPage#gotoAllPagesPG" />
 
 		<execute macro="WikiPage#addPG">
-			<var name="wikiPageContent" value="${wikiPage1Content}" />
-			<var name="wikiPageTitle" value="${wikiPage1Title}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="WikiPage#gotoAllPagesPG" />
-
-		<execute macro="WikiPage#addPG">
-			<var name="wikiPageContent" value="${wikiPage2Content}" />
-			<var name="wikiPageTitle" value="${wikiPage2Title}" />
+			<var name="wikiPageContent" value="Wiki Page2 Content" />
+			<var name="wikiPageTitle" value="Wiki Page2 Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -752,15 +748,15 @@
 		</execute>
 
 		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageTitle" value="${wikiPage1Title}" />
+			<var name="wikiPageTitle" value="Wiki Page1 Title" />
 		</execute>
 
 		<execute macro="WikiPage#linkPG">
-			<var name="wikiPage1Content" value="${wikiPage1Content}" />
-			<var name="wikiPage1Title" value="${wikiPage1Title}" />
-			<var name="wikiPage2Content" value="${wikiPage2Content}" />
-			<var name="wikiPage2Link" value="${wikiPage2Link}" />
-			<var name="wikiPage2Title" value="${wikiPage2Title}" />
+			<var name="wikiPage1Content" value="Wiki Page1 Content" />
+			<var name="wikiPage1Title" value="Wiki Page1 Title" />
+			<var name="wikiPage2Content" value="Wiki Page2 Content" />
+			<var name="wikiPage2Link" value="[[Wiki Page2 Title]]" />
+			<var name="wikiPage2Title" value="Wiki Page2 Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -768,27 +764,20 @@
 		</execute>
 
 		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageTitle" value="${wikiPage1Title}" />
+			<var name="wikiPageTitle" value="Wiki Page1 Title" />
 		</execute>
 
 		<execute macro="WikiPage#gotoBodyLinkPG">
-			<var name="wikiPageContent" value="${wikiPageContent}" />
+			<var name="wikiPageContent" value="Wiki Page2 Title" />
 		</execute>
 
 		<execute macro="WikiPage#viewPG">
-			<var name="wikiPageContent" value="${wikiPage2Content}" />
-			<var name="wikiPageTitle" value="${wikiPage2Title}" />
+			<var name="wikiPageContent" value="Wiki Page2 Content" />
+			<var name="wikiPageTitle" value="Wiki Page2 Title" />
 		</execute>
 	</command>
 
-	<command name="RemoveRedirectWikiPage" priority="5">
-		<var name="wikiPage2Content" value="Wiki2 Test2 Page2 Content2" />
-		<var name="wikiPageContent" value="Wiki Test Page Content" />
-		<var name="wikiPageRedirectLink" value="(Redirected from Wiki Test Page Title)" />
-		<var name="wikiPageTitle" value="Wiki Test Page Title" />
-		<var name="wikiPageTitleRename" value="Wiki Test Page Rename" />
-		<var name="wikiPageUsername" value="Test Test" />
-
+	<command name="RemoveRedirectLinkFromWikiPage" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -796,8 +785,8 @@
 		<execute macro="WikiPage#gotoAllPagesPG" />
 
 		<execute macro="WikiPage#addPG">
-			<var name="wikiPageContent" value="${wikiPageContent}" />
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+			<var name="wikiPageContent" value="Wiki Page Content" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -805,34 +794,22 @@
 		</execute>
 
 		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
 		<execute macro="WikiPage#renameWikiPagePG">
-			<var name="wikiPageContent" value="${wikiPageContent}" />
-			<var name="wikiPageRedirectLink" value="${wikiPageRedirectLink}" />
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-			<var name="wikiPageTitleRename" value="${wikiPageTitleRename}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+			<var name="wikiPageTitleRename" value="Wiki Page Rename" />
 		</execute>
 
 		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
 		<execute macro="WikiPage#removeRedirectWikiPagePG">
-			<var name="wikiPage2Content" value="${wikiPage2Content}" />
-			<var name="wikiPageRedirectLink" value="${wikiPageRedirectLink}" />
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-			<var name="wikiPageTitleRename" value="${wikiPageTitleRename}" />
-		</execute>
-
-		<execute macro="WikiPage#viewRenamedPG">
-			<var name="wikiPageRedirectLink" value="${wikiPageRedirectLink}" />
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+			<var name="wikiPage2Content" value="Wiki2 Page2 Content2" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+			<var name="wikiPageTitleRename" value="Wiki Page Rename" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -840,15 +817,38 @@
 		</execute>
 
 		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageContent" value="${wikiPageContent}" />
-			<var name="wikiPageRevision" value="1.0" />
-			<var name="wikiPageTitle" value="${wikiPageTitleRename}" />
-			<var name="wikiPageUsername" value="${wikiPageUsername}" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
+		<execute macro="WikiPage#cannotViewRedirectLinkPG" />
+
 		<execute macro="WikiPage#viewPG">
-			<var name="wikiPageContent" value="${wikiPageContent}" />
-			<var name="wikiPageTitle" value="${wikiPageTitleRename}" />
+			<var name="wikiPageContent" value="Wiki2 Page2 Content2" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="WikiPage#gotoPG">
+			<var name="wikiPageTitle" value="Wiki Page Rename" />
+		</execute>
+
+		<execute macro="WikiPage#cannotViewRedirectLinkPG" />
+
+		<execute macro="WikiPage#viewPG">
+			<var name="wikiPageContent" value="Wiki Page Content" />
+			<var name="wikiPageTitle" value="Wiki Page Rename" />
+		</execute>
+	</command>
+
+	<command name="RenameWikiPageTitle" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WikiPage#gotoAllPagesPG" />
+
+		<execute macro="WikiPage#addPG">
+			<var name="wikiPageContent" value="Wiki Page Content" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -856,15 +856,36 @@
 		</execute>
 
 		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageContent" value="${wikiPage2Content}" />
-			<var name="wikiPageRevision" value="1.1" />
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-			<var name="wikiPageUsername" value="${wikiPageUsername}" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="WikiPage#renameWikiPagePG">
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+			<var name="wikiPageTitleRename" value="Wiki Page Rename" />
+		</execute>
+
+		<execute macro="WikiPage#gotoPG">
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="WikiPage#viewRedirectLinkPG">
+			<var name="wikiPageRedirectLink" value="(Redirected from Wiki Page Title)" />
 		</execute>
 
 		<execute macro="WikiPage#viewPG">
-			<var name="wikiPageContent" value="${wikiPage2Content}" />
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+			<var name="wikiPageContent" value="Wiki Page Content" />
+			<var name="wikiPageTitle" value="Wiki Page Rename" />
+		</execute>
+
+		<execute macro="WikiPage#gotoPG">
+			<var name="wikiPageTitle" value="Wiki Page Rename" />
+		</execute>
+
+		<execute macro="WikiPage#cannotViewRedirectLinkPG" />
+
+		<execute macro="WikiPage#viewPG">
+			<var name="wikiPageContent" value="Wiki Page Content" />
+			<var name="wikiPageTitle" value="Wiki Page Rename" />
 		</execute>
 	</command>
 

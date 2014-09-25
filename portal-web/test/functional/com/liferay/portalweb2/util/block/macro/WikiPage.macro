@@ -447,6 +447,10 @@
 		</if>
 	</command>
 
+	<command name="cannotViewRedirectLinkPG">
+		<execute action="PGWikiWikipage#assertElementNotPresent" locator-key1="WIKI_PAGE_REDIRECT_LINK" />
+	</command>
+
 	<command name="changeParentWikipagetoWikipagePG">
 		<var name="key_wikiPageTitle" value="${wikiPage2Title}" />
 
@@ -965,13 +969,6 @@
 	</command>
 
 	<command name="removeRedirectWikiPagePG">
-		<var name="key_wikiPageTitle" value="${wikiPageTitleRename}" />
-
-		<execute action="PGWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_TITLE_HEADER" value1="${wikiPageTitleRename}" />
-		<execute action="PGWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageContent}" />
-
-		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
-
 		<execute action="PGWikiWikipage#assertClick" locator-key1="WIKI_PAGE_REDIRECT_LINK" value1="(Redirected from ${wikiPageTitle})" />
 
 		<execute action="PGWikiWikipageRedirect#assertTextEquals" locator-key1="INFO_MESSAGE" value1="This page is currently redirected to ${wikiPageTitleRename}." />
@@ -1000,11 +997,6 @@
 	</command>
 
 	<command name="renameWikiPagePG">
-		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
-
-		<execute action="PGWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_TITLE_HEADER" value1="${wikiPageTitle}" />
-		<execute action="PGWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageContent}" />
-		<execute action="PGWikiWikipage#assertTextNotPresent" locator-key1="WIKI_PAGE_BODY" value1="(Redirected from Wiki Page Test)" />
 		<execute action="PGWikiWikipage#assertClick" locator-key1="WIKI_PAGE_ACTIONS_DETAILS" value1="Details" />
 
 		<execute action="PGWikiWikipageDetails#assertClick" locator-key1="MOVE_LINK" value1="Move" />
@@ -1499,11 +1491,8 @@
 		<execute action="PGWiki#assertTextEquals" locator-key1="RATINGS_AVERAGE" value1="Average (1 Vote)" />
 	</command>
 
-	<command name="viewRenamedPG">
-		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
-
+	<command name="viewRedirectLinkPG">
 		<execute action="PGWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_REDIRECT_LINK" value1="${wikiPageRedirectLink}" />
-		<execute action="PGWikiWikipage#assertTextNotEquals" locator-key1="PORTLET_BODY_TITLE_HEADER" value1="${wikiPageTitle}" />
 	</command>
 
 	<command name="viewSaveAsDraftFrontPagePG">

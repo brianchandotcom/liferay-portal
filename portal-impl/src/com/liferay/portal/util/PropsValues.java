@@ -1978,6 +1978,10 @@ public class PropsValues {
 
 	public static final boolean XML_VALIDATION_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.XML_VALIDATION_ENABLED));
 
+	public static final boolean XSL_CONTENT_SECURE_PROCESSING_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.XSL_CONTENT_SECURE_PROCESSING_ENABLED));
+
+	public static final boolean XSL_TEMPLATE_SECURE_PROCESSING_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.XSL_TEMPLATE_SECURE_PROCESSING_ENABLED));
+
 	public static final boolean XUGGLER_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.XUGGLER_ENABLED));
 
 	public static final String XUGGLER_JAR_URL = PropsUtil.get(PropsKeys.XUGGLER_JAR_URL);

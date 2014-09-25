@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.template.TemplateContextHelper;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.Writer;
 
@@ -37,7 +38,9 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import javax.xml.XMLConstants;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
@@ -64,7 +67,16 @@ public class XSLTemplate implements Template {
 		_xslTemplateResource = xslTemplateResource;
 		_errorTemplateResource = errorTemplateResource;
 		_templateContextHelper = templateContextHelper;
+
 		_transformerFactory = TransformerFactory.newInstance();
+
+		try {
+			_transformerFactory.setFeature(
+				XMLConstants.FEATURE_SECURE_PROCESSING,
+				PropsValues.XSL_TEMPLATE_SECURE_PROCESSING_ENABLED);
+		}
+		catch (TransformerConfigurationException tce) {
+		}
 
 		_context = new HashMap<String, Object>();
 	}

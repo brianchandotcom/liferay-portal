@@ -2833,6 +2833,10 @@ public interface PropsKeys {
 
 	public static final String XML_VALIDATION_ENABLED = "xml.validation.enabled";
 
+	public static final String XSL_CONTENT_SECURE_PROCESSING_ENABLED = "xsl.content.secure.processing.enabled";
+
+	public static final String XSL_TEMPLATE_SECURE_PROCESSING_ENABLED = "xsl.template.secure.processing.enabled";
+
 	public static final String XUGGLER_ENABLED = "xuggler.enabled";
 
 	public static final String XUGGLER_FFPRESET = "xuggler.ffpreset.";

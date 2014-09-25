@@ -87,12 +87,12 @@
 </tr>
 <tr>
 	<td>RESOURCE_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_calendarResourceName}')]/td[4]/div/a[@title='Actions']</td>
+	<td>//tr[contains(.,'${key_calendarResourceName}')]/td[4]/div/a/i[@class='lfr-icon-menu-arrow caret']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RESOURCE_TABLE_ACTIONS_GENERIC</td>
-	<td>//tr//a[@title='Actions']</td>
+	<td>//tr//i[@class='lfr-icon-menu-arrow caret']</td>
 	<td></td>
 </tr>
 <tr>

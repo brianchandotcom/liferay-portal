@@ -1,0 +1,96 @@
+<html>
+<head>
+<title>CPContenttargetingUserSegmentReports</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPContenttargetingUserSegmentReports</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPContenttargetingUserSegmentReports</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>UPDATE_REPORT</td>
+	<td>//div[@class='portlet-body']/span[contains(@class,'pull-right')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_VIEW_REPORTS_TABLE</td>
+	<td>//tbody[@class='table-data']/tr/td[contains(.,'${key_viewContentReport}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER_SEGMENT_REPORTS_TABLE-->
+<tr>
+	<td>USER_SEGMENT_REPORTS_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_reportName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SEGMENT_REPORTS_TABLE_DESCRIPTION</td>
+	<td>//tr[contains(.,'${key_reportName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SEGMENT_REPORTS_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_reportName}')]//div/a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SEGMENT_REPORTS_TABLE_ACTIONS_MENULIST_VIEW_REPORT</td>
+	<td>//ul/li/a[contains(.,'View Report')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SEGMENT_REPORTS_TABLE_ACTIONS_MENULIST_UPDATE_REPORT</td>
+	<td>//ul/li/a[contains(.,'Update Report')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--REPORT_TABLE-->
+<tr>
+	<td>REPORT_TABLE_TITLE</td>
+	<td>//tr[contains(.,'${key_reportTitle}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORT_TABLE_TYPE</td>
+	<td>//tr[contains(.,'${key_reportTitle}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORT_TABLE_EVENT</td>
+	<td>//tr[contains(.,'${key_reportTitle}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORT_TABLE_COUNT</td>
+	<td>//tr[contains(.,'${key_reportTitle}')]/td[4]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

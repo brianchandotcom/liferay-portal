@@ -1019,11 +1019,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		pos = newContent.indexOf("\npublic ");
 
 		if (pos != -1) {
-			String javaClassContent = newContent.substring(pos);
+			String javaClassContent = newContent.substring(pos + 1);
+
+			String beforeJavaClass = newContent.substring(0, pos + 1);
+
+			int javaClassLineCount =
+				StringUtil.count(beforeJavaClass, "\n") + 1;
 
 			newContent = formatJavaTerms(
 				fileName, absolutePath, newContent, javaClassContent,
-				_javaTermSortExclusions, _testAnnotationsExclusions);
+				javaClassLineCount, _javaTermSortExclusions,
+				_testAnnotationsExclusions);
 		}
 
 		newContent = formatJava(fileName, absolutePath, newContent);

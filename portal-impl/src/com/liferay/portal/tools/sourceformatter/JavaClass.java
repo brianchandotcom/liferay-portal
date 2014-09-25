@@ -109,12 +109,14 @@ public class JavaClass {
 	public static final int TYPE_VARIABLE_PUBLIC_STATIC = 1;
 
 	public JavaClass(
-			String fileName, String absolutePath, String content, String indent)
+			String fileName, String absolutePath, String content, int lineCount,
+			String indent)
 		throws Exception {
 
 		_fileName = fileName;
 		_absolutePath = absolutePath;
 		_content = content;
+		_lineCount = lineCount;
 		_indent = indent;
 
 		_staticBlocks = new ArrayList<JavaTerm>();
@@ -157,7 +159,7 @@ public class JavaClass {
 
 				JavaClass innerClass = new JavaClass(
 					_fileName, _absolutePath, javaTermContent,
-					_indent + StringPool.TAB);
+					javaTerm.getLineCount(), _indent + StringPool.TAB);
 
 				String newJavaTermContent = innerClass.formatJavaTerms(
 					javaTermSortExclusions, testAnnotationsExclusions);
@@ -606,7 +608,7 @@ public class JavaClass {
 			new UnsyncStringReader(_content));
 
 		int index = 0;
-		int lineCount = 0;
+		int lineCount = _lineCount - 1;
 
 		String line = null;
 
@@ -1010,6 +1012,7 @@ public class JavaClass {
 	private String _content;
 	private String _fileName;
 	private String _indent;
+	private int _lineCount;
 	private List<JavaTerm> _staticBlocks;
 
 }

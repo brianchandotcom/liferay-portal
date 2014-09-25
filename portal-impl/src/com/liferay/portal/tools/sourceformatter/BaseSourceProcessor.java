@@ -693,12 +693,14 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected String formatJavaTerms(
 			String fileName, String absolutePath, String content,
-			String javaClassContent, List<String> javaTermSortExclusions,
+			String javaClassContent, int javaClassLineCount,
+			List<String> javaTermSortExclusions,
 			List<String> testAnnotationsExclusions)
 		throws Exception {
 
 		JavaClass javaClass = new JavaClass(
-			fileName, absolutePath, javaClassContent, StringPool.TAB);
+			fileName, absolutePath, javaClassContent, javaClassLineCount,
+			StringPool.TAB);
 
 		String newJavaClassContent = javaClass.formatJavaTerms(
 			javaTermSortExclusions, testAnnotationsExclusions);

@@ -82,6 +82,6 @@
 		<execute action="PGCalendarResource#assertTextEquals" locator-key1="RESOURCE_TABLE_NAME" value1="${calendarResourceName}" />
 		<execute action="PGCalendarResource#assertTextEquals" locator-key1="RESOURCE_TABLE_DESCRIPTION" value1="" />
 		<execute action="PGCalendarResource#assertTextEquals" locator-key1="RESOURCE_TABLE_ACTIVE" value1="Yes" />
-		<execute action="PGCalendarResource#assertTextEquals" locator-key1="RESOURCE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="PGCalendarResource#assertElementPresent" locator-key1="RESOURCE_TABLE_ACTIONS" />
 	</command>
 </definition>

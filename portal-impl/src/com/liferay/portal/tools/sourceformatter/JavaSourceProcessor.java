@@ -778,15 +778,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			});
 
 		newContent = StringUtil.replace(
-			newContent,
-			new String[] {
-				StringPool.TAB + "static ", StringPool.TAB + "public static {",
-				" final static "
-			},
-			new String[] {
-				StringPool.TAB + "public static ", StringPool.TAB + "static {",
-				" static final "
-			});
+			newContent, " final static ", " static final ");
 
 		newContent = fixCompatClassImports(absolutePath, newContent);
 

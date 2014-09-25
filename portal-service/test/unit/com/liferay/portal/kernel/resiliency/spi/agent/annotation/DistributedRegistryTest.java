@@ -332,7 +332,7 @@ public class DistributedRegistryTest {
 		public static String name9 = "name9";
 
 		@Distributed
-		public static String name15 = "name15";
+		protected String name15 = "name15";
 
 	}
 

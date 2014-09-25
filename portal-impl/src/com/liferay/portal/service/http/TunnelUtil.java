@@ -66,11 +66,7 @@ public class TunnelUtil {
 			throw authException;
 		}
 
-		if ((sharedSecret.length() != 8) && (sharedSecret.length() != 16) &&
-			(sharedSecret.length() != 24) && (sharedSecret.length() != 32) &&
-			(sharedSecret.length() != 48) && (sharedSecret.length() != 56) &&
-			(sharedSecret.length() != 64)) {
-
+		if (sharedSecret.length() < 8) {
 			AuthException authException = new AuthException();
 
 			authException.setType(AuthException.INVALID_SHARED_SECRET);

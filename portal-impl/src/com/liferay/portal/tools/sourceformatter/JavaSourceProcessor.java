@@ -777,7 +777,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				"private static Log _log"
 			});
 
-		/*
 		newContent = StringUtil.replace(
 			newContent,
 			new String[] {
@@ -788,7 +787,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				StringPool.TAB + "public static ", StringPool.TAB + "static {",
 				" static final "
 			});
-		*/
 
 		newContent = fixCompatClassImports(absolutePath, newContent);
 

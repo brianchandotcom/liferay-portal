@@ -123,11 +123,13 @@ public class JavaClass {
 	}
 
 	public String formatJavaTerms(
+			List<String> javaTermAccessLevelModifierExclusions,
 			List<String> javaTermSortExclusions,
 			List<String> testAnnotationsExclusions)
 		throws Exception {
 
-		Set<JavaTerm> javaTerms = getJavaTerms();
+		Set<JavaTerm> javaTerms = getJavaTerms(
+			javaTermAccessLevelModifierExclusions);
 
 		if (javaTerms == null) {
 			return _content;
@@ -162,6 +164,7 @@ public class JavaClass {
 					javaTerm.getLineCount(), _indent + StringPool.TAB);
 
 				String newJavaTermContent = innerClass.formatJavaTerms(
+					javaTermAccessLevelModifierExclusions,
 					javaTermSortExclusions, testAnnotationsExclusions);
 
 				if (!javaTermContent.equals(newJavaTermContent)) {
@@ -600,7 +603,10 @@ public class JavaClass {
 		return line.substring(x + 1);
 	}
 
-	protected Set<JavaTerm> getJavaTerms() throws Exception {
+	protected Set<JavaTerm> getJavaTerms(
+			List<String> javaTermAccessLevelModifierExclusions)
+		throws Exception {
+
 		Set<JavaTerm> javaTerms = new TreeSet<JavaTerm>(
 			new JavaTermComparator(false));
 
@@ -694,7 +700,10 @@ public class JavaClass {
 			else if (!line.startsWith(_indent + StringPool.CLOSE_CURLY_BRACE) &&
 					 !line.startsWith(_indent + StringPool.CLOSE_PARENTHESIS) &&
 					 !line.startsWith(_indent + "extends") &&
-					 !line.startsWith(_indent + "implements")) {
+					 !line.startsWith(_indent + "implements") &&
+					 !BaseSourceProcessor.isExcluded(
+						 javaTermAccessLevelModifierExclusions, _absolutePath,
+						 lineCount)) {
 
 				Matcher matcher = _classPattern.matcher(_content);
 

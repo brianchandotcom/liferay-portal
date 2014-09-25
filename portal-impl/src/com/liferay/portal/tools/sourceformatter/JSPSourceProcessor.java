@@ -435,7 +435,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			newContent = formatJavaTerms(
 				fileName, absolutePath, newContent, javaClassContent,
-				javaClassLineCount, null, null);
+				javaClassLineCount, null, null, null);
 		}
 
 		if (!content.equals(newContent)) {

@@ -1028,8 +1028,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			newContent = formatJavaTerms(
 				fileName, absolutePath, newContent, javaClassContent,
-				javaClassLineCount, _javaTermSortExclusions,
-				_testAnnotationsExclusions);
+				javaClassLineCount, _javaTermAccessLevelModifierExclusions,
+				_javaTermSortExclusions, _testAnnotationsExclusions);
 		}
 
 		newContent = formatJava(fileName, absolutePath, newContent);
@@ -1217,6 +1217,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"fit.on.single.line.exludes");
 		_hibernateSQLQueryExclusions = getPropertyList(
 			"hibernate.sql.query.excludes");
+		_javaTermAccessLevelModifierExclusions = getPropertyList(
+			"javaterm.access.level.modifier.excludes");
 		_javaTermSortExclusions = getPropertyList("javaterm.sort.excludes");
 		_lineLengthExclusions = getPropertyList("line.length.excludes");
 		_proxyExclusions = getPropertyList("proxy.excludes");
@@ -2512,6 +2514,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\n(.+)\n\n(\t+)}\n");
 	private Pattern _incorrectLineBreakPattern = Pattern.compile(
 		"\t(catch |else |finally |for |if |try |while ).*\\{\n\n\t+\\w");
+	private List<String> _javaTermAccessLevelModifierExclusions;
 	private List<String> _javaTermSortExclusions;
 	private List<String> _lineLengthExclusions;
 	private Pattern _logPattern = Pattern.compile(

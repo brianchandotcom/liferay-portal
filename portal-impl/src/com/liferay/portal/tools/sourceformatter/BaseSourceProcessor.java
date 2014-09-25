@@ -694,6 +694,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected String formatJavaTerms(
 			String fileName, String absolutePath, String content,
 			String javaClassContent, int javaClassLineCount,
+			List<String> javaTermAccessLevelModifierExclusions,
 			List<String> javaTermSortExclusions,
 			List<String> testAnnotationsExclusions)
 		throws Exception {
@@ -703,7 +704,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			StringPool.TAB);
 
 		String newJavaClassContent = javaClass.formatJavaTerms(
-			javaTermSortExclusions, testAnnotationsExclusions);
+			javaTermAccessLevelModifierExclusions, javaTermSortExclusions,
+			testAnnotationsExclusions);
 
 		if (!javaClassContent.equals(newJavaClassContent)) {
 			return StringUtil.replaceFirst(

@@ -83,16 +83,16 @@
 		</execute>
 
 		<execute macro="DMFolder#addSubfolderPG">
-			<var name="dmSubFolderName" value="DM Folder Name" />
+			<var name="dmSubFolderName" value="DM Folder2 Name" />
 		</execute>
 
 		<execute macro="DMFolder#gotoPG">
-			<var name="dmFolderName" value="DM Folder Name" />
+			<var name="dmFolderName" value="DM Folder2 Name" />
 		</execute>
 
 		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_1.txt" />
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentFile" value="Document_2.txt" />
+			<var name="dmDocumentTitle" value="Document_2.txt" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -104,15 +104,15 @@
 		</execute>
 
 		<execute macro="DMFolder#gotoPG">
-			<var name="dmFolderName" value="DM Folder Name" />
+			<var name="dmFolderName" value="DM Folder2 Name" />
 		</execute>
 
 		<execute macro="DMDocument#gotoCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Document_2.txt" />
 		</execute>
 
 		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Document_2.txt" />
 		</execute>
 	</command>
 
@@ -136,12 +136,12 @@
 		</execute>
 
 		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_1.txt" />
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentFile" value="Document_3.txt" />
+			<var name="dmDocumentTitle" value="Document_3.txt" />
 		</execute>
 
 		<execute macro="DMDocument#gotoCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Document_3.txt" />
 		</execute>
 
 		<execute macro="DMDocument#checkoutCP">
@@ -157,7 +157,7 @@
 		</execute>
 
 		<execute macro="DMDocument#gotoCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Document_3.txt" />
 		</execute>
 
 		<execute macro="DMDocument#checkinCP">
@@ -173,11 +173,11 @@
 		</execute>
 
 		<execute macro="DMDocument#viewIconNotLockedCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Document_3.txt" />
 		</execute>
 
 		<execute macro="DMDocument#gotoCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Document_3.txt" />
 		</execute>
 
 		<execute macro="DMDocument#viewCheckedinCP" >
@@ -191,12 +191,12 @@
 		</execute>
 
 		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_1.txt" />
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentFile" value="Document_4.txt" />
+			<var name="dmDocumentTitle" value="Document_4.txt" />
 		</execute>
 
 		<execute macro="DMDocument#gotoCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Document_4.txt" />
 		</execute>
 
 		<execute macro="DMDocument#checkoutCP">
@@ -212,11 +212,11 @@
 		</execute>
 
 		<execute macro="DMDocument#viewIconLockedCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Document_4.txt" />
 		</execute>
 
 		<execute macro="DMDocument#gotoCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Document_4.txt" />
 		</execute>
 
 		<execute macro="DMDocument#viewCheckedoutCP" >
@@ -230,12 +230,12 @@
 		</execute>
 
 		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_1.txt" />
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="Document_1.doc" />
 		</execute>
 
 		<execute macro="DMDocument#deleteCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Document_1.doc" />
 			<var name="recycleBinDisabled" value="true" />
 		</execute>
 
@@ -244,7 +244,7 @@
 		</execute>
 
 		<execute macro="DMDocument#cannotViewCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Document_1.doc" />
 		</execute>
 
 		<execute macro="DMDocument#viewDefaultCP" />
@@ -256,16 +256,16 @@
 		</execute>
 
 		<execute macro="DMFolder#addSubfolderPG">
-			<var name="dmSubFolderName" value="DM Folder Name" />
+			<var name="dmSubFolderName" value="DM Folder3 Name" />
 		</execute>
 
 		<execute macro="DMFolder#gotoPG">
-			<var name="dmFolderName" value="DM Folder Name" />
+			<var name="dmFolderName" value="DM Folder3 Name" />
 		</execute>
 
 		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_1.txt" />
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentFile" value="Document_2.doc" />
+			<var name="dmDocumentTitle" value="Document_2.doc" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -277,11 +277,11 @@
 		</execute>
 
 		<execute macro="DMFolder#gotoPG">
-			<var name="dmFolderName" value="DM Folder Name" />
+			<var name="dmFolderName" value="DM Folder3 Name" />
 		</execute>
 
 		<execute macro="DMDocument#deleteCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Document_2.doc" />
 			<var name="recycleBinDisabled" value="true" />
 		</execute>
 
@@ -292,11 +292,11 @@
 		</execute>
 
 		<execute macro="DMFolder#gotoPG">
-			<var name="dmFolderName" value="DM Folder Name" />
+			<var name="dmFolderName" value="DM Folder3 Name" />
 		</execute>
 
 		<execute macro="DMDocument#cannotViewCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Document_2.doc" />
 		</execute>
 
 		<execute macro="DMDocument#viewDefaultCP" />
@@ -333,13 +333,13 @@
 		</execute>
 
 		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_1.txt" />
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentFile" value="Document_3.doc" />
+			<var name="dmDocumentTitle" value="Document_3.doc" />
 		</execute>
 
 		<execute macro="DMDocument#editCP">
 			<var name="dmDocumentFileEdit" value="Document_2.jpg" />
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Document_3.doc" />
 		</execute>
 
 		<execute macro="DMDocument#gotoHomeCP" />
@@ -349,11 +349,11 @@
 		</execute>
 
 		<execute macro="DMDocument#gotoCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Document_3.doc" />
 		</execute>
 
 		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Document_3.doc" />
 		</execute>
 
 		<execute macro="DMDocument#viewDocumentMetadataCP">
@@ -373,12 +373,12 @@
 		</execute>
 
 		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_1.txt" />
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentFile" value="Document_1.docx" />
+			<var name="dmDocumentTitle" value="Document_1.docx" />
 		</execute>
 
 		<execute macro="DMDocument#editCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Document_1.docx" />
 			<var name="dmDocumentTitleEdit" value="Document_1.jpg" />
 		</execute>
 
@@ -391,11 +391,11 @@
 		</execute>
 
 		<execute macro="DMDocument#gotoCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Document_1.docx" />
 		</execute>
 
 		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Document_1.docx" />
 		</execute>
 	</command>
 
@@ -405,13 +405,13 @@
 		</execute>
 
 		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_1.txt" />
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentFile" value="Document_2.docx" />
+			<var name="dmDocumentTitle" value="Document_2.docx" />
 		</execute>
 
 		<execute macro="DMDocument#editCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
-			<var name="dmDocumentTitleEdit" value="Document_1_Edit.jpg" />
+			<var name="dmDocumentTitle" value="Document_2.docx" />
+			<var name="dmDocumentTitleEdit" value="Document_2_Edit.jpg" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -423,11 +423,11 @@
 		</execute>
 
 		<execute macro="DMDocument#gotoCP">
-			<var name="dmDocumentTitle" value="Document_1_Edit.txt" />
+			<var name="dmDocumentTitle" value="Document_2_Edit.docx" />
 		</execute>
 
 		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentTitle" value="Document_1_Edit.txt" />
+			<var name="dmDocumentTitle" value="Document_2_Edit.docx" />
 		</execute>
 	</command>
 
@@ -437,13 +437,13 @@
 		</execute>
 
 		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_1.txt" />
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentFile" value="Document_3.docx" />
+			<var name="dmDocumentTitle" value="Document_3.docx" />
 		</execute>
 
 		<execute macro="DMDocument#editCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
-			<var name="dmDocumentTitleEdit" value="Document_1" />
+			<var name="dmDocumentTitle" value="Document_3.docx" />
+			<var name="dmDocumentTitleEdit" value="Document_3" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -455,11 +455,11 @@
 		</execute>
 
 		<execute macro="DMDocument#gotoCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Document_3.docx" />
 		</execute>
 
 		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Document_3.docx" />
 		</execute>
 	</command>
 
@@ -469,12 +469,12 @@
 		</execute>
 
 		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_1.txt" />
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentFile" value="Document_1.odt" />
+			<var name="dmDocumentTitle" value="Document_1.odt" />
 		</execute>
 
 		<execute macro="DMDocument#moveToFolderCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Document_1.odt" />
 			<var name="dmFolderName" value="Home" />
 		</execute>
 
@@ -483,11 +483,11 @@
 		</execute>
 
 		<execute macro="DMDocument#gotoCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Document_1.odt" />
 		</execute>
 
 		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Document_1.odt" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -499,7 +499,7 @@
 		</execute>
 
 		<execute macro="DMDocument#cannotViewCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Document_1.odt" />
 		</execute>
 	</command>
 
@@ -509,16 +509,16 @@
 		</execute>
 
 		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_1.txt" />
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentFile" value="Document_2.odt" />
+			<var name="dmDocumentTitle" value="Document_2.odt" />
 		</execute>
 
 		<execute macro="DMDocument#searchCP">
-			<var name="dmDocumentKeyword" value="Document_1.txt" />
+			<var name="dmDocumentKeyword" value="Document_2.odt" />
 		</execute>
 
 		<execute macro="DMDocument#viewSearchResultsCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Document_2.odt" />
 			<var name="dmParentFolder" value="Home » Sharepoint Repository Name" />
 		</execute>
 	</command>
@@ -529,18 +529,18 @@
 		</execute>
 
 		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_1.txt" />
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentFile" value="Document_3.odt" />
+			<var name="dmDocumentTitle" value="Document_3.odt" />
 		</execute>
 
 		<execute macro="DMDocument#gotoHomeCP" />
 
 		<execute macro="DMDocument#searchCP">
-			<var name="dmDocumentKeyword" value="Document_1.txt" />
+			<var name="dmDocumentKeyword" value="Document_3.odt" />
 		</execute>
 
 		<execute macro="DMDocument#viewSearchResultsCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Document_3.odt" />
 			<var name="dmParentFolder" value="Home » Sharepoint Repository Name" />
 			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
 		</execute>
@@ -552,12 +552,12 @@
 		</execute>
 
 		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_1.txt" />
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentFile" value="Document_1.xls" />
+			<var name="dmDocumentTitle" value="Document_1.xls" />
 		</execute>
 
 		<execute macro="DMDocument#gotoCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Document_1.xls" />
 		</execute>
 
 		<execute macro="DMDocument#checkoutCP">
@@ -574,7 +574,7 @@
 
 		<execute macro="DMDocument#editCP">
 			<var name="checkedOut" value="true" />
-			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Document_1.xls" />
 			<var name="dmDocumentTitleEdit" value="Document_1_Edit.jpg" />
 			<var name="sharepointRepository" value="true" />
 		</execute>
@@ -588,11 +588,11 @@
 		</execute>
 
 		<execute macro="DMDocument#viewIconLockedCP">
-			<var name="dmDocumentTitle" value="Document_1_Edit.txt" />
+			<var name="dmDocumentTitle" value="Document_1_Edit.xls" />
 		</execute>
 
 		<execute macro="DMDocument#gotoCP">
-			<var name="dmDocumentTitle" value="Document_1_Edit.txt" />
+			<var name="dmDocumentTitle" value="Document_1_Edit.xls" />
 		</execute>
 
 		<execute macro="DMDocument#viewCheckedoutCP" >

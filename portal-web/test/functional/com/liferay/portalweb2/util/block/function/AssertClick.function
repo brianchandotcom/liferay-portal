@@ -282,7 +282,7 @@
 	</command>
 
 	<command name="waitForDMHomeAssertTextEqualsClick">
-		<execute argument1="//a[contains(@class,'browse-folder')]" selenium="waitForElementPresent" />
+		<execute argument1="//div[contains(@id,'documentLibraryContainer')]" selenium="waitForElementPresent" />
 
 		<execute argument1="1500" selenium="pause" />
 

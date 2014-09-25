@@ -46,7 +46,7 @@
 		</execute>
 
 		<execute macro="SOAnnouncementsEntry#addPG">
-			<var name="distributionScope" value="General" />
+			<var name="distributionScope" value="${siteName}" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryURL" value="${entryURL}" />
@@ -58,7 +58,7 @@
 		</execute>
 
 		<execute macro="SOAnnouncementsEntry#viewPG">
-			<var name="distributionScope" value="General" />
+			<var name="distributionScope" value="${siteName}" />
 			<var name="entryAuthor" value="${adminName}" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
@@ -347,7 +347,6 @@
 
 	<command name="AddSOAnnouncementsEntryScheduled" priority="5">
 		<var name="announcementType" value="General" />
-		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryURL" value="http://www.liferay.com" />
@@ -364,7 +363,7 @@
 		</execute>
 
 		<execute macro="SOAnnouncementsEntry#addPG">
-			<var name="distributionScope" value="General" />
+			<var name="distributionScope" value="${siteName}" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryURL" value="${entryURL}" />
@@ -380,7 +379,7 @@
 		</execute>
 
 		<execute macro="SOAnnouncementsEntry#viewPG">
-			<var name="distributionScope" value="General" />
+			<var name="distributionScope" value="${siteName}" />
 			<var name="entryAuthor" value="${adminName}" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
@@ -398,7 +397,7 @@
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 
 		<execute macro="SOAnnouncementsEntry#addPG">
-			<var name="distributionScope" value="General" />
+			<var name="distributionScope" value="${distributionScope}" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryURL" value="${entryURL}" />
@@ -411,7 +410,7 @@
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 
 		<execute macro="SOAnnouncementsEntry#viewPG">
-			<var name="distributionScope" value="General" />
+			<var name="distributionScope" value="${distributionScope}" />
 			<var name="entryAuthor" value="${adminName}" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
@@ -824,7 +823,7 @@
 		</execute>
 
 		<execute macro="SOAnnouncementsEntry#addPG">
-			<var name="distributionScope" value="Open Site Name" />
+			<var name="distributionScope" value="${siteName}" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryURL" value="${entryURL}" />
@@ -836,7 +835,7 @@
 		</execute>
 
 		<execute macro="SOAnnouncementsEntry#viewPG">
-			<var name="distributionScope" value="Open Site Name" />
+			<var name="distributionScope" value="${siteName}" />
 			<var name="entryAuthor" value="${userName}" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
@@ -1067,7 +1066,7 @@
 		</execute>
 
 		<execute macro="SOAnnouncementsEntry#addPG">
-			<var name="distributionScope" value="General" />
+			<var name="distributionScope" value="${siteName}" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryURL" value="${entryURL}" />
@@ -1120,7 +1119,7 @@
 		</execute>
 
 		<execute macro="SOAnnouncementsEntry#addPG">
-			<var name="distributionScope" value="Open Site Name" />
+			<var name="distributionScope" value="${siteName}" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryURL" value="${entryURL}" />
@@ -1234,7 +1233,7 @@
 		</execute>
 
 		<execute macro="SOAnnouncementsEntry#addPG">
-			<var name="distributionScope" value="General" />
+			<var name="distributionScope" value="${siteName}" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryURL" value="${entryURL}" />
@@ -1246,7 +1245,7 @@
 		</execute>
 
 		<execute macro="SOAnnouncementsEntry#editPG">
-			<var name="distributionScope" value="General" />
+			<var name="distributionScope" value="${siteName}" />
 			<var name="entryContentEdit" value="${entryContentEdit}" />
 			<var name="entryTitleEdit" value="${entryTitleEdit}" />
 			<var name="entryURL" value="${entryURL}" />
@@ -1258,7 +1257,7 @@
 		</execute>
 
 		<execute macro="SOAnnouncementsEntry#viewPG">
-			<var name="distributionScope" value="General" />
+			<var name="distributionScope" value="${siteName}" />
 			<var name="entryAuthor" value="${adminName}" />
 			<var name="entryContent" value="${entryContentEdit}" />
 			<var name="entryTitle" value="${entryTitleEdit}" />
@@ -1307,7 +1306,7 @@
 		</execute>
 
 		<execute macro="SOAnnouncementsEntry#addPG">
-			<var name="distributionScope" value="Open Site Name" />
+			<var name="distributionScope" value="${siteName}" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryURL" value="${entryURL}" />
@@ -1319,7 +1318,7 @@
 		</execute>
 
 		<execute macro="SOAnnouncementsEntry#editPG">
-			<var name="distributionScope" value="Open Site Name" />
+			<var name="distributionScope" value="${siteName}" />
 			<var name="entryContentEdit" value="${entryContentEdit}" />
 			<var name="entryTitleEdit" value="${entryTitleEdit}" />
 			<var name="entryURL" value="${entryURL}" />
@@ -1331,7 +1330,7 @@
 		</execute>
 
 		<execute macro="SOAnnouncementsEntry#viewPG">
-			<var name="distributionScope" value="Open Site Name" />
+			<var name="distributionScope" value="${siteName}" />
 			<var name="entryAuthor" value="${userName}" />
 			<var name="entryContent" value="${entryContentEdit}" />
 			<var name="entryTitle" value="${entryTitleEdit}" />
@@ -1485,7 +1484,7 @@
 		</execute>
 
 		<execute macro="SOAnnouncementsEntry#addPG">
-			<var name="distributionScope" value="General" />
+			<var name="distributionScope" value="${siteName}" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryURL" value="${entryURL}" />
@@ -1497,7 +1496,7 @@
 		</execute>
 
 		<execute macro="SOAnnouncementsEntry#markAsReadPG">
-			<var name="distributionScope" value="General" />
+			<var name="distributionScope" value="${siteName}" />
 			<var name="entryAuthor" value="${adminName}" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
@@ -1544,7 +1543,7 @@
 		</execute>
 
 		<execute macro="SOAnnouncementsEntry#addPG">
-			<var name="distributionScope" value="Open Site Name" />
+			<var name="distributionScope" value="${siteName}" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryURL" value="${entryURL}" />
@@ -1556,7 +1555,7 @@
 		</execute>
 
 		<execute macro="SOAnnouncementsEntry#markAsReadPG">
-			<var name="distributionScope" value="Open Site Name" />
+			<var name="distributionScope" value="${siteName}" />
 			<var name="entryAuthor" value="${userName}" />
 			<var name="entryContentEdit" value="${entryContent}" />
 			<var name="entryTitleEdit" value="${entryTitle}" />
@@ -1609,7 +1608,7 @@
 		</execute>
 
 		<execute macro="SOAnnouncementsEntry#addPG">
-			<var name="distributionScope" value="General" />
+			<var name="distributionScope" value="${siteName}" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryURL" value="${entryURL}" />
@@ -1621,7 +1620,7 @@
 		</execute>
 
 		<execute macro="SOAnnouncementsEntry#markAsReadPG">
-			<var name="distributionScope" value="General" />
+			<var name="distributionScope" value="${siteName}" />
 			<var name="entryAuthor" value="${adminName}" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
@@ -1634,7 +1633,7 @@
 		</execute>
 
 		<execute macro="SOAnnouncementsEntry#markAsUnreadPG">
-			<var name="distributionScope" value="General" />
+			<var name="distributionScope" value="${siteName}" />
 			<var name="entryAuthor" value="${adminName}" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
@@ -1681,7 +1680,7 @@
 		</execute>
 
 		<execute macro="SOAnnouncementsEntry#addPG">
-			<var name="distributionScope" value="Open Site Name" />
+			<var name="distributionScope" value="${siteName}" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryURL" value="${entryURL}" />
@@ -1693,7 +1692,7 @@
 		</execute>
 
 		<execute macro="SOAnnouncementsEntry#markAsReadPG">
-			<var name="distributionScope" value="Open Site Name" />
+			<var name="distributionScope" value="${siteName}" />
 			<var name="entryAuthor" value="${userName}" />
 			<var name="entryContentEdit" value="${entryContent}" />
 			<var name="entryTitleEdit" value="${entryTitle}" />
@@ -1706,7 +1705,7 @@
 		</execute>
 
 		<execute macro="SOAnnouncementsEntry#markAsUnreadPG">
-			<var name="distributionScope" value="Open Site Name" />
+			<var name="distributionScope" value="${siteName}" />
 			<var name="entryAuthor" value="${userName}" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
@@ -1811,7 +1810,7 @@
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOAnnouncementsEntry#viewEmptyPG">
-			<var name="distributionScope" value="General" />
+			<var name="distributionScope" value="${distributionScope}" />
 			<var name="entryAuthor" value="${adminName}" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />

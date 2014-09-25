@@ -64,7 +64,8 @@ catch (Exception e) {
 		<liferay-ui:message key="lower-case-letters" />
 	</td>
 	<td>
-		<liferay-ui:input-checkbox defaultValue="<%= lowerCaseLetters %>" param="lowerCaseLetters" />
+		<aui:input type="hidden" name="lowerCaseLetters" value="<%= lowerCaseLetters %>"/>
+		<liferay-ui:input-checkbox defaultValue="<%= lowerCaseLetters %>" param="lowerCaseLettersCheckbox" onClick='<%= renderResponse.getNamespace() +  "toggleLettersCheckbox(this);" %>' />
 	</td>
 </tr>
 <tr>
@@ -72,7 +73,8 @@ catch (Exception e) {
 		<liferay-ui:message key="upper-case-letters" />
 	</td>
 	<td>
-		<liferay-ui:input-checkbox defaultValue="<%= upperCaseLetters %>" param="upperCaseLetters" />
+		<aui:input type="hidden" name="upperCaseLetters" value="<%= upperCaseLetters %>"/>
+		<liferay-ui:input-checkbox defaultValue="<%= upperCaseLetters %>" param="upperCaseLettersCheckbox" onClick='<%= renderResponse.getNamespace() +  "toggleLettersCheckbox(this);" %>' />
 	</td>
 </tr>
 <tr>
@@ -136,5 +138,18 @@ catch (Exception e) {
 
 			event.halt();
 		}
+	);
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />toggleLettersCheckbox',
+		function(checkbox) {
+			checkbox = A.one(checkbox);
+
+			var checked = checkbox.attr('checked');
+
+			checkbox.previous().val(checked);
+		},
+		['aui-base']
 	);
 </aui:script>

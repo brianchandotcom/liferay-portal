@@ -1108,6 +1108,16 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 		<var name="git.plugins.dir" unset="true" />
 
 		<echo file="git-commit-plugins">${git.commit.plugins.rev.parse}</echo>
+
+		<if>
+			<isset property="env.JENKINS_HOME" />
+			<then>
+				<copy
+					file="git-commit-plugins"
+					todir="${env.JENKINS_HOME}/jobs/${env.JOB_NAME}/builds/${env.BUILD_NUMBER}"
+				/>
+			</then>
+		</if>
 	</target>
 
 	<target name="record-git-commit-portal">
@@ -1116,6 +1126,16 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 		</exec>
 
 		<echo file="git-commit-portal">${git.commit.portal.rev.parse}</echo>
+
+		<if>
+			<isset property="env.JENKINS_HOME" />
+			<then>
+				<copy
+					file="git-commit-portal"
+					todir="${env.JENKINS_HOME}/jobs/${env.JOB_NAME}/builds/${env.BUILD_NUMBER}"
+				/>
+			</then>
+		</if>
 	</target>
 
 	<target name="setup-jrebel">

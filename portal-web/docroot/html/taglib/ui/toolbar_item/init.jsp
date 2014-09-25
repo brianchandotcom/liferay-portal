@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,31 +12,10 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.portal.kernel.servlet.taglib.ui;
+<%@ include file="/html/taglib/init.jsp" %>
 
-/**
- * @author Iván Zaera
- */
-public class JavascriptMenuItem extends MenuItem implements JavascriptUIItem {
-
-	public String getJavascript() {
-		return _javascript;
-	}
-
-	public String getOnClick() {
-		return _onClick;
-	}
-
-	public void setJavascript(String javascript) {
-		_javascript = javascript;
-	}
-
-	public void setOnClick(String onClick) {
-		_onClick = onClick;
-	}
-
-	private String _javascript;
-	private String _onClick;
-
-}
+<%@ page import="com.liferay.portal.kernel.servlet.taglib.ui.JavascriptToolbarItem" %><%@
+page import="com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem" %><%@
+page import="com.liferay.portal.kernel.servlet.taglib.ui.URLToolbarItem" %>

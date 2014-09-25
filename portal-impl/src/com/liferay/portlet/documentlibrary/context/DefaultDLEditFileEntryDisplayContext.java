@@ -200,11 +200,6 @@ public class DefaultDLEditFileEntryDisplayContext
 		_dlFileEntryType = dlFileEntryType;
 		_fileEntry = fileEntry;
 
-		if ((_dlFileEntryType == null) && (_fileEntry != null)) {
-			_dlFileEntryType =
-				_fileEntryDisplayContextHelper.getDLFileEntryType();
-		}
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -217,6 +212,11 @@ public class DefaultDLEditFileEntryDisplayContext
 
 		if (fileEntry != null) {
 			_fileVersion = fileEntry.getFileVersion();
+		}
+
+		if ((_dlFileEntryType == null) && (_fileEntry != null)) {
+			_dlFileEntryType =
+				_fileEntryDisplayContextHelper.getDLFileEntryType();
 		}
 
 		_fileVersionDisplayContextHelper = new FileVersionDisplayContextHelper(

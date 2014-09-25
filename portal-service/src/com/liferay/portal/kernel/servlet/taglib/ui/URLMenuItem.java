@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.servlet.taglib.ui;
 /**
  * @author Iván Zaera
  */
-public class URLMenuItem extends MenuItem {
+public class URLMenuItem extends MenuItem implements URLUIItem {
 
 	public String getMethod() {
 		return _method;

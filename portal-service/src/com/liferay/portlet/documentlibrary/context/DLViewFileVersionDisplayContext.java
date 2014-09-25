@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
+import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
@@ -37,6 +38,8 @@ public interface DLViewFileVersionDisplayContext extends DLDisplayContext {
 	public Fields getFields(DDMStructure ddmStructure) throws PortalException;
 
 	public List<MenuItem> getMenuItems() throws PortalException;
+
+	public List<ToolbarItem> getToolbarItems() throws PortalException;
 
 	public boolean isAssetMetadataVisible() throws PortalException;
 

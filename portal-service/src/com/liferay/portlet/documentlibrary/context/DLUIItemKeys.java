@@ -17,31 +17,34 @@ package com.liferay.portlet.documentlibrary.context;
 /**
  * @author Iván Zaera
  */
-public class DLMenuItemKeys {
+public class DLUIItemKeys {
 
 	public static final String CANCEL_CHECKOUT =
-		DLMenuItemKeys.class.getName() + "#cancel-checkout";
+		DLUIItemKeys.class.getName() + "#cancel-checkout";
 
 	public static final String CHECKIN =
-		DLMenuItemKeys.class.getName() + "#checkin";
+		DLUIItemKeys.class.getName() + "#checkin";
 
 	public static final String CHECKOUT =
-		DLMenuItemKeys.class.getName() + "#checkout";
+		DLUIItemKeys.class.getName() + "#checkout";
 
 	public static final String DELETE =
-		DLMenuItemKeys.class.getName() + "#delete";
+		DLUIItemKeys.class.getName() + "#delete";
 
 	public static final String DOWNLOAD =
-		DLMenuItemKeys.class.getName() + "#download";
+		DLUIItemKeys.class.getName() + "#download";
 
-	public static final String EDIT = DLMenuItemKeys.class.getName() + "#edit";
+	public static final String EDIT = DLUIItemKeys.class.getName() + "#edit";
 
-	public static final String MOVE = DLMenuItemKeys.class.getName() + "#move";
+	public static final String MOVE = DLUIItemKeys.class.getName() + "#move";
+
+	public static final String MOVE_TO_THE_RECYCLE_BIN =
+		DLUIItemKeys.class.getName() + "#move-to-the-recycle-bin";
 
 	public static final String OPEN_IN_MS_OFFICE =
-		DLMenuItemKeys.class.getName() + "#open-in-ms-office";
+		DLUIItemKeys.class.getName() + "#open-in-ms-office";
 
 	public static final String PERMISSIONS =
-		DLMenuItemKeys.class.getName() + "#permissions";
+		DLUIItemKeys.class.getName() + "#permissions";
 
 }

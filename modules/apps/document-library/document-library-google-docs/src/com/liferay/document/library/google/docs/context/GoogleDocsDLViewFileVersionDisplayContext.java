@@ -21,11 +21,15 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
+import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
+import com.liferay.portal.kernel.servlet.taglib.ui.UIItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
+import com.liferay.portal.kernel.servlet.taglib.ui.URLToolbarItem;
+import com.liferay.portal.kernel.servlet.taglib.ui.URLUIItem;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.context.BaseDLViewFileVersionDisplayContext;
-import com.liferay.portlet.documentlibrary.context.DLMenuItemKeys;
+import com.liferay.portlet.documentlibrary.context.DLUIItemKeys;
 import com.liferay.portlet.documentlibrary.context.DLViewFileVersionDisplayContext;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -79,19 +83,32 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 	public List<MenuItem> getMenuItems() throws PortalException {
 		List<MenuItem> menuItems = super.getMenuItems();
 
-		_removeMenuItem(menuItems, DLMenuItemKeys.DOWNLOAD);
-		_removeMenuItem(menuItems, DLMenuItemKeys.OPEN_IN_MS_OFFICE);
+		_removeNonGoogleUIItems(menuItems);
 
-		_insertEditInGoogleMenuItem(menuItems);
+		URLMenuItem urlMenuItem = _insertEditInGoogleURLUIItem(
+			new URLMenuItem(), menuItems);
+
+		urlMenuItem.setTarget("_blank");
 
 		return menuItems;
 	}
 
-	private int _getIndex(List<MenuItem> menuItems, String key) {
-		for (int i = 0; i < menuItems.size(); i++) {
-			MenuItem menuItem = menuItems.get(i);
+	@Override
+	public List<ToolbarItem> getToolbarItems() throws PortalException {
+		List<ToolbarItem> toolbarItems = super.getToolbarItems();
 
-			if (key.equals(menuItem.getKey())) {
+		_removeNonGoogleUIItems(toolbarItems);
+
+		_insertEditInGoogleURLUIItem(new URLToolbarItem(), toolbarItems);
+
+		return toolbarItems;
+	}
+
+	private int _getIndex(List<? extends UIItem> uiItems, String key) {
+		for (int i = 0; i < uiItems.size(); i++) {
+			UIItem uiItem = uiItems.get(i);
+
+			if (key.equals(uiItem.getKey())) {
 				return i;
 			}
 		}
@@ -99,19 +116,18 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 		return -1;
 	}
 
-	private void _insertEditInGoogleMenuItem(List<MenuItem> menuItems)
-		throws PortalException {
+	private <T extends URLUIItem> T _insertEditInGoogleURLUIItem(
+		T urlUIItem, List<? super T> urlUIItems) {
 
-		int index = _getIndex(menuItems, DLMenuItemKeys.EDIT);
+		int index = _getIndex(
+			(List<? extends UIItem>)urlUIItems, DLUIItemKeys.EDIT);
 
 		if (index == -1) {
 			index = 0;
 		}
 
-		URLMenuItem urlMenuItem = new URLMenuItem();
-
-		urlMenuItem.setIconCssClass("icon-edit");
-		urlMenuItem.setKey(GoogleDocsMenuItemKeys.EDIT_IN_GOOGLE);
+		urlUIItem.setIcon("icon-edit");
+		urlUIItem.setKey(GoogleDocsMenuItemKeys.EDIT_IN_GOOGLE);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -122,9 +138,9 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 		String message = LanguageUtil.get(
 			resourceBundle, "edit-in-google-docs");
 
-		urlMenuItem.setMessage(message);
+		urlUIItem.setLabel(message);
 
-		urlMenuItem.setTarget("_blank");
+		urlUIItem.setTarget("_blank");
 
 		DLFileVersion dlFileVersion = (DLFileVersion)fileVersion.getModel();
 
@@ -134,16 +150,23 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 		String editURL = googleDocsMetadataHelper.getFieldValue(
 			GoogleDocsConstants.DDM_FIELD_NAME_EDIT_URL);
 
-		urlMenuItem.setURL(editURL);
+		urlUIItem.setURL(editURL);
 
-		menuItems.add(index, urlMenuItem);
+		urlUIItems.add(index, urlUIItem);
+
+		return urlUIItem;
 	}
 
-	private void _removeMenuItem(List<MenuItem> menuItems, String key) {
-		int index = _getIndex(menuItems, key);
+	private void _removeNonGoogleUIItems(List<? extends UIItem> uiItems) {
+		_removeUIItem(uiItems, DLUIItemKeys.DOWNLOAD);
+		_removeUIItem(uiItems, DLUIItemKeys.OPEN_IN_MS_OFFICE);
+	}
+
+	private void _removeUIItem(List<? extends UIItem> uiItems, String key) {
+		int index = _getIndex(uiItems, key);
 
 		if (index != -1) {
-			menuItems.remove(index);
+			uiItems.remove(index);
 		}
 	}
 

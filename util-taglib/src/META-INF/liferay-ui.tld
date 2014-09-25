@@ -4296,6 +4296,21 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>toolbar-item</name>
+		<tag-class>com.liferay.taglib.ui.ToolbarItemTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>toolbarItem</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>var</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>trash-empty</name>
 		<tag-class>com.liferay.taglib.ui.TrashEmptyTag</tag-class>
 		<body-content>empty</body-content>

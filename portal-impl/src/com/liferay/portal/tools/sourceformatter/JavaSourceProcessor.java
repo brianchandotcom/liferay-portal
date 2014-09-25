@@ -1242,7 +1242,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		StringBundler sb = new StringBundler();
 
-		try (UnsyncBufferedReader unsyncBufferedReader = 
+		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
 			String line = null;
@@ -1281,7 +1281,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					}
 				}
 
-				if (line.contains(StringPool.TAB + "for (") && 
+				if (line.contains(StringPool.TAB + "for (") &&
 					line.contains(":") && !line.contains(" :")) {
 
 					line = StringUtil.replace(line, ":" , " :");
@@ -1515,7 +1515,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							line, StringPool.DOUBLE_SPACE, StringPool.SPACE);
 
 						trimmedLine = StringUtil.replaceLast(
-							trimmedLine, StringPool.DOUBLE_SPACE, 
+							trimmedLine, StringPool.DOUBLE_SPACE,
 							StringPool.SPACE);
 					}
 
@@ -1531,7 +1531,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 								!linePart.startsWith("throws")) {
 
 								line = StringUtil.replaceLast(
-									line, StringPool.SPACE + linePart, 
+									line, StringPool.SPACE + linePart,
 									linePart);
 							}
 						}
@@ -1716,7 +1716,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				Tuple combinedLines = null;
 				int lineLength = getLineLength(line);
 
-				if (!line.startsWith("import ") && 
+				if (!line.startsWith("import ") &&
 					!line.startsWith("package ") &&
 					!line.matches("\\s*\\*.*")) {
 

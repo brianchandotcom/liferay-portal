@@ -511,7 +511,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		boolean hasUnsortedExceptions = false;
 
-		try (UnsyncBufferedReader unsyncBufferedReader = 
+		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
 			_checkedForIncludesFileNames = new HashSet<String>();
@@ -602,7 +602,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					line = StringUtil.replace(line, "<%=", "<%= ");
 				}
 
-				if (trimmedPreviousLine.equals("%>") && 
+				if (trimmedPreviousLine.equals("%>") &&
 					Validator.isNotNull(line) &&  !trimmedLine.equals("-->")) {
 
 					sb.append("\n");
@@ -678,7 +678,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 									processErrorMessage(
 										fileName,
-										"attribute: " + fileName + " " + 
+										"attribute: " + fileName + " " +
 											lineCount);
 
 									readAttributes = false;

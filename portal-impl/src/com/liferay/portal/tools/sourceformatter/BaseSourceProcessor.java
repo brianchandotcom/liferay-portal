@@ -1383,7 +1383,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		try (UnsyncBufferedReader unsyncBufferedReader = 
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
-			
+
 			String line = null;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {

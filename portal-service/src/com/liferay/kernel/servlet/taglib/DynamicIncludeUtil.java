@@ -14,18 +14,51 @@
 
 package com.liferay.kernel.servlet.taglib;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Carlos Sierra Andrés
+ * @author Raymond Augé
  */
 public class DynamicIncludeUtil {
 
+	public static void include(
+		HttpServletRequest request, HttpServletResponse response, String key) {
+
+		List<DynamicInclude> dynamicIncludes = getDynamicIncludes(key);
+
+		if ((dynamicIncludes != null) && !dynamicIncludes.isEmpty()) {
+			for (DynamicInclude dynamicInclude : dynamicIncludes) {
+				try {
+					dynamicInclude.include(request, response);
+				}
+				catch (Exception e) {
+					_log.error(e, e);
+				}
+			}
+		}
+	}
+
 	public static List<DynamicInclude> getDynamicIncludes(String key) {
 		return _instance._dynamicIncludes.getService(key);
+	}
+
+	public static boolean hasInclude(String key) {
+		List<DynamicInclude> dynamicIncludes = getDynamicIncludes(key);
+
+		if ((dynamicIncludes == null) || dynamicIncludes.isEmpty()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private DynamicIncludeUtil() {
@@ -34,6 +67,8 @@ public class DynamicIncludeUtil {
 
 		_dynamicIncludes.open();
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(DynamicIncludeUtil.class);
 
 	private static DynamicIncludeUtil _instance = new DynamicIncludeUtil();
 

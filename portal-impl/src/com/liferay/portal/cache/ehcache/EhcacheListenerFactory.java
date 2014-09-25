@@ -121,7 +121,7 @@ public class EhcacheListenerFactory implements ListenerFactory {
 					cacheEventListener);
 		}
 
-		return new EhcacheCacheListenerAdapter<Serializable, Serializable>(
+		return new EhcacheCacheListenerAdapter<Serializable, Object>(
 			cacheEventListener);
 	}
 

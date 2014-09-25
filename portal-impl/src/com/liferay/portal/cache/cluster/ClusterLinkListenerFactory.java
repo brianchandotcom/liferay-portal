@@ -38,7 +38,8 @@ public class ClusterLinkListenerFactory implements ListenerFactory {
 	public CacheListener<? extends Serializable, ?> createCacheListener(
 		Properties properties) {
 
-		return new ClusterLinkCacheReplicator(properties);
+		return new ClusterLinkCacheReplicator<Serializable, Serializable>(
+			properties);
 	}
 
 	@Override

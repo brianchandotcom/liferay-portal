@@ -23,4 +23,5 @@ String namesJS = (String)request.getAttribute("liferay-ui:tabs:namesJS");
 String param = (String)request.getAttribute("liferay-ui:tabs:param");
 String value = (String)request.getAttribute("liferay-ui:tabs:value");
 String[] values = (String[])request.getAttribute("liferay-ui:tabs:values");
+String[] tabsUrls = (String[])request.getAttribute("liferay-ui:tabs:tabsUrls");
 %>

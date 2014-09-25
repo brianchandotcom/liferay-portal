@@ -486,7 +486,7 @@ public class PortalSecurityManagerImpl extends SecurityManager
 	}
 
 	protected void initPACLImpl(Class<?> clazz, Object pacl) throws Exception {
-		Field field = clazz.getDeclaredField("_pacl");
+		Field field = ReflectionUtil.getDeclaredField(clazz, "_pacl");
 
 		synchronized (field) {
 			field.setAccessible(true);

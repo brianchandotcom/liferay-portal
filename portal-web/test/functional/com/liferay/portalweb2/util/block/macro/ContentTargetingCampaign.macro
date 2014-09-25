@@ -37,7 +37,7 @@
 
 		<execute action="CPContenttargetingAddcampaign#click" locator-key1="CAMPAIGN_TRACKING_ACTIONS_CONTENT_SELECT_CONTENT_CHOOSE_BUTTON" />
 		<execute action="CPContenttargetingAddcampaign#selectFrame" value1="relative=top" />
-		<execute action="CPContenttargetingAddcampaign#select" locator-key1="CAMPAIGN_TRACKING_ACTIONS_CONTENT_TRACKING_ACTION_SELECT" value1="${contentTrackingActionSelect}" />
+		<execute action="CPContenttargetingAddcampaign#assertTextEquals" locator-key1="CAMPAIGN_TRACKING_ACTIONS_CONTENT_TRACKING_ACTION" value1="view" />
 	</command>
 
 	<command name="addTrackingActionFormCP">
@@ -57,7 +57,7 @@
 
 		<execute action="CPContenttargetingAddcampaign#type" locator-key1="CAMPAIGN_TRACKING_ACTIONS_LINK_ALIAS_FIELD" value1="${linkAlias}" />
 		<execute action="CPContenttargetingAddcampaign#type" locator-key1="CAMPAIGN_TRACKING_ACTIONS_LINK_ID_FIELD" value1="${linkId}" />
-		<execute action="CPContenttargetingAddcampaign#select" locator-key1="CAMPAIGN_TRACKING_ACTIONS_LINK_TRACKING_ACTION_SELECT" value1="${linkTrackingActionSelect}" />
+		<execute action="CPContenttargetingAddcampaign#assertTextEquals" locator-key1="CAMPAIGN_TRACKING_ACTIONS_LINK_TRACKING_ACTION" value1="click" />
 	</command>
 
 	<command name="addTrackingActionPageCP">
@@ -237,6 +237,59 @@
 		<execute action="CPContenttargetingAddcampaign#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="updateReportCP">
+		<execute action="CPContenttargeting#click" locator-key1="NAVIGATION_CAMPAIGNS" />
+
+		<var name="key_campaignName" value="${campaignName}" />
+
+		<execute action="CPContenttargeting#click" locator-key1="CAMPAIGN_TABLE_ACTIONS" />
+		<execute action="CPContenttargeting#assertClick" locator-key1="CAMPAIGN_TABLE_ACTIONS_MENULIST_REPORTS" value1="Reports" />
+
+		<if>
+			<isset var="contentViewsDescription" />
+			<then>
+				<var name="key_contentViewsDescription" value="${contentViewsDescription}" />
+
+				<execute action="CPContenttargetingCampaignReports#assertTextEquals" locator-key1="CONTENT_VIEWS_REPORT_DESCRIPTION" value1="${contentViewsDescription}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="contentViewsDescription" />
+			<then>
+				<var name="key_trackingActionsDescription" value="${trackingActionsDescription}" />
+
+				<execute action="CPContenttargetingCampaignReports#assertTextEquals" locator-key1="TRACKING_ACTIONS_REPORT_DESCRIPTION" value1="${trackingActionsDescription}" />
+			</then>
+		</if>
+
+		<var name="key_reportType" value="${viewReportType}" />
+
+		<execute action="CPContenttargetingCampaignReports#click" locator-key1="REPORT_ACTIONS" />
+		<execute action="CPContenttargetingCampaignReports#assertClick" locator-key1="REPORT_ACTIONS_MENULIST_VIEW_REPORT" value1="View Report" />
+		<execute action="CPContenttargetingCampaignReports#click" locator-key1="UPDATE_REPORT_BUTTON" />
+		<execute action="CPContenttargetingCampaignReports#pause" locator1="1000" />
+		<execute action="CPContenttargetingCampaignReports#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<if>
+			<equals arg1="${notEnoughInfoContentView}" arg2="true" />
+			<then>
+				<var name="viewReportType" value="${viewReportType?lowercase()}" />
+
+				<execute action="CPContenttargetingCampaignReports#assertTextEquals" locator-key1="NOT_ENOUGH_DATA_MESSAGE" value1="There is not enough data to generate a content views report for the campaign Campaign Name. Please make sure the Campaign Content Display application is available on any site page." />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${notEnoughInfoTrackingAction}" arg2="true" />
+			<then>
+				<var name="viewReportType" value="${viewReportType?lowercase()}" />
+
+				<execute action="CPContenttargetingCampaignReports#assertTextEquals" locator-key1="NOT_ENOUGH_DATA_MESSAGE" value1="There is not enough data to generate a tracking actions report for the campaign Campaign Name. Please make sure that at least one tracking action has been set for this campaign." />
+			</then>
+		</if>
+	</command>
+
 	<command name="viewCampaignCP">
 		<execute action="CPContenttargeting#click" locator-key1="NAVIGATION_CAMPAIGNS" />
 
@@ -257,6 +310,16 @@
 		</if>
 	</command>
 
+	<command name="viewContentReportCP">
+		<var name="key_contentTitle" value="${contentTitle}" />
+
+		<execute action="CPContenttargetingCampaignReports#assertTextEquals" locator-key1="CONTENT_GRAPH_CONTENT_TITLE" value1="${contentTitle}" />
+		<execute action="CPContenttargetingCampaignReports#assertTextEquals" locator-key1="CONTENT_REPORT_TABLE_CONTENT_TITLE" value1="${contentTitle}" />
+		<execute action="CPContenttargetingCampaignReports#assertTextEquals" locator-key1="CONTENT_REPORT_TABLE_CONTENT_TYPE" value1="${contentType}" />
+		<execute action="CPContenttargetingCampaignReports#assertTextEquals" locator-key1="CONTENT_REPORT_TABLE_EVENT" value1="${contentEvent}" />
+		<execute action="CPContenttargetingCampaignReports#assertTextEquals" locator-key1="CONTENT_REPORT_TABLE_COUNT" value1="${contentEventCount}" />
+	</command>
+
 	<command name="viewTrackingActionsCP">
 		<execute action="CPContenttargeting#click" locator-key1="NAVIGATION_CAMPAIGNS" />
 
@@ -275,7 +338,7 @@
 				<then>
 					<execute action="CPContenttargetingEditcampaign#assertTextEquals" locator-key1="CAMPAIGN_TRACKING_ACTIONS_PAGE_ALIAS_FIELD" value1="${pageAlias}" />
 					<execute action="CPContenttargetingEditcampaign#assertTextEquals" locator-key1="CAMPAIGN_TRACKING_ACTIONS_PAGE_FRIENDLY_URL_FIELD" value1="${pageFriendlyURL}" />
-					<execute action="CPContenttargetingEditcampaign#assertSelectedLabel" locator-key1="CAMPAIGN_TRACKING_ACTIONS_PAGE_TRACKING_ACTION_SELECT" value1="${pageTrackingActionSelect}" />
+					<execute action="CPContenttargetingEditcampaign#assertTextEquals" locator-key1="CAMPAIGN_TRACKING_ACTIONS_PAGE_TRACKING_ACTION" value1="view" />
 				</then>
 				<elseif>
 					<equals arg1="${trackingAction}" arg2="Form" />
@@ -298,7 +361,7 @@
 					<then>
 						<execute action="CPContenttargetingEditcampaign#type" locator-key1="CAMPAIGN_TRACKING_ACTIONS_CONTENT_ALIAS_FIELD" value1="${contentAlias}" />
 						<execute action="CPContenttargetingEditcampaign#assertTextEquals" locator-key1="CAMPAIGN_TRACKING_ACTION_CONTENT_TITLE" value1="${contentTitle}" />
-						<execute action="CPContenttargetingEditcampaign#select" locator-key1="CAMPAIGN_TRACKING_ACTIONS_CONTENT_TRACKING_ACTION_SELECT" value1="${contentTrackingActionSelect}" />
+						<execute action="CPContenttargetingEditcampaign#assertTextEquals" locator-key1="CAMPAIGN_TRACKING_ACTIONS_CONTENT_TRACKING_ACTION" value1="view" />
 					</then>
 				</elseif>
 				<elseif>
@@ -306,10 +369,20 @@
 					<then>
 						<execute action="CPContenttargetingAddcampaign#assertTextEquals" locator-key1="CAMPAIGN_TRACKING_ACTIONS_LINK_ALIAS_FIELD" value1="${linkAlias}" />
 						<execute action="CPContenttargetingAddcampaign#assertTextEquals" locator-key1="CAMPAIGN_TRACKING_ACTIONS_LINK_ID_FIELD" value1="${linkId}" />
-						<execute action="CPContenttargetingAddcampaign#assertSelectedLabel" locator-key1="CAMPAIGN_TRACKING_ACTIONS_LINK_TRACKING_ACTION_SELECT" value1="${linkTrackingActionSelect}" />
+						<execute action="CPContenttargetingAddcampaign#assertTextEquals" locator-key1="CAMPAIGN_TRACKING_ACTIONS_LINK_TRACKING_ACTION" value1="click" />
 					</then>
 				</elseif>
 			</if>
 		</for>
+	</command>
+
+	<command name="viewTrackingReportCP">
+		<var name="key_trackingAlias" value="${trackingAlias}" />
+
+		<execute action="CPContenttargetingCampaignReports#assertTextEquals" locator-key1="TRACKING_GRAPH_ALIAS_USER_SEGMENT" value1="${trackingAlias} (${trackingUserSegment})" />
+		<execute action="CPContenttargetingCampaignReports#assertTextEquals" locator-key1="TRACKING_REPORT_TABLE_CONTENT_ALIAS" value1="${trackingAlias}" />
+		<execute action="CPContenttargetingCampaignReports#assertTextEquals" locator-key1="TRACKING_REPORT_TABLE_EVENT" value1="${trackingEvent}" />
+		<execute action="CPContenttargetingCampaignReports#assertTextEquals" locator-key1="TRACKING_REPORT_TABLE_USER_SEGMENT" value1="${trackingUserSegment}" />
+		<execute action="CPContenttargetingCampaignReports#assertTextEquals" locator-key1="TRACKING_REPORT_TABLE_COUNT" value1="${trackingEventCount}" />
 	</command>
 </definition>

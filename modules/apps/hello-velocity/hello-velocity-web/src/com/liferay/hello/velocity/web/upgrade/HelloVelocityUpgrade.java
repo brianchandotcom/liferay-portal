@@ -59,15 +59,15 @@ public class HelloVelocityUpgrade {
 						"com_liferay_hello_velocity_web_portlet_" +
 							"HelloVelocityPortlet"
 					}
-			};
+				};
+			}
 
-		}
-	};
+		};
 
-	_releaseLocalService.updateRelease(
-		HelloVelocityPortlet.class.getName(),
-		Collections.<UpgradeProcess> singletonList(upgradePortletId), 1, 0,
-		false);
+		_releaseLocalService.updateRelease(
+			HelloVelocityPortlet.class.getName(),
+			Collections.<UpgradeProcess> singletonList(upgradePortletId), 1, 0,
+			false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

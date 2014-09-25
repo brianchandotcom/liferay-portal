@@ -36,11 +36,12 @@ viewPageHistoryURL.setParameter("title", wikiPage.getTitle());
 PortletURL viewPageActivitiesURL = PortletURLUtil.clone(viewPageHistoryURL, renderResponse);
 
 viewPageActivitiesURL.setParameter("struts_action", "/wiki/view_page_activities");
+
+String tabsUrls = viewPageActivitiesURL.toString() + "," + viewPageHistoryURL.toString();
 %>
 
 <liferay-ui:tabs
 	names="activities,versions"
 	param="tabs3"
-	url0="<%= viewPageActivitiesURL.toString() %>"
-	url1="<%= viewPageHistoryURL.toString() %>"
+	tabsUrls="<%= tabsUrls %>"
 />

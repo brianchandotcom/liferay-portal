@@ -109,23 +109,27 @@ public class JavaClass {
 	public static final int TYPE_VARIABLE_PUBLIC_STATIC = 1;
 
 	public JavaClass(
-			String fileName, String absolutePath, String content, String indent)
+			String fileName, String absolutePath, String content, int lineCount,
+			String indent)
 		throws Exception {
 
 		_fileName = fileName;
 		_absolutePath = absolutePath;
 		_content = content;
+		_lineCount = lineCount;
 		_indent = indent;
 
 		_staticBlocks = new ArrayList<JavaTerm>();
 	}
 
 	public String formatJavaTerms(
+			List<String> javaTermAccessLevelModifierExclusions,
 			List<String> javaTermSortExclusions,
 			List<String> testAnnotationsExclusions)
 		throws Exception {
 
-		Set<JavaTerm> javaTerms = getJavaTerms();
+		Set<JavaTerm> javaTerms = getJavaTerms(
+			javaTermAccessLevelModifierExclusions);
 
 		if (javaTerms == null) {
 			return _content;
@@ -157,9 +161,10 @@ public class JavaClass {
 
 				JavaClass innerClass = new JavaClass(
 					_fileName, _absolutePath, javaTermContent,
-					_indent + StringPool.TAB);
+					javaTerm.getLineCount(), _indent + StringPool.TAB);
 
 				String newJavaTermContent = innerClass.formatJavaTerms(
+					javaTermAccessLevelModifierExclusions,
 					javaTermSortExclusions, testAnnotationsExclusions);
 
 				if (!javaTermContent.equals(newJavaTermContent)) {
@@ -598,7 +603,10 @@ public class JavaClass {
 		return line.substring(x + 1);
 	}
 
-	protected Set<JavaTerm> getJavaTerms() throws Exception {
+	protected Set<JavaTerm> getJavaTerms(
+			List<String> javaTermAccessLevelModifierExclusions)
+		throws Exception {
+
 		Set<JavaTerm> javaTerms = new TreeSet<JavaTerm>(
 			new JavaTermComparator(false));
 
@@ -606,7 +614,7 @@ public class JavaClass {
 			new UnsyncStringReader(_content));
 
 		int index = 0;
-		int lineCount = 0;
+		int lineCount = _lineCount - 1;
 
 		String line = null;
 
@@ -621,6 +629,14 @@ public class JavaClass {
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			lineCount++;
+
+			if (JavaSourceProcessor.getLeadingTabCount(line) !=
+					_indent.length()) {
+
+				index = index + line.length() + 1;
+
+				continue;
+			}
 
 			if (line.startsWith(_indent + "private ") ||
 				line.equals(_indent + "private") ||
@@ -679,6 +695,27 @@ public class JavaClass {
 			else if (hasAnnotationCommentOrJavadoc(line)) {
 				if (lastCommentOrAnnotationPos == -1) {
 					lastCommentOrAnnotationPos = index;
+				}
+			}
+			else if (!line.startsWith(_indent + StringPool.CLOSE_CURLY_BRACE) &&
+					 !line.startsWith(_indent + StringPool.CLOSE_PARENTHESIS) &&
+					 !line.startsWith(_indent + "extends") &&
+					 !line.startsWith(_indent + "implements") &&
+					 !BaseSourceProcessor.isExcluded(
+						 javaTermAccessLevelModifierExclusions, _absolutePath,
+						 lineCount)) {
+
+				Matcher matcher = _classPattern.matcher(_content);
+
+				if (matcher.find()) {
+					String insideClass = _content.substring(matcher.end());
+
+					if (insideClass.contains(line)) {
+						BaseSourceProcessor.processErrorMessage(
+							_fileName,
+							"Missing access level modifier: " + _fileName +
+								" " + lineCount);
+					}
 				}
 			}
 
@@ -912,7 +949,8 @@ public class JavaClass {
 
 	protected boolean hasAnnotationCommentOrJavadoc(String s) {
 		if (s.startsWith(_indent + StringPool.AT) ||
-			s.startsWith(_indent + "/**") || s.startsWith(_indent + "//")) {
+			s.startsWith(_indent + StringPool.SLASH) ||
+			s.startsWith(_indent + " *")) {
 
 			return true;
 		}
@@ -1007,9 +1045,12 @@ public class JavaClass {
 	}
 
 	private String _absolutePath;
+	private Pattern _classPattern = Pattern.compile(
+		"(private |protected |public )(static )*class ([\\s\\S]*?) \\{\n");
 	private String _content;
 	private String _fileName;
 	private String _indent;
+	private int _lineCount;
 	private List<JavaTerm> _staticBlocks;
 
 }

@@ -712,10 +712,6 @@ public class PersistenceNestedSetsTreeManagerTest {
 	private static class SessionFactoryInvocationHandler
 		implements InvocationHandler {
 
-		SessionFactoryInvocationHandler(Object target) {
-			_target = target;
-		}
-
 		@Override
 		public Object invoke(Object proxy, Method method, Object[] args)
 			throws Throwable {
@@ -731,6 +727,10 @@ public class PersistenceNestedSetsTreeManagerTest {
 
 		public void setFailOpenSession(boolean failOpenSession) {
 			_failOpenSession = failOpenSession;
+		}
+
+		private SessionFactoryInvocationHandler(Object target) {
+			_target = target;
 		}
 
 		private boolean _failOpenSession;

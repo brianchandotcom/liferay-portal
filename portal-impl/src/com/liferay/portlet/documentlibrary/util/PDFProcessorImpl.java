@@ -761,8 +761,8 @@ public class PDFProcessorImpl
 			_dpi = dpi;
 			_height = height;
 			_width = width;
-			_generateThumbnail = generateThumbnail;
 			_generatePreview = generatePreview;
+			_generateThumbnail = generateThumbnail;
 		}
 
 		@Override

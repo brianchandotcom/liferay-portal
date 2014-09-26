@@ -62,7 +62,7 @@
 
 	<command name="viewPG">
 		<if>
-			<isset var="campaignSelected" />
+			<isset var="viewCampaignSelected" />
 			<then>
 				<var name="key_viewCampaignSelected" value="${viewCampaignSelected}" />
 

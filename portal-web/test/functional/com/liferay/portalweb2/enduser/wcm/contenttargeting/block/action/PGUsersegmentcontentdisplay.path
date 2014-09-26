@@ -81,12 +81,17 @@
 </tr>
 <tr>
 	<td>PREVIEW_1</td>
-	<td>//div[@data-index='0']</td>
+	<td>//div[contains(@id,'usersegmentcontentdisplay')]/div[@data-index='0']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIEW_2</td>
-	<td>//div[@data-index='1']</td>
+	<td>//div[contains(@id,'usersegmentcontentdisplay')]/div[@data-index='1']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_3</td>
+	<td>//div[contains(@id,'usersegmentcontentdisplay')]/div[@data-index='2']</td>
 	<td></td>
 </tr>
 <tr>

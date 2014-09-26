@@ -423,8 +423,8 @@
 		</execute>
 	</command>
 
-	<command name="ViewWorkflowPublishButton" priority="5">
-		<description message="This is a use case for LPS-47352." />
+	<command name="ViewWorkflowButtons" priority="5">
+		<description message="This is a use case for LPS-47352 and LPS-48912." />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Workflow" />
@@ -434,6 +434,8 @@
 			<var name="workflowDefinitionName" value="New Workflow Definition Name" />
 		</execute>
 
+		<execute action="CPPortalWorkflowconfigurationAddworkflow#assertTextEquals" locator-key1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
 		<execute action="CPPortalWorkflowconfigurationAddworkflow#assertTextEquals" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="CPPortalWorkflowconfigurationAddworkflow#assertTextEquals" locator-key1="CANCEL_BUTTON" value1="Cancel" />
 	</command>
 </definition>

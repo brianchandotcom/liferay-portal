@@ -100,6 +100,11 @@
 	<td>//div[contains(@class,'control-group field-wrapper') and contains(@data-fieldname,'Separator')]/div[contains(@class,'separator')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>NEW_PROCESS_FIELDS_FIELDSET</td>
+	<td>//div[contains(@class,'control-group field-wrapper') and contains(@data-fieldname,'${key_fieldName}')]/fieldset/legend</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

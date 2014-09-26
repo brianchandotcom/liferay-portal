@@ -292,6 +292,12 @@
 		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator-key1="NEW_PROCESS_FIELDS_DOCUMENTS_AND_MEDIA_SELECT" value1="${kfProcessFieldData}" />
 	</command>
 
+	<command name="viewCompleteFormFieldFieldset">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator-key1="NEW_PROCESS_FIELDS_FIELDSET" value1="${fieldName}" />
+	</command>
+
 	<command name="viewCompleteFormFieldNotPresent">
 		<var name="key_fieldName" value="${fieldName}" />
 

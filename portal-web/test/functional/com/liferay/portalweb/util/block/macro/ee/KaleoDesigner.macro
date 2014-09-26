@@ -171,6 +171,13 @@
 		</execute>
 	</command>
 
+	<command name="deleteTableDefinitionDraftViaKaleoDesignerCP">
+		<execute action="CPKaleodesignerconfiguration#assertClick" locator-key1="DEFINITION_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="CPKaleodesignerconfiguration#assertClickNoError" locator-key1="DEFINITION_MENULIST_DELETE" value1="Delete" />
+		<execute action="CPKaleodesignerconfiguration#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute action="CPKaleodesignerconfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="editConnectorName">
 		<execute action="Kaleodesigner#doubleClick" locator-key1="SETTINGS_NAME" />
 		<execute action="Kaleodesigner#type" locator-key1="SETTINGS_NAME_FIELD" value1="${connectorName}" />
@@ -380,6 +387,21 @@
 		<execute action="Kaleodesigner#click" locator-key1="VIEW_FORM_NODE" />
 	</command>
 
+	<command name="tearDownWorkflowDefinitionsViaKaleoDesigner">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Kaleo Designer" />
+		</execute>
+
+		<while>
+			<condition action="CPKaleodesignerconfiguration#isElementPresent" locator-key1="DEFINITION_TABLE_ACTIONS_1" />
+			<then>
+				<execute macro="KaleoDesigner#deleteTableDefinitionDraftViaKaleoDesignerCP" />
+			</then>
+		</while>
+
+		<execute macro="KaleoDesigner#viewNoWorkflowDraftsViaKaleoDesignerCP" />
+	</command>
+
 	<command name="viewConnectorPresent">
 		<var name="key_connectorLabel" value="${connectorLabel}" />
 
@@ -499,6 +521,10 @@
 
 	<command name="viewNodeType">
 		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_TYPE" value1="${nodeType}" />
+	</command>
+
+	<command name="viewNoWorkflowDraftsViaKaleoDesignerCP">
+		<execute action="CPKaleodesignerconfiguration#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No workflow definitions are defined." />
 	</command>
 
 	<command name="viewSourceXML">

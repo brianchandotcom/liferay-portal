@@ -1,9 +1,48 @@
 <definition>
+	<command name="addConnectorAndNodeViaViewTab">
+		<var name="key_nodeType" value="${nodeType?replace('-', '_')}" />
+
+		<execute action="Kaleodesigner#sikuliDragAndDrop" locator-key1="NODE_CORNER" value1="250,0" />
+
+		<var name="key_newNodeName" value="${newNodeName}" />
+
+		<execute action="Kaleodesigner#assertClick" locator-key1="VIEW_FORM_ADD_NEW_NODE" value1="${newNodeName}" />
+
+		<execute action="Kaleodesigner#click" locator-key1="VIEW_FORM_CONNECTOR_DEFAULT" />
+
+		<execute macro="KaleoDesigner#editConnectorName">
+			<var name="connectorName" value="${connectorName}" />
+		</execute>
+
+		<var name="key_nodeType" value="${newNodeType}" />
+
+		<execute action="Kaleodesigner#click" locator-key1="VIEW_FORM_NODE_DEFAULT" />
+
+		<execute macro="KaleoDesigner#editNodeName">
+			<var name="nodeName" value="${newNodeName}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editNodeDescription">
+			<var name="nodeDescription" value="${newNodeDescription}" />
+		</execute>
+	</command>
+
+	<command name="addDraftWorkflowDefinitionViaKaleoDesignerCP">
+		<execute action="Kaleodesigner#assertClick" locator-key1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
+		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="addNewDefinitionViaKaleoDesignerCP">
+		<execute action="CPKaleodesignerconfiguration#assertClick" locator-key1="ADD_NEW_DEFINITION_BUTTON" value1="Add New Definition" />
+
+		<execute action="Kaleodesigner#type" locator-key1="TITLE_FIELD" value1="${workflowDefinitionTitle}" />
+	</command>
+
 	<command name="addNewDefinitionViaWorkflowCP">
 		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="TOOLBAR_ADD_NEW_DEFINITION" value1="Add New Definition" />
 
-		<execute action="CPPortalWorkflowconfigurationAddworkflow#selectFrame" locator-key1="IFRAME" />
-		<execute action="CPPortalWorkflowconfigurationAddworkflow#type" locator-key1="NAME_FIELD" value1="${workflowDefinitionName}" />
+		<execute action="Kaleodesigner#selectFrame" locator-key1="IFRAME" />
+		<execute action="Kaleodesigner#type" locator-key1="TITLE_FIELD" value1="${workflowDefinitionTitle}" />
 	</command>
 
 	<command name="addNodeSettingsSection">
@@ -45,17 +84,11 @@
 	</command>
 
 	<command name="addNodeViaViewTab">
-		<var name="key_nodeType" value="${nodeType}" />
+		<var name="key_nodeType" value="${nodeType?replace('-', '_')}" />
 
-		<if>
-			<equals arg1="${nodeType}" arg2="join-xor" />
-			<then>
-				<execute action="Kaleodesigner#sikuliDragAndDrop" locator-key1="NODE_JOIN_XOR_PNG" value1="250,0" />
-			</then>
-			<else>
-				<execute action="Kaleodesigner#sikuliDragAndDrop" locator-key1="NODE_PNG" value1="250,0" />
-			</else>
-		</if>
+		<execute action="Kaleodesigner#sikuliDragAndDrop" locator-key1="NODE_PNG" value1="250,0" />
+
+		<var name="key_nodeType" value="${nodeType}" />
 
 		<execute action="Kaleodesigner#click" locator-key1="VIEW_FORM_NODE_DEFAULT" />
 
@@ -141,6 +174,13 @@
 		<execute macro="KaleoDesigner#viewNodeNotPresent">
 			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
 		</execute>
+	</command>
+
+	<command name="editConnectorName">
+		<execute action="Kaleodesigner#doubleClick" locator-key1="SETTINGS_NAME" />
+		<execute action="Kaleodesigner#type" locator-key1="SETTINGS_NAME_FIELD" value1="${connectorName}" />
+		<execute action="Kaleodesigner#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_NAME" value1="${connectorName}" />
 	</command>
 
 	<command name="editExecutionType">
@@ -271,8 +311,22 @@
 		<execute action="Kaleodesigner#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
 	</command>
 
+	<command name="editNodeSettings">
+		<execute action="Kaleodesigner#doubleClick" locator-key1="SETTINGS_NAME" />
+		<execute action="Kaleodesigner#type" locator-key1="SETTINGS_NAME_FIELD" value1="${nodeName}" />
+		<execute action="Kaleodesigner#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_NAME" value1="${nodeName}" />
+	</command>
+
 	<command name="editWorkflowDefinitionTitleViaWorkflowCP">
-		<execute action="CPPortalWorkflowconfigurationEditworkflow#type" locator-key1="TITLE_FIELD" value1="${workflowDefinitionTitle}" />
+		<execute action="Kaleodesigner#type" locator-key1="TITLE_FIELD" value1="${workflowDefinitionTitle}" />
+	</command>
+
+	<command name="editWorkflowDefinitionViaKaleoDesignerCP">
+		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
+
+		<execute action="CPKaleodesignerconfiguration#assertClick" locator-key1="DEFINITION_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPKaleodesignerconfiguration#assertClick" locator-key1="DEFINITION_MENULIST_EDIT" value1="Edit" />
 	</command>
 
 	<command name="editWorkflowDefinitionViaWorkflowCP">
@@ -280,13 +334,27 @@
 
 		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_TABLE_SPECIFIC_DEFINITION_ACTIONS" value1="Actions" />
 		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_MENULIST_EDIT" value1="Edit" />
-		<execute action="CPPortalWorkflowconfigurationEditworkflow#selectFrame" locator-key1="IFRAME" />
+		<execute action="Kaleodesigner#selectFrame" locator-key1="IFRAME" />
+	</command>
+
+	<command name="eraseDefinitionViaSourceXML">
+		<execute action="Kaleodesigner#assertClick" locator-key1="SOURCE_KALEO_XML_TAB" value1="Source (Kaleo XML)" />
+		<execute action="Kaleodesigner#pause" locator1="1000" />
+		<execute action="Kaleodesigner#type" locator-key1="SOURCE_KALEO_XML_CONTENT" value1="" />
+		<execute action="Kaleodesigner#pause" locator1="1000" />
+		<execute action="Kaleodesigner#assertClick" locator-key1="VIEW_TAB" value1="View" />
+		<execute action="Kaleodesigner#pause" locator1="1000" />
+	</command>
+
+	<command name="publishWorkflowDefinitionViaKaleoDesignerCP">
+		<execute action="Kaleodesigner#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="publishWorkflowDefinitionViaWorkflowCP">
-		<execute action="CPPortalWorkflowconfigurationAddworkflow#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-		<execute action="CPPortalWorkflowconfigurationAddworkflow#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPPortalWorkflowconfigurationAddworkflow#selectFrameTop" locator-key1="IFRAME" value1="relative=top" />
+		<execute action="Kaleodesigner#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="Kaleodesigner#selectFrameTop" locator-key1="IFRAME" value1="relative=top" />
 	</command>
 
 	<command name="removeNodeSettingsSection">
@@ -297,6 +365,12 @@
 		<var name="key_nodeNodeLabel" value="${nodeNodeLabel}" />
 
 		<execute action="Kaleodesigner#click" locator-key1="VIEW_FORM_NODE" />
+	</command>
+
+	<command name="viewConnectorPresent">
+		<var name="key_connectorLabel" value="${connectorLabel}" />
+
+		<execute action="Kaleodesigner#assertElementPresent" locator-key1="VIEW_FORM_CONNECTOR" />
 	</command>
 
 	<command name="viewExecutionType">
@@ -343,7 +417,7 @@
 	<command name="viewNodeAssignments">
 		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_ASSIGNMENTS" value1="${nodeAssignmentType}" />
 		<execute action="Kaleodesigner#doubleClick" locator-key1="SETTINGS_ASSIGNMENTS" />
-		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_ASSIGNMENT_TYPE_SELECT" value1="${nodeAssignmentType}" />
+		<execute action="Kaleodesigner#assertElementPresent" locator-key1="SETTINGS_ASSIGNMENT_TYPE_SELECT" />
 	</command>
 
 	<command name="viewNodeNotifications">
@@ -401,7 +475,13 @@
 	<command name="viewNodeNotPresent">
 		<var name="key_nodeNodeLabel" value="${nodeNodeLabel}" />
 
-		<execute action="Kaleodesigner#assertElementNotPresent" locator-key1="VIEW_FORM_NODE" value1="${nodeLabel}" />
+		<execute action="Kaleodesigner#assertElementNotPresent" locator-key1="VIEW_FORM_NODE" />
+	</command>
+
+	<command name="viewNodePresent">
+		<var name="key_nodeNodeLabel" value="${nodeNodeLabel}" />
+
+		<execute action="Kaleodesigner#assertElementPresent" locator-key1="VIEW_FORM_NODE" />
 	</command>
 
 	<command name="viewNodeType">
@@ -418,5 +498,27 @@
 		<execute action="Kaleodesigner#pause" locator1="1000" />
 		<execute action="Kaleodesigner#assertClick" locator-key1="VIEW_TAB" value1="View" />
 		<execute action="Kaleodesigner#pause" locator1="1000" />
+	</command>
+
+	<command name="viewTableDefinitionDraftViaKaleoDesignerCP">
+		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
+
+		<execute action="CPKaleodesignerconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_NAME" value1="${workflowDefinitionTitle}" />
+		<execute action="CPKaleodesignerconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_TITLE" value1="${workflowDefinitionTitle}" />
+		<execute action="CPKaleodesignerconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_VERSION" value1="0" />
+		<execute action="CPKaleodesignerconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_DRAFT_VERSION" value1="1" />
+		<execute action="CPKaleodesignerconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_PUBLISHED" value1="No" />
+		<execute action="CPKaleodesignerconfiguration#assertElementPresent" locator-key1="DEFINITION_TABLE_ACTIONS" />
+	</command>
+
+	<command name="viewTableDefinitionPublishedViaKaleoDesignerCP">
+		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
+
+		<execute action="CPKaleodesignerconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_NAME" value1="${workflowDefinitionTitle}" />
+		<execute action="CPKaleodesignerconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_TITLE" value1="${workflowDefinitionTitle}" />
+		<execute action="CPKaleodesignerconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_VERSION" value1="1" />
+		<execute action="CPKaleodesignerconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_DRAFT_VERSION" value1="1" />
+		<execute action="CPKaleodesignerconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_PUBLISHED" value1="Yes" />
+		<execute action="CPKaleodesignerconfiguration#assertElementPresent" locator-key1="DEFINITION_TABLE_ACTIONS" />
 	</command>
 </definition>

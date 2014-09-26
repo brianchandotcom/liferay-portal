@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>CONTENT_VIEWS_REPORT_DESCRIPTION</td>
-	<td>//tr[contains(.,'Content Views')]//a[contains(.,'${key_contentViewsDescription}')]</td>
+	<td>//tr[contains(.,'Content Views')]/td[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -35,12 +35,17 @@
 </tr>
 <tr>
 	<td>TRACKING_ACTIONS_REPORT_DESCRIPTION</td>
-	<td>//tr[contains(.,'Tracking Actions')]//a[contains(.,'${key_trackingActionsDescription}')]</td>
+	<td>//tr[contains(.,'Tracking Actions')]/td[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>REPORT_ACTIONS</td>
 	<td>//tr[contains(.,'${key_reportType}')]/td[4]/div/a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORT_ACTIONS</td>
+	<td>//tr[contains(.,'Content Views')]/td[4]/div/a[@title='Actions']</td>
 	<td></td>
 </tr>
 <tr>
@@ -91,18 +96,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_GRAPH_CONTENT_TITLE</td>
+	<td>//div[@id='campaignContentChart']//span[contains(.,'Apple')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--CONTENT_REPORT_TABLE-->
 <tr>
-	<td>CONTENT_REPORT_TABLE_CONTENT_TITLE</td>
+	<td>CONTENT_REPORT_TABLE_TITLE</td>
 	<td>//tr[contains(.,'${key_contentTitle}')]/td</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT_REPORT_TABLE_CONTENT_TYPE</td>
+	<td>CONTENT_REPORT_TABLE_TYPE</td>
 	<td>//tr[contains(.,'${key_contentTitle}')]/td[2]</td>
 	<td></td>
 </tr>
@@ -134,7 +144,7 @@
 </tr>
 <!--TRACKING_REPORT_TABLE-->
 <tr>
-	<td>TRACKING_REPORT_TABLE_CONTENT_ALIAS</td>
+	<td>TRACKING_REPORT_TABLE_ALIAS</td>
 	<td>//tr[contains(.,'${key_trackingAlias}')]/td</td>
 	<td></td>
 </tr>

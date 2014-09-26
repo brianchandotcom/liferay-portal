@@ -267,7 +267,7 @@
 		</execute>
 	</command>
 
-	<command name="CampaignContentViewReports" priority="5">
+	<command name="CampaignViewContentViewsReports" priority="5">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Site Name" />
@@ -302,7 +302,7 @@
 
 		<execute macro="ContentTargetingCampaign#addCP">
 			<var name="campaignDescription" value="Campaign Description" />
-			<var name="campaignEndDate" value="1/1/2015" />
+			<var name="campaignEndDate" value="1/1/2099" />
 			<var name="campaignEndTime" value="12:00 PM" />
 			<var name="campaignName" value="Campaign Name" />
 			<var name="campaignPrioritySelect" value="3" />
@@ -340,9 +340,9 @@
 		<execute macro="ContentTargetingCampaign#updateReportCP">
 			<var name="campaignName" value="Campaign Name" />
 			<var name="contentTitle" value="DM Document Title" />
-			<var name="contentViewsDescription" value="Displays the number of times that content has been viewed by users in the context of the current campaign." />
+			<var name="contentViewsDescription" value="true" />
 			<var name="notEnoughInfoContentView" value="true" />
-			<var name="trackingActionsDescription" value="Displays the number of times that the actions tracked for the current campaign have been triggered by users belonging to every user segment." />
+			<var name="trackingActionsDescription" value="true" />
 			<var name="viewReportType" value="Content Views" />
 		</execute>
 
@@ -393,133 +393,6 @@
 			<var name="contentEventCount" value="4" />
 			<var name="contentTitle" value="DM Document Title" />
 			<var name="contentType" value="Document" />
-		</execute>
-	</command>
-
-	<command name="CampaignTrackingActionViewReports" priority="5">
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Audience Targeting" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
-		<execute macro="ContentTargetingUserSegment#addCP">
-			<var name="userSegmentDescription" value="User Segment Description" />
-			<var name="userSegmentName" value="User Segment Name" />
-		</execute>
-
-		<execute macro="ContentTargetingUserSegment#addUserAttributesGenderRuleCP">
-			<var name="genderRadio" value="Male" />
-		</execute>
-
-		<execute macro="ContentTargetingUserSegment#saveCP" />
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Documents and Media" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.jpg" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Audience Targeting" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
-		<execute macro="ContentTargetingCampaign#addCP">
-			<var name="campaignDescription" value="Campaign Description" />
-			<var name="campaignEndDate" value="1/1/2015" />
-			<var name="campaignEndTime" value="12:00 PM" />
-			<var name="campaignName" value="Campaign Name" />
-			<var name="campaignPrioritySelect" value="3" />
-			<var name="campaignStartDate" value="1/1/2014" />
-			<var name="campaignStartTime" value="12:00 AM" />
-			<var name="userSegmentSelect" value="User Segment Name" />
-		</execute>
-
-		<execute macro="ContentTargetingCampaign#addTrackingActionContentCP">
-			<var name="contentAlias" value="Content Alias" />
-			<var name="contentTitle" value="DM Document Title" />
-			<var name="linkId" value="Content id" />
-			<var name="menulistContent" value="Document" />
-		</execute>
-
-		<execute macro="ContentTargetingCampaign#saveCP" />
-
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Audience Targeting" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
-		<execute macro="ContentTargetingCampaign#viewTrackingActionsCP">
-			<var name="campaignName" value="Campaign Name" />
-			<var name="contentAlias" value="Content Alias" />
-			<var name="contentTitle" value="DM Document Title" />
-			<var name="viewTrackingActionsList" value="Content" />
-		</execute>
-
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Audience Targeting" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
-		<execute macro="ContentTargetingCampaign#updateReportCP">
-			<var name="campaignName" value="Campaign Name" />
-			<var name="contentTitle" value="DM Document Title" />
-			<var name="notEnoughInfoTrackingAction" value="true" />
-			<var name="viewReportType" value="Tracking Actions" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Campaign Content Display" />
-		</execute>
-
-		<execute action="Home#refresh" />
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="CampaignDisplayPortlet#configureCampaignRule">
-			<var name="campaignName" value="Campaign Name" />
-			<var name="contentTitle" value="DM Document Title" />
-			<var name="contentType" value="Document" />
-			<var name="rowNumber" value="1" />
-		</execute>
-
-		<execute macro="CampaignDisplayPortlet#savePG" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Audience Targeting" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
-		<execute macro="ContentTargetingCampaign#updateReportCP">
-			<var name="campaignName" value="Campaign Name" />
-			<var name="contentTitle" value="DM Document Title" />
-			<var name="viewReportType" value="Tracking Actions" />
-		</execute>
-
-		<execute macro="ContentTargetingCampaign#viewTrackingReportCP">
-			<var name="trackingAlias" value="Content Alias" />
-			<var name="trackingEvent" value="View" />
-			<var name="trackingEventCount" value="4" />
-			<var name="trackingUserSegment" value="User Segment Name" />
 		</execute>
 	</command>
 
@@ -713,6 +586,133 @@
 			<var name="preview2Text" value="Default" />
 			<var name="viewDontDisplay" value="PREVIEW_2" />
 			<var name="viewUserSegmentSelected" value="Default" />
+		</execute>
+	</command>
+
+	<command name="CampaignViewTrackingActionReports" priority="5">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addUserAttributesGenderRuleCP">
+			<var name="genderRadio" value="Male" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.jpg" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addCP">
+			<var name="campaignDescription" value="Campaign Description" />
+			<var name="campaignEndDate" value="1/1/2099" />
+			<var name="campaignEndTime" value="12:00 PM" />
+			<var name="campaignName" value="Campaign Name" />
+			<var name="campaignPrioritySelect" value="3" />
+			<var name="campaignStartDate" value="1/1/2014" />
+			<var name="campaignStartTime" value="12:00 AM" />
+			<var name="userSegmentSelect" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addTrackingActionContentCP">
+			<var name="contentAlias" value="Content Alias" />
+			<var name="contentTitle" value="DM Document Title" />
+			<var name="linkId" value="Content id" />
+			<var name="menulistContent" value="Document" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#viewTrackingActionsCP">
+			<var name="campaignName" value="Campaign Name" />
+			<var name="contentAlias" value="Content Alias" />
+			<var name="contentTitle" value="DM Document Title" />
+			<var name="viewTrackingActionsList" value="Content" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#updateReportCP">
+			<var name="campaignName" value="Campaign Name" />
+			<var name="contentTitle" value="DM Document Title" />
+			<var name="notEnoughInfoTrackingAction" value="true" />
+			<var name="viewReportType" value="Tracking Actions" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Campaign Content Display" />
+		</execute>
+
+		<execute action="Home#refresh" />
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="CampaignDisplayPortlet#configureCampaignRule">
+			<var name="campaignName" value="Campaign Name" />
+			<var name="contentTitle" value="DM Document Title" />
+			<var name="contentType" value="Document" />
+			<var name="rowNumber" value="1" />
+		</execute>
+
+		<execute macro="CampaignDisplayPortlet#savePG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#updateReportCP">
+			<var name="campaignName" value="Campaign Name" />
+			<var name="contentTitle" value="DM Document Title" />
+			<var name="viewReportType" value="Tracking Actions" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#viewTrackingReportCP">
+			<var name="trackingAlias" value="Content Alias" />
+			<var name="trackingCount" value="4" />
+			<var name="trackingEvent" value="View" />
+			<var name="userSegmentName" value="User Segment Name" />
 		</execute>
 	</command>
 

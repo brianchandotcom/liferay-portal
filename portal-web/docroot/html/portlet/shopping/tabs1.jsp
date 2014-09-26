@@ -56,5 +56,5 @@ String backURL = ParamUtil.getString(request, "backURL");
 	backURL="<%= backURL %>"
 	names="<%= tabs1Names %>"
 	url="<%= viewURL.toString() %>"
-	tabsUrls="<%= tabsUrl %>"
+	urls="<%= tabsUrl %>"
 />

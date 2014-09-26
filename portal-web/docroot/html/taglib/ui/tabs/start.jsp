@@ -111,7 +111,7 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs
 
 	<%
 	for (int i = 0; i < values.length; i++) {
-		String curURL = (tabsUrls!=null  && i < tabsUrls.length && Validator.isNotNull(tabsUrls[i])) ? tabsUrls[i] : null;
+		String curURL = (urls!=null && i < urls.length && Validator.isNotNull(urls[i])) ? urls[i] : null;
 
 		if (Validator.isNull(curURL)) {
 			if (values.length == 1) {

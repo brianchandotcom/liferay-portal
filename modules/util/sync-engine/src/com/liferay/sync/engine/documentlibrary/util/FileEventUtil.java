@@ -101,8 +101,7 @@ public class FileEventUtil {
 		if (syncSite.getType() != SyncSite.TYPE_SYSTEM) {
 			parameters.put(
 				"serviceContext.groupPermissions",
-				"ADD_DOCUMENT,ADD_SUBFOLDER,ADD_SHORTCUT,SUBSCRIBE,UPDATE," +
-					"VIEW");
+				"ADD_DOCUMENT,ADD_SUBFOLDER,ADD_SHORTCUT,UPDATE,VIEW");
 		}
 
 		if (syncSite.getType() == SyncSite.TYPE_OPEN) {

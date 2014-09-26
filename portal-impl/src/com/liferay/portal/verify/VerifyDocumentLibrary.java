@@ -43,12 +43,14 @@ import com.liferay.portal.util.PortalInstances;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
@@ -56,6 +58,10 @@ import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.FileVersionVersionComparator;
 import com.liferay.portlet.documentlibrary.webdav.DLWebDAVStorageImpl;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 
@@ -108,6 +114,59 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		dlFileVersion.setStatusDate(new Date());
 
 		DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion);
+	}
+
+	protected void checkDLFileEntryMetadata() throws Exception {
+		ActionableDynamicQuery actionableDynamicQuery =
+			DLFileEntryMetadataLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
+
+				@Override
+				public void performAction(Object object)
+					throws PortalException {
+
+					DLFileEntryMetadata dlFileEntryMetadata =
+						(DLFileEntryMetadata)object;
+
+					try {
+						DLFileEntry dlFileEntry =
+							DLFileEntryLocalServiceUtil.getFileEntry(
+								dlFileEntryMetadata.getFileEntryId());
+
+						DDMStructure ddmStructure =
+							DDMStructureLocalServiceUtil.fetchStructure(
+								dlFileEntryMetadata.getDDMStructureId());
+
+						if (ddmStructure == null) {
+							deleteRedundantDLFileEntryMetadata(
+								dlFileEntryMetadata);
+
+							return;
+						}
+
+						if (dlFileEntry.getCompanyId() !=
+								ddmStructure.getCompanyId()) {
+
+							deleteRedundantDLFileEntryMetadata(
+								dlFileEntryMetadata);
+						}
+					}
+					catch (Exception e) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to delete redundant metadata for " +
+									"file entry " +
+										dlFileEntryMetadata.getFileEntryId(),
+								e);
+						}
+					}
+				}
+
+			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 	protected void checkDLFileEntryType() throws Exception {
@@ -449,11 +508,25 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		}
 	}
 
+	protected void deleteRedundantDLFileEntryMetadata(
+			DLFileEntryMetadata dlFileEntryMetadata)
+		throws Exception {
+
+		DLFileEntryMetadataLocalServiceUtil.deleteDLFileEntryMetadata(
+			dlFileEntryMetadata);
+
+		StorageEngineUtil.deleteByClass(dlFileEntryMetadata.getDDMStorageId());
+
+		DDMStructureLinkLocalServiceUtil.deleteClassStructureLink(
+			dlFileEntryMetadata.getFileEntryMetadataId());
+	}
+
 	@Override
 	protected void doVerify() throws Exception {
 		checkMisversionedDLFileEntries();
 
 		checkDLFileEntryType();
+		checkDLFileEntryMetadata();
 		checkMimeTypes();
 		checkTitles();
 		deleteOrphanedDLFileEntries();

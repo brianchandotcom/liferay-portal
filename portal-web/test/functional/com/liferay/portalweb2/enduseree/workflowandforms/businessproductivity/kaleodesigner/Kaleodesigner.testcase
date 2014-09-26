@@ -310,6 +310,10 @@
 			<var name="workflowDefinitionTitle" value="Single Approver Edited" />
 		</execute>
 
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="update" />
+		</execute>
+
 		<execute macro="KaleoDesigner#deleteNode">
 			<var name="nodeNodeLabel" value="update" />
 		</execute>
@@ -328,10 +332,6 @@
 
 		<execute macro="KaleoDesigner#editWorkflowDefinitionViaWorkflowCP">
 			<var name="workflowDefinitionTitle" value="Single Approver Edited" />
-		</execute>
-
-		<execute macro="KaleoDesigner#selectNode">
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
 		</execute>
 
 		<execute macro="KaleoDesigner#viewNodeNotPresent">
@@ -362,7 +362,7 @@
 		</execute>
 
 		<execute macro="KaleoDesigner#viewSourceXML">
-			<var name="kdsourceXML" ><![CDATA[<![CDATA[The file sent by ${userName} on the ${siteName}  website has been submitted.]]></var>
+			<var name="kdsourceXML" ><![CDATA[<![CDATA[The file sent by]]></var>
 			<var name="line" value="16" />
 		</execute>
 	</command>
@@ -418,7 +418,7 @@
 		</execute>
 
 		<execute macro="KaleoDesigner#viewSourceXML">
-			<var name="kdsourceXML" ><![CDATA[<![CDATA[The file sent by ${userName} on the ${siteName}  website has been submitted.]]></var>
+			<var name="kdsourceXML" ><![CDATA[<![CDATA[The file sent by]]></var>
 			<var name="line" value="16" />
 		</execute>
 	</command>

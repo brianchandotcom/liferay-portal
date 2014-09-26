@@ -6754,7 +6754,7 @@
 
 		<execute macro="KaleoFormsPortlet#populateFieldText">
 			<var name="fieldName" value="Text" />
-			<var name="kfProcessFieldData" value="Test Submitted" />
+			<var name="kfProcessFieldData" value="Test Data" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#saveProcessRecord" />

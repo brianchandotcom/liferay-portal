@@ -37,11 +37,11 @@ PortletURL viewPageActivitiesURL = PortletURLUtil.clone(viewPageHistoryURL, rend
 
 viewPageActivitiesURL.setParameter("struts_action", "/wiki/view_page_activities");
 
-String tabsUrls = viewPageActivitiesURL.toString() + "," + viewPageHistoryURL.toString();
+String[] urls = new String[] {viewPageActivitiesURL.toString(), viewPageHistoryURL.toString()};
 %>
 
 <liferay-ui:tabs
 	names="activities,versions"
 	param="tabs3"
-	urls="<%= tabsUrls %>"
+	urls="<%= urls %>"
 />

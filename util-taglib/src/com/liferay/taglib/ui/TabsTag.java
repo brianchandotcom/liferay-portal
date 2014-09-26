@@ -52,16 +52,7 @@ public class TabsTag extends IncludeTag {
 			request.removeAttribute("liferay-ui:tabs:refresh");
 			request.removeAttribute("liferay-ui:tabs:type");
 			request.removeAttribute("liferay-ui:tabs:url");
-			request.removeAttribute("liferay-ui:tabs:url0");
-			request.removeAttribute("liferay-ui:tabs:url1");
-			request.removeAttribute("liferay-ui:tabs:url2");
-			request.removeAttribute("liferay-ui:tabs:url3");
-			request.removeAttribute("liferay-ui:tabs:url4");
-			request.removeAttribute("liferay-ui:tabs:url5");
-			request.removeAttribute("liferay-ui:tabs:url6");
-			request.removeAttribute("liferay-ui:tabs:url7");
-			request.removeAttribute("liferay-ui:tabs:url8");
-			request.removeAttribute("liferay-ui:tabs:url9");
+			request.removeAttribute("liferay-ui:tabs:urls");
 			request.removeAttribute("liferay-ui:tabs:value");
 			request.removeAttribute("liferay-ui:tabs:values");
 
@@ -87,16 +78,7 @@ public class TabsTag extends IncludeTag {
 				_tabsValues = null;
 				_type = null;
 				_url = null;
-				_url0 = null;
-				_url1 = null;
-				_url2 = null;
-				_url3 = null;
-				_url4 = null;
-				_url5 = null;
-				_url6 = null;
-				_url7 = null;
-				_url8 = null;
-				_url9 = null;
+				_urls = null;
 				_value = null;
 			}
 		}
@@ -126,49 +108,9 @@ public class TabsTag extends IncludeTag {
 			}
 
 			request.setAttribute("liferay-ui:tabs:values", _tabsValues);
-
 			request.setAttribute("liferay-ui:tabs:type", _type);
 			request.setAttribute("liferay-ui:tabs:url", _url);
-
-			if (_url0 != null) {
-				request.setAttribute("liferay-ui:tabs:url0", _url0);
-			}
-
-			if (_url1 != null) {
-				request.setAttribute("liferay-ui:tabs:url1", _url1);
-			}
-
-			if (_url2 != null) {
-				request.setAttribute("liferay-ui:tabs:url2", _url2);
-			}
-
-			if (_url3 != null) {
-				request.setAttribute("liferay-ui:tabs:url3", _url3);
-			}
-
-			if (_url4 != null) {
-				request.setAttribute("liferay-ui:tabs:url4", _url4);
-			}
-
-			if (_url5 != null) {
-				request.setAttribute("liferay-ui:tabs:url5", _url5);
-			}
-
-			if (_url6 != null) {
-				request.setAttribute("liferay-ui:tabs:url6", _url6);
-			}
-
-			if (_url7 != null) {
-				request.setAttribute("liferay-ui:tabs:url7", _url7);
-			}
-
-			if (_url8 != null) {
-				request.setAttribute("liferay-ui:tabs:url8", _url8);
-			}
-
-			if (_url9 != null) {
-				request.setAttribute("liferay-ui:tabs:url9", _url9);
-			}
+			request.setAttribute("liferay-ui:tabs:urls", _urls);
 
 			if (_value == null) {
 				if (_tabsValues.length > 0) {
@@ -299,44 +241,8 @@ public class TabsTag extends IncludeTag {
 		_url = url;
 	}
 
-	public void setUrl0(String url0) {
-		_url0 = url0;
-	}
-
-	public void setUrl1(String url1) {
-		_url1 = url1;
-	}
-
-	public void setUrl2(String url2) {
-		_url2 = url2;
-	}
-
-	public void setUrl3(String url3) {
-		_url3 = url3;
-	}
-
-	public void setUrl4(String url4) {
-		_url4 = url4;
-	}
-
-	public void setUrl5(String url5) {
-		_url5 = url5;
-	}
-
-	public void setUrl6(String url6) {
-		_url6 = url6;
-	}
-
-	public void setUrl7(String url7) {
-		_url7 = url7;
-	}
-
-	public void setUrl8(String url8) {
-		_url8 = url8;
-	}
-
-	public void setUrl9(String url9) {
-		_url9 = url9;
+	public void setUrls(String[] urls) {
+		_urls = urls;
 	}
 
 	public void setValue(String value) {
@@ -382,16 +288,7 @@ public class TabsTag extends IncludeTag {
 	private String[] _tabsValues;
 	private String _type;
 	private String _url;
-	private String _url0;
-	private String _url1;
-	private String _url2;
-	private String _url3;
-	private String _url4;
-	private String _url5;
-	private String _url6;
-	private String _url7;
-	private String _url8;
-	private String _url9;
+	private String[] _urls;
 	private String _value;
 
 }

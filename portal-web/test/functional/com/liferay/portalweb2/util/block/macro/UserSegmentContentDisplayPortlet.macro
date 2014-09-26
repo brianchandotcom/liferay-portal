@@ -200,9 +200,6 @@
 			<then>
 				<execute action="PGUsersegmentcontentdisplay#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContentText}" />
 			</then>
-			<else>
-				<execute action="PGUsersegmentcontentdisplay#assertElementPresent" locator-key1="ENTRY_CONTENT" />
-			</else>
 		</if>
 
 		<if>

@@ -116,8 +116,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CAMPAIGN_TRACKING_ACTIONS_PAGE_TRACKING_ACTION_SELECT</td>
-	<td>//div[contains(@class,'pagetrackingaction')]//select[contains(@id,'eventType')]</td>
+	<td>CAMPAIGN_TRACKING_ACTIONS_PAGE_TRACKING_ACTION</td>
+	<td>//div[contains(@class,'pagetrackingaction')]//input[contains(@value,'view')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -194,8 +194,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CAMPAIGN_TRACKING_ACTIONS_CONTENT_TRACKING_ACTION_SELECT</td>
-	<td>//div[contains(@class,'contenttrackingaction')]//select[contains(@id,'eventType')]</td>
+	<td>CAMPAIGN_TRACKING_ACTIONS_CONTENT_TRACKING_ACTION</td>
+	<td>//div[contains(@class,'contenttrackingaction')]//input[contains(@value,'view')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -215,8 +215,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CAMPAIGN_TRACKING_ACTIONS_LINK_TRACKING_ACTION_SELECT</td>
-	<td>//div[contains(@class,'linktrackingaction')]//select[contains(@id,'eventType')]</td>
+	<td>CAMPAIGN_TRACKING_ACTIONS_LINK_TRACKING_ACTION</td>
+	<td>//div[contains(@class,'linktrackingaction')]//input[contains(@value,'click')]</td>
 	<td></td>
 </tr>
 </tbody>

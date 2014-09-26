@@ -255,7 +255,7 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#addBehaviorPageVisitedRuleCP">
-			<var name="friendlyURL" value="test-page-name" />
+			<var name="friendlyURL" value="/test-page-name" />
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#saveCP" />
@@ -266,7 +266,7 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
-			<var name="friendlyURL" value="test-page-name" />
+			<var name="friendlyURL" value="/test-page-name" />
 			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Page Visited" />
 		</execute>
@@ -787,6 +787,8 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
+			<var name="organizationName" value="Organization Name" />
+			<var name="organizationRole" value="Organization Owner" />
 			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Organization Role" />
 		</execute>

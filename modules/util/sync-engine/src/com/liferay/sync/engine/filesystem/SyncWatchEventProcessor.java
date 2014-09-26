@@ -154,6 +154,12 @@ public class SyncWatchEventProcessor implements Runnable {
 		SyncFile parentSyncFile = SyncFileService.fetchSyncFile(
 			parentTargetFilePath.toString());
 
+		if ((parentSyncFile == null) ||
+			(parentSyncFile.getState() == SyncFile.STATE_ERROR)) {
+
+			return;
+		}
+
 		SyncFile syncFile = SyncFileService.fetchSyncFile(
 			targetFilePath.toString());
 
@@ -223,6 +229,12 @@ public class SyncWatchEventProcessor implements Runnable {
 
 		SyncFile parentSyncFile = SyncFileService.fetchSyncFile(
 			parentTargetFilePath.toString());
+
+		if ((parentSyncFile == null) ||
+			(parentSyncFile.getState() == SyncFile.STATE_ERROR)) {
+
+			return;
+		}
 
 		SyncFile syncFile = SyncFileService.fetchSyncFileByFileKey(
 			FileUtil.getFileKey(targetFilePath), _syncAccountId);

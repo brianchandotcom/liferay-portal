@@ -89,6 +89,18 @@ public class Watcher implements Runnable {
 		return _downloadedFilePathNames;
 	}
 
+	public void registerFilePath(Path filePath, boolean recursive)
+		throws IOException {
+
+		if (Files.notExists(filePath)) {
+			processMissingFilePath(filePath);
+
+			return;
+		}
+
+		doRegister(filePath, recursive);
+	}
+
 	@Override
 	public void run() {
 		while (true) {
@@ -365,18 +377,6 @@ public class Watcher implements Runnable {
 				SyncSiteService.update(syncSite);
 			}
 		}
-	}
-
-	protected void registerFilePath(Path filePath, boolean recursive)
-		throws IOException {
-
-		if (Files.notExists(filePath)) {
-			processMissingFilePath(filePath);
-
-			return;
-		}
-
-		doRegister(filePath, recursive);
 	}
 
 	protected boolean skipWatchEvent(

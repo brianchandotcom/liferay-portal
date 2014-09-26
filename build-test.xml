@@ -2962,6 +2962,33 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		</if>
 	</target>
 
+	<target name="prepare-virtual-network-interface">
+		<echo file="portal-impl/src/portal-ext.properties" append="true">
+
+cluster.link.channel.system.properties=\
+	#
+	# Common
+	#
+	\
+	jgroups.bind_addr:${cluster.link.bind.addr["cluster-link-udp"]},\
+	jgroups.bind_interface:eth0:0,\
+	\
+	#
+	# Multicast
+	#
+	\
+	jgroups.mping.mcast_addr:${multicast.group.address["cluster-link-mping"]},\
+	jgroups.mping.mcast_port:${multicast.group.port["cluster-link-mping"]},\
+	jgroups.mping.ip_ttl:8
+
+cluster.link.autodetect.address=
+
+cluster.link.bind.addr["cluster-link-control"]=127.0.0.1
+
+cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1
+		</echo>
+	</target>
+
 	<target name="print-scm-revision">
 		<echo>Portal GIT ID:</echo>
 		<echo />

@@ -100,10 +100,10 @@ AUI.add(
 						var surface = Surface.app.surfaces[surfaceId];
 
 						if (surface && !surface.activeChild.inDoc()) {
-							surface = false;
+							surface = null;
 						}
 
-						if (Surface.isPortletSurface(portletId) && !surface) {
+						if (!surface && Surface.isPortletSurface(portletId)) {
 							Surface.app.addSurfaces(surfaceId);
 						}
 					}

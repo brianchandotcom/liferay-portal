@@ -24,10 +24,15 @@
 			</then>
 		</if>
 
-		<for list="Application Display Templates,Audience Targeting,Blogs,Bookmarks,Documents and Media,Dynamic Data Lists,Message Boards,Mobile Device Families,Polls,Shopping,Web Content,Wiki" param="contentName">
+		<for list="Application Display Templates,Audience Targeting,Blogs,Bookmarks,Calendar,Documents and Media,Dynamic Data Lists,Message Boards,Mobile Device Families,Polls,Shopping,Web Content,Wiki" param="contentName">
 			<var name="key_contentName" value="${contentName}" />
 
-			<execute action="CPSitesEdit#check" locator-key1="STAGING_CONTENT_CHECKBOX" />
+			<if>
+				<condition action="CPSitesEdit#isElementPresent" locator-key1="STAGING_CONTENT_CHECKBOX" />
+				<then>
+					<execute action="CPSitesEdit#check" locator-key1="STAGING_CONTENT_CHECKBOX" />
+				</then>
+			</if>
 		</for>
 
 		<if>

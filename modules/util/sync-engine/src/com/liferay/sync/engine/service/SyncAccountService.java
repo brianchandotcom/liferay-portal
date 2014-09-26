@@ -74,7 +74,7 @@ public class SyncAccountService {
 	public static SyncAccount addSyncAccount(
 			String filePathName, String login, int maxConnections,
 			String password, int pollInterval, SyncSite[] syncSites,
-			boolean trustSelfSigned, String url)
+			SyncUser syncUser, boolean trustSelfSigned, String url)
 		throws Exception {
 
 		// Sync account
@@ -118,6 +118,12 @@ public class SyncAccountService {
 				SyncSiteService.update(syncSite);
 			}
 		}
+
+		// Sync user
+
+		syncUser.setSyncAccountId(syncAccount.getSyncAccountId());
+
+		SyncUserService.update(syncUser);
 
 		return syncAccount;
 	}

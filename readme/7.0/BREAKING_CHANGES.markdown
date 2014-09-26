@@ -466,3 +466,36 @@ demonstrates using a `SyncCapability` instance to move a `FileEntry`:
 There are repositories that don't support Liferay Sync operations.
 
 ---------------------------------------
+
+### Removed [url0, ..., url9] attributes from `liferay-ui:tabs` taglib
+- **Date:** 2014-Sep-26
+- **JIRA Ticket:** LPS-50378
+
+#### What changed?
+
+The `liferay-ui:tabs` taglib no longer supports the series of url0, url1...
+attributes.
+
+#### Who is affected?
+
+Client code using the `liferay-ui:tabs` taglib, explicitly setting values to any
+of the urlX attributes.
+
+#### How should I update my code?
+
+The hardcoded set of 10 urls has been replaced by an arbitrary array of strings
+`liferay-ui:tabs@urls`.
+
+The urls are set to the corresponding tab based on their position in the array,
+so they should match the order of their tab inside the liferay-ui:tabs@names`
+parameter.
+
+#### Why was this change made?
+
+The taglib was imposing a restriction on the number of urls which was out of its
+scope.
+
+Additionally, it was very difficult to use when creating a dynamic, data-driven
+number of tabs.
+
+---------------------------------------

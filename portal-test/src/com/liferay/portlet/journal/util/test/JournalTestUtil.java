@@ -153,12 +153,8 @@ public class JournalTestUtil {
 			expirationDateMonth = expirationCal.get(Calendar.MONTH);
 			expirationDateDay = expirationCal.get(Calendar.DATE);
 			expirationDateYear = expirationCal.get(Calendar.YEAR);
-			expirationDateHour = expirationCal.get(Calendar.HOUR);
+			expirationDateHour = expirationCal.get(Calendar.HOUR_OF_DAY);
 			expirationDateMinute = expirationCal.get(Calendar.MINUTE);
-
-			if (expirationCal.get(Calendar.AM_PM) == Calendar.PM) {
-				expirationDateHour += 12;
-			}
 		}
 
 		Calendar displayCal = CalendarFactoryUtil.getCalendar(
@@ -167,7 +163,7 @@ public class JournalTestUtil {
 		int displayDateDay = displayCal.get(Calendar.DATE);
 		int displayDateMonth = displayCal.get(Calendar.MONTH);
 		int displayDateYear = displayCal.get(Calendar.YEAR);
-		int displayDateHour = displayCal.get(Calendar.HOUR);
+		int displayDateHour = displayCal.get(Calendar.HOUR_OF_DAY);
 		int displayDateMinute = displayCal.get(Calendar.MINUTE);
 
 		if (workflowEnabled) {
@@ -762,12 +758,8 @@ public class JournalTestUtil {
 			displayDateMonth = displayCal.get(Calendar.MONTH);
 			displayDateDay = displayCal.get(Calendar.DATE);
 			displayDateYear = displayCal.get(Calendar.YEAR);
-			displayDateHour = displayCal.get(Calendar.HOUR);
+			displayDateHour = displayCal.get(Calendar.HOUR_OF_DAY);
 			displayDateMinute = displayCal.get(Calendar.MINUTE);
-
-			if (displayCal.get(Calendar.AM_PM) == Calendar.PM) {
-				displayDateHour += 12;
-			}
 		}
 
 		serviceContext.setCommand(Constants.UPDATE);

@@ -43,5 +43,5 @@ String tabsUrls = viewPageActivitiesURL.toString() + "," + viewPageHistoryURL.to
 <liferay-ui:tabs
 	names="activities,versions"
 	param="tabs3"
-	tabsUrls="<%= tabsUrls %>"
+	urls="<%= tabsUrls %>"
 />

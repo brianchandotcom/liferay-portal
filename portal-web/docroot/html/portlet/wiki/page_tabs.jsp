@@ -86,13 +86,13 @@ String tabsUrl =
 	<c:when test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">
 		<liferay-ui:tabs
 			names="content,details,history,incoming-links,outgoing-links,attachments"
-			tabsUrls="<%= tabsUrlWithPermission %>"
+			urls="<%= tabsUrlWithPermission %>"
 		/>
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:tabs
 			names="details,history,incoming-links,outgoing-links,attachments"
-			tabsUrls="<%= tabsUrl %>"
+			urls="<%= tabsUrl %>"
 		/>
 	</c:otherwise>
 </c:choose>

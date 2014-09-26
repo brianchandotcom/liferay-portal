@@ -13,6 +13,8 @@
 		</execute>
 
 		<execute macro="Workflow#tearDownWorkflowDefinitions" />
+
+		<execute macro="KaleoDesigner#tearDownWorkflowDefinitionsViaKaleoDesigner" />
 	</tear-down>
 
 	<command name="AddConditionNodeEditNameAndDesciptionAndDeleteViaViewTab" priority="5">
@@ -379,6 +381,30 @@
 		</execute>
 	</command>
 
+	<command name="DeleteWorkflowDefinitionDraftViaKaleoDesignerCP" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Kaleo Designer" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaKaleoDesignerCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition" />
+		</execute>
+
+		<execute macro="KaleoDesigner#SaveAsDraftWorkflowDefinitionViaKaleoDesignerCP" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Kaleo Designer" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewTableDefinitionDraftViaKaleoDesignerCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteTableDefinitionDraftViaKaleoDesignerCP" />
+
+		<execute macro="KaleoDesigner#viewNoWorkflowDraftsViaKaleoDesignerCP" />
+	</command>
+
 	<command name="EditSingleApproverDefinitionDeleteTaskNode" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Workflow" />
@@ -421,7 +447,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewAndPublishWorkflowDefinitionDraftKaleoDesignerCP" priority="5">
+	<command name="ViewAndPublishWorkflowDefinitionDraftViaKaleoDesignerCP" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Kaleo Designer" />
 		</execute>
@@ -508,7 +534,7 @@
 		</execute>
 	</command>
 
-	<command name="viewInvalidSourceXMLRemainsAfterTabSwitch" priority="5">
+	<command name="ViewInvalidSourceXMLRemainsAfterTabSwitch" priority="5">
 		<description message="This is a use case for LPS-48590." />
 
 		<execute macro="Page#gotoCP">

@@ -12,23 +12,13 @@
  * details.
  */
 
-package com.liferay.osgi.util.service;
+package com.liferay.osgi.util.test;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public class ServiceUnavailableException extends RuntimeException {
+public interface InterfaceOne {
 
-	public ServiceUnavailableException(Class<?> clazz) {
-		super(clazz.toString());
-
-		_clazz = clazz;
-	}
-
-	public Class<?> getUnavailableServiceClass() {
-		return _clazz;
-	}
-
-	private Class<?> _clazz;
+	public void noop1();
 
 }

@@ -223,11 +223,11 @@ public class SyncFileService {
 
 			_syncFilePersistence.delete(syncFile, notify);
 
-			if (!syncFile.isFolder()) {
+			// Sync files
+
+			if (!syncFile.isFolder() || (syncFile.getTypePK() == 0)) {
 				return;
 			}
-
-			// Sync files
 
 			List<SyncFile> childSyncFiles = _syncFilePersistence.queryForEq(
 				"parentFolderId", syncFile.getTypePK());
@@ -556,6 +556,10 @@ public class SyncFileService {
 			update(syncFile);
 
 			// Sync files
+
+			if (syncFile.getTypePK() == 0) {
+				return syncFile;
+			}
 
 			List<SyncFile> childSyncFiles = _syncFilePersistence.queryForEq(
 				"parentFolderId", syncFile.getTypePK());

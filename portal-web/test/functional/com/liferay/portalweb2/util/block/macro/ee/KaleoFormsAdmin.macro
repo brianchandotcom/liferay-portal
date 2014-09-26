@@ -1,6 +1,6 @@
 <definition>
 	<command name="addFieldSet">
-		<execute macro="KaleoFormsAdmin#assertFieldSetStep">
+		<execute macro="KaleoFormsAdmin#viewFieldsStepCmd">
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
@@ -24,7 +24,7 @@
 	</command>
 
 	<command name="addProcessDetails">
-		<execute macro="KaleoFormsAdmin#assertDetailsStep" />
+		<execute macro="KaleoFormsAdmin#viewDetailsStepCmd" />
 
 		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="NEXT_BUTTON_INACTIVE" value1="Next" />
 		<execute action="CPKaleoformsadminNewprocess#type" locator-key1="DETAILS_NAME_FIELD" value1="${kfProcessName}" />
@@ -32,7 +32,7 @@
 	</command>
 
 	<command name="addWorkflow">
-		<execute macro="KaleoFormsAdmin#assertWorkflowStep">
+		<execute macro="KaleoFormsAdmin#viewWorkflowStepCmd">
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
@@ -42,46 +42,8 @@
 		<execute action="CPKaleoformsadminNewprocessAddworkflow#type" locator-key1="TITLE_FIELD" value1="${workflowDefinitionTitle}" />
 	</command>
 
-	<command name="assertDetailsStep">
-		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="FORM_NAVIGATOR_1" value1="1" />
-		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="FORM_NAVIGATOR_DETAILS" value1="Details" />
-	</command>
-
-	<command name="assertFieldSetStep">
-		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="PROCESS_NAME" value1="${kfProcessName}" />
-		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="FORM_NAVIGATOR_2" value1="2" />
-		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="FORM_NAVIGATOR_FIELD_SET" value1="Fields" />
-	</command>
-
-	<command name="assertFormsNotPresent">
-		<var name="key_workflowTask" value="${workflowTask}" />
-
-		<execute action="CPKaleoformsadminNewprocess#assertElementNotPresent" locator-key1="FORMS_TABLE_TASK" />
-		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no results." />
-	</command>
-
-	<command name="assertFormsStep">
-		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="PROCESS_NAME" value1="${kfProcessName}" />
-		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="FORM_NAVIGATOR_4" value1="4" />
-		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="FORM_NAVIGATOR_FORMS" value1="Forms" />
-	</command>
-
-	<command name="assertTaskNotPresent">
-		<var name="key_workflowTask" value="${workflowTask}" />
-
-		<execute action="CPKaleoformsadminNewprocess#assertTextNotPresent" locator-key1="FORMS_TABLE_TASK" value1="${workflowTask}" />
-		<execute action="CPKaleoformsadminNewprocess#assertElementNotPresent" locator-key1="FORMS_TABLE_FORM" />
-		<execute action="CPKaleoformsadminNewprocess#assertElementNotPresent" locator-key1="FORMS_TABLE_ASSIGN_FORM_BUTTON" />
-	</command>
-
-	<command name="assertWorkflowStep">
-		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="PROCESS_NAME" value1="${kfProcessName}" />
-		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="FORM_NAVIGATOR_3" value1="3" />
-		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="FORM_NAVIGATOR_WORKFLOW" value1="Workflow" />
-	</command>
-
 	<command name="assignForm">
-		<execute macro="KaleoFormsAdmin#assertFormsStep">
+		<execute macro="KaleoFormsAdmin#viewFormsStepCmd">
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
@@ -102,7 +64,7 @@
 	</command>
 
 	<command name="chooseFieldSet">
-		<execute macro="KaleoFormsAdmin#assertFieldSetStep">
+		<execute macro="KaleoFormsAdmin#viewFieldsStepCmd">
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
@@ -130,7 +92,7 @@
 	</command>
 
 	<command name="chooseWorkflow">
-		<execute macro="KaleoFormsAdmin#assertWorkflowStep">
+		<execute macro="KaleoFormsAdmin#viewWorkflowStepCmd">
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
@@ -223,7 +185,7 @@
 	</command>
 
 	<command name="editFieldSet">
-		<execute macro="KaleoFormsAdmin#assertFieldSetStep">
+		<execute macro="KaleoFormsAdmin#viewFieldsStepCmd">
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
@@ -263,7 +225,7 @@
 	</command>
 
 	<command name="editProcessDetails">
-		<execute macro="KaleoFormsAdmin#assertDetailsStep" />
+		<execute macro="KaleoFormsAdmin#viewDetailsStepCmd" />
 
 		<if>
 			<isset var="kfProcessNameEdit" />
@@ -288,7 +250,7 @@
 	</command>
 
 	<command name="editWorkflow">
-		<execute macro="KaleoFormsAdmin#assertWorkflowStep">
+		<execute macro="KaleoFormsAdmin#viewWorkflowStepCmd">
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
@@ -435,7 +397,7 @@
 	</command>
 
 	<command name="saveProcess">
-		<execute macro="KaleoFormsAdmin#assertFormsStep">
+		<execute macro="KaleoFormsAdmin#viewFormsStepCmd">
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
@@ -479,11 +441,28 @@
 		<execute action="CPKaleoformsadmin#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No processes were found." />
 	</command>
 
+	<command name="viewDetailsStepCmd">
+		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="FORM_NAVIGATOR_1" value1="1" />
+		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="FORM_NAVIGATOR_DETAILS" value1="Details" />
+	</command>
+
+	<command name="viewFieldsStepCmd">
+		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="PROCESS_NAME" value1="${kfProcessName}" />
+		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="FORM_NAVIGATOR_2" value1="2" />
+		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="FORM_NAVIGATOR_FIELD_SET" value1="Fields" />
+	</command>
+
 	<command name="viewFormsNotPresent">
 		<var name="key_workflowTask" value="${workflowTask}" />
 
 		<execute action="CPKaleoformsadminNewprocess#assertElementNotPresent" locator-key1="FORMS_TABLE_TASK" />
 		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no results." />
+	</command>
+
+	<command name="viewFormsStepCmd">
+		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="PROCESS_NAME" value1="${kfProcessName}" />
+		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="FORM_NAVIGATOR_4" value1="4" />
+		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="FORM_NAVIGATOR_FORMS" value1="Forms" />
 	</command>
 
 	<command name="viewHeaderTitle">
@@ -532,7 +511,7 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#assertDetailsStep" />
+		<execute macro="KaleoFormsAdmin#viewDetailsStepCmd" />
 
 		<execute action="CPKaleoformsadminEditprocess#assertTextEquals" locator-key1="DETAILS_NAME_FIELD" value1="${kfProcessName}" />
 		<execute action="CPKaleoformsadminEditprocess#assertTextEquals" locator-key1="DETAILS_DESCRIPTION_FIELD" value1="${kfProcessDescription}" />
@@ -541,7 +520,7 @@
 	</command>
 
 	<command name="viewProcessFieldSet">
-		<execute macro="KaleoFormsAdmin#assertFieldSetStep" />
+		<execute macro="KaleoFormsAdmin#viewFieldsStepCmd" />
 
 		<execute action="CPKaleoformsadminEditprocess#assertTextEquals" locator-key1="SELECTED_FIELD_SET" value1="${kfFieldSetName}" />
 
@@ -549,7 +528,7 @@
 	</command>
 
 	<command name="viewProcessForms">
-		<execute macro="KaleoFormsAdmin#assertFormsStep">
+		<execute macro="KaleoFormsAdmin#viewFormsStepCmd">
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
@@ -561,7 +540,7 @@
 	</command>
 
 	<command name="viewProcessFormsDeleted">
-		<execute macro="KaleoFormsAdmin#assertFormsStep">
+		<execute macro="KaleoFormsAdmin#viewFormsStepCmd">
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
@@ -622,7 +601,7 @@
 	</command>
 
 	<command name="viewProcessWorkflow">
-		<execute macro="KaleoFormsAdmin#assertWorkflowStep">
+		<execute macro="KaleoFormsAdmin#viewWorkflowStepCmd">
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
@@ -649,5 +628,11 @@
 		<execute action="CPKaleoformsadminNewprocess#assertTextNotPresent" locator-key1="FORMS_TABLE_TASK" value1="${workflowTask}" />
 		<execute action="CPKaleoformsadminNewprocess#assertElementNotPresent" locator-key1="FORMS_TABLE_FORM" />
 		<execute action="CPKaleoformsadminNewprocess#assertElementNotPresent" locator-key1="FORMS_TABLE_ASSIGN_FORM_BUTTON" />
+	</command>
+
+	<command name="viewWorkflowStepCmd">
+		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="PROCESS_NAME" value1="${kfProcessName}" />
+		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="FORM_NAVIGATOR_3" value1="3" />
+		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="FORM_NAVIGATOR_WORKFLOW" value1="Workflow" />
 	</command>
 </definition>

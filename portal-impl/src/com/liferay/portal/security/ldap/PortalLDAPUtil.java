@@ -147,16 +147,9 @@ public class PortalLDAPUtil {
 			String groupFilter = PrefsPropsUtil.getString(
 				companyId, PropsKeys.LDAP_IMPORT_GROUP_SEARCH_FILTER + postfix);
 
-			if (!LDAPUtil.isValidFilter(groupFilter)) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(PropsKeys.LDAP_IMPORT_GROUP_SEARCH_FILTER);
-				sb.append(postfix);
-				sb.append(" specifies an invalid filter:");
-				sb.append(groupFilter);
-
-				throw new LDAPFilterException(sb.toString());
-			}
+			LDAPUtil.validateFilter(
+				groupFilter,
+				PropsKeys.LDAP_IMPORT_GROUP_SEARCH_FILTER + postfix);
 
 			StringBundler sb = new StringBundler(
 				Validator.isNotNull(groupFilter) ? 9 : 5);
@@ -471,16 +464,8 @@ public class PortalLDAPUtil {
 			String userFilter = PrefsPropsUtil.getString(
 				companyId, PropsKeys.LDAP_IMPORT_USER_SEARCH_FILTER + postfix);
 
-			if (!LDAPUtil.isValidFilter(userFilter)) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(PropsKeys.LDAP_IMPORT_USER_SEARCH_FILTER);
-				sb.append(postfix);
-				sb.append(" specifies an invalid filter:");
-				sb.append(userFilter);
-
-				throw new LDAPFilterException(sb.toString());
-			}
+			LDAPUtil.validateFilter(
+				userFilter, PropsKeys.LDAP_IMPORT_USER_SEARCH_FILTER + postfix);
 
 			StringBundler sb = new StringBundler(
 				Validator.isNotNull(userFilter) ? 9 : 5);

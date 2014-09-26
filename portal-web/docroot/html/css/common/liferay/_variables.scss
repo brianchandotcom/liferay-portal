@@ -1,0 +1,33 @@
+$form_text_fields: 'input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="time"], input[type="url"], input[type="week"], textarea, .uneditable-input' !default;
+
+$screen-lg: 1200px !default;
+$screen-lg-min: $screen-lg;
+$screen-lg-desktop: $screen-lg-min;
+
+$screen-md: 992px !default;
+$screen-md-min: $screen-md;
+$screen-desktop: $screen-md-min;
+
+$screen-sm: 768px !default;
+$screen-sm-min: $screen-sm;
+$screen-tablet: $screen-sm-min;
+
+$screen-xs: 480px !default;
+$screen-xs-min: $screen-xs;
+$screen-phone: $screen-xs-min;
+
+$screen-md-max: ($screen-lg-min - 1) !default;
+$screen-sm-max: ($screen-md-min - 1) !default;
+$screen-xs-max: ($screen-sm-min - 1) !default;
+
+$media-query-sizes: (
+	xs: $screen-xs,
+	sm: $screen-sm,
+	md: $screen-md,
+	lg: $screen-lg
+);
+
+// Deprecated
+
+$breakpoint_phone: 768px !default;
+$breakpoint_tablet: 980px !default;

@@ -1,46 +1,4 @@
-$breakpoint_phone: 768px !default;
-$breakpoint_tablet: 980px !default;
+@import "liferay/variables";
 
-$form_text_fields: 'input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="time"], input[type="url"], input[type="week"], textarea, .uneditable-input' !default;
-
-@mixin respond-to($types...) {
-	$maxWidth: -1;
-	$minWidth: -1;
-
-	@each $type in $types {
-		@if $type == phone {
-			$maxWidth: if($maxWidth == -1, $breakpoint_phone - 1, $maxWidth);
-			$minWidth: 0;
-		}
-		@else if $type == tablet {
-			@if $maxWidth != 0 {
-				$maxWidth: if($maxWidth == -1, $breakpoint_tablet - 1, max($breakpoint_tablet - 1, $maxWidth));
-			}
-
-			$minWidth: if($minWidth == -1, $breakpoint_phone, min($breakpoint_phone, $minWidth));
-		}
-		@else if $type == desktop {
-			$maxWidth: 0;
-			$minWidth: if($minWidth == -1, $breakpoint_tablet, $minWidth);
-		}
-	}
-
-	@if $maxWidth <= 0 and $minWidth <= 0 {
-		@content;
-	}
-	@else if $maxWidth <= 0 {
-		@media (min-width: $minWidth) {
-			@content;
-		}
-	}
-	@else if $minWidth <= 0 {
-		@media (max-width: $maxWidth) {
-			@content;
-		}
-	}
-	@else {
-		@media (min-width: $minWidth) and (max-width: $maxWidth) {
-			@content;
-		}
-	}
-}
+@import "liferay/media_query";
+@import "liferay/respond_to";

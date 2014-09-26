@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFIRMATION</td>
 	<td></td>
 	<td></td>
@@ -70,6 +75,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DEFINITION_TABLE_ACTIONS_1</td>
+	<td>//div[contains(@id,'kaleodesignerportlet_kaleoDraftDefinitionsSearchContainerSearchContainer')]//td[6]/div/a[contains(.,'Actions')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -78,6 +88,11 @@
 <tr>
 	<td>DEFINITION_MENULIST_EDIT</td>
 	<td>//ul[contains(@class,'dropdown-menu lfr-menu-list')]/li/a[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITION_MENULIST_DELETE</td>
+	<td>//ul[contains(@class,'dropdown-menu lfr-menu-list')]/li/a[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>

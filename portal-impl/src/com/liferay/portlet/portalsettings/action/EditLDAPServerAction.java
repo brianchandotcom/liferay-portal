@@ -253,12 +253,12 @@ public class EditLDAPServerAction extends PortletAction {
 		String userFilter = ParamUtil.getString(
 			actionRequest, "importUserSearchFilter");
 
-		LDAPUtil.validateFilter(userFilter);
+		LDAPUtil.validateFilter(userFilter, "importUserSearchFilter");
 
 		String groupFilter = ParamUtil.getString(
 			actionRequest, "importGroupSearchFilter");
 
-		LDAPUtil.validateFilter(groupFilter);
+		LDAPUtil.validateFilter(groupFilter, "importGroupSearchFilter");
 	}
 
 	private static final String[] _KEYS = {

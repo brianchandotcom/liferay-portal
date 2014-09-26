@@ -599,7 +599,9 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		String importGroupSearchFilter = PrefsPropsUtil.getString(
 			companyId, PropsKeys.LDAP_IMPORT_GROUP_SEARCH_FILTER + postfix);
 
-		LDAPUtil.validateFilter(importGroupSearchFilter);
+		LDAPUtil.validateFilter(
+			importGroupSearchFilter,
+			PropsKeys.LDAP_IMPORT_GROUP_SEARCH_FILTER + postfix);
 
 		StringBundler sb = new StringBundler(7);
 
@@ -819,7 +821,9 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			String importGroupSearchFilter = PrefsPropsUtil.getString(
 				companyId, PropsKeys.LDAP_IMPORT_GROUP_SEARCH_FILTER + postfix);
 
-			LDAPUtil.validateFilter(importGroupSearchFilter);
+			LDAPUtil.validateFilter(
+				importGroupSearchFilter,
+				PropsKeys.LDAP_IMPORT_GROUP_SEARCH_FILTER + postfix);
 
 			StringBundler sb = new StringBundler(9);
 

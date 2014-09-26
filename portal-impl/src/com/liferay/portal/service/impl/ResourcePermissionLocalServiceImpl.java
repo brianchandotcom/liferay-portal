@@ -608,6 +608,10 @@ public class ResourcePermissionLocalServiceImpl
 			List<Resource> resources, long[] roleIds, String actionId)
 		throws PortalException {
 
+		if (roleIds.length == 0) {
+			return false;
+		}
+
 		int size = resources.size();
 
 		if (size < 2) {
@@ -734,6 +738,10 @@ public class ResourcePermissionLocalServiceImpl
 			long[] roleIds, String actionId)
 		throws PortalException {
 
+		if (roleIds.length == 0) {
+			return false;
+		}
+
 		ResourceAction resourceAction =
 			resourceActionLocalService.getResourceAction(name, actionId);
 
@@ -781,14 +789,18 @@ public class ResourcePermissionLocalServiceImpl
 			long[] roleIds, String actionId)
 		throws PortalException {
 
+		boolean[] hasResourcePermissions = new boolean[roleIds.length];
+
+		if (roleIds.length == 0) {
+			return hasResourcePermissions;
+		}
+
 		ResourceAction resourceAction =
 			resourceActionLocalService.getResourceAction(name, actionId);
 
 		List<ResourcePermission> resourcePermissions =
 			resourcePermissionPersistence.findByC_N_S_P_R(
 				companyId, name, scope, primKey, roleIds);
-
-		boolean[] hasResourcePermissions = new boolean[roleIds.length];
 
 		if (resourcePermissions.isEmpty()) {
 			return hasResourcePermissions;

@@ -49,7 +49,7 @@ public class ReflectionServiceTrackerTest {
 	public static class WhenTrackingClasses {
 
 		@Test
-		public void andThereAreNoRegisteredServicesShouldInjectNull() {
+		public void shouldInjectNullWhenNoServicesAreRegistered() {
 			TestInstance testInstance = new TestInstance();
 
 			ReflectionServiceTracker reflectionServiceTracker =
@@ -62,7 +62,7 @@ public class ReflectionServiceTrackerTest {
 		}
 
 		@Test
-		public void andUnregisteringServicesShouldInjectNull() {
+		public void shouldInjectNullWhenUnregisteringServices() {
 			TestInstance testInstance = new TestInstance();
 
 			ReflectionServiceTracker reflectionServiceTracker =
@@ -109,7 +109,7 @@ public class ReflectionServiceTrackerTest {
 	public static class WhenTrackingInterfaces {
 
 		@Test
-		public void andServicesAreRegisteredTheyShouldBeInjected() {
+		public void shouldInjectServicesWhenTheyAreRegistered() {
 			TestInterface testInterface = new TestInterface();
 
 			ReflectionServiceTracker reflectionServiceTracker =
@@ -136,7 +136,7 @@ public class ReflectionServiceTrackerTest {
 
 		@Test
 		public void
-		andThereAreNoRegisteredServicesShouldInjectUnavailableServiceProxy() {
+		shouldInjectUnavailableServiceProxyWhenNoServicesAreRegistered() {
 			TestInterface testInterface = new TestInterface();
 
 			ReflectionServiceTracker reflectionServiceTracker =
@@ -170,7 +170,7 @@ public class ReflectionServiceTrackerTest {
 
 		@Test
 		public void
-			andUnregisteringServicesShouldInjectUnavailableServiceProxy() {
+			shouldInjectUnavailableServiceProxyWhenUnregisteringServices() {
 
 			TestInterface testInterface = new TestInterface();
 
@@ -218,7 +218,7 @@ public class ReflectionServiceTrackerTest {
 
 		@Test
 		public void
-		andUnregisteringServicesShouldInjectTheNextWithHigherServiceRanking() {
+		shouldInjectNextServiceWithHighestRankingWhenUnregisterServices() {
 			TestInterface testInterface = new TestInterface();
 
 			ReflectionServiceTracker reflectionServiceTracker =
@@ -270,7 +270,7 @@ public class ReflectionServiceTrackerTest {
 
 		@Test
 		public void
-		andMoreThanOneServiceExistsShouldInjectTheOneWithHigherServiceRanking()
+		shouldInjectTheServiceWithHighestRankingWhenSeveralServicesAreRegistered()
 			throws IOException {
 
 			TestInterface testInterface = new TestInterface();
@@ -310,7 +310,7 @@ public class ReflectionServiceTrackerTest {
 		}
 
 		@Test
-		public void andChangingServiceRankingShouldUpdateInjectionPoint() {
+		public void shouldUpdateInjectionPointWhenChangingServiceProperties() {
 			TestInterface testInterface = new TestInterface();
 
 			ReflectionServiceTracker reflectionServiceTracker =

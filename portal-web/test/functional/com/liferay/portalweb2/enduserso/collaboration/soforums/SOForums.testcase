@@ -3044,7 +3044,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-43724" name="SubscribeToSOCategoryThreadAndViewEntryInGmail" priority="5">
+	<command name="SubscribeToSOCategoryThreadAndViewEntryInGmail" priority="5">
 		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain=" />
 
 		<var name="categoryName" value="MB Category Name" />

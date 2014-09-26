@@ -285,8 +285,8 @@
 	<command name="addProjectViaMyAccount">
 		<execute action="Myaccount#click" locator-key1="MENU_IDENTIFICATION_PROJECTS" />
 		<execute action="Myaccount#type" locator-key1="PROJECTS_TITLE_FIELD" value1="${userProjectTitle}" />
-		<execute action="Myaccount#select" locator-key1="PROJECTS_START_DATE_MONTH_SELECT" value1="January" />
-		<execute action="Myaccount#select" locator-key1="PROJECTS_START_DATE_YEAR_SELECT" value1="2012" />
+		<execute action="Myaccount#select" locator-key1="PROJECTS_START_DATE_MONTH_SELECT" value1="${userProjectStartDateMonth}" />
+		<execute action="Myaccount#select" locator-key1="PROJECTS_START_DATE_YEAR_SELECT" value1="${userProjectStartDateYear}" />
 		<execute action="Myaccount#check" locator-key1="PROJECTS_CURRENT_CHECKBOX" />
 
 		<if>
@@ -988,6 +988,30 @@
 	<command name="deleteProfilePictureViaMyAccount">
 		<execute action="Myaccount#click" locator-key1="DETAILS_PICTURE_DELETE_BUTTON" />
 		<execute action="Myaccount#pause" value1="1000" />
+		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
+		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="Myaccount#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="deleteTagViaMyAccount">
+		<execute action="Myaccount#click" locator-key1="MENU_USER_INFORMATION_CATEGORIZATION" />
+
+		<if>
+			<isset var="userTagList" />
+			<then>
+				<for list="${userTagList}" param="userTag" >
+					<var name="key_userTag" value="${userTag}" />
+
+					<execute action="Myaccount#click" locator-key1="CATEGORIZATION_REMOVE_TAG_BUTTON" />
+				</for>
+			</then>
+			<else>
+				<var name="key_userTag" value="${userTag}" />
+
+				<execute action="Myaccount#click" locator-key1="CATEGORIZATION_REMOVE_TAG_BUTTON" />
+			</else>
+		</if>
+
 		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
 		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="Myaccount#selectFrame" value1="relative=top" />

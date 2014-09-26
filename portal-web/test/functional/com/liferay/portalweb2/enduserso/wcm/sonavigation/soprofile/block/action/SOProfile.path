@@ -393,6 +393,27 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SCREENSHOTS-->
+<tr>
+	<td>SCREENSHOTS_PROFILE_PICTURE_PNG</td>
+	<td>so/screenshots/profile/profile_picture.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCREENSHOTS_PROFILE_PICTURE_EDIT_PNG</td>
+	<td>so/screenshots/profile/profile_picture_edit.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCREENSHOTS_PROFILE_PICTURE_DEFAULT_PNG</td>
+	<td>so/screenshots/profile/profile_picture_default.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

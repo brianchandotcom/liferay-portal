@@ -315,6 +315,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CATEGORIZATION_REMOVE_TAG_BUTTON</td>
+	<td>//span[contains(.,'${key_userTag}')]//i[contains(@class,'remove')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

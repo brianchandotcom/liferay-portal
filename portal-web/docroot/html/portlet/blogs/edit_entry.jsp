@@ -35,6 +35,9 @@ long smallImageFileEntryId = BeanParamUtil.getLong(entry, request, "smallImageFi
 
 boolean preview = ParamUtil.getBoolean(request, "preview");
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
+
+String emailEntryUpdatedComment = ParamUtil.getString(request, "emailEntryUpdatedComment");
+boolean sendEmailEntryUpdated = ParamUtil.getBoolean(request, "sendEmailEntryUpdated");
 %>
 
 <c:if test="<%= showHeader %>">
@@ -149,6 +152,14 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 		<liferay-ui:section>
 			<aui:input name="displayDate" />
+
+			<c:if test="<%= (entry != null) && blogsSettings.isEmailEntryUpdatedEnabled() %>">
+				<aui:input name="sendEmailEntryUpdated" type="checkbox" value="<%= sendEmailEntryUpdated %>" />
+
+				<div id="<portlet:namespace />emailEntryUpdatedCommentWrapper">
+					<aui:input name="emailEntryUpdatedComment" type="textarea" value="<%= emailEntryUpdatedComment %>" />
+				</div>
+			</c:if>
 
 			<liferay-ui:custom-attributes-available className="<%= BlogsEntry.class.getName() %>">
 				<liferay-ui:custom-attribute-list
@@ -327,6 +338,12 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 	Liferay.on('destroyPortlet', clearSaveDraftHandle);
 </aui:script>
+
+<c:if test="<%= (entry != null) && blogsSettings.isEmailEntryUpdatedEnabled() %>">
+	<aui:script>
+		Liferay.Util.toggleBoxes('<portlet:namespace />sendEmailEntryUpdated', '<portlet:namespace />emailEntryUpdatedCommentWrapper');
+	</aui:script>
+</c:if>
 
 <%
 if (entry != null) {

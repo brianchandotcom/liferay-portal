@@ -220,13 +220,23 @@ public class BlogsTestUtil {
 			BlogsEntry entry, String title, boolean approved)
 		throws Exception {
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(entry.getGroupId());
+
+		return updateEntry(entry, title, approved, serviceContext);
+	}
+
+	public static BlogsEntry updateEntry(
+			BlogsEntry entry, String title, boolean approved,
+			ServiceContext serviceContext)
+		throws Exception {
+
 		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
 
 		try {
 			WorkflowThreadLocal.setEnabled(true);
 
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(entry.getGroupId());
+			serviceContext = (ServiceContext)serviceContext.clone();
 
 			serviceContext.setCommand(Constants.UPDATE);
 			serviceContext.setLayoutFullURL("http://localhost");

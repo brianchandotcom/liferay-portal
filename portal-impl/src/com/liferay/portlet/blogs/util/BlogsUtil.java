@@ -102,6 +102,11 @@ public class BlogsUtil {
 			"[$BLOGS_ENTRY_TITLE$]",
 			LanguageUtil.get(themeDisplay.getLocale(), "the-blog-entry-title"));
 		definitionTerms.put(
+			"[$BLOGS_ENTRY_UPDATE_COMMENT$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-comment-of-the-user-who-updated-the-blog-entry"));
+		definitionTerms.put(
 			"[$BLOGS_ENTRY_USER_ADDRESS$]",
 			LanguageUtil.get(
 				themeDisplay.getLocale(),

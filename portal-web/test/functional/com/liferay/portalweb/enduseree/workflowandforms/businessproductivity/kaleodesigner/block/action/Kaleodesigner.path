@@ -19,8 +19,43 @@
 	<td></td>
 </tr>
 <tr>
+	<td>IFRAME</td>
+	<td>//iframe[@class='dialog-iframe-node ']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BACK</td>
+	<td>//a[contains(@id,'TabsBack')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HEADER_TITLE</td>
 	<td>//h3[@class='header-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAME_FIELD</td>
+	<td>//input[contains(@id,'kaleo') and contains(@id,'_name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_FIELD</td>
+	<td>//input[contains(@id,'kaleo') and contains(@id,'_title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_AS_DRAFT_BUTTON</td>
+	<td>//div[contains(@class,'button-holder')]/button[contains(.,'Save as Draft')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_BUTTON</td>
+	<td>//div[contains(@class,'button-holder')]/button[contains(.,'Publish')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -65,8 +100,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NODE_JOIN_XOR_PNG</td>
-	<td>portal/screenshots/kaleodesigner/node_join_xor.png</td>
+	<td>NODE_CORNER</td>
+	<td>portal/screenshots/kaleodesigner/node_${key_nodeType}_corner.png</td>
 	<td></td>
 </tr>
 <tr>
@@ -253,6 +288,7 @@
 	<td>//div[@class='diagram-builder-canvas']/div[2]</td>
 	<td></td>
 </tr>
+<!--VIEW_FORM_NODE-->
 <tr>
 	<td>VIEW_FORM_NODE_DEFAULT</td>
 	<td>//div[@class='diagram-node-label' and contains(.,'${key_nodeType}')]/../div/div/div</td>
@@ -271,6 +307,33 @@
 <tr>
 	<td>VIEW_FORM_NODE_DELETE_ICON</td>
 	<td>//div[@class='diagram-node-label' and contains(.,'${key_nodeNodeLabel}')]/../div[3]/div/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--VIEW_FORM_CONNECTOR-->
+<tr>
+	<td>VIEW_FORM_CONNECTOR_DEFAULT</td>
+	<td>//span[@class='diagram-builder-connector-name unselectable' and contains(.,'connector')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_FORM_CONNECTOR</td>
+	<td>//span[@class='diagram-builder-connector-name unselectable' and contains(.,'${key_connectorLabel}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--VIEW_FORM_ADD_NEW-->
+<tr>
+	<td>VIEW_FORM_ADD_NEW_NODE</td>
+	<td>//div[contains(@class,'diagram-node-suggest-connector')]//div[@class='diagram-builder-field-label' and contains(.,'${key_newNodeName}')]</td>
 	<td></td>
 </tr>
 <tr>

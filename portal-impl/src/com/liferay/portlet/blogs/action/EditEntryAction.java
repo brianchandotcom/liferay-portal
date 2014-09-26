@@ -519,11 +519,13 @@ public class EditEntryAction extends PortletAction {
 
 			boolean sendEmailEntryUpdated = ParamUtil.getBoolean(
 				actionRequest, "sendEmailEntryUpdated");
-			String emailEntryUpdatedComment = ParamUtil.getString(
-				actionRequest, "emailEntryUpdatedComment");
 
 			serviceContext.setAttribute(
 				"sendEmailEntryUpdated", sendEmailEntryUpdated);
+
+			String emailEntryUpdatedComment = ParamUtil.getString(
+				actionRequest, "emailEntryUpdatedComment");
+
 			serviceContext.setAttribute(
 				"emailEntryUpdatedComment", emailEntryUpdatedComment);
 

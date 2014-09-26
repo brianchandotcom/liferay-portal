@@ -73,7 +73,7 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 			ServiceContextTestUtil.getServiceContext(entry.getGroupId());
 
 		serviceContext.setAttribute(
-			"emailEntryUpdatedComment", "This entry has been updated");
+			"emailEntryUpdatedComment", "This entry was updated.");
 
 		BlogsTestUtil.updateEntry(
 			entry, StringUtil.randomString(), true, serviceContext);
@@ -96,7 +96,7 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 			ServiceContextTestUtil.getServiceContext(entry.getGroupId());
 
 		serviceContext.setAttribute(
-			"emailEntryUpdatedComment", "This entry has been updated");
+			"emailEntryUpdatedComment", "This entry was updated.");
 		serviceContext.setAttribute(
 			"sendEmailEntryUpdated", Boolean.TRUE.toString());
 
@@ -105,7 +105,7 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 
 		MailMessage message = MailServiceTestUtil.getLastMailMessage();
 
-		Assert.assertEquals(message.getBody(), "This entry has been updated");
+		Assert.assertEquals(message.getBody(), "This entry was updated.");
 	}
 
 	@Test

@@ -54,6 +54,7 @@ catch (Exception e) {
 	</td>
 	<td>
 		<aui:input type="hidden" name="numbers" value="<%= numbers %>"/>
+
 		<liferay-ui:input-checkbox defaultValue="<%= numbers %>" param="numbersCheckbox" onClick='<%= renderResponse.getNamespace() +  "toggleParameterCheckbox(this);" %>' />
 	</td>
 </tr>
@@ -63,6 +64,7 @@ catch (Exception e) {
 	</td>
 	<td>
 		<aui:input type="hidden" name="lowerCaseLetters" value="<%= lowerCaseLetters %>"/>
+
 		<liferay-ui:input-checkbox defaultValue="<%= lowerCaseLetters %>" param="lowerCaseLettersCheckbox" onClick='<%= renderResponse.getNamespace() +  "toggleParameterCheckbox(this);" %>' />
 	</td>
 </tr>
@@ -72,6 +74,7 @@ catch (Exception e) {
 	</td>
 	<td>
 		<aui:input type="hidden" name="upperCaseLetters" value="<%= upperCaseLetters %>"/>
+
 		<liferay-ui:input-checkbox defaultValue="<%= upperCaseLetters %>" param="upperCaseLettersCheckbox" onClick='<%= renderResponse.getNamespace() +  "toggleParameterCheckbox(this);" %>' />
 	</td>
 </tr>
@@ -137,7 +140,9 @@ catch (Exception e) {
 			event.halt();
 		}
 	);
+</aui:script>
 
+<aui:script>
 	Liferay.provide(
 		window,
 		'<portlet:namespace />toggleParameterCheckbox',

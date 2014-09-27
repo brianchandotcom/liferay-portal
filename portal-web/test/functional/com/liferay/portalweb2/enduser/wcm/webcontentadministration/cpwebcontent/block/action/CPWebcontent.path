@@ -88,7 +88,7 @@
 </tr>
 <tr>
 	<td>TOOLBAR_DISPLAY_STYLE_BUTTON</td>
-	<td>//div[@id='_15_displayStyleButtons']/div/a</td>
+	<td>//div[@id='_15_displayStyleButtons']/li/a</td>
 	<td></td>
 </tr>
 <tr>

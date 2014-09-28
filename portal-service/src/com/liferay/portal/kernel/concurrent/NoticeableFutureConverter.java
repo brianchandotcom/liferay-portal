@@ -14,7 +14,10 @@
 
 package com.liferay.portal.kernel.concurrent;
 
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * @author Shuyang Zhou
@@ -25,59 +28,56 @@ public abstract class NoticeableFutureConverter<T, V>
 	public NoticeableFutureConverter(NoticeableFuture<V> noticeableFuture) {
 		super(noticeableFuture);
 
-		_noticeableFuture = noticeableFuture;
+		_defaultNoticeableFuture = new DefaultNoticeableFuture<T>();
+
+		noticeableFuture.addFutureListener(
+			new FutureListener<V>() {
+
+				@Override
+				public void complete(Future<V> future) {
+					if (future.isCancelled()) {
+						_defaultNoticeableFuture.cancel(true);
+
+						return;
+					}
+
+					try {
+						_defaultNoticeableFuture.set(convert(future.get()));
+					}
+					catch (Throwable t) {
+						if (t instanceof ExecutionException) {
+							t = t.getCause();
+						}
+
+						_defaultNoticeableFuture.setException(t);
+					}
+				}
+
+			});
 	}
 
 	@Override
 	public boolean addFutureListener(FutureListener<T> futureListener) {
-		return _noticeableFuture.addFutureListener(
-			new FutureListenerConverter(futureListener));
+		return _defaultNoticeableFuture.addFutureListener(futureListener);
+	}
+
+	@Override
+	public T get() throws ExecutionException, InterruptedException {
+		return _defaultNoticeableFuture.get();
+	}
+
+	@Override
+	public T get(long timeout, TimeUnit timeUnit)
+		throws ExecutionException, InterruptedException, TimeoutException {
+
+		return _defaultNoticeableFuture.get(timeout, timeUnit);
 	}
 
 	@Override
 	public boolean removeFutureListener(FutureListener<T> futureListener) {
-		return _noticeableFuture.removeFutureListener(
-			new FutureListenerConverter(futureListener));
+		return _defaultNoticeableFuture.removeFutureListener(futureListener);
 	}
 
-	private final NoticeableFuture<V> _noticeableFuture;
-
-	private class FutureListenerConverter implements FutureListener<V> {
-
-		public FutureListenerConverter(FutureListener<T> futureListener) {
-			_futureListener = futureListener;
-		}
-
-		@Override
-		public void complete(Future<V> future) {
-			_futureListener.complete(new FutureConverter<T, V>(future) {
-
-				@Override
-				protected T convert(V v) throws Throwable {
-					return NoticeableFutureConverter.this.convert(v);
-				}
-
-			});
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			FutureListener<?> futureListener = (FutureListener<?>)obj;
-
-			if (futureListener instanceof
-					NoticeableFutureConverter.FutureListenerConverter) {
-
-				FutureListenerConverter futureListenerConverter =
-					(FutureListenerConverter)futureListener;
-
-				futureListener = futureListenerConverter._futureListener;
-			}
-
-			return _futureListener.equals(futureListener);
-		}
-
-		private final FutureListener<T> _futureListener;
-
-	}
+	private final DefaultNoticeableFuture<T> _defaultNoticeableFuture;
 
 }

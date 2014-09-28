@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.junit.Assert;
@@ -189,27 +188,5 @@ public class DefaultNoticeableFutureTest {
 
 	private final DefaultNoticeableFuture<Object> defaultNoticeableFuture =
 		new DefaultNoticeableFuture<Object>();
-
-	private static class RecordedFutureListener<T>
-		implements FutureListener<T> {
-
-		@Override
-		public void complete(Future<T> future) {
-			_count++;
-			_future = future;
-		}
-
-		public int getCount() {
-			return _count;
-		}
-
-		public Future<T> getFuture() {
-			return _future;
-		}
-
-		private int _count;
-		private Future<T> _future;
-
-	}
 
 }

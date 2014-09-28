@@ -1,0 +1,292 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.kernel.concurrent;
+
+import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
+import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Test;
+
+/**
+ * @author Shuyang Zhou
+ */
+public class NoticeableFutureConverterTest {
+
+	@ClassRule
+	public static CodeCoverageAssertor codeCoverageAssertor =
+		new CodeCoverageAssertor();
+
+	@Test
+	public void testCancelInner() throws Exception {
+		NoticeableFuture<Object> noticeableFutureConverter =
+			new NopNoticeableFutureConverter(_defaultNoticeableFuture);
+
+		Assert.assertFalse(noticeableFutureConverter.isCancelled());
+		Assert.assertFalse(noticeableFutureConverter.isDone());
+
+		_defaultNoticeableFuture.cancel(true);
+
+		Assert.assertTrue(_defaultNoticeableFuture.isCancelled());
+		Assert.assertTrue(_defaultNoticeableFuture.isDone());
+		Assert.assertTrue(noticeableFutureConverter.isCancelled());
+		Assert.assertTrue(noticeableFutureConverter.isDone());
+
+		try {
+			noticeableFutureConverter.get();
+
+			Assert.fail();
+		}
+		catch (CancellationException ce) {
+		}
+
+		try {
+			noticeableFutureConverter.get(1, TimeUnit.SECONDS);
+
+			Assert.fail();
+		}
+		catch (CancellationException ce) {
+		}
+	}
+
+	@Test
+	public void testCancelOutter() throws Exception {
+		NoticeableFuture<Object> noticeableFutureConverter =
+			new NopNoticeableFutureConverter(_defaultNoticeableFuture);
+
+		Assert.assertFalse(noticeableFutureConverter.isCancelled());
+		Assert.assertFalse(noticeableFutureConverter.isDone());
+
+		noticeableFutureConverter.cancel(true);
+
+		Assert.assertTrue(_defaultNoticeableFuture.isCancelled());
+		Assert.assertTrue(_defaultNoticeableFuture.isDone());
+		Assert.assertTrue(noticeableFutureConverter.isCancelled());
+		Assert.assertTrue(noticeableFutureConverter.isDone());
+
+		try {
+			noticeableFutureConverter.get();
+
+			Assert.fail();
+		}
+		catch (CancellationException ce) {
+		}
+
+		try {
+			noticeableFutureConverter.get(1, TimeUnit.SECONDS);
+
+			Assert.fail();
+		}
+		catch (CancellationException ce) {
+		}
+	}
+
+	@Test
+	public void testCovertCausedExecutionException() throws Exception {
+		final Exception exception = new Exception();
+
+		NoticeableFuture<Object> noticeableFutureConverter =
+			new NoticeableFutureConverter(_defaultNoticeableFuture) {
+
+				@Override
+				protected Object convert(Object v) throws Exception {
+					throw exception;
+				}
+
+			};
+
+		RecordedFutureListener<Object> recordedFutureListener =
+			new RecordedFutureListener<Object>();
+
+		Assert.assertTrue(
+			noticeableFutureConverter.addFutureListener(
+				recordedFutureListener));
+
+		_defaultNoticeableFuture.set(new Object());
+
+		Assert.assertEquals(1, recordedFutureListener.getCount());
+		Assert.assertSame(
+			ReflectionTestUtil.getFieldValue(
+				noticeableFutureConverter, "_defaultNoticeableFuture"),
+			recordedFutureListener.getFuture());
+
+		try {
+			noticeableFutureConverter.get();
+
+			Assert.fail();
+		}
+		catch (ExecutionException ee) {
+			Assert.assertSame(exception, ee.getCause());
+		}
+
+		try {
+			noticeableFutureConverter.get(1, TimeUnit.SECONDS);
+
+			Assert.fail();
+		}
+		catch (ExecutionException ee) {
+			Assert.assertSame(exception, ee.getCause());
+		}
+	}
+
+	@Test
+	public void testCovertResult() throws Exception {
+		NoticeableFuture<Object> noticeableFutureConverter =
+			new NopNoticeableFutureConverter(_defaultNoticeableFuture);
+
+		Object result = new Object();
+
+		_defaultNoticeableFuture.set(result);
+
+		Assert.assertSame(result, noticeableFutureConverter.get());
+		Assert.assertSame(
+			result, noticeableFutureConverter.get(1, TimeUnit.SECONDS));
+	}
+
+	@Test
+	public void testExecutionException() throws Exception {
+		NoticeableFuture<Object> noticeableFutureConverter =
+			new NopNoticeableFutureConverter(_defaultNoticeableFuture);
+
+		RecordedFutureListener<Object> recordedFutureListener =
+			new RecordedFutureListener<Object>();
+
+		Assert.assertTrue(
+			noticeableFutureConverter.addFutureListener(
+				recordedFutureListener));
+
+		Exception exception = new Exception();
+
+		_defaultNoticeableFuture.setException(exception);
+
+		Assert.assertEquals(1, recordedFutureListener.getCount());
+		Assert.assertSame(
+			ReflectionTestUtil.getFieldValue(
+				noticeableFutureConverter, "_defaultNoticeableFuture"),
+			recordedFutureListener.getFuture());
+
+		try {
+			noticeableFutureConverter.get();
+
+			Assert.fail();
+		}
+		catch (ExecutionException ee) {
+			Assert.assertSame(exception, ee.getCause());
+		}
+
+		try {
+			noticeableFutureConverter.get(1, TimeUnit.SECONDS);
+
+			Assert.fail();
+		}
+		catch (ExecutionException ee) {
+			Assert.assertSame(exception, ee.getCause());
+		}
+	}
+
+	@Test
+	public void testFutureListenerRegistration() {
+		NoticeableFuture<Object> noticeableFutureConverter =
+			new NopNoticeableFutureConverter(_defaultNoticeableFuture);
+
+		RecordedFutureListener<Object> recordedFutureListener =
+			new RecordedFutureListener<Object>();
+
+		Assert.assertTrue(
+			noticeableFutureConverter.addFutureListener(
+				recordedFutureListener));
+		Assert.assertFalse(
+			noticeableFutureConverter.addFutureListener(
+				recordedFutureListener));
+		Assert.assertTrue(
+			noticeableFutureConverter.removeFutureListener(
+				recordedFutureListener));
+		Assert.assertFalse(
+			noticeableFutureConverter.removeFutureListener(
+				recordedFutureListener));
+	}
+
+	@Test(timeout = 10000)
+	public void testInterruptionException() throws Exception {
+		NoticeableFuture<Object> noticeableFutureConverter =
+			new NopNoticeableFutureConverter(_defaultNoticeableFuture);
+
+		Thread currentThread = Thread.currentThread();
+
+		currentThread.interrupt();
+
+		try {
+			noticeableFutureConverter.get();
+
+			Assert.fail();
+		}
+		catch (InterruptedException ie) {
+		}
+
+		Assert.assertFalse(currentThread.isInterrupted());
+
+		currentThread.interrupt();
+
+		try {
+			noticeableFutureConverter.get(1, TimeUnit.MILLISECONDS);
+
+			Assert.fail();
+		}
+		catch (InterruptedException ie) {
+		}
+
+		Assert.assertFalse(currentThread.isInterrupted());
+	}
+
+	@Test
+	public void testTimeoutException() throws Exception {
+		NoticeableFuture<Object> noticeableFutureConverter =
+			new NopNoticeableFutureConverter(_defaultNoticeableFuture);
+
+		try {
+			noticeableFutureConverter.get(1, TimeUnit.MILLISECONDS);
+
+			Assert.fail();
+		}
+		catch (TimeoutException te) {
+		}
+	}
+
+	private final DefaultNoticeableFuture<Object> _defaultNoticeableFuture =
+		new DefaultNoticeableFuture<Object>();
+
+	private static class NopNoticeableFutureConverter
+		extends NoticeableFutureConverter<Object, Object> {
+
+		public NopNoticeableFutureConverter(
+			NoticeableFuture<Object> noticeableFuture) {
+
+			super(noticeableFuture);
+		}
+
+		@Override
+		protected Object convert(Object object) {
+			return object;
+		}
+
+	}
+
+}

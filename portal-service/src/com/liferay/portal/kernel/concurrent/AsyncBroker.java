@@ -14,7 +14,14 @@
 
 package com.liferay.portal.kernel.concurrent;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.memory.FinalizeAction;
 import com.liferay.portal.kernel.memory.FinalizeManager;
+import com.liferay.portal.kernel.util.ReflectionUtil;
+
+import java.lang.ref.Reference;
+import java.lang.reflect.Field;
 
 import java.util.Collections;
 import java.util.Map;
@@ -52,6 +59,12 @@ public class AsyncBroker<K, V> {
 
 			});
 
+		if (_REFERENT_FIELD != null) {
+			FinalizeManager.register(
+				defaultNoticeableFuture, new CancellationFinalizeAction(key),
+				FinalizeManager.PHANTOM_REFERENCE_FACTORY);
+		}
+
 		return defaultNoticeableFuture;
 	}
 
@@ -81,9 +94,60 @@ public class AsyncBroker<K, V> {
 		return true;
 	}
 
+	private static final Field _REFERENT_FIELD;
+
+	private static Log _log = LogFactoryUtil.getLog(AsyncBroker.class);
+
+	static {
+		Field referentField = null;
+
+		try {
+			referentField = ReflectionUtil.getDeclaredField(
+				Reference.class, "referent");
+		}
+		catch (Throwable t) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Current JVM does not support " +
+						"java.lang.ref.PhantomReference resurrection, orphan " +
+							"NoticeableFuture cancellation has been disabled.",
+					t);
+			}
+		}
+
+		_REFERENT_FIELD = referentField;
+	}
+
 	private final ConcurrentMap<K, DefaultNoticeableFuture<V>>
 		_defaultNoticeableFutures =
 			new ConcurrentReferenceValueHashMap<K, DefaultNoticeableFuture<V>>(
 				FinalizeManager.WEAK_REFERENCE_FACTORY);
+
+	private static class CancellationFinalizeAction implements FinalizeAction {
+
+		public CancellationFinalizeAction(Object key) {
+			_key = key;
+		}
+
+		@Override
+		public void doFinalize(final Reference<?> reference) {
+			try {
+				NoticeableFuture<?> noticeableFuture =
+					(NoticeableFuture<?>)_REFERENT_FIELD.get(reference);
+
+				if (noticeableFuture.cancel(true) && _log.isWarnEnabled()) {
+					_log.warn(
+						"Cancelled an orphan NoticeableFuture : " +
+							noticeableFuture + " under key : " + _key);
+				}
+			}
+			catch (Exception e) {
+				_log.error("Unable to access referent of " + reference, e);
+			}
+		}
+
+		private final Object _key;
+
+	}
 
 }

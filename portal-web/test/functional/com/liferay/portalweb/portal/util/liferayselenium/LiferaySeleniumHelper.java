@@ -764,6 +764,14 @@ public class LiferaySeleniumHelper {
 
 				return true;
 			}
+
+			if (line.contains("[org.apache.xmlbeans.impl.store.CharUtil$1]")) {
+				return true;
+			}
+
+			if (line.contains("[org.apache.xmlbeans.impl.store.Locale$1]")) {
+				return true;
+			}
 		}
 
 		// LPS-49505

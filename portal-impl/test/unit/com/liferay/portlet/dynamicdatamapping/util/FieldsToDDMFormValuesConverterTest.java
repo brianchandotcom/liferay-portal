@@ -54,6 +54,40 @@ public class FieldsToDDMFormValuesConverterTest extends BaseDDMTestCase {
 	}
 
 	@Test
+	public void testConversionWithFieldsDisplayNotAvailable() throws Exception {
+		DDMForm ddmForm = createDDMForm();
+
+		addDDMFormFields(
+			ddmForm, createTextDDMFormField("Metadata1"),
+			createTextDDMFormField("Metadata2"));
+
+		DDMStructure ddmStructure = createStructure("Test Structure", ddmForm);
+
+		Field metadata1Field = createField(
+			ddmStructure.getStructureId(), "Metadata1",
+			createValuesList("Metadata 1 Value"),
+			createValuesList("Metadata 1 Valor"));
+
+		Field metadata2Field = createField(
+			ddmStructure.getStructureId(), "Metadata2",
+			createValuesList("Metadata 2 Value"),
+			createValuesList("Metadata 2 Valor"));
+
+		Fields fields = createFields(metadata1Field, metadata2Field);
+
+		DDMFormValues ddmFormValues =
+			FieldsToDDMFormValuesConverterUtil.convert(ddmStructure, fields);
+
+		List<DDMFormFieldValue> ddmFormFieldValues =
+			ddmFormValues.getDDMFormFieldValues();
+
+		testDDMFormFieldValue(
+			"Metadata 1 Value", "Metadata 1 Valor", ddmFormFieldValues.get(0));
+		testDDMFormFieldValue(
+			"Metadata 2 Value", "Metadata 2 Valor", ddmFormFieldValues.get(1));
+	}
+
+	@Test
 	public void testConversionWithNestedFields() throws Exception {
 		DDMForm ddmForm = createDDMForm();
 
@@ -227,17 +261,25 @@ public class FieldsToDDMFormValuesConverterTest extends BaseDDMTestCase {
 	}
 
 	protected void testDDMFormFieldValue(
-		String expectedInstanceId, String expectedEnValue,
-		String expectedPtValue, DDMFormFieldValue ddmFormFieldValue) {
-
-		Assert.assertEquals(
-			expectedInstanceId, ddmFormFieldValue.getInstanceId());
+		String expectedEnValue, String expectedPtValue,
+		DDMFormFieldValue ddmFormFieldValue) {
 
 		Value value = ddmFormFieldValue.getValue();
 
 		Assert.assertEquals(expectedEnValue, value.getString(LocaleUtil.US));
 		Assert.assertEquals(
 			expectedPtValue, value.getString(LocaleUtil.BRAZIL));
+	}
+
+	protected void testDDMFormFieldValue(
+		String expectedInstanceId, String expectedEnValue,
+		String expectedPtValue, DDMFormFieldValue ddmFormFieldValue) {
+
+		Assert.assertEquals(
+			expectedInstanceId, ddmFormFieldValue.getInstanceId());
+
+		testDDMFormFieldValue(
+			expectedEnValue, expectedPtValue, ddmFormFieldValue);
 	}
 
 }

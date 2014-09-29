@@ -27,11 +27,11 @@ import java.io.Serializable;
 public class HttpPrincipal implements Serializable {
 
 	public HttpPrincipal() {
-		this(null, null, null, false);
+		this(null, null, null, true);
 	}
 
 	public HttpPrincipal(String url) {
-		this(url, null, null, false);
+		this(url, null, null, true);
 	}
 
 	public HttpPrincipal(String url, String login, String password) {

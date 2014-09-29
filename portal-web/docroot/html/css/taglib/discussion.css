@@ -206,7 +206,9 @@
 
 	.lfr-discussion-details {
 		.taglib-user-display {
-			word-wrap: break-word;
+			@include respond-to(desktop, tablet) {
+				word-wrap: break-word;
+			}
 
 			.user-details .user-name {
 				font-weight: bold;

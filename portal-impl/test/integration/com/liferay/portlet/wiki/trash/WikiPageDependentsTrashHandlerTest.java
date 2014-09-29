@@ -684,7 +684,8 @@ public class WikiPageDependentsTrashHandlerTest {
 		Assert.assertFalse(page.isInTrash());
 		Assert.assertFalse(childPage.isInTrash());
 		Assert.assertFalse(grandchildPage.isInTrash());
-		Assert.assertEquals(childPage.getTitle(), grandchildPage.getParentTitle());
+		Assert.assertEquals(
+			childPage.getTitle(), grandchildPage.getParentTitle());
 		Assert.assertEquals(page.getTitle(), childPage.getParentTitle());
 		Assert.assertEquals(
 			initialTrashEntriesCount,

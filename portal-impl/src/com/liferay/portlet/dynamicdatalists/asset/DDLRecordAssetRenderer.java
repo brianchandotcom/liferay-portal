@@ -126,6 +126,7 @@ public class DDLRecordAssetRenderer extends BaseAssetRenderer {
 			"struts_action", "/dynamic_data_lists/edit_record");
 		portletURL.setParameter(
 			"recordId", String.valueOf(_record.getRecordId()));
+		portletURL.setParameter("version", _recordVersion.getVersion());
 
 		return portletURL;
 	}
@@ -153,6 +154,7 @@ public class DDLRecordAssetRenderer extends BaseAssetRenderer {
 			"struts_action", "/dynamic_data_lists/view_record");
 		portletURL.setParameter(
 			"recordId", String.valueOf(_record.getRecordId()));
+		portletURL.setParameter("version", _recordVersion.getVersion());
 
 		return portletURL.toString();
 	}

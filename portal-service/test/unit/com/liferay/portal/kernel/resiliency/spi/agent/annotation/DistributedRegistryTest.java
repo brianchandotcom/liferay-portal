@@ -50,7 +50,7 @@ public class DistributedRegistryTest {
 	public void testClassRegisterAndUnregister() {
 		DistributedRegistry.registerDistributed(ChildClass.class);
 
-		Assert.assertEquals(4, _exactDirections.size());
+		Assert.assertEquals(3, _exactDirections.size());
 		Assert.assertEquals(
 			Direction.REQUEST, _exactDirections.get(ChildClass.name1));
 		Assert.assertEquals(
@@ -309,11 +309,10 @@ public class DistributedRegistryTest {
 		public static final String name12 = "name12";
 
 		@Distributed
-		public static final String name14 = "name14";
-
-		@Distributed
 		public final String name13 = "name13";
 
+		@Distributed
+		static final String name14 = "name14";
 	}
 
 	private static class ParentClass implements ParentInterface {
@@ -330,10 +329,6 @@ public class DistributedRegistryTest {
 
 		@Distributed
 		public static String name9 = "name9";
-
-		@Distributed
-		protected String name15 = "name15";
-
 	}
 
 	private interface ParentInterface {

@@ -24,6 +24,7 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import java.io.Serializable;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
  * The base model interface for the BackgroundTask service. Represents a row in the &quot;BackgroundTask&quot; database table, with each column mapped to a property of this class.
@@ -254,15 +255,14 @@ public interface BackgroundTaskModel extends BaseModel<BackgroundTask>,
 	 *
 	 * @return the task context of this background task
 	 */
-	@AutoEscape
-	public String getTaskContext();
+	public Map getTaskContext();
 
 	/**
 	 * Sets the task context of this background task.
 	 *
 	 * @param taskContext the task context of this background task
 	 */
-	public void setTaskContext(String taskContext);
+	public void setTaskContext(Map taskContext);
 
 	/**
 	 * Returns the completed of this background task.

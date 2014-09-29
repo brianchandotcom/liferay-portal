@@ -237,7 +237,7 @@
 	<portlet>
 		<portlet-name>27</portlet-name>
 		<display-name>Unit Converter</display-name>
-		<portlet-class>com.liferay.util.bridges.mvc.MVCPortlet</portlet-class>
+		<portlet-class>com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/unit_converter/</value>
@@ -674,7 +674,7 @@
 	<portlet>
 		<portlet-name>70</portlet-name>
 		<display-name>Password Generator</display-name>
-		<portlet-class>com.liferay.util.bridges.mvc.MVCPortlet</portlet-class>
+		<portlet-class>com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/password_generator/</value>
@@ -1182,7 +1182,7 @@
 	<portlet>
 		<portlet-name>114</portlet-name>
 		<display-name>Recent Bloggers</display-name>
-		<portlet-class>com.liferay.util.bridges.mvc.MVCPortlet</portlet-class>
+		<portlet-class>com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet</portlet-class>
 		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/recent_bloggers/configuration.jsp</value>
@@ -2406,7 +2406,7 @@
 	<portlet>
 		<portlet-name>176</portlet-name>
 		<display-name>License Manager</display-name>
-		<portlet-class>com.liferay.util.bridges.mvc.MVCPortlet</portlet-class>
+		<portlet-class>com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/license_manager/</value>
@@ -2472,7 +2472,7 @@
 	<portlet>
 		<portlet-name>180</portlet-name>
 		<display-name>User Statistics</display-name>
-		<portlet-class>com.liferay.util.bridges.mvc.MVCPortlet</portlet-class>
+		<portlet-class>com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet</portlet-class>
 		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/user_statistics/configuration.jsp</value>
@@ -2533,7 +2533,7 @@
 	<portlet>
 		<portlet-name>181</portlet-name>
 		<display-name>Group Statistics</display-name>
-		<portlet-class>com.liferay.util.bridges.mvc.MVCPortlet</portlet-class>
+		<portlet-class>com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet</portlet-class>
 		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/group_statistics/configuration.jsp</value>

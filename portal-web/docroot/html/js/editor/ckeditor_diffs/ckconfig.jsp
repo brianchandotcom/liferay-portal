@@ -185,13 +185,15 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 	config.toolbar_phone = [
 		['Bold', 'Italic', 'Underline'],
 		['NumberedList', 'BulletedList'],
-		['Image', 'Link', 'Unlink']
+		['Image', 'Link', 'Unlink'],
+		['Source']
 	];
 
 	config.toolbar_simple = [
 		['Bold', 'Italic', 'Underline', 'Strike'],
 		['NumberedList', 'BulletedList'],
-		['Image', 'Link', 'Unlink', 'Table']
+		['Image', 'Link', 'Unlink', 'Table'],
+		['Source']
 	];
 
 	config.toolbar_tablet = [
@@ -199,7 +201,8 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		['NumberedList', 'BulletedList'],
 		['Image', 'Link', 'Unlink'],
 		['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-		['Styles', 'FontSize']
+		['Styles', 'FontSize'],
+		['Source']
 	];
 
 	ckEditor.on(

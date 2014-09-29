@@ -73,12 +73,12 @@ public class TrackbackImpl implements Trackback {
 	protected String buildBody(
 		ThemeDisplay themeDisplay, String excerpt, String url) {
 
-		StringBundler sb = new StringBundler(7);
-
 		url = StringUtil.replace(
 			url,
-			new String[]{StringPool.CLOSE_BRACKET, StringPool.OPEN_BRACKET},
-			new String[]{"%5D", "%5B"});
+			new String[] {StringPool.CLOSE_BRACKET, StringPool.OPEN_BRACKET},
+			new String[] {"%5D", "%5B"});
+
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("[...] ");
 		sb.append(excerpt);

@@ -2908,6 +2908,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/portal/netty-all.jar</file-name>
+				<version>4.0.23</version>
+				<project-name>Netty</project-name>
+				<project-url>http://netty.io/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/portal/odmg.jar</file-name>
 				<version>3.0</version>
 				<project-name>ODMG - Object Data Management Group Java Bindings</project-name>

@@ -390,7 +390,7 @@
 			<var name="workflowDefinitionTitle" value="New Workflow Definition" />
 		</execute>
 
-		<execute macro="KaleoDesigner#SaveAsDraftWorkflowDefinitionViaKaleoDesignerCP" />
+		<execute macro="KaleoDesigner#saveAsDraftWorkflowDefinitionViaKaleoDesignerCP" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Kaleo Designer" />
@@ -456,7 +456,7 @@
 			<var name="workflowDefinitionTitle" value="New Workflow Definition" />
 		</execute>
 
-		<execute macro="KaleoDesigner#SaveAsDraftWorkflowDefinitionViaKaleoDesignerCP" />
+		<execute macro="KaleoDesigner#saveAsDraftWorkflowDefinitionViaKaleoDesignerCP" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Kaleo Designer" />

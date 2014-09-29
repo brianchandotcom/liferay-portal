@@ -257,6 +257,7 @@
 
 		<execute action="CPKaleoformsadminNewprocess#click" locator-key1="WORKFLOW_TABLE_ACTIONS" />
 		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="WORKFLOW_MENULIST_EDIT" value1="Edit" />
+
 		<execute action="Kaleodesigner#type" locator-key1="TITLE_FIELD" value1="${workflowDefinitionTitleEdit}" />
 	</command>
 

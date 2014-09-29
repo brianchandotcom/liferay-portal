@@ -161,8 +161,8 @@ AUI.add(
 				NAME: NAME,
 
 				prototype: {
-					UI_EVENTS: {},
 					TREEVIEWS: {},
+					UI_EVENTS: {},
 
 					renderUI: function() {
 						var instance = this;
@@ -204,6 +204,8 @@ AUI.add(
 								};
 
 								entry[matchKey] = curEntries[index];
+
+								entry.value = LString.unescapeHTML(entry.value);
 
 								instance.entries.add(entry);
 							}
@@ -461,7 +463,7 @@ AUI.add(
 
 						entry[matchKey] = entryMatchKey;
 
-						entry.value = A.Lang.String.unescapeHTML(entry.value);
+						entry.value = LString.unescapeHTML(entry.value);
 
 						instance.entries.add(entry);
 					},

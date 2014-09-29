@@ -517,6 +517,18 @@ public class EditEntryAction extends PortletAction {
 
 			// Update entry
 
+			boolean sendEmailEntryUpdated = ParamUtil.getBoolean(
+				actionRequest, "sendEmailEntryUpdated");
+
+			serviceContext.setAttribute(
+				"sendEmailEntryUpdated", sendEmailEntryUpdated);
+
+			String emailEntryUpdatedComment = ParamUtil.getString(
+				actionRequest, "emailEntryUpdatedComment");
+
+			serviceContext.setAttribute(
+				"emailEntryUpdatedComment", emailEntryUpdatedComment);
+
 			entry = BlogsEntryLocalServiceUtil.getEntry(entryId);
 
 			String tempOldUrlTitle = entry.getUrlTitle();

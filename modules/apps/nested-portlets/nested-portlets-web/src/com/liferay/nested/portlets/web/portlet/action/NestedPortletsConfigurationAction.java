@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.nestedportlets.action;
+package com.liferay.nested.portlets.web.portlet.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -43,10 +44,21 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Jorge Ferrer
+ * @author Peter Fellwock
  */
-public class ConfigurationActionImpl extends DefaultConfigurationAction {
+@Component(
+		immediate = true,
+		property = {
+			"javax.portlet.name=com_liferay_nested_portlets_web_portlet_" + 
+				"NestedPortletsPortlet"
+		},
+		service = ConfigurationAction.class
+	)
+public class NestedPortletsConfigurationAction extends DefaultConfigurationAction {
 
 	@Override
 	public void processAction(

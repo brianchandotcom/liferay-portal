@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.nestedportlets.action;
+package com.liferay.nested.portlets.web.portlet.action;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -26,15 +27,12 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTemplate;
 import com.liferay.portal.model.LayoutTemplateConstants;
 import com.liferay.portal.model.LayoutTypePortletConstants;
-import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutTemplateLocalServiceUtil;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -42,39 +40,40 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.portlet.PortletConfig;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Berentey Zsolt
  * @author Jorge Ferrer
  * @author Raymond Augé
  * @author Jesper Weissglas
+ * @author Peter Fellwock
  */
-public class ViewAction extends PortletAction {
+@Component(
+		immediate = true,
+		property = {
+			"action.command.name=view",
+			"javax.portlet.name=com_liferay_nested_portlets_web_portlet_NestedPortletsPortlet"
+		},
+		service = ActionCommand.class
+	)
+public class ViewAction implements ActionCommand {
 
 	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
+	public boolean processCommand(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws PortletException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Portlet portlet = (Portlet)renderRequest.getAttribute(
-			WebKeys.RENDER_PORTLET);
-
-		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.getPortletSetup(
-				renderRequest, portlet.getPortletId());
+		PortletPreferences portletPreferences = portletRequest.getPreferences();
 
 		String layoutTemplateId = portletPreferences.getValue(
 			"layoutTemplateId",
@@ -103,7 +102,7 @@ public class ViewAction extends PortletAction {
 				if (Validator.isNotNull(columnId)) {
 					columnIds.put(
 						columnId,
-						renderResponse.getNamespace() + StringPool.UNDERLINE +
+						portletResponse.getNamespace() + StringPool.UNDERLINE +
 							columnId);
 				}
 			}
@@ -114,7 +113,7 @@ public class ViewAction extends PortletAction {
 
 			sb.append(theme.getThemeId());
 			sb.append(LayoutTemplateConstants.CUSTOM_SEPARATOR);
-			sb.append(renderResponse.getNamespace());
+			sb.append(portletResponse.getNamespace());
 			sb.append(layoutTemplateId);
 
 			velocityTemplateId = sb.toString();
@@ -124,29 +123,36 @@ public class ViewAction extends PortletAction {
 			Matcher columnIdMatcher = _columnIdPattern.matcher(content);
 
 			velocityTemplateContent = columnIdMatcher.replaceAll(
-				"$1" + renderResponse.getNamespace() + "$2$3");
+				"$1" + portletResponse.getNamespace() + "$2$3");
 		}
 
 		checkLayout(themeDisplay.getLayout(), columnIds.values());
 
-		renderRequest.setAttribute(
+		portletRequest.setAttribute(
 			WebKeys.NESTED_PORTLET_VELOCITY_TEMPLATE_ID, velocityTemplateId);
-		renderRequest.setAttribute(
+		portletRequest.setAttribute(
 			WebKeys.NESTED_PORTLET_VELOCITY_TEMPLATE_CONTENT,
 			velocityTemplateContent);
 
+		@SuppressWarnings("unchecked")
 		Map<String, Object> vmVariables =
-			(Map<String, Object>)renderRequest.getAttribute(
+			(Map<String, Object>)portletRequest.getAttribute(
 				WebKeys.VM_VARIABLES);
 
 		if (vmVariables != null) {
 			vmVariables.putAll(columnIds);
 		}
 		else {
-			renderRequest.setAttribute(WebKeys.VM_VARIABLES, columnIds);
+			portletRequest.setAttribute(WebKeys.VM_VARIABLES, columnIds);
 		}
 
-		return actionMapping.findForward("portlet.nested_portlets.view");
+		 //actionMapping.findForward("portlet.nested_portlets.view");
+
+		ActionResponse actionResponse = (ActionResponse)portletResponse;
+
+		actionResponse.setRenderParameter("mvcPath", "/view.jsp");
+
+		return true;
 	}
 
 	protected void checkLayout(Layout layout, Collection<String> columnIds) {

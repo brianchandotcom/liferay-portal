@@ -1,0 +1,76 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+	FilePickerCustomizer filePickerCustomizer = dlEditFileEntryDisplayContext.getFilePickerCustomizer();
+%>
+
+<c:choose>
+	<c:when test="<%= filePickerCustomizer == null %>">
+		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="file" onChange='<%= renderResponse.getNamespace() + "validateTitle();" %>' type="file">
+			<aui:validator name="acceptFiles">
+				'<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>'
+			</aui:validator>
+		</aui:input>
+	</c:when>
+	<c:otherwise>
+		<aui:field-wrapper label="file">
+			<aui:button cssClass="customized-file-button" name="file" value="Seleccionar archivo" />
+
+			<img id="<portlet:namespace />pickButtonIcon" src="" style="border: 0px">
+
+			<span id="<portlet:namespace />pickButtonTitle"></span>
+		</aui:field-wrapper>
+
+		<aui:script use="aui-base">
+			function <portlet:namespace/>onFilePick(fields) {
+				var documentIconURL = fields['<%= filePickerCustomizer.getIconFieldName() %>'];
+				var documentTitle = fields['<%= filePickerCustomizer.getTitleFieldName() %>'];
+				var documentDescription = fields['<%= filePickerCustomizer.getDescriptionFieldName() %>'];
+
+				A.one('#<portlet:namespace />pickButtonIcon').attr('src', documentIconURL);
+
+				A.one('#<portlet:namespace />pickButtonTitle').html(documentTitle);
+
+				A.one('#<portlet:namespace />title').val(documentTitle);
+				A.one('#<portlet:namespace />description').val(documentDescription);
+
+				A.all('#<portlet:namespace />fm .lfr-ddm-container .field-wrapper').each(
+					function(item, index) {
+						var fieldName = item.getAttribute('data-fieldname');
+						var input = item.one('input');
+
+						input.val(fields[fieldName]);
+					}
+				);
+			}
+
+			<%
+				filePickerCustomizer.setOnFilePickCallback(liferayPortletResponse.getNamespace() + "onFilePick");
+			%>
+
+			<%= filePickerCustomizer.getJavascript() %>
+
+			A.one('#<portlet:namespace />fm').delegate(
+				'click',
+				function(event) {
+					<%= filePickerCustomizer.getOnClickCallback() %>();
+				},
+				'.customized-file-button'
+			);
+		</aui:script>
+	</c:otherwise>
+</c:choose>

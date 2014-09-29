@@ -313,11 +313,7 @@ else {
 			</c:if>
 		</div>
 
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="file" onChange='<%= renderResponse.getNamespace() + "validateTitle();" %>' type="file">
-			<aui:validator name="acceptFiles">
-				'<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>'
-			</aui:validator>
-		</aui:input>
+		<%@ include file="/html/portlet/document_library/edit_file_entry_picker.jspf" %>
 
 		<aui:input name="title">
 			<aui:validator errorMessage="you-must-specify-a-file-or-a-title" name="custom">

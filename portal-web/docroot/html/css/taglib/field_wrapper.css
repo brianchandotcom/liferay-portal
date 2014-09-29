@@ -1,4 +1,4 @@
-.aui .field-wrapper .control-label {
+.field-wrapper .control-label {
 	color: #555;
 	display: block;
 	font-size: 15px;
@@ -7,6 +7,6 @@
 	margin-bottom: 5px;
 }
 
-.aui .field-wrapper.form-inline .control-label {
+.field-wrapper.form-inline .control-label {
 	display: inline-block;
 }

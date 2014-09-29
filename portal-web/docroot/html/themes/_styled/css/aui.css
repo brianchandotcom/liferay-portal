@@ -1,37 +1,7 @@
-$FontAwesomePath: "aui/alloy-font-awesome/font" !default;
+@import "aui_variables";
 
-@import "aui/alloy-font-awesome/scss/variables";
-@import "aui/alloy-font-awesome/scss/mixins-alloy";
-@import "aui/alloy-font-awesome/scss/path-alloy";
+@import "aui/bootstrap";
+@import "aui_custom";
+@import "liferay_custom";
 
-.aui {
-	@import "aui_variables";
-
-	@import "aui/bootstrap";
-	@import "aui_custom";
-	@import "liferay_custom";
-
-	@import "aui/alloy-font-awesome/scss/core";
-	@import "aui/alloy-font-awesome/scss/bootstrap";
-	@import "aui/alloy-font-awesome/scss/extras";
-	@import "aui/alloy-font-awesome/scss/icons-alloy";
-	@import "aui/alloy-font-awesome/scss/icons-alloy-extra";
-
-	@at-root {
-		@font-face {
-			font-family: 'Glyphicons Halflings';
-			src: url(if($bootstrap-sass-asset-helper, twbs-font-path('#{$icon-font-path}#{$icon-font-name}.eot'), '#{$icon-font-path}#{$icon-font-name}.eot'));
-			src: url(if($bootstrap-sass-asset-helper, twbs-font-path('#{$icon-font-path}#{$icon-font-name}.eot?#iefix'), '#{$icon-font-path}#{$icon-font-name}.eot?#iefix')) format('embedded-opentype'),
-				url(if($bootstrap-sass-asset-helper, twbs-font-path('#{$icon-font-path}#{$icon-font-name}.woff'), '#{$icon-font-path}#{$icon-font-name}.woff')) format('woff'),
-				url(if($bootstrap-sass-asset-helper, twbs-font-path('#{$icon-font-path}#{$icon-font-name}.ttf'), '#{$icon-font-path}#{$icon-font-name}.ttf')) format('truetype'),
-				url(if($bootstrap-sass-asset-helper, twbs-font-path('#{$icon-font-path}#{$icon-font-name}.svg##{$icon-font-svg-id}'), '#{$icon-font-path}#{$icon-font-name}.svg##{$icon-font-svg-id}')) format('svg');
-		}
-	}
-
-	background-color: $body-bg;
-	color: $text-color;
-	font-family: $font-family-base;
-	font-size: $font-size-base;
-	line-height: $line-height-base;
-	margin: 0;
-}
+@import "aui/alloy-font-awesome/scss/font-awesome";

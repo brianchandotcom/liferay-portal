@@ -19,8 +19,6 @@ $dropdown-link-active-bg: lighten($link-color, 5%);
 $dropdown-link-hover-bg: darken(#3ECAF4, 10%);
 $dropdown-link-hover-color: #FFF;
 
-$icon-font-path: "aui/glyphicons/font/";
-
 $line-height-base: 1.42858;
 
 $navbar-default-bg: #F3F3F3;
@@ -53,3 +51,8 @@ $alert-success-text: $state-success-text;
 $alert-warning-bg: $state-warning-bg;
 $alert-warning-border: $state-warning-border;
 $alert-warning-text: $state-warning-text;
+
+// Icon paths
+
+$FontAwesomePath: "aui/alloy-font-awesome/font";
+$icon-font-path: "aui/glyphicons/font/";

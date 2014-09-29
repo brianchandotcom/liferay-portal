@@ -2,114 +2,110 @@
 @import "mixins";
 
 @include respond-to(phone, tablet) {
-	.aui {
-		.dockbar {
-			.container, .container-fluid {
-				padding: 0 5px;
+	.dockbar {
+		.container, .container-fluid {
+			padding: 0 5px;
 
-				.nav-add-controls-btn {
-					display: none;
+			.nav-add-controls-btn {
+				display: none;
+			}
+
+			.nav-account-controls {
+				float: right;
+				text-align: top;
+			}
+
+			.navbar-brand {
+				@include display-flex();
+				@include flex-grow(1);
+				@include flex-shrink(500);
+
+				line-height: 16px;
+				min-width: 128px;
+				padding: 12px 0 0 0;
+				white-space: nowrap;
+				width: auto;
+
+				.control-panel-back-link {
+					float: left;
+					margin-top: 6px;
+					position: relative;
+					z-index: 2;
+
+					@include respond-to(phone) {
+						@include flex-shrink(0);
+
+						margin: 0;
+						padding: 6px 8px;
+						position: absolute;
+					}
 				}
 
-				.nav-account-controls {
-					float: right;
-					text-align: top;
-				}
-
-				.navbar-brand {
-					@include display-flex();
-					@include flex-grow(1);
-					@include flex-shrink(500);
-
-					line-height: 16px;
-					min-width: 128px;
-					padding: 12px 0 0 0;
-					white-space: nowrap;
-					width: auto;
-
-					.control-panel-back-link {
-						float: left;
-						margin-top: 6px;
+				h1 {
+					@include respond-to(phone) {
+						display: block;
+						height: 51px;
+						line-height: 16px;
+						margin-top: -5px;
+						max-width: 100%;
+						min-width: 55px;
+						padding: 0 16px 0 33px;
 						position: relative;
-						z-index: 2;
 
-						@include respond-to(phone) {
-							@include flex-shrink(0);
+						a {
+							display: inline-block;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							white-space: nowrap;
+							width: 100%;
 
-							margin: 0;
-							padding: 6px 8px;
-							position: absolute;
+							.lfr-icon-menu-text {
+								font-size: 18px;
+							}
 						}
-					}
 
-					h1 {
-						@include respond-to(phone) {
+						.control-panel-site-selector, .site-administration-title {
 							display: block;
-							height: 51px;
-							line-height: 16px;
-							margin-top: -5px;
-							max-width: 100%;
-							min-width: 55px;
-							padding: 0 16px 0 33px;
-							position: relative;
 
-							a {
-								display: inline-block;
-								overflow: hidden;
-								text-overflow: ellipsis;
-								white-space: nowrap;
-								width: 100%;
+							@include ellipsis;
 
-								.lfr-icon-menu-text {
-									font-size: 18px;
-								}
-							}
+							font-size: 16px;
+						}
 
-							.control-panel-site-selector, .site-administration-title {
-								display: block;
+						.control-panel-site-selector {
+							position: static;
 
-								@include ellipsis;
-
-								font-size: 16px;
-							}
-
-							.control-panel-site-selector {
-								position: static;
-
-								i {
-									bottom: 4px;
-									position: absolute;
-									right: 0;
-								}
-							}
-
-							.divider {
-								display: none;
+							i {
+								bottom: 4px;
+								position: absolute;
+								right: 0;
 							}
 						}
 
-						@include respond-to(tablet) {
-							line-height: 32px;
+						.divider {
+							display: none;
 						}
 					}
-				}
 
-				.navbar-btn {
-					float: right;
+					@include respond-to(tablet) {
+						line-height: 32px;
+					}
 				}
+			}
 
-				.nav-account-controls > li:hover {
-					background-color: transparent;
-				}
+			.navbar-btn {
+				float: right;
+			}
+
+			.nav-account-controls > li:hover {
+				background-color: transparent;
 			}
 		}
 	}
 }
 
 @include respond-to(phone) {
-	.aui{
-		.control-panel-home-actions, .portlet-title .taglib-icon-help {
-			display: none;
-		}
+	.control-panel-home-actions, .portlet-title .taglib-icon-help {
+		display: none;
 	}
 }

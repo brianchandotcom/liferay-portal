@@ -2,61 +2,59 @@
 @import "mixins";
 
 @include respond-to(phone, tablet) {
-	.aui {
-		.btn-group, .button-holder {
-			@include respond-to(phone) {
-				width: 100%;
-			}
-
-			> .btn + .dropdown-toggle {
-				padding-left: 12px;
-				padding-right: 12px;
-			}
+	.btn-group, .button-holder {
+		@include respond-to(phone) {
+			width: 100%;
 		}
 
-		.btn {
-			font-size: 17.5px;
+		> .btn + .dropdown-toggle {
+			padding-left: 12px;
+			padding-right: 12px;
+		}
+	}
 
-			.caret {
-				border-left-width: 5px;
-				border-right-width: 5px;
-				border-top-width: 5px;
-			}
+	.btn {
+		font-size: 17.5px;
 
-			[class^="icon-"], [class*=" icon-"] {
-				margin-top: 4px;
-			}
-
-			@include respond-to(phone) {
-				display: block;
-				margin-top: 5px;
-				width: 100%;
-			}
+		.caret {
+			border-left-width: 5px;
+			border-right-width: 5px;
+			border-top-width: 5px;
 		}
 
-		.form-search .input-group .btn {
-			display: inline-block;
-			padding: 5px 19px 6px;
-
-			@include respond-to(phone) {
-				margin-top: 0;
-				width: auto;
-			}
+		[class^="icon-"], [class*=" icon-"] {
+			margin-top: 4px;
 		}
 
-		.dropup .btn .caret {
-			border-bottom-width: 5px;
+		@include respond-to(phone) {
+			display: block;
+			margin-top: 5px;
+			width: 100%;
 		}
+	}
 
-		button.close, button.btn.close {
-			font-size: 2em;
+	.form-search .input-group .btn {
+		display: inline-block;
+		padding: 5px 19px 6px;
+
+		@include respond-to(phone) {
+			margin-top: 0;
 			width: auto;
 		}
+	}
 
-		@media (max-width: 480px) {
-			.modal-header button.close {
-				padding: 12px;
-			}
+	.dropup .btn .caret {
+		border-bottom-width: 5px;
+	}
+
+	button.close, button.btn.close {
+		font-size: 2em;
+		width: auto;
+	}
+
+	@media (max-width: 480px) {
+		.modal-header button.close {
+			padding: 12px;
 		}
 	}
 }

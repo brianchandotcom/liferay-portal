@@ -114,7 +114,7 @@
 }
 
 @media (max-width: 767px) {
-	.aui #wrapper {
+	#wrapper {
 		padding: 1em 1.1em 0;
 	}
 

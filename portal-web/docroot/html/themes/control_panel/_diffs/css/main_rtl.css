@@ -1,17 +1,15 @@
-.aui {
-	.add-content-menu, .lfr-edit-layout-panel, .panel-page-menu .portlet-borderless-container {
-		.panel-group .panel.panel-default {
-			.toggler-header .panel-toggle {
-				background-position: 0 -20px;
-			}
+.add-content-menu, .lfr-edit-layout-panel, .panel-page-menu .portlet-borderless-container {
+	.panel-group .panel.panel-default {
+		.toggler-header .panel-toggle {
+			background-position: 0 -20px;
+		}
 
-			.toggler-header-collapsed .panel-toggle {
-				background-position: 0 0;
-			}
+		.toggler-header-collapsed .panel-toggle {
+			background-position: 0 0;
 		}
 	}
+}
 
-	.table-data tr.lfr-role .first {
-		background-position: 95% 50%;
-	}
+.table-data tr.lfr-role .first {
+	background-position: 95% 50%;
 }

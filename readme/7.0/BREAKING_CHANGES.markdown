@@ -28,7 +28,7 @@ Each change must have a brief descriptive title and contain the following
 information:
 
 * **[Title]** Provide a brief descriptive title. Use past tense and follow
-the capitalization rules from 
+the capitalization rules from
 <http://en.wikibooks.org/wiki/Basic_Book_Design/Capitalizing_Words_in_Titles>.
 * **Date:** Specify the date you submitted the change. Format the date as
 *YYYY-MMM* (e.g., 2014-Mar) or *YYYY-MMM-DD* (e.g., 2014-Feb-25).
@@ -311,7 +311,7 @@ clicking on the checkboxes.
 In your front-end JavaScript code, follow these steps:
 
 - Remove the `Checkbox` suffix when querying for the node in any of its forms,
-like `A.one(...)`, `$(...)`, etc. 
+like `A.one(...)`, `$(...)`, etc.
 - Remove any action that tries to set the value of the checkbox on the
 previously generated hidden field.
 
@@ -329,7 +329,7 @@ properly even when JavaScript is disabled.
 #### What changed?
 Several APIs in `portal-service.jar` contained references to the
 `javax.servlet.jsp` package. This forced `util-taglib`, which depended on many
-of the package's features, to be bound to the same JSP implementation. 
+of the package's features, to be bound to the same JSP implementation.
 
 Due to this, the following APIs had breaking changes:
 
@@ -464,5 +464,32 @@ demonstrates using a `SyncCapability` instance to move a `FileEntry`:
 #### Why was this change made?
 
 There are repositories that don't support Liferay Sync operations.
+
+---------------------------------------
+### Removed the .aui namespace from around Bootstrap
+- **Date:** 2014-Sep-26
+- **JIRA Ticket:** LPS-50348
+
+#### What changed?
+
+The `.aui` namespace was removed from prefixing all of Bootstrap's CSS.
+
+#### Who is affected?
+
+Theme and plugin developers that targeted their CSS to relying on the
+namespace.
+
+#### How should I update my code?
+
+Theme developers can still manually add an `aui.css` file in their `_diffs`
+directory, and add it back in, as well as adding the `aui` css class to the
+`$root_css_class` variable.
+
+#### Why was this change made?
+
+Due to changes in the Sass parser, the nesting of third-party libraries was
+causing some syntax errors which broke other functionality (such as RTL
+conversion). There was also a lot of additional complexity for a relatively
+minor benefit.
 
 ---------------------------------------

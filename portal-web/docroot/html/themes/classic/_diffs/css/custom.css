@@ -14,798 +14,798 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 /* ---------- Base styles ---------- */
 
-.aui {
+html {
 	background-color: transparent;
+}
 
-	.separator {
-		border-color: #BFBFBF transparent #FFF;
-		border-style: solid;
-		border-width: 1px 0;
+.separator {
+	border-color: #BFBFBF transparent #FFF;
+	border-style: solid;
+	border-width: 1px 0;
+}
+
+.site-title {
+	a:hover {
+		text-decoration: none;
 	}
 
-	.site-title {
-		a:hover {
-			text-decoration: none;
+	.site-name {
+		display: inline-block;
+	}
+}
+
+#sign-in {
+	background: url(@theme_image_path@/common/key.png) no-repeat 3px 50%;
+	font-weight: bold;
+	padding: 5px 5px 5px 25px;
+	position: absolute;
+	right: 0;
+	top: -1.2em;
+}
+
+.redirected-to-message {
+	margin-right: 10px;
+
+	a {
+		background: #ECFBFF;
+		border: 1px solid #ADE5FA;
+		color: #8D8D8D;
+		padding: 5px;
+	}
+}
+
+.site-navigation {
+	margin-bottom: 6px;
+
+	.lfr-nav-item {
+		span, a {
+			@include ellipsis;
+
+			@include respond-to(desktop) {
+				max-width: 300px;
+			}
 		}
-
-		.site-name {
-			display: inline-block;
-		}
 	}
+}
 
-	#sign-in {
-		background: url(@theme_image_path@/common/key.png) no-repeat 3px 50%;
-		font-weight: bold;
-		padding: 5px 5px 5px 25px;
-		position: absolute;
-		right: 0;
-		top: -1.2em;
-	}
+.taglib-portal-message {
+	margin-bottom: 0;
+}
 
-	.redirected-to-message {
-		margin-right: 10px;
+/* ---------- Dockbar ---------- */
 
-		a {
-			background: #ECFBFF;
-			border: 1px solid #ADE5FA;
-			color: #8D8D8D;
-			padding: 5px;
-		}
-	}
+.dockbar, .dockbar-split .dockbar {
+	@include respond-to(phone, tablet) {
+		.info-link-container {
+			&.open {
+				.info-button a {
+					background-color: #3EA9DB;
+				}
+			}
 
-	.site-navigation {
-		margin-bottom: 6px;
+			.info-link {
+				color: #FFF;
+				font-size: 26px;
 
-		.lfr-nav-item {
-			span, a {
-				@include ellipsis;
-
-				@include respond-to(desktop) {
-					max-width: 300px;
+				&:focus, &:hover {
+					background-color: #5BBAE8;
 				}
 			}
 		}
 	}
+}
 
-	.taglib-portal-message {
-		margin-bottom: 0;
-	}
+.dockbar {
+	&.navbar {
+		.nav {
+			li {
+				&.dropdown {
+					&.active {
+						.dropdown-toggle {
+							background-color: transparent;
 
-	/* ---------- Dockbar ---------- */
-
-	.dockbar, .dockbar-split .dockbar {
-		@include respond-to(phone, tablet) {
-			.info-link-container {
-				&.open {
-					.info-button a {
-						background-color: #3EA9DB;
-					}
-				}
-
-				.info-link {
-					color: #FFF;
-					font-size: 26px;
-
-					&:focus, &:hover {
-						background-color: #5BBAE8;
-					}
-				}
-			}
-		}
-	}
-
-	.dockbar {
-		&.navbar {
-			.nav {
-				li {
-					&.dropdown {
-						&.active {
-							.dropdown-toggle {
-								background-color: transparent;
-
-								&:hover {
-									color: #FFF;
-								}
+							&:hover {
+								color: #FFF;
 							}
 						}
+					}
 
-						&.staging-toggle .dropdown-menu {
-							background-color: #55B8EC;
-						}
+					&.staging-toggle .dropdown-menu {
+						background-color: #55B8EC;
 					}
 				}
 			}
 		}
+	}
 
-		.container, .container-fluid {
-			> .nav.nav-add-controls ul.dropdown-menu > li > a {
-				&:focus, &:hover {
-					color: #FFF;
-				}
-			}
-		}
-
-		.info-button {
-			a {
-				color: #FFF;
-				padding: 12px 15px;
-
-				&:focus, &:hover {
-					background-color: #2FA4F5;
-					color: #FFF;
-				}
-			}
-		}
-
-		.info-link-container {
-			&.open .info-button a {
-				background-color: #2FA4F5;
-			}
-		}
-
-		.staging-controls .nav > li.staging-toggle {
-			&.active a, > a {
+	.container, .container-fluid {
+		> .nav.nav-add-controls ul.dropdown-menu > li > a {
+			&:focus, &:hover {
 				color: #FFF;
 			}
-
-			> a {
-				padding: 5px 20px;
-			}
 		}
+	}
 
-		.page-customization-bar .btn {
-			border-color: transparent;
+	.info-button {
+		a {
+			color: #FFF;
+			padding: 12px 15px;
 
 			&:focus, &:hover {
-				background: transparent;
-				text-decoration: underline;
-			}
-		}
-
-		.staging-bar {
-			margin: 6px 0;
-
-			> li {
-				background: transparent;
-
-				a {
-					color: #FFF;
-				}
-
-				@include respond-to(phone, tablet) {
-					&.nav-account-controls li.info-link-container {
-						&.open {
-							.info-link {
-								background-color: #3EA9DB;
-							}
-						}
-
-						.info-link {
-							color: #FFF;
-							font-size: 26px;
-							margin-left: 0;
-							padding: 11px 16px 12px;
-
-							&:focus, &:hover {
-								background-color: #5BBAE8;
-							}
-						}
-					}
-				}
-			}
-
-			.staging-toggle {
+				background-color: #2FA4F5;
 				color: #FFF;
-
-				li a {
-					color: #FFF;
-					font-weight: 300;
-					text-decoration: none;
-				}
-
-				.btn-link {
-					color: #FFF;
-					font-size: 12px;
-				}
 			}
 		}
 	}
 
-	.dockbar-split .dockbar {
-		.info-button {
+	.info-link-container {
+		&.open .info-button a {
+			background-color: #2FA4F5;
+		}
+	}
+
+	.staging-controls .nav > li.staging-toggle {
+		&.active a, > a {
+			color: #FFF;
+		}
+
+		> a {
+			padding: 5px 20px;
+		}
+	}
+
+	.page-customization-bar .btn {
+		border-color: transparent;
+
+		&:focus, &:hover {
+			background: transparent;
+			text-decoration: underline;
+		}
+	}
+
+	.staging-bar {
+		margin: 6px 0;
+
+		> li {
+			background: transparent;
+
 			a {
-				margin-top: -4px;
+				color: #FFF;
+			}
+
+			@include respond-to(phone, tablet) {
+				&.nav-account-controls li.info-link-container {
+					&.open {
+						.info-link {
+							background-color: #3EA9DB;
+						}
+					}
+
+					.info-link {
+						color: #FFF;
+						font-size: 26px;
+						margin-left: 0;
+						padding: 11px 16px 12px;
+
+						&:focus, &:hover {
+							background-color: #5BBAE8;
+						}
+					}
+				}
 			}
 		}
 
-		.nav > li.staging-toggle > a {
-			padding: 5px 20px;
+		.staging-toggle {
+			color: #FFF;
+
+			li a {
+				color: #FFF;
+				font-weight: 300;
+				text-decoration: none;
+			}
+
+			.btn-link {
+				color: #FFF;
+				font-size: 12px;
+			}
 		}
+	}
+}
 
-		.container, .container-fluid {
-			> .nav {
-				&.nav-account-controls {
-					background-color: $dockbarGradientEnd;
-					border-top: 1px solid #00AEFF;
+.dockbar-split .dockbar {
+	.info-button {
+		a {
+			margin-top: -4px;
+		}
+	}
 
-					@include respond-to(phone, tablet) {
-						background-color: transparent;
-						border-top-width: 0;
-					}
+	.nav > li.staging-toggle > a {
+		padding: 5px 20px;
+	}
+
+	.container, .container-fluid {
+		> .nav {
+			&.nav-account-controls {
+				background-color: $dockbarGradientEnd;
+				border-top: 1px solid #00AEFF;
+
+				@include respond-to(phone, tablet) {
+					background-color: transparent;
+					border-top-width: 0;
+				}
+			}
+
+			&.nav-add-controls ul.dropdown-menu {
+				overflow: visible;
+
+				&.nav-add-controls-notice {
+					top: 70px;
 				}
 
-				&.nav-add-controls ul.dropdown-menu {
-					overflow: visible;
+				> li {
+					background-color: transparent;
 
-					&.nav-add-controls-notice {
-						top: 70px;
-					}
+					@include background-image(none);
 
-					> li {
-						background-color: transparent;
+					> a {
+						line-height: inherit;
+						padding: 6px 8px;
 
-						@include background-image(none);
+						@include respond-to(phone, tablet) {
+							background: transparent;
+							padding: 9px 15px;
+						}
 
-						> a {
-							line-height: inherit;
-							padding: 6px 8px;
+						&:focus, &:hover {
+							background: #5BBAE8;
+
+							@include respond-to(phone, tablet) {
+								background: #2FA4F5;
+							}
+						}
+
+						&.toggle-controls-link {
+							background: #80E000;
 
 							@include respond-to(phone, tablet) {
 								background: transparent;
-								padding: 9px 15px;
-							}
 
-							&:focus, &:hover {
-								background: #5BBAE8;
-
-								@include respond-to(phone, tablet) {
+								&:focus, &:hover {
 									background: #2FA4F5;
 								}
 							}
-
-							&.toggle-controls-link {
-								background: #80E000;
-
-								@include respond-to(phone, tablet) {
-									background: transparent;
-
-									&:focus, &:hover {
-										background: #2FA4F5;
-									}
-								}
-							}
 						}
 					}
 				}
 			}
-		}
-
-		.page-customization-bar {
-			background-color: #6DA4E4;
-			background-color: rgba(109, 168, 228, 0.9);
-			line-height: 20px;
-		}
-
-		.page-customization-bar-container {
-			top: -1px;
 		}
 	}
 
-	/* ---------- Main navigation ---------- */
+	.page-customization-bar {
+		background-color: #6DA4E4;
+		background-color: rgba(109, 168, 228, 0.9);
+		line-height: 20px;
+	}
 
-	#navigation {
-		background-color: #555;
-		border-width: 0;
-		min-height: 0;
+	.page-customization-bar-container {
+		top: -1px;
+	}
+}
 
-		.add-page-editor {
-			input {
-				margin-top: 0;
-			}
+/* ---------- Main navigation ---------- */
+
+#navigation {
+	background-color: #555;
+	border-width: 0;
+	min-height: 0;
+
+	.add-page-editor {
+		input {
+			margin-top: 0;
+		}
+	}
+
+	.nav {
+		@include respond-to(desktop) {
+			background: #555;
+			padding-left: 20px;
+			padding-right: 20px;
 		}
 
-		.nav {
-			@include respond-to(desktop) {
-				background: #555;
-				padding-left: 20px;
-				padding-right: 20px;
-			}
+		li {
+			&.dropdown {
+				> .dropdown-toggle {
+					padding-right: 0;
 
-			li {
-				&.dropdown {
-					> .dropdown-toggle {
-						padding-right: 0;
-
-						.caret {
-							border-bottom-color: #FFF;
-							border-top-color: #FFF;
-						}
+					.caret {
+						border-bottom-color: #FFF;
+						border-top-color: #FFF;
 					}
 				}
-
-				&.hover, &.open {
-					> a {
-						background-color: #A3A3A3;
-						color: #FFF;
-
-						@include respond-to(phone, tablet) {
-							background-color: #2FA4F5;
-						}
-					}
-				}
-
-				&.active > a {
-					background-color: $dockbarGradientStart;
-				}
 			}
 
-			> li > a {
-				@include respond-to(desktop) {
-					padding: 8px 15px;
-				}
-			}
-
-			.dropdown-menu {
-				background: #00ACFF;
-				border-width: 0;
-				margin: 0;
-
-				&:after, &:before {
-					border-width: 0;
-				}
-
-				a {
+			&.hover, &.open {
+				> a {
+					background-color: #A3A3A3;
 					color: #FFF;
 
-					&:hover {
-						background: none;
-						text-decoration: underline;
+					@include respond-to(phone, tablet) {
+						background-color: #2FA4F5;
 					}
 				}
 			}
-		}
 
-		li a {
-			color: #FFF;
-		}
-	}
-
-	.modify-pages {
-		.delete-tab {
-			background: #555;
-			border: 2px solid #FFF;
-
-			@include box-sizing(content-box);
-
-			color: #FFF;
-			font-size: 14px;
-			height: auto;
-			line-height: normal;
-			padding: 0 6px 3px;
-			right: -9px;
-			top: -1px;
-			z-index: 300;
-
-			@include respond-to(phone, tablet) {
-				right: 0;
+			&.active > a {
+				background-color: $dockbarGradientStart;
 			}
 		}
 
-		.lfr-nav-item .lfr-nav-child-toggle {
-			padding: 10px;
-
-			i {
-				margin: 0;
-			}
-
-			@include respond-to(phone, tablet) {
-				line-height: 1em;
-				padding: 14px;
-				position: absolute;
-				right: 0;
-				top: 0;
+		> li > a {
+			@include respond-to(desktop) {
+				padding: 8px 15px;
 			}
 		}
 
-		.drag-handle {
-			background-color: rgba(255, 255, 255, 0.75);
-
-			@include box-sizing(content-box);
-
-			color: #009AE5;
-		}
-	}
-
-	/* ---------- Breadcrumbs ---------- */
-
-	.breadcrumb {
-		background-color: #FAFAFA;
-	}
-
-	#breadcrumbs {
-		margin-bottom: 45px;
-
-		.breadcrumb {
-			margin-bottom: 0;
-		}
-	}
-
-	/* ---------- Portlet wrapper and icons ---------- */
-
-	.portlet-content, .portlet-minimized .portlet-content-container {
-		border: 1px solid #EAEAEA;
-		border-top-width: 0;
-		padding: 12px 10px 10px;
-	}
-
-	.portlet-topper {
-		background: #D3D3D3;
-		color: #FFF;
-		padding: 0;
-
-		.portlet-title {
-			font-size: 1em;
-			font-weight: normal;
-			line-height: 2.2;
+		.dropdown-menu {
+			background: #00ACFF;
+			border-width: 0;
 			margin: 0;
 
-			i, span img {
-				display: none;
+			&:after, &:before {
+				border-width: 0;
 			}
-		}
 
-		.portlet-topper-toolbar {
-			font-size: 0.8em;
-			margin: -10px 0 0;
-			padding: 0;
-			right: 10px;
-			top: 50%;
-		}
-	}
+			a {
+				color: #FFF;
 
-	.lfr-configurator-visibility .portlet-topper {
-		background-color: #A9A9A9;
-	}
-
-	.signed-in.controls-visible .portlet-title {
-		padding-right: 80px;
-	}
-
-	.portlet-asset-publisher .asset-title, .portlet-asset-publisher .header-title, .portlet-asset-publisher li.title-list, .portlet-blogs .entry-title, .portlet-blogs .header-title, .portlet-message-boards .header-title {
-		@include hyphens;
-	}
-
-	.portlet-asset-publisher .asset-content, .portlet-asset-publisher .asset-summary, .portlet-blogs .entry-body, .portlet-journal .journal-article-preview, .portlet-journal-content .journal-content-article, .portlet-message-boards .thread-body {
-		word-wrap: break-word;
-	}
-
-	.edit-actions {
-		list-style: none;
-		margin-left: 0;
-		margin-right: 0;
-
-		li {
-			float: left;
-			margin-right: 10px;
-		}
-	}
-
-	.portlet-icons {
-		float: none;
-	}
-
-	.page-maximized .portlet-icons {
-		font-size: 11px;
-	}
-
-	/* ---------- Set password reminder portlet ---------- */
-
-	.update-reminder-query {
-		.form-group {
-			max-width: 350px;
-		}
-
-		.reminder-query-answer {
-			height: 30px;
-			width: 100%;
-		}
-
-		.reminder-query-question {
-			width: 100%;
-		}
-	}
-
-	/* ---------- Staging bar ---------- */
-
-	.navbar-inner .nav.staging-bar {
-		border-top-width: 0;
-
-		li {
-			.page-variations {
-				display: inline-block;
-				margin-left: 8px;
-
-				a {
-					text-decoration: none;
+				&:hover {
+					background: none;
+					text-decoration: underline;
 				}
 			}
 		}
 	}
 
-	.portlet-staging-bar {
-		.row .layout-revision-info {
-			max-width: 100%;
+	li a {
+		color: #FFF;
+	}
+}
 
-			.layout-revision-version {
-				label {
-					color: #B6DDF5;
-				}
-			}
+.modify-pages {
+	.delete-tab {
+		background: #555;
+		border: 2px solid #FFF;
+
+		@include box-sizing(content-box);
+
+		color: #FFF;
+		font-size: 14px;
+		height: auto;
+		line-height: normal;
+		padding: 0 6px 3px;
+		right: -9px;
+		top: -1px;
+		z-index: 300;
+
+		@include respond-to(phone, tablet) {
+			right: 0;
+		}
+	}
+
+	.lfr-nav-item .lfr-nav-child-toggle {
+		padding: 10px;
+
+		i {
+			margin: 0;
 		}
 
-		.label-submit {
+		@include respond-to(phone, tablet) {
+			line-height: 1em;
+			padding: 14px;
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+	}
+
+	.drag-handle {
+		background-color: rgba(255, 255, 255, 0.75);
+
+		@include box-sizing(content-box);
+
+		color: #009AE5;
+	}
+}
+
+/* ---------- Breadcrumbs ---------- */
+
+.breadcrumb {
+	background-color: #FAFAFA;
+}
+
+#breadcrumbs {
+	margin-bottom: 45px;
+
+	.breadcrumb {
+		margin-bottom: 0;
+	}
+}
+
+/* ---------- Portlet wrapper and icons ---------- */
+
+.portlet-content, .portlet-minimized .portlet-content-container {
+	border: 1px solid #EAEAEA;
+	border-top-width: 0;
+	padding: 12px 10px 10px;
+}
+
+.portlet-topper {
+	background: #D3D3D3;
+	color: #FFF;
+	padding: 0;
+
+	.portlet-title {
+		font-size: 1em;
+		font-weight: normal;
+		line-height: 2.2;
+		margin: 0;
+
+		i, span img {
+			display: none;
+		}
+	}
+
+	.portlet-topper-toolbar {
+		font-size: 0.8em;
+		margin: -10px 0 0;
+		padding: 0;
+		right: 10px;
+		top: 50%;
+	}
+}
+
+.lfr-configurator-visibility .portlet-topper {
+	background-color: #A9A9A9;
+}
+
+.signed-in.controls-visible .portlet-title {
+	padding-right: 80px;
+}
+
+.portlet-asset-publisher .asset-title, .portlet-asset-publisher .header-title, .portlet-asset-publisher li.title-list, .portlet-blogs .entry-title, .portlet-blogs .header-title, .portlet-message-boards .header-title {
+	@include hyphens;
+}
+
+.portlet-asset-publisher .asset-content, .portlet-asset-publisher .asset-summary, .portlet-blogs .entry-body, .portlet-journal .journal-article-preview, .portlet-journal-content .journal-content-article, .portlet-message-boards .thread-body {
+	word-wrap: break-word;
+}
+
+.edit-actions {
+	list-style: none;
+	margin-left: 0;
+	margin-right: 0;
+
+	li {
+		float: left;
+		margin-right: 10px;
+	}
+}
+
+.portlet-icons {
+	float: none;
+}
+
+.page-maximized .portlet-icons {
+	font-size: 11px;
+}
+
+/* ---------- Set password reminder portlet ---------- */
+
+.update-reminder-query {
+	.form-group {
+		max-width: 350px;
+	}
+
+	.reminder-query-answer {
+		height: 30px;
+		width: 100%;
+	}
+
+	.reminder-query-question {
+		width: 100%;
+	}
+}
+
+/* ---------- Staging bar ---------- */
+
+.navbar-inner .nav.staging-bar {
+	border-top-width: 0;
+
+	li {
+		.page-variations {
+			display: inline-block;
+			margin-left: 8px;
+
+			a {
+				text-decoration: none;
+			}
+		}
+	}
+}
+
+.portlet-staging-bar {
+	.row .layout-revision-info {
+		max-width: 100%;
+
+		.layout-revision-version {
+			label {
+				color: #B6DDF5;
+			}
+		}
+	}
+
+	.label-submit {
+		background-color: #469DE3;
+	}
+
+	.layout-branch-selector, .layout-set-branch-selector {
+		.icon-caret-down {
 			background-color: #469DE3;
 		}
+	}
 
-		.layout-branch-selector, .layout-set-branch-selector {
-			.icon-caret-down {
+	.page-variations-options, .site-pages-variation-options {
+		.lfr-icon-menu {
+			background-color: #50AFE9;
+
+			.icon-globe, .icon-file {
 				background-color: #469DE3;
 			}
 		}
+	}
+}
 
-		.page-variations-options, .site-pages-variation-options {
-			.lfr-icon-menu {
-				background-color: #50AFE9;
+/* ---------- Footer ---------- */
 
-				.icon-globe, .icon-file {
-					background-color: #469DE3;
-				}
+#footer {
+	text-align: right;
+}
+
+/* ---------- Hudcrumbs ---------- */
+
+.lfr-hudcrumbs {
+	position: fixed;
+	top: 0;
+	z-index: 300;
+
+	.breadcrumb {
+		background: #414445;
+		background: rgba(0, 0, 0, 0.8);
+
+		li {
+			a, span {
+				color: #FFF;
 			}
 		}
 	}
+}
 
-	/* ---------- Footer ---------- */
+/* ---------- Miscellaneous ---------- */
 
-	#footer {
-		text-align: right;
+.lfr-panel-container {
+	background-color: transparent;
+}
+
+.lfr-portlet-title-editable-content {
+	.field-input {
+		height: 30px;
 	}
 
-	/* ---------- Hudcrumbs ---------- */
+	.btn {
+		height: 30px;
+		line-height: 1em;
+	}
+}
 
-	.lfr-hudcrumbs {
-		position: fixed;
-		top: 0;
-		z-index: 300;
+.portlet-journal-content .lfr-icon-actions {
+	margin-bottom: 3px;
+}
 
-		.breadcrumb {
-			background: #414445;
-			background: rgba(0, 0, 0, 0.8);
+/* ---------- Extras ---------- */
 
-			li {
-				a, span {
-					color: #FFF;
+#navigation {
+	&.navbar {
+		@include border-radius(0);
+	}
+
+	.nav {
+		li {
+			&.open {
+				> a {
+					@include box-shadow(none);
 				}
 			}
 		}
-	}
 
-	/* ---------- Miscellaneous ---------- */
-
-	.lfr-panel-container {
-		background-color: transparent;
-	}
-
-	.lfr-portlet-title-editable-content {
-		.field-input {
-			height: 30px;
-		}
-
-		.btn {
-			height: 30px;
-			line-height: 1em;
-		}
-	}
-
-	.portlet-journal-content .lfr-icon-actions {
-		margin-bottom: 3px;
-	}
-
-	/* ---------- Extras ---------- */
-
-	#navigation {
-		&.navbar {
+		.dropdown-menu {
 			@include border-radius(0);
 		}
 
-		.nav {
-			li {
-				&.open {
-					> a {
-						@include box-shadow(none);
-					}
-				}
-			}
+		> .active > a {
+			background-color: $dockbarGradientStart;
 
-			.dropdown-menu {
-				@include border-radius(0);
-			}
+			@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 47%, $dockbarGradientEnd 100%));
+			@include box-shadow(none);
+			@include filter-gradient($dockbarGradientStart, $dockbarGradientEnd, vertical);
+		}
+	}
+}
 
-			> .active > a {
-				background-color: $dockbarGradientStart;
+.dockbar, .dockbar-split .dockbar {
+	.nav li.dropdown {
+		&.open {
+			> .dropdown-toggle {
+				background-color: $dockbarOpenGradientStart;
 
-				@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 47%, $dockbarGradientEnd 100%));
+				@include background-image(linear-gradient($dockbarOpenGradientStart, $dockbarOpenGradientEnd));
 				@include box-shadow(none);
-				@include filter-gradient($dockbarGradientStart, $dockbarGradientEnd, vertical);
+			}
+		}
+
+		&.active {
+			> .staging-link.dropdown-toggle {
+				background-color: #55B8EC;
+				background-image: none;
 			}
 		}
 	}
+}
 
-	.dockbar, .dockbar-split .dockbar {
-		.nav li.dropdown {
-			&.open {
-				> .dropdown-toggle {
-					background-color: $dockbarOpenGradientStart;
+.dockbar-split .dockbar .nav > li {
+	background-color: $dockbarGradientStart;
 
-					@include background-image(linear-gradient($dockbarOpenGradientStart, $dockbarOpenGradientEnd));
-					@include box-shadow(none);
-				}
-			}
+	@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 47%, $dockbarGradientEnd 100%));
 
-			&.active {
-				> .staging-link.dropdown-toggle {
-					background-color: #55B8EC;
-					background-image: none;
-				}
-			}
-		}
+	@include respond-to(phone, tablet) {
+		background-color: transparent;
+
+		@include background-image(none);
 	}
 
-	.dockbar-split .dockbar .nav > li {
-		background-color: $dockbarGradientStart;
+	&.staging-toggle {
+		background-color: transparent;
+		@include background-image(none);
+	}
+}
 
-		@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 47%, $dockbarGradientEnd 100%));
+.dockbar .staging-bar .staging-toggle > a {
+	@include border-radius(3px);
+}
 
-		@include respond-to(phone, tablet) {
-			background-color: transparent;
+.modify-pages .delete-tab {
+	@include border-radius(50%);
+	@include text-shadow(none);
+	@include transition(opacity 0.3s ease);
 
-			@include background-image(none);
-		}
+	&:hover {
+		@include box-shadow(0 1px 1px -1px #000);
+	}
+}
 
-		&.staging-toggle {
-			background-color: transparent;
-			@include background-image(none);
-		}
+%portlet-action-bar-custom {
+	@include border-radius(3px);
+
+	@include respond-to(desktop) {
+		@include border-radius(20px);
 	}
 
-	.dockbar .staging-bar .staging-toggle > a {
-		@include border-radius(3px);
+	@include box-shadow(inset 0 1px 3px #000);
+}
+
+.portlet-borderless-bar {
+	@extend %portlet-action-bar-custom;
+
+	margin-bottom: 10px;
+
+	@include respond-to(desktop) {
+		margin-bottom: 0;
 	}
 
-	.modify-pages .delete-tab {
-		@include border-radius(50%);
-		@include text-shadow(none);
-		@include transition(opacity 0.3s ease);
-
-		&:hover {
-			@include box-shadow(0 1px 1px -1px #000);
-		}
-	}
-
-	%portlet-action-bar-custom {
-		@include border-radius(3px);
+	.portlet-actions {
+		@include box-shadow(none);
 
 		@include respond-to(desktop) {
-			@include border-radius(20px);
+			@include box-shadow(inset 2px 1px 2px #000);
 		}
-
-		@include box-shadow(inset 0 1px 3px #000);
 	}
 
-	.portlet-borderless-bar {
+	.portlet-title-default {
+		@include box-shadow(none);
+
+		@include respond-to(desktop) {
+			@include box-shadow(inset -2px 1px 2px #000);
+		}
+	}
+}
+
+.portlet-content, .portlet-minimized .portlet-content-container {
+	@include border-radius(0 0 3px 3px);
+}
+
+.portlet-borderless-container, .portlet-content {
+	.lfr-icon-actions {
 		@extend %portlet-action-bar-custom;
-
-		margin-bottom: 10px;
-
-		@include respond-to(desktop) {
-			margin-bottom: 0;
-		}
-
-		.portlet-actions {
-			@include box-shadow(none);
-
-			@include respond-to(desktop) {
-				@include box-shadow(inset 2px 1px 2px #000);
-			}
-		}
-
-		.portlet-title-default {
-			@include box-shadow(none);
-
-			@include respond-to(desktop) {
-				@include box-shadow(inset -2px 1px 2px #000);
-			}
-		}
 	}
+}
 
-	.portlet-content, .portlet-minimized .portlet-content-container {
-		@include border-radius(0 0 3px 3px);
-	}
-
-	.portlet-borderless-container, .portlet-content {
-		.lfr-icon-actions {
-			@extend %portlet-action-bar-custom;
-		}
-	}
-
-	.portlet-minimized {
-		.portlet-content {
-			border-width: 0;
-		}
-
-		.portlet-topper {
-			@include border-radius(3px);
-		}
-	}
-
-	.portlet-nested-portlets .portlet-body {
-		.portlet, .portlet-borderless-container {
-			@include box-shadow(none);
-		}
+.portlet-minimized {
+	.portlet-content {
+		border-width: 0;
 	}
 
 	.portlet-topper {
-		@include border-radius(3px 3px 0 0);
+		@include border-radius(3px);
 	}
+}
 
-	.dockbar-split .dockbar {
-		.container, .container-fluid {
-			@include box-shadow(none);
-			@include text-shadow(none);
+.portlet-nested-portlets .portlet-body {
+	.portlet, .portlet-borderless-container {
+		@include box-shadow(none);
+	}
+}
 
-			@include respond-to(phone, tablet) {
-				background-color: $dockbarGradientStart;
+.portlet-topper {
+	@include border-radius(3px 3px 0 0);
+}
 
-				@include background-image(linear-gradient($dockbarGradientStart, $dockbarGradientEnd));
-			}
-		}
+.dockbar-split .dockbar {
+	.container, .container-fluid {
+		@include box-shadow(none);
+		@include text-shadow(none);
 
-		.nav {
-			li.dropdown.open {
-				> .dropdown-toggle {
-					background-color: $dockbarOpenGradientStart;
+		@include respond-to(phone, tablet) {
+			background-color: $dockbarGradientStart;
 
-					@include background-image(linear-gradient($dockbarOpenGradientStart, $dockbarOpenGradientEnd));
-					@include box-shadow(none);
-				}
-			}
-
-			li.dropdown.active {
-				> .staging-link.dropdown-toggle {
-					background-color: #55B8EC;
-					background-image: none;
-				}
-			}
+			@include background-image(linear-gradient($dockbarGradientStart, $dockbarGradientEnd));
 		}
 	}
 
-	.lfr-hudcrumbs {
-		ul {
-			@include border-top-left-radius(0);
-			@include border-top-right-radius(0);
+	.nav {
+		li.dropdown.open {
+			> .dropdown-toggle {
+				background-color: $dockbarOpenGradientStart;
+
+				@include background-image(linear-gradient($dockbarOpenGradientStart, $dockbarOpenGradientEnd));
+				@include box-shadow(none);
+			}
 		}
 
-		.breadcrumb li {
-			a, span {
-				@include text-shadow(-1px -1px #000);
+		li.dropdown.active {
+			> .staging-link.dropdown-toggle {
+				background-color: #55B8EC;
+				background-image: none;
 			}
 		}
 	}
+}
 
-	/* ---------- IE8 ---------- */
+.lfr-hudcrumbs {
+	ul {
+		@include border-top-left-radius(0);
+		@include border-top-right-radius(0);
+	}
 
-	&.ie8 {
-		.dockbar-split .dockbar .info-button a {
-			margin-top: -2px;
+	.breadcrumb li {
+		a, span {
+			@include text-shadow(-1px -1px #000);
 		}
+	}
+}
+
+/* ---------- IE8 ---------- */
+
+.ie8 {
+	.dockbar-split .dockbar .info-button a {
+		margin-top: -2px;
 	}
 }

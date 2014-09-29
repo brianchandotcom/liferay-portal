@@ -345,7 +345,7 @@
 	vertical-align: middle;
 }
 
-.aui .lfr-url-error {
+.lfr-url-error {
 	display: inline-block;
 	white-space: normal;
 
@@ -443,42 +443,40 @@
 
 /* ---------- Modals ---------- */
 
-.aui {
-	.dialog-iframe-popup {
-		> #main-content, > #wrapper {
-			bottom: 0;
-			left: 0;
-			overflow: auto;
-			padding: 20px;
-			position: absolute;
-			right: 0;
-			top: 0;
-			-webkit-overflow-scrolling: touch;
-		}
-	}
-
-	.modal {
-		display: block;
-		margin: 0;
-		overflow: hidden;
-		position: fixed;
-	}
-
-	.modal-body {
+.dialog-iframe-popup {
+	> #main-content, > #wrapper {
+		bottom: 0;
+		left: 0;
 		overflow: auto;
-
-		&.dialog-iframe-bd {
-			overflow: hidden;
-		}
+		padding: 20px;
+		position: absolute;
+		right: 0;
+		top: 0;
+		-webkit-overflow-scrolling: touch;
 	}
+}
 
-	.modal-hidden {
-		display: none;
-	}
+.modal {
+	display: block;
+	margin: 0;
+	overflow: hidden;
+	position: fixed;
+}
 
-	.modal-open .modal {
+.modal-body {
+	overflow: auto;
+
+	&.dialog-iframe-bd {
 		overflow: hidden;
 	}
+}
+
+.modal-hidden {
+	display: none;
+}
+
+.modal-open .modal {
+	overflow: hidden;
 }
 
 /* ---------- Loading mask ---------- */
@@ -655,35 +653,33 @@
 
 /* ---------- CKEditor menu ---------- */
 
-.aui {
-	.cke_dialog .cke_dialog_ui_input_text {
-		height: auto;
+.cke_dialog .cke_dialog_ui_input_text {
+	height: auto;
+}
+
+.cke_editable_inline a {
+	cursor: pointer;
+}
+
+.cke_panel.cke_combopanel {
+	width: 220px;
+}
+
+.cke_panel_block {
+	.cke_panel_grouptitle {
+		font-size: 20px;
+		line-height: 20px;
+		margin-top: 0;
 	}
 
-	.cke_editable_inline a {
-		cursor: pointer;
-	}
+	.cke_panel_list {
+		margin-left: 0;
 
-	.cke_panel.cke_combopanel {
-		width: 220px;
-	}
+		.cke_panel_listItem {
+			line-height: initial;
 
-	.cke_panel_block {
-		.cke_panel_grouptitle {
-			font-size: 20px;
-			line-height: 20px;
-			margin-top: 0;
-		}
-
-		.cke_panel_list {
-			margin-left: 0;
-
-			.cke_panel_listItem {
-				line-height: initial;
-
-				a:hover {
-					text-decoration: none;
-				}
+			a:hover {
+				text-decoration: none;
 			}
 		}
 	}
@@ -691,7 +687,7 @@
 
 /* ---------- HTML editor ---------- */
 
-.aui .html-editor.portlet {
+.html-editor.portlet {
 	background: #FFF;
 	color: #000;
 	line-height: 1;
@@ -861,6 +857,6 @@
 
 /* LPS-44925 */
 
-.aui .modal-content .dialog-iframe-node {
+.modal-content .dialog-iframe-node {
 	border: 1px solid transparent;
 }

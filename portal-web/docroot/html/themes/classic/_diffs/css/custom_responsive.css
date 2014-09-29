@@ -4,208 +4,206 @@
 /* ---------- Dockbar ---------- */
 
 @include respond-to(phone, tablet) {
-	.aui {
-		* {
-			-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	* {
+		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	}
+
+	#heading {
+		bottom: 100%;
+		margin-top: -2em;
+		position: relative;
+
+		.site-title {
+			font-size: 26px;
+
+			img {
+				height: auto;
+				width: 35px;
+			}
 		}
+	}
 
-		#heading {
-			bottom: 100%;
-			margin-top: -2em;
-			position: relative;
+	#navigation.open {
+		background: #009AE5;
+	}
 
-			.site-title {
-				font-size: 26px;
+	.dockbar {
+		.container, .container-fluid {
+			.nav-add-controls ul.dropdown-menu {
+				background: transparent;
+				padding: 0;
 
-				img {
-					height: auto;
-					width: 35px;
+				> li > a {
+					background: transparent;
+					padding: 9px 15px;
+
+					&.toggle-controls-link {
+						background: transparent;
+					}
 				}
 			}
 		}
+	}
 
-		#navigation.open {
-			background: #009AE5;
+	.dockbar-split .dockbar, .dockbar {
+		.info-items {
+			height: auto;
+			position: static;
+			width: 300px;
 		}
 
-		.dockbar {
-			.container, .container-fluid {
-				.nav-add-controls ul.dropdown-menu {
+		.nav .staging-toggle {
+			padding: 2px 0;
+		}
+
+		.container, .container-fluid {
+			.site-navigation-btn {
+				display: none;
+
+				&.open {
+					background-color: #F5AF45;
+				}
+			}
+
+			.navbar-btn {
+				background: transparent;
+				border-width: 0;
+				font-size: 24px;
+
+				&:hover, &.nav-account-controls-btn.open, &.nav-add-controls-btn.open {
+					background-color: #5BBAE8;
+				}
+			}
+
+			> .nav {
+				background: transparent;
+				border-width: 0;
+
+				.nav-item-icon {
+					font-size: 26px;
+				}
+
+				&.nav-add-controls ul.dropdown-menu {
 					background: transparent;
+					border-top-width: 0;
 					padding: 0;
 
 					> li > a {
 						background: transparent;
-						padding: 9px 15px;
+						color: #FFF;
+						text-align: left;
+
+						&:focus, &:hover {
+							background-color: #5BBAE8;
+						}
 
 						&.toggle-controls-link {
 							background: transparent;
+
+							.nav-item-icon {
+								color: #FFF;
+							}
+						}
+
+						.nav-item-label {
+							background: transparent;
 						}
 					}
 				}
-			}
-		}
 
-		.dockbar-split .dockbar, .dockbar {
-			.info-items {
-				height: auto;
-				position: static;
-				width: 300px;
-			}
-
-			.nav .staging-toggle {
-				padding: 2px 0;
-			}
-
-			.container, .container-fluid {
-				.site-navigation-btn {
-					display: none;
-
-					&.open {
-						background-color: #F5AF45;
-					}
-				}
-
-				.navbar-btn {
-					background: transparent;
-					border-width: 0;
-					font-size: 24px;
-
-					&:hover, &.nav-account-controls-btn.open, &.nav-add-controls-btn.open {
-						background-color: #5BBAE8;
-					}
-				}
-
-				> .nav {
-					background: transparent;
-					border-width: 0;
-
-					.nav-item-icon {
-						font-size: 26px;
-					}
-
-					&.nav-add-controls ul.dropdown-menu {
-						background: transparent;
-						border-top-width: 0;
-						padding: 0;
-
-						> li > a {
-							background: transparent;
+				> li {
+					&.dropdown {
+						&.active > .dropdown-toggle {
 							color: #FFF;
-							text-align: left;
+						}
 
-							&:focus, &:hover {
-								background-color: #5BBAE8;
-							}
+						&.open > .dropdown-toggle {
+							background: #2FA4F5;
+							color: #FFF;
+						}
 
-							&.toggle-controls-link {
-								background: transparent;
+						.dropdown-menu {
+							li a {
+								font-size: 16px;
+								line-height: 27px;
+								margin: 0;
 
 								.nav-item-icon {
-									color: #FFF;
+									font-size: 22px;
+									margin-top: 0;
+									min-width: 1em;
+									vertical-align: middle;
 								}
-							}
 
-							.nav-item-label {
-								background: transparent;
+								.nav-item-label {
+									vertical-align: middle;
+								}
 							}
 						}
 					}
 
-					> li {
-						&.dropdown {
-							&.active > .dropdown-toggle {
-								color: #FFF;
-							}
+					&.info-items {
+						background-color: transparent;
+					}
 
-							&.open > .dropdown-toggle {
-								background: #2FA4F5;
-								color: #FFF;
-							}
-
-							.dropdown-menu {
-								li a {
-									font-size: 16px;
-									line-height: 27px;
-									margin: 0;
-
-									.nav-item-icon {
-										font-size: 22px;
-										margin-top: 0;
-										min-width: 1em;
-										vertical-align: middle;
-									}
-
-									.nav-item-label {
-										vertical-align: middle;
-									}
-								}
-							}
-						}
-
-						&.info-items {
-							background-color: transparent;
-						}
-
-						&.staging-toggle {
-							> a {
-								background-color: #2496E5;
-								padding-bottom: 0;
-								padding-top: 0;
-
-								&:hover {
-									background-color: #2FA4F5;
-								}
-							}
-
-							span.nav-item-label {
-								padding: 5px 10px;
-							}
-						}
-
+					&.staging-toggle {
 						> a {
-							color: #FFF;
-							font-size: 16px;
-							line-height: 20px;
-							padding: 12px 10px;
+							background-color: #2496E5;
+							padding-bottom: 0;
+							padding-top: 0;
 
-							&:focus, &:hover {
-								background-color: #5BBAE8;
+							&:hover {
+								background-color: #2FA4F5;
 							}
 						}
 
-						&.sign-in > a {
-							padding: 15px;
+						span.nav-item-label {
+							padding: 5px 10px;
 						}
 					}
-				}
 
-				.dockbar-user-notifications .user-notifications-count {
-					margin: 0 auto;
-				}
-			}
-		}
+					> a {
+						color: #FFF;
+						font-size: 16px;
+						line-height: 20px;
+						padding: 12px 10px;
 
-		.portlet-dockbar {
-			width: 100%;
-		}
+						&:focus, &:hover {
+							background-color: #5BBAE8;
+						}
+					}
 
-		.portlet-staging-bar .staging-toggle .variations-options {
-			.page-variations {
-				right: 0;
-
-				a {
-					padding: 3px 6px;
+					&.sign-in > a {
+						padding: 15px;
+					}
 				}
 			}
 
-			.staging-variation-selector {
-				margin-right: 0;
+			.dockbar-user-notifications .user-notifications-count {
+				margin: 0 auto;
+			}
+		}
+	}
+
+	.portlet-dockbar {
+		width: 100%;
+	}
+
+	.portlet-staging-bar .staging-toggle .variations-options {
+		.page-variations {
+			right: 0;
+
+			a {
+				padding: 3px 6px;
 			}
 		}
 
-		.staging-toggle .variations-options a {
-			padding: 0;
+		.staging-variation-selector {
+			margin-right: 0;
 		}
+	}
+
+	.staging-toggle .variations-options a {
+		padding: 0;
 	}
 }

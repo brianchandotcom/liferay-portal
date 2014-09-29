@@ -164,14 +164,12 @@
 }
 
 @include respond-to(phone, tablet) {
-	.aui {
-		#{$form_text_fields},
-		select,
-		.input-group .input-group-addon,
-		.navbar-search .search-query {
-			font-size: 18px;
-			height: auto;
-			line-height: normal;
-		}
+	#{$form_text_fields},
+	select,
+	.input-group .input-group-addon,
+	.navbar-search .search-query {
+		font-size: 18px;
+		height: auto;
+		line-height: normal;
 	}
 }

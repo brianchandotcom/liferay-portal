@@ -934,15 +934,25 @@ public class SeleniumBuilderFileUtil {
 
 				String attributeValue = attribute.getValue();
 
-				if (attributeName.equals("value1") &&
-					attributeValue.contains("move-file")) {
-
-					if (!attributeValue.contains("-Dfile") ||
-						!attributeValue.contains("-Dtofile")) {
+				if (attributeName.equals("value1")) {
+					if (attributeValue.contains("move-file") &&
+						(!attributeValue.contains("-Dfile") ||
+						!attributeValue.contains("-Dtofile"))) {
 
 						throwValidationException(
 							1018, fileName, executeElement,
 							new String[] {"-Dfile", "-Dtofile"}, "value1");
+					}
+
+					if (attributeValue.contains("replace-file") &&
+						(!attributeValue.contains("-Dfile") ||
+						!attributeValue.contains("-Dtoken") ||
+						!attributeValue.contains("-Dvalue"))) {
+
+						throwValidationException(
+							1018, fileName, executeElement,
+							new String[] {"-Dfile", "-Dtoken", "-Dvalue"},
+							"value1");
 					}
 				}
 			}

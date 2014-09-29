@@ -63,6 +63,10 @@ public class GoogleDocsMetadataHelper {
 		}
 	}
 
+	public DDMStructure getDDMStructure() {
+		return _ddmStructure;
+	}
+
 	public String getFieldValue(String fieldName) {
 		initFields();
 

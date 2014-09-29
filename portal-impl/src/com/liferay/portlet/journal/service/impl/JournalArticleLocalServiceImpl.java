@@ -6117,16 +6117,18 @@ public class JournalArticleLocalServiceImpl
 		newArticle.setContent(contentDocument.formattedString());
 	}
 
-	protected Map<String, String> createFieldsValuesMap(Element rootElement) {
+	protected Map<String, String> createFieldsValuesMap(Element parentElement) {
 		Map<String, String> fieldsValuesMap = new HashMap<String, String>();
 
-		List<Element> elements = rootElement.elements("dynamic-element");
+		List<Element> dynamicElementElements = parentElement.elements(
+			"dynamic-element");
 
-		for (Element element : elements) {
-			String fieldName = element.attributeValue("name", StringPool.BLANK);
+		for (Element dynamicElementElement : dynamicElementElements) {
+			String fieldName = dynamicElementElement.attributeValue(
+				"name", StringPool.BLANK);
 
-			List<Element> dynamicContentElements = element.elements(
-				"dynamic-content");
+			List<Element> dynamicContentElements =
+				dynamicElementElement.elements("dynamic-content");
 
 			for (Element dynamicContentElement : dynamicContentElements) {
 				String value = dynamicContentElement.getText();
@@ -6134,7 +6136,8 @@ public class JournalArticleLocalServiceImpl
 				fieldsValuesMap.put(fieldName, value);
 			}
 
-			fieldsValuesMap.putAll(createFieldsValuesMap(element));
+			fieldsValuesMap.putAll(
+				createFieldsValuesMap(dynamicElementElement));
 		}
 
 		return fieldsValuesMap;

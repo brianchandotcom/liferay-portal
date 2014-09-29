@@ -19,7 +19,17 @@ package com.liferay.document.library.google.docs.util;
  */
 public class GoogleDocsConstants {
 
+	public static final String DDM_FIELD_NAME_DESCRIPTION = "Description";
+
 	public static final String DDM_FIELD_NAME_EDIT_URL = "Edit_URL";
+
+	public static final String DDM_FIELD_NAME_EMBED_URL = "Embed_URL";
+
+	public static final String DDM_FIELD_NAME_ICON = "Icon";
+
+	public static final String DDM_FIELD_NAME_ID = "ID";
+
+	public static final String DDM_FIELD_NAME_TITLE = "Title";
 
 	public static final String DDM_STRUCTURE_KEY_GOOGLE_DOCS = "GOOGLE_DOCS";
 

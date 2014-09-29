@@ -14,8 +14,8 @@
 
 package com.liferay.social.activities.web.portlet;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.social.activities.web.upgrade.SocialActivitiesUpgrade;
+import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
 

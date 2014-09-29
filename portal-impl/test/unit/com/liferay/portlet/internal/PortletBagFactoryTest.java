@@ -15,9 +15,9 @@
 package com.liferay.portlet.internal;
 
 import com.liferay.portal.kernel.bean.BeanLocatorException;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portlet.PortletBagFactory;
+import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
 

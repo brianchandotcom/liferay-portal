@@ -15,7 +15,7 @@
 package com.liferay.loan.calculator.web.portlet;
 
 import com.liferay.loan.calculator.web.upgrade.LoanCalculatorUpgrade;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
 

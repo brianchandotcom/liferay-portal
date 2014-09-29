@@ -15,7 +15,7 @@
 package com.liferay.dictionary.web.portlet;
 
 import com.liferay.dictionary.web.upgrade.DictionaryUpgrade;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
 

@@ -15,7 +15,7 @@
 package com.liferay.currency.converter.web.portlet;
 
 import com.liferay.currency.converter.web.upgrade.CurrencyConverterUpgrade;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
 

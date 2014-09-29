@@ -42,8 +42,7 @@ public class MVCPortletAutoDeployer extends PortletAutoDeployer {
 		}
 
 		filterMap.put(
-			"portlet_class",
-			"com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet");
+			"portlet_class", "com.liferay.util.bridges.mvc.MVCPortlet");
 		filterMap.put("portlet_name", pluginName);
 		filterMap.put("portlet_title", pluginName);
 		filterMap.put("restore_current_view", "false");

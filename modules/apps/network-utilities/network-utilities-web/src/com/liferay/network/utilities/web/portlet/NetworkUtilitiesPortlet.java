@@ -15,7 +15,7 @@
 package com.liferay.network.utilities.web.portlet;
 
 import com.liferay.network.utilities.web.upgrade.NetworkUtilitiesUpgrade;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
 

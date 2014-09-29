@@ -14,7 +14,7 @@
 
 package com.liferay.xsl.content.web.portlet;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.util.bridges.mvc.MVCPortlet;
 import com.liferay.xsl.content.web.upgrade.XSLContentUpgrade;
 
 import javax.portlet.Portlet;

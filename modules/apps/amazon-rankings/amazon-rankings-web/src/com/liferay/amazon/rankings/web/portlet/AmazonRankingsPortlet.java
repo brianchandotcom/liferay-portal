@@ -15,7 +15,7 @@
 package com.liferay.amazon.rankings.web.portlet;
 
 import com.liferay.amazon.rankings.web.upgrade.AmazonRankingsUpgrade;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
 

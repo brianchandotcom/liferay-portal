@@ -15,7 +15,7 @@
 package com.liferay.invitation.web.portlet;
 
 import com.liferay.invitation.web.upgrade.InvitationUpgrade;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
 

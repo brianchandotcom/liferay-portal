@@ -17,11 +17,13 @@ package com.liferay.xsl.content.web.util;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.xsl.content.web.configuration.XSLContentConfigurationValues;
 
 import java.io.IOException;
 
 import java.net.URL;
 
+import javax.xml.XMLConstants;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
@@ -48,6 +50,10 @@ public class XSLContentUtil {
 
 		TransformerFactory transformerFactory =
 			TransformerFactory.newInstance();
+
+		transformerFactory.setFeature(
+			XMLConstants.FEATURE_SECURE_PROCESSING,
+			XSLContentConfigurationValues.XSL_SECURE_PROCESSING_ENABLED);
 
 		Transformer transformer = transformerFactory.newTransformer(xslSource);
 

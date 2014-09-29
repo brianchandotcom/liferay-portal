@@ -18,8 +18,8 @@
 
 <%
 int type = ParamUtil.getInteger(request, "type");
-int fromId = ParamUtil.getInteger(request, "fromId");
-int toId = ParamUtil.getInteger(request, "toId");
+int fromId = ParamUtil.getInteger(request, "fromUnit");
+int toId = ParamUtil.getInteger(request, "toUnit");
 double fromValue = ParamUtil.getDouble(request, "fromValue");
 
 Conversion conversion = ConverterUtil.getConversion(type, fromId, toId, fromValue);
@@ -34,7 +34,7 @@ Conversion conversion = ConverterUtil.getConversion(type, fromId, toId, fromValu
 		<aui:col xs="6">
 			<aui:input label="from" name="fromValue" size="30" type="number" value="<%= conversion.getFromValue() %>" />
 
-			<aui:select label="" name="fromId">
+			<aui:select label="" name="fromUnit">
 				<c:if test="<%= type == 0 %>">
 					<aui:option label="meter" selected="<%= (fromId == 0) %>" value="0" />
 					<aui:option label="millimeter" selected="<%= (fromId == 1) %>" value="1" />
@@ -99,7 +99,7 @@ Conversion conversion = ConverterUtil.getConversion(type, fromId, toId, fromValu
 		<aui:col xs="6">
 			<aui:input disabled="<%= true %>" label="To" name="toValue" size="30" type="input" value="<%= conversion.getToValue() %>" />
 
-			<aui:select label="" name="toId">
+			<aui:select label="" name="toUnit">
 				<c:if test="<%= type == 0 %>">
 					<aui:option label="meter" selected="<%= (toId == 0) %>" value="0" />
 					<aui:option label="millimeter" selected="<%= (toId == 1) %>" value="1" />
@@ -261,8 +261,8 @@ Conversion conversion = ConverterUtil.getConversion(type, fromId, toId, fromValu
 			var conversionType = conversionTypes[value];
 
 			if (conversionType) {
-				setBox(document.<portlet:namespace />fm.<portlet:namespace />fromId, conversionType);
-				setBox(document.<portlet:namespace />fm.<portlet:namespace />toId, conversionType);
+				setBox(document.<portlet:namespace />fm.<portlet:namespace />fromUnit, conversionType);
+				setBox(document.<portlet:namespace />fm.<portlet:namespace />toUnit, conversionType);
 			}
 		}
 	);

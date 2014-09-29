@@ -59,6 +59,13 @@ public class DefaultDLEditFileEntryDisplayContext
 	}
 
 	@Override
+	public FilePickerCustomizer getFilePickerCustomizer()
+		throws PortalException {
+
+		return null;
+	}
+
+	@Override
 	public long getMaximumUploadSize() {
 		long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
 

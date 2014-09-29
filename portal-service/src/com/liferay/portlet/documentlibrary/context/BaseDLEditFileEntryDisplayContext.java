@@ -67,6 +67,13 @@ public class BaseDLEditFileEntryDisplayContext
 	}
 
 	@Override
+	public FilePickerCustomizer getFilePickerCustomizer()
+		throws PortalException {
+
+		return parentDLDisplayContext.getFilePickerCustomizer();
+	}
+
+	@Override
 	public long getMaximumUploadSize() throws PortalException {
 		return parentDLDisplayContext.getMaximumUploadSize();
 	}

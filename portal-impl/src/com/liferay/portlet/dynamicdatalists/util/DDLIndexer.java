@@ -158,6 +158,7 @@ public class DDLIndexer extends BaseIndexer {
 		portletURL.setParameter(
 			"struts_action", "/dynamic_data_lists/view_record");
 		portletURL.setParameter("recordId", recordId);
+		portletURL.setParameter("version", document.get(Field.VERSION));
 
 		Summary summary = createSummary(
 			document, Field.TITLE, Field.DESCRIPTION);

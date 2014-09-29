@@ -110,7 +110,8 @@ public class TabsTag extends IncludeTag {
 				"liferay-ui:tabs:onClick", String.valueOf(_onClick));
 			request.setAttribute("liferay-ui:tabs:param", _param);
 			request.setAttribute("liferay-ui:tabs:portletURL", _portletURL);
-			request.setAttribute("liferay-ui:tabs:refresh", String.valueOf(_refresh));
+			request.setAttribute(
+				"liferay-ui:tabs:refresh", String.valueOf(_refresh));
 
 			if ((_tabsValues == null) || (_tabsValues.length < _names.length)) {
 				_tabsValues = _names;

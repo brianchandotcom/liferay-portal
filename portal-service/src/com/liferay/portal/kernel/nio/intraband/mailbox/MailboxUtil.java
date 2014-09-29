@@ -37,20 +37,6 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class MailboxUtil {
 
-	public static long depositMail(ByteBuffer byteBuffer) {
-		long receipt = _receiptGenerator.getAndIncrement();
-
-		_mailMap.put(receipt, byteBuffer);
-
-		_overdueMailQueue.offer(new ReceiptStub(receipt, System.nanoTime()));
-
-		if (!_INTRABAND_MAILBOX_REAPER_THREAD_ENABLED) {
-			_pollingCleanup();
-		}
-
-		return receipt;
-	}
-
 	public static ByteBuffer receiveMail(long receipt) {
 		ByteBuffer byteBuffer = _mailMap.remove(receipt);
 
@@ -84,6 +70,20 @@ public class MailboxUtil {
 		catch (Exception e) {
 			throw new MailboxException(e);
 		}
+	}
+
+	static long depositMail(ByteBuffer byteBuffer) {
+		long receipt = _receiptGenerator.getAndIncrement();
+
+		_mailMap.put(receipt, byteBuffer);
+
+		_overdueMailQueue.offer(new ReceiptStub(receipt, System.nanoTime()));
+
+		if (!_INTRABAND_MAILBOX_REAPER_THREAD_ENABLED) {
+			_pollingCleanup();
+		}
+
+		return receipt;
 	}
 
 	private static void _pollingCleanup() {

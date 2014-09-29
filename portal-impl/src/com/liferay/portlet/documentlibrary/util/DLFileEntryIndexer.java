@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -257,6 +258,17 @@ public class DLFileEntryIndexer extends BaseIndexer {
 			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception {
 
+		MultiValueFacet multiValueFacet = new MultiValueFacet(searchContext);
+
+		long searchRepositoryId = (Long)searchContext.getAttribute(
+			"searchRepositoryId");
+
+		multiValueFacet.setFieldName("repositoryId");
+		multiValueFacet.setStatic(true);
+		multiValueFacet.setValues(new long[] {searchRepositoryId});
+
+		searchContext.addFacet(multiValueFacet);
+
 		String keywords = searchContext.getKeywords();
 
 		if (Validator.isNull(keywords)) {
@@ -414,6 +426,7 @@ public class DLFileEntryIndexer extends BaseIndexer {
 					CharPool.UNDERLINE));
 			document.addKeyword("path", dlFileEntry.getTitle());
 			document.addKeyword("readCount", dlFileEntry.getReadCount());
+			document.addKeyword("repositoryId", dlFileEntry.getRepositoryId());
 			document.addKeyword("size", dlFileEntry.getSize());
 
 			ExpandoBridge expandoBridge =

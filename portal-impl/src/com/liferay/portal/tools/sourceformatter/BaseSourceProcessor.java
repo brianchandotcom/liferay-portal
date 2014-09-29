@@ -747,6 +747,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		for (String fileName : fileNames) {
+			if (!fileName.startsWith("shared")) {
+				break;
+			}
+
 			File file = new File(basedir + fileName);
 
 			String content = fileUtil.read(file);

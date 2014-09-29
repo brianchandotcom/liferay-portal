@@ -161,8 +161,8 @@ AUI.add(
 				NAME: NAME,
 
 				prototype: {
-					UI_EVENTS: {},
 					TREEVIEWS: {},
+					UI_EVENTS: {},
 
 					renderUI: function() {
 						var instance = this;

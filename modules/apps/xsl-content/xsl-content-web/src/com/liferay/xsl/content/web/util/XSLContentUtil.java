@@ -17,7 +17,7 @@ package com.liferay.xsl.content.web.util;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.xsl.content.web.configuration.XSLContentConfigurationValues;
+import com.liferay.xsl.content.web.configuration.XSLContentConfiguration;
 
 import java.io.IOException;
 
@@ -39,7 +39,9 @@ public class XSLContentUtil {
 
 	public static final String DEFAULT_XSL_URL = "/example.xsl";
 
-	public static String transform(URL xmlUrl, URL xslUrl)
+	public static String transform(
+			URL xmlUrl, URL xslUrl,
+			XSLContentConfiguration xslContentConfiguration)
 		throws IOException, TransformerException {
 
 		String xml = HttpUtil.URLtoString(xmlUrl);
@@ -53,7 +55,7 @@ public class XSLContentUtil {
 
 		transformerFactory.setFeature(
 			XMLConstants.FEATURE_SECURE_PROCESSING,
-			XSLContentConfigurationValues.XSL_SECURE_PROCESSING_ENABLED);
+			xslContentConfiguration.isXslSecureProcessingEnabled());
 
 		Transformer transformer = transformerFactory.newTransformer(xslSource);
 

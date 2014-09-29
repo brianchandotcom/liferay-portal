@@ -51,6 +51,7 @@ page import="com.liferay.portlet.documentlibrary.context.DLEditFileEntryDisplayC
 page import="com.liferay.portlet.documentlibrary.context.DLEntryListDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.context.DLViewFileVersionDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.context.DLViewFileVersionDisplayContextUtil" %><%@
+page import="com.liferay.portlet.documentlibrary.context.FilePickerCustomizer" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntryType" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants" %><%@

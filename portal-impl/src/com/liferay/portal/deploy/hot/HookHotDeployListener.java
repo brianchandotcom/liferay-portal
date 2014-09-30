@@ -77,7 +77,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.language.LanguageResources;
+import com.liferay.portal.language.LiferayResourceBundle;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalogUtil;
 import com.liferay.portal.repository.util.ExternalRepositoryFactory;
@@ -132,7 +132,6 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.taglib.FileAvailabilityUtil;
 
 import java.io.File;
-import java.io.InputStream;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -149,6 +148,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -1197,12 +1197,9 @@ public class HookHotDeployListener
 		List<Element> languagePropertiesElements = parentElement.elements(
 			"language-properties");
 
-		Map<String, Object> baseLanguageMap = null;
-		String baseLanguagePropertiesLocation = null;
+		ResourceBundle parentResourceBundle = null;
 
 		for (Element languagePropertiesElement : languagePropertiesElements) {
-			Properties properties = null;
-
 			String languagePropertiesLocation =
 				languagePropertiesElement.getText();
 
@@ -1219,16 +1216,15 @@ public class HookHotDeployListener
 				}
 			}
 
+			ResourceBundle languageResourceBundle;
+			URL url;
+
 			try {
-				URL url = portletClassLoader.getResource(
+				url = portletClassLoader.getResource(
 					languagePropertiesLocation);
 
 				if (url == null) {
 					continue;
-				}
-
-				try (InputStream is = url.openStream()) {
-					properties = PropertiesUtil.load(is, StringPool.UTF8);
 				}
 			}
 			catch (Exception e) {
@@ -1237,46 +1233,32 @@ public class HookHotDeployListener
 				continue;
 			}
 
-			Map<String, Object> languageMap = new HashMap<String, Object>();
-
-			if (baseLanguageMap != null) {
-				languageMap.putAll(baseLanguageMap);
+			if (parentResourceBundle != null) {
+				languageResourceBundle =
+					new LiferayResourceBundle(
+						parentResourceBundle, url.openStream(),
+						StringPool.UTF8);
 			}
-
-			for (Map.Entry<Object, Object> entry : properties.entrySet()) {
-				String key = (String)entry.getKey();
-				String value = (String)entry.getValue();
-
-				value = LanguageResources.fixValue(value);
-
-				languageMap.put(key, value);
+			else {
+				languageResourceBundle =
+					new LiferayResourceBundle(url.openStream(),
+						StringPool.UTF8);
 			}
 
 			if (locale != null) {
 				String languageId = LocaleUtil.toLanguageId(locale);
 
-				languageMap.put("language.id", languageId);
+				Properties serviceProperties = new Properties();
+				serviceProperties.put("language.id", languageId);
 
 				registerService(
 					servletContextName, languagePropertiesLocation,
-					Object.class, new Object(), languageMap);
+					ResourceBundle.class, languageResourceBundle,
+					serviceProperties);
 			}
-			else if (!languageMap.isEmpty()) {
-				baseLanguageMap = languageMap;
-				baseLanguagePropertiesLocation = languagePropertiesLocation;
+			else if (languageResourceBundle != null ) {
+				parentResourceBundle = languageResourceBundle;
 			}
-		}
-
-		if (baseLanguageMap != null) {
-			Locale locale = new Locale(StringPool.BLANK);
-
-			String languageId = LocaleUtil.toLanguageId(locale);
-
-			baseLanguageMap.put("language.id", languageId);
-
-			registerService(
-				servletContextName, baseLanguagePropertiesLocation,
-				Object.class, new Object(), baseLanguageMap);
 		}
 	}
 

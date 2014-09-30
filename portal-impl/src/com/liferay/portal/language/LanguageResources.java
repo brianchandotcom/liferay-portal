@@ -341,10 +341,13 @@ public class LanguageResources {
 		implements ServiceTrackerCustomizer<ResourceBundle, ResourceBundle> {
 
 		@Override
-		public ResourceBundle addingService(ServiceReference<ResourceBundle> serviceReference) {
+		public ResourceBundle addingService(
+			ServiceReference<ResourceBundle> serviceReference) {
+
 			Registry registry = RegistryUtil.getRegistry();
 
-			ResourceBundle resourceBundle = registry.getService(serviceReference);
+			ResourceBundle resourceBundle = registry.getService(
+				serviceReference);
 
 			String languageId = GetterUtil.getString(
 				serviceReference.getProperty("language.id"), StringPool.BLANK);

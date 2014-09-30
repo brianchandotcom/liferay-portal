@@ -94,6 +94,12 @@ public class VerifyJournal extends VerifyProcess {
 				continue;
 			}
 
+			List<Element> nestedElements = element.elements("dynamic-element");
+
+			if (!nestedElements.isEmpty()) {
+				updateElements(nestedElements, article, document);
+			}
+
 			Element dynamicContentElement = element.element("dynamic-content");
 
 			String path = dynamicContentElement.getStringValue();

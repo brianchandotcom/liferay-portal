@@ -50,7 +50,7 @@
 		<if>
 			<equals arg1="${invalidSize}" arg2="true" />
 			<then>
-				<execute action="PGMessageboardsPostthread#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter a file with a valid file size no larger than ${maxAttachmentFileSize}k." />
+				<execute action="PGMessageboardsPostthread#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter a file with a valid file size no larger than ${maxAttachmentFileSize}KB." />
 			</then>
 		</if>
 	</command>
@@ -376,9 +376,9 @@
 			</then>
 			<else>
 				<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
-				<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_STARTED_BY" value1="${userName}" />
+				<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_STARTED_BY" value1="${startedByUserName}" />
 				<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_POSTS" value1="${postCount}" />
-				<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_LAST_POST" value1="${userName}" />
+				<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_LAST_POST" value1="${lastPostUserName}" />
 				<execute action="PGMessageboards#click" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
 			</else>
 		</if>
@@ -677,12 +677,6 @@
 	</command>
 
 	<command name="splitThreadPG">
-		<execute macro="MessageboardsThread#gotoPG">
-			<var name="postCount" value="${postCount}" />
-			<var name="threadSubject" value="${threadSubject}" />
-			<var name="userName" value="${userName}" />
-		</execute>
-
 		<var name="key_threadBody" value="${threadReplyBody}" />
 
 		<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_SPLIT_THREAD" value1="Split Thread" />

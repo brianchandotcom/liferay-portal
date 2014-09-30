@@ -380,6 +380,7 @@
 			<then>
 				<execute action="CKEditor#assertVisible" locator-key1="RESIZER" />
 				<execute action="CKEditor#mouseDown" locator-key1="RESIZER" />
+				<execute action="CKEditor#mouseUp" locator-key1="RESIZER" />
 			</then>
 		</if>
 
@@ -1187,6 +1188,12 @@
 	</command>
 
 	<command name="viewCKEditorResizer">
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute action="PGWikiAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_WIKI_PAGE_TITLE" value1="${key_wikiPageTitle}" />
+
+		<execute action="PGWiki#assertClick" locator-key1="EDIT_BUTTON" value1="Edit" />
+
 		<if>
 			<equals arg1="${changeWikiFormat}" arg2="true" />
 			<then>
@@ -1197,6 +1204,7 @@
 
 		<execute action="CKEditor#assertVisible" locator-key1="RESIZER" />
 		<execute action="CKEditor#mouseDown" locator-key1="RESIZER" />
+		<execute action="CKEditor#mouseUp" locator-key1="RESIZER" />
 	</command>
 
 	<command name="viewCommentPG">

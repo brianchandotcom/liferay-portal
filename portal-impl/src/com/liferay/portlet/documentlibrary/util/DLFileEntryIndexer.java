@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
-import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -258,16 +257,10 @@ public class DLFileEntryIndexer extends BaseIndexer {
 			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception {
 
-		MultiValueFacet multiValueFacet = new MultiValueFacet(searchContext);
+		long searchRepositoryId = GetterUtil.getLong(
+			searchContext.getAttribute("searchRepositoryId"));
 
-		long searchRepositoryId = (Long)searchContext.getAttribute(
-			"searchRepositoryId");
-
-		multiValueFacet.setFieldName("repositoryId");
-		multiValueFacet.setStatic(true);
-		multiValueFacet.setValues(new long[] {searchRepositoryId});
-
-		searchContext.addFacet(multiValueFacet);
+		searchQuery.addRequiredTerm("repositoryId", searchRepositoryId);
 
 		String keywords = searchContext.getKeywords();
 

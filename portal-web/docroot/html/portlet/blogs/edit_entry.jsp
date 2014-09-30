@@ -163,7 +163,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 				%>
 
 				<div id="<portlet:namespace />emailEntryUpdatedCommentWrapper">
-					<aui:input name="emailEntryUpdatedComment" type="textarea" value="<%= emailEntryUpdatedComment %>" />
+					<aui:input label="comments-regarding-the-blog-entry-update" name="emailEntryUpdatedComment" type="textarea" value="<%= emailEntryUpdatedComment %>" />
 				</div>
 			</c:if>
 

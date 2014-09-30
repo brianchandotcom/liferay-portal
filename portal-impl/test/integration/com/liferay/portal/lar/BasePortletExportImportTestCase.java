@@ -16,6 +16,7 @@ package com.liferay.portal.lar;
 
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lar.ExportImportClassedModelUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.template.TemplateHandler;
@@ -78,12 +79,8 @@ public abstract class BasePortletExportImportTestCase
 		StagedModel relatedStagedModel1 = addStagedModel(group.getGroupId());
 		StagedModel relatedStagedModel2 = addStagedModel(group.getGroupId());
 
-		addAssetLink(
-			group.getGroupId(), getStagedModelUuid(stagedModel),
-			getStagedModelUuid(relatedStagedModel1), 1);
-		addAssetLink(
-			group.getGroupId(), getStagedModelUuid(stagedModel),
-			getStagedModelUuid(relatedStagedModel2), 2);
+		addAssetLink(stagedModel, relatedStagedModel1, 1);
+		addAssetLink(stagedModel, relatedStagedModel2, 2);
 
 		exportImportPortlet(getPortletId());
 
@@ -92,7 +89,7 @@ public abstract class BasePortletExportImportTestCase
 
 		Assert.assertNotNull(importedStagedModel);
 
-		validateImportedLinks(getStagedModelUuid(stagedModel));
+		validateImportedLinks(stagedModel, importedStagedModel);
 	}
 
 	@Test
@@ -235,14 +232,12 @@ public abstract class BasePortletExportImportTestCase
 	}
 
 	protected AssetLink addAssetLink(
-			long groupId, String sourceStagedModelUuid,
-			String targetStagedModelUuid, int weight)
+			StagedModel sourceStagedModel, StagedModel targetStagedModel,
+			int weight)
 		throws PortalException {
 
-		AssetEntry originAssetEntry = AssetEntryLocalServiceUtil.getEntry(
-			groupId, sourceStagedModelUuid);
-		AssetEntry targetAssetEntry = AssetEntryLocalServiceUtil.getEntry(
-			groupId, targetStagedModelUuid);
+		AssetEntry originAssetEntry = getAssetEntry(sourceStagedModel);
+		AssetEntry targetAssetEntry = getAssetEntry(targetStagedModel);
 
 		return AssetLinkLocalServiceUtil.addLink(
 			TestPropsValues.getUserId(), originAssetEntry.getEntryId(),
@@ -290,6 +285,14 @@ public abstract class BasePortletExportImportTestCase
 		LayoutLocalServiceUtil.importPortletInfo(
 			TestPropsValues.getUserId(), importedLayout.getPlid(),
 			importedGroup.getGroupId(), portletId, importParameterMap, larFile);
+	}
+
+	protected AssetEntry getAssetEntry(StagedModel stagedModel)
+		throws PortalException {
+
+		return AssetEntryLocalServiceUtil.getEntry(
+			ExportImportClassedModelUtil.getClassName(stagedModel),
+			ExportImportClassedModelUtil.getClassPK(stagedModel));
 	}
 
 	protected PortletPreferences getImportedPortletPreferences(
@@ -420,15 +423,16 @@ public abstract class BasePortletExportImportTestCase
 			expectedDisplayStyleGroupId, importedDisplayStyleGroupId);
 	}
 
-	protected void validateImportedLinks(String uuid) throws PortalException {
-		AssetEntry originalAssetEntry = AssetEntryLocalServiceUtil.getEntry(
-			group.getGroupId(), uuid);
+	protected void validateImportedLinks(
+			StagedModel originalStagedModel, StagedModel importedStagedModel)
+		throws PortalException {
+
+		AssetEntry originalAssetEntry = getAssetEntry(originalStagedModel);
 
 		List<AssetLink> originalAssetLinks = AssetLinkLocalServiceUtil.getLinks(
 			originalAssetEntry.getEntryId());
 
-		AssetEntry importedAssetEntry =  AssetEntryLocalServiceUtil.getEntry(
-			importedGroup.getGroupId(), uuid);
+		AssetEntry importedAssetEntry = getAssetEntry(importedStagedModel);
 
 		List<AssetLink> importedAssetLinks = AssetLinkLocalServiceUtil.getLinks(
 			importedAssetEntry.getEntryId());

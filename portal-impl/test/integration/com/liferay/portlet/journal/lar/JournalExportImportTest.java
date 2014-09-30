@@ -31,6 +31,8 @@ import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.test.RandomTestUtil;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
@@ -38,9 +40,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUti
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
 import java.util.HashMap;
@@ -127,8 +127,6 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			group.getGroupId(), content, ddmStructure.getStructureKey(),
 			ddmTemplate.getTemplateKey());
 
-		String exportedResourceUuid = article.getArticleResourceUuid();
-
 		exportImportPortlet(PortletKeys.JOURNAL);
 
 		int articlesCount = JournalArticleLocalServiceUtil.getArticlesCount(
@@ -136,11 +134,11 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 
 		Assert.assertEquals(1, articlesCount);
 
-		JournalArticleResource importedJournalArticleResource =
-			JournalArticleResourceLocalServiceUtil.fetchArticleResource(
-				exportedResourceUuid, importedGroup.getGroupId());
+		JournalArticle journalArticle =
+			JournalArticleLocalServiceUtil.fetchJournalArticleByUuidAndGroupId(
+				article.getUuid(), importedGroup.getGroupId());
 
-		Assert.assertNotNull(importedJournalArticleResource);
+		Assert.assertNotNull(journalArticle);
 
 		groupId = importedGroup.getGroupId();
 
@@ -178,6 +176,16 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		Assert.assertEquals(
 			dependentDDMTemplate.getClassPK(),
 			dependentDDMStructure.getStructureId());
+	}
+
+	@Override
+	protected AssetEntry getAssetEntry(StagedModel stagedModel)
+		throws PortalException {
+
+		JournalArticle article = (JournalArticle)stagedModel;
+
+		return AssetEntryLocalServiceUtil.getEntry(
+			article.getGroupId(), article.getArticleResourceUuid());
 	}
 
 	protected Map<String, String[]> getBaseParameterMap(long groupId, long plid)
@@ -219,7 +227,7 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
 				PortletKeys.JOURNAL,
-			new String[] {Boolean.TRUE.toString()});
+			new String[]{Boolean.TRUE.toString()});
 
 		return parameterMap;
 	}
@@ -250,21 +258,9 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 	protected StagedModel getStagedModel(String uuid, long groupId)
 		throws PortalException {
 
-		JournalArticleResource importedArticleResource =
-			JournalArticleResourceLocalServiceUtil.
-				fetchJournalArticleResourceByUuidAndGroupId(uuid, groupId);
-
-		return JournalArticleLocalServiceUtil.getLatestArticle(
-			importedArticleResource.getResourcePrimKey());
-	}
-
-	@Override
-	protected String getStagedModelUuid(StagedModel stagedModel)
-		throws PortalException {
-
-		JournalArticle article = (JournalArticle)stagedModel;
-
-		return article.getArticleResourceUuid();
+		return
+			JournalArticleLocalServiceUtil.fetchJournalArticleByUuidAndGroupId(
+				uuid, groupId);
 	}
 
 	@Override

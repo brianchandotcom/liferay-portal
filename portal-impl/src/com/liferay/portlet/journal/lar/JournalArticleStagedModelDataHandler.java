@@ -80,10 +80,11 @@ public class JournalArticleStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		JournalArticle article = fetchStagedModelByUuidAndGroupId(
-			uuid, groupId);
+		JournalArticleResource articleResource =
+			JournalArticleResourceLocalServiceUtil.
+				fetchJournalArticleResourceByUuidAndGroupId(uuid, groupId);
 
-		if (article == null) {
+		if (articleResource == null) {
 			return;
 		}
 
@@ -93,12 +94,15 @@ public class JournalArticleStagedModelDataHandler
 		if (Validator.isNotNull(extraData) && extraDataJSONObject.has("uuid")) {
 			String articleUuid = extraDataJSONObject.getString("uuid");
 
-			article =
-				JournalArticleLocalServiceUtil.
-					fetchJournalArticleByUuidAndGroupId(articleUuid, groupId);
-		}
+			JournalArticle article = fetchStagedModelByUuidAndGroupId(
+				articleUuid, groupId);
 
-		JournalArticleLocalServiceUtil.deleteArticle(article);
+			JournalArticleLocalServiceUtil.deleteArticle(article);
+		}
+		else {
+			JournalArticleLocalServiceUtil.deleteArticle(
+				groupId, articleResource.getArticleId(), null);
+		}
 	}
 
 	@Override

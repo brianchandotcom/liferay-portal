@@ -194,11 +194,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>GMAIL_HTML_MODE_MESSAGE_TITLE</td>
-	<td>//tr[contains(.,'Your New Account')]//h2/font/b</td>
-	<td></td>
-</tr>
-<tr>
 	<td>GMAIL_HTML_MODE_MESSAGE_BODY_GREETING</td>
 	<td>//tr[contains(.,'${key_gmailAssetType}')]//td/div[@class='msg']</td>
 	<td></td>

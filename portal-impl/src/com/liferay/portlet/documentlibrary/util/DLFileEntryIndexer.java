@@ -257,6 +257,11 @@ public class DLFileEntryIndexer extends BaseIndexer {
 			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception {
 
+		long searchRepositoryId = GetterUtil.getLong(
+			searchContext.getAttribute("searchRepositoryId"));
+
+		searchQuery.addRequiredTerm("repositoryId", searchRepositoryId);
+
 		String keywords = searchContext.getKeywords();
 
 		if (Validator.isNull(keywords)) {
@@ -414,6 +419,7 @@ public class DLFileEntryIndexer extends BaseIndexer {
 					CharPool.UNDERLINE));
 			document.addKeyword("path", dlFileEntry.getTitle());
 			document.addKeyword("readCount", dlFileEntry.getReadCount());
+			document.addKeyword("repositoryId", dlFileEntry.getRepositoryId());
 			document.addKeyword("size", dlFileEntry.getSize());
 
 			ExpandoBridge expandoBridge =

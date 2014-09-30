@@ -122,6 +122,8 @@
 
 		.tab {
 			&.active {
+				background: transparent;
+
 				@include opacity(1);
 
 				.tab-label {

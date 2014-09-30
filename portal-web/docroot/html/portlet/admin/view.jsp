@@ -111,10 +111,10 @@
 
 					var form = document.<portlet:namespace />fm;
 
-					form.<portlet:namespace /><%= Constants.CMD %>.value = currentTarget.attr('data-cmd');
+					form.<portlet:namespace /><%= Constants.CMD %>.value = currentTarget.data('cmd');
 					form.<portlet:namespace />redirect.value = '<%= redirectURL %>';
 
-					var portletId = currentTarget.attr('data-portletid');
+					var portletId = currentTarget.data('portletid');
 
 					if (portletId) {
 						form.<portlet:namespace />portletId.value = portletId;

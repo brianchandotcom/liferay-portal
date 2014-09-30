@@ -84,6 +84,47 @@ public class VerifyJournal extends VerifyProcess {
 		verifyURLTitle();
 	}
 
+	protected void updateElements(
+		List<Element> elements, JournalArticle article, Document document) {
+
+		for (Element element : elements) {
+			String type = element.attributeValue("type");
+
+			if (!type.equals("document_library")) {
+				continue;
+			}
+
+			Element dynamicContentElement = element.element("dynamic-content");
+
+			String path = dynamicContentElement.getStringValue();
+
+			String[] pathArray = StringUtil.split(path, CharPool.SLASH);
+
+			if (pathArray.length != 5) {
+				continue;
+			}
+
+			long groupId = GetterUtil.getLong(pathArray[2]);
+			long folderId = GetterUtil.getLong(pathArray[3]);
+			String title = HttpUtil.decodeURL(HtmlUtil.escape(pathArray[4]));
+
+			DLFileEntry dlFileEntry =
+				DLFileEntryLocalServiceUtil.fetchFileEntry(
+					groupId, folderId, title);
+
+			if (dlFileEntry == null) {
+				continue;
+			}
+
+			dynamicContentElement.setText(
+				path + StringPool.SLASH + dlFileEntry.getUuid());
+		}
+
+		article.setContent(document.asXML());
+
+		JournalArticleLocalServiceUtil.updateJournalArticle(article);
+	}
+
 	protected void updateFolderAssets() throws Exception {
 		List<JournalFolder> folders =
 			JournalFolderLocalServiceUtil.getNoAssetFolders();
@@ -171,44 +212,7 @@ public class VerifyJournal extends VerifyProcess {
 
 				List<Element> elements = rootElement.elements();
 
-				for (Element element : elements) {
-					String type = element.attributeValue("type");
-
-					if (!type.equals("document_library")) {
-						continue;
-					}
-
-					Element dynamicContentElement = element.element(
-						"dynamic-content");
-
-					String path = dynamicContentElement.getStringValue();
-
-					String[] pathArray = StringUtil.split(path, CharPool.SLASH);
-
-					if (pathArray.length != 5) {
-						continue;
-					}
-
-					long groupId = GetterUtil.getLong(pathArray[2]);
-					long folderId = GetterUtil.getLong(pathArray[3]);
-					String title = HttpUtil.decodeURL(
-						HtmlUtil.escape(pathArray[4]));
-
-					DLFileEntry dlFileEntry =
-						DLFileEntryLocalServiceUtil.fetchFileEntry(
-							groupId, folderId, title);
-
-					if (dlFileEntry == null) {
-						continue;
-					}
-
-					dynamicContentElement.setText(
-						path + StringPool.SLASH + dlFileEntry.getUuid());
-				}
-
-				article.setContent(document.asXML());
-
-				JournalArticleLocalServiceUtil.updateJournalArticle(article);
+				updateElements(elements, article, document);
 			}
 		}
 		finally {

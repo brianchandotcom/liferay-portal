@@ -22,8 +22,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
  */
 public interface DLEditFileEntryDisplayContext extends DLDisplayContext {
 
-	public FilePickerCustomizer getFilePickerCustomizer()
-		throws PortalException;
+	public DLFilePicker getDLFilePicker() throws PortalException;
 
 	public long getMaximumUploadSize() throws PortalException;
 

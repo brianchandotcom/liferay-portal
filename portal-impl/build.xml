@@ -644,10 +644,6 @@ public class Creole10Parser]]></replacevalue>
 		<delete dir="${tstamp.value}" />
 	</target>
 
-	<target name="build-selenium-old">
-		<ant dir="../portal-web" target="build-selenium-old" />
-	</target>
-
 	<target name="build-selenium-new">
 		<ant dir="../portal-web" target="build-selenium-new" />
 	</target>

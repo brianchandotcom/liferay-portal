@@ -514,25 +514,6 @@
 		</copy>
 	</target>
 
-	<target name="build-selenium-old">
-		<delete dir="test-classes" />
-
-		<!--
-		ant build-selenium -Dminimize=com/liferay/portalweb/portal/util/TearDownPageTest.html -DreportDuplicates=true
-		-->
-
-		<java
-			classname="com.liferay.portal.tools.SeleneseToJavaBuilder"
-			classpathref="project.classpath"
-			fork="true"
-			maxmemory="1024m"
-			newenvironment="true"
-		>
-			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<arg line="--basedir test/functional --minimize ${minimize} --reportDuplicates ${reportDuplicates}" />
-		</java>
-	</target>
-
 	<target name="build-selenium-new">
 		<if>
 			<not>

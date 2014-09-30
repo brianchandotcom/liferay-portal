@@ -16,13 +16,10 @@ package com.liferay.portal.kernel.servlet.filters.invoker;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.LiferayFilter;
 import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.kernel.util.PortalLifecycle;
-import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -267,34 +264,8 @@ public class InvokerFilterHelper {
 			return;
 		}
 
-		boolean filterEnabled = true;
-
-		if (filter instanceof LiferayFilter) {
-
-			// We no longer remove disabled filters because they can be enabled
-			// at runtime by a hook. The performance difference is negligible
-			// since most filters are assumed to be enabled.
-
-			//LiferayFilter liferayFilter = (LiferayFilter)filter;
-
-			//filterEnabled = liferayFilter.isFilterEnabled();
-		}
-
-		if (filterEnabled) {
 			_filterConfigs.put(filterName, filterConfig);
 			_filters.put(filterName, filter);
-		}
-		else {
-			if (filter instanceof PortalLifecycle) {
-				PortalLifecycle portalLifecycle = (PortalLifecycle)filter;
-
-				PortalLifecycleUtil.removeDestroy(portalLifecycle);
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Removing disabled filter " + filter.getClass());
-			}
-		}
 	}
 
 	protected void initFilterMapping(

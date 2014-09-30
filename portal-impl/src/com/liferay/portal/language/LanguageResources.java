@@ -128,29 +128,6 @@ public class LanguageResources {
 		return superLocale;
 	}
 
-	public static Map<String, String> putLanguageMap(
-		Locale locale, Map<String, String> languageMap) {
-
-		Map<String, String> oldLanguageMap = _languageMaps.get(locale);
-
-		if (oldLanguageMap == null) {
-			_loadLocale(locale);
-			oldLanguageMap = _languageMaps.get(locale);
-		}
-
-		Map<String, String> newLanguageMap = new HashMap<String, String>();
-
-		if (oldLanguageMap != null) {
-			newLanguageMap.putAll(oldLanguageMap);
-		}
-
-		newLanguageMap.putAll(languageMap);
-
-		_languageMaps.put(locale, newLanguageMap);
-
-		return oldLanguageMap;
-	}
-
 	public void setConfig(String config) {
 		_configNames = StringUtil.split(
 			config.replace(CharPool.PERIOD, CharPool.SLASH));
@@ -262,6 +239,29 @@ public class LanguageResources {
 		return properties;
 	}
 
+	private static Map<String, String> _putLanguageMap(
+		Locale locale, Map<String, String> languageMap) {
+
+		Map<String, String> oldLanguageMap = _languageMaps.get(locale);
+
+		if (oldLanguageMap == null) {
+			_loadLocale(locale);
+			oldLanguageMap = _languageMaps.get(locale);
+		}
+
+		Map<String, String> newLanguageMap = new HashMap<String, String>();
+
+		if (oldLanguageMap != null) {
+			newLanguageMap.putAll(oldLanguageMap);
+		}
+
+		newLanguageMap.putAll(languageMap);
+
+		_languageMaps.put(locale, newLanguageMap);
+
+		return oldLanguageMap;
+	}
+
 	private LanguageResources() {
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -355,9 +355,8 @@ public class LanguageResources {
 				locale = LocaleUtil.fromLanguageId(languageId, true);
 
 				for (String key : serviceReference.getPropertyKeys()) {
-					String value = fixValue(
-						GetterUtil.getString(
-							serviceReference.getProperty(key)));
+					String value = GetterUtil.getString(
+						serviceReference.getProperty(key));
 
 					languageMap.put(key, value);
 				}
@@ -366,7 +365,7 @@ public class LanguageResources {
 				locale = new Locale(StringPool.BLANK);
 			}
 
-			Map<String, String> oldLanguageMap = putLanguageMap(
+			Map<String, String> oldLanguageMap = _putLanguageMap(
 				locale, languageMap);
 
 			_oldLanguagesMap.put(serviceReference, oldLanguageMap);
@@ -402,7 +401,7 @@ public class LanguageResources {
 			Map<String, String> languageMap = _oldLanguagesMap.get(
 				serviceReference);
 
-			putLanguageMap(locale, languageMap);
+			_putLanguageMap(locale, languageMap);
 		}
 
 		private Map<ServiceReference<Object>, Map<String, String>>

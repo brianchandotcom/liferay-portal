@@ -89,22 +89,39 @@
 			</c:choose>
 		</aui:form>
 
-		<aui:script use="aui-base">
-			A.one('#<portlet:namespace />fm').delegate(
-				'click',
-				function(event) {
-					document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = event.currentTarget.attr('data-cmd');
-					document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<portlet:renderURL><portlet:param name="struts_action" value="/admin/view" /><portlet:param name="tabs1" value="<%= tabs1 %>" /><portlet:param name="tabs2" value="<%= tabs2 %>" /><portlet:param name="tabs3" value="<%= tabs3 %>" /><portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= String.valueOf(cur) %>" /><portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= String.valueOf(delta) %>" /></portlet:renderURL>';
+		<portlet:renderURL var="redirectURL">
+			<portlet:param name="struts_action" value="/admin/view" />
+			<portlet:param name="tabs1" value="<%= tabs1 %>" />
+			<portlet:param name="tabs2" value="<%= tabs2 %>" />
+			<portlet:param name="tabs3" value="<%= tabs3 %>" />
+			<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= String.valueOf(cur) %>" />
+			<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= String.valueOf(delta) %>" />
+		</portlet:renderURL>
 
-					var portletId = event.currentTarget.attr('data-portletid');
+		<portlet:actionURL var="editServerURL">
+			<portlet:param name="struts_action" value="/admin/edit_server" />
+		</portlet:actionURL>
+
+		<aui:script>
+			AUI.$('#<portlet:namespace />fm').on(
+				'click',
+				'.save-server-button',
+				function(event) {
+					var currentTarget = AUI.$(event.currentTarget);
+
+					var form = document.<portlet:namespace />fm;
+
+					form.<portlet:namespace /><%= Constants.CMD %>.value = currentTarget.data('cmd');
+					form.<portlet:namespace />redirect.value = '<%= redirectURL %>';
+
+					var portletId = currentTarget.data('portletid');
 
 					if (portletId) {
-						document.<portlet:namespace />fm.<portlet:namespace />portletId.value = portletId;
+						form.<portlet:namespace />portletId.value = portletId;
 					}
 
-					submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/admin/edit_server" /></portlet:actionURL>');
-				},
-				'.save-server-button'
+					submitForm(form, '<%= editServerURL %>');
+				}
 			);
 		</aui:script>
 	</c:when>

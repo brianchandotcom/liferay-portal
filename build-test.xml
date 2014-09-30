@@ -2124,6 +2124,19 @@ tck.url=true</echo>
 					tofile="${tstamp.value}/WEB-INF/classes/portal-ext.properties"
 				/>
 
+				<if>
+					<not>
+						<resourcecontains resource="${tstamp.value}/WEB-INF/classes/portal-ext.properties" substring="module.framework.properties.osgi.console=11312" />
+					</not>
+					<then>
+						<echo
+							append="true"
+							file="${tstamp.value}/WEB-INF/classes/portal-ext.properties"
+							message="module.framework.properties.osgi.console=11312"
+						/>
+					</then>
+				</if>
+
 				<zip
 					basedir="${tstamp.value}"
 					destfile="${test.build.liferay.portal.zip.file.name}"
@@ -2137,6 +2150,18 @@ tck.url=true</echo>
 					file="portal-impl/src/portal-ext.properties"
 					tofile="${app.server.classes.portal.dir}/portal-ext.properties"
 				/>
+				<if>
+					<not>
+						<resourcecontains resource="portal-impl/classes/portal-ext.properties" substring="module.framework.properties.osgi.console=11312" />
+					</not>
+					<then>
+						<echo
+							append="true"
+							file="portal-impl/classes/portal-ext.properties"
+							message="module.framework.properties.osgi.console=11312"
+						/>
+					</then>
+				</if>
 			</else>
 		</if>
 	</target>

@@ -1,0 +1,65 @@
+<html>
+<head>
+<title>CPKnowledgebaseadminSelectRelatedAsset</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPKnowledgebaseadminSelectRelatedAsset</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPKnowledgebaseadminSelectRelatedAsset</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_ASSET_IFRAME</td>
+	<td>//iframe[contains(@id,'selectAsset')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ASSET_TABLE-->
+<tr>
+	<td>ASSET_TABLE_TITLE</td>
+	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TABLE_DESCRIPTION</td>
+	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TABLE_USER_NAME</td>
+	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TABLE_MODIFIED_DATE</td>
+	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[4]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TABLE_SITE</td>
+	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TABLE_ACTION</td>
+	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[6]/button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

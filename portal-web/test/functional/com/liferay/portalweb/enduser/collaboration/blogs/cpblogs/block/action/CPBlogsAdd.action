@@ -1,9 +1,5 @@
 <definition>
 	<command name="assertClick">
-		<case locator-key1="PUBLISH_BUTTON">
-			<execute function="AssertClick#assertTextClickAtCKEditor" />
-		</case>
-
 		<case locator-key1="SAVE_AS_DRAFT_BUTTON">
 			<execute function="AssertClick#assertTextClickAtAndWaitCKEditor" />
 		</case>
@@ -16,16 +12,6 @@
 	<command name="assertTextEquals">
 		<case locator-key1="SAVE_STATUS">
 			<execute function="AssertTextEquals#assertPartialText" />
-		</case>
-	</command>
-
-	<command name="type">
-		<case locator-key1="CONTENT_FIELD">
-			<execute function="Type#typeFrameWaitForCKEditor" />
-		</case>
-
-		<case locator-key1="TITLE_FIELD">
-			<execute function="Type#typeWaitForCKEditor" />
 		</case>
 	</command>
 </definition>

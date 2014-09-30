@@ -222,6 +222,25 @@ public class PortalLDAPUtil {
 			mappedGroupAttributeIds.add(groupMappings.getProperty("user"));
 		}
 
+		if (_log.isDebugEnabled()) {
+			Attributes attributes = _getAttributes(
+				ldapContext, fullDistinguishedName,
+				mappedGroupAttributeIds.toArray(
+					new String[mappedGroupAttributeIds.size()]));
+
+			for (String attributeId : mappedGroupAttributeIds) {
+				Attribute attribute = attributes.get(attributeId);
+
+				if (Validator.isNull(attribute)) {
+					continue;
+				}
+
+				_log.debug("LDAP group attribute " + attribute.toString());
+			}
+
+			return attributes;
+		}
+
 		return _getAttributes(
 			ldapContext, fullDistinguishedName,
 			mappedGroupAttributeIds.toArray(
@@ -568,6 +587,23 @@ public class PortalLDAPUtil {
 
 		String[] mappedUserAttributeIds = ArrayUtil.toStringArray(
 			userMappings.values().toArray(new Object[userMappings.size()]));
+
+		if (_log.isDebugEnabled()) {
+			Attributes attributes = _getAttributes(
+				ldapContext, fullDistinguishedName, mappedUserAttributeIds);
+
+			for (String attributeId : mappedUserAttributeIds) {
+				Attribute attribute = attributes.get(attributeId);
+
+				if (Validator.isNull(attribute)) {
+					continue;
+				}
+
+				_log.debug("LDAP user attribute " + attribute.toString());
+			}
+
+			return attributes;
+		}
 
 		return _getAttributes(
 			ldapContext, fullDistinguishedName, mappedUserAttributeIds);

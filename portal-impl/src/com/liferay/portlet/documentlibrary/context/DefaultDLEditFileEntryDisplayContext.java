@@ -59,7 +59,9 @@ public class DefaultDLEditFileEntryDisplayContext
 	}
 
 	@Override
-	public DLFilePicker getDLFilePicker() throws PortalException {
+	public DLFilePicker getDLFilePicker(String onFilePickCallback)
+		throws PortalException {
+
 		return null;
 	}
 

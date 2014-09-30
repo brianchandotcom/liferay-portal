@@ -34,7 +34,4 @@ public interface DLFilePicker {
 
 	public String getTitleFieldName() throws PortalException;
 
-	public void setOnFilePickCallback(String filePickCallback)
-		throws PortalException;
-
 }

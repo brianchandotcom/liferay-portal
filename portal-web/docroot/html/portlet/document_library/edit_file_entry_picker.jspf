@@ -15,7 +15,7 @@
 --%>
 
 <%
-DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker();
+DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker(renderResponse.getNamespace() + "onFilePick");
 %>
 
 <c:choose>
@@ -28,7 +28,7 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker();
 	</c:when>
 	<c:otherwise>
 		<aui:field-wrapper label="file">
-			<aui:button cssClass="customized-file-button" name="file" value="Seleccionar archivo" />
+			<aui:button cssClass="customized-file-button" name="file" value="select-file" />
 
 			<img id="<portlet:namespace />pickButtonIcon" src="" style="border: 0px">
 
@@ -57,10 +57,6 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker();
 					}
 				);
 			}
-
-			<%
-			dlFilePicker.setOnFilePickCallback(liferayPortletResponse.getNamespace() + "onFilePick");
-			%>
 
 			<%= dlFilePicker.getJavascript() %>
 

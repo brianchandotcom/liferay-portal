@@ -118,13 +118,17 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 
 		PrintWriter printWriter = response.getWriter();
 
-		String embedURL = _googleDocsMetadataHelper.getFieldValue(
-			GoogleDocsConstants.DDM_FIELD_NAME_EMBED_URL);
+		if (_googleDocsMetadataHelper.containsField(
+				GoogleDocsConstants.DDM_FIELD_NAME_EMBED_URL)) {
 
-		printWriter.format(
-			"<iframe width='100%%' height='300' frameborder='0' src='%s'>" +
-				"</iframe>",
-			embedURL);
+			String embedURL = _googleDocsMetadataHelper.getFieldValue(
+				GoogleDocsConstants.DDM_FIELD_NAME_EMBED_URL);
+
+			printWriter.format(
+				"<iframe width='100%%' height='300' frameborder='0' src='%s'>" +
+					"</iframe>",
+				embedURL);
+		}
 	}
 
 	private int _getIndex(List<? extends UIItem> uiItems, String key) {
@@ -142,37 +146,39 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 	private <T extends URLUIItem> T _insertEditInGoogleURLUIItem(
 		T urlUIItem, List<? super T> urlUIItems) {
 
-		int index = _getIndex(
-			(List<? extends UIItem>)urlUIItems, DLUIItemKeys.EDIT);
+		if (_googleDocsMetadataHelper.containsField(
+				GoogleDocsConstants.DDM_FIELD_NAME_EDIT_URL)) {
 
-		if (index == -1) {
-			index = 0;
+			int index = _getIndex(
+				(List<? extends UIItem>)urlUIItems, DLUIItemKeys.EDIT);
+
+			if (index == -1) {
+				index = 0;
+			}
+
+			urlUIItem.setIcon("icon-edit");
+			urlUIItem.setKey(GoogleDocsUIItemKeys.EDIT_IN_GOOGLE);
+
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			ResourceBundle resourceBundle = ResourceUtil.getResourceBundle(
+				themeDisplay.getLocale());
+
+			String message = LanguageUtil.get(
+				resourceBundle, "edit-in-google-docs");
+
+			urlUIItem.setLabel(message);
+
+			urlUIItem.setTarget("_blank");
+
+			String editURL = _googleDocsMetadataHelper.getFieldValue(
+				GoogleDocsConstants.DDM_FIELD_NAME_EDIT_URL);
+
+			urlUIItem.setURL(editURL);
+
+			urlUIItems.add(index, urlUIItem);
 		}
-
-		urlUIItem.setIcon("icon-edit");
-		urlUIItem.setKey(GoogleDocsUIItemKeys.EDIT_IN_GOOGLE);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		ResourceBundle resourceBundle = ResourceUtil.getResourceBundle(
-			themeDisplay.getLocale());
-
-		String message = LanguageUtil.get(
-			resourceBundle, "edit-in-google-docs");
-
-		urlUIItem.setLabel(message);
-
-		urlUIItem.setTarget("_blank");
-
-		DLFileVersion dlFileVersion = (DLFileVersion)fileVersion.getModel();
-
-		String editURL = _googleDocsMetadataHelper.getFieldValue(
-			GoogleDocsConstants.DDM_FIELD_NAME_EDIT_URL);
-
-		urlUIItem.setURL(editURL);
-
-		urlUIItems.add(index, urlUIItem);
 
 		return urlUIItem;
 	}

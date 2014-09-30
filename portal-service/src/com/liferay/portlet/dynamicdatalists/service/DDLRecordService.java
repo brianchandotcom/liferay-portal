@@ -79,6 +79,15 @@ public interface DDLRecordService extends BaseService {
 		long recordId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public void revertRecord(long recordId, java.lang.String version,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #revertRecord(long, long,
+	String, ServiceContext)}
+	*/
+	@java.lang.Deprecated
 	public void revertRecordVersion(long recordId, java.lang.String version,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;

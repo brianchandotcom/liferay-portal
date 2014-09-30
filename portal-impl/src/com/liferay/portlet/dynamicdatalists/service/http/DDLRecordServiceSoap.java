@@ -108,6 +108,24 @@ public class DDLRecordServiceSoap {
 		}
 	}
 
+	public static void revertRecord(long recordId, java.lang.String version,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			DDLRecordServiceUtil.revertRecord(recordId, version, serviceContext);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #revertRecord(long, long,
+	String, ServiceContext)}
+	*/
+	@Deprecated
 	public static void revertRecordVersion(long recordId,
 		java.lang.String version,
 		com.liferay.portal.service.ServiceContext serviceContext)

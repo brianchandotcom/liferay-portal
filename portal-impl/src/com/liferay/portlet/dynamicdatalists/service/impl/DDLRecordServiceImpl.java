@@ -99,7 +99,7 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 	}
 
 	@Override
-	public void revertRecordVersion(
+	public void revertRecord(
 			long recordId, String version, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -108,8 +108,21 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 		DDLRecordSetPermission.check(
 			getPermissionChecker(), record.getRecordSetId(), ActionKeys.UPDATE);
 
-		ddlRecordLocalService.revertRecordVersion(
+		ddlRecordLocalService.revertRecord(
 			getGuestOrUserId(), recordId, version, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #revertRecord(long, long,
+	 *             String, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public void revertRecordVersion(
+			long recordId, String version, ServiceContext serviceContext)
+		throws PortalException {
+
+		revertRecord(recordId, version, serviceContext);
 	}
 
 	@Override

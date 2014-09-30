@@ -122,7 +122,7 @@ var pickerCallback = function(data) {
 	    var documentViewURL = doc[googlePickerDoc.EMBEDDABLE_URL] || '';
 	    var documentEditURL = doc[googlePickerDoc.URL] || '';
 
-		${filePickCallback}({
+		${onFilePickCallback}({
 			"ID": documentId,
 			"Title": documentName,
 			"Description": documentDescription,

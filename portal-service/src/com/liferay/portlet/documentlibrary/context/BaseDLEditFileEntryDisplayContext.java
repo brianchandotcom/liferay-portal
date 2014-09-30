@@ -67,8 +67,10 @@ public class BaseDLEditFileEntryDisplayContext
 	}
 
 	@Override
-	public DLFilePicker getDLFilePicker() throws PortalException {
-		return parentDLDisplayContext.getDLFilePicker();
+	public DLFilePicker getDLFilePicker(String onFilePickCallback)
+		throws PortalException {
+
+		return parentDLDisplayContext.getDLFilePicker(onFilePickCallback);
 	}
 
 	@Override

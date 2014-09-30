@@ -78,7 +78,7 @@
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
-		<execute macro="KBArticle#viewPGViaKBDisplay">
+		<execute macro="KBArticle#viewViaKBDisplayPG">
 			<var name="kbArticleContent" value="This is an article created from the KB Admin." />
 			<var name="kbArticleTitle" value="KB Admin Article" />
 		</execute>

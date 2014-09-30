@@ -136,7 +136,7 @@
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
-		<execute macro="KBArticle#viewPGViaKBDisplay">
+		<execute macro="KBArticle#viewViaKBDisplayPG">
 			<var name="kbArticleContent" value="Knowledge Base Article Content" />
 			<var name="kbArticleStatus" value="Approved" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
@@ -157,10 +157,53 @@
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
-		<execute macro="KBArticle#viewPGViaKBDisplay">
+		<execute macro="KBArticle#viewViaKBDisplayPG">
 			<var name="kbArticleContent" value="Knowledge Base Article Content Edit" />
 			<var name="kbArticleStatus" value="Approved" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title Edit" />
+		</execute>
+	</command>
+
+	<command name="ViewKBArticleWithBlogsEntryRelatedAsset" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#addCP">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleRelatedAssetTitle" value="Blogs Entry Title" />
+			<var name="kbArticleRelatedAssetType" value="Blogs Entry" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="KBArticle#viewViaKBDisplayPG">
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleRelatedAssetTitle" value="Blogs Entry Title" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		</execute>
+
+		<execute macro="KBArticle#gotoRelatedAssetViaKBDisplayPG">
+			<var name="kbArticleRelatedAssetTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="KBArticle#viewRelatedAssetViaKBDisplayPG">
+			<var name="kbArticleRelatedAssetTitle" value="Knowledge Base Article Title" />
+			<var name="RelatedAssetContent" value="Blogs Entry Content" />
+			<var name="RelatedAssetTitle" value="Blogs Entry Title" />
+			<var name="RelatedAssetType" value="Blogs Entry" />
 		</execute>
 	</command>
 </definition>

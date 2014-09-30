@@ -17,7 +17,6 @@ package com.liferay.portal.model.impl;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -27,11 +26,8 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
-import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
@@ -145,20 +141,6 @@ public class BackgroundTaskImpl extends BackgroundTaskBaseImpl {
 	}
 
 	@Override
-	public Map<String, Serializable> getTaskContextMap() {
-		if (_taskContextMap != null) {
-			return _taskContextMap;
-		}
-
-		String taskContext = getTaskContext();
-
-		_taskContextMap =
-			(Map<String, Serializable>)JSONFactoryUtil.deserialize(taskContext);
-
-		return _taskContextMap;
-	}
-
-	@Override
 	public boolean isInProgress() {
 		if (getStatus() == BackgroundTaskConstants.STATUS_IN_PROGRESS) {
 			return true;
@@ -168,6 +150,5 @@ public class BackgroundTaskImpl extends BackgroundTaskBaseImpl {
 	}
 
 	private long _attachmentsFolderId;
-	private Map<String, Serializable> _taskContextMap;
 
 }

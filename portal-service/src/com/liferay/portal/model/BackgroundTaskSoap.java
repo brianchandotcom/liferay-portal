@@ -21,6 +21,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.portal.service.http.BackgroundTaskServiceSoap}.
@@ -45,7 +46,7 @@ public class BackgroundTaskSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setServletContextNames(model.getServletContextNames());
 		soapModel.setTaskExecutorClassName(model.getTaskExecutorClassName());
-		soapModel.setTaskContext(model.getTaskContext());
+		soapModel.setTaskContextMap(model.getTaskContextMap());
 		soapModel.setCompleted(model.getCompleted());
 		soapModel.setCompletionDate(model.getCompletionDate());
 		soapModel.setStatus(model.getStatus());
@@ -190,12 +191,12 @@ public class BackgroundTaskSoap implements Serializable {
 		_taskExecutorClassName = taskExecutorClassName;
 	}
 
-	public String getTaskContext() {
-		return _taskContext;
+	public Map getTaskContextMap() {
+		return _taskContextMap;
 	}
 
-	public void setTaskContext(String taskContext) {
-		_taskContext = taskContext;
+	public void setTaskContextMap(Map taskContextMap) {
+		_taskContextMap = taskContextMap;
 	}
 
 	public boolean getCompleted() {
@@ -245,7 +246,7 @@ public class BackgroundTaskSoap implements Serializable {
 	private String _name;
 	private String _servletContextNames;
 	private String _taskExecutorClassName;
-	private String _taskContext;
+	private Map _taskContextMap;
 	private boolean _completed;
 	private Date _completionDate;
 	private int _status;

@@ -220,7 +220,7 @@ create table BackgroundTask (
 	name VARCHAR(75) null,
 	servletContextNames VARCHAR(255) null,
 	taskExecutorClassName VARCHAR(200) null,
-	taskContext TEXT null,
+	taskContextMap TEXT null,
 	completed BOOLEAN,
 	completionDate DATE null,
 	status INTEGER,

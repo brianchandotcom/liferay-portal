@@ -46,7 +46,5 @@ public interface BackgroundTask extends BackgroundTaskModel, PersistedModel {
 
 	public java.lang.String getStatusLabel();
 
-	public java.util.Map<java.lang.String, java.io.Serializable> getTaskContextMap();
-
 	public boolean isInProgress();
 }

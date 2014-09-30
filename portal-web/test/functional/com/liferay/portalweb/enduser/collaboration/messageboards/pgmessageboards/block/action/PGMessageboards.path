@@ -64,11 +64,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PERMISSIONS_BUTTON</td>
-	<td>//button[contains(.,'Permissions')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>RSS_LINK</td>
 	<td>//div[contains(@class,'category-subscription-types')]/span/a/span[contains(.,'RSS')]</td>
 	<td></td>

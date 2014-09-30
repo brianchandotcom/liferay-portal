@@ -14,7 +14,7 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
-import com.liferay.portal.kernel.upgrade.BaseUpgradeAdminPortlets;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v7_0_0.util.BackgroundTaskTable;
 
 import java.sql.SQLException;
@@ -22,7 +22,7 @@ import java.sql.SQLException;
 /**
  * @author Cristina González
  */
-public class UpgradeBackgroundTask extends BaseUpgradeAdminPortlets {
+public class UpgradeBackgroundTask extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

@@ -220,10 +220,11 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#gotoPG">
+			<var name="lastPostUserName" value="Test Test" />
 			<var name="postCount" value="1" />
+			<var name="startedByUserName" value="Test Test" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
-			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewPG">
@@ -268,10 +269,11 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#gotoPG">
+			<var name="lastPostUserName" value="Test Test" />
 			<var name="postCount" value="1" />
+			<var name="startedByUserName" value="Test Test" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
-			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewPG">
@@ -315,10 +317,11 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#gotoPG">
+			<var name="lastPostUserName" value="Test Test" />
 			<var name="postCount" value="1" />
+			<var name="startedByUserName" value="Test Test" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
-			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewPG">
@@ -345,10 +348,11 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#gotoPG">
+			<var name="lastPostUserName" value="Test Test" />
 			<var name="postCount" value="1" />
+			<var name="startedByUserName" value="Test Test" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
-			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewPG">
@@ -375,10 +379,11 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#gotoPG">
+			<var name="lastPostUserName" value="Test Test" />
 			<var name="postCount" value="1" />
+			<var name="startedByUserName" value="Test Test" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
-			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewPG">
@@ -553,10 +558,11 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#gotoPG">
+			<var name="lastPostUserName" value="Test Test" />
 			<var name="postCount" value="1" />
+			<var name="startedByUserName" value="Test Test" />
 			<var name="threadBody" value="MB Thread Message Body" />
 			<var name="threadSubject" value="MB Thread Message Subject" />
-			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="MessageboardsThread#editPG">
@@ -584,10 +590,11 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#gotoPG">
+			<var name="lastPostUserName" value="Test Test" />
 			<var name="postCount" value="1" />
+			<var name="startedByUserName" value="Test Test" />
 			<var name="threadBody" value="MB Thread Message Body" />
 			<var name="threadSubject" value="MB Thread Message Subject" />
-			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="MessageboardsThread#editPG">
@@ -615,10 +622,11 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#gotoPG">
+			<var name="lastPostUserName" value="Test Test" />
 			<var name="postCount" value="1" />
+			<var name="startedByUserName" value="Test Test" />
 			<var name="threadBody" value="MB Thread Message Body" />
 			<var name="threadSubject" value="MB Thread Message Subject" />
-			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="MessageboardsThread#editPG">
@@ -687,10 +695,11 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#gotoPG">
+			<var name="lastPostUserName" value="Test Test" />
 			<var name="postCount" value="1" />
+			<var name="startedByUserName" value="Test Test" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
-			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewPG">
@@ -758,10 +767,11 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#gotoPG">
+			<var name="lastPostUserName" value="Test Test" />
 			<var name="postCount" value="2" />
+			<var name="startedByUserName" value="Test Test" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
-			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewPG">

@@ -484,26 +484,24 @@ AUI.add(
 
 						var dataType = instance.get('dataType');
 
-						if (!dataType) {
-							return;
+						if (dataType) {
+							var localizationMap = instance.get('localizationMap');
+
+							var value;
+
+							if (Lang.isString(localizationMap)) {
+								value = localizationMap;
+							}
+							else if (!A.Object.isEmpty(localizationMap)) {
+								value = localizationMap[instance.get('displayLocale')];
+							}
+
+							if (Lang.isUndefined(value)) {
+								value = instance.getValue();
+							}
+
+							instance.setValue(value);
 						}
-
-						var localizationMap = instance.get('localizationMap');
-
-						var value;
-
-						if (Lang.isString(localizationMap)) {
-							value = localizationMap;
-						}
-						else if (!A.Object.isEmpty(localizationMap)) {
-							value = localizationMap[instance.get('displayLocale')];
-						}
-
-						if (Lang.isUndefined(value)) {
-							value = instance.getValue();
-						}
-
-						instance.setValue(value);
 					},
 
 					toJSON: function() {

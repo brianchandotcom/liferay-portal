@@ -22,7 +22,31 @@
 
 		<execute action="CPKnowledgebaseadminAddarticle#type" locator-key1="TITLE_FIELD" value1="${kbArticleTitle}" />
 		<execute action="CPKnowledgebaseadminAddarticle#type" locator-key1="CONTENT_FIELD" value1="${kbArticleContent}" />
-		<execute action="CPKnowledgebaseadminAddarticle#addSelection" locator-key1="SECTIONS_SELECT" value1="${kbArticleSection}" />
+
+		<if>
+			<isset var="kbArticleRelatedAssetType" />
+			<then>
+				<if>
+					<condition action="CPKnowledgebaseadminAddarticle#isElementNotPresent" locator-key1="RELATED_ASSETS_HEADER_EXPANDED" />
+					<then>
+						<execute action="CPKnowledgebaseadminAddarticle#click" locator-key1="RELATED_ASSETS_HEADER_COLLAPSED" />
+					</then>
+				</if>
+
+				<execute macro="KBArticle#selectRelatedAssetCP">
+					<var name="kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
+					<var name="kbArticleRelatedAssetType" value="${kbArticleRelatedAssetType}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<isset var="kbArticleSection" />
+			<then>
+				<execute action="CPKnowledgebaseadminAddarticle#addSelection" locator-key1="SECTIONS_SELECT" value1="${kbArticleSection}" />
+			</then>
+		</if>
+
 		<execute action="CPKnowledgebaseadminAddarticle#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<if>
@@ -139,6 +163,18 @@
 		<execute action="PGKnowledgebasesection#assertClick" locator-key1="KB_ARTICLE_LINK" value1="${kbArticleTitle}" />
 	</command>
 
+	<command name="gotoRelatedAssetCP">
+		<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
+
+		<execute action="CPKnowledgebaseadminArticle#assertClick" locator-key1="RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
+	</command>
+
+	<command name="gotoRelatedAssetViaKBDisplayPG">
+		<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
+
+		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
+	</command>
+
 	<command name="searchPGViaKBSearch">
 		<execute action="PGKnowledgebasesearch#type" locator-key1="SEARCH_FIELD" value1="${searchTerm}" />
 		<execute action="PGKnowledgebasesearch#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
@@ -161,6 +197,22 @@
 		<execute action="PGKnowledgebasearticleConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 		<execute action="PGKnowledgebasearticleConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="PGKnowledgebasearticleConfiguration#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="selectRelatedAssetCP">
+		<execute action="CPKnowledgebaseadminAddarticle#assertClick" locator-key1="RELATED_ASSETS_SELECT_BUTTON" value1="Select" />
+
+		<var name="key_kbArticleRelatedAssetType" value="${kbArticleRelatedAssetType}" />
+
+		<execute action="CPKnowledgebaseadminAddarticle#assertClick" locator-key1="RELATED_ASSETS_SELECT_MENULIST" value1="${kbArticleRelatedAssetType}" />
+
+		<execute action="CPKnowledgebaseadminSelectRelatedAsset#selectFrame" locator-key1="SELECT_ASSET_IFRAME" />
+
+		<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
+
+		<execute action="CPKnowledgebaseadminSelectRelatedAsset#assertTextEquals" locator-key1="ASSET_TABLE_TITLE" value1="${kbArticleRelatedAssetTitle}" />
+		<execute action="CPKnowledgebaseadminSelectRelatedAsset#assertClick" locator-key1="ASSET_TABLE_ACTION" value1="Choose" />
+		<execute action="CPKnowledgebaseadminSelectRelatedAsset#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="selectSectionPGViaKBSection">
@@ -201,6 +253,21 @@
 		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="ARTICLE_TABLE_PRIORITY" value1="${kbPriority}" />
 		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="ARTICLE_TABLE_TITLE" value1="${kbArticleTitle}" />
 		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="ARTICLE_TABLE_AUTHOR" value1="${kbAuthor}" />
+		<execute action="CPKnowledgebaseadmin#click" locator-key1="ARTICLE_TABLE_ACTIONS" />
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ARTICLE_MENULIST_VIEW" value1="View" />
+
+		<execute action="CPKnowledgebaseadminArticle#assertTextEquals" locator-key1="TITLE" value1="${kbArticleTitle}" />
+		<execute action="CPKnowledgebaseadminArticle#assertTextEquals" locator-key1="CONTENT" value1="${kbArticleContent}" />
+
+		<if>
+			<isset var="kbArticleRelatedAssetTitle" />
+			<then>
+				<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
+
+				<execute action="CPKnowledgebaseadminArticle#assertTextEquals" locator-key1="RELATED_ASSETS_HEADER" value1="Related Assets:" />
+				<execute action="CPKnowledgebaseadminArticle#assertTextEquals" locator-key1="RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="viewDefaultCP">
@@ -232,11 +299,6 @@
 		<execute action="PGKnowledgebasearticle#assertTextEquals" locator-key1="ARTICLE_CONTENT" value1="${kbArticleContent}" />
 	</command>
 
-	<command name="viewPGViaKBDisplay">
-		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_TITLE" value1="${kbArticleTitle}" />
-		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_CONTENT" value1="${kbArticleContent}" />
-	</command>
-
 	<command name="viewPGViaKBSearch">
 		<execute action="PGKnowledgebasesearchArticle#assertTextEquals" locator-key1="ARTICLE_TITLE" value1="${kbArticleTitle}" />
 		<execute action="PGKnowledgebasesearchArticle#assertTextEquals" locator-key1="ARTICLE_CONTENT" value1="${kbArticleContent}" />
@@ -245,6 +307,34 @@
 	<command name="viewPGViaKBSection">
 		<execute action="PGKnowledgebasesectionArticle#assertTextEquals" locator-key1="ARTICLE_TITLE" value1="${kbArticleTitle}" />
 		<execute action="PGKnowledgebasesectionArticle#assertTextEquals" locator-key1="ARTICLE_CONTENT" value1="${kbArticleContent}" />
+	</command>
+
+	<command name="viewRelatedAssetCP">
+		<if>
+			<equals arg1="${RelatedAssetType}" arg2="Blogs Entry" />
+			<then>
+				<execute action="CPKnowledgebaseadminViewRelatedAsset#assertTextEquals" locator-key1="BLOGS_ENTRY_CONTENT" value1="${RelatedAssetContent}" />
+			</then>
+		</if>
+
+		<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
+
+		<execute action="CPKnowledgebaseadminViewRelatedAsset#assertTextEquals" locator-key1="RELATED_ASSETS_HEADER" value1="Related Assets:" />
+		<execute action="CPKnowledgebaseadminViewRelatedAsset#assertTextEquals" locator-key1="RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
+	</command>
+
+	<command name="viewRelatedAssetViaKBDisplayPG">
+		<if>
+			<equals arg1="${RelatedAssetType}" arg2="Blogs Entry" />
+			<then>
+				<execute action="CPKnowledgebaseadminViewRelatedAsset#assertTextEquals" locator-key1="BLOGS_ENTRY_CONTENT" value1="${RelatedAssetContent}" />
+			</then>
+		</if>
+
+		<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
+
+		<execute action="PGKnowledgebasedisplayViewRelatedAsset#assertTextEquals" locator-key1="RELATED_ASSETS_HEADER" value1="Related Assets:" />
+		<execute action="PGKnowledgebasedisplayViewRelatedAsset#assertTextEquals" locator-key1="RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
 	</command>
 
 	<command name="viewSearchResultsPG">
@@ -263,5 +353,20 @@
 
 			<execute action="PGKnowledgebasesection#assertTextEquals" locator-key1="KB_ARTICLE_LINK" value1="${kbArticleTitle}" />
 		</for>
+	</command>
+
+	<command name="viewViaKBDisplayPG">
+		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_TITLE" value1="${kbArticleTitle}" />
+		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_CONTENT" value1="${kbArticleContent}" />
+
+		<if>
+			<isset var="kbArticleRelatedAssetTitle" />
+			<then>
+				<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
+
+				<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="RELATED_ASSETS_HEADER" value1="Related Assets:" />
+				<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
+			</then>
+		</if>
 	</command>
 </definition>

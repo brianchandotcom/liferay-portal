@@ -15,10 +15,10 @@
 package com.liferay.document.library.google.docs.context;
 
 import com.liferay.document.library.google.docs.util.FreeMarkerRenderer;
+import com.liferay.document.library.google.docs.util.GoogleDocsConfigurationHelper;
 import com.liferay.document.library.google.docs.util.GoogleDocsConstants;
 import com.liferay.document.library.google.docs.util.GoogleDocsMetadataHelper;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.context.DLFilePicker;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -26,8 +26,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import freemarker.template.TemplateException;
 
 import java.io.IOException;
-
-import javax.portlet.PortletPreferences;
 
 /**
  * @author Iván Zaera
@@ -43,7 +41,8 @@ public class GoogleDocsDLFilePicker implements DLFilePicker {
 		_googleDocsMetadataHelper = googleDocsMetadataHelper;
 		_namespace = namespace;
 		_onFilePickCallback = onFilePickCallback;
-		_themeDisplay = themeDisplay;
+		_googleDocsConfigurationHelper = new GoogleDocsConfigurationHelper(
+			themeDisplay.getCompanyId());
 	}
 
 	@Override
@@ -68,17 +67,12 @@ public class GoogleDocsDLFilePicker implements DLFilePicker {
 				"com/liferay/document/library/google/docs/context/"+
 					"dependencies/google_file_picker.ftl");
 
-			PortletPreferences companyPortletPreferences =
-				PrefsPropsUtil.getPreferences(_themeDisplay.getCompanyId());
-
-			String googleAppsAPIKey = companyPortletPreferences.getValue(
-				"googleAppsAPIKey", null);
-			String googleClientId = companyPortletPreferences.getValue(
-				"googleClientId", null);
-
 			freeMarkerRenderer.setAttribute(
-				"googleAppsAPIKey", googleAppsAPIKey);
-			freeMarkerRenderer.setAttribute("googleClientId", googleClientId);
+				"googleAppsAPIKey",
+				_googleDocsConfigurationHelper.getGoogleAppsAPIKey());
+			freeMarkerRenderer.setAttribute(
+				"googleClientId",
+				_googleDocsConfigurationHelper.getGoogleClientId());
 
 			freeMarkerRenderer.setAttribute("namespace", _namespace);
 
@@ -102,9 +96,9 @@ public class GoogleDocsDLFilePicker implements DLFilePicker {
 		return GoogleDocsConstants.DDM_FIELD_NAME_TITLE;
 	}
 
+	private GoogleDocsConfigurationHelper _googleDocsConfigurationHelper;
 	private GoogleDocsMetadataHelper _googleDocsMetadataHelper;
 	private String _namespace;
 	private String _onFilePickCallback;
-	private ThemeDisplay _themeDisplay;
 
 }

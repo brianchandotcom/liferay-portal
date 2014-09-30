@@ -166,6 +166,7 @@ import org.springframework.aop.framework.AdvisedSupport;
  * @author Mika Koivisto
  * @author Peter Fellwock
  * @author Raymond Augé
+ * @author Kamesh Sampath
  */
 public class HookHotDeployListener
 	extends BaseHotDeployListener implements PropsKeys {
@@ -633,13 +634,6 @@ public class HookHotDeployListener
 
 		if (hotDeployListenersContainer != null) {
 			hotDeployListenersContainer.unregisterHotDeployListeners();
-		}
-
-		LanguagesContainer languagesContainer = _languagesContainerMap.remove(
-			servletContextName);
-
-		if (languagesContainer != null) {
-			languagesContainer.unregisterLanguages();
 		}
 
 		Properties portalProperties = _portalPropertiesMap.remove(
@@ -1200,14 +1194,11 @@ public class HookHotDeployListener
 			Element parentElement)
 		throws Exception {
 
-		LanguagesContainer languagesContainer = new LanguagesContainer();
-
-		_languagesContainerMap.put(servletContextName, languagesContainer);
-
 		List<Element> languagePropertiesElements = parentElement.elements(
 			"language-properties");
 
-		Map<String, String> baseLanguageMap = null;
+		Map<String, Object> baseLanguageMap = null;
+		String baseLanguagePropertiesLocation = null;
 
 		for (Element languagePropertiesElement : languagePropertiesElements) {
 			Properties properties = null;
@@ -1246,7 +1237,7 @@ public class HookHotDeployListener
 				continue;
 			}
 
-			Map<String, String> languageMap = new HashMap<String, String>();
+			Map<String, Object> languageMap = new HashMap<String, Object>();
 
 			if (baseLanguageMap != null) {
 				languageMap.putAll(baseLanguageMap);
@@ -1262,17 +1253,30 @@ public class HookHotDeployListener
 			}
 
 			if (locale != null) {
-				languagesContainer.addLanguage(locale, languageMap);
+				String languageId = LocaleUtil.toLanguageId(locale);
+
+				languageMap.put("language.id", languageId);
+
+				registerService(
+					servletContextName, languagePropertiesLocation,
+					Object.class, new Object(), languageMap);
 			}
 			else if (!languageMap.isEmpty()) {
 				baseLanguageMap = languageMap;
+				baseLanguagePropertiesLocation = languagePropertiesLocation;
 			}
 		}
 
 		if (baseLanguageMap != null) {
 			Locale locale = new Locale(StringPool.BLANK);
 
-			languagesContainer.addLanguage(locale, baseLanguageMap);
+			String languageId = LocaleUtil.toLanguageId(locale);
+
+			baseLanguageMap.put("language.id", languageId);
+
+			registerService(
+				servletContextName, baseLanguagePropertiesLocation,
+				Object.class, new Object(), baseLanguageMap);
 		}
 	}
 
@@ -2454,8 +2458,6 @@ public class HookHotDeployListener
 	private Map<String, HotDeployListenersContainer>
 		_hotDeployListenersContainerMap =
 			new HashMap<String, HotDeployListenersContainer>();
-	private Map<String, LanguagesContainer> _languagesContainerMap =
-		new HashMap<String, LanguagesContainer>();
 	private Map<String, StringArraysContainer> _mergeStringArraysContainerMap =
 		new HashMap<String, StringArraysContainer>();
 	private Map<String, StringArraysContainer>
@@ -2564,33 +2566,6 @@ public class HookHotDeployListener
 
 		private List<HotDeployListener> _hotDeployListeners =
 			new ArrayList<HotDeployListener>();
-
-	}
-
-	private class LanguagesContainer {
-
-		public void addLanguage(
-			Locale locale, Map<String, String> languageMap) {
-
-			Map<String, String> oldLanguageMap =
-				LanguageResources.putLanguageMap(locale, languageMap);
-
-			_languagesMap.put(locale, oldLanguageMap);
-		}
-
-		public void unregisterLanguages() {
-			for (Map.Entry<Locale, Map<String, String>> entry :
-					_languagesMap.entrySet()) {
-
-				Locale locale = entry.getKey();
-				Map<String, String> languageMap = entry.getValue();
-
-				LanguageResources.putLanguageMap(locale, languageMap);
-			}
-		}
-
-		private Map<Locale, Map<String, String>> _languagesMap =
-			new HashMap<Locale, Map<String, String>>();
 
 	}
 

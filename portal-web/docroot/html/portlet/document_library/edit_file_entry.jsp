@@ -371,7 +371,6 @@ else {
 						List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
 
 						for (DDMStructure ddmStructure : ddmStructures) {
-							if (dlEditFileEntryDisplayContext.isDDMStructureVisible(ddmStructure)) {
 								Fields fields = null;
 
 								try {
@@ -383,6 +382,10 @@ else {
 								}
 				%>
 
+								<c:if test="<%= !dlEditFileEntryDisplayContext.isDDMStructureVisible(ddmStructure) %>">
+									<div style="display: none">
+								</c:if>
+
 								<liferay-ddm:html
 									classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
 									classPK="<%= ddmStructure.getPrimaryKey() %>"
@@ -391,8 +394,11 @@ else {
 									requestedLocale="<%= locale %>"
 								/>
 
+								<c:if test="<%= !dlEditFileEntryDisplayContext.isDDMStructureVisible(ddmStructure) %>">
+									</div>
+								</c:if>
+
 				<%
-							}
 						}
 					}
 					catch (Exception e) {

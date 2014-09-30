@@ -125,6 +125,7 @@ AUI.add(
 						instance.getAttrs(A.Object.keys(DDMPortletSupport.ATTRS)),
 						{
 							container: fieldNode,
+							dataType: fieldDefinition.dataType,
 							definition: definition,
 							displayLocale: instance.get('displayLocale'),
 							instanceId: fieldInstanceId,
@@ -190,6 +191,9 @@ AUI.add(
 				ATTRS: {
 					container: {
 						setter: A.one
+					},
+
+					dataType: {
 					},
 
 					definition: {
@@ -478,34 +482,43 @@ AUI.add(
 					syncValueUI: function() {
 						var instance = this;
 
-						var localizationMap = instance.get('localizationMap');
+						var dataType = instance.get('dataType');
 
-						var value;
+						if (dataType) {
+							var localizationMap = instance.get('localizationMap');
 
-						if (Lang.isString(localizationMap)) {
-							value = localizationMap;
+							var value;
+
+							if (Lang.isString(localizationMap)) {
+								value = localizationMap;
+							}
+							else if (!A.Object.isEmpty(localizationMap)) {
+								value = localizationMap[instance.get('displayLocale')];
+							}
+
+							if (Lang.isUndefined(value)) {
+								value = instance.getValue();
+							}
+
+							instance.setValue(value);
 						}
-						else if (!A.Object.isEmpty(localizationMap)) {
-							value = localizationMap[instance.get('displayLocale')];
-						}
-
-						if (Lang.isUndefined(value)) {
-							value = instance.getValue();
-						}
-
-						instance.setValue(value);
 					},
 
 					toJSON: function() {
 						var instance = this;
 
-						instance.updateLocalizationMap(instance.get('displayLocale'));
-
 						var fieldJSON = {
 							instanceId: instance.get('instanceId'),
-							name: instance.get('name'),
-							value: instance.get('localizationMap')
+							name: instance.get('name')
 						};
+
+						var dataType = instance.get('dataType');
+
+						if (dataType) {
+							instance.updateLocalizationMap(instance.get('displayLocale'));
+
+							fieldJSON.value = instance.get('localizationMap');
+						}
 
 						var fields = instance.get('fields');
 

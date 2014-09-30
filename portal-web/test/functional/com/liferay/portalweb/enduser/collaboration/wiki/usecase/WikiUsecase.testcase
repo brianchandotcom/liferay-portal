@@ -105,6 +105,8 @@
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
 
+		<execute macro="WikiPage#gotoAllPagesPG" />
+
 		<execute macro="WikiPage#viewCKEditorResizer">
 			<var name="changeWikiFormat" value="true" />
 			<var name="newFormat" value="HTML" />

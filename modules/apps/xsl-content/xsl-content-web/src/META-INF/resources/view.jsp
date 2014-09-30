@@ -14,6 +14,7 @@
  */
 --%>
 
+<%@page import="com.liferay.xsl.content.web.configuration.XSLContentConfiguration"%>
 <%@ include file="/init.jsp" %>
 
 <%
@@ -82,7 +83,7 @@ try {
 		}
 	}
 
-	String content = XSLContentUtil.transform(new URL(xmlUrl), new URL(xslUrl));
+	String content = XSLContentUtil.transform(new URL(xmlUrl), new URL(xslUrl), xslContentConfiguration);
 %>
 
 	<%= content %>

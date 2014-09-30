@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.HitsImpl;
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.QuerySuggester;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
@@ -191,6 +192,12 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		FacetProcessor<SearchRequestBuilder> facetProcessor) {
 
 		_facetProcessor = facetProcessor;
+	}
+
+	@Override
+	@Reference
+	public void setQuerySuggester(QuerySuggester querySuggester) {
+		super.setQuerySuggester(querySuggester);
 	}
 
 	public void setSwallowException(boolean swallowException) {

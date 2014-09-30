@@ -185,6 +185,12 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	@Override
+	public com.liferay.portlet.dynamicdatamapping.model.DDMForm createFullHierarchyDDMForm()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmStructure.createFullHierarchyDDMForm();
+	}
+
+	@Override
 	public java.lang.String[] getAvailableLanguageIds() {
 		return _ddmStructure.getAvailableLanguageIds();
 	}
@@ -865,6 +871,12 @@ public class DDMStructureWrapper implements DDMStructure,
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_ddmStructure.setExpandoBridgeAttributes(serviceContext);
+	}
+
+	@Override
+	public void setFullHierarchyDDMForm(
+		com.liferay.portlet.dynamicdatamapping.model.DDMForm fullHierarchyDDMForm) {
+		_ddmStructure.setFullHierarchyDDMForm(fullHierarchyDDMForm);
 	}
 
 	/**

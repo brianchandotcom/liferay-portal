@@ -86,6 +86,9 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 	public com.liferay.portlet.dynamicdatamapping.model.DDMForm getFullHierarchyDDMForm()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public com.liferay.portlet.dynamicdatamapping.model.DDMForm createFullHierarchyDDMForm()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.model.DDMFormField> getFullHierarchyDDMFormFieldsMap(
 		boolean includeNestedDDMFormFields)
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -126,6 +129,9 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 
 	public void setDDMForm(
 		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm);
+
+	public void setFullHierarchyDDMForm(
+		com.liferay.portlet.dynamicdatamapping.model.DDMForm fullHierarchyDDMForm);
 
 	public void updateDDMForm(
 		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm);

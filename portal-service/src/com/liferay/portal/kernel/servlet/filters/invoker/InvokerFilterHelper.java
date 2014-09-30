@@ -264,8 +264,8 @@ public class InvokerFilterHelper {
 			return;
 		}
 
-			_filterConfigs.put(filterName, filterConfig);
-			_filters.put(filterName, filter);
+		_filterConfigs.put(filterName, filterConfig);
+		_filters.put(filterName, filter);
 	}
 
 	protected void initFilterMapping(

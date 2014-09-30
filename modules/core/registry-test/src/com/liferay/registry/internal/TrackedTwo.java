@@ -15,20 +15,18 @@
 package com.liferay.registry.internal;
 
 /**
- * @author Raymond Augé
+ * @author Carlos Sierra Andrés
  */
-public class TrackedOne {
+public class TrackedTwo {
 
-	public TrackedOne() {}
-
-	public TrackedOne(String key) {
-		this.key = key;
+	public TrackedTwo(TrackedOne trackedOne) {
+		_trackedOne = trackedOne;
 	}
 
-	public String getKey() {
-		return key;
+	public TrackedOne getTrackedOne() {
+		return _trackedOne;
 	}
 
-	private String key;
+	private TrackedOne _trackedOne;
 
 }

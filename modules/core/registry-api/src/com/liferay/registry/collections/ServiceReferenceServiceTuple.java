@@ -19,11 +19,11 @@ import com.liferay.registry.ServiceReference;
 /**
 * @author Carlos Sierra Andrés
 */
-public class ServiceReferenceServiceTuple<S>
-	implements Comparable<ServiceReferenceServiceTuple<S>> {
+public class ServiceReferenceServiceTuple<SR, TS>
+	implements Comparable<ServiceReferenceServiceTuple<SR, TS>> {
 
 	public ServiceReferenceServiceTuple(
-		ServiceReference<S> serviceReference, S service) {
+		ServiceReference<SR> serviceReference, TS service) {
 
 		_serviceReference = serviceReference;
 		_service = service;
@@ -31,7 +31,7 @@ public class ServiceReferenceServiceTuple<S>
 
 	@Override
 	public int compareTo(
-		ServiceReferenceServiceTuple<S> serviceReferenceServiceTuple) {
+		ServiceReferenceServiceTuple<SR, TS> serviceReferenceServiceTuple) {
 
 		return _serviceReference.compareTo(
 			serviceReferenceServiceTuple.getServiceReference());
@@ -47,18 +47,18 @@ public class ServiceReferenceServiceTuple<S>
 			return false;
 		}
 
-		ServiceReferenceServiceTuple<S> serviceReferenceServiceTuple =
-			(ServiceReferenceServiceTuple<S>)obj;
+		ServiceReferenceServiceTuple<SR, TS> serviceReferenceServiceTuple =
+			(ServiceReferenceServiceTuple<SR, TS>)obj;
 
 		return _serviceReference.equals(
 			serviceReferenceServiceTuple.getServiceReference());
 	}
 
-	public S getService() {
+	public TS getService() {
 		return _service;
 	}
 
-	public ServiceReference<S> getServiceReference() {
+	public ServiceReference<SR> getServiceReference() {
 		return _serviceReference;
 	}
 
@@ -67,7 +67,7 @@ public class ServiceReferenceServiceTuple<S>
 		return _serviceReference.hashCode();
 	}
 
-	private S _service;
-	private ServiceReference<S> _serviceReference;
+	private TS _service;
+	private ServiceReference<SR> _serviceReference;
 
 }

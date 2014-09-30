@@ -27,39 +27,42 @@ import java.util.PriorityQueue;
 /**
  * @author Carlos Sierra Andrés
  */
-public class SingleValueServiceTrackerBucketFactory<S>
-	implements ServiceTrackerBucketFactory<S, S> {
+public class SingleValueServiceTrackerBucketFactory<SR, TS>
+	implements ServiceTrackerBucketFactory<SR, TS, TS> {
 
 	public SingleValueServiceTrackerBucketFactory() {
 		_comparator = Collections.reverseOrder();
 	}
 
 	public SingleValueServiceTrackerBucketFactory(
-		Comparator<ServiceReference<S>> comparator) {
+		Comparator<ServiceReference<SR>> comparator) {
 
 		_comparator = comparator;
 	}
 
 	@Override
-	public ServiceTrackerBucket<S, S> create() {
+	public ServiceTrackerBucket<SR, TS, TS> create() {
 		return new SingleBucket();
 	}
 
-	private Comparator<ServiceReference<S>> _comparator;
+	private Comparator<ServiceReference<SR>> _comparator;
 
-	private class SingleBucket implements ServiceTrackerBucket<S, S> {
+	private class SingleBucket implements ServiceTrackerBucket<SR, TS, TS> {
 
 		public SingleBucket() {
 			_service = null;
 
+			ServiceReferenceServiceTupleComparator<SR>
+				serviceReferenceServiceTupleComparator =
+					new ServiceReferenceServiceTupleComparator<>(_comparator);
+
 			_serviceReferences =
-				new PriorityQueue<ServiceReferenceServiceTuple<S>>(
-					1,
-					new ServiceReferenceServiceTupleComparator<S>(_comparator));
+				new PriorityQueue<ServiceReferenceServiceTuple<SR, TS>>(
+					1, serviceReferenceServiceTupleComparator);
 		}
 
 		@Override
-		public S getContent() {
+		public TS getContent() {
 			return _service;
 		}
 
@@ -70,12 +73,12 @@ public class SingleValueServiceTrackerBucketFactory<S>
 
 		@Override
 		public synchronized void remove(
-			ServiceReferenceServiceTuple<S> serviceReferenceServiceTuple) {
+			ServiceReferenceServiceTuple<SR, TS> serviceReferenceServiceTuple) {
 
 			_serviceReferences.remove(serviceReferenceServiceTuple);
 
-			ServiceReferenceServiceTuple<S> headServiceReferenceServiceTuple =
-				_serviceReferences.peek();
+			ServiceReferenceServiceTuple<SR, TS>
+				headServiceReferenceServiceTuple = _serviceReferences.peek();
 
 			if (headServiceReferenceServiceTuple != null) {
 				_service = headServiceReferenceServiceTuple.getService();
@@ -87,15 +90,15 @@ public class SingleValueServiceTrackerBucketFactory<S>
 
 		@Override
 		public synchronized void store(
-			ServiceReferenceServiceTuple<S> serviceReferenceServiceTuple) {
+			ServiceReferenceServiceTuple<SR, TS> serviceReferenceServiceTuple) {
 
 			_serviceReferences.add(serviceReferenceServiceTuple);
 
 			_service = _serviceReferences.peek().getService();
 		}
 
-		private S _service;
-		private PriorityQueue<ServiceReferenceServiceTuple<S>>
+		private TS _service;
+		private PriorityQueue<ServiceReferenceServiceTuple<SR, TS>>
 			_serviceReferences;
 
 	}

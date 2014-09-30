@@ -87,6 +87,17 @@ public class DDLRecordServiceUtil {
 		return getService().getRecord(recordId);
 	}
 
+	public static void revertRecord(long recordId, java.lang.String version,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().revertRecord(recordId, version, serviceContext);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #revertRecord(long, long,
+	String, ServiceContext)}
+	*/
+	@Deprecated
 	public static void revertRecordVersion(long recordId,
 		java.lang.String version,
 		com.liferay.portal.service.ServiceContext serviceContext)

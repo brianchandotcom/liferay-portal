@@ -95,7 +95,7 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 		URLMenuItem urlMenuItem = _insertEditInGoogleURLUIItem(
 			new URLMenuItem(), menuItems);
 
-		urlMenuItem.setTarget("_blank");
+		urlMenuItem.setMethod("GET");
 
 		return menuItems;
 	}

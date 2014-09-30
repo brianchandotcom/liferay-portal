@@ -85,7 +85,7 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 	public void testEmailEntryUpdatedSentWithEmailEntryUpdatedComment()
 		throws Exception {
 
-		givenThatBlogSendsEmailEntryUpdatedBasedOnUserComments();
+		givenThatBlogServiceSendsEmailWithUserCommentsWhenUpdatingEntry();
 
 		BlogsEntry entry = BlogsTestUtil.addEntry(group, true);
 
@@ -112,7 +112,7 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 	public void testEmailEntryUpdatedSentWithEmptyEmailEntryUpdatedComment()
 		throws Exception {
 
-		givenThatBlogSendsEmailEntryUpdatedBasedOnUserComments();
+		givenThatBlogServiceSendsEmailWithUserCommentsWhenUpdatingEntry();
 
 		BlogsEntry entry = BlogsTestUtil.addEntry(group, true);
 
@@ -133,7 +133,8 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 		Assert.assertEquals(message.getBody(), StringPool.NEW_LINE);
 	}
 
-	protected void givenThatBlogSendsEmailEntryUpdatedBasedOnUserComments()
+	protected void
+			givenThatBlogServiceSendsEmailWithUserCommentsWhenUpdatingEntry()
 		throws Exception {
 
 		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(

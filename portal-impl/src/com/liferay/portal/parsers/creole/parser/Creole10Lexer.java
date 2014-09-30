@@ -1,4 +1,4 @@
-// $ANTLR 3.0.1 Creole10.g 2013-07-25 09:25:48
+// $ANTLR 3.0.1 Creole10.g 2014-05-16 14:56:50
 
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -35,9 +35,9 @@ public class Creole10Lexer extends Lexer {
     public static final int T78=78;
     public static final int FORCED_END_OF_LINE=4;
     public static final int NOWIKI_BLOCK_CLOSE=27;
-    public static final int NOWIKI_CLOSE=28;
     public static final int SPACE=35;
     public static final int EOF=-1;
+    public static final int NOWIKI_CLOSE=28;
     public static final int T72=72;
     public static final int T71=71;
     public static final int LIST_ITEM=7;
@@ -57,8 +57,8 @@ public class Creole10Lexer extends Lexer {
     public static final int BRACE_CLOSE=37;
     public static final int EQUAL=18;
     public static final int TABULATOR=36;
-    public static final int LIST_ITEM_PART=8;
     public static final int PIPE=19;
+    public static final int LIST_ITEM_PART=8;
     public static final int LINK_OPEN=21;
     public static final int T61=61;
     public static final int T60=60;

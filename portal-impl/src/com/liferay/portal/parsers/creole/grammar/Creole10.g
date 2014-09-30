@@ -26,7 +26,7 @@ scope CountLevel {
 
 @header {
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -104,7 +104,7 @@ import java.util.Stack;
 
 @lexer::header {
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -134,7 +134,7 @@ import java.util.Stack;
 
 	public WikiPageNode getWikiPageNode() {
 		if (_wikipage == null)
-			throw new IllegalStateException("No succesful parsing process");
+			throw new IllegalStateException("No successful parsing process");
 
 		return _wikipage;
 	}

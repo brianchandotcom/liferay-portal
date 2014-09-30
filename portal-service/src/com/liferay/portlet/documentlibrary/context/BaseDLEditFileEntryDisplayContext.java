@@ -67,10 +67,8 @@ public class BaseDLEditFileEntryDisplayContext
 	}
 
 	@Override
-	public FilePickerCustomizer getFilePickerCustomizer()
-		throws PortalException {
-
-		return parentDLDisplayContext.getFilePickerCustomizer();
+	public DLFilePicker getDLFilePicker() throws PortalException {
+		return parentDLDisplayContext.getDLFilePicker();
 	}
 
 	@Override

@@ -20,7 +20,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 /**
  * @author Ivan Zaera
  */
-public interface FilePickerCustomizer {
+public interface DLFilePicker {
 
 	public DDMStructure getDDMStructure() throws PortalException;
 

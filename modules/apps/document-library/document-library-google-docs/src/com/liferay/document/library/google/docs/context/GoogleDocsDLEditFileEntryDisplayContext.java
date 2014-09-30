@@ -27,7 +27,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.context.BaseDLEditFileEntryDisplayContext;
 import com.liferay.portlet.documentlibrary.context.DLEditFileEntryDisplayContext;
-import com.liferay.portlet.documentlibrary.context.FilePickerCustomizer;
+import com.liferay.portlet.documentlibrary.context.DLFilePicker;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -48,8 +48,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Ivan Zaera
  */
 public class GoogleDocsDLEditFileEntryDisplayContext
-	extends BaseDLEditFileEntryDisplayContext
-	implements FilePickerCustomizer {
+	extends BaseDLEditFileEntryDisplayContext implements DLFilePicker {
 
 	public GoogleDocsDLEditFileEntryDisplayContext(
 		DLEditFileEntryDisplayContext parentDLEditFileEntryDisplayContext,
@@ -88,9 +87,7 @@ public class GoogleDocsDLEditFileEntryDisplayContext
 	}
 
 	@Override
-	public FilePickerCustomizer getFilePickerCustomizer()
-		throws PortalException {
-
+	public DLFilePicker getDLFilePicker() throws PortalException {
 		return this;
 	}
 

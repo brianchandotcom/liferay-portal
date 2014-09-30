@@ -15,11 +15,11 @@
 --%>
 
 <%
-	FilePickerCustomizer filePickerCustomizer = dlEditFileEntryDisplayContext.getFilePickerCustomizer();
+DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker();
 %>
 
 <c:choose>
-	<c:when test="<%= filePickerCustomizer == null %>">
+	<c:when test="<%= dlFilePicker == null %>">
 		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="file" onChange='<%= renderResponse.getNamespace() + "validateTitle();" %>' type="file">
 			<aui:validator name="acceptFiles">
 				'<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>'
@@ -37,9 +37,9 @@
 
 		<aui:script use="aui-base">
 			function <portlet:namespace/>onFilePick(fields) {
-				var documentIconURL = fields['<%= filePickerCustomizer.getIconFieldName() %>'];
-				var documentTitle = fields['<%= filePickerCustomizer.getTitleFieldName() %>'];
-				var documentDescription = fields['<%= filePickerCustomizer.getDescriptionFieldName() %>'];
+				var documentIconURL = fields['<%= dlFilePicker.getIconFieldName() %>'];
+				var documentTitle = fields['<%= dlFilePicker.getTitleFieldName() %>'];
+				var documentDescription = fields['<%= dlFilePicker.getDescriptionFieldName() %>'];
 
 				A.one('#<portlet:namespace />pickButtonIcon').attr('src', documentIconURL);
 
@@ -59,15 +59,15 @@
 			}
 
 			<%
-				filePickerCustomizer.setOnFilePickCallback(liferayPortletResponse.getNamespace() + "onFilePick");
+			dlFilePicker.setOnFilePickCallback(liferayPortletResponse.getNamespace() + "onFilePick");
 			%>
 
-			<%= filePickerCustomizer.getJavascript() %>
+			<%= dlFilePicker.getJavascript() %>
 
 			A.one('#<portlet:namespace />fm').delegate(
 				'click',
 				function(event) {
-					<%= filePickerCustomizer.getOnClickCallback() %>();
+					<%= dlFilePicker.getOnClickCallback() %>();
 				},
 				'.customized-file-button'
 			);

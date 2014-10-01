@@ -123,8 +123,22 @@ public class DDLRecordAssetRenderer extends BaseAssetRenderer {
 			"struts_action", "/dynamic_data_lists/edit_record");
 		portletURL.setParameter(
 			"recordId", String.valueOf(_record.getRecordId()));
+		portletURL.setParameter("version", _recordVersion.getVersion());
 
 		return portletURL;
+	}
+
+	@Override
+	public String getURLViewInContext(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			String noSuchEntryRedirect)
+		throws Exception {
+
+		return getURLViewInContext(
+			liferayPortletRequest, noSuchEntryRedirect,
+			"/dynamic_data_lists/find_record", "recordId",
+			_record.getRecordId());
 	}
 
 	@Override

@@ -68,7 +68,7 @@ if (assetRendererFactory != null) {
 		viewFullContentURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
 	}
 
-	if (viewInContext) {
+	if (viewInContext || !assetEntry.isVisible()) {
 		inheritRedirect = true;
 
 		String viewFullContentURLString = viewFullContentURL.toString();

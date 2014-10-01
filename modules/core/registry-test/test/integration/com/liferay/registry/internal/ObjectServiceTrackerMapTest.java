@@ -153,20 +153,23 @@ public class ObjectServiceTrackerMapTest {
 
 			TrackedOne trackedOne2 = new TrackedOne();
 
-			registerService(trackedOne2, 1);
+			ServiceRegistration<TrackedOne> serviceRegistration1 =
+				registerService(trackedOne2, 1);
 
 			TrackedOne trackedOne1 = new TrackedOne();
 
-			ServiceRegistration<TrackedOne> serviceRegistration1 =
+			ServiceRegistration<TrackedOne> serviceRegistration2 =
 				registerService(trackedOne1, 2);
 
 			Assert.assertEquals(
 				trackedOne1, serviceTrackerMap.getService("aTarget"));
 
-			serviceRegistration1.unregister();
+			serviceRegistration2.unregister();
 
 			Assert.assertEquals(
 				trackedOne2, serviceTrackerMap.getService("aTarget"));
+
+			serviceRegistration1.unregister();
 		}
 	}
 
@@ -231,11 +234,14 @@ public class ObjectServiceTrackerMapTest {
 			serviceRegistration1.unregister();
 			serviceRegistration2.unregister();
 
-			registerService(trackedOne2);
-			registerService(trackedOne1);
+			serviceRegistration2 = registerService(trackedOne2);
+			serviceRegistration1 = registerService(trackedOne1);
 
 			Assert.assertEquals(
 				trackedOne1, serviceTrackerMap.getService("aTarget"));
+
+			serviceRegistration1.unregister();
+			serviceRegistration2.unregister();
 		}
 	}
 
@@ -266,11 +272,14 @@ public class ObjectServiceTrackerMapTest {
 			properties.put("other", "aProperty");
 			properties.put("target", "aTarget");
 
-			_bundleContext.registerService(
-				TrackedOne.class, new TrackedOne(), properties);
+			ServiceRegistration<TrackedOne> serviceRegistration =
+				_bundleContext.registerService(
+					TrackedOne.class, new TrackedOne(), properties);
 
 			Assert.assertNotNull(
 				serviceTrackerMap.getService("aProperty - aTarget"));
+
+			serviceRegistration.unregister();
 		}
 	}
 
@@ -279,7 +288,8 @@ public class ObjectServiceTrackerMapTest {
 		try (ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
 				createServiceTrackerMap()) {
 
-			registerService(new TrackedOne(), "anotherTarget");
+			ServiceRegistration<TrackedOne> serviceRegistration =
+				registerService(new TrackedOne(), "anotherTarget");
 
 			Assert.assertNull(serviceTrackerMap.getService("aTarget"));
 		}
@@ -324,10 +334,13 @@ public class ObjectServiceTrackerMapTest {
 
 			TrackedOne trackedOne1 = new TrackedOne();
 
-			registerService(trackedOne1, "trackedOne1");
+			ServiceRegistration<TrackedOne> serviceRegistration1 =
+				registerService(trackedOne1, "trackedOne1");
 
 			TrackedOne trackedOne2 = new TrackedOne();
-			registerService(trackedOne2, "trackedOne2");
+
+			ServiceRegistration<TrackedOne> serviceRegistration2 =
+				registerService(trackedOne2, "trackedOne2");
 
 			TrackedTwo trackedTwo1 = serviceTrackerMap.getService(
 				"trackedOne1");
@@ -338,6 +351,9 @@ public class ObjectServiceTrackerMapTest {
 				"trackedOne2");
 
 			Assert.assertEquals(trackedOne2, trackedTwo2.getTrackedOne());
+
+			serviceRegistration1.unregister();
+			serviceRegistration2.unregister();
 		}
 	}
 
@@ -398,10 +414,12 @@ public class ObjectServiceTrackerMapTest {
 
 			TrackedOne trackedOne1 = new TrackedOne("1");
 
-			registerService(trackedOne1, "trackedOne1");
+			ServiceRegistration<TrackedOne> serviceRegistration1 =
+				registerService(trackedOne1, "trackedOne1");
 
 			TrackedOne trackedOne2 = new TrackedOne("2");
-			registerService(trackedOne2, "trackedOne2");
+			ServiceRegistration<TrackedOne> serviceRegistration2 =
+				registerService(trackedOne2, "trackedOne2");
 
 			TrackedTwo trackedTwo1 = serviceTrackerMap.getService(
 				"trackedOne1-1");
@@ -412,17 +430,24 @@ public class ObjectServiceTrackerMapTest {
 				"trackedOne2-2");
 
 			Assert.assertEquals(trackedOne2, trackedTwo2.getTrackedOne());
+
+			serviceRegistration1.unregister();
+			serviceRegistration2.unregister();
 		}
 	}
 
 	@Test
 	public void testGetServiceWithSimpleRegistration() {
-		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
-			createServiceTrackerMap();
+		try (ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
+				createServiceTrackerMap()) {
 
-		registerService(new TrackedOne());
+			ServiceRegistration<TrackedOne> serviceRegistration =
+				registerService(new TrackedOne());
 
-		Assert.assertNotNull(serviceTrackerMap.getService("aTarget"));
+			Assert.assertNotNull(serviceTrackerMap.getService("aTarget"));
+
+			serviceRegistration.unregister();
+		}
 	}
 
 	@Test
@@ -441,12 +466,12 @@ public class ObjectServiceTrackerMapTest {
 
 			Set<String> keySet = serviceTrackerMap.keySet();
 
-			Assert.assertEquals(keySet, new HashSet<String>() {
-				{
-					add("aTarget1");
-					add("aTarget2");
-				}
-			});
+			HashSet<String> targets = new HashSet<String>();
+
+			targets.add("aTarget1");
+			targets.add("aTarget2");
+
+			Assert.assertEquals(keySet, targets);
 
 			serviceRegistration1.unregister();
 			serviceRegistration2.unregister();

@@ -72,7 +72,8 @@ public interface BlogsEntryService extends BaseService {
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
 		boolean allowTrackbacks, java.lang.String[] trackbacks,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector imageSelector,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageSelector,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageSelector,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -200,7 +201,8 @@ public interface BlogsEntryService extends BaseService {
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
 		boolean allowTrackbacks, java.lang.String[] trackbacks,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector imageSelector,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageSelector,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageSelector,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 }

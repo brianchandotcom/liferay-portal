@@ -70,6 +70,8 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 		attributes.put("allowPingbacks", getAllowPingbacks());
 		attributes.put("allowTrackbacks", getAllowTrackbacks());
 		attributes.put("trackbacks", getTrackbacks());
+		attributes.put("coverImageFileEntryId", getCoverImageFileEntryId());
+		attributes.put("coverImageURL", getCoverImageURL());
 		attributes.put("smallImage", getSmallImage());
 		attributes.put("smallImageFileEntryId", getSmallImageFileEntryId());
 		attributes.put("smallImageId", getSmallImageId());
@@ -186,6 +188,19 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 			setTrackbacks(trackbacks);
 		}
 
+		Long coverImageFileEntryId = (Long)attributes.get(
+				"coverImageFileEntryId");
+
+		if (coverImageFileEntryId != null) {
+			setCoverImageFileEntryId(coverImageFileEntryId);
+		}
+
+		String coverImageURL = (String)attributes.get("coverImageURL");
+
+		if (coverImageURL != null) {
+			setCoverImageURL(coverImageURL);
+		}
+
 		Boolean smallImage = (Boolean)attributes.get("smallImage");
 
 		if (smallImage != null) {
@@ -296,6 +311,26 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	}
 
 	/**
+	* Returns the cover image file entry ID of this blogs entry.
+	*
+	* @return the cover image file entry ID of this blogs entry
+	*/
+	@Override
+	public long getCoverImageFileEntryId() {
+		return _blogsEntry.getCoverImageFileEntryId();
+	}
+
+	/**
+	* Returns the cover image u r l of this blogs entry.
+	*
+	* @return the cover image u r l of this blogs entry
+	*/
+	@Override
+	public java.lang.String getCoverImageURL() {
+		return _blogsEntry.getCoverImageURL();
+	}
+
+	/**
 	* Returns the create date of this blogs entry.
 	*
 	* @return the create date of this blogs entry
@@ -356,6 +391,11 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 		return _blogsEntry.getGroupId();
 	}
 
+	@Override
+	public long getImagesFolderId() {
+		return _blogsEntry.getImagesFolderId();
+	}
+
 	/**
 	* Returns the modified date of this blogs entry.
 	*
@@ -399,11 +439,6 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	@Override
 	public long getSmallImageFileEntryId() {
 		return _blogsEntry.getSmallImageFileEntryId();
-	}
-
-	@Override
-	public long getSmallImageFolderId() {
-		return _blogsEntry.getSmallImageFolderId();
 	}
 
 	/**
@@ -806,6 +841,26 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	@Override
 	public void setContent(java.lang.String content) {
 		_blogsEntry.setContent(content);
+	}
+
+	/**
+	* Sets the cover image file entry ID of this blogs entry.
+	*
+	* @param coverImageFileEntryId the cover image file entry ID of this blogs entry
+	*/
+	@Override
+	public void setCoverImageFileEntryId(long coverImageFileEntryId) {
+		_blogsEntry.setCoverImageFileEntryId(coverImageFileEntryId);
+	}
+
+	/**
+	* Sets the cover image u r l of this blogs entry.
+	*
+	* @param coverImageURL the cover image u r l of this blogs entry
+	*/
+	@Override
+	public void setCoverImageURL(java.lang.String coverImageURL) {
+		_blogsEntry.setCoverImageURL(coverImageURL);
 	}
 
 	/**

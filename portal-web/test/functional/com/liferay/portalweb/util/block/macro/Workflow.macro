@@ -309,6 +309,7 @@
 
 		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_TABLE_SPECIFIC_DEFINITION_ACTIONS" value1="Actions" />
 		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_MENULIST_EDIT" value1="Edit" />
+
 		<execute action="Kaleodesigner#selectFrame" locator-key1="IFRAME" />
 	</command>
 

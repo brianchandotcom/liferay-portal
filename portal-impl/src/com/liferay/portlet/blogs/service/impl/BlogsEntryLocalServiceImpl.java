@@ -380,10 +380,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		// Portlet file repository
 
-		long smallImageFolderId = entry.getSmallImageFolderId();
+		long imagesFolderId = entry.getImagesFolderId();
 
-		if (smallImageFolderId != 0) {
-			PortletFileRepositoryUtil.deletePortletFolder(smallImageFolderId);
+		if (imagesFolderId != 0) {
+			PortletFileRepositoryUtil.deletePortletFolder(imagesFolderId);
 		}
 
 		// Subscriptions

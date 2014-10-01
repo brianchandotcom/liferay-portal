@@ -19,9 +19,9 @@ import com.liferay.registry.ServiceReference;
 /**
  * @author Carlos Sierra Andrés
  */
-public interface ServiceReferenceMapper<K> {
+public interface ServiceReferenceMapper<K, S> {
 
-	public void map(ServiceReference<?> serviceReference, Emitter<K> emitter);
+	public void map(ServiceReference<S> serviceReference, Emitter<K> emitter);
 
 	public interface Emitter<K> {
 

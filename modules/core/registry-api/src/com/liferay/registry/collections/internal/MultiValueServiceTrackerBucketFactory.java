@@ -30,31 +30,31 @@ import java.util.TreeSet;
 /**
  * @author Carlos Sierra Andrés
  */
-public class MultiValueServiceTrackerBucketFactory<S>
-	implements ServiceTrackerBucketFactory<S, List<S>> {
+public class MultiValueServiceTrackerBucketFactory<SR, TS>
+	implements ServiceTrackerBucketFactory<SR, TS, List<TS>> {
 
 	public MultiValueServiceTrackerBucketFactory() {
 		_comparator = Collections.reverseOrder();
 	}
 
 	public MultiValueServiceTrackerBucketFactory(
-		Comparator<ServiceReference<S>> comparator) {
+		Comparator<ServiceReference<SR>> comparator) {
 
 		_comparator = comparator;
 	}
 
 	@Override
-	public ServiceTrackerBucket<S, List<S>> create() {
+	public ServiceTrackerBucket<SR, TS, List<TS>> create() {
 		return new ListServiceTrackerBucket();
 	}
 
-	private Comparator<ServiceReference<S>> _comparator;
+	private Comparator<ServiceReference<SR>> _comparator;
 
 	private class ListServiceTrackerBucket
-		implements ServiceTrackerBucket<S, List<S>> {
+		implements ServiceTrackerBucket<SR, TS, List<TS>> {
 
 		@Override
-		public List<S> getContent() {
+		public List<TS> getContent() {
 			return _services;
 		}
 
@@ -65,7 +65,7 @@ public class MultiValueServiceTrackerBucketFactory<S>
 
 		@Override
 		public synchronized void remove(
-			ServiceReferenceServiceTuple<S> serviceReferenceServiceTuple) {
+			ServiceReferenceServiceTuple<SR, TS> serviceReferenceServiceTuple) {
 
 			_serviceReferenceServiceTuples.remove(serviceReferenceServiceTuple);
 
@@ -74,7 +74,7 @@ public class MultiValueServiceTrackerBucketFactory<S>
 
 		@Override
 		public synchronized void store(
-			ServiceReferenceServiceTuple<S> serviceReferenceServiceTuple) {
+			ServiceReferenceServiceTuple<SR, TS> serviceReferenceServiceTuple) {
 
 			_serviceReferenceServiceTuples.add(serviceReferenceServiceTuple);
 
@@ -82,11 +82,13 @@ public class MultiValueServiceTrackerBucketFactory<S>
 		}
 
 		protected void rebuild() {
-			_services = new ArrayList<S>(_serviceReferenceServiceTuples.size());
+			_services = new ArrayList<TS>(
+				_serviceReferenceServiceTuples.size());
 
 			for (
-				ServiceReferenceServiceTuple<S> serviceReferenceServiceTuple :
-					_serviceReferenceServiceTuples) {
+				ServiceReferenceServiceTuple<SR, TS>
+					serviceReferenceServiceTuple :
+						_serviceReferenceServiceTuples) {
 
 				_services.add(serviceReferenceServiceTuple.getService());
 			}
@@ -95,14 +97,18 @@ public class MultiValueServiceTrackerBucketFactory<S>
 		}
 
 		private ListServiceTrackerBucket() {
+			ServiceReferenceServiceTupleComparator<SR>
+				serviceReferenceServiceTupleComparator =
+					new ServiceReferenceServiceTupleComparator<>(_comparator);
+
 			_serviceReferenceServiceTuples =
-				new TreeSet<ServiceReferenceServiceTuple<S>>(
-					new ServiceReferenceServiceTupleComparator<S>(_comparator));
+				new TreeSet<ServiceReferenceServiceTuple<SR, TS>>(
+					serviceReferenceServiceTupleComparator);
 		}
 
-		private Set<ServiceReferenceServiceTuple<S>>
+		private Set<ServiceReferenceServiceTuple<SR, TS>>
 			_serviceReferenceServiceTuples;
-		private List<S> _services = new ArrayList<S>();
+		private List<TS> _services = new ArrayList<TS>();
 
 	}
 

@@ -17,8 +17,8 @@ package com.liferay.registry.collections;
 /**
  * @author Carlos Sierra Andrés
  */
-public interface ServiceTrackerBucketFactory<S, R> {
+public interface ServiceTrackerBucketFactory<SR, TS, R> {
 
-	public ServiceTrackerBucket<S, R> create();
+	public ServiceTrackerBucket<SR, TS, R> create();
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.registry.collections;
 
 import java.io.Closeable;
+import java.util.Set;
 
 /**
  * @author Carlos Sierra Andrés
@@ -24,7 +25,11 @@ public interface ServiceTrackerMap<K, R> extends Closeable {
 	@Override
 	public void close();
 
+	public boolean containsKey(K key);
+
 	public R getService(K key);
+
+	public Set<K> keySet();
 
 	public void open();
 

@@ -375,7 +375,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DDLRecordVersion recordVersion = getRecordVersion(recordId, version);
+		DDLRecordVersion recordVersion =
+			ddlRecordVersionLocalService.getRecordVersion(recordId, version);
 
 		if (!recordVersion.isApproved()) {
 			return;

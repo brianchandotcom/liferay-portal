@@ -19,6 +19,7 @@ import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil;
+import com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
@@ -126,7 +127,7 @@ public class DDLRecordImpl extends DDLRecordBaseImpl {
 	public DDLRecordVersion getRecordVersion(String version)
 		throws PortalException {
 
-		return DDLRecordLocalServiceUtil.getRecordVersion(
+		return DDLRecordVersionLocalServiceUtil.getRecordVersion(
 			getRecordId(), version);
 	}
 

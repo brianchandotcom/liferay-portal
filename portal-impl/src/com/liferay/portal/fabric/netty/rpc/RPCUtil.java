@@ -58,7 +58,7 @@ public class RPCUtil {
 							id, channelFuture.cause())) {
 
 						_log.error(
-							"Unable to place exception  because no future " +
+							"Unable to place exception because no future " +
 								"exists with ID " + id,
 							channelFuture.cause());
 					}

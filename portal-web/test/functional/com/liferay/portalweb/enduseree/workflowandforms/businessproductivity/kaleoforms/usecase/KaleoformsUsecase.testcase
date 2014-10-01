@@ -6780,6 +6780,65 @@
 		</execute>
 	</command>
 
+	<command name="ViewNoDuplicatesCreatedByAddFormSaveAndContinue" priority="4">
+		<description message="This is a use case for LPS-48995." />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Kaleo Forms Admin" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#addProcess" />
+
+		<execute macro="KaleoFormsAdmin#addProcessDetails">
+			<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#next" />
+
+		<execute macro="KaleoFormsAdmin#addFieldSet">
+			<var name="kfFieldSetName" value="Data Definition" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#saveFieldSet" />
+
+		<execute macro="KaleoFormsAdmin#chooseFieldSet">
+			<var name="kfFieldSetName" value="Data Definition" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#next" />
+
+		<execute macro="KaleoFormsAdmin#chooseWorkflow">
+			<var name="workflowDefinitionTitle" value="Single Approver" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#next" />
+
+		<execute macro="KaleoFormsAdmin#assignForm">
+			<var name="workflowTask" value="create" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#addForm">
+			<var name="kfFormName" value="Created Task Form" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#saveAndContinueForm" />
+		<execute macro="KaleoFormsAdmin#saveAndContinueForm" />
+		<execute macro="KaleoFormsAdmin#saveAndContinueForm" />
+		<execute macro="KaleoFormsAdmin#saveForm" />
+
+		<var name="key_kfFormName" value="Created Task Form" />
+
+		<execute action="CPKaleoformsadminNewprocessSelectform#assertTextEquals" locator-key1="FORM_TABLE_NAME" value1="Created Task Form" />
+		<execute action="CPKaleoformsadminNewprocessSelectform#assertElementNotPresent" locator-key1="FORM_TABLE_NAME_2" />
+	</command>
+
 	<command name="ViewProcessWithComments" priority="4">
 		<var name="commentList" value="Assigned initial task.,Updating the due date on a process assigned to my roles.,Assign process to Test Test.,Updating the due date on a process assigned to me.,Please make changes and resubmit.,Assigned initial task.,Resubmitting.,Assigned initial task.,Assign process to Test Test again.,Process is approved." />
 		<var name="ddldataDefinitionDescription" value="Data Definition Description" />

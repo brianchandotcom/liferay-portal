@@ -1214,7 +1214,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_allowUseServiceUtilInServiceImpl = GetterUtil.getBoolean(
 			getProperty("allow.use.service.util.in.service.impl"));
 		_fitOnSingleLineExclusions = getPropertyList(
-			"fit.on.single.line.exludes");
+			"fit.on.single.line.excludes");
 		_hibernateSQLQueryExclusions = getPropertyList(
 			"hibernate.sql.query.excludes");
 		_javaTermAccessLevelModifierExclusions = getPropertyList(

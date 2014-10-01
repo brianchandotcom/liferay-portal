@@ -267,7 +267,7 @@ public class LanguageResources {
 		Registry registry = RegistryUtil.getRegistry();
 
 		Filter languageResourceFilter = registry.getFilter(
-			"(&(!(javax.portlet.name=*))(language.id=*)(objectClass=" + 
+			"(&(!(javax.portlet.name=*))(language.id=*)(objectClass=" +
 				ResourceBundle.class.getName() + "))");
 
 		_serviceTracker = registry.trackServices(
@@ -284,7 +284,8 @@ public class LanguageResources {
 	private static Map<Locale, Map<String, String>> _languageMaps =
 		new ConcurrentHashMap<Locale, Map<String, String>>(64);
 	private static Locale _nullLocale = new Locale(StringPool.BLANK);
-	private static ServiceTracker<ResourceBundle, ResourceBundle> _serviceTracker;
+	private static ServiceTracker<ResourceBundle, ResourceBundle>
+		_serviceTracker;
 	private static Map<Locale, Locale> _superLocales =
 		new ConcurrentHashMap<Locale, Locale>();
 
@@ -380,13 +381,13 @@ public class LanguageResources {
 
 		@Override
 		public void modifiedService(
-			ServiceReference<ResourceBundle> serviceReference, 
+			ServiceReference<ResourceBundle> serviceReference,
 			ResourceBundle resourceBundle) {
 		}
 
 		@Override
 		public void removedService(
-			ServiceReference<ResourceBundle> serviceReference, 
+			ServiceReference<ResourceBundle> serviceReference,
 			ResourceBundle resourceBundle) {
 
 			Registry registry = RegistryUtil.getRegistry();
@@ -410,9 +411,8 @@ public class LanguageResources {
 			_putLanguageMap(locale, languageMap);
 		}
 
-		private Map<ServiceReference<ResourceBundle>, Map<String, String>>
-			_oldLanguageMaps =
-				new HashMap<ServiceReference<ResourceBundle>, Map<String, String>>();
+		private Map<ServiceReference<?>, Map<String, String>> _oldLanguageMaps =
+			new HashMap<>();
 
 	}
 

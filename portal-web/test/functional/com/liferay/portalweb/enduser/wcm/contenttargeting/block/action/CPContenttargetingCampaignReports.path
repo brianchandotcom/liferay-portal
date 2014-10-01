@@ -96,11 +96,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT_GRAPH_CONTENT_TITLE</td>
-	<td>//div[@id='campaignContentChart']//span[contains(.,'Apple')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -255,7 +255,7 @@
 		<if>
 			<equals arg1="trackingActionsDescription" arg2="true" />
 			<then>
-				<execute action="CPContenttargetingCampaignReports#assertTextEquals" locator-key1="TRACKING_ACTIONS_REPORT_DESCRIPTION" value1="Displays the number of times that the actions tracked for the current campaign have been triggered by users belonging to every user segment." />
+				<execute action="CPContenttargetingCampaignReports#assertTextEquals" locator-key1="TRACKING_ACTIONS_REPORT_DESCRIPTION" value1="Displays the number of times that the actions tracked for the current campaign have been triggered." />
 			</then>
 		</if>
 

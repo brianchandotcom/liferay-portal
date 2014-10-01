@@ -313,7 +313,7 @@
 		<var name="key_reportName" value="${reportName}" />
 
 		<execute action="CPContenttargetingUserSegmentReports#assertTextEquals" locator-key1="USER_SEGMENT_REPORTS_TABLE_NAME" value1="${reportName}" />
-		<execute action="CPContenttargetingUserSegmentReports#assertTextEquals" locator-key1="USER_SEGMENT_REPORTS_TABLE_DESCRIPTION" value1="Displays the number of times that content has been viewed by a user belonging to the current user segment." />
+		<execute action="CPContenttargetingUserSegmentReports#assertTextEquals" locator-key1="USER_SEGMENT_REPORTS_TABLE_DESCRIPTION" value1="Displays the number of times that content has been viewed by a user who belongs to the current user segment." />
 
 		<execute action="CPContenttargetingUserSegmentReports#assertClick" locator-key1="USER_SEGMENT_REPORTS_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPContenttargetingUserSegmentReports#assertClick" locator-key1="USER_SEGMENT_REPORTS_TABLE_ACTIONS_MENULIST_VIEW_REPORT" value1="View Report" />

@@ -827,6 +827,10 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
 		<execute macro="UserSegmentContentDisplayPortlet#configureDisplayContent">
 			<var name="belongs" value="true" />
 			<var name="contentTitle" value="Web Content Title" />
@@ -837,6 +841,17 @@
 		</execute>
 
 		<execute macro="UserSegmentContentDisplayPortlet#savePG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="UserSegmentContentListPortlet#configureDisplayFilter">
+			<var name="assetTypeFilter" value="Web Content Article" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page Name" />
@@ -1384,6 +1399,10 @@
 
 		<execute action="Home#refresh" />
 
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
 		<execute macro="UserSegmentContentDisplayPortlet#configureDisplayContent">
 			<var name="belongs" value="true" />
 			<var name="contentTitle" value="Web Content Title All" />
@@ -1480,6 +1499,10 @@
 
 		<execute action="Home#refresh" />
 
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
 		<execute macro="UserSegmentContentDisplayPortlet#configureDisplayContent">
 			<var name="belongs" value="true" />
 			<var name="contentTitle" value="Web Content Title Any" />
@@ -1559,6 +1582,10 @@
 		</execute>
 
 		<execute action="Home#refresh" />
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
 
 		<execute macro="UserSegmentContentDisplayPortlet#configureDisplayContent">
 			<var name="belongs" value="true" />
@@ -1684,6 +1711,10 @@
 
 		<execute action="Home#refresh" />
 
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
 		<execute macro="UserSegmentContentDisplayPortlet#configureDisplayContent">
 			<var name="contentTitle" value="Web Content Title Female" />
 			<var name="contentType" value="Web Content Article" />
@@ -1801,6 +1832,10 @@
 
 		<execute action="Home#refresh" />
 
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
 		<execute macro="UserSegmentContentDisplayPortlet#configureDisplayContent">
 			<var name="belongs" value="true" />
 			<var name="contentTitle" value="Web Content Title" />
@@ -1889,6 +1924,10 @@
 		</execute>
 
 		<execute action="Home#refresh" />
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
 
 		<execute macro="UserSegmentContentDisplayPortlet#configureDisplayContent">
 			<var name="belongs" value="true" />

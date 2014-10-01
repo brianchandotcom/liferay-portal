@@ -750,6 +750,8 @@
 			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Organization Member" />
 		</execute>
+
+		<execute macro="Organization#tearDownCP" />
 	</command>
 
 	<command name="AddUserSegmentUserAttributesOrganizationRoleCP" priority="5">
@@ -792,6 +794,8 @@
 			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Organization Role" />
 		</execute>
+
+		<execute macro="Organization#tearDownCP" />
 	</command>
 
 	<command name="AddUserSegmentUserAttributesRegularRoleCP" priority="5">
@@ -1163,10 +1167,15 @@
 
 		<execute action="Home#refresh" />
 
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
 		<execute macro="UserSegmentContentDisplayPortlet#configureDisplayContent">
 			<var name="contentTitle" value="Targeted Web Content Title" />
 			<var name="contentType" value="Web Content Article" />
 			<var name="doesNotBelong" value="true" />
+			<var name="rowNumber" value="1" />
 			<var name="toAny" value="true" />
 			<var name="userSegmentName" value="Female Users" />
 			<var name="viewEntryPG" value="Female Users" />
@@ -1191,6 +1200,7 @@
 			<var name="doesNotBelong" value="true" />
 			<var name="otherwiseContentTitle" value="Targeted Web Content Title 2" />
 			<var name="otherwiseContentType" value="Basic Web Content" />
+			<var name="rowNumber" value="1" />
 			<var name="toAny" value="true" />
 			<var name="userSegmentName" value="Female Users" />
 			<var name="viewEntryPG" value="Female Users" />

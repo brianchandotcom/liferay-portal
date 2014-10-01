@@ -449,8 +449,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		String[] excludes = new String[] {
 			"**\\.bnd\\**", "**\\.idea\\**", "**\\.ivy\\**",
 			"portal-impl\\**\\*.action", "portal-impl\\**\\*.function",
-			"portal-impl\\**\\*.macro", "portal-impl\\**\\*.testcase",
-			"tools\\sdk\\**"
+			"portal-impl\\**\\*.macro", "portal-impl\\**\\*.testcase"
 		};
 
 		String[] includes = new String[] {
@@ -459,10 +458,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		};
 
 		_friendlyUrlRoutesSortExclusions = getPropertyList(
-			"friendly.url.routes.sort.excludes");
+			"friendly.url.routes.sort.excludes.files");
 		_numericalPortletNameElementExclusions = getPropertyList(
-			"numerical.portlet.name.element.excludes");
-		_xmlExclusions = getPropertyList("xml.excludes");
+			"numerical.portlet.name.element.excludes.files");
+		_xmlExclusions = getPropertyList("xml.excludes.files");
 
 		List<String> fileNames = getFileNames(excludes, includes);
 

@@ -16,14 +16,19 @@ package com.liferay.portal.tools.sourceformatter;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.util.ContentUtil;
 
 import java.io.File;
-import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
+import java.util.Enumeration;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * @author Hugo Huijser
@@ -39,7 +44,12 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			return formatPortletProperties(content);
 		}
 
-		formatPortalProperties(fileName, content);
+		if (fileName.endsWith("source-formatter.properties")) {
+			formatSourceFormatterProperties(fileName, content);
+		}
+		else {
+			formatPortalProperties(fileName, content);
+		}
 
 		return content;
 	}
@@ -52,13 +62,14 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 		if (portalSource) {
 			includes = new String[] {
-				"**\\portal-ext.properties", "**\\portal-legacy-*.properties"
+				"**\\portal-ext.properties", "**\\portal-legacy-*.properties",
+				"**\\source-formatter.properties"
 			};
 		}
 		else {
 			includes = new String[] {
 				"**\\portal.properties", "**\\portal-ext.properties",
-				"**\\portlet.properties"
+				"**\\portlet.properties", "**\\source-formatter.properties"
 			};
 		}
 
@@ -112,7 +123,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected void formatPortalProperties(String fileName, String content)
-		throws IOException {
+		throws Exception {
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(content));
@@ -160,6 +171,60 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return content;
+	}
+
+	protected void formatSourceFormatterProperties (
+			String fileName, String content)
+		throws Exception {
+
+		String path = StringPool.BLANK;
+
+		int pos = fileName.lastIndexOf(StringPool.SLASH);
+
+		if (pos != -1) {
+			path = fileName.substring(0, pos + 1);
+		}
+
+		Properties properties = new Properties();
+
+		InputStream inputStream = new FileInputStream(fileName);
+
+		properties.load(inputStream);
+
+		Enumeration<String> enu =
+			(Enumeration<String>)properties.propertyNames();
+
+		while (enu.hasMoreElements()) {
+			String key = enu.nextElement();
+
+			if (!key.endsWith("excludes.files")) {
+				continue;
+			}
+
+			String value = properties.getProperty(key);
+
+			if (Validator.isNull(value)) {
+				continue;
+			}
+
+			List<String> propertyFileNames = ListUtil.fromString(
+				value, StringPool.COMMA);
+
+			for (String propertyFileName : propertyFileNames) {
+				pos = propertyFileName.indexOf(StringPool.AT);
+
+				if (pos != -1) {
+					propertyFileName = propertyFileName.substring(0, pos);
+				}
+
+				if (!fileUtil.exists(path + propertyFileName)) {
+					processErrorMessage(
+						fileName,
+						"Incorrect property value: " + propertyFileName + " " +
+							fileName);
+				}
+			}
+		}
 	}
 
 	private String _portalPortalPropertiesContent;

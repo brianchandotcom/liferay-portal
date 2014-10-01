@@ -1214,20 +1214,23 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_allowUseServiceUtilInServiceImpl = GetterUtil.getBoolean(
 			getProperty("allow.use.service.util.in.service.impl"));
 		_fitOnSingleLineExclusions = getPropertyList(
-			"fit.on.single.line.exludes");
+			"fit.on.single.line.excludes.files");
 		_hibernateSQLQueryExclusions = getPropertyList(
-			"hibernate.sql.query.excludes");
+			"hibernate.sql.query.excludes.files");
 		_javaTermAccessLevelModifierExclusions = getPropertyList(
-			"javaterm.access.level.modifier.excludes");
-		_javaTermSortExclusions = getPropertyList("javaterm.sort.excludes");
-		_lineLengthExclusions = getPropertyList("line.length.excludes");
-		_proxyExclusions = getPropertyList("proxy.excludes");
-		_secureRandomExclusions = getPropertyList("secure.random.excludes");
-		_staticLogVariableExclusions = getPropertyList("static.log.excludes");
+			"javaterm.access.level.modifier.excludes.files");
+		_javaTermSortExclusions = getPropertyList(
+			"javaterm.sort.excludes.files");
+		_lineLengthExclusions = getPropertyList("line.length.excludes.files");
+		_proxyExclusions = getPropertyList("proxy.excludes.files");
+		_secureRandomExclusions = getPropertyList(
+			"secure.random.excludes.files");
+		_staticLogVariableExclusions = getPropertyList(
+			"static.log.excludes.files");
 		_testAnnotationsExclusions = getPropertyList(
-			"test.annotations.excludes");
+			"test.annotations.excludes.files");
 		_upgradeServiceUtilExclusions = getPropertyList(
-			"upgrade.service.util.excludes");
+			"upgrade.service.util.excludes.files");
 
 		for (String fileName : fileNames) {
 			format(fileName);
@@ -2332,7 +2335,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"**\\portal\\service\\**", "**\\portal-client\\**",
 			"**\\portal-web\\test\\**\\*Test.java",
 			"**\\portlet\\**\\service\\**", "**\\test\\*-generated\\**",
-			"**\\tools\\sdk\\**", "**\\tools\\sourceformatter\\**"
+			"**\\tools\\sourceformatter\\**"
 		};
 		String[] includes = new String[] {"**\\*.java"};
 

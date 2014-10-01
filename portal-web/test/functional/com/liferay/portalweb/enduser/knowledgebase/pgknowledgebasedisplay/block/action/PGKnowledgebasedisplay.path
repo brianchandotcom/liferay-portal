@@ -124,6 +124,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--RELATED_ASSETS-->
+<tr>
+	<td>RELATED_ASSETS_HEADER</td>
+	<td>//h2[contains(@class,'asset-links-title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RELATED_ASSETS_LINKS</td>
+	<td>//ul[@class='asset-links-list']/li/span/a[contains(.,'${key_kbArticleRelatedAssetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ACTIONS_MENULIST-->
 <tr>
 	<td>ACTIONS_MENULIST_ADD_CHILD_ARTICLE</td>

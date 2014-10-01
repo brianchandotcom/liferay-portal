@@ -1,0 +1,77 @@
+<html>
+<head>
+<title>CPKnowledgebaseadminViewRelatedAsset</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPKnowledgebaseadminViewRelatedAsset</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPKnowledgebaseadminViewRelatedAsset</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>BACK_TO_HEADER</td>
+	<td>//h3[@class='header-title']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BLOGS_ENTRY-->
+<tr>
+	<td>BLOGS_ENTRY_TITLE</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLOGS_ENTRY_CONTENT</td>
+	<td>//div[@class='asset-content']/p</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MESSAGE_BOARDS_THREAD-->
+<tr>
+	<td>MESSAGE_BOARDS_THREAD_TITLE</td>
+	<td>//div[@class='subject']/strong</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_BOARDS_THREAD_CONTENT</td>
+	<td>//div[@class='thread-body']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RELATED_ASSETS-->
+<tr>
+	<td>RELATED_ASSETS_HEADER</td>
+	<td>//h2[contains(@class,'asset-links-title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RELATED_ASSETS_LINKS</td>
+	<td>//ul[@class='asset-links-list']/li/span/a[contains(.,'${key_kbArticleRelatedAssetTitle}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

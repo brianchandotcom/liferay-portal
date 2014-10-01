@@ -127,6 +127,7 @@
 		</if>
 
 		<execute action="CPBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
+		<execute action="CPBlogsAdd#pause" locator1="1000" />
 		<execute action="CPBlogsAdd#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<var name="key_entryTitle" value="${entryTitle}" />
@@ -736,7 +737,6 @@
 	</command>
 
 	<command name="entryAddSubtitleCmdCP">
-		<execute action="CPBlogsAdd#assertTextEquals" locator-key1="SUBTITLE_FIELD_LABEL" value1="Subtitle" />
 		<execute action="CPBlogsAdd#type" locator-key1="SUBTITLE_FIELD" value1="${entrySubtitle}" />
 	</command>
 

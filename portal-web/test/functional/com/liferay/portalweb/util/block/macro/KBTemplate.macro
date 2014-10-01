@@ -27,10 +27,15 @@
 
 		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="NAVIGATION_TEMPLATES" value1="Templates" />
 
-		<execute action="CPKnowledgebaseadminTemplates#check" locator-key1="TEMPLATE_TABLE_CHECKBOX_ALL" />
-		<execute action="CPKnowledgebaseadminTemplates#assertClick" locator-key1="DELETE_BUTTON" value1="Delete" />
-		<execute action="CPKnowledgebaseadminTemplates#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected templates?" />
-		<execute action="CPKnowledgebaseadminTemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<if>
+			<condition action="CPKnowledgebaseadminTemplates#isElementPresent" locator-key1="TEMPLATE_TABLE_CHECKBOX_ALL" />
+			<then>
+				<execute action="CPKnowledgebaseadminTemplates#check" locator-key1="TEMPLATE_TABLE_CHECKBOX_ALL" />
+				<execute action="CPKnowledgebaseadminTemplates#assertClick" locator-key1="DELETE_BUTTON" value1="Delete" />
+				<execute action="CPKnowledgebaseadminTemplates#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected templates?" />
+				<execute action="CPKnowledgebaseadminTemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+			</then>
+		</if>
 	</command>
 
 	<command name="viewCP">

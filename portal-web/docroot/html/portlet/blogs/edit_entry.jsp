@@ -40,6 +40,7 @@ if (!customAbstract) {
 
 boolean allowPingbacks = PropsValues.BLOGS_PINGBACK_ENABLED && BeanParamUtil.getBoolean(entry, request, "allowPingbacks", true);
 boolean allowTrackbacks = PropsValues.BLOGS_TRACKBACK_ENABLED && BeanParamUtil.getBoolean(entry, request, "allowTrackbacks", true);
+long coverImageFileEntryId = BeanParamUtil.getLong(entry, request, "coverImageFileEntryId");
 long smallImageFileEntryId = BeanParamUtil.getLong(entry, request, "smallImageFileEntryId");
 
 boolean preview = ParamUtil.getBoolean(request, "preview");
@@ -108,6 +109,10 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 		type="pills"
 	>
 		<liferay-ui:section>
+			<div class="lfr-blogs-cover-image-selector">
+				<liferay-ui:image-selector draggableImage="vertical" fileEntryId="<%= coverImageFileEntryId %>" paramName="coverImageFileEntry" />
+			</div>
+
 			<div class="entry-title">
 				<h2><liferay-ui:input-editor contents="<%= title %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="title" placeholder="title" /></h2>
 			</div>

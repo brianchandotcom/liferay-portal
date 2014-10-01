@@ -260,7 +260,9 @@ public class DLFileEntryIndexer extends BaseIndexer {
 		long searchRepositoryId = GetterUtil.getLong(
 			searchContext.getAttribute("searchRepositoryId"));
 
-		searchQuery.addRequiredTerm("repositoryId", searchRepositoryId);
+		if (searchRepositoryId != 0) {
+			searchQuery.addRequiredTerm("repositoryId", searchRepositoryId);
+		}
 
 		String keywords = searchContext.getKeywords();
 

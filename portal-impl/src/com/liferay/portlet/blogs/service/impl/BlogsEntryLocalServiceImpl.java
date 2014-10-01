@@ -192,19 +192,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				PortletFileRepositoryUtil.getPortletFileEntry(
 					smallImageFileEntryId);
 
-			Folder folder = PortletFileRepositoryUtil.addPortletFolder(
-				groupId, userId, PortletKeys.BLOGS,
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				String.valueOf(entryId), serviceContext);
-
-			FileEntry fileEntry =
-				PortletFileRepositoryUtil.addPortletFileEntry(
-					groupId, userId, BlogsEntry.class.getName(), entryId,
-					PortletKeys.BLOGS, folder.getFolderId(),
-					tempFileEntry.getContentStream(), tempFileEntry.getTitle(),
-					tempFileEntry.getMimeType(), false);
-
-			smallImageFileEntryId = fileEntry.getFileEntryId();
+			smallImageFileEntryId = addSmallImageFileEntry(
+				userId, groupId, entryId, tempFileEntry.getMimeType(),
+				tempFileEntry.getTitle(), tempFileEntry.getContentStream());
 
 			PortletFileRepositoryUtil.deletePortletFileEntry(
 				tempFileEntry.getFileEntryId());
@@ -1144,16 +1134,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 					PortletFileRepositoryUtil.getPortletFileEntry(
 						imageSelector.getImageId());
 
-				FileEntry fileEntry =
-					PortletFileRepositoryUtil.addPortletFileEntry(
-						entry.getGroupId(), userId, BlogsEntry.class.getName(),
-						entry.getEntryId(), PortletKeys.BLOGS,
-						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-						tempFileEntry.getContentStream(),
-						tempFileEntry.getTitle(), tempFileEntry.getMimeType(),
-						false);
-
-				smallImageFileEntryId = fileEntry.getFileEntryId();
+				smallImageFileEntryId = addSmallImageFileEntry(
+					userId, entry.getGroupId(), entry.getEntryId(),
+					tempFileEntry.getMimeType(), tempFileEntry.getTitle(),
+					tempFileEntry.getContentStream());
 
 				PortletFileRepositoryUtil.deletePortletFileEntry(
 					tempFileEntry.getFileEntryId());
@@ -1412,6 +1396,30 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				userId, groupId, BlogsEntry.class.getName(), entry.getEntryId(),
 				entry.getUserName());
 		}
+	}
+
+	protected long addSmallImageFileEntry(
+			long userId, long groupId, long entryId, String mimeType,
+			String title, InputStream is)
+		throws PortalException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		Folder folder = PortletFileRepositoryUtil.addPortletFolder(
+			groupId, userId, PortletKeys.BLOGS,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, String.valueOf(entryId),
+			serviceContext);
+
+		FileEntry fileEntry =
+			PortletFileRepositoryUtil.addPortletFileEntry(
+				groupId, userId, BlogsEntry.class.getName(), entryId,
+				PortletKeys.BLOGS, folder.getFolderId(), is, title, mimeType,
+				false);
+
+		return fileEntry.getFileEntryId();
 	}
 
 	protected void deleteDiscussion(BlogsEntry entry) throws PortalException {

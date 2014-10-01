@@ -276,7 +276,7 @@
 
 		<execute macro="ContentTargetingCampaign#addTrackingActionPageCP">
 			<var name="pageAlias" value="Page Alias" />
-			<var name="pageFriendlyURL" value="/home" />
+			<var name="pageFriendlyURL" value="/test-page-name" />
 			<var name="pageTrackingActionSelect" value="View" />
 		</execute>
 

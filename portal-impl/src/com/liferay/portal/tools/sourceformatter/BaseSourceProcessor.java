@@ -1491,20 +1491,15 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		Properties properties = new Properties();
 
-		if (portalSource) {
-			ClassLoader classLoader =
-				BaseSourceProcessor.class.getClassLoader();
-
-			properties.load(
-				classLoader.getResourceAsStream(
-					"com/liferay/portal/tools/dependencies/" + fileName));
-
-			return properties;
-		}
-
 		List<Properties> propertiesList = new ArrayList<Properties>();
 
-		for (int i = 0; i <= 2; i++) {
+		int level = 2;
+
+		if (portalSource) {
+			level = 3;
+		}
+
+		for (int i = 0; i <= level; i++) {
 			try {
 				InputStream inputStream = new FileInputStream(fileName);
 

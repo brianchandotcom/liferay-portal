@@ -132,7 +132,7 @@ public class BlogsTestUtil {
 			boolean allowTrackbacks = true;
 			String[] trackbacks = new String[0];
 
-			ImageSelector imageSelector = null;
+			ImageSelector smallImageSelector = null;
 
 			if (smallImage) {
 				Class<?> clazz = BlogsTestUtil.class;
@@ -156,7 +156,7 @@ public class BlogsTestUtil {
 						MimeTypesUtil.getContentType("image.jpg"));
 				}
 
-				imageSelector = new ImageSelector(
+				smallImageSelector = new ImageSelector(
 					fileEntry.getFileEntryId(), StringPool.BLANK, null);
 			}
 
@@ -169,7 +169,7 @@ public class BlogsTestUtil {
 				userId, title, subtitle, description, content, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-				imageSelector, serviceContext);
+				smallImageSelector, serviceContext);
 
 			if (approved) {
 				return updateStatus(entry, serviceContext);

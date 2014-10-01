@@ -341,6 +341,12 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		return ddlRecordFinder.countByR_S(recordSetId, status);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordVersionLocalServiceImpl#getRecordVersion(
+	 *             long)}
+	 */
+	@Deprecated
 	@Override
 	public DDLRecordVersion getRecordVersion(long recordVersionId)
 		throws PortalException {
@@ -348,6 +354,12 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		return ddlRecordVersionPersistence.findByPrimaryKey(recordVersionId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordVersionLocalServiceImpl#getRecordVersion(
+	 *             long, String)}
+	 */
+	@Deprecated
 	@Override
 	public DDLRecordVersion getRecordVersion(long recordId, String version)
 		throws PortalException {
@@ -355,6 +367,12 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		return ddlRecordVersionPersistence.findByR_V(recordId, version);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordVersionLocalServiceImpl#getRecordVersions(
+	 *             long, int, int, OrderByComparator)}
+	 */
+	@Deprecated
 	@Override
 	public List<DDLRecordVersion> getRecordVersions(
 		long recordId, int start, int end,
@@ -364,6 +382,12 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			recordId, start, end, orderByComparator);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordVersionLocalServiceImpl#getRecordVersionsCount(
+	 *             long)}
+	 */
+	@Deprecated
 	@Override
 	public int getRecordVersionsCount(long recordId) {
 		return ddlRecordVersionPersistence.countByRecordId(recordId);

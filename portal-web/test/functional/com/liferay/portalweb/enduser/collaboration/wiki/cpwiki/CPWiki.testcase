@@ -146,6 +146,10 @@
 			<var name="portletName" value="Wiki" />
 		</execute>
 
+		<execute macro="WikiNode#gotoCP" >
+			<var name="wikiNodeName" value="Main" />
+		</execute>
+
 		<execute macro="WikiPage#gotoCP">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>

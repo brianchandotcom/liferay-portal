@@ -62,80 +62,42 @@ if ((hiddenMessagesCount == 0) && (visibleMessagesCount == 0) && portletName.equ
 %>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />handleEntry',
-		function(entryId) {
-			var A = AUI();
+	function <portlet:namespace />handleEntry(entryId) {
+		var entry = AUI.$('#<portlet:namespace />' + entryId);
 
-			var entry = A.one('#<portlet:namespace />' + entryId);
+		var container = entry.parent();
 
-			if (entry) {
-				var container = entry.get('parentNode');
+		if (container.hasClass('unread-entries')) {
+			<portlet:namespace />markEntry(entryId);
+		}
+		else {
+			<portlet:namespace />toggleContent(entry);
+		}
+	}
 
-				if (container) {
-					if (container.hasClass('unread-entries')) {
-						<portlet:namespace />markEntry(entry, entryId);
-					}
-					else {
-						<portlet:namespace />toggleContent(entry);
-					}
-				}
-			}
-		},
-		['aui-base']
-	);
+	function <portlet:namespace />markEntry(entryId) {
+		Liferay.Service(
+			'/announcementsflag/add-flag',
+			{
+				entryId : entryId,
+				value: <%= AnnouncementsFlagConstants.HIDDEN %>
+			},
+			AUI.$.proxy(Liferay.Portlet, 'refresh', '#p_p_id<portlet:namespace />')
+		);
+	}
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />markEntry',
-		function(entry, entryId) {
-			var A = AUI();
+	function <portlet:namespace />toggleContent(entry) {
+		var content = entry.find('.entry-content');
+		var control = entry.find('.control-entry a');
 
-			Liferay.Service(
-				'/announcementsflag/add-flag',
-				{
-					entryId : entryId,
-					value: <%= AnnouncementsFlagConstants.HIDDEN %>
-				},
-				A.bind('refresh', Liferay.Portlet, '#p_p_id<portlet:namespace />')
-			);
-		},
-		['aui-base']
-	);
+		var visible = entry.hasClass('visible');
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />toggleContent',
-		function(entry) {
-			var A = AUI();
+		entry.toggleClass('visible', !visible);
 
-			var content = entry.all('.entry-content');
-			var control = entry.all('.control-entry a');
+		content.toggleClass('hide', visible);
 
-			if (entry.hasClass('visible')) {
-				entry.removeClass('visible');
+		var label = visible ? '<%= UnicodeLanguageUtil.get(request, "show") %>' : '<%= UnicodeLanguageUtil.get(request, "hide") %>';
 
-				if (content) {
-					content.hide();
-				}
-
-				if (control) {
-					control.html('<%= UnicodeLanguageUtil.get(request, "show") %>');
-				}
-			}
-			else {
-				entry.addClass('visible');
-
-				if (content) {
-					content.show();
-				}
-
-				if (control) {
-					control.html('<%= UnicodeLanguageUtil.get(request, "hide") %>');
-				}
-			}
-		},
-		['aui-base']
-	);
+		control.html(label);
+	}
 </aui:script>

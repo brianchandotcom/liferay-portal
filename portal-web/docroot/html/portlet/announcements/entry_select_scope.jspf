@@ -129,8 +129,8 @@ boolean hasDistributionScope = false;
 	</c:if>
 </aui:select>
 
-<aui:script use="aui-base">
+<aui:script>
 	if (<%= !hasDistributionScope %>) {
-		A.one('#<portlet:namespace />fieldSet').hide();
+		AUI.$('#<portlet:namespace />fieldSet').addClass('hide');
 	}
 </aui:script>

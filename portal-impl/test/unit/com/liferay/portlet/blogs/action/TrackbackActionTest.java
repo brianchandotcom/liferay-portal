@@ -91,7 +91,7 @@ public class TrackbackActionTest extends PowerMockito {
 
 		addTrackback();
 
-		assertError("Remote IP does not match the trackback URL's IP 123");
+		assertError("Remote IP does not match the trackback URL's IP");
 	}
 
 	@Test

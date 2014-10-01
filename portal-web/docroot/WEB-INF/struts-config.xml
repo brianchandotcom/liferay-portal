@@ -1457,12 +1457,6 @@
 
 		<action path="/navigation/view" forward="portlet.navigation.view" />
 
-		<!-- Nested Portlets -->
-
-		<action path="/nested_portlets/view" type="com.liferay.portlet.nestedportlets.action.ViewAction">
-			<forward name="portlet.nested_portlets.view" path="portlet.nested_portlets.view" />
-		</action>
-
 		<!-- News -->
 
 		<action path="/news/edit" type="com.liferay.portlet.news.action.EditPreferencesAction">

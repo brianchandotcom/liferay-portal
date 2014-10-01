@@ -54,5 +54,5 @@ String backURL = ParamUtil.getString(request, "backURL");
 	backURL="<%= backURL %>"
 	names="<%= tabs1Names %>"
 	url="<%= viewURL.toString() %>"
-	url1="<%= cartURL.toString() %>"
+	urls="<%= new String[] {StringPool.BLANK, cartURL.toString()} %>"
 />

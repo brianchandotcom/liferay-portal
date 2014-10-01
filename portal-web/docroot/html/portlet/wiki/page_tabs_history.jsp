@@ -41,6 +41,5 @@ viewPageActivitiesURL.setParameter("struts_action", "/wiki/view_page_activities"
 <liferay-ui:tabs
 	names="activities,versions"
 	param="tabs3"
-	url0="<%= viewPageActivitiesURL.toString() %>"
-	url1="<%= viewPageHistoryURL.toString() %>"
+	urls="<%= new String[] {viewPageActivitiesURL.toString(), viewPageHistoryURL.toString()} %>"
 />

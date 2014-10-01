@@ -4140,51 +4140,66 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>urls</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Deprecated as of 7.0.0, replaced by liferay-ui:tabs#urls</description>
 			<name>url0</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Deprecated as of 7.0.0, replaced by liferay-ui:tabs#urls</description>
 			<name>url1</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Deprecated as of 7.0.0, replaced by liferay-ui:tabs#urls</description>
 			<name>url2</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Deprecated as of 7.0.0, replaced by liferay-ui:tabs#urls</description>
 			<name>url3</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Deprecated as of 7.0.0, replaced by liferay-ui:tabs#urls</description>
 			<name>url4</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Deprecated as of 7.0.0, replaced by liferay-ui:tabs#urls</description>
 			<name>url5</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Deprecated as of 7.0.0, replaced by liferay-ui:tabs#urls</description>
 			<name>url6</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Deprecated as of 7.0.0, replaced by liferay-ui:tabs#urls</description>
 			<name>url7</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Deprecated as of 7.0.0, replaced by liferay-ui:tabs#urls</description>
 			<name>url8</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Deprecated as of 7.0.0, replaced by liferay-ui:tabs#urls</description>
 			<name>url9</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

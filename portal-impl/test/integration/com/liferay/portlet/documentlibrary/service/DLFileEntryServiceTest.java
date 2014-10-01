@@ -39,7 +39,6 @@ import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;

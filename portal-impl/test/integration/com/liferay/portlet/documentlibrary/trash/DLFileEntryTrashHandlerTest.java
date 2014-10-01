@@ -46,7 +46,6 @@ import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileRankLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
@@ -73,17 +72,6 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class DLFileEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
-
-	@Test
-	public void testTrashDLFileRank() throws Exception {
-		trashDLFileRank();
-	}
-
-	@Ignore()
-	@Override
-	@Test
-	public void testTrashVersionParentBaseModelAndRestore() throws Exception {
-	}
 
 	@Test
 	public void testFileNameUpdateWhenUpdatingTitle() throws Exception {
@@ -113,6 +101,17 @@ public class DLFileEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 		Assert.assertEquals(
 			DLUtil.getSanitizedFileName(newTitle, dlFileVersion.getExtension()),
 			dlFileVersion.getFileName());
+	}
+
+	@Test
+	public void testTrashDLFileRank() throws Exception {
+		trashDLFileRank();
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashVersionParentBaseModelAndRestore() throws Exception {
 	}
 
 	@Override

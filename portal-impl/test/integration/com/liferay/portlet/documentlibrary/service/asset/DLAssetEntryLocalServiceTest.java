@@ -62,8 +62,8 @@ public class DLAssetEntryLocalServiceTest {
 			fileEntry.getCreateDate(), fileEntry.getModifiedDate(),
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId(),
 			fileEntry.getUuid(), 0, null, null, true, null, null, null,
-			fileEntry.getMimeType(), newTitle, fileEntry.getDescription(),
-			null, null, null, 0, 0, null, true);
+			fileEntry.getMimeType(), newTitle, fileEntry.getDescription(), null,
+			null, null, 0, 0, null, true);
 
 		fileEntry = DLAppLocalServiceUtil.getFileEntry(
 			fileEntry.getFileEntryId());

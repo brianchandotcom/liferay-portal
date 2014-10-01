@@ -379,7 +379,6 @@
 		<execute action="CPKaleoformsadminNewprocessSelectformNewform#selectFrame" locator-key1="FORM_IFRAME" />
 		<execute action="CPKaleoformsadminNewprocessSelectformNewform#assertClick" locator-key1="SAVE_AND_CONTINUE_BUTTON" value1="Save and Continue" />
 		<execute action="CPKaleoformsadminNewprocessSelectformNewform#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPKaleoformsadminNewprocessSelectformNewform#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="saveFieldSet">

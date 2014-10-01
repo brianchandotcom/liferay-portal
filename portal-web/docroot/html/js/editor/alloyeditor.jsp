@@ -38,6 +38,7 @@ if (!_alloyEditorConfigFileNames.contains(alloyEditorConfigFileName)) {
 String alloyEditorMode = ParamUtil.getString(request, "alloyEditorMode");
 
 Map<String, String> configParamsMap = (Map<String, String>)request.getAttribute("liferay-ui:input-editor:configParams");
+Map<String, String> fileBrowserParamsMap = (Map<String, String>)request.getAttribute("liferay-ui:input-editor:fileBrowserParams");
 
 String configParams = marshallParams(configParamsMap);
 
@@ -96,6 +97,15 @@ if (alloyEditorMode.equals("text")) {
 							base: Liferay.AUI.getJavaScriptRootPath() + '/editor/alloyeditor/',
 							combine: Liferay.AUI.getCombine(),
 							comboBase: Liferay.AUI.getComboPath(),
+							modules: {
+								'button-imageselector': {
+									path: 'buttons/button_image_selector.js',
+									requires: [
+										'aui-base',
+										'button-base'
+									]
+								}
+							},
 							root: Liferay.AUI.getJavaScriptRootPath() + '/editor/alloyeditor/'
 						}
 					}
@@ -210,7 +220,27 @@ if (alloyEditorMode.equals("text")) {
 	CKEDITOR.inline(
 		'<%= name %>',
 		{
-			customConfig: '<%= PortalUtil.getPathContext() %>/html/js/editor/alloyeditor/<%= HtmlUtil.escapeJS(alloyEditorConfigFileName) %>?p_p_id=<%= HttpUtil.encodeURL(portletId) %>&p_main_path=<%= HttpUtil.encodeURL(mainPath) %>&contentsLanguageId=<%= HttpUtil.encodeURL(contentsLanguageId) %>&colorSchemeCssClass=<%= HttpUtil.encodeURL(themeDisplay.getColorScheme().getCssClass()) %>&cssClasses=<%= HttpUtil.encodeURL(cssClasses) %>&cssPath=<%= HttpUtil.encodeURL(themeDisplay.getPathThemeCss()) %>&doAsGroupId=<%= HttpUtil.encodeURL(String.valueOf(doAsGroupId)) %>&doAsUserId=<%= HttpUtil.encodeURL(doAsUserId) %>&imagesPath=<%= HttpUtil.encodeURL(themeDisplay.getPathThemeImages()) %>&inlineEdit=<%= inlineEdit %><%= configParams %>&languageId=<%= HttpUtil.encodeURL(LocaleUtil.toLanguageId(locale)) %>&name=<%= name %>&resizable=<%= resizable %>&toolbarSet=<%= HttpUtil.encodeURL(toolbarSet) %>'
+			customConfig: '<%= PortalUtil.getPathContext() %>/html/js/editor/alloyeditor/<%= HtmlUtil.escapeJS(alloyEditorConfigFileName) %>?p_p_id=<%= HttpUtil.encodeURL(portletId) %>&p_main_path=<%= HttpUtil.encodeURL(mainPath) %>&contentsLanguageId=<%= HttpUtil.encodeURL(contentsLanguageId) %>&colorSchemeCssClass=<%= HttpUtil.encodeURL(themeDisplay.getColorScheme().getCssClass()) %>&cssClasses=<%= HttpUtil.encodeURL(cssClasses) %>&cssPath=<%= HttpUtil.encodeURL(themeDisplay.getPathThemeCss()) %>&doAsGroupId=<%= HttpUtil.encodeURL(String.valueOf(doAsGroupId)) %>&doAsUserId=<%= HttpUtil.encodeURL(doAsUserId) %>&imagesPath=<%= HttpUtil.encodeURL(themeDisplay.getPathThemeImages()) %>&inlineEdit=<%= inlineEdit %><%= configParams %>&languageId=<%= HttpUtil.encodeURL(LocaleUtil.toLanguageId(locale)) %>&name=<%= name %>&resizable=<%= resizable %>&toolbarSet=<%= HttpUtil.encodeURL(toolbarSet) %>',
+
+				<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_SELECTOR %>" varImpl="documentSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<portlet:param name="struts_action" value="/document_selector/view" />
+					<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+					<portlet:param name="eventName" value='<%= name + "selectDocument" %>' />
+					<portlet:param name="showGroupsSelector" value="true" />
+				</liferay-portlet:renderURL>
+
+				<%
+				if (fileBrowserParamsMap != null) {
+					for (Map.Entry<String, String> entry : fileBrowserParamsMap.entrySet()) {
+						documentSelectorURL.setParameter(entry.getKey(), entry.getValue());
+					}
+				}
+				%>
+
+				filebrowserBrowseUrl: '<%= documentSelectorURL %>',
+				filebrowserFlashBrowseUrl: '<%= documentSelectorURL %>&Type=flash',
+				filebrowserImageBrowseLinkUrl: '<%= documentSelectorURL %>&Type=image',
+				filebrowserImageBrowseUrl: '<%= documentSelectorURL %>&Type=image'
 		}
 	);
 

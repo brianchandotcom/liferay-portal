@@ -1540,15 +1540,18 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 					continue;
 				}
 
-				if (properties.containsKey(key)) {
+				if (key.contains("excludes")) {
 					String existingValue = properties.getProperty(key);
 
 					if (Validator.isNotNull(existingValue)) {
 						value = existingValue + StringPool.COMMA + value;
 					}
-				}
 
-				properties.put(key, value);
+					properties.put(key, value);
+				}
+				else if (!properties.containsKey(key)) {
+					properties.put(key, value);
+				}
 			}
 		}
 

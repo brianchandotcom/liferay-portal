@@ -92,11 +92,7 @@ public class VerifyJournal extends VerifyProcess {
 				continue;
 			}
 
-			List<Element> nestedElements = element.elements("dynamic-element");
-
-			if (!nestedElements.isEmpty()) {
-				updateElements(nestedElements);
-			}
+			updateElements(element.elements("dynamic-element"));
 
 			Element dynamicContentElement = element.element("dynamic-content");
 
@@ -210,9 +206,7 @@ public class VerifyJournal extends VerifyProcess {
 
 				Element rootElement = document.getRootElement();
 
-				List<Element> elements = rootElement.elements();
-
-				updateElements(elements);
+				updateElements(rootElement.elements());
 
 				article.setContent(document.asXML());
 

@@ -132,6 +132,7 @@ public class BlogsTestUtil {
 			boolean allowTrackbacks = true;
 			String[] trackbacks = new String[0];
 
+			ImageSelector coverImageSelector = null;
 			ImageSelector smallImageSelector = null;
 
 			if (smallImage) {
@@ -169,7 +170,7 @@ public class BlogsTestUtil {
 				userId, title, subtitle, description, content, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-				smallImageSelector, serviceContext);
+				coverImageSelector, smallImageSelector, serviceContext);
 
 			if (approved) {
 				return updateStatus(entry, serviceContext);
@@ -245,7 +246,7 @@ public class BlogsTestUtil {
 			entry = BlogsEntryLocalServiceUtil.updateEntry(
 				entry.getUserId(), entry.getEntryId(), title,
 				entry.getSubtitle(), entry.getDescription(), entry.getContent(),
-				1, 1, 2012, 12, 00, true, true, new String[0], null,
+				1, 1, 2012, 12, 00, true, true, new String[0], null, null,
 				serviceContext);
 
 			if (approved) {

@@ -432,7 +432,7 @@ public class EditEntryAction extends PortletAction {
 				entry.getDescription(), content, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, entry.getAllowPingbacks(),
-				entry.getAllowTrackbacks(), null, null, serviceContext);
+				entry.getAllowTrackbacks(), null, null, null, serviceContext);
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -485,6 +485,17 @@ public class EditEntryAction extends PortletAction {
 		String[] trackbacks = StringUtil.split(
 			ParamUtil.getString(actionRequest, "trackbacks"));
 
+		long coverImageFileEntryId = ParamUtil.getLong(
+			actionRequest, "coverImageFileEntryId");
+		String coverImageURL = ParamUtil.getString(
+			actionRequest, "coverImageURL");
+		String coverImageFileEntryCropRegion = ParamUtil.getString(
+			actionRequest, "coverImageFileEntryCropRegion");
+
+		ImageSelector coverImageSelector = new ImageSelector(
+			coverImageFileEntryId, coverImageURL,
+			coverImageFileEntryCropRegion);
+
 		long smallImageFileEntryId = ParamUtil.getLong(
 			actionRequest, "smallImageFileEntryId");
 		String smallImageURL = ParamUtil.getString(
@@ -507,7 +518,7 @@ public class EditEntryAction extends PortletAction {
 				title, subtitle, description, content, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-				smallImageSelector, serviceContext);
+				coverImageSelector, smallImageSelector, serviceContext);
 
 			AssetPublisherUtil.addAndStoreSelection(
 				actionRequest, BlogsEntry.class.getName(), entry.getEntryId(),
@@ -537,8 +548,8 @@ public class EditEntryAction extends PortletAction {
 				entryId, title, subtitle, description, content,
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, allowPingbacks,
-				allowTrackbacks, trackbacks, smallImageSelector,
-				serviceContext);
+				allowTrackbacks, trackbacks, coverImageSelector,
+				smallImageSelector, serviceContext);
 
 			if (!tempOldUrlTitle.equals(entry.getUrlTitle())) {
 				oldUrlTitle = tempOldUrlTitle;

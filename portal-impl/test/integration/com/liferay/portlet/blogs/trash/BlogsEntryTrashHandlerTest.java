@@ -191,6 +191,7 @@ public class BlogsEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 		boolean allowPingbacks = true;
 		boolean allowTrackbacks = true;
 		String[] trackbacks = new String[0];
+		ImageSelector coverImageSelector = null;
 		ImageSelector smallImageSelector = null;
 
 		serviceContext = (ServiceContext)serviceContext.clone();
@@ -201,7 +202,7 @@ public class BlogsEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 			TestPropsValues.getUserId(), title, subtitle, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-			smallImageSelector, serviceContext);
+			coverImageSelector, smallImageSelector, serviceContext);
 
 		if (approved) {
 			entry = BlogsEntryLocalServiceUtil.updateStatus(

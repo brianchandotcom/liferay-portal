@@ -334,21 +334,45 @@ public interface DDLRecordLocalService extends BaseLocalService,
 		long recordId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordVersionLocalServiceImpl#getRecordVersion(
+	long, String)}
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getRecordVersion(
 		long recordId, java.lang.String version)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordVersionLocalServiceImpl#getRecordVersion(
+	long)}
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getRecordVersion(
 		long recordVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordVersionLocalServiceImpl#getRecordVersions(
+	long, int, int, OrderByComparator)}
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> getRecordVersions(
 		long recordId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> orderByComparator);
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordVersionLocalServiceImpl#getRecordVersionsCount(
+	long)}
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRecordVersionsCount(long recordId);
 

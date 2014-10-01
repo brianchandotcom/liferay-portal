@@ -23,9 +23,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.portlet.dynamicdatalists.service.http.DDLRecordVersionServiceSoap}.
  *
  * @author Brian Wing Shun Chan
+ * @see com.liferay.portlet.dynamicdatalists.service.http.DDLRecordVersionServiceSoap
  * @generated
  */
 @ProviderType

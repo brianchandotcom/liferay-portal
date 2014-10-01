@@ -488,6 +488,11 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	@Override
+	public void persist() {
+		_ddlRecordVersion.persist();
+	}
+
+	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_ddlRecordVersion.setCachedModel(cachedModel);
 	}

@@ -69,6 +69,7 @@ AUI.add(
 
 						instance._eventHandles = [
 							instance.rootNode.delegate(STR_CLICK, instance._onBrowseClick, '.browse-image', instance),
+							instance.one('#image').on('load', instance._onImageUpdated, instance),
 							instance.one('#removeImage').on(STR_CLICK, instance._updateImageData, instance)
 						];
 					},
@@ -214,7 +215,7 @@ AUI.add(
 												instance._constrainVertical(event);
 											}
 										},
-										'drag:end': A.bind(instance._notifyImageUpdated, instance)
+										'drag:end': A.bind(instance._onImageUpdated, instance)
 									}
 								}
 							).plug(
@@ -228,14 +229,16 @@ AUI.add(
 						}
 					},
 
-					_notifyImageUpdated: function(event) {
+					_onImageUpdated: function(event) {
 						var instance = this;
 
-						var cropRegion = instance._getCropRegion();
+						if (instance.get('draggableImage') !== 'none') {
+							var cropRegion = instance._getCropRegion();
 
-						var cropRegionNode = instance.rootNode.one('#' + instance.get('paramName') + 'CropRegion');
+							var cropRegionNode = instance.rootNode.one('#' + instance.get('paramName') + 'CropRegion');
 
-						cropRegionNode.val(A.JSON.stringify(cropRegion));
+							cropRegionNode.val(A.JSON.stringify(cropRegion));
+						}
 					},
 
 					_onBrowseClick: function(event) {

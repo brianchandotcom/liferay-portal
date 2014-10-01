@@ -145,11 +145,23 @@ AUI.add(
 						var scaleY = naturalSize.height / imagePreview.height();
 						var scaleX = naturalSize.width / imagePreview.width();
 
+						var posX = 0;
+
+						if (naturalSize.width > imagePreviewWrapper.width()) {
+							posX = Math.ceil((imagePreviewWrapper.getX() - imagePreview.getX()) * scaleX);
+						}
+
+						var posY = 0;
+
+						if (naturalSize.height > imagePreviewWrapper.height()) {
+							posY = Math.ceil((imagePreviewWrapper.getY() - imagePreview.getY()) * scaleY);
+						}
+
 						var cropRegion = {
 							height: Math.ceil(imagePreviewWrapper.height() * scaleY),
 							width: naturalSize.width,
-							x: Math.ceil((imagePreviewWrapper.getX() - imagePreview.getX()) * scaleX),
-							y: Math.ceil((imagePreviewWrapper.getY() - imagePreview.getY()) * scaleY)
+							x: posX,
+							y: posY
 						};
 
 						return cropRegion;

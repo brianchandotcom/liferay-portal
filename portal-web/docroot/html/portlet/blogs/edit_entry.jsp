@@ -150,6 +150,23 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 		<liferay-ui:section>
 			<aui:input name="displayDate" />
 
+			<c:if test="<%= (entry != null) && blogsSettings.isEmailEntryUpdatedEnabled() %>">
+
+				<%
+				boolean sendEmailEntryUpdated = ParamUtil.getBoolean(request, "sendEmailEntryUpdated");
+				%>
+
+				<aui:input name="sendEmailEntryUpdated" type="checkbox" value="<%= sendEmailEntryUpdated %>" />
+
+				<%
+				String emailEntryUpdatedComment = ParamUtil.getString(request, "emailEntryUpdatedComment");
+				%>
+
+				<div id="<portlet:namespace />emailEntryUpdatedCommentWrapper">
+					<aui:input label="comments-regarding-the-blog-entry-update" name="emailEntryUpdatedComment" type="textarea" value="<%= emailEntryUpdatedComment %>" />
+				</div>
+			</c:if>
+
 			<liferay-ui:custom-attributes-available className="<%= BlogsEntry.class.getName() %>">
 				<liferay-ui:custom-attribute-list
 					className="<%= BlogsEntry.class.getName() %>"
@@ -327,6 +344,12 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 	Liferay.on('destroyPortlet', clearSaveDraftHandle);
 </aui:script>
+
+<c:if test="<%= (entry != null) && blogsSettings.isEmailEntryUpdatedEnabled() %>">
+	<aui:script>
+		Liferay.Util.toggleBoxes('<portlet:namespace />sendEmailEntryUpdated', '<portlet:namespace />emailEntryUpdatedCommentWrapper');
+	</aui:script>
+</c:if>
 
 <%
 if (entry != null) {

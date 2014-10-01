@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.service;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.DeleteAfterTestRun;
@@ -29,11 +30,18 @@ import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.io.ByteArrayInputStream;
+import java.io.Serializable;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -203,6 +211,66 @@ public class DLFileEntryServiceTest {
 			serviceContext);
 	}
 
+	@Test
+	public void testUpdateFileNameWhenDeletingFileVersion() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		DLFileEntry dlFileEntry = addDLFileEntry(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, false);
+
+		dlFileEntry = updateStatus(
+			dlFileEntry.getLatestFileVersion(true), serviceContext);
+
+		String initialFileName = dlFileEntry.getFileName();
+
+		String newTitle = RandomTestUtil.randomString();
+
+		dlFileEntry = updateFileEntry(dlFileEntry, newTitle, serviceContext);
+
+		Assert.assertNotEquals(initialFileName, dlFileEntry.getFileName());
+		Assert.assertEquals(
+			DLUtil.getSanitizedFileName(newTitle, dlFileEntry.getExtension()),
+			dlFileEntry.getFileName());
+
+		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(true);
+
+		dlFileEntry = DLFileEntryLocalServiceUtil.deleteFileVersion(
+			dlFileEntry.getUserId(), dlFileEntry.getFileEntryId(),
+			dlFileVersion.getVersion());
+
+		Assert.assertEquals(initialFileName, dlFileEntry.getFileName());
+	}
+
+	@Test
+	public void testUpdateFileNameWhenUpdatingStatus() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		DLFileEntry dlFileEntry = addDLFileEntry(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, false);
+
+		dlFileEntry = updateStatus(
+			dlFileEntry.getLatestFileVersion(true), serviceContext);
+
+		String initialFileName = dlFileEntry.getFileName();
+
+		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(true);
+
+		String newTitle = RandomTestUtil.randomString();
+
+		dlFileVersion.setFileName(newTitle);
+
+		DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion);
+
+		dlFileEntry = updateStatus(dlFileVersion, serviceContext);
+
+		Assert.assertNotEquals(initialFileName, dlFileEntry.getFileName());
+		Assert.assertEquals(
+			DLUtil.getSanitizedFileName(newTitle, dlFileEntry.getExtension()),
+			dlFileEntry.getFileName());
+	}
+
 	protected DLFileEntry addDLFileEntry(long folderId, boolean appendExtension)
 		throws Exception {
 
@@ -224,6 +292,33 @@ public class DLFileEntryServiceTest {
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
 			null, new ByteArrayInputStream(_CONTENT.getBytes()), 0,
 			serviceContext);
+	}
+
+	protected DLFileEntry updateFileEntry(
+			DLFileEntry dlFileEntry, String newTitle,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return DLFileEntryLocalServiceUtil.updateFileEntry(
+			dlFileEntry.getUserId(), dlFileEntry.getFileEntryId(),
+			dlFileEntry.getTitle(), dlFileEntry.getMimeType(), newTitle,
+			dlFileEntry.getDescription(), StringPool.BLANK, false,
+			dlFileEntry.getFileEntryTypeId(), null, null,
+			dlFileEntry.getContentStream(), dlFileEntry.getSize(),
+			serviceContext);
+	}
+
+	protected DLFileEntry updateStatus(
+			DLFileVersion dlFileVersion, ServiceContext serviceContext)
+		throws Exception {
+
+		Map workflowContext = new HashMap<String, Serializable>();
+
+		workflowContext.put("event", StringPool.BLANK);
+
+		return DLFileEntryLocalServiceUtil.updateStatus(
+			dlFileVersion.getUserId(), dlFileVersion.getFileVersionId(),
+			WorkflowConstants.STATUS_APPROVED, serviceContext, workflowContext);
 	}
 
 	private static final String _CONTENT =

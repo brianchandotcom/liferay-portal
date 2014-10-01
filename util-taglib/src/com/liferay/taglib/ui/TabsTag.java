@@ -118,65 +118,56 @@ public class TabsTag extends IncludeTag {
 			}
 
 			request.setAttribute("liferay-ui:tabs:values", _tabsValues);
+
 			request.setAttribute("liferay-ui:tabs:type", _type);
 			request.setAttribute("liferay-ui:tabs:url", _url);
 
-			if (_urls == null) {
-				String[] urlsArray = new String[10];
-				boolean urlsArrayInitialized = false;
+			if ((_urls == null) &&
+				((_url0 != null) || (_url1 != null) || (_url2 != null) ||
+				 (_url3 != null) || (_url4 != null) || (_url5 != null) ||
+				 (_url6 != null) || (_url7 != null) || (_url8 != null) ||
+				 (_url9 != null))) {
+
+				_urls = new String[10];
 
 				if (_url0 != null) {
-					urlsArray[0] = _url0;
-					urlsArrayInitialized = true;
+					_urls[0] = _url0;
 				}
 
 				if (_url1 != null) {
-					urlsArray[1] = _url1;
-					urlsArrayInitialized = true;
+					_urls[1] = _url1;
 				}
 
 				if (_url2 != null) {
-					urlsArray[2] = _url2;
-					urlsArrayInitialized = true;
+					_urls[2] = _url2;
 				}
 
 				if (_url3 != null) {
-					urlsArray[3] = _url3;
-					urlsArrayInitialized = true;
+					_urls[3] = _url3;
 				}
 
 				if (_url4 != null) {
-					urlsArray[4] = _url4;
-					urlsArrayInitialized = true;
+					_urls[4] = _url4;
 				}
 
 				if (_url5 != null) {
-					urlsArray[5] = _url5;
-					urlsArrayInitialized = true;
+					_urls[5] = _url5;
 				}
 
 				if (_url6 != null) {
-					urlsArray[6] = _url6;
-					urlsArrayInitialized = true;
+					_urls[6] = _url6;
 				}
 
 				if (_url7 != null) {
-					urlsArray[7] = _url7;
-					urlsArrayInitialized = true;
+					_urls[7] = _url7;
 				}
 
 				if (_url8 != null) {
-					urlsArray[8] = _url8;
-					urlsArrayInitialized = true;
+					_urls[8] = _url8;
 				}
 
 				if (_url9 != null) {
-					urlsArray[9] = _url9;
-					urlsArrayInitialized = true;
-				}
-
-				if (urlsArrayInitialized) {
-					_urls = urlsArray;
+					_urls[9] = _url9;
 				}
 			}
 
@@ -398,16 +389,16 @@ public class TabsTag extends IncludeTag {
 	private String[] _tabsValues;
 	private String _type;
 	private String _url;
-	private String _url0 = null;
-	private String _url1 = null;
-	private String _url2 = null;
-	private String _url3 = null;
-	private String _url4 = null;
-	private String _url5 = null;
-	private String _url6 = null;
-	private String _url7 = null;
-	private String _url8 = null;
-	private String _url9 = null;
+	private String _url0;
+	private String _url1;
+	private String _url2;
+	private String _url3;
+	private String _url4;
+	private String _url5;
+	private String _url6;
+	private String _url7;
+	private String _url8;
+	private String _url9;
 	private String[] _urls;
 	private String _value;
 

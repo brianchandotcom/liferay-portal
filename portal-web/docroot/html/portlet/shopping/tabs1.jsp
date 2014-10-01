@@ -45,8 +45,6 @@ if (!tabs1.equals("cart")) {
 	cartURL.setParameter("redirect", currentURL);
 }
 
-String[] urls = new String[] {StringPool.BLANK, cartURL.toString()};
-
 // Back URL
 
 String backURL = ParamUtil.getString(request, "backURL");
@@ -56,5 +54,5 @@ String backURL = ParamUtil.getString(request, "backURL");
 	backURL="<%= backURL %>"
 	names="<%= tabs1Names %>"
 	url="<%= viewURL.toString() %>"
-	urls="<%= urls %>"
+	urls="<%= new String[] {StringPool.BLANK, cartURL.toString()} %>"
 />

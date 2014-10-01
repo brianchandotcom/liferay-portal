@@ -86,7 +86,7 @@ public class DLFileEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Test
-	public void testUpdateTitle() throws Exception {
+	public void testFileNameUpdateWhenUpdatingTitle() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -94,11 +94,6 @@ public class DLFileEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 			true, serviceContext);
 
 		moveBaseModelToTrash(dlFileEntry.getFileEntryId());
-
-		dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntry(
-			dlFileEntry.getFileEntryId());
-
-		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(true);
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			getBaseModelClassName());
@@ -109,17 +104,14 @@ public class DLFileEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntry(
 			dlFileEntry.getFileEntryId());
-		dlFileVersion = DLFileVersionLocalServiceUtil.getFileVersion(
-			dlFileVersion.getFileVersionId());
 
-		Assert.assertEquals(dlFileEntry.getTitle(), dlFileVersion.getTitle());
-		Assert.assertEquals(newTitle, dlFileEntry.getTitle());
+		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(true);
+
 		Assert.assertEquals(
 			DLUtil.getSanitizedFileName(newTitle, dlFileEntry.getExtension()),
 			dlFileEntry.getFileName());
-		Assert.assertEquals(newTitle, dlFileVersion.getTitle());
 		Assert.assertEquals(
-			DLUtil.getSanitizedFileName(newTitle, dlFileEntry.getExtension()),
+			DLUtil.getSanitizedFileName(newTitle, dlFileVersion.getExtension()),
 			dlFileVersion.getFileName());
 	}
 

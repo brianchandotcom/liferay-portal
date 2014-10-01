@@ -68,7 +68,6 @@ public class DLAssetEntryLocalServiceTest {
 		fileEntry = DLAppLocalServiceUtil.getFileEntry(
 			fileEntry.getFileEntryId());
 
-		Assert.assertEquals(newTitle, fileEntry.getTitle());
 		Assert.assertEquals(
 			DLUtil.getSanitizedFileName(newTitle, fileEntry.getExtension()),
 			fileEntry.getFileName());

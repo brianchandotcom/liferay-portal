@@ -12,17 +12,19 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.util.liferayselenium;
+package com.liferay.portalweb.util.liferayselenium.impl;
 
-import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class SafariWebDriverImpl extends BaseWebDriverImpl {
+public class InternetExplorerWebDriverImpl extends BaseWebDriverImpl {
 
-	public SafariWebDriverImpl(String projectDirName, String browserURL) {
-		super(projectDirName, browserURL, new SafariDriver());
+	public InternetExplorerWebDriverImpl(
+		String projectDirName, String browserURL) {
+
+		super(projectDirName, browserURL, new InternetExplorerDriver());
 	}
 
 }

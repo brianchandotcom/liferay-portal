@@ -12,107 +12,72 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.util.liferayselenium;
+package com.liferay.portalweb.util.liferayselenium.impl;
 
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portalweb.portal.util.liferayselenium.MobileDriverToSeleniumBridge;
+import com.liferay.portalweb.portal.util.liferayselenium.WebDriverHelper;
 import com.liferay.portalweb.util.TestPropsValues;
+import com.liferay.portalweb.util.liferayselenium.LiferaySelenium;
+import com.liferay.portalweb.util.liferayselenium.service.LiferaySeleniumHelper;
 
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
+import io.appium.java_client.MobileDriver;
 
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Keys;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.internal.WrapsDriver;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Kenji Heigel
  */
-public abstract class BaseWebDriverImpl
-	extends WebDriverToSeleniumBridge implements LiferaySelenium {
+public abstract class BaseMobileDriverImpl
+	extends MobileDriverToSeleniumBridge implements LiferaySelenium {
 
-	public BaseWebDriverImpl(
-		String projectDirName, String browserURL, WebDriver webDriver) {
+	public BaseMobileDriverImpl(
+		String projectDirName, String browserURL, MobileDriver mobileDriver) {
 
-		super(webDriver);
-
-		_projectDirName = projectDirName;
-
-		if (OSDetector.isWindows()) {
-			_dependenciesDirName = StringUtil.replace(
-				_dependenciesDirName, "//", "\\");
-
-			_outputDirName = StringUtil.replace(_outputDirName, "//", "\\");
-
-			_projectDirName = StringUtil.replace(_projectDirName, "//", "\\");
-
-			_sikuliImagesDirName = StringUtil.replace(
-				_sikuliImagesDirName, "//", "\\");
-			_sikuliImagesDirName = StringUtil.replace(
-				_sikuliImagesDirName, "linux", "windows");
-		}
-
-		if (!TestPropsValues.MOBILE_DEVICE_ENABLED) {
-			WebDriver.Options options = webDriver.manage();
-
-			WebDriver.Window window = options.window();
-
-			int x = 1280;
-			int y = 1040;
-
-			window.setSize(new Dimension(x, y));
-		}
-
-		webDriver.get(browserURL);
+		super(mobileDriver);
 	}
 
 	@Override
 	public void antCommand(String fileName, String target) throws Exception {
-		LiferaySeleniumHelper.antCommand(this, fileName, target);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void assertAlert(String pattern) throws Exception {
-		LiferaySeleniumHelper.assertAlert(this, pattern);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void assertAlertNotPresent() throws Exception {
-		LiferaySeleniumHelper.assertAlertNotPresent(this);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void assertChecked(String locator) throws Exception {
-		LiferaySeleniumHelper.assertChecked(this, locator);
+	public void assertChecked(String pattern) throws Exception {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void assertConfirmation(String pattern) throws Exception {
-		LiferaySeleniumHelper.assertConfirmation(this, pattern);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void assertConsoleTextNotPresent(String text) throws Exception {
-		LiferaySeleniumHelper.assertConsoleTextNotPresent(text);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void assertConsoleTextPresent(String text) throws Exception {
-		LiferaySeleniumHelper.assertConsoleTextPresent(text);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void assertElementNotPresent(String locator) throws Exception {
-		LiferaySeleniumHelper.assertElementNotPresent(this, locator);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -122,24 +87,24 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void assertEmailBody(String index, String body) throws Exception {
-		LiferaySeleniumHelper.assertEmailBody(this, index, body);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void assertEmailSubject(String index, String subject)
 		throws Exception {
 
-		LiferaySeleniumHelper.assertEmailSubject(this, index, subject);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void assertHTMLSourceTextNotPresent(String value) throws Exception {
-		LiferaySeleniumHelper.assertHTMLSourceTextPresent(this, value);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void assertHTMLSourceTextPresent(String value) throws Exception {
-		LiferaySeleniumHelper.assertHTMLSourceTextPresent(this, value);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -160,7 +125,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void assertLocation(String pattern) {
-		LiferaySeleniumHelper.assertLocation(this, pattern);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -175,44 +140,43 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void assertNotAlert(String pattern) {
-		LiferaySeleniumHelper.assertNotAlert(this, pattern);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void assertNotChecked(String locator) throws Exception {
-		LiferaySeleniumHelper.assertNotChecked(this, locator);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void assertNotLocation(String pattern) {
-		LiferaySeleniumHelper.assertNotLocation(this, pattern);
+	public void assertNotLocation(String pattern) throws Exception {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void assertNotPartialText(String locator, String pattern)
 		throws Exception {
 
-		LiferaySeleniumHelper.assertNotPartialText(this, locator, pattern);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void assertNotSelectedLabel(String selectLocator, String pattern)
 		throws Exception {
 
-		LiferaySeleniumHelper.assertNotSelectedLabel(
-			this, selectLocator, pattern);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void assertNotText(String locator, String pattern) throws Exception {
-		LiferaySeleniumHelper.assertNotText(this, locator, pattern);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void assertNotValue(String locator, String pattern)
 		throws Exception {
 
-		LiferaySeleniumHelper.assertNotValue(this, locator, pattern);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -224,14 +188,14 @@ public abstract class BaseWebDriverImpl
 	public void assertPartialText(String locator, String pattern)
 		throws Exception {
 
-		LiferaySeleniumHelper.assertPartialText(this, locator, pattern);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void assertSelectedLabel(String selectLocator, String pattern)
 		throws Exception {
 
-		LiferaySeleniumHelper.assertSelectedLabel(this, selectLocator, pattern);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -241,17 +205,17 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void assertTextNotPresent(String pattern) throws Exception {
-		LiferaySeleniumHelper.assertTextNotPresent(this, pattern);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void assertTextPresent(String pattern) throws Exception {
-		LiferaySeleniumHelper.assertTextPresent(this, pattern);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void assertValue(String locator, String pattern) throws Exception {
-		LiferaySeleniumHelper.assertValue(this, locator, pattern);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -261,37 +225,34 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void clickAndWait(String locator) {
-		super.click(locator);
-		super.waitForPageToLoad("30000");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void clickAtAndWait(String locator, String coordString) {
-		super.clickAt(locator, coordString);
-		super.waitForPageToLoad("30000");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void connectToEmailAccount(String emailAddress, String emailPassword)
 		throws Exception {
 
-		LiferaySeleniumHelper.connectToEmailAccount(
-			emailAddress, emailPassword);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void copyText(String locator) {
-		_clipBoard = super.getText(locator);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void copyValue(String locator) {
-		_clipBoard = super.getValue(locator);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void deleteAllEmails() throws Exception {
-		LiferaySeleniumHelper.deleteAllEmails();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -301,28 +262,22 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void fail(String message) {
-		LiferaySeleniumHelper.fail(message);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public String getCurrentDay() {
-		Calendar calendar = Calendar.getInstance();
-
-		return StringUtil.valueOf(calendar.get(Calendar.DATE));
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public String getCurrentMonth() {
-		Calendar calendar = Calendar.getInstance();
-
-		return StringUtil.valueOf(calendar.get(Calendar.MONTH) + 1);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public String getCurrentYear() {
-		Calendar calendar = Calendar.getInstance();
-
-		return StringUtil.valueOf(calendar.get(Calendar.YEAR));
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -332,62 +287,32 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public String getEmailBody(String index) throws Exception {
-		return LiferaySeleniumHelper.getEmailBody(index);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public String getEmailSubject(String index) throws Exception {
-		return LiferaySeleniumHelper.getEmailSubject(index);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public String getFirstNumber(String locator) {
-		WebElement webElement = getWebElement(locator);
-
-		String text = webElement.getText();
-
-		if (text == null) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler();
-
-		char[] chars = text.toCharArray();
-
-		for (char c : chars) {
-			boolean digit = false;
-
-			if (Validator.isDigit(c)) {
-				sb.append(c);
-
-				digit = true;
-			}
-
-			String s = sb.toString();
-
-			if (Validator.isNotNull(s) && !digit) {
-				return s;
-			}
-		}
-
-		return sb.toString();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public String getFirstNumberIncrement(String locator) {
-		String firstNumber = getFirstNumber(locator);
-
-		return StringUtil.valueOf(GetterUtil.getInteger(firstNumber) + 1);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public String getNumberDecrement(String value) {
-		return LiferaySeleniumHelper.getNumberDecrement(value);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public String getNumberIncrement(String value) {
-		return LiferaySeleniumHelper.getNumberIncrement(value);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -412,13 +337,12 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void goBackAndWait() {
-		super.goBack();
-		super.waitForPageToLoad("30000");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean isConfirmation(String pattern) {
-		return LiferaySeleniumHelper.isConfirmation(this, pattern);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -433,7 +357,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public boolean isHTMLSourceTextPresent(String value) throws Exception {
-		return LiferaySeleniumHelper.isHTMLSourceTextPresent(this, value);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -443,25 +367,17 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public boolean isNotChecked(String locator) {
-		return LiferaySeleniumHelper.isNotChecked(this, locator);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean isNotPartialText(String locator, String value) {
-		return LiferaySeleniumHelper.isNotPartialText(this, locator, value);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean isNotSelectedLabel(String selectLocator, String pattern) {
-		if (isElementNotPresent(selectLocator)) {
-			return false;
-		}
-
-		String[] selectedLabels = getSelectedLabels(selectLocator);
-
-		List<String> selectedLabelsList = Arrays.asList(selectedLabels);
-
-		return !selectedLabelsList.contains(pattern);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -471,7 +387,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public boolean isNotValue(String locator, String value) {
-		return LiferaySeleniumHelper.isNotValue(this, locator, value);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -481,20 +397,12 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public boolean isPartialText(String locator, String value) {
-		WebElement webElement = getWebElement(locator, "1");
-
-		String text = webElement.getText();
-
-		return text.contains(value);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean isSelectedLabel(String selectLocator, String pattern) {
-		if (isElementNotPresent(selectLocator)) {
-			return false;
-		}
-
-		return pattern.equals(getSelectedLabel(selectLocator, "1"));
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -509,30 +417,27 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public boolean isTextNotPresent(String pattern) {
-		return LiferaySeleniumHelper.isTextNotPresent(this, pattern);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean isValue(String locator, String value) {
-		return value.equals(getValue(locator, "1"));
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void keyDownAndWait(String locator, String keySequence) {
-		super.keyDown(locator, keySequence);
-		super.waitForPageToLoad("30000");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void keyPressAndWait(String locator, String keySequence) {
-		super.keyPress(locator, keySequence);
-		super.waitForPageToLoad("30000");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void keyUpAndWait(String locator, String keySequence) {
-		super.keyUp(locator, keySequence);
-		super.waitForPageToLoad("30000");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -542,24 +447,12 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void mouseRelease() {
-		WebElement bodyWebElement = getWebElement("//body");
-
-		WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
-
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		Actions actions = new Actions(webDriver);
-
-		actions.release();
-
-		Action action = actions.build();
-
-		action.perform();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void paste(String location) {
-		super.type(location, _clipBoard);
+	public void paste(String locator) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -573,13 +466,12 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void refreshAndWait() {
-		super.refresh();
-		super.waitForPageToLoad("30000");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void replyToEmail(String to, String body) throws Exception {
-		LiferaySeleniumHelper.replyToEmail(this, to, body);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -593,6 +485,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void saveScreenshotAndSource() throws Exception {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -608,15 +501,12 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void scrollWebElementIntoView(String locator) throws Exception {
-		WebElement webElement = getWebElement(locator);
-
-		super.scrollWebElementIntoView(webElement);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void selectAndWait(String selectLocator, String optionLocator) {
-		super.select(selectLocator, optionLocator);
-		super.waitForPageToLoad("30000");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -632,21 +522,17 @@ public abstract class BaseWebDriverImpl
 	public void sendEmail(String to, String subject, String body)
 		throws Exception {
 
-		LiferaySeleniumHelper.sendEmail(this, to, subject, body);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void sendKeys(String locator, String value) {
-		typeKeys(locator, value);
+		WebDriverHelper.type(this, locator, value);
 	}
 
 	@Override
 	public void sendKeysAceEditor(String locator, String value) {
-		WebElement webElement = getWebElement(locator);
-
-		webElement.sendKeys(Keys.chord(Keys.CONTROL, Keys.END));
-
-		LiferaySeleniumHelper.typeAceEditor(this, locator, value);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -667,6 +553,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void setDefaultTimeout() {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -675,33 +562,23 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void setTimeoutImplicit(String timeout) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public void setWindowSize(String coordString) {
-		WebElement bodyWebElement = getWebElement("//body");
-
-		WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
-
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		WebDriver.Options options = webDriver.manage();
-
-		WebDriver.Window window = options.window();
-
-		String[] screenResolution = StringUtil.split(coordString, ",");
-
-		int x = GetterUtil.getInteger(screenResolution[0]);
-		int y = GetterUtil.getInteger(screenResolution[1]);
-
-		window.setSize(new Dimension(x, y));
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void sikuliAssertElementNotPresent(String image) throws Exception {
-		LiferaySeleniumHelper.sikuliAssertElementNotPresent(this, image);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void sikuliAssertElementPresent(String image) throws Exception {
-		LiferaySeleniumHelper.sikuliAssertElementPresent(this, image);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -713,58 +590,58 @@ public abstract class BaseWebDriverImpl
 	public void sikuliDragAndDrop(String image, String coordString)
 		throws Exception {
 
-		LiferaySeleniumHelper.sikuliDragAndDrop(this, image, coordString);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void sikuliLeftMouseDown() throws Exception {
-		LiferaySeleniumHelper.sikuliLeftMouseDown(this);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void sikuliLeftMouseUp() throws Exception {
-		LiferaySeleniumHelper.sikuliLeftMouseUp(this);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void sikuliMouseMove(String image) throws Exception {
-		LiferaySeleniumHelper.sikuliMouseMove(this, image);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void sikuliRightMouseDown() throws Exception {
-		LiferaySeleniumHelper.sikuliRightMouseDown(this);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void sikuliRightMouseUp() throws Exception {
-		LiferaySeleniumHelper.sikuliRightMouseUp(this);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void sikuliType(String image, String value) throws Exception {
-		LiferaySeleniumHelper.sikuliType(this, image, value);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void sikuliUploadCommonFile(String image, String value)
 		throws Exception {
 
-		LiferaySeleniumHelper.sikuliUploadCommonFile(this, image, value);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void sikuliUploadTCatFile(String image, String value)
 		throws Exception {
 
-		LiferaySeleniumHelper.sikuliUploadTCatFile(this, image, value);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void sikuliUploadTempFile(String image, String value)
 		throws Exception {
 
-		LiferaySeleniumHelper.sikuliUploadTempFile(this, image, value);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -773,24 +650,46 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void stopLogger() {
-	}
-
-	@Override
-	public void tap(String locator) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
+	public void tap(String locator) {
+		WebElement webElement = getWebElement("//body");
+
+		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+
+		JavascriptExecutor javascriptExecutor =
+			(JavascriptExecutor)wrappedWebDriver;
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("YUI().use('node-event-simulate', function(Y) {");
+		sb.append("var node = Y.one('");
+
+		String cssLocator = locator;
+
+		cssLocator = cssLocator.replaceAll("\\/\\/", " ");
+		cssLocator = cssLocator.replaceAll(
+			"contains\\(@([^,]*),([^)]*)\\)", "$1*=$2");
+		cssLocator = cssLocator.replaceAll("'", "\"");
+		cssLocator = cssLocator.replaceAll("\\/", " > ");
+		cssLocator = cssLocator.replaceAll("^ ", "");
+		cssLocator = cssLocator.replaceAll(" and ", "][");
+
+		sb.append(cssLocator);
+
+		sb.append("');");
+		sb.append("node.simulateGesture('tap');});");
+
+		javascriptExecutor.executeScript(sb.toString());
+	}
+
+	@Override
 	public void typeAceEditor(String locator, String value) {
-		WebElement webElement = getWebElement(locator);
-
-		webElement.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-
-		LiferaySeleniumHelper.typeAceEditor(this, locator, value);
-
-		webElement.sendKeys(Keys.chord(Keys.CONTROL, Keys.SHIFT, Keys.END));
-
-		webElement.sendKeys(Keys.DELETE);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -799,59 +698,38 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void typeKeys(String locator, String value, boolean typeAceEditor) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public void typeScreen(String value) {
-		LiferaySeleniumHelper.typeScreen(value);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void uploadCommonFile(String location, String value) {
-		uploadFile(location, _projectDirName + _dependenciesDirName + value);
+	public void uploadCommonFile(String locator, String value) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void uploadFile(String location, String value) {
-		makeVisible(location);
-
-		WebElement webElement = getWebElement(location);
-
-		webElement.sendKeys(value);
+	public void uploadFile(String locator, String value) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void uploadTempFile(String location, String value) {
-		String slash = "/";
-
-		if (OSDetector.isWindows()) {
-			slash = "\\";
-		}
-
-		uploadFile(location, _outputDirName + slash + value);
+	public void uploadTempFile(String locator, String value) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void waitForConfirmation(String pattern) throws Exception {
-		int timeout =
-			TestPropsValues.TIMEOUT_EXPLICIT_WAIT /
-				TestPropsValues.TIMEOUT_IMPLICIT_WAIT;
-
-		for (int second = 0;; second++) {
-			if (second >= timeout) {
-				assertConfirmation(pattern);
-			}
-
-			try {
-				if (isConfirmation(pattern)) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-		}
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void waitForElementNotPresent(String locator) throws Exception {
-		LiferaySeleniumHelper.waitForElementNotPresent(this, locator);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -863,25 +741,24 @@ public abstract class BaseWebDriverImpl
 	public void waitForNotPartialText(String locator, String value)
 		throws Exception {
 
-		LiferaySeleniumHelper.waitForNotPartialText(this, locator, value);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void waitForNotSelectedLabel(String selectLocator, String pattern)
 		throws Exception {
 
-		LiferaySeleniumHelper.waitForNotSelectedLabel(
-			this, selectLocator, pattern);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void waitForNotText(String locator, String value) throws Exception {
-		LiferaySeleniumHelper.waitForNotText(this, locator, value);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void waitForNotValue(String locator, String value) throws Exception {
-		LiferaySeleniumHelper.waitForNotValue(this, locator, value);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -893,15 +770,14 @@ public abstract class BaseWebDriverImpl
 	public void waitForPartialText(String locator, String value)
 		throws Exception {
 
-		LiferaySeleniumHelper.waitForPartialText(this, locator, value);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void waitForSelectedLabel(String selectLocator, String pattern)
 		throws Exception {
 
-		LiferaySeleniumHelper.waitForSelectedLabel(
-			this, selectLocator, pattern);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -911,17 +787,17 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void waitForTextNotPresent(String value) throws Exception {
-		LiferaySeleniumHelper.waitForTextNotPresent(this, value);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void waitForTextPresent(String value) throws Exception {
-		LiferaySeleniumHelper.waitForTextPresent(this, value);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void waitForValue(String locator, String value) throws Exception {
-		LiferaySeleniumHelper.waitForValue(this, locator, value);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -931,11 +807,9 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void windowMaximizeAndWait() {
-		super.windowMaximize();
-		super.waitForPageToLoad("30000");
+		throw new UnsupportedOperationException();
 	}
 
-	private String _clipBoard = "";
 	private String _dependenciesDirName =
 		"portal-web//test//functional//com//liferay//portalweb//dependencies//";
 	private String _outputDirName = TestPropsValues.OUTPUT_DIR_NAME;

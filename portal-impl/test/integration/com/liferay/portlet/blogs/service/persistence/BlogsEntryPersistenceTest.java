@@ -155,6 +155,10 @@ public class BlogsEntryPersistenceTest {
 
 		newBlogsEntry.setTrackbacks(RandomTestUtil.randomString());
 
+		newBlogsEntry.setCoverImageFileEntryId(RandomTestUtil.nextLong());
+
+		newBlogsEntry.setCoverImageURL(RandomTestUtil.randomString());
+
 		newBlogsEntry.setSmallImage(RandomTestUtil.randomBoolean());
 
 		newBlogsEntry.setSmallImageFileEntryId(RandomTestUtil.nextLong());
@@ -212,6 +216,10 @@ public class BlogsEntryPersistenceTest {
 			newBlogsEntry.getAllowTrackbacks());
 		Assert.assertEquals(existingBlogsEntry.getTrackbacks(),
 			newBlogsEntry.getTrackbacks());
+		Assert.assertEquals(existingBlogsEntry.getCoverImageFileEntryId(),
+			newBlogsEntry.getCoverImageFileEntryId());
+		Assert.assertEquals(existingBlogsEntry.getCoverImageURL(),
+			newBlogsEntry.getCoverImageURL());
 		Assert.assertEquals(existingBlogsEntry.getSmallImage(),
 			newBlogsEntry.getSmallImage());
 		Assert.assertEquals(existingBlogsEntry.getSmallImageFileEntryId(),
@@ -613,8 +621,9 @@ public class BlogsEntryPersistenceTest {
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"title", true, "subtitle", true, "urlTitle", true, "description",
 			true, "content", true, "displayDate", true, "allowPingbacks", true,
-			"allowTrackbacks", true, "trackbacks", true, "smallImage", true,
-			"smallImageFileEntryId", true, "smallImageId", true,
+			"allowTrackbacks", true, "trackbacks", true,
+			"coverImageFileEntryId", true, "coverImageURL", true, "smallImage",
+			true, "smallImageFileEntryId", true, "smallImageId", true,
 			"smallImageURL", true, "status", true, "statusByUserId", true,
 			"statusByUserName", true, "statusDate", true);
 	}
@@ -874,6 +883,10 @@ public class BlogsEntryPersistenceTest {
 		blogsEntry.setAllowTrackbacks(RandomTestUtil.randomBoolean());
 
 		blogsEntry.setTrackbacks(RandomTestUtil.randomString());
+
+		blogsEntry.setCoverImageFileEntryId(RandomTestUtil.nextLong());
+
+		blogsEntry.setCoverImageURL(RandomTestUtil.randomString());
 
 		blogsEntry.setSmallImage(RandomTestUtil.randomBoolean());
 

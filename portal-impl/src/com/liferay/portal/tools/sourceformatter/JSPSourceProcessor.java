@@ -450,7 +450,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		_moveFrequentlyUsedImportsToCommonInit = GetterUtil.getBoolean(
 			getProperty("move.frequently.used.imports.to.common.init"));
 		_unusedVariablesExclusions = getPropertyList(
-			"jsp.unused.variables.excludes");
+			"jsp.unused.variables.excludes.files");
 
 		String[] excludes = new String[] {"**\\null.jsp", "**\\tools\\**"};
 		String[] includes = new String[] {

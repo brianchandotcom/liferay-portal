@@ -45,12 +45,6 @@
 		<execute action="PGCampaigncontentdisplay#selectFrame" value1="relative=top" />
 	</command>
 
-	<command name="gotoConfigurationPG">
-		<execute action="PGCampaigncontentdisplay#click" locator-key1="CONFIGURATION_LINK" />
-
-		<execute action="PGCampaigncontentdisplay#selectFrame" locator-key1="CAMPAIGN_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
-	</command>
-
 	<command name="savePG">
 		<execute action="PGCampaigncontentdisplay#selectFrame" locator-key1="CAMPAIGN_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
 

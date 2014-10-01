@@ -129,6 +129,8 @@
 
 		<execute action="PGUsersegmentcontentdisplay#selectFrame" locator-key1="USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
 
+		<var name="key_rowNumber" value="${rowNumber}" />
+
 		<if>
 			<equals arg1="${belongs}" arg2="true" />
 			<then>
@@ -209,6 +211,8 @@
 				<execute action="PGUsersegmentcontentdisplay#assertTextEquals" locator-key1="PREVIEW_1" value1="${preview1Text}" />
 			</then>
 		</if>
+
+		<execute action="Home#pause" locator1="5000" />
 
 		<if>
 			<isset var="preview2Text" />

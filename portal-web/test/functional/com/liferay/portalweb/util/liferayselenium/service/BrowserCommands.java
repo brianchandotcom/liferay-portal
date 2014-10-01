@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.util;
+package com.liferay.portalweb.util.liferayselenium.service;
 
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portalweb.util.TestPropsValues;

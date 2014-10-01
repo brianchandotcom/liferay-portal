@@ -316,7 +316,7 @@ AUI.add(
 							STR_IMAGE_DATA,
 							{
 								imageData: {
-									id: event.fileentryid || 0,
+									fileEntryId: event.fileentryid || 0,
 									url: event.url || ''
 								}
 							}

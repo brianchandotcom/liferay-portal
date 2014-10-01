@@ -39,7 +39,7 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class DLAssetTest {
+public class DLAssetEntryLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {

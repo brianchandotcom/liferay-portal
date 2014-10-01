@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -41,8 +40,6 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marcellus Tavares
@@ -138,25 +135,10 @@ public class DDLRecordAssetRenderer extends BaseAssetRenderer {
 			String noSuchEntryRedirect)
 		throws Exception {
 
-		HttpServletRequest request =
-			liferayPortletRequest.getHttpServletRequest();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Layout layout = themeDisplay.getLayout();
-
-		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			layout.getPlid(), PortletKeys.DYNAMIC_DATA_LISTS,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"struts_action", "/dynamic_data_lists/view_record");
-		portletURL.setParameter(
-			"recordId", String.valueOf(_record.getRecordId()));
-		portletURL.setParameter("version", _recordVersion.getVersion());
-
-		return portletURL.toString();
+		return getURLViewInContext(
+			liferayPortletRequest, noSuchEntryRedirect,
+			"/dynamic_data_lists/find_record", "recordId",
+			_record.getRecordId());
 	}
 
 	@Override

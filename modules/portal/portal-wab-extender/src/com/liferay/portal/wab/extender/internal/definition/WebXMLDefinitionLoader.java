@@ -17,7 +17,6 @@ package com.liferay.portal.wab.extender.internal.definition;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -131,14 +130,6 @@ public class WebXMLDefinitionLoader {
 
 		for (Element urlPatternElement : element.elements("url-pattern")) {
 			String urlPattern = urlPatternElement.getTextTrim();
-
-			if (urlPattern.endsWith(_SLASH_STAR) && (urlPattern.length() > 2)) {
-				urlPattern = urlPattern.substring(0, urlPattern.length() - 2);
-			}
-
-			if (urlPattern.startsWith(StringPool.STAR)) {
-				urlPattern = StringPool.SLASH.concat(urlPattern);
-			}
 
 			urlPatterns.add(urlPattern);
 		}

@@ -506,7 +506,7 @@ public class EditEntryAction extends PortletAction {
 			actionRequest, "smallImageURL");
 
 		ImageSelector imageSelector = new ImageSelector(
-			smallImageFileEntryId, smallImageURL);
+			smallImageFileEntryId, smallImageURL, null);
 
 		BlogsEntry entry = null;
 		String oldUrlTitle = StringPool.BLANK;

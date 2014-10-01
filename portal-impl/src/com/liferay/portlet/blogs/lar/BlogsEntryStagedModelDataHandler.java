@@ -269,7 +269,7 @@ public class BlogsEntryStagedModelDataHandler
 		}
 		else {
 			imageSelector = new ImageSelector(
-				smallImageFileEntryId, entry.getSmallImageURL());
+				smallImageFileEntryId, entry.getSmallImageURL(), null);
 		}
 
 		BlogsEntry importedEntry = null;

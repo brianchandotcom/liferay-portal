@@ -16,6 +16,10 @@ AUI.add(
 						validator: Lang.isString
 					},
 
+					draggableImage: {
+						validator: Lang.isString
+					},
+
 					paramName: {
 						validator: Lang.isString
 					},
@@ -34,6 +38,9 @@ AUI.add(
 				prototype: {
 					initializer: function(config) {
 						var instance = this;
+
+						instance._image = instance.one('#image');
+						instance._imageWrapper = instance.one('.image-wrapper');
 
 						instance._bindUI();
 
@@ -66,10 +73,42 @@ AUI.add(
 						];
 					},
 
+					_constrainHorizontal: function(event) {
+						var pageX = event.pageX;
+
+						var instance = this;
+
+						var previewWrapper = instance._imageWrapper;
+
+						var left = previewWrapper.getX();
+
+						var right = left + previewWrapper.width() - instance._image.width();
+
+						if (pageX >= left || pageX <= right) {
+							event.preventDefault();
+						}
+					},
+
+					_constrainVertical: function(event) {
+						var pageY = event.pageY;
+
+						var instance = this;
+
+						var previewWrapper = instance._imageWrapper;
+
+						var top = previewWrapper.getY();
+
+						var bottom = top + previewWrapper.height() - instance._image.height();
+
+						if (pageY >= top || pageY <= bottom) {
+							event.preventDefault();
+						}
+					},
+
 					_defImageDataFn: function(event) {
 						var instance = this;
 
-						var fileEntryIdNode = instance.rootNode.one('#' + instance.get('paramName'));
+						var fileEntryIdNode = instance.rootNode.one('#' + instance.get('paramName') + 'Id');
 
 						var fileEntryImage = instance.one('#image');
 
@@ -91,6 +130,112 @@ AUI.add(
 						browseImageControls.toggle(!showImageControls);
 
 						instance.rootNode.toggleClass('drop-enabled', !showImageControls);
+					},
+
+					_getCropRegion: function() {
+						var instance = this;
+
+						var imagePreview = instance._image;
+
+						var imagePreviewWrapper = instance._imageWrapper;
+
+						var naturalSize = instance._getImgNaturalSize(imagePreview);
+
+						var scaleY = naturalSize.height / imagePreview.height();
+						var scaleX = naturalSize.width / imagePreview.width();
+
+						var cropRegion = {
+							height: Math.ceil(imagePreviewWrapper.height() * scaleY),
+							width: naturalSize.width,
+							x: Math.ceil((imagePreviewWrapper.getX() - imagePreview.getX()) * scaleX),
+							y: Math.ceil((imagePreviewWrapper.getY() - imagePreview.getY()) * scaleY)
+						};
+
+						return cropRegion;
+					},
+
+					_getImgNaturalSize: function(img) {
+						var imageHeight = img.get('naturalHeight');
+						var imageWidth = img.get('naturalWidth');
+
+						if (Lang.isUndefined(imageHeight) || Lang.isUndefined(imageWidth)) {
+							var tmp = new Image();
+
+							tmp.src = img.attr('src');
+
+							imageHeight = tmp.height;
+							imageWidth = tmp.width;
+						}
+
+						return {
+							height: imageHeight,
+							width: imageWidth
+						};
+					},
+
+					_initDD: function() {
+						var instance = this;
+
+						var dd = instance._dd;
+
+						if (!dd) {
+							var previewWrapper = instance._imageWrapper;
+
+							var constrain = {};
+
+							var draggableImage = instance.get('draggableImage');
+
+							if (draggableImage === 'vertical') {
+								constrain = {
+									left: previewWrapper.getX(),
+									right: previewWrapper.getX() + previewWrapper.width()
+								};
+							}
+
+							if (draggableImage === 'horizontal') {
+								constrain = {
+									top: previewWrapper.getY(),
+									bottom: previewWrapper.getY() + previewWrapper.height()
+								};
+							}
+
+							dd = new A.DD.Drag(
+								{
+									node: instance._image,
+									on: {
+										'drag:drag': function(event) {
+											var draggableImage = instance.get('draggableImage');
+
+											if ((draggableImage === 'horizontal') || (draggableImage === 'both')) {
+												instance._constrainHorizontal(event);
+											}
+
+											if ((draggableImage === 'vertical') || (draggableImage === 'both')) {
+												instance._constrainVertical(event);
+											}
+										},
+										'drag:end': A.bind(instance._notifyImageUpdated, instance)
+									}
+								}
+							).plug(
+								A.Plugin.DDConstrained,
+								{
+									constrain: constrain
+								}
+							);
+
+							instance._dd = dd;
+						}
+					},
+
+					_notifyImageUpdated: function(event) {
+						var instance = this;
+
+						var cropRegion = instance._getCropRegion();
+
+						var cropRegionNode = instance.rootNode.one('#' + instance.get('paramName') + 'CropRegion');
+
+						cropRegionNode.val(A.JSON.stringify(cropRegion));
 					},
 
 					_onBrowseClick: function(event) {
@@ -138,6 +283,10 @@ AUI.add(
 									imageData: data.image
 								}
 							);
+
+							if (instance.get('draggableImage') !== 'none') {
+								instance._initDD();
+							}
 						}
 					},
 
@@ -172,6 +321,10 @@ AUI.add(
 								}
 							}
 						);
+
+						if (instance.get('draggableImage') !== 'none') {
+							instance._initDD();
+						}
 					}
 				}
 			}

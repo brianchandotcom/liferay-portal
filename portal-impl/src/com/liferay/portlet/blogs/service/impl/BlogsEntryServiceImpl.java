@@ -101,7 +101,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 				MimeTypesUtil.getContentType(smallImageFileName));
 
 			imageSelector = new ImageSelector(
-				fileEntry.getFileEntryId(), smallImageURL);
+				fileEntry.getFileEntryId(), smallImageURL, null);
 		}
 
 		return addEntry(
@@ -476,7 +476,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 					MimeTypesUtil.getContentType(smallImageFileName));
 
 				imageSelector = new ImageSelector(
-					fileEntry.getFileEntryId(), smallImageURL);
+					fileEntry.getFileEntryId(), smallImageURL, null);
 			}
 		}
 		else {

@@ -1385,9 +1385,15 @@ public class DLAppHelperLocalServiceImpl
 					}
 				}
 
-				assetEntryLocalService.updateVisible(
+				AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
 					DLFileEntryConstants.getClassName(),
-					fileEntry.getFileEntryId(), true);
+					fileEntry.getFileEntryId());
+
+				if (assetEntry != null) {
+					assetEntryLocalService.updateVisible(
+						DLFileEntryConstants.getClassName(),
+						fileEntry.getFileEntryId(), true);
+				}
 			}
 
 			// Sync

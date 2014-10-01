@@ -47,7 +47,9 @@ public class DLAssetEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateEntryUpdatesTitleAndFileName() throws Exception {
+	public void testUpdateFileNameWhenUpdatingAssetEntryTitle()
+		throws Exception {
+
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".txt",

@@ -212,7 +212,9 @@ public class DLFileEntryServiceTest {
 	}
 
 	@Test
-	public void testUpdateFileNameWhenDeletingFileVersion() throws Exception {
+	public void testUpdateFileNameWhenDeletingLatestFileVersion()
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
@@ -255,9 +257,9 @@ public class DLFileEntryServiceTest {
 
 		String initialFileName = dlFileEntry.getFileName();
 
-		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(true);
-
 		String newTitle = RandomTestUtil.randomString();
+
+		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(true);
 
 		dlFileVersion.setFileName(newTitle);
 
@@ -312,13 +314,10 @@ public class DLFileEntryServiceTest {
 			DLFileVersion dlFileVersion, ServiceContext serviceContext)
 		throws Exception {
 
-		Map workflowContext = new HashMap<String, Serializable>();
-
-		workflowContext.put("event", StringPool.BLANK);
-
 		return DLFileEntryLocalServiceUtil.updateStatus(
 			dlFileVersion.getUserId(), dlFileVersion.getFileVersionId(),
-			WorkflowConstants.STATUS_APPROVED, serviceContext, workflowContext);
+			WorkflowConstants.STATUS_APPROVED, serviceContext,
+			new HashMap<String, Serializable>());
 	}
 
 	private static final String _CONTENT =

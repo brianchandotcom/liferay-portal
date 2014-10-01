@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.repository.model.RepositoryModel;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -1398,7 +1399,7 @@ public class DLAppHelperLocalServiceImpl
 
 			// Sync
 
-			String event = (String)workflowContext.get("event");
+			String event = GetterUtil.getString(workflowContext.get("event"));
 
 			if (Validator.isNotNull(event)) {
 				triggerRepositoryEvent(

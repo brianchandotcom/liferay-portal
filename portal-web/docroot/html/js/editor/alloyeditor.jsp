@@ -238,9 +238,9 @@ if (alloyEditorMode.equals("text")) {
 				%>
 
 				filebrowserBrowseUrl: '<%= documentSelectorURL %>',
-				filebrowserImageBrowseUrl: '<%= documentSelectorURL %>&Type=image',
+				filebrowserFlashBrowseUrl: '<%= documentSelectorURL %>&Type=flash',
 				filebrowserImageBrowseLinkUrl: '<%= documentSelectorURL %>&Type=image',
-				filebrowserFlashBrowseUrl: '<%= documentSelectorURL %>&Type=flash'
+				filebrowserImageBrowseUrl: '<%= documentSelectorURL %>&Type=image'
 		}
 	);
 

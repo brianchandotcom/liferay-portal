@@ -33,7 +33,7 @@
 			<li class="tree-item">
 				<aui:input name="preferences--showAssetCount--" type="checkbox" value="<%= showAssetCount %>" />
 
-				<ul class="hide lfr-tree list-unstyled" id="<portlet:namespace />assetCountOptions">
+				<ul class='<%= showAssetCount ? "" : "hide" %> lfr-tree list-unstyled' id="<portlet:namespace />assetCountOptions">
 					<li class="tree-item">
 						<aui:select helpMessage="asset-type-asset-count-help" label="asset-type" name="preferences--classNameId--">
 							<aui:option label="any" value="<%= classNameId == 0 %>" />
@@ -90,23 +90,15 @@
 	</aui:button-row>
 </aui:form>
 
-<aui:script use="aui-base">
-	var showAssetCount = A.one('#<portlet:namespace />showAssetCount');
+<aui:script>
+	var showAssetCount = AUI.$('#<portlet:namespace />showAssetCount');
+	var assetCountOptions = AUI.$('#<portlet:namespace />assetCountOptions');
 
 	function showHiddenFields() {
-		var assetCountOptions = A.one('#<portlet:namespace />assetCountOptions');
+		var isChecked = showAssetCount.prop('checked');
 
-		if (showAssetCount && assetCountOptions) {
-			if (showAssetCount.get('checked')) {
-				assetCountOptions.show();
-			}
-			else {
-				assetCountOptions.hide();
-			}
-		}
+		assetCountOptions.toggleClass('hide', !isChecked);
 	}
-
-	showHiddenFields();
 
 	showAssetCount.on('change', showHiddenFields);
 </aui:script>

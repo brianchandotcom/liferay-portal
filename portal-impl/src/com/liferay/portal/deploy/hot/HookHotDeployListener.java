@@ -132,6 +132,7 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.taglib.FileAvailabilityUtil;
 
 import java.io.File;
+import java.io.InputStream;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -1197,7 +1198,8 @@ public class HookHotDeployListener
 		List<Element> languagePropertiesElements = parentElement.elements(
 			"language-properties");
 
-		ResourceBundle parentResourceBundle = null;
+		URL baseLanguageURL = null;
+		String baseLanguagePropertiesLocation = null;
 
 		for (Element languagePropertiesElement : languagePropertiesElements) {
 			String languagePropertiesLocation =
@@ -1216,48 +1218,51 @@ public class HookHotDeployListener
 				}
 			}
 
-			ResourceBundle languageResourceBundle;
-			URL url;
+			URL url = portletClassLoader.getResource(
+				languagePropertiesLocation);
 
-			try {
-				url = portletClassLoader.getResource(
-					languagePropertiesLocation);
-
-				if (url == null) {
-					continue;
-				}
-			}
-			catch (Exception e) {
-				_log.error("Unable to read " + languagePropertiesLocation, e);
-
+			if (url == null) {
 				continue;
-			}
-
-			if (parentResourceBundle != null) {
-				languageResourceBundle =
-					new LiferayResourceBundle(
-						parentResourceBundle, url.openStream(),
-						StringPool.UTF8);
-			}
-			else {
-				languageResourceBundle =
-					new LiferayResourceBundle(url.openStream(),
-						StringPool.UTF8);
 			}
 
 			if (locale != null) {
 				String languageId = LocaleUtil.toLanguageId(locale);
 
-				Properties serviceProperties = new Properties();
-				serviceProperties.put("language.id", languageId);
+				try (InputStream inputStream = url.openStream()) {
+					ResourceBundle resourceBundle = new LiferayResourceBundle(
+						inputStream, StringPool.UTF8);
+
+					Map<String, Object> properties = new HashMap<>();
+
+					properties.put("language.id", languageId);
+
+					registerService(
+						servletContextName, languagePropertiesLocation,
+						ResourceBundle.class, resourceBundle, properties);
+				}
+			}
+			else {
+				baseLanguageURL = url;
+				baseLanguagePropertiesLocation = languagePropertiesLocation;
+			}
+		}
+
+		if (baseLanguageURL != null) {
+			Locale locale = new Locale(StringPool.BLANK);
+
+			String languageId = LocaleUtil.toLanguageId(locale);
+
+			try (InputStream inputStream = baseLanguageURL.openStream()) {
+				ResourceBundle resourceBundle = new LiferayResourceBundle(
+					inputStream, StringPool.UTF8);
+
+				Map<String, Object> properties = new HashMap<>();
+
+				properties.put("language.id", languageId);
 
 				registerService(
-					servletContextName, languagePropertiesLocation,
-					ResourceBundle.class, languageResourceBundle,
-					serviceProperties);
-			}
-			else if (languageResourceBundle != null ) {
-				parentResourceBundle = languageResourceBundle;
+					servletContextName, baseLanguagePropertiesLocation,
+					ResourceBundle.class, resourceBundle, properties);
 			}
 		}
 	}

@@ -24,7 +24,6 @@ import com.liferay.util.ContentUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Enumeration;
@@ -124,7 +123,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected void formatPortalProperties(String fileName, String content)
-		throws IOException {
+		throws Exception {
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(content));

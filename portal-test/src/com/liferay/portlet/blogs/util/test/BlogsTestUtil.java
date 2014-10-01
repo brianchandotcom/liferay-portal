@@ -157,7 +157,7 @@ public class BlogsTestUtil {
 				}
 
 				imageSelector = new ImageSelector(
-					fileEntry.getFileEntryId(), StringPool.BLANK);
+					fileEntry.getFileEntryId(), StringPool.BLANK, null);
 			}
 
 			serviceContext = (ServiceContext)serviceContext.clone();

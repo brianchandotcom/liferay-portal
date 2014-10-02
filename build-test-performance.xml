@@ -4,6 +4,9 @@
 	<import file="build-test.xml" />
 
 	<target name="run-performance-test">
+		<fail message="Please set the property ${performance.branch.main}." unless="performance.branch.main" />
+		<fail message="Please set the property ${performance.branch.temp}." unless="performance.branch.temp" />
+
 		<ssh-execute>
 			<![CDATA[
 				export ANT_HOME=/opt/ant
@@ -11,6 +14,26 @@
 				export JAVA_HOME=/opt/jvms/default_jdk
 				export PATH=${PATH}:${ANT_HOME}/bin:${JAVA_HOME}/bin
 				export SSH_TTY=/dev/pts/7
+
+				cd /home/trunks/git/liferay-portal
+
+				git reset --hard
+
+				git checkout ${performance.branch.main}
+
+				git pull git@github.com:liferay/liferay-portal.git ${performance.branch.main}
+
+				git branch | egrep "temp" | xargs git branch -D
+
+				cd /home/trunks/git/liferay-benchmark-ee
+
+				ant stop all-database all-portal start-visualvm all-grinder all-sample stop
+
+				cd /home/trunks/git/liferay-portal
+
+				git fetch git@github.com:liferay/liferay-portal.git ${performance.branch.temp}:temp
+
+				git checkout temp
 
 				cd /home/trunks/git/liferay-benchmark-ee
 

@@ -1218,16 +1218,6 @@ create database lportal2 character set utf8;</echo>
 			value="${env.JENKINS_HOME}/jobs/${env.JOB_NAME}/builds/${previous.build.number}"
 		/>
 
-		<copy
-			file="git-commit-plugins"
-			todir="${changelog.dir}"
-		/>
-
-		<copy
-			file="git-commit-portal"
-			todir="${changelog.dir}"
-		/>
-
 		<if>
 			<and>
 				<available file="${previous.changelog.dir}/git-build-log.html" />

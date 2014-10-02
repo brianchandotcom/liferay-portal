@@ -224,8 +224,9 @@ public class DLFileEntryServiceTest {
 		String initialFileName = dlFileEntry.getFileName();
 
 		String newTitle = RandomTestUtil.randomString();
+		dlFileEntry.setTitle(newTitle);
 
-		dlFileEntry = updateFileEntry(dlFileEntry, newTitle, serviceContext);
+		dlFileEntry = updateFileEntry(dlFileEntry,serviceContext);
 
 		Assert.assertNotEquals(initialFileName, dlFileEntry.getFileName());
 		Assert.assertEquals(
@@ -249,8 +250,9 @@ public class DLFileEntryServiceTest {
 		String initialFileName = dlFileEntry.getFileName();
 
 		String newTitle = RandomTestUtil.randomString();
+		dlFileEntry.setTitle(newTitle);
 
-		dlFileEntry = updateFileEntry(dlFileEntry, newTitle, serviceContext);
+		dlFileEntry = updateFileEntry(dlFileEntry, serviceContext);
 
 		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(true);
 
@@ -314,16 +316,15 @@ public class DLFileEntryServiceTest {
 	}
 
 	protected DLFileEntry updateFileEntry(
-			DLFileEntry dlFileEntry, String newTitle,
-			ServiceContext serviceContext)
+			DLFileEntry dlFileEntry, ServiceContext serviceContext)
 		throws Exception {
 
 		return DLFileEntryLocalServiceUtil.updateFileEntry(
 			dlFileEntry.getUserId(), dlFileEntry.getFileEntryId(),
-			dlFileEntry.getTitle(), dlFileEntry.getMimeType(), newTitle,
-			dlFileEntry.getDescription(), StringPool.BLANK, false,
-			dlFileEntry.getFileEntryTypeId(), null, null,
-			dlFileEntry.getContentStream(), dlFileEntry.getSize(),
+			dlFileEntry.getTitle(), dlFileEntry.getMimeType(),
+			dlFileEntry.getTitle(), dlFileEntry.getDescription(),
+			StringPool.BLANK, false, dlFileEntry.getFileEntryTypeId(), null,
+			null, dlFileEntry.getContentStream(), dlFileEntry.getSize(),
 			serviceContext);
 	}
 

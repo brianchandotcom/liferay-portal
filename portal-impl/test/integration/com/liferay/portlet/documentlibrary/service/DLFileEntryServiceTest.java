@@ -225,8 +225,7 @@ public class DLFileEntryServiceTest {
 
 		String initialFileName = dlFileEntry.getFileName();
 
-		String newTitle = RandomTestUtil.randomString();
-		dlFileEntry.setTitle(newTitle);
+		dlFileEntry.setTitle(RandomTestUtil.randomString());
 
 		dlFileEntry = updateFileEntry(dlFileEntry, serviceContext);
 
@@ -251,6 +250,7 @@ public class DLFileEntryServiceTest {
 			dlFileEntry.getLatestFileVersion(true), serviceContext);
 
 		String newTitle = RandomTestUtil.randomString();
+
 		dlFileEntry.setTitle(newTitle);
 
 		dlFileEntry = updateFileEntry(dlFileEntry, serviceContext);
@@ -276,6 +276,7 @@ public class DLFileEntryServiceTest {
 		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(true);
 
 		String newTitle = RandomTestUtil.randomString();
+
 		dlFileVersion.setFileName(newTitle);
 
 		DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion);

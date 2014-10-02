@@ -14,6 +14,7 @@
 
 package com.liferay.nested.portlets.web.portlet.action;
 
+import com.liferay.nested.portlets.web.portlet.util.NestedPortletUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
@@ -31,8 +32,9 @@ import com.liferay.portal.model.Theme;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutTemplateLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+
+import org.osgi.service.component.annotations.Component;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -45,8 +47,6 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-
-import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Berentey Zsolt
@@ -75,9 +75,8 @@ public class ViewAction implements ActionCommand {
 
 		PortletPreferences portletPreferences = portletRequest.getPreferences();
 
-		String layoutTemplateId = portletPreferences.getValue(
-			"layoutTemplateId",
-			PropsValues.NESTED_PORTLETS_LAYOUT_TEMPLATE_DEFAULT);
+		String layoutTemplateId = 
+			NestedPortletUtil.getLayoutTemplateId(portletPreferences);
 
 		String velocityTemplateId = StringPool.BLANK;
 		String velocityTemplateContent = StringPool.BLANK;

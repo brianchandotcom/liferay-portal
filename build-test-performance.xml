@@ -4,8 +4,8 @@
 	<import file="build-test.xml" />
 
 	<target name="run-performance-test">
-		<fail message="Please set the property ${branch.main}." unless="branch.main" />
-		<fail message="Please set the property ${branch.temp}." unless="branch.temp" />
+		<fail message="Please set the property ${test.branch.main}." unless="test.branch.main" />
+		<fail message="Please set the property ${test.branch.temp}." unless="test.branch.temp" />
 
 		<ssh-execute>
 			<![CDATA[
@@ -19,9 +19,9 @@
 
 				git reset --hard
 
-				git checkout ${branch.main}
+				git checkout ${test.branch.main}
 
-				git pull git@github.com:liferay/liferay-portal.git ${branch.main}
+				git pull git@github.com:liferay/liferay-portal.git ${test.branch.main}
 
 				git branch | egrep "temp" | xargs git branch -D
 
@@ -31,7 +31,7 @@
 
 				cd /home/trunks/git/liferay-portal
 
-				git fetch git@github.com:liferay/liferay-portal.git ${branch.temp}:temp
+				git fetch git@github.com:liferay/liferay-portal.git ${test.branch.temp}:temp
 
 				git checkout temp
 

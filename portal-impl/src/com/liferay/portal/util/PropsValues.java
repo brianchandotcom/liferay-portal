@@ -1284,8 +1284,6 @@ public class PropsValues {
 
 	public static final String[] NAVIGATION_DISPLAY_STYLE_OPTIONS = PropsUtil.getArray(PropsKeys.NAVIGATION_DISPLAY_STYLE_OPTIONS);
 
-	public static final String NESTED_PORTLETS_LAYOUT_TEMPLATE_DEFAULT = PropsUtil.get(PropsKeys.NESTED_PORTLETS_LAYOUT_TEMPLATE_DEFAULT);
-
 	public static final String NET_SF_EHCACHE_CONFIGURATION_RESOURCE_NAME = PropsUtil.get(PropsKeys.NET_SF_EHCACHE_CONFIGURATION_RESOURCE_NAME);
 
 	public static final String NETVIBES_SERVLET_MAPPING = PropsUtil.get(PropsKeys.NETVIBES_SERVLET_MAPPING);

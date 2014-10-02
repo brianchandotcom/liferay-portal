@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<portlet-preferences>
+	<preference>
+		<name>nested.portlets.layout.template.default</name>
+		<value>2_columns_i</value>
+	</preference>
+	<preference>
+		<name>nested.portlets.layout.template.unsupported</name>
+		<value>freeform,1_column</value>
+	</preference>
+</portlet-preferences>

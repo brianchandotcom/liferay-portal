@@ -259,6 +259,13 @@ public class JSONWebServiceActionParameters {
 
 					key = key.substring(0, pos - 1);
 				}
+				else {
+					if (value != null) {
+						typeName = value.toString();
+
+						value = Void.TYPE;
+					}
+				}
 
 				if (typeName != null) {
 					if (_parameterTypes == null) {

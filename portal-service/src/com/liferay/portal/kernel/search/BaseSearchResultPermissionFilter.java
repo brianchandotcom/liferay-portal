@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -150,7 +151,7 @@ public abstract class BaseSearchResultPermissionFilter
 		scores = scores.subList(start, end);
 
 		hits.setDocs(documents.toArray(new Document[documents.size()]));
-		hits.setScores(scores.toArray(new Float[scores.size()]));
+		hits.setScores(ArrayUtil.toFloatArray(scores));
 		hits.setLength(size);
 		hits.setSearchTime(
 			(float)(System.currentTimeMillis() - startTime) / Time.SECOND);

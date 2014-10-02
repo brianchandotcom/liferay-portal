@@ -66,8 +66,6 @@ public interface Hits extends Serializable {
 
 	public void setScores(float[] scores);
 
-	public void setScores(Float[] scores);
-
 	public void setSearchTime(float time);
 
 	public void setSnippets(String[] snippets);

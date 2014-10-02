@@ -600,7 +600,7 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 		hits.setLength(total);
 		hits.setQuery(query);
 		hits.setQueryTerms(queryTerms.toArray(new String[queryTerms.size()]));
-		hits.setScores(subsetScores.toArray(new Float[subsetScores.size()]));
+		hits.setScores(ArrayUtil.toFloatArray(subsetScores));
 		hits.setSearchTime(searchTime);
 		hits.setStart(startTime);
 

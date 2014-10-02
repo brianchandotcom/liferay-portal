@@ -24,6 +24,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -42,9 +43,27 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 			throw new NullPointerException("A DDM Form instance was never set");
 		}
 
-		validateDDMFormFieldValues(
-			ddmForm.getDDMFormFieldsMap(false),
-			ddmFormValues.getDDMFormFieldValues());
+		traverseDDMFormFields(
+			ddmForm.getDDMFormFields(),
+			ddmFormValues.getDDMFormFieldValuesMap());
+
+		traverseDDMFormFieldValues(
+			ddmFormValues.getDDMFormFieldValues(),
+			ddmForm.getDDMFormFieldsMap(false));
+	}
+
+	protected List<DDMFormFieldValue> getDDMFormFieldValuesByFieldName(
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap,
+		String fieldName) {
+
+		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
+			fieldName);
+
+		if (ddmFormFieldValues == null) {
+			return Collections.emptyList();
+		}
+
+		return ddmFormFieldValues;
 	}
 
 	protected boolean isNull(Value value) {
@@ -53,6 +72,38 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 		}
 
 		return false;
+	}
+
+	protected void traverseDDMFormFields(
+			List<DDMFormField> ddmFormFields,
+			Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap)
+		throws StorageException {
+
+		for (DDMFormField ddmFormField : ddmFormFields) {
+			List<DDMFormFieldValue> ddmFormFieldValues =
+				getDDMFormFieldValuesByFieldName(
+					ddmFormFieldValuesMap, ddmFormField.getName());
+
+			validateDDMFormFieldValues(ddmFormField, ddmFormFieldValues);
+
+			for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+				traverseDDMFormFields(
+					ddmFormField.getNestedDDMFormFields(),
+					ddmFormFieldValue.getNestedDDMFormFieldValuesMap());
+			}
+		}
+	}
+
+	protected void traverseDDMFormFieldValues(
+			List<DDMFormFieldValue> ddmFormFieldValues,
+			Map<String, DDMFormField> ddmFormFieldsMap)
+		throws StorageException {
+
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+			validateDDMFormFieldValue(
+				ddmFormFieldsMap.get(ddmFormFieldValue.getName()),
+				ddmFormFieldValue);
+		}
 	}
 
 	protected void validateDDMFormFieldValue(
@@ -65,43 +116,42 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 					ddmFormFieldValue.getName());
 		}
 
-		validateDDMFormFieldValue(
-			ddmFormField, ddmFormFieldValue.getDDMFormValues(),
-			ddmFormFieldValue.getValue());
+		DDMFormValues ddmFormValues = ddmFormFieldValue.getDDMFormValues();
 
-		validateDDMFormFieldValues(
-			ddmFormField.getNestedDDMFormFieldsMap(),
-			ddmFormFieldValue.getNestedDDMFormFieldValues());
+		validateDDMFormFieldValue(
+			ddmFormField, ddmFormValues.getAvailableLocales(),
+			ddmFormValues.getDefaultLocale(), ddmFormFieldValue.getValue());
+
+		traverseDDMFormFieldValues(
+			ddmFormFieldValue.getNestedDDMFormFieldValues(),
+			ddmFormField.getNestedDDMFormFieldsMap());
 	}
 
 	protected void validateDDMFormFieldValue(
-			DDMFormField ddmFormField, DDMFormValues ddmFormValues, Value value)
+			DDMFormField ddmFormField, Set<Locale> availableLocales,
+			Locale defaultLocale, Value value)
 		throws StorageException {
 
 		if (isNull(value)) {
-			if (ddmFormField.isRequired()) {
-				throw new StorageFieldRequiredException(
-					"No value defined for field " + ddmFormField.getName());
-			}
+			throw new StorageFieldValueException(
+				"No value defined for field " + ddmFormField.getName());
 		}
-		else {
-			if (Validator.isNull(ddmFormField.getDataType())) {
-				throw new StorageFieldValueException(
-					"Value should not be set for field " +
-						ddmFormField.getName());
-			}
 
-			if ((ddmFormField.isLocalizable() && !value.isLocalized()) ||
-				(!ddmFormField.isLocalizable() && value.isLocalized())) {
-
-				throw new StorageFieldValueException(
-					"Invalid value set for field " + ddmFormField.getName());
-			}
-
-			validateDDMFormFieldValueLocales(
-				ddmFormField, ddmFormValues.getAvailableLocales(),
-				ddmFormValues.getDefaultLocale(), value);
+		if (Validator.isNull(ddmFormField.getDataType())) {
+			throw new StorageFieldValueException(
+				"Value should not be set for field " +
+					ddmFormField.getName());
 		}
+
+		if ((ddmFormField.isLocalizable() && !value.isLocalized()) ||
+			(!ddmFormField.isLocalizable() && value.isLocalized())) {
+
+			throw new StorageFieldValueException(
+				"Invalid value set for field " + ddmFormField.getName());
+		}
+
+		validateDDMFormFieldValueLocales(
+			ddmFormField, availableLocales, defaultLocale, value);
 	}
 
 	protected void validateDDMFormFieldValueLocales(
@@ -127,14 +177,19 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 	}
 
 	protected void validateDDMFormFieldValues(
-			Map<String, DDMFormField> ddmFormFieldsMap,
+			DDMFormField ddmFormField,
 			List<DDMFormFieldValue> ddmFormFieldValues)
 		throws StorageException {
 
-		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
-			validateDDMFormFieldValue(
-				ddmFormFieldsMap.get(ddmFormFieldValue.getName()),
-				ddmFormFieldValue);
+		if (ddmFormField.isRequired() && (ddmFormFieldValues.size() == 0)) {
+			throw new StorageFieldRequiredException(
+				"No value defined for field " + ddmFormField.getName());
+		}
+
+		if (!ddmFormField.isRepeatable() && (ddmFormFieldValues.size() > 1)) {
+			throw new StorageFieldValueException(
+				"Incorrect number of values set for field " +
+					ddmFormField.getName());
 		}
 	}
 

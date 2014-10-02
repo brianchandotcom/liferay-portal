@@ -315,7 +315,7 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 			searchRepositoryURL.setParameter("repositoryId", String.valueOf(mountFolder.getRepositoryId()));
 			searchRepositoryURL.setParameter("searchRepositoryId", String.valueOf(mountFolder.getRepositoryId()));
 
-			tabsUrls = ArrayUtil.append(tabsUrls, searchRepositoryURL.toString()); 
+			tabsUrls = ArrayUtil.append(tabsUrls, searchRepositoryURL.toString());
 		}
 		%>
 
@@ -323,8 +323,8 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 			<liferay-ui:tabs
 				names='<%= LanguageUtil.get(request, "local") + "," + HtmlUtil.escape(ListUtil.toString(mountFolders, "name")) %>'
 				refresh="<%= false %>"
-				value="<%= selectedTab %>"
 				urls ="<%= tabsUrls %>"
+				value="<%= selectedTab %>"
 			>
 				<liferay-ui:section>
 					<div class="local-search-results" data-repositoryId="<%= scopeGroupId %>" <%= scopeGroupId == searchRepositoryId ? "data-searchProcessed" : "" %> id="<portlet:namespace />searchResultsContainer<%= scopeGroupId %>">

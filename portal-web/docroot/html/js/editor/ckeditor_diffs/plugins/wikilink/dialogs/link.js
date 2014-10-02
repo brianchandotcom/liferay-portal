@@ -53,7 +53,7 @@ CKEDITOR.dialog.add(
 
 										var address = val;
 
-										if (val.indexOf('www') === 0) {
+										if (val.indexOf('www.') === 0) {
 											address = 'http://' + val;
 										}
 

@@ -28,14 +28,18 @@ public class GetUserSitesGroupsEvent extends BaseEvent {
 		long syncAccountId, Map<String, Object> parameters) {
 
 		super(syncAccountId, _URL_PATH, parameters);
+
+		_handler = new GetUserSitesGroupsHandler(this);
 	}
 
 	@Override
-	protected Handler<Void> getHandler() {
-		return new GetUserSitesGroupsHandler(this);
+	public Handler<Void> getHandler() {
+		return _handler;
 	}
 
 	private static final String _URL_PATH =
 		"/sync-web.syncdlobject/get-user-sites-groups";
+
+	private Handler<Void> _handler;
 
 }

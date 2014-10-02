@@ -30,11 +30,13 @@ public class GetSyncContextEvent extends BaseEvent {
 		long syncAccountId, Map<String, Object> parameters) {
 
 		super(syncAccountId, _URL_PATH, parameters);
+
+		_handler = new GetSyncContextHandler(this);
 	}
 
 	@Override
-	protected Handler<Void> getHandler() {
-		return new GetSyncContextHandler(this);
+	public Handler<Void> getHandler() {
+		return _handler;
 	}
 
 	@Override
@@ -51,5 +53,7 @@ public class GetSyncContextEvent extends BaseEvent {
 
 	private static final String _URL_PATH =
 		"/sync-web.syncdlobject/get-sync-context";
+
+	private Handler<Void> _handler;
 
 }

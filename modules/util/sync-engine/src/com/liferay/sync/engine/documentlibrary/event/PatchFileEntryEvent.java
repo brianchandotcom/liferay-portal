@@ -30,11 +30,13 @@ public class PatchFileEntryEvent extends BaseEvent {
 		long syncAccountId, Map<String, Object> parameters) {
 
 		super(syncAccountId, _URL_PATH, parameters);
+
+		_handler = new PatchFileEntryHandler(this);
 	}
 
 	@Override
-	protected Handler<Void> getHandler() {
-		return new PatchFileEntryHandler(this);
+	public Handler<Void> getHandler() {
+		return _handler;
 	}
 
 	@Override
@@ -51,5 +53,7 @@ public class PatchFileEntryEvent extends BaseEvent {
 
 	private static final String _URL_PATH =
 		"/sync-web.syncdlobject/patch-file-entry";
+
+	private Handler<Void> _handler;
 
 }

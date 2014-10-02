@@ -85,6 +85,8 @@ public abstract class BaseEvent implements Event {
 			_handler);
 	}
 
+	public abstract Handler<Void> getHandler();
+
 	@Override
 	public Map<String, Object> getParameters() {
 		return _parameters;
@@ -121,8 +123,6 @@ public abstract class BaseEvent implements Event {
 			_handler.handleException(e);
 		}
 	}
-
-	protected abstract Handler<Void> getHandler();
 
 	protected void processAsynchronousRequest() throws Exception {
 		executeAsynchronousPost(_urlPath, _parameters);

@@ -493,3 +493,47 @@ conversion). There was also a lot of additional complexity for a relatively
 minor benefit.
 
 ---------------------------------------
+### Moved MVCPortlet, ActionCommand and ActionCommandCache from util-bridges.jar to portal-service.jar
+- **Date:** 2014-09-26
+- **JIRA Ticket:** LPS-50156
+
+#### What changed?
+
+The classes from package `com.liferay.util.bridges.mvc` in util-bridges.jar
+were moved to a new package `com.liferay.portal.kernel.portlet.bridges.mvc`
+in portal-service.jar
+
+The classes affected are:
+
+```
+com.liferay.util.bridges.mvc.ActionCommand
+com.liferay.util.bridges.mvc.BaseActionCommand
+```
+
+They have are now:
+
+```
+com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand
+com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand
+```
+
+In addition `com.liferay.util.bridges.mvc.MVCPortlet` is a deprecated, but
+was made to extend `com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet`.
+
+#### Who is affected?
+
+This will affect any implementations of ActionCommand.
+
+#### How should I update my code?
+
+Replace imports of `com.liferay.util.bridges.mvc.ActionCommand` by
+`com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand` or
+`com.liferay.util.bridges.mvc.BaseActionCommand` by
+`com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand`
+
+#### Why was this change made?
+
+This change was made in order to avoid duplication of an implementable
+interface in the system. Duplication can cause ClassCastExceptions.
+
+---------------------------------------

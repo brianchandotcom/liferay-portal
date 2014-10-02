@@ -298,6 +298,7 @@
 			var instance = this;
 
 			var res = new Array(parseInt(params[1], 10) + 1);
+
 			res = res.join(STR_EQUALS);
 
 			if (instance._isDataAvailable() && !instance._isLastItemNewLine()) {
@@ -540,7 +541,10 @@
 		_pushTagList: function(tagsList) {
 			var instance = this;
 
-			var endResult, i, length, tag;
+			var endResult;
+			var i;
+			var length;
+			var tag;
 
 			endResult = instance._endResult;
 			length = tagsList.length;

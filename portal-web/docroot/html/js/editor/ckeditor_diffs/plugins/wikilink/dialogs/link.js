@@ -96,24 +96,19 @@ CKEDITOR.dialog.add(
 					title: LANG_LINK.info
 				}
 			],
-			minWidth: 250,
 			minHeight: 100,
+			minWidth: 250,
 			title: LANG_LINK.title,
 
-			onShow: function() {
+			onFocus: function() {
 				var instance = this;
 
-				instance.fakeObj = false;
+				var urlField = instance.getContentElement('info', 'linkAddress');
 
-				var editor = instance.getParentEditor();
-				var selection = editor.getSelection();
-				var element = PLUGIN.getSelectedLink(editor) || null;
+				urlField.select();
+			},
 
-				if (element) {
-					selection.selectElement(element);
-				}
-
-				instance.setupContent(parseLink.apply(instance, [editor, element]));
+			onLoad: function() {
 			},
 
 			onOk: function() {
@@ -167,15 +162,20 @@ CKEDITOR.dialog.add(
 				}
 			},
 
-			onFocus: function() {
+			onShow: function() {
 				var instance = this;
 
-				var urlField = instance.getContentElement('info', 'linkAddress');
+				instance.fakeObj = false;
 
-				urlField.select();
-			},
+				var editor = instance.getParentEditor();
+				var selection = editor.getSelection();
+				var element = PLUGIN.getSelectedLink(editor) || null;
 
-			onLoad: function() {
+				if (element) {
+					selection.selectElement(element);
+				}
+
+				instance.setupContent(parseLink.apply(instance, [editor, element]));
 			}
 		};
 	}

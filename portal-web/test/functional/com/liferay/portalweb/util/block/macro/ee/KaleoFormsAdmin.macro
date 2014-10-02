@@ -518,7 +518,7 @@
 	</command>
 
 	<command name="viewNoUnpublishedWorkflowDefinitions">
-		<execute macro="KaleoFormsAdmin#viewWorkflowUnpublished" />
+		<execute macro="KaleoFormsAdmin#viewUnpublishedWorkflowDefinitions" />
 
 		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no unpublished definitions." />
 	</command>
@@ -638,6 +638,10 @@
 		<execute macro="KaleoFormsAdmin#next" />
 	</command>
 
+	<command name="viewPublishedWorkflowDefinitions">
+		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="WORKFLOW_NAVIGATION_PUBLISHED_TAB" value1="Published" />
+	</command>
+
 	<command name="viewSelectedWorkflow">
 		<if>
 			<isset var="workflowDefinitionTitleEdit" />
@@ -658,17 +662,13 @@
 		<execute action="CPKaleoformsadminNewprocess#assertElementNotPresent" locator-key1="FORMS_TABLE_ASSIGN_FORM_BUTTON" />
 	</command>
 
-	<command name="viewWorkflowPublished">
-		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="WORKFLOW_NAVIGATION_PUBLISHED_TAB" value1="Published" />
+	<command name="viewUnpublishedWorkflowDefinitions">
+		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="WORKFLOW_NAVIGATION_UNPUBLISHED_TAB" value1="Unpublished" />
 	</command>
 
 	<command name="viewWorkflowStepCmd">
 		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="PROCESS_NAME" value1="${kfProcessName}" />
 		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="FORM_NAVIGATOR_3" value1="3" />
 		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="FORM_NAVIGATOR_WORKFLOW" value1="Workflow" />
-	</command>
-
-	<command name="viewWorkflowUnpublished">
-		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="WORKFLOW_NAVIGATION_UNPUBLISHED_TAB" value1="Unpublished" />
 	</command>
 </definition>

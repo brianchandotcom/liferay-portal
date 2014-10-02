@@ -466,7 +466,8 @@ demonstrates using a `SyncCapability` instance to move a `FileEntry`:
 There are repositories that don't support Liferay Sync operations.
 
 ---------------------------------------
-### Removed the .aui namespace from around Bootstrap
+
+### Removed the `.aui` Namespace from Bootstrap
 - **Date:** 2014-Sep-26
 - **JIRA Ticket:** LPS-50348
 
@@ -476,19 +477,18 @@ The `.aui` namespace was removed from prefixing all of Bootstrap's CSS.
 
 #### Who is affected?
 
-Theme and plugin developers that targeted their CSS to relying on the
-namespace.
+Theme and plugin developers that targeted their CSS to rely on the namespace.
 
 #### How should I update my code?
 
 Theme developers can still manually add an `aui.css` file in their `_diffs`
-directory, and add it back in, as well as adding the `aui` css class to the
+directory, and add it back in. The `aui` CSS class can also be added to the
 `$root_css_class` variable.
 
 #### Why was this change made?
 
 Due to changes in the Sass parser, the nesting of third-party libraries was
-causing some syntax errors which broke other functionality (such as RTL
+causing some syntax errors which broke other functionality (e.g., RTL
 conversion). There was also a lot of additional complexity for a relatively
 minor benefit.
 

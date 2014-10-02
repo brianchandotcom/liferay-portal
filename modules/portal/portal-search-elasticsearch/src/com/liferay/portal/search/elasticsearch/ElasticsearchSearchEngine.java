@@ -177,6 +177,10 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 	public synchronized void restore(long companyId, String backupName)
 		throws SearchException {
 
+		backupName = StringUtil.toLowerCase(backupName);
+
+		validateBackupName(backupName);
+
 		AdminClient adminClient =
 			_elasticsearchConnectionManager.getAdminClient();
 

@@ -262,22 +262,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--WORKFLOW_NAVIGATION-->
-<tr>
-	<td>WORKFLOW_NAVIGATION_PUBLISHED_TAB</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Published')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WORKFLOW_NAVIGATION_UNPUBLISHED_TAB</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Unpublished')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--WORKFLOW_TABLE-->
 <tr>
 	<td>WORKFLOW_TABLE_TITLE</td>
@@ -303,6 +287,38 @@
 <tr>
 	<td>WORKFLOW_MENULIST_CHOOSE</td>
 	<td>//a[@role='menuitem' and contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WORKFLOW_UNPUBLISHED_TABLE-->
+<tr>
+	<td>WORKFLOW_UNPUBLISHED_TABLE_TITLE</td>
+	<td>//div[contains(@id,'kaleoformsportlet_kaleoDraftDefinitionsSearchContainer')]//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_UNPUBLISHED_TABLE_ACTIONS</td>
+	<td>//div[contains(@id,'kaleoformsportlet_kaleoDraftDefinitionsSearchContainer')]//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[3]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WORKFLOW_UNPUBLISHED_MENULIST-->
+<tr>
+	<td>WORKFLOW_UNPUBLISHED_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_UNPUBLISHED_MENULIST_DELETE</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>

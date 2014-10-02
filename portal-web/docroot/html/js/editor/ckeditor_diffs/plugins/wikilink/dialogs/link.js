@@ -57,8 +57,8 @@ CKEDITOR.dialog.add(
 											address = 'http://' + val;
 										}
 
-										data.text = val;
 										data.address = address;
+										data.text = val;
 									},
 									id: 'linkAddress',
 									label: LANG_COMMON.url,
@@ -88,7 +88,7 @@ CKEDITOR.dialog.add(
 							],
 							id: 'linkOptions',
 							padding: 1,
-							type:  'vbox'
+							type: 'vbox'
 						}
 					],
 					id: 'info',
@@ -121,11 +121,13 @@ CKEDITOR.dialog.add(
 
 				var attributes = {};
 				var data = {};
+
 				var editor = instance.getParentEditor();
 
 				instance.commitContent(data);
 
 				attributes['data-cke-saved-href'] = data.address;
+
 				attributes.href = data.address;
 
 				if (!instance._.selectedElement) {
@@ -137,6 +139,7 @@ CKEDITOR.dialog.add(
 
 						ranges[0].insertNode(text);
 						ranges[0].selectNodeContents(text);
+
 						selection.selectRanges(ranges);
 					}
 
@@ -148,15 +151,18 @@ CKEDITOR.dialog.add(
 					);
 
 					style.type = CKEDITOR.STYLE_INLINE;
+
 					editor.applyStyle(style);
 				}
 				else {
-					var currentText = instance._.selectedElement.getText(data.text);
+					var selectedElement = instance._.selectedElement;
 
-					instance._.selectedElement.setAttributes(attributes);
+					var currentText = selectedElement.getText(data.text);
+
+					selectedElement.setAttributes(attributes);
 
 					if (CKEDITOR.env.ie) {
-						instance._.selectedElement.setText(currentText);
+						selectedElement.setText(currentText);
 					}
 				}
 			},

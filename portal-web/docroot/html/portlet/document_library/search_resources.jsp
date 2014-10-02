@@ -296,12 +296,26 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 	<c:when test="<%= showRepositoryTabs %>">
 
 		<%
+		PortletURL searchRepositoryURL = liferayPortletResponse.createRenderURL();
+		searchRepositoryURL.setParameter("struts_action", "/document_library/search");
+		searchRepositoryURL.setParameter("repositoryId", String.valueOf(scopeGroupId));
+		searchRepositoryURL.setParameter("searchRepositoryId", String.valueOf(scopeGroupId));
+		searchRepositoryURL.setParameter("keywords", String.valueOf(keywords));
+		searchRepositoryURL.setParameter("showRepositoryTabs", Boolean.TRUE.toString());
+		searchRepositoryURL.setParameter("showSearchInfo", Boolean.TRUE.toString());
+
+		String[] tabsUrls = new String[] {searchRepositoryURL.toString()};
+
 		String selectedTab = LanguageUtil.get(request, "local");
 
 		for (Folder mountFolder : mountFolders) {
 			if (mountFolder.getRepositoryId() == searchRepositoryId) {
 				selectedTab = HtmlUtil.escape(mountFolder.getName());
 			}
+			searchRepositoryURL.setParameter("repositoryId", String.valueOf(mountFolder.getRepositoryId()));
+			searchRepositoryURL.setParameter("searchRepositoryId", String.valueOf(mountFolder.getRepositoryId()));
+
+			tabsUrls = ArrayUtil.append(tabsUrls, searchRepositoryURL.toString()); 
 		}
 		%>
 
@@ -310,6 +324,7 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 				names='<%= LanguageUtil.get(request, "local") + "," + HtmlUtil.escape(ListUtil.toString(mountFolders, "name")) %>'
 				refresh="<%= false %>"
 				value="<%= selectedTab %>"
+				urls ="<%= tabsUrls %>"
 			>
 				<liferay-ui:section>
 					<div class="local-search-results" data-repositoryId="<%= scopeGroupId %>" <%= scopeGroupId == searchRepositoryId ? "data-searchProcessed" : "" %> id="<portlet:namespace />searchResultsContainer<%= scopeGroupId %>">

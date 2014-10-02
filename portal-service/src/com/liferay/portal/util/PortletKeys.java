@@ -152,7 +152,7 @@ public class PortletKeys {
 
 	public static final String NAVIGATION = "71";
 
-	public static final String NESTED_PORTLETS = "118";
+	public static final String NESTED_PORTLETS = "com_liferay_nested_portlets_web_portlet_NestedPortletsPortlet";
 
 	public static final String PAGE_COMMENTS = "107";
 

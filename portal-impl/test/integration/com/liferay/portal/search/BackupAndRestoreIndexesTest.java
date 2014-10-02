@@ -16,6 +16,10 @@ package com.liferay.portal.search;
 
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.test.DeleteAfterTestRun;
+import com.liferay.portal.test.Sync;
+import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortalInstances;
@@ -30,8 +34,13 @@ import org.junit.runner.RunWith;
 /**
  * @author Cristina González
  */
-@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
+@ExecutionTestListeners(
+	listeners = {
+		MainServletExecutionTestListener.class,
+		SynchronousDestinationExecutionTestListener.class
+	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
+@Sync
 public class BackupAndRestoreIndexesTest {
 
 	@Test
@@ -49,7 +58,7 @@ public class BackupAndRestoreIndexesTest {
 			backupNames.put(companyId, backupName);
 		}
 
-		GroupTestUtil.addGroup();
+		_group = GroupTestUtil.addGroup();
 
 		for (Map.Entry<Long, String> entry : backupNames.entrySet()) {
 			String backupName = entry.getValue();
@@ -59,5 +68,8 @@ public class BackupAndRestoreIndexesTest {
 			SearchEngineUtil.removeBackup(entry.getKey(), backupName);
 		}
 	}
+
+	@DeleteAfterTestRun
+	private Group _group;
 
 }

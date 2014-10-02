@@ -3595,7 +3595,6 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
-
 		<execute macro="KaleoFormsAdmin#viewNoUnpublishedWorkflowDefinitions" />
 
 		<execute macro="KaleoFormsAdmin#addWorkflow">
@@ -3620,7 +3619,6 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#viewPublishedWorkflowDefinitions" />
-
 		<execute macro="KaleoFormsAdmin#viewNoUnpublishedWorkflowDefinitions" />
 	</command>
 </definition>

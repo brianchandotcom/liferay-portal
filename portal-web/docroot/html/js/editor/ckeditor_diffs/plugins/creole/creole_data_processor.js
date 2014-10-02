@@ -298,6 +298,7 @@
 			var instance = this;
 
 			var res = new Array(parseInt(params[1], 10) + 1);
+
 			res = res.join(STR_EQUALS);
 
 			if (instance._isDataAvailable() && !instance._isLastItemNewLine()) {
@@ -337,19 +338,17 @@
 			var hrefAttribute = element.getAttribute('href');
 
 			if (hrefAttribute) {
-				if (CKEDITOR.env.ie && (CKEDITOR.env.version < 8)) {
-					var ckeSavedHref = element.getAttribute('data-cke-saved-href');
-
-					if (ckeSavedHref) {
-						hrefAttribute = ckeSavedHref;
-					}
-				}
-
 				if (!REGEX_URL_PREFIX.test(hrefAttribute)) {
 					hrefAttribute = decodeURIComponent(hrefAttribute);
 				}
 
-				listTagsIn.push('[[', hrefAttribute, STR_PIPE);
+				var linkText = element.textContent || element.innerText;
+
+				listTagsIn.push('[[');
+
+				if (linkText !== hrefAttribute) {
+					listTagsIn.push(hrefAttribute, STR_PIPE);
+				}
 
 				listTagsOut.push(']]');
 			}
@@ -542,7 +541,10 @@
 		_pushTagList: function(tagsList) {
 			var instance = this;
 
-			var endResult, i, length, tag;
+			var endResult;
+			var i;
+			var length;
+			var tag;
 
 			endResult = instance._endResult;
 			length = tagsList.length;

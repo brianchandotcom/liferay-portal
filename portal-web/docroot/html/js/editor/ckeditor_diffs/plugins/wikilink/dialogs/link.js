@@ -15,7 +15,7 @@ CKEDITOR.dialog.add(
 			};
 
 			if (element) {
-				var href = element.data('cke-saved-href') || element.getAttribute('href');
+				var href = element.getAttribute('href');
 
 				if (editor.config.decodeLinks) {
 					data.address = decodeURIComponent(href);
@@ -27,16 +27,7 @@ CKEDITOR.dialog.add(
 			else {
 				var selection = editor.getSelection();
 
-				if (CKEDITOR.env.ie) {
-					selection.unlock(true);
-
-					data.address = selection.getNative().createRange().text;
-
-					selection.lock();
-				}
-				else {
-					data.address = selection.getNative().toString();
-				}
+				data.address = selection.getSelectedText();
 			}
 
 			instance._.selectedElement = element;
@@ -58,7 +49,16 @@ CKEDITOR.dialog.add(
 											data = {};
 										}
 
-										data.address = instance.getValue();
+										var val = instance.getValue();
+
+										var address = val;
+
+										if (val.indexOf('www.') === 0) {
+											address = 'http://' + val;
+										}
+
+										data.address = address;
+										data.text = val;
 									},
 									id: 'linkAddress',
 									label: LANG_COMMON.url,
@@ -88,7 +88,7 @@ CKEDITOR.dialog.add(
 							],
 							id: 'linkOptions',
 							padding: 1,
-							type:  'vbox'
+							type: 'vbox'
 						}
 					],
 					id: 'info',
@@ -96,9 +96,71 @@ CKEDITOR.dialog.add(
 					title: LANG_LINK.info
 				}
 			],
-			minWidth: 250,
 			minHeight: 100,
+			minWidth: 250,
 			title: LANG_LINK.title,
+
+			onFocus: function() {
+				var instance = this;
+
+				var urlField = instance.getContentElement('info', 'linkAddress');
+
+				urlField.select();
+			},
+
+			onLoad: function() {
+			},
+
+			onOk: function() {
+				var instance = this;
+
+				var attributes = {};
+				var data = {};
+
+				var editor = instance.getParentEditor();
+
+				instance.commitContent(data);
+
+				attributes['data-cke-saved-href'] = data.address;
+
+				attributes.href = data.address;
+
+				if (!instance._.selectedElement) {
+					var selection = editor.getSelection();
+					var ranges = selection.getRanges(true);
+
+					if (ranges.length == 1 && ranges[0].collapsed) {
+						var text = new CKEDITOR.dom.text(data.text, editor.document);
+
+						ranges[0].insertNode(text);
+						ranges[0].selectNodeContents(text);
+
+						selection.selectRanges(ranges);
+					}
+
+					var style = new CKEDITOR.style(
+						{
+							attributes: attributes,
+							element: 'a'
+						}
+					);
+
+					style.type = CKEDITOR.STYLE_INLINE;
+
+					editor.applyStyle(style);
+				}
+				else {
+					var selectedElement = instance._.selectedElement;
+
+					var currentText = selectedElement.getText(data.text);
+
+					selectedElement.setAttributes(attributes);
+
+					if (CKEDITOR.env.ie) {
+						selectedElement.setText(currentText);
+					}
+				}
+			},
 
 			onShow: function() {
 				var instance = this;
@@ -114,56 +176,6 @@ CKEDITOR.dialog.add(
 				}
 
 				instance.setupContent(parseLink.apply(instance, [editor, element]));
-			},
-
-			onOk: function() {
-				var instance = this;
-
-				var attributes = {};
-				var data = {};
-				var editor = instance.getParentEditor();
-
-				instance.commitContent(data);
-
-				attributes['data-cke-saved-href'] = data.address;
-				attributes.href = data.address;
-
-				if (!instance._.selectedElement) {
-					var selection = editor.getSelection();
-					var ranges = selection.getRanges(true);
-
-					if (ranges.length == 1 && ranges[0].collapsed) {
-						var text = new CKEDITOR.dom.text(attributes['data-cke-saved-href'], editor.document);
-
-						ranges[0].insertNode(text);
-						ranges[0].selectNodeContents(text);
-						selection.selectRanges(ranges);
-					}
-
-					var style = new CKEDITOR.style(
-						{
-							attributes: attributes,
-							element: 'a'
-						}
-					);
-
-					style.type = CKEDITOR.STYLE_INLINE;
-					style.apply(editor.document);
-				}
-				else {
-					instance._.selectedElement.setAttributes(attributes);
-				}
-			},
-
-			onFocus: function() {
-				var instance = this;
-
-				var urlField = instance.getContentElement('info', 'linkAddress');
-
-				urlField.select();
-			},
-
-			onLoad: function() {
 			}
 		};
 	}

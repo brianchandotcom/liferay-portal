@@ -583,11 +583,11 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 
 				return;
 			}
-			catch (PortalException e) {
-				if (!(e instanceof DuplicateFolderNameException) &&
-					 !(e instanceof DuplicateFileException)) {
+			catch (PortalException pe) {
+				if (!(pe instanceof DuplicateFolderNameException) &&
+					 !(pe instanceof DuplicateFileException)) {
 
-					throw e;
+					throw pe;
 				}
 
 				i++;

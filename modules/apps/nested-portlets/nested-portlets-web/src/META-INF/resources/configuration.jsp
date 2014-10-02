@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/nested_portlets/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
 
@@ -30,13 +30,13 @@
 		<%
 		int CELLS_PER_ROW = 4;
 
-		String layoutTemplateId = portletPreferences.getValue("layoutTemplateId", PropsValues.NESTED_PORTLETS_LAYOUT_TEMPLATE_DEFAULT);
+		String layoutTemplateId = NestedPortletUtil.getLayoutTemplateId(portletPreferences);
 
 		List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates(theme.getThemeId());
 
-		layoutTemplates = PluginUtil.restrictPlugins(layoutTemplates, user);
+		layoutTemplates = com.liferay.portal.plugin.PluginUtil.restrictPlugins(layoutTemplates, user);
 
-		List<String> unsupportedLayoutTemplates = ListUtil.fromArray(PropsUtil.getArray(PropsKeys.NESTED_PORTLETS_LAYOUT_TEMPLATE_UNSUPPORTED));
+		List<String> unsupportedLayoutTemplates = ListUtil.fromArray(PropsUtil.getArray(portletPreferences.getValue("nested.portlets.layout.template.unsupported", StringPool.BLANK)));
 
 		int i = 0;
 

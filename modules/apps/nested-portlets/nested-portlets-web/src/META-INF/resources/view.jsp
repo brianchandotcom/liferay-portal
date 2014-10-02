@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/nested_portlets/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE) %>">
 	<div class="alert alert-info hide" id="<portlet:namespace />nested-portlets-msg">
@@ -38,8 +38,8 @@
 
 <%
 try {
-	String velocityTemplateId = (String)request.getAttribute(WebKeys.NESTED_PORTLET_VELOCITY_TEMPLATE_ID);
-	String velocityTemplateContent = (String)request.getAttribute(WebKeys.NESTED_PORTLET_VELOCITY_TEMPLATE_CONTENT);
+	String velocityTemplateId = (String)request.getAttribute("NESTED_PORTLET_VELOCITY_TEMPLATE_ID");
+	String velocityTemplateContent = (String)request.getAttribute("NESTED_PORTLET_VELOCITY_TEMPLATE_CONTENT");
 
 	if (Validator.isNotNull(velocityTemplateId) && Validator.isNotNull(velocityTemplateContent)) {
 		RuntimePageUtil.processTemplate(request, response, new StringTemplateResource(velocityTemplateId, velocityTemplateContent));
@@ -49,9 +49,7 @@ catch (Exception e) {
 	_log.error("Cannot render Nested Portlets portlet", e);
 }
 finally {
-	RenderRequestImpl renderRequestImpl = (RenderRequestImpl)renderRequest;
-
-	renderRequestImpl.defineObjects(portletConfig, renderResponse);
+	NestedPortletUtil.defineObjects(portletConfig, renderResponse, renderRequest);
 }
 %>
 

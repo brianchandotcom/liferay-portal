@@ -15,10 +15,9 @@
 package com.liferay.portlet.dynamicdatamapping.storage;
 
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.Value;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -48,21 +47,22 @@ public class DDMFormValues {
 		return _ddmFormFieldValues;
 	}
 
-	public Map<String, List<Value>> getDDMFormFieldValuesMap() {
-		Map<String, List<Value>> ddmFormFieldValuesMap =
-			new HashMap<String, List<Value>>();
+	public Map<String, List<DDMFormFieldValue>> getDDMFormFieldValuesMap() {
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+			new LinkedHashMap<String, List<DDMFormFieldValue>>();
 
 		for (DDMFormFieldValue ddmFormFieldValue : _ddmFormFieldValues) {
-			List<Value> values = ddmFormFieldValuesMap.get(
-				ddmFormFieldValue.getName());
+			List<DDMFormFieldValue> ddmFormFieldValues =
+				ddmFormFieldValuesMap.get(ddmFormFieldValue.getName());
 
-			if (values == null) {
-				values = new ArrayList<Value>();
+			if (ddmFormFieldValues == null) {
+				ddmFormFieldValues = new ArrayList<DDMFormFieldValue>();
 
-				ddmFormFieldValuesMap.put(ddmFormFieldValue.getName(), values);
+				ddmFormFieldValuesMap.put(
+					ddmFormFieldValue.getName(), ddmFormFieldValues);
 			}
 
-			values.add(ddmFormFieldValue.getValue());
+			ddmFormFieldValues.add(ddmFormFieldValue);
 		}
 
 		return ddmFormFieldValuesMap;

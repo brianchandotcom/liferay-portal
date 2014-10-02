@@ -221,14 +221,11 @@ public class DLFileEntryServiceTest {
 		dlFileEntry = updateStatus(
 			dlFileEntry.getLatestFileVersion(true), serviceContext);
 
-		String initialFileName = dlFileEntry.getFileName();
-
 		String newTitle = RandomTestUtil.randomString();
 		dlFileEntry.setTitle(newTitle);
 
 		dlFileEntry = updateFileEntry(dlFileEntry,serviceContext);
 
-		Assert.assertNotEquals(initialFileName, dlFileEntry.getFileName());
 		Assert.assertEquals(
 			DLUtil.getSanitizedFileName(newTitle, dlFileEntry.getExtension()),
 			dlFileEntry.getFileName());
@@ -274,8 +271,6 @@ public class DLFileEntryServiceTest {
 		dlFileEntry = updateStatus(
 			dlFileEntry.getLatestFileVersion(true), serviceContext);
 
-		String initialFileName = dlFileEntry.getFileName();
-
 		String newTitle = RandomTestUtil.randomString();
 
 		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(true);
@@ -286,7 +281,6 @@ public class DLFileEntryServiceTest {
 
 		dlFileEntry = updateStatus(dlFileVersion, serviceContext);
 
-		Assert.assertNotEquals(initialFileName, dlFileEntry.getFileName());
 		Assert.assertEquals(
 			DLUtil.getSanitizedFileName(newTitle, dlFileEntry.getExtension()),
 			dlFileEntry.getFileName());

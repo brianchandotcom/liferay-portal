@@ -79,6 +79,9 @@ String storageTypeValue = StringPool.BLANK;
 if (scopeStorageType.equals("expando")) {
 	storageTypeValue = StorageType.EXPANDO.getValue();
 }
+else if (scopeStorageType.equals("json")) {
+	storageTypeValue = StorageType.JSON.getValue();
+}
 else if (scopeStorageType.equals("xml")) {
 	storageTypeValue = StorageType.XML.getValue();
 }

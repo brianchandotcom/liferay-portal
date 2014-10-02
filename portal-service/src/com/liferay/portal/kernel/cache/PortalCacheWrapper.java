@@ -34,11 +34,6 @@ public class PortalCacheWrapper<K extends Serializable, V>
 	}
 
 	@Override
-	public BootstrapLoader getBootstrapLoader() {
-		return portalCache.getBootstrapLoader();
-	}
-
-	@Override
 	public List<K> getKeys() {
 		return portalCache.getKeys();
 	}

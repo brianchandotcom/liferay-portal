@@ -211,27 +211,6 @@ public class DLFileEntryServiceTest {
 	}
 
 	@Test
-	public void testUpdateFileName()throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		DLFileEntry dlFileEntry = addDLFileEntry(
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, false);
-
-		dlFileEntry = updateStatus(
-			dlFileEntry.getLatestFileVersion(true), serviceContext);
-
-		String newTitle = RandomTestUtil.randomString();
-		dlFileEntry.setTitle(newTitle);
-
-		dlFileEntry = updateFileEntry(dlFileEntry,serviceContext);
-
-		Assert.assertEquals(
-			DLUtil.getSanitizedFileName(newTitle, dlFileEntry.getExtension()),
-			dlFileEntry.getFileName());
-	}
-
-	@Test
 	public void testRestoreFileNameWhenDeletingLatestFileVersion()
 		throws Exception {
 
@@ -258,6 +237,27 @@ public class DLFileEntryServiceTest {
 			dlFileVersion.getVersion());
 
 		Assert.assertEquals(initialFileName, dlFileEntry.getFileName());
+	}
+
+	@Test
+	public void testUpdateFileName()throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		DLFileEntry dlFileEntry = addDLFileEntry(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, false);
+
+		dlFileEntry = updateStatus(
+			dlFileEntry.getLatestFileVersion(true), serviceContext);
+
+		String newTitle = RandomTestUtil.randomString();
+		dlFileEntry.setTitle(newTitle);
+
+		dlFileEntry = updateFileEntry(dlFileEntry, serviceContext);
+
+		Assert.assertEquals(
+			DLUtil.getSanitizedFileName(newTitle, dlFileEntry.getExtension()),
+			dlFileEntry.getFileName());
 	}
 
 	@Test

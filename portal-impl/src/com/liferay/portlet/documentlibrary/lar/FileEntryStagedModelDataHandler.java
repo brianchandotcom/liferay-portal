@@ -181,7 +181,18 @@ public class FileEntryStagedModelDataHandler
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
-		if (!fileVersion.isApproved() && !fileEntry.isInTrash()) {
+		if (!ArrayUtil.contains(
+				getExportableStatuses(), fileVersion.getStatus())) {
+
+			return;
+		}
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			DLFileEntry.class.getName());
+
+		if (trashHandler.isInTrash(fileEntry.getFileEntryId()) ||
+			trashHandler.isInTrashContainer(fileEntry.getFileEntryId())) {
+
 			return;
 		}
 
@@ -671,58 +682,6 @@ public class FileEntryStagedModelDataHandler
 			pde.setStagedModel(fileEntry);
 
 			throw pde;
-		}
-
-		try {
-			FileVersion fileVersion = fileEntry.getFileVersion();
-
-			if (!ArrayUtil.contains(
-					getExportableStatuses(), fileVersion.getStatus())) {
-
-				throw new PortletDataException(
-					PortletDataException.STATUS_UNAVAILABLE);
-			}
-		}
-		catch (PortletDataException pde) {
-			throw pde;
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to check workflow status for file entry " +
-						fileEntry.getFileEntryId());
-			}
-		}
-
-		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			DLFileEntry.class.getName());
-
-		if (trashHandler != null) {
-			try {
-				if (trashHandler.isInTrash(fileEntry.getFileEntryId()) ||
-					trashHandler.isInTrashContainer(
-						fileEntry.getFileEntryId())) {
-
-					throw new PortletDataException(
-						PortletDataException.STATUS_IN_TRASH);
-				}
-			}
-			catch (PortletDataException pde) {
-				throw pde;
-			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
-				}
-				else if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to check trash status for file entry " +
-							fileEntry.getFileEntryId());
-				}
-			}
 		}
 	}
 

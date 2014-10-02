@@ -51,24 +51,28 @@ public class DDMFormFieldValue {
 		return _nestedDDMFormFieldValues;
 	}
 
-	public Map<String, List<Value>> getNestedDDMFormFieldValuesMap() {
-		Map<String, List<Value>> nestedDDMFormFieldValuesMap =
-			new HashMap<String, List<Value>>();
+	public Map<String, List<DDMFormFieldValue>>
+		getNestedDDMFormFieldValuesMap() {
+
+		Map<String, List<DDMFormFieldValue>> nestedDDMFormFieldValuesMap =
+			new HashMap<String, List<DDMFormFieldValue>>();
 
 		for (DDMFormFieldValue nestedDDMFormFieldValue :
 				_nestedDDMFormFieldValues) {
 
-			List<Value> values = nestedDDMFormFieldValuesMap.get(
-				nestedDDMFormFieldValue.getName());
+			List<DDMFormFieldValue> nestedDDMFormFieldValues =
+				nestedDDMFormFieldValuesMap.get(
+					nestedDDMFormFieldValue.getName());
 
-			if (values == null) {
-				values = new ArrayList<Value>();
+			if (nestedDDMFormFieldValues == null) {
+				nestedDDMFormFieldValues = new ArrayList<DDMFormFieldValue>();
 
 				nestedDDMFormFieldValuesMap.put(
-					nestedDDMFormFieldValue.getName(), values);
+					nestedDDMFormFieldValue.getName(),
+					nestedDDMFormFieldValues);
 			}
 
-			values.add(nestedDDMFormFieldValue.getValue());
+			nestedDDMFormFieldValues.add(nestedDDMFormFieldValue);
 		}
 
 		return nestedDDMFormFieldValuesMap;

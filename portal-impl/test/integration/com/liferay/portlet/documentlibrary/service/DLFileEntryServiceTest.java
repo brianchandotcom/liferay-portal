@@ -271,10 +271,9 @@ public class DLFileEntryServiceTest {
 		dlFileEntry = updateStatus(
 			dlFileEntry.getLatestFileVersion(true), serviceContext);
 
-		String newTitle = RandomTestUtil.randomString();
-
 		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(true);
 
+		String newTitle = RandomTestUtil.randomString();
 		dlFileVersion.setFileName(newTitle);
 
 		DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion);

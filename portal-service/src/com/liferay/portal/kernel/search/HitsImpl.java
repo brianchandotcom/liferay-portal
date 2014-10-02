@@ -157,17 +157,6 @@ public class HitsImpl implements Hits {
 	}
 
 	@Override
-	public void setScores(Float[] scores) {
-		float[] primScores = new float[scores.length];
-
-		for (int i = 0; i < scores.length; i++) {
-			primScores[i] = scores[i].floatValue();
-		}
-
-		setScores(primScores);
-	}
-
-	@Override
 	public void setSearchTime(float time) {
 		_searchTime = time;
 	}

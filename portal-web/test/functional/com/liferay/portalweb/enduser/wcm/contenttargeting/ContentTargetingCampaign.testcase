@@ -57,7 +57,7 @@
 			<var name="campaignEndDate" value="1/1/2015" />
 			<var name="campaignEndTime" value="12:00 PM" />
 			<var name="campaignName" value="Campaign Name" />
-			<var name="campaignPrioritySelect" value="3" />
+			<var name="campaignPriorityField" value="3" />
 			<var name="campaignStartDate" value="1/1/2014" />
 			<var name="campaignStartTime" value="12:00 AM" />
 			<var name="userSegmentSelect" value="User Segment Name" />
@@ -112,7 +112,7 @@
 			<var name="campaignEndDate" value="1/1/2015" />
 			<var name="campaignEndTime" value="12:00 PM" />
 			<var name="campaignName" value="Campaign Name" />
-			<var name="campaignPrioritySelect" value="3" />
+			<var name="campaignPriorityField" value="3" />
 			<var name="campaignStartDate" value="1/1/2014" />
 			<var name="campaignStartTime" value="12:00 AM" />
 			<var name="userSegmentSelect" value="User Segment Name" />
@@ -166,7 +166,7 @@
 			<var name="campaignEndDate" value="1/1/2015" />
 			<var name="campaignEndTime" value="12:00 PM" />
 			<var name="campaignName" value="Campaign Name" />
-			<var name="campaignPrioritySelect" value="3" />
+			<var name="campaignPriorityField" value="3" />
 			<var name="campaignStartDate" value="1/1/2014" />
 			<var name="campaignStartTime" value="12:00 AM" />
 			<var name="userSegmentSelect" value="User Segment Name" />
@@ -217,7 +217,7 @@
 			<var name="campaignEndDate" value="1/1/2015" />
 			<var name="campaignEndTime" value="12:00 PM" />
 			<var name="campaignName" value="Campaign Name" />
-			<var name="campaignPrioritySelect" value="3" />
+			<var name="campaignPriorityField" value="3" />
 			<var name="campaignStartDate" value="1/1/2014" />
 			<var name="campaignStartTime" value="12:00 AM" />
 			<var name="userSegmentSelect" value="User Segment Name" />
@@ -268,7 +268,7 @@
 			<var name="campaignEndDate" value="1/1/2015" />
 			<var name="campaignEndTime" value="12:00 PM" />
 			<var name="campaignName" value="Campaign Name" />
-			<var name="campaignPrioritySelect" value="3" />
+			<var name="campaignPriorityField" value="3" />
 			<var name="campaignStartDate" value="1/1/2014" />
 			<var name="campaignStartTime" value="12:00 AM" />
 			<var name="userSegmentSelect" value="User Segment Name" />
@@ -319,7 +319,7 @@
 			<var name="campaignEndDate" value="1/1/2015" />
 			<var name="campaignEndTime" value="12:00 PM" />
 			<var name="campaignName" value="Campaign Name" />
-			<var name="campaignPrioritySelect" value="3" />
+			<var name="campaignPriorityField" value="3" />
 			<var name="campaignStartDate" value="1/1/2014" />
 			<var name="campaignStartTime" value="12:00 AM" />
 			<var name="userSegmentSelect" value="User Segment Name" />
@@ -370,7 +370,7 @@
 			<var name="campaignEndDate" value="1/1/2015" />
 			<var name="campaignEndTime" value="12:00 PM" />
 			<var name="campaignName" value="Campaign Name" />
-			<var name="campaignPrioritySelect" value="3" />
+			<var name="campaignPriorityField" value="3" />
 			<var name="campaignStartDate" value="1/1/2014" />
 			<var name="campaignStartTime" value="12:00 AM" />
 			<var name="userSegmentSelect" value="User Segment Name" />
@@ -418,7 +418,7 @@
 			<var name="campaignEndDate" value="1/1/2015" />
 			<var name="campaignEndTime" value="12:00 PM" />
 			<var name="campaignName" value="Campaign Name" />
-			<var name="campaignPrioritySelect" value="3" />
+			<var name="campaignPriorityField" value="3" />
 			<var name="campaignStartDate" value="1/1/2014" />
 			<var name="campaignStartTime" value="12:00 AM" />
 			<var name="userSegmentSelect" value="User Segment Name" />
@@ -456,7 +456,7 @@
 			<var name="campaignEndTimeEdit" value="12:00 AM" />
 			<var name="campaignName" value="Campaign Name" />
 			<var name="campaignNameEdit" value="Campaign Name Edit" />
-			<var name="campaignPrioritySelectEdit" value="5" />
+			<var name="campaignPriorityFieldEdit" value="5" />
 			<var name="campaignStartDateEdit" value="1/1/2013" />
 			<var name="campaignStartTimeEdit" value="12:00 PM" />
 			<var name="linkAlias" value="Link Alias" />

@@ -17,7 +17,7 @@
 		<execute action="CPContenttargetingAddcampaign#type" locator-key1="CAMPAIGN_START_TIME_FIELD" value1="${campaignStartTime}" />
 		<execute action="CPContenttargetingAddcampaign#type" locator-key1="CAMPAIGN_END_DATE_FIELD" value1="${campaignEndDate}" />
 		<execute action="CPContenttargetingAddcampaign#type" locator-key1="CAMPAIGN_END_TIME_FIELD" value1="${campaignEndTime}" />
-		<execute action="CPContenttargetingAddcampaign#select" locator-key1="CAMPAIGN_PRIORITY_SELECT" value1="${campaignPrioritySelect}" />
+		<execute action="CPContenttargetingAddcampaign#type" locator-key1="CAMPAIGN_PRIORITY_FIELD" value1="${campaignPriorityField}" />
 	</command>
 
 	<command name="addTrackingActionContentCP">
@@ -150,9 +150,9 @@
 				</then>
 			</elseif>
 			<elseif>
-				<isset var="campaignPrioritySelectEdit" />
+				<isset var="campaignPriorityFieldEdit" />
 				<then>
-					<execute action="CPContenttargetingAddcampaign#select" locator-key1="CAMPAIGN_PRIORITY_SELECT" value1="${campaignPrioritySelectEdit}" />
+					<execute action="CPContenttargetingAddcampaign#type" locator-key1="CAMPAIGN_PRIORITY_FIELD" value1="${campaignPriorityFieldEdit}" />
 				</then>
 			</elseif>
 		</if>

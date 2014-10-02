@@ -15,7 +15,7 @@ CKEDITOR.dialog.add(
 			};
 
 			if (element) {
-				var href = element.data('cke-saved-href') || element.getAttribute('href');
+				var href = element.getAttribute('href');
 
 				if (editor.config.decodeLinks) {
 					data.address = decodeURIComponent(href);
@@ -27,16 +27,7 @@ CKEDITOR.dialog.add(
 			else {
 				var selection = editor.getSelection();
 
-				if (CKEDITOR.env.ie) {
-					selection.unlock(true);
-
-					data.address = selection.getNative().createRange().text;
-
-					selection.lock();
-				}
-				else {
-					data.address = selection.getNative().toString();
-				}
+				data.address = selection.getSelectedText();
 			}
 
 			instance._.selectedElement = element;
@@ -58,7 +49,16 @@ CKEDITOR.dialog.add(
 											data = {};
 										}
 
-										data.address = instance.getValue();
+										var val = instance.getValue();
+
+										var address = val;
+
+										if (val.indexOf('www') === 0) {
+											address = 'http://' + val;
+										}
+
+										data.text = val;
+										data.address = address;
 									},
 									id: 'linkAddress',
 									label: LANG_COMMON.url,
@@ -133,7 +133,7 @@ CKEDITOR.dialog.add(
 					var ranges = selection.getRanges(true);
 
 					if (ranges.length == 1 && ranges[0].collapsed) {
-						var text = new CKEDITOR.dom.text(attributes['data-cke-saved-href'], editor.document);
+						var text = new CKEDITOR.dom.text(data.text, editor.document);
 
 						ranges[0].insertNode(text);
 						ranges[0].selectNodeContents(text);
@@ -148,10 +148,16 @@ CKEDITOR.dialog.add(
 					);
 
 					style.type = CKEDITOR.STYLE_INLINE;
-					style.apply(editor.document);
+					editor.applyStyle(style);
 				}
 				else {
+					var currentText = instance._.selectedElement.getText(data.text);
+
 					instance._.selectedElement.setAttributes(attributes);
+
+					if (CKEDITOR.env.ie) {
+						instance._.selectedElement.setText(currentText);
+					}
 				}
 			},
 

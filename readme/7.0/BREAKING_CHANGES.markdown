@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `10c9096`.*
+*This document has been reviewed through commit `80a3e7c`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -466,7 +466,8 @@ demonstrates using a `SyncCapability` instance to move a `FileEntry`:
 There are repositories that don't support Liferay Sync operations.
 
 ---------------------------------------
-### Removed the .aui namespace from around Bootstrap
+
+### Removed the `.aui` Namespace from Bootstrap
 - **Date:** 2014-Sep-26
 - **JIRA Ticket:** LPS-50348
 
@@ -476,32 +477,33 @@ The `.aui` namespace was removed from prefixing all of Bootstrap's CSS.
 
 #### Who is affected?
 
-Theme and plugin developers that targeted their CSS to relying on the
-namespace.
+Theme and plugin developers that targeted their CSS to rely on the namespace are
+affected.
 
 #### How should I update my code?
 
 Theme developers can still manually add an `aui.css` file in their `_diffs`
-directory, and add it back in, as well as adding the `aui` css class to the
+directory, and add it back in. The `aui` CSS class can also be added to the
 `$root_css_class` variable.
 
 #### Why was this change made?
 
 Due to changes in the Sass parser, the nesting of third-party libraries was
-causing some syntax errors which broke other functionality (such as RTL
+causing some syntax errors which broke other functionality (e.g., RTL
 conversion). There was also a lot of additional complexity for a relatively
 minor benefit.
 
 ---------------------------------------
-### Moved MVCPortlet, ActionCommand and ActionCommandCache from util-bridges.jar to portal-service.jar
-- **Date:** 2014-09-26
+
+### Moved `MVCPortlet`, `ActionCommand` and `ActionCommandCache` from `util-bridges.jar` to `portal-service.jar`
+- **Date:** 2014-Sep-26
 - **JIRA Ticket:** LPS-50156
 
 #### What changed?
 
-The classes from package `com.liferay.util.bridges.mvc` in util-bridges.jar
+The classes from package `com.liferay.util.bridges.mvc` in `util-bridges.jar`
 were moved to a new package `com.liferay.portal.kernel.portlet.bridges.mvc`
-in portal-service.jar
+in `portal-service.jar`.
 
 The classes affected are:
 
@@ -510,30 +512,30 @@ com.liferay.util.bridges.mvc.ActionCommand
 com.liferay.util.bridges.mvc.BaseActionCommand
 ```
 
-They have are now:
+They are now:
 
 ```
 com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand
 com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand
 ```
 
-In addition `com.liferay.util.bridges.mvc.MVCPortlet` is a deprecated, but
+In addition, `com.liferay.util.bridges.mvc.MVCPortlet` is a deprecated, but
 was made to extend `com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet`.
 
 #### Who is affected?
 
-This will affect any implementations of ActionCommand.
+This will affect any implementations of `ActionCommand`.
 
 #### How should I update my code?
 
-Replace imports of `com.liferay.util.bridges.mvc.ActionCommand` by
-`com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand` or
-`com.liferay.util.bridges.mvc.BaseActionCommand` by
-`com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand`
+Replace imports of `com.liferay.util.bridges.mvc.ActionCommand` with
+`com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand` and imports of
+`com.liferay.util.bridges.mvc.BaseActionCommand` with
+`com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand`.
 
 #### Why was this change made?
 
-This change was made in order to avoid duplication of an implementable
-interface in the system. Duplication can cause ClassCastExceptions.
+This change was made in to avoid duplication of an implementable interface in
+the system. Duplication can cause `ClassCastException`s.
 
 ---------------------------------------

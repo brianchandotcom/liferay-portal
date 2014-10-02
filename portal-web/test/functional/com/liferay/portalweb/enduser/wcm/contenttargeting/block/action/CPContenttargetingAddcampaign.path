@@ -54,8 +54,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CAMPAIGN_PRIORITY_SELECT</td>
-	<td>//select[contains(@id,'contenttargetingweb_priority')]</td>
+	<td>CAMPAIGN_PRIORITY_FIELD</td>
+	<td>//input[contains(@id,'contenttargetingweb_priority')]</td>
 	<td></td>
 </tr>
 <tr>

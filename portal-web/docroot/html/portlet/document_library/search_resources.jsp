@@ -297,6 +297,7 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 
 		<%
 		PortletURL searchRepositoryURL = liferayPortletResponse.createRenderURL();
+
 		searchRepositoryURL.setParameter("struts_action", "/document_library/search");
 		searchRepositoryURL.setParameter("repositoryId", String.valueOf(scopeGroupId));
 		searchRepositoryURL.setParameter("searchRepositoryId", String.valueOf(scopeGroupId));
@@ -312,6 +313,7 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 			if (mountFolder.getRepositoryId() == searchRepositoryId) {
 				selectedTab = HtmlUtil.escape(mountFolder.getName());
 			}
+
 			searchRepositoryURL.setParameter("repositoryId", String.valueOf(mountFolder.getRepositoryId()));
 			searchRepositoryURL.setParameter("searchRepositoryId", String.valueOf(mountFolder.getRepositoryId()));
 

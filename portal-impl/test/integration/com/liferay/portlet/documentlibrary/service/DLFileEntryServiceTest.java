@@ -232,7 +232,7 @@ public class DLFileEntryServiceTest {
 	}
 
 	@Test
-	public void testUpdateFileNameWhenDeletingLatestFileVersion()
+	public void testRestoreFileNameWhenDeletingLatestFileVersion()
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -261,7 +261,9 @@ public class DLFileEntryServiceTest {
 	}
 
 	@Test
-	public void testUpdateFileNameWhenUpdatingStatus() throws Exception {
+	public void testUpdateFileNameWhenUpdatingFileVersionStatus()
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 

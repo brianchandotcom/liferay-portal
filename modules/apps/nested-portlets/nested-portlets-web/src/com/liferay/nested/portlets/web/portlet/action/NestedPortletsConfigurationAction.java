@@ -31,8 +31,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 
-import org.osgi.service.component.annotations.Component;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -46,19 +44,22 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Jorge Ferrer
  * @author Peter Fellwock
  */
 @Component(
-		immediate = true,
-		property = {
-			"javax.portlet.name=com_liferay_nested_portlets_web_portlet_" + 
-				"NestedPortletsPortlet"
-		},
-		service = ConfigurationAction.class
-	)
-public class NestedPortletsConfigurationAction extends DefaultConfigurationAction {
+	immediate = true,
+	property = {
+		"javax.portlet.name=com_liferay_nested_portlets_web_portlet_" +
+			"NestedPortletsPortlet"
+	},
+	service = ConfigurationAction.class
+)
+public class NestedPortletsConfigurationAction
+	extends DefaultConfigurationAction {
 
 	@Override
 	public void processAction(
@@ -74,8 +75,8 @@ public class NestedPortletsConfigurationAction extends DefaultConfigurationActio
 
 		PortletPreferences preferences = actionRequest.getPreferences();
 
-		String oldLayoutTemplateId = 
-			NestedPortletUtil.getLayoutTemplateId(preferences);
+		String oldLayoutTemplateId = NestedPortletUtil.getLayoutTemplateId(
+			preferences);
 
 		if (!oldLayoutTemplateId.equals(layoutTemplateId)) {
 			reorganizeNestedColumns(

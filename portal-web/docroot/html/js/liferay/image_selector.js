@@ -207,8 +207,8 @@ AUI.add(
 
 							if (draggableImage === 'horizontal') {
 								constrain = {
-									top: previewWrapper.getY(),
-									bottom: previewWrapper.getY() + previewWrapper.height()
+									bottom: previewWrapper.getY() + previewWrapper.height(),
+									top: previewWrapper.getY()
 								};
 							}
 
@@ -241,18 +241,6 @@ AUI.add(
 						}
 					},
 
-					_onImageUpdated: function(event) {
-						var instance = this;
-
-						if (instance.get('draggableImage') !== 'none') {
-							var cropRegion = instance._getCropRegion();
-
-							var cropRegionNode = instance.rootNode.one('#' + instance.get('paramName') + 'CropRegion');
-
-							cropRegionNode.val(A.JSON.stringify(cropRegion));
-						}
-					},
-
 					_onBrowseClick: function(event) {
 						var instance = this;
 
@@ -278,6 +266,18 @@ AUI.add(
 						instance.rootNode.removeClass(CSS_DROP_ACTIVE);
 
 						instance._uploader.uploadAll();
+					},
+
+					_onImageUpdated: function(event) {
+						var instance = this;
+
+						if (instance.get('draggableImage') !== 'none') {
+							var cropRegion = instance._getCropRegion();
+
+							var cropRegionNode = instance.rootNode.one('#' + instance.get('paramName') + 'CropRegion');
+
+							cropRegionNode.val(A.JSON.stringify(cropRegion));
+						}
 					},
 
 					_onUploadComplete: function(event) {

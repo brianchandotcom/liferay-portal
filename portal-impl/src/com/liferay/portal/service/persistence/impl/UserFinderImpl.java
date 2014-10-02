@@ -982,9 +982,9 @@ public class UserFinderImpl
 				sb.append("WHERE (");
 
 				for (Organization organization : organizationsTree) {
-					sb.append("(Organization_.treePath LIKE %/");
+					sb.append("(Organization_.treePath LIKE '%/");
 					sb.append(organization.getOrganizationId());
-					sb.append("/%)");
+					sb.append("/%')");
 					sb.append(" OR ");
 				}
 
@@ -995,7 +995,7 @@ public class UserFinderImpl
 				join = sb.toString();
 			}
 			else {
-				join = "WHERE (Organization_.treePath LIKE %/ /%)";
+				join = "WHERE (Organization_.treePath LIKE '%/ /%')";
 			}
 		}
 		else if (key.equals("usersPasswordPolicies")) {

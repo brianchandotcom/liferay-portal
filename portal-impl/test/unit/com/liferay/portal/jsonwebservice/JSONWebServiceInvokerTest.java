@@ -131,7 +131,8 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 	@Test
 	public void testCreateArgumentInstances() throws Exception {
-		// style #1
+
+		// Style 1
 
 		Map<String, Object> map = new LinkedHashMap<>();
 
@@ -154,7 +155,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 			"using #1: h=177/id=-1/n=John Doe/v=foo!",
 			invokerResult.getResult());
 
-		// style #2
+		// Style 2
 
 		map.clear();
 
@@ -166,15 +167,15 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		try {
 			jsonWebServiceAction.invoke();
+
 			Assert.fail();
 		}
 		catch (Exception ignore) {
 		}
 
-		// style #2 - proper way
+		map.clear();
 
 		params.clear();
-		map.clear();
 
 		params.put("+fooData:" + FooDataImpl.class.getName(), null);
 
@@ -192,10 +193,11 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 			"using #2: h=177/id=-1/n=John Doe/v=foo!",
 			invokerResult.getResult());
 
-		// style #3
+		// Style 3
+
+		map.clear();
 
 		params.clear();
-		map.clear();
 
 		params.put("+fooData", FooDataImpl.class.getName());
 
@@ -213,10 +215,11 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 			"using #2: h=177/id=-1/n=John Doe/v=foo!",
 			invokerResult.getResult());
 
-		// style #4
+		// Style 4
+
+		map.clear();
 
 		params.clear();
-		map.clear();
 
 		Map<String, Object> fooObj = new HashMap<>();
 

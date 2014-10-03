@@ -16,7 +16,16 @@ package com.liferay.portlet.dynamicdatamapping.storage;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONSerializerUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMContent;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.service.DDMContentLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.query.Condition;
+import com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -37,7 +46,14 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		throw new UnsupportedOperationException();
+		DDMStructure ddmStructure =
+			DDMStructureLocalServiceUtil.getDDMStructure(ddmStructureId);
+
+		DDMFormValues ddmFormValues =
+			FieldsToDDMFormValuesConverterUtil.convert(ddmStructure, fields);
+
+		return _doCreate(
+			companyId, ddmStructureId, ddmFormValues, serviceContext);
 	}
 
 	@Override
@@ -101,6 +117,29 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 		throws Exception {
 
 		throw new UnsupportedOperationException();
+	}
+
+	private long _doCreate(
+			long companyId, long ddmStructureId, DDMFormValues ddmFormValues,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		long classNameId = PortalUtil.getClassNameId(
+			DDMContent.class.getName());
+
+		String serializedDDMFormValues =
+			DDMFormValuesJSONSerializerUtil.serialize(ddmFormValues);
+
+		DDMContent ddmContent = DDMContentLocalServiceUtil.addContent(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			DDMStorageLink.class.getName(), null, serializedDDMFormValues,
+			serviceContext);
+
+		DDMStorageLinkLocalServiceUtil.addStorageLink(
+			classNameId, ddmContent.getPrimaryKey(), ddmStructureId,
+			serviceContext);
+
+		return ddmContent.getPrimaryKey();
 	}
 
 }

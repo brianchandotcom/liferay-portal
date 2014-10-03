@@ -18,9 +18,9 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.auth.AccessControlContext;
-import com.liferay.portal.security.auth.AuthSettingsUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
+import com.liferay.portal.security.sso.SSOUtil;
 
 import java.lang.reflect.Method;
 
@@ -71,7 +71,7 @@ public class AccessControlAdvisorImpl implements AccessControlAdvisor {
 
 		Set<String> hostsAllowedSet = SetUtil.fromArray(hostsAllowed);
 
-		if (!AuthSettingsUtil.isAccessAllowed(request, hostsAllowedSet)) {
+		if (!SSOUtil.isAccessAllowed(request, hostsAllowedSet)) {
 			throw new SecurityException(
 				"Access denied for " + request.getRemoteAddr());
 		}

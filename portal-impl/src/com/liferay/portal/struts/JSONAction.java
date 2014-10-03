@@ -28,9 +28,9 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.ac.AccessControlUtil;
-import com.liferay.portal.security.auth.AuthSettingsUtil;
 import com.liferay.portal.security.auth.AuthTokenUtil;
 import com.liferay.portal.security.auth.PortalSessionAuthVerifier;
+import com.liferay.portal.security.sso.SSOUtil;
 import com.liferay.portal.servlet.SharedSessionServletRequest;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -153,7 +153,7 @@ public abstract class JSONAction extends Action {
 		}
 
 		if (PropsValues.JSON_SERVICE_AUTH_TOKEN_ENABLED) {
-			if (!AuthSettingsUtil.isAccessAllowed(request, _hostsAllowed)) {
+			if (!SSOUtil.isAccessAllowed(request, _hostsAllowed)) {
 				AuthTokenUtil.checkCSRFToken(request, getCSRFOrigin(request));
 			}
 		}

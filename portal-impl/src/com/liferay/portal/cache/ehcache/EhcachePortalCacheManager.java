@@ -15,7 +15,6 @@
 package com.liferay.portal.cache.ehcache;
 
 import com.liferay.portal.cache.AbstractPortalCacheManager;
-import com.liferay.portal.kernel.cache.CacheManagerListener;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.configuration.PortalCacheManagerConfiguration;
 import com.liferay.portal.kernel.log.Log;
@@ -32,9 +31,7 @@ import java.lang.reflect.Field;
 
 import java.net.URL;
 
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import javax.management.MBeanServer;
 
@@ -42,7 +39,6 @@ import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.config.CacheConfiguration;
 import net.sf.ehcache.config.Configuration;
-import net.sf.ehcache.event.CacheManagerEventListener;
 import net.sf.ehcache.event.CacheManagerEventListenerRegistry;
 import net.sf.ehcache.management.ManagementService;
 import net.sf.ehcache.util.FailSafeTimer;
@@ -56,36 +52,6 @@ import net.sf.ehcache.util.FailSafeTimer;
  */
 public class EhcachePortalCacheManager<K extends Serializable, V>
 	extends AbstractPortalCacheManager<K, V> {
-
-	@Override
-	public Set<CacheManagerListener> getCacheManagerListeners() {
-		Set<CacheManagerListener> cacheManagerListeners =
-			new HashSet<CacheManagerListener>();
-
-		CacheManagerEventListenerRegistry cacheManagerEventListenerRegistry =
-			_cacheManager.getCacheManagerEventListenerRegistry();
-
-		Set<CacheManagerEventListener> cacheManagerEventListeners =
-			cacheManagerEventListenerRegistry.getRegisteredListeners();
-
-		for (CacheManagerEventListener cacheManagerEventListener :
-				cacheManagerEventListeners) {
-
-			if (!(cacheManagerEventListener instanceof
-					PortalCacheManagerEventListener)) {
-
-				continue;
-			}
-
-			PortalCacheManagerEventListener portalCacheManagerEventListener =
-				(PortalCacheManagerEventListener)cacheManagerEventListener;
-
-			cacheManagerListeners.add(
-				portalCacheManagerEventListener.getCacheManagerListener());
-		}
-
-		return cacheManagerListeners;
-	}
 
 	public CacheManager getEhcacheManager() {
 		return _cacheManager;
@@ -112,17 +78,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		reconfigPortalCache(_configurationPair.getValue());
 	}
 
-	@Override
-	public boolean registerCacheManagerListener(
-		CacheManagerListener cacheManagerListener) {
-
-		CacheManagerEventListenerRegistry cacheManagerEventListenerRegistry =
-			_cacheManager.getCacheManagerEventListenerRegistry();
-
-		return cacheManagerEventListenerRegistry.registerListener(
-			new PortalCacheManagerEventListener(cacheManagerListener));
-	}
-
 	public void setConfigPropertyKey(String configPropertyKey) {
 		_configPropertyKey = configPropertyKey;
 	}
@@ -147,39 +102,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 	public void setRegisterCacheStatistics(boolean registerCacheStatistics) {
 		_registerCacheStatistics = registerCacheStatistics;
-	}
-
-	@Override
-	public boolean unregisterCacheManagerListener(
-		CacheManagerListener cacheManagerListener) {
-
-		CacheManagerEventListenerRegistry cacheManagerEventListenerRegistry =
-			_cacheManager.getCacheManagerEventListenerRegistry();
-
-		return cacheManagerEventListenerRegistry.unregisterListener(
-			new PortalCacheManagerEventListener(cacheManagerListener));
-	}
-
-	@Override
-	public void unregisterCacheManagerListeners() {
-		CacheManagerEventListenerRegistry cacheManagerEventListenerRegistry =
-			_cacheManager.getCacheManagerEventListenerRegistry();
-
-		Set<CacheManagerEventListener> cacheManagerEventListeners =
-			cacheManagerEventListenerRegistry.getRegisteredListeners();
-
-		for (CacheManagerEventListener cacheManagerEventListener :
-				cacheManagerEventListeners) {
-
-			if (!(cacheManagerEventListener instanceof
-					PortalCacheManagerEventListener)) {
-
-				continue;
-			}
-
-			cacheManagerEventListenerRegistry.unregisterListener(
-				cacheManagerEventListener);
-		}
 	}
 
 	@Override
@@ -265,6 +187,13 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 			_managementService.init();
 		}
+
+		CacheManagerEventListenerRegistry cacheManagerEventListenerRegistry =
+			_cacheManager.getCacheManagerEventListenerRegistry();
+
+		cacheManagerEventListenerRegistry.registerListener(
+			new PortalCacheManagerEventListener(
+				aggregatedCacheManagerListener));
 	}
 
 	protected void reconfigEhcache(Configuration configuration) {

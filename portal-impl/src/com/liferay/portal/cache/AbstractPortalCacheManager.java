@@ -15,6 +15,7 @@
 package com.liferay.portal.cache;
 
 import com.liferay.portal.cache.transactional.TransactionalPortalCache;
+import com.liferay.portal.kernel.cache.AggregatedCacheManagerListener;
 import com.liferay.portal.kernel.cache.BlockingPortalCache;
 import com.liferay.portal.kernel.cache.BootstrapLoader;
 import com.liferay.portal.kernel.cache.CacheListener;
@@ -39,6 +40,7 @@ import java.io.Serializable;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -161,8 +163,21 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
+	public Set<CacheManagerListener> getCacheManagerListeners() {
+		return aggregatedCacheManagerListener.getCacheManagerListeners();
+	}
+
+	@Override
 	public boolean isClusterAware() {
 		return clusterAware;
+	}
+
+	@Override
+	public boolean registerCacheManagerListener(
+		CacheManagerListener cacheManagerListener) {
+
+		return aggregatedCacheManagerListener.addCacheListener(
+			cacheManagerListener);
 	}
 
 	@Override
@@ -178,6 +193,19 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 	public void setMpiOnly(boolean mpiOnly) {
 		_mpiOnly = mpiOnly;
+	}
+
+	@Override
+	public boolean unregisterCacheManagerListener(
+		CacheManagerListener cacheManagerListener) {
+
+		return aggregatedCacheManagerListener.removeCacheListener(
+			cacheManagerListener);
+	}
+
+	@Override
+	public void unregisterCacheManagerListeners() {
+		aggregatedCacheManagerListener.clearAll();
 	}
 
 	protected abstract PortalCache<K, V> createPortalCache(String cacheName);
@@ -227,6 +255,8 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 		}
 	}
 
+	protected final AggregatedCacheManagerListener
+		aggregatedCacheManagerListener = new AggregatedCacheManagerListener();
 	protected boolean clusterAware;
 
 	private void _initPortalCacheListeners(

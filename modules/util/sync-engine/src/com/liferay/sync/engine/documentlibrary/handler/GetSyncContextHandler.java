@@ -83,6 +83,7 @@ public class GetSyncContextHandler extends BaseJSONHandler {
 			syncAccount.getSyncAccountId());
 
 		remoteSyncUser.setSyncAccountId(localSyncUser.getSyncAccountId());
+		remoteSyncUser.setSyncUserId(localSyncUser.getSyncUserId());
 
 		SyncUserService.update(remoteSyncUser);
 	}

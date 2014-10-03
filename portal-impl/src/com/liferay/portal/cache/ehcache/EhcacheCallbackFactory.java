@@ -28,11 +28,10 @@ import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.io.Serializable;
 
-import java.util.Map;
 import java.util.Properties;
-import java.util.concurrent.ConcurrentHashMap;
 
 import net.sf.ehcache.bootstrap.BootstrapCacheLoaderFactory;
+import net.sf.ehcache.distribution.CacheReplicator;
 import net.sf.ehcache.event.CacheEventListener;
 import net.sf.ehcache.event.CacheEventListenerFactory;
 import net.sf.ehcache.event.CacheManagerEventListenerFactory;
@@ -51,30 +50,23 @@ public class EhcacheCallbackFactory implements CallbackFactory {
 			return null;
 		}
 
-		BootstrapCacheLoaderFactory<?> bootstrapCacheLoaderFactory =
-			_bootstrapCacheLoaderFactories.get(className);
+		try {
+			BootstrapCacheLoaderFactory<?> bootstrapCacheLoaderFactory =
+				(BootstrapCacheLoaderFactory<?>)InstanceFactory.newInstance(
+					ClassLoaderUtil.getPortalClassLoader(), className);
 
-		if (bootstrapCacheLoaderFactory == null) {
-			try {
-				bootstrapCacheLoaderFactory =
-					(BootstrapCacheLoaderFactory<?>)InstanceFactory.newInstance(
-						ClassLoaderUtil.getPortalClassLoader(), className);
-			}
-			catch (Exception e) {
-				_log.error(
-					"Unable to instantiate bootstrap cache loader factory " +
-						className,
-					e);
-
-				return null;
-			}
-
-			_bootstrapCacheLoaderFactories.put(
-				className, bootstrapCacheLoaderFactory);
+			return new EhcacheBootstrapLoaderAdapter(
+				bootstrapCacheLoaderFactory.createBootstrapCacheLoader(
+					properties));
 		}
+		catch (Exception e) {
+			_log.error(
+				"Unable to instantiate bootstrap cache loader factory " +
+					className,
+				e);
 
-		return new EhcacheBootstrapLoaderAdapter(
-			bootstrapCacheLoaderFactory.createBootstrapCacheLoader(properties));
+			return null;
+		}
 	}
 
 	@Override
@@ -88,41 +80,30 @@ public class EhcacheCallbackFactory implements CallbackFactory {
 			return null;
 		}
 
-		CacheEventListenerFactory cacheEventListenerFactory =
-			_cacheEventListenerFactories.get(className);
+		try {
+			CacheEventListenerFactory cacheEventListenerFactory =
+				(CacheEventListenerFactory)InstanceFactory.newInstance(
+					ClassLoaderUtil.getPortalClassLoader(), className);
 
-		if (cacheEventListenerFactory == null) {
-			try {
-				cacheEventListenerFactory =
-					(CacheEventListenerFactory)InstanceFactory.newInstance(
-						ClassLoaderUtil.getPortalClassLoader(), className);
-			}
-			catch (Exception e) {
-				_log.error(
-					"Unable to instantiate cache event listener factory " +
-						className,
-					e);
+			CacheEventListener cacheEventListener =
+				cacheEventListenerFactory.createCacheEventListener(properties);
 
-				return null;
+			if (cacheEventListener instanceof CacheReplicator) {
+				return new EhcacheCacheReplicatorAdapter
+					<Serializable, Serializable>(cacheEventListener);
 			}
 
-			_cacheEventListenerFactories.put(
-				className, cacheEventListenerFactory);
+			return new EhcacheCacheListenerAdapter<Serializable, Object>(
+				cacheEventListener);
 		}
+		catch (Exception e) {
+			_log.error(
+				"Unable to instantiate cache event listener factory " +
+					className,
+				e);
 
-		CacheEventListener cacheEventListener =
-			cacheEventListenerFactory.createCacheEventListener(properties);
-
-		if (cacheEventListener instanceof
-				net.sf.ehcache.distribution.CacheReplicator) {
-
-			return
-				new EhcacheCacheReplicatorAdapter<Serializable, Serializable>(
-					cacheEventListener);
+			return null;
 		}
-
-		return new EhcacheCacheListenerAdapter<Serializable, Object>(
-			cacheEventListener);
 	}
 
 	@Override
@@ -155,45 +136,29 @@ public class EhcacheCallbackFactory implements CallbackFactory {
 		EhcachePortalCacheManager<?, ?> ehcachePortalCacheManager =
 			(EhcachePortalCacheManager<?, ?>)portalCacheManager;
 
-		CacheManagerEventListenerFactory cacheManagerEventListenerFactory =
-			_cacheManagerEventListenerFactories.get(className);
+		try {
+			CacheManagerEventListenerFactory cacheManagerEventListenerFactory =
+				(CacheManagerEventListenerFactory)
+					InstanceFactory.newInstance(
+						ClassLoaderUtil.getPortalClassLoader(), className);
 
-		if (cacheManagerEventListenerFactory == null) {
-			try {
-				cacheManagerEventListenerFactory =
-					(CacheManagerEventListenerFactory)
-						InstanceFactory.newInstance(
-							ClassLoaderUtil.getPortalClassLoader(), className);
-			}
-			catch (Exception e) {
-				_log.error(
-					"Unable to instantiate cache manager event listener " +
-						"factory " + className,
-					e);
-
-				return null;
-			}
-
-			_cacheManagerEventListenerFactories.put(
-				className, cacheManagerEventListenerFactory);
+			return new EhcacheCacheManagerListenerAdapter(
+				cacheManagerEventListenerFactory.
+					createCacheManagerEventListener(
+						ehcachePortalCacheManager.getEhcacheManager(),
+						properties));
 		}
+		catch (Exception e) {
+			_log.error(
+				"Unable to instantiate cache manager event listener " +
+					"factory " + className,
+				e);
 
-		return new EhcacheCacheManagerListenerAdapter(
-			cacheManagerEventListenerFactory.createCacheManagerEventListener(
-				ehcachePortalCacheManager.getEhcacheManager(), properties));
+			return null;
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		EhcacheCallbackFactory.class);
-
-	private static final Map<String, BootstrapCacheLoaderFactory<?>>
-		_bootstrapCacheLoaderFactories =
-			new ConcurrentHashMap<String, BootstrapCacheLoaderFactory<?>>();
-	private static final Map<String, CacheEventListenerFactory>
-		_cacheEventListenerFactories =
-			new ConcurrentHashMap<String, CacheEventListenerFactory>();
-	private static final Map<String, CacheManagerEventListenerFactory>
-		_cacheManagerEventListenerFactories =
-			new ConcurrentHashMap<String, CacheManagerEventListenerFactory>();
 
 }

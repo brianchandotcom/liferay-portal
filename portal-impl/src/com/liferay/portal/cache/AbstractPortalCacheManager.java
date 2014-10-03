@@ -1,0 +1,268 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.cache;
+
+import com.liferay.portal.cache.transactional.TransactionalPortalCache;
+import com.liferay.portal.kernel.cache.BlockingPortalCache;
+import com.liferay.portal.kernel.cache.BootstrapLoader;
+import com.liferay.portal.kernel.cache.CacheListener;
+import com.liferay.portal.kernel.cache.CacheListenerScope;
+import com.liferay.portal.kernel.cache.CacheManagerListener;
+import com.liferay.portal.kernel.cache.CallbackFactory;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheException;
+import com.liferay.portal.kernel.cache.PortalCacheManager;
+import com.liferay.portal.kernel.cache.PortalCacheProvider;
+import com.liferay.portal.kernel.cache.configuration.CallbackConfiguration;
+import com.liferay.portal.kernel.cache.configuration.PortalCacheConfiguration;
+import com.liferay.portal.kernel.cache.configuration.PortalCacheManagerConfiguration;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.util.PropsValues;
+
+import java.io.Serializable;
+
+import java.util.Collection;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
+/**
+ * @author Tina Tian
+ */
+public abstract class AbstractPortalCacheManager<K extends Serializable, V>
+	implements PortalCacheManager<K, V> {
+
+	public void afterPropertiesSet() {
+		if ((_portalCacheManagerConfiguration != null) ||
+			(_mpiOnly && SPIUtil.isSPI())) {
+
+			return;
+		}
+
+		initPortalCacheManager();
+
+		_portalCacheManagerConfiguration = getPortalCacheManagerConfiguration();
+
+		Collection<CallbackConfiguration> cacheManagerListenerConfigurations =
+			_portalCacheManagerConfiguration.
+				getCacheManagerListenerConfigurations();
+
+		for (CallbackConfiguration callbackConfiguration :
+				cacheManagerListenerConfigurations) {
+
+			CallbackFactory callbackFactory =
+				callbackConfiguration.getCallbackFactory();
+
+			CacheManagerListener cacheManagerListener =
+				callbackFactory.createCacheManagerListener(
+					callbackConfiguration.getProperties());
+
+			if (cacheManagerListener != null) {
+				registerCacheManagerListener(cacheManagerListener);
+			}
+		}
+
+		PortalCacheProvider.registerPortalCacheManager(this);
+	}
+
+	@Override
+	public void clearAll() throws PortalCacheException {
+		_portalCaches.clear();
+
+		doClearAll();
+	}
+
+	@Override
+	public void destroy() {
+		PortalCacheProvider.unregisterPortalCacheManager(getName());
+
+		_portalCaches.clear();
+
+		doDestroy();
+	}
+
+	@Override
+	public PortalCache<K, V> getCache(String name) throws PortalCacheException {
+		return getCache(name, false);
+	}
+
+	@Override
+	public PortalCache<K, V> getCache(String name, boolean blocking)
+		throws PortalCacheException {
+
+		PortalCache<K, V> portalCache = _portalCaches.get(name);
+
+		if (portalCache != null) {
+			return portalCache;
+		}
+
+		portalCache = createPortalCache(name);
+
+		PortalCacheConfiguration portalCacheConfiguration =
+			_portalCacheManagerConfiguration.getPortalCacheConfiguration(
+				portalCache.getName());
+
+		if (portalCacheConfiguration == null) {
+			portalCacheConfiguration =
+				_portalCacheManagerConfiguration.
+					getDefaultPortalCacheConfiguration();
+		}
+
+		_initPortalCacheListeners(portalCache, portalCacheConfiguration);
+
+		if (PropsValues.TRANSACTIONAL_CACHE_ENABLED &&
+			isTransactionalPortalCache(name)) {
+
+			portalCache = new TransactionalPortalCache<K, V>(portalCache);
+		}
+
+		if (PropsValues.EHCACHE_BLOCKING_CACHE_ALLOWED && blocking) {
+			portalCache = new BlockingPortalCache<K, V>(portalCache);
+		}
+
+		if ((_portalCaches.putIfAbsent(name, portalCache) == null) &&
+			PropsValues.EHCACHE_BOOTSTRAP_CACHE_LOADER_ENABLED &&
+			(portalCacheConfiguration != null)) {
+
+			CallbackConfiguration bootstrapConfiguration =
+				portalCacheConfiguration.getBootstrapLoaderConfiguration();
+
+			if (bootstrapConfiguration != null) {
+				CallbackFactory callbackFactory =
+					bootstrapConfiguration.getCallbackFactory();
+
+				BootstrapLoader bootstrapLoader =
+					callbackFactory.createBootstrapLoader(
+						bootstrapConfiguration.getProperties());
+
+				if (bootstrapLoader != null) {
+					bootstrapLoader.load(getName(), name);
+				}
+			}
+		}
+
+		return _portalCaches.get(name);
+	}
+
+	@Override
+	public boolean isClusterAware() {
+		return clusterAware;
+	}
+
+	@Override
+	public void removeCache(String name) {
+		_portalCaches.remove(name);
+
+		doRemoveCache(name);
+	}
+
+	public void setClusterAware(boolean clusterAware) {
+		this.clusterAware = clusterAware;
+	}
+
+	public void setMpiOnly(boolean mpiOnly) {
+		_mpiOnly = mpiOnly;
+	}
+
+	protected abstract PortalCache<K, V> createPortalCache(String cacheName);
+
+	protected abstract void doClearAll();
+
+	protected abstract void doDestroy();
+
+	protected abstract void doRemoveCache(String cacheName);
+
+	protected abstract PortalCacheManagerConfiguration
+		getPortalCacheManagerConfiguration();
+
+	protected abstract void initPortalCacheManager();
+
+	protected boolean isTransactionalPortalCache(String name) {
+		for (String namePattern : PropsValues.TRANSACTIONAL_CACHE_NAMES) {
+			if (StringUtil.wildcardMatches(
+					name, namePattern, CharPool.QUESTION, CharPool.STAR,
+					CharPool.PERCENT, true)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	protected void reconfigPortalCache(
+		PortalCacheManagerConfiguration portalCacheManagerConfiguration) {
+
+		for (String portalCacheName :
+				portalCacheManagerConfiguration.getPortalCacheNames()) {
+
+			PortalCache<K, V> portalCache = _portalCaches.get(portalCacheName);
+
+			if (portalCache == null) {
+				continue;
+			}
+
+			portalCache.unregisterCacheListeners();
+
+			_initPortalCacheListeners(
+				portalCache,
+				portalCacheManagerConfiguration.getPortalCacheConfiguration(
+					portalCacheName));
+		}
+	}
+
+	protected boolean clusterAware;
+
+	private void _initPortalCacheListeners(
+		PortalCache<K, V> portalCache,
+		PortalCacheConfiguration portalCacheConfiguration) {
+
+		if (portalCacheConfiguration == null) {
+			return;
+		}
+
+		Map<CallbackConfiguration, CacheListenerScope>
+			cacheListenerConfigurations =
+				portalCacheConfiguration.getCacheListenerConfigurations();
+
+		for (Map.Entry<CallbackConfiguration, CacheListenerScope> entry :
+				cacheListenerConfigurations.entrySet()) {
+
+			CallbackConfiguration callbackConfiguration = entry.getKey();
+
+			CallbackFactory callbackFactory =
+				callbackConfiguration.getCallbackFactory();
+
+			CacheListener<K, V> cacheListener =
+				(CacheListener<K, V>)callbackFactory.createCacheListener(
+					callbackConfiguration.getProperties());
+
+			portalCache.registerCacheListener(cacheListener, entry.getValue());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		AbstractPortalCacheManager.class);
+
+	private boolean _mpiOnly;
+	private PortalCacheManagerConfiguration _portalCacheManagerConfiguration;
+	private final ConcurrentMap<String, PortalCache<K, V>> _portalCaches =
+		new ConcurrentHashMap<String, PortalCache<K, V>>();
+
+}

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.cache.cluster.clusterlink.messaging;
 
-import com.liferay.portal.cache.cluster.ClusterReplicationThreadLocal;
+import com.liferay.portal.kernel.cache.AggregatedCacheListener;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheProvider;
@@ -74,9 +74,9 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 		PortalCacheClusterEventType portalCacheClusterEventType =
 			portalCacheClusterEvent.getEventType();
 
-		boolean replicate = ClusterReplicationThreadLocal.isReplicate();
+		boolean remote = AggregatedCacheListener.getRemoteInvokeThreadLocal();
 
-		ClusterReplicationThreadLocal.setReplicate(false);
+		AggregatedCacheListener.setRemoteInvokeThreadLocal(true);
 
 		try {
 			if (portalCacheClusterEventType.equals(
@@ -105,7 +105,7 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 			}
 		}
 		finally {
-			ClusterReplicationThreadLocal.setReplicate(replicate);
+			AggregatedCacheListener.setRemoteInvokeThreadLocal(remote);
 		}
 	}
 

@@ -18,15 +18,14 @@ import com.liferay.portal.kernel.portlet.WindowStateFactory;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.sso.SSOUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
@@ -159,10 +158,7 @@ public class LoginAction extends Action {
 		loginRedirect = PortalUtil.escapeRedirect(loginRedirect);
 
 		if (Validator.isNotNull(loginRedirect)) {
-			if (PrefsPropsUtil.getBoolean(
-					themeDisplay.getCompanyId(), PropsKeys.CAS_AUTH_ENABLED,
-					PropsValues.CAS_AUTH_ENABLED)) {
-
+			if (SSOUtil.isRedirectRequired(themeDisplay.getCompanyId())) {
 				redirect = loginRedirect;
 			}
 			else {

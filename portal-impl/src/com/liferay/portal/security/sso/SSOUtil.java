@@ -37,4 +37,15 @@ public class SSOUtil {
 		return authLoginURL;
 	}
 
+	public static boolean isRedirectRequired(long companyId) {
+		if (PrefsPropsUtil.getBoolean(
+				companyId, PropsKeys.CAS_AUTH_ENABLED,
+				PropsValues.CAS_AUTH_ENABLED)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 }

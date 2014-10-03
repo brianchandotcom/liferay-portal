@@ -63,7 +63,9 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 
 	@Override
 	protected void doDeleteByClass(long classPK) throws Exception {
-		throw new UnsupportedOperationException();
+		DDMContentLocalServiceUtil.deleteDDMContent(classPK);
+
+		DDMStorageLinkLocalServiceUtil.deleteClassStorageLink(classPK);
 	}
 
 	@Override

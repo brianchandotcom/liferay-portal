@@ -21,6 +21,10 @@ import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelOutboundHandlerAdapter;
+import io.netty.channel.ChannelPipeline;
+import io.netty.channel.ChannelPromise;
 import io.netty.channel.embedded.EmbeddedChannel;
 
 import java.nio.channels.ClosedChannelException;
@@ -95,11 +99,50 @@ public class RPCRequestTest {
 		Assert.assertTrue(message instanceof RPCResponse);
 		Assert.assertEquals(rpcResponse.toString(), message.toString());
 
+		// Cancellation
+
+		ChannelPipeline channelPipeline = _embeddedChannel.pipeline();
+
+		channelPipeline.addFirst(
+			new ChannelOutboundHandlerAdapter() {
+
+				@Override
+				public void write(
+					ChannelHandlerContext channelHandlerContext, Object object,
+					ChannelPromise channelPromise) {
+
+					channelPromise.cancel(true);
+				}
+
+			});
+
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			RPCRequest.class.getName(), Level.SEVERE);
+
+		try {
+			rpcRequest.execute(_embeddedChannel);
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertEquals(1, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Cancelled on sending RPC response: " + rpcResponse,
+				logRecord.getMessage());
+		}
+		finally {
+			captureHandler.close();
+
+			channelPipeline.removeFirst();
+		}
+
 		// Channel failure
 
 		_embeddedChannel.close();
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+		captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			RPCRequest.class.getName(), Level.SEVERE);
 
 		try {

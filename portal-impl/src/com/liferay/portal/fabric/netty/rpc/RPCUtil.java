@@ -40,7 +40,7 @@ public class RPCUtil {
 
 		final long id = NettyChannelAttributes.nextId(channel);
 
-		NoticeableFuture<T> noticeableFuture = asyncBroker.post(id);
+		final NoticeableFuture<T> noticeableFuture = asyncBroker.post(id);
 
 		ChannelFuture channelFuture = channel.writeAndFlush(
 			new RPCRequest<T>(id, processCallable));
@@ -51,6 +51,12 @@ public class RPCUtil {
 				@Override
 				public void operationComplete(ChannelFuture channelFuture) {
 					if (channelFuture.isSuccess()) {
+						return;
+					}
+
+					if (channelFuture.isCancelled()) {
+						noticeableFuture.cancel(true);
+
 						return;
 					}
 

@@ -99,7 +99,7 @@
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructure" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructureLink" />
 	</entity>
-	<entity name="DDLRecordVersion" local-service="false" remote-service="false">
+	<entity name="DDLRecordVersion" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 

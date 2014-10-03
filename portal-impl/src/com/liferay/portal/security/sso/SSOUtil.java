@@ -17,7 +17,16 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
+
+import java.util.Collections;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -144,6 +153,107 @@ public class SSOUtil {
 		return sessionRedirectOnExpire;
 	}
 
+	private SSOUtil() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			SSO.class, new SSOServiceTrackerCustomizer());
+
+		_serviceTracker.open();
+	}
+
+	private String _getSessionExpirationRedirectUrl() {
+		for (SSO sso : _ssoMap.values()) {
+			String redirectUrl = sso.getSessionExpirationRedirectUrl();
+
+			if (redirectUrl != null) {
+				return redirectUrl;
+			}
+		}
+
+		return null;
+	}
+
+	private String _getSignInUrl() {
+		for (SSO sso : _ssoMap.values()) {
+			String signInUrl = sso.getSignInUrl();
+
+			if (signInUrl != null) {
+				return signInUrl;
+			}
+		}
+
+		return null;
+	}
+
+	private boolean _isLoginRedirectRequired() {
+		for (SSO sso : _ssoMap.values()) {
+			if (sso.isLoginRedirectRequired()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _isRedirectRequired() {
+		for (SSO sso : _ssoMap.values()) {
+			if (sso.isRedirectRequired()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _isSessionRedirectOnExpire() {
+		for (SSO sso : _ssoMap.values()) {
+			if (sso.isSessionRedirectOnExpire()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private static final String _SERVER_IP = "SERVER_IP";
+
+	private static SSOUtil _instance = new SSOUtil();
+
+	private ServiceTracker<SSO, SSO> _serviceTracker;
+	private Map<ServiceReference<SSO>, SSO> _ssoMap =
+		new ConcurrentSkipListMap<>(Collections.reverseOrder());
+
+	private class SSOServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<SSO, SSO> {
+
+		@Override
+		public SSO addingService(ServiceReference<SSO> serviceReference) {
+			Registry registry = RegistryUtil.getRegistry();
+
+			SSO sso = registry.getService(serviceReference);
+
+			_ssoMap.put(serviceReference, sso);
+
+			return sso;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<SSO> serviceReference, SSO sso) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<SSO> serviceReference, SSO sso) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+
+			_ssoMap.remove(serviceReference);
+		}
+
+	}
 
 }

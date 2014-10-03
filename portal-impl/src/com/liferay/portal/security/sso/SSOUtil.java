@@ -13,8 +13,28 @@
  */
 package com.liferay.portal.security.sso;
 
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portal.util.PropsValues;
 /**
  * @author Raymond Augé
  */
 public class SSOUtil {
+
+	public static String getSignInUrl(long companyId, String defaultURLSignIn) {
+		String authLoginURL = null;
+
+		if (PrefsPropsUtil.getBoolean(
+				companyId, PropsKeys.CAS_AUTH_ENABLED,
+				PropsValues.CAS_AUTH_ENABLED) ||
+			PrefsPropsUtil.getBoolean(
+				companyId, PropsKeys.OPEN_SSO_AUTH_ENABLED,
+				PropsValues.OPEN_SSO_AUTH_ENABLED)) {
+
+			authLoginURL = defaultURLSignIn;
+		}
+
+		return authLoginURL;
+	}
+
 }

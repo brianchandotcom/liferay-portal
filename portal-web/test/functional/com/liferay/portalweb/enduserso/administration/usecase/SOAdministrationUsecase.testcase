@@ -53,7 +53,7 @@
 		<var name="messageBody" value="Message Body" />
 		<var name="messageReplyBody" value="Message Reply Body" />
 		<var name="messageSubject" value="Message Subject" />
-		<var name="microblogsEntryContent1" value="Microblogs Post1" />
+		<var name="microblogsEntryContent1" value="#Microblogs Post1" />
 		<var name="microblogsEntryContent2" value="Microblogs Post2" />
 		<var name="microblogsEntryTagValue" value="Microblogs" />
 		<var name="soPage" value="true" />
@@ -142,9 +142,8 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="SOMicroblogs#addMicroblogsEntryHashtag">
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryContent" value="${microblogsEntryContent1}" />
-			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue}" />
 		</execute>
 
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntryTag">

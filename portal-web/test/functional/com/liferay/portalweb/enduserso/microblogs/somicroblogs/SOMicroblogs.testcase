@@ -218,9 +218,9 @@
 	</command>
 
 	<command name="AddMicroblogsEntriesTag" priority="5">
-		<var name="microblogsEntryContent1" value="Microblogs Post1" />
-		<var name="microblogsEntryContent2" value="Microblogs Post2" />
-		<var name="microblogsEntryContent3" value="Microblogs Post3" />
+		<var name="microblogsEntryContent1" value="#Microblogs Post1" />
+		<var name="microblogsEntryContent2" value="#Microblogs Post2" />
+		<var name="microblogsEntryContent3" value="#Microblogs Post3" />
 		<var name="microblogsEntryTagValue" value="Microblogs" />
 
 		<execute macro="Page#gotoPG">
@@ -228,9 +228,8 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="SOMicroblogs#addMicroblogsEntryHashtag">
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryContent" value="${microblogsEntryContent1}" />
-			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -238,9 +237,8 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="SOMicroblogs#addMicroblogsEntryHashtag">
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryContent" value="${microblogsEntryContent2}" />
-			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -248,9 +246,8 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="SOMicroblogs#addMicroblogsEntryHashtag">
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryContent" value="${microblogsEntryContent3}" />
-			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue}" />
 		</execute>
 
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntryTag">
@@ -276,9 +273,9 @@
 	</command>
 
 	<command name="AddMicroblogsEntriesTags" priority="4">
-		<var name="microblogsEntryContent1" value="Microblogs1 Post1" />
-		<var name="microblogsEntryContent2" value="Microblogs1 Post2" />
-		<var name="microblogsEntryContent3" value="Microblogs2 Post3" />
+		<var name="microblogsEntryContent1" value="#Microblogs1 Post1" />
+		<var name="microblogsEntryContent2" value="#Microblogs1 Post2" />
+		<var name="microblogsEntryContent3" value="#Microblogs2 Post3" />
 		<var name="microblogsEntryTagValue1" value="Microblogs1" />
 		<var name="microblogsEntryTagValue2" value="Microblogs2" />
 
@@ -287,9 +284,8 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="SOMicroblogs#addMicroblogsEntryHashtag">
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryContent" value="${microblogsEntryContent1}" />
-			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -297,9 +293,8 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="SOMicroblogs#addMicroblogsEntryHashtag">
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryContent" value="${microblogsEntryContent2}" />
-			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -307,9 +302,8 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="SOMicroblogs#addMicroblogsEntryHashtag">
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryContent" value="${microblogsEntryContent3}" />
-			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue}" />
 		</execute>
 
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntryTag">
@@ -342,10 +336,10 @@
 	</command>
 
 	<command name="AddMicroblogsEntriesTagsByMultipleUsers" priority="5">
-		<var name="microblogsEntryContent1" value="Microblogs1 Post1" />
-		<var name="microblogsEntryContent2" value="Microblogs1 Post2" />
-		<var name="microblogsEntryContent3" value="Microblogs2 Post3" />
-		<var name="microblogsEntryContent4" value="Microblogs2 Post4" />
+		<var name="microblogsEntryContent1" value="#Microblogs1 Post1" />
+		<var name="microblogsEntryContent2" value="#Microblogs1 Post2" />
+		<var name="microblogsEntryContent3" value="#Microblogs2 Post3" />
+		<var name="microblogsEntryContent4" value="#Microblogs2 Post4" />
 		<var name="microblogsEntryTagValue1" value="Microblogs1" />
 		<var name="microblogsEntryTagValue2" value="Microblogs2" />
 		<var name="userEmailAddress1" value="socialoffice01@liferay.com" />
@@ -450,9 +444,8 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="SOMicroblogs#addMicroblogsEntryHashtag">
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryContent" value="${microblogsEntryContent1}" />
-			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue1}" />
 		</execute>
 
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntryTag">
@@ -472,9 +465,8 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="SOMicroblogs#addMicroblogsEntryHashtag">
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryContent" value="${microblogsEntryContent2}" />
-			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue1}" />
 		</execute>
 
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntryTag">
@@ -494,9 +486,8 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="SOMicroblogs#addMicroblogsEntryHashtag">
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryContent" value="${microblogsEntryContent3}" />
-			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue2}" />
 		</execute>
 
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntryTag">
@@ -516,9 +507,8 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="SOMicroblogs#addMicroblogsEntryHashtag">
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryContent" value="${microblogsEntryContent4}" />
-			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue2}" />
 		</execute>
 
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntryTag">
@@ -694,7 +684,7 @@
 	</command>
 
 	<command name="AddMicroblogsEntryMentionAndTag" priority="5">
-		<var name="microblogsEntryContent" value="Microblogs Post" />
+		<var name="microblogsEntryContent" value="#Microblogs Post" />
 		<var name="microblogsEntryTagValue" value="Microblogs" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
@@ -727,7 +717,6 @@
 		</execute>
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryMention">
-			<var name="hashTag" value="true" />
 			<var name="mentionUserEmailAddress" value="${userEmailAddress}" />
 			<var name="mentionUserFirstName" value="${userFirstName}" />
 			<var name="mentionUserListName" value="${userListName}" />
@@ -923,6 +912,7 @@
 	</command>
 
 	<command name="AddMicroblogsEntryMentionsAndTags" priority="5">
+		<var name="microblogsEntryTagContent" value="#Microblogs1 #Microblogs2 #Microblogs3" />
 		<var name="microblogsEntryTagValue1" value="Microblogs1" />
 		<var name="microblogsEntryTagValue2" value="Microblogs2" />
 		<var name="microblogsEntryTagValue3" value="Microblogs3" />
@@ -1006,49 +996,49 @@
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryMentions">
 			<var name="mentionUserNameList" value="${userName1},${userName2},${userName3}" />
-			<var name="microblogsEntryTagValueList" value="${microblogsEntryTagValue1},${microblogsEntryTagValue2},${microblogsEntryTagValue3}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryTagContent}" />
 		</execute>
 
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntryMentions">
 			<var name="mentionUserEmailAddress" value="${userEmailAddress1}" />
 			<var name="mentionUserName" value="${userName1}" />
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
-			<var name="microblogsEntryContent" value="${microblogsEntryTagValue1} ${microblogsEntryTagValue2} ${microblogsEntryTagValue3} ${userName1} ${userName2} ${userName3}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryTagContent} ${userName1} ${userName2} ${userName3}" />
 		</execute>
 
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntryTag">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
-			<var name="microblogsEntryContent" value="${microblogsEntryTagValue1} ${microblogsEntryTagValue2} ${microblogsEntryTagValue3} ${userName1} ${userName2} ${userName3}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryTagContent} ${userName1} ${userName2} ${userName3}" />
 			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue1}" />
-			<var name="statusUpdateEntryContent" value="${microblogsEntryTagValue1} ${microblogsEntryTagValue2} ${microblogsEntryTagValue3} ${userName1} ${userName2} ${userName3}" />
+			<var name="statusUpdateEntryContent" value="${microblogsEntryTagContent} ${userName1} ${userName2} ${userName3}" />
 		</execute>
 
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntryMentions">
 			<var name="mentionUserEmailAddress" value="${userEmailAddress2}" />
 			<var name="mentionUserName" value="${userName2}" />
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
-			<var name="microblogsEntryContent" value="${microblogsEntryTagValue1} ${microblogsEntryTagValue2} ${microblogsEntryTagValue3} ${userName1} ${userName2} ${userName3}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryTagContent} ${userName1} ${userName2} ${userName3}" />
 		</execute>
 
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntryTag">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
-			<var name="microblogsEntryContent" value="${microblogsEntryTagValue1} ${microblogsEntryTagValue2} ${microblogsEntryTagValue3} ${userName1} ${userName2} ${userName3}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryTagContent} ${userName1} ${userName2} ${userName3}" />
 			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue2}" />
-			<var name="statusUpdateEntryContent" value="${microblogsEntryTagValue1} ${microblogsEntryTagValue2} ${microblogsEntryTagValue3} ${userName1} ${userName2} ${userName3}" />
+			<var name="statusUpdateEntryContent" value="${microblogsEntryTagContent} ${userName1} ${userName2} ${userName3}" />
 		</execute>
 
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntryMentions">
 			<var name="mentionUserEmailAddress" value="${userEmailAddress3}" />
 			<var name="mentionUserName" value="${userName3}" />
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
-			<var name="microblogsEntryContent" value="${microblogsEntryTagValue1} ${microblogsEntryTagValue2} ${microblogsEntryTagValue3} ${userName1} ${userName2} ${userName3}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryTagContent} ${userName1} ${userName2} ${userName3}" />
 		</execute>
 
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntryTag">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
-			<var name="microblogsEntryContent" value="${microblogsEntryTagValue1} ${microblogsEntryTagValue2} ${microblogsEntryTagValue3} ${userName1} ${userName2} ${userName3}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryTagContent} ${userName1} ${userName2} ${userName3}" />
 			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue3}" />
-			<var name="statusUpdateEntryContent" value="${microblogsEntryTagValue1} ${microblogsEntryTagValue2} ${microblogsEntryTagValue3} ${userName1} ${userName2} ${userName3}" />
+			<var name="statusUpdateEntryContent" value="${microblogsEntryTagContent} ${userName1} ${userName2} ${userName3}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -1062,14 +1052,14 @@
 			<var name="microblogsEntryAuthorFirstName" value="${adminFirstName}" />
 			<var name="microblogsEntryAuthorLastName" value="${adminLastName}" />
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
-			<var name="microblogsEntryContent" value="${microblogsEntryTagValue1} ${microblogsEntryTagValue2} ${microblogsEntryTagValue3} ${userName1} ${userName2} ${userName3}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryTagContent} ${userName1} ${userName2} ${userName3}" />
 		</execute>
 
 		<execute macro="SOMicroblogs#viewMicroblogsEntryViewableByEveryoneTag">
 			<var name="microblogsEntryAuthorFirstName" value="${adminFirstName}" />
 			<var name="microblogsEntryAuthorLastName" value="${adminLastName}" />
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
-			<var name="microblogsEntryContent" value="${microblogsEntryTagValue1} ${microblogsEntryTagValue2} ${microblogsEntryTagValue3} ${userName1} ${userName2} ${userName3}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryTagContent} ${userName1} ${userName2} ${userName3}" />
 			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue1}" />
 		</execute>
 
@@ -1084,14 +1074,14 @@
 			<var name="microblogsEntryAuthorFirstName" value="${adminFirstName}" />
 			<var name="microblogsEntryAuthorLastName" value="${adminLastName}" />
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
-			<var name="microblogsEntryContent" value="${microblogsEntryTagValue1} ${microblogsEntryTagValue2} ${microblogsEntryTagValue3} ${userName1} ${userName2} ${userName3}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryTagContent} ${userName1} ${userName2} ${userName3}" />
 		</execute>
 
 		<execute macro="SOMicroblogs#viewMicroblogsEntryViewableByEveryoneTag">
 			<var name="microblogsEntryAuthorFirstName" value="${adminFirstName}" />
 			<var name="microblogsEntryAuthorLastName" value="${adminLastName}" />
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
-			<var name="microblogsEntryContent" value="${microblogsEntryTagValue1} ${microblogsEntryTagValue2} ${microblogsEntryTagValue3} ${userName1} ${userName2} ${userName3}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryTagContent} ${userName1} ${userName2} ${userName3}" />
 			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue2}" />
 		</execute>
 
@@ -1106,14 +1096,14 @@
 			<var name="microblogsEntryAuthorFirstName" value="${adminFirstName}" />
 			<var name="microblogsEntryAuthorLastName" value="${adminLastName}" />
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
-			<var name="microblogsEntryContent" value="${microblogsEntryTagValue1} ${microblogsEntryTagValue2} ${microblogsEntryTagValue3} ${userName1} ${userName2} ${userName3}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryTagContent} ${userName1} ${userName2} ${userName3}" />
 		</execute>
 
 		<execute macro="SOMicroblogs#viewMicroblogsEntryViewableByEveryoneTag">
 			<var name="microblogsEntryAuthorFirstName" value="${adminFirstName}" />
 			<var name="microblogsEntryAuthorLastName" value="${adminLastName}" />
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
-			<var name="microblogsEntryContent" value="${microblogsEntryTagValue1} ${microblogsEntryTagValue2} ${microblogsEntryTagValue3} ${userName1} ${userName2} ${userName3}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryTagContent} ${userName1} ${userName2} ${userName3}" />
 			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue3}" />
 		</execute>
 	</command>
@@ -1333,7 +1323,7 @@
 	</command>
 
 	<command name="AddMicroblogsEntryTag" priority="5">
-		<var name="microblogsEntryContent" value="Microblogs Post" />
+		<var name="microblogsEntryContent" value="#Microblogs Post" />
 		<var name="microblogsEntryTagValue" value="Microblogs" />
 
 		<execute macro="Page#gotoPG">
@@ -1341,9 +1331,8 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="SOMicroblogs#addMicroblogsEntryHashtag">
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
-			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue}" />
 		</execute>
 
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntryTag">
@@ -1355,7 +1344,7 @@
 	</command>
 
 	<command name="AddMicroblogsEntryTags" priority="5">
-		<var name="microblogsEntryContent" value="Microblogs1 Microblogs2 Microblogs3 Post" />
+		<var name="microblogsEntryContent" value="#Microblogs1 #Microblogs2 #Microblogs3 Post" />
 		<var name="microblogsEntryTagValue1" value="Microblogs1" />
 		<var name="microblogsEntryTagValue2" value="Microblogs2" />
 		<var name="microblogsEntryTagValue3" value="Microblogs3" />
@@ -1365,9 +1354,8 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="SOMicroblogs#addMicroblogsEntryHashtags">
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
-			<var name="microblogsEntryTagValueList" value="${microblogsEntryTagValue1},${microblogsEntryTagValue2},${microblogsEntryTagValue3}" />
 		</execute>
 
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntryTag">
@@ -1567,7 +1555,7 @@
 	</command>
 
 	<command name="AddMicroblogsEntryViewableByConnectionsCommentTag" priority="4">
-		<var name="microblogsEntryCommentContent" value="Microblogs Post Comment" />
+		<var name="microblogsEntryCommentContent" value="#Microblogs Post Comment" />
 		<var name="microblogsEntryCommentTagValue" value="Microblogs" />
 		<var name="microblogsEntryContent" value="Microblogs Post" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
@@ -1614,7 +1602,7 @@
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MICROBLOGS" />
 
-		<execute macro="SOMicroblogs#addMicroblogsEntryCommentHashtag">
+		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
@@ -2296,9 +2284,9 @@
 	</command>
 
 	<command name="DeleteMicroblogsEntryTag" priority="4">
-		<var name="microblogsEntryContent1" value="Microblogs Post1" />
-		<var name="microblogsEntryContent2" value="Microblogs Post2" />
-		<var name="microblogsEntryContent3" value="Microblogs Post3" />
+		<var name="microblogsEntryContent1" value="#Microblogs Post1" />
+		<var name="microblogsEntryContent2" value="#Microblogs Post2" />
+		<var name="microblogsEntryContent3" value="#Microblogs Post3" />
 		<var name="microblogsEntryTagValue" value="Microblogs" />
 
 		<execute macro="Page#gotoPG">
@@ -2306,9 +2294,8 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="SOMicroblogs#addMicroblogsEntryHashtag">
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryContent" value="${microblogsEntryContent1}" />
-			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -2316,9 +2303,8 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="SOMicroblogs#addMicroblogsEntryHashtag">
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryContent" value="${microblogsEntryContent2}" />
-			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -2326,9 +2312,8 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="SOMicroblogs#addMicroblogsEntryHashtag">
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryContent" value="${microblogsEntryContent3}" />
-			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -2662,10 +2647,10 @@
 	</command>
 
 	<command name="EditMicroblogsEntryTag" priority="4">
-		<var name="microblogsEntryContent1" value="Microblogs Post1" />
-		<var name="microblogsEntryContent2" value="Microblogs Post2" />
-		<var name="microblogsEntryContent3" value="Microblogs Post3" />
-		<var name="microblogsEntryContent3Edit" value="Microblogs1 Post3" />
+		<var name="microblogsEntryContent1" value="#Microblogs Post1" />
+		<var name="microblogsEntryContent2" value="#Microblogs Post2" />
+		<var name="microblogsEntryContent3" value="#Microblogs Post3" />
+		<var name="microblogsEntryContent3Edit" value="#Microblogs1 Post3" />
 		<var name="microblogsEntryTagValue" value="Microblogs" />
 		<var name="microblogsEntryTagValueEdit" value="Microblogs1" />
 
@@ -2674,9 +2659,8 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="SOMicroblogs#addMicroblogsEntryHashtag">
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryContent" value="${microblogsEntryContent1}" />
-			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -2684,9 +2668,8 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="SOMicroblogs#addMicroblogsEntryHashtag">
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryContent" value="${microblogsEntryContent2}" />
-			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -2694,9 +2677,8 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="SOMicroblogs#addMicroblogsEntryHashtag">
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryContent" value="${microblogsEntryContent3}" />
-			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -2704,7 +2686,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="SOMicroblogs#deleteAndEditMicroblogsEntryTag">
+		<execute macro="SOMicroblogs#deleteAndEditMicroblogsEntry">
 			<var name="microblogsEntryContent" value="${microblogsEntryContent3}" />
 			<var name="microblogsEntryContentEdit" value="${microblogsEntryContent3Edit}" />
 			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValueEdit}" />
@@ -3537,7 +3519,7 @@
 	</command>
 
 	<command name="ViewMicroblogsEntryTag" priority="4">
-		<var name="microblogsEntryContent" value="Microblogs Post" />
+		<var name="microblogsEntryContent" value="#Microblogs Post" />
 		<var name="microblogsEntryTagValue" value="Microblogs" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
@@ -3569,7 +3551,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="SOMicroblogs#addMicroblogsEntryHashtag">
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue}" />
 			<var name="microblogsEntryViewableBy" value="Connections" />
@@ -3590,7 +3572,7 @@
 	</command>
 
 	<command name="ViewMicroblogsEntryTagViaProfile" priority="4">
-		<var name="microblogsEntryContent" value="Microblogs Post" />
+		<var name="microblogsEntryContent" value="#Microblogs Post" />
 		<var name="microblogsEntryTagValue" value="Microblogs" />
 
 		<execute macro="Page#gotoPG">
@@ -3599,9 +3581,8 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute macro="SOMicroblogs#addMicroblogsEntryHashtag">
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
-			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue}" />
 		</execute>
 
 		<execute action="Dockbar#click" locator-key1="USER_NAME" />

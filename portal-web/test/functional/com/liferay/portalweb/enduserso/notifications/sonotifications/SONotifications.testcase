@@ -1615,7 +1615,7 @@
 		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName} would like to add you as a connection." />
 	</command>
 
-	<command name="ViewFolderDocumentNotifications" priority="5">
+	<command known-issues="LPS-50589" name="ViewFolderDocumentNotifications" priority="5">
 		<var name="dmDocumentDescription" value="DM Folder Document Description" />
 		<var name="dmDocumentDescriptionEdit" value="DM Folder Document Description Edit" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
@@ -2226,7 +2226,7 @@
 	</command>
 
 	<command name="ViewMicroblogsEntryViewableByConnectionsCommentTagNotification" priority="4">
-		<var name="microblogsEntryCommentContent" value="Microblogs Post Comment" />
+		<var name="microblogsEntryCommentContent" value="#Microblogs Post Comment" />
 		<var name="microblogsEntryCommentTagValue" value="Microblogs" />
 		<var name="microblogsEntryContent" value="Microblogs Post" />
 		<var name="pageName" value="Microblogs" />
@@ -2276,7 +2276,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="SOMicroblogs#addMicroblogsEntryCommentHashtag">
+		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
@@ -2289,7 +2289,9 @@
 
 		<execute macro="SOMicroblogs#viewMicroblogsEntryCommentNotification">
 			<var name="microblogsEntryCommentAuthorName" value="${userName}" />
-			<var name="microblogsEntryCommentContent" value="#${microblogsEntryCommentContent}" />
+			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
+			<var name="microblogsEntryCommentTagValue" value="${microblogsEntryTagValue}" />
+			<var name="tag" value="true" />
 		</execute>
 	</command>
 
@@ -2357,8 +2359,10 @@
 		</execute>
 
 		<execute macro="SOMicroblogs#viewMicroblogsEntryCommentNotification">
+			<var name="mention" value="true" />
+			<var name="mentionUserName" value="${adminName}" />
 			<var name="microblogsEntryCommentAuthorName" value="${userName}" />
-			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent} [@${adminScreenName}]" />
+			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent} ${adminName}" />
 		</execute>
 	</command>
 

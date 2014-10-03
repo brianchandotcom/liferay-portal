@@ -74,10 +74,8 @@ public class PortalCacheManagerConfiguration {
 		return _portalCacheConfigurations.get(portalCacheName);
 	}
 
-	public Map<String, PortalCacheConfiguration>
-		getPortalCacheConfigurations() {
-
-		return Collections.unmodifiableMap(_portalCacheConfigurations);
+	public Set<String> getPortalCacheNames() {
+		return Collections.unmodifiableSet(_portalCacheConfigurations.keySet());
 	}
 
 	private final Set<CallbackConfiguration>

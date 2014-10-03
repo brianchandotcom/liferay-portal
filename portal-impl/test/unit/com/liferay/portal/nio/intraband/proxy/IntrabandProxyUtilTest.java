@@ -52,6 +52,7 @@ import com.liferay.portal.nio.intraband.proxy.IntrabandProxyUtil.MethodsBag;
 import com.liferay.portal.nio.intraband.proxy.IntrabandProxyUtil.TemplateSkeleton;
 import com.liferay.portal.nio.intraband.proxy.IntrabandProxyUtil.TemplateStub;
 import com.liferay.portal.test.AdviseWith;
+import com.liferay.portal.test.aspects.ReflectionUtilAdvice;
 import com.liferay.portal.test.runners.AspectJMockingNewClassLoaderJUnitTestRunner;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.PropsValues;
@@ -547,17 +548,18 @@ public class IntrabandProxyUtilTest {
 
 	@AdviseWith(adviceClasses = {ReflectionUtilAdvice.class})
 	@Test
-	public void testInitializationFailure() {
+	public void testInitializationFailure() throws ClassNotFoundException {
+		Throwable throwable = new Throwable();
+
+		ReflectionUtilAdvice.setDeclaredMethodThrowable(throwable);
+
 		try {
 			new IntrabandProxyUtil();
 
 			Assert.fail();
 		}
 		catch (ExceptionInInitializerError eiie) {
-			Throwable throwable = eiie.getCause();
-
-			Assert.assertSame(RuntimeException.class, throwable.getClass());
-			Assert.assertEquals("Unable to get method", throwable.getMessage());
+			Assert.assertSame(throwable, eiie.getCause());
 		}
 	}
 
@@ -1028,19 +1030,6 @@ public class IntrabandProxyUtilTest {
 			throws Throwable {
 
 			return proceedingJoinPoint.proceed(new Object[] {Boolean.TRUE});
-		}
-
-	}
-
-	@Aspect
-	public static class ReflectionUtilAdvice {
-
-		@Around(
-			"execution(public static java.lang.reflect.Method " +
-				"com.liferay.portal.kernel.util.ReflectionUtil." +
-					"getDeclaredMethod(Class, String, Class...))")
-		public Object getDeclaredMethod() {
-			throw new RuntimeException("Unable to get method");
 		}
 
 	}

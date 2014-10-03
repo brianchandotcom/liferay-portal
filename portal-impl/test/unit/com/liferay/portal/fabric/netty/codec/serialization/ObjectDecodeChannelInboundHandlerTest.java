@@ -19,6 +19,7 @@ import com.liferay.portal.fabric.netty.util.NettyUtil;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.test.AdviseWith;
+import com.liferay.portal.test.aspects.ReflectionUtilAdvice;
 import com.liferay.portal.test.runners.AspectJMockingNewClassLoaderJUnitTestRunner;
 
 import io.netty.buffer.ByteBuf;
@@ -29,10 +30,6 @@ import io.netty.channel.ChannelPipeline;
 import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
-
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
 
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -90,16 +87,17 @@ public class ObjectDecodeChannelInboundHandlerTest {
 	@AdviseWith(adviceClasses = ReflectionUtilAdvice.class)
 	@Test
 	public void testClassLoadingFailure() {
+		Throwable throwable = new Throwable();
+
+		ReflectionUtilAdvice.setDeclaredFieldThrowable(throwable);
+
 		try {
 			new DateChannelHandler();
 
 			Assert.fail();
 		}
 		catch (ExceptionInInitializerError eiie) {
-			Throwable throwable = eiie.getCause();
-
-			Assert.assertSame(Exception.class, throwable.getClass());
-			Assert.assertEquals("Forced Exception", throwable.getMessage());
+			Assert.assertSame(throwable, eiie.getCause());
 		}
 	}
 
@@ -147,21 +145,6 @@ public class ObjectDecodeChannelInboundHandlerTest {
 		Assert.assertTrue(map.containsValue(annotatedObjectDecoder));
 		Assert.assertSame(
 			dateChannelHandler, annotatedObjectDecoder.removeLast());
-	}
-
-	@Aspect
-	public static class ReflectionUtilAdvice {
-
-		@Around(
-			"execution(public static java.lang.reflect.Field " +
-				"com.liferay.portal.kernel.util.ReflectionUtil." +
-					"getDeclaredField(Class, String))")
-		public Object getDeclaredField(ProceedingJoinPoint proceedingJoinPoint)
-			throws Exception {
-
-			throw new Exception("Forced Exception");
-		}
-
 	}
 
 	private static class DateChannelHandler

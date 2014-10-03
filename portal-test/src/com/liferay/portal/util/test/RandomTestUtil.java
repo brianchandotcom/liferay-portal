@@ -104,6 +104,16 @@ public class RandomTestUtil {
 		return StringUtil.randomString(length);
 	}
 
+	public static String[] randomStrings(int count) {
+		String[] strings = new String[count];
+
+		for (int i = 0; i < count; i++) {
+			strings[i] = StringUtil.randomString();
+		}
+
+		return strings;
+	}
+
 	public static UnicodeProperties randomUnicodeProperties(
 		int propertyCount, int keyLength, int valueLength) {
 

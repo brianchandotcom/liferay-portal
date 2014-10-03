@@ -15,6 +15,7 @@
 package com.liferay.sync.engine.util;
 
 import com.liferay.sync.engine.model.SyncFile;
+import com.liferay.sync.engine.service.SyncFileService;
 
 import java.io.File;
 import java.io.IOException;
@@ -192,6 +193,18 @@ public class FileUtil {
 			(PropsValues.SYNC_FILE_IGNORE_HIDDEN &&
 			 Files.isHidden(filePath)) ||
 			Files.isSymbolicLink(filePath) || fileName.endsWith(".lnk")) {
+
+			return true;
+		}
+
+		SyncFile syncFile = SyncFileService.fetchSyncFile(filePath.toString());
+
+		if (syncFile == null) {
+			return isIgnoredFilePath(filePath.getParent());
+		}
+
+		if (!syncFile.isSystem() &&
+			(syncFile.getState() == SyncFile.STATE_UNSYNCED)) {
 
 			return true;
 		}

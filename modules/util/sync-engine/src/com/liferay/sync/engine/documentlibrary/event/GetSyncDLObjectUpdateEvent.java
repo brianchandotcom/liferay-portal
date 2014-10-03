@@ -47,6 +47,14 @@ public class GetSyncDLObjectUpdateEvent extends BaseEvent {
 
 	@Override
 	protected void processRequest() throws Exception {
+		Long parentFolderId = (Long)getParameterValue("parentFolderId");
+
+		if (parentFolderId != null) {
+			super.processRequest();
+
+			return;
+		}
+
 		SyncSite syncSite = (SyncSite)getParameterValue("syncSite");
 
 		// Refetch for updated last remote sync time
@@ -64,8 +72,8 @@ public class GetSyncDLObjectUpdateEvent extends BaseEvent {
 
 				SyncFileService.addSyncFile(
 					null, null, null, filePathName, null, filePathName, 0,
-					syncSite.getGroupId(), syncSite.getSyncAccountId(),
-					SyncFile.TYPE_SYSTEM);
+					syncSite.getGroupId(), SyncFile.STATE_SYNCED,
+					syncSite.getSyncAccountId(), SyncFile.TYPE_SYSTEM);
 			}
 		}
 

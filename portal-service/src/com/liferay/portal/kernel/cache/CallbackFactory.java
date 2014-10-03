@@ -21,11 +21,11 @@ import java.util.Properties;
 /**
  * @author Tina Tian
  */
-public interface ListenerFactory {
+public interface CallbackFactory {
 
 	public BootstrapLoader createBootstrapLoader(Properties properties);
 
-	public CacheListener<? extends Serializable, ?> createCacheListener(
+	public <K extends Serializable, V> CacheListener<K, V> createCacheListener(
 		Properties properties);
 
 	public CacheManagerListener createCacheManagerListener(

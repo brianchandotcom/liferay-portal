@@ -33,8 +33,6 @@ public interface PortalCache<K extends Serializable, V> {
 	@Proxy
 	public V get(K key);
 
-	public BootstrapLoader getBootstrapLoader();
-
 	@Proxy
 	public List<K> getKeys();
 

@@ -15,7 +15,6 @@
 package com.liferay.portal.cache.memory;
 
 import com.liferay.portal.kernel.cache.AbstractPortalCache;
-import com.liferay.portal.kernel.cache.BootstrapLoader;
 import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.CacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
@@ -53,11 +52,6 @@ public class MemoryPortalCache<K extends Serializable, V>
 		_cacheListeners = null;
 		_concurrentMap = null;
 		_name = null;
-	}
-
-	@Override
-	public BootstrapLoader getBootstrapLoader() {
-		return null;
 	}
 
 	@Override

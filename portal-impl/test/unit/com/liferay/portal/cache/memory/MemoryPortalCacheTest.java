@@ -132,11 +132,6 @@ public class MemoryPortalCacheTest {
 	}
 
 	@Test
-	public void testGetBootstrapLoader() {
-		Assert.assertNull(_memoryPortalCache.getBootstrapLoader());
-	}
-
-	@Test
 	public void testGetKeys() {
 		_memoryPortalCache.put(_KEY_2, _VALUE_2);
 

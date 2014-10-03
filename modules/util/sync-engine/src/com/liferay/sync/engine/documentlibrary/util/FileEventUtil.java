@@ -19,6 +19,8 @@ import com.liferay.sync.engine.documentlibrary.event.AddFolderEvent;
 import com.liferay.sync.engine.documentlibrary.event.CancelCheckOutEvent;
 import com.liferay.sync.engine.documentlibrary.event.CheckInFileEntryEvent;
 import com.liferay.sync.engine.documentlibrary.event.CheckOutFileEntryEvent;
+import com.liferay.sync.engine.documentlibrary.event.GetAllFolderSyncDLObjectsEvent;
+import com.liferay.sync.engine.documentlibrary.event.GetSyncDLObjectUpdateEvent;
 import com.liferay.sync.engine.documentlibrary.event.MoveFileEntryEvent;
 import com.liferay.sync.engine.documentlibrary.event.MoveFileEntryToTrashEvent;
 import com.liferay.sync.engine.documentlibrary.event.MoveFolderEvent;
@@ -26,6 +28,7 @@ import com.liferay.sync.engine.documentlibrary.event.MoveFolderToTrashEvent;
 import com.liferay.sync.engine.documentlibrary.event.PatchFileEntryEvent;
 import com.liferay.sync.engine.documentlibrary.event.UpdateFileEntryEvent;
 import com.liferay.sync.engine.documentlibrary.event.UpdateFolderEvent;
+import com.liferay.sync.engine.documentlibrary.handler.GetAllFolderSyncDLObjectsHandler;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.model.SyncSite;
 import com.liferay.sync.engine.service.SyncSiteService;
@@ -37,6 +40,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -178,6 +182,26 @@ public class FileEventUtil {
 		moveFolderToTrashEvent.run();
 	}
 
+	public static List<SyncFile> getAllFolders(
+		long companyId, long repositoryId, long syncAccountId) {
+
+		Map<String, Object> parameters = new HashMap<String, Object>();
+
+		parameters.put("companyId", companyId);
+		parameters.put("repositoryId", repositoryId);
+
+		GetAllFolderSyncDLObjectsEvent getAllFolderSyncDLObjectsEvent =
+			new GetAllFolderSyncDLObjectsEvent(syncAccountId, parameters);
+
+		getAllFolderSyncDLObjectsEvent.run();
+
+		GetAllFolderSyncDLObjectsHandler getAllFolderSyncDLObjectsHandler =
+			(GetAllFolderSyncDLObjectsHandler)getAllFolderSyncDLObjectsEvent.
+				getHandler();
+
+		return getAllFolderSyncDLObjectsHandler.getSyncFiles();
+	}
+
 	public static void moveFile(
 		long folderId, long syncAccountId, SyncFile syncFile) {
 
@@ -210,6 +234,20 @@ public class FileEventUtil {
 			syncAccountId, parameters);
 
 		moveFolderEvent.run();
+	}
+
+	public static void resyncFolder(long syncAccountId, SyncFile syncFile) {
+		Map<String, Object> parameters = new HashMap<String, Object>();
+
+		parameters.put("companyId", syncFile.getCompanyId());
+		parameters.put("lastAccessTime", 0);
+		parameters.put("parentFolderId", syncFile.getTypePK());
+		parameters.put("repositoryId", syncFile.getRepositoryId());
+
+		GetSyncDLObjectUpdateEvent getSyncDLObjectUpdateEvent =
+			new GetSyncDLObjectUpdateEvent(syncAccountId, parameters);
+
+		getSyncDLObjectUpdateEvent.run();
 	}
 
 	public static void updateFile(

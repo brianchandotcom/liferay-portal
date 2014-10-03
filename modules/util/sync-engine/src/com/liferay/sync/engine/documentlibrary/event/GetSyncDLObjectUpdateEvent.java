@@ -36,15 +36,25 @@ public class GetSyncDLObjectUpdateEvent extends BaseEvent {
 		long syncAccountId, Map<String, Object> parameters) {
 
 		super(syncAccountId, _URL_PATH, parameters);
+
+		_handler = new GetSyncDLObjectUpdateHandler(this);
 	}
 
 	@Override
-	protected Handler<Void> getHandler() {
-		return new GetSyncDLObjectUpdateHandler(this);
+	public Handler<Void> getHandler() {
+		return _handler;
 	}
 
 	@Override
 	protected void processRequest() throws Exception {
+		Long parentFolderId = (Long)getParameterValue("parentFolderId");
+
+		if (parentFolderId != null) {
+			super.processRequest();
+
+			return;
+		}
+
 		SyncSite syncSite = (SyncSite)getParameterValue("syncSite");
 
 		// Refetch for updated last remote sync time
@@ -62,8 +72,8 @@ public class GetSyncDLObjectUpdateEvent extends BaseEvent {
 
 				SyncFileService.addSyncFile(
 					null, null, null, filePathName, null, filePathName, 0,
-					syncSite.getGroupId(), syncSite.getSyncAccountId(),
-					SyncFile.TYPE_SYSTEM);
+					syncSite.getGroupId(), SyncFile.STATE_SYNCED,
+					syncSite.getSyncAccountId(), SyncFile.TYPE_SYSTEM);
 			}
 		}
 
@@ -78,5 +88,7 @@ public class GetSyncDLObjectUpdateEvent extends BaseEvent {
 
 	private static final String _URL_PATH =
 		"/sync-web.syncdlobject/get-sync-dl-object-update";
+
+	private Handler<Void> _handler;
 
 }

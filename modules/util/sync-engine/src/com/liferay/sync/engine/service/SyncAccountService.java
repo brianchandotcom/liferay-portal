@@ -103,7 +103,8 @@ public class SyncAccountService {
 
 		SyncFileService.addSyncFile(
 			null, null, null, filePathName, null, filePathName, 0, 0,
-			syncAccount.getSyncAccountId(), SyncFile.TYPE_SYSTEM);
+			SyncFile.STATE_SYNCED, syncAccount.getSyncAccountId(),
+			SyncFile.TYPE_SYSTEM);
 
 		// Sync sites
 

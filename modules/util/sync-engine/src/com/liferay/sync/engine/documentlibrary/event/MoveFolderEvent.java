@@ -26,14 +26,18 @@ public class MoveFolderEvent extends BaseEvent {
 
 	public MoveFolderEvent(long syncAccountId, Map<String, Object> parameters) {
 		super(syncAccountId, _URL_PATH, parameters);
+
+		_handler = new MoveFolderHandler(this);
 	}
 
 	@Override
-	protected Handler<Void> getHandler() {
-		return new MoveFolderHandler(this);
+	public Handler<Void> getHandler() {
+		return _handler;
 	}
 
 	private static final String _URL_PATH =
 		"/sync-web.syncdlobject/move-folder";
+
+	private Handler<Void> _handler;
 
 }

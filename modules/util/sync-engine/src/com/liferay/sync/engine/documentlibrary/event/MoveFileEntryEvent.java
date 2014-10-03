@@ -28,14 +28,18 @@ public class MoveFileEntryEvent extends BaseEvent {
 		long syncAccountId, Map<String, Object> parameters) {
 
 		super(syncAccountId, _URL_PATH, parameters);
+
+		_handler = new MoveFileEntryHandler(this);
 	}
 
 	@Override
-	protected Handler<Void> getHandler() {
-		return new MoveFileEntryHandler(this);
+	public Handler<Void> getHandler() {
+		return _handler;
 	}
 
 	private static final String _URL_PATH =
 		"/sync-web.syncdlobject/move-file-entry";
+
+	private Handler<Void> _handler;
 
 }

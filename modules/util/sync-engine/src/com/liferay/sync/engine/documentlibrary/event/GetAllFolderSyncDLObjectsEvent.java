@@ -14,7 +14,7 @@
 
 package com.liferay.sync.engine.documentlibrary.event;
 
-import com.liferay.sync.engine.documentlibrary.handler.GetUserSitesGroupsHandler;
+import com.liferay.sync.engine.documentlibrary.handler.GetAllFolderSyncDLObjectsHandler;
 import com.liferay.sync.engine.documentlibrary.handler.Handler;
 
 import java.util.Map;
@@ -22,14 +22,14 @@ import java.util.Map;
 /**
  * @author Shinn Lok
  */
-public class GetUserSitesGroupsEvent extends BaseEvent {
+public class GetAllFolderSyncDLObjectsEvent extends BaseEvent {
 
-	public GetUserSitesGroupsEvent(
+	public GetAllFolderSyncDLObjectsEvent(
 		long syncAccountId, Map<String, Object> parameters) {
 
 		super(syncAccountId, _URL_PATH, parameters);
 
-		_handler = new GetUserSitesGroupsHandler(this);
+		_handler = new GetAllFolderSyncDLObjectsHandler(this);
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class GetUserSitesGroupsEvent extends BaseEvent {
 	}
 
 	private static final String _URL_PATH =
-		"/sync-web.syncdlobject/get-user-sites-groups";
+		"/sync-web.syncdlobject/get-all-folder-sync-dl-objects";
 
 	private Handler<Void> _handler;
 

@@ -105,6 +105,12 @@ public class DownloadFileHandler extends BaseHandler {
 
 		SyncFile syncFile = (SyncFile)getParameterValue("syncFile");
 
+		syncFile = SyncFileService.fetchSyncFile(syncFile.getSyncFileId());
+
+		if (syncFile.getState() == SyncFile.STATE_UNSYNCED) {
+			return;
+		}
+
 		Path filePath = Paths.get(syncFile.getFilePathName());
 
 		Watcher watcher = WatcherRegistry.getWatcher(getSyncAccountId());

@@ -33,7 +33,7 @@ public class DownloadFileEvent extends BaseEvent {
 	}
 
 	@Override
-	protected Handler<Void> getHandler() {
+	public Handler<Void> getHandler() {
 		return new DownloadFileHandler(this);
 	}
 
@@ -69,5 +69,7 @@ public class DownloadFileEvent extends BaseEvent {
 	}
 
 	private static final String _URL_PATH = "/sync-web/download";
+
+	private Handler<Void> _handler;
 
 }

@@ -108,7 +108,7 @@ public class NettyChannelAttributesTest {
 			throws Throwable {
 
 			Attribute<Object> attribute =
-				(Attribute)proceedingJoinPoint.getThis();
+				(Attribute<Object>)proceedingJoinPoint.getThis();
 
 			attribute.set(_concurrentValue);
 

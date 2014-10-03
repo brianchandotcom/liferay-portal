@@ -24,6 +24,7 @@ import com.liferay.portlet.asset.model.ClassTypeReader;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
+import com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.service.permission.DDLRecordSetPermission;
 
 /**
@@ -46,7 +47,8 @@ public class DDLRecordAssetRendererFactory extends BaseAssetRendererFactory {
 		DDLRecordVersion recordVersion = null;
 
 		if (type == TYPE_LATEST) {
-			recordVersion = DDLRecordLocalServiceUtil.getRecordVersion(classPK);
+			recordVersion = DDLRecordVersionLocalServiceUtil.getRecordVersion(
+				classPK);
 
 			record = recordVersion.getRecord();
 		}

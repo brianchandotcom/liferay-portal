@@ -27,6 +27,7 @@ import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
+import com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -54,7 +55,7 @@ public class DDLRecordWorkflowHandler extends BaseWorkflowHandler<DDLRecord> {
 		throws PortalException {
 
 		DDLRecordVersion recordVersion =
-			DDLRecordLocalServiceUtil.getRecordVersion(classPK);
+			DDLRecordVersionLocalServiceUtil.getRecordVersion(classPK);
 
 		DDLRecord record = recordVersion.getRecord();
 

@@ -16,6 +16,8 @@ package com.liferay.portlet.dynamicdatalists.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.model.PersistedModel;
+
 /**
  * The extended model interface for the DDLRecordVersion service. Represents a row in the &quot;DDLRecordVersion&quot; database table, with each column mapped to a property of this class.
  *
@@ -26,7 +28,7 @@ import aQute.bnd.annotation.ProviderType;
  * @generated
  */
 @ProviderType
-public interface DDLRecordVersion extends DDLRecordVersionModel {
+public interface DDLRecordVersion extends DDLRecordVersionModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

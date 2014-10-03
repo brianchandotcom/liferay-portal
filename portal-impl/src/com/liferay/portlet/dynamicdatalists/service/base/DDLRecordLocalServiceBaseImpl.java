@@ -837,6 +837,44 @@ public abstract class DDLRecordLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the d d l record version local service.
+	 *
+	 * @return the d d l record version local service
+	 */
+	public com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionLocalService getDDLRecordVersionLocalService() {
+		return ddlRecordVersionLocalService;
+	}
+
+	/**
+	 * Sets the d d l record version local service.
+	 *
+	 * @param ddlRecordVersionLocalService the d d l record version local service
+	 */
+	public void setDDLRecordVersionLocalService(
+		com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionLocalService ddlRecordVersionLocalService) {
+		this.ddlRecordVersionLocalService = ddlRecordVersionLocalService;
+	}
+
+	/**
+	 * Returns the d d l record version remote service.
+	 *
+	 * @return the d d l record version remote service
+	 */
+	public com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionService getDDLRecordVersionService() {
+		return ddlRecordVersionService;
+	}
+
+	/**
+	 * Sets the d d l record version remote service.
+	 *
+	 * @param ddlRecordVersionService the d d l record version remote service
+	 */
+	public void setDDLRecordVersionService(
+		com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionService ddlRecordVersionService) {
+		this.ddlRecordVersionService = ddlRecordVersionService;
+	}
+
+	/**
 	 * Returns the d d l record version persistence.
 	 *
 	 * @return the d d l record version persistence
@@ -963,6 +1001,10 @@ public abstract class DDLRecordLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected DDLRecordSetPersistence ddlRecordSetPersistence;
 	@BeanReference(type = DDLRecordSetFinder.class)
 	protected DDLRecordSetFinder ddlRecordSetFinder;
+	@BeanReference(type = com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionLocalService.class)
+	protected com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionLocalService ddlRecordVersionLocalService;
+	@BeanReference(type = com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionService.class)
+	protected com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionService ddlRecordVersionService;
 	@BeanReference(type = DDLRecordVersionPersistence.class)
 	protected DDLRecordVersionPersistence ddlRecordVersionPersistence;
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)

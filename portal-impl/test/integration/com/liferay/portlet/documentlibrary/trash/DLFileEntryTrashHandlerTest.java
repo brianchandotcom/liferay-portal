@@ -38,6 +38,7 @@ import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileRank;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -46,6 +47,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileRankLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
 import com.liferay.portlet.trash.util.TrashUtil;
@@ -70,6 +72,36 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class DLFileEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
+
+	@Test
+	public void testFileNameUpdateWhenUpdatingTitle() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		DLFileEntry dlFileEntry = (DLFileEntry)addBaseModelWithWorkflow(
+			true, serviceContext);
+
+		moveBaseModelToTrash(dlFileEntry.getFileEntryId());
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			getBaseModelClassName());
+
+		String newTitle = RandomTestUtil.randomString();
+
+		trashHandler.updateTitle(dlFileEntry.getFileEntryId(), newTitle);
+
+		dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntry(
+			dlFileEntry.getFileEntryId());
+
+		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(true);
+
+		Assert.assertEquals(
+			DLUtil.getSanitizedFileName(newTitle, dlFileEntry.getExtension()),
+			dlFileEntry.getFileName());
+		Assert.assertEquals(
+			DLUtil.getSanitizedFileName(newTitle, dlFileVersion.getExtension()),
+			dlFileVersion.getFileName());
+	}
 
 	@Test
 	public void testTrashDLFileRank() throws Exception {

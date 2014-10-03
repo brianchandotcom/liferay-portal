@@ -52,6 +52,7 @@ import com.liferay.portlet.assetpublisher.util.AssetSearcher;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.social.model.SocialActivityConstants;
@@ -705,6 +706,10 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
 				classPK);
 
+			String fileName = DLUtil.getSanitizedFileName(
+				title, dlFileEntry.getExtension());
+
+			dlFileEntry.setFileName(fileName);
 			dlFileEntry.setTitle(title);
 			dlFileEntry.setDescription(description);
 

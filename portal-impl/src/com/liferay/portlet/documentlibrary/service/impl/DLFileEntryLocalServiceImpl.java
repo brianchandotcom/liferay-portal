@@ -850,6 +850,7 @@ public class DLFileEntryLocalServiceImpl
 
 					dlFileEntry.setModifiedDate(
 						dlLatestFileVersion.getCreateDate());
+					dlFileEntry.setFileName(dlLatestFileVersion.getFileName());
 					dlFileEntry.setExtension(
 						dlLatestFileVersion.getExtension());
 					dlFileEntry.setMimeType(dlLatestFileVersion.getMimeType());
@@ -1726,6 +1727,7 @@ public class DLFileEntryLocalServiceImpl
 					dlFileEntry.getVersion(),
 					dlFileVersion.getVersion()) <= 0) {
 
+				dlFileEntry.setFileName(dlFileVersion.getFileName());
 				dlFileEntry.setExtension(dlFileVersion.getExtension());
 				dlFileEntry.setMimeType(dlFileVersion.getMimeType());
 				dlFileEntry.setTitle(dlFileVersion.getTitle());

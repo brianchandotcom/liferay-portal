@@ -1210,7 +1210,6 @@ public class ServicePreAction extends Action {
 						publishToLiveURL.setParameter("tabs1", "public-pages");
 					}
 
-					publishToLiveURL.setParameter("pagesRedirect", currentURL);
 					publishToLiveURL.setParameter(
 						"groupId", String.valueOf(scopeGroupId));
 					publishToLiveURL.setParameter(

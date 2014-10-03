@@ -109,10 +109,7 @@ public class EditExportConfigurationAction extends PortletAction {
 
 			SessionErrors.add(actionRequest, e.getClass());
 
-			String pagesRedirect = ParamUtil.getString(
-				actionRequest, "pagesRedirect");
-
-			sendRedirect(actionRequest, actionResponse, pagesRedirect);
+			sendRedirect(actionRequest, actionResponse);
 		}
 	}
 

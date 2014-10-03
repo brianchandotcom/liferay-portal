@@ -295,8 +295,6 @@ public class EditLayoutsAction extends PortletAction {
 			else if (e instanceof SystemException) {
 				SessionErrors.add(actionRequest, e.getClass(), e);
 
-				redirect = ParamUtil.getString(actionRequest, "pagesRedirect");
-
 				sendRedirect(
 					portletConfig, actionRequest, actionResponse, redirect,
 					closeRedirect);

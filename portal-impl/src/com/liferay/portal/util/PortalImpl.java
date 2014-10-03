@@ -142,6 +142,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
+import com.liferay.portal.security.sso.SSOUtil;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -6596,19 +6597,7 @@ public class PortalImpl implements Portal {
 
 		long companyId = PortalUtil.getCompanyId(request);
 
-		if (PrefsPropsUtil.getBoolean(
-				companyId, PropsKeys.CAS_AUTH_ENABLED,
-				PropsValues.CAS_AUTH_ENABLED) ||
-			PrefsPropsUtil.getBoolean(
-				companyId, PropsKeys.LOGIN_DIALOG_DISABLED,
-				PropsValues.LOGIN_DIALOG_DISABLED) ||
-			PrefsPropsUtil.getBoolean(
-				companyId, PropsKeys.NTLM_AUTH_ENABLED,
-				PropsValues.NTLM_AUTH_ENABLED) ||
-			PrefsPropsUtil.getBoolean(
-				companyId, PropsKeys.OPEN_SSO_AUTH_ENABLED,
-				PropsValues.OPEN_SSO_AUTH_ENABLED)) {
-
+		if (SSOUtil.isLoginRedirectRequired(companyId)) {
 			return true;
 		}
 

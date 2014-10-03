@@ -37,6 +37,26 @@ public class SSOUtil {
 		return authLoginURL;
 	}
 
+	public static boolean isLoginRedirectRequired(long companyId) {
+		if (PrefsPropsUtil.getBoolean(
+				companyId, PropsKeys.CAS_AUTH_ENABLED,
+				PropsValues.CAS_AUTH_ENABLED) ||
+			PrefsPropsUtil.getBoolean(
+				companyId, PropsKeys.LOGIN_DIALOG_DISABLED,
+				PropsValues.LOGIN_DIALOG_DISABLED) ||
+			PrefsPropsUtil.getBoolean(
+				companyId, PropsKeys.NTLM_AUTH_ENABLED,
+				PropsValues.NTLM_AUTH_ENABLED) ||
+			PrefsPropsUtil.getBoolean(
+				companyId, PropsKeys.OPEN_SSO_AUTH_ENABLED,
+				PropsValues.OPEN_SSO_AUTH_ENABLED)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public static boolean isRedirectRequired(long companyId) {
 		if (PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.CAS_AUTH_ENABLED,

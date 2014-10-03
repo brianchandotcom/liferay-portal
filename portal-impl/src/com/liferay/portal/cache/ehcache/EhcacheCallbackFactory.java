@@ -41,6 +41,8 @@ import net.sf.ehcache.event.CacheManagerEventListenerFactory;
  */
 public class EhcacheCallbackFactory implements CallbackFactory {
 
+	public static final CallbackFactory INSTANCE = new EhcacheCallbackFactory();
+
 	@Override
 	public BootstrapLoader createBootstrapLoader(Properties properties) {
 		String className = properties.getProperty(
@@ -156,6 +158,9 @@ public class EhcacheCallbackFactory implements CallbackFactory {
 
 			return null;
 		}
+	}
+
+	private EhcacheCallbackFactory() {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

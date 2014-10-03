@@ -29,6 +29,9 @@ import java.util.Properties;
  */
 public class ClusterLinkCallbackFactory implements CallbackFactory {
 
+	public static final CallbackFactory INSTANCE =
+		new ClusterLinkCallbackFactory();
+
 	@Override
 	public BootstrapLoader createBootstrapLoader(Properties properties) {
 		return new ClusterLinkBootstrapLoader(properties);
@@ -47,6 +50,9 @@ public class ClusterLinkCallbackFactory implements CallbackFactory {
 		Properties properties) {
 
 		throw new UnsupportedOperationException();
+	}
+
+	private ClusterLinkCallbackFactory() {
 	}
 
 }

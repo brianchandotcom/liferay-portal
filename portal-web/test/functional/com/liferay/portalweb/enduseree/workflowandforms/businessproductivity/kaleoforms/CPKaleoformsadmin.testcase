@@ -2981,7 +2981,7 @@
 	</command>
 
 	<command name="SearchProcessRecords" priority="5">
-		<var name="kfFieldSetName" value="Data Definition" />
+		<var name="kfFieldSetName" value="Process Field Set" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
 		<execute macro="Page#gotoContentCP">
@@ -3264,7 +3264,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#addFieldSet">
-			<var name="kfFieldSetName" value="${kfFieldSetName}" />
+			<var name="kfFieldSetName" value="Process Field Set" />
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 

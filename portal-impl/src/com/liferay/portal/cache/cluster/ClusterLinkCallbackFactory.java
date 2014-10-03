@@ -35,11 +35,11 @@ public class ClusterLinkCallbackFactory implements CallbackFactory {
 	}
 
 	@Override
-	public CacheListener<? extends Serializable, ?> createCacheListener(
+	public <K extends Serializable, V> CacheListener<K, V> createCacheListener(
 		Properties properties) {
 
-		return new ClusterLinkCacheReplicator<Serializable, Serializable>(
-			properties);
+		return (CacheListener<K, V>)
+			new ClusterLinkCacheReplicator<K, Serializable>(properties);
 	}
 
 	@Override

@@ -70,7 +70,7 @@ public class EhcacheCallbackFactory implements CallbackFactory {
 	}
 
 	@Override
-	public CacheListener<? extends Serializable, ?> createCacheListener(
+	public <K extends Serializable, V> CacheListener<K, V> createCacheListener(
 		Properties properties) {
 
 		String className = properties.getProperty(
@@ -89,12 +89,12 @@ public class EhcacheCallbackFactory implements CallbackFactory {
 				cacheEventListenerFactory.createCacheEventListener(properties);
 
 			if (cacheEventListener instanceof CacheReplicator) {
-				return new EhcacheCacheReplicatorAdapter
-					<Serializable, Serializable>(cacheEventListener);
+				return (CacheListener<K, V>)
+					new EhcacheCacheReplicatorAdapter<K, Serializable>(
+						cacheEventListener);
 			}
 
-			return new EhcacheCacheListenerAdapter<Serializable, Object>(
-				cacheEventListener);
+			return new EhcacheCacheListenerAdapter<K, V>(cacheEventListener);
 		}
 		catch (Exception e) {
 			_log.error(

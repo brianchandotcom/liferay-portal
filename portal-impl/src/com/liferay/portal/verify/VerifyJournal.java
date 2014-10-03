@@ -75,9 +75,8 @@ public class VerifyJournal extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
+		verifyContent();
 		verifyCreateDate();
-		verifyDocumentLibraryContent();
-		verifyLinkToLayoutContent();
 		updateFolderAssets();
 		verifyOracleNewLine();
 		verifyPermissionsAndAssets();
@@ -86,42 +85,37 @@ public class VerifyJournal extends VerifyProcess {
 		verifyURLTitle();
 	}
 
-	protected void updateDocumentLibraryElements(List<Element> elements) {
-		for (Element element : elements) {
-			String type = element.attributeValue("type");
+	protected void updateDocumentLibraryElements(Element element) {
+		List<Element> nestedElements = element.elements("dynamic-element");
 
-			if (!type.equals("document_library")) {
-				continue;
-			}
-
-			updateDocumentLibraryElements(element.elements("dynamic-element"));
-
-			Element dynamicContentElement = element.element("dynamic-content");
-
-			String path = dynamicContentElement.getStringValue();
-
-			String[] pathArray = StringUtil.split(path, CharPool.SLASH);
-
-			if (pathArray.length != 5) {
-				continue;
-			}
-
-			long groupId = GetterUtil.getLong(pathArray[2]);
-			long folderId = GetterUtil.getLong(pathArray[3]);
-			String title = HttpUtil.decodeURL(HtmlUtil.escape(pathArray[4]));
-
-			DLFileEntry dlFileEntry =
-				DLFileEntryLocalServiceUtil.fetchFileEntry(
-					groupId, folderId, title);
-
-			if (dlFileEntry == null) {
-				continue;
-			}
-
-			Node node = dynamicContentElement.node(0);
-
-			node.setText(path + StringPool.SLASH + dlFileEntry.getUuid());
+		for (Element nestedElement : nestedElements) {
+			updateDocumentLibraryElements(nestedElement);
 		}
+
+		Element dynamicContentElement = element.element("dynamic-content");
+
+		String path = dynamicContentElement.getStringValue();
+
+		String[] pathArray = StringUtil.split(path, CharPool.SLASH);
+
+		if (pathArray.length != 5) {
+			return;
+		}
+
+		long groupId = GetterUtil.getLong(pathArray[2]);
+		long folderId = GetterUtil.getLong(pathArray[3]);
+		String title = HttpUtil.decodeURL(HtmlUtil.escape(pathArray[4]));
+
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.fetchFileEntry(
+			groupId, folderId, title);
+
+		if (dlFileEntry == null) {
+			return;
+		}
+
+		Node node = dynamicContentElement.node(0);
+
+		node.setText(path + StringPool.SLASH + dlFileEntry.getUuid());
 	}
 
 	protected void updateFolderAssets() throws Exception {
@@ -152,27 +146,19 @@ public class VerifyJournal extends VerifyProcess {
 		}
 	}
 
-	protected void updateLinkToLayoutElements(
-		List<Element> elements, long groupId) {
+	protected void updateLinkToLayoutElements(long groupId, Element element) {
+		List<Element> nestedElements = element.elements("dynamic-element");
 
-		for (Element element : elements) {
-			String type = element.attributeValue("type");
-
-			if (!type.equals("link_to_layout")) {
-				continue;
-			}
-
-			updateLinkToLayoutElements(
-				element.elements("dynamic-element"), groupId);
-
-			Element dynamicContentElement = element.element("dynamic-content");
-
-			Node node = dynamicContentElement.node(0);
-
-			node.setText(
-				dynamicContentElement.getStringValue() + StringPool.AT +
-					groupId);
+		for (Element nestedElement : nestedElements) {
+			updateLinkToLayoutElements(groupId, nestedElement);
 		}
+
+		Element dynamicContentElement = element.element("dynamic-content");
+
+		Node node = dynamicContentElement.node(0);
+
+		node.setText(
+			dynamicContentElement.getStringValue() + StringPool.AT + groupId);
 	}
 
 	protected void updateURLTitle(
@@ -205,6 +191,53 @@ public class VerifyJournal extends VerifyProcess {
 		}
 		finally {
 			DataAccess.cleanUp(con, ps);
+		}
+	}
+
+	protected void verifyContent() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select id_ from JournalArticle where (content like " +
+					"'%document_library%' or content like '%link_to_layout%')" +
+						" and structureId != ''");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long id = rs.getLong("id_");
+
+				JournalArticle article =
+					JournalArticleLocalServiceUtil.getArticle(id);
+
+				Document document = SAXReaderUtil.read(article.getContent());
+
+				Element rootElement = document.getRootElement();
+
+				for (Element element : rootElement.elements()) {
+					String type = element.attributeValue("type");
+
+					if (type.equals("document_library")) {
+						updateDocumentLibraryElements(element);
+					}
+					else if (type.equals("link_to_layout")) {
+						updateLinkToLayoutElements(
+							article.getGroupId(), element);
+					}
+				}
+
+				article.setContent(document.asXML());
+
+				JournalArticleLocalServiceUtil.updateJournalArticle(article);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 
@@ -303,79 +336,6 @@ public class VerifyJournal extends VerifyProcess {
 
 				JournalArticleLocalServiceUtil.updateJournalArticle(article);
 			}
-		}
-	}
-
-	protected void verifyDocumentLibraryContent() throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"select id_ from JournalArticle where content like " +
-					"'%document_library%' and structureId != ''");
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				long id = rs.getLong("id_");
-
-				JournalArticle article =
-					JournalArticleLocalServiceUtil.getArticle(id);
-
-				Document document = SAXReaderUtil.read(article.getContent());
-
-				Element rootElement = document.getRootElement();
-
-				updateDocumentLibraryElements(rootElement.elements());
-
-				article.setContent(document.asXML());
-
-				JournalArticleLocalServiceUtil.updateJournalArticle(article);
-			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-	}
-
-	protected void verifyLinkToLayoutContent() throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"select id_ from JournalArticle where content like " +
-					"'%link_to_layout%' and structureId != ''");
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				long id = rs.getLong("id_");
-
-				JournalArticle article =
-					JournalArticleLocalServiceUtil.getArticle(id);
-
-				Document document = SAXReaderUtil.read(article.getContent());
-
-				Element rootElement = document.getRootElement();
-
-				updateLinkToLayoutElements(
-					rootElement.elements(), article.getGroupId());
-
-				article.setContent(document.asXML());
-
-				JournalArticleLocalServiceUtil.updateJournalArticle(article);
-			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 

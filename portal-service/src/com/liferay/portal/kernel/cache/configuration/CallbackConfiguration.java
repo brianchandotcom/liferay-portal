@@ -25,18 +25,17 @@ import java.util.Properties;
 public class CallbackConfiguration {
 
 	public CallbackConfiguration(
-		Class<? extends CallbackFactory> callbackFactoryClass,
-		Properties properties) {
+		CallbackFactory callbackFactory, Properties properties) {
 
-		if (callbackFactoryClass == null) {
-			throw new NullPointerException("Callback Factory class is null");
+		if (callbackFactory == null) {
+			throw new NullPointerException("Callback factory is null");
 		}
 
 		if (properties == null) {
 			throw new NullPointerException("Properties is null");
 		}
 
-		_callbackFactoryClass = callbackFactoryClass;
+		_callbackFactory = callbackFactory;
 		_properties = properties;
 	}
 
@@ -53,13 +52,12 @@ public class CallbackConfiguration {
 		CallbackConfiguration callbackConfiguration =
 			(CallbackConfiguration)object;
 
-		return _callbackFactoryClass.equals(
-				callbackConfiguration._callbackFactoryClass) &&
+		return (_callbackFactory == callbackConfiguration._callbackFactory) &&
 			_properties.equals(callbackConfiguration._properties);
 	}
 
-	public Class<? extends CallbackFactory> getCallbackFactoryClass() {
-		return _callbackFactoryClass;
+	public CallbackFactory getCallbackFactory() {
+		return _callbackFactory;
 	}
 
 	public Properties getProperties() {
@@ -68,12 +66,12 @@ public class CallbackConfiguration {
 
 	@Override
 	public int hashCode() {
-		int hash = HashUtil.hash(0, _callbackFactoryClass);
+		int hash = HashUtil.hash(0, _callbackFactory);
 
 		return HashUtil.hash(hash, _properties);
 	}
 
-	private final Class<? extends CallbackFactory> _callbackFactoryClass;
+	private final CallbackFactory _callbackFactory;
 	private final Properties _properties;
 
 }

@@ -8,5 +8,6 @@
 	<preference>
 		<name>nested.portlets.layout.template.unsupported</name>
 		<value>freeform,1_column</value>
+		<read-only>true</read-only>
 	</preference>
 </portlet-preferences>

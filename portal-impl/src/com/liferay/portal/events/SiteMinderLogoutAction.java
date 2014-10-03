@@ -18,10 +18,12 @@ import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.auth.AuthSettingsUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +39,10 @@ public class SiteMinderLogoutAction extends Action {
 		try {
 			long companyId = PortalUtil.getCompanyId(request);
 
-			if (!AuthSettingsUtil.isSiteMinderEnabled(companyId)) {
+			if (!PrefsPropsUtil.getBoolean(
+					companyId, PropsKeys.SITEMINDER_AUTH_ENABLED,
+					PropsValues.SITEMINDER_AUTH_ENABLED)) {
+
 				return;
 			}
 

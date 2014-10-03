@@ -22,10 +22,10 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
-import com.liferay.portal.security.auth.AuthSettingsUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
 
@@ -60,7 +60,9 @@ public class PortalLDAPExporterImpl implements PortalLDAPExporter {
 
 		long companyId = contact.getCompanyId();
 
-		if (!AuthSettingsUtil.isLDAPAuthEnabled(companyId) ||
+		if (!PrefsPropsUtil.getBoolean(
+				companyId, PropsKeys.LDAP_AUTH_ENABLED,
+				PropsValues.LDAP_AUTH_ENABLED) ||
 			!LDAPSettingsUtil.isExportEnabled(companyId)) {
 
 			return;
@@ -139,7 +141,9 @@ public class PortalLDAPExporterImpl implements PortalLDAPExporter {
 
 		long companyId = user.getCompanyId();
 
-		if (!AuthSettingsUtil.isLDAPAuthEnabled(companyId) ||
+		if (!PrefsPropsUtil.getBoolean(
+				companyId, PropsKeys.LDAP_AUTH_ENABLED,
+				PropsValues.LDAP_AUTH_ENABLED) ||
 			!LDAPSettingsUtil.isExportEnabled(companyId) ||
 			!LDAPSettingsUtil.isExportGroupEnabled(companyId)) {
 
@@ -227,7 +231,9 @@ public class PortalLDAPExporterImpl implements PortalLDAPExporter {
 
 		long companyId = user.getCompanyId();
 
-		if (!AuthSettingsUtil.isLDAPAuthEnabled(companyId) ||
+		if (!PrefsPropsUtil.getBoolean(
+				companyId, PropsKeys.LDAP_AUTH_ENABLED,
+				PropsValues.LDAP_AUTH_ENABLED) ||
 			!LDAPSettingsUtil.isExportEnabled(companyId)) {
 
 			return;

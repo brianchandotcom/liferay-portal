@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.auth.AuthSettingsUtil;
 import com.liferay.portal.security.ntlm.NtlmManager;
 import com.liferay.portal.security.ntlm.NtlmUserAccount;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
@@ -46,7 +45,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import jcifs.Config;
-
 import jcifs.util.Base64;
 
 /**
@@ -86,7 +84,9 @@ public class NtlmFilter extends BasePortalFilter {
 			long companyId = PortalInstances.getCompanyId(request);
 
 			if (BrowserSnifferUtil.isIe(request) &&
-				AuthSettingsUtil.isNtlmEnabled(companyId)) {
+				PrefsPropsUtil.getBoolean(
+					companyId, PropsKeys.NTLM_AUTH_ENABLED,
+					PropsValues.NTLM_AUTH_ENABLED)) {
 
 				return true;
 			}

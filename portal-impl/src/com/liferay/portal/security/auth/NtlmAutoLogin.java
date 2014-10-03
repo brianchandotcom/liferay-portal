@@ -14,9 +14,12 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.ldap.PortalLDAPImporterUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +37,10 @@ public class NtlmAutoLogin extends BaseAutoLogin {
 
 		long companyId = PortalUtil.getCompanyId(request);
 
-		if (!AuthSettingsUtil.isNtlmEnabled(companyId)) {
+		if (!PrefsPropsUtil.getBoolean(
+				companyId, PropsKeys.NTLM_AUTH_ENABLED,
+				PropsValues.NTLM_AUTH_ENABLED)) {
+
 			return null;
 		}
 

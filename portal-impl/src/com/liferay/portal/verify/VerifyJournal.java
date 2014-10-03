@@ -167,14 +167,11 @@ public class VerifyJournal extends VerifyProcess {
 
 			Element dynamicContentElement = element.element("dynamic-content");
 
-			String data = dynamicContentElement.getStringValue();
-
-			data = data.concat(StringPool.AT);
-			data = data.concat(String.valueOf(groupId));
-
 			Node node = dynamicContentElement.node(0);
 
-			node.setText(data);
+			node.setText(
+				dynamicContentElement.getStringValue() + StringPool.AT +
+					groupId);
 		}
 	}
 
@@ -355,7 +352,7 @@ public class VerifyJournal extends VerifyProcess {
 
 			ps = con.prepareStatement(
 				"select id_ from JournalArticle where content like " +
-					"'%link_to_layout%'");
+					"'%link_to_layout%' and structureId != ''");
 
 			rs = ps.executeQuery();
 

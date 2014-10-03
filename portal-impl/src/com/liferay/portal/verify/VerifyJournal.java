@@ -153,8 +153,7 @@ public class VerifyJournal extends VerifyProcess {
 	}
 
 	protected void updateLinkToLayoutElements(
-			List<Element> elements, long groupId)
-		throws Exception {
+		List<Element> elements, long groupId) {
 
 		for (Element element : elements) {
 			String type = element.attributeValue("type");

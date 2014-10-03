@@ -14,7 +14,7 @@
 
 package com.liferay.portal.cache.mvcc;
 
-import com.liferay.portal.cache.cluster.ClusterReplicationThreadLocal;
+import com.liferay.portal.kernel.cache.AggregatedCacheListener;
 import com.liferay.portal.kernel.cache.LowLevelCache;
 import com.liferay.portal.kernel.cache.PortalCacheWrapper;
 import com.liferay.portal.model.MVCCModel;
@@ -54,12 +54,12 @@ public class MVCCPortalCache<K extends Serializable, V extends MVCCModel>
 	}
 
 	protected void doPut(K key, V value, int timeToLive, boolean quiet) {
-		boolean replicate = false;
+		boolean skipListener = false;
 
 		if (quiet) {
-			replicate = ClusterReplicationThreadLocal.isReplicate();
+			skipListener = AggregatedCacheListener.getSkipListenerThreadLocal();
 
-			ClusterReplicationThreadLocal.setReplicate(false);
+			AggregatedCacheListener.setSkipListenerThreadLocal(true);
 		}
 
 		try {
@@ -86,7 +86,8 @@ public class MVCCPortalCache<K extends Serializable, V extends MVCCModel>
 		}
 		finally {
 			if (quiet) {
-				ClusterReplicationThreadLocal.setReplicate(replicate);
+				AggregatedCacheListener.setSkipListenerThreadLocal(
+					skipListener);
 			}
 		}
 	}

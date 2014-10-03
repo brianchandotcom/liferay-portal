@@ -174,6 +174,7 @@ public class VerifyJournal extends VerifyProcess {
 			data = data.concat(String.valueOf(groupId));
 
 			Node node = dynamicContentElement.node(0);
+
 			node.setText(data);
 		}
 	}

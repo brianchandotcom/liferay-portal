@@ -74,6 +74,20 @@ public abstract class AbstractPortalCache<K extends Serializable, V>
 	}
 
 	@Override
+	public void registerCacheListener(CacheListener<K, V> cacheListener) {
+		aggregatedCacheListener.addCacheListener(cacheListener);
+	}
+
+	@Override
+	public void registerCacheListener(
+		CacheListener<K, V> cacheListener,
+		CacheListenerScope cacheListenerScope) {
+
+		aggregatedCacheListener.addCacheListener(
+			cacheListener, cacheListenerScope);
+	}
+
+	@Override
 	public void remove(K key) {
 		if (key == null) {
 			throw new NullPointerException("Key is null");
@@ -143,6 +157,16 @@ public abstract class AbstractPortalCache<K extends Serializable, V>
 		return doReplace(key, oldValue, newValue, timeToLive);
 	}
 
+	@Override
+	public void unregisterCacheListener(CacheListener<K, V> cacheListener) {
+		aggregatedCacheListener.removeCacheListener(cacheListener);
+	}
+
+	@Override
+	public void unregisterCacheListeners() {
+		aggregatedCacheListener.clearAll();
+	}
+
 	protected abstract V doGet(K key);
 
 	protected abstract void doPut(
@@ -174,5 +198,8 @@ public abstract class AbstractPortalCache<K extends Serializable, V>
 
 		doPut(key, value, timeToLive, quiet);
 	}
+
+	protected final AggregatedCacheListener<K, V> aggregatedCacheListener =
+		new AggregatedCacheListener<K, V>();
 
 }

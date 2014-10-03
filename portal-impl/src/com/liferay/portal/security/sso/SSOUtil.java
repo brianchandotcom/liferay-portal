@@ -21,6 +21,32 @@ import com.liferay.portal.util.PropsValues;
  */
 public class SSOUtil {
 
+	public static String getSessionExpirationRedirectUrl(
+		long companyId, String defaultSessionRedirectUrl) {
+
+		String sessionRedirectUrl = defaultSessionRedirectUrl;
+
+		if (PrefsPropsUtil.getBoolean(
+				companyId, PropsKeys.CAS_AUTH_ENABLED,
+				PropsValues.CAS_AUTH_ENABLED) &&
+			PropsValues.CAS_LOGOUT_ON_SESSION_EXPIRATION) {
+
+			sessionRedirectUrl = PrefsPropsUtil.getString(
+				companyId, PropsKeys.CAS_LOGOUT_URL, PropsValues.CAS_LOGOUT_URL);
+		}
+		else if (PrefsPropsUtil.getBoolean(
+					companyId, PropsKeys.OPEN_SSO_AUTH_ENABLED,
+					PropsValues.OPEN_SSO_AUTH_ENABLED) &&
+				 PropsValues.OPEN_SSO_LOGOUT_ON_SESSION_EXPIRATION) {
+
+			sessionRedirectUrl = PrefsPropsUtil.getString(
+				companyId, PropsKeys.OPEN_SSO_LOGOUT_URL,
+				PropsValues.OPEN_SSO_LOGOUT_URL);
+		}
+
+		return sessionRedirectUrl;
+	}
+
 	public static String getSignInUrl(long companyId, String defaultURLSignIn) {
 		String authLoginURL = null;
 
@@ -66,6 +92,27 @@ public class SSOUtil {
 		}
 
 		return false;
+	}
+
+	public static boolean isSessionRedirectOnExpire(long companyId) {
+		boolean sessionRedirectOnExpire =
+			PropsValues.SESSION_TIMEOUT_REDIRECT_ON_EXPIRE;
+
+		if (PrefsPropsUtil.getBoolean(
+				companyId, PropsKeys.CAS_AUTH_ENABLED, PropsValues.CAS_AUTH_ENABLED) &&
+			PropsValues.CAS_LOGOUT_ON_SESSION_EXPIRATION) {
+
+			sessionRedirectOnExpire = true;
+		}
+		else if (PrefsPropsUtil.getBoolean(
+					companyId, PropsKeys.OPEN_SSO_AUTH_ENABLED,
+					PropsValues.OPEN_SSO_AUTH_ENABLED) &&
+				 PropsValues.OPEN_SSO_LOGOUT_ON_SESSION_EXPIRATION) {
+
+			sessionRedirectOnExpire = true;
+		}
+
+		return sessionRedirectOnExpire;
 	}
 
 }

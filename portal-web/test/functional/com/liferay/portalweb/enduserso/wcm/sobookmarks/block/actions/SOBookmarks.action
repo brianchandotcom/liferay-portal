@@ -10,7 +10,7 @@
 			<execute function="Close#closeWindow" />
 		</case>
 
-		<case locator-key1="BOOKMARKS_POP_UP_MSN">
+		<case locator-key1="BOOKMARKS_POP_UP_WIRED">
 			<execute function="Close#closeWindow" />
 		</case>
 

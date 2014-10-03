@@ -155,6 +155,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT_MICROBLOGS_COMMENT_TAG_LINK</td>
+	<td>//div[@class='non-actionable']//li[contains(@class,'user-notification')]//div[@class='body']//a[contains(.,'${key_microblogsEntryCommentContent}') and contains(.,'${key_microblogsEntryCommentTagValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT_MICROBLOGS_COMMENT_MENTION_LINK</td>
+	<td>//div[@class='non-actionable']//li[contains(@class,'user-notification')]//div[@class='body']//a[contains(.,'${key_microblogsEntryCommentContent}') and contains(.,'${key_mentionUserName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NOTIFICATION_MENU_MARK_AS_READ_NOTIFICATIONS_LINK</td>
 	<td>//div[@class='non-actionable']//a[contains(.,'Mark as Read')]</td>
 	<td></td>

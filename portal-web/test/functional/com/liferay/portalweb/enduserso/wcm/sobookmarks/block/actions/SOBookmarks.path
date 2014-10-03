@@ -102,9 +102,9 @@
 	<td>Bing</td>
 </tr>
 <tr>
-	<td>BOOKMARKS_POP_UP_MSN</td>
-	<td>title=MSN.com</td>
-	<td>MSN</td>
+	<td>BOOKMARKS_POP_UP_WIRED</td>
+	<td>title=WIRED</td>
+	<td>WIRED</td>
 </tr>
 <tr>
 	<td>BOOKMARKS_POP_UP_IMAGE_GOOGLE</td>
@@ -117,9 +117,9 @@
 	<td>Bing</td>
 </tr>
 <tr>
-	<td>BOOKMARKS_POP_UP_IMAGE_MSN</td>
-	<td>//img[@alt='MSN Logo']</td>
-	<td>MSN</td>
+	<td>BOOKMARKS_POP_UP_IMAGE_WIRED</td>
+	<td>//img[@alt='WIRED']</td>
+	<td></td>
 </tr>
 <tr>
 	<td>BOOKMARKS_NULL_WINDOW</td>

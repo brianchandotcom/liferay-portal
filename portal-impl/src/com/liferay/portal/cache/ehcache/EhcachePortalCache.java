@@ -97,21 +97,6 @@ public class EhcachePortalCache<K extends Serializable, V>
 		ehcache.removeAll();
 	}
 
-	public void setEhcache(Ehcache ehcache) {
-		this.ehcache = ehcache;
-
-		RegisteredEventListeners registeredEventListeners =
-			ehcache.getCacheEventNotificationService();
-
-		for (RegistrationPair registrationPair :
-				_cacheEventListeners.values()) {
-
-			registeredEventListeners.registerListener(
-				registrationPair._cacheEventListener,
-				registrationPair._notificationScope);
-		}
-	}
-
 	@Override
 	public void unregisterCacheListener(CacheListener<K, V> cacheListener) {
 		RegistrationPair registrationPair = _cacheEventListeners.remove(

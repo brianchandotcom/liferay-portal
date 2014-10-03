@@ -48,7 +48,19 @@ if (searchFolderId > 0) {
 	folder = DLAppServiceUtil.getFolder(searchFolderId);
 }
 else {
-	folderIdsArray = new long[0];
+    long defaultFolderId = DLFolderConstants.getFolderId(scopeGroupId, DLFolderConstants.getDataRepositoryId(scopeGroupId, searchFolderIds));
+
+    List<Folder> folders = DLAppServiceUtil.getFolders(scopeGroupId, searchFolderIds);
+
+    List<Long> folderIds = new ArrayList<Long>(folders.size() + 1);
+
+    folderIds.add(defaultFolderId);
+
+    for (Folder subFolder : folders) {
+        folderIds.add(subFolder.getFolderId());
+    }
+
+    folderIdsArray = StringUtil.split(StringUtil.merge(folderIds), 0L);
 }
 
 List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, QueryUtil.ALL_POS, QueryUtil.ALL_POS);

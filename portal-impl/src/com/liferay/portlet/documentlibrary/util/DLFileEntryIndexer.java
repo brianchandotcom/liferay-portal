@@ -257,13 +257,6 @@ public class DLFileEntryIndexer extends BaseIndexer {
 			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception {
 
-		long searchRepositoryId = GetterUtil.getLong(
-			searchContext.getAttribute("searchRepositoryId"));
-
-		if (searchRepositoryId != 0) {
-			searchQuery.addRequiredTerm("repositoryId", searchRepositoryId);
-		}
-
 		String keywords = searchContext.getKeywords();
 
 		if (Validator.isNull(keywords)) {
@@ -402,9 +395,17 @@ public class DLFileEntryIndexer extends BaseIndexer {
 			document.addText(
 				Field.PROPERTIES, dlFileEntry.getLuceneProperties());
 			document.addText(Field.TITLE, dlFileEntry.getTitle());
-			document.addKeyword(
-				Field.TREE_PATH,
-				StringUtil.split(dlFileEntry.getTreePath(), CharPool.SLASH));
+
+			String treePath = dlFileEntry.getTreePath();
+
+			if (treePath.equals(StringPool.SLASH)) {
+				document.addKeyword(Field.TREE_PATH, "0");
+			}
+			else {
+				document.addKeyword(
+					Field.TREE_PATH,
+					StringUtil.split(dlFileEntry.getTreePath(), CharPool.SLASH));
+			}
 
 			document.addKeyword(
 				"dataRepositoryId", dlFileEntry.getDataRepositoryId());
@@ -421,7 +422,6 @@ public class DLFileEntryIndexer extends BaseIndexer {
 					CharPool.UNDERLINE));
 			document.addKeyword("path", dlFileEntry.getTitle());
 			document.addKeyword("readCount", dlFileEntry.getReadCount());
-			document.addKeyword("repositoryId", dlFileEntry.getRepositoryId());
 			document.addKeyword("size", dlFileEntry.getSize());
 
 			ExpandoBridge expandoBridge =

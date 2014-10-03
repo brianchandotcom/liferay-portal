@@ -32,7 +32,4 @@ public class NestedPortletUtil {
 		return LayoutTemplateId;
 	}
 
-	public static void main(String[] args) {
-	}
-
 }

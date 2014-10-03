@@ -36,7 +36,7 @@ public class CallbackConfiguration {
 		}
 
 		_callbackFactory = callbackFactory;
-		_properties = properties;
+		_properties = (Properties)properties.clone();
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class CallbackConfiguration {
 	}
 
 	public Properties getProperties() {
-		return _properties;
+		return (Properties)_properties.clone();
 	}
 
 	@Override

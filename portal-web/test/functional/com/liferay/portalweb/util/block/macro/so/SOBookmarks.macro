@@ -104,9 +104,9 @@
 				</then>
 			</elseif>
 			<else>
-				<execute action="SOBookmarks#selectWindow" locator-key1="BOOKMARKS_POP_UP_MSN" />
-				<execute action="SOBookmarks#assertElementPresent" locator-key1="BOOKMARKS_POP_UP_IMAGE_MSN" />
-				<execute action="SOBookmarks#close" locator-key1="BOOKMARKS_POP_UP_MSN" />
+				<execute action="SOBookmarks#selectWindow" locator-key1="BOOKMARKS_POP_UP_WIRED" />
+				<execute action="SOBookmarks#assertElementPresent" locator-key1="BOOKMARKS_POP_UP_IMAGE_WIRED" />
+				<execute action="SOBookmarks#close" locator-key1="BOOKMARKS_POP_UP_WIRED" />
 			</else>
 		</if>
 	</command>

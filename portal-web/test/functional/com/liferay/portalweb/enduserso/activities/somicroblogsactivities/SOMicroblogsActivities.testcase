@@ -257,7 +257,7 @@
 		<var name="adminFirstName" value="Test" />
 		<var name="adminListName" value="Test, Test" />
 		<var name="adminName" value="Test Test" />
-		<var name="microblogsEntryContent" value="Microblogs Post" />
+		<var name="microblogsEntryContent" value="#Microblogs Post" />
 		<var name="microblogsEntryViewableBy" value="Everyone" />
 		<var name="password" value="test" />
 		<var name="roleName" value="Social Office" />
@@ -317,7 +317,7 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute macro="SOMicroblogs#addMicroblogsEntryHashtag">
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 		</execute>
@@ -454,7 +454,7 @@
 		<var name="adminFirstName" value="Test" />
 		<var name="adminListName" value="Test, Test" />
 		<var name="adminName" value="Test Test" />
-		<var name="microblogsEntryContent" value="Microblogs Post" />
+		<var name="microblogsEntryContent" value="#Microblogs Post" />
 		<var name="microblogsEntryViewableBy" value="Everyone" />
 		<var name="password" value="test" />
 		<var name="roleName" value="Social Office" />
@@ -507,7 +507,7 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute macro="SOMicroblogs#addMicroblogsEntryHashtag">
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 		</execute>
@@ -574,9 +574,9 @@
 		<var name="adminFirstName" value="Test" />
 		<var name="adminName" value="Test Test" />
 		<var name="microblogsEntryContent1" value="Microblogs Post1" />
-		<var name="microblogsEntryContent2" value="Microblogs Post2" />
+		<var name="microblogsEntryContent2" value="#Microblogs Post2" />
 		<var name="microblogsEntryContent3" value="Microblogs Post3" />
-		<var name="microblogsEntryContent4" value="Microblogs Post4" />
+		<var name="microblogsEntryContent4" value="#Microblogs Post4" />
 		<var name="microblogsEntryViewableBy" value="Everyone" />
 		<var name="password" value="test" />
 		<var name="roleName" value="Social Office" />
@@ -615,7 +615,7 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute macro="SOMicroblogs#addMicroblogsEntryHashtag">
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent2}" />
 		</execute>
@@ -646,7 +646,7 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute macro="SOMicroblogs#addMicroblogsEntryHashtag">
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${userName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent4}" />
 		</execute>

@@ -82,48 +82,6 @@
 		</if>
 	</command>
 
-	<command name="addMicroblogsEntryCommentHashtag">
-		<execute macro="SOMicroblogs#viewMicroblogsEntryAuthor" />
-
-		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
-
-		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
-
-		<if>
-			<condition action="SOMicroblogs#isElementPresent" locator-key1="MICROBLOGS_CONTENT_FIELD" />
-			<then>
-				<execute action="SOMicroblogs#assertClick" locator-key1="MICROBLOGS_ENTRY_COMMENT_LINK" value1="Comment" />
-				<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_ENTRY_COMMENT_CONTENT_FIELD" />
-				<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" />
-				<execute action="SOMicroblogs#type" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="#${microblogsEntryCommentContent}" />
-
-				<execute macro="SOMicroblogs#viewCharacterCountdownCmd">
-					<var name="commentInDashboard" value="true" />
-				</execute>
-
-				<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_ENTRY_COMMENT_POST_BUTTON" />
-
-				<var name="key_microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
-
-				<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_COMMENT_CONTENT" value1="${microblogsEntryCommentContent}" />
-			</then>
-			<else>
-				<execute action="SOMicroblogs#assertClick" locator-key1="MICROBLOGS_ENTRY_COMMENT_LINK" value1="Comment" />
-				<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_CONTENT_FIELD" />
-				<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" />
-				<execute action="SOMicroblogs#type" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="#${microblogsEntryCommentContent}" />
-
-				<execute macro="SOMicroblogs#viewCharacterCountdownCmd" />
-
-				<execute action="SOMicroblogs#click" locator-key1="POST_BUTTON" />
-
-				<var name="key_microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
-
-				<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_COMMENT_CONTENT" value1="${microblogsEntryCommentContent}" />
-			</else>
-		</if>
-	</command>
-
 	<command name="addMicroblogsEntryCommentMention">
 		<execute macro="SOMicroblogs#viewMicroblogsEntryAuthor" />
 
@@ -205,63 +163,6 @@
 		<execute action="SOMicroblogsProfile#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_COMMENT_CONTENT" value1="${microblogsEntryCommentContent}" />
 	</command>
 
-	<command name="addMicroblogsEntryHashtag">
-		<if>
-			<condition action="SOMicroblogs#isElementNotPresent" locator-key1="MICROBLOGS_ENTRY_CONTENT_GENERAL" />
-			<then>
-				<execute action="SOMicroblogs#assertTextEquals" locator-key1="INFO_MESSAGE" value1="You do not have any microblog entries." />
-			</then>
-		</if>
-
-		<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_CONTENT_FIELD" />
-		<execute action="SOUserBar#selectFrameTop" />
-
-		<execute macro="SOMicroblogs#selectViewableByCmd">
-			<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
-		</execute>
-
-		<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" />
-		<execute action="SOMicroblogs#type" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="#${microblogsEntryContent}" />
-
-		<execute macro="SOMicroblogs#viewCharacterCountdownCmd" />
-
-		<execute action="SOMicroblogs#click" locator-key1="POST_BUTTON" />
-
-		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
-
-		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
-	</command>
-
-	<command name="addMicroblogsEntryHashtags">
-		<if>
-			<condition action="SOMicroblogs#isElementNotPresent" locator-key1="MICROBLOGS_ENTRY_CONTENT_GENERAL" />
-			<then>
-				<execute action="SOMicroblogs#assertTextEquals" locator-key1="INFO_MESSAGE" value1="You do not have any microblog entries." />
-			</then>
-		</if>
-
-		<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_CONTENT_FIELD" />
-		<execute action="SOUserBar#selectFrameTop" />
-
-		<execute macro="SOMicroblogs#selectViewableByCmd">
-			<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
-		</execute>
-
-		<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" />
-
-		<for list="${microblogsEntryTagValueList}" param="microblogsEntryTagValue">
-			<execute action="SOMicroblogs#type" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="#${microblogsEntryTagValue} " />
-		</for>
-
-		<execute action="SOMicroblogs#type" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="Post" />
-
-		<execute action="SOMicroblogs#click" locator-key1="POST_BUTTON" />
-
-		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
-
-		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
-	</command>
-
 	<command name="addMicroblogsEntryInvalid">
 		<if>
 			<condition action="SOMicroblogs#isElementNotPresent" locator-key1="MICROBLOGS_ENTRY_CONTENT_GENERAL" />
@@ -305,15 +206,7 @@
 
 		<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" />
 
-		<if>
-			<equals arg1="${hashTag}" arg2="true" />
-			<then>
-				<execute action="SOMicroblogs#type" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="#${microblogsEntryContent} @${mentionUserFirstName}" />
-			</then>
-			<else>
-				<execute action="SOMicroblogs#type" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="${microblogsEntryContent} @${mentionUserFirstName}" />
-			</else>
-		</if>
+		<execute action="SOMicroblogs#type" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="${microblogsEntryContent} @${mentionUserFirstName}" />
 
 		<execute macro="SOMicroblogs#viewCharacterCountdownCmd" />
 
@@ -343,24 +236,7 @@
 		</execute>
 
 		<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" />
-
-		<if>
-			<isset var="microblogsEntryTagValueList" />
-			<then>
-				<for list="${microblogsEntryTagValueList}" param="microblogsEntryTagValue">
-					<execute action="SOMicroblogs#type" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="#${microblogsEntryTagValue} " />
-				</for>
-			</then>
-			<elseif>
-				<isset var="microblogsEntryTagValueList" />
-				<then>
-					<execute action="SOMicroblogs#type" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="#${microblogsEntryTagValue} " />
-				</then>
-			</elseif>
-			<else>
-				<execute action="SOMicroblogs#type" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="${microblogsEntryContent} " />
-			</else>
-		</if>
+		<execute action="SOMicroblogs#type" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="${microblogsEntryContent} " />
 
 		<for list="${mentionUserNameList}" param="mentionUserName">
 			<execute action="SOMicroblogs#type" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1=" @${mentionUserName}" />
@@ -369,6 +245,34 @@
 		</for>
 
 		<execute action="SOMicroblogs#click" locator-key1="POST_BUTTON" />
+	</command>
+
+	<command name="deleteAndEditMicroblogsEntry">
+		<execute action="SOMicroblogs#makeVisible" locator-key1="MICROBLOGS_ENTRY_EDIT" />
+		<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_ENTRY_EDIT_LINK" />
+		<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_ENTRY_CONTENT_EDIT_FIELD" />
+		<execute action="SOUserBar#selectFrameTop" />
+
+		<execute macro="SOMicroblogs#selectViewableByCmd">
+			<var name="editInDashboard" value="true" />
+			<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
+		</execute>
+
+		<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" />
+
+		<execute macro="SOMicroblogs#deleteMicroblogsTextFieldCmd" />
+
+		<execute action="SOMicroblogs#type" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="${microblogsEntryContentEdit}" />
+
+		<execute macro="SOMicroblogs#viewCharacterCountdownCmd">
+			<var name="editInDashboard" value="true" />
+		</execute>
+
+		<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_ENTRY_CONTENT_EDIT_POST_BUTTON" />
+
+		<var name="key_microblogsEntryContent" value="${microblogsEntryContentEdit}" />
+
+		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryContentEdit}" />
 	</command>
 
 	<command name="deleteAndEditMicroblogsEntryMention">
@@ -400,34 +304,6 @@
 		<var name="key_microblogsEntryContent" value="${microblogsEntryContentEdit} ${mentionUserName}" />
 
 		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryContentEdit} ${mentionUserName}" />
-	</command>
-
-	<command name="deleteAndEditMicroblogsEntryTag">
-		<execute action="SOMicroblogs#makeVisible" locator-key1="MICROBLOGS_ENTRY_EDIT" />
-		<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_ENTRY_EDIT_LINK" />
-		<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_ENTRY_CONTENT_EDIT_FIELD" />
-		<execute action="SOUserBar#selectFrameTop" />
-
-		<execute macro="SOMicroblogs#selectViewableByCmd">
-			<var name="editInDashboard" value="true" />
-			<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
-		</execute>
-
-		<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" />
-
-		<execute macro="SOMicroblogs#deleteMicroblogsTextFieldCmd" />
-
-		<execute action="SOMicroblogs#type" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="#${microblogsEntryContentEdit}" />
-
-		<execute macro="SOMicroblogs#viewCharacterCountdownCmd">
-			<var name="editInDashboard" value="true" />
-		</execute>
-
-		<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_ENTRY_CONTENT_EDIT_POST_BUTTON" />
-
-		<var name="key_microblogsEntryContent" value="${microblogsEntryContentEdit}" />
-
-		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryContentEdit}" />
 	</command>
 
 	<command name="deleteMicroblogsEntry">
@@ -761,6 +637,38 @@
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${microblogsEntryCommentAuthorName} commented on your post." />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${microblogsEntryCommentContent}" />
+
+		<if>
+			<equals arg1="mention" arg2="true" />
+			<then>
+				<var name="key_mentionUserName" value="${mentionUserName}" />
+				<var name="key_microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
+
+				<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT_MICROBLOGS_COMMENT_MENTION_LINK" value1="${mentionUserName}" />
+
+				<execute action="SOProfile#assertTextEquals" locator-key1="USER_NAME" value1="${mentionUserName}" />
+				<execute action="SOProfile#assertTextEquals" locator-key1="USER_EMAIL" value1="${mentionUserEmailAddress}" />
+
+				<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
+			</then>
+			<elseif>
+				<equals arg1="tag" arg2="true" />
+				<then>
+					<var name="key_microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
+					<var name="key_microblogsEntryTagValue" value="${microblogsEntryCommentTagValue}" />
+
+					<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT_MICROBLOGS_COMMENT_TAG_LINK" value1="${microblogsEntryCommentTagValue}" />
+
+					<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_COMMENT_AUTHOR" value1="${microblogsEntryCommentAuthorName}" />
+					<execute action="SOMicroblogs#assertTextEquals" locator-key1="TAB_TAG_VALUE" value1="${microblogsEntryCommentTagValue}" />
+					<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_COMMENT_CONTENT" value1="${microblogsEntryCommentContent}" />
+					<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_COMMENT_CONTENT_TAG" value1="${microblogsEntryCommentTagValue}" />
+
+					<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
+				</then>
+			</elseif>
+		</if>
+
 		<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${microblogsEntryCommentAuthorName} commented on your post." />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
 	</command>

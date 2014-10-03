@@ -36,7 +36,7 @@
 		<var name="bookmarksEntryName3" value="Bookmarks Entry3 Name" />
 		<var name="bookmarksEntryUrl1" value="http://www.google.com" />
 		<var name="bookmarksEntryUrl2" value="http://www.bing.com" />
-		<var name="bookmarksEntryUrl3" value="http://www.msn.com" />
+		<var name="bookmarksEntryUrl3" value="http://www.wired.com" />
 
 		<execute macro="SOUserBar#addSOSite">
 			<var name="siteDescription" value="${siteDescription}" />

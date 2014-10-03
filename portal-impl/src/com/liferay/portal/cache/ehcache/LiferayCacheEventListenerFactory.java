@@ -17,6 +17,7 @@ package com.liferay.portal.cache.ehcache;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Properties;
@@ -40,7 +41,7 @@ public class LiferayCacheEventListenerFactory
 		try {
 			_cacheEventListenerFactory =
 				(CacheEventListenerFactory)InstanceFactory.newInstance(
-					className);
+					PortalClassLoaderUtil.getClassLoader(), className);
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

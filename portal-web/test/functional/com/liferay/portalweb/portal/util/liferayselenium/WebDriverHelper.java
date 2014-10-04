@@ -235,6 +235,46 @@ public class WebDriverHelper {
 		return (String)javascriptExecutor.executeScript(script);
 	}
 
+	public static Point getFramePoint(WebDriver webDriver) {
+		int x = 0;
+		int y = 0;
+
+		WebElement bodyWebElement = getWebElement(webDriver, "//body");
+
+		WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
+
+		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+
+		WebDriver.TargetLocator targetLocator = wrappedWebDriver.switchTo();
+
+		targetLocator.window(_defaultWindowHandle);
+
+		for (WebElement webElement : _frameWebElements) {
+			Point point = webElement.getLocation();
+
+			x += point.getX();
+			y += point.getY();
+
+			targetLocator.frame(webElement);
+		}
+
+		Point framePoint = new Point(x, y);
+
+		return framePoint;
+	}
+
+	public static int getFramePositionLeft(WebDriver webDriver) {
+		Point point = getFramePoint(webDriver);
+
+		return point.getX();
+	}
+
+	public static int getFramePositionTop(WebDriver webDriver) {
+		Point point = getFramePoint(webDriver);
+
+		return point.getY();
+	}
+
 	public static String getLocation(WebDriver webDriver) {
 		return webDriver.getCurrentUrl();
 	}

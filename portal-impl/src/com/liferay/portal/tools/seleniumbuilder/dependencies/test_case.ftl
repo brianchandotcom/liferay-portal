@@ -1,6 +1,7 @@
 package ${seleniumBuilderContext.getTestCasePackageName(testCaseName)};
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.MathUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;

@@ -1,5 +1,6 @@
 package ${seleniumBuilderContext.getActionPackageName(actionName)};
 
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portalweb.portal.util.block.action.BaseAction;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
@@ -188,6 +189,8 @@ public class ${actionSimpleClassName} extends
 
 					<#list 1..seleniumBuilderContext.getFunctionLocatorCount(functionName) as i>
 						locator${i} = getLocator(locator${i}, locatorKey${i}, environmentScopeVariables);
+
+						value${i} = HtmlUtil.escape(value${i});
 					</#list>
 
 					<#if commandElement.element("default")??>

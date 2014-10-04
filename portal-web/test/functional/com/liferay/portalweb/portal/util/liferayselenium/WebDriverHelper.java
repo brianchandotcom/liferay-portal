@@ -291,6 +291,34 @@ public class WebDriverHelper {
 		return text.replace("\n", " ");
 	}
 
+	public static Point getWindowPoint(WebDriver webDriver) {
+		WebElement bodyWebElement = getWebElement(webDriver, "//body");
+
+		WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
+
+		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+
+		WebDriver.Options options = wrappedWebDriver.manage();
+
+		WebDriver.Window window = options.window();
+
+		Point windowPoint = window.getPosition();
+
+		return windowPoint;
+	}
+
+	public static int getWindowPositionLeft(WebDriver webDriver) {
+		Point point = getWindowPoint(webDriver);
+
+		return point.getX();
+	}
+
+	public static int getWindowPositionTop(WebDriver webDriver) {
+		Point point = getWindowPoint(webDriver);
+
+		return point.getY();
+	}
+
 	public static boolean isElementPresent(
 		WebDriver webDriver, String locator) {
 

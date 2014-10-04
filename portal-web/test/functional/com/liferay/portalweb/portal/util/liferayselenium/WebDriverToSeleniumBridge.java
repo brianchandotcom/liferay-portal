@@ -370,13 +370,18 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public void dragAndDrop(String locator, String coordString) {
-		WebElement webElement = getWebElement(locator);
-
 		try {
-			Point point = webElement.getLocation();
-
-			int x = point.getX() + 45;
-			int y = point.getY() + 100;
+			int x =
+				WebDriverHelper.getElementPositionCenterX(this, locator) +
+				WebDriverHelper.getFramePositionLeft(this) +
+				WebDriverHelper.getWindowPositionLeft(this) -
+				WebDriverHelper.getScrollOffsetX(this);
+			int y =
+				WebDriverHelper.getElementPositionCenterY(this, locator) +
+				WebDriverHelper.getFramePositionTop(this) +
+				WebDriverHelper.getNavigationBarHeight() +
+				WebDriverHelper.getWindowPositionTop(this) -
+				WebDriverHelper.getScrollOffsetY(this);
 
 			Robot robot = new Robot();
 
@@ -408,24 +413,20 @@ public class WebDriverToSeleniumBridge
 		String locatorOfObjectToBeDragged,
 		String locatorOfDragDestinationObject) {
 
-		WebElement objectToBeDraggedWebElement = getWebElement(
-			locatorOfObjectToBeDragged);
+		int x =
+			WebDriverHelper.getElementPositionCenterX(
+				this, locatorOfDragDestinationObject) -
+			WebDriverHelper.getElementPositionCenterX(
+				this, locatorOfObjectToBeDragged);
+		int y =
+			WebDriverHelper.getElementPositionCenterY(
+				this, locatorOfDragDestinationObject) -
+			WebDriverHelper.getElementPositionCenterY(
+				this, locatorOfObjectToBeDragged);
 
-		WrapsDriver wrapsDriver = (WrapsDriver)objectToBeDraggedWebElement;
+		String coordinates = Integer.toString(x) + "," + Integer.toString(y);
 
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		Actions actions = new Actions(webDriver);
-
-		WebElement dragDestinationObjectWebElement = getWebElement(
-			locatorOfDragDestinationObject);
-
-		actions.dragAndDrop(
-			objectToBeDraggedWebElement, dragDestinationObjectWebElement);
-
-		Action action = actions.build();
-
-		action.perform();
+		dragAndDrop(locatorOfObjectToBeDragged, coordinates);
 	}
 
 	@Override

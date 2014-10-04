@@ -79,6 +79,7 @@ public class WebDriverToSeleniumBridge
 		initKeysSpecialChars();
 
 		WebDriverHelper.setDefaultWindowHandle(webDriver.getWindowHandle());
+		WebDriverHelper.setNavigationBarHeight(120);
 	}
 
 	@Override

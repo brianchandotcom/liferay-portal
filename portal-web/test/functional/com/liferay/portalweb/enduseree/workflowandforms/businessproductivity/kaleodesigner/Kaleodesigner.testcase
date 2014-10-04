@@ -510,9 +510,7 @@
 		<execute macro="KaleoDesigner#saveAsDraftWorkflowDefinitionViaKaleoDesignerCP" />
 
 		<execute macro="KaleoDesigner#undoDraft" />
-
 		<execute macro="KaleoDesigner#undoDraft" />
-
 		<execute macro="KaleoDesigner#redoDraft" />
 
 		<execute macro="KaleoDesigner#viewDraftVersion">
@@ -675,7 +673,6 @@
 		</execute>
 
 		<execute macro="KaleoDesigner#undoDraft" />
-
 		<execute macro="KaleoDesigner#undoDraft" />
 
 		<execute macro="KaleoDesigner#viewDraftVersion">

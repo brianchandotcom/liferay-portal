@@ -1641,14 +1641,18 @@ create database lportal2 character set utf8;</echo>
 	</target>
 
 	<target name="move-file">
+		<fail message="Please set the property ${file}." unless="file" />
+		<fail message="Please set the property ${tofile}." unless="tofile" />
+
 		<if>
-			<available file="${token}" property="token.present" />
+			<available file="${file}" />
 			<then>
-				<move file="${token}" tofile="${value}" />
-				<echo message="Moved from ${token} to ${value}" />
+				<move file="${file}" tofile="${tofile}" />
+
+				<echo message="Moved from ${file} to ${tofile}" />
 			</then>
 			<else>
-				<echo message="File or directory not found" />
+				<echo message="${file} not found" />
 			</else>
 		</if>
 	</target>

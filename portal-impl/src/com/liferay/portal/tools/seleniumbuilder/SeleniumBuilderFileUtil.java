@@ -554,8 +554,8 @@ public class SeleniumBuilderFileUtil {
 		}
 		else if (errorCode == 1018) {
 			throw new IllegalArgumentException(
-				prefix + "Missing attribute value (" + StringUtil.merge(
-					array, "|") + ") in " + string1 + " in " + suffix);
+				prefix + "Missing (" + StringUtil.merge(array, "|") +
+					") in attribute " + string1 + " at " + suffix);
 		}
 		else if (errorCode == 2000) {
 			throw new IllegalArgumentException(
@@ -937,12 +937,12 @@ public class SeleniumBuilderFileUtil {
 				if (attributeName.equals("value1") &&
 					attributeValue.contains("move-file")) {
 
-					if (!attributeValue.contains("-Dtoken") ||
-						!attributeValue.contains("-Dvalue")) {
+					if (!attributeValue.contains("-Dfile") ||
+						!attributeValue.contains("-Dtofile")) {
 
 						throwValidationException(
 							1018, fileName, executeElement,
-							new String[] {"-Dtoken | -Dvalue"}, "value1");
+							new String[] {"-Dfile", "-Dtofile"}, "value1");
 					}
 				}
 			}

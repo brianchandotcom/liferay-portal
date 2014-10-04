@@ -1804,14 +1804,14 @@ public class SeleniumBuilderTest {
 
 		test(
 			"TestCaseActionCommandMissingAttributeValue_1.testcase",
-			"Error 1018: Missing attribute value (-Dtoken | -Dvalue) in " +
-				"value1 in " + _DIR_NAME +
+			"Error 1018: Missing (-Dfile | -Dtofile) in attribute value1 at " +
+				_DIR_NAME +
 				"/TestCaseActionCommandMissingAttributeValue_1.testcase:3");
 
 		test(
 			"TestCaseActionCommandMissingAttributeValue_2.testcase",
-			"Error 1018: Missing attribute value (-Dtoken | -Dvalue) in " +
-				"value1 in " + _DIR_NAME +
+			"Error 1018: Missing (-Dfile | -Dtofile) in attribute value1 at " +
+				_DIR_NAME +
 				"/TestCaseActionCommandMissingAttributeValue_2.testcase:3");
 	}
 

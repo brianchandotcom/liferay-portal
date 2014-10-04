@@ -3,7 +3,7 @@
 		<execute
 			action="BaseLiferay#antCommand"
 			locator1="build-test.xml"
-			value1="move-file -Dtokn=test.xml -Dvalue=test2.xml"
+			value1="move-file -Dfil=test.xml -Dtofile=test2.xml"
 		/>
 	</command>
 </definition>

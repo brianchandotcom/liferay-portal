@@ -1,0 +1,9 @@
+<definition component-name="portal-collaboration">
+	<command name="MoveDir" priority="5">
+		<execute
+			action="BaseLiferay#antCommand"
+			locator1="build-test.xml"
+			value1="move-file -Dfile=/opt/dev/projects/test2 -Dtofil=/opt/dev/projects/test2"
+		/>
+	</command>
+</definition>

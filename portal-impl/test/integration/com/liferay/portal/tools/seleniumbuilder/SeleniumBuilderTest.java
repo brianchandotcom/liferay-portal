@@ -1799,6 +1799,23 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testTestCaseActionCommandMissingAttributeValue()
+		throws Exception {
+
+		test(
+			"TestCaseActionCommandMissingAttributeValue_1.testcase",
+			"Error 1018: Missing (-Dfile | -Dtofile) in attribute value1 at " +
+				_DIR_NAME +
+				"/TestCaseActionCommandMissingAttributeValue_1.testcase:3");
+
+		test(
+			"TestCaseActionCommandMissingAttributeValue_2.testcase",
+			"Error 1018: Missing (-Dfile | -Dtofile) in attribute value1 at " +
+				_DIR_NAME +
+				"/TestCaseActionCommandMissingAttributeValue_2.testcase:3");
+	}
+
+	@Test
 	public void testTestCaseActionComplexString1001() throws Exception {
 		test(
 			"TestCaseActionComplexString1001.testcase",

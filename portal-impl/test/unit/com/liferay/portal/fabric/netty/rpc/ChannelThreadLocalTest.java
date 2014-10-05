@@ -14,10 +14,9 @@
 
 package com.liferay.portal.fabric.netty.rpc;
 
+import com.liferay.portal.fabric.netty.NettyTestUtil;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelInitializer;
 import io.netty.channel.embedded.EmbeddedChannel;
 
 import org.junit.Assert;
@@ -47,14 +46,8 @@ public class ChannelThreadLocalTest {
 			Assert.assertEquals("Channel is null", ise.getMessage());
 		}
 
-		EmbeddedChannel embeddedChannel = new EmbeddedChannel(
-			new ChannelInitializer<Channel>() {
-
-				@Override
-				protected void initChannel(Channel channel) {
-				}
-
-			});
+		EmbeddedChannel embeddedChannel =
+			NettyTestUtil.createEmptyEmbeddedChannel();
 
 		ChannelThreadLocal.setChannel(embeddedChannel);
 

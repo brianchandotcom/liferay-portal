@@ -14,6 +14,7 @@
 
 package com.liferay.portal.fabric.netty.rpc;
 
+import com.liferay.portal.fabric.netty.NettyTestUtil;
 import com.liferay.portal.fabric.netty.handlers.NettyChannelAttributes;
 import com.liferay.portal.kernel.concurrent.AsyncBroker;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
@@ -22,8 +23,6 @@ import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelInitializer;
 import io.netty.channel.embedded.EmbeddedChannel;
 
 import java.io.Serializable;
@@ -125,15 +124,8 @@ public class RPCResponseTest {
 		}
 	}
 
-	private final EmbeddedChannel _embeddedChannel = new EmbeddedChannel(
-		new ChannelInitializer<Channel>() {
-
-			@Override
-			protected void initChannel(Channel channel) {
-			}
-
-		});
-
+	private final EmbeddedChannel _embeddedChannel =
+		NettyTestUtil.createEmptyEmbeddedChannel();
 	private final ProcessException _exception = new ProcessException(
 		"This is the exception.");
 	private final long _id = System.currentTimeMillis();

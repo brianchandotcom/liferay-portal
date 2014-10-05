@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portal.util.liferayselenium;
 
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -251,7 +252,7 @@ public class Logger {
 
 			for (Object argument : arguments) {
 				sb.append("\"");
-				sb.append(String.valueOf(argument));
+				sb.append(HtmlUtil.escape(String.valueOf(argument)));
 				sb.append("\" ");
 			}
 		}
@@ -317,7 +318,7 @@ public class Logger {
 
 			for (Object argument : arguments) {
 				sb.append("<b>");
-				sb.append(String.valueOf(argument));
+				sb.append(HtmlUtil.escape(String.valueOf(argument)));
 				sb.append("</b> ");
 			}
 		}
@@ -601,7 +602,7 @@ public class Logger {
 
 			if (Validator.isNotNull(value)) {
 				sb.append(" value <b>");
-				sb.append(value);
+				sb.append(HtmlUtil.escape(value));
 				sb.append("</b>");
 			}
 		}

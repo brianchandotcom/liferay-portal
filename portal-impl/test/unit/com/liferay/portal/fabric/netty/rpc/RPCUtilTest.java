@@ -27,6 +27,10 @@ import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelOutboundHandlerAdapter;
+import io.netty.channel.ChannelPipeline;
+import io.netty.channel.ChannelPromise;
 import io.netty.channel.embedded.EmbeddedChannel;
 import io.netty.util.Attribute;
 import io.netty.util.AttributeKey;
@@ -67,6 +71,29 @@ public class RPCUtilTest {
 	@Test
 	public void testConstructor() {
 		new RPCUtil();
+	}
+
+	@Test
+	public void testRPCWithCancellation() throws Exception {
+		ChannelPipeline channelPipeline = _embeddedChannel.pipeline();
+
+		channelPipeline.addFirst(
+			new ChannelOutboundHandlerAdapter() {
+
+				@Override
+				public void write(
+					ChannelHandlerContext channelHandlerContext, Object object,
+					ChannelPromise channelPromise) {
+
+					channelPromise.cancel(true);
+				}
+
+			});
+
+		Future<String> future = RPCUtil.execute(
+			_embeddedChannel, new ResultProcessCallable("result"));
+
+		Assert.assertTrue(future.isCancelled());
 	}
 
 	@Test

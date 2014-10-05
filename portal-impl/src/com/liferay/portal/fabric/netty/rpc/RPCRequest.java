@@ -82,6 +82,13 @@ public class RPCRequest<T extends Serializable> extends RPCSerializable {
 				return;
 			}
 
+			if (channelFuture.isCancelled()) {
+				_log.error(
+					"Cancelled on sending RPC response: " + _rpcResponse);
+
+				return;
+			}
+
 			_log.error(
 				"Unable to send RPC response: " + _rpcResponse,
 				channelFuture.cause());

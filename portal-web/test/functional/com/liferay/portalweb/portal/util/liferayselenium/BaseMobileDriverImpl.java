@@ -166,7 +166,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void assertNotVisible(String locator) throws Exception {
-		throw new UnsupportedOperationException();
+		LiferaySeleniumHelper.assertNotVisible(this, locator);
 	}
 
 	@Override
@@ -748,7 +748,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void waitForNotVisible(String locator) throws Exception {
-		throw new UnsupportedOperationException();
+		LiferaySeleniumHelper.waitForNotVisible(this, locator);
 	}
 
 	@Override

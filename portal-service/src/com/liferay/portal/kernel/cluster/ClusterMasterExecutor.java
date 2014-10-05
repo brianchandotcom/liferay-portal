@@ -16,9 +16,8 @@ package com.liferay.portal.kernel.cluster;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.util.MethodHandler;
-
-import java.util.concurrent.Future;
 
 /**
  * @author Michael C. Han
@@ -26,7 +25,7 @@ import java.util.concurrent.Future;
 @ProviderType
 public interface ClusterMasterExecutor {
 
-	public <T> Future<T> executeOnMaster(MethodHandler methodHandler);
+	public <T> NoticeableFuture<T> executeOnMaster(MethodHandler methodHandler);
 
 	public void initialize();
 

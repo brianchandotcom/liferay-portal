@@ -74,6 +74,24 @@ public class WorkflowHandlerRegistryUtil {
 		_instance._register(workflowHandler);
 	}
 
+	public static <T> void startWorkflowInstance(
+			long companyId, long groupId, long userId, String className,
+			long classPK, T model, ServiceContext serviceContext)
+		throws PortalException {
+
+		Map<String, Serializable> workflowContext =
+			(Map<String, Serializable>)serviceContext.removeAttribute(
+				"workflowContext");
+
+		if (workflowContext == null) {
+			workflowContext = Collections.emptyMap();
+		}
+
+		startWorkflowInstance(
+			companyId, groupId, userId, className, classPK, model,
+			serviceContext, workflowContext);
+	}
+
 	public static <T> T startWorkflowInstance(
 			final long companyId, final long groupId, final long userId,
 			String className, final long classPK, final T model,
@@ -172,24 +190,6 @@ public class WorkflowHandlerRegistryUtil {
 		}
 
 		return updatedModel;
-	}
-
-	public static <T> void startWorkflowInstance(
-			long companyId, long groupId, long userId, String className,
-			long classPK, T model, ServiceContext serviceContext)
-		throws PortalException {
-
-		Map<String, Serializable> workflowContext =
-			(Map<String, Serializable>)serviceContext.removeAttribute(
-				"workflowContext");
-
-		if (workflowContext == null) {
-			workflowContext = Collections.emptyMap();
-		}
-
-		startWorkflowInstance(
-			companyId, groupId, userId, className, classPK, model,
-			serviceContext, workflowContext);
 	}
 
 	public static <T> void startWorkflowInstance(

@@ -213,21 +213,24 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 	<aui:button onClick='<%= renderResponse.getNamespace() + "saveSelectBoxes();" %>' type="submit" />
 </aui:button-row>
 
-<aui:script use="aui-base">
+<aui:script>
 	function selectAsset(assetEntryId, assetClassName, assetType, assetEntryTitle, groupName) {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'add-selection';
-		document.<portlet:namespace />fm.<portlet:namespace />assetEntryId.value = assetEntryId;
-		document.<portlet:namespace />fm.<portlet:namespace />assetEntryType.value = assetClassName;
+		var form = document.<portlet:namespace />fm;
 
-		submitForm(document.<portlet:namespace />fm);
+		form.<portlet:namespace /><%= Constants.CMD %>.value = 'add-selection';
+		form.<portlet:namespace />assetEntryId.value = assetEntryId;
+		form.<portlet:namespace />assetEntryType.value = assetClassName;
+
+		submitForm(form);
 	}
 
-	A.getBody().delegate(
+	AUI.$('body').delegate(
+		'.asset-selector a',
 		'click',
 		function(event) {
 			event.preventDefault();
 
-			var currentTarget = event.currentTarget;
+			var currentTarget = AUI.$(event.currentTarget);
 
 			Liferay.Util.selectEntity(
 				{
@@ -238,14 +241,13 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 					},
 					eventName: '<%= eventName %>',
 					id: '<%= eventName %>' + currentTarget.attr('id'),
-					title: currentTarget.attr('data-title'),
-					uri: currentTarget.attr('data-href')
+					title: currentTarget.data('title'),
+					uri: currentTarget.data('href')
 				},
 				function(event) {
 					selectAsset(event.assetentryid, event.assetclassname, event.assettype, event.assettitle, event.groupdescriptivename);
 				}
 			);
-		},
-		'.asset-selector a'
+		}
 	);
 </aui:script>

@@ -45,15 +45,15 @@ boolean emailAssetEntryAddedEnabled = ParamUtil.getBoolean(request, "preferences
 	</div>
 </aui:fieldset>
 
-<aui:script use="aui-base">
-	var enableEmailSubscription = A.one('#<portlet:namespace />enableEmailSubscription');
+<aui:script>
+	var enableEmailSubscription = AUI.$('#<portlet:namespace />enableEmailSubscription');
+	var emailSubscriptionSettings = AUI.$('#<portlet:namespace />emailSubscriptionSettings');
 
-	enableEmailSubscription.on(
-		'change',
+	enableEmailSubscription.change(
 		function(event) {
-			var emailSubscriptionSettings = A.one('#<portlet:namespace />emailSubscriptionSettings');
+			var isChecked = AUI.$(this).prop('checked');
 
-			emailSubscriptionSettings.toggle();
+			emailSubscriptionSettings.toggleClass('hide', !isChecked);
 		}
 	);
 </aui:script>

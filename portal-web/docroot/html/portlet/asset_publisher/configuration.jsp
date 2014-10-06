@@ -254,13 +254,16 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 	</c:choose>
 </aui:form>
 
-<aui:script use="aui-base">
-	A.getBody().delegate(
+<aui:script>
+	var form = document.<portlet:namespace />fm;
+
+	AUI.$('body').delegate(
+		'.scope-selector a',
 		'click',
 		function(event) {
 			event.preventDefault();
 
-			var currentTarget = event.currentTarget;
+			var currentTarget = AUI.$(event.currentTarget);
 
 			Liferay.Util.selectEntity(
 				{
@@ -271,48 +274,45 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 					},
 					eventName: '<%= eventName %>',
 					id: '<%= eventName %>' + currentTarget.attr('id'),
-					title: currentTarget.attr('data-title'),
-					uri: currentTarget.attr('data-href')
+					title: currentTarget.data('title'),
+					uri: currentTarget.data('href')
 				},
 				function(event) {
-					document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'add-scope';
-					document.<portlet:namespace />fm.<portlet:namespace />scopeId.value = event.scopeid;
+					form.<portlet:namespace /><%= Constants.CMD %>.value = 'add-scope';
+					form.<portlet:namespace />scopeId.value = event.scopeid;
 
-					submitForm(document.<portlet:namespace />fm);
+					submitForm(form);
 				}
 			);
-		},
-		'.scope-selector a'
+		}
 	);
-</aui:script>
 
-<aui:script>
 	function <portlet:namespace />chooseSelectionStyle() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'selection-style';
+		form.<portlet:namespace /><%= Constants.CMD %>.value = 'selection-style';
 
-		submitForm(document.<portlet:namespace />fm);
+		submitForm(form);
 	}
 
 	function <portlet:namespace />moveSelectionDown(assetEntryOrder) {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'move-selection-down';
-		document.<portlet:namespace />fm.<portlet:namespace />assetEntryOrder.value = assetEntryOrder;
+		form.<portlet:namespace /><%= Constants.CMD %>.value = 'move-selection-down';
+		form.<portlet:namespace />assetEntryOrder.value = assetEntryOrder;
 
-		submitForm(document.<portlet:namespace />fm);
+		submitForm(form);
 	}
 
 	function <portlet:namespace />moveSelectionUp(assetEntryOrder) {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'move-selection-up';
-		document.<portlet:namespace />fm.<portlet:namespace />assetEntryOrder.value = assetEntryOrder;
+		form.<portlet:namespace /><%= Constants.CMD %>.value = 'move-selection-up';
+		form.<portlet:namespace />assetEntryOrder.value = assetEntryOrder;
 
-		submitForm(document.<portlet:namespace />fm);
+		submitForm(form);
 	}
 
 	Liferay.provide(
 		window,
 		'<portlet:namespace />saveSelectBoxes',
 		function() {
-			if (document.<portlet:namespace />fm.<portlet:namespace />classNameIds) {
-				document.<portlet:namespace />fm.<portlet:namespace />classNameIds.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentClassNameIds);
+			if (form.<portlet:namespace />classNameIds) {
+				form.<portlet:namespace />classNameIds.value = Liferay.Util.listSelect(form.<portlet:namespace />currentClassNameIds);
 			}
 
 			<%
@@ -320,17 +320,17 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 				String className = AssetPublisherUtil.getClassName(curRendererFactory);
 			%>
 
-				if (document.<portlet:namespace />fm.<portlet:namespace />classTypeIds<%= className %>) {
-					document.<portlet:namespace />fm.<portlet:namespace />classTypeIds<%= className %>.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace /><%= className %>currentClassTypeIds);
+				if (form.<portlet:namespace />classTypeIds<%= className %>) {
+					form.<portlet:namespace />classTypeIds<%= className %>.value = Liferay.Util.listSelect(form.<portlet:namespace /><%= className %>currentClassTypeIds);
 				}
 
 			<%
 			}
 			%>
 
-			document.<portlet:namespace />fm.<portlet:namespace />metadataFields.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentMetadataFields);
+			form.<portlet:namespace />metadataFields.value = Liferay.Util.listSelect(form.<portlet:namespace />currentMetadataFields);
 
-			submitForm(document.<portlet:namespace />fm);
+			submitForm(form);
 		},
 		['liferay-util-list-fields']
 	);

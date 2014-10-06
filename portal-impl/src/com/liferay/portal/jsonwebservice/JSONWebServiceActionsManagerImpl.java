@@ -121,31 +121,9 @@ public class JSONWebServiceActionsManagerImpl
 				jsonWebServiceActionParameters.getServiceContext());
 		}
 
-		String[] paths = _resolvePaths(request, path);
-
-		String contextName = paths[0];
-
-		path = paths[1];
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Request JSON web service action with path " + path +
-					" and method " + method + " for " + contextName);
-		}
-
-		int jsonWebServiceActionConfigIndex =
-			_getJSONWebServiceActionConfigIndex(
-				contextName, path, method,
-				jsonWebServiceActionParameters.getParameterNames());
-
-		if (jsonWebServiceActionConfigIndex == -1) {
-			throw new NoSuchJSONWebServiceException(
-				"No JSON web service action with path " + path +
-					" and method " + method + " for " + contextName);
-		}
-
 		JSONWebServiceActionConfig jsonWebServiceActionConfig =
-			_jsonWebServiceActionConfigs.get(jsonWebServiceActionConfigIndex);
+			_findJSONWebServiceAction(
+				request, path, method, jsonWebServiceActionParameters);
 
 		return new JSONWebServiceActionImpl(
 			jsonWebServiceActionConfig, jsonWebServiceActionParameters,
@@ -164,33 +142,9 @@ public class JSONWebServiceActionsManagerImpl
 		jsonWebServiceActionParameters.collectAll(
 			request, null, null, parameterMap);
 
-		String[] parameterNames =
-			jsonWebServiceActionParameters.getParameterNames();
-
-		String[] paths = _resolvePaths(request, path);
-
-		String contextName = paths[0];
-
-		path = paths[1];
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Request JSON web service action with path " + path +
-					" and method " + method + " for " + contextName);
-		}
-
-		int jsonWebServiceActionConfigIndex =
-			_getJSONWebServiceActionConfigIndex(
-				contextName, path, method, parameterNames);
-
-		if (jsonWebServiceActionConfigIndex == -1) {
-			throw new NoSuchJSONWebServiceException(
-				"No JSON web service action with path " + path +
-					" and method " + method + " for " + contextName);
-		}
-
 		JSONWebServiceActionConfig jsonWebServiceActionConfig =
-			_jsonWebServiceActionConfigs.get(jsonWebServiceActionConfigIndex);
+			_findJSONWebServiceAction(
+				request, path, method, jsonWebServiceActionParameters);
 
 		return new JSONWebServiceActionImpl(
 			jsonWebServiceActionConfig, jsonWebServiceActionParameters,
@@ -491,6 +445,53 @@ public class JSONWebServiceActionsManagerImpl
 		}
 
 		return matched;
+	}
+
+	private JSONWebServiceActionConfig _findJSONWebServiceAction(
+			HttpServletRequest request, String path, String method,
+			JSONWebServiceActionParameters jsonWebServiceActionParameters)
+		throws NoSuchJSONWebServiceException {
+
+		String[] paths = _resolvePaths(request, path);
+
+		String contextName = paths[0];
+
+		path = paths[1];
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Request JSON web service action with path " + path +
+					" and method " + method + " for " + contextName);
+		}
+
+		String[] parameterNames =
+			jsonWebServiceActionParameters.getParameterNames();
+
+		int jsonWebServiceActionConfigIndex =
+			_getJSONWebServiceActionConfigIndex(
+				contextName, path, method, parameterNames);
+
+		if (jsonWebServiceActionConfigIndex == -1) {
+			if (jsonWebServiceActionParameters.includeDefaultParameters()) {
+				parameterNames =
+					jsonWebServiceActionParameters.getParameterNames();
+
+				jsonWebServiceActionConfigIndex =
+					_getJSONWebServiceActionConfigIndex(
+						contextName, path, method, parameterNames);
+			}
+		}
+
+		if (jsonWebServiceActionConfigIndex == -1) {
+			throw new NoSuchJSONWebServiceException(
+				"No JSON web service action with path " + path +
+					" and method " + method + " for " + contextName);
+		}
+
+		JSONWebServiceActionConfig jsonWebServiceActionConfig =
+			_jsonWebServiceActionConfigs.get(jsonWebServiceActionConfigIndex);
+
+		return jsonWebServiceActionConfig;
 	}
 
 	private int _getJSONWebServiceActionConfigIndex(

@@ -68,6 +68,10 @@ public class AsyncBroker<K, V> {
 		return defaultNoticeableFuture;
 	}
 
+	public NoticeableFuture<V> take(K key) {
+		return _defaultNoticeableFutures.remove(key);
+	}
+
 	public boolean takeWithException(K key, Throwable throwable) {
 		DefaultNoticeableFuture<V> defaultNoticeableFuture =
 			_defaultNoticeableFutures.remove(key);

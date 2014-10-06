@@ -16,6 +16,7 @@ package com.liferay.portal.fabric.netty.rpc;
 
 import com.liferay.portal.fabric.netty.handlers.NettyChannelAttributes;
 import com.liferay.portal.kernel.concurrent.AsyncBroker;
+import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -29,9 +30,12 @@ import java.io.Serializable;
  */
 public class RPCResponse<T extends Serializable> extends RPCSerializable {
 
-	public RPCResponse(long id, T result, Throwable throwable) {
+	public RPCResponse(
+		long id, boolean cancelled, T result, Throwable throwable) {
+
 		super(id);
 
+		_cancelled = cancelled;
 		_result = result;
 		_throwable = throwable;
 	}
@@ -41,7 +45,26 @@ public class RPCResponse<T extends Serializable> extends RPCSerializable {
 		AsyncBroker<Long, Serializable> asyncBroker =
 			NettyChannelAttributes.getAsyncBroker(channel);
 
-		if (_throwable != null) {
+		if (_cancelled) {
+			NoticeableFuture<?> noticeableFuture = asyncBroker.take(id);
+
+			if (noticeableFuture == null) {
+				_log.error(
+					"Unable to place cancellation because no future exists " +
+						"with ID " + id);
+			}
+			else if (noticeableFuture.cancel(true)) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Cancelled future with ID " + id);
+				}
+			}
+			else if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to cancel future with ID " + id +
+						", because it is already completed");
+			}
+		}
+		else if (_throwable != null) {
 			if (!asyncBroker.takeWithException(id, _throwable)) {
 				_log.error(
 					"Unable to place exception because no future exists with " +
@@ -60,10 +83,12 @@ public class RPCResponse<T extends Serializable> extends RPCSerializable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{id=");
 		sb.append(id);
+		sb.append(", cancelled=");
+		sb.append(_cancelled);
 		sb.append(", result=");
 		sb.append(_result);
 		sb.append(", throwable=");
@@ -77,6 +102,7 @@ public class RPCResponse<T extends Serializable> extends RPCSerializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private final boolean _cancelled;
 	private final T _result;
 	private final Throwable _throwable;
 

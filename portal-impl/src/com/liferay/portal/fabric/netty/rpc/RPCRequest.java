@@ -14,9 +14,10 @@
 
 package com.liferay.portal.fabric.netty.rpc;
 
+import com.liferay.portal.kernel.concurrent.FutureListener;
+import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import io.netty.channel.Channel;
@@ -25,27 +26,61 @@ import io.netty.channel.ChannelFutureListener;
 
 import java.io.Serializable;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+
 /**
  * @author Shuyang Zhou
  */
 public class RPCRequest<T extends Serializable> extends RPCSerializable {
 
-	public RPCRequest(long id, ProcessCallable<T> processCallable) {
+	public RPCRequest(long id, RPCCallable<T> rpcCallable) {
 		super(id);
 
-		_processCallable = processCallable;
+		_rpcCallable = rpcCallable;
 	}
 
 	@Override
-	public void execute(Channel channel) {
+	public void execute(final Channel channel) {
 		ChannelThreadLocal.setChannel(channel);
 
 		try {
-			sendRPCResponse(
-				channel, new RPCResponse<T>(id, _processCallable.call(), null));
+			NoticeableFuture<T> noticeableFuture = _rpcCallable.call();
+
+			noticeableFuture.addFutureListener(
+				new FutureListener<T>() {
+
+					@Override
+					public void complete(Future<T> future) {
+						if (future.isCancelled()) {
+							sendRPCResponse(
+								channel, new RPCResponse<T>(
+									id, true, null, null));
+
+							return;
+						}
+
+						try {
+							sendRPCResponse(
+								channel,
+								new RPCResponse<T>(
+									id, false, future.get(), null));
+						}
+						catch (Throwable throwable) {
+							if (throwable instanceof ExecutionException) {
+								throwable = throwable.getCause();
+							}
+
+							sendRPCResponse(
+								channel, new RPCResponse<T>(
+									id, false, null, throwable));
+						}
+					}
+
+				});
 		}
 		catch (Throwable t) {
-			sendRPCResponse(channel, new RPCResponse<T>(id, null, t));
+			sendRPCResponse(channel, new RPCResponse<T>(id, false, null, t));
 		}
 		finally {
 			ChannelThreadLocal.removeChannel();
@@ -58,8 +93,8 @@ public class RPCRequest<T extends Serializable> extends RPCSerializable {
 
 		sb.append("{id=");
 		sb.append(id);
-		sb.append(", processCallable=");
-		sb.append(_processCallable);
+		sb.append(", rpcCallable=");
+		sb.append(_rpcCallable);
 		sb.append("}");
 
 		return sb.toString();
@@ -106,6 +141,6 @@ public class RPCRequest<T extends Serializable> extends RPCSerializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private final ProcessCallable<T> _processCallable;
+	private final RPCCallable<T> _rpcCallable;
 
 }

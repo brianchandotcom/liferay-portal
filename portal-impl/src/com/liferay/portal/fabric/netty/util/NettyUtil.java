@@ -14,10 +14,19 @@
 
 package com.liferay.portal.fabric.netty.util;
 
+import com.liferay.portal.kernel.concurrent.FutureListener;
+import com.liferay.portal.kernel.concurrent.NoticeableFuture;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
+import io.netty.channel.EventLoop;
 import io.netty.channel.embedded.EmbeddedChannel;
+
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Shuyang Zhou
@@ -40,5 +49,43 @@ public class NettyUtil {
 
 		return channelPipeline;
 	}
+
+	public static <T> void scheduleCancellation(
+		Channel channel, final NoticeableFuture<T> noticeableFuture,
+		long timeout) {
+
+		EventLoop eventLoop = channel.eventLoop();
+
+		final Future<?> cancellationFuture = eventLoop.schedule(
+			new Runnable() {
+
+				@Override
+				public void run() {
+					if (noticeableFuture.cancel(true) && _log.isWarnEnabled()) {
+						_log.warn("Cancelled timeout " + noticeableFuture);
+					}
+				}
+
+			},
+			timeout, TimeUnit.MILLISECONDS);
+
+		noticeableFuture.addFutureListener(
+			new FutureListener<T>() {
+
+				@Override
+				public void complete(Future<T> future) {
+					if (cancellationFuture.cancel(true) &&
+						_log.isDebugEnabled()) {
+
+						_log.debug(
+							"Cancelled scheduled cancellation for " +
+								noticeableFuture);
+					}
+				}
+
+			});
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(NettyUtil.class);
 
 }

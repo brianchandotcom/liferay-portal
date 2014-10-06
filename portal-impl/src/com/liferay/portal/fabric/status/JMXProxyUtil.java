@@ -14,14 +14,10 @@
 
 package com.liferay.portal.fabric.status;
 
-import com.liferay.portal.fabric.netty.rpc.RPCUtil;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.process.ProcessCallable;
-import com.liferay.portal.kernel.process.ProcessChannel;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.util.ProxyUtil;
-
-import io.netty.channel.Channel;
 
 import java.io.Serializable;
 
@@ -67,36 +63,6 @@ public class JMXProxyUtil {
 			new JMXProxyInvocationHandler(objectName, processCallableExecutor));
 	}
 
-	public static ProcessCallableExecutor toProcessCallableExecutor(
-		final Channel channel) {
-
-		return new ProcessCallableExecutor() {
-
-			@Override
-			public <V extends Serializable> NoticeableFuture<V> execute(
-				ProcessCallable<V> processCallable) {
-
-				return RPCUtil.execute(channel, processCallable);
-			}
-
-		};
-	}
-
-	public static ProcessCallableExecutor toProcessCallableExecutor(
-		final ProcessChannel<?> processChannel) {
-
-		return new ProcessCallableExecutor() {
-
-			@Override
-			public <V extends Serializable> NoticeableFuture<V> execute(
-				ProcessCallable<V> processCallable) {
-
-				return processChannel.write(processCallable);
-			}
-
-		};
-	}
-
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target(ElementType.METHOD)
 	public @interface Optional {
@@ -105,8 +71,7 @@ public class JMXProxyUtil {
 	public interface ProcessCallableExecutor {
 
 		public <V extends Serializable> NoticeableFuture<V> execute(
-			ProcessCallable<V> processCallable)
-		throws ProcessException;
+			ProcessCallable<V> processCallable);
 
 	}
 

@@ -68,6 +68,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.hibernate.util.JDBCExceptionReporter;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
@@ -712,6 +713,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			search(fileEntry, false, "liferay", false);
 		}
 
+		@Ignore
 		@Test
 		public void shouldFindFileEntryByAssetTagNameAfterUpdate()
 			throws Exception {

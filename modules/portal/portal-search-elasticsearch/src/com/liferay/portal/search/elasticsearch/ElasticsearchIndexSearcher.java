@@ -42,6 +42,7 @@ import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectio
 import com.liferay.portal.search.elasticsearch.facet.ElasticsearchFacetFieldCollector;
 import com.liferay.portal.search.elasticsearch.facet.FacetProcessor;
 import com.liferay.portal.search.elasticsearch.util.DocumentTypes;
+import com.liferay.portal.search.elasticsearch.util.ElasticsearchHelperUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -407,7 +408,9 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			searchRequestBuilder.setSize(0);
 		}
 
-		QueryBuilder queryBuilder = QueryBuilders.queryString(query.toString());
+		QueryBuilder queryBuilder =
+			QueryBuilders.queryString(
+				ElasticsearchHelperUtil.toEscapedQueryString(query));
 
 		searchRequestBuilder.setQuery(queryBuilder);
 

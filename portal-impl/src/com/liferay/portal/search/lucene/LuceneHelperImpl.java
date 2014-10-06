@@ -60,6 +60,7 @@ import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.util.lucene.KeywordsUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -244,15 +245,26 @@ public class LuceneHelperImpl implements LuceneHelper {
 		}
 
 		if (like) {
-			value = StringUtil.replace(
+			String replacedValue = StringUtil.replace(
 				value, StringPool.PERCENT, StringPool.BLANK);
+
+			if (Validator.isNotNull(replacedValue)) {
+				value = replacedValue;
+			}
 		}
 
 		try {
 			QueryParser queryParser = new QueryParser(
 				getVersion(), field, analyzer);
 
-			Query query = queryParser.parse(value);
+			Query query = null;
+
+			try {
+				query = queryParser.parse(value);
+			}
+			catch (Exception e) {
+				query = queryParser.parse(KeywordsUtil.escape(value));
+			}
 
 			BooleanClause.Occur occur = null;
 

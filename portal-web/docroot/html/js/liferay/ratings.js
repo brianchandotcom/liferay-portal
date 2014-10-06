@@ -97,7 +97,7 @@ AUI.add(
 						return prefix + score;
 					},
 
-					_getLabel: function(desc, totalEntries, ratingScore) {
+					_getLabel: function(desc, totalEntries) {
 						var instance = this;
 
 						var voteLabel = '';
@@ -316,7 +316,7 @@ AUI.add(
 
 						var averageScore = json.averageScore;
 
-						var label = instance._getLabel(description, json.totalEntries, averageScore);
+						var label = instance._getLabel(description, json.totalEntries);
 
 						var averageIndex = instance.get('round') ? Math.round(averageScore) : Math.floor(averageScore);
 
@@ -373,11 +373,9 @@ AUI.add(
 							var description = instance._fixScore(instance.get('totalScore'));
 
 							var totalEntries = instance.get('totalEntries');
-							var averageScore = instance.get('averageScore');
-							var size = instance.get(STR_SIZE);
 							var yourScore = instance.get(STR_YOUR_SCORE);
 
-							var label = instance._getLabel(description, totalEntries, averageScore);
+							var label = instance._getLabel(description, totalEntries);
 
 							var yourScoreIndex = instance._convertToIndex(yourScore);
 

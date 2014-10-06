@@ -86,6 +86,20 @@ public class WikiPageServiceWrapper implements WikiPageService,
 			inputStream, mimeType);
 	}
 
+	/**
+	* @deprecated As of 7.0.0 replaced by {@link #addTempFileEntry(long,
+	String, String, InputStream, String)}
+	*/
+	@Deprecated
+	@Override
+	public void addTempPageAttachment(long nodeId, java.lang.String fileName,
+		java.lang.String tempFolderName, java.io.InputStream inputStream,
+		java.lang.String mimeType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_wikiPageService.addTempPageAttachment(nodeId, fileName,
+			tempFolderName, inputStream, mimeType);
+	}
+
 	@Override
 	public void changeNode(long nodeId, java.lang.String title, long newNodeId,
 		com.liferay.portal.service.ServiceContext serviceContext)

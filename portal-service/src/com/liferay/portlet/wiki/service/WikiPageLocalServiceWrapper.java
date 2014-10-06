@@ -125,6 +125,20 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	/**
+	* @deprecated As of 7.0.0 replaced by {@link #addTempFileEntry(long, long,
+	String, String, InputStream, String)}
+	*/
+	@Deprecated
+	@Override
+	public void addTempPageAttachment(long groupId, long userId,
+		java.lang.String fileName, java.lang.String tempFolderName,
+		java.io.InputStream inputStream, java.lang.String mimeType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_wikiPageLocalService.addTempPageAttachment(groupId, userId, fileName,
+			tempFolderName, inputStream, mimeType);
+	}
+
+	/**
 	* Adds the wiki page to the database. Also notifies the appropriate model listeners.
 	*
 	* @param wikiPage the wiki page

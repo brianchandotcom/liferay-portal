@@ -293,7 +293,7 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 			String mimeType = uploadPortletRequest.getContentType("file");
 
 			WikiPageServiceUtil.addTempFileEntry(
-				nodeId, sourceFileName, _TEMP_FOLDER_NAME, inputStream,
+				nodeId, _TEMP_FOLDER_NAME, sourceFileName, inputStream,
 				mimeType);
 		}
 		finally {

@@ -759,10 +759,26 @@ AUI.add(
 										}
 									)
 								);
-
-								coordinatesNode.html([latitude, longitude].join(', '));
 							}
 						);
+					},
+
+					setValue: function(value) {
+						var instance = this;
+
+						if (Lang.isString(value) && value !== '') {
+							var inputNode = instance.getInputNode();
+
+							inputNode.val(value);
+
+							value = AJSON.parse(value);
+
+							var inputName = instance.getInputName();
+
+							var coordinatesNode = A.one('#' + inputName + 'Coordinates');
+
+							coordinatesNode.html([value.latitude, value.longitude].join(', '));
+						}
 					}
 				}
 			}

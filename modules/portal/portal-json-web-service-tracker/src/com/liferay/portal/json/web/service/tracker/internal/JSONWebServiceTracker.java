@@ -33,7 +33,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Miguel Pastor
  */
-@Component(immediate = true, service = JSONWebServiceTracker.class)
+//@Component(immediate = true, service = JSONWebServiceTracker.class)
 public class JSONWebServiceTracker
 	implements ServiceTrackerCustomizer<Object, Object> {
 

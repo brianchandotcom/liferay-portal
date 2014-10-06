@@ -3679,6 +3679,19 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/portal/validation-api.jar</file-name>
+				<version>1.1.0</version>
+				<project-name>Java Validation API</project-name>
+				<project-url>http://central.maven.org/maven2/javax/validation/validation-api/1.1.0.Final/validation-api-1.1.0.Final.jar</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+						<copyright-notice>Copyright (c) 2012 Vaadin Ltd</copyright-notice>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/portal/velocity.jar</file-name>
 				<version>1.6.4</version>
 				<project-name>Velocity</project-name>

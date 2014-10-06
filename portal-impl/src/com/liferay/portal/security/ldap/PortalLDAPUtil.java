@@ -231,7 +231,7 @@ public class PortalLDAPUtil {
 			for (String attributeId : mappedGroupAttributeIds) {
 				Attribute attribute = attributes.get(attributeId);
 
-				if (Validator.isNull(attribute)) {
+				if (attribute == null) {
 					continue;
 				}
 
@@ -590,7 +590,7 @@ public class PortalLDAPUtil {
 			for (String attributeId : mappedUserAttributeIds) {
 				Attribute attribute = attributes.get(attributeId);
 
-				if (Validator.isNull(attribute)) {
+				if (attribute == null) {
 					continue;
 				}
 

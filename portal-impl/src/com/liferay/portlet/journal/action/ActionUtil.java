@@ -17,14 +17,15 @@ package com.liferay.portlet.journal.action;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
@@ -38,6 +39,7 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -489,9 +491,19 @@ public class ActionUtil {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					(String)values.get(i));
 
-				String data = jsonObject.getString("data");
+				String uuid = jsonObject.getString("uuid");
+				long groupId = jsonObject.getLong("groupId");
 
-				images.put(sb.toString(), UnicodeFormatter.hexToBytes(data));
+				if (Validator.isNotNull(uuid) && (groupId > 0)) {
+					FileEntry fileEntry =
+						DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+							uuid, groupId);
+
+					byte[] fileEntryBytes = FileUtil.getBytes(
+						fileEntry.getContentStream());
+
+					images.put(sb.toString(), fileEntryBytes);
+				}
 			}
 		}
 

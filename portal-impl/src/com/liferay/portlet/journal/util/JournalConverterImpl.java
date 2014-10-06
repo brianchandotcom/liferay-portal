@@ -377,6 +377,7 @@ public class JournalConverterImpl implements JournalConverter {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 			jsonObject.put("groupId", fileEntry.getGroupId());
+			jsonObject.put("title", fileEntry.getTitle());
 			jsonObject.put("uuid", fileEntry.getUuid());
 			jsonObject.put("version", fileEntry.getVersion());
 

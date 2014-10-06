@@ -89,16 +89,6 @@ TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler
 		'_<%= HtmlUtil.escapeJS(portletResource) %>_displayStyle': '<%= displayStyle %>'
 	}
 
-	var toggleCustomFields = function(event) {
-		var target = event.currentTarget;
-
-		data[target.attr('data-key')] = target.get('checked');
-
-		Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(portletResource) %>_', data);
-	};
-
-	A.one('.checkBoxes').delegate('change', toggleCustomFields, 'input[type="checkbox"]');
-
 	var changeDisplayStyle = function(event) {
 		var selectedIndex = event.currentTarget.get('selectedIndex');
 
@@ -115,6 +105,15 @@ TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler
 
 	if (selectDisplayStyle) {
 		selectDisplayStyle.on('change', changeDisplayStyle);
-
 	};
+
+	var toggleCustomFields = function(event) {
+		var target = event.currentTarget;
+
+		data[target.attr('data-key')] = target.get('checked');
+
+		Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(portletResource) %>_', data);
+	};
+
+	A.one('.checkBoxes').delegate('change', toggleCustomFields, 'input[type="checkbox"]');
 </aui:script>

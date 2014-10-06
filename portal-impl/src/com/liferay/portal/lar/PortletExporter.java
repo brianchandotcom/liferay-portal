@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
@@ -180,6 +181,27 @@ public class PortletExporter {
 
 		portletDataContext.clearScopedPrimaryKeys();
 
+		Map<String, String[]> parameterMap =
+			portletDataContext.getParameterMap();
+
+		Date originalStartDate = portletDataContext.getStartDate();
+
+		String range = MapUtil.getString(
+			portletDataContext.getParameterMap(), "range");
+
+		if (range.equals(ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE)) {
+			long lastPublishDate = GetterUtil.getLong(
+				jxPortletPreferences.getValue(
+					"last-publish-date", StringPool.BLANK));
+
+			if (lastPublishDate > 0) {
+				portletDataContext.setStartDate(new Date(lastPublishDate));
+			}
+			else {
+				portletDataContext.setStartDate(null);
+			}
+		}
+
 		try {
 			data = portletDataHandler.exportData(
 				portletDataContext, portletId, jxPortletPreferences);
@@ -215,6 +237,8 @@ public class PortletExporter {
 		boolean updateLastPublishDate = MapUtil.getBoolean(
 			portletDataContext.getParameterMap(),
 			PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE);
+
+		portletDataContext.setStartDate(originalStartDate);
 
 		if (updateLastPublishDate) {
 			StagingUtil.updateLastPublishDate(

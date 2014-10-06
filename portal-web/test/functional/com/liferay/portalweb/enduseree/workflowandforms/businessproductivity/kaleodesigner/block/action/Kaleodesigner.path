@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DRAFT_VERSION</td>
+	<td>//div[@class='control-group field-wrapper' and contains(.,'Draft Version')]/div[contains(.,'${key_draftVersion}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_AS_DRAFT_BUTTON</td>
 	<td>//div[contains(@class,'button-holder')]/button[contains(.,'Save as Draft')]</td>
 	<td></td>
@@ -71,6 +76,27 @@
 <tr>
 	<td>SOURCE_KALEO_XML_TAB</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Source (Kaleo XML)')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!-- DRAFT_HISTORY -->
+<tr>
+	<td>DRAFT_HISTORY_UNDO_BUTTON</td>
+	<td>//button[contains(@id,'undoButton')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DRAFT_HISTORY_REDO_BUTTON</td>
+	<td>//button[contains(@id,'redoButton')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DRAFT_HISTORY_LATEST_VERSION_BUTTON</td>
+	<td>//button[contains(@id,'latestButton')]</td>
 	<td></td>
 </tr>
 <tr>

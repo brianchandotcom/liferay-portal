@@ -360,6 +360,10 @@
 		<execute action="Kaleodesigner#pause" locator1="1000" />
 	</command>
 
+	<command name="latestVersionDraft">
+		<execute action="Kaleodesigner#assertClick" locator-key1="DRAFT_HISTORY_LATEST_VERSION_BUTTON" value1="Latest Version" />
+	</command>
+
 	<command name="publishWorkflowDefinitionViaKaleoDesignerCP">
 		<execute action="Kaleodesigner#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -369,6 +373,10 @@
 		<execute action="Kaleodesigner#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="Kaleodesigner#selectFrameTop" locator-key1="IFRAME" value1="relative=top" />
+	</command>
+
+	<command name="redoDraft">
+		<execute action="Kaleodesigner#assertClick" locator-key1="DRAFT_HISTORY_REDO_BUTTON" value1="Redo" />
 	</command>
 
 	<command name="removeNodeSettingsSection">
@@ -401,10 +409,26 @@
 		<execute macro="KaleoDesigner#viewNoWorkflowDraftsViaKaleoDesignerCP" />
 	</command>
 
+	<command name="undoDraft">
+		<execute action="Kaleodesigner#assertClick" locator-key1="DRAFT_HISTORY_UNDO_BUTTON" value1="Undo" />
+	</command>
+
+	<command name="viewConnectorNotPresent">
+		<var name="key_connectorLabel" value="${connectorLabel}" />
+
+		<execute action="Kaleodesigner#assertElementNotPresent" locator-key1="VIEW_FORM_CONNECTOR" />
+	</command>
+
 	<command name="viewConnectorPresent">
 		<var name="key_connectorLabel" value="${connectorLabel}" />
 
 		<execute action="Kaleodesigner#assertElementPresent" locator-key1="VIEW_FORM_CONNECTOR" />
+	</command>
+
+	<command name="viewDraftVersion">
+		<var name="key_draftVersion" value="${draftVersion}" />
+
+		<execute action="Kaleodesigner#assertTextEquals" locator-key1="DRAFT_VERSION" value1="${draftVersion}" />
 	</command>
 
 	<command name="viewExecutionType">

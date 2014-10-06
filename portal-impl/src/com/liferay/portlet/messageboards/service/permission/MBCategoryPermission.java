@@ -75,6 +75,12 @@ public class MBCategoryPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
+		if (MBBanLocalServiceUtil.hasBan(
+				groupId, permissionChecker.getUserId())) {
+
+			return false;
+		}
+
 		if ((categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ||
 			(categoryId == MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
 

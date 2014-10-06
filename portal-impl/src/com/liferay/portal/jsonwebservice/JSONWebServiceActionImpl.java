@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import jodd.bean.BeanCopy;
 import jodd.bean.BeanUtil;
 
 import jodd.typeconverter.TypeConverterManager;

@@ -16,6 +16,7 @@ package com.liferay.portal.security.permission;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Role;
@@ -25,6 +26,7 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.util.test.CompanyTestUtil;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.OrganizationTestUtil;
 import com.liferay.portal.util.test.RoleTestUtil;
@@ -199,13 +201,16 @@ public class PermissionCheckerTest {
 
 		PermissionChecker permissionChecker = _getPermissionChecker(_user);
 
-		Assert.assertFalse(permissionChecker.isOmniadmin());
+		Assert.assertTrue(permissionChecker.isOmniadmin());
 	}
 
 	@Test
 	public void testIsOmniAdminWithCompanyAdmin() throws Exception {
-		PermissionChecker permissionChecker = _getPermissionChecker(
-			TestPropsValues.getUser());
+		Company company = CompanyTestUtil.addCompany();
+
+		User adminUser = UserTestUtil.addCompanyAdmin(company);
+
+		PermissionChecker permissionChecker = _getPermissionChecker(adminUser);
 
 		Assert.assertFalse(permissionChecker.isOmniadmin());
 	}

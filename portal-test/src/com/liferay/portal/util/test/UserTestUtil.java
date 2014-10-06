@@ -45,6 +45,21 @@ import java.util.Locale;
  */
 public class UserTestUtil {
 
+	public static User addCompanyAdmin(Company company) throws Exception {
+		User user = addUser();
+
+		user.setCompanyId(company.getCompanyId());
+
+		UserLocalServiceUtil.updateUser(user);
+
+		Role administratorRole = RoleLocalServiceUtil.getRole(
+			company.getCompanyId(), RoleConstants.ADMINISTRATOR);
+
+		UserLocalServiceUtil.addRoleUser(administratorRole.getRoleId(), user);
+
+		return user;
+	}
+
 	public static User addGroupAdminUser(Group group) throws Exception {
 		return UserTestUtil.addGroupUser(
 			group, RoleConstants.SITE_ADMINISTRATOR);
@@ -72,21 +87,10 @@ public class UserTestUtil {
 	}
 
 	public static User addOmniAdmin() throws Exception {
-		User user = addUser();
-
 		Company defaultCompany = CompanyLocalServiceUtil.getCompanyByMx(
 			PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
 
-		user.setCompanyId(defaultCompany.getCompanyId());
-
-		UserLocalServiceUtil.updateUser(user);
-
-		Role administratorRole = RoleLocalServiceUtil.getRole(
-			defaultCompany.getCompanyId(), RoleConstants.ADMINISTRATOR);
-
-		UserLocalServiceUtil.addRoleUser(administratorRole.getRoleId(), user);
-
-		return user;
+		return addCompanyAdmin(defaultCompany);
 	}
 
 	public static User addOrganizationAdminUser(Organization organization)

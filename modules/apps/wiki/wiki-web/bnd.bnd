@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Wiki Web
+Bundle-SymbolicName: com.liferay.wiki.web
+Bundle-Version: 1.0.0
+Include-Resource:\
+	WEB-INF/classes/portlet.properties=docroot/WEB-INF/src/portlet.properties
+Web-ContextPath: /wiki-web
+
+-donotcopy=(docroot/WEB-INF/src|.*\.jar|.*\.java)
+-wab: docroot
+-wablib:\
+	${app.server.lib.portal.dir}/util-java.jar,\
+	${app.server.lib.portal.dir}/util-taglib.jar

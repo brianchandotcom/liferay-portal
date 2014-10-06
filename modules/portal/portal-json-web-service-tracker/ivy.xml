@@ -17,7 +17,6 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency org="biz.aQute.bnd" name="annotation" rev="2.3.0"/>
 		<dependency name="org.apache.felix.scr" org="org.apache.felix" rev="1.6.2" />
 		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />

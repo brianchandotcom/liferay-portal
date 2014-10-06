@@ -639,6 +639,11 @@ AUI.add(
 
 		var DocumentLibraryField = A.Component.create(
 			{
+				ATTRS: {
+					acceptedFileFormats: {
+						value: ['*']
+					}
+				},
 				EXTENDS: Field,
 
 				prototype: {
@@ -648,6 +653,75 @@ AUI.add(
 						var container = instance.get('container');
 
 						container.delegate('click', instance._handleButtonsClick, '.btn', instance);
+
+						instance.uploader = new A.Uploader(
+							{
+								after: {
+									fileselect: function(event) {
+										instance.setPercentUploaded(0);
+
+										if (instance.notice) {
+											instance.notice.hide();
+										}
+
+										instance.uploader.uploadAll();
+									}
+								},
+								appendNewFiles: false,
+								dragAndDropArea: '#' + instance.getInputName() + 'Title',
+								fileFieldName: 'file',
+								fileFilters: instance.get('acceptedFileFormats'),
+								on: {
+									uploadcomplete: function(event) {
+										try {
+											var data = A.JSON.parse(event.data);
+
+											if (data.status) {
+												instance.showNotice(data.message);
+
+												instance.setPercentUploaded(0);
+											}
+											else {
+												data.title = data.name;
+
+												instance.setValue(data);
+
+												instance.setPercentUploaded(100);
+											}
+										}
+										catch (e) {
+											instance.showNotice(Liferay.Language.get('an-unexpected-error-occurred'));
+
+											instance.setPercentUploaded(0);
+										}
+									},
+									uploaderror: function(event) {
+										instance.showNotice(Liferay.Language.get('an-unexpected-error-occurred'));
+
+										instance.setPercentUploaded(0);
+									},
+									uploadprogress: function(event) {
+										instance.setPercentUploaded(event.percentLoaded);
+									}
+								},
+								uploadURL: instance.getUploadURL(),
+								withCredentials: false
+							}
+						).render('#' + instance.getInputName() + 'UploadContainer');
+					},
+
+					syncUI: function() {
+						var instance = this;
+
+						var parsedValue = instance.getParsedValue(instance.getValue());
+
+						var titleNode = A.one('#' + instance.getInputName() + 'Title');
+
+						titleNode.val(parsedValue.title || '');
+
+						var clearButtonNode = A.one('#' + instance.getInputName() + 'ClearButton');
+
+						clearButtonNode.toggle(!!parsedValue.uuid);
 					},
 
 					_handleButtonsClick: function(event) {
@@ -655,35 +729,62 @@ AUI.add(
 
 						var currentTarget = event.currentTarget;
 
-						var portletNamespace = instance.get('portletNamespace');
-
 						if (currentTarget.test('.select-button')) {
-							Liferay.Util.selectEntity(
-								{
-									dialog: {
-										constrain: true,
-										destroyOnHide: true,
-										modal: true
-									},
-									eventName: portletNamespace + 'selectDocumentLibrary',
-									id: portletNamespace + 'selectDocumentLibrary',
-									title: Liferay.Language.get('select-document'),
-									uri: instance.getDocumentLibraryURL()
-								},
-								function(event) {
-									instance.setValue(
-										{
-											groupId: event.groupid,
-											title: event.title,
-											uuid: event.uuid
-										}
-									);
-								}
-							);
+							instance._handleSelectButtonClick(event);
+						}
+						else if (currentTarget.test('.upload-button')) {
+							instance._handleUploadButtonClick(event);
 						}
 						else if (currentTarget.test('.clear-button')) {
-							instance.setValue('');
+							instance._handleClearButtonClick(event);
 						}
+					},
+
+					_handleClearButtonClick: function(event) {
+						var instance = this;
+
+						instance.setValue('');
+
+						instance.uploader.set('fileList', []);
+
+						instance.setPercentUploaded(0);
+					},
+
+					_handleSelectButtonClick: function(event) {
+						var instance = this;
+
+						var portletNamespace = instance.get('portletNamespace');
+
+						instance.setPercentUploaded(0);
+
+						Liferay.Util.selectEntity(
+							{
+								dialog: {
+									constrain: true,
+									destroyOnHide: true,
+									modal: true
+								},
+								eventName: portletNamespace + 'selectDocumentLibrary',
+								id: portletNamespace + 'selectDocumentLibrary',
+								title: Liferay.Language.get('select-document'),
+								uri: instance.getDocumentLibraryURL()
+							},
+							function(event) {
+								instance.setValue(
+									{
+										groupId: event.groupid,
+										title: event.title,
+										uuid: event.uuid
+									}
+								);
+							}
+						);
+					},
+
+					_handleUploadButtonClick: function(event) {
+						var instance = this;
+
+						instance.uploader.openFileSelectDialog();
 					},
 
 					getDocumentLibraryURL: function() {
@@ -705,24 +806,260 @@ AUI.add(
 						return portletURL.toString();
 					},
 
+					getParsedValue: function(value) {
+						var instance = this;
+
+						if (Lang.isString(value)) {
+							if (value !== '') {
+								value = AJSON.parse(value);
+							}
+							else {
+								value = {};
+							}
+						}
+
+						return value;
+					},
+
+					getUploadURL: function() {
+						var instance = this;
+
+						var portletNamespace = instance.get('portletNamespace');
+
+						var portletURL = Liferay.PortletURL.createURL(themeDisplay.getURLControlPanel());
+
+						portletURL.setDoAsGroupId(instance.get('doAsGroupId'));
+
+						portletURL.setLifecycle(Liferay.PortletURL.ACTION_PHASE);
+
+						portletURL.setParameter('cmd', 'add_temp');
+						portletURL.setParameter('folderId', 'someFolderId');
+						portletURL.setParameter('p_auth', Liferay.authToken);
+						portletURL.setParameter('struts_action', '/journal/upload_document');
+
+						portletURL.setPortletId(15);
+
+						return portletURL.toString();
+					},
+
+					setPercentUploaded: function(value) {
+						var instance = this;
+
+						var progressContainerNode = A.one('#' + instance.getInputName() + 'Progress');
+
+						progressContainerNode.toggle(value > 0);
+
+						var progressBarNode = progressContainerNode.one('.progress-bar');
+
+						progressBarNode.attr('aria-valuenow', value);
+						progressBarNode.setStyle('width', value + '%');
+					},
+
 					setValue: function(value) {
 						var instance = this;
 
-						if (Lang.isString(value) && value !== '') {
-							value = AJSON.parse(value);
+						var parsedValue = instance.getParsedValue(value);
+
+						if (!parsedValue.title && !parsedValue.uuid) {
+							value = '';
+						}
+						else {
+							value = AJSON.stringify(parsedValue);
 						}
 
-						var titleNode = A.one('#' + instance.getInputName() + 'Title');
+						DocumentLibraryField.superclass.setValue.call(instance, value);
 
-						titleNode.val((value && value.title) || '');
+						instance.syncUI();
+					},
 
-						DocumentLibraryField.superclass.setValue.call(instance, AJSON.stringify(value));
+					showNotice: function(message) {
+						var instance = this;
+
+						if (!instance.notice) {
+							instance.notice = new Liferay.Notice(
+								{
+									toggleText: false,
+									type: 'warning'
+								}
+							).hide();
+						}
+
+						instance.notice.html(message);
+						instance.notice.show();
 					}
 				}
 			}
 		);
 
 		FieldTypes['ddm-documentlibrary'] = DocumentLibraryField;
+
+		var ImageField = A.Component.create(
+			{
+				ATTRS: {
+					acceptedFileFormats: {
+						value: ['image/gif', 'image/jpeg', 'image/jpg', 'image/png']
+					}
+				},
+
+				EXTENDS: DocumentLibraryField,
+
+				prototype: {
+					syncUI: function() {
+						var instance = this;
+
+						var parsedValue = instance.getParsedValue(instance.getValue());
+
+						var isNotEmpty = instance.isNotEmpty(parsedValue);
+
+						var altNode = A.one('#' + instance.getInputName() + 'Alt');
+
+						altNode.attr('disabled', !isNotEmpty);
+
+						var titleNode = A.one('#' + instance.getInputName() + 'Title');
+
+						if (isNotEmpty) {
+							altNode.val(parsedValue.alt || '');
+
+							titleNode.val(parsedValue.name || '');
+						}
+						else {
+							altNode.val('');
+
+							titleNode.val(Liferay.Language.get('drag-file-here'));
+						}
+
+						var clearButtonNode = A.one('#' + instance.getInputName() + 'ClearButton');
+
+						clearButtonNode.toggle(isNotEmpty);
+
+						var previewButtonNode = A.one('#' + instance.getInputName() + 'PreviewButton');
+
+						previewButtonNode.toggle(isNotEmpty);
+					},
+
+					_getImagePreviewURL: function() {
+						var instance = this;
+
+						var imagePreviewURL;
+
+						var value = instance.getParsedValue(instance.getValue());
+
+						if (value.data) {
+							imagePreviewURL = value.data;
+						}
+						else if (value.uuid) {
+							imagePreviewURL = [
+								'/documents',
+								value.groupId,
+								value.uuid
+							].join('/');
+						}
+
+						return imagePreviewURL;
+					},
+
+					_handleButtonsClick: function(event) {
+						var instance = this;
+
+						var currentTarget = event.currentTarget;
+
+						if (currentTarget.test('.preview-button')) {
+							instance._handlePreviewButtonClick(event);
+						}
+
+						ImageField.superclass._handleButtonsClick.apply(instance, arguments);
+					},
+
+					_handlePreviewButtonClick: function(event) {
+						var instance = this;
+
+						if (!instance.viewer) {
+							instance.viewer = new A.ImageViewer(
+								{
+									caption: 'alt',
+									links: '#' + instance.getInputName() + 'PreviewContainer a',
+									preloadAllImages: false,
+									zIndex: Liferay.zIndex.OVERLAY
+								}
+							).render();
+						}
+
+						var imagePreviewURL = instance._getImagePreviewURL();
+
+						var previewLinkNode = A.one('#' + instance.getInputName() + 'PreviewContainer a');
+						var previewImageNode = A.one('#' + instance.getInputName() + 'PreviewContainer img');
+
+						previewLinkNode.attr('href', imagePreviewURL);
+						previewImageNode.attr('src', imagePreviewURL);
+
+						instance.viewer.set('currentIndex', 0);
+						instance.viewer.set('links', previewLinkNode);
+
+						instance.viewer.show();
+					},
+
+					getDocumentLibraryURL: function() {
+						var instance = this;
+
+						var portletURL = ImageField.superclass.getDocumentLibraryURL.apply(instance, arguments);
+
+						return portletURL + '&Type=image';
+					},
+
+					getValue: function() {
+						var instance = this;
+
+						var value;
+
+						var parsedValue = instance.getParsedValue(ImageField.superclass.getValue.apply(instance, arguments));
+
+						if (instance.isNotEmpty(parsedValue)) {
+							var altNode = A.one('#' + instance.getInputName() + 'Alt');
+
+							parsedValue.alt = altNode.val();
+
+							value = AJSON.stringify(parsedValue)
+						}
+						else {
+							value = '';
+						}
+
+						return value;
+					},
+
+					isNotEmpty: function(value) {
+						var instance = this;
+
+						var parsedValue = instance.getParsedValue(value);
+
+						return (parsedValue.hasOwnProperty('data') && parsedValue.data !== '') || parsedValue.hasOwnProperty('uuid');
+					},
+
+					setValue: function(value) {
+						var instance = this;
+
+						var parsedValue = instance.getParsedValue(value);
+
+						if (instance.isNotEmpty(parsedValue)) {
+							if (!parsedValue.name && parsedValue.title) {
+								parsedValue.name = parsedValue.title;
+							}
+
+							value = AJSON.stringify(parsedValue);
+						}
+						else {
+							value = '';
+						}
+
+						DocumentLibraryField.superclass.setValue.call(instance, value);
+
+						instance.syncUI();
+					}
+				}
+			}
+		);
+
+		FieldTypes['ddm-image'] = ImageField;
 
 		var GeolocationField = A.Component.create(
 			{
@@ -1039,6 +1376,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-datatype', 'aui-io-request', 'aui-parse-content', 'aui-set', 'json', 'liferay-portlet-url', 'liferay-translation-manager']
+		requires: ['aui-base', 'aui-datatype', 'aui-image-viewer', 'aui-io-request', 'aui-parse-content', 'aui-set', 'json', 'liferay-notice', 'liferay-portlet-url', 'liferay-translation-manager', 'uploader']
 	}
 );

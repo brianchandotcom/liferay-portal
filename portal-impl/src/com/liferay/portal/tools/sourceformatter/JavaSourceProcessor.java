@@ -1692,13 +1692,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 								lineCount);
 					}
 
-					if (!trimmedLine.equals("}) {") &&
-						trimmedLine.startsWith(StringPool.CLOSE_CURLY_BRACE) &&
+					if (trimmedLine.startsWith(StringPool.CLOSE_CURLY_BRACE) &&
 						line.endsWith(StringPool.OPEN_CURLY_BRACE)) {
 
-						processErrorMessage(
-							fileName, "line break: " + fileName + " " +
-								lineCount);
+						Matcher matcher = _lineBreakPattern.matcher(
+							trimmedLine);
+
+						if (!matcher.find()) {
+							processErrorMessage(
+								fileName, "line break: " + fileName + " " +
+									lineCount);
+						}
 					}
 				}
 
@@ -2519,6 +2523,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\t(catch |else |finally |for |if |try |while ).*\\{\n\n\t+\\w");
 	private List<String> _javaTermAccessLevelModifierExclusions;
 	private List<String> _javaTermSortExclusions;
+	private Pattern _lineBreakPattern = Pattern.compile("\\}(\\)+) \\{");
 	private List<String> _lineLengthExclusions;
 	private Pattern _logPattern = Pattern.compile(
 		"\n\tprivate static Log _log = LogFactoryUtil.getLog\\(\n*" +

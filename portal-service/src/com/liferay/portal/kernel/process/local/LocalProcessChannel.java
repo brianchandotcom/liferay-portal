@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.concurrent.FutureListener;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessChannel;
-import com.liferay.portal.kernel.process.ProcessException;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -75,8 +74,7 @@ public class LocalProcessChannel<T extends Serializable>
 
 	@Override
 	public <V extends Serializable> NoticeableFuture<V> write(
-			ProcessCallable<V> processCallable)
-		throws ProcessException {
+		ProcessCallable<V> processCallable) {
 
 		long id = _idGenerator.getAndIncrement();
 
@@ -89,7 +87,7 @@ public class LocalProcessChannel<T extends Serializable>
 			_objectOutputStream.flush();
 		}
 		catch (IOException ioe) {
-			throw new ProcessException(ioe);
+			_asyncBroker.takeWithException(id, ioe);
 		}
 
 		return (NoticeableFuture<V>)noticeableFuture;

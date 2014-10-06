@@ -26,7 +26,6 @@ public interface ProcessChannel<T extends Serializable> {
 	public NoticeableFuture<T> getProcessNoticeableFuture();
 
 	public <V extends Serializable> NoticeableFuture<V> write(
-			ProcessCallable<V> processCallable)
-		throws ProcessException;
+		ProcessCallable<V> processCallable);
 
 }

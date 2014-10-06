@@ -558,7 +558,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select text_ from Image where imageId=?");
+				"select text_ from Image where imageId = ?");
 
 			ps.setLong(1, image.getImageId());
 

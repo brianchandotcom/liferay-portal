@@ -796,8 +796,8 @@ public class JavaClass {
 			}
 		}
 		else if (line.startsWith(_indent + "public ")) {
-			if (line.contains(" class ") || line.contains(" enum ") ||
-				line.contains(" interface ")) {
+			if (line.contains(" @interface ") || line.contains(" class ") ||
+				line.contains(" enum ") || line.contains(" interface ")) {
 
 				return new Tuple(getClassName(line), TYPE_CLASS_PUBLIC);
 			}
@@ -845,8 +845,8 @@ public class JavaClass {
 			}
 		}
 		else if (line.startsWith(_indent + "protected ")) {
-			if (line.contains(" class ") || line.contains(" enum ") ||
-				line.contains(" interface ")) {
+			if (line.contains(" @interface ") || line.contains(" class ") ||
+				line.contains(" enum ") || line.contains(" interface ")) {
 
 				return new Tuple(getClassName(line), TYPE_CLASS_PROTECTED);
 			}
@@ -891,8 +891,8 @@ public class JavaClass {
 			}
 		}
 		else if (line.startsWith(_indent + "private ")) {
-			if (line.contains(" class ") || line.contains(" enum ") ||
-				line.contains(" interface ")) {
+			if (line.contains(" @interface ") || line.contains(" class ") ||
+				line.contains(" enum ") || line.contains(" interface ")) {
 
 				return new Tuple(getClassName(line), TYPE_CLASS_PRIVATE);
 			}

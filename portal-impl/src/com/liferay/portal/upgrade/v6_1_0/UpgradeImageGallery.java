@@ -19,6 +19,7 @@ import com.liferay.portal.image.DatabaseHook;
 import com.liferay.portal.image.FileSystemHook;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.Hook;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
@@ -44,6 +45,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.documentlibrary.util.ImageProcessorUtil;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.sql.Connection;
@@ -549,6 +551,31 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		}
 	}
 
+	protected InputStream getImageAsAStream(Image image)
+		throws PortalException, SQLException {
+
+		InputStream is = null;
+
+		if (_sourceHook instanceof DatabaseHook) {
+			byte[] bytes = getImageBytesFromDB(image);
+
+			is = new UnsyncByteArrayInputStream(bytes);
+		}
+		else {
+			is = _sourceHook.getImageAsStream(image);
+		}
+
+		return is;
+	}
+
+	protected byte[] getImageAsBytes(Image image)
+		throws IOException, PortalException, SQLException {
+
+		InputStream is = getImageAsAStream(image);
+
+		return FileUtil.getBytes(is);
+	}
+
 	protected byte[] getImageBytesFromDB(Image image) throws SQLException {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -577,7 +604,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			DataAccess.cleanUp(con, ps, rs);
 		}
 
-		return null;
+		return new byte[0];
 	}
 
 	protected List<String> getResourceActionIds(
@@ -600,16 +627,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			long repositoryId, long companyId, String name, Image image)
 		throws Exception {
 
-		byte[] bytes = null;
-
-		if (_sourceHook instanceof DatabaseHook) {
-			bytes = getImageBytesFromDB(image);
-		}
-		else {
-			InputStream is = _sourceHook.getImageAsStream(image);
-
-			bytes = FileUtil.getBytes(is);
-		}
+		byte[] bytes = getImageAsBytes(image);
 
 		if (name == null) {
 			name = image.getImageId() + StringPool.PERIOD + image.getType();
@@ -697,16 +715,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 				if (rs.next()) {
 					long fileVersionId = rs.getLong(1);
 
-					InputStream is = null;
-
-					if (_sourceHook instanceof DatabaseHook) {
-						byte[] bytes = getImageBytesFromDB(thumbnailImage);
-
-						is = new UnsyncByteArrayInputStream(bytes);
-					}
-					else {
-						is = _sourceHook.getImageAsStream(thumbnailImage);
-					}
+					InputStream is = getImageAsAStream(thumbnailImage);
 
 					ImageProcessorUtil.storeThumbnail(
 						companyId, groupId, fileEntryId, fileVersionId,

@@ -189,41 +189,6 @@ public class LiferaySyncCapability implements SyncCapability {
 	}
 
 	protected void registerDLSyncEventCallback(
-		final String event, final String type, final long typePK) {
-
-		DLSyncEvent dlSyncEvent = DLSyncEventLocalServiceUtil.addDLSyncEvent(
-			event, type, typePK);
-
-		final long modifiedTime = dlSyncEvent.getModifiedTime();
-
-		TransactionCommitCallbackRegistryUtil.registerCallback(
-			new Callable<Void>() {
-
-				@Override
-				public Void call() throws Exception {
-					Message message = new Message();
-
-					Map<String, Object> values = new HashMap<String, Object>(4);
-
-					values.put("event", event);
-					values.put("modifiedTime", modifiedTime);
-					values.put("type", type);
-					values.put("typePK", typePK);
-
-					message.setValues(values);
-
-					MessageBusUtil.sendMessage(
-						DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR,
-						message);
-
-					return null;
-				}
-
-			}
-		);
-	}
-
-	protected void registerDLSyncEventCallback(
 			String event, FileEntry fileEntry)
 		throws PortalException {
 
@@ -256,6 +221,41 @@ public class LiferaySyncCapability implements SyncCapability {
 
 		registerDLSyncEventCallback(
 			event, DLSyncConstants.TYPE_FOLDER, folder.getFolderId());
+	}
+
+	protected void registerDLSyncEventCallback(
+		final String event, final String type, final long typePK) {
+
+		DLSyncEvent dlSyncEvent = DLSyncEventLocalServiceUtil.addDLSyncEvent(
+			event, type, typePK);
+
+		final long modifiedTime = dlSyncEvent.getModifiedTime();
+
+		TransactionCommitCallbackRegistryUtil.registerCallback(
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					Message message = new Message();
+
+					Map<String, Object> values = new HashMap<String, Object>(4);
+
+					values.put("event", event);
+					values.put("modifiedTime", modifiedTime);
+					values.put("type", type);
+					values.put("typePK", typePK);
+
+					message.setValues(values);
+
+					MessageBusUtil.sendMessage(
+						DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR,
+						message);
+
+					return null;
+				}
+
+			}
+		);
 	}
 
 	protected <S extends RepositoryEventType, T>

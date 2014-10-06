@@ -88,6 +88,16 @@ public class JavaTerm {
 
 			String parameterType = parameters.substring(0, x);
 
+			if (parameterType.equals("final")) {
+				int y = parameters.indexOf(StringPool.SPACE, x + 1);
+
+				if (y == -1) {
+					return _parameterTypes;
+				}
+
+				parameterType = parameters.substring(x + 1, y);
+			}
+
 			_parameterTypes.add(parameterType);
 
 			int y = parameters.indexOf(StringPool.COMMA);

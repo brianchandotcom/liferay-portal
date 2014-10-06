@@ -98,6 +98,19 @@ public class JMXProxyUtil {
 		};
 	}
 
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target(ElementType.METHOD)
+	public @interface Optional {
+	}
+
+	public interface ProcessCallableExecutor {
+
+		public <V extends Serializable> NoticeableFuture<V> execute(
+			ProcessCallable<V> processCallable)
+		throws ProcessException;
+
+	}
+
 	protected static Object decode(
 		Class<?> decodedClass, Serializable serializable) {
 
@@ -259,19 +272,6 @@ public class JMXProxyUtil {
 		}
 
 		return false;
-	}
-
-	@Retention(RetentionPolicy.RUNTIME)
-	@Target(ElementType.METHOD)
-	public @interface Optional {
-	}
-
-	public interface ProcessCallableExecutor {
-
-		public <V extends Serializable> NoticeableFuture<V> execute(
-			ProcessCallable<V> processCallable)
-		throws ProcessException;
-
 	}
 
 	protected static class GetAttributeProcessCallable

@@ -1637,6 +1637,30 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		portletPreferences.setValues(key, newValues);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #validateMissingReferences(PortletDataContext)}
+	 */
+	@Deprecated
+	@Override
+	public MissingReferences validateMissingReferences(
+			long userId, long groupId, Map<String, String[]> parameterMap,
+			File file)
+		throws Exception {
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		String userIdStrategy = MapUtil.getString(
+			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
+		PortletDataContext portletDataContext =
+			PortletDataContextFactoryUtil.createImportPortletDataContext(
+				group.getCompanyId(), groupId, parameterMap,
+				getUserIdStrategy(userId, userIdStrategy), zipReader);
+
+		return validateMissingReferences(portletDataContext);
+	}
+
 	@Override
 	public MissingReferences validateMissingReferences(
 			final PortletDataContext portletDataContext)
@@ -1669,30 +1693,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				portletDataContext.getZipEntryAsInputStream("/manifest.xml")));
 
 		return missingReferences;
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #validateMissingReferences(PortletDataContext)}
-	 */
-	@Deprecated
-	@Override
-	public MissingReferences validateMissingReferences(
-			long userId, long groupId, Map<String, String[]> parameterMap,
-			File file)
-		throws Exception {
-
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-		String userIdStrategy = MapUtil.getString(
-			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
-		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
-
-		PortletDataContext portletDataContext =
-			PortletDataContextFactoryUtil.createImportPortletDataContext(
-				group.getCompanyId(), groupId, parameterMap,
-				getUserIdStrategy(userId, userIdStrategy), zipReader);
-
-		return validateMissingReferences(portletDataContext);
 	}
 
 	@Override

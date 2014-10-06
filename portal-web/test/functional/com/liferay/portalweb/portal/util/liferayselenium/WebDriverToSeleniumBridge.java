@@ -415,14 +415,14 @@ public class WebDriverToSeleniumBridge
 		String locatorOfDragDestinationObject) {
 
 		int x = WebDriverHelper.getElementPositionCenterX(
-				this, locatorOfDragDestinationObject);
-	
+			this, locatorOfDragDestinationObject);
+
 		x -= WebDriverHelper.getElementPositionCenterX(
 			this, locatorOfObjectToBeDragged);
 
 		int y = WebDriverHelper.getElementPositionCenterY(
 			this, locatorOfDragDestinationObject);
-		
+
 		y -= WebDriverHelper.getElementPositionCenterY(
 			this, locatorOfObjectToBeDragged);
 

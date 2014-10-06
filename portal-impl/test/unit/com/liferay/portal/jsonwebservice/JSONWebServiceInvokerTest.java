@@ -134,9 +134,9 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		// Style 1
 
-		Map<String, Object> map = new LinkedHashMap<>();
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
 
-		Map<String, Object> params = new LinkedHashMap<>();
+		Map<String, Object> params = new LinkedHashMap<String, Object>();
 
 		params.put("+fooData", null);
 
@@ -221,7 +221,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		params.clear();
 
-		Map<String, Object> fooObj = new HashMap<>();
+		Map<String, Object> fooObj = new HashMap<String, Object>();
 
 		fooObj.put("name", "Jane Doe");
 

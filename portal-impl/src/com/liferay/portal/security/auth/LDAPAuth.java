@@ -363,7 +363,10 @@ public class LDAPAuth implements Authenticator {
 			String password)
 		throws Exception {
 
-		if (!AuthSettingsUtil.isLDAPAuthEnabled(companyId)) {
+		if (!PrefsPropsUtil.getBoolean(
+				companyId, PropsKeys.LDAP_AUTH_ENABLED,
+				PropsValues.LDAP_AUTH_ENABLED)) {
+
 			if (_log.isDebugEnabled()) {
 				_log.debug("Authenticator is not enabled");
 			}

@@ -19,7 +19,7 @@
 <%
 String authenticationURL = currentURL + "#_LFR_FN_authentication";
 
-boolean ldapAuthEnabled = AuthSettingsUtil.isLDAPAuthEnabled(company.getCompanyId());
+boolean ldapAuthEnabled = PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.LDAP_AUTH_ENABLED, PropsValues.LDAP_AUTH_ENABLED);
 boolean ldapAuthRequired = PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.LDAP_AUTH_REQUIRED);
 boolean ldapImportEnabled = PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.LDAP_IMPORT_ENABLED, PropsValues.LDAP_IMPORT_ENABLED);
 boolean ldapImportOnStartup = PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.LDAP_IMPORT_ON_STARTUP);

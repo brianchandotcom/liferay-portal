@@ -45,7 +45,10 @@ public class SiteMinderAutoLogin extends BaseAutoLogin {
 
 		long companyId = company.getCompanyId();
 
-		if (!AuthSettingsUtil.isSiteMinderEnabled(companyId)) {
+		if (!PrefsPropsUtil.getBoolean(
+				companyId, PropsKeys.SITEMINDER_AUTH_ENABLED,
+				PropsValues.SITEMINDER_AUTH_ENABLED)) {
+
 			return null;
 		}
 

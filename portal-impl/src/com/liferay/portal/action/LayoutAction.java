@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.servlet.MetaInfoCacheServletResponse;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -32,11 +31,11 @@ import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.sso.SSOUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletRequestImpl;
@@ -116,18 +115,8 @@ public class LayoutAction extends Action {
 						redirectParam;
 				}
 
-				String authLoginURL = null;
-
-				if (PrefsPropsUtil.getBoolean(
-						themeDisplay.getCompanyId(), PropsKeys.CAS_AUTH_ENABLED,
-						PropsValues.CAS_AUTH_ENABLED) ||
-					PrefsPropsUtil.getBoolean(
-						themeDisplay.getCompanyId(),
-						PropsKeys.OPEN_SSO_AUTH_ENABLED,
-						PropsValues.OPEN_SSO_AUTH_ENABLED)) {
-
-					authLoginURL = themeDisplay.getURLSignIn();
-				}
+				String authLoginURL = SSOUtil.getSignInUrl(
+					themeDisplay.getCompanyId(), themeDisplay.getURLSignIn());
 
 				if (Validator.isNull(authLoginURL)) {
 					authLoginURL = PortalUtil.getSiteLoginURL(themeDisplay);

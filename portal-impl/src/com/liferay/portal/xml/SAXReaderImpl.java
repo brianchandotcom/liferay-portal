@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.kernel.xml.Text;
 import com.liferay.portal.kernel.xml.XMLSchema;
 import com.liferay.portal.kernel.xml.XPath;
+import com.liferay.portal.security.xml.SecureXMLBuilderUtil;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.EntityResolver;
 import com.liferay.portal.util.PropsValues;
@@ -46,8 +47,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.xerces.parsers.SAXParser;
 
 import org.dom4j.DocumentFactory;
 
@@ -557,12 +556,12 @@ public class SAXReaderImpl implements SAXReader {
 		}
 
 		try {
-			reader = new org.dom4j.io.SAXReader(new SAXParser(), validate);
+			reader = new org.dom4j.io.SAXReader(
+				SecureXMLBuilderUtil.newXMLReader(), validate);
 
 			reader.setEntityResolver(new EntityResolver());
 
 			reader.setFeature(_FEATURES_DYNAMIC, validate);
-			reader.setFeature(_FEATURES_EXTERNAL_GENERAL_ENTITIES, validate);
 			reader.setFeature(_FEATURES_LOAD_DTD_GRAMMAR, validate);
 			reader.setFeature(_FEATURES_LOAD_EXTERNAL_DTD, validate);
 			reader.setFeature(_FEATURES_VALIDATION, validate);

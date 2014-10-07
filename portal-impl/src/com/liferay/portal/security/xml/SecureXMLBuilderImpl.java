@@ -14,10 +14,12 @@
 
 package com.liferay.portal.security.xml;
 
-import org.xml.sax.XMLReader;
-
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.stream.XMLInputFactory;
+
+import org.apache.xerces.parsers.SAXParser;
+
+import org.xml.sax.XMLReader;
 
 /**
  * @author Tomas Polesovsky
@@ -26,17 +28,17 @@ public class SecureXMLBuilderImpl implements SecureXMLBuilder {
 
 	@Override
 	public DocumentBuilderFactory newDocumentBuilderFactory() {
-		return null;
+		return DocumentBuilderFactory.newInstance();
 	}
 
 	@Override
 	public XMLInputFactory newXMLInputFactory() {
-		return null;
+		return XMLInputFactory.newFactory();
 	}
 
 	@Override
 	public XMLReader newXMLReader() {
-		return null;
+		return new SAXParser();
 	}
 
 }

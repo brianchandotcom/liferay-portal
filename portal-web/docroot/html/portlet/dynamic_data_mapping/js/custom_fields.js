@@ -1043,17 +1043,42 @@ AUI.add(
 
 					fieldNamespace: {
 						value: 'ddm'
+					},
+
+					localizable: {
+						setter: booleanParse,
+						value: false
 					}
 				},
 
-				EXTENDS: A.FormBuilderTextField,
+				EXTENDS: A.FormBuilderField,
 
 				NAME: 'ddm-geolocation',
 
 				prototype: {
 					getHTML: function() {
 						return TPL_GEOLOCATION;
-					}
+					},
+
+					getPropertyModel: function() {
+			            var instance = this,
+			                strings = instance.getStrings();
+
+			            var model = DDMGeolocationField.superclass.getPropertyModel.apply(instance, arguments);
+
+			            AArray.each(
+							model,
+							function(item, index) {
+								var attributeName = item.attributeName;
+
+								if (attributeName === 'predefinedValue') {
+									model.splice(index, 1);
+								}
+							}
+						);
+
+			            return model;
+			        }
 				}
 			}
 		);

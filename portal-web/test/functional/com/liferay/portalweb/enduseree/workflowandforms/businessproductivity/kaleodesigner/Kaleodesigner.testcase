@@ -447,6 +447,44 @@
 		</execute>
 	</command>
 
+	<command name="PublishFromSourceTabAndViewNameChange" priority="5">
+		<description message="This is a use case for LPS-43214 and LPS-50269." />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="Test Definition" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editSourceXML">
+			<var name="kdsourceXML" value=" NAME EDIT " />
+			<var name="linePNG" value="name" />
+		</execute>
+
+		<execute macro="KaleoDesigner#publishWorkflowDefinitionViaWorkflowCP" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<var name="key_workflowDefinitionName" value="Test D NAME EDIT efinition" />
+
+		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_NAME" value1="Test D NAME EDIT efinition" />
+
+		<execute macro="KaleoDesigner#editWorkflowDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="Test Definition" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewSourceXMLTab" />
+
+		<execute macro="KaleoDesigner#viewSourceXMLLine">
+			<var name="kdsourceXML"><![CDATA[<name>Test D NAME EDIT efinition</name>]]></var>
+			<var name="line" value="3" />
+		</execute>
+	</command>
+
 	<command name="RedoDraftDefinition" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Kaleo Designer" />
@@ -783,7 +821,7 @@
 			<var name="workflowDefinitionTitle" value="Uploaded Definition" />
 		</execute>
 
-		<execute macro="KaleoDesigner#viewSourceXML">
+		<execute macro="KaleoDesigner#viewSourceXMLLine">
 			<var name="kdsourceXML" ><![CDATA[<![CDATA[The file sent by]]></var>
 			<var name="line" value="16" />
 		</execute>
@@ -801,13 +839,16 @@
 		</execute>
 
 		<execute macro="KaleoDesigner#editSourceXML">
-			<var name="kdsourceXML" value=" " />
-			<var name="line" value="16" />
+			<var name="kdsourceXML" value="INVALID" />
+			<var name="linePNG" value="state" />
 		</execute>
 
-		<execute macro="KaleoDesigner#viewSourceXML">
-			<var name="kdsourceXML"><![CDATA[<initial>tr rget>review</target>]]></var>
-			<var name="line" value="9" />
+		<execute macro="KaleoDesigner#viewViewTab" />
+		<execute macro="KaleoDesigner#viewSourceXMLTab" />
+
+		<execute macro="KaleoDesigner#viewSourceXMLLine">
+			<var name="kdsourceXML"><![CDATA[<stINVALIDate>]]></var>
+			<var name="line" value="6" />
 		</execute>
 	</command>
 
@@ -833,7 +874,7 @@
 			<var name="workflowDefinitionTitle" value="Uploaded Definition" />
 		</execute>
 
-		<execute macro="KaleoDesigner#viewSourceXML">
+		<execute macro="KaleoDesigner#viewSourceXMLLine">
 			<var name="kdsourceXML" ><![CDATA[<![CDATA[A file has been submitted.]]></var>
 			<var name="line" value="15" />
 		</execute>
@@ -843,7 +884,6 @@
 		</execute>
 
 		<execute macro="Workflow#deactivateAddedWorkflowDefinition" />
-
 		<execute macro="Workflow#deleteWorkflowDefinition" />
 
 		<execute macro="Workflow#uploadDefinition">
@@ -861,7 +901,7 @@
 			<var name="workflowDefinitionTitle" value="Uploaded Definition" />
 		</execute>
 
-		<execute macro="KaleoDesigner#viewSourceXML">
+		<execute macro="KaleoDesigner#viewSourceXMLLine">
 			<var name="kdsourceXML" ><![CDATA[<![CDATA[The file sent by]]></var>
 			<var name="line" value="16" />
 		</execute>

@@ -323,13 +323,9 @@
 		<execute action="Kaleodesigner#assertClick" locator-key1="SOURCE_KALEO_XML_TAB" value1="Source (Kaleo XML)" />
 		<execute action="Kaleodesigner#pause" locator1="1000" />
 
-		<var name="key_line" value="${line}" />
+		<var name="key_linePNG" value="${linePNG?lowercase()}" />
 
-		<execute action="Kaleodesigner#scrollWebElementIntoView" locator-key1="SOURCE_KALEO_XML_CONTENT_SPECIFIC_LINE" />
-		<execute action="Kaleodesigner#sikuliType" locator-key1="SOURCE_KALEO_XML_CONTENT_TRANSITION_TAG_PNG" value1="${kdsourceXML}" />
-		<execute action="Kaleodesigner#pause" locator1="1000" />
-		<execute action="Kaleodesigner#assertClick" locator-key1="VIEW_TAB" value1="View" />
-		<execute action="Kaleodesigner#pause" locator1="1000" />
+		<execute action="Kaleodesigner#sikuliType" locator-key1="SOURCE_KALEO_XML_CONTENT_TAG_PNG" value1="${kdsourceXML}" />
 	</command>
 
 	<command name="editWorkflowDefinitionTitleViaWorkflowCP">
@@ -550,15 +546,17 @@
 		<execute action="CPKaleodesignerconfiguration#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No workflow definitions are defined." />
 	</command>
 
-	<command name="viewSourceXML">
-		<execute action="Kaleodesigner#assertClick" locator-key1="SOURCE_KALEO_XML_TAB" value1="Source (Kaleo XML)" />
-		<execute action="Kaleodesigner#pause" locator1="1000" />
-
+	<command name="viewSourceXMLLine">
 		<var name="key_line" value="${line}" />
 
 		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SOURCE_KALEO_XML_CONTENT_SPECIFIC_LINE" value1="${kdsourceXML}" />
 		<execute action="Kaleodesigner#pause" locator1="1000" />
 		<execute action="Kaleodesigner#assertClick" locator-key1="VIEW_TAB" value1="View" />
+		<execute action="Kaleodesigner#pause" locator1="1000" />
+	</command>
+
+	<command name="viewSourceXMLTab">
+		<execute action="Kaleodesigner#assertClick" locator-key1="SOURCE_KALEO_XML_TAB" value1="Source (Kaleo XML)" />
 		<execute action="Kaleodesigner#pause" locator1="1000" />
 	</command>
 
@@ -582,5 +580,10 @@
 		<execute action="CPKaleodesignerconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_DRAFT_VERSION" value1="1" />
 		<execute action="CPKaleodesignerconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_PUBLISHED" value1="Yes" />
 		<execute action="CPKaleodesignerconfiguration#assertElementPresent" locator-key1="DEFINITION_TABLE_ACTIONS" />
+	</command>
+
+	<command name="viewViewTab">
+		<execute action="Kaleodesigner#assertClick" locator-key1="VIEW_TAB" value1="View" />
+		<execute action="Kaleodesigner#pause" locator1="1000" />
 	</command>
 </definition>

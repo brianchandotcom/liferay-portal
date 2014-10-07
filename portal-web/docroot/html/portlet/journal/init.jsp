@@ -56,7 +56,6 @@ page import="com.liferay.portlet.journal.model.JournalFeed" %><%@
 page import="com.liferay.portlet.journal.model.JournalFeedConstants" %><%@
 page import="com.liferay.portlet.journal.model.JournalFolder" %><%@
 page import="com.liferay.portlet.journal.model.JournalFolderConstants" %><%@
-page import="com.liferay.portlet.journal.model.impl.JournalArticleImpl" %><%@
 page import="com.liferay.portlet.journal.search.ArticleDisplayTerms" %><%@
 page import="com.liferay.portlet.journal.search.EntriesChecker" %><%@
 page import="com.liferay.portlet.journal.search.FeedDisplayTerms" %><%@

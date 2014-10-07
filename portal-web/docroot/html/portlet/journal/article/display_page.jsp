@@ -34,7 +34,6 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
 		<%
 		String defaultLanguageId = (String)request.getAttribute("edit_article.jsp-defaultLanguageId");
-		String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageId");
 
 		String layoutUuid = BeanParamUtil.getString(article, request, "layoutUuid");
 

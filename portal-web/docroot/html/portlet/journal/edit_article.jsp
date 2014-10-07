@@ -91,8 +91,6 @@ if (ddmTemplate == null) {
 
 String defaultLanguageId = ParamUtil.getString(request, "defaultLanguageId");
 
-String toLanguageId = ParamUtil.getString(request, "toLanguageId");
-
 if (Validator.isNull(defaultLanguageId) || !LanguageUtil.isAvailableLocale(themeDisplay.getSiteGroupId(), defaultLanguageId)) {
 	if (article != null) {
 		defaultLanguageId = article.getDefaultLanguageId();
@@ -106,10 +104,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 String[] mainSections = PropsValues.JOURNAL_ARTICLE_FORM_ADD;
 
-if (Validator.isNotNull(toLanguageId)) {
-	mainSections = PropsValues.JOURNAL_ARTICLE_FORM_TRANSLATE;
-}
-else if (classNameId > JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
+if (classNameId > JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
 	mainSections = PropsValues.JOURNAL_ARTICLE_FORM_DEFAULT_VALUES;
 }
 else if ((article != null) && (article.getId() > 0)) {
@@ -124,7 +119,6 @@ request.setAttribute("edit_article.jsp-structure", ddmStructure);
 request.setAttribute("edit_article.jsp-template", ddmTemplate);
 
 request.setAttribute("edit_article.jsp-defaultLanguageId", defaultLanguageId);
-request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 %>
 
 <div class="article-form <%= ((article != null) && !article.isNew()) ? "article-form-edit" : "article-form-add" %>">
@@ -163,7 +157,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 		<aui:input name="articleId" type="hidden" value="<%= articleId %>" />
 		<aui:input name="articleIds" type="hidden" value="<%= articleId + EditArticleAction.VERSION_SEPARATOR + version %>" />
 		<aui:input name="version" type="hidden" value="<%= ((article == null) || article.isNew()) ? version : article.getVersion() %>" />
-		<aui:input name="languageId" type="hidden" value="<%= Validator.isNotNull(toLanguageId) ? toLanguageId : defaultLanguageId %>" />
+		<aui:input name="languageId" type="hidden" value="<%= defaultLanguageId %>" />
 		<aui:input name="articleURL" type="hidden" value="<%= editArticleRenderURL %>" />
 		<aui:input name="ddmStructureId" type="hidden" />
 		<aui:input name="ddmTemplateId" type="hidden" />
@@ -192,12 +186,10 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 
 		<div class="journal-article-wrapper" id="<portlet:namespace />journalArticleWrapper">
 			<div class="journal-article-wrapper-content">
-				<c:if test="<%= Validator.isNull(toLanguageId) %>">
-					<c:if test="<%= (article != null) && !article.isNew() %>">
-						<aui:workflow-status id="<%= String.valueOf(article.getArticleId()) %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" version="<%= String.valueOf(article.getVersion()) %>" />
+				<c:if test="<%= (article != null) && !article.isNew() %>">
+					<aui:workflow-status id="<%= String.valueOf(article.getArticleId()) %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" version="<%= String.valueOf(article.getVersion()) %>" />
 
-						<liferay-util:include page="/html/portlet/journal/article_toolbar.jsp" />
-					</c:if>
+					<liferay-util:include page="/html/portlet/journal/article_toolbar.jsp" />
 				</c:if>
 
 				<liferay-util:buffer var="htmlTop">
@@ -276,60 +268,27 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 						}
 						%>
 
-						<c:choose>
-							<c:when test="<%= Validator.isNull(toLanguageId) %>">
-								<c:if test="<%= hasSavePermission %>">
-									<aui:button data-cmd="<%= Constants.PUBLISH %>" disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
+						<c:if test="<%= hasSavePermission %>">
+							<aui:button data-cmd="<%= Constants.PUBLISH %>" disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
 
-									<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
-										<aui:button data-cmd="<%= ((article == null) || Validator.isNull(article.getArticleId())) ? Constants.ADD : Constants.UPDATE %>" name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
-									</c:if>
-								</c:if>
-							</c:when>
-							<c:otherwise>
-								<aui:button data-cmd="<%= Constants.TRANSLATE %>" name="translateButton" type="submit" value="save" />
+							<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
+								<aui:button data-cmd="<%= ((article == null) || Validator.isNull(article.getArticleId())) ? Constants.ADD : Constants.UPDATE %>" name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
+							</c:if>
+						</c:if>
 
-								<%
-								String[] translations = article.getAvailableLanguageIds();
-								%>
-
-								<aui:button data-cmd="<%= Constants.DELETE_TRANSLATION %>" disabled="<%= toLanguageId.equals(defaultLanguageId) || !ArrayUtil.contains(translations, toLanguageId) %>" name="removeArticleLocaleButton" value="remove-translation" />
-							</c:otherwise>
-						</c:choose>
 						<aui:button href="<%= redirect %>" type="cancel" />
 					</aui:button-row>
 				</liferay-util:buffer>
 
-				<c:choose>
-					<c:when test="<%= Validator.isNull(toLanguageId) %>">
-						<liferay-ui:form-navigator
-							categoryNames="<%= _CATEGORY_NAMES %>"
-							categorySections="<%= categorySections %>"
-							formName="fm1"
-							htmlBottom="<%= htmlBottom %>"
-							htmlTop="<%= htmlTop %>"
-							jspPath="/html/portlet/journal/article/"
-							showButtons="<%= false %>"
-						/>
-					</c:when>
-					<c:otherwise>
-
-						<%
-						for (String section : mainSections) {
-						%>
-
-							<div class="form-section">
-								<liferay-util:include page='<%= "/html/portlet/journal/article/" + _getSectionJsp(section) + ".jsp" %>' />
-							</div>
-
-						<%
-						}
-						%>
-
-						<%= htmlBottom %>
-
-					</c:otherwise>
-				</c:choose>
+				<liferay-ui:form-navigator
+					categoryNames="<%= _CATEGORY_NAMES %>"
+					categorySections="<%= categorySections %>"
+					formName="fm1"
+					htmlBottom="<%= htmlBottom %>"
+					htmlTop="<%= htmlTop %>"
+					jspPath="/html/portlet/journal/article/"
+					showButtons="<%= false %>"
+				/>
 			</div>
 		</div>
 	</aui:form>

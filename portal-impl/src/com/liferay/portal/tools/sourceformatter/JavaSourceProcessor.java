@@ -1105,23 +1105,19 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	protected String fixIncorrectEmptyLineBeforeCloseCurlyBrace(
 		String content, String fileName) {
 
-		if (fileName.endsWith("AnnotationLocatorTest.java")) {
-			return content;
-		}
+		Matcher matcher1 = _incorrectCloseCurlyBracePattern1.matcher(content);
 
-		Matcher matcher = _incorrectCloseCurlyBracePattern.matcher(content);
-
-		while (matcher.find()) {
-			String lastLine = StringUtil.trimLeading(matcher.group(1));
+		while (matcher1.find()) {
+			String lastLine = StringUtil.trimLeading(matcher1.group(1));
 
 			if (lastLine.startsWith("// ")) {
 				continue;
 			}
 
-			String tabs = matcher.group(2);
+			String tabs = matcher1.group(2);
 			int tabCount = tabs.length();
 
-			int pos = matcher.start();
+			int pos = matcher1.start();
 
 			while (true) {
 				pos = content.lastIndexOf("\n" + tabs, pos - 1);
@@ -1130,18 +1126,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					continue;
 				}
 
-				String codeBlock = content.substring(
-					pos + tabCount + 1, matcher.end());
+				String codeBlock = content.substring(pos + 1, matcher1.end());
 
 				String firstLine = codeBlock.substring(
 					0, codeBlock.indexOf("\n"));
 
-				if (firstLine.contains(" class ") ||
-					firstLine.contains(" enum ") ||
-					firstLine.contains(" interface ") ||
-					firstLine.startsWith("new ") ||
-					firstLine.contains(" new ")) {
+				Matcher matcher2 = _incorrectCloseCurlyBracePattern2.matcher(
+					firstLine);
 
+				if (matcher2.find()) {
 					break;
 				}
 
@@ -2517,8 +2510,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private List<String> _fitOnSingleLineExclusions;
 	private List<String> _hibernateSQLQueryExclusions;
 	private Set<String> _immutableFieldTypes;
-	private Pattern _incorrectCloseCurlyBracePattern = Pattern.compile(
+	private Pattern _incorrectCloseCurlyBracePattern1 = Pattern.compile(
 		"\n(.+)\n\n(\t+)}\n");
+	private Pattern _incorrectCloseCurlyBracePattern2 = Pattern.compile(
+		"(\t| )@?(class |enum |interface |new )");
 	private Pattern _incorrectLineBreakPattern = Pattern.compile(
 		"\t(catch |else |finally |for |if |try |while ).*\\{\n\n\t+\\w");
 	private List<String> _javaTermAccessLevelModifierExclusions;

@@ -455,7 +455,6 @@ public class AnnotationLocatorTest {
 	}
 
 	private Method _method(final int value) {
-
 		return new Method() {
 
 			@Override
@@ -469,7 +468,6 @@ public class AnnotationLocatorTest {
 			}
 
 		};
-
 	}
 
 	private void _methodListLocate(

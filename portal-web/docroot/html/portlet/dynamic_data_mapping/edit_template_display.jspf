@@ -52,11 +52,10 @@ if (Validator.isNotNull(scriptContent)) {
 
 										<%
 										for (TemplateVariableDefinition templateVariableDefinition : templateVariableGroup.getTemplateVariableDefinitions()) {
-											String[] dataContentArray = _getDataContentArray(templateVariableDefinition, language);
 										%>
 
 											<li class="palette-item-container">
-												<span class="palette-item" data-content1="<%= HtmlUtil.escapeAttribute(dataContentArray[0]) %>" <c:if test="<%= Validator.isNotNull(dataContentArray[1]) %>">data-content2="<%= HtmlUtil.escapeAttribute(dataContentArray[1]) %>"</c:if> <c:if test="<%= Validator.isNotNull(dataContentArray[2]) %>">data-content3="<%= HtmlUtil.escapeAttribute(dataContentArray[2]) %>"</c:if> data-title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(request, templateVariableDefinition)) %>">
+												<span class="palette-item" data-content="<%= HtmlUtil.escapeAttribute(_getDataContent(templateVariableDefinition, language)) %>" data-title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(request, templateVariableDefinition)) %>">
 													<liferay-ui:message key="<%= templateVariableDefinition.getLabel() %>" /><c:if test="<%= templateVariableDefinition.isCollection() || templateVariableDefinition.isRepeatable() %>">*</c:if>
 												</span>
 											</li>
@@ -239,35 +238,13 @@ if (Validator.isNotNull(scriptContent)) {
 
 			var item = event.currentTarget;
 
-			var contentAttrs = Util.getAttributes(item, 'data-content');
-
-			var cursorPos;
-			var processed;
-
 			var aceAutocomplete = richEditor['ace-autocomplete-plugin'];
 
 			aceAutocomplete._lockEditor = true;
 
-			AObject.each(
-				contentAttrs,
-				function(item, index) {
-					if (processed) {
-						editor.insert('\n');
+			var content = item.attr('data-content');
 
-						cursorPos = editor.getCursorPosition();
-
-						editor.insert('\n');
-					}
-
-					processed = true;
-
-					editor.insert(item);
-				}
-			);
-
-			if (cursorPos) {
-				editor.moveCursorToPosition(cursorPos);
-			}
+			editor.insert(content);
 
 			editor.focus();
 
@@ -488,56 +465,58 @@ private String _getAccessor(String accessor, String language) {
 	return accessor;
 }
 
-private String[] _getDataContentArray(TemplateVariableDefinition templateVariableDefinition, String language) {
-	String[] dataContentArray = new String[] {StringPool.BLANK, StringPool.BLANK, StringPool.BLANK};
+private String _getDataContent(TemplateVariableDefinition templateVariableDefinition, String language) {
+	String dataContent = StringPool.BLANK;
 
 	String dataType = templateVariableDefinition.getDataType();
 
 	if (templateVariableDefinition.isCollection()) {
 		TemplateVariableDefinition itemTemplateVariableDefinition = templateVariableDefinition.getItemTemplateVariableDefinition();
 
-		String[] listCodeArray = _getListCodeArray(templateVariableDefinition.getName(), itemTemplateVariableDefinition.getName(), itemTemplateVariableDefinition.getAccessor(), language);
-
-		dataContentArray[0] = listCodeArray[0];
-		dataContentArray[1] = listCodeArray[1];
+		dataContent = _getListCode(templateVariableDefinition.getName(), itemTemplateVariableDefinition.getName(), itemTemplateVariableDefinition.getAccessor(), language);
 	}
 	else if (Validator.isNull(dataType)) {
-		dataContentArray[0] = _getVariableReferenceCode(templateVariableDefinition.getName(), templateVariableDefinition.getAccessor(), language);
+		dataContent = _getVariableReferenceCode(templateVariableDefinition.getName(), templateVariableDefinition.getAccessor(), language);
 	}
 	else if (dataType.equals("service-locator")) {
 		Class<?> templateVariableDefinitionClass = templateVariableDefinition.getClazz();
 
 		String variableName = templateVariableDefinitionClass.getSimpleName();
 
-		dataContentArray[0] = _getVariableAssignmentCode(variableName, "serviceLocator.findService(\"" + templateVariableDefinition.getName() + "\")", language);
-		dataContentArray[1] = _getVariableReferenceCode(variableName, null, language);
+		StringBundler sb = new StringBundler(2);
+
+		sb.append(_getVariableAssignmentCode(variableName, "serviceLocator.findService(\"" + templateVariableDefinition.getName() + "\")", language));
+		sb.append(_getVariableReferenceCode(variableName, null, language));
+
+		dataContent = sb.toString();
 	}
 	else {
 		try {
-			dataContentArray = templateVariableDefinition.generateCode(language);
+			String[] generateCode = templateVariableDefinition.generateCode(language);
+
+			dataContent = generateCode[0];
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
 	}
 
-	return dataContentArray;
+	return dataContent;
 }
 
-private String[] _getListCodeArray(
-	String variableName, String itemName, String accessor, String language) {
-	String[] listCodeArray = new String[2];
+private String _getListCode(String variableName, String itemName, String accessor, String language) {
+	StringBundler sb = new StringBundler(2);
 
 	if (StringUtil.equalsIgnoreCase(language, "ftl")) {
-		listCodeArray[0] = "<#if " + variableName + "?has_content>\n\t<#list " + variableName + " as " + itemName + ">\n\t\t" + _getVariableReferenceCode(itemName, accessor, language);
-		listCodeArray[1] = "\n\t</#list>\n</#if>";
+		sb.append("<#if " + variableName + "?has_content>\n\t<#list " + variableName + " as " + itemName + ">\n\t\t" + _getVariableReferenceCode(itemName, accessor, language));
+		sb.append("\n\t</#list>\n</#if>");
 	}
 	else if (StringUtil.equalsIgnoreCase(language, "vm")) {
-		listCodeArray[0] = "#if (!$"+ variableName + ".isEmpty())\n\t#foreach ($" + itemName + " in $" + variableName + ")\n\t\t" + _getVariableReferenceCode(itemName, accessor, language);
-		listCodeArray[1] = "#end\n#end";
+		sb.append("#if (!$"+ variableName + ".isEmpty())\n\t#foreach ($" + itemName + " in $" + variableName + ")\n\t\t" + _getVariableReferenceCode(itemName, accessor, language));
+		sb.append("#end\n#end");
 	}
 
-	return listCodeArray;
+	return sb.toString();
 }
 
 private String _getPaletteItemTitle(HttpServletRequest request, String label, Class<?> clazz) {

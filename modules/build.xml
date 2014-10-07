@@ -17,6 +17,7 @@
 		<dirset dir="apps/xsl-content" includes="*" />
 		<dirset dir="core" includes="*" />
 		<dirset dir="portal" includes="*" />
+		<pathelement location="test/liferay-arquillian-extension"/>
 	</path>
 
 	<pathconvert pathsep="," property="plugins.includes.path" refid="plugins.includes.path" targetos="unix" />

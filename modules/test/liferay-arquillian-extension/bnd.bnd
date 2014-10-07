@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Arquillian Extension
+Bundle-SymbolicName: com.liferay.arquillian.extension
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.arquillian.extension
+Include-Resource: classes

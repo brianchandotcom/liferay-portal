@@ -32,7 +32,7 @@ public class UnlocalizedValue implements Value {
 
 	@Override
 	public void addString(Locale locale, String value) {
-		throw new UnsupportedOperationException();
+		_values.put(LocaleUtil.ROOT, value);
 	}
 
 	@Override

@@ -162,6 +162,93 @@
 		</execute>
 	</command>
 
+	<command name="AddJoinXORWorkflowDefinitionViaViewTab" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNodeViaViewTab">
+			<var name="nodeDescription" value="Start Node Description" />
+			<var name="nodeName" value="Start" />
+			<var name="nodeNodeLabel" value="Start" />
+			<var name="nodeType" value="start" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
+			<var name="connectorName" value="SubmitToFork" />
+			<var name="newNode" value="Fork" />
+			<var name="newNodeDescription" value="Fork Description" />
+			<var name="newNodeName" value="Fork" />
+			<var name="newNodeType" value="fork" />
+			<var name="nodeType" value="start" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
+			<var name="connectorName" value="SendToTask" />
+			<var name="newNode" value="Task" />
+			<var name="newNodeDescription" value="Task Description" />
+			<var name="newNodeName" value="Task" />
+			<var name="newNodeType" value="task" />
+			<var name="nodeType" value="fork" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
+			<var name="connectorName" value="Join1" />
+			<var name="newNode" value="Join XOR" />
+			<var name="newNodeDescription" value="JoinXOR Description" />
+			<var name="newNodeName" value="JoinXOR" />
+			<var name="newNodeType" value="join-xor" />
+			<var name="nodeType" value="task" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
+			<var name="connectorName" value="SendToState" />
+			<var name="down" value="true" />
+			<var name="newNode" value="State" />
+			<var name="newNodeDescription" value="State Description" />
+			<var name="newNodeName" value="State" />
+			<var name="newNodeType" value="state" />
+			<var name="nodeType" value="fork" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorViaViewTab">
+			<var name="connectorName" value="Join2" />
+			<var name="nodeType" value="state" />
+			<var name="nodeTypeDestination" value="join-xor" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
+			<var name="connectorName" value="Finish" />
+			<var name="newNode" value="End" />
+			<var name="newNodeDescription" value="End Description" />
+			<var name="newNodeName" value="End" />
+			<var name="newNodeType" value="end" />
+			<var name="nodeType" value="join-xor" />
+		</execute>
+
+		<execute macro="KaleoDesigner#publishWorkflowDefinitionViaWorkflowCP" />
+	</command>
+
 	<command name="AddNewWorkflowDefinitionViaViewTab" priority="5">
 		<var name="nodeNodeLabel" value="Task" />
 		<var name="nodeType" value="task" />

@@ -779,6 +779,48 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected void checkXMLSecurity(String fileName, String content) {
+		if (fileName.endsWith("SecureXMLBuilderImpl.java") ||
+			fileName.contains("/test/")) {
+
+			return;
+		}
+
+		if (content.contains("DocumentBuilderFactory.newInstance")) {
+			processErrorMessage(
+				fileName,
+				"Use SecureXMLBuilderUtil.newDocumentBuilderFactory " +
+					"instead of DocumentBuilderFactory.newInstance: " +
+					fileName);
+		}
+
+		if (content.contains("SAXParserFactory.newInstance")) {
+			processErrorMessage(
+				fileName,
+				"Use SecureXMLBuilderUtil.newXMLReader instead of " +
+					"SAXParserFactory.newInstance: " +
+					fileName);
+		}
+
+		if (content.contains("new SAXParser")) {
+			processErrorMessage(
+				fileName,
+				"Use SecureXMLBuilderUtil.newXMLReader instead of " +
+					"new SAXParser: " +
+					fileName);
+		}
+
+		if (content.contains("XMLInputFactory.newInstance") ||
+			content.contains("XMLInputFactory.newFactory")) {
+
+			processErrorMessage(
+				fileName,
+				"Use SecureXMLBuilderUtil.newXMLInputFactory instead of " +
+					"XMLInputFactory.new*: " +
+					fileName);
+		}
+	}
+
 	@Override
 	protected String doFormat(
 			File file, String fileName, String absolutePath, String content)
@@ -1093,6 +1135,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-49552
 
 		checkFinderCacheInterfaceMethod(fileName, newContent);
+
+		// LPS-50479
+
+		checkXMLSecurity(fileName, content);
 
 		newContent = fixIncorrectEmptyLineBeforeCloseCurlyBrace(
 			newContent, fileName);

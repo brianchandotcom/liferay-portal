@@ -67,7 +67,7 @@ public class RPCResponseTest {
 			_id, true, _result, _throwable);
 
 		Assert.assertEquals(
-			"{id=" + _id + ", cancelled=true, result=" + _result +
+			"{cancelled=true, id=" + _id + ", result=" + _result +
 				", throwable=" + _throwable + "}",
 			rpcResponse.toString());
 	}

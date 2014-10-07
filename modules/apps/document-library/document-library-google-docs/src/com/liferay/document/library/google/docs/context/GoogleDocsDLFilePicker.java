@@ -87,8 +87,13 @@ public class GoogleDocsDLFilePicker implements DLFilePicker {
 	}
 
 	@Override
+	public String getJavascriptModuleName() {
+		return "FilePicker";
+	}
+
+	@Override
 	public String getOnClickCallback() throws PortalException {
-		return _namespace + "openPicker";
+		return "openPicker";
 	}
 
 	@Override

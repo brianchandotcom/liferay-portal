@@ -34,4 +34,6 @@ public interface DLFilePicker {
 
 	public String getTitleFieldName() throws PortalException;
 
+	public String getJavascriptModuleName() throws PortalException;
+
 }

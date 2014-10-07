@@ -383,7 +383,7 @@ else {
 				%>
 
 								<c:if test="<%= !dlEditFileEntryDisplayContext.isDDMStructureVisible(ddmStructure) %>">
-									<div style="display: none">
+									<div class="hide">
 								</c:if>
 
 								<liferay-ddm:html

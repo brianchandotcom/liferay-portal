@@ -15,9 +15,8 @@
 --%>
 
 <%
-DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker(renderResponse.getNamespace() + "onFilePick");
+DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker("onFilePick");
 %>
-
 <c:choose>
 	<c:when test="<%= dlFilePicker == null %>">
 		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="file" onChange='<%= renderResponse.getNamespace() + "validateTitle();" %>' type="file">
@@ -28,15 +27,15 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker(render
 	</c:when>
 	<c:otherwise>
 		<aui:field-wrapper label="file">
-			<aui:button cssClass="customized-file-button" name="file" value="select-file" />
+			<aui:button cssClass="customized-file-button disabled" disabled="true" name="file" value="select-file"/>
 
-			<img id="<portlet:namespace />pickButtonIcon" src="" style="border: 0px">
+			<img id="<portlet:namespace />pickButtonIcon">
 
 			<span id="<portlet:namespace />pickButtonTitle"></span>
 		</aui:field-wrapper>
 
 		<aui:script use="aui-base">
-			function <portlet:namespace/>onFilePick(fields) {
+			var onFilePick = function(fields) {
 				var documentIconURL = fields['<%= dlFilePicker.getIconFieldName() %>'];
 				var documentTitle = fields['<%= dlFilePicker.getTitleFieldName() %>'];
 				var documentDescription = fields['<%= dlFilePicker.getDescriptionFieldName() %>'];
@@ -56,17 +55,15 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker(render
 						input.val(fields[fieldName]);
 					}
 				);
-			}
+			};
 
 			<%= dlFilePicker.getJavascript() %>
 
-			A.one('#<portlet:namespace />fm').delegate(
-				'click',
-				function(event) {
-					<%= dlFilePicker.getOnClickCallback() %>();
-				},
-				'.customized-file-button'
-			);
+			var filePicker = new <%= dlFilePicker.getJavascriptModuleName() %>(function() {
+				Liferay.Util.toggleDisabled(A.one('.customized-file-button'), false);
+			});
+
+			A.one('.customized-file-button').on('click', filePicker.<%= dlFilePicker.getOnClickCallback() %>, filePicker);
 		</aui:script>
 	</c:otherwise>
 </c:choose>

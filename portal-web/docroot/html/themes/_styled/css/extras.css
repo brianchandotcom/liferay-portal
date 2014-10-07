@@ -31,7 +31,7 @@
 	@include border-radius(0 0 4px 4px);
 }
 
-.lfr-preview-file-image img, .lfr-translation-manager {
+.lfr-preview-file-image img {
 	@include box-shadow(0 3px 5px -3px rgba(0, 0, 0, 0.8));
 }
 
@@ -164,10 +164,6 @@
 	.lfr-ddm-small-image-preview {
 		@include box-shadow(0 1px 3px #CCC);
 	}
-}
-
-.lfr-translation-manager-translation.lfr-translation-manager-translation-editing {
-	@include box-shadow(inset 0 0 2px #224FA8);
 }
 
 .portlet-document-library-upload-mask .overlaymask-content {

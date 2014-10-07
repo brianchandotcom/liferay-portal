@@ -47,14 +47,7 @@ if (Validator.isNotNull(toLanguageId)) {
 Fields ddmFields = null;
 
 if (article != null) {
-	String content = null;
-
-	if (Validator.isNotNull(toLanguageId)) {
-		content = JournalArticleImpl.getContentByLocale(article.getDocument(), toLanguageId);
-	}
-	else {
-		content = JournalArticleImpl.getContentByLocale(article.getDocument(), defaultLanguageId);
-	}
+	String content = article.getContent();
 
 	if (Validator.isNotNull(content)) {
 		ddmFields = JournalConverterUtil.getDDMFields(ddmStructure, content);

@@ -20,7 +20,6 @@ import java.io.Serializable;
 
 import java.util.Collection;
 
-import net.sf.ehcache.CacheException;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 import net.sf.ehcache.constructs.EhcacheDecoratorAdapter;
@@ -49,9 +48,7 @@ public class LiferayCacheDecorator extends EhcacheDecoratorAdapter {
 	}
 
 	@Override
-	public void put(Element element, boolean doNotNotifyCacheReplicators)
-		throws CacheException, IllegalArgumentException, IllegalStateException {
-
+	public void put(Element element, boolean doNotNotifyCacheReplicators) {
 		boolean remoteInvoke = AggregatedCacheListener.isRemoteInvoke();
 
 		AggregatedCacheListener.setRemoteInvoke(doNotNotifyCacheReplicators);
@@ -66,8 +63,7 @@ public class LiferayCacheDecorator extends EhcacheDecoratorAdapter {
 
 	@Override
 	public Element putIfAbsent(
-			final Element element, final boolean doNotNotifyCacheReplicators)
-		throws NullPointerException {
+		Element element, boolean doNotNotifyCacheReplicators) {
 
 		boolean remoteInvoke = AggregatedCacheListener.isRemoteInvoke();
 
@@ -82,9 +78,7 @@ public class LiferayCacheDecorator extends EhcacheDecoratorAdapter {
 	}
 
 	@Override
-	public boolean remove(Object key, boolean doNotNotifyCacheReplicators)
-		throws IllegalStateException {
-
+	public boolean remove(Object key, boolean doNotNotifyCacheReplicators) {
 		boolean remoteInvoke = AggregatedCacheListener.isRemoteInvoke();
 
 		AggregatedCacheListener.setRemoteInvoke(doNotNotifyCacheReplicators);
@@ -98,16 +92,14 @@ public class LiferayCacheDecorator extends EhcacheDecoratorAdapter {
 	}
 
 	@Override
-	public boolean remove(Serializable key, boolean doNotNotifyCacheReplicators)
-		throws IllegalStateException {
+	public boolean remove(
+		Serializable key, boolean doNotNotifyCacheReplicators) {
 
 		return remove((Object)key, doNotNotifyCacheReplicators);
 	}
 
 	@Override
-	public void removeAll(boolean doNotNotifyCacheReplicators)
-		throws CacheException, IllegalStateException {
-
+	public void removeAll(boolean doNotNotifyCacheReplicators) {
 		boolean remoteInvoke = AggregatedCacheListener.isRemoteInvoke();
 
 		AggregatedCacheListener.setRemoteInvoke(doNotNotifyCacheReplicators);
@@ -122,8 +114,7 @@ public class LiferayCacheDecorator extends EhcacheDecoratorAdapter {
 
 	@Override
 	public void removeAll(
-			Collection<?> keys, boolean doNotNotifyCacheReplicators)
-		throws IllegalStateException {
+		Collection<?> keys, boolean doNotNotifyCacheReplicators) {
 
 		boolean remoteInvoke = AggregatedCacheListener.isRemoteInvoke();
 

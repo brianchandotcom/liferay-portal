@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.model.PollsQuestionModel;
-import com.liferay.polls.model.PollsQuestionSoap;
 
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
@@ -34,6 +33,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
@@ -47,10 +48,8 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -72,7 +71,7 @@ import java.util.TreeSet;
 @JSON(strict = true)
 @ProviderType
 public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
-	implements PollsQuestionModel {
+	implements PollsQuestionModel, StagedModel, GroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -113,55 +112,6 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
 	public static final long UUID_COLUMN_BITMASK = 4L;
 	public static final long CREATEDATE_COLUMN_BITMASK = 8L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 */
-	public static PollsQuestion toModel(PollsQuestionSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		PollsQuestion model = new PollsQuestionImpl();
-
-		model.setUuid(soapModel.getUuid());
-		model.setQuestionId(soapModel.getQuestionId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setTitle(soapModel.getTitle());
-		model.setDescription(soapModel.getDescription());
-		model.setExpirationDate(soapModel.getExpirationDate());
-		model.setLastVoteDate(soapModel.getLastVoteDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 */
-	public static List<PollsQuestion> toModels(PollsQuestionSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<PollsQuestion> models = new ArrayList<PollsQuestion>(soapModels.length);
-
-		for (PollsQuestionSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.com.liferay.polls.model.PollsQuestion"));
@@ -808,10 +758,13 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 
 	@Override
 	public int compareTo(PollsQuestion pollsQuestion) {
+		PollsQuestionModelImpl pollsQuestionModel =
+			(PollsQuestionModelImpl)pollsQuestion;
+
 		int value = 0;
 
 		value = DateUtil.compareTo(getCreateDate(),
-				pollsQuestion.getCreateDate());
+				pollsQuestionModel.getCreateDate());
 
 		value = value * -1;
 
@@ -828,7 +781,7 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 			return true;
 		}
 
-		if (!(obj instanceof PollsQuestion)) {
+		if (!(obj instanceof PollsQuestionModelImpl)) {
 			return false;
 		}
 
@@ -1056,7 +1009,7 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 
 	private static final ClassLoader _classLoader = PollsQuestion.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			PollsQuestion.class
+			GroupedModel.class, PollsQuestion.class, StagedModel.class
 		};
 	private String _uuid;
 	private String _originalUuid;

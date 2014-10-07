@@ -25,7 +25,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -73,15 +75,26 @@ public class PollsQuestionLocalServiceImpl
 
 		long questionId = counterLocalService.increment();
 
-		PollsQuestion question = pollsQuestionPersistence.create(questionId);
+		PollsQuestion question = pollsQuestionPersistence.create(
+			questionId);
 
-		question.setUuid(serviceContext.getUuid());
-		question.setGroupId(groupId);
-		question.setCompanyId(user.getCompanyId());
-		question.setUserId(user.getUserId());
-		question.setUserName(user.getFullName());
-		question.setCreateDate(serviceContext.getCreateDate(now));
-		question.setModifiedDate(serviceContext.getModifiedDate(now));
+		if (question instanceof GroupedModel) {
+			GroupedModel groupedModel = (GroupedModel)question;
+
+			groupedModel.setGroupId(groupId);
+			groupedModel.setCompanyId(user.getCompanyId());
+			groupedModel.setUserId(user.getUserId());
+			groupedModel.setUserName(user.getFullName());
+			groupedModel.setCreateDate(serviceContext.getCreateDate(now));
+			groupedModel.setModifiedDate(serviceContext.getModifiedDate(now));
+		}
+
+		if (question instanceof StagedModel) {
+			StagedModel stagedModel = (StagedModel) question;
+
+			stagedModel.setUuid(serviceContext.getUuid());
+		}
+
 		question.setTitleMap(titleMap);
 		question.setDescriptionMap(descriptionMap);
 		question.setExpirationDate(expirationDate);
@@ -147,9 +160,11 @@ public class PollsQuestionLocalServiceImpl
 			boolean addGuestPermissions)
 		throws PortalException {
 
+		GroupedModel groupedModel = (GroupedModel)question;
+
 		resourceLocalService.addResources(
-			question.getCompanyId(), question.getGroupId(),
-			question.getUserId(), PollsQuestion.class.getName(),
+			groupedModel.getCompanyId(), groupedModel.getGroupId(),
+			groupedModel.getUserId(), PollsQuestion.class.getName(),
 			question.getQuestionId(), false, addGroupPermissions,
 			addGuestPermissions);
 	}
@@ -160,9 +175,11 @@ public class PollsQuestionLocalServiceImpl
 			String[] guestPermissions)
 		throws PortalException {
 
+		GroupedModel groupedModel = (GroupedModel)question;
+
 		resourceLocalService.addModelResources(
-			question.getCompanyId(), question.getGroupId(),
-			question.getUserId(), PollsQuestion.class.getName(),
+			groupedModel.getCompanyId(), groupedModel.getGroupId(),
+			groupedModel.getUserId(), PollsQuestion.class.getName(),
 			question.getQuestionId(), groupPermissions, guestPermissions);
 	}
 
@@ -179,6 +196,7 @@ public class PollsQuestionLocalServiceImpl
 		action = SystemEventConstants.ACTION_SKIP,
 		type = SystemEventConstants.TYPE_DELETE)
 	public void deleteQuestion(PollsQuestion question) throws PortalException {
+		GroupedModel pollsQuestionImpl = (GroupedModel)question;
 
 		// Question
 
@@ -187,7 +205,7 @@ public class PollsQuestionLocalServiceImpl
 		// Resources
 
 		resourceLocalService.deleteResource(
-			question.getCompanyId(), PollsQuestion.class.getName(),
+			pollsQuestionImpl.getCompanyId(), PollsQuestion.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, question.getQuestionId());
 
 		// Choices
@@ -256,7 +274,12 @@ public class PollsQuestionLocalServiceImpl
 		PollsQuestion question = pollsQuestionPersistence.findByPrimaryKey(
 			questionId);
 
-		question.setModifiedDate(serviceContext.getModifiedDate(null));
+		if (question instanceof StagedModel) {
+			StagedModel stagedModel = (StagedModel) question;
+
+			stagedModel.setModifiedDate(serviceContext.getModifiedDate(null));
+		}
+
 		question.setTitleMap(titleMap);
 		question.setDescriptionMap(descriptionMap);
 		question.setExpirationDate(expirationDate);

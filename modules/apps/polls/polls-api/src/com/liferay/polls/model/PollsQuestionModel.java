@@ -47,7 +47,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface PollsQuestionModel extends BaseModel<PollsQuestion>,
-	LocalizedModel, StagedGroupedModel {
+	LocalizedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -68,28 +68,7 @@ public interface PollsQuestionModel extends BaseModel<PollsQuestion>,
 	 */
 	public void setPrimaryKey(long primaryKey);
 
-	/**
-	 * Returns the uuid of this polls question.
-	 *
-	 * @return the uuid of this polls question
-	 */
-	@AutoEscape
-	@Override
-	public String getUuid();
 
-	/**
-	 * Sets the uuid of this polls question.
-	 *
-	 * @param uuid the uuid of this polls question
-	 */
-	@Override
-	public void setUuid(String uuid);
-
-	/**
-	 * Returns the question ID of this polls question.
-	 *
-	 * @return the question ID of this polls question
-	 */
 	public long getQuestionId();
 
 	/**
@@ -98,119 +77,6 @@ public interface PollsQuestionModel extends BaseModel<PollsQuestion>,
 	 * @param questionId the question ID of this polls question
 	 */
 	public void setQuestionId(long questionId);
-
-	/**
-	 * Returns the group ID of this polls question.
-	 *
-	 * @return the group ID of this polls question
-	 */
-	@Override
-	public long getGroupId();
-
-	/**
-	 * Sets the group ID of this polls question.
-	 *
-	 * @param groupId the group ID of this polls question
-	 */
-	@Override
-	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this polls question.
-	 *
-	 * @return the company ID of this polls question
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this polls question.
-	 *
-	 * @param companyId the company ID of this polls question
-	 */
-	@Override
-	public void setCompanyId(long companyId);
-
-	/**
-	 * Returns the user ID of this polls question.
-	 *
-	 * @return the user ID of this polls question
-	 */
-	@Override
-	public long getUserId();
-
-	/**
-	 * Sets the user ID of this polls question.
-	 *
-	 * @param userId the user ID of this polls question
-	 */
-	@Override
-	public void setUserId(long userId);
-
-	/**
-	 * Returns the user uuid of this polls question.
-	 *
-	 * @return the user uuid of this polls question
-	 */
-	@Override
-	public String getUserUuid();
-
-	/**
-	 * Sets the user uuid of this polls question.
-	 *
-	 * @param userUuid the user uuid of this polls question
-	 */
-	@Override
-	public void setUserUuid(String userUuid);
-
-	/**
-	 * Returns the user name of this polls question.
-	 *
-	 * @return the user name of this polls question
-	 */
-	@AutoEscape
-	@Override
-	public String getUserName();
-
-	/**
-	 * Sets the user name of this polls question.
-	 *
-	 * @param userName the user name of this polls question
-	 */
-	@Override
-	public void setUserName(String userName);
-
-	/**
-	 * Returns the create date of this polls question.
-	 *
-	 * @return the create date of this polls question
-	 */
-	@Override
-	public Date getCreateDate();
-
-	/**
-	 * Sets the create date of this polls question.
-	 *
-	 * @param createDate the create date of this polls question
-	 */
-	@Override
-	public void setCreateDate(Date createDate);
-
-	/**
-	 * Returns the modified date of this polls question.
-	 *
-	 * @return the modified date of this polls question
-	 */
-	@Override
-	public Date getModifiedDate();
-
-	/**
-	 * Sets the modified date of this polls question.
-	 *
-	 * @param modifiedDate the modified date of this polls question
-	 */
-	@Override
-	public void setModifiedDate(Date modifiedDate);
 
 	/**
 	 * Returns the title of this polls question.

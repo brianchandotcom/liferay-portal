@@ -19,6 +19,7 @@ import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.service.base.PollsQuestionServiceBaseImpl;
 import com.liferay.polls.service.permission.PollsPermission;
 import com.liferay.polls.service.permission.PollsQuestionPermission;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
@@ -54,7 +55,7 @@ public class PollsQuestionServiceImpl extends PollsQuestionServiceBaseImpl {
 
 	@Override
 	public void deleteQuestion(long questionId) throws PortalException {
-		PollsQuestionPermission.check(
+		_pollsQuestionPermission.check(
 			getPermissionChecker(), questionId, ActionKeys.DELETE);
 
 		pollsQuestionLocalService.deleteQuestion(questionId);
@@ -62,7 +63,7 @@ public class PollsQuestionServiceImpl extends PollsQuestionServiceBaseImpl {
 
 	@Override
 	public PollsQuestion getQuestion(long questionId) throws PortalException {
-		PollsQuestionPermission.check(
+		_pollsQuestionPermission.check(
 			getPermissionChecker(), questionId, ActionKeys.VIEW);
 
 		return pollsQuestionLocalService.getQuestion(questionId);
@@ -78,7 +79,7 @@ public class PollsQuestionServiceImpl extends PollsQuestionServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		PollsQuestionPermission.check(
+		_pollsQuestionPermission.check(
 			getPermissionChecker(), questionId, ActionKeys.UPDATE);
 
 		return pollsQuestionLocalService.updateQuestion(
@@ -87,5 +88,8 @@ public class PollsQuestionServiceImpl extends PollsQuestionServiceBaseImpl {
 			expirationDateHour, expirationDateMinute, neverExpire, choices,
 			serviceContext);
 	}
+	
+	@BeanReference(type = PollsQuestionPermission.class)
+	private PollsQuestionPermission _pollsQuestionPermission;
 
 }

@@ -174,7 +174,10 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 
 		if ((list != null) && !list.isEmpty()) {
 			for (PollsQuestion pollsQuestion : list) {
-				if (!Validator.equals(uuid, pollsQuestion.getUuid())) {
+				PollsQuestionImpl pollsQuestionImpl =
+					(PollsQuestionImpl)pollsQuestion;
+
+				if (!Validator.equals(uuid, pollsQuestionImpl.getUuid())) {
 					list = null;
 
 					break;
@@ -688,8 +691,8 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 					finderArgs, this);
 		}
 
-		if (result instanceof PollsQuestion) {
-			PollsQuestion pollsQuestion = (PollsQuestion)result;
+		if (result instanceof PollsQuestionImpl) {
+			PollsQuestionImpl pollsQuestion = (PollsQuestionImpl)result;
 
 			if (!Validator.equals(uuid, pollsQuestion.getUuid()) ||
 					(groupId != pollsQuestion.getGroupId())) {
@@ -742,7 +745,8 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 						finderArgs, list);
 				}
 				else {
-					PollsQuestion pollsQuestion = list.get(0);
+					PollsQuestionImpl pollsQuestion =
+						(PollsQuestionImpl)list.get(0);
 
 					result = pollsQuestion;
 
@@ -937,7 +941,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 */
 	@Override
 	public List<PollsQuestion> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator<PollsQuestion> orderByComparator) {
+		int start, int end, OrderByComparator<? extends PollsQuestion> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -962,8 +966,12 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 
 		if ((list != null) && !list.isEmpty()) {
 			for (PollsQuestion pollsQuestion : list) {
-				if (!Validator.equals(uuid, pollsQuestion.getUuid()) ||
-						(companyId != pollsQuestion.getCompanyId())) {
+
+				PollsQuestionImpl pollsQuestionImpl =
+					(PollsQuestionImpl)pollsQuestion;
+
+				if (!Validator.equals(uuid, pollsQuestionImpl.getUuid()) ||
+						(companyId != pollsQuestionImpl.getCompanyId())) {
 					list = null;
 
 					break;
@@ -1514,7 +1522,11 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 
 		if ((list != null) && !list.isEmpty()) {
 			for (PollsQuestion pollsQuestion : list) {
-				if ((groupId != pollsQuestion.getGroupId())) {
+
+				PollsQuestionImpl pollsQuestionImpl =
+					(PollsQuestionImpl)pollsQuestion;
+
+				if ((groupId != pollsQuestionImpl.getGroupId())) {
 					list = null;
 
 					break;
@@ -2282,8 +2294,12 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 			PollsQuestionImpl.class, pollsQuestion.getPrimaryKey(),
 			pollsQuestion);
 
+		PollsQuestionImpl pollsQuestionImpl = (PollsQuestionImpl)pollsQuestion;
+
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] { pollsQuestion.getUuid(), pollsQuestion.getGroupId() },
+			new Object[] {
+					pollsQuestionImpl.getUuid(), pollsQuestionImpl.getGroupId()
+				},
 			pollsQuestion);
 
 		pollsQuestion.resetOriginalValues();
@@ -2360,9 +2376,11 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	}
 
 	protected void cacheUniqueFindersCache(PollsQuestion pollsQuestion) {
+		PollsQuestionImpl pollsQuestionImpl = (PollsQuestionImpl)pollsQuestion;
+
 		if (pollsQuestion.isNew()) {
 			Object[] args = new Object[] {
-					pollsQuestion.getUuid(), pollsQuestion.getGroupId()
+					pollsQuestionImpl.getUuid(), pollsQuestionImpl.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
@@ -2371,12 +2389,14 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 				pollsQuestion);
 		}
 		else {
-			PollsQuestionModelImpl pollsQuestionModelImpl = (PollsQuestionModelImpl)pollsQuestion;
+			PollsQuestionModelImpl pollsQuestionModelImpl =
+				(PollsQuestionModelImpl)pollsQuestion;
 
 			if ((pollsQuestionModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						pollsQuestion.getUuid(), pollsQuestion.getGroupId()
+						pollsQuestionImpl.getUuid(),
+						pollsQuestionImpl.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
@@ -2388,10 +2408,12 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	}
 
 	protected void clearUniqueFindersCache(PollsQuestion pollsQuestion) {
-		PollsQuestionModelImpl pollsQuestionModelImpl = (PollsQuestionModelImpl)pollsQuestion;
+		PollsQuestionModelImpl pollsQuestionModelImpl =
+			(PollsQuestionModelImpl)pollsQuestion;
 
 		Object[] args = new Object[] {
-				pollsQuestion.getUuid(), pollsQuestion.getGroupId()
+				pollsQuestionModelImpl.getUuid(),
+			pollsQuestionModelImpl.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -2417,7 +2439,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 */
 	@Override
 	public PollsQuestion create(long questionId) {
-		PollsQuestion pollsQuestion = new PollsQuestionImpl();
+		PollsQuestionImpl pollsQuestion = new PollsQuestionImpl();
 
 		pollsQuestion.setNew(true);
 		pollsQuestion.setPrimaryKey(questionId);
@@ -2520,12 +2542,13 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 
 		boolean isNew = pollsQuestion.isNew();
 
-		PollsQuestionModelImpl pollsQuestionModelImpl = (PollsQuestionModelImpl)pollsQuestion;
+		PollsQuestionModelImpl pollsQuestionModelImpl =
+			(PollsQuestionModelImpl)pollsQuestion;
 
-		if (Validator.isNull(pollsQuestion.getUuid())) {
+		if (Validator.isNull(pollsQuestionModelImpl.getUuid())) {
 			String uuid = PortalUUIDUtil.generate();
 
-			pollsQuestion.setUuid(uuid);
+			pollsQuestionModelImpl.setUuid(uuid);
 		}
 
 		Session session = null;
@@ -2629,23 +2652,26 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 			return pollsQuestion;
 		}
 
+		PollsQuestionImpl otherPollsQuestion = (PollsQuestionImpl)pollsQuestion;
+
 		PollsQuestionImpl pollsQuestionImpl = new PollsQuestionImpl();
 
-		pollsQuestionImpl.setNew(pollsQuestion.isNew());
-		pollsQuestionImpl.setPrimaryKey(pollsQuestion.getPrimaryKey());
+		pollsQuestionImpl.setNew(otherPollsQuestion.isNew());
+		pollsQuestionImpl.setPrimaryKey(otherPollsQuestion.getPrimaryKey());
 
-		pollsQuestionImpl.setUuid(pollsQuestion.getUuid());
-		pollsQuestionImpl.setQuestionId(pollsQuestion.getQuestionId());
-		pollsQuestionImpl.setGroupId(pollsQuestion.getGroupId());
-		pollsQuestionImpl.setCompanyId(pollsQuestion.getCompanyId());
-		pollsQuestionImpl.setUserId(pollsQuestion.getUserId());
-		pollsQuestionImpl.setUserName(pollsQuestion.getUserName());
-		pollsQuestionImpl.setCreateDate(pollsQuestion.getCreateDate());
-		pollsQuestionImpl.setModifiedDate(pollsQuestion.getModifiedDate());
-		pollsQuestionImpl.setTitle(pollsQuestion.getTitle());
-		pollsQuestionImpl.setDescription(pollsQuestion.getDescription());
-		pollsQuestionImpl.setExpirationDate(pollsQuestion.getExpirationDate());
-		pollsQuestionImpl.setLastVoteDate(pollsQuestion.getLastVoteDate());
+		pollsQuestionImpl.setUuid(otherPollsQuestion.getUuid());
+		pollsQuestionImpl.setQuestionId(otherPollsQuestion.getQuestionId());
+		pollsQuestionImpl.setGroupId(otherPollsQuestion.getGroupId());
+		pollsQuestionImpl.setCompanyId(otherPollsQuestion.getCompanyId());
+		pollsQuestionImpl.setUserId(otherPollsQuestion.getUserId());
+		pollsQuestionImpl.setUserName(otherPollsQuestion.getUserName());
+		pollsQuestionImpl.setCreateDate(otherPollsQuestion.getCreateDate());
+		pollsQuestionImpl.setModifiedDate(otherPollsQuestion.getModifiedDate());
+		pollsQuestionImpl.setTitle(otherPollsQuestion.getTitle());
+		pollsQuestionImpl.setDescription(otherPollsQuestion.getDescription());
+		pollsQuestionImpl.setExpirationDate(
+			otherPollsQuestion.getExpirationDate());
+		pollsQuestionImpl.setLastVoteDate(otherPollsQuestion.getLastVoteDate());
 
 		return pollsQuestionImpl;
 	}

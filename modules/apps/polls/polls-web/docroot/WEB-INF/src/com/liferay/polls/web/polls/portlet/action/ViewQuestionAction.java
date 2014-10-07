@@ -30,6 +30,8 @@ import javax.portlet.PortletConfig;
  */
 public class ViewQuestionAction extends EditQuestionAction {
 
+
+
 	@Override
 	protected void updateQuestion(
 			PortletConfig portletConfig, ActionRequest actionRequest,
@@ -46,5 +48,7 @@ public class ViewQuestionAction extends EditQuestionAction {
 
 		PollsUtil.saveVote(actionRequest, actionResponse, questionId);
 	}
+
+
 
 }

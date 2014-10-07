@@ -54,14 +54,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
 		attributes.put("questionId", getQuestionId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("expirationDate", getExpirationDate());
@@ -74,10 +67,6 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	public void setModelAttributes(Map<String, Object> attributes) {
 		String uuid = (String)attributes.get("uuid");
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
 		Long questionId = (Long)attributes.get("questionId");
 
 		if (questionId != null) {
@@ -86,39 +75,15 @@ public class PollsQuestionWrapper implements PollsQuestion,
 
 		Long groupId = (Long)attributes.get("groupId");
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
 		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
 
 		Long userId = (Long)attributes.get("userId");
 
-		if (userId != null) {
-			setUserId(userId);
-		}
-
 		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
 
 		Date createDate = (Date)attributes.get("createDate");
 
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
 		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
 
 		String title = (String)attributes.get("title");
 
@@ -163,26 +128,6 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	@Override
 	public java.util.List<com.liferay.polls.model.PollsChoice> getChoices() {
 		return _pollsQuestion.getChoices();
-	}
-
-	/**
-	* Returns the company ID of this polls question.
-	*
-	* @return the company ID of this polls question
-	*/
-	@Override
-	public long getCompanyId() {
-		return _pollsQuestion.getCompanyId();
-	}
-
-	/**
-	* Returns the create date of this polls question.
-	*
-	* @return the create date of this polls question
-	*/
-	@Override
-	public java.util.Date getCreateDate() {
-		return _pollsQuestion.getCreateDate();
 	}
 
 	@Override
@@ -284,16 +229,6 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	}
 
 	/**
-	* Returns the group ID of this polls question.
-	*
-	* @return the group ID of this polls question
-	*/
-	@Override
-	public long getGroupId() {
-		return _pollsQuestion.getGroupId();
-	}
-
-	/**
 	* Returns the last vote date of this polls question.
 	*
 	* @return the last vote date of this polls question
@@ -301,16 +236,6 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	@Override
 	public java.util.Date getLastVoteDate() {
 		return _pollsQuestion.getLastVoteDate();
-	}
-
-	/**
-	* Returns the modified date of this polls question.
-	*
-	* @return the modified date of this polls question
-	*/
-	@Override
-	public java.util.Date getModifiedDate() {
-		return _pollsQuestion.getModifiedDate();
 	}
 
 	/**
@@ -415,46 +340,6 @@ public class PollsQuestionWrapper implements PollsQuestion,
 		return _pollsQuestion.getTitleMap();
 	}
 
-	/**
-	* Returns the user ID of this polls question.
-	*
-	* @return the user ID of this polls question
-	*/
-	@Override
-	public long getUserId() {
-		return _pollsQuestion.getUserId();
-	}
-
-	/**
-	* Returns the user name of this polls question.
-	*
-	* @return the user name of this polls question
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _pollsQuestion.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this polls question.
-	*
-	* @return the user uuid of this polls question
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _pollsQuestion.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this polls question.
-	*
-	* @return the uuid of this polls question
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _pollsQuestion.getUuid();
-	}
-
 	@Override
 	public java.util.List<com.liferay.polls.model.PollsVote> getVotes() {
 		return _pollsQuestion.getVotes();
@@ -524,26 +409,6 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_pollsQuestion.setCachedModel(cachedModel);
-	}
-
-	/**
-	* Sets the company ID of this polls question.
-	*
-	* @param companyId the company ID of this polls question
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_pollsQuestion.setCompanyId(companyId);
-	}
-
-	/**
-	* Sets the create date of this polls question.
-	*
-	* @param createDate the create date of this polls question
-	*/
-	@Override
-	public void setCreateDate(java.util.Date createDate) {
-		_pollsQuestion.setCreateDate(createDate);
 	}
 
 	/**
@@ -639,16 +504,6 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	}
 
 	/**
-	* Sets the group ID of this polls question.
-	*
-	* @param groupId the group ID of this polls question
-	*/
-	@Override
-	public void setGroupId(long groupId) {
-		_pollsQuestion.setGroupId(groupId);
-	}
-
-	/**
 	* Sets the last vote date of this polls question.
 	*
 	* @param lastVoteDate the last vote date of this polls question
@@ -656,16 +511,6 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	@Override
 	public void setLastVoteDate(java.util.Date lastVoteDate) {
 		_pollsQuestion.setLastVoteDate(lastVoteDate);
-	}
-
-	/**
-	* Sets the modified date of this polls question.
-	*
-	* @param modifiedDate the modified date of this polls question
-	*/
-	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
-		_pollsQuestion.setModifiedDate(modifiedDate);
 	}
 
 	@Override
@@ -761,46 +606,6 @@ public class PollsQuestionWrapper implements PollsQuestion,
 		_pollsQuestion.setTitleMap(titleMap, defaultLocale);
 	}
 
-	/**
-	* Sets the user ID of this polls question.
-	*
-	* @param userId the user ID of this polls question
-	*/
-	@Override
-	public void setUserId(long userId) {
-		_pollsQuestion.setUserId(userId);
-	}
-
-	/**
-	* Sets the user name of this polls question.
-	*
-	* @param userName the user name of this polls question
-	*/
-	@Override
-	public void setUserName(java.lang.String userName) {
-		_pollsQuestion.setUserName(userName);
-	}
-
-	/**
-	* Sets the user uuid of this polls question.
-	*
-	* @param userUuid the user uuid of this polls question
-	*/
-	@Override
-	public void setUserUuid(java.lang.String userUuid) {
-		_pollsQuestion.setUserUuid(userUuid);
-	}
-
-	/**
-	* Sets the uuid of this polls question.
-	*
-	* @param uuid the uuid of this polls question
-	*/
-	@Override
-	public void setUuid(java.lang.String uuid) {
-		_pollsQuestion.setUuid(uuid);
-	}
-
 	@Override
 	public com.liferay.portal.model.CacheModel<com.liferay.polls.model.PollsQuestion> toCacheModel() {
 		return _pollsQuestion.toCacheModel();
@@ -843,11 +648,6 @@ public class PollsQuestionWrapper implements PollsQuestion,
 		}
 
 		return false;
-	}
-
-	@Override
-	public StagedModelType getStagedModelType() {
-		return _pollsQuestion.getStagedModelType();
 	}
 
 	/**

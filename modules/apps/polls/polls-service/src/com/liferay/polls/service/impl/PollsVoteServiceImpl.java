@@ -17,6 +17,7 @@ package com.liferay.polls.service.impl;
 import com.liferay.polls.model.PollsVote;
 import com.liferay.polls.service.base.PollsVoteServiceBaseImpl;
 import com.liferay.polls.service.permission.PollsQuestionPermission;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -41,11 +42,14 @@ public class PollsVoteServiceImpl extends PollsVoteServiceBaseImpl {
 			userId = counterLocalService.increment();
 		}
 
-		PollsQuestionPermission.check(
+		_pollsQuestionPermission.check(
 			getPermissionChecker(), questionId, ActionKeys.ADD_VOTE);
 
 		return pollsVoteLocalService.addVote(
 			userId, questionId, choiceId, serviceContext);
 	}
+
+	@BeanReference(type=PollsQuestionPermission.class)
+	private PollsQuestionPermission _pollsQuestionPermission;
 
 }

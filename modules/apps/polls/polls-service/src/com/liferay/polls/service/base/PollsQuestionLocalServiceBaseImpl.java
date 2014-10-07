@@ -17,6 +17,7 @@ package com.liferay.polls.service.base;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.polls.model.PollsQuestion;
+import com.liferay.polls.model.impl.PollsQuestionImpl;
 import com.liferay.polls.service.PollsQuestionLocalService;
 import com.liferay.polls.service.persistence.PollsChoicePersistence;
 import com.liferay.polls.service.persistence.PollsQuestionPersistence;
@@ -309,7 +310,7 @@ public abstract class PollsQuestionLocalServiceBaseImpl
 				@Override
 				public void performAction(Object object)
 					throws PortalException {
-					PollsQuestion stagedModel = (PollsQuestion)object;
+					PollsQuestionImpl stagedModel = (PollsQuestionImpl)object;
 
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
 						stagedModel);
@@ -345,7 +346,7 @@ public abstract class PollsQuestionLocalServiceBaseImpl
 	@Override
 	public List<PollsQuestion> getPollsQuestionsByUuidAndCompanyId(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<PollsQuestion> orderByComparator) {
+		OrderByComparator<? extends PollsQuestion> orderByComparator) {
 		return pollsQuestionPersistence.findByUuid_C(uuid, companyId, start,
 			end, orderByComparator);
 	}

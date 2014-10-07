@@ -138,7 +138,7 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 			PollsPermission.RESOURCE_NAME);
 
 		Element questionsElement = portletDataContext.getImportDataGroupElement(
-			PollsQuestion.class);
+			PollsQuestionImpl.class);
 
 		if (portletDataContext.getBooleanParameter(
 				PollsPortletDataHandler.NAMESPACE, "questions")) {

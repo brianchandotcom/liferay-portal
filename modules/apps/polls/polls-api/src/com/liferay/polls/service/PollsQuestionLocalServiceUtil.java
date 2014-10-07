@@ -331,10 +331,10 @@ public class PollsQuestionLocalServiceUtil {
 
 	public static java.util.List<com.liferay.polls.model.PollsQuestion> getPollsQuestionsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsQuestion> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<? extends com.liferay.polls.model.PollsQuestion> orderByComparator) {
 		return getService()
 				   .getPollsQuestionsByUuidAndCompanyId(uuid, companyId, start,
-			end, orderByComparator);
+						end, orderByComparator);
 	}
 
 	/**

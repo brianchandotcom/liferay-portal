@@ -253,7 +253,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	*/
 	public java.util.List<com.liferay.polls.model.PollsQuestion> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsQuestion> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<? extends com.liferay.polls.model.PollsQuestion> orderByComparator);
 
 	/**
 	* Returns the first polls question in the ordered set where uuid = &#63; and companyId = &#63;.

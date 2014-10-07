@@ -16,6 +16,7 @@ package com.liferay.polls.lar;
 
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.model.PollsQuestion;
+import com.liferay.polls.model.impl.PollsQuestionImpl;
 import com.liferay.polls.service.PollsChoiceLocalServiceUtil;
 import com.liferay.polls.service.PollsQuestionLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -96,7 +97,7 @@ public class PollsChoiceStagedModelDataHandler
 			choice.getQuestionId());
 
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
-			portletDataContext, choice, question,
+			portletDataContext, choice, (PollsQuestionImpl)question,
 			PortletDataContext.REFERENCE_TYPE_STRONG);
 
 		Element choiceElement = portletDataContext.getExportDataElement(choice);

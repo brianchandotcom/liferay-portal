@@ -2,11 +2,25 @@
 	<command name="addConnectorAndNodeViaViewTab">
 		<var name="key_nodeType" value="${nodeType?replace('-', '_')}" />
 
-		<execute action="Kaleodesigner#sikuliDragAndDrop" locator-key1="NODE_CORNER" value1="250,0" />
+		<if>
+			<equals arg1="${down}" arg2="true" />
+			<then>
+				<execute action="Kaleodesigner#sikuliDragAndDrop" locator-key1="NODE_CORNER" value1="50,300" />
+			</then>
+			<elseif>
+				<equals arg1="${up}" arg2="true" />
+				<then>
+					<execute action="Kaleodesigner#sikuliDragAndDrop" locator-key1="NODE_CORNER" value1="150,-250" />
+				</then>
+			</elseif>
+			<else>
+				<execute action="Kaleodesigner#sikuliDragAndDrop" locator-key1="NODE_CORNER" value1="100,0" />
+			</else>
+		</if>
 
-		<var name="key_newNodeName" value="${newNodeName}" />
+		<var name="key_newNode" value="${newNode}" />
 
-		<execute action="Kaleodesigner#assertClick" locator-key1="VIEW_FORM_ADD_NEW_NODE" value1="${newNodeName}" />
+		<execute action="Kaleodesigner#assertClick" locator-key1="VIEW_FORM_ADD_NEW_NODE" value1="${newNode}" />
 		<execute action="Kaleodesigner#click" locator-key1="VIEW_FORM_CONNECTOR_DEFAULT" />
 
 		<execute macro="KaleoDesigner#editConnectorName">
@@ -23,6 +37,26 @@
 
 		<execute macro="KaleoDesigner#editNodeDescription">
 			<var name="nodeDescription" value="${newNodeDescription}" />
+		</execute>
+	</command>
+
+	<command name="addConnectorViaViewTab">
+		<var name="key_nodeType" value="${nodeType?replace('-', '_')}" />
+
+		<execute action="Kaleodesigner#sikuliMouseMove" locator-key1="NODE_CORNER" />
+
+		<execute action="Kaleodesigner#sikuliLeftMouseDown" />
+
+		<var name="key_nodeType" value="${nodeTypeDestination?replace('-', '_')}" />
+
+		<execute action="Kaleodesigner#sikuliMouseMove" locator-key1="NODE_CORNER" />
+
+		<execute action="Kaleodesigner#sikuliLeftMouseUp" />
+
+		<execute action="Kaleodesigner#click" locator-key1="VIEW_FORM_CONNECTOR_DEFAULT" />
+
+		<execute macro="KaleoDesigner#editConnectorName">
+			<var name="connectorName" value="${connectorName}" />
 		</execute>
 	</command>
 

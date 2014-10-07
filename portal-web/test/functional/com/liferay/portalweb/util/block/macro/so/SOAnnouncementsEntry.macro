@@ -459,7 +459,7 @@
 			<isset var="entryURL" />
 			<then>
 				<execute action="SOAnnouncements#assertClick" locator-key1="ANNOUNCEMENTS_ENTRY_TITLE_LINK" value1="${entryTitle}" />
-				<execute action="SOAnnouncements#assertElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_IMAGE_LIFERAY" />
+				<execute action="SOAnnouncements#assertElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_IMAGE_GOOGLE" />
 
 				<execute macro="Page#openURL" />
 

@@ -731,7 +731,7 @@
 		<var name="entryContentEdit" value="Announcements Entry Content Edit" />
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryTitleEdit" value="Announcements Entry Title Edit" />
-		<var name="entryURL" value="http://www.liferay.com" />
+		<var name="entryURL" value="http://www.google.com" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />
@@ -775,7 +775,7 @@
 	<command name="MarkAsReadSOSiteAnnouncementsEntryNotificationSOUser" priority="5">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
-		<var name="entryURL" value="http://www.liferay.com" />
+		<var name="entryURL" value="http://www.google.com" />
 		<var name="siteDescription" value="Open Site Description" />
 		<var name="siteName" value="Open Site Name" />
 		<var name="siteType" value="Open" />
@@ -3073,7 +3073,7 @@
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
-		<var name="entryURL" value="http://www.liferay.com" />
+		<var name="entryURL" value="http://www.google.com" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />
@@ -3773,7 +3773,7 @@
 	<command known-issues="LPS-50417" name="ViewNoSiteAnnouncementEntryNotification" priority="4">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
-		<var name="entryURL" value="http://www.liferay.com" />
+		<var name="entryURL" value="http://www.google.com" />
 		<var name="siteDescription" value="Open Site Description" />
 		<var name="siteName" value="Open Site Name" />
 		<var name="siteType" value="Open" />
@@ -4300,7 +4300,7 @@
 		<var name="entryContentEdit" value="Announcements Entry Content Edit" />
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryTitleEdit" value="Announcements Entry Title Edit" />
-		<var name="entryURL" value="http://www.liferay.com" />
+		<var name="entryURL" value="http://www.google.com" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />
@@ -4367,7 +4367,7 @@
 
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
-		<var name="entryURL" value="http://www.liferay.com" />
+		<var name="entryURL" value="http://www.google.com" />
 		<var name="siteDescription" value="Open Site Description" />
 		<var name="siteName" value="Open Site Name" />
 		<var name="siteType" value="Open" />
@@ -4470,7 +4470,7 @@
 		<var name="entryContentEdit" value="Announcements Entry Content Edit" />
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryTitleEdit" value="Announcements Entry Title Edit" />
-		<var name="entryURL" value="http://www.liferay.com" />
+		<var name="entryURL" value="http://www.google.com" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
@@ -4496,7 +4496,7 @@
 		<var name="entryContentEdit" value="Announcements Entry Content Edit" />
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryTitleEdit" value="Announcements Entry Title Edit" />
-		<var name="entryURL" value="http://www.liferay.com" />
+		<var name="entryURL" value="http://www.google.com" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />
@@ -4541,7 +4541,7 @@
 	<command name="ViewSOSiteAnnouncementsEntryNotification" priority="5">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
-		<var name="entryURL" value="http://www.liferay.com" />
+		<var name="entryURL" value="http://www.google.com" />
 		<var name="siteDescription" value="Open Site Description" />
 		<var name="siteName" value="Open Site Name" />
 		<var name="siteType" value="Open" />
@@ -4578,7 +4578,7 @@
 	<command name="ViewSOSiteAnnouncementsEntryNotificationSOUser" priority="5">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
-		<var name="entryURL" value="http://www.liferay.com" />
+		<var name="entryURL" value="http://www.google.com" />
 		<var name="siteDescription" value="Open Site Description" />
 		<var name="siteName" value="Open Site Name" />
 		<var name="siteType" value="Open" />
@@ -4662,7 +4662,7 @@
 	<command name="ViewSOSiteAnnouncementsEntrySOUserNotification" priority="5">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
-		<var name="entryURL" value="http://www.liferay.com" />
+		<var name="entryURL" value="http://www.google.com" />
 		<var name="siteDescription" value="Open Site Description" />
 		<var name="siteName" value="Open Site Name" />
 		<var name="siteType" value="Open" />

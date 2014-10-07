@@ -63,7 +63,7 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker("onFil
 				Liferay.Util.toggleDisabled(A.one('.customized-file-button'), false);
 			});
 
-			A.one('.customized-file-button').on('click', filePicker.<%= dlFilePicker.getOnClickCallback() %>, filePicker);
+			A.one('.customized-file-button').on('click', filePicker['<%= dlFilePicker.getOnClickCallback() %>'], filePicker);
 		</aui:script>
 	</c:otherwise>
 </c:choose>

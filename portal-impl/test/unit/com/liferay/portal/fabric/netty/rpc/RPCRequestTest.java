@@ -15,8 +15,8 @@
 package com.liferay.portal.fabric.netty.rpc;
 
 import com.liferay.portal.fabric.netty.NettyTestUtil;
-import com.liferay.portal.kernel.process.ProcessCallable;
-import com.liferay.portal.kernel.process.ProcessException;
+import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
+import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
@@ -48,12 +48,23 @@ public class RPCRequestTest {
 		new CodeCoverageAssertor();
 
 	@Test
-	public void testExecuteWithException() {
+	public void testExecuteWithAsyncException() {
 		RPCRequest<String> rpcRequest = new RPCRequest<String>(
-			_id, new TestProcessCallable(null, _exception));
+			_id, new TestRPCCallable(null, false, _throwable, null));
 
 		RPCResponse<String> rpcResponse = new RPCResponse<String>(
-			_id, null, _exception);
+			_id, false, null, _throwable);
+
+		doTestExecute(rpcRequest, rpcResponse);
+	}
+
+	@Test
+	public void testExecuteWithCancellation() {
+		RPCRequest<String> rpcRequest = new RPCRequest<String>(
+			_id, new TestRPCCallable(null, true, null, null));
+
+		RPCResponse<String> rpcResponse = new RPCResponse<String>(
+			_id, true, null, null);
 
 		doTestExecute(rpcRequest, rpcResponse);
 	}
@@ -61,49 +72,30 @@ public class RPCRequestTest {
 	@Test
 	public void testExecuteWithResult() {
 		RPCRequest<String> rpcRequest = new RPCRequest<String>(
-			_id, new TestProcessCallable(_result, null));
+			_id, new TestRPCCallable(null, false, null, _result));
 
 		RPCResponse<String> rpcResponse = new RPCResponse<String>(
-			_id, _result, null);
+			_id, false, _result, null);
 
 		doTestExecute(rpcRequest, rpcResponse);
 	}
 
 	@Test
-	public void testToString() {
-		ProcessCallable<String> processCallable = new TestProcessCallable(
-			_result, null);
-
+	public void testExecuteWithSyncException() {
 		RPCRequest<String> rpcRequest = new RPCRequest<String>(
-			_id, processCallable);
+			_id, new TestRPCCallable(_throwable, false, null, null));
 
-		Assert.assertEquals(
-			"{id=" + _id + ", processCallable=" + processCallable.toString() +
-				"}",
-			rpcRequest.toString());
+		RPCResponse<String> rpcResponse = new RPCResponse<String>(
+			_id, false, null, _throwable);
+
+		doTestExecute(rpcRequest, rpcResponse);
 	}
 
-	protected void doTestExecute(
-		RPCRequest<String> rpcRequest, RPCResponse<String> rpcResponse) {
-
-		// Normal
-
-		rpcRequest.execute(_embeddedChannel);
-
-		Queue<Object> messages = _embeddedChannel.outboundMessages();
-
-		Assert.assertEquals(1, messages.size());
-
-		Object message = messages.poll();
-
-		Assert.assertTrue(message instanceof RPCResponse);
-		Assert.assertEquals(rpcResponse.toString(), message.toString());
-
-		// Cancellation
-
+	@Test
+	public void testSendRPCResponseCancelled() {
 		ChannelPipeline channelPipeline = _embeddedChannel.pipeline();
 
-		channelPipeline.addFirst(
+		channelPipeline.addLast(
 			new ChannelOutboundHandlerAdapter() {
 
 				@Override
@@ -116,15 +108,19 @@ public class RPCRequestTest {
 
 			});
 
+		RPCRequest<String> rpcRequest = new RPCRequest<String>(
+			_id, new TestRPCCallable(null, false, null, _result));
+
+		RPCResponse<String> rpcResponse = new RPCResponse<String>(
+			_id, true, null, null);
+
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			RPCRequest.class.getName(), Level.SEVERE);
 
 		try {
-			rpcRequest.execute(_embeddedChannel);
+			rpcRequest.sendRPCResponse(_embeddedChannel, rpcResponse);
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
-
-			Assert.assertEquals(1, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -134,74 +130,117 @@ public class RPCRequestTest {
 		}
 		finally {
 			captureHandler.close();
-
-			channelPipeline.removeFirst();
 		}
+	}
 
-		// Channel failure
-
+	@Test
+	public void testSendRPCResponseFailed() {
 		_embeddedChannel.close();
 
-		captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+		RPCRequest<String> rpcRequest = new RPCRequest<String>(
+			_id, new TestRPCCallable(null, false, null, _result));
+
+		RPCResponse<String> rpcResponse = new RPCResponse<String>(
+			_id, true, null, null);
+
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			RPCRequest.class.getName(), Level.SEVERE);
 
 		try {
-			rpcRequest.execute(_embeddedChannel);
-
-			messages = _embeddedChannel.outboundMessages();
-
-			Assert.assertTrue(messages.isEmpty());
+			rpcRequest.sendRPCResponse(_embeddedChannel, rpcResponse);
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
-
-			Assert.assertEquals(1, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
 			Assert.assertEquals(
-				"Unable to send RPC response: " + rpcResponse.toString(),
+				"Unable to send RPC response: " + rpcResponse,
 				logRecord.getMessage());
 
 			Throwable throwable = logRecord.getThrown();
 
-			Assert.assertSame(
-				ClosedChannelException.class, throwable.getClass());
+			Assert.assertTrue(throwable instanceof ClosedChannelException);
 		}
 		finally {
 			captureHandler.close();
 		}
 	}
 
+	@Test
+	public void testToString() {
+		RPCCallable<String> rpcCallable = new TestRPCCallable(
+			null, true, null, null);
+
+		RPCRequest<String> rpcRequest = new RPCRequest<String>(
+			_id, rpcCallable);
+
+		Assert.assertEquals(
+			"{id=" + _id + ", rpcCallable=" + rpcCallable.toString() + "}",
+			rpcRequest.toString());
+	}
+
+	protected void doTestExecute(
+		RPCRequest<String> rpcRequest, RPCResponse<String> rpcResponse) {
+
+		rpcRequest.execute(_embeddedChannel);
+
+		Queue<Object> messages = _embeddedChannel.outboundMessages();
+
+		Assert.assertEquals(1, messages.size());
+
+		Object message = messages.poll();
+
+		Assert.assertTrue(message instanceof RPCResponse);
+		Assert.assertEquals(rpcResponse.toString(), message.toString());
+	}
+
 	private final EmbeddedChannel _embeddedChannel =
 		NettyTestUtil.createEmptyEmbeddedChannel();
-	private final ProcessException _exception = new ProcessException(
-		"This is the exception.");
 	private final long _id = System.currentTimeMillis();
 	private final String _result = "This is the result.";
+	private final Throwable _throwable = new Throwable(
+		"This is the throwable.");
 
-	private static class TestProcessCallable
-		implements ProcessCallable<String> {
+	private static class TestRPCCallable implements RPCCallable<String> {
 
-		public TestProcessCallable(
-			String result, ProcessException processException) {
+		public TestRPCCallable(
+			Throwable syncThrowable, boolean cancel, Throwable asyncThrowable,
+			String result) {
 
+			_syncThrowable = syncThrowable;
+			_cancel = cancel;
+			_asyncThrowable = asyncThrowable;
 			_result = result;
-			_processException = processException;
 		}
 
 		@Override
-		public String call() throws ProcessException {
-			if (_processException != null) {
-				throw _processException;
+		public NoticeableFuture<String> call() throws Throwable {
+			if (_syncThrowable != null) {
+				throw _syncThrowable;
 			}
 
-			return _result;
+			DefaultNoticeableFuture<String> defaultNoticeableFuture =
+				new DefaultNoticeableFuture<String>();
+
+			if (_cancel) {
+				defaultNoticeableFuture.cancel(true);
+			}
+			else if (_asyncThrowable != null) {
+				defaultNoticeableFuture.setException(_asyncThrowable);
+			}
+			else {
+				defaultNoticeableFuture.set(_result);
+			}
+
+			return defaultNoticeableFuture;
 		}
 
 		private static final long serialVersionUID = 1L;
 
-		private final ProcessException _processException;
+		private final Throwable _asyncThrowable;
+		private final boolean _cancel;
 		private final String _result;
+		private final Throwable _syncThrowable;
 
 	}
 

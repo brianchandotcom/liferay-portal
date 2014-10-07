@@ -31,6 +31,12 @@ public class DDMFormField implements Serializable {
 		_type = type;
 	}
 
+	public void addNestedDDMFormField(DDMFormField nestedDDMFormField) {
+		nestedDDMFormField.setDDMForm(_ddmForm);
+
+		_nestedDDMFormFields.add(nestedDDMFormField);
+	}
+
 	public String getDataType() {
 		return _dataType;
 	}

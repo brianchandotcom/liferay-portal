@@ -32,6 +32,12 @@ public class DDMForm implements Serializable {
 		_availableLocales.add(locale);
 	}
 
+	public void addDDMFormField(DDMFormField ddmFormField) {
+		ddmFormField.setDDMForm(this);
+
+		_ddmFormFields.add(ddmFormField);
+	}
+
 	public Set<Locale> getAvailableLocales() {
 		return _availableLocales;
 	}

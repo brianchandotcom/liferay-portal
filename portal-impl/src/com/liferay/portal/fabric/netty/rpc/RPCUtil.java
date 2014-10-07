@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.concurrent.AsyncBroker;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.process.ProcessCallable;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -33,7 +32,7 @@ import java.io.Serializable;
 public class RPCUtil {
 
 	public static <T extends Serializable> NoticeableFuture<T> execute(
-		Channel channel, ProcessCallable<T> processCallable) {
+		Channel channel, RPCCallable<T> rpcCallable) {
 
 		final AsyncBroker<Long, T> asyncBroker =
 			NettyChannelAttributes.getAsyncBroker(channel);
@@ -43,7 +42,7 @@ public class RPCUtil {
 		final NoticeableFuture<T> noticeableFuture = asyncBroker.post(id);
 
 		ChannelFuture channelFuture = channel.writeAndFlush(
-			new RPCRequest<T>(id, processCallable));
+			new RPCRequest<T>(id, rpcCallable));
 
 		channelFuture.addListener(
 			new ChannelFutureListener() {

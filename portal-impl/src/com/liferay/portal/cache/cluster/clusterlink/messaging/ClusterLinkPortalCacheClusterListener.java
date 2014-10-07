@@ -74,9 +74,9 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 		PortalCacheClusterEventType portalCacheClusterEventType =
 			portalCacheClusterEvent.getEventType();
 
-		boolean remote = AggregatedCacheListener.getRemoteInvokeThreadLocal();
+		boolean remote = AggregatedCacheListener.isRemoteInvoke();
 
-		AggregatedCacheListener.setRemoteInvokeThreadLocal(true);
+		AggregatedCacheListener.setRemoteInvoke(true);
 
 		try {
 			if (portalCacheClusterEventType.equals(
@@ -105,7 +105,7 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 			}
 		}
 		finally {
-			AggregatedCacheListener.setRemoteInvokeThreadLocal(remote);
+			AggregatedCacheListener.setRemoteInvoke(remote);
 		}
 	}
 

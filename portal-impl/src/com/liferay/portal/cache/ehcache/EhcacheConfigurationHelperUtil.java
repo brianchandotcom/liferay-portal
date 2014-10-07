@@ -19,12 +19,13 @@ import com.liferay.portal.kernel.cache.CacheListenerScope;
 import com.liferay.portal.kernel.cache.configuration.CallbackConfiguration;
 import com.liferay.portal.kernel.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.kernel.cache.configuration.PortalCacheManagerConfiguration;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
-import java.io.StringReader;
 
 import java.net.URL;
 
@@ -53,7 +54,7 @@ public class EhcacheConfigurationHelperUtil {
 			Configuration, PortalCacheManagerConfiguration>
 		getConfiguration(String configurationPath) {
 
-		return getConfiguration(configurationPath, false);
+		return getConfiguration(configurationPath, false, false);
 	}
 
 	public static ObjectValuePair<
@@ -82,7 +83,7 @@ public class EhcacheConfigurationHelperUtil {
 			Configuration, PortalCacheManagerConfiguration>
 		getConfiguration(URL configurationURL) {
 
-		return getConfiguration(configurationURL, false);
+		return getConfiguration(configurationURL, false, false);
 	}
 
 	public static ObjectValuePair<
@@ -197,15 +198,9 @@ public class EhcacheConfigurationHelperUtil {
 			EhcacheConstants.PORTAL_CACHE_MANAGER_NAME,
 			ehcacheConfiguration.getName());
 
-		CallbackConfiguration callbackConfiguration = new CallbackConfiguration(
-			EhcacheCallbackFactory.INSTANCE, properties);
-
-		Set<CallbackConfiguration> callbackConfigurations =
-			new HashSet<CallbackConfiguration>();
-
-		callbackConfigurations.add(callbackConfiguration);
-
-		return callbackConfigurations;
+		return Collections.singleton(
+			new CallbackConfiguration(
+				EhcacheCallbackFactory.INSTANCE, properties));
 	}
 
 	private static PortalCacheConfiguration _parseCacheConfiguration(
@@ -337,13 +332,14 @@ public class EhcacheConfigurationHelperUtil {
 
 		String propertyLines = propertiesString.trim();
 
-		propertyLines = propertyLines.replaceAll(
-			propertySeparator, StringPool.NEW_LINE);
+		propertyLines = StringUtil.replace(
+			propertyLines, propertySeparator, StringPool.NEW_LINE);
 
 		try {
-			properties.load(new StringReader(propertyLines));
+			properties.load(new UnsyncStringReader(propertyLines));
 		}
-		catch (IOException e) {
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
 		}
 
 		return properties;

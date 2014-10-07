@@ -52,17 +52,15 @@ public class LiferayCacheDecorator extends EhcacheDecoratorAdapter {
 	public void put(Element element, boolean doNotNotifyCacheReplicators)
 		throws CacheException, IllegalArgumentException, IllegalStateException {
 
-		boolean remoteInvoke =
-			AggregatedCacheListener.getRemoteInvokeThreadLocal();
+		boolean remoteInvoke = AggregatedCacheListener.isRemoteInvoke();
 
-		AggregatedCacheListener.setRemoteInvokeThreadLocal(
-			doNotNotifyCacheReplicators);
+		AggregatedCacheListener.setRemoteInvoke(doNotNotifyCacheReplicators);
 
 		try {
 			super.put(element, doNotNotifyCacheReplicators);
 		}
 		finally {
-			AggregatedCacheListener.setRemoteInvokeThreadLocal(remoteInvoke);
+			AggregatedCacheListener.setRemoteInvoke(remoteInvoke);
 		}
 	}
 
@@ -71,17 +69,15 @@ public class LiferayCacheDecorator extends EhcacheDecoratorAdapter {
 			final Element element, final boolean doNotNotifyCacheReplicators)
 		throws NullPointerException {
 
-		boolean remoteInvoke =
-			AggregatedCacheListener.getRemoteInvokeThreadLocal();
+		boolean remoteInvoke = AggregatedCacheListener.isRemoteInvoke();
 
-		AggregatedCacheListener.setRemoteInvokeThreadLocal(
-			doNotNotifyCacheReplicators);
+		AggregatedCacheListener.setRemoteInvoke(doNotNotifyCacheReplicators);
 
 		try {
 			return super.putIfAbsent(element, doNotNotifyCacheReplicators);
 		}
 		finally {
-			AggregatedCacheListener.setRemoteInvokeThreadLocal(remoteInvoke);
+			AggregatedCacheListener.setRemoteInvoke(remoteInvoke);
 		}
 	}
 
@@ -89,17 +85,15 @@ public class LiferayCacheDecorator extends EhcacheDecoratorAdapter {
 	public boolean remove(Object key, boolean doNotNotifyCacheReplicators)
 		throws IllegalStateException {
 
-		boolean remoteInvoke =
-			AggregatedCacheListener.getRemoteInvokeThreadLocal();
+		boolean remoteInvoke = AggregatedCacheListener.isRemoteInvoke();
 
-		AggregatedCacheListener.setRemoteInvokeThreadLocal(
-			doNotNotifyCacheReplicators);
+		AggregatedCacheListener.setRemoteInvoke(doNotNotifyCacheReplicators);
 
 		try {
 			return super.remove(key, doNotNotifyCacheReplicators);
 		}
 		finally {
-			AggregatedCacheListener.setRemoteInvokeThreadLocal(remoteInvoke);
+			AggregatedCacheListener.setRemoteInvoke(remoteInvoke);
 		}
 	}
 
@@ -114,17 +108,15 @@ public class LiferayCacheDecorator extends EhcacheDecoratorAdapter {
 	public void removeAll(boolean doNotNotifyCacheReplicators)
 		throws CacheException, IllegalStateException {
 
-		boolean remoteInvoke =
-			AggregatedCacheListener.getRemoteInvokeThreadLocal();
+		boolean remoteInvoke = AggregatedCacheListener.isRemoteInvoke();
 
-		AggregatedCacheListener.setRemoteInvokeThreadLocal(
-			doNotNotifyCacheReplicators);
+		AggregatedCacheListener.setRemoteInvoke(doNotNotifyCacheReplicators);
 
 		try {
 			super.removeAll(doNotNotifyCacheReplicators);
 		}
 		finally {
-			AggregatedCacheListener.setRemoteInvokeThreadLocal(remoteInvoke);
+			AggregatedCacheListener.setRemoteInvoke(remoteInvoke);
 		}
 	}
 
@@ -133,17 +125,15 @@ public class LiferayCacheDecorator extends EhcacheDecoratorAdapter {
 			Collection<?> keys, boolean doNotNotifyCacheReplicators)
 		throws IllegalStateException {
 
-		boolean remoteInvoke =
-			AggregatedCacheListener.getRemoteInvokeThreadLocal();
+		boolean remoteInvoke = AggregatedCacheListener.isRemoteInvoke();
 
-		AggregatedCacheListener.setRemoteInvokeThreadLocal(
-			doNotNotifyCacheReplicators);
+		AggregatedCacheListener.setRemoteInvoke(doNotNotifyCacheReplicators);
 
 		try {
 			super.removeAll(keys, doNotNotifyCacheReplicators);
 		}
 		finally {
-			AggregatedCacheListener.setRemoteInvokeThreadLocal(remoteInvoke);
+			AggregatedCacheListener.setRemoteInvoke(remoteInvoke);
 		}
 	}
 

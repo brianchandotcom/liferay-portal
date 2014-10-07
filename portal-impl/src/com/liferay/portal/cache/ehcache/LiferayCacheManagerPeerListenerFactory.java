@@ -74,60 +74,58 @@ public class LiferayCacheManagerPeerListenerFactory
 		return cacheManagerPeerListener;
 	}
 
-	public static class DummyCacheReplicator implements CacheReplicator {
-
-		@Override
-		public boolean alive() {
-			return true;
-		}
-
-		@Override
-		public Object clone() {
-			return new DummyCacheReplicator();
-		}
-
-		@Override
-		public void dispose() {
-		}
-
-		@Override
-		public boolean isReplicateUpdatesViaCopy() {
-			return false;
-		}
-
-		@Override
-		public boolean notAlive() {
-			return false;
-		}
-
-		@Override
-		public void notifyElementEvicted(Ehcache ehcache, Element element) {
-		}
-
-		@Override
-		public void notifyElementExpired(Ehcache ehcache, Element element) {
-		}
-
-		@Override
-		public void notifyElementPut(Ehcache ehcache, Element element) {
-		}
-
-		@Override
-		public void notifyElementRemoved(Ehcache ehcache, Element element) {
-		}
-
-		@Override
-		public void notifyElementUpdated(Ehcache ehcache, Element element) {
-		}
-
-		@Override
-		public void notifyRemoveAll(Ehcache ehch) {
-		}
-
-	}
-
 	private static final CacheReplicator _PLACE_HOLDER =
-		new DummyCacheReplicator();
+		new CacheReplicator() {
+
+			@Override
+			public boolean alive() {
+				return true;
+			}
+
+			@Override
+			public Object clone() {
+				return this;
+			}
+
+			@Override
+			public void dispose() {
+			}
+
+			@Override
+			public boolean isReplicateUpdatesViaCopy() {
+				return false;
+			}
+
+			@Override
+			public boolean notAlive() {
+				return false;
+			}
+
+			@Override
+			public void notifyElementEvicted(Ehcache ehcache, Element element) {
+			}
+
+			@Override
+			public void notifyElementExpired(Ehcache ehcache, Element element) {
+			}
+
+			@Override
+			public void notifyElementPut(Ehcache ehcache, Element element) {
+			}
+
+			@Override
+			public void notifyElementRemoved(Ehcache ehcache, Element element) {
+			}
+
+			@Override
+			public void notifyElementUpdated(Ehcache ehcache, Element element) {
+			}
+
+			@Override
+			public void notifyRemoveAll(Ehcache ehch) {
+			}
+
+		};
 
 	private static Log _log = LogFactoryUtil.getLog(
 		LiferayCacheManagerPeerListenerFactory.class);
@@ -155,11 +153,12 @@ public class LiferayCacheManagerPeerListenerFactory
 		}
 
 		@Override
-		public void dispose() throws CacheException {
+		public void dispose() {
 			_cacheManagerPeerListener.dispose();
 		}
 
 		@Override
+		@SuppressWarnings("rawtypes")
 		public List getBoundCachePeers() {
 			return _cacheManagerPeerListener.getBoundCachePeers();
 		}
@@ -180,7 +179,7 @@ public class LiferayCacheManagerPeerListenerFactory
 		}
 
 		@Override
-		public void init() throws CacheException {
+		public void init() {
 			for (String cacheName : _cacheManager.getCacheNames()) {
 				_wrapEhcache(cacheName);
 			}

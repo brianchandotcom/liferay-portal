@@ -38,7 +38,6 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
 
-import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -61,12 +60,9 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 		_portalCacheManagerConfiguration = getPortalCacheManagerConfiguration();
 
-		Collection<CallbackConfiguration> cacheManagerListenerConfigurations =
-			_portalCacheManagerConfiguration.
-				getCacheManagerListenerConfigurations();
-
 		for (CallbackConfiguration callbackConfiguration :
-				cacheManagerListenerConfigurations) {
+				_portalCacheManagerConfiguration.
+					getCacheManagerListenerConfigurations()) {
 
 			CallbackFactory callbackFactory =
 				callbackConfiguration.getCallbackFactory();
@@ -138,20 +134,25 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 			portalCache = new BlockingPortalCache<K, V>(portalCache);
 		}
 
-		if ((_portalCaches.putIfAbsent(name, portalCache) == null) &&
-			PropsValues.EHCACHE_BOOTSTRAP_CACHE_LOADER_ENABLED &&
-			(portalCacheConfiguration != null)) {
+		PortalCache<K, V> previousPortalCache = _portalCaches.putIfAbsent(
+			name, portalCache);
 
-			CallbackConfiguration bootstrapConfiguration =
+		if (previousPortalCache != null) {
+			portalCache = previousPortalCache;
+		}
+		else if (PropsValues.EHCACHE_BOOTSTRAP_CACHE_LOADER_ENABLED &&
+				 (portalCacheConfiguration != null)) {
+
+			CallbackConfiguration bootstrapLoaderConfiguration =
 				portalCacheConfiguration.getBootstrapLoaderConfiguration();
 
-			if (bootstrapConfiguration != null) {
+			if (bootstrapLoaderConfiguration != null) {
 				CallbackFactory callbackFactory =
-					bootstrapConfiguration.getCallbackFactory();
+					bootstrapLoaderConfiguration.getCallbackFactory();
 
 				BootstrapLoader bootstrapLoader =
 					callbackFactory.createBootstrapLoader(
-						bootstrapConfiguration.getProperties());
+						bootstrapLoaderConfiguration.getProperties());
 
 				if (bootstrapLoader != null) {
 					bootstrapLoader.load(getName(), name);
@@ -159,7 +160,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 			}
 		}
 
-		return _portalCaches.get(name);
+		return portalCache;
 	}
 
 	@Override

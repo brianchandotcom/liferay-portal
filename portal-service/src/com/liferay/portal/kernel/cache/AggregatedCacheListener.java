@@ -28,22 +28,22 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * @author Tina Tian
  */
-public class AggregatedCacheListener <K extends Serializable, V>
+public class AggregatedCacheListener<K extends Serializable, V>
 	implements CacheListener<K, V> {
 
-	public static boolean getRemoteInvokeThreadLocal() {
+	public static boolean isRemoteInvoke() {
 		return _remoteInvokeThreadLocal.get();
 	}
 
-	public static boolean getSkipListenerThreadLocal() {
+	public static boolean isSkipListener() {
 		return _skipListenerThreadLocal.get();
 	}
 
-	public static void setRemoteInvokeThreadLocal(boolean remoteInvoke) {
+	public static void setRemoteInvoke(boolean remoteInvoke) {
 		_remoteInvokeThreadLocal.set(remoteInvoke);
 	}
 
-	public static void setSkipListenerThreadLocal(boolean skipListener) {
+	public static void setSkipListener(boolean skipListener) {
 		_skipListenerThreadLocal.set(skipListener);
 	}
 
@@ -75,14 +75,12 @@ public class AggregatedCacheListener <K extends Serializable, V>
 			return;
 		}
 
-		for ( Map.Entry<CacheListener<K, V>, CacheListenerScope> entry :
+		for (Map.Entry<CacheListener<K, V>, CacheListenerScope> entry :
 				_cacheListeners.entrySet()) {
-
-			CacheListenerScope cacheListenerScope = entry.getValue();
 
 			CacheListener<K, V> cacheListener = entry.getKey();
 
-			if (_shouldDeliver(cacheListener, cacheListenerScope)) {
+			if (_shouldDeliver(cacheListener, entry.getValue())) {
 				cacheListener.notifyEntryEvicted(
 					portalCache, key, value, timeToLive);
 			}
@@ -98,14 +96,12 @@ public class AggregatedCacheListener <K extends Serializable, V>
 			return;
 		}
 
-		for ( Map.Entry<CacheListener<K, V>, CacheListenerScope> entry :
+		for (Map.Entry<CacheListener<K, V>, CacheListenerScope> entry :
 				_cacheListeners.entrySet()) {
-
-			CacheListenerScope cacheListenerScope = entry.getValue();
 
 			CacheListener<K, V> cacheListener = entry.getKey();
 
-			if (_shouldDeliver(cacheListener, cacheListenerScope)) {
+			if (_shouldDeliver(cacheListener, entry.getValue())) {
 				cacheListener.notifyEntryExpired(
 					portalCache, key, value, timeToLive);
 			}
@@ -121,14 +117,12 @@ public class AggregatedCacheListener <K extends Serializable, V>
 			return;
 		}
 
-		for ( Map.Entry<CacheListener<K, V>, CacheListenerScope> entry :
+		for (Map.Entry<CacheListener<K, V>, CacheListenerScope> entry :
 				_cacheListeners.entrySet()) {
-
-			CacheListenerScope cacheListenerScope = entry.getValue();
 
 			CacheListener<K, V> cacheListener = entry.getKey();
 
-			if (_shouldDeliver(cacheListener, cacheListenerScope)) {
+			if (_shouldDeliver(cacheListener, entry.getValue())) {
 				cacheListener.notifyEntryPut(
 					portalCache, key, value, timeToLive);
 			}
@@ -144,14 +138,12 @@ public class AggregatedCacheListener <K extends Serializable, V>
 			return;
 		}
 
-		for ( Map.Entry<CacheListener<K, V>, CacheListenerScope> entry :
+		for (Map.Entry<CacheListener<K, V>, CacheListenerScope> entry :
 				_cacheListeners.entrySet()) {
-
-			CacheListenerScope cacheListenerScope = entry.getValue();
 
 			CacheListener<K, V> cacheListener = entry.getKey();
 
-			if (_shouldDeliver(cacheListener, cacheListenerScope)) {
+			if (_shouldDeliver(cacheListener, entry.getValue())) {
 				cacheListener.notifyEntryRemoved(
 					portalCache, key, value, timeToLive);
 			}
@@ -167,14 +159,12 @@ public class AggregatedCacheListener <K extends Serializable, V>
 			return;
 		}
 
-		for ( Map.Entry<CacheListener<K, V>, CacheListenerScope> entry :
+		for (Map.Entry<CacheListener<K, V>, CacheListenerScope> entry :
 				_cacheListeners.entrySet()) {
-
-			CacheListenerScope cacheListenerScope = entry.getValue();
 
 			CacheListener<K, V> cacheListener = entry.getKey();
 
-			if (_shouldDeliver(cacheListener, cacheListenerScope)) {
+			if (_shouldDeliver(cacheListener, entry.getValue())) {
 				cacheListener.notifyEntryUpdated(
 					portalCache, key, value, timeToLive);
 			}
@@ -189,14 +179,12 @@ public class AggregatedCacheListener <K extends Serializable, V>
 			return;
 		}
 
-		for ( Map.Entry<CacheListener<K, V>, CacheListenerScope> entry :
+		for (Map.Entry<CacheListener<K, V>, CacheListenerScope> entry :
 				_cacheListeners.entrySet()) {
-
-			CacheListenerScope cacheListenerScope = entry.getValue();
 
 			CacheListener<K, V> cacheListener = entry.getKey();
 
-			if (_shouldDeliver(cacheListener, cacheListenerScope)) {
+			if (_shouldDeliver(cacheListener, entry.getValue())) {
 				cacheListener.notifyRemoveAll(portalCache);
 			}
 		}

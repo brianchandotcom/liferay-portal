@@ -57,9 +57,9 @@ public class MVCCPortalCache<K extends Serializable, V extends MVCCModel>
 		boolean skipListener = false;
 
 		if (quiet) {
-			skipListener = AggregatedCacheListener.getSkipListenerThreadLocal();
+			skipListener = AggregatedCacheListener.isSkipListener();
 
-			AggregatedCacheListener.setSkipListenerThreadLocal(true);
+			AggregatedCacheListener.setSkipListener(true);
 		}
 
 		try {
@@ -86,8 +86,7 @@ public class MVCCPortalCache<K extends Serializable, V extends MVCCModel>
 		}
 		finally {
 			if (quiet) {
-				AggregatedCacheListener.setSkipListenerThreadLocal(
-					skipListener);
+				AggregatedCacheListener.setSkipListener(skipListener);
 			}
 		}
 	}

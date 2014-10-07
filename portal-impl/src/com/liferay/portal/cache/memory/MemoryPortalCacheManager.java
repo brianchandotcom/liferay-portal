@@ -76,11 +76,17 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 		portalCache = new MemoryPortalCache<K, V>(
 			this, cacheName, _cacheInitialCapacity);
 
-		if (_memoryPortalCaches.putIfAbsent(cacheName, portalCache) == null) {
+		MemoryPortalCache<K, V> previousPortalCache =
+			_memoryPortalCaches.putIfAbsent(cacheName, portalCache);
+
+		if (previousPortalCache == null) {
 			aggregatedCacheManagerListener.notifyCacheAdded(cacheName);
 		}
+		else {
+			portalCache = previousPortalCache;
+		}
 
-		return _memoryPortalCaches.get(cacheName);
+		return portalCache;
 	}
 
 	@Override

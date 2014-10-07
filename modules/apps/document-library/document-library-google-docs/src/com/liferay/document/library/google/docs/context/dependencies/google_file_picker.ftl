@@ -133,5 +133,4 @@ else if (window.gapi) {
 	Liferay.fire('googleAPILoaded');
 }
 
-// Export the required file picker interface
 var FilePicker = GoogleFilePicker;

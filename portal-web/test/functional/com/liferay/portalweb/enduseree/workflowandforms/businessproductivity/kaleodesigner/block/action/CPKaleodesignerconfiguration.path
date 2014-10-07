@@ -75,6 +75,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DEFINITION_TABLE_DEFINITION_DRAFT_ACTIONS</td>
+	<td>//div[contains(@id,'kaleodesignerportlet_kaleoDraftDefinitionsSearchContainerSearchContainer')]//tr[contains(.,'No')]/td[6]/div/a[contains(.,'Actions')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DEFINITION_TABLE_ACTIONS_1</td>
 	<td>xpath=(//div[contains(@id,'kaleodesignerportlet_kaleoDraftDefinitionsSearchContainerSearchContainer')]//td[6]/div/a[contains(.,'Actions')])[1]</td>
 	<td></td>

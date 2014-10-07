@@ -69,13 +69,15 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 
 	config.toolbar_bbcode = [
 		['Bold', 'Italic', 'Underline', 'Strike'],
-		['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
-		['Image', 'Link', 'Unlink'],
-		['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-		['Font', 'FontSize', 'Format'],
 		['TextColor'],
-		['Undo', 'Redo'],
-		['Smiley', '-', 'Blockquote', '-', 'Code'],
+		['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+		['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'Code'],
+		'/',
+		['Format', 'Font', 'FontSize'],
+		['Link', 'Unlink'],
+		['Image', '-', 'Smiley'],
+		'/',
+		['Cut', 'Copy', 'Paste', '-', 'SelectAll', '-', 'Undo', 'Redo'],
 		['Source'],
 		['A11YBtn']
 	];
@@ -83,15 +85,17 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 	config.toolbar_phone = [
 		['Bold', 'Italic', 'Underline'],
 		['NumberedList', 'BulletedList'],
-		['Image', 'Link', 'Unlink']
+		['Link', 'Unlink'],
+		['Image']
 	];
 
 	config.toolbar_tablet = [
 		['Bold', 'Italic', 'Underline', 'Strike'],
-		['NumberedList', 'BulletedList'],
-		['Image', 'Link', 'Unlink'],
 		['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-		['Styles', 'FontSize']
+		['NumberedList', 'BulletedList'],
+		['Styles', 'FontSize'],
+		['Link', 'Unlink'],
+		['Image']
 	];
 
 	config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';

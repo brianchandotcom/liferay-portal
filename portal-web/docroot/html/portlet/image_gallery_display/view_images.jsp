@@ -24,6 +24,8 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute("view.js
 List results = searchContainer.getResults();
 
 DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request, dlPortletInstanceSettings);
+
+Boolean mediaGalleryHasImages = false;
 %>
 
 <c:choose>
@@ -67,6 +69,8 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 				<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
 
 					<%
+					mediaGalleryHasImages = true;
+
 					FileVersion fileVersion = fileEntry.getFileVersion();
 
 					boolean hasAudio = AudioProcessorUtil.hasAudio(fileVersion);
@@ -258,66 +262,68 @@ embeddedPlayerURL.setParameter("struts_action", "/image_gallery_display/embedded
 embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 %>
 
-<aui:script use="aui-image-viewer,aui-image-viewer-media">
-	var viewportRegion = A.getDoc().get('viewportRegion');
+<c:if test="<%= mediaGalleryHasImages %>">
+	<aui:script use="aui-image-viewer,aui-image-viewer-media">
+		var viewportRegion = A.getDoc().get('viewportRegion');
 
-	var maxHeight = (viewportRegion.height / 2);
-	var maxWidth = (viewportRegion.width / 2);
+		var maxHeight = (viewportRegion.height / 2);
+		var maxWidth = (viewportRegion.width / 2);
 
-	var imageGallery = new A.ImageViewer(
-		{
-			after: {
-				<c:if test="<%= dlActionsDisplayContext.isShowActions() %>">
-					load: function(event) {
-						var instance = this;
+		var imageGallery = new A.ImageViewer(
+			{
+				after: {
+					<c:if test="<%= dlActionsDisplayContext.isShowActions() %>">
+						load: function(event) {
+							var instance = this;
 
-						var currentLink = instance.getCurrentLink();
+							var currentLink = instance.getCurrentLink();
 
-						var thumbnailId = currentLink.attr('thumbnailId');
+							var thumbnailId = currentLink.attr('thumbnailId');
 
-						var actions = instance._actions;
+							var actions = instance._actions;
 
-						if (actions) {
-							var defaultAction = A.one('#<portlet:namespace />buttonsContainer_' + thumbnailId);
+							if (actions) {
+								var defaultAction = A.one('#<portlet:namespace />buttonsContainer_' + thumbnailId);
 
-							actions.empty();
+								actions.empty();
 
-							var action = defaultAction.clone().show();
+								var action = defaultAction.clone().show();
 
-							actions.append(action);
+								actions.append(action);
+							}
 						}
+					</c:if>
+				},
+				delay: 5000,
+				infoTemplate: '<%= LanguageUtil.format(request, "image-x-of-x", new String[] {"{current}", "{total}"}, false) %>',
+				links: '#<portlet:namespace />imageGalleryAssetInfo .image-link.preview',
+				maxHeight: maxHeight,
+				maxWidth: maxWidth,
+				playingLabel: '(<liferay-ui:message key="playing" />)',
+				plugins: [
+					{
+						cfg: {
+							'providers.liferay': {
+								container: '<iframe frameborder="0" height="{height}" scrolling="no" src="<%= embeddedPlayerURL.toString() %>&<portlet:namespace />thumbnailURL={thumbnailURL}&<portlet:namespace />mp3PreviewURL={mp3PreviewURL}&<portlet:namespace />mp4PreviewURL={mp4PreviewURL}&<portlet:namespace />oggPreviewURL={oggPreviewURL}&<portlet:namespace />ogvPreviewURL={ogvPreviewURL}" width="{width}"></iframe>',
+								matcher: /(.+)&mediaGallery=1/,
+								mediaRegex: /(.+)&mediaGallery=1/,
+								options: A.merge(
+									A.MediaViewerPlugin.DEFAULT_OPTIONS,
+									{
+										'mp3PreviewURL': '',
+										'mp4PreviewURL': '',
+										'oggPreviewURL': '',
+										'ogvPreviewURL': '',
+										'thumbnailURL': ''
+									}
+								)
+							}
+						},
+						fn: A.MediaViewerPlugin
 					}
-				</c:if>
-			},
-			delay: 5000,
-			infoTemplate: '<%= LanguageUtil.format(request, "image-x-of-x", new String[] {"{current}", "{total}"}, false) %>',
-			links: '#<portlet:namespace />imageGalleryAssetInfo .image-link.preview',
-			maxHeight: maxHeight,
-			maxWidth: maxWidth,
-			playingLabel: '(<liferay-ui:message key="playing" />)',
-			plugins: [
-				{
-					cfg: {
-						'providers.liferay': {
-							container: '<iframe frameborder="0" height="{height}" scrolling="no" src="<%= embeddedPlayerURL.toString() %>&<portlet:namespace />thumbnailURL={thumbnailURL}&<portlet:namespace />mp3PreviewURL={mp3PreviewURL}&<portlet:namespace />mp4PreviewURL={mp4PreviewURL}&<portlet:namespace />oggPreviewURL={oggPreviewURL}&<portlet:namespace />ogvPreviewURL={ogvPreviewURL}" width="{width}"></iframe>',
-							matcher: /(.+)&mediaGallery=1/,
-							mediaRegex: /(.+)&mediaGallery=1/,
-							options: A.merge(
-								A.MediaViewerPlugin.DEFAULT_OPTIONS,
-								{
-									'mp3PreviewURL': '',
-									'mp4PreviewURL': '',
-									'oggPreviewURL': '',
-									'ogvPreviewURL': '',
-									'thumbnailURL': ''
-								}
-							)
-						}
-					},
-					fn: A.MediaViewerPlugin
-				}
-			],
-			zIndex: ++Liferay.zIndex.WINDOW
-		}
-	).render();
-</aui:script>
+				],
+				zIndex: ++Liferay.zIndex.WINDOW
+			}
+		).render();
+	</aui:script>
+</c:if>

@@ -17,7 +17,7 @@
 		propertySeparator=","
 	/>
 	<cacheManagerPeerListenerFactory
-		class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"
+		class="com.liferay.portal.cache.ehcache.LiferayCacheManagerPeerListenerFactory"
 	/>
 	<defaultCache
 		eternal="false"

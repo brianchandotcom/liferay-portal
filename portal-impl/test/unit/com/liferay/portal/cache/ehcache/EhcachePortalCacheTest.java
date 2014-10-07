@@ -20,11 +20,7 @@ import com.liferay.portal.kernel.cache.CacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 
-import java.io.Serializable;
-
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
@@ -32,8 +28,6 @@ import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 import net.sf.ehcache.config.CacheConfiguration;
 import net.sf.ehcache.config.Configuration;
-import net.sf.ehcache.event.CacheEventListener;
-import net.sf.ehcache.event.RegisteredEventListeners;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -198,66 +192,6 @@ public class EhcachePortalCacheTest {
 		localCacheListener.assertActionsCount(0);
 		remoteCacheListener.assertActionsCount(0);
 		_defaultCacheListener.assertActionsCount(0);
-	}
-
-	@Test
-	public void testCacheListenerCopying() {
-		RegisteredEventListeners registeredEventListeners =
-			_ehcachePortalCache.ehcache.getCacheEventNotificationService();
-
-		Set<CacheEventListener> cacheEventListeners =
-			registeredEventListeners.getCacheEventListeners();
-
-		Assert.assertEquals(1, cacheEventListeners.size());
-
-		Iterator<CacheEventListener> iterator = cacheEventListeners.iterator();
-
-		CacheEventListener cacheEventListener = iterator.next();
-
-		Assert.assertTrue(
-			cacheEventListener instanceof PortalCacheCacheEventListener);
-
-		PortalCacheCacheEventListener<Serializable, Serializable>
-			portalCacheCacheEventListener =
-				(PortalCacheCacheEventListener<Serializable, Serializable>)
-					cacheEventListener;
-
-		Assert.assertSame(
-			_defaultCacheListener,
-			portalCacheCacheEventListener.getCacheListener());
-		Assert.assertSame(
-			_ehcachePortalCache,
-			portalCacheCacheEventListener.getPortalCache());
-
-		String newCacheName = "newCache";
-
-		_cacheManager.addCache(newCacheName);
-
-		Cache newCache = _cacheManager.getCache(newCacheName);
-
-		_ehcachePortalCache.setEhcache(newCache);
-
-		registeredEventListeners = newCache.getCacheEventNotificationService();
-
-		Assert.assertEquals(1, cacheEventListeners.size());
-
-		iterator = cacheEventListeners.iterator();
-
-		cacheEventListener = iterator.next();
-
-		Assert.assertTrue(
-			cacheEventListener instanceof PortalCacheCacheEventListener);
-
-		portalCacheCacheEventListener =
-			(PortalCacheCacheEventListener<Serializable, Serializable>)
-				cacheEventListener;
-
-		Assert.assertSame(
-			_defaultCacheListener,
-			portalCacheCacheEventListener.getCacheListener());
-		Assert.assertSame(
-			_ehcachePortalCache,
-			portalCacheCacheEventListener.getPortalCache());
 	}
 
 	@Test

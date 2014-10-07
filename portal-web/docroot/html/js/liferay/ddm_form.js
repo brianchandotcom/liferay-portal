@@ -312,6 +312,8 @@ AUI.add(
 
 						var currentTarget = event.currentTarget;
 
+						instance.ddmRepeatableButton = currentTarget;
+
 						if (currentTarget.hasClass('lfr-ddm-repeatable-add-button')) {
 							instance.repeat();
 						}
@@ -409,6 +411,12 @@ AUI.add(
 
 						container.remove(true);
 
+						Liferay.fire('ddmField:change', 
+							{
+								ddmRepeatableButton: instance.ddmRepeatableButton
+							}
+						);
+
 						var parent = instance.get('parent');
 
 						var siblings = parent.get('fields');
@@ -428,6 +436,12 @@ AUI.add(
 								var fieldNode = A.Node.create(fieldTemplate);
 
 								instance.get('container').insert(fieldNode, 'after');
+
+								Liferay.fire('ddmField:change', 
+									{
+										ddmRepeatableButton: instance.ddmRepeatableButton
+									}
+								);
 
 								var parent = instance.get('parent');
 

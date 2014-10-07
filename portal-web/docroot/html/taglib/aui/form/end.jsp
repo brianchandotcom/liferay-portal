@@ -26,7 +26,7 @@
 </form>
 
 <aui:script use="liferay-form">
-	Liferay.Form.register(
+	var <%= namespace + name %>liferayForm = Liferay.Form.register(
 		{
 			id: '<%= namespace + name %>'
 
@@ -72,4 +72,50 @@
 	<c:if test="<%= Validator.isNotNull(onSubmit) %>">
 		A.all('#<%= namespace + name %> .input-container').removeAttribute('disabled');
 	</c:if>
+
+	Liferay.on('ddmField:change', 
+		function(event) {
+			var ddmRepeatableButton = event.ddmRepeatableButton;
+			var formFieldRule;
+			var formFieldRules = <%= namespace + name %>liferayForm.formValidator.get('rules');
+
+			var controlGroup = ddmRepeatableButton ? ddmRepeatableButton.get('parentNode') : null;
+
+			if (controlGroup) {
+				var formField = controlGroup.one('.field');
+				var formFieldId = formField ? formField.get('id') : null;
+				var controlGroupNext = controlGroup.next();
+			}
+
+			if (controlGroupNext) {
+				var formFieldNext = controlGroupNext.one('.field');
+				var formFieldIdNext = formFieldNext ? formFieldNext.get('id') : null;
+			}
+
+			if (ddmRepeatableButton) {
+				if (ddmRepeatableButton.hasClass('lfr-ddm-repeatable-add-button')) {
+					for (formFieldRule in formFieldRules) {
+						if (formFieldRule === formFieldId) {
+							var formFieldNextRules = formFieldRules[formFieldRule];
+						}
+					}
+
+					if (formFieldIdNext) {
+						formFieldRules[formFieldIdNext] = formFieldNextRules;
+					}
+
+					<%= namespace + name %>liferayForm.formValidator.set('rules', formFieldRules);
+				}
+				else if (ddmRepeatableButton.hasClass('lfr-ddm-repeatable-delete-button')) {
+					for (formFieldRule in formFieldRules) {
+						if (formFieldRule === formFieldId) {
+							delete formFieldRules[formFieldRule];
+
+							delete <%= namespace + name %>liferayForm.formValidator.errors[formFieldRule];
+						}
+					}
+				}
+			}
+		}
+	);
 </aui:script>

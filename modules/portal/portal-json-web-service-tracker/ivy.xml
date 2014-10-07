@@ -20,5 +20,10 @@
 		<dependency name="org.apache.felix.scr" org="org.apache.felix" rev="1.6.2" />
 		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
+		<dependency conf="test->default" name="arquillian-container-liferay" org="com.liferay.arquillian" rev="latest.integration" />
+		<dependency conf="test->default" name="arquillian-deployment-generator-bnd" org="com.liferay.arquillian" rev="latest.integration" />
+		<dependency conf="test->default" name="arquillian-junit-container" org="org.jboss.arquillian.junit" rev="1.1.3.Final" />
+		<dependency conf="test->default" name="httpclient" org="org.apache.httpcomponents" rev="4.3.5" />
+		<dependency conf="test->default" name="junit" org="junit" rev="4.11" />
 	</dependencies>
 </ivy-module>

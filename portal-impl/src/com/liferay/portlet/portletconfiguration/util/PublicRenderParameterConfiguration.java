@@ -82,9 +82,9 @@ public class PublicRenderParameterConfiguration {
 		return _publicRenderParameterName;
 	}
 
-	private boolean _ignoreValue;
-	private String _mappingValue;
-	private PublicRenderParameter _publicRenderParameter;
-	private String _publicRenderParameterName;
+	private final boolean _ignoreValue;
+	private final String _mappingValue;
+	private final PublicRenderParameter _publicRenderParameter;
+	private final String _publicRenderParameterName;
 
 }

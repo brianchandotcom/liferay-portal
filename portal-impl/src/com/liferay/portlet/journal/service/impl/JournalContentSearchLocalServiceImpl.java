@@ -272,7 +272,7 @@ public class JournalContentSearchLocalServiceImpl
 		return contentSearches;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentSearchLocalServiceImpl.class);
 
 }

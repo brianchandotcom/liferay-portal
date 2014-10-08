@@ -71,6 +71,6 @@ public class UserGroupNameComparator extends OrderByComparator<UserGroup> {
 		return _ascending;
 	}
 
-	private boolean _ascending;
+	private final boolean _ascending;
 
 }

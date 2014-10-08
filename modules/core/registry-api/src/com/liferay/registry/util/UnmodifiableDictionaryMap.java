@@ -103,6 +103,6 @@ public class UnmodifiableDictionaryMap <K, V> implements Map<K, V> {
 		return _map.values();
 	}
 
-	private Map<K, V> _map;
+	private final Map<K, V> _map;
 
 }

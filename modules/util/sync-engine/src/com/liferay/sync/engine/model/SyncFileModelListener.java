@@ -63,7 +63,7 @@ public class SyncFileModelListener implements ModelListener<SyncFile> {
 		IODeltaUtil.checksums(syncFile);
 	}
 
-	private static Logger _logger = LoggerFactory.getLogger(
+	private static final Logger _logger = LoggerFactory.getLogger(
 		SyncFileModelListener.class);
 
 }

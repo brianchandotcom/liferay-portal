@@ -215,7 +215,7 @@ public class RubyExecutor extends BaseScriptingExecutor {
 		}
 		finally {
 			try {
-				_globalRuntimeField.set(null, null);
+				_GLOBAL_RUNTIME_FIELD.set(null, null);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -292,17 +292,18 @@ public class RubyExecutor extends BaseScriptingExecutor {
 
 	private static final String _COMPILE_MODE_JIT = "jit";
 
-	private static Log _log = LogFactoryUtil.getLog(RubyExecutor.class);
+	private static final Field _GLOBAL_RUNTIME_FIELD;
 
-	private static Field _globalRuntimeField;
-	private static ThreadFactory _threadFactory =
+	private static final Log _log = LogFactoryUtil.getLog(RubyExecutor.class);
+
+	private static final ThreadFactory _threadFactory =
 		new NamedThreadFactory(
 			RubyExecutor.class.getName(), Thread.NORM_PRIORITY,
 			RubyExecutor.class.getClassLoader());
 
 	static {
 		try {
-			_globalRuntimeField = ReflectionUtil.getDeclaredField(
+			_GLOBAL_RUNTIME_FIELD = ReflectionUtil.getDeclaredField(
 				Ruby.class, "globalRuntime");
 		}
 		catch (Exception e) {
@@ -310,10 +311,10 @@ public class RubyExecutor extends BaseScriptingExecutor {
 		}
 	}
 
-	private String _basePath;
+	private final String _basePath;
 	private boolean _executeInSeparateThread = true;
-	private List<String> _loadPaths;
-	private ScriptingContainer _scriptingContainer;
+	private final List<String> _loadPaths;
+	private final ScriptingContainer _scriptingContainer;
 
 	private class EvalCallable implements Callable<Map<String, Object>> {
 

@@ -100,7 +100,7 @@ public class SyncPropService {
 		return syncProp;
 	}
 
-	private static Logger _logger = LoggerFactory.getLogger(
+	private static final Logger _logger = LoggerFactory.getLogger(
 		SyncPropService.class);
 
 	private static SyncPropPersistence _syncPropPersistence =

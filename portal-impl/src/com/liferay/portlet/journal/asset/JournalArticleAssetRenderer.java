@@ -445,6 +445,6 @@ public class JournalArticleAssetRenderer
 		return themeDisplay.getPathThemeImages() + "/common/history.png";
 	}
 
-	private JournalArticle _article;
+	private final JournalArticle _article;
 
 }

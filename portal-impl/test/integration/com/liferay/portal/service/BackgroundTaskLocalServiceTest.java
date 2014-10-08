@@ -325,7 +325,7 @@ public class BackgroundTaskLocalServiceTest {
 	private static final Class<?> _TASK_EXECUTOR_CLASS =
 		PortletStagingBackgroundTaskExecutor.class;
 
-	private Destination _destination = new SynchronousDestination();
+	private final Destination _destination = new SynchronousDestination();
 
 	@DeleteAfterTestRun
 	private Group _group;

@@ -104,6 +104,6 @@ public class BundleResolverClassLoader extends ClassLoader {
 		return clazz;
 	}
 
-	private Bundle[] _bundles;
+	private final Bundle[] _bundles;
 
 }

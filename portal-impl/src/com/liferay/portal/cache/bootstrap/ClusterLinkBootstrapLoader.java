@@ -77,7 +77,7 @@ public class ClusterLinkBootstrapLoader implements BootstrapLoader {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterLinkBootstrapLoader.class);
 
 	private final boolean _bootstrapAsynchronously;

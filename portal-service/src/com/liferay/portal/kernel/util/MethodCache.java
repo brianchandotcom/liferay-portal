@@ -53,7 +53,7 @@ public class MethodCache {
 		return method;
 	}
 
-	private static Map<MethodKey, Method> _methods =
+	private static final Map<MethodKey, Method> _methods =
 		new ConcurrentHashMap<MethodKey, Method>();
 
 }

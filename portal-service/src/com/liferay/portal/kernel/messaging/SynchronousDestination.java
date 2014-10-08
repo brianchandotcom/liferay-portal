@@ -48,9 +48,9 @@ public class SynchronousDestination extends BaseDestination {
 		_sentMessageCounter.incrementAndGet();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		SynchronousDestination.class);
 
-	private AtomicLong _sentMessageCounter = new AtomicLong();
+	private final AtomicLong _sentMessageCounter = new AtomicLong();
 
 }

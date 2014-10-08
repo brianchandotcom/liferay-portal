@@ -196,10 +196,10 @@ public class SyncSiteService {
 		}
 	}
 
-	private static Logger _logger = LoggerFactory.getLogger(
+	private static final Logger _logger = LoggerFactory.getLogger(
 		SyncSiteService.class);
 
-	private static Map<Long, Set<Long>> _activeSyncSiteIds =
+	private static final Map<Long, Set<Long>> _activeSyncSiteIds =
 		new HashMap<Long, Set<Long>>();
 	private static SyncSitePersistence _syncSitePersistence =
 		getSyncSitePersistence();

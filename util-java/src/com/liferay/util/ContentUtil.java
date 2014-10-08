@@ -76,10 +76,10 @@ public class ContentUtil {
 		_contentPool.put(location, content);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ContentUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(ContentUtil.class);
 
-	private static ContentUtil _instance = new ContentUtil();
+	private static final ContentUtil _instance = new ContentUtil();
 
-	private Map<String, String> _contentPool;
+	private final Map<String, String> _contentPool;
 
 }

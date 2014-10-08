@@ -54,9 +54,9 @@ public class ServletContextReportDesignRetriever
 		return _reportName;
 	}
 
-	private String _postfix;
-	private String _prefix;
-	private String _reportName;
-	private ServletContext _servletContext;
+	private final String _postfix;
+	private final String _prefix;
+	private final String _reportName;
+	private final ServletContext _servletContext;
 
 }

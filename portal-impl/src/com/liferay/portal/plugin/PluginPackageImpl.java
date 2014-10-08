@@ -376,7 +376,7 @@ public class PluginPackageImpl
 	private List<String> _liferayVersions = new ArrayList<String>();
 	private String _longDescription = StringPool.BLANK;
 	private Date _modifiedDate;
-	private ModuleId _moduleId;
+	private final ModuleId _moduleId;
 	private String _name;
 	private String _pageURL;
 	private String _recommendedDeploymentContext;

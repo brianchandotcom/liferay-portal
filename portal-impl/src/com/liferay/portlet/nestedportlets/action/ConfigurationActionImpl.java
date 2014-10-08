@@ -135,7 +135,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			layout.getTypeSettings());
 	}
 
-	private static Pattern _pattern = Pattern.compile(
+	private static final Pattern _pattern = Pattern.compile(
 		"processColumn[(]\"(.*?)\"(?:, *\"(?:.*?)\")?[)]", Pattern.DOTALL);
 
 }

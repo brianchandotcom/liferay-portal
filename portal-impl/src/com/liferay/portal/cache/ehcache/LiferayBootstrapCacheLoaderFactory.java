@@ -62,9 +62,9 @@ public class LiferayBootstrapCacheLoaderFactory<T extends BootstrapCacheLoader>
 			properties);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayBootstrapCacheLoaderFactory.class);
 
-	private BootstrapCacheLoaderFactory<T> _bootstrapCacheLoaderFactory;
+	private final BootstrapCacheLoaderFactory<T> _bootstrapCacheLoaderFactory;
 
 }

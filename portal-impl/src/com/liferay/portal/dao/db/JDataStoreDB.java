@@ -64,6 +64,6 @@ public class JDataStoreDB extends FirebirdDB {
 		" long varchar", " long varchar", " varchar", "", "commit"
 	};
 
-	private static JDataStoreDB _instance = new JDataStoreDB();
+	private static final JDataStoreDB _instance = new JDataStoreDB();
 
 }

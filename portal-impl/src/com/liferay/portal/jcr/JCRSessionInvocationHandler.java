@@ -91,10 +91,10 @@ public class JCRSessionInvocationHandler
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		JCRSessionInvocationHandler.class);
 
-	private Map<String, Binary> _binaries = new HashMap<String, Binary>();
-	private Session _session;
+	private final Map<String, Binary> _binaries = new HashMap<String, Binary>();
+	private final Session _session;
 
 }

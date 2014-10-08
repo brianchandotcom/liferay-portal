@@ -181,7 +181,7 @@ public class StoreFactory {
 		}
 	};
 
-	private static Log _log = LogFactoryUtil.getLog(StoreFactory.class);
+	private static final Log _log = LogFactoryUtil.getLog(StoreFactory.class);
 
 	private static Store _store;
 	private static boolean _warned;

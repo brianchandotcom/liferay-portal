@@ -188,7 +188,7 @@ public class UnsyncPrintWriterTest {
 
 	private static Writer _getOut(UnsyncPrintWriter unsyncPrintWriter) {
 		try {
-			return (Writer) _writerField.get(unsyncPrintWriter);
+			return (Writer) _WRITER_FIELD.get(unsyncPrintWriter);
 		}
 		catch (Throwable t) {
 			throw new RuntimeException(t);
@@ -198,13 +198,13 @@ public class UnsyncPrintWriterTest {
 	private static final String _TEST_FILE_NAME =
 		"UnsyncPrintWriterTest.testFile";
 
-	private static Field _writerField;
+	private static final Field _WRITER_FIELD;
 
 	static {
 		try {
-			_writerField = UnsyncPrintWriter.class.getDeclaredField("_writer");
+			_WRITER_FIELD = UnsyncPrintWriter.class.getDeclaredField("_writer");
 
-			_writerField.setAccessible(true);
+			_WRITER_FIELD.setAccessible(true);
 		}
 		catch (Exception e) {
 			throw new LoggedExceptionInInitializerError(e);

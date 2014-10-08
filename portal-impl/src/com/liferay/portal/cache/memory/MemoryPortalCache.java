@@ -160,6 +160,6 @@ public class MemoryPortalCache<K extends Serializable, V>
 
 	private ConcurrentMap<K, V> _concurrentMap;
 	private String _name;
-	private PortalCacheManager<K, V> _portalCacheManager;
+	private final PortalCacheManager<K, V> _portalCacheManager;
 
 }

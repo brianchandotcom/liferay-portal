@@ -96,6 +96,6 @@ public class ChainableMethodAdviceInjectorCollector {
 	private ChainableMethodAdviceInjectorCollector() {
 	}
 
-	private List<String> _beanNames = new ArrayList<String>();
+	private final List<String> _beanNames = new ArrayList<String>();
 
 }

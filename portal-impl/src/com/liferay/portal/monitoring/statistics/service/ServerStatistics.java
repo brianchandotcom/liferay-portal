@@ -107,7 +107,7 @@ public class ServerStatistics
 		serviceStatistics.processDataSample(serviceRequestDataSample);
 	}
 
-	private Map<String, ServiceStatistics> _serviceStatistics =
+	private final Map<String, ServiceStatistics> _serviceStatistics =
 		new ConcurrentHashMap<String, ServiceStatistics>();
 
 }

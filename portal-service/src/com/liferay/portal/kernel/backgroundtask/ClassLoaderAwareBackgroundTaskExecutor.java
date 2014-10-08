@@ -56,6 +56,6 @@ public class ClassLoaderAwareBackgroundTaskExecutor
 		}
 	}
 
-	private ClassLoader _classLoader;
+	private final ClassLoader _classLoader;
 
 }

@@ -43,6 +43,6 @@ public class JettyHttpSessionWrapper
 		return jettySharedSessionWrapper.getSession();
 	}
 
-	private HttpSession _session;
+	private final HttpSession _session;
 
 }

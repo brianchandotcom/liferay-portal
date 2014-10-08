@@ -413,10 +413,10 @@ public class SocialActivitySettingLocalServiceImpl
 
 	private static final String _PREFIX_CLASS_PK = "_LFR_CLASS_PK_";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		SocialActivitySettingLocalServiceImpl.class);
 
-	private static PortalCache<String, SocialActivityDefinition>
+	private static final PortalCache<String, SocialActivityDefinition>
 		_activityDefinitions = MultiVMPoolUtil.getCache(
 			SocialActivitySettingLocalServiceImpl.class.getName());
 

@@ -95,6 +95,6 @@ public class MBDiscussionAssetRenderer extends MBMessageAssetRenderer {
 		}
 	}
 
-	private MBMessage _message;
+	private final MBMessage _message;
 
 }

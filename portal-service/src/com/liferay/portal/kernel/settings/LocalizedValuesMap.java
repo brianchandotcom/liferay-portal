@@ -187,9 +187,9 @@ public class LocalizedValuesMap implements Map<Locale, String>, Serializable {
 		}
 	}
 
-	private Locale[] _availableLocales;
-	private Locale _defaultLocale;
-	private String _key;
-	private Map<Locale, String> _map = new HashMap<Locale, String>();
+	private final Locale[] _availableLocales;
+	private final Locale _defaultLocale;
+	private final String _key;
+	private final Map<Locale, String> _map = new HashMap<Locale, String>();
 
 }

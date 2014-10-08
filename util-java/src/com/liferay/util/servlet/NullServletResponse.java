@@ -54,7 +54,7 @@ public class NullServletResponse extends HttpServletResponseWrapper {
 	public void sendRedirect(String location) throws IOException {
 	}*/
 
-	private PrintWriter _printWriter;
-	private ServletOutputStream _servletOutputStream;
+	private final PrintWriter _printWriter;
+	private final ServletOutputStream _servletOutputStream;
 
 }

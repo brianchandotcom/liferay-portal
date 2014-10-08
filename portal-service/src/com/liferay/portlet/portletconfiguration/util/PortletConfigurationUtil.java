@@ -101,7 +101,7 @@ public class PortletConfigurationUtil {
 		return portletTitle;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortletConfigurationUtil.class);
 
 }

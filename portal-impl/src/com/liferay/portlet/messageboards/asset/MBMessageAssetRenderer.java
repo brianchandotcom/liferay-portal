@@ -246,6 +246,6 @@ public class MBMessageAssetRenderer
 		return themeDisplay.getPathThemeImages() + "/common/message.png";
 	}
 
-	private MBMessage _message;
+	private final MBMessage _message;
 
 }

@@ -146,7 +146,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		return StringUtil.toUpperCase(articleId);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ConfigurationActionImpl.class);
 
 	private final Method _doProcessActionMethod;

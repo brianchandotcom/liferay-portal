@@ -112,7 +112,7 @@ public class UpgradeNestedPortlets extends UpgradeProcess {
 	private static final int _UNDERLINE_COUNT = StringUtil.count(
 		PortletConstants.INSTANCE_SEPARATOR, StringPool.UNDERLINE) + 1;
 
-	private static Pattern _pattern = Pattern.compile(
+	private static final Pattern _pattern = Pattern.compile(
 		"(" + PortletKeys.NESTED_PORTLETS +
 			PortletConstants.INSTANCE_SEPARATOR + "[^_,\\s=]+_)([^_,\\s=]+)");
 

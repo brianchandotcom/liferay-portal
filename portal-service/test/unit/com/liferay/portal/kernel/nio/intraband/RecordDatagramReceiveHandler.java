@@ -43,6 +43,6 @@ public class RecordDatagramReceiveHandler implements DatagramReceiveHandler {
 	}
 
 	private volatile Datagram _datagram;
-	private boolean _throwException;
+	private final boolean _throwException;
 
 }

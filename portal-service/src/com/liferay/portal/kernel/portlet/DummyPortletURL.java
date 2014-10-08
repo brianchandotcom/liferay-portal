@@ -101,6 +101,6 @@ public class DummyPortletURL implements PortletURL {
 	private DummyPortletURL() {
 	}
 
-	private static DummyPortletURL _instance = new DummyPortletURL();
+	private static final DummyPortletURL _instance = new DummyPortletURL();
 
 }

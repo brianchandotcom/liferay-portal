@@ -218,8 +218,8 @@ public abstract class RemoteSPI implements ProcessCallable<SPI>, Remote, SPI {
 
 		private static final long serialVersionUID = 1L;
 
-		private String _spiId;
-		private String _spiProviderName;
+		private final String _spiId;
+		private final String _spiProviderName;
 
 	}
 
@@ -380,6 +380,6 @@ public abstract class RemoteSPI implements ProcessCallable<SPI>, Remote, SPI {
 		objectOutputStream.writeUTF(System.getProperty(PropsKeys.LIFERAY_HOME));
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(RemoteSPI.class);
+	private static final Log _log = LogFactoryUtil.getLog(RemoteSPI.class);
 
 }

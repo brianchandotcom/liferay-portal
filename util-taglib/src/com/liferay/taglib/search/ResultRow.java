@@ -633,11 +633,11 @@ public class ResultRow
 	private Map<String, Object> _data;
 	private Object _obj;
 	private Map<String, Object> _params;
-	private int _pos;
+	private final int _pos;
 	private String _primaryKey;
 	private boolean _restricted;
 	private String _rowId;
-	private List<SearchEntry> _searchEntries;
+	private final List<SearchEntry> _searchEntries;
 	private boolean _skip;
 
 }

@@ -160,7 +160,7 @@ public abstract class BaseEntityCollectionAdapter<T>
 
 	protected String collectionName;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		BaseEntityCollectionAdapter.class);
 
 }

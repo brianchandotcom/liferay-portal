@@ -70,7 +70,7 @@ public class ViewCounterTransformerListener extends BaseTransformerListener {
 	private static final String _COUNTER_TOKEN =
 		StringPool.AT + "view_counter" + StringPool.AT;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ViewCounterTransformerListener.class);
 
 }

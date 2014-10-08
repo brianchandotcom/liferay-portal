@@ -265,9 +265,9 @@ public class AcceptorServletTest {
 		Assert.assertTrue(_mockHttpSession.isInvalid());
 	}
 
-	private MockHttpSession _mockHttpSession = new MockHttpSession();
+	private final MockHttpSession _mockHttpSession = new MockHttpSession();
 	private String _pathContext = StringPool.BLANK;
-	private RecordSPIAgent _recordSPIAgent = new RecordSPIAgent();
+	private final RecordSPIAgent _recordSPIAgent = new RecordSPIAgent();
 
 	private class RecordSPIAgent extends MockSPIAgent {
 

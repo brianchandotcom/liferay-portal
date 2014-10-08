@@ -57,6 +57,6 @@ public class RobotsServlet extends HttpServlet {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(RobotsServlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(RobotsServlet.class);
 
 }

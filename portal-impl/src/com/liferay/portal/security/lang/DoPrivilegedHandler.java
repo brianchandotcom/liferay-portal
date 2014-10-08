@@ -167,9 +167,9 @@ public class DoPrivilegedHandler
 			return _method.invoke(_bean, _arguments);
 		}
 
-		private Object[] _arguments;
+		private final Object[] _arguments;
 		private Object _bean;
-		private Method _method;
+		private final Method _method;
 
 	}
 
@@ -204,9 +204,9 @@ public class DoPrivilegedHandler
 			return false;
 		}
 
-		private Class<?> _declaringClass;
-		private String _methodName;
-		private Class<?>[] _parameterTypes;
+		private final Class<?> _declaringClass;
+		private final String _methodName;
+		private final Class<?>[] _parameterTypes;
 
 	}
 

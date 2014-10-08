@@ -130,8 +130,8 @@ public class FreeMarkerTemplate extends AbstractTemplate {
 		}
 	}
 
-	private Configuration _configuration;
-	private boolean _privileged;
+	private final Configuration _configuration;
+	private final boolean _privileged;
 
 	private class TemplatePrivilegedExceptionAction
 		implements PrivilegedExceptionAction<Template> {
@@ -149,7 +149,7 @@ public class FreeMarkerTemplate extends AbstractTemplate {
 				TemplateConstants.DEFAUT_ENCODING);
 		}
 
-		private TemplateResource _templateResource;
+		private final TemplateResource _templateResource;
 
 	}
 

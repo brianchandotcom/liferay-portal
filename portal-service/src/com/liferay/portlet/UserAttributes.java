@@ -757,7 +757,7 @@ public class UserAttributes {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UserAttributes.class);
+	private static final Log _log = LogFactoryUtil.getLog(UserAttributes.class);
 
 	private final Address _businessAddress;
 	private final Phone _businessFaxPhone;

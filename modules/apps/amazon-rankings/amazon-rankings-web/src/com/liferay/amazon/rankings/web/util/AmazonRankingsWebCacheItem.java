@@ -281,12 +281,12 @@ public class AmazonRankingsWebCacheItem implements WebCacheItem {
 
 	private static final long _REFRESH_TIME = Time.MINUTE * 20;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		AmazonRankingsWebCacheItem.class);
 
-	private String _amazonAccessKeyId;
-	private String _amazonAssociateTag;
-	private String _amazonSecretAccessKey;
-	private String _isbn;
+	private final String _amazonAccessKeyId;
+	private final String _amazonAssociateTag;
+	private final String _amazonSecretAccessKey;
+	private final String _isbn;
 
 }

@@ -77,6 +77,6 @@ public class CustomJspRegistryImpl implements CustomJspRegistry {
 		_servletContextNames.remove(servletContextName);
 	}
 
-	private Map<String, String> _servletContextNames;
+	private final Map<String, String> _servletContextNames;
 
 }

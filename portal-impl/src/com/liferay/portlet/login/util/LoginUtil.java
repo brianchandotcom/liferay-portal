@@ -553,6 +553,6 @@ public class LoginUtil {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LoginUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(LoginUtil.class);
 
 }

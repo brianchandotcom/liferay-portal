@@ -103,7 +103,7 @@ public class IntrabandTestUtil {
 		return datagram;
 	}
 
-	private static ServerSocketConfigurator _serverSocketConfigurator =
+	private static final ServerSocketConfigurator _serverSocketConfigurator =
 		new ServerSocketConfigurator() {
 
 		@Override

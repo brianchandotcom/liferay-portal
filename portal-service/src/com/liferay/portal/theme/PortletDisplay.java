@@ -813,9 +813,9 @@ public class PortletDisplay implements Serializable {
 		_content.writeTo(writer);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PortletDisplay.class);
+	private static final Log _log = LogFactoryUtil.getLog(PortletDisplay.class);
 
-	private static StringBundler _blankStringBundler = new StringBundler(
+	private static final StringBundler _blankStringBundler = new StringBundler(
 		StringPool.BLANK);
 
 	private boolean _active;

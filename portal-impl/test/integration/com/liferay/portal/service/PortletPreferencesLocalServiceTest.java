@@ -1557,7 +1557,7 @@ public class PortletPreferencesLocalServiceTest {
 			}
 		}
 
-		private boolean _strict;
+		private final boolean _strict;
 
 	}
 

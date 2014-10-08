@@ -98,6 +98,6 @@ public class MockPortalCacheManager<K extends Serializable, V>
 		throw new UnsupportedOperationException();
 	}
 
-	private String _name;
+	private final String _name;
 
 }

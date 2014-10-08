@@ -413,7 +413,7 @@ public class ChannelHubImpl implements ChannelHub {
 	}
 
 	private Channel _channel;
-	private ConcurrentMap<Long, Channel> _channels =
+	private final ConcurrentMap<Long, Channel> _channels =
 		new ConcurrentHashMap<Long, Channel>();
 	private long _companyId = CompanyConstants.SYSTEM;
 

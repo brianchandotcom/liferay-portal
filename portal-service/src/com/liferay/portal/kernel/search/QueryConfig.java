@@ -385,7 +385,7 @@ public class QueryConfig implements Serializable {
 
 	private static final String _SELECTED_FIELD_NAMES = "selectedFieldNames";
 
-	private Map<String, Serializable> _attributes =
+	private final Map<String, Serializable> _attributes =
 		new HashMap<String, Serializable>();
 
 }

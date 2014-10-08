@@ -79,7 +79,7 @@ public class SerializableSessionAttributeListener
 		attributeAdded(httpSessionBindingEvent);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		SerializableSessionAttributeListener.class);
 
 	private Boolean _requiresSerializable;

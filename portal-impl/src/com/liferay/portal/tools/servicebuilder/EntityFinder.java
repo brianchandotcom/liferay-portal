@@ -142,11 +142,11 @@ public class EntityFinder {
 		return _unique;
 	}
 
-	private List<EntityColumn> _columns;
-	private boolean _dbIndex;
-	private String _name;
-	private String _returnType;
-	private boolean _unique;
-	private String _where;
+	private final List<EntityColumn> _columns;
+	private final boolean _dbIndex;
+	private final String _name;
+	private final String _returnType;
+	private final boolean _unique;
+	private final String _where;
 
 }

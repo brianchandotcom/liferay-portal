@@ -172,11 +172,11 @@ public class SearchEngineInitializer implements Runnable {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		SearchEngineInitializer.class);
 
-	private long _companyId;
+	private final long _companyId;
 	private boolean _finished;
-	private Set<String> _usedSearchEngineIds;
+	private final Set<String> _usedSearchEngineIds;
 
 }

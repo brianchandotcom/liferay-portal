@@ -150,7 +150,7 @@ public class CaptchaImpl implements Captcha {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(CaptchaImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(CaptchaImpl.class);
 
 	private volatile Captcha _captcha;
 	private Captcha _originalCaptcha;

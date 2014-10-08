@@ -204,7 +204,7 @@ public class PermissionCheckerUtil {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PermissionCheckerUtil.class);
 
 }

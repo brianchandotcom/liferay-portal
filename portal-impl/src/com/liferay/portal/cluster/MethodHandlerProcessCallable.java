@@ -42,6 +42,6 @@ public class MethodHandlerProcessCallable<T extends Serializable>
 
 	private static final long serialVersionUID = 1L;
 
-	private MethodHandler _methodHandler;
+	private final MethodHandler _methodHandler;
 
 }

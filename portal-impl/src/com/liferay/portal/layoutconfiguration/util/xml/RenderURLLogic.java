@@ -39,7 +39,7 @@ public class RenderURLLogic extends ActionURLLogic {
 
 	@Override
 	public String getLifecycle() {
-		return _lifecycle;
+		return _LIFECYCLE;
 	}
 
 	@Override
@@ -47,6 +47,6 @@ public class RenderURLLogic extends ActionURLLogic {
 		return OPEN_TAG;
 	}
 
-	private String _lifecycle = PortletRequest.RENDER_PHASE;
+	private static final String _LIFECYCLE = PortletRequest.RENDER_PHASE;
 
 }

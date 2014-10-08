@@ -314,7 +314,7 @@ public class Log4JUtil {
 			StringPool.BLANK);
 	}
 
-	private static Map<String, String> _customLogSettings =
+	private static final Map<String, String> _customLogSettings =
 		new ConcurrentHashMap<String, String>();
 	private static String _liferayHome;
 

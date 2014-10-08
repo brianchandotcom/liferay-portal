@@ -258,6 +258,6 @@ public class BlogsUtil {
 			BlogsEntry.class.getName(), "urlTitle", title);
 	}
 
-	private static Pattern _friendlyURLPattern = Pattern.compile("[^a-z0-9_-]");
+	private static final Pattern _friendlyURLPattern = Pattern.compile("[^a-z0-9_-]");
 
 }

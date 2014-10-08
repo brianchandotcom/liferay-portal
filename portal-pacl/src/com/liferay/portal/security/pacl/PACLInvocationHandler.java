@@ -92,7 +92,7 @@ public class PACLInvocationHandler
 		}
 	}
 
-	private AdvisedSupport _advisedSupport;
+	private final AdvisedSupport _advisedSupport;
 	private InvocationHandler _invocationHandler;
 
 	private class InvokePrivilegedExceptionAction
@@ -118,10 +118,10 @@ public class PACLInvocationHandler
 			}
 		}
 
-		private Object[] _arguments;
+		private final Object[] _arguments;
 		private InvocationHandler _invocationHandler;
-		private Method _method;
-		private Object _proxy;
+		private final Method _method;
+		private final Object _proxy;
 
 	}
 

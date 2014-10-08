@@ -52,6 +52,6 @@ public class BidirectionalMap<K, V> extends HashMap<K, V> {
 		return key;
 	}
 
-	private Map<V, K> _invertedMap = new HashMap<V, K>();
+	private final Map<V, K> _invertedMap = new HashMap<V, K>();
 
 }

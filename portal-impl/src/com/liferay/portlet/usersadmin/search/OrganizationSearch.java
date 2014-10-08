@@ -139,6 +139,6 @@ public class OrganizationSearch extends SearchContainer<Organization> {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(OrganizationSearch.class);
+	private static final Log _log = LogFactoryUtil.getLog(OrganizationSearch.class);
 
 }

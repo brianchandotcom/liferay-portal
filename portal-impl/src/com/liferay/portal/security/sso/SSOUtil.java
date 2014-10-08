@@ -218,10 +218,10 @@ public class SSOUtil {
 
 	private static final String _SERVER_IP = "SERVER_IP";
 
-	private static SSOUtil _instance = new SSOUtil();
+	private static final SSOUtil _instance = new SSOUtil();
 
-	private ServiceTracker<SSO, SSO> _serviceTracker;
-	private Map<ServiceReference<SSO>, SSO> _ssoMap =
+	private final ServiceTracker<SSO, SSO> _serviceTracker;
+	private final Map<ServiceReference<SSO>, SSO> _ssoMap =
 		new ConcurrentSkipListMap<>(Collections.reverseOrder());
 
 	private class SSOServiceTrackerCustomizer

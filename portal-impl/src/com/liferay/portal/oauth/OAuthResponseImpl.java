@@ -42,6 +42,6 @@ public class OAuthResponseImpl implements OAuthResponse {
 		return _response;
 	}
 
-	private Response _response;
+	private final Response _response;
 
 }

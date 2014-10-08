@@ -86,6 +86,6 @@ public class LiferayResourceBundle extends ResourceBundle {
 		return _map.keySet();
 	}
 
-	private Map<String, String> _map;
+	private final Map<String, String> _map;
 
 }

@@ -144,7 +144,7 @@ public class PortletPreferencesWrapper
 		}
 	}
 
-	private String _lifecycle;
-	private PortletPreferences _portletPreferences;
+	private final String _lifecycle;
+	private final PortletPreferences _portletPreferences;
 
 }

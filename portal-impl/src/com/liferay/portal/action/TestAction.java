@@ -43,6 +43,6 @@ public class TestAction extends Action {
 		return actionMapping.findForward("portal.test");
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(TestAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(TestAction.class);
 
 }

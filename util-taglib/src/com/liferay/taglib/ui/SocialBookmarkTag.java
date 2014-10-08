@@ -161,7 +161,7 @@ public class SocialBookmarkTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/social_bookmark/page.jsp";
 
-	private static Map<String, String> _jspPaths =
+	private static final Map<String, String> _jspPaths =
 		new HashMap<String, String>();
 
 	private String _contentId;

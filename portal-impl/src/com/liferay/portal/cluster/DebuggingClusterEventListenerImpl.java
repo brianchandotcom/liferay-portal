@@ -57,7 +57,7 @@ public class DebuggingClusterEventListenerImpl implements ClusterEventListener {
 		_log.info(sb.toString());
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DebuggingClusterEventListenerImpl.class);
 
 }

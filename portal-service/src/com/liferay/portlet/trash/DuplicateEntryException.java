@@ -25,9 +25,9 @@ public class DuplicateEntryException extends RestoreEntryException {
 
 	@Override
 	public int getType() {
-		return _type;
+		return _TYPE;
 	}
 
-	private int _type = RestoreEntryException.DUPLICATE;
+	private static final int _TYPE = RestoreEntryException.DUPLICATE;
 
 }

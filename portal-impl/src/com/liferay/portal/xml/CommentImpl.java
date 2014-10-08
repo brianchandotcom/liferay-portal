@@ -62,6 +62,6 @@ public class CommentImpl extends NodeImpl implements Comment {
 		return _comment.toString();
 	}
 
-	private org.dom4j.Comment _comment;
+	private final org.dom4j.Comment _comment;
 
 }

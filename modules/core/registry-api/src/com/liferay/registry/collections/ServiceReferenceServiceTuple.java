@@ -67,7 +67,7 @@ public class ServiceReferenceServiceTuple<SR, TS>
 		return _serviceReference.hashCode();
 	}
 
-	private TS _service;
-	private ServiceReference<SR> _serviceReference;
+	private final TS _service;
+	private final ServiceReference<SR> _serviceReference;
 
 }

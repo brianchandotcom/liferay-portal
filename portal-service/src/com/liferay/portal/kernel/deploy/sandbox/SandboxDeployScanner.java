@@ -56,7 +56,7 @@ public class SandboxDeployScanner extends Thread {
 		}
 	}
 
-	private SandboxDeployDir _sandboxDeployDir;
+	private final SandboxDeployDir _sandboxDeployDir;
 	private boolean _started = true;
 
 }

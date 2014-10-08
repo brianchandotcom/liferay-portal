@@ -72,7 +72,7 @@ public class ResetDatabaseStatementHandler implements InvocationHandler {
 		}
 	}
 
-	private Connection _connection;
-	private Statement _statement;
+	private final Connection _connection;
+	private final Statement _statement;
 
 }

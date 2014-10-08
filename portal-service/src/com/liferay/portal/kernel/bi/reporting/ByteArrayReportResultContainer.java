@@ -89,9 +89,9 @@ public class ByteArrayReportResultContainer
 		_reportGenerationException = reportGenerationException;
 	}
 
-	private int _initialCapacity;
+	private final int _initialCapacity;
 	private ReportGenerationException _reportGenerationException;
-	private String _reportName;
+	private final String _reportName;
 	private UnsyncByteArrayOutputStream _unsyncByteArrayOutputStream;
 
 }

@@ -649,7 +649,7 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 		return available;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ThemeImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(ThemeImpl.class);
 
 	private final Map<String, ColorScheme> _colorSchemesMap =
 		new HashMap<String, ColorScheme>();

@@ -52,9 +52,9 @@ public class OrganizationRoleChecker extends RowChecker {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		OrganizationRoleChecker.class);
 
-	private Role _role;
+	private final Role _role;
 
 }

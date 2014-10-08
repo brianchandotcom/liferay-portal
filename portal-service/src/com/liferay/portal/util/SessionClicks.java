@@ -140,6 +140,6 @@ public class SessionClicks {
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.SESSION_CLICKS_MAX_SIZE_TERMS));
 
-	private static Log _log = LogFactoryUtil.getLog(SessionClicks.class);
+	private static final Log _log = LogFactoryUtil.getLog(SessionClicks.class);
 
 }

@@ -140,7 +140,7 @@ public class ClusterLinkUtil {
 
 	private static final String _ADDRESS = "CLUSTER_ADDRESS";
 
-	private static Log _log = LogFactoryUtil.getLog(ClusterLinkUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(ClusterLinkUtil.class);
 
 	private static ClusterLink _clusterLink;
 

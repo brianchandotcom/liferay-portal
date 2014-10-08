@@ -82,8 +82,8 @@ public class WebAppPool {
 		}
 	}
 
-	private static WebAppPool _instance = new WebAppPool();
+	private static final WebAppPool _instance = new WebAppPool();
 
-	private ConcurrentMap<Long, Map<String, Object>> _webAppPool;
+	private final ConcurrentMap<Long, Map<String, Object>> _webAppPool;
 
 }

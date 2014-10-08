@@ -75,6 +75,6 @@ public class PortletSandboxDeployListener
 		_sandboxHandler.undeploy(dir);
 	}
 
-	private SandboxHandler _sandboxHandler;
+	private final SandboxHandler _sandboxHandler;
 
 }

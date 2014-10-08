@@ -85,7 +85,7 @@ public class BaseSettingsTest extends PowerMockito {
 
 	private static final String[] _VALUES = {"value0", "value1"};
 
-	private BaseSettings _baseSettings;
-	private MemorySettings _parentSettings;
+	private final BaseSettings _baseSettings;
+	private final MemorySettings _parentSettings;
 
 }

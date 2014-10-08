@@ -30,6 +30,6 @@ public class LiferayContextCreatedEvent implements Event {
 		return _testClass;
 	}
 
-	private TestClass _testClass;
+	private final TestClass _testClass;
 
 }

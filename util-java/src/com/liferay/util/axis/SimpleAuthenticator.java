@@ -32,6 +32,6 @@ public class SimpleAuthenticator extends Authenticator {
 		return _authentication;
 	}
 
-	private PasswordAuthentication _authentication;
+	private final PasswordAuthentication _authentication;
 
 }

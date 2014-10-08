@@ -202,7 +202,7 @@ public class ReflectionTest {
 
 	private static final String _TEST_FIELD_2 = "TEST_FIELD_2";
 
-	private static Log _log = LogFactoryUtil.getLog(ReflectionTest.class);
+	private static final Log _log = LogFactoryUtil.getLog(ReflectionTest.class);
 
 	static {
 

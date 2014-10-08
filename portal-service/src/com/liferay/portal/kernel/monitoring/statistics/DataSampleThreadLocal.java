@@ -65,7 +65,7 @@ public class DataSampleThreadLocal {
 		return _dataSamples;
 	}
 
-	private static ThreadLocal<DataSampleThreadLocal> _dataSampleThreadLocal =
+	private static final ThreadLocal<DataSampleThreadLocal> _dataSampleThreadLocal =
 		new AutoResetThreadLocal<DataSampleThreadLocal>(
 			DataSampleThreadLocal.class + "._dataSampleThreadLocal") {
 
@@ -83,8 +83,8 @@ public class DataSampleThreadLocal {
 
 			};
 
-	private Queue<DataSample> _dataSamples =
+	private final Queue<DataSample> _dataSamples =
 		new ConcurrentLinkedQueue<DataSample>();
-	private long _monitorTime;
+	private final long _monitorTime;
 
 }

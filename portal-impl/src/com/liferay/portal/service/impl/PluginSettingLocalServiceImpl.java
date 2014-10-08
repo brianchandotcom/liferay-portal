@@ -140,7 +140,7 @@ public class PluginSettingLocalServiceImpl
 		return pluginSetting;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PluginSettingLocalServiceImpl.class);
 
 }

@@ -167,6 +167,6 @@ public class UserInfoFactory {
 		return userInfo;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UserInfoFactory.class);
+	private static final Log _log = LogFactoryUtil.getLog(UserInfoFactory.class);
 
 }

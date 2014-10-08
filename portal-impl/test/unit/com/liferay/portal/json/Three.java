@@ -29,7 +29,7 @@ public class Three {
 
 	@JSON
 	public boolean hasFeature() {
-		return _feature;
+		return _FEATURE;
 	}
 
 	public boolean isFlag() {
@@ -44,7 +44,8 @@ public class Three {
 		this._ignore = ignore;
 	}
 
-	private boolean _feature = true;
+	private static final boolean _FEATURE = true;
+
 	private boolean _flag = true;
 	private String _ignore;
 

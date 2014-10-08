@@ -69,7 +69,7 @@ public class ShardIterativelyAdvice implements MethodInterceptor {
 		_shardAdvice = shardAdvice;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ShardIterativelyAdvice.class);
 
 	private ShardAdvice _shardAdvice;

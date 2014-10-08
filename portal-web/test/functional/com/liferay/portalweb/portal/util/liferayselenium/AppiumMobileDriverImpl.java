@@ -31,8 +31,8 @@ public class AppiumMobileDriverImpl extends BaseMobileDriverImpl {
 			new AppiumDriver(_url, _desiredCapabilities));
 	}
 
-	private static DesiredCapabilities _desiredCapabilities;
-	private static URL _url;
+	private static final DesiredCapabilities _desiredCapabilities;
+	private static final URL _url;
 
 	static {
 		_desiredCapabilities = DesiredCapabilities.android();

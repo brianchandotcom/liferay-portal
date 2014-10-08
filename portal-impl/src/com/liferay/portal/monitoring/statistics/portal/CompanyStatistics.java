@@ -68,11 +68,11 @@ public class CompanyStatistics
 	}
 
 	public long getStartTime() {
-		return _startTime;
+		return _START_TIME;
 	}
 
 	public long getUptime() {
-		return System.currentTimeMillis() - _startTime;
+		return System.currentTimeMillis() - _START_TIME;
 	}
 
 	public String getWebId() {
@@ -118,11 +118,12 @@ public class CompanyStatistics
 		_requestStatistics.reset();
 	}
 
-	private long _companyId;
+	private static final long _START_TIME = System.currentTimeMillis();
+
+	private final long _companyId;
 	private long _maxTime;
 	private long _minTime;
-	private RequestStatistics _requestStatistics;
-	private long _startTime = System.currentTimeMillis();
-	private String _webId;
+	private final RequestStatistics _requestStatistics;
+	private final String _webId;
 
 }

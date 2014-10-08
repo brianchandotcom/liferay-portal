@@ -253,9 +253,9 @@ public class NavItem implements Serializable {
 	}
 
 	private List<NavItem> _children;
-	private Layout _layout;
-	private HttpServletRequest _request;
-	private Template _template;
-	private ThemeDisplay _themeDisplay;
+	private final Layout _layout;
+	private final HttpServletRequest _request;
+	private final Template _template;
+	private final ThemeDisplay _themeDisplay;
 
 }

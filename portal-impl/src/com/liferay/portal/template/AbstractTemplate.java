@@ -250,6 +250,6 @@ public abstract class AbstractTemplate implements Template {
 		return MultiVMPoolUtil.getCache(cacheName);
 	}
 
-	private TemplateContextHelper _templateContextHelper;
+	private final TemplateContextHelper _templateContextHelper;
 
 }

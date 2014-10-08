@@ -86,6 +86,6 @@ public class JSONWebServiceMappingResolver {
 		return pathFromClass + path;
 	}
 
-	private JSONWebServiceNaming _jsonWebServiceNaming;
+	private final JSONWebServiceNaming _jsonWebServiceNaming;
 
 }

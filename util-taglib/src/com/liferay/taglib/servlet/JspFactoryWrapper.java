@@ -104,6 +104,6 @@ public class JspFactoryWrapper extends JspFactory {
 	private static final int _JSP_WRITER_BUFFER_SIZE = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.JSP_WRITER_BUFFER_SIZE));
 
-	private JspFactory _jspFactory;
+	private final JspFactory _jspFactory;
 
 }

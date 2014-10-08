@@ -51,6 +51,6 @@ public class AddFolderEvent extends BaseEvent {
 
 	private static final String _URL_PATH = "/sync-web.syncdlobject/add-folder";
 
-	private Handler<Void> _handler;
+	private final Handler<Void> _handler;
 
 }

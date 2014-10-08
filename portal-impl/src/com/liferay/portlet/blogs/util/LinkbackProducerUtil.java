@@ -251,9 +251,9 @@ public class LinkbackProducerUtil {
 		StringUtil.equalsIgnoreCase(
 			PropsValues.HTTP_HEADER_VERSION_VERBOSITY, "partial");
 
-	private static Log _log = LogFactoryUtil.getLog(LinkbackProducerUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(LinkbackProducerUtil.class);
 
-	private static List<Tuple> _pingbackQueue = Collections.synchronizedList(
+	private static final List<Tuple> _pingbackQueue = Collections.synchronizedList(
 		new ArrayList<Tuple>());
 
 }

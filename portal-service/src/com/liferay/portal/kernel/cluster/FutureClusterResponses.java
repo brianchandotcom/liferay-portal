@@ -84,8 +84,8 @@ public class FutureClusterResponses
 		return _clusterNodeResponses.getClusterResponses();
 	}
 
-	private ClusterNodeResponses _clusterNodeResponses;
-	private AtomicInteger _counter;
-	private Set<Address> _expectedReplyAddress;
+	private final ClusterNodeResponses _clusterNodeResponses;
+	private final AtomicInteger _counter;
+	private final Set<Address> _expectedReplyAddress;
 
 }

@@ -30,7 +30,7 @@ public class DefineObjectsTei extends TagExtraInfo {
 		return _variableInfo;
 	}
 
-	private static VariableInfo[] _variableInfo = new VariableInfo[] {
+	private static final VariableInfo[] _variableInfo = new VariableInfo[] {
 		new VariableInfo(
 			"group", Group.class.getName(), true, VariableInfo.AT_END),
 		new VariableInfo(

@@ -112,8 +112,8 @@ public class FallbackSettingsTest extends PowerMockito {
 		}
 	}
 
-	private FallbackKeys _fallbackKeys;
-	private FallbackSettings _fallbackSettings;
-	private Settings _settings;
+	private final FallbackKeys _fallbackKeys;
+	private final FallbackSettings _fallbackSettings;
+	private final Settings _settings;
 
 }

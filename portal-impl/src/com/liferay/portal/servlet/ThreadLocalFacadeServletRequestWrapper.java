@@ -129,7 +129,7 @@ public class ThreadLocalFacadeServletRequestWrapper
 		_nextServletRequestThreadLocal.set(servletRequest);
 	}
 
-	private static ThreadLocal<ServletRequest> _nextServletRequestThreadLocal =
+	private static final ThreadLocal<ServletRequest> _nextServletRequestThreadLocal =
 		new AutoResetThreadLocal<ServletRequest>(
 			ThreadLocalFacadeServletRequestWrapper.class +
 				"._nextServletRequestThreadLocal") {
@@ -141,7 +141,7 @@ public class ThreadLocalFacadeServletRequestWrapper
 
 		};
 
-	private List<Locale> _locales;
-	private ServletRequestWrapper _servletRequestWrapper;
+	private final List<Locale> _locales;
+	private final ServletRequestWrapper _servletRequestWrapper;
 
 }

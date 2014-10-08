@@ -67,8 +67,8 @@ public class PortletProps {
 			PortletClassLoaderUtil.getClassLoader(), "portlet");
 	}
 
-	private static PortletProps _instance = new PortletProps();
+	private static final PortletProps _instance = new PortletProps();
 
-	private Configuration _configuration;
+	private final Configuration _configuration;
 
 }

@@ -112,7 +112,7 @@ public class DLFileShortcutTrashRenderer extends BaseTrashRenderer {
 		return null;
 	}
 
-	private FileEntry _fileEntry;
-	private DLFileShortcut _fileShortcut;
+	private final FileEntry _fileEntry;
+	private final DLFileShortcut _fileShortcut;
 
 }

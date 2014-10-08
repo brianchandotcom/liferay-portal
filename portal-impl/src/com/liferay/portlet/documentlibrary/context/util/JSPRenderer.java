@@ -58,7 +58,7 @@ public class JSPRenderer {
 		_attributes.put(key, value);
 	}
 
-	private Map<String, Object> _attributes = new HashMap<>();
-	private String _jspPath;
+	private final Map<String, Object> _attributes = new HashMap<>();
+	private final String _jspPath;
 
 }

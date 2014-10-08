@@ -164,9 +164,9 @@ public class LiferayTemplateCache extends TemplateCache {
 		return template;
 	}
 
-	private Configuration _configuration;
-	private Method _normalizeNameMethod;
-	private PortalCache<TemplateResource, Object> _portalCache;
+	private final Configuration _configuration;
+	private final Method _normalizeNameMethod;
+	private final PortalCache<TemplateResource, Object> _portalCache;
 
 	private class TemplatePrivilegedExceptionAction
 		implements PrivilegedExceptionAction<Template> {
@@ -185,10 +185,10 @@ public class LiferayTemplateCache extends TemplateCache {
 			return doGetTemplate(_templateId, _locale, _encoding, _parse);
 		}
 
-		private String _encoding;
-		private Locale _locale;
-		private boolean _parse;
-		private String _templateId;
+		private final String _encoding;
+		private final Locale _locale;
+		private final boolean _parse;
+		private final String _templateId;
 
 	}
 

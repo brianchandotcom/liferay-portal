@@ -116,13 +116,13 @@ public class PermissionDisplay
 		return _portletName.concat(_modelName).concat(_actionId).hashCode();
 	}
 
-	private String _actionId;
-	private String _actionLabel;
-	private String _modelLabel;
-	private String _modelName;
-	private Permission _permission;
-	private String _portletLabel;
-	private String _portletName;
-	private Resource _resource;
+	private final String _actionId;
+	private final String _actionLabel;
+	private final String _modelLabel;
+	private final String _modelName;
+	private final Permission _permission;
+	private final String _portletLabel;
+	private final String _portletName;
+	private final Resource _resource;
 
 }

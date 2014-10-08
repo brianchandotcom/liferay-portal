@@ -200,9 +200,9 @@ public class XPathImpl implements XPath {
 		}
 	}
 
-	private static FunctionContext _functionContext =
+	private static final FunctionContext _functionContext =
 		new LiferayFunctionContext();
 
-	private org.dom4j.XPath _xPath;
+	private final org.dom4j.XPath _xPath;
 
 }

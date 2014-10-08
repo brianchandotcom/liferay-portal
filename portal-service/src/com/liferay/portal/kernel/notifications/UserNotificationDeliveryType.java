@@ -44,9 +44,9 @@ public class UserNotificationDeliveryType {
 		return _modifiable;
 	}
 
-	private boolean _default;
-	private boolean _modifiable;
-	private String _name;
-	private int _type;
+	private final boolean _default;
+	private final boolean _modifiable;
+	private final String _name;
+	private final int _type;
 
 }

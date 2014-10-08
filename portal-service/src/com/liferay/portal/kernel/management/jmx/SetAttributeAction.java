@@ -47,8 +47,8 @@ public class SetAttributeAction extends BaseJMXManageAction<Void> {
 		}
 	}
 
-	private String _name;
-	private ObjectName _objectName;
-	private Object _value;
+	private final String _name;
+	private final ObjectName _objectName;
+	private final Object _value;
 
 }

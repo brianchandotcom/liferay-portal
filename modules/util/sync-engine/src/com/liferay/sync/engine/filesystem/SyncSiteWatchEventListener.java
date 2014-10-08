@@ -144,7 +144,7 @@ public class SyncSiteWatchEventListener extends BaseWatchEventListener {
 		return true;
 	}
 
-	private static Logger _logger = LoggerFactory.getLogger(
+	private static final Logger _logger = LoggerFactory.getLogger(
 		SyncWatchEventService.class);
 
 }

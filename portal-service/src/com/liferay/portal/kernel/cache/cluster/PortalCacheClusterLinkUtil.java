@@ -71,7 +71,7 @@ public class PortalCacheClusterLinkUtil {
 		_portalCacheClusterLink = portalCacheClusterLink;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortalCacheClusterLinkUtil.class);
 
 	private static PortalCacheClusterLink _portalCacheClusterLink;

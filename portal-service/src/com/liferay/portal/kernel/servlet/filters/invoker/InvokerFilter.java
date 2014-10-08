@@ -279,7 +279,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 	private static final String _SECURE_RESPONSE =
 		InvokerFilter.class.getName() + "SECURE_RESPONSE";
 
-	private static Log _log = LogFactoryUtil.getLog(InvokerFilter.class);
+	private static final Log _log = LogFactoryUtil.getLog(InvokerFilter.class);
 
 	private String _contextPath;
 	private Dispatcher _dispatcher;

@@ -231,7 +231,7 @@ public class DBFactoryImpl implements DBFactory {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DBFactoryImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(DBFactoryImpl.class);
 
 	private static DB _db;
 

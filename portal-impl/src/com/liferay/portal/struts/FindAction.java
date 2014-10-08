@@ -335,8 +335,8 @@ public abstract class FindAction extends Action {
 			getPrimaryKeyParameterName(), String.valueOf(primaryKey));
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(FindAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(FindAction.class);
 
-	private String[] _portletIds;
+	private final String[] _portletIds;
 
 }

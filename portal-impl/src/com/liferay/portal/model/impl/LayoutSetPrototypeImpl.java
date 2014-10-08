@@ -90,7 +90,7 @@ public class LayoutSetPrototypeImpl extends LayoutSetPrototypeBaseImpl {
 		super.setSettings(settingsProperties.toString());
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutSetPrototypeImpl.class);
 
 	private UnicodeProperties _settingsProperties;

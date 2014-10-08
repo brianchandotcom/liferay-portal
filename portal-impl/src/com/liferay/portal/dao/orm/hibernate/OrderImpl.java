@@ -29,6 +29,6 @@ public class OrderImpl implements Order {
 		return _criterion;
 	}
 
-	private org.hibernate.criterion.Order _criterion;
+	private final org.hibernate.criterion.Order _criterion;
 
 }

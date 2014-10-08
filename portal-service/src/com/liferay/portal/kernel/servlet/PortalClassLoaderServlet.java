@@ -125,7 +125,7 @@ public class PortalClassLoaderServlet
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortalClassLoaderServlet.class);
 
 	private boolean _calledPortalDestroy;

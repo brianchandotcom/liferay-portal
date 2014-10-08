@@ -71,10 +71,10 @@ public class AsyncBrokerTest {
 		catch (UnsupportedOperationException uoe) {
 		}
 
-		NoticeableFuture<String> noticeableFuture = asyncBroker.post(_key);
+		NoticeableFuture<String> noticeableFuture = asyncBroker.post(_KEY);
 
 		Assert.assertEquals(1, map.size());
-		Assert.assertSame(noticeableFuture, map.get(_key));
+		Assert.assertSame(noticeableFuture, map.get(_KEY));
 
 		noticeableFuture.cancel(true);
 
@@ -90,7 +90,7 @@ public class AsyncBrokerTest {
 		AsyncBroker<String, String> asyncBroker =
 			new AsyncBroker<String, String>();
 
-		NoticeableFuture<String> noticeableFuture = asyncBroker.post(_key);
+		NoticeableFuture<String> noticeableFuture = asyncBroker.post(_KEY);
 
 		noticeableFuture.cancel(true);
 
@@ -116,7 +116,7 @@ public class AsyncBrokerTest {
 			AsyncBroker.class.getName(), Level.OFF);
 
 		try {
-			asyncBroker.post(_key);
+			asyncBroker.post(_KEY);
 
 			GCUtil.gc();
 
@@ -137,7 +137,7 @@ public class AsyncBrokerTest {
 			AsyncBroker.class.getName(), Level.WARNING);
 
 		try {
-			NoticeableFuture<String> noticeableFuture = asyncBroker.post(_key);
+			NoticeableFuture<String> noticeableFuture = asyncBroker.post(_KEY);
 
 			String toString = noticeableFuture.toString();
 
@@ -156,7 +156,7 @@ public class AsyncBrokerTest {
 
 			Assert.assertEquals(
 				"Cancelled orphan noticeable future " + toString +
-					" with key " + _key,
+					" with key " + _KEY,
 				logRecord.getMessage());
 		}
 		finally {
@@ -175,7 +175,7 @@ public class AsyncBrokerTest {
 			AsyncBroker<String, String> asyncBroker =
 				new AsyncBroker<String, String>();
 
-			asyncBroker.post(_key);
+			asyncBroker.post(_KEY);
 
 			GCUtil.gc();
 
@@ -256,11 +256,11 @@ public class AsyncBrokerTest {
 			ReflectionTestUtil.getFieldValue(
 				asyncBroker, "_defaultNoticeableFutures");
 
-		NoticeableFuture<String> noticeableFuture = asyncBroker.post(_key);
+		NoticeableFuture<String> noticeableFuture = asyncBroker.post(_KEY);
 
 		Assert.assertEquals(1, defaultNoticeableFutures.size());
-		Assert.assertSame(noticeableFuture, defaultNoticeableFutures.get(_key));
-		Assert.assertSame(noticeableFuture, asyncBroker.post(_key));
+		Assert.assertSame(noticeableFuture, defaultNoticeableFutures.get(_KEY));
+		Assert.assertSame(noticeableFuture, asyncBroker.post(_KEY));
 		Assert.assertEquals(1, defaultNoticeableFutures.size());
 		Assert.assertTrue(noticeableFuture.cancel(true));
 		Assert.assertTrue(defaultNoticeableFutures.isEmpty());
@@ -284,15 +284,15 @@ public class AsyncBrokerTest {
 				asyncBroker, "_defaultNoticeableFutures");
 
 		Assert.assertTrue(defaultNoticeableFutures.isEmpty());
-		Assert.assertNull(asyncBroker.take(_key));
+		Assert.assertNull(asyncBroker.take(_KEY));
 
-		NoticeableFuture<String> noticeableFuture = asyncBroker.post(_key);
+		NoticeableFuture<String> noticeableFuture = asyncBroker.post(_KEY);
 
 		Assert.assertEquals(1, defaultNoticeableFutures.size());
-		Assert.assertSame(noticeableFuture, defaultNoticeableFutures.get(_key));
-		Assert.assertSame(noticeableFuture, asyncBroker.take(_key));
+		Assert.assertSame(noticeableFuture, defaultNoticeableFutures.get(_KEY));
+		Assert.assertSame(noticeableFuture, asyncBroker.take(_KEY));
 		Assert.assertTrue(defaultNoticeableFutures.isEmpty());
-		Assert.assertNull(asyncBroker.take(_key));
+		Assert.assertNull(asyncBroker.take(_KEY));
 	}
 
 	@Test
@@ -308,13 +308,13 @@ public class AsyncBrokerTest {
 
 		Exception exception = new Exception();
 
-		Assert.assertFalse(asyncBroker.takeWithException(_key, exception));
+		Assert.assertFalse(asyncBroker.takeWithException(_KEY, exception));
 
-		NoticeableFuture<String> noticeableFuture = asyncBroker.post(_key);
+		NoticeableFuture<String> noticeableFuture = asyncBroker.post(_KEY);
 
 		Assert.assertEquals(1, defaultNoticeableFutures.size());
-		Assert.assertSame(noticeableFuture, defaultNoticeableFutures.get(_key));
-		Assert.assertTrue(asyncBroker.takeWithException(_key, exception));
+		Assert.assertSame(noticeableFuture, defaultNoticeableFutures.get(_KEY));
+		Assert.assertTrue(asyncBroker.takeWithException(_KEY, exception));
 
 		try {
 			noticeableFuture.get();
@@ -326,7 +326,7 @@ public class AsyncBrokerTest {
 		}
 
 		Assert.assertTrue(defaultNoticeableFutures.isEmpty());
-		Assert.assertFalse(asyncBroker.takeWithException(_key, exception));
+		Assert.assertFalse(asyncBroker.takeWithException(_KEY, exception));
 	}
 
 	@Test
@@ -339,22 +339,23 @@ public class AsyncBrokerTest {
 				asyncBroker, "_defaultNoticeableFutures");
 
 		Assert.assertTrue(defaultNoticeableFutures.isEmpty());
-		Assert.assertFalse(asyncBroker.takeWithResult(_key, _value));
+		Assert.assertFalse(asyncBroker.takeWithResult(_KEY, _VALUE));
 
-		NoticeableFuture<String> noticeableFuture = asyncBroker.post(_key);
+		NoticeableFuture<String> noticeableFuture = asyncBroker.post(_KEY);
 
 		Assert.assertEquals(1, defaultNoticeableFutures.size());
-		Assert.assertSame(noticeableFuture, defaultNoticeableFutures.get(_key));
-		Assert.assertTrue(asyncBroker.takeWithResult(_key, _value));
-		Assert.assertEquals(_value, noticeableFuture.get());
+		Assert.assertSame(noticeableFuture, defaultNoticeableFutures.get(_KEY));
+		Assert.assertTrue(asyncBroker.takeWithResult(_KEY, _VALUE));
+		Assert.assertEquals(_VALUE, noticeableFuture.get());
 		Assert.assertTrue(defaultNoticeableFutures.isEmpty());
-		Assert.assertFalse(asyncBroker.takeWithResult(_key, _value));
+		Assert.assertFalse(asyncBroker.takeWithResult(_KEY, _VALUE));
 	}
+
+	private static final String _KEY = "testKey";
 
 	private static final String _THREAD_ENABLED_KEY =
 		FinalizeManager.class.getName() + ".thread.enabled";
 
-	private final String _key = "testKey";
-	private final String _value = "testValue";
+	private static final String _VALUE = "testValue";
 
 }

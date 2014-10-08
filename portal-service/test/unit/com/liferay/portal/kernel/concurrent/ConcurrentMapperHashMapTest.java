@@ -1,4 +1,3 @@
-
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -908,7 +907,7 @@ public class ConcurrentMapperHashMapTest {
 
 	private static final Queue<Event> _eventQueue =  new LinkedList<Event>();
 
-	private ConcurrentMap<Key, Value> _concurrentMap =
+	private final ConcurrentMap<Key, Value> _concurrentMap =
 		new ConcurrentTypeReferenceHashMap();
 	private final Key _testKey = new Key("testKey");
 	private final Value _testValue = new Value("testValue");

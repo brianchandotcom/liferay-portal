@@ -318,7 +318,7 @@ public class LiferaySyncCapability implements SyncCapability {
 			}
 		}
 
-		private MethodKey _methodKey;
+		private final MethodKey _methodKey;
 
 	}
 

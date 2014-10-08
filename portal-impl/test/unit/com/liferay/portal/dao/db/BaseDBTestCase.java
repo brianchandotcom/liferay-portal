@@ -61,6 +61,6 @@ public abstract class BaseDBTestCase {
 		"select * from SomeTable where someColumn1 = [$FALSE$] and " +
 			"someColumn2 = [$TRUE$]";
 
-	private DB _db = getDB();
+	private final DB _db = getDB();
 
 }

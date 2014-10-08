@@ -139,7 +139,7 @@ public class ServiceBag<V> {
 		}
 	}
 
-	private AdvisedSupport _advisedSupport;
-	private ServiceWrapper<?> _serviceWrapper;
+	private final AdvisedSupport _advisedSupport;
+	private final ServiceWrapper<?> _serviceWrapper;
 
 }

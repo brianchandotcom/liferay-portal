@@ -229,6 +229,6 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 		return credentials;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(OpenSSOAutoLogin.class);
+	private static final Log _log = LogFactoryUtil.getLog(OpenSSOAutoLogin.class);
 
 }

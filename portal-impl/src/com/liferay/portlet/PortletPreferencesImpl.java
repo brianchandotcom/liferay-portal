@@ -183,7 +183,7 @@ public class PortletPreferencesImpl
 		return _portletId;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortletPreferencesImpl.class);
 
 	private long _companyId;

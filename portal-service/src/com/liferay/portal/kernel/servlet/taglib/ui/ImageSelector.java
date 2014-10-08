@@ -56,6 +56,6 @@ public class ImageSelector {
 	}
 
 	private long _imageId;
-	private String _imageURL;
+	private final String _imageURL;
 
 }

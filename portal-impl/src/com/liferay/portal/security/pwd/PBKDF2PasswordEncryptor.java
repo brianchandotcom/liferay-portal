@@ -99,7 +99,7 @@ public class PBKDF2PasswordEncryptor
 
 	private static final int _SALT_BYTES_LENGTH = 8;
 
-	private static Pattern _pattern = Pattern.compile(
+	private static final Pattern _pattern = Pattern.compile(
 		"^.*/?([0-9]+)?/([0-9]+)$");
 
 	private class PBKDF2EncryptionConfiguration {
@@ -160,7 +160,7 @@ public class PBKDF2PasswordEncryptor
 
 		private int _keySize = _KEY_SIZE;
 		private int _rounds = _ROUNDS;
-		private byte[] _saltBytes = new byte[_SALT_BYTES_LENGTH];
+		private final byte[] _saltBytes = new byte[_SALT_BYTES_LENGTH];
 
 	}
 

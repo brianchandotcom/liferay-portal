@@ -165,7 +165,7 @@ public class StagingLocalizationTest {
 
 	private Locale[] _availableLocales;
 	private Locale _defaultLocale;
-	private Locale[] _locales =
+	private final Locale[] _locales =
 		{LocaleUtil.US, LocaleUtil.GERMANY, LocaleUtil.SPAIN};
 
 	@DeleteAfterTestRun

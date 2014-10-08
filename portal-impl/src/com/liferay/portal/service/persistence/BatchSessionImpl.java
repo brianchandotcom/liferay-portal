@@ -65,7 +65,7 @@ public class BatchSessionImpl implements BatchSession {
 		}
 	}
 
-	private static ThreadLocal<Boolean> _enabled =
+	private static final ThreadLocal<Boolean> _enabled =
 		new InitialThreadLocal<Boolean>(
 			BatchSessionImpl.class + "._enabled", false);
 

@@ -212,6 +212,6 @@ public class MySQLDB extends BaseDB {
 
 	private static final boolean _SUPPORTS_UPDATE_WITH_INNER_JOIN = true;
 
-	private static MySQLDB _instance = new MySQLDB();
+	private static final MySQLDB _instance = new MySQLDB();
 
 }

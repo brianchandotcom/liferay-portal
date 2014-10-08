@@ -67,6 +67,6 @@ public class AddressImpl implements com.liferay.portal.kernel.cluster.Address {
 
 	private static final long serialVersionUID = 7969878022424426497L;
 
-	private Address _address;
+	private final Address _address;
 
 }

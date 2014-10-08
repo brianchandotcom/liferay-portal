@@ -53,7 +53,7 @@ public class LayoutCloneFactory {
 		return _layoutClone;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LayoutCloneFactory.class);
+	private static final Log _log = LogFactoryUtil.getLog(LayoutCloneFactory.class);
 
 	private static LayoutClone _layoutClone;
 

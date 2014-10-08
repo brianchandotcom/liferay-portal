@@ -34,7 +34,7 @@ public class DefaultTermCollector implements TermCollector {
 		return _term;
 	}
 
-	private int _frequency;
-	private String _term;
+	private final int _frequency;
+	private final String _term;
 
 }

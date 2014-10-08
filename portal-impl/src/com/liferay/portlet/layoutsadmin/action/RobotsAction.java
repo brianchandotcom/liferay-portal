@@ -96,6 +96,6 @@ public class RobotsAction extends Action {
 		return null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(RobotsAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(RobotsAction.class);
 
 }

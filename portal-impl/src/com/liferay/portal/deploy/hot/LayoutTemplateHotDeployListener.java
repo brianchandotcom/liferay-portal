@@ -160,10 +160,10 @@ public class LayoutTemplateHotDeployListener extends BaseHotDeployListener {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutTemplateHotDeployListener.class);
 
-	private static Map<String, List<LayoutTemplate>> _layoutTemplates =
+	private static final Map<String, List<LayoutTemplate>> _layoutTemplates =
 		new HashMap<String, List<LayoutTemplate>>();
 
 }

@@ -112,8 +112,8 @@ public class JSONRPCResponse implements JSONSerializable {
 			return _message;
 		}
 
-		private int _code;
-		private String _message;
+		private final int _code;
+		private final String _message;
 
 	}
 

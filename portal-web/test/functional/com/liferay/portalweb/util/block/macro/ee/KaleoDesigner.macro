@@ -366,6 +366,7 @@
 	<command name="editSourceXML">
 		<execute action="Kaleodesigner#assertClick" locator-key1="SOURCE_KALEO_XML_TAB" value1="Source (Kaleo XML)" />
 		<execute action="Kaleodesigner#pause" locator1="1000" />
+		<execute action="Kaleodesigner#scrollWebElementIntoView" locator-key1="SOURCE_KALEO_XML_TAB" />
 
 		<var name="key_linePNG" value="${linePNG?lowercase()}" />
 
@@ -592,6 +593,8 @@
 	</command>
 
 	<command name="viewSourceXMLLine">
+		<execute action="Kaleodesigner#scrollWebElementIntoView" locator-key1="SOURCE_KALEO_XML_TAB" />
+
 		<var name="key_line" value="${line}" />
 
 		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SOURCE_KALEO_XML_CONTENT_SPECIFIC_LINE" value1="${kdsourceXML}" />

@@ -22,8 +22,8 @@ import org.junit.Test;
 public class SQLSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
-	public void testIncorrectLineFeed() throws Exception {
-		test("IncorrectLineFeed.testsql");
+	public void testIncorrectEmptyLines() throws Exception {
+		test("IncorrectEmptyLines.testsql");
 	}
 
 }

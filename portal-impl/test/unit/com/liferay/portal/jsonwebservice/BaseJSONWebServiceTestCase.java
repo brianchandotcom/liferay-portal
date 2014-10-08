@@ -80,27 +80,7 @@ public abstract class BaseJSONWebServiceTestCase extends PowerMockito {
 	protected static void registerAction(
 		Object action, String servletContextName) {
 
-		Class actionClass = action.getClass();
-
-		JSONWebServiceMappingResolver jsonWebServiceMappingResolver =
-			new JSONWebServiceMappingResolver(new JSONWebServiceNaming());
-
-		Method[] methods = actionClass.getMethods();
-
-		for (Method actionMethod : methods) {
-			if (actionMethod.getDeclaringClass() != actionClass) {
-				continue;
-			}
-
-			String path = jsonWebServiceMappingResolver.resolvePath(
-				actionClass, actionMethod);
-			String method = jsonWebServiceMappingResolver.resolveHttpMethod(
-				actionMethod);
-
-			JSONWebServiceActionsManagerUtil.registerJSONWebServiceAction(
-				servletContextName, StringPool.BLANK, action, actionClass,
-				actionMethod, path, method);
-		}
+		registerActionClass(action, action.getClass(), servletContextName);
 	}
 
 	protected static void registerActionClass(Class<?> actionClass) {
@@ -110,6 +90,12 @@ public abstract class BaseJSONWebServiceTestCase extends PowerMockito {
 	protected static void registerActionClass(
 		Class<?> actionClass, String servletContextName) {
 
+		registerActionClass(null, actionClass, servletContextName);
+	}
+
+	protected static void registerActionClass(
+		Object action, Class<?> actionClass, String servletContextName) {
+
 		JSONWebServiceMappingResolver jsonWebServiceMappingResolver =
 			new JSONWebServiceMappingResolver(new JSONWebServiceNaming());
 
@@ -125,9 +111,16 @@ public abstract class BaseJSONWebServiceTestCase extends PowerMockito {
 			String method = jsonWebServiceMappingResolver.resolveHttpMethod(
 				actionMethod);
 
-			JSONWebServiceActionsManagerUtil.registerJSONWebServiceAction(
-				servletContextName, StringPool.BLANK, actionClass, actionMethod,
-				path, method);
+			if (action != null) {
+				JSONWebServiceActionsManagerUtil.registerJSONWebServiceAction(
+					servletContextName, StringPool.BLANK, action, actionClass,
+					actionMethod, path, method);
+			}
+			else {
+				JSONWebServiceActionsManagerUtil.registerJSONWebServiceAction(
+					servletContextName, StringPool.BLANK, actionClass,
+					actionMethod, path, method);
+			}
 		}
 	}
 

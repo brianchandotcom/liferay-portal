@@ -42,15 +42,9 @@ public class JSONWebServiceActionsManagerTest
 			"/abc/hello");
 
 		mockHttpServletRequest.setParameter("a", "123");
-		mockHttpServletRequest.setAttribute("c", "qwe");
 
-		JSONWebServiceAction jsonWebServiceAction =
-			JSONWebServiceActionsManagerUtil.getJSONWebServiceAction(
-				mockHttpServletRequest);
-
-		String string = (String)jsonWebServiceAction.invoke();
-
-		Assert.assertEquals("hello:123", string);
+		doTestOverloadedMethodsAndDefaultParams(
+			mockHttpServletRequest, "hello:123");
 	}
 
 	@Test
@@ -61,15 +55,8 @@ public class JSONWebServiceActionsManagerTest
 		mockHttpServletRequest.setParameter("a", "123");
 		mockHttpServletRequest.setParameter("b", "456");
 
-		mockHttpServletRequest.setAttribute("c", "qwe");
-
-		JSONWebServiceAction jsonWebServiceAction =
-			JSONWebServiceActionsManagerUtil.getJSONWebServiceAction(
-				mockHttpServletRequest);
-
-		String string = (String)jsonWebServiceAction.invoke();
-
-		Assert.assertEquals("hello:123", string);
+		doTestOverloadedMethodsAndDefaultParams(
+			mockHttpServletRequest, "hello:123");
 	}
 
 	@Test
@@ -81,15 +68,8 @@ public class JSONWebServiceActionsManagerTest
 		mockHttpServletRequest.setParameter("b", "456");
 		mockHttpServletRequest.setParameter("c", "789");
 
-		mockHttpServletRequest.setAttribute("c", "qwe");
-
-		JSONWebServiceAction jsonWebServiceAction =
-			JSONWebServiceActionsManagerUtil.getJSONWebServiceAction(
-				mockHttpServletRequest);
-
-		String string = (String)jsonWebServiceAction.invoke();
-
-		Assert.assertEquals("hello:123:456:789", string);
+		doTestOverloadedMethodsAndDefaultParams(
+			mockHttpServletRequest, "hello:123:456:789");
 	}
 
 	@Test
@@ -101,15 +81,23 @@ public class JSONWebServiceActionsManagerTest
 		mockHttpServletRequest.setParameter("b", "456");
 		mockHttpServletRequest.setParameter("d", "abc");
 
+		doTestOverloadedMethodsAndDefaultParams(
+			mockHttpServletRequest, "hello:123:456>abc");
+	}
+
+	protected void doTestOverloadedMethodsAndDefaultParams(
+			MockHttpServletRequest mockHttpServletRequest,
+			String expectedString)
+		throws Exception {
+
 		mockHttpServletRequest.setAttribute("c", "qwe");
 
 		JSONWebServiceAction jsonWebServiceAction =
 			JSONWebServiceActionsManagerUtil.getJSONWebServiceAction(
 				mockHttpServletRequest);
 
-		String string = (String)jsonWebServiceAction.invoke();
-
-		Assert.assertEquals("hello:123:456>abc", string);
+		Assert.assertEquals(
+			expectedString, (String)jsonWebServiceAction.invoke());
 	}
 
 }

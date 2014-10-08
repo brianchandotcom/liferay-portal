@@ -67,7 +67,7 @@
 	</command>
 
 	<command name="viewNotification">
-		<execute action="PGNotificationsdockbar#assertClick" locator-key1="COUNT" value1="${notificationCount}" />
+		<execute action="PGNotificationsdockbar#assertClick" locator-key1="COUNT_ALERT" value1="${notificationCount}" />
 		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATIONS_CONTENT_GENERIC" value1="${notificationContent}" />
 	</command>
 

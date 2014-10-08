@@ -356,7 +356,7 @@
 		</execute>
 
 		<execute macro="KaleoDesigner#addNodeViaSourceXML">
-			<var name="nodeType" value="${nodeNodeLabel}" />
+			<var name="nodeType" value="${nodeType}" />
 		</execute>
 
 		<execute macro="KaleoDesigner#selectNode">

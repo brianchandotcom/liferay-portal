@@ -463,18 +463,6 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String WIDGET = "WIDGET";
 
-	public static final String WIKI_NODE = "WIKI_NODE";
-
-	public static final String WIKI_NODE_ID = "WIKI_NODE_ID";
-
-	public static final String WIKI_PAGE = "WIKI_PAGE";
-
-	public static final String WIKI_TREE_WALKER_DEPTH = "WIKI_TREE_WALKER_DEPTH";
-
-	public static final String WIKI_TREE_WALKER_PAGE = "WIKI_TREE_WALKER_PAGE";
-
-	public static final String WIKI_TREE_WALKER_PARENT = "WIKI_TREE_WALKER_PARENT";
-
 	public static final String WORDS_LIST = "WORDS_LIST";
 
 	public static final String WORKFLOW_ASSET_PREVIEW = "WORKFLOW_ASSET_PREVIEW";

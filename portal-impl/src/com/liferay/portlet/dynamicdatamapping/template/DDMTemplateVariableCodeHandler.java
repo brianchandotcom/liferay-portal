@@ -62,16 +62,6 @@ public class DDMTemplateVariableCodeHandler
 		return new String[] {content};
 	}
 
-	protected String[] getContentLines(String content) {
-		String[] lines = StringUtil.splitLines(content);
-
-		for (int i = 0; i < lines.length; i++) {
-			lines[i] = StringUtil.trim(lines[i]);
-		}
-
-		return lines;
-	}
-
 	protected String getResourceName(String dataType) {
 		if (isCommonResource(dataType)) {
 			dataType = "common";
@@ -120,28 +110,19 @@ public class DDMTemplateVariableCodeHandler
 
 	protected String handleRepeatableField(
 			TemplateVariableDefinition templateVariableDefinition,
-			String language, String content)
+			String language, String templateContent)
 		throws Exception {
 
 		Template template = getTemplate(_templatePath + "repeatable.ftl");
 
-		String templateContent = getTemplateContent(
+		templateContent = StringUtil.replace(
+			templateContent, StringPool.NEW_LINE,
+			StringPool.NEW_LINE + StringPool.TAB + StringPool.TAB);
+
+		template.put("templateContent", templateContent);
+
+		return getTemplateContent(
 			template, templateVariableDefinition, language);
-
-		String[] lines = getContentLines(templateContent);
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(lines[0]);
-		sb.append(StringPool.NEW_LINE);
-		sb.append(StringPool.TAB);
-		sb.append(lines[1]);
-		sb.append(content);
-		sb.append(lines[2]);
-		sb.append(StringPool.NEW_LINE);
-		sb.append(lines[3]);
-
-		return sb.toString();
 	}
 
 	protected boolean isCommonResource(String dataType) {

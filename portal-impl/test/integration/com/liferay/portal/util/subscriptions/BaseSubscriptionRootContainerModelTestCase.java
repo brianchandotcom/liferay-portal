@@ -26,7 +26,7 @@ public abstract class BaseSubscriptionRootContainerModelTestCase
 	extends BaseSubscriptionTestCase {
 
 	@Test
-	public void testSubscriptionRootContainerModelAddingBaseModelWhenInContainerModel()
+	public void testSubscriptionRootContainerModelWhenAddingBaseModelInContainerModel()
 		throws Exception {
 
 		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);

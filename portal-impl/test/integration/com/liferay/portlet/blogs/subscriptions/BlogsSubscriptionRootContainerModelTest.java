@@ -49,7 +49,7 @@ public class BlogsSubscriptionRootContainerModelTest
 	@Ignore
 	@Override
 	@Test
-	public void testSubscriptionRootContainerModelAddingBaseModelWhenInContainerModel() {
+	public void testSubscriptionRootContainerModelWhenAddingBaseModelInContainerModel() {
 	}
 
 	@Ignore

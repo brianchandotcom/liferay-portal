@@ -66,7 +66,7 @@ public class JSONInit {
 
 	private static void _registerDefaultTransformers() throws Exception {
 		JoddIntrospector.introspector = new CachingIntrospector(
-			true, true, true, "_");
+			true, true, true, new String[] {"_"});
 
 		JoddJson.jsonAnnotation = JSON.class;
 

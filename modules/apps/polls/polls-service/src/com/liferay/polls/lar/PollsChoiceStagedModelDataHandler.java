@@ -16,6 +16,7 @@ package com.liferay.polls.lar;
 
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.model.PollsQuestion;
+import com.liferay.polls.model.impl.PollsChoiceImpl;
 import com.liferay.polls.model.impl.PollsQuestionImpl;
 import com.liferay.polls.service.PollsChoiceLocalServiceUtil;
 import com.liferay.polls.service.PollsQuestionLocalServiceUtil;
@@ -38,7 +39,7 @@ import java.util.Map;
  * @author Mate Thurzo
  */
 public class PollsChoiceStagedModelDataHandler
-	extends BaseStagedModelDataHandler<PollsChoice> {
+	extends BaseStagedModelDataHandler<PollsChoiceImpl> {
 
 	public static final String[] CLASS_NAMES = {PollsChoice.class.getName()};
 
@@ -55,27 +56,28 @@ public class PollsChoiceStagedModelDataHandler
 	}
 
 	@Override
-	public PollsChoice fetchStagedModelByUuidAndCompanyId(
+	public PollsChoiceImpl fetchStagedModelByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		List<PollsChoice> choices =
 			PollsChoiceLocalServiceUtil.getPollsChoicesByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new StagedModelModifiedDateComparator<PollsChoice>());
+				new StagedModelModifiedDateComparator<PollsChoiceImpl>());
 
 		if (ListUtil.isEmpty(choices)) {
 			return null;
 		}
 
-		return choices.get(0);
+		return (PollsChoiceImpl)choices.get(0);
 	}
 
 	@Override
-	public PollsChoice fetchStagedModelByUuidAndGroupId(
+	public PollsChoiceImpl fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return PollsChoiceLocalServiceUtil.fetchPollsChoiceByUuidAndGroupId(
-			uuid, groupId);
+		return (PollsChoiceImpl)
+			PollsChoiceLocalServiceUtil.fetchPollsChoiceByUuidAndGroupId(
+				uuid, groupId);
 	}
 
 	@Override
@@ -84,26 +86,29 @@ public class PollsChoiceStagedModelDataHandler
 	}
 
 	@Override
-	public String getDisplayName(PollsChoice choice) {
+	public String getDisplayName(PollsChoiceImpl choice) {
 		return choice.getName();
 	}
 
 	@Override
 	protected void doExportStagedModel(
-			PortletDataContext portletDataContext, PollsChoice choice)
+			PortletDataContext portletDataContext, PollsChoiceImpl choice)
 		throws Exception {
 
 		PollsQuestion question = PollsQuestionLocalServiceUtil.getQuestion(
 			choice.getQuestionId());
 
+		PollsChoiceImpl choiceImpl = (PollsChoiceImpl) choice;
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
-			portletDataContext, choice, (PollsQuestionImpl)question,
+			portletDataContext, choiceImpl,
+			(PollsQuestionImpl)question,
 			PortletDataContext.REFERENCE_TYPE_STRONG);
 
 		Element choiceElement = portletDataContext.getExportDataElement(choice);
 
 		portletDataContext.addClassedModel(
-			choiceElement, ExportImportPathUtil.getModelPath(choice), choice);
+			choiceElement, ExportImportPathUtil.getModelPath(choiceImpl),
+			choice);
 	}
 
 	@Override
@@ -123,10 +128,8 @@ public class PollsChoiceStagedModelDataHandler
 
 	@Override
 	protected void doImportStagedModel(
-			PortletDataContext portletDataContext, PollsChoice choice)
+			PortletDataContext portletDataContext, PollsChoiceImpl choice)
 		throws Exception {
-
-		long userId = portletDataContext.getUserId(choice.getUserUuid());
 
 		Map<Long, Long> questionIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -135,33 +138,27 @@ public class PollsChoiceStagedModelDataHandler
 		long questionId = MapUtil.getLong(
 			questionIds, choice.getQuestionId(), choice.getQuestionId());
 
-		PollsChoice importedChoice = null;
+		PollsQuestion pollsQuestion =
+			PollsQuestionLocalServiceUtil.getPollsQuestion(questionId);
 
-		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			choice);
+		PollsChoiceImpl importedChoice = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			PollsChoice existingChoice = fetchStagedModelByUuidAndGroupId(
+			importedChoice = fetchStagedModelByUuidAndGroupId(
 				choice.getUuid(), portletDataContext.getScopeGroupId());
-
-			if (existingChoice == null) {
-				serviceContext.setUuid(choice.getUuid());
-
-				importedChoice = PollsChoiceLocalServiceUtil.addChoice(
-					userId, questionId, choice.getName(),
-					choice.getDescription(), serviceContext);
-			}
-			else {
-				importedChoice = PollsChoiceLocalServiceUtil.updateChoice(
-					existingChoice.getChoiceId(), questionId, choice.getName(),
-					choice.getDescription(), serviceContext);
-			}
 		}
-		else {
-			importedChoice = PollsChoiceLocalServiceUtil.addChoice(
-				userId, questionId, choice.getName(), choice.getDescription(),
-				serviceContext);
+		if (importedChoice == null) {
+			importedChoice = (PollsChoiceImpl) pollsQuestion.createChoice();
+
+			importedChoice.setCompanyId(
+				portletDataContext.getCompanyId());
+			importedChoice.setGroupId(
+				portletDataContext.getScopeGroupId());
 		}
+
+		importedChoice.setModelAttributes(choice.getModelAttributes());
+
+		importedChoice.persist();
 
 		portletDataContext.importClassedModel(choice, importedChoice);
 	}

@@ -16,12 +16,17 @@ package com.liferay.polls.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.google.common.base.Optional;
 import com.liferay.polls.exception.NoSuchQuestionException;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.model.impl.PollsQuestionImpl;
 import com.liferay.polls.model.impl.PollsQuestionModelImpl;
 import com.liferay.polls.service.persistence.PollsQuestionPersistence;
 
+import com.liferay.portal.kernel.CompanyProvider;
+import com.liferay.portal.kernel.GroupProvider;
+import com.liferay.portal.kernel.UserProvider;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -40,6 +45,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.Company;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -2438,17 +2446,25 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 * @return the new polls question
 	 */
 	@Override
-	public PollsQuestion create(long questionId) {
-		PollsQuestionImpl pollsQuestion = new PollsQuestionImpl();
+	public PollsQuestion create() {
+		PollsQuestionImpl pollsQuestionImpl = new PollsQuestionImpl();
 
-		pollsQuestion.setNew(true);
-		pollsQuestion.setPrimaryKey(questionId);
+		Company company = companyProvider.get();
+
+		Group group = groupProvider.get();
+
+		User user = userProvider.get();
 
 		String uuid = PortalUUIDUtil.generate();
 
-		pollsQuestion.setUuid(uuid);
+		pollsQuestionImpl.setCompanyId(company.getCompanyId());
+		pollsQuestionImpl.setGroupId(group.getGroupId());
+		pollsQuestionImpl.setNew(true);
+		pollsQuestionImpl.setUserId(user.getUserId());
+		pollsQuestionImpl.setUserName(user.getScreenName());
+		pollsQuestionImpl.setUuid(uuid);
 
-		return pollsQuestion;
+		return pollsQuestionImpl;
 	}
 
 	/**
@@ -3088,4 +3104,12 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 				return _nullPollsQuestion;
 			}
 		};
+
+	@BeanReference(type = CompanyProvider.class)
+	protected CompanyProvider companyProvider;
+	@BeanReference(type = GroupProvider.class)
+	protected GroupProvider groupProvider;
+	@BeanReference(type = UserProvider.class)
+	protected UserProvider userProvider;
+
 }

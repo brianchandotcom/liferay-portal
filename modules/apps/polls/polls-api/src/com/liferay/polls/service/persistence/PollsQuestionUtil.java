@@ -712,8 +712,8 @@ public class PollsQuestionUtil {
 	* @param questionId the primary key for the new polls question
 	* @return the new polls question
 	*/
-	public static com.liferay.polls.model.PollsQuestion create(long questionId) {
-		return getPersistence().create(questionId);
+	public static com.liferay.polls.model.PollsQuestion create() {
+		return getPersistence().create();
 	}
 
 	/**

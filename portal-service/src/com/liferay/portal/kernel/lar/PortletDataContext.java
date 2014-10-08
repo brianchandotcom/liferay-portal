@@ -41,6 +41,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 /**
  * <p>
@@ -344,8 +345,7 @@ public interface PortletDataContext extends Serializable {
 	public Element getImportDataElement(
 		String name, String attribute, String value);
 
-	public Element getImportDataGroupElement(
-		Class<? extends StagedModel> clazz);
+	public Element getImportDataGroupElement(Class<?> clazz);
 
 	public Element getImportDataRootElement();
 

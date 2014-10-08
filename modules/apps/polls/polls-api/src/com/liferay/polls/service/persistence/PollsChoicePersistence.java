@@ -253,7 +253,7 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	*/
 	public java.util.List<com.liferay.polls.model.PollsChoice> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<? extends com.liferay.polls.model.PollsChoice> orderByComparator);
 
 	/**
 	* Returns the first polls choice in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -531,7 +531,7 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @param choiceId the primary key for the new polls choice
 	* @return the new polls choice
 	*/
-	public com.liferay.polls.model.PollsChoice create(long choiceId);
+	public com.liferay.polls.model.PollsChoice create();
 
 	/**
 	* Removes the polls choice with the primary key from the database. Also notifies the appropriate model listeners.

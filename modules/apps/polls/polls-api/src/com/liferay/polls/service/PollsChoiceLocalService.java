@@ -47,20 +47,6 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PollsChoiceLocalServiceUtil} to access the polls choice local service. Add custom service methods to {@link com.liferay.polls.service.impl.PollsChoiceLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.polls.model.PollsChoice addChoice(long userId,
-		long questionId, java.lang.String name, java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Adds the polls choice to the database. Also notifies the appropriate model listeners.
-	*
-	* @param pollsChoice the polls choice
-	* @return the polls choice that was added
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.polls.model.PollsChoice addPollsChoice(
-		com.liferay.polls.model.PollsChoice pollsChoice);
 
 	/**
 	* Creates a new polls choice with the primary key. Does not add the polls choice to the database.
@@ -68,7 +54,7 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 	* @param choiceId the primary key for the new polls choice
 	* @return the new polls choice
 	*/
-	public com.liferay.polls.model.PollsChoice createPollsChoice(long choiceId);
+	public com.liferay.polls.model.PollsChoice createPollsChoice();
 
 	/**
 	* @throws PortalException
@@ -255,7 +241,7 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.polls.model.PollsChoice> getPollsChoicesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<? extends com.liferay.polls.model.PollsChoice> orderByComparator);
 
 	/**
 	* Returns the number of polls choices.
@@ -272,18 +258,4 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	public com.liferay.polls.model.PollsChoice updateChoice(long choiceId,
-		long questionId, java.lang.String name, java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Updates the polls choice in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param pollsChoice the polls choice
-	* @return the polls choice that was updated
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.polls.model.PollsChoice updatePollsChoice(
-		com.liferay.polls.model.PollsChoice pollsChoice);
 }

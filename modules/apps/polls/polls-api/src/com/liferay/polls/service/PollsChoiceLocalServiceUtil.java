@@ -42,25 +42,6 @@ public class PollsChoiceLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.polls.service.impl.PollsChoiceLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.polls.model.PollsChoice addChoice(long userId,
-		long questionId, java.lang.String name, java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addChoice(userId, questionId, name, description,
-			serviceContext);
-	}
-
-	/**
-	* Adds the polls choice to the database. Also notifies the appropriate model listeners.
-	*
-	* @param pollsChoice the polls choice
-	* @return the polls choice that was added
-	*/
-	public static com.liferay.polls.model.PollsChoice addPollsChoice(
-		com.liferay.polls.model.PollsChoice pollsChoice) {
-		return getService().addPollsChoice(pollsChoice);
-	}
 
 	/**
 	* Creates a new polls choice with the primary key. Does not add the polls choice to the database.
@@ -68,9 +49,8 @@ public class PollsChoiceLocalServiceUtil {
 	* @param choiceId the primary key for the new polls choice
 	* @return the new polls choice
 	*/
-	public static com.liferay.polls.model.PollsChoice createPollsChoice(
-		long choiceId) {
-		return getService().createPollsChoice(choiceId);
+	public static com.liferay.polls.model.PollsChoice createPollsChoice() {
+		return getService().createPollsChoice();
 	}
 
 	/**
@@ -289,7 +269,7 @@ public class PollsChoiceLocalServiceUtil {
 
 	public static java.util.List<com.liferay.polls.model.PollsChoice> getPollsChoicesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<? extends com.liferay.polls.model.PollsChoice> orderByComparator) {
 		return getService()
 				   .getPollsChoicesByUuidAndCompanyId(uuid, companyId, start,
 			end, orderByComparator);
@@ -311,27 +291,6 @@ public class PollsChoiceLocalServiceUtil {
 	*/
 	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
 		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static com.liferay.polls.model.PollsChoice updateChoice(
-		long choiceId, long questionId, java.lang.String name,
-		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateChoice(choiceId, questionId, name, description,
-			serviceContext);
-	}
-
-	/**
-	* Updates the polls choice in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param pollsChoice the polls choice
-	* @return the polls choice that was updated
-	*/
-	public static com.liferay.polls.model.PollsChoice updatePollsChoice(
-		com.liferay.polls.model.PollsChoice pollsChoice) {
-		return getService().updatePollsChoice(pollsChoice);
 	}
 
 	public static PollsChoiceLocalService getService() {

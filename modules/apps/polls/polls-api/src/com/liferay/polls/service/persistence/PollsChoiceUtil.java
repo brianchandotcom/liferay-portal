@@ -703,8 +703,8 @@ public class PollsChoiceUtil {
 	* @param choiceId the primary key for the new polls choice
 	* @return the new polls choice
 	*/
-	public static com.liferay.polls.model.PollsChoice create(long choiceId) {
-		return getPersistence().create(choiceId);
+	public static com.liferay.polls.model.PollsChoice create() {
+		return getPersistence().create();
 	}
 
 	/**

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import java.util.List;
@@ -88,7 +89,7 @@ public class PollsVoteStagedModelDataHandler
 		throws Exception {
 
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
-			portletDataContext, vote, vote.getChoice(),
+			portletDataContext, vote, (StagedModel)vote.getChoice(),
 			PortletDataContext.REFERENCE_TYPE_STRONG);
 
 		Element voteElement = portletDataContext.getExportDataElement(vote);

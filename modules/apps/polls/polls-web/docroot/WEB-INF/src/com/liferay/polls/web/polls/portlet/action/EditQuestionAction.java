@@ -263,7 +263,7 @@ public class EditQuestionAction extends PortletAction {
 						LocalizationUtil.getLocalizationMap(
 							actionRequest, CHOICE_DESCRIPTION_PREFIX + id);
 
-					PollsChoice choice = PollsChoiceUtil.create(0);
+					PollsChoice choice = PollsChoiceUtil.create();
 
 					choice.setName(choiceName);
 					choice.setDescriptionMap(localeChoiceDescriptionMap);

@@ -33,27 +33,6 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 		_pollsChoiceLocalService = pollsChoiceLocalService;
 	}
 
-	@Override
-	public com.liferay.polls.model.PollsChoice addChoice(long userId,
-		long questionId, java.lang.String name, java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _pollsChoiceLocalService.addChoice(userId, questionId, name,
-			description, serviceContext);
-	}
-
-	/**
-	* Adds the polls choice to the database. Also notifies the appropriate model listeners.
-	*
-	* @param pollsChoice the polls choice
-	* @return the polls choice that was added
-	*/
-	@Override
-	public com.liferay.polls.model.PollsChoice addPollsChoice(
-		com.liferay.polls.model.PollsChoice pollsChoice) {
-		return _pollsChoiceLocalService.addPollsChoice(pollsChoice);
-	}
-
 	/**
 	* Creates a new polls choice with the primary key. Does not add the polls choice to the database.
 	*
@@ -61,8 +40,8 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 	* @return the new polls choice
 	*/
 	@Override
-	public com.liferay.polls.model.PollsChoice createPollsChoice(long choiceId) {
-		return _pollsChoiceLocalService.createPollsChoice(choiceId);
+	public com.liferay.polls.model.PollsChoice createPollsChoice() {
+		return _pollsChoiceLocalService.createPollsChoice();
 	}
 
 	/**
@@ -305,7 +284,7 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 	@Override
 	public java.util.List<com.liferay.polls.model.PollsChoice> getPollsChoicesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<? extends com.liferay.polls.model.PollsChoice> orderByComparator) {
 		return _pollsChoiceLocalService.getPollsChoicesByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
 	}
@@ -328,27 +307,6 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 	@Override
 	public void setBeanIdentifier(java.lang.String beanIdentifier) {
 		_pollsChoiceLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public com.liferay.polls.model.PollsChoice updateChoice(long choiceId,
-		long questionId, java.lang.String name, java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _pollsChoiceLocalService.updateChoice(choiceId, questionId,
-			name, description, serviceContext);
-	}
-
-	/**
-	* Updates the polls choice in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param pollsChoice the polls choice
-	* @return the polls choice that was updated
-	*/
-	@Override
-	public com.liferay.polls.model.PollsChoice updatePollsChoice(
-		com.liferay.polls.model.PollsChoice pollsChoice) {
-		return _pollsChoiceLocalService.updatePollsChoice(pollsChoice);
 	}
 
 	/**

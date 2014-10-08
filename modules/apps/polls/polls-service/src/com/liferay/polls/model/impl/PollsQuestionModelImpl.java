@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.BaseModelImpl;
@@ -71,7 +72,7 @@ import java.util.TreeSet;
 @JSON(strict = true)
 @ProviderType
 public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
-	implements PollsQuestionModel, StagedModel, GroupedModel {
+	implements PollsQuestionModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

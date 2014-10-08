@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.model.PollsChoiceModel;
-import com.liferay.polls.model.PollsChoiceSoap;
 
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
@@ -33,6 +32,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
@@ -71,7 +71,7 @@ import java.util.TreeSet;
 @JSON(strict = true)
 @ProviderType
 public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
-	implements PollsChoiceModel {
+	implements PollsChoiceModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -113,53 +113,6 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 	public static final long QUESTIONID_COLUMN_BITMASK = 8L;
 	public static final long UUID_COLUMN_BITMASK = 16L;
 
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 */
-	public static PollsChoice toModel(PollsChoiceSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		PollsChoice model = new PollsChoiceImpl();
-
-		model.setUuid(soapModel.getUuid());
-		model.setChoiceId(soapModel.getChoiceId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setQuestionId(soapModel.getQuestionId());
-		model.setName(soapModel.getName());
-		model.setDescription(soapModel.getDescription());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 */
-	public static List<PollsChoice> toModels(PollsChoiceSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<PollsChoice> models = new ArrayList<PollsChoice>(soapModels.length);
-
-		for (PollsChoiceSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.com.liferay.polls.model.PollsChoice"));
@@ -698,6 +651,8 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		pollsChoiceImpl.setDescription(getDescription());
 
 		pollsChoiceImpl.resetOriginalValues();
+
+		pollsChoiceImpl.setNew(true);
 
 		return pollsChoiceImpl;
 	}

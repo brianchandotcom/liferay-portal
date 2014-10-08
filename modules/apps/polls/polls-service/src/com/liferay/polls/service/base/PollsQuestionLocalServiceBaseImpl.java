@@ -23,6 +23,7 @@ import com.liferay.polls.service.persistence.PollsChoicePersistence;
 import com.liferay.polls.service.persistence.PollsQuestionPersistence;
 import com.liferay.polls.service.persistence.PollsVotePersistence;
 
+import com.liferay.portal.kernel.UserProvider;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -81,28 +82,14 @@ public abstract class PollsQuestionLocalServiceBaseImpl
 	 */
 
 	/**
-	 * Adds the polls question to the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param pollsQuestion the polls question
-	 * @return the polls question that was added
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public PollsQuestion addPollsQuestion(PollsQuestion pollsQuestion) {
-		pollsQuestion.setNew(true);
-
-		return pollsQuestionPersistence.update(pollsQuestion);
-	}
-
-	/**
 	 * Creates a new polls question with the primary key. Does not add the polls question to the database.
 	 *
 	 * @param questionId the primary key for the new polls question
 	 * @return the new polls question
 	 */
 	@Override
-	public PollsQuestion createPollsQuestion(long questionId) {
-		return pollsQuestionPersistence.create(questionId);
+	public PollsQuestion createPollsQuestion() {
+		return pollsQuestionPersistence.create();
 	}
 
 	/**
@@ -389,18 +376,6 @@ public abstract class PollsQuestionLocalServiceBaseImpl
 	@Override
 	public int getPollsQuestionsCount() {
 		return pollsQuestionPersistence.countAll();
-	}
-
-	/**
-	 * Updates the polls question in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param pollsQuestion the polls question
-	 * @return the polls question that was updated
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public PollsQuestion updatePollsQuestion(PollsQuestion pollsQuestion) {
-		return pollsQuestionPersistence.update(pollsQuestion);
 	}
 
 	/**
@@ -803,4 +778,8 @@ public abstract class PollsQuestionLocalServiceBaseImpl
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private String _beanIdentifier;
+
+	@BeanReference(type = UserProvider.class)
+	protected UserProvider userProvider;
+
 }

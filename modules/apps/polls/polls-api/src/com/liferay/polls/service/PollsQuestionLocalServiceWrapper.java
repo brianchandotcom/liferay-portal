@@ -34,33 +34,6 @@ public class PollsQuestionLocalServiceWrapper
 		_pollsQuestionLocalService = pollsQuestionLocalService;
 	}
 
-	/**
-	* Adds the polls question to the database. Also notifies the appropriate model listeners.
-	*
-	* @param pollsQuestion the polls question
-	* @return the polls question that was added
-	*/
-	@Override
-	public com.liferay.polls.model.PollsQuestion addPollsQuestion(
-		com.liferay.polls.model.PollsQuestion pollsQuestion) {
-		return _pollsQuestionLocalService.addPollsQuestion(pollsQuestion);
-	}
-
-	@Override
-	public com.liferay.polls.model.PollsQuestion addQuestion(long userId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		java.util.List<com.liferay.polls.model.PollsChoice> choices,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _pollsQuestionLocalService.addQuestion(userId, titleMap,
-			descriptionMap, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, choices, serviceContext);
-	}
-
 	@Override
 	public void addQuestionResources(
 		com.liferay.polls.model.PollsQuestion question,
@@ -102,9 +75,8 @@ public class PollsQuestionLocalServiceWrapper
 	* @return the new polls question
 	*/
 	@Override
-	public com.liferay.polls.model.PollsQuestion createPollsQuestion(
-		long questionId) {
-		return _pollsQuestionLocalService.createPollsQuestion(questionId);
+	public com.liferay.polls.model.PollsQuestion createPollsQuestion() {
+		return _pollsQuestionLocalService.createPollsQuestion();
 	}
 
 	/**
@@ -397,34 +369,6 @@ public class PollsQuestionLocalServiceWrapper
 	@Override
 	public void setBeanIdentifier(java.lang.String beanIdentifier) {
 		_pollsQuestionLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	/**
-	* Updates the polls question in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param pollsQuestion the polls question
-	* @return the polls question that was updated
-	*/
-	@Override
-	public com.liferay.polls.model.PollsQuestion updatePollsQuestion(
-		com.liferay.polls.model.PollsQuestion pollsQuestion) {
-		return _pollsQuestionLocalService.updatePollsQuestion(pollsQuestion);
-	}
-
-	@Override
-	public com.liferay.polls.model.PollsQuestion updateQuestion(long userId,
-		long questionId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		java.util.List<com.liferay.polls.model.PollsChoice> choices,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _pollsQuestionLocalService.updateQuestion(userId, questionId,
-			titleMap, descriptionMap, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, choices, serviceContext);
 	}
 
 	/**

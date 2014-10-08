@@ -16,6 +16,7 @@ package com.liferay.polls.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,6 +35,10 @@ public interface PollsQuestion extends PollsQuestionModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.polls.model.impl.PollsQuestionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public boolean addChoice(PollsChoice pollsChoice);
+
+	public PollsChoice createChoice();
+
 	public java.util.List<com.liferay.polls.model.PollsChoice> getChoices();
 
 	public java.util.List<com.liferay.polls.model.PollsVote> getVotes();
@@ -48,4 +53,10 @@ public interface PollsQuestion extends PollsQuestionModel, PersistedModel {
 	public boolean isExpired(
 		com.liferay.portal.service.ServiceContext serviceContext,
 		java.util.Date defaultCreateDate);
+
+	public void setGroupPermissions(String ... permissions);
+
+	public void setGuestPermissions(String ... permissions);
+
+	public void validate() throws PortalException;
 }

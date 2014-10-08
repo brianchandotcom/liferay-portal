@@ -54,14 +54,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
 		attributes.put("choiceId", getChoiceId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("questionId", getQuestionId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
@@ -73,10 +66,6 @@ public class PollsChoiceWrapper implements PollsChoice,
 	public void setModelAttributes(Map<String, Object> attributes) {
 		String uuid = (String)attributes.get("uuid");
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
 		Long choiceId = (Long)attributes.get("choiceId");
 
 		if (choiceId != null) {
@@ -85,39 +74,15 @@ public class PollsChoiceWrapper implements PollsChoice,
 
 		Long groupId = (Long)attributes.get("groupId");
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
 		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
 
 		Long userId = (Long)attributes.get("userId");
 
-		if (userId != null) {
-			setUserId(userId);
-		}
-
 		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
 
 		Date createDate = (Date)attributes.get("createDate");
 
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
 		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
 
 		Long questionId = (Long)attributes.get("questionId");
 
@@ -161,26 +126,6 @@ public class PollsChoiceWrapper implements PollsChoice,
 	@Override
 	public long getChoiceId() {
 		return _pollsChoice.getChoiceId();
-	}
-
-	/**
-	* Returns the company ID of this polls choice.
-	*
-	* @return the company ID of this polls choice
-	*/
-	@Override
-	public long getCompanyId() {
-		return _pollsChoice.getCompanyId();
-	}
-
-	/**
-	* Returns the create date of this polls choice.
-	*
-	* @return the create date of this polls choice
-	*/
-	@Override
-	public java.util.Date getCreateDate() {
-		return _pollsChoice.getCreateDate();
 	}
 
 	@Override
@@ -272,26 +217,6 @@ public class PollsChoiceWrapper implements PollsChoice,
 	}
 
 	/**
-	* Returns the group ID of this polls choice.
-	*
-	* @return the group ID of this polls choice
-	*/
-	@Override
-	public long getGroupId() {
-		return _pollsChoice.getGroupId();
-	}
-
-	/**
-	* Returns the modified date of this polls choice.
-	*
-	* @return the modified date of this polls choice
-	*/
-	@Override
-	public java.util.Date getModifiedDate() {
-		return _pollsChoice.getModifiedDate();
-	}
-
-	/**
 	* Returns the name of this polls choice.
 	*
 	* @return the name of this polls choice
@@ -324,46 +249,6 @@ public class PollsChoiceWrapper implements PollsChoice,
 	@Override
 	public long getQuestionId() {
 		return _pollsChoice.getQuestionId();
-	}
-
-	/**
-	* Returns the user ID of this polls choice.
-	*
-	* @return the user ID of this polls choice
-	*/
-	@Override
-	public long getUserId() {
-		return _pollsChoice.getUserId();
-	}
-
-	/**
-	* Returns the user name of this polls choice.
-	*
-	* @return the user name of this polls choice
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _pollsChoice.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this polls choice.
-	*
-	* @return the user uuid of this polls choice
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _pollsChoice.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this polls choice.
-	*
-	* @return the uuid of this polls choice
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _pollsChoice.getUuid();
 	}
 
 	@Override
@@ -422,26 +307,6 @@ public class PollsChoiceWrapper implements PollsChoice,
 	@Override
 	public void setChoiceId(long choiceId) {
 		_pollsChoice.setChoiceId(choiceId);
-	}
-
-	/**
-	* Sets the company ID of this polls choice.
-	*
-	* @param companyId the company ID of this polls choice
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_pollsChoice.setCompanyId(companyId);
-	}
-
-	/**
-	* Sets the create date of this polls choice.
-	*
-	* @param createDate the create date of this polls choice
-	*/
-	@Override
-	public void setCreateDate(java.util.Date createDate) {
-		_pollsChoice.setCreateDate(createDate);
 	}
 
 	/**
@@ -527,26 +392,6 @@ public class PollsChoiceWrapper implements PollsChoice,
 	}
 
 	/**
-	* Sets the group ID of this polls choice.
-	*
-	* @param groupId the group ID of this polls choice
-	*/
-	@Override
-	public void setGroupId(long groupId) {
-		_pollsChoice.setGroupId(groupId);
-	}
-
-	/**
-	* Sets the modified date of this polls choice.
-	*
-	* @param modifiedDate the modified date of this polls choice
-	*/
-	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
-		_pollsChoice.setModifiedDate(modifiedDate);
-	}
-
-	/**
 	* Sets the name of this polls choice.
 	*
 	* @param name the name of this polls choice
@@ -584,46 +429,6 @@ public class PollsChoiceWrapper implements PollsChoice,
 	@Override
 	public void setQuestionId(long questionId) {
 		_pollsChoice.setQuestionId(questionId);
-	}
-
-	/**
-	* Sets the user ID of this polls choice.
-	*
-	* @param userId the user ID of this polls choice
-	*/
-	@Override
-	public void setUserId(long userId) {
-		_pollsChoice.setUserId(userId);
-	}
-
-	/**
-	* Sets the user name of this polls choice.
-	*
-	* @param userName the user name of this polls choice
-	*/
-	@Override
-	public void setUserName(java.lang.String userName) {
-		_pollsChoice.setUserName(userName);
-	}
-
-	/**
-	* Sets the user uuid of this polls choice.
-	*
-	* @param userUuid the user uuid of this polls choice
-	*/
-	@Override
-	public void setUserUuid(java.lang.String userUuid) {
-		_pollsChoice.setUserUuid(userUuid);
-	}
-
-	/**
-	* Sets the uuid of this polls choice.
-	*
-	* @param uuid the uuid of this polls choice
-	*/
-	@Override
-	public void setUuid(java.lang.String uuid) {
-		_pollsChoice.setUuid(uuid);
 	}
 
 	@Override
@@ -668,11 +473,6 @@ public class PollsChoiceWrapper implements PollsChoice,
 		}
 
 		return false;
-	}
-
-	@Override
-	public StagedModelType getStagedModelType() {
-		return _pollsChoice.getStagedModelType();
 	}
 
 	/**

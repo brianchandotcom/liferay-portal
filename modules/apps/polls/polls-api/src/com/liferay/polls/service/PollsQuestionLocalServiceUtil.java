@@ -43,33 +43,6 @@ public class PollsQuestionLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.polls.service.impl.PollsQuestionLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 
-	/**
-	* Adds the polls question to the database. Also notifies the appropriate model listeners.
-	*
-	* @param pollsQuestion the polls question
-	* @return the polls question that was added
-	*/
-	public static com.liferay.polls.model.PollsQuestion addPollsQuestion(
-		com.liferay.polls.model.PollsQuestion pollsQuestion) {
-		return getService().addPollsQuestion(pollsQuestion);
-	}
-
-	public static com.liferay.polls.model.PollsQuestion addQuestion(
-		long userId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		java.util.List<com.liferay.polls.model.PollsChoice> choices,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addQuestion(userId, titleMap, descriptionMap,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire, choices,
-			serviceContext);
-	}
-
 	public static void addQuestionResources(
 		com.liferay.polls.model.PollsQuestion question,
 		boolean addGroupPermissions, boolean addGuestPermissions)
@@ -108,9 +81,8 @@ public class PollsQuestionLocalServiceUtil {
 	* @param questionId the primary key for the new polls question
 	* @return the new polls question
 	*/
-	public static com.liferay.polls.model.PollsQuestion createPollsQuestion(
-		long questionId) {
-		return getService().createPollsQuestion(questionId);
+	public static com.liferay.polls.model.PollsQuestion createPollsQuestion() {
+		return getService().createPollsQuestion();
 	}
 
 	/**
@@ -373,33 +345,6 @@ public class PollsQuestionLocalServiceUtil {
 	*/
 	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
 		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	/**
-	* Updates the polls question in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param pollsQuestion the polls question
-	* @return the polls question that was updated
-	*/
-	public static com.liferay.polls.model.PollsQuestion updatePollsQuestion(
-		com.liferay.polls.model.PollsQuestion pollsQuestion) {
-		return getService().updatePollsQuestion(pollsQuestion);
-	}
-
-	public static com.liferay.polls.model.PollsQuestion updateQuestion(
-		long userId, long questionId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		java.util.List<com.liferay.polls.model.PollsChoice> choices,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateQuestion(userId, questionId, titleMap,
-			descriptionMap, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, choices, serviceContext);
 	}
 
 	public static PollsQuestionLocalService getService() {

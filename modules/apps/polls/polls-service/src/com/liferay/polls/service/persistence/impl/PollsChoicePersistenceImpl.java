@@ -18,10 +18,15 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.polls.exception.NoSuchChoiceException;
 import com.liferay.polls.model.PollsChoice;
+import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.model.impl.PollsChoiceImpl;
 import com.liferay.polls.model.impl.PollsChoiceModelImpl;
 import com.liferay.polls.service.persistence.PollsChoicePersistence;
 
+import com.liferay.portal.kernel.CompanyProvider;
+import com.liferay.portal.kernel.GroupProvider;
+import com.liferay.portal.kernel.UserProvider;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -38,12 +43,19 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.Company;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.StagedGroupedModel;
+import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -148,8 +160,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @return the ordered range of matching polls choices
 	 */
 	@Override
-	public List<PollsChoice> findByUuid(String uuid, int start, int end,
+	public List<PollsChoice> findByUuid(
+		String uuid, int start, int end,
 		OrderByComparator<PollsChoice> orderByComparator) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -170,7 +184,9 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 
 		if ((list != null) && !list.isEmpty()) {
 			for (PollsChoice pollsChoice : list) {
-				if (!Validator.equals(uuid, pollsChoice.getUuid())) {
+				StagedModel stagedModel = (StagedModel) pollsChoice;
+
+				if (!Validator.equals(uuid, stagedModel.getUuid())) {
 					list = null;
 
 					break;
@@ -684,8 +700,8 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 					finderArgs, this);
 		}
 
-		if (result instanceof PollsChoice) {
-			PollsChoice pollsChoice = (PollsChoice)result;
+		if (result instanceof StagedGroupedModel) {
+			StagedGroupedModel pollsChoice = (StagedGroupedModel)result;
 
 			if (!Validator.equals(uuid, pollsChoice.getUuid()) ||
 					(groupId != pollsChoice.getGroupId())) {
@@ -738,7 +754,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 						finderArgs, list);
 				}
 				else {
-					PollsChoice pollsChoice = list.get(0);
+					PollsChoiceImpl pollsChoice = (PollsChoiceImpl) list.get(0);
 
 					result = pollsChoice;
 
@@ -932,7 +948,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 */
 	@Override
 	public List<PollsChoice> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator<PollsChoice> orderByComparator) {
+		int start, int end, OrderByComparator<? extends PollsChoice> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -957,8 +973,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 
 		if ((list != null) && !list.isEmpty()) {
 			for (PollsChoice pollsChoice : list) {
-				if (!Validator.equals(uuid, pollsChoice.getUuid()) ||
-						(companyId != pollsChoice.getCompanyId())) {
+				StagedModel stagedModel = (StagedModel)pollsChoice;
+
+				if (!Validator.equals(uuid, stagedModel.getUuid()) ||
+						(companyId != stagedModel.getCompanyId())) {
 					list = null;
 
 					break;
@@ -2175,8 +2193,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 		EntityCacheUtil.putResult(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
 			PollsChoiceImpl.class, pollsChoice.getPrimaryKey(), pollsChoice);
 
+		StagedGroupedModel stagedModel = (StagedGroupedModel)pollsChoice;
+
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] { pollsChoice.getUuid(), pollsChoice.getGroupId() },
+			new Object[] { stagedModel.getUuid(), stagedModel.getGroupId() },
 			pollsChoice);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_Q_N,
@@ -2257,9 +2277,13 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	}
 
 	protected void cacheUniqueFindersCache(PollsChoice pollsChoice) {
+		StagedGroupedModel stagedGroupedModelModel =
+			(StagedGroupedModel) pollsChoice;
+
 		if (pollsChoice.isNew()) {
 			Object[] args = new Object[] {
-					pollsChoice.getUuid(), pollsChoice.getGroupId()
+				stagedGroupedModelModel.getUuid(),
+				stagedGroupedModelModel.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
@@ -2282,7 +2306,8 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 			if ((pollsChoiceModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						pollsChoice.getUuid(), pollsChoice.getGroupId()
+					stagedGroupedModelModel.getUuid(),
+					stagedGroupedModelModel.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
@@ -2308,8 +2333,11 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	protected void clearUniqueFindersCache(PollsChoice pollsChoice) {
 		PollsChoiceModelImpl pollsChoiceModelImpl = (PollsChoiceModelImpl)pollsChoice;
 
+		StagedGroupedModel stagedGroupedModel =
+			(StagedGroupedModel) pollsChoice;
+
 		Object[] args = new Object[] {
-				pollsChoice.getUuid(), pollsChoice.getGroupId()
+				stagedGroupedModel.getUuid(), stagedGroupedModel.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -2350,17 +2378,25 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @return the new polls choice
 	 */
 	@Override
-	public PollsChoice create(long choiceId) {
-		PollsChoice pollsChoice = new PollsChoiceImpl();
+	public PollsChoice create() {
+		PollsChoiceImpl pollsChoiceImpl = new PollsChoiceImpl();
 
-		pollsChoice.setNew(true);
-		pollsChoice.setPrimaryKey(choiceId);
+		Company company = companyProvider.get();
+
+		Group group = groupProvider.get();
+
+		User user = userProvider.get();
 
 		String uuid = PortalUUIDUtil.generate();
 
-		pollsChoice.setUuid(uuid);
+		pollsChoiceImpl.setCompanyId(company.getCompanyId());
+		pollsChoiceImpl.setGroupId(group.getGroupId());
+		pollsChoiceImpl.setNew(true);
+		pollsChoiceImpl.setUserId(user.getUserId());
+		pollsChoiceImpl.setUserName(user.getScreenName());
+		pollsChoiceImpl.setUuid(uuid);
 
-		return pollsChoice;
+		return pollsChoiceImpl;
 	}
 
 	/**
@@ -2452,14 +2488,17 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 		com.liferay.polls.model.PollsChoice pollsChoice) {
 		pollsChoice = toUnwrappedModel(pollsChoice);
 
+		StagedGroupedModel stagedGroupedModel =
+			(StagedGroupedModel) pollsChoice;
+
 		boolean isNew = pollsChoice.isNew();
 
 		PollsChoiceModelImpl pollsChoiceModelImpl = (PollsChoiceModelImpl)pollsChoice;
 
-		if (Validator.isNull(pollsChoice.getUuid())) {
+		if (Validator.isNull(stagedGroupedModel.getUuid())) {
 			String uuid = PortalUUIDUtil.generate();
 
-			pollsChoice.setUuid(uuid);
+			stagedGroupedModel.setUuid(uuid);
 		}
 
 		Session session = null;
@@ -2565,19 +2604,22 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 			return pollsChoice;
 		}
 
+		StagedGroupedModel stagedGroupedModel =
+			(StagedGroupedModel) pollsChoice;
+
 		PollsChoiceImpl pollsChoiceImpl = new PollsChoiceImpl();
 
 		pollsChoiceImpl.setNew(pollsChoice.isNew());
 		pollsChoiceImpl.setPrimaryKey(pollsChoice.getPrimaryKey());
 
-		pollsChoiceImpl.setUuid(pollsChoice.getUuid());
+		pollsChoiceImpl.setUuid(stagedGroupedModel.getUuid());
 		pollsChoiceImpl.setChoiceId(pollsChoice.getChoiceId());
-		pollsChoiceImpl.setGroupId(pollsChoice.getGroupId());
-		pollsChoiceImpl.setCompanyId(pollsChoice.getCompanyId());
-		pollsChoiceImpl.setUserId(pollsChoice.getUserId());
-		pollsChoiceImpl.setUserName(pollsChoice.getUserName());
-		pollsChoiceImpl.setCreateDate(pollsChoice.getCreateDate());
-		pollsChoiceImpl.setModifiedDate(pollsChoice.getModifiedDate());
+		pollsChoiceImpl.setGroupId(stagedGroupedModel.getGroupId());
+		pollsChoiceImpl.setCompanyId(stagedGroupedModel.getCompanyId());
+		pollsChoiceImpl.setUserId(stagedGroupedModel.getUserId());
+		pollsChoiceImpl.setUserName(stagedGroupedModel.getUserName());
+		pollsChoiceImpl.setCreateDate(stagedGroupedModel.getCreateDate());
+		pollsChoiceImpl.setModifiedDate(stagedGroupedModel.getModifiedDate());
 		pollsChoiceImpl.setQuestionId(pollsChoice.getQuestionId());
 		pollsChoiceImpl.setName(pollsChoice.getName());
 		pollsChoiceImpl.setDescription(pollsChoice.getDescription());
@@ -2987,4 +3029,12 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 				return _nullPollsChoice;
 			}
 		};
+
+	@BeanReference(type = CompanyProvider.class)
+	protected CompanyProvider companyProvider;
+	@BeanReference(type = GroupProvider.class)
+	protected GroupProvider groupProvider;
+	@BeanReference(type = UserProvider.class)
+	protected UserProvider userProvider;
+
 }

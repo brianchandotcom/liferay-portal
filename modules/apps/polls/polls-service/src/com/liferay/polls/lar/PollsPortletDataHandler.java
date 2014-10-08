@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.lar.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.StagedModel;
 
 import java.util.List;
 
@@ -138,7 +139,7 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 			PollsPermission.RESOURCE_NAME);
 
 		Element questionsElement = portletDataContext.getImportDataGroupElement(
-			PollsQuestionImpl.class);
+			PollsQuestion.class);
 
 		if (portletDataContext.getBooleanParameter(
 				PollsPortletDataHandler.NAMESPACE, "questions")) {
@@ -151,7 +152,8 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 			}
 
 			Element choicesElement =
-				portletDataContext.getImportDataGroupElement(PollsChoice.class);
+				portletDataContext.getImportDataGroupElement(
+					PollsChoice.class);
 
 			List<Element> choiceElements = choicesElement.elements();
 

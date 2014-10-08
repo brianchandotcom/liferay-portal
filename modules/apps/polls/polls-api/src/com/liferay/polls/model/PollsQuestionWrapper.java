@@ -16,6 +16,7 @@ package com.liferay.polls.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
@@ -36,8 +37,29 @@ import java.util.Map;
 @ProviderType
 public class PollsQuestionWrapper implements PollsQuestion,
 	ModelWrapper<PollsQuestion> {
+
+	@Override
+	public void setGroupPermissions(String... permissions) {
+		_pollsQuestion.setGroupPermissions(permissions);
+	}
+
+	@Override
+	public void setGuestPermissions(String... permissions) {
+		_pollsQuestion.setGuestPermissions(permissions);
+	}
+
+	@Override
+	public void validate() throws PortalException {
+		_pollsQuestion.validate();
+	}
+
 	public PollsQuestionWrapper(PollsQuestion pollsQuestion) {
 		_pollsQuestion = pollsQuestion;
+	}
+
+	@Override
+	public boolean addChoice(PollsChoice pollsChoice) {
+		return _pollsQuestion.addChoice(pollsChoice);
 	}
 
 	@Override
@@ -679,4 +701,9 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	}
 
 	private final PollsQuestion _pollsQuestion;
+
+	@Override
+	public PollsChoice createChoice() {
+		return _pollsQuestion.createChoice();
+	}
 }

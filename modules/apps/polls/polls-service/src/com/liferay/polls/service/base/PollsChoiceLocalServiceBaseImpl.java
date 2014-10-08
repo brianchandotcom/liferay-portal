@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.BaseLocalServiceImpl;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.persistence.UserPersistence;
@@ -78,28 +79,14 @@ public abstract class PollsChoiceLocalServiceBaseImpl
 	 */
 
 	/**
-	 * Adds the polls choice to the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param pollsChoice the polls choice
-	 * @return the polls choice that was added
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public PollsChoice addPollsChoice(PollsChoice pollsChoice) {
-		pollsChoice.setNew(true);
-
-		return pollsChoicePersistence.update(pollsChoice);
-	}
-
-	/**
 	 * Creates a new polls choice with the primary key. Does not add the polls choice to the database.
 	 *
 	 * @param choiceId the primary key for the new polls choice
 	 * @return the new polls choice
 	 */
 	@Override
-	public PollsChoice createPollsChoice(long choiceId) {
-		return pollsChoicePersistence.create(choiceId);
+	public PollsChoice createPollsChoice() {
+		return pollsChoicePersistence.create();
 	}
 
 	/**
@@ -306,7 +293,7 @@ public abstract class PollsChoiceLocalServiceBaseImpl
 				@Override
 				public void performAction(Object object)
 					throws PortalException {
-					PollsChoice stagedModel = (PollsChoice)object;
+					StagedModel stagedModel = (StagedModel)object;
 
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
 						stagedModel);
@@ -342,7 +329,7 @@ public abstract class PollsChoiceLocalServiceBaseImpl
 	@Override
 	public List<PollsChoice> getPollsChoicesByUuidAndCompanyId(String uuid,
 		long companyId, int start, int end,
-		OrderByComparator<PollsChoice> orderByComparator) {
+		OrderByComparator<? extends PollsChoice> orderByComparator) {
 		return pollsChoicePersistence.findByUuid_C(uuid, companyId, start, end,
 			orderByComparator);
 	}
@@ -385,18 +372,6 @@ public abstract class PollsChoiceLocalServiceBaseImpl
 	@Override
 	public int getPollsChoicesCount() {
 		return pollsChoicePersistence.countAll();
-	}
-
-	/**
-	 * Updates the polls choice in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param pollsChoice the polls choice
-	 * @return the polls choice that was updated
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public PollsChoice updatePollsChoice(PollsChoice pollsChoice) {
-		return pollsChoicePersistence.update(pollsChoice);
 	}
 
 	/**

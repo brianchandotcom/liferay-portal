@@ -541,7 +541,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @param questionId the primary key for the new polls question
 	* @return the new polls question
 	*/
-	public com.liferay.polls.model.PollsQuestion create(long questionId);
+	public com.liferay.polls.model.PollsQuestion create();
 
 	/**
 	* Removes the polls question with the primary key from the database. Also notifies the appropriate model listeners.

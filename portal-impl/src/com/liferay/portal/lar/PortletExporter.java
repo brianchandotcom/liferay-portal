@@ -181,9 +181,6 @@ public class PortletExporter {
 
 		portletDataContext.clearScopedPrimaryKeys();
 
-		Map<String, String[]> parameterMap =
-			portletDataContext.getParameterMap();
-
 		Date originalStartDate = portletDataContext.getStartDate();
 
 		String range = MapUtil.getString(

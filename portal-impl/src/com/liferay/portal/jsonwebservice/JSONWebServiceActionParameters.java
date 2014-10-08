@@ -17,16 +17,12 @@ package com.liferay.portal.jsonwebservice;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 
-import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -63,11 +59,7 @@ public class JSONWebServiceActionParameters {
 	}
 
 	public List<NameValue<String, Object>> getInnerParameters(String baseName) {
-		if (_innerParameters == null) {
-			return null;
-		}
-
-		return _innerParameters.get(baseName);
+		return _parameters.getInnerParameters(baseName);
 	}
 
 	public JSONRPCRequest getJSONRPCRequest() {
@@ -93,15 +85,15 @@ public class JSONWebServiceActionParameters {
 	}
 
 	public String getParameterTypeName(String name) {
-		if (_parameterTypes == null) {
-			return null;
-		}
-
-		return _parameterTypes.get(name);
+		return _parameters.getParameterTypeName(name);
 	}
 
 	public ServiceContext getServiceContext() {
 		return _serviceContext;
+	}
+
+	public boolean includeDefaultParameters() {
+		return _parameters.includeDefaultParameters();
 	}
 
 	private void _addDefaultParameters() {
@@ -118,7 +110,7 @@ public class JSONWebServiceActionParameters {
 
 			Object value = request.getAttribute(attributeName);
 
-			_parameters.put(attributeName, value);
+			_parameters.putDefaultParameter(attributeName, value);
 		}
 	}
 
@@ -235,98 +227,9 @@ public class JSONWebServiceActionParameters {
 		}
 	}
 
-	private Map<String, List<NameValue<String, Object>>> _innerParameters;
 	private JSONRPCRequest _jsonRPCRequest;
-
-	private Map<String, Object> _parameters = new HashMap<String, Object>() {
-
-		@Override
-		public Object put(String key, Object value) {
-			int pos = key.indexOf(CharPool.COLON);
-
-			if (key.startsWith(StringPool.DASH)) {
-				key = key.substring(1);
-
-				value = null;
-			}
-			else if (key.startsWith(StringPool.PLUS)) {
-				key = key.substring(1);
-
-				String typeName = null;
-
-				if (pos != -1) {
-					typeName = key.substring(pos);
-
-					key = key.substring(0, pos - 1);
-				}
-				else {
-					if (value != null) {
-						typeName = value.toString();
-
-						value = Void.TYPE;
-					}
-				}
-
-				if (typeName != null) {
-					if (_parameterTypes == null) {
-						_parameterTypes = new HashMap<String, String>();
-					}
-
-					_parameterTypes.put(key, typeName);
-				}
-
-				if (Validator.isNull(GetterUtil.getString(value))) {
-					value = Void.TYPE;
-				}
-			}
-			else if (pos != -1) {
-				String typeName = key.substring(pos + 1);
-
-				key = key.substring(0, pos);
-
-				if (_parameterTypes == null) {
-					_parameterTypes = new HashMap<String, String>();
-				}
-
-				_parameterTypes.put(key, typeName);
-
-				if (Validator.isNull(GetterUtil.getString(value))) {
-					value = Void.TYPE;
-				}
-			}
-
-			pos = key.indexOf(CharPool.PERIOD);
-
-			if (pos != -1) {
-				String baseName = key.substring(0, pos);
-
-				String innerName = key.substring(pos + 1);
-
-				if (_innerParameters == null) {
-					_innerParameters =
-						new HashMap<String, List<NameValue<String, Object>>>();
-				}
-
-				List<NameValue<String, Object>> values = _innerParameters.get(
-					baseName);
-
-				if (values == null) {
-					values = new ArrayList<NameValue<String, Object>>();
-
-					_innerParameters.put(baseName, values);
-				}
-
-				values.add(new NameValue<String, Object>(innerName, value));
-
-				return value;
-			}
-
-			return super.put(key, value);
-		}
-
-	};
-
-	private Map<String, String> _parameterTypes;
+	private JSONWebServiceActionParametersMap _parameters =
+		new JSONWebServiceActionParametersMap();
 	private ServiceContext _serviceContext;
 
 }

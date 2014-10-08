@@ -73,12 +73,28 @@ public abstract class BaseJSONWebServiceTestCase extends PowerMockito {
 			new MethodParametersResolverImpl());
 	}
 
+	protected static void registerAction(Object action) {
+		registerAction(action, StringPool.BLANK);
+	}
+
+	protected static void registerAction(
+		Object action, String servletContextName) {
+
+		registerActionClass(action, action.getClass(), servletContextName);
+	}
+
 	protected static void registerActionClass(Class<?> actionClass) {
 		registerActionClass(actionClass, StringPool.BLANK);
 	}
 
 	protected static void registerActionClass(
 		Class<?> actionClass, String servletContextName) {
+
+		registerActionClass(null, actionClass, servletContextName);
+	}
+
+	protected static void registerActionClass(
+		Object action, Class<?> actionClass, String servletContextName) {
 
 		JSONWebServiceMappingResolver jsonWebServiceMappingResolver =
 			new JSONWebServiceMappingResolver(new JSONWebServiceNaming());
@@ -95,9 +111,16 @@ public abstract class BaseJSONWebServiceTestCase extends PowerMockito {
 			String method = jsonWebServiceMappingResolver.resolveHttpMethod(
 				actionMethod);
 
-			JSONWebServiceActionsManagerUtil.registerJSONWebServiceAction(
-				servletContextName, StringPool.BLANK, actionClass, actionMethod,
-				path, method);
+			if (action != null) {
+				JSONWebServiceActionsManagerUtil.registerJSONWebServiceAction(
+					servletContextName, StringPool.BLANK, action, actionClass,
+					actionMethod, path, method);
+			}
+			else {
+				JSONWebServiceActionsManagerUtil.registerJSONWebServiceAction(
+					servletContextName, StringPool.BLANK, actionClass,
+					actionMethod, path, method);
+			}
 		}
 	}
 

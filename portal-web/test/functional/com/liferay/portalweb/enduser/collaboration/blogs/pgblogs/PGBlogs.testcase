@@ -1592,8 +1592,12 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsPortlet#configureDisplayTemplatePG">
-			<var name="displaySelection" value="${displaySelection}" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="BlogsPortlet#configureDisplaySettingsPG">
+			<var name="displayTemplate" value="${displayTemplate}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1659,7 +1663,7 @@
 	</command>
 
 	<command name="ViewBlogsEntryWithFullContentDisplayTemplate" priority="5">
-		<var name="displaySelection" value="Full Content" />
+		<var name="displayTemplate" value="Full Content" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -1672,8 +1676,12 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="BlogsPortlet#configureDisplayTemplatePG">
-			<var name="displaySelection" value="${displaySelection}" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="BlogsPortlet#configureDisplaySettingsPG">
+			<var name="displayTemplate" value="${displayTemplate}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1749,7 +1757,7 @@
 	</command>
 
 	<command name="ViewBlogsEntryWithTitleDisplayTemplate" priority="5">
-		<var name="displaySelection" value="Title" />
+		<var name="displayTemplate" value="Title" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -1762,8 +1770,12 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="BlogsPortlet#configureDisplayTemplatePG">
-			<var name="displaySelection" value="${displaySelection}" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="BlogsPortlet#configureDisplaySettingsPG">
+			<var name="displayTemplate" value="${displayTemplate}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

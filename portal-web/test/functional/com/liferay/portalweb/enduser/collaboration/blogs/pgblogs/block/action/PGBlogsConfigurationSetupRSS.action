@@ -1,0 +1,15 @@
+<definition>
+	<command name="assertTextEquals">
+		<case locator-key1="FORMAT_SELECT">
+			<execute function="AssertTextEquals#assertValue" />
+		</case>
+
+		<case locator-key1="MAXIMUM_ITEMS_TO_DISPLAY_SELECT">
+			<execute function="AssertTextEquals#assertValue" />
+		</case>
+
+		<case locator-key1="RSS_DISPLAY_STYLE_SELECT">
+			<execute function="AssertTextEquals#assertValue" />
+		</case>
+	</command>
+</definition>

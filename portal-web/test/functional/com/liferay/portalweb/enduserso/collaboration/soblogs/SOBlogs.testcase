@@ -2510,7 +2510,11 @@
 			<var name="entryTitle" value="${entryTitle1}" />
 		</execute>
 
-		<execute macro="BlogsPortlet#configureMaxItemsToDisplayPG">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="BlogsPortlet#configureDisplaySettingsPG">
 			<var name="maximumItemsToDisplay" value="${maximumItemsToDisplay}" />
 		</execute>
 
@@ -2955,7 +2959,7 @@
 	</command>
 
 	<command name="ViewSOBlogsEntryWithAbstractDisplayTemplate" priority="4">
-		<var name="displaySelection" value="Abstract" />
+		<var name="displayTemplate" value="Abstract" />
 		<var name="entryAbstractDescription" value="Blogs Entry Abstract Description" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -2989,8 +2993,12 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="BlogsPortlet#configureDisplayTemplatePG">
-			<var name="displaySelection" value="${displaySelection}" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="BlogsPortlet#configureDisplaySettingsPG">
+			<var name="displayTemplate" value="${displayTemplate}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -3006,7 +3014,7 @@
 	</command>
 
 	<command name="ViewSOBlogsEntryWithFullContentDisplayTemplate" priority="4">
-		<var name="displaySelection" value="Full Content" />
+		<var name="displayTemplate" value="Full Content" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -3020,8 +3028,12 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="BlogsPortlet#configureDisplayTemplatePG">
-			<var name="displaySelection" value="${displaySelection}" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="BlogsPortlet#configureDisplaySettingsPG">
+			<var name="displayTemplate" value="${displayTemplate}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -3036,7 +3048,7 @@
 	</command>
 
 	<command name="ViewSOBlogsEntryWithTitleDisplayTemplate" priority="4">
-		<var name="displaySelection" value="Title" />
+		<var name="displayTemplate" value="Title" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -3050,8 +3062,12 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="BlogsPortlet#configureDisplayTemplatePG">
-			<var name="displaySelection" value="${displaySelection}" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="BlogsPortlet#configureDisplaySettingsPG">
+			<var name="displayTemplate" value="${displayTemplate}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

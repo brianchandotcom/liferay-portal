@@ -1,0 +1,19 @@
+<definition>
+	<command name="assertTextEquals">
+		<case locator-key1="DISPLAY_SETTINGS_MAXIMUM_ITEMS_TO_DISPLAY_SELECT">
+			<execute function="AssertTextEquals#assertValue" />
+		</case>
+
+		<case locator-key1="SOCIAL_BOOKMARKS_DISPLAY_POSITION_SELECT">
+			<execute function="AssertTextEquals#assertValue" />
+		</case>
+
+		<case locator-key1="SOCIAL_BOOKMARKS_DISPLAY_STYLE_SELECT">
+			<execute function="AssertTextEquals#assertValue" />
+		</case>
+
+		<case locator-key1="DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECT">
+			<execute function="AssertTextEquals#assertValue" />
+		</case>
+	</command>
+</definition>

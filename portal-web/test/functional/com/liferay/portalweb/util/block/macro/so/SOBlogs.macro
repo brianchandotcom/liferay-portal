@@ -50,7 +50,7 @@
 		<execute action="PGBlogsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 		<execute action="PGBlogsConfiguration#uncheck" locator-key1="SOCIAL_BOOKMARKS_TWITTER_CHECKBOX" />
 		<execute action="PGBlogsConfiguration#uncheck" locator-key1="SOCIAL_BOOKMARKS_FACEBOOK_CHECKBOX" />
-		<execute action="PGBlogsConfiguration#uncheck" locator-key1="SOCIAL_BOOKMARKS_GOOGLE_PLUS_ONE_CHECKBOX" />
+		<execute action="PGBlogsConfiguration#uncheck" locator-key1="SOCIAL_BOOKMARKS_GOOGLE_PLUS_CHECKBOX" />
 		<execute action="PGBlogsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="PGBlogsConfiguration#assertElementPresent" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />

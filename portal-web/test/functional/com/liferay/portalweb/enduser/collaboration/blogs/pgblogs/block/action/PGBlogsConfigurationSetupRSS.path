@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>PGBlogsConfigurationSetupRSS</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGBlogsConfigurationSetupRSS</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGBlogsConfigurationSetupRSS</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>PGBlogsConfiguration</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_RSS_SUBSCRIPTION_CHECKBOX</td>
+	<td>//input[contains(@id,'enableRss')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MAXIMUM_ITEMS_TO_DISPLAY_SELECT</td>
+	<td>//select[contains(@id,'rssDelta')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RSS_DISPLAY_STYLE_SELECT</td>
+	<td>//select[contains(@id,'rssDisplayStyle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORMAT_SELECT</td>
+	<td>//select[contains(@id,'rssFeedType')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

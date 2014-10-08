@@ -35,6 +35,8 @@
 		<execute macro="PortalInstances#tearDownCP" />
 
 		<execute macro="Page#tearDownPG" />
+
+		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
 	<command name="AddBlogsEntryWithSmallImageAbstractDisplay" priority="3">
@@ -84,6 +86,88 @@
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
+	</command>
+
+	<command name="AllowMultiplePortletConfigurationsPerSite" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="sitePageName" value="Site Page 1" />
+			<var name="sitePagePrivacy" value="Public" />
+			<var name="siteScopeSelected" value="true" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="sitePageName" value="Site Page 2" />
+			<var name="sitePagePrivacy" value="Public" />
+			<var name="siteScopeSelected" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page 1" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page 2" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page 1" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="BlogsPortlet#configureDisplaySettingsPG">
+			<var name="enableDisplaySettingsComments" value="false" />
+			<var name="enableDisplaySettingsRelatedAssets" value="false" />
+			<var name="enableDisplaySettingsSocialBookmarks" value="false" />
+			<var name="maximumItemsToDisplay" value="75" />
+		</execute>
+
+		<execute macro="BlogsPortlet#configureRSSPG">
+			<var name="enableRSSSubscriptionCheckbox" value="false" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page 2" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="BlogsPortlet#viewDefaultConfigurationDisplaySettingsPG" />
+
+		<execute macro="BlogsPortlet#viewDefaultConfigurationRSSPG" />
 	</command>
 
 	<command name="DemoTrackbackURL" priority="5">
@@ -198,7 +282,7 @@
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="Blogs Entry4 Content" />
 
 		<execute macro="User#firstLoginPG">
-+			<var name="password" value="test" />
+			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 			<var name="virtualHostsURL" value="http://${ipAddress}:8080" />
 		</execute>

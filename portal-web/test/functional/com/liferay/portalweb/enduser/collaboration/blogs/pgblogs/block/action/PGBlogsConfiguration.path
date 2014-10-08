@@ -41,27 +41,27 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_SETUP</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Setup')]</td>
+	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Setup')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_PERMISSIONS</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Permissions')]</td>
+	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_COMMUNICATION</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Communication')]</td>
+	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Communication')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_SHARING</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Sharing')]</td>
+	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Sharing')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_SCOPE</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Scope')]</td>
+	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Scope')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -72,27 +72,12 @@
 <!--NAVIGATION_SETUP-->
 <tr>
 	<td>NAVIGATION_SETUP_DISPLAY_SETTINGS</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Display Settings')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_SETUP_EMAIL_FROM</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Email From')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_SETUP_MESSAGE_ADDED_EMAIL</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Entry Added Email')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_SETUP_MESSAGE_UPDATED_EMAIL</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Entry Updated Email')]</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Display Settings')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_SETUP_RSS</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'RSS')]</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'RSS')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -103,17 +88,42 @@
 <!--DISPLAY_SETTINGS-->
 <tr>
 	<td>DISPLAY_SETTINGS_MAXIMUM_ITEMS_TO_DISPLAY_SELECT</td>
-	<td>//div[contains(.,'Maximum Items to Display')]//select[contains(@id,'pageDelta')]</td>
+	<td>//select[contains(@id,'pageDelta')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DISPLAY_SETTINGS_DISPLAY_TEMPLATE_MENULIST</td>
+	<td>DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECT</td>
 	<td>//select[contains(@id,'displayStyle')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECTION</td>
-	<td>//select[contains(@id,'displayStyle')]/optgroup/option[contains(.,'${key_displaySelection}')]</td>
+	<td>DISPLAY_SETTINGS_ENABLE_FLAGS_CHECKBOX</td>
+	<td>//input[contains(@id,'enableFlags')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_ENABLE_RELATED_ASSET_CHECKBOX</td>
+	<td>//input[contains(@id,'enableRelatedAssets')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_ENABLE_RATINGS_CHECKBOX</td>
+	<td>//input[contains(@id,'enableRatings')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_ENABLE_COMMENTS_CHECKBOX</td>
+	<td>//input[contains(@id,'enableComments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_ENABLE_COMMENT_RATINGS_CHECKBOX</td>
+	<td>//input[contains(@id,'enableCommentRatings')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_ENABLE_SOCIAL_BOOKMARKS_CHECKBOX</td>
+	<td>//input[contains(@id,'enableSocialBookmarks')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -123,18 +133,28 @@
 </tr>
 <!--SOCIAL_BOOKMARKS-->
 <tr>
+	<td>SOCIAL_BOOKMARKS_DISPLAY_STYLE_SELECT</td>
+	<td>//select[contains(@id,'socialBookmarksDisplayStyle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SOCIAL_BOOKMARKS_DISPLAY_POSITION_SELECT</td>
+	<td>//select[contains(@id,'socialBookmarksDisplayPosition')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SOCIAL_BOOKMARKS_TWITTER_CHECKBOX</td>
-	<td>//div[contains(.,'Twitter')]/label/input[@id='_86_socialBookmarksTypesCheckbox']</td>
+	<td>//input[contains(@id,'socialBookmarksTypestwitter')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SOCIAL_BOOKMARKS_FACEBOOK_CHECKBOX</td>
-	<td>//div[contains(.,'Facebook')]/label/input[@id='_86_socialBookmarksTypesCheckbox']</td>
+	<td>//input[contains(@id,'socialBookmarksTypesfacebook')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SOCIAL_BOOKMARKS_GOOGLE_PLUS_ONE_CHECKBOX</td>
-	<td>//div[contains(.,'Google')]/label/input[@id='_86_socialBookmarksTypesCheckbox']</td>
+	<td>SOCIAL_BOOKMARKS_GOOGLE_PLUS_CHECKBOX</td>
+	<td>//input[contains(@id,'socialBookmarksTypesplusone')]</td>
 	<td></td>
 </tr>
 <tr>

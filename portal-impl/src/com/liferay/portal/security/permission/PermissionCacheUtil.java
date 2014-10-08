@@ -134,14 +134,15 @@ public class PermissionCacheUtil {
 		_permissionCheckerBagPortalCache = MultiVMPoolUtil.getCache(
 			PERMISSION_CHECKER_BAG_CACHE_NAME,
 			PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
-	private static final PortalCache<PermissionKey, Boolean> _permissionPortalCache =
-		MultiVMPoolUtil.getCache(
+	private static final PortalCache<PermissionKey, Boolean>
+		_permissionPortalCache = MultiVMPoolUtil.getCache(
 			PERMISSION_CACHE_NAME,
 			PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
-	private static final PortalCache<ResourceBlockIdsBagKey, ResourceBlockIdsBag>
-		_resourceBlockIdsBagCache = MultiVMPoolUtil.getCache(
-			RESOURCE_BLOCK_IDS_BAG_CACHE_NAME,
-			PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
+	private static final
+		PortalCache<ResourceBlockIdsBagKey, ResourceBlockIdsBag>
+			_resourceBlockIdsBagCache = MultiVMPoolUtil.getCache(
+				RESOURCE_BLOCK_IDS_BAG_CACHE_NAME,
+				PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
 	private static final PortalCache<Long, UserPermissionCheckerBag>
 		_userPermissionCheckerBagPortalCache = MultiVMPoolUtil.getCache(
 			USER_PERMISSION_CHECKER_BAG_CACHE_NAME,

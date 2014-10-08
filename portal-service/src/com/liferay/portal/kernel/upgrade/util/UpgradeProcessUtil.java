@@ -200,6 +200,7 @@ public class UpgradeProcessUtil {
 		UpgradeProcessUtil.class);
 
 	private static boolean _createIGImageDocumentType = false;
-	private static final Map<Long, String> _languageIds = new HashMap<Long, String>();
+	private static final Map<Long, String> _languageIds =
+		new HashMap<Long, String>();
 
 }

@@ -346,7 +346,8 @@ public class Session {
 				Charset.defaultCharset()));
 	}
 
-	private static final Logger _logger = LoggerFactory.getLogger(Session.class);
+	private static final Logger _logger = LoggerFactory.getLogger(
+		Session.class);
 
 	private static HttpRoutePlanner _httpRoutePlanner;
 	private static String _token;

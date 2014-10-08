@@ -119,7 +119,8 @@ public class UserTrackerImpl extends UserTrackerBaseImpl {
 
 	private String _emailAddress;
 	private String _fullName;
-	private final List<UserTrackerPath> _paths = new ArrayList<UserTrackerPath>();
+	private final List<UserTrackerPath> _paths =
+		new ArrayList<UserTrackerPath>();
 	private User _user;
 
 }

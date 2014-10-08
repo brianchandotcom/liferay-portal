@@ -43,6 +43,7 @@ public class OrganizationMembershipPolicyFactoryImpl
 	private static final OrganizationMembershipPolicyFactoryImpl _instance =
 		new OrganizationMembershipPolicyFactoryImpl();
 
-	private final ServiceTracker<?, OrganizationMembershipPolicy> _serviceTracker;
+	private final ServiceTracker<?, OrganizationMembershipPolicy>
+		_serviceTracker;
 
 }

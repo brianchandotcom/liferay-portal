@@ -138,8 +138,8 @@ public class DefaultThreadLocalBinder implements ThreadLocalBinder {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultThreadLocalBinder.class);
 
-	private static final ThreadLocal<Map<ThreadLocal<?>, ?>> _threadLocalValues =
-		new AutoResetThreadLocal<Map<ThreadLocal<?>, ?>>(
+	private static final ThreadLocal<Map<ThreadLocal<?>, ?>>
+		_threadLocalValues = new AutoResetThreadLocal<Map<ThreadLocal<?>, ?>>(
 			DefaultThreadLocalBinder.class + "._threadLocalValueMap") {
 
 			@Override
@@ -152,7 +152,8 @@ public class DefaultThreadLocalBinder implements ThreadLocalBinder {
 		};
 
 	private ClassLoader _classLoader;
-	private final Set<ThreadLocal<?>> _threadLocals = new HashSet<ThreadLocal<?>>();
+	private final Set<ThreadLocal<?>> _threadLocals =
+		new HashSet<ThreadLocal<?>>();
 	private Map<String, String> _threadLocalSources;
 
 }

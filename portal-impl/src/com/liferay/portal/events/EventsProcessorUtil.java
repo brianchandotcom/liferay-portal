@@ -164,7 +164,8 @@ public class EventsProcessorUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		EventsProcessorUtil.class);
 
-	private static final EventsProcessorUtil _instance = new EventsProcessorUtil();
+	private static final EventsProcessorUtil _instance =
+		new EventsProcessorUtil();
 
 	private final ConcurrentMap<String, Collection<LifecycleAction>>
 		_lifecycleActions =

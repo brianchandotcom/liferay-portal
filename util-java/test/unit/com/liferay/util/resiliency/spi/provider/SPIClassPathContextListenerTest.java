@@ -507,7 +507,8 @@ public class SPIClassPathContextListenerTest {
 		}
 	}
 
-	private static final String _CONTEXT_PATH = System.getProperty("java.io.tmpdir");
+	private static final String _CONTEXT_PATH = System.getProperty(
+		"java.io.tmpdir");
 
 	private static final String _EMBEDDED_LIB_DIR_NAME = "/embeddedLib";
 
@@ -523,18 +524,19 @@ public class SPIClassPathContextListenerTest {
 	private File _jarFile;
 	private File _jdbcDriverJarFile;
 
-	private final MockServletContext _mockServletContext = new MockServletContext() {
+	private final MockServletContext _mockServletContext =
+		new MockServletContext() {
 
-		{
-			addInitParameter("spiEmbeddedLibDir", _EMBEDDED_LIB_DIR_NAME);
-		}
+			{
+				addInitParameter("spiEmbeddedLibDir", _EMBEDDED_LIB_DIR_NAME);
+			}
 
-		@Override
-		public String getRealPath(String path) {
-			return _CONTEXT_PATH;
-		}
+			@Override
+			public String getRealPath(String path) {
+				return _CONTEXT_PATH;
+			}
 
-	};
+		};
 
 	private File _portalServiceJarFile;
 

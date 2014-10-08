@@ -600,7 +600,8 @@ public class BasicRegistryImpl implements Registry {
 			return stringBuilder.toString();
 		}
 
-		private final Map<String, Object> _properties = new LowerCaseKeyTreeMap();
+		private final Map<String, Object> _properties =
+			new LowerCaseKeyTreeMap();
 
 	}
 

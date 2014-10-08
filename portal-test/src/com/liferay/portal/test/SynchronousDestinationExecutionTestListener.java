@@ -170,7 +170,8 @@ public class SynchronousDestinationExecutionTestListener
 			_sync = sync;
 		}
 
-		private final List<String> _absentDestinationNames = new ArrayList<String>();
+		private final List<String> _absentDestinationNames =
+			new ArrayList<String>();
 		private final List<Destination> _asyncServiceDestinations =
 			new ArrayList<Destination>();
 		private boolean _forceSync;

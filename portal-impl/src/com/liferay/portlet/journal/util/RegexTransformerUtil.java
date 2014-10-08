@@ -64,7 +64,8 @@ public class RegexTransformerUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		RegexTransformerUtil.class);
 
-	private static final RegexTransformerUtil _instance = new RegexTransformerUtil();
+	private static final RegexTransformerUtil _instance =
+		new RegexTransformerUtil();
 
 	private final List<Pattern> _patterns;
 	private final List<String> _replacements;

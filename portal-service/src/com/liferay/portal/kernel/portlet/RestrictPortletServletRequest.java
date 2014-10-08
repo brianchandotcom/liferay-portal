@@ -210,6 +210,7 @@ public class RestrictPortletServletRequest
 
 	private static final Object _nullValue = new Object();
 
-	private final Map<String, Object> _attributes = new HashMap<String, Object>();
+	private final Map<String, Object> _attributes =
+		new HashMap<String, Object>();
 
 }

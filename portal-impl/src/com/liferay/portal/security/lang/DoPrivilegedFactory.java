@@ -163,7 +163,8 @@ public class DoPrivilegedFactory
 	private static final Log _log = LogFactoryUtil.getLog(
 		DoPrivilegedFactory.class);
 
-	private static final Set<String> _earlyBeanReferenceNames = new HashSet<String>();
+	private static final Set<String> _earlyBeanReferenceNames =
+		new HashSet<String>();
 
 	private static class BeanPrivilegedAction <T>
 		implements PrivilegedAction<T> {

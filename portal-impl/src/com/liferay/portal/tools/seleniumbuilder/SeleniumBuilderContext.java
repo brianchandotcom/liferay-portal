@@ -1259,7 +1259,8 @@ public class SeleniumBuilderContext {
 		new HashMap<String, String>();
 	private final Map<String, String> _macroClassNames =
 		new HashMap<String, String>();
-	private final Map<String, String> _macroFileNames = new HashMap<String, String>();
+	private final Map<String, String> _macroFileNames =
+		new HashMap<String, String>();
 	private final Map<String, String> _macroJavaFileNames =
 		new HashMap<String, String>();
 	private final Set<String> _macroNames = new HashSet<String>();
@@ -1269,8 +1270,10 @@ public class SeleniumBuilderContext {
 		new HashMap<String, Element>();
 	private final Map<String, String> _macroSimpleClassNames =
 		new HashMap<String, String>();
-	private final Map<String, String> _pathClassNames = new HashMap<String, String>();
-	private final Map<String, String> _pathFileNames = new HashMap<String, String>();
+	private final Map<String, String> _pathClassNames =
+		new HashMap<String, String>();
+	private final Map<String, String> _pathFileNames =
+		new HashMap<String, String>();
 	private final Map<String, String> _pathJavaFileNames =
 		new HashMap<String, String>();
 	private final Set<String> _pathNames = new HashSet<String>();

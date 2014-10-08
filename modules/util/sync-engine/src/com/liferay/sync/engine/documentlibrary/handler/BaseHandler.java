@@ -156,7 +156,8 @@ public class BaseHandler implements Handler<Void> {
 		}
 	}
 
-	private static final Logger _logger = LoggerFactory.getLogger(BaseHandler.class);
+	private static final Logger _logger = LoggerFactory.getLogger(
+		BaseHandler.class);
 
 	private final Event _event;
 

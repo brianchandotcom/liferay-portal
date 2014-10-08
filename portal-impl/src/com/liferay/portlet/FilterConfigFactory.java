@@ -81,7 +81,8 @@ public class FilterConfigFactory {
 		_pool.remove(portletApp.getServletContextName());
 	}
 
-	private static final FilterConfigFactory _instance = new FilterConfigFactory();
+	private static final FilterConfigFactory _instance =
+		new FilterConfigFactory();
 
 	private final Map<String, Map<String, FilterConfig>> _pool;
 

@@ -735,7 +735,8 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			);
 		}
 
-		private final ClassLoaderUtil.PACL _noPacl = new ClassLoaderUtil.NoPACL();
+		private final ClassLoaderUtil.PACL _noPacl =
+			new ClassLoaderUtil.NoPACL();
 
 	}
 

@@ -597,8 +597,9 @@ public class ClusterExecutorImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterExecutorImpl.class);
 
-	private final CopyOnWriteArrayList<ClusterEventListener> _clusterEventListeners =
-		new CopyOnWriteArrayList<ClusterEventListener>();
+	private final CopyOnWriteArrayList<ClusterEventListener>
+		_clusterEventListeners =
+			new CopyOnWriteArrayList<ClusterEventListener>();
 	private final Map<String, Address> _clusterNodeAddresses =
 		new ConcurrentHashMap<String, Address>();
 	private JChannel _controlJChannel;

@@ -254,7 +254,7 @@ public class LinkbackProducerUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LinkbackProducerUtil.class);
 
-	private static final List<Tuple> _pingbackQueue = Collections.synchronizedList(
-		new ArrayList<Tuple>());
+	private static final List<Tuple> _pingbackQueue =
+		Collections.synchronizedList(new ArrayList<Tuple>());
 
 }

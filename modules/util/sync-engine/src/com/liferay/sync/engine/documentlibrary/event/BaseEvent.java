@@ -132,7 +132,8 @@ public abstract class BaseEvent implements Event {
 		executePost(_urlPath, _parameters);
 	}
 
-	private static final Logger _logger = LoggerFactory.getLogger(BaseEvent.class);
+	private static final Logger _logger = LoggerFactory.getLogger(
+		BaseEvent.class);
 
 	private Handler<Void> _handler;
 	private final Map<String, Object> _parameters;

@@ -935,7 +935,8 @@ public class DefaultDLViewFileVersionDisplayContext
 	private final FileEntry _fileEntry;
 	private final FileEntryDisplayContextHelper _fileEntryDisplayContextHelper;
 	private final FileVersion _fileVersion;
-	private final FileVersionDisplayContextHelper _fileVersionDisplayContextHelper;
+	private final FileVersionDisplayContextHelper
+		_fileVersionDisplayContextHelper;
 	private final long _folderId;
 	private Boolean _ieOnWin32;
 	private final HttpServletRequest _request;

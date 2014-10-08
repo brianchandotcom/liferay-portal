@@ -141,8 +141,14 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		boolean privateLayout = layoutType.startsWith("private");
 
 		try {
+			long groupId = getLayoutGroupId();
+
+			if (groupId == 0) {
+				groupId = _themeDisplay.getScopeGroupId();
+			}
+
 			Layout layout = LayoutLocalServiceUtil.getLayout(
-				getLayoutGroupId(), privateLayout, getLayoutId());
+				groupId, privateLayout, getLayoutId());
 
 			return PortalUtil.getLayoutFriendlyURL(layout, _themeDisplay);
 		}

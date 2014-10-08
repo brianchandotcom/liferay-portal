@@ -1,0 +1,164 @@
+<html>
+<head>
+<title>CPSAMLAdmin</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPSAMLAdmin</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPSAMLAdmin</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAML_ENABLED_CHECKBOX</td>
+	<td>//input[@id='_2_WAR_samlportlet_saml.enabledCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAML_ROLE_SELECT</td>
+	<td>//select[@id='_2_WAR_samlportlet_saml.role']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAML_ENTITY_ID_FIELD</td>
+	<td>//input[@id='_2_WAR_samlportlet_saml.entity.id']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_GENERAL</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'General')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_IDENTITY_PROVIDER</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Identity Provider')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SERVICE_PROVIDER_CONNECTIONS</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Service Provider Connections')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CERTIFICATE_AND_PRIVATE_KEY-->
+<tr>
+	<td>CERTIFICATE_AND_PRIVATE_KEY_COMMON_NAME_FIELD</td>
+	<td>//input[@id='_2_WAR_samlportlet_certificateCommonName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CERTIFICATE_AND_PRIVATE_KEY_ORGANIZATION_FIELD</td>
+	<td>//input[@id='_2_WAR_samlportlet_certificateOrganization']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CERTIFICATE_AND_PRIVATE_KEY_COUNTRY_FIELD</td>
+	<td>//input[@id='_2_WAR_samlportlet_certificateCountry']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CERTIFICATE_AND_PRIVATE_KEY_KEY_ALGORITHM_SELECT</td>
+	<td>//select[@id='_2_WAR_samlportlet_certificateKeyAlgorithm']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CERTIFICATE_AND_PRIVATE_KEY_KEY_LENGTH_SELECT</td>
+	<td>//select[@id='_2_WAR_samlportlet_certificateKeyLength']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CERTIFICATE_AND_PRIVATE_KEY_KEY_PASSWORD_FIELD</td>
+	<td>//div[@class='control-group' and contains(.,'Key Password')]/input[@type='password'] | //input[contains(@id,'_2_WAR_samlportlet_saml.keystore.credential.password')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CERTIFICATE_AND_PRIVATE_KEY_SAVE_BUTTON</td>
+	<td>//fieldset[contains(.,'Certificate and Private Key')]//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SERVICE_PROVIDER_CONNECTIONS-->
+<tr>
+	<td>SERVICE_PROVIDER_CONNECTIONS_ADD_SERVICE_PROVIDER_BUTTON</td>
+	<td>//button[contains(.,'Add Service Provider')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SERVICE_PROVIDER_CONNECTIONS_TABLE-->
+<tr>
+	<td>SERVICE_PROVIDER_CONNECTIONS_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_samlSP}')]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SERVICE_PROVIDER_CONNECTIONS_ENTITY_ID</td>
+	<td>//tr[contains(.,'${key_samlSP}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SERVICE_PROVIDER_CONNECTIONS_ENABLED</td>
+	<td>//tr[contains(.,'${key_samlSP}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SERVICE_PROVIDER_CONNECTIONS_ACTIONS</td>
+	<td>//tr[contains(.,'${key_samlSP}')]/td[4]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SERVICE_PROVIDER_CONNECTIONS_MENULIST-->
+<tr>
+	<td>SERVICE_PROVIDER_CONNECTIONS_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SERVICE_PROVIDER_CONNECTIONS_MENULIST_DELETE</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

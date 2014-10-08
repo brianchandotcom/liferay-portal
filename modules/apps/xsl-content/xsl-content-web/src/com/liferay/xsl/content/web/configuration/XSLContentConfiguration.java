@@ -22,6 +22,15 @@ import aQute.bnd.annotation.metatype.Meta;
 @Meta.OCD(id = "com.liferay.xsl.content.web", localization = "content.Language")
 public interface XSLContentConfiguration {
 
+	@Meta.AD(deflt = "false", id = "xml.doctype.declaration.allowed")
+	public boolean isXmlDoctypeDeclarationAllowed();
+
+	@Meta.AD(deflt = "false", id = "xml.external.general.entities.allowed")
+	public boolean isXmlExternalGeneralEntitiesAllowed();
+
+	@Meta.AD(deflt = "false", id = "xml.external.parameter.entities.allowed")
+	public boolean isXmlExternalParameterEntitiesAllowed();
+
 	@Meta.AD(deflt = "true", id = "xsl.secure.processing.enabled")
 	public boolean isXslSecureProcessingEnabled();
 

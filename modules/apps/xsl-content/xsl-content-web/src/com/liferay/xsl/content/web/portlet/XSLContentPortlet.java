@@ -57,6 +57,9 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator",
 		"javax.portlet.supported-public-render-parameter=tags",
+		"xml.doctype.declaration.allowed=false",
+		"xml.external.general.entities.allowed=false",
+		"xml.external.parameter.entities.allowed=false",
 		"xsl.secure.processing.enabled=true"
 	},
 	service = Portlet.class

@@ -1061,24 +1061,15 @@ AUI.add(
 					},
 
 					getPropertyModel: function() {
-			            var instance = this,
-			                strings = instance.getStrings();
+						var instance = this;
 
-			            var model = DDMGeolocationField.superclass.getPropertyModel.apply(instance, arguments);
-
-			            AArray.each(
-							model,
+						return AArray.filter(
+							DDMGeolocationField.superclass.getPropertyModel.apply(instance, arguments),
 							function(item, index) {
-								var attributeName = item.attributeName;
-
-								if (attributeName === 'predefinedValue') {
-									model.splice(index, 1);
-								}
+								return item.attributeName !== 'predefinedValue';
 							}
 						);
-
-			            return model;
-			        }
+					}
 				}
 			}
 		);

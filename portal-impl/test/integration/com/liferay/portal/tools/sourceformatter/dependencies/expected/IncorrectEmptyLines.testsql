@@ -1,0 +1,6 @@
+create index index1 on table1 (field1);
+create index index2 on table1 (field2);
+
+update table1 set field1 = 0;
+
+insert into table1 (field1, field2, field3) values (1, 2, 3);

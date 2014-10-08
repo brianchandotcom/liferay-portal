@@ -132,6 +132,9 @@ public class SourceFormatter {
 		if (fileName.endsWith(".testjava")) {
 			sourceProcessor = JavaSourceProcessor.class.newInstance();
 		}
+		else if (fileName.endsWith(".testsql")) {
+			sourceProcessor = SQLSourceProcessor.class.newInstance();
+		}
 		else if (fileName.endsWith(".testxml")) {
 			sourceProcessor = XMLSourceProcessor.class.newInstance();
 		}

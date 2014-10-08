@@ -208,7 +208,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	protected String checkFinalableFieldTypes(
+	protected String checkFinalableFieldType(
 		com.thoughtworks.qdox.model.JavaClass javaClass,
 		com.thoughtworks.qdox.model.JavaClass[] javaClasses,
 		JavaField javaField, String content) {
@@ -406,7 +406,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return ifClause;
 	}
 
-	protected String checkImmutableFieldTypes(
+	protected String checkImmutableFieldType(
 		JavaField javaField, Type javaFieldType, String content) {
 
 		String oldName = javaField.getName();
@@ -431,7 +431,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"(?<=[\\W&&[^.\"]])(" + oldName + ")\\b", newName);
 	}
 
-	protected String checkStaticableFieldTypes(
+	protected String checkStaticableFieldType(
 		JavaField javaField, Type javaFieldType, String content) {
 
 		String[] lines = StringUtil.splitLines(content);
@@ -453,9 +453,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return StringUtil.replace(content, line, newLine);
 	}
 
-	protected String checkImmutableStaticableAndFinalableFieldTypes(
-		String fileName, String packagePath, String className,
-		String content) {
+	protected String checkJavaFieldTypes(
+		String fileName, String packagePath, String className, String content) {
 
 		if (!portalSource) {
 			return content;
@@ -497,13 +496,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				if (javaField.isFinal() &&
 					immutableFieldTypes.contains(fieldTypeName)) {
 
-					content = checkImmutableFieldTypes(
+					content = checkImmutableFieldType(
 						javaField, javaFieldType, content);
-					content = checkStaticableFieldTypes(
+					content = checkStaticableFieldType(
 						javaField, javaFieldType, content);
 				}
 
-				content = checkFinalableFieldTypes(
+				content = checkFinalableFieldType(
 					javaClass, javaClasses, javaField, content);
 			}
 		}
@@ -817,7 +816,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		String newContent = checkImmutableStaticableAndFinalableFieldTypes(
+		String newContent = checkJavaFieldTypes(
 			fileName, packagePath, className, content);
 
 		if (newContent.contains("$\n */")) {

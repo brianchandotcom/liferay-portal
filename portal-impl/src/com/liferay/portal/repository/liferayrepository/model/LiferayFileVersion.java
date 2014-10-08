@@ -414,7 +414,8 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LiferayFileVersion.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LiferayFileVersion.class);
 
 	private final DLFileVersion _dlFileVersion;
 	private final boolean _escapedModel;

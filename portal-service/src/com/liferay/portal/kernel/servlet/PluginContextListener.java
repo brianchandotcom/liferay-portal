@@ -173,7 +173,7 @@ public class PluginContextListener
 	protected ClassLoader pluginClassLoader;
 	protected ServletContext servletContext;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PluginContextListener.class);
 
 	private boolean _addedPluginClassLoader;

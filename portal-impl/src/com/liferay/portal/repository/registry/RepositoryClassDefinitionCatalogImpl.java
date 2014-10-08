@@ -150,13 +150,14 @@ public class RepositoryClassDefinitionCatalogImpl
 		_repositoryClassDefinitions.remove(className);
 	}
 
-	private Set<String> _externalRepositoriesClassNames =
+	private final Set<String> _externalRepositoriesClassNames =
 		new ConcurrentHashSet<String>();
 	private RepositoryFactory _legacyExternalRepositoryFactory;
-	private Map<String, RepositoryClassDefinition> _repositoryClassDefinitions =
-		new ConcurrentHashMap<String, RepositoryClassDefinition>();
+	private final Map<String, RepositoryClassDefinition>
+		_repositoryClassDefinitions =
+			new ConcurrentHashMap<String, RepositoryClassDefinition>();
 	private List<RepositoryDefiner> _repositoryDefiners;
-	private StringServiceRegistrationMap<RepositoryDefiner>
+	private final StringServiceRegistrationMap<RepositoryDefiner>
 		_serviceRegistrations =
 			new StringServiceRegistrationMap<RepositoryDefiner>();
 	private ServiceTracker<RepositoryDefiner, RepositoryDefiner>

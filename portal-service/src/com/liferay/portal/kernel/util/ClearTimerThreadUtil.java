@@ -65,7 +65,8 @@ public class ClearTimerThreadUtil {
 
 	private static final Field _QUEUE_FIELD;
 
-	private static Log _log = LogFactoryUtil.getLog(ClearTimerThreadUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ClearTimerThreadUtil.class);
 
 	static {
 		Method clearMethod = null;

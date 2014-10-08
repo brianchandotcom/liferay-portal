@@ -62,7 +62,7 @@ public class JournalCreationStrategyFactory {
 		_journalCreationStrategy = journalCreationStrategy;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		JournalCreationStrategyFactory.class);
 
 	private static JournalCreationStrategy _journalCreationStrategy;

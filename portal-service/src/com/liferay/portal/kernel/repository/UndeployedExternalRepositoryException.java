@@ -34,6 +34,6 @@ public class UndeployedExternalRepositoryException extends RepositoryException {
 		return _className;
 	}
 
-	private ClassName _className;
+	private final ClassName _className;
 
 }

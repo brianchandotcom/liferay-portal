@@ -69,6 +69,7 @@ public class WebAutoDeployer extends WebDeployer implements AutoDeployer {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(WebAutoDeployer.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		WebAutoDeployer.class);
 
 }

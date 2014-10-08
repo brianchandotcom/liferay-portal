@@ -209,10 +209,11 @@ public abstract class BaseSandboxHandler implements SandboxHandler {
 
 	protected abstract String getPluginType();
 
-	private static Log _log = LogFactoryUtil.getLog(BaseSandboxHandler.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseSandboxHandler.class);
 
-	private Deployer _deployer;
+	private final Deployer _deployer;
 	private File _engineHostDir;
-	private String _pluginType;
+	private final String _pluginType;
 
 }

@@ -360,7 +360,7 @@ public class JSONObjectImpl implements JSONObject {
 
 	private static final String _NULL_JSON = "{}";
 
-	private static Log _log = LogFactoryUtil.getLog(JSONObjectImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(JSONObjectImpl.class);
 
 	private org.json.JSONObject _jsonObject;
 

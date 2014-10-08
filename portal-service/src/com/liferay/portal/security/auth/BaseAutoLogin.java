@@ -110,6 +110,6 @@ public abstract class BaseAutoLogin implements AuthVerifier, AutoLogin {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception;
 
-	private static Log _log = LogFactoryUtil.getLog(BaseAutoLogin.class);
+	private static final Log _log = LogFactoryUtil.getLog(BaseAutoLogin.class);
 
 }

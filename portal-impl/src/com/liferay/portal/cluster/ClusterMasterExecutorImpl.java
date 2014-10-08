@@ -257,14 +257,14 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 	private static final String _LOCK_CLASS_NAME =
 		ClusterMasterExecutorImpl.class.getName();
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterMasterExecutorImpl.class);
 
 	private static volatile boolean _master;
 
 	private ClusterEventListener _clusterEventListener;
 	private ClusterExecutor _clusterExecutor;
-	private Set<ClusterMasterTokenTransitionListener>
+	private final Set<ClusterMasterTokenTransitionListener>
 		_clusterMasterTokenTransitionListeners =
 			new HashSet<ClusterMasterTokenTransitionListener>();
 	private volatile boolean _enabled;

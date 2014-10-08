@@ -274,10 +274,10 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 	private static final String[] _DL_FILE_ENTRY_PROCESSORS =
 		PropsUtil.getArray(PropsKeys.DL_FILE_ENTRY_PROCESSORS);
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DLProcessorRegistryImpl.class);
 
-	private Map<String, DLProcessor> _dlProcessors =
+	private final Map<String, DLProcessor> _dlProcessors =
 		new ConcurrentHashMap<String, DLProcessor>();
 
 }

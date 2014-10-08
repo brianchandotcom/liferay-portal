@@ -188,7 +188,7 @@ public class CatalinaCometProcessor
 		response.setContentType(ContentTypes.TEXT_PLAIN_UTF8);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		CatalinaCometProcessor.class);
 
 	private CometHandler _cometHandler;

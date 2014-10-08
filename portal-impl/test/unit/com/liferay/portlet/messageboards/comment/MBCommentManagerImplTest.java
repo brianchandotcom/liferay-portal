@@ -284,7 +284,7 @@ public class MBCommentManagerImplTest extends Mockito {
 
 	private static final String _USER_NAME = RandomTestUtil.randomString();
 
-	private MBCommentManagerImpl _mbCommentManagerImpl =
+	private final MBCommentManagerImpl _mbCommentManagerImpl =
 		new MBCommentManagerImpl();
 
 	@Mock
@@ -302,7 +302,7 @@ public class MBCommentManagerImplTest extends Mockito {
 	@Mock
 	private Portal _portal;
 
-	private ServiceContext _serviceContext = new ServiceContext();
+	private final ServiceContext _serviceContext = new ServiceContext();
 
 	@Mock
 	private Function<String, ServiceContext> _serviceContextFunction;

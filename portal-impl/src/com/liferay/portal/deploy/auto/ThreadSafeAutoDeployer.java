@@ -41,6 +41,6 @@ public class ThreadSafeAutoDeployer implements AutoDeployer {
 		throw new UnsupportedOperationException();
 	}
 
-	private AutoDeployer _autoDeployer;
+	private final AutoDeployer _autoDeployer;
 
 }

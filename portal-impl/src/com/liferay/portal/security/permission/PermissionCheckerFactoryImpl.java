@@ -43,6 +43,6 @@ public class PermissionCheckerFactoryImpl implements PermissionCheckerFactory {
 		return permissionChecker;
 	}
 
-	private PermissionChecker _permissionChecker;
+	private final PermissionChecker _permissionChecker;
 
 }

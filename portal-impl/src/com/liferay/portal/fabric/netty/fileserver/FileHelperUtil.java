@@ -396,6 +396,6 @@ public class FileHelperUtil {
 		return rawSize.get();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(FileHelperUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(FileHelperUtil.class);
 
 }

@@ -57,8 +57,8 @@ public class URLWrapper {
 		return _hashCode;
 	}
 
-	private int _hashCode;
+	private final int _hashCode;
 	private URL _url;
-	private String _urlString;
+	private final String _urlString;
 
 }

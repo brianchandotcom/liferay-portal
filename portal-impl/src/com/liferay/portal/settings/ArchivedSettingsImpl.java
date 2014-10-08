@@ -154,7 +154,7 @@ public class ArchivedSettingsImpl
 		return _portletPreferencesSettings;
 	}
 
-	private PortletItem _portletItem;
+	private final PortletItem _portletItem;
 	private PortletPreferencesSettings _portletPreferencesSettings;
 
 }

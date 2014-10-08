@@ -66,7 +66,7 @@ public class UrlToWebUrlMethodImpl extends BaseMethodImpl {
 
 	private static final String _METHOD_NAME = "url to web url";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		UrlToWebUrlMethodImpl.class);
 
 }

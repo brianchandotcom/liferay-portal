@@ -176,7 +176,7 @@ public class ExtRegistry {
 		"ext-spring.xml", "portal-log4j-ext.xml"
 	};
 
-	private static Map<String, Set<String>> _extMap =
+	private static final Map<String, Set<String>> _extMap =
 		new HashMap<String, Set<String>>();
 
 }

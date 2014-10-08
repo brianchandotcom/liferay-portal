@@ -53,7 +53,7 @@ public class SubscriptionSenderMessageListener extends BaseMessageListener {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		SubscriptionSenderMessageListener.class);
 
 }

@@ -75,6 +75,7 @@ public class LuceneClusterUtil {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LuceneClusterUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LuceneClusterUtil.class);
 
 }

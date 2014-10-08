@@ -36,6 +36,6 @@ public class SwapUpgradeColumnImpl extends BaseUpgradeColumnImpl {
 		return _valueMapper.getNewValue(oldValue);
 	}
 
-	private ValueMapper _valueMapper;
+	private final ValueMapper _valueMapper;
 
 }

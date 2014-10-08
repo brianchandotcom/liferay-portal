@@ -144,7 +144,7 @@ public class DDLTemplateHandler extends BaseDDMTemplateHandler {
 		return _templateVariableCodeHandler;
 	}
 
-	private TemplateVariableCodeHandler _templateVariableCodeHandler =
+	private final TemplateVariableCodeHandler _templateVariableCodeHandler =
 		new DDMTemplateVariableCodeHandler(
 			"com/liferay/portlet/dynamicdatalists/dependencies/template/");
 

@@ -119,7 +119,7 @@ public class DefaultSynchronousMessageSender
 		_timeout = timeout;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultSynchronousMessageSender.class);
 
 	private MessageBus _messageBus;

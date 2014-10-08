@@ -48,6 +48,6 @@ public class LiferayTemplateModel extends SimpleHash {
 		return _beanModel.get(key);
 	}
 
-	private BeanModel _beanModel;
+	private final BeanModel _beanModel;
 
 }

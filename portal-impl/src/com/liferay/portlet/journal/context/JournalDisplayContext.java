@@ -57,7 +57,7 @@ public class JournalDisplayContext {
 
 	private String _displayStyle;
 	private String[] _displayViews;
-	private LiferayPortletRequest _liferayPortletRequest;
-	private PortletPreferences _portletPreferences;
+	private final LiferayPortletRequest _liferayPortletRequest;
+	private final PortletPreferences _portletPreferences;
 
 }

@@ -53,6 +53,6 @@ public class UpdateFolderEvent extends BaseEvent {
 	private static final String _URL_PATH =
 		"/sync-web.syncdlobject/update-folder";
 
-	private Handler<Void> _handler;
+	private final Handler<Void> _handler;
 
 }

@@ -117,7 +117,7 @@ public class WebXMLDefinitionLoaderTest {
 	@Mock
 	private ServletContextListener _servletContextListener;
 
-	private WebXMLDefinitionLoader _webXMLDefinitionLoader;
+	private final WebXMLDefinitionLoader _webXMLDefinitionLoader;
 
 	private class CustomClassLoaderMockBundle extends MockBundle {
 

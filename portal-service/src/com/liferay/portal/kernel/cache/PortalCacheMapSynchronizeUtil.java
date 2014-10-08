@@ -89,8 +89,8 @@ public class PortalCacheMapSynchronizeUtil {
 			_map.clear();
 		}
 
-		private Map<? extends K, ? extends V> _map;
-		private Synchronizer<K, V> _synchronizer;
+		private final Map<? extends K, ? extends V> _map;
+		private final Synchronizer<K, V> _synchronizer;
 
 	}
 

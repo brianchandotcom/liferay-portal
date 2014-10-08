@@ -206,9 +206,9 @@ public class CASFilter extends BasePortalFilter {
 		processFilter(CASFilter.class, request, response, filterChain);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(CASFilter.class);
+	private static final Log _log = LogFactoryUtil.getLog(CASFilter.class);
 
-	private static Map<Long, TicketValidator> _ticketValidators =
+	private static final Map<Long, TicketValidator> _ticketValidators =
 		new ConcurrentHashMap<Long, TicketValidator>();
 
 }

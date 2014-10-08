@@ -42,10 +42,10 @@ public class DefaultControlPanelEntryFactory {
 		_serviceTracker.open();
 	}
 
-	private static DefaultControlPanelEntryFactory _instance =
+	private static final DefaultControlPanelEntryFactory _instance =
 		new DefaultControlPanelEntryFactory();
 
-	private ServiceTracker<ControlPanelEntry, ControlPanelEntry>
+	private final ServiceTracker<ControlPanelEntry, ControlPanelEntry>
 		_serviceTracker;
 
 }

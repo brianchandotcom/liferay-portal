@@ -52,10 +52,10 @@ public class ClusterForwardReceiver extends BaseReceiver {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterForwardReceiver.class);
 
-	private ClusterForwardMessageListener _clusterForwardMessageListener;
-	private List<org.jgroups.Address> _localTransportAddresses;
+	private final ClusterForwardMessageListener _clusterForwardMessageListener;
+	private final List<org.jgroups.Address> _localTransportAddresses;
 
 }

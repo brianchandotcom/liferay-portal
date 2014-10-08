@@ -179,6 +179,6 @@ public class MBCategoryAssetRenderer extends BaseAssetRenderer {
 		return themeDisplay.getPathThemeImages() + "/common/conversation.png";
 	}
 
-	private MBCategory _category;
+	private final MBCategory _category;
 
 }

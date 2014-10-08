@@ -140,7 +140,7 @@ public class ZipWriterImpl implements ZipWriter {
 		return _file.getPath();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ZipWriterImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(ZipWriterImpl.class);
 
 	static {
 		File.setDefaultArchiveDetector(
@@ -149,6 +149,6 @@ public class ZipWriterImpl implements ZipWriter {
 				new ZipDriver()));
 	}
 
-	private File _file;
+	private final File _file;
 
 }

@@ -83,10 +83,10 @@ public class UserGroupRoleUserChecker extends RowChecker {
 		return super.isDisabled(obj);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		UserGroupRoleUserChecker.class);
 
-	private Group _group;
-	private Role _role;
+	private final Group _group;
+	private final Role _role;
 
 }

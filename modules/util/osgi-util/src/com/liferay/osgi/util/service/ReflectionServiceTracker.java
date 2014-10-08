@@ -259,7 +259,7 @@ public class ReflectionServiceTracker implements Closeable {
 
 		};
 
-	private List<ServiceTracker<?, ?>> _serviceTrackers =
+	private final List<ServiceTracker<?, ?>> _serviceTrackers =
 		new ArrayList<ServiceTracker<?, ?>>();
 	private Object _unavailableServiceProxy;
 
@@ -290,8 +290,8 @@ public class ReflectionServiceTracker implements Closeable {
 			_method = method;
 		}
 
-		private Method _method;
-		private Object _target;
+		private final Method _method;
+		private final Object _target;
 
 	}
 
@@ -312,7 +312,7 @@ public class ReflectionServiceTracker implements Closeable {
 			super.inject(_proxy);
 		}
 
-		private Object _proxy;
+		private final Object _proxy;
 
 	}
 

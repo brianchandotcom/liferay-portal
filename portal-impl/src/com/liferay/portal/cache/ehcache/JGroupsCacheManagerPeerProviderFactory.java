@@ -74,7 +74,7 @@ public class JGroupsCacheManagerPeerProviderFactory
 
 	private static final String _DEFAULT_CLUSTER_NAME = "Ehcache";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		JGroupsCacheManagerPeerProviderFactory.class);
 
 }

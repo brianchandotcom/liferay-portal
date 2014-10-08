@@ -64,6 +64,6 @@ public class CatalinaCometSession extends BaseCometSession {
 		}
 	}
 
-	private CometEvent _cometEvent;
+	private final CometEvent _cometEvent;
 
 }

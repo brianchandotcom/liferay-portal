@@ -33,6 +33,6 @@ public class StringQueryImpl extends BaseQueryImpl implements Query {
 		return _query;
 	}
 
-	private String _query;
+	private final String _query;
 
 }

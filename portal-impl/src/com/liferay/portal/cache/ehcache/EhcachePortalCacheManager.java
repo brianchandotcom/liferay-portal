@@ -225,7 +225,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	private static final String _DEFAULT_CLUSTERED_EHCACHE_CONFIG_FILE =
 		"/ehcache/liferay-multi-vm-clustered.xml";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		EhcachePortalCacheManager.class);
 
 	private CacheManager _cacheManager;

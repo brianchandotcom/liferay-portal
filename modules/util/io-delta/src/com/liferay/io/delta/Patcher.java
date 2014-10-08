@@ -125,7 +125,7 @@ public class Patcher {
 
 	private static final int _NATIVE_TRANSFER_THRESHOLD = 1000000;
 
-	private ByteBuffer _transferByteBuffer = ByteBuffer.allocate(
+	private final ByteBuffer _transferByteBuffer = ByteBuffer.allocate(
 		_NATIVE_TRANSFER_THRESHOLD);
 
 }

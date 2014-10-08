@@ -69,7 +69,7 @@ public class ReportCompilerRequestMessageListener extends BaseMessageListener {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ReportCompilerRequestMessageListener.class);
 
 	private ReportEngine _reportEngine;

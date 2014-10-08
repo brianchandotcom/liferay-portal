@@ -174,10 +174,10 @@ public class ThemeHotDeployListener extends BaseHotDeployListener {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ThemeHotDeployListener.class);
 
-	private static Map<String, List<Theme>> _themes =
+	private static final Map<String, List<Theme>> _themes =
 		new HashMap<String, List<Theme>>();
 
 }

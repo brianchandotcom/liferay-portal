@@ -62,7 +62,8 @@ public abstract class BasePortalLifecycle implements PortalLifecycle {
 
 	protected abstract void doPortalInit() throws Exception;
 
-	private static Log _log = LogFactoryUtil.getLog(BasePortalLifecycle.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		BasePortalLifecycle.class);
 
 	private boolean _calledPortalDestroy;
 

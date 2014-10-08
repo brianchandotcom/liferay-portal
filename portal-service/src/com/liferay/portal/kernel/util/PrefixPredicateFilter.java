@@ -38,7 +38,7 @@ public class PrefixPredicateFilter implements PredicateFilter<String> {
 		}
 	}
 
-	private boolean _include;
-	private String _prefix;
+	private final boolean _include;
+	private final String _prefix;
 
 }

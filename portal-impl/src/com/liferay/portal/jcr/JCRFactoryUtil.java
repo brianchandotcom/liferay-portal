@@ -114,7 +114,7 @@ public class JCRFactoryUtil {
 	}
 
 	private static JCRFactory _jcrFactory;
-	private static ThreadLocal<Map<String, Session>> _sessions =
+	private static final ThreadLocal<Map<String, Session>> _sessions =
 		new AutoResetThreadLocal<Map<String, Session>>(
 			JCRFactoryUtil.class + "._sessions",
 			new HashMap<String, Session>());

@@ -84,7 +84,7 @@ public class TransactionalCallableUtil {
 			_callable = callable;
 		}
 
-		private Callable<?> _callable;
+		private final Callable<?> _callable;
 
 	}
 

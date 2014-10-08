@@ -244,6 +244,6 @@ public class FIFOUtilTest {
 		return true;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(FIFOUtilTest.class);
+	private static final Log _log = LogFactoryUtil.getLog(FIFOUtilTest.class);
 
 }

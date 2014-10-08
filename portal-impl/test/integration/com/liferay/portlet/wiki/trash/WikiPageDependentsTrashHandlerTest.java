@@ -1099,11 +1099,11 @@ public class WikiPageDependentsTrashHandlerTest {
 			return _redirectPage.getResourcePrimKey();
 		}
 
-		private WikiPage _childPage;
-		private WikiPage _grandchildPage;
-		private WikiPage _page;
-		private WikiPage _parentPage;
-		private WikiPage _redirectPage;
+		private final WikiPage _childPage;
+		private final WikiPage _grandchildPage;
+		private final WikiPage _page;
+		private final WikiPage _parentPage;
+		private final WikiPage _redirectPage;
 
 	}
 

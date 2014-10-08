@@ -241,10 +241,10 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeDocumentLibrary.class);
 
-	private static Set<String> _imageMimeTypes = SetUtil.fromArray(
+	private static final Set<String> _imageMimeTypes = SetUtil.fromArray(
 		PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES);
 
 }

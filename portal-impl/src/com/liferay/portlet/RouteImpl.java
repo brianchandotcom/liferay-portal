@@ -170,15 +170,15 @@ public class RouteImpl implements Route {
 		return true;
 	}
 
-	private static StringEncoder _urlEncoder = new URLStringEncoder();
+	private static final StringEncoder _urlEncoder = new URLStringEncoder();
 
-	private Map<String, StringParser> _generatedParameters =
+	private final Map<String, StringParser> _generatedParameters =
 		new HashMap<String, StringParser>();
-	private Set<String> _ignoredParameters = new LinkedHashSet<String>();
-	private Map<String, String> _implicitParameters =
+	private final Set<String> _ignoredParameters = new LinkedHashSet<String>();
+	private final Map<String, String> _implicitParameters =
 		new HashMap<String, String>();
-	private Map<String, String> _overriddenParameters =
+	private final Map<String, String> _overriddenParameters =
 		new HashMap<String, String>();
-	private StringParser _stringParser;
+	private final StringParser _stringParser;
 
 }

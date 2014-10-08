@@ -199,9 +199,9 @@ public class LocalProcessLauncher {
 		private ProcessContext() {
 		}
 
-		private static ConcurrentMap<String, Object> _attributes =
+		private static final ConcurrentMap<String, Object> _attributes =
 			new ConcurrentHashMap<String, Object>();
-		private static AtomicReference<HeartbeatThread>
+		private static final AtomicReference<HeartbeatThread>
 			_heartbeatThreadReference = new AtomicReference<HeartbeatThread>();
 		private static ProcessOutputStream _processOutputStream;
 
@@ -287,9 +287,9 @@ public class LocalProcessLauncher {
 		}
 
 		private volatile boolean _detach;
-		private long _interval;
-		private ProcessCallable<String> _pringBackProcessCallable;
-		private ShutdownHook _shutdownHook;
+		private final long _interval;
+		private final ProcessCallable<String> _pringBackProcessCallable;
+		private final ShutdownHook _shutdownHook;
 
 	}
 
@@ -307,7 +307,7 @@ public class LocalProcessLauncher {
 
 		private static final long serialVersionUID = 1L;
 
-		private String _message;
+		private final String _message;
 
 	}
 

@@ -38,6 +38,7 @@ public class LogSessionIdAction extends Action {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LogSessionIdAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LogSessionIdAction.class);
 
 }

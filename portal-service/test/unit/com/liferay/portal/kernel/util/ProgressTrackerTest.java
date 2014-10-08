@@ -150,7 +150,7 @@ public class ProgressTrackerTest {
 			_progressTracker.initialize(_mockHttpSession);
 		}
 
-		private ProgressTracker _progressTracker;
+		private final ProgressTracker _progressTracker;
 
 	}
 

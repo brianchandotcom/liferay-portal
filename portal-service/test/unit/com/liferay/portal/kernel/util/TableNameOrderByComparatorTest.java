@@ -121,7 +121,7 @@ public class TableNameOrderByComparatorTest {
 			return _orderBy;
 		}
 
-		private String _orderBy;
+		private final String _orderBy;
 
 	}
 

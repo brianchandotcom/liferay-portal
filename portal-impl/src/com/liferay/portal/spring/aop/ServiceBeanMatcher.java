@@ -46,6 +46,6 @@ public class ServiceBeanMatcher implements BeanMatcher {
 
 	private static final String _SERVICE_SUFFIX = "Service";
 
-	private boolean _counterMatcher;
+	private final boolean _counterMatcher;
 
 }

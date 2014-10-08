@@ -62,6 +62,6 @@ public class EntityImpl extends NodeImpl implements Entity {
 		return _entity.toString();
 	}
 
-	private org.dom4j.Entity _entity;
+	private final org.dom4j.Entity _entity;
 
 }

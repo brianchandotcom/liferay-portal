@@ -84,7 +84,7 @@ public class AddFileFolderHandler extends BaseJSONHandler {
 		SyncFileService.update(localSyncFile);
 	}
 
-	private static Logger _logger = LoggerFactory.getLogger(
+	private static final Logger _logger = LoggerFactory.getLogger(
 		AddFileFolderHandler.class);
 
 }

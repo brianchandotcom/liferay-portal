@@ -80,7 +80,7 @@ public class EventDefinitionImpl implements EventDefinition {
 
 	private PortletApp _portletApp;
 	private QName _qName;
-	private Set<QName> _qNames;
+	private final Set<QName> _qNames;
 	private String _valueType;
 
 }

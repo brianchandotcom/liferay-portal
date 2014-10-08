@@ -77,7 +77,7 @@ public class CacheUtil {
 		return sb.toString();
 	}
 
-	private static PortalCache<String, CacheResponseData> _portalCache =
+	private static final PortalCache<String, CacheResponseData> _portalCache =
 		MultiVMPoolUtil.getCache(CACHE_NAME);
 
 }

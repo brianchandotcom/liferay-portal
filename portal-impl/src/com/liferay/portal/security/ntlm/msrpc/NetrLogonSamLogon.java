@@ -105,18 +105,18 @@ public class NetrLogonSamLogon extends DcerpcMessage {
 		return _status;
 	}
 
-	private NetlogonAuthenticator _authenticator;
+	private final NetlogonAuthenticator _authenticator;
 
 	@SuppressWarnings("unused")
 	private byte _authoritative;
 
-	private String _computerName;
-	private NetlogonNetworkInfo _logonInformation;
-	private short _logonLevel;
-	private String _logonServer;
-	private NetlogonAuthenticator _returnAuthenticator;
+	private final String _computerName;
+	private final NetlogonNetworkInfo _logonInformation;
+	private final short _logonLevel;
+	private final String _logonServer;
+	private final NetlogonAuthenticator _returnAuthenticator;
 	private int _status;
-	private NetlogonValidationSamInfo _validationInformation;
-	private short _validationLevel;
+	private final NetlogonValidationSamInfo _validationInformation;
+	private final short _validationLevel;
 
 }

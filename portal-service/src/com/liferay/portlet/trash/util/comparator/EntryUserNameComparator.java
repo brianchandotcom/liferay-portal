@@ -72,6 +72,6 @@ public class EntryUserNameComparator extends OrderByComparator<TrashEntry> {
 		return _ascending;
 	}
 
-	private boolean _ascending;
+	private final boolean _ascending;
 
 }

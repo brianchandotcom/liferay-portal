@@ -787,6 +787,6 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 	}
 
 	private Ehcache _ehcache;
-	private AtomicInteger _referenceCounter = new AtomicInteger(0);
+	private final AtomicInteger _referenceCounter = new AtomicInteger(0);
 
 }

@@ -197,7 +197,7 @@ public class RawMetadataProcessorImpl
 			destinationFileVersion);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		RawMetadataProcessorImpl.class);
 
 }

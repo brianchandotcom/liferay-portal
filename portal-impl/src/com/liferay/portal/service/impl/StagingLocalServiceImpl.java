@@ -898,7 +898,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 	private static final String _ASSEMBLED_LAR_PREFIX = "assembled_";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		StagingLocalServiceImpl.class);
 
 }

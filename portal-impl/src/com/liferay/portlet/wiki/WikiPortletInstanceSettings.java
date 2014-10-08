@@ -178,6 +178,6 @@ public class WikiPortletInstanceSettings {
 			PortletKeys.WIKI_DISPLAY, _getFallbackKeys(), _MULTI_VALUED_KEYS);
 	}
 
-	private TypedSettings _typedSettings;
+	private final TypedSettings _typedSettings;
 
 }

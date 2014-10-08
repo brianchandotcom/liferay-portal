@@ -117,10 +117,10 @@ public class MBeanRegistry {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(MBeanRegistry.class);
+	private static final Log _log = LogFactoryUtil.getLog(MBeanRegistry.class);
 
 	private MBeanServer _mBeanServer;
-	private Map<String, ObjectName> _objectNameCache =
+	private final Map<String, ObjectName> _objectNameCache =
 		new ConcurrentHashMap<String, ObjectName>();
 
 }

@@ -108,6 +108,6 @@ public class DLFileEntryResourceImpl extends BaseResourceImpl {
 		return false;
 	}
 
-	private FileEntry _fileEntry;
+	private final FileEntry _fileEntry;
 
 }

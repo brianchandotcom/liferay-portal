@@ -27,6 +27,6 @@ public abstract class MessageRunnable implements Runnable {
 		return _message;
 	}
 
-	private Message _message;
+	private final Message _message;
 
 }

@@ -97,8 +97,9 @@ public class PropertyChecker extends BaseChecker {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PropertyChecker.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		PropertyChecker.class);
 
-	private Permissions _permissions = new Permissions();
+	private final Permissions _permissions = new Permissions();
 
 }

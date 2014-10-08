@@ -255,9 +255,9 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 			"cobertura-dump/" + processId);
 	}
 
-	private Pattern[] _excludePatterns;
-	private Pattern[] _includePatterns;
-	private ConcurrentMap<ClassLoader, ProjectData> _projectDatas =
+	private final Pattern[] _excludePatterns;
+	private final Pattern[] _includePatterns;
+	private final ConcurrentMap<ClassLoader, ProjectData> _projectDatas =
 		new ConcurrentHashMap<ClassLoader, ProjectData>();
 
 	private static class TouchCollectorClassVisitor extends ClassVisitor {

@@ -56,6 +56,6 @@ public class JSONValidatorImpl implements JSONValidator {
 		}
 	}
 
-	private JsonSchema _jsonSchema;
+	private final JsonSchema _jsonSchema;
 
 }

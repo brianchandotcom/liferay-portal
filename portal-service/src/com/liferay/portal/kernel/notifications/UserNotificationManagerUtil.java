@@ -265,29 +265,30 @@ public class UserNotificationManagerUtil {
 			serviceContext);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		UserNotificationManagerUtil.class);
 
-	private static UserNotificationManagerUtil _instance =
+	private static final UserNotificationManagerUtil _instance =
 		new UserNotificationManagerUtil();
 
-	private Map<String, List<UserNotificationDefinition>>
+	private final Map<String, List<UserNotificationDefinition>>
 		_userNotificationDefinitions =
 			new ConcurrentHashMap<String, List<UserNotificationDefinition>>();
-	private StringServiceRegistrationMap<UserNotificationDefinition>
+	private final StringServiceRegistrationMap<UserNotificationDefinition>
 		_userNotificationDefinitionServiceRegistrations =
 			new StringServiceRegistrationMap<UserNotificationDefinition>();
-	private ServiceTracker
+	private final ServiceTracker
 		<UserNotificationDefinition, UserNotificationDefinition>
 			_userNotificationDefinitionServiceTracker;
-	private Map<String, Map<String, UserNotificationHandler>>
+	private final Map<String, Map<String, UserNotificationHandler>>
 		_userNotificationHandlers = new ConcurrentHashMap
 			<String, Map<String, UserNotificationHandler>>();
-	private ServiceRegistrationMap<UserNotificationHandler>
+	private final ServiceRegistrationMap<UserNotificationHandler>
 		_userNotificationHandlerServiceRegistrations =
 			new ServiceRegistrationMap<UserNotificationHandler>();
-	private ServiceTracker<UserNotificationHandler, UserNotificationHandler>
-		_userNotificationHandlerServiceTracker;
+	private final
+		ServiceTracker<UserNotificationHandler, UserNotificationHandler>
+			_userNotificationHandlerServiceTracker;
 
 	private class UserNotificationDefinitionServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer

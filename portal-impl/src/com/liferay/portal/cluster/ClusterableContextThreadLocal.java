@@ -40,7 +40,7 @@ public class ClusterableContextThreadLocal {
 		return context;
 	}
 
-	private static ThreadLocal<HashMap<String, Serializable>>
+	private static final ThreadLocal<HashMap<String, Serializable>>
 		_contextThreadLocal =
 			new InitialThreadLocal<HashMap<String, Serializable>>(
 				ClusterableContextThreadLocal.class.getName() +

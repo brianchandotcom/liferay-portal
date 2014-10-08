@@ -64,7 +64,7 @@ public class SkipAdvice extends AnnotationChainableMethodAdvice<Skip> {
 		return _nullSkip;
 	}
 
-	private static Skip _nullSkip = new Skip() {
+	private static final Skip _nullSkip = new Skip() {
 
 		@Override
 		public Class<? extends Annotation> annotationType() {

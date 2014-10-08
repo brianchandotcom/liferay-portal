@@ -405,7 +405,8 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 		super.setExtraSettings(_extraSettingsProperties.toString());
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DLFileEntryImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLFileEntryImpl.class);
 
 	private UnicodeProperties _extraSettingsProperties;
 

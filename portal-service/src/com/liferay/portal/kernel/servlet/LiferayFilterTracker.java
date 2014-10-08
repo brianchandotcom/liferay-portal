@@ -65,7 +65,7 @@ public class LiferayFilterTracker {
 		}
 	}
 
-	private static Map<String, Set<LiferayFilter>> _liferayFilters =
+	private static final Map<String, Set<LiferayFilter>> _liferayFilters =
 		new HashMap<String, Set<LiferayFilter>>();
 
 }

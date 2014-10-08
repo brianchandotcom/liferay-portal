@@ -268,15 +268,16 @@ public class ResetDatabaseUtil {
 		return null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ResetDatabaseUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ResetDatabaseUtil.class);
 
-	private static ConcurrentMap<String, Table> _cachedTables =
+	private static final ConcurrentMap<String, Table> _cachedTables =
 		new ConcurrentHashMap<String, Table>();
 	private static boolean _initialized;
-	private static JSqlParser _jSqlParser = new CCJSqlParserManager();
-	private static ConcurrentMap<String, Table> _modifiedTables =
+	private static final JSqlParser _jSqlParser = new CCJSqlParserManager();
+	private static final ConcurrentMap<String, Table> _modifiedTables =
 		new ConcurrentHashMap<String, Table>();
 	private static volatile boolean _recording;
-	private static Set<Table> _tables = new ConcurrentHashSet<Table>();
+	private static final Set<Table> _tables = new ConcurrentHashSet<Table>();
 
 }

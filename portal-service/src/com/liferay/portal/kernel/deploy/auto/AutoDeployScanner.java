@@ -65,9 +65,10 @@ public class AutoDeployScanner extends Thread {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(AutoDeployScanner.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		AutoDeployScanner.class);
 
-	private AutoDeployDir _autoDeployDir;
+	private final AutoDeployDir _autoDeployDir;
 	private boolean _started = true;
 
 }

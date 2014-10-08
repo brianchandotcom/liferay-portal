@@ -53,7 +53,7 @@ public class ClusterLinkPortalCacheClusterChannel
 		ClusterLinkUtil.sendMulticastMessage(message, _priority);
 	}
 
-	private String _destinationName;
-	private Priority _priority;
+	private final String _destinationName;
+	private final Priority _priority;
 
 }

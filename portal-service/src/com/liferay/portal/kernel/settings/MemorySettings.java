@@ -75,6 +75,6 @@ public class MemorySettings extends BaseModifiableSettings {
 		return _map.get(key);
 	}
 
-	private Map<String, String[]> _map = new HashMap<String, String[]>();
+	private final Map<String, String[]> _map = new HashMap<String, String[]>();
 
 }

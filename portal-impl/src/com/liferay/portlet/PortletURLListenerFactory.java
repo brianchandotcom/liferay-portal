@@ -144,9 +144,9 @@ public class PortletURLListenerFactory {
 		return portletURLGenerationListener;
 	}
 
-	private static PortletURLListenerFactory _instance =
+	private static final PortletURLListenerFactory _instance =
 		new PortletURLListenerFactory();
 
-	private Map<String, Map<String, PortletURLGenerationListener>> _pool;
+	private final Map<String, Map<String, PortletURLGenerationListener>> _pool;
 
 }

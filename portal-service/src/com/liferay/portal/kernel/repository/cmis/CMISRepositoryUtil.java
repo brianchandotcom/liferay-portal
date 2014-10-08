@@ -90,17 +90,19 @@ public class CMISRepositoryUtil {
 	private static final String _CLASS_NAME =
 		"com.liferay.portal.repository.cmis.CMISRepositoryUtil";
 
-	private static Log _log = LogFactoryUtil.getLog(CMISRepositoryUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		CMISRepositoryUtil.class);
 
-	private static MethodKey _checkRepositoryMethodKey = new MethodKey(
+	private static final MethodKey _checkRepositoryMethodKey = new MethodKey(
 		ClassResolverUtil.resolveByPortalClassLoader(_CLASS_NAME),
 		"checkRepository", long.class, Map.class, UnicodeProperties.class,
 		String.class);
-	private static MethodKey _createSessionMethodKey = new MethodKey(
+	private static final MethodKey _createSessionMethodKey = new MethodKey(
 		ClassResolverUtil.resolveByPortalClassLoader(_CLASS_NAME),
 		"createSession", Map.class);
-	private static MethodKey _getTypeSettingsValueMethodKey = new MethodKey(
-		ClassResolverUtil.resolveByPortalClassLoader(_CLASS_NAME),
-		"getTypeSettingsValue", UnicodeProperties.class, String.class);
+	private static final MethodKey _getTypeSettingsValueMethodKey =
+		new MethodKey(
+			ClassResolverUtil.resolveByPortalClassLoader(_CLASS_NAME),
+			"getTypeSettingsValue", UnicodeProperties.class, String.class);
 
 }

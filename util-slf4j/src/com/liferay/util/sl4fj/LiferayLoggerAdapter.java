@@ -313,6 +313,6 @@ public class LiferayLoggerAdapter
 		_log.warn(message, t);
 	}
 
-	private transient Log _log;
+	private final transient Log _log;
 
 }

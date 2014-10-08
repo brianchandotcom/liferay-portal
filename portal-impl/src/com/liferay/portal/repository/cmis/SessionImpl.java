@@ -60,6 +60,6 @@ public class SessionImpl implements Session {
 		_session.setDefaultContext(operationContext);
 	}
 
-	private org.apache.chemistry.opencmis.client.api.Session _session;
+	private final org.apache.chemistry.opencmis.client.api.Session _session;
 
 }

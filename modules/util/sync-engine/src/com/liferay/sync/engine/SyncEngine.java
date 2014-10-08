@@ -386,16 +386,17 @@ public class SyncEngine {
 		retryFileTransfers(syncAccountId);
 	}
 
-	private static Logger _logger = LoggerFactory.getLogger(SyncEngine.class);
+	private static final Logger _logger = LoggerFactory.getLogger(
+		SyncEngine.class);
 
-	private static ScheduledExecutorService _eventScheduledExecutorService =
-		Executors.newScheduledThreadPool(5);
-	private static ExecutorService _executorService =
+	private static final ScheduledExecutorService
+		_eventScheduledExecutorService = Executors.newScheduledThreadPool(5);
+	private static final ExecutorService _executorService =
 		Executors.newCachedThreadPool();
 	private static boolean _running;
-	private static Map<Long, Object[]> _syncAccountTasks =
+	private static final Map<Long, Object[]> _syncAccountTasks =
 		new HashMap<Long, Object[]>();
-	private static ScheduledExecutorService
+	private static final ScheduledExecutorService
 		_syncWatchEventProcessorExecutorService =
 			Executors.newScheduledThreadPool(5);
 

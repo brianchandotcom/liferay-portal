@@ -71,6 +71,6 @@ public class UserScreenNameComparator extends OrderByComparator<User> {
 		return _ascending;
 	}
 
-	private boolean _ascending;
+	private final boolean _ascending;
 
 }

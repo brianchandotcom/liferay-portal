@@ -95,7 +95,8 @@ public class XLSTextStripper {
 		return _text;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(XLSTextStripper.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		XLSTextStripper.class);
 
 	private final String _text;
 

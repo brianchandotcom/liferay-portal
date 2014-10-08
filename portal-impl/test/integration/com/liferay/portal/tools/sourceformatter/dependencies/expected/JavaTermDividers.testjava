@@ -149,15 +149,16 @@ public class JavaTermDividers {
 	private void _methodPrivate2() {
 	}
 
+	private static final String _VAR_PRIVATE_STATIC_1;
+
+	private static final String _VAR_PRIVATE_STATIC_2;
+
 	private static final String _VAR_PRIVATE_STATIC_FINAL_1;
 
 	private static final String _VAR_PRIVATE_STATIC_FINAL_2;
 
-	private static String _varPrivateStatic1;
-	private static String _varPrivateStatic2;
-
-	private String _varPrivate1;
-	private String _varPrivate2;
+	private final String _varPrivate1;
+	private final String _varPrivate2;
 
 	private static class ClassPrivateStatic1 {
 

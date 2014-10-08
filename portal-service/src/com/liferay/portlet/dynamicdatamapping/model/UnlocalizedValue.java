@@ -65,6 +65,6 @@ public class UnlocalizedValue implements Value {
 		throw new UnsupportedOperationException();
 	}
 
-	private Map<Locale, String> _values = new HashMap<Locale, String>();
+	private final Map<Locale, String> _values = new HashMap<Locale, String>();
 
 }

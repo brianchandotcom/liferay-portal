@@ -196,7 +196,7 @@ public class ZipReaderImpl implements ZipReader {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ZipReaderImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(ZipReaderImpl.class);
 
 	static {
 		File.setDefaultArchiveDetector(
@@ -205,6 +205,6 @@ public class ZipReaderImpl implements ZipReader {
 				new ZipDriver()));
 	}
 
-	private File _zipFile;
+	private final File _zipFile;
 
 }

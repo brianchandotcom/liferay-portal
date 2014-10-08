@@ -40,7 +40,7 @@ public class BooleanClauseImpl implements BooleanClause {
 		return _query;
 	}
 
-	private BooleanClauseOccur _booleanClauseOccur;
-	private Query _query;
+	private final BooleanClauseOccur _booleanClauseOccur;
+	private final Query _query;
 
 }

@@ -475,8 +475,9 @@ public class FileEntryProxyBean
 		return newFileEntryProxyBean(fileEntry);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(FileEntryProxyBean.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		FileEntryProxyBean.class);
 
-	private FileEntry _fileEntry;
+	private final FileEntry _fileEntry;
 
 }

@@ -48,13 +48,13 @@ public class RoleMembershipPolicyFactoryImpl
 		_serviceTracker.open();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		RoleMembershipPolicyFactoryImpl.class);
 
-	private static RoleMembershipPolicyFactoryImpl _instance =
+	private static final RoleMembershipPolicyFactoryImpl _instance =
 		new RoleMembershipPolicyFactoryImpl();
 
-	private ServiceTracker<?, RoleMembershipPolicy> _serviceTracker;
+	private final ServiceTracker<?, RoleMembershipPolicy> _serviceTracker;
 
 	private class RoleMembershipPolicyTrackerCustomizer
 		implements

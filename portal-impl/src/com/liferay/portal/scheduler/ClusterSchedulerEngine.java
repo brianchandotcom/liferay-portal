@@ -895,30 +895,30 @@ public class ClusterSchedulerEngine
 
 	private static final String _PORTAL_READY = "portal.ready";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterSchedulerEngine.class);
 
-	private static MethodKey _getScheduledJobMethodKey = new MethodKey(
+	private static final MethodKey _getScheduledJobMethodKey = new MethodKey(
 		SchedulerEngineHelperUtil.class, "getScheduledJob", String.class,
 		String.class, StorageType.class);
-	private static MethodKey _getScheduledJobsMethodKey1 = new MethodKey(
+	private static final MethodKey _getScheduledJobsMethodKey1 = new MethodKey(
 		SchedulerEngineHelperUtil.class, "getScheduledJobs");
-	private static MethodKey _getScheduledJobsMethodKey2 = new MethodKey(
+	private static final MethodKey _getScheduledJobsMethodKey2 = new MethodKey(
 		SchedulerEngineHelperUtil.class, "getScheduledJobs", String.class,
 		StorageType.class);
-	private static MethodKey _getScheduledJobsMethodKey3 = new MethodKey(
+	private static final MethodKey _getScheduledJobsMethodKey3 = new MethodKey(
 		SchedulerEngineHelperUtil.class, "getScheduledJobs", StorageType.class);
 
 	private String _beanIdentifier;
 	private ClusterEventListener _clusterEventListener;
 	private volatile String _localClusterNodeAddress;
 	private volatile boolean _master;
-	private Map<String, ObjectValuePair<SchedulerResponse, TriggerState>>
+	private final Map<String, ObjectValuePair<SchedulerResponse, TriggerState>>
 		_memoryClusteredJobs = new ConcurrentHashMap
 			<String, ObjectValuePair<SchedulerResponse, TriggerState>>();
 	private boolean _portalReady;
 	private java.util.concurrent.locks.Lock _readLock;
-	private SchedulerEngine _schedulerEngine;
+	private final SchedulerEngine _schedulerEngine;
 	private java.util.concurrent.locks.Lock _writeLock;
 
 	private static class SchedulerClusterInvokeAcceptor
@@ -994,7 +994,7 @@ public class ClusterSchedulerEngine
 				timeoutException);
 		}
 
-		private Address _address;
+		private final Address _address;
 
 	}
 

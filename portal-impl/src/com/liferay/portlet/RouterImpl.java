@@ -60,6 +60,6 @@ public class RouterImpl implements Router {
 		return false;
 	}
 
-	private List<Route> _routes = new ArrayList<Route>();
+	private final List<Route> _routes = new ArrayList<Route>();
 
 }

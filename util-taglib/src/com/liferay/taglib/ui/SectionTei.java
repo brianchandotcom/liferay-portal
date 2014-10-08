@@ -28,7 +28,7 @@ public class SectionTei extends TagExtraInfo {
 		return _variableInfo;
 	}
 
-	private static VariableInfo[] _variableInfo = new VariableInfo[] {
+	private static final VariableInfo[] _variableInfo = new VariableInfo[] {
 		new VariableInfo(
 			"sectionParam", String.class.getName(), true, VariableInfo.NESTED),
 		new VariableInfo(

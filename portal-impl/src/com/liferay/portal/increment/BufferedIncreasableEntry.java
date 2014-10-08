@@ -53,6 +53,6 @@ public class BufferedIncreasableEntry<K, T>
 		return _methodInvocation.toString();
 	}
 
-	private MethodInvocation _methodInvocation;
+	private final MethodInvocation _methodInvocation;
 
 }

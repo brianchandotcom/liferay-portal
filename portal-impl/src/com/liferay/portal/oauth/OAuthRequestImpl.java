@@ -58,6 +58,6 @@ public class OAuthRequestImpl implements OAuthRequest {
 		}
 	}
 
-	private org.scribe.model.OAuthRequest _oAuthRequest;
+	private final org.scribe.model.OAuthRequest _oAuthRequest;
 
 }

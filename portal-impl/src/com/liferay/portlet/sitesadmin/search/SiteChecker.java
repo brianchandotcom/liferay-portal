@@ -49,6 +49,6 @@ public class SiteChecker extends RowChecker {
 		return super.isDisabled(obj);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SiteChecker.class);
+	private static final Log _log = LogFactoryUtil.getLog(SiteChecker.class);
 
 }

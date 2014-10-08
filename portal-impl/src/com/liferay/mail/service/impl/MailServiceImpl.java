@@ -303,26 +303,27 @@ public class MailServiceImpl implements MailService, IdentifiableBean {
 		MessageBusUtil.sendMessage(DestinationNames.MAIL, methodHandler);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(MailServiceImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		MailServiceImpl.class);
 
-	private static MethodKey _addForwardMethodKey = new MethodKey(
+	private static final MethodKey _addForwardMethodKey = new MethodKey(
 		Hook.class, "addForward", long.class, long.class, List.class,
 		List.class, boolean.class);
-	private static MethodKey _addUserMethodKey = new MethodKey(
+	private static final MethodKey _addUserMethodKey = new MethodKey(
 		Hook.class, "addUser", long.class, long.class, String.class,
 		String.class, String.class, String.class, String.class);
-	private static MethodKey _addVacationMessageMethodKey = new MethodKey(
+	private static final MethodKey _addVacationMessageMethodKey = new MethodKey(
 		Hook.class, "addVacationMessage", long.class, long.class, String.class,
 		String.class);
-	private static MethodKey _deleteEmailAddressMethodKey = new MethodKey(
+	private static final MethodKey _deleteEmailAddressMethodKey = new MethodKey(
 		Hook.class, "deleteEmailAddress", long.class, long.class);
-	private static MethodKey _deleteUserMethodKey = new MethodKey(
+	private static final MethodKey _deleteUserMethodKey = new MethodKey(
 		Hook.class, "deleteUser", long.class, long.class);
-	private static MethodKey _updateBlockedMethodKey = new MethodKey(
+	private static final MethodKey _updateBlockedMethodKey = new MethodKey(
 		Hook.class, "updateBlocked", long.class, long.class, List.class);
-	private static MethodKey _updateEmailAddressMethodKey = new MethodKey(
+	private static final MethodKey _updateEmailAddressMethodKey = new MethodKey(
 		Hook.class, "updateEmailAddress", long.class, long.class, String.class);
-	private static MethodKey _updatePasswordMethodKey = new MethodKey(
+	private static final MethodKey _updatePasswordMethodKey = new MethodKey(
 		Hook.class, "updatePassword", long.class, long.class, String.class);
 
 	private String _beanIdentifier;

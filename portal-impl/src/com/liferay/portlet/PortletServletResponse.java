@@ -379,8 +379,8 @@ public class PortletServletResponse extends HttpServletResponseWrapper {
 		return (ResourceResponse)_portletResponse;
 	}
 
-	private boolean _include;
-	private String _lifecycle;
-	private PortletResponse _portletResponse;
+	private final boolean _include;
+	private final String _lifecycle;
+	private final PortletResponse _portletResponse;
 
 }

@@ -70,7 +70,7 @@ public class FaultImpl implements Fault {
 		return sb.toString();
 	}
 
-	private int _code;
-	private String _description;
+	private final int _code;
+	private final String _description;
 
 }

@@ -134,6 +134,6 @@ public class UpgradeMVCC extends UpgradeProcess {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UpgradeMVCC.class);
+	private static final Log _log = LogFactoryUtil.getLog(UpgradeMVCC.class);
 
 }

@@ -95,7 +95,7 @@ public class LiferayBulkOperationCapability implements BulkOperationCapability {
 		_fieldNames.put(Field.CreateDate.class, "createDate");
 	}
 
-	private long _repositoryId;
+	private final long _repositoryId;
 
 	private static class FileEntryPerformActionMethod
 		implements ActionableDynamicQuery.PerformActionMethod {
@@ -193,7 +193,7 @@ public class LiferayBulkOperationCapability implements BulkOperationCapability {
 			}
 		}
 
-		private Filter<?> _filter;
+		private final Filter<?> _filter;
 
 	}
 

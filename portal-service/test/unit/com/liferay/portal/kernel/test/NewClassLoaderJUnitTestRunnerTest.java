@@ -61,7 +61,7 @@ public class NewClassLoaderJUnitTestRunnerTest {
 
 		String value1 = "value1";
 
-		System.setProperty(PROPERTY_KEY, value1);
+		System.setProperty(_PROPERTY_KEY, value1);
 
 		Assert.assertEquals(value1, ValueClass.value);
 	}
@@ -74,7 +74,7 @@ public class NewClassLoaderJUnitTestRunnerTest {
 
 		String value2 = "value2";
 
-		System.setProperty(PROPERTY_KEY, value2);
+		System.setProperty(_PROPERTY_KEY, value2);
 
 		Assert.assertEquals(value2, ValueClass.value);
 	}
@@ -95,14 +95,14 @@ public class NewClassLoaderJUnitTestRunnerTest {
 		Assert.assertSame(_classLoader, contextClassLoader);
 	}
 
-	private static final String PROPERTY_KEY = "PROPERTY_KEY";
+	private static final String _PROPERTY_KEY = "PROPERTY_KEY";
 
 	private ClassLoader _classLoader;
-	private AtomicInteger _counter = new AtomicInteger();
+	private final AtomicInteger _counter = new AtomicInteger();
 
 	private static class ValueClass {
 
-		public static String value = System.getProperty(PROPERTY_KEY);
+		public static String value = System.getProperty(_PROPERTY_KEY);
 
 	}
 

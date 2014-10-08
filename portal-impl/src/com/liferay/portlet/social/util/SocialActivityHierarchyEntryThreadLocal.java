@@ -73,7 +73,7 @@ public class SocialActivityHierarchyEntryThreadLocal {
 		push(classNameId, classPK);
 	}
 
-	private static ThreadLocal<Stack<SocialActivityHierarchyEntry>>
+	private static final ThreadLocal<Stack<SocialActivityHierarchyEntry>>
 		_activityHierarchyEntries =
 			new AutoResetThreadLocal<Stack<SocialActivityHierarchyEntry>>(
 				SocialActivityHierarchyEntryThreadLocal.class +

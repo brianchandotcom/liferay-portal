@@ -93,6 +93,7 @@ public class SecurityChecker extends BaseChecker {
 		return false;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SecurityChecker.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		SecurityChecker.class);
 
 }

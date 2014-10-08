@@ -47,7 +47,7 @@ public class BackgroundTaskStatus implements Serializable {
 		_attributes.put(key, value);
 	}
 
-	private Map<String, Serializable> _attributes =
+	private final Map<String, Serializable> _attributes =
 		new ConcurrentHashMap<String, Serializable>();
 
 }

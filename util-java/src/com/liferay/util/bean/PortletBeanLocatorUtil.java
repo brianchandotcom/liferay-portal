@@ -52,7 +52,7 @@ public class PortletBeanLocatorUtil {
 		_beanLocator = beanLocator;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortletBeanLocatorUtil.class);
 
 	private static BeanLocator _beanLocator;

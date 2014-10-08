@@ -139,7 +139,7 @@ public class TestCacheListener<K extends Serializable, V>
 		Assert.assertTrue(_actions.contains(action));
 	}
 
-	private List<Action> _actions = new ArrayList<Action>();
+	private final List<Action> _actions = new ArrayList<Action>();
 
 	private static class Action {
 
@@ -215,10 +215,10 @@ public class TestCacheListener<K extends Serializable, V>
 
 		private static final Object _NULL_OBJECT = new Object();
 
-		private ActionType _actionType;
-		private Object _key;
+		private final ActionType _actionType;
+		private final Object _key;
 		private int _timeToLive;
-		private Object _value;
+		private final Object _value;
 
 	}
 

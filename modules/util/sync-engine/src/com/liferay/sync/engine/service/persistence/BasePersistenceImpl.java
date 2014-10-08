@@ -192,9 +192,9 @@ public class BasePersistenceImpl<TT extends BaseModel, TID>
 
 	private static ConnectionSource _connectionSource;
 
-	private List<ModelListener<TT>> _modelListeners =
+	private final List<ModelListener<TT>> _modelListeners =
 		new ArrayList<ModelListener<TT>>();
-	private Map<String, String[]> _syncNotificationFieldNames =
+	private final Map<String, String[]> _syncNotificationFieldNames =
 		new HashMap<String, String[]>();
 
 }

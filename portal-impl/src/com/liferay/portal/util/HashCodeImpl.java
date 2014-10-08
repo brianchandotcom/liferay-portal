@@ -172,6 +172,6 @@ public class HashCodeImpl implements HashCode {
 		return _hashCodeBuilder.toHashCode();
 	}
 
-	private HashCodeBuilder _hashCodeBuilder;
+	private final HashCodeBuilder _hashCodeBuilder;
 
 }

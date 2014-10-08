@@ -215,14 +215,15 @@ public class ThreadLocalDistributorTest {
 		return clazz.getClassLoader();
 	}
 
-	private List<KeyValuePair> _keyValuePairs = new ArrayList<KeyValuePair>();
+	private final List<KeyValuePair> _keyValuePairs =
+		new ArrayList<KeyValuePair>();
 
 	private static class TestClass {
 
 		@SuppressWarnings("unused")
 		private static ThreadLocal<?> _nullValue;
 
-		private static ThreadLocal<String> _threadLocal =
+		private static final ThreadLocal<String> _threadLocal =
 			new ThreadLocal<String>();
 
 		@SuppressWarnings("unused")

@@ -28,6 +28,6 @@ public class CMISInFolderExpression implements CMISCriterion {
 		return "IN_FOLDER('".concat(_objectId).concat("')");
 	}
 
-	private String _objectId;
+	private final String _objectId;
 
 }

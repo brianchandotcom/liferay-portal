@@ -37,8 +37,8 @@ public class LanguageWrapper {
 		return _text;
 	}
 
-	private String _after;
-	private String _before;
-	private String _text;
+	private final String _after;
+	private final String _before;
+	private final String _text;
 
 }

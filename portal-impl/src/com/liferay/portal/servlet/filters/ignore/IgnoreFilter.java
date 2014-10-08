@@ -46,6 +46,6 @@ public class IgnoreFilter extends BasePortalFilter {
 			request, response);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(IgnoreFilter.class);
+	private static final Log _log = LogFactoryUtil.getLog(IgnoreFilter.class);
 
 }

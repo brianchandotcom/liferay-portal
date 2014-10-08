@@ -301,6 +301,6 @@ public class WikiPageAssetRenderer
 		return themeDisplay.getPathThemeImages() + "/common/page.png";
 	}
 
-	private WikiPage _page;
+	private final WikiPage _page;
 
 }

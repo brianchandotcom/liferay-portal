@@ -107,7 +107,8 @@ public class XMLAttributesSorter {
 		return document.formattedString();
 	}
 
-	private static FileImpl _fileUtil = FileImpl.getInstance();
-	private static SAXReaderImpl _saxReaderUtil = SAXReaderImpl.getInstance();
+	private static final FileImpl _fileUtil = FileImpl.getInstance();
+	private static final SAXReaderImpl _saxReaderUtil =
+		SAXReaderImpl.getInstance();
 
 }

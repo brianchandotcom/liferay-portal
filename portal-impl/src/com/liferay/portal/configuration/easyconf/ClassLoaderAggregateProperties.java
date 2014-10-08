@@ -364,20 +364,20 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 		return delay;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ClassLoaderAggregateProperties.class);
 
-	private CompositeConfiguration _baseCompositeConfiguration =
+	private final CompositeConfiguration _baseCompositeConfiguration =
 		new CompositeConfiguration();
 	private boolean _baseConfigurationLoaded;
-	private ClassLoader _classLoader;
-	private String _companyId;
-	private String _componentName;
-	private CompositeConfiguration _globalCompositeConfiguration =
+	private final ClassLoader _classLoader;
+	private final String _companyId;
+	private final String _componentName;
+	private final CompositeConfiguration _globalCompositeConfiguration =
 		new CompositeConfiguration();
-	private List<String> _loadedSources = new ArrayList<String>();
-	private Configuration _prefixedSystemConfiguration;
-	private SystemConfiguration _systemConfiguration =
+	private final List<String> _loadedSources = new ArrayList<String>();
+	private final Configuration _prefixedSystemConfiguration;
+	private final SystemConfiguration _systemConfiguration =
 		new SystemConfiguration();
 
 }

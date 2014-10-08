@@ -58,7 +58,7 @@ public class QuartzConnectionProvider implements ConnectionProvider {
 	public void shutdown() {
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		QuartzConnectionProvider.class);
 
 }

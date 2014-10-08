@@ -76,7 +76,7 @@ public class LoggingOutputProcessor implements OutputProcessor<Void, Void> {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LoggingOutputProcessor.class);
 
 }

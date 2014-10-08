@@ -58,7 +58,7 @@ public class ToolkitWrapper implements Toolkit {
 		_toolkit.validate(password1, password2, passwordPolicy);
 	}
 
-	private Toolkit _originalToolkit;
+	private final Toolkit _originalToolkit;
 	private Toolkit _toolkit;
 
 }

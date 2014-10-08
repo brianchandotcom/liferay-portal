@@ -78,6 +78,6 @@ public class LiferayFileUpload extends ServletFileUpload {
 		return item;
 	}
 
-	private HttpSession _session;
+	private final HttpSession _session;
 
 }

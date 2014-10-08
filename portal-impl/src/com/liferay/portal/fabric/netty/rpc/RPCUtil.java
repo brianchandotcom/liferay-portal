@@ -74,6 +74,6 @@ public class RPCUtil {
 		return noticeableFuture;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(RPCUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(RPCUtil.class);
 
 }

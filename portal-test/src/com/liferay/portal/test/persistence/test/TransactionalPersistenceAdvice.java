@@ -50,7 +50,7 @@ public class TransactionalPersistenceAdvice implements MethodInterceptor {
 		_basePersistences.clear();
 	}
 
-	private Map<Serializable, BasePersistence<?>> _basePersistences =
+	private final Map<Serializable, BasePersistence<?>> _basePersistences =
 		new HashMap<Serializable, BasePersistence<?>>();
 
 }

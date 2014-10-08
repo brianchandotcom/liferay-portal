@@ -293,11 +293,11 @@ public class SettingsFactoryImpl implements SettingsFactory {
 			portletId);
 	}
 
-	private ConcurrentMap<String, FallbackKeys> _fallbackKeysMap =
+	private final ConcurrentMap<String, FallbackKeys> _fallbackKeysMap =
 		new ConcurrentHashMap<String, FallbackKeys>();
-	private ConcurrentMap<String, List<String>> _multiValuedKeysMap =
+	private final ConcurrentMap<String, List<String>> _multiValuedKeysMap =
 		new ConcurrentHashMap<String, List<String>>();
-	private Map<String, Properties> _propertiesMap =
+	private final Map<String, Properties> _propertiesMap =
 		new ConcurrentHashMap<String, Properties>();
 
 }

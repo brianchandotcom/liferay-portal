@@ -45,7 +45,7 @@ public class DefaultFullNameGeneratorTest {
 		Assert.assertEquals("T T ThisShouldBeAVeryLongLastName", fullName);
 	}
 
-	private DefaultFullNameGenerator _defaultDefaultFullNameGenerator =
+	private final DefaultFullNameGenerator _defaultDefaultFullNameGenerator =
 		new DefaultFullNameGenerator();
 
 }

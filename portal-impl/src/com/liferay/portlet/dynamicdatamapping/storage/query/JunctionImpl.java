@@ -51,7 +51,7 @@ public class JunctionImpl implements Junction {
 
 	private static final boolean _JUNCTION = true;
 
-	private List<Condition> _conditions = new ArrayList<Condition>();
-	private LogicalOperator _logicalOperator;
+	private final List<Condition> _conditions = new ArrayList<Condition>();
+	private final LogicalOperator _logicalOperator;
 
 }

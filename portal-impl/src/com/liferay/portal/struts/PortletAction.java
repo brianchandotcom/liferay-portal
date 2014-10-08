@@ -507,6 +507,6 @@ public class PortletAction extends Action {
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = true;
 
-	private static Log _log = LogFactoryUtil.getLog(PortletAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(PortletAction.class);
 
 }

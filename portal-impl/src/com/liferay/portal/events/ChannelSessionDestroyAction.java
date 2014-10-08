@@ -78,7 +78,7 @@ public class ChannelSessionDestroyAction extends SessionAction {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ChannelSessionDestroyAction.class);
 
 }

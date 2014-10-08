@@ -85,7 +85,7 @@ public class EhcacheStreamBootstrapCacheLoader implements BootstrapCacheLoader {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		EhcacheStreamBootstrapCacheLoader.class);
 
 	private final boolean _bootstrapAsynchronously;
@@ -120,7 +120,7 @@ public class EhcacheStreamBootstrapCacheLoader implements BootstrapCacheLoader {
 			}
 		}
 
-		private Ehcache _ehcache;
+		private final Ehcache _ehcache;
 
 	}
 

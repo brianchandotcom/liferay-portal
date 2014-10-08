@@ -29,6 +29,6 @@ public class CriterionImpl implements Criterion {
 		return _criterion;
 	}
 
-	private org.hibernate.criterion.Criterion _criterion;
+	private final org.hibernate.criterion.Criterion _criterion;
 
 }

@@ -33,8 +33,8 @@ public class ResetDatabaseUtilDataSource extends DataSourceWrapper {
 
 	public static void initialize() {
 		try {
-			if (_paclField.get(null) != _pacl) {
-				_paclField.set(null, _pacl);
+			if (_PACL_FIELD.get(null) != _pacl) {
+				_PACL_FIELD.set(null, _pacl);
 			}
 		}
 		catch (Exception e) {
@@ -54,7 +54,9 @@ public class ResetDatabaseUtilDataSource extends DataSourceWrapper {
 			new ResetDatabaseConnectionHandler(super.getConnection()));
 	}
 
-	private static DataSourceFactoryImpl.PACL _pacl =
+	private static final Field _PACL_FIELD;
+
+	private static final DataSourceFactoryImpl.PACL _pacl =
 		new DataSourceFactoryImpl.PACL() {
 
 			@Override
@@ -64,11 +66,9 @@ public class ResetDatabaseUtilDataSource extends DataSourceWrapper {
 
 		};
 
-	private static Field _paclField;
-
 	static {
 		try {
-			_paclField = ReflectionUtil.getDeclaredField(
+			_PACL_FIELD = ReflectionUtil.getDeclaredField(
 				DataSourceFactoryImpl.class, "_pacl");
 		}
 		catch (Exception e) {

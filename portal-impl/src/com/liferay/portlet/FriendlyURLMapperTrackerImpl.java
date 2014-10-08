@@ -95,14 +95,14 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		FriendlyURLMapperTrackerImpl.class);
 
-	private Portlet _portlet;
-	private Map<FriendlyURLMapper, ServiceRegistration<?>>
+	private final Portlet _portlet;
+	private final Map<FriendlyURLMapper, ServiceRegistration<?>>
 		_serviceRegistrations =
 			new ConcurrentHashMap<FriendlyURLMapper, ServiceRegistration<?>>();
-	private ServiceTracker<FriendlyURLMapper, FriendlyURLMapper>
+	private final ServiceTracker<FriendlyURLMapper, FriendlyURLMapper>
 		_serviceTracker;
 
 	private class FriendlyURLMapperServiceTrackerCustomizer

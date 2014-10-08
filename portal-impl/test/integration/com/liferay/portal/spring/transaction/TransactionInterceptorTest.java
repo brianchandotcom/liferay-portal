@@ -136,7 +136,7 @@ public class TransactionInterceptorTest {
 			_platformTransactionManager.rollback(transactionStatus);
 		}
 
-		private PlatformTransactionManager _platformTransactionManager;
+		private final PlatformTransactionManager _platformTransactionManager;
 
 	}
 

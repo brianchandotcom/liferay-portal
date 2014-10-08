@@ -132,8 +132,8 @@ public class RepositoryClassDefinition
 		}
 	}
 
-	private RepositoryDefiner _repositoryDefiner;
-	private Map<Tuple, Collection<RepositoryEventListener<?, ?>>>
+	private final RepositoryDefiner _repositoryDefiner;
+	private final Map<Tuple, Collection<RepositoryEventListener<?, ?>>>
 		_repositoryEventListeners =
 			new HashMap<Tuple, Collection<RepositoryEventListener<?, ?>>>();
 	private RepositoryFactory _repositoryFactory;

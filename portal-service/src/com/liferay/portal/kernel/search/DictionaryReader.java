@@ -51,7 +51,7 @@ public class DictionaryReader {
 
 	private static final int _UNICODE_BYTE_ORDER_MARK = 65279;
 
-	private BufferedReader _bufferedReader;
+	private final BufferedReader _bufferedReader;
 	private final String _encoding;
 
 	private class DictionaryIterator implements Iterator<DictionaryEntry> {

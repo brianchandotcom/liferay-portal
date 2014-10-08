@@ -84,6 +84,6 @@ public class MockPortletPreferences implements PortletPreferences {
 	public void store() {
 	}
 
-	private Map<String, String[]> _map = new HashMap<String, String[]>();
+	private final Map<String, String[]> _map = new HashMap<String, String[]>();
 
 }

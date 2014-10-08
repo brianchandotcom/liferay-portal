@@ -82,9 +82,9 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 		_repositoryFactory = repositoryFactory;
 	}
 
-	private LiferaySyncCapability _liferaySyncCapability =
+	private final LiferaySyncCapability _liferaySyncCapability =
 		new LiferaySyncCapability();
-	private LiferayTrashCapability _liferayTrashCapability =
+	private final LiferayTrashCapability _liferayTrashCapability =
 		new LiferayTrashCapability();
 	private RepositoryFactory _repositoryFactory;
 

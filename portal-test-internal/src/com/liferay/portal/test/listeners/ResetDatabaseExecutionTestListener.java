@@ -271,17 +271,17 @@ public class ResetDatabaseExecutionTestListener
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ResetDatabaseExecutionTestListener.class);
 
 	private static String _initializedDLFileSystemStoreDirName;
 	private static String _initializedDLJCRStoreDirName;
-	private static Map<Long, String> _initializedIndexNames =
+	private static final Map<Long, String> _initializedIndexNames =
 		new HashMap<Long, String>();
 
 	private String _dlFileSystemStoreDirName;
 	private String _dlJCRStoreDirName;
-	private Map<Long, String> _indexNames = new HashMap<Long, String>();
+	private final Map<Long, String> _indexNames = new HashMap<Long, String>();
 	private Level _level;
 
 	private class DeleteFileShutdownHook extends Thread {
@@ -316,7 +316,7 @@ public class ResetDatabaseExecutionTestListener
 			}
 		}
 
-		private String _fileName;
+		private final String _fileName;
 
 	}
 

@@ -61,6 +61,6 @@ public class XStreamMarshallingContextAdapter
 		_marshallingContext.put(key, value);
 	}
 
-	private MarshallingContext _marshallingContext;
+	private final MarshallingContext _marshallingContext;
 
 }

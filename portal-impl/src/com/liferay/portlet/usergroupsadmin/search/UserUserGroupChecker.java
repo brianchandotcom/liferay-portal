@@ -79,8 +79,9 @@ public class UserUserGroupChecker extends RowChecker {
 		return super.isDisabled(obj);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UserUserGroupChecker.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		UserUserGroupChecker.class);
 
-	private UserGroup _userGroup;
+	private final UserGroup _userGroup;
 
 }

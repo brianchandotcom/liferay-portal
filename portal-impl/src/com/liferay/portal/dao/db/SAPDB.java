@@ -110,6 +110,6 @@ public class SAPDB extends BaseDB {
 		" varchar", " varchar", " varchar", "", "commit"
 	};
 
-	private static SAPDB _instance = new SAPDB();
+	private static final SAPDB _instance = new SAPDB();
 
 }

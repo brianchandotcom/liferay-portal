@@ -54,7 +54,7 @@ public class ReferenceEntry {
 			_field.toString());
 	}
 
-	private Field _field;
-	private Object _object;
+	private final Field _field;
+	private final Object _object;
 
 }

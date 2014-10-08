@@ -79,9 +79,9 @@ public abstract class BaseCapabilityProvider implements CapabilityProvider {
 
 	protected abstract String getProviderKey();
 
-	private Set<Class<? extends Capability>> _exportedCapabilityClasses =
+	private final Set<Class<? extends Capability>> _exportedCapabilityClasses =
 		new HashSet<>();
-	private Map<Class<? extends Capability>, Capability>
+	private final Map<Class<? extends Capability>, Capability>
 		_supportedCapabilities = new HashMap<>();
 
 }

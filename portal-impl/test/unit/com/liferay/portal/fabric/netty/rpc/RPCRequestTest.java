@@ -50,10 +50,10 @@ public class RPCRequestTest {
 	@Test
 	public void testExecuteWithAsyncException() {
 		RPCRequest<String> rpcRequest = new RPCRequest<String>(
-			_id, new TestRPCCallable(null, false, _throwable, null));
+			_ID, new TestRPCCallable(null, false, _throwable, null));
 
 		RPCResponse<String> rpcResponse = new RPCResponse<String>(
-			_id, false, null, _throwable);
+			_ID, false, null, _throwable);
 
 		doTestExecute(rpcRequest, rpcResponse);
 	}
@@ -61,10 +61,10 @@ public class RPCRequestTest {
 	@Test
 	public void testExecuteWithCancellation() {
 		RPCRequest<String> rpcRequest = new RPCRequest<String>(
-			_id, new TestRPCCallable(null, true, null, null));
+			_ID, new TestRPCCallable(null, true, null, null));
 
 		RPCResponse<String> rpcResponse = new RPCResponse<String>(
-			_id, true, null, null);
+			_ID, true, null, null);
 
 		doTestExecute(rpcRequest, rpcResponse);
 	}
@@ -72,10 +72,10 @@ public class RPCRequestTest {
 	@Test
 	public void testExecuteWithResult() {
 		RPCRequest<String> rpcRequest = new RPCRequest<String>(
-			_id, new TestRPCCallable(null, false, null, _result));
+			_ID, new TestRPCCallable(null, false, null, _RESULT));
 
 		RPCResponse<String> rpcResponse = new RPCResponse<String>(
-			_id, false, _result, null);
+			_ID, false, _RESULT, null);
 
 		doTestExecute(rpcRequest, rpcResponse);
 	}
@@ -83,10 +83,10 @@ public class RPCRequestTest {
 	@Test
 	public void testExecuteWithSyncException() {
 		RPCRequest<String> rpcRequest = new RPCRequest<String>(
-			_id, new TestRPCCallable(_throwable, false, null, null));
+			_ID, new TestRPCCallable(_throwable, false, null, null));
 
 		RPCResponse<String> rpcResponse = new RPCResponse<String>(
-			_id, false, null, _throwable);
+			_ID, false, null, _throwable);
 
 		doTestExecute(rpcRequest, rpcResponse);
 	}
@@ -109,10 +109,10 @@ public class RPCRequestTest {
 			});
 
 		RPCRequest<String> rpcRequest = new RPCRequest<String>(
-			_id, new TestRPCCallable(null, false, null, _result));
+			_ID, new TestRPCCallable(null, false, null, _RESULT));
 
 		RPCResponse<String> rpcResponse = new RPCResponse<String>(
-			_id, true, null, null);
+			_ID, true, null, null);
 
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			RPCRequest.class.getName(), Level.SEVERE);
@@ -138,10 +138,10 @@ public class RPCRequestTest {
 		_embeddedChannel.close();
 
 		RPCRequest<String> rpcRequest = new RPCRequest<String>(
-			_id, new TestRPCCallable(null, false, null, _result));
+			_ID, new TestRPCCallable(null, false, null, _RESULT));
 
 		RPCResponse<String> rpcResponse = new RPCResponse<String>(
-			_id, true, null, null);
+			_ID, true, null, null);
 
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			RPCRequest.class.getName(), Level.SEVERE);
@@ -172,10 +172,10 @@ public class RPCRequestTest {
 			null, true, null, null);
 
 		RPCRequest<String> rpcRequest = new RPCRequest<String>(
-			_id, rpcCallable);
+			_ID, rpcCallable);
 
 		Assert.assertEquals(
-			"{id=" + _id + ", rpcCallable=" + rpcCallable.toString() + "}",
+			"{id=" + _ID + ", rpcCallable=" + rpcCallable.toString() + "}",
 			rpcRequest.toString());
 	}
 
@@ -194,10 +194,12 @@ public class RPCRequestTest {
 		Assert.assertEquals(rpcResponse.toString(), message.toString());
 	}
 
+	private static final long _ID = System.currentTimeMillis();
+
+	private static final String _RESULT = "This is the result.";
+
 	private final EmbeddedChannel _embeddedChannel =
 		NettyTestUtil.createEmptyEmbeddedChannel();
-	private final long _id = System.currentTimeMillis();
-	private final String _result = "This is the result.";
 	private final Throwable _throwable = new Throwable(
 		"This is the throwable.");
 
@@ -210,7 +212,7 @@ public class RPCRequestTest {
 			_syncThrowable = syncThrowable;
 			_cancel = cancel;
 			_asyncThrowable = asyncThrowable;
-			_result = result;
+			_RESULT = result;
 		}
 
 		@Override
@@ -229,7 +231,7 @@ public class RPCRequestTest {
 				defaultNoticeableFuture.setException(_asyncThrowable);
 			}
 			else {
-				defaultNoticeableFuture.set(_result);
+				defaultNoticeableFuture.set(_RESULT);
 			}
 
 			return defaultNoticeableFuture;
@@ -237,9 +239,10 @@ public class RPCRequestTest {
 
 		private static final long serialVersionUID = 1L;
 
+		private final String _RESULT;
+
 		private final Throwable _asyncThrowable;
 		private final boolean _cancel;
-		private final String _result;
 		private final Throwable _syncThrowable;
 
 	}

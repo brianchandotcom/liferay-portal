@@ -100,6 +100,6 @@ public abstract class BaseMethodImpl implements Method {
 		return html;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(BaseMethodImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(BaseMethodImpl.class);
 
 }

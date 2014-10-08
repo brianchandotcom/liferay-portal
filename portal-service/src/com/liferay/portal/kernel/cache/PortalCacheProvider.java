@@ -52,9 +52,10 @@ public class PortalCacheProvider {
 		_portalCacheManagers.remove(portalCacheManagerName);
 	}
 
-	private static Map<String, PortalCacheManager<? extends Serializable, ?>>
-		_portalCacheManagers =
-			new ConcurrentHashMap
-				<String, PortalCacheManager<? extends Serializable, ?>>();
+	private static final
+		Map<String, PortalCacheManager<? extends Serializable, ?>>
+			_portalCacheManagers =
+				new ConcurrentHashMap
+					<String, PortalCacheManager<? extends Serializable, ?>>();
 
 }

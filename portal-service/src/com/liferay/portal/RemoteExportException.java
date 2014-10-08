@@ -62,7 +62,7 @@ public class RemoteExportException extends PortalException {
 	}
 
 	private long _groupId;
-	private int _type;
+	private final int _type;
 	private String _url;
 
 }

@@ -152,7 +152,7 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 		return portletPreferences;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PollsDisplayPortletDataHandler.class);
 
 }

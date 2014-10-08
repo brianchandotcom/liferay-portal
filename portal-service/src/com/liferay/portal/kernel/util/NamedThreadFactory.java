@@ -59,10 +59,10 @@ public class NamedThreadFactory implements ThreadFactory {
 		return thread;
 	}
 
-	private ClassLoader _contextClassLoader;
-	private AtomicInteger _counter = new AtomicInteger();
-	private ThreadGroup _group;
-	private String _name;
-	private int _priority;
+	private final ClassLoader _contextClassLoader;
+	private final AtomicInteger _counter = new AtomicInteger();
+	private final ThreadGroup _group;
+	private final String _name;
+	private final int _priority;
 
 }

@@ -34,7 +34,7 @@ public class Fact<T> implements Serializable {
 		return _identifier;
 	}
 
-	private T _factObject;
-	private String _identifier;
+	private final T _factObject;
+	private final String _identifier;
 
 }

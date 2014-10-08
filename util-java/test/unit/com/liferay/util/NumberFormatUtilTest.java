@@ -38,7 +38,7 @@ public class NumberFormatUtilTest {
 			"1.1", NumberFormatUtil.format(_numberFormat, 1.1, 1.1));
 	}
 
-	private NumberFormat _numberFormat = NumberFormat.getNumberInstance(
+	private final NumberFormat _numberFormat = NumberFormat.getNumberInstance(
 		LocaleUtil.ENGLISH);
 
 }

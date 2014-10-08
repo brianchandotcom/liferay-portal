@@ -130,7 +130,7 @@ public class OrganizationSearchTerms extends OrganizationDisplayTerms {
 		return false;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		OrganizationSearchTerms.class);
 
 }

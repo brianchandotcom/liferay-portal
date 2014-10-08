@@ -271,7 +271,7 @@ public class TemporaryFileEntriesCapabilityImpl
 	private static final long _TEMPORARY_FILE_ENTRIES_TIMEOUT_DEFAULT =
 		12 * 60 * 60 * 1000;
 
-	private LocalRepository _localRepository;
+	private final LocalRepository _localRepository;
 
 	private class DeleteExpiredTemporaryFilesRepositoryModelOperation
 		extends BaseRepositoryModelOperation {

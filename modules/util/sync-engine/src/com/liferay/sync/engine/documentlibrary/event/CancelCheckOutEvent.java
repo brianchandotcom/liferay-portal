@@ -53,6 +53,6 @@ public class CancelCheckOutEvent extends BaseEvent {
 	private static final String _URL_PATH =
 		"/sync-web.syncdlobject/cancel-check-out";
 
-	private Handler<Void> _handler;
+	private final Handler<Void> _handler;
 
 }

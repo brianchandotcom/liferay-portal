@@ -338,7 +338,7 @@ public class StagingImplTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private static Locale[] _locales = {
+	private static final Locale[] _locales = {
 		LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US
 	};
 

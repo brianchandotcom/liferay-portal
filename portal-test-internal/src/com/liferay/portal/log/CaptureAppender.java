@@ -40,7 +40,7 @@ public class CaptureAppender extends AppenderSkeleton {
 		_parentCategory = logger.getParent();
 
 		try {
-			_parentField.set(_logger, null);
+			_PARENT_FIELD.set(_logger, null);
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -54,7 +54,7 @@ public class CaptureAppender extends AppenderSkeleton {
 		_logger.setLevel(_level);
 
 		try {
-			_parentField.set(_logger, _parentCategory);
+			_PARENT_FIELD.set(_logger, _parentCategory);
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -75,11 +75,11 @@ public class CaptureAppender extends AppenderSkeleton {
 		_loggingEvents.add(loggingEvent);
 	}
 
-	private static Field _parentField;
+	private static final Field _PARENT_FIELD;
 
 	static {
 		try {
-			_parentField = ReflectionUtil.getDeclaredField(
+			_PARENT_FIELD = ReflectionUtil.getDeclaredField(
 				Category.class, "parent");
 		}
 		catch (Exception e) {
@@ -87,10 +87,10 @@ public class CaptureAppender extends AppenderSkeleton {
 		}
 	}
 
-	private Level _level;
-	private Logger _logger;
-	private List<LoggingEvent> _loggingEvents =
+	private final Level _level;
+	private final Logger _logger;
+	private final List<LoggingEvent> _loggingEvents =
 		new CopyOnWriteArrayList<LoggingEvent>();
-	private Category _parentCategory;
+	private final Category _parentCategory;
 
 }

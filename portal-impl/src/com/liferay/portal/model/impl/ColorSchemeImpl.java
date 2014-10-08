@@ -200,7 +200,8 @@ public class ColorSchemeImpl implements ColorScheme {
 		_settingsProperties = settingsProperties;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ColorSchemeImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ColorSchemeImpl.class);
 
 	private final String _colorSchemeId;
 	private String _colorSchemeImagesPath =

@@ -130,8 +130,8 @@ public class AuthTokenUtil {
 			request, plid, portletId, strutsAction, tokenValue);
 	}
 
-	private static AuthTokenUtil _instance = new AuthTokenUtil();
+	private static final AuthTokenUtil _instance = new AuthTokenUtil();
 
-	private ServiceTracker<?, AuthToken> _serviceTracker;
+	private final ServiceTracker<?, AuthToken> _serviceTracker;
 
 }

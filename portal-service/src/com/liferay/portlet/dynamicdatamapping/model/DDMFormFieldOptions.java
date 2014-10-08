@@ -67,7 +67,7 @@ public class DDMFormFieldOptions implements Serializable {
 	}
 
 	private Locale _defaultLocale = LocaleUtil.getDefault();
-	private Map<String, LocalizedValue> _options =
+	private final Map<String, LocalizedValue> _options =
 		new LinkedHashMap<String, LocalizedValue>();
 
 }

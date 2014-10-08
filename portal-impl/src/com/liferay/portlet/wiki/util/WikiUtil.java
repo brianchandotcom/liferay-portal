@@ -812,17 +812,17 @@ public class WikiUtil {
 		StringPool.PLUS, StringPool.QUESTION, StringPool.SLASH
 	};
 
-	private static Log _log = LogFactoryUtil.getLog(WikiUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(WikiUtil.class);
 
-	private static WikiUtil _instance = new WikiUtil();
+	private static final WikiUtil _instance = new WikiUtil();
 
-	private static Pattern _editPageURLPattern = Pattern.compile(
+	private static final Pattern _editPageURLPattern = Pattern.compile(
 		"\\[\\$BEGIN_PAGE_TITLE_EDIT\\$\\](.*?)" +
 			"\\[\\$END_PAGE_TITLE_EDIT\\$\\]");
-	private static Pattern _viewPageURLPattern = Pattern.compile(
+	private static final Pattern _viewPageURLPattern = Pattern.compile(
 		"\\[\\$BEGIN_PAGE_TITLE\\$\\](.*?)\\[\\$END_PAGE_TITLE\\$\\]");
 
-	private Map<String, WikiEngine> _engines =
+	private final Map<String, WikiEngine> _engines =
 		new ConcurrentHashMap<String, WikiEngine>();
 
 }

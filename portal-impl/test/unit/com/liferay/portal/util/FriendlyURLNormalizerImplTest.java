@@ -102,7 +102,7 @@ public class FriendlyURLNormalizerImplTest {
 			"wordnc", _friendlyURLNormalizerImpl.normalize("word\u00F1\u00C7"));
 	}
 
-	private FriendlyURLNormalizerImpl _friendlyURLNormalizerImpl =
+	private final FriendlyURLNormalizerImpl _friendlyURLNormalizerImpl =
 		new FriendlyURLNormalizerImpl();
 
 }

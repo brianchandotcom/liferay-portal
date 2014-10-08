@@ -66,6 +66,6 @@ public class MobileDriverWrapper
 		return _mobileDriver.performTouchAction(touchAction);
 	}
 
-	private MobileDriver _mobileDriver;
+	private final MobileDriver _mobileDriver;
 
 }

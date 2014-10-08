@@ -79,7 +79,7 @@ public class CallbackPreferringTransactionExecutor
 			return _throwable;
 		}
 
-		private Throwable _throwable;
+		private final Throwable _throwable;
 
 	}
 
@@ -145,8 +145,8 @@ public class CallbackPreferringTransactionExecutor
 			_methodInvocation = methodInvocation;
 		}
 
-		private MethodInvocation _methodInvocation;
-		private TransactionAttribute _transactionAttribute;
+		private final MethodInvocation _methodInvocation;
+		private final TransactionAttribute _transactionAttribute;
 
 	}
 

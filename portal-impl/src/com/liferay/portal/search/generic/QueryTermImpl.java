@@ -36,7 +36,7 @@ public class QueryTermImpl implements QueryTerm {
 		return _value;
 	}
 
-	private String _field;
-	private String _value;
+	private final String _field;
+	private final String _value;
 
 }

@@ -734,7 +734,8 @@ public class SPIAgentSerializableTest {
 
 	private static final String _SERVLET_CONTEXT_NAME = "SERVLET_CONTEXT_NAME";
 
-	private static ThreadLocal<String> _threadLocal = new ThreadLocal<String>();
+	private static final ThreadLocal<String> _threadLocal =
+		new ThreadLocal<String>();
 
 	private ClassLoader _classLoader;
 

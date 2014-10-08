@@ -37,7 +37,7 @@ public abstract class BaseSubscriptionTestCase {
 
 	protected long addContainerModel(long containerModelId) throws Exception {
 		return 0;
-	};
+	}
 
 	protected void updateBaseModel(long baseModelId) throws Exception {
 	}

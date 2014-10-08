@@ -161,7 +161,8 @@ public class PerFieldAnalyzer extends Analyzer implements Tokenizer {
 		return analyzer.tokenStream(fieldName, reader);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(PerFieldAnalyzer.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		PerFieldAnalyzer.class);
 
 	private final Analyzer _analyzer;
 	private final Map<String, ObjectValuePair<Pattern, Analyzer>> _analyzers =

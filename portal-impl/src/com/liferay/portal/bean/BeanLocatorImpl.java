@@ -180,7 +180,8 @@ public class BeanLocatorImpl implements BeanLocator {
 		return _pacl.getBean(bean, _classLoader);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(BeanLocatorImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		BeanLocatorImpl.class);
 
 	private static final PACL _pacl = new NoPACL();
 

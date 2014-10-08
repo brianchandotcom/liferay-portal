@@ -68,7 +68,8 @@ public class DynamicIncludeUtil {
 		_dynamicIncludes.open();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(DynamicIncludeUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		DynamicIncludeUtil.class);
 
 	private static final DynamicIncludeUtil _instance = new DynamicIncludeUtil();
 

@@ -118,7 +118,8 @@ public class ServletContextPool {
 		return servletContext;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(ServletContextPool.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ServletContextPool.class);
 
 	private static final ServletContextPool _instance = new ServletContextPool();
 

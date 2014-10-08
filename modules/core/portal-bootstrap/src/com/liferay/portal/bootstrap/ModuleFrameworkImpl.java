@@ -1275,7 +1275,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		frameworkWiring.refreshBundles(refreshBundles, frameworkListener);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(ModuleFrameworkImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ModuleFrameworkImpl.class);
 
 	private final Pattern _bundleSymbolicNamePattern = Pattern.compile(
 		"(" + Verifier.SYMBOLICNAME.pattern() + ")(-[0-9])?.*\\.jar");

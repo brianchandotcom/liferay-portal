@@ -161,7 +161,8 @@ public class EventsProcessorUtil {
 		lifecycleActions.remove(event);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(EventsProcessorUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		EventsProcessorUtil.class);
 
 	private static final EventsProcessorUtil _instance = new EventsProcessorUtil();
 

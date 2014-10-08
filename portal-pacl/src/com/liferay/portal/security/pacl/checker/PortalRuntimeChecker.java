@@ -611,7 +611,8 @@ public class PortalRuntimeChecker extends BaseChecker {
 
 	private static final String _PORTAL_SERVLET_CONTEXT_NAME = "portal";
 
-	private static final Log _log = LogFactoryUtil.getLog(PortalRuntimeChecker.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortalRuntimeChecker.class);
 
 	private Set<String> _classLoaderReferenceIds;
 	private Set<String> _expandoBridgeClassNames;

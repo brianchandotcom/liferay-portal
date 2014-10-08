@@ -458,7 +458,8 @@ public class ImageProcessorImpl
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(ImageProcessorImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ImageProcessorImpl.class);
 
 	private final List<Long> _fileVersionIds = new Vector<Long>();
 	private final Set<String> _imageMimeTypes = SetUtil.fromArray(

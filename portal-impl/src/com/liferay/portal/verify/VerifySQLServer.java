@@ -302,7 +302,8 @@ public class VerifySQLServer extends VerifyProcess {
 		"((systypes.name = 'ntext') OR (systypes.name = 'text') OR " +
 			"(systypes.name = 'varchar'))";
 
-	private static final Log _log = LogFactoryUtil.getLog(VerifySQLServer.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		VerifySQLServer.class);
 
 	private final List<String> _addPrimaryKeySQLs = new ArrayList<String>();
 

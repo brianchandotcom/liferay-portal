@@ -302,7 +302,8 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 				_layout.toEscapedModel(), _layoutRevision.toEscapedModel()));
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(LayoutStagingHandler.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutStagingHandler.class);
 
 	private static final Set<String> _layoutRevisionMethodNames =
 		new HashSet<String>();

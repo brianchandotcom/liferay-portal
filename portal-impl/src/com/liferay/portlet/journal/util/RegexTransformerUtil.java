@@ -61,7 +61,8 @@ public class RegexTransformerUtil {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(RegexTransformerUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		RegexTransformerUtil.class);
 
 	private static final RegexTransformerUtil _instance = new RegexTransformerUtil();
 

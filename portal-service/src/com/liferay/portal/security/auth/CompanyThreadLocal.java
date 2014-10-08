@@ -76,7 +76,8 @@ public class CompanyThreadLocal {
 		_deleteInProcess.set(deleteInProcess);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(CompanyThreadLocal.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		CompanyThreadLocal.class);
 
 	private static final ThreadLocal<Long> _companyId =
 		new AutoResetThreadLocal<Long>(

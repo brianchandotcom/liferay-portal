@@ -303,7 +303,8 @@ public class MailServiceImpl implements MailService, IdentifiableBean {
 		MessageBusUtil.sendMessage(DestinationNames.MAIL, methodHandler);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(MailServiceImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		MailServiceImpl.class);
 
 	private static final MethodKey _addForwardMethodKey = new MethodKey(
 		Hook.class, "addForward", long.class, long.class, List.class,

@@ -114,7 +114,8 @@ public class UserTrackerImpl extends UserTrackerBaseImpl {
 		return _paths;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(UserTrackerImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		UserTrackerImpl.class);
 
 	private String _emailAddress;
 	private String _fullName;

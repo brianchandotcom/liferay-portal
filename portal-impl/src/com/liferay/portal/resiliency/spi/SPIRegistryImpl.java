@@ -190,7 +190,8 @@ public class SPIRegistryImpl implements SPIRegistry {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(SPIRegistryImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		SPIRegistryImpl.class);
 
 	private SPI _errorSPI;
 	private final Set<String> _excludedPortletIds = new ConcurrentHashSet<String>();

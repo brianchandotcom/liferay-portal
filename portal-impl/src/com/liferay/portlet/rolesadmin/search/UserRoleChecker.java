@@ -77,7 +77,8 @@ public class UserRoleChecker extends RowChecker {
 		return super.isDisabled(obj);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(UserRoleChecker.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		UserRoleChecker.class);
 
 	private final Role _role;
 

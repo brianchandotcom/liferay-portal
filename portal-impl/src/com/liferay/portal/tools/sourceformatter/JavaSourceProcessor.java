@@ -480,8 +480,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						javaField, javaFieldType, content);
 				}
 
-				content = checkFinalableFieldType(
-					javaClass, javaClasses, javaField, content);
+				if (!fileName.endsWith("AppiumMobileDriverImpl.java") &&
+					!fileName.endsWith("ChromeWebDriverImpl.java")) {
+
+					content = checkFinalableFieldType(
+						javaClass, javaClasses, javaField, content);
+				}
 			}
 		}
 

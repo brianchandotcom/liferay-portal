@@ -1007,6 +1007,8 @@
 			<var name="workflowDefinitionTitle" value="Uploaded Definition" />
 		</execute>
 
+		<execute macro="KaleoDesigner#viewSourceXMLTab" />
+
 		<execute macro="KaleoDesigner#viewSourceXMLLine">
 			<var name="kdsourceXML" ><![CDATA[<![CDATA[The file sent by]]></var>
 			<var name="line" value="16" />
@@ -1026,10 +1028,12 @@
 
 		<execute macro="KaleoDesigner#editSourceXML">
 			<var name="kdsourceXML" value="INVALID" />
+			<var name="line" value="6" />
 			<var name="linePNG" value="state" />
 		</execute>
 
 		<execute macro="KaleoDesigner#viewViewTab" />
+
 		<execute macro="KaleoDesigner#viewSourceXMLTab" />
 
 		<execute macro="KaleoDesigner#viewSourceXMLLine">
@@ -1060,6 +1064,8 @@
 			<var name="workflowDefinitionTitle" value="Uploaded Definition" />
 		</execute>
 
+		<execute macro="KaleoDesigner#viewSourceXMLTab" />
+
 		<execute macro="KaleoDesigner#viewSourceXMLLine">
 			<var name="kdsourceXML" ><![CDATA[<![CDATA[A file has been submitted.]]></var>
 			<var name="line" value="15" />
@@ -1086,6 +1092,8 @@
 		<execute macro="Workflow#editWorkflowDefinitionViaWorkflowCP">
 			<var name="workflowDefinitionTitle" value="Uploaded Definition" />
 		</execute>
+
+		<execute macro="KaleoDesigner#viewSourceXMLTab" />
 
 		<execute macro="KaleoDesigner#viewSourceXMLLine">
 			<var name="kdsourceXML" ><![CDATA[<![CDATA[The file sent by]]></var>

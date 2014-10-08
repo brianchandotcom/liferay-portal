@@ -1,4 +1,5 @@
 <%--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -14,6 +15,18 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ taglib uri="/META-INF/aui.tld" prefix="aui" %>
+<%@ taglib uri="/META-INF/liferay-portlet-ext.tld" prefix="liferay-portlet" %>
+<%@ taglib uri="/META-INF/liferay-portlet_2_0.tld" prefix="portlet" %>
 
-<%@ include file="/html/portlet/password_generator/init-ext.jsp" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
+
+<%@ page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringPool" %><%@
+page import="com.liferay.util.PwdGenerator" %>
+
+<liferay-theme:defineObjects />
+<portlet:defineObjects />
+
+<%@ include file="/init-ext.jsp" %>

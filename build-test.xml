@@ -2575,10 +2575,26 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 		</if>
 
 		<if>
-			<equals arg1="${test.build.bundle.jbosseap6.1}" arg2="true" />
+			<and>
+				<equals arg1="${test.build.bundle.jbosseap6.1}" arg2="true" />
+				<isset property="test.build.portal.war.url" />
+			</and>
 			<then>
-				<ant antfile="build-dist.xml" target="build-dist-jboss-eap-6.1" inheritAll="false" />
+				<property name="test.app.server.jboss.eap.version" value="6.1" />
+
+				<antcall target="prepare-test-bundle">
+					<param name="app.server.jboss.dir" value="${app.server.parent.dir}/jboss-eap-6.1" />
+					<param name="app.server.type" value="jboss" />
+				</antcall>
+
+				<var name="test.app.server.jboss.eap.version" unset="true" />
 			</then>
+			<elseif>
+				<equals arg1="${test.build.bundle.jbosseap6.1}" arg2="true" />
+				<then>
+					<ant antfile="build-dist.xml" target="build-dist-jboss-eap-6.1" inheritAll="false" />
+				</then>
+			</elseif>
 		</if>
 
 		<if>
@@ -2762,9 +2778,20 @@ plugins.includes=marketplace-portlet</echo>
 
 	<target name="prepare-test-bundle">
 		<if>
-			<equals arg1="${app.server.type}" arg2="tcserver" />
+			<and>
+				<equals arg1="${app.server.type}" arg2="jboss" />
+				<equals arg1="${test.app.server.jboss.eap.version}" arg2="6.1" />
+			</and>
 			<then>
-				<ant antfile="build-dist.xml" target="unzip-tcserver" inheritAll="false" />
+				<app-server-properties-update>
+					app.server.type=jboss
+					app.server.jboss.version=6.1.0
+					app.server.jboss.dir=${app.server.parent.dir}/jboss-eap-6.1
+					app.server.jboss.zip.name=jboss-eap-6.1.0.zip
+					app.server.jboss.zip.url=http://mirrors/www.jboss.org/jbossas/downloads/jboss-eap-6.1.0.zip
+				</app-server-properties-update>
+
+				<ant antfile="build-dist.xml" target="unzip-jboss" inheritAll="false" />
 
 				<mkdir dir="dist" />
 
@@ -2774,7 +2801,7 @@ plugins.includes=marketplace-portlet</echo>
 				/>
 
 				<unzip
-					dest="${app.server.tcserver.portal.dir}"
+					dest="${app.server.jboss.portal.dir}"
 					src="dist/liferay-portal-${lp.version}.war"
 				/>
 
@@ -2786,7 +2813,7 @@ plugins.includes=marketplace-portlet</echo>
 				/>
 
 				<unzip
-					dest="${app.server.tcserver.lib.global.dir}"
+					dest="${app.server.jboss.classes.global.dir}"
 					src="liferay-portal-dependencies.zip"
 				>
 					<mapper
@@ -2798,20 +2825,79 @@ plugins.includes=marketplace-portlet</echo>
 
 				<delete file="liferay-portal-dependencies.zip" />
 
-				<copy todir="${app.server.tcserver.lib.global.dir}">
+				<copy todir="${app.server.jboss.classes.global.dir}">
 					<fileset
 						dir="lib/development"
-						includes="activation.jar,jms.jar,jta.jar,jutf7.jar,mail.jar,mysql.jar,persistence.jar,script-10.jar"
+						includes="jtds.jar,mysql.jar,postgresql.jar"
 					/>
 				</copy>
 
-				<copy todir="${app.server.tcserver.lib.global.dir}">
+				<copy
+					file="tools/servers/jboss/modules/module.xml"
+					tofile="${app.server.jboss.lib.global.dir}/module.xml"
+				/>
+
+				<delete>
 					<fileset
-						dir="lib/portal"
-						includes="ccpp.jar"
+						dir="${app.server.jboss.lib.portal.dir}"
+						includes="eclipselink.jar"
 					/>
-				</copy>
+				</delete>
+
+				<app-server-properties-reset />
 			</then>
+			<elseif>
+				<equals arg1="${app.server.type}" arg2="tcserver" />
+				<then>
+					<ant antfile="build-dist.xml" target="unzip-tcserver" inheritAll="false" />
+
+					<mkdir dir="dist" />
+
+					<get
+						dest="dist/liferay-portal-${lp.version}.war"
+						src="${test.build.portal.war.url}"
+					/>
+
+					<unzip
+						dest="${app.server.tcserver.portal.dir}"
+						src="dist/liferay-portal-${lp.version}.war"
+					/>
+
+					<delete dir="dist" />
+
+					<get
+						dest="liferay-portal-dependencies.zip"
+						src="${test.build.portal.dependencies.zip.url}"
+					/>
+
+					<unzip
+						dest="${app.server.tcserver.lib.global.dir}"
+						src="liferay-portal-dependencies.zip"
+					>
+						<mapper
+							from="[^/]+/(.*)"
+							to="\1"
+							type="regexp"
+						/>
+					</unzip>
+
+					<delete file="liferay-portal-dependencies.zip" />
+
+					<copy todir="${app.server.tcserver.lib.global.dir}">
+						<fileset
+							dir="lib/development"
+							includes="activation.jar,jms.jar,jta.jar,jutf7.jar,mail.jar,mysql.jar,persistence.jar,script-10.jar"
+						/>
+					</copy>
+
+					<copy todir="${app.server.tcserver.lib.global.dir}">
+						<fileset
+							dir="lib/portal"
+							includes="ccpp.jar"
+						/>
+					</copy>
+				</then>
+			</elseif>
 			<elseif>
 				<equals arg1="${app.server.type}" arg2="weblogic" />
 				<then>

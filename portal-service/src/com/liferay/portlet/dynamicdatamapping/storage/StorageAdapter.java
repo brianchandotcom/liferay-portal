@@ -70,6 +70,8 @@ public interface StorageAdapter {
 			long ddmStructureId, long[] classPKs, List<String> fieldNames)
 		throws StorageException;
 
+	public String getStorageType();
+
 	public List<Fields> query(
 			long ddmStructureId, List<String> fieldNames, Condition condition,
 			OrderByComparator<Fields> orderByComparator)

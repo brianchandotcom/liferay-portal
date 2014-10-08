@@ -54,6 +54,11 @@ import java.util.Map;
 public class XMLStorageAdapter extends BaseStorageAdapter {
 
 	@Override
+	public String getStorageType() {
+		return StorageType.XML.toString();
+	}
+
+	@Override
 	protected long doCreate(
 			long companyId, long ddmStructureId, Fields fields,
 			ServiceContext serviceContext)

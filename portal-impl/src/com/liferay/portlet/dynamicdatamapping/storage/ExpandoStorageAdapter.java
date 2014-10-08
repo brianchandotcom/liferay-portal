@@ -73,6 +73,11 @@ import org.springframework.expression.spel.support.StandardEvaluationContext;
 public class ExpandoStorageAdapter extends BaseStorageAdapter {
 
 	@Override
+	public String getStorageType() {
+		return StorageType.EXPANDO.toString();
+	}
+
+	@Override
 	protected long doCreate(
 			long companyId, long ddmStructureId, Fields fields,
 			ServiceContext serviceContext)

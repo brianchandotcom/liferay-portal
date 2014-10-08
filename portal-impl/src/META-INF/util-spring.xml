@@ -997,23 +997,22 @@
 			</map>
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.dynamicdatamapping.storage.StorageEngine" class="com.liferay.portlet.dynamicdatamapping.storage.StorageEngineImpl">
-		<property name="defaultStorageAdapter">
-			<bean class="com.liferay.portlet.dynamicdatamapping.storage.XMLStorageAdapter" />
-		</property>
+	<bean id="com.liferay.portlet.dynamicdatamapping.storage.StorageAdapterRegistry" class="com.liferay.portlet.dynamicdatamapping.storage.StorageAdapterRegistryImpl">
+		<property name="defaultStorageType" value="xml" />
 		<property name="storageAdapters">
-			<map>
-				<entry key="expando">
-					<bean class="com.liferay.portlet.dynamicdatamapping.storage.ExpandoStorageAdapter" />
-				</entry>
-				<entry key="xml">
-					<bean class="com.liferay.portlet.dynamicdatamapping.storage.XMLStorageAdapter" />
-				</entry>
-			</map>
+			<list>
+				<bean class="com.liferay.portlet.dynamicdatamapping.storage.ExpandoStorageAdapter" />
+				<bean class="com.liferay.portlet.dynamicdatamapping.storage.XMLStorageAdapter" />
+			</list>
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.dynamicdatamapping.storage.StorageAdapterRegistryUtil" class="com.liferay.portlet.dynamicdatamapping.storage.StorageAdapterRegistryUtil">
+		<property name="storageAdapterRegistry" ref="com.liferay.portlet.dynamicdatamapping.storage.StorageAdapterRegistry" />
+	</bean>
 	<bean id="com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil" class="com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil">
-		<property name="storageEngine" ref="com.liferay.portlet.dynamicdatamapping.storage.StorageEngine" />
+		<property name="storageEngine">
+			<bean class="com.liferay.portlet.dynamicdatamapping.storage.StorageEngineImpl" />
+		</property>
 	</bean>
 	<bean id="com.liferay.portlet.dynamicdatamapping.storage.query.ConditionFactoryUtil" class="com.liferay.portlet.dynamicdatamapping.storage.query.ConditionFactoryUtil">
 		<property name="conditionFactory">

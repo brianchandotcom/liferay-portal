@@ -437,13 +437,4 @@
 	<bean id="com.liferay.portlet.trash.service.persistence.TrashEntryPersistence" class="com.liferay.portlet.trash.service.persistence.impl.TrashEntryPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.trash.service.TrashVersionLocalService" class="com.liferay.portlet.trash.service.impl.TrashVersionLocalServiceImpl" />
 	<bean id="com.liferay.portlet.trash.service.persistence.TrashVersionPersistence" class="com.liferay.portlet.trash.service.persistence.impl.TrashVersionPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.wiki.service.WikiNodeLocalService" class="com.liferay.portlet.wiki.service.impl.WikiNodeLocalServiceImpl" />
-	<bean id="com.liferay.portlet.wiki.service.WikiNodeService" class="com.liferay.portlet.wiki.service.impl.WikiNodeServiceImpl" />
-	<bean id="com.liferay.portlet.wiki.service.persistence.WikiNodePersistence" class="com.liferay.portlet.wiki.service.persistence.impl.WikiNodePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.wiki.service.WikiPageLocalService" class="com.liferay.portlet.wiki.service.impl.WikiPageLocalServiceImpl" />
-	<bean id="com.liferay.portlet.wiki.service.WikiPageService" class="com.liferay.portlet.wiki.service.impl.WikiPageServiceImpl" />
-	<bean id="com.liferay.portlet.wiki.service.persistence.WikiPagePersistence" class="com.liferay.portlet.wiki.service.persistence.impl.WikiPagePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.wiki.service.persistence.WikiPageFinder" class="com.liferay.portlet.wiki.service.persistence.impl.WikiPageFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.wiki.service.WikiPageResourceLocalService" class="com.liferay.portlet.wiki.service.impl.WikiPageResourceLocalServiceImpl" />
-	<bean id="com.liferay.portlet.wiki.service.persistence.WikiPageResourcePersistence" class="com.liferay.portlet.wiki.service.persistence.impl.WikiPageResourcePersistenceImpl" parent="basePersistence" />
 </beans>

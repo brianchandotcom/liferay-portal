@@ -833,7 +833,6 @@ AUI.add(
 						portletURL.setLifecycle(Liferay.PortletURL.ACTION_PHASE);
 
 						portletURL.setParameter('cmd', 'add_temp');
-						portletURL.setParameter('folderId', 'someFolderId');
 						portletURL.setParameter('p_auth', Liferay.authToken);
 						portletURL.setParameter('struts_action', '/journal/upload_document');
 

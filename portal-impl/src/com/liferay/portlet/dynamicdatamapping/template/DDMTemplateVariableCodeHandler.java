@@ -95,7 +95,7 @@ public class DDMTemplateVariableCodeHandler
 
 		template.processTemplate(writer);
 
-		return writer.toString();
+		return StringUtil.trim(writer.toString());
 	}
 
 	protected TemplateResource getTemplateResource(String resource) {

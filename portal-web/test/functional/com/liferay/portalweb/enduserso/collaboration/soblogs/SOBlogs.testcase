@@ -1113,6 +1113,8 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
+		<execute macro="SOUserBar#showEditControls" />
+
 		<execute macro="BlogsEntry#editContentInlinePG">
 			<var name="entryContent" value="${entryContentOriginal}" />
 			<var name="entryContentEdit" value="${entryContentEdit}" />

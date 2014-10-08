@@ -773,7 +773,7 @@
 			<var name="eventType" value="${eventType}" />
 			<var name="optionSet" value="true" />
 			<var name="permissionDefinitonKey" value="${permissionDefinitonKey}" />
-			<var name="permissionsMoreOptions" value="true" />
+			<var name="permissions" value="true" />
 			<var name="roleName" value="${roleName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1039,7 +1039,7 @@
 			<var name="eventType" value="${eventType}" />
 			<var name="optionSet" value="true" />
 			<var name="permissionDefinitonKey" value="${permissionDefinitonKey}" />
-			<var name="permissionsMoreOptions" value="true" />
+			<var name="permissions" value="true" />
 			<var name="roleName" value="${roleName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />

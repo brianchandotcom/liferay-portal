@@ -120,6 +120,7 @@
 
 		.document-upload-progress {
 			height: 6px;
+			margin-top: -7px;
 		}
 
 		.lfr-ddm-repeatable-add-button, .lfr-ddm-repeatable-delete-button {

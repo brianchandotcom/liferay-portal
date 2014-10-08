@@ -27,7 +27,7 @@
 		</a>
 	</div>
 
-	<@aui.input helpMessage=escape(fieldStructure.tip) inlineField=true label=escape(label) name="${namespacedFieldName}Title" readonly="readonly" style="margin-bottom:0" type="text" value=(name?has_content)?string(name, languageUtil.get(locale, "drag-file-here"))>
+	<@aui.input helpMessage=escape(fieldStructure.tip) inlineField=true label=escape(label) name="${namespacedFieldName}Title" readonly="readonly" type="text" value=(name?has_content)?string(name, languageUtil.get(locale, "drag-file-here"))>
 		<#if required>
 			<@aui.validator name="required" />
 		</#if>

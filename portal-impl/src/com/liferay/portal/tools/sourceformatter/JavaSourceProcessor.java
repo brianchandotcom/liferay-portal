@@ -216,7 +216,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		Type javaClassType = javaClass.asType();
 
 		if ((javaClass.isEnum() && javaClassType.equals(javaField.getType())) ||
-			javaField.isFinal() || !javaField.isPrivate()) {
+			javaField.isFinal()) {
 
 			return content;
 		}
@@ -406,42 +406,33 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return ifClause;
 	}
 
-	protected String checkImmutableAndStaticableFieldTypes(
-		com.thoughtworks.qdox.model.JavaClass javaClass, JavaField javaField,
-		String content) {
+	protected String checkImmutableFieldTypes(
+		JavaField javaField, Type javaFieldType, String content) {
 
-		Type type = javaField.getType();
+		String oldName = javaField.getName();
 
-		String fieldTypeName = type.getFullyQualifiedName();
-
-		if (_immutableFieldTypes == null) {
-			_immutableFieldTypes = getImmutableFieldTypes();
-		}
-
-		if (!javaField.isPrivate() || !javaField.isFinal() ||
-			!_immutableFieldTypes.contains(fieldTypeName)) {
+		if (javaFieldType.isArray() || !javaField.isStatic() ||
+			oldName.equals("serialVersionUID")) {
 
 			return content;
 		}
 
-		String oldName = javaField.getName();
+		Matcher matcher = _camelCasePattern.matcher(oldName);
 
-		if (!type.isArray() && javaField.isStatic() &&
-			!oldName.equals("serialVersionUID")) {
+		String newName = matcher.replaceAll("$1_$2");
 
-			Matcher matcher = _camelCasePattern.matcher(oldName);
+		newName = StringUtil.toUpperCase(newName);
 
-			String newName = matcher.replaceAll("$1_$2");
-
-			newName = StringUtil.toUpperCase(newName);
-
-			if (newName.charAt(0) != CharPool.UNDERLINE) {
-				newName = StringPool.UNDERLINE.concat(newName);
-			}
-
-			content = content.replaceAll(
-				"(?<=[\\W&&[^.\"]])(" + oldName + ")\\b", newName);
+		if (newName.charAt(0) != CharPool.UNDERLINE) {
+			newName = StringPool.UNDERLINE.concat(newName);
 		}
+
+		return content.replaceAll(
+			"(?<=[\\W&&[^.\"]])(" + oldName + ")\\b", newName);
+	}
+
+	protected String checkStaticableFieldTypes(
+		JavaField javaField, Type javaFieldType, String content) {
 
 		String[] lines = StringUtil.splitLines(content);
 
@@ -449,7 +440,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			javaField.getInitializationExpression());
 
 		if (javaField.isStatic() || initializationExpression.isEmpty() ||
-			type.isArray()) {
+			javaFieldType.isArray()) {
 
 			return content;
 		}
@@ -493,8 +484,24 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		for (com.thoughtworks.qdox.model.JavaClass javaClass: javaClasses) {
 			for (JavaField javaField : javaClass.getFields()) {
-				content = checkImmutableAndStaticableFieldTypes(
-					javaClass, javaField, content);
+				if (!javaField.isPrivate()) {
+					continue;
+				}
+
+				Type javaFieldType = javaField.getType();
+
+				String fieldTypeName = javaFieldType.getFullyQualifiedName();
+
+				Set<String> immutableFieldTypes = getImmutableFieldTypes();
+
+				if (javaField.isFinal() &&
+					immutableFieldTypes.contains(fieldTypeName)) {
+
+					content = checkImmutableFieldTypes(
+						javaField, javaFieldType, content);
+					content = checkStaticableFieldTypes(
+						javaField, javaFieldType, content);
+				}
 
 				content = checkFinalableFieldTypes(
 					javaClass, javaClasses, javaField, content);
@@ -2301,7 +2308,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected Set<String> getImmutableFieldTypes() {
-		Set<String> immutableFieldTypes = SetUtil.fromArray(
+		if (_immutableFieldTypes != null) {
+			return _immutableFieldTypes;
+		}
+
+		_immutableFieldTypes = SetUtil.fromArray(
 			new String[] {
 				"boolean", "byte", "char", "double", "float", "int", "long",
 				"short", "java.lang.Boolean", "java.lang.Byte",
@@ -2312,9 +2323,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				"java.lang.reflect.Method"
 			});
 
-		immutableFieldTypes.addAll(getPropertyList("immutable.field.types"));
+		_immutableFieldTypes.addAll(getPropertyList("immutable.field.types"));
 
-		return immutableFieldTypes;
+		return _immutableFieldTypes;
 	}
 
 	protected List<String> getImportedExceptionClassNames(

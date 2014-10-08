@@ -27,7 +27,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
  * @author Igor Spasic
  */
 public class JSONWebServiceActionsManagerTest
-		extends BaseJSONWebServiceTestCase {
+	extends BaseJSONWebServiceTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -41,7 +41,7 @@ public class JSONWebServiceActionsManagerTest
 		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
 			"/foo/hello");
 
-		mockHttpServletRequest.setParameter("a", "123");
+		mockHttpServletRequest.setParameter("i1", "123");
 
 		doTestOverloadedMethodsAndDefaultParams(
 			mockHttpServletRequest, "hello:123");
@@ -52,8 +52,8 @@ public class JSONWebServiceActionsManagerTest
 		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
 			"/foo/hello");
 
-		mockHttpServletRequest.setParameter("a", "123");
-		mockHttpServletRequest.setParameter("b", "456");
+		mockHttpServletRequest.setParameter("i1", "123");
+		mockHttpServletRequest.setParameter("i2", "456");
 
 		doTestOverloadedMethodsAndDefaultParams(
 			mockHttpServletRequest, "hello:123");
@@ -64,9 +64,9 @@ public class JSONWebServiceActionsManagerTest
 		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
 			"/foo/hello");
 
-		mockHttpServletRequest.setParameter("a", "123");
-		mockHttpServletRequest.setParameter("b", "456");
-		mockHttpServletRequest.setParameter("c", "789");
+		mockHttpServletRequest.setParameter("i1", "123");
+		mockHttpServletRequest.setParameter("i2", "456");
+		mockHttpServletRequest.setParameter("i3", "789");
 
 		doTestOverloadedMethodsAndDefaultParams(
 			mockHttpServletRequest, "hello:123:456:789");
@@ -77,9 +77,9 @@ public class JSONWebServiceActionsManagerTest
 		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
 			"/foo/hello");
 
-		mockHttpServletRequest.setParameter("a", "123");
-		mockHttpServletRequest.setParameter("b", "456");
-		mockHttpServletRequest.setParameter("d", "abc");
+		mockHttpServletRequest.setParameter("i1", "123");
+		mockHttpServletRequest.setParameter("i2", "456");
+		mockHttpServletRequest.setParameter("s", "abc");
 
 		doTestOverloadedMethodsAndDefaultParams(
 			mockHttpServletRequest, "hello:123:456>abc");
@@ -90,7 +90,7 @@ public class JSONWebServiceActionsManagerTest
 			String expectedString)
 		throws Exception {
 
-		mockHttpServletRequest.setAttribute("c", "qwe");
+		mockHttpServletRequest.setAttribute("a", "qwe");
 
 		JSONWebServiceAction jsonWebServiceAction =
 			JSONWebServiceActionsManagerUtil.getJSONWebServiceAction(

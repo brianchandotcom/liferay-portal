@@ -32,4 +32,5 @@ public class OrganizationIndexerPostProcessor extends BaseIndexerPostProcessor {
 	}
 
 	private static final AtomicBoolean _INSTANTIATED = new AtomicBoolean();
+
 }

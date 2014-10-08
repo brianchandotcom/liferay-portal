@@ -459,7 +459,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		com.thoughtworks.qdox.model.JavaClass[] javaClasses =
 			javaDocBuilder.getClasses();
 
-		for (com.thoughtworks.qdox.model.JavaClass javaClass: javaClasses) {
+		for (com.thoughtworks.qdox.model.JavaClass javaClass : javaClasses) {
 			for (JavaField javaField : javaClass.getFields()) {
 				if (!javaField.isPrivate()) {
 					continue;
@@ -1822,8 +1822,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 						if (!trimmedLine.startsWith("//")) {
 							if (previousLine.endsWith(StringPool.COMMA) &&
-								 previousLine.contains(
-									 StringPool.OPEN_PARENTHESIS) &&
+								previousLine.contains(
+									StringPool.OPEN_PARENTHESIS) &&
 								!previousLine.contains("for (") &&
 								(lineLeadingTabCount >
 									previousLineLeadingTabCount)) {
@@ -1905,7 +1905,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 										lineCount);
 							}
 
-							if ((diff == 2) && 
+							if ((diff == 2) &&
 								(previousLineLeadingTabCount > 0) &&
 								line.endsWith(StringPool.SEMICOLON) &&
 								!previousLine.contains(

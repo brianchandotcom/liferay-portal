@@ -29,11 +29,9 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.RepositoryEntry;
-import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -160,16 +158,7 @@ public class RepositoryStagedModelDataHandler
 							repository.getName());
 				}
 
-				long classNameId = 0;
-
-				if (existingRepository != null) {
-					classNameId = existingRepository.getClassNameId();
-				}
-
-				if ((existingRepository == null) ||
-					(classNameId !=
-						PortalUtil.getClassNameId(LiferayRepository.class))) {
-
+				if (existingRepository == null) {
 					serviceContext.setUuid(repository.getUuid());
 
 					importedRepository =

@@ -149,6 +149,11 @@ public class StorageEngineImpl implements StorageEngine {
 	}
 
 	@Override
+	public String getStorageType() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public List<Fields> query(
 			long ddmStructureId, List<String> fieldNames, Condition condition,
 			OrderByComparator<Fields> orderByComparator)

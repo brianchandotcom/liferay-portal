@@ -23,7 +23,6 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalService
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.query.Condition;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -176,16 +175,6 @@ public class StorageEngineImpl implements StorageEngine {
 		return storageAdapter.queryCount(ddmStructureId, condition);
 	}
 
-	public void setDefaultStorageAdapter(StorageAdapter defaultStorageAdapter) {
-		_defaultStorageAdapter = defaultStorageAdapter;
-	}
-
-	public void setStorageAdapters(
-		Map<String, StorageAdapter> storageAdapters) {
-
-		_storageAdapters = storageAdapters;
-	}
-
 	@Override
 	public void update(
 			long classPK, Fields fields, boolean mergeFields,
@@ -225,13 +214,14 @@ public class StorageEngineImpl implements StorageEngine {
 	}
 
 	protected StorageAdapter getStorageAdapter(String storageType) {
-		StorageAdapter storageAdapter = _storageAdapters.get(storageType);
+		StorageAdapter storageAdapter =
+			StorageAdapterRegistryUtil.getStorageAdapter(storageType);
 
-		if (storageAdapter == null) {
-			storageAdapter = _defaultStorageAdapter;
+		if (storageAdapter != null) {
+			return storageAdapter;
 		}
 
-		return storageAdapter;
+		return StorageAdapterRegistryUtil.getDefaultStorageAdapter();
 	}
 
 	protected StorageAdapter getStructureStorageAdapter(long ddmStructureId)
@@ -250,9 +240,5 @@ public class StorageEngineImpl implements StorageEngine {
 			throw new StorageException(e);
 		}
 	}
-
-	private StorageAdapter _defaultStorageAdapter;
-	private Map<String, StorageAdapter> _storageAdapters =
-		new HashMap<String, StorageAdapter>();
 
 }

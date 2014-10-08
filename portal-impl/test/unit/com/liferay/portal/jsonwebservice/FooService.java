@@ -134,6 +134,18 @@ public class FooService {
 		return "world";
 	}
 
+	public static String hello(int a) {
+		return "hello:" + a;
+	}
+
+	public static String hello(int a, int b, int c) {
+		return "hello:" + a + ":" + b + ":" + c;
+	}
+
+	public static String hello(int a, int b, String d) {
+		return "hello:" + a + ":" + b + ">" + d;
+	}
+
 	public static String helloWorld(Integer userId, String worldName) {
 		return "Welcome " + userId + " to " + worldName;
 	}

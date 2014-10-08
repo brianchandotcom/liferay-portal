@@ -33,13 +33,13 @@ public class JSONWebServiceActionsManagerTest
 	public static void setUpClass() throws Exception {
 		initPortalServices();
 
-		registerAction(new AbcService());
+		registerAction(new FooService());
 	}
 
 	@Test
 	public void testOverloadedMethodsAndDefaultParams1() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
-			"/abc/hello");
+			"/foo/hello");
 
 		mockHttpServletRequest.setParameter("a", "123");
 
@@ -50,7 +50,7 @@ public class JSONWebServiceActionsManagerTest
 	@Test
 	public void testOverloadedMethodsAndDefaultParams2() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
-			"/abc/hello");
+			"/foo/hello");
 
 		mockHttpServletRequest.setParameter("a", "123");
 		mockHttpServletRequest.setParameter("b", "456");
@@ -62,7 +62,7 @@ public class JSONWebServiceActionsManagerTest
 	@Test
 	public void testOverloadedMethodsAndDefaultParams3() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
-			"/abc/hello");
+			"/foo/hello");
 
 		mockHttpServletRequest.setParameter("a", "123");
 		mockHttpServletRequest.setParameter("b", "456");
@@ -75,7 +75,7 @@ public class JSONWebServiceActionsManagerTest
 	@Test
 	public void testOverloadedMethodsAndDefaultParams4() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
-			"/abc/hello");
+			"/foo/hello");
 
 		mockHttpServletRequest.setParameter("a", "123");
 		mockHttpServletRequest.setParameter("b", "456");

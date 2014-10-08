@@ -773,9 +773,7 @@ AUI.add(
 
 							value = AJSON.parse(value);
 
-							var inputName = instance.getInputName();
-
-							var coordinatesNode = A.one('#' + inputName + 'Coordinates');
+							var coordinatesNode = A.one('#' + instance.getInputName() + 'Coordinates');
 
 							coordinatesNode.html([value.latitude, value.longitude].join(', '));
 						}

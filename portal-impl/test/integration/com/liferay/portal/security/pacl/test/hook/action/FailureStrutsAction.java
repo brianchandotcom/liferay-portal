@@ -15,6 +15,7 @@
 package com.liferay.portal.security.pacl.test.hook.action;
 
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
+
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.servlet.http.HttpServletRequest;

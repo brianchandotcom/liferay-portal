@@ -14,15 +14,13 @@
 
 package com.liferay.view.extension.resolver;
 
+import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.TagIdResolver;
 
-import java.lang.reflect.InvocationTargetException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.beanutils.PropertyUtils;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -41,15 +39,13 @@ public class FormTagIdResolver implements TagIdResolver {
 		Object jspTag) {
 
 		String portletId = PortalUtil.getPortletId(request);
+		String name = BeanPropertiesUtil.getStringSilent(jspTag, "name");
 
-		try {
-			return portletId + "-" + PropertyUtils.getProperty(jspTag, "name");
-		} catch (
-			IllegalAccessException | InvocationTargetException |
-				NoSuchMethodException e) {
-
+		if (Validator.isNull(portletId) || Validator.isNull(name)) {
 			return null;
 		}
+
+		return portletId.concat("-").concat(name);
 	}
 
 }

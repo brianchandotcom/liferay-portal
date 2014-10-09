@@ -17,15 +17,7 @@
 <%@ include file="/html/portlet/admin/init.jsp" %>
 
 <%
-List<ConvertProcess> convertProcesses = new ArrayList<ConvertProcess>();
-
-for (String convertProcessClassName : PropsValues.CONVERT_PROCESSES) {
-	ConvertProcess convertProcess = (ConvertProcess)InstancePool.get(convertProcessClassName);
-
-	if (convertProcess.isEnabled()) {
-		convertProcesses.add(convertProcess);
-	}
-}
+Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConvertProcesses();
 %>
 
 <liferay-ui:error exception="<%= FileSystemStoreRootDirException.class %>" message="the-root-directories-of-the-selected-file-system-stores-are-not-valid" />

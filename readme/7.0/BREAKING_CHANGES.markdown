@@ -539,3 +539,38 @@ This change was made in to avoid duplication of an implementable interface in
 the system. Duplication can cause `ClassCastException`s.
 
 ---------------------------------------
+
+### ConvertProcess's are no longer declared in portal.properties but contributed through OSGi modules
+- **Date:** 2014-Oct-9
+- **JIRA Ticket:** LPS-50604
+
+#### What changed?
+
+The class com.liferay.portal.convert.ConvertProcess has been renamed to 
+com.liferay.portal.convert.BaseConvertProcess while the former has been 
+converted to an interface.
+
+The portal.properties key convert.processes no longer exists and 
+ConvertProcess implementations must be registered as OSGi components.
+
+#### Who is affected?
+
+This will affect any implementations of ConvertProcess. Until version 6.2
+this type of services could only be implemented with EXT plugins given that
+they needed to extend from a class inside portal-impl.
+
+#### How should I update my code?
+
+Replace `extends com.liferay.portal.convert.ConvertProcess` with
+`extends com.liferay.portal.convert.BaseConvertProcess` and annotate the
+class with `@Component(service=ConvertProcess.class)`.
+
+Then turn your EXT plugin into an OSGi bundle and deploy it to the portal.
+You should see your convert process in the configuration UI.
+
+#### Why was this change made?
+
+This change is included in the ongoing strategy to modularize the Portal
+by means of an OSGi container. 
+
+---------------------------------------

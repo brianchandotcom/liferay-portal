@@ -185,25 +185,26 @@ public class ShoppingUtil {
 
 		String[] categoryNames = StringUtil.split(coupon.getLimitCategories());
 
-		List<Long> categoryIds = new ArrayList<Long>();
+		Set<Long> categoryIds = new HashSet<Long>();
 
 		for (String categoryName : categoryNames) {
 			ShoppingCategory category =
 				ShoppingCategoryLocalServiceUtil.getCategory(
 					coupon.getGroupId(), categoryName);
 
+			List<Long> subcategoryIds = new ArrayList<Long>();
+
+			ShoppingCategoryLocalServiceUtil.getSubcategoryIds(
+				subcategoryIds, category.getGroupId(),
+				category.getCategoryId());
+
 			categoryIds.add(category.getCategoryId());
+			categoryIds.addAll(subcategoryIds);
 		}
 
 		String[] skus = StringUtil.split(coupon.getLimitSkus());
 
 		if ((categoryIds.size() > 0) || (skus.length > 0)) {
-			Set<Long> categoryIdsSet = new HashSet<Long>();
-
-			for (Long categoryId : categoryIds) {
-				categoryIdsSet.add(categoryId);
-			}
-
 			Set<String> skusSet = new HashSet<String>();
 
 			for (String sku : skus) {
@@ -221,8 +222,8 @@ public class ShoppingUtil {
 
 				ShoppingItem item = cartItem.getItem();
 
-				if ((!categoryIdsSet.isEmpty() &&
-					 categoryIdsSet.contains(item.getCategoryId())) ||
+				if ((!categoryIds.isEmpty() &&
+					 categoryIds.contains(item.getCategoryId())) ||
 					(!skusSet.isEmpty() && skusSet.contains(item.getSku()))) {
 
 					newItems.put(cartItem, count);

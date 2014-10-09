@@ -790,6 +790,13 @@
 			<var name="workflowRestriction" value="Specific Restrictions" />
 		</execute>
 
+		<execute macro="WebContentFolder#configureWorkflowCP">
+			<var name="folderName" value="WC Folder Name" />
+			<var name="structureName" value="Basic Web Content" />
+			<var name="workflowDefinition" value="No Workflow" />
+			<var name="workflowRestriction" value="Specific Restrictions" />
+		</execute>
+
 		<execute macro="WebContentFolder#gotoCP">
 			<var name="folderName" value="WC Folder Name" />
 			<var name="webContentTitle" value="WC Folder Name" />

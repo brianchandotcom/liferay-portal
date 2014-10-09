@@ -25,12 +25,12 @@
 </tr>
 <tr>
 	<td>TITLE_FIELD</td>
-	<td>//input[@id='_33_title']</td>
+	<td>//div[@id='_33_titleEditor']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_FIELD</td>
-	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td>//div[@id='_33_contentEditor']</td>
 	<td></td>
 </tr>
 <tr>

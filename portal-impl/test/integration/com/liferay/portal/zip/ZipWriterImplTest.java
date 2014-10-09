@@ -81,6 +81,23 @@ public class ZipWriterImplTest {
 	}
 
 	@Test
+	public void testAddEntryFromBytesThatAreEmpty() throws Exception {
+		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
+
+		FileUtil.copyFile(_getDependencyAsFile(_ZIP_FILE_PATH), tempZipFile);
+
+		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
+
+		byte[] emptyBytes = new byte[0];
+
+		zipWriter.addEntry("empty.txt", emptyBytes);
+
+		ZipReader zipReader = new ZipReaderImpl(tempZipFile);
+
+		Assert.assertEquals("", zipReader.getEntryAsString("empty.txt"));
+	}
+
+	@Test
 	public void testAddEntryFromInputStream() throws Exception {
 		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
 
@@ -152,6 +169,23 @@ public class ZipWriterImplTest {
 	}
 
 	@Test
+	public void testAddEntryFromStringBuilderThatIsEmpty() throws Exception {
+		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
+
+		FileUtil.copyFile(_getDependencyAsFile(_ZIP_FILE_PATH), tempZipFile);
+
+		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
+
+		StringBuilder emptyStringBuilder = new StringBuilder();
+
+		zipWriter.addEntry("empty.txt", emptyStringBuilder);
+
+		ZipReader zipReader = new ZipReaderImpl(tempZipFile);
+
+		Assert.assertEquals("", zipReader.getEntryAsString("empty.txt"));
+	}
+
+	@Test
 	public void testAddEntryFromStringBuilderThatIsNull() throws Exception {
 		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
 
@@ -166,6 +200,23 @@ public class ZipWriterImplTest {
 		ZipReader zipReader = new ZipReaderImpl(tempZipFile);
 
 		Assert.assertNull(zipReader.getEntryAsString("null.txt"));
+	}
+
+	@Test
+	public void testAddEntryFromStringThatIsEmpty() throws Exception {
+		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
+
+		FileUtil.copyFile(_getDependencyAsFile(_ZIP_FILE_PATH), tempZipFile);
+
+		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
+
+		String emptyString = "";
+
+		zipWriter.addEntry("empty.txt", emptyString);
+
+		ZipReader zipReader = new ZipReaderImpl(tempZipFile);
+
+		Assert.assertEquals("", zipReader.getEntryAsString("empty.txt"));
 	}
 
 	@Test

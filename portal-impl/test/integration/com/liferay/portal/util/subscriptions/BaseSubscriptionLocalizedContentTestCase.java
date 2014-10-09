@@ -62,7 +62,6 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 		throws Exception {
 
 		localizedContents.put(LocaleUtil.GERMANY, GERMAN_BODY);
-		localizedContents.put(LocaleUtil.SPAIN, SPANISH_BODY);
 
 		setBaseModelSubscriptionBodyPreferences(
 			getSubscriptionAddedBodyPreferenceName());
@@ -77,27 +76,19 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 			"Body", GERMAN_BODY);
 
 		Assert.assertEquals(1, messages.size());
-
-		LocaleThreadLocal.setDefaultLocale(LocaleUtil.SPAIN);
-
-		addBaseModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
-
-		messages = MailServiceTestUtil.getMailMessages("Body", SPANISH_BODY);
-
-		Assert.assertEquals(1, messages.size());
 	}
+
 
 	@Test
 	public void testSubscriptionLocalizedContentWhenUpdatingBaseModel()
 		throws Exception {
 
-		localizedContents.put(LocaleUtil.GERMANY, GERMAN_BODY);
 		localizedContents.put(LocaleUtil.SPAIN, SPANISH_BODY);
 
 		setBaseModelSubscriptionBodyPreferences(
 			getSubscriptionUpdatedBodyPreferenceName());
 
-		LocaleThreadLocal.setDefaultLocale(LocaleUtil.GERMANY);
+		LocaleThreadLocal.setDefaultLocale(LocaleUtil.SPAIN);
 
 		long baseModelId = addBaseModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
@@ -105,20 +96,8 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 
 		updateBaseModel(baseModelId);
 
-		List<MailMessage> messages = MailServiceTestUtil.getMailMessages(
-			"Body", GERMAN_BODY);
-
-		Assert.assertEquals(1, messages.size());
-
-		LocaleThreadLocal.setDefaultLocale(LocaleUtil.SPAIN);
-
-		baseModelId = addBaseModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
-
-		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
-
-		updateBaseModel(baseModelId);
-
-		messages = MailServiceTestUtil.getMailMessages("Body", SPANISH_BODY);
+		List<MailMessage>  messages = MailServiceTestUtil.getMailMessages(
+			"Body", SPANISH_BODY);
 
 		Assert.assertEquals(1, messages.size());
 	}

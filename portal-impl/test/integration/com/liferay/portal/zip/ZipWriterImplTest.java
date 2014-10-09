@@ -320,6 +320,15 @@ public class ZipWriterImplTest {
 		zipWriter.finish();
 	}
 
+	@Test
+	public void testFinishIfZipFileIsNull() throws Exception {
+		ZipWriter zipWriter = new ZipWriterImpl(null);
+
+		byte[] bytes = zipWriter.finish();
+
+		Assert.assertEquals(0, bytes.length);
+	}
+
 	/**
 	 * Throws an ArchiveFileNotFoundException if and only if this file is a
 	 * true archive file, not just a false positive, including RAES

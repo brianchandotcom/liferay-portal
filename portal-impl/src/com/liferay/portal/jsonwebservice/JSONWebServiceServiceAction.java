@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 
 import java.lang.reflect.InvocationTargetException;
@@ -176,7 +177,9 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 			return new JSONWebServiceInvokerAction(request);
 		}
 
-		if (request.getParameter("discover") != null) {
+		if (PropsValues.JSONWS_WEB_SERVICE_API_INFO_ENABLED &&
+			(request.getParameter("discover") != null)) {
+
 			return new JSONWebServiceDiscoverAction(request);
 		}
 

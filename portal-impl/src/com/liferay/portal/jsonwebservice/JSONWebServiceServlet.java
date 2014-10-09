@@ -29,6 +29,7 @@ import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.struts.JSONAction;
 import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
@@ -60,8 +61,9 @@ public class JSONWebServiceServlet extends JSONServlet {
 
 		String path = GetterUtil.getString(request.getPathInfo());
 
-		if ((!path.equals(StringPool.BLANK) &&
-			 !path.equals(StringPool.SLASH)) ||
+		if (!PropsValues.JSONWS_WEB_SERVICE_API_INFO_ENABLED ||
+			(!path.equals(StringPool.BLANK) &&
+				!path.equals(StringPool.SLASH)) ||
 			(request.getParameter("discover") != null)) {
 
 			Locale locale = PortalUtil.getLocale(request, response, true);

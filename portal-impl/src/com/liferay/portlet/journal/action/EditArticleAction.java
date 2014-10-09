@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -429,29 +428,6 @@ public class EditArticleAction extends PortletAction {
 		portletURL.setWindowState(actionRequest.getWindowState());
 
 		return portletURL.toString();
-	}
-
-	protected void removeArticlesLocale(ActionRequest actionRequest)
-		throws Exception {
-
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-
-		String[] removeArticleLocaleIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "articleIds"));
-
-		for (String removeArticleLocaleId : removeArticleLocaleIds) {
-			int pos = removeArticleLocaleId.lastIndexOf(VERSION_SEPARATOR);
-
-			String articleId = removeArticleLocaleId.substring(0, pos);
-			double version = GetterUtil.getDouble(
-				removeArticleLocaleId.substring(
-					pos + VERSION_SEPARATOR.length()));
-			String languageId = ParamUtil.getString(
-				actionRequest, "languageId");
-
-			JournalArticleServiceUtil.removeArticleLocale(
-				groupId, articleId, version, languageId);
-		}
 	}
 
 	protected void subscribeStructure(ActionRequest actionRequest)

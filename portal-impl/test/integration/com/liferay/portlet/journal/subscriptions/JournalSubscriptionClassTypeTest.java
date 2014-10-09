@@ -82,13 +82,13 @@ public class JournalSubscriptionClassTypeTest
 
 	@Override
 	protected long addClassType() throws Exception {
-		_ddmStructure = DDMStructureTestUtil.addStructure(
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			group.getGroupId(), JournalArticle.class.getName());
 
-		_ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			group.getGroupId(), _ddmStructure.getStructureId());
+		DDMTemplateTestUtil.addTemplate(
+			group.getGroupId(), ddmStructure.getStructureId());
 
-		return _ddmStructure.getStructureId();
+		return ddmStructure.getStructureId();
 	}
 
 	@Override
@@ -125,8 +125,5 @@ public class JournalSubscriptionClassTypeTest
 
 		JournalTestUtil.updateArticleWithWorkflow(article, true);
 	}
-
-	protected DDMStructure _ddmStructure;
-	protected DDMTemplate _ddmTemplate;
 
 }

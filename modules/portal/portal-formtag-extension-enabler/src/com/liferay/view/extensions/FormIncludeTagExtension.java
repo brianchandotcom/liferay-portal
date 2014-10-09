@@ -17,6 +17,7 @@ package com.liferay.view.extensions;
 import com.liferay.kernel.servlet.taglib.IncludeTagExtension;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import java.util.EnumSet;
 
@@ -29,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Carlos Sierra Andrés
  */
 @Component(
-	immediate = true, property ={"tagId=58-fm"},
+	immediate = true, property = {"tagId=58-fm"},
 	service = IncludeTagExtension.class
 )
 public class FormIncludeTagExtension implements IncludeTagExtension {
@@ -45,7 +46,9 @@ public class FormIncludeTagExtension implements IncludeTagExtension {
 		ExtensionPoint point) {
 
 		try {
-			response.getWriter().println("<h2>extension</h2><br>");
+			PrintWriter writer = response.getWriter();
+
+			writer.println("<h2>extension</h2><br/>");
 		}
 		catch (IOException e) {
 			throw new RuntimeException(e);

@@ -24,7 +24,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <%@ page import="com.liferay.amazon.rankings.web.model.AmazonRankings" %><%@
-page import="com.liferay.amazon.rankings.web.util.AmazonRankingsConfiguration" %><%@
+page import="com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration" %><%@
 page import="com.liferay.amazon.rankings.web.util.AmazonRankingsUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.util.CharPool" %><%@
@@ -49,11 +49,8 @@ page import="javax.portlet.WindowState" %>
 <%
 WindowState windowState = liferayPortletRequest.getWindowState();
 
-AmazonRankingsConfiguration configuration = (AmazonRankingsConfiguration)renderRequest.getAttribute("configuration");
+AmazonRankingsConfiguration amazonRankingsConfiguration = (AmazonRankingsConfiguration)renderRequest.getAttribute(AmazonRankingsConfiguration.class.getName());
 
-String amazonAccessKeyId = portletPreferences.getValue("amazon.access.key.id", configuration.amazonAccessKeyId());
-String amazonAssociateTag = portletPreferences.getValue("amazon.associate.tag" , configuration.amazonAssociateTag());
-String amazonSecretAccessKey = portletPreferences.getValue("amazon.secret.access.key", configuration.amazonSecretAccessKey());
 String[] isbns = portletPreferences.getValues("isbns", configuration.isbns());
 
 NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);

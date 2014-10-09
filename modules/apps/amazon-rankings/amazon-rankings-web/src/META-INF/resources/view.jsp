@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <c:choose>
-	<c:when test="<%= Validator.isNull(amazonAccessKeyId) %>">
+	<c:when test="<%= Validator.isNull(amazonRankingsConfiguration.amazonAccessKeyId()) %>">
 		<liferay-ui:message key="please-contact-the-administrator-to-configure-an-amazon-license" />
 	</c:when>
 	<c:otherwise>
@@ -27,7 +27,7 @@
 		Set<AmazonRankings> amazonRankingsSet = new TreeSet<AmazonRankings>();
 
 		for (int i = 0; i < isbns.length; i++) {
-			AmazonRankings amazonRankings = AmazonRankingsUtil.getAmazonRankings(amazonAccessKeyId, amazonAssociateTag, amazonSecretAccessKey, isbns[i]);
+			AmazonRankings amazonRankings = AmazonRankingsUtil.getAmazonRankings(amazonRankingsConfiguration.amazonAccessKeyId(), amazonRankingsConfiguration.amazonAssociateTag(), amazonRankingsConfiguration.amazonSecretAccessKey(), isbns[i]);
 
 			if (amazonRankings != null) {
 				amazonRankingsSet.add(amazonRankings);

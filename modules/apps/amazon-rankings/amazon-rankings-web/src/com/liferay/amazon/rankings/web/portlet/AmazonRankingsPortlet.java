@@ -16,8 +16,8 @@ package com.liferay.amazon.rankings.web.portlet;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
+import com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration;
 import com.liferay.amazon.rankings.web.upgrade.AmazonRankingsUpgrade;
-import com.liferay.amazon.rankings.web.util.AmazonRankingsConfiguration;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import java.io.IOException;
@@ -32,6 +32,7 @@ import javax.portlet.RenderResponse;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -58,7 +59,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.preferences=classpath:/META-INF/portlet-preferences/default-portlet-preferences.xml",
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user",
+		"javax.portlet.security-role-ref=power-user,user"
 	},
 	service = Portlet.class
 )
@@ -69,14 +70,17 @@ public class AmazonRankingsPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		renderRequest.setAttribute("configuration", _configuration);
+		renderRequest.setAttribute(
+			AmazonRankingsConfiguration.class.getName(),
+			_amazonRankingsConfiguration);
 
 		super.doView(renderRequest, renderResponse);
 	}
 
 	@Activate
+	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_configuration = Configurable.createConfigurable(
+		_amazonRankingsConfiguration = Configurable.createConfigurable(
 			AmazonRankingsConfiguration.class, properties);
 	}
 
@@ -85,6 +89,6 @@ public class AmazonRankingsPortlet extends MVCPortlet {
 		AmazonRankingsUpgrade amazonRankingsUpgrade) {
 	}
 
-	private AmazonRankingsConfiguration _configuration;
+	private volatile AmazonRankingsConfiguration _amazonRankingsConfiguration;
 
 }

@@ -15,7 +15,8 @@
 package com.liferay.amazon.rankings.web.portlet.action;
 
 import aQute.bnd.annotation.metatype.Configurable;
-import com.liferay.amazon.rankings.web.util.AmazonRankingsConfiguration;
+
+import com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.CharPool;
@@ -33,6 +34,7 @@ import javax.portlet.RenderResponse;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Brian Wing Shun Chan
@@ -55,23 +57,6 @@ public class AmazonRankingsConfigurationAction
 			ActionResponse actionResponse)
 		throws Exception {
 
-		String amazonAccessKeyId = getParameter(
-			actionRequest, "amazon.access.key.id");
-
-		setPreference(actionRequest, "amazon.access.key.id", amazonAccessKeyId);
-
-		String amazonAssociateTag = getParameter(
-			actionRequest, "amazon.associate.tag");
-
-		setPreference(
-			actionRequest, "amazon.associate.tag", amazonAssociateTag);
-
-		String amazonSecretAccessKey = getParameter(
-			actionRequest, "amazon.secret.access.key");
-
-		setPreference(
-			actionRequest, "amazon.secret.access.key", amazonSecretAccessKey);
-
 		String[] isbns = StringUtil.split(
 			StringUtil.toUpperCase(getParameter(actionRequest, "isbns")),
 			CharPool.SPACE);
@@ -83,23 +68,26 @@ public class AmazonRankingsConfigurationAction
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
 
+	@Override
 	public String render(
 			PortletConfig portletConfig, RenderRequest renderRequest,
 			RenderResponse renderResponse)
 		throws Exception {
 
-		renderRequest.setAttribute("configuration", _configuration);
+		renderRequest.setAttribute(
+			AmazonRankingsConfiguration.class.getName(),
+			_amazonRankingsConfiguration);
 
 		return super.render(portletConfig, renderRequest, renderResponse);
 	}
 
 	@Activate
+	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_configuration = Configurable.createConfigurable(
+		_amazonRankingsConfiguration = Configurable.createConfigurable(
 			AmazonRankingsConfiguration.class, properties);
 	}
 
-
-	private AmazonRankingsConfiguration _configuration;
+	private volatile AmazonRankingsConfiguration _amazonRankingsConfiguration;
 
 }

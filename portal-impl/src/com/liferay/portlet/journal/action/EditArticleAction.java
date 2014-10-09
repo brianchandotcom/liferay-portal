@@ -54,8 +54,6 @@ import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
-import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.journal.ArticleContentException;
 import com.liferay.portlet.journal.ArticleContentSizeException;
 import com.liferay.portlet.journal.ArticleDisplayDateException;
@@ -72,7 +70,6 @@ import com.liferay.portlet.journal.asset.JournalArticleAssetRenderer;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
-import com.liferay.portlet.journal.util.JournalConverterUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -637,23 +634,6 @@ public class EditArticleAction extends PortletAction {
 				article.getResourcePrimKey(), -1);
 		}
 		else {
-
-			// Merge current content with new content
-
-			JournalArticle curArticle = JournalArticleServiceUtil.getArticle(
-				groupId, articleId, version);
-
-			Fields newFields = DDMUtil.getFields(
-				ddmStructure.getStructureId(), serviceContext);
-
-			Fields existingFields = JournalConverterUtil.getDDMFields(
-				ddmStructure, curArticle.getDocument());
-
-			Fields mergedFields = DDMUtil.mergeFields(
-				newFields, existingFields);
-
-			content = JournalConverterUtil.getContent(
-				ddmStructure, mergedFields);
 
 			// Update article
 

@@ -67,6 +67,8 @@ public abstract class BaseSubscriptionClassTypeTestCase
 			PARENT_CONTAINER_MODEL_ID_DEFAULT, classTypeId);
 
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
+
+		deleteSubscriptionClassType(classTypeId);
 	}
 
 	@Test
@@ -83,6 +85,8 @@ public abstract class BaseSubscriptionClassTypeTestCase
 		updateBaseModel(baseModelId);
 
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
+
+		deleteSubscriptionClassType(classTypeId);
 	}
 
 	protected abstract long addBaseModelWithClassType(
@@ -92,6 +96,9 @@ public abstract class BaseSubscriptionClassTypeTestCase
 	protected abstract long addClassType() throws Exception;
 
 	protected abstract void addSubscriptionClassType(long classTypeId)
+		throws Exception;
+
+	protected abstract void deleteSubscriptionClassType(Long classTypeId)
 		throws Exception;
 
 	protected abstract Long getDefaultClassTypeId() throws Exception;

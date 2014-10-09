@@ -78,6 +78,14 @@ public class DLSubscriptionClassTypeTest
 	}
 
 	@Override
+	protected void deleteSubscriptionClassType(Long classTypeId)
+		throws Exception {
+
+		DLAppServiceUtil.unsubscribeFileEntryType(
+			group.getGroupId(), classTypeId);
+	}
+
+	@Override
 	protected Long getDefaultClassTypeId() throws Exception {
 		DLFileEntryType basicEntryType =
 			DLFileEntryTypeLocalServiceUtil.getDLFileEntryType(

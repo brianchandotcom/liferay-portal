@@ -39,7 +39,6 @@ import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.runner.RunWith;
 
 /**
@@ -99,6 +98,14 @@ public class JournalSubscriptionClassTypeTest
 	}
 
 	@Override
+	protected void deleteSubscriptionClassType(Long classTypeId)
+		throws Exception {
+
+		JournalArticleLocalServiceUtil.unsubscribeStructure(
+			group.getGroupId(), TestPropsValues.getUserId(), classTypeId);
+	}
+
+	@Override
 	protected Long getDefaultClassTypeId() throws Exception {
 		Company company = CompanyLocalServiceUtil.getCompany(
 			group.getCompanyId());
@@ -107,8 +114,6 @@ public class JournalSubscriptionClassTypeTest
 			company.getGroupId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
 			"BASIC-WEB-CONTENT");
-
-		Assert.assertNotNull(ddmStructure);
 
 		return ddmStructure.getStructureId();
 	}

@@ -28,9 +28,11 @@ import com.liferay.portlet.messageboards.NoSuchCategoryException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -63,11 +65,17 @@ public class MBMessagePermission implements BaseModelPermissionChecker {
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, long messageId,
-			String actionId)
+			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(messageId);
+		MBThread mbThread = MBThreadLocalServiceUtil.fetchThread(classPK);
+
+		if (mbThread == null) {
+			return false;
+		}
+
+		MBMessage message = MBMessageLocalServiceUtil.getMessage(
+			mbThread.getRootMessageId());
 
 		return contains(permissionChecker, message, actionId);
 	}

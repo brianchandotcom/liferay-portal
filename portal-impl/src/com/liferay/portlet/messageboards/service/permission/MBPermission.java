@@ -16,8 +16,10 @@ package com.liferay.portlet.messageboards.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
 
 /**
@@ -38,10 +40,18 @@ public class MBPermission {
 	}
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, long groupId, String actionId) {
+			PermissionChecker permissionChecker, long classPK, String actionId)
+		throws PortalException {
+
+		Group group = GroupLocalServiceUtil.fetchGroup(classPK);
+
+		if (group == null) {
+			return MBCategoryPermission.contains(
+				permissionChecker, classPK, actionId);
+		}
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, groupId, RESOURCE_NAME, groupId,
+			permissionChecker, classPK, RESOURCE_NAME, classPK,
 			PortletKeys.MESSAGE_BOARDS, actionId);
 
 		if (hasPermission != null) {
@@ -49,7 +59,7 @@ public class MBPermission {
 		}
 
 		return permissionChecker.hasPermission(
-			groupId, RESOURCE_NAME, groupId, actionId);
+			classPK, RESOURCE_NAME, classPK, actionId);
 	}
 
 }

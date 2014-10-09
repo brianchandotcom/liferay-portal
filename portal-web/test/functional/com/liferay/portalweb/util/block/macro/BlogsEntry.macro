@@ -544,10 +544,21 @@
 	</command>
 
 	<command name="addWithWorkflowCP">
-		<execute action="CPBlogs#click" locator-key1="ADD_ENTRY" />
+		<execute action="CPBlogs#assertClick" locator-key1="ADD_ENTRY" value1="Add" />
 
 		<execute action="CPBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
+
+		<if>
+			<isset var="entrySubtitle" />
+			<then>
+				<execute macro="BlogsEntry#entryAddSubtitleCmdCP">
+					<var name="entrySubtitle" value="Blogs Entry Subtitle" />
+				</execute>
+			</then>
+		</if>
+
 		<execute action="CPBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
+		<execute action="CPBlogsAdd#pause" locator1="1000" />
 		<execute action="CPBlogsAdd#assertClick" locator-key1="SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
 
 		<var name="key_entryTitle" value="${entryTitle}" />

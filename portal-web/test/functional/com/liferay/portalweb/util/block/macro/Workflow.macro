@@ -274,7 +274,7 @@
 	</command>
 
 	<command name="deactivateAddedWorkflowDefinition">
-		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_TABLE_ADDED_DEFINITION_ACTIONS" value1="Actions" />
+		<execute action="CPPortalWorkflowconfiguration#click" locator-key1="DEFINITION_TABLE_ADDED_DEFINITION_ACTIONS" />
 
 		<execute macro="Workflow#deactivateWorkflowDefinitionCmd" />
 	</command>
@@ -282,7 +282,7 @@
 	<command name="deactivateWorkflowDefinition">
 		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 
-		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_TABLE_ADDED_DEFINITION_ACTIONS" value1="Actions" />
+		<execute action="CPPortalWorkflowconfiguration#click" locator-key1="DEFINITION_TABLE_ADDED_DEFINITION_ACTIONS" />
 
 		<execute macro="Workflow#deactivateWorkflowDefinitionCmd" />
 	</command>
@@ -294,7 +294,7 @@
 	</command>
 
 	<command name="deleteWorkflowDefinition">
-		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_TABLE_DEACTIVATED_DEFINITION_ACTIONS" value1="Actions" />
+		<execute action="CPPortalWorkflowconfiguration#click" locator-key1="DEFINITION_TABLE_DEACTIVATED_DEFINITION_ACTIONS" />
 		<execute action="CPPortalWorkflowconfiguration#assertClickNoError" locator-key1="DEFINITION_MENULIST_DELETE" value1="Delete" />
 		<execute action="CPPortalWorkflowconfiguration#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -307,7 +307,7 @@
 	<command name="editWorkflowDefinitionViaWorkflowCP">
 		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 
-		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_TABLE_SPECIFIC_DEFINITION_ACTIONS" value1="Actions" />
+		<execute action="CPPortalWorkflowconfiguration#click" locator-key1="DEFINITION_TABLE_SPECIFIC_DEFINITION_ACTIONS" />
 		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_MENULIST_EDIT" value1="Edit" />
 
 		<execute action="Kaleodesigner#selectFrame" locator-key1="IFRAME" />
@@ -323,7 +323,7 @@
 		<var name="key_workflowDefinitionName" value="${workflowDefinitionName}" />
 
 		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_ACTIVE" value1="No" />
-		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_TABLE_DEACTIVATED_DEFINITION_ACTIONS" value1="Actions" />
+		<execute action="CPPortalWorkflowconfiguration#click" locator-key1="DEFINITION_TABLE_DEACTIVATED_DEFINITION_ACTIONS" />
 		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_MENULIST_ACTIVATE" value1="Activate" />
 		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_ACTIVE" value1="Yes" />

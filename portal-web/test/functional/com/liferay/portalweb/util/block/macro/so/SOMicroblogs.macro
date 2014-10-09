@@ -635,42 +635,94 @@
 		<execute action="SOUserBar#assertElementPresent" locator-key1="NOTIFICATION" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="1" />
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${microblogsEntryCommentAuthorName} commented on your post." />
+
+		<if>
+			<equals arg1="${ownMicroblogsEntry}" arg2="false" />
+			<then>
+				<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${microblogsEntryCommentAuthorName} also commented on ${microblogsEntryAuthorName}&apos;s post." />
+			</then>
+			<else>
+				<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${microblogsEntryCommentAuthorName} commented on your post." />
+			</else>
+		</if>
+
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${microblogsEntryCommentContent}" />
 
 		<if>
-			<equals arg1="mention" arg2="true" />
+			<and>
+				<equals arg1="${mention}" arg2="true" />
+				<equals arg1="${tag}" arg2="true" />
+			</and>
 			<then>
-				<var name="key_mentionUserName" value="${mentionUserName}" />
-				<var name="key_microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
+				<execute macro="SOMicroblogs#viewMicroblogsEntryCommentNotificationMentionCmd">
+					<var name="mentionUserEmailAddress" value="${mentionUserEmailAddress}" />
+					<var name="mentionUserName" value="${mentionUserName}" />
+					<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
+				</execute>
 
-				<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT_MICROBLOGS_COMMENT_MENTION_LINK" value1="${mentionUserName}" />
+				<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
 
-				<execute action="SOProfile#assertTextEquals" locator-key1="USER_NAME" value1="${mentionUserName}" />
-				<execute action="SOProfile#assertTextEquals" locator-key1="USER_EMAIL" value1="${mentionUserEmailAddress}" />
+				<execute macro="SOMicroblogs#viewMicroblogsEntryCommentNotificationTagCmd">
+					<var name="microblogsEntryCommentAuthorName" value="${microblogsEntryCommentAuthorName}" />
+					<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
+					<var name="microblogsEntryCommentTagValue" value="${microblogsEntryCommentTagValue}" />
+				</execute>
 
 				<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
 			</then>
 			<elseif>
-				<equals arg1="tag" arg2="true" />
+				<equals arg1="${mention}" arg2="true" />
 				<then>
-					<var name="key_microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
-					<var name="key_microblogsEntryTagValue" value="${microblogsEntryCommentTagValue}" />
+					<execute macro="SOMicroblogs#viewMicroblogsEntryCommentNotificationMentionCmd">
+						<var name="mentionUserEmailAddress" value="${mentionUserEmailAddress}" />
+						<var name="mentionUserName" value="${mentionUserName}" />
+						<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
+					</execute>
 
-					<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT_MICROBLOGS_COMMENT_TAG_LINK" value1="${microblogsEntryCommentTagValue}" />
-
-					<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_COMMENT_AUTHOR" value1="${microblogsEntryCommentAuthorName}" />
-					<execute action="SOMicroblogs#assertTextEquals" locator-key1="TAB_TAG_VALUE" value1="${microblogsEntryCommentTagValue}" />
-					<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_COMMENT_CONTENT" value1="${microblogsEntryCommentContent}" />
-					<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_COMMENT_CONTENT_TAG" value1="${microblogsEntryCommentTagValue}" />
+					<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${tag}" arg2="true" />
+				<then>
+					<execute macro="SOMicroblogs#viewMicroblogsEntryCommentNotificationTagCmd">
+						<var name="microblogsEntryCommentAuthorName" value="${microblogsEntryCommentAuthorName}" />
+						<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
+						<var name="microblogsEntryCommentTagValue" value="${microblogsEntryCommentTagValue}" />
+					</execute>
 
 					<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
 				</then>
 			</elseif>
 		</if>
 
-		<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${microblogsEntryCommentAuthorName} commented on your post." />
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
+	</command>
+
+	<command name="viewMicroblogsEntryCommentNotificationMentionCmd">
+		<var name="key_mentionUserName" value="${mentionUserName}" />
+		<var name="key_microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
+
+		<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT_MICROBLOGS_COMMENT_MENTION_LINK" value1="${mentionUserName}" />
+
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_NAME" value1="${mentionUserName}" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_EMAIL" value1="${mentionUserEmailAddress}" />
+	</command>
+
+	<command name="viewMicroblogsEntryCommentNotificationTagCmd">
+		<var name="key_microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
+		<var name="key_microblogsEntryCommentTagValue" value="${microblogsEntryCommentTagValue}" />
+
+		<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT_MICROBLOGS_COMMENT_TAG_LINK" value1="${microblogsEntryCommentTagValue}" />
+
+		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_COMMENT_AUTHOR" value1="${microblogsEntryCommentAuthorName}" />
+
+		<var name="key_microblogsEntryTagValue" value="${microblogsEntryCommentTagValue}" />
+
+		<execute action="SOMicroblogs#assertTextEquals" locator-key1="TAB_TAG_VALUE" value1="${microblogsEntryCommentTagValue}" />
+		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_COMMENT_CONTENT" value1="${microblogsEntryCommentContent}" />
+		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_COMMENT_CONTENT_TAG" value1="${microblogsEntryCommentTagValue}" />
 	</command>
 
 	<command name="viewMicroblogsEntryCommentTag">

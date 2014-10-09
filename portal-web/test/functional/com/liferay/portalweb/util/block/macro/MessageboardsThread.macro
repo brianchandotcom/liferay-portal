@@ -304,7 +304,8 @@
 			<elseif>
 				<equals arg1="${preview}" arg2="true" />
 				<then>
-					<execute action="PGMessageboardsPostthread#assertClick" locator-key1="PREVIEW_BUTTON" value1="Preview" />
+					<execute action="PGMessageboardsPostthread#assertClickNoError" locator-key1="PREVIEW_BUTTON" value1="Preview" />
+					<execute action="PGMessageboardsPostthread#confirm" locator-key1="CONFIRMATION" value1="In order to preview your changes, the message will be saved as a draft and other users may not be able to see it. Are you sure you want to do this?" />
 
 					<var name="key_threadSubject" value="${threadSubject}" />
 

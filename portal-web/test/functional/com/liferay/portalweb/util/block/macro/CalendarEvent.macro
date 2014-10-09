@@ -938,15 +938,8 @@
 		</if>
 
 		<if>
-			<equals arg1="${permissionsMoreOptions}" arg2="true" />
+			<equals arg1="${permissions}" arg2="true" />
 			<then>
-				<if>
-					<condition action="PGCalendarAddevent#isNotVisible" locator-key1="DETAILS_PERMISSIONS_HIDE_OPTIONS_LINK" />
-					<then>
-						<execute action="PGCalendarAddevent#click" locator-key1="DETAILS_PERMISSIONS_MORE_OPTIONS_LINK" />
-					</then>
-				</if>
-
 				<var name="key_permissionDefinitionKey" value="${permissionDefinitionKey}" />
 				<var name="key_roleName" value="${roleName}" />
 

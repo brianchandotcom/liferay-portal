@@ -113,8 +113,8 @@ public class PermissionCheckerUtil {
 			return DLPermission.contains(permissionChecker, classPK, actionId);
 		}
 		else if (className.equals(JournalArticle.class.getName())) {
-			JournalArticle article = JournalArticleLocalServiceUtil.getArticle(
-				classPK);
+			JournalArticle article =
+				JournalArticleLocalServiceUtil.getLatestArticle(classPK);
 
 			return JournalArticlePermission.contains(
 				permissionChecker, article, actionId);
@@ -162,7 +162,7 @@ public class PermissionCheckerUtil {
 				permissionChecker, classPK, actionId);
 		}
 		else if (className.equals(WikiPage.class.getName())) {
-			WikiPage page = WikiPageLocalServiceUtil.getPageByPageId(classPK);
+			WikiPage page = WikiPageLocalServiceUtil.getPage(classPK);
 
 			return WikiPagePermission.contains(
 				permissionChecker, page, actionId);

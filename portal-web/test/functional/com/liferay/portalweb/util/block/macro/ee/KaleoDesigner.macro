@@ -214,8 +214,8 @@
 		</execute>
 	</command>
 
-	<command name="deleteTableDefinitionDraftViaKaleoDesignerCP">
-		<execute action="CPKaleodesignerconfiguration#assertClick" locator-key1="DEFINITION_TABLE_ACTIONS_1" value1="Actions" />
+	<command name="deleteTableDefinitionDraftViaKDCP">
+		<execute action="CPKaleodesignerconfiguration#assertClick" locator-key1="DEFINITION_TABLE_DEFINITION_DRAFT_ACTIONS" value1="Actions" />
 		<execute action="CPKaleodesignerconfiguration#assertClickNoError" locator-key1="DEFINITION_MENULIST_DELETE" value1="Delete" />
 		<execute action="CPKaleodesignerconfiguration#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute action="CPKaleodesignerconfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -272,7 +272,27 @@
 
 	<command name="editNodeAssignments">
 		<execute action="Kaleodesigner#doubleClick" locator-key1="SETTINGS_ASSIGNMENTS" />
-		<execute action="Kaleodesigner#select" locator-key1="SETTINGS_ASSIGNMENT_TYPE_SELECT" value1="${nodeAssignmentType}" />
+		<execute action="Kaleodesigner#select" locator-key1="SETTINGS_CELL_EDITOR_ASSIGNMENT_TYPE_SELECT" value1="${nodeAssignmentType}" />
+
+		<if>
+			<equals arg1="${nodeAssignmentType}" arg2="Role" />
+			<then>
+				<execute action="Kaleodesigner#click" locator-key1="SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_SEARCH" />
+
+				<var name="key_roleName" value="${roleName}" />
+
+				<execute action="Kaleodesigner#click" locator-key1="SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_SEARCH_LIST_RESULT" />
+			</then>
+		</if>
+
+		<execute action="Kaleodesigner#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+
+		<if>
+			<equals arg1="${nodeAssignmentType}" arg2="Role" />
+			<then>
+				<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_ASSIGNMENTS" value1="Role ID" />
+			</then>
+		</if>
 	</command>
 
 	<command name="editNodeDescription">
@@ -328,19 +348,37 @@
 			<isset var="nodeNotificationsRecipientType" />
 			<then>
 				<execute action="Kaleodesigner#assertClick" locator-key1="SETTINGS_CELL_EDITOR_EDIT_RECIPIENTS" value1="Edit Recipients" />
-				<execute action="Kaleodesigner#select" locator-key1="SETTINGS_CELL_EDITOR_RECIPIENT_EDITOR_TYPE_SELECT" value1="${nodeNotificationsRecipientType}" />
+				<execute action="Kaleodesigner#select" locator-key1="SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_TYPE_SELECT" value1="${nodeNotificationsRecipientType}" />
 
 				<if>
 					<equals arg1="${nodeNotificationsRecipientType}" arg2="Role" />
 					<then>
-						<execute action="Kaleodesigner#type" locator-key1="SETTINGS_CELL_EDITOR_RECIPIENT_EDITOR_ROLE" value1="${nodeNotificationsRecipientRole}" />
+						<execute action="Kaleodesigner#click" locator-key1="SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_SEARCH" />
+
+						<var name="key_roleName" value="${roleName}" />
+
+						<execute action="Kaleodesigner#click" locator-key1="SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_SEARCH_LIST_RESULT" />
 					</then>
 				</if>
 
-				<execute action="Kaleodesigner#assertClick" locator-key1="SETTINGS_CELL_EDITOR_RECIPIENT_EDITOR_SAVE_BUTTON" value1="Save" />
+				<if>
+					<equals arg1="${nodeNotificationsRecipientType}" arg2="Role Type" />
+					<then>
+						<execute action="Kaleodesigner#select" locator-key1="SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_TYPE_SELECT" value1="${roleType}" />
+						<execute action="Kaleodesigner#click" locator-key1="SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_NAME_SEARCH" />
+
+						<var name="key_roleName" value="${roleName}" />
+
+						<execute action="Kaleodesigner#click" locator-key1="SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_SEARCH_LIST_RESULT" />
+					</then>
+				</if>
+
+				<execute action="Kaleodesigner#pause" locator1="1000" />
+				<execute action="Kaleodesigner#assertClick" locator-key1="SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_SAVE_BUTTON" value1="Save" />
 			</then>
 		</if>
 
+		<execute action="Kaleodesigner#pause" locator1="1000" />
 		<execute action="Kaleodesigner#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
 	</command>
 
@@ -436,21 +474,6 @@
 		<execute action="Kaleodesigner#scrollWebElementIntoView" locator-key1="VIEW_FORM_NODE" />
 	</command>
 
-	<command name="tearDownWorkflowDefinitionsViaKaleoDesigner">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Kaleo Designer" />
-		</execute>
-
-		<while>
-			<condition action="CPKaleodesignerconfiguration#isElementPresent" locator-key1="DEFINITION_TABLE_ACTIONS_1" />
-			<then>
-				<execute macro="KaleoDesigner#deleteTableDefinitionDraftViaKaleoDesignerCP" />
-			</then>
-		</while>
-
-		<execute macro="KaleoDesigner#viewNoWorkflowDraftsViaKaleoDesignerCP" />
-	</command>
-
 	<command name="undoDraft">
 		<execute action="Kaleodesigner#assertClick" locator-key1="DRAFT_HISTORY_UNDO_BUTTON" value1="Undo" />
 	</command>
@@ -517,14 +540,19 @@
 	<command name="viewNodeAssignments">
 		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_ASSIGNMENTS" value1="${nodeAssignmentType}" />
 		<execute action="Kaleodesigner#doubleClick" locator-key1="SETTINGS_ASSIGNMENTS" />
-		<execute action="Kaleodesigner#assertElementPresent" locator-key1="SETTINGS_ASSIGNMENT_TYPE_SELECT" />
+		<execute action="Kaleodesigner#assertElementPresent" locator-key1="SETTINGS_CELL_EDITOR_ASSIGNMENT_TYPE_SELECT" />
 	</command>
 
 	<command name="viewNodeNotifications">
-		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_NOTIFICATIONS" value1="${nodeNotificationsName}" />
 		<execute action="Kaleodesigner#doubleClick" locator-key1="SETTINGS_NOTIFICATIONS" />
 		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_NAME" value1="${nodeNotificationsName}" />
-		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_DESCRIPTION" value1="${nodeNotificationsDescription}" />
+
+		<if>
+			<isset var="nodeNotificationsDescription" />
+			<then>
+				<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_DESCRIPTION" value1="${nodeNotificationsDescription}" />
+			</then>
+		</if>
 
 		<if>
 			<isset var="nodeNotificationsTemplateLanguage" />
@@ -543,7 +571,12 @@
 		<if>
 			<isset var="nodeNotificationsType" />
 			<then>
-				<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_NOTIFICATION_TYPE_SELECT" value1="${nodeNotificationsType}" />
+				<if>
+					<equals arg1="${nodeNotificationsType}" arg2="User Notification" />
+					<then>
+						<execute action="Kaleodesigner#sikuliAssertElementPresent" locator-key1="SETTINGS_CELL_EDITOR_NOTIFICATION_TYPE_USER_NOTIFICATION_PNG" />
+					</then>
+				</if>
 			</then>
 		</if>
 
@@ -560,12 +593,33 @@
 			<isset var="nodeNotificationsRecipientType" />
 			<then>
 				<execute action="Kaleodesigner#assertClick" locator-key1="SETTINGS_CELL_EDITOR_EDIT_RECIPIENTS" value1="Edit Recipients" />
-				<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_RECIPIENT_EDITOR_TYPE_SELECT" value1="${nodeNotificationsRecipientType}" />
 
 				<if>
 					<equals arg1="${nodeNotificationsRecipientType}" arg2="Role" />
 					<then>
-						<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_RECIPIENT_EDITOR_ROLE" value1="${nodeNotificationsRecipientRole}" />
+						<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_TYPE_SELECT" value1="${nodeNotificationsRecipientType}" />
+						<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_SEARCH" value1="${nodeNotificationsRecipientRole}" />
+					</then>
+				</if>
+
+				<if>
+					<equals arg1="${nodeNotificationsRecipientType}" arg2="Role Type" />
+					<then>
+						<execute action="Kaleodesigner#sikuliAssertElementPresent" locator-key1="SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_RECIPIENT_TYPE_PNG" />
+
+						<if>
+							<equals arg1="${nodeNotificationsRecipientType}" arg2="Role" />
+							<then>
+								<execute action="Kaleodesigner#sikuliAssertElementPresent" locator-key1="SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_ROLE_TYPE_PNG" />
+							</then>
+						</if>
+
+						<if>
+							<equals arg1="${roleName}" arg2="Administrator" />
+							<then>
+								<execute action="Kaleodesigner#sikuliAssertElementPresent" locator-key1="SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_ROLE_NAME_PNG" />
+							</then>
+						</if>
 					</then>
 				</if>
 			</then>
@@ -586,10 +640,6 @@
 
 	<command name="viewNodeType">
 		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_TYPE" value1="${nodeType}" />
-	</command>
-
-	<command name="viewNoWorkflowDraftsViaKaleoDesignerCP">
-		<execute action="CPKaleodesignerconfiguration#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No workflow definitions are defined." />
 	</command>
 
 	<command name="viewSourceXMLLine">

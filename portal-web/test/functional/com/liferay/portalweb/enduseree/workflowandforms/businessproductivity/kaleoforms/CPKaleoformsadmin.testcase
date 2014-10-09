@@ -27,10 +27,10 @@
 		</execute>
 
 		<execute macro="Workflow#tearDownSpecificWorkflowDefinition">
-			<var name="workflowDefinitionTitle" value="Single Approver Edited" />
+			<var name="workflowDefinitionTitle" value="Edited Workflow Definition" />
 		</execute>
 
-		<execute macro="Workflow#tearDownWorkflowDefinitions" />
+		<execute macro="Workflow#tearDownWorkflowDefinitionsViaWorkflowCP" />
 
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
@@ -2121,19 +2121,19 @@
 
 		<execute macro="KaleoFormsAdmin#editWorkflow">
 			<var name="workflowDefinitionTitle" value="Single Approver" />
-			<var name="workflowDefinitionTitleEdit" value="Single Approver Edit" />
+			<var name="workflowDefinitionTitleEdit" value="Edited Workflow Definition" />
 		</execute>
 
 		<execute macro="KaleoDesigner#addSourceXMLBasicDefinition" />
 
 		<execute macro="KaleoFormsAdmin#publishWorkflow">
-			<var name="workflowDefinitionTitleEdit" value="Single Approver Edit" />
+			<var name="workflowDefinitionTitleEdit" value="Edited Workflow Definition" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="workflowDefinitionTitle" value="Single Approver" />
-			<var name="workflowDefinitionTitleEdit" value="Single Approver Edit" />
+			<var name="workflowDefinitionTitleEdit" value="Edited Workflow Definition" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -2203,7 +2203,7 @@
 
 		<execute macro="KaleoFormsAdmin#editWorkflow">
 			<var name="workflowDefinitionTitle" value="Single Approver" />
-			<var name="workflowDefinitionTitleEdit" value="Single Approver Edit" />
+			<var name="workflowDefinitionTitleEdit" value="Edited Workflow Definition" />
 		</execute>
 
 		<execute macro="KaleoDesigner#selectNode">
@@ -2215,13 +2215,13 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#publishWorkflow">
-			<var name="workflowDefinitionTitleEdit" value="Single Approver Edit" />
+			<var name="workflowDefinitionTitleEdit" value="Edited Workflow Definition" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="workflowDefinitionTitle" value="Single Approver" />
-			<var name="workflowDefinitionTitleEdit" value="Single Approver Edit" />
+			<var name="workflowDefinitionTitleEdit" value="Edited Workflow Definition" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />

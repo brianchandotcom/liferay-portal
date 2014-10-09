@@ -29,9 +29,7 @@
 			<var name="workflowDefinitionTitle" value="Single Approver Edited" />
 		</execute>
 
-		<execute macro="Workflow#tearDownWorkflowDefinitions" />
-
-		<execute macro="Page#tearDownPG" />
+		<execute macro="Workflow#tearDownWorkflowDefinitionsViaWorkflowCP" />
 	</tear-down>
 
 	<command name="AddWikiPageAsSiteUser" priority="4">

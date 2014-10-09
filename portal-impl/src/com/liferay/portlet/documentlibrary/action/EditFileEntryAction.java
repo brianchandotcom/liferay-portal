@@ -75,8 +75,8 @@ import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.SourceFileNameException;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -371,44 +371,11 @@ public class EditFileEntryAction extends PortletAction {
 				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 				_TEMP_FOLDER_NAME, selectedFileName);
 
+			selectedFileName = DLUtil.getFileName(
+				tempFileEntry.getGroupId(), tempFileEntry.getFolderId(),
+				tempFileEntry.getFileName());
+
 			String mimeType = tempFileEntry.getMimeType();
-
-			String extension = FileUtil.getExtension(selectedFileName);
-
-			int pos = selectedFileName.lastIndexOf(TEMP_RANDOM_SUFFIX);
-
-			if (pos != -1) {
-				selectedFileName = selectedFileName.substring(0, pos);
-
-				if (Validator.isNotNull(extension)) {
-					selectedFileName =
-						selectedFileName + StringPool.PERIOD + extension;
-				}
-			}
-
-			while (true) {
-				try {
-					DLAppLocalServiceUtil.getFileEntry(
-						themeDisplay.getScopeGroupId(), folderId,
-						selectedFileName);
-
-					StringBundler sb = new StringBundler(5);
-
-					sb.append(FileUtil.stripExtension(selectedFileName));
-					sb.append(StringPool.DASH);
-					sb.append(StringUtil.randomString());
-
-					if (Validator.isNotNull(extension)) {
-						sb.append(StringPool.PERIOD);
-						sb.append(extension);
-					}
-
-					selectedFileName = sb.toString();
-				}
-				catch (Exception e) {
-					break;
-				}
-			}
 
 			InputStream inputStream = tempFileEntry.getContentStream();
 			long size = tempFileEntry.getSize();

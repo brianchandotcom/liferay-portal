@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 
+import com.liferay.portal.util.test.DependenciesTestUtil;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -32,7 +33,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.Date;
 
 /**
@@ -52,18 +52,21 @@ public class ZipWriterImplTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_expectedEntryContent = StringUtil.read(
-			_getDependencyAsInputStream(_ENTRY_FILE_PATH));
+			DependenciesTestUtil.getDependencyAsInputStream(
+				ZipWriterImplTest.class, _ENTRY_FILE_PATH));
 	}
 
 	@Test
 	public void testAddEntryFromBytes() throws Exception {
 		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
 
-		FileUtil.copyFile(_getDependencyAsFile(_ZIP_FILE_PATH), tempZipFile);
+		FileUtil.copyFile(DependenciesTestUtil.getDependencyAsFile(
+			getClass(), _ZIP_FILE_PATH), tempZipFile);
 
 		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
 
-		File entry = _getDependencyAsFile(_ENTRY_FILE_PATH);
+		File entry = DependenciesTestUtil.getDependencyAsFile(
+			getClass(), _ENTRY_FILE_PATH);
 
 		zipWriter.addEntry(_ENTRY_FILE_PATH, FileUtil.getBytes(entry));
 
@@ -84,7 +87,8 @@ public class ZipWriterImplTest {
 	public void testAddEntryFromBytesThatAreEmpty() throws Exception {
 		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
 
-		FileUtil.copyFile(_getDependencyAsFile(_ZIP_FILE_PATH), tempZipFile);
+		FileUtil.copyFile(DependenciesTestUtil.getDependencyAsFile(
+			getClass(), _ZIP_FILE_PATH), tempZipFile);
 
 		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
 
@@ -101,12 +105,14 @@ public class ZipWriterImplTest {
 	public void testAddEntryFromInputStream() throws Exception {
 		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
 
-		FileUtil.copyFile(_getDependencyAsFile(_ZIP_FILE_PATH), tempZipFile);
+		FileUtil.copyFile(DependenciesTestUtil.getDependencyAsFile(
+			getClass(), _ZIP_FILE_PATH), tempZipFile);
 
 		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
 
 		zipWriter.addEntry(
-			_ENTRY_FILE_PATH, _getDependencyAsInputStream(_ENTRY_FILE_PATH));
+			_ENTRY_FILE_PATH, DependenciesTestUtil.getDependencyAsInputStream(
+				getClass(), _ENTRY_FILE_PATH));
 
 		ZipReader zipReader = new ZipReaderImpl(tempZipFile);
 
@@ -121,13 +127,15 @@ public class ZipWriterImplTest {
 
 		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
 
-		FileUtil.copyFile(_getDependencyAsFile(_ZIP_FILE_PATH), tempZipFile);
+		FileUtil.copyFile(DependenciesTestUtil.getDependencyAsFile(
+			getClass(), _ZIP_FILE_PATH), tempZipFile);
 
 		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
 
 		zipWriter.addEntry(
 			"/" + _ENTRY_FILE_PATH,
-			_getDependencyAsInputStream(_ENTRY_FILE_PATH));
+			DependenciesTestUtil.getDependencyAsInputStream(
+				getClass(), _ENTRY_FILE_PATH));
 
 		ZipReader zipReader = new ZipReaderImpl(tempZipFile);
 
@@ -140,7 +148,8 @@ public class ZipWriterImplTest {
 	public void testAddEntryFromInputStreamThatIsNull() throws Exception {
 		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
 
-		FileUtil.copyFile(_getDependencyAsFile(_ZIP_FILE_PATH), tempZipFile);
+		FileUtil.copyFile(DependenciesTestUtil.getDependencyAsFile(
+			getClass(), _ZIP_FILE_PATH), tempZipFile);
 
 		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
 
@@ -157,7 +166,8 @@ public class ZipWriterImplTest {
 	public void testAddEntryFromString() throws Exception {
 		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
 
-		FileUtil.copyFile(_getDependencyAsFile(_ZIP_FILE_PATH), tempZipFile);
+		FileUtil.copyFile(DependenciesTestUtil.getDependencyAsFile(
+			getClass(), _ZIP_FILE_PATH), tempZipFile);
 
 		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
 
@@ -173,7 +183,8 @@ public class ZipWriterImplTest {
 	public void testAddEntryFromStringBuilder() throws Exception {
 		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
 
-		FileUtil.copyFile(_getDependencyAsFile(_ZIP_FILE_PATH), tempZipFile);
+		FileUtil.copyFile(DependenciesTestUtil.getDependencyAsFile(
+			getClass(), _ZIP_FILE_PATH), tempZipFile);
 
 		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
 
@@ -193,7 +204,8 @@ public class ZipWriterImplTest {
 	public void testAddEntryFromStringBuilderThatIsEmpty() throws Exception {
 		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
 
-		FileUtil.copyFile(_getDependencyAsFile(_ZIP_FILE_PATH), tempZipFile);
+		FileUtil.copyFile(DependenciesTestUtil.getDependencyAsFile(
+			getClass(), _ZIP_FILE_PATH), tempZipFile);
 
 		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
 
@@ -210,7 +222,8 @@ public class ZipWriterImplTest {
 	public void testAddEntryFromStringBuilderThatIsNull() throws Exception {
 		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
 
-		FileUtil.copyFile(_getDependencyAsFile(_ZIP_FILE_PATH), tempZipFile);
+		FileUtil.copyFile(DependenciesTestUtil.getDependencyAsFile(
+			getClass(), _ZIP_FILE_PATH), tempZipFile);
 
 		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
 
@@ -227,7 +240,8 @@ public class ZipWriterImplTest {
 	public void testAddEntryFromStringThatIsEmpty() throws Exception {
 		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
 
-		FileUtil.copyFile(_getDependencyAsFile(_ZIP_FILE_PATH), tempZipFile);
+		FileUtil.copyFile(DependenciesTestUtil.getDependencyAsFile(
+			getClass(), _ZIP_FILE_PATH), tempZipFile);
 
 		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
 
@@ -244,7 +258,8 @@ public class ZipWriterImplTest {
 	public void testAddEntryFromStringThatIsNull() throws Exception {
 		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
 
-		FileUtil.copyFile(_getDependencyAsFile(_ZIP_FILE_PATH), tempZipFile);
+		FileUtil.copyFile(DependenciesTestUtil.getDependencyAsFile(
+			getClass(), _ZIP_FILE_PATH), tempZipFile);
 
 		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
 
@@ -298,7 +313,8 @@ public class ZipWriterImplTest {
 	public void testFinishIfZipFileIsTrueArchiveFile() throws Exception {
 		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
 
-		FileUtil.copyFile(_getDependencyAsFile(_ZIP_FILE_PATH), tempZipFile);
+		FileUtil.copyFile(DependenciesTestUtil.getDependencyAsFile(
+			getClass(), _ZIP_FILE_PATH), tempZipFile);
 
 		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
 
@@ -310,19 +326,6 @@ public class ZipWriterImplTest {
 		ZipWriter zipWriter = new ZipWriterImpl();
 
 		zipWriter.finish();
-	}
-
-	private static File _getDependencyAsFile(String name) throws Exception {
-		URL url = ZipReaderImplTest.class.getResource("dependencies/" + name);
-
-		return new File(url.toURI());
-	}
-
-	private static InputStream _getDependencyAsInputStream(String name)
-		throws Exception {
-
-		return ZipReaderImplTest.class.getResourceAsStream(
-			"dependencies/" + name);
 	}
 
 	private static final String _ENTRY_FILE_PATH = "entry.txt";

@@ -18,12 +18,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 
+import com.liferay.portal.util.test.DependenciesTestUtil;
 import de.schlichtherle.io.FileInputStream;
 
-import java.io.File;
 import java.io.InputStream;
-
-import java.net.URL;
 
 import java.nio.charset.Charset;
 
@@ -43,26 +41,33 @@ public class ZipReaderImplTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_expectedContent_0 = StringUtil.read(
-			_getDependencyAsInputStream(_FILE_PATH_0));
+			DependenciesTestUtil.getDependencyAsInputStream(
+				ZipReaderImplTest.class, _FILE_PATH_0));
 
 		_expectedContent_1 = StringUtil.read(
-			_getDependencyAsInputStream(_FILE_PATH_1));
+			DependenciesTestUtil.getDependencyAsInputStream(
+				ZipReaderImplTest.class, _FILE_PATH_1));
 
 		_expectedContent_2 = StringUtil.read(
-			_getDependencyAsInputStream(_FILE_PATH_2));
+			DependenciesTestUtil.getDependencyAsInputStream(
+				ZipReaderImplTest.class, _FILE_PATH_2));
 
 		_expectedContent_3 = StringUtil.read(
-			_getDependencyAsInputStream(_FILE_PATH_3));
+			DependenciesTestUtil.getDependencyAsInputStream(
+				ZipReaderImplTest.class, _FILE_PATH_3));
 	}
 
 	@Test
 	public void testConstructors() throws Exception {
 		ZipReader zipReader = new ZipReaderImpl(
-			_getDependencyAsInputStream(_ZIP_FILE_PATH));
+			DependenciesTestUtil.getDependencyAsInputStream(
+				getClass(), _ZIP_FILE_PATH));
 
 		Assert.assertNotNull(zipReader);
 
-		zipReader = new ZipReaderImpl(_getDependencyAsFile(_ZIP_FILE_PATH));
+		zipReader = new ZipReaderImpl(
+			DependenciesTestUtil.getDependencyAsFile(
+				getClass(), _ZIP_FILE_PATH));
 
 		Assert.assertNotNull(zipReader);
 	}
@@ -70,7 +75,8 @@ public class ZipReaderImplTest {
 	@Test
 	public void testGetEntries() throws Exception {
 		ZipReader zipReader = new ZipReaderImpl(
-			_getDependencyAsInputStream(_ZIP_FILE_PATH));
+			DependenciesTestUtil.getDependencyAsInputStream(
+				getClass(), _ZIP_FILE_PATH));
 
 		List<String> entries = zipReader.getEntries();
 
@@ -85,7 +91,8 @@ public class ZipReaderImplTest {
 	@Test
 	public void testGetEntryAsByteArray() throws Exception {
 		ZipReader zipReader = new ZipReaderImpl(
-			_getDependencyAsInputStream(_ZIP_FILE_PATH));
+			DependenciesTestUtil.getDependencyAsInputStream(
+				getClass(), _ZIP_FILE_PATH));
 
 		byte[] content = zipReader.getEntryAsByteArray(_FILE_PATH_0);
 
@@ -107,7 +114,8 @@ public class ZipReaderImplTest {
 	@Test
 	public void testGetEntryAsByteArrayThatDoesNotExist() throws Exception {
 		ZipReader zipReader = new ZipReaderImpl(
-			_getDependencyAsInputStream(_ZIP_FILE_PATH));
+			DependenciesTestUtil.getDependencyAsInputStream(
+				getClass(), _ZIP_FILE_PATH));
 
 		Assert.assertNull(zipReader.getEntryAsByteArray("foo.txt"));
 	}
@@ -115,7 +123,8 @@ public class ZipReaderImplTest {
 	@Test
 	public void testGetEntryAsByteArrayThatIsADirectory() throws Exception {
 		ZipReader zipReader = new ZipReaderImpl(
-			_getDependencyAsInputStream(_ZIP_FILE_PATH));
+			DependenciesTestUtil.getDependencyAsInputStream(
+				getClass(), _ZIP_FILE_PATH));
 
 		Assert.assertNull(zipReader.getEntryAsByteArray("1"));
 		Assert.assertNull(zipReader.getEntryAsByteArray("/1"));
@@ -124,7 +133,8 @@ public class ZipReaderImplTest {
 	@Test
 	public void testGetEntryAsByteArrayWithEmptyName() throws Exception {
 		ZipReader zipReader = new ZipReaderImpl(
-			_getDependencyAsInputStream(_ZIP_FILE_PATH));
+			DependenciesTestUtil.getDependencyAsInputStream(
+				getClass(), _ZIP_FILE_PATH));
 
 		Assert.assertNull(zipReader.getEntryAsByteArray(""));
 		Assert.assertNull(zipReader.getEntryAsByteArray(null));
@@ -133,7 +143,8 @@ public class ZipReaderImplTest {
 	@Test
 	public void testGetEntryAsInputStream() throws Exception {
 		ZipReader zipReader = new ZipReaderImpl(
-			_getDependencyAsInputStream(_ZIP_FILE_PATH));
+			DependenciesTestUtil.getDependencyAsInputStream(
+				getClass(), _ZIP_FILE_PATH));
 
 		InputStream is = zipReader.getEntryAsInputStream(_FILE_PATH_0);
 
@@ -155,7 +166,8 @@ public class ZipReaderImplTest {
 	@Test
 	public void testGetEntryAsInputStreamThatDoesNotExist() throws Exception {
 		ZipReader zipReader = new ZipReaderImpl(
-			_getDependencyAsInputStream(_ZIP_FILE_PATH));
+			DependenciesTestUtil.getDependencyAsInputStream(
+				getClass(), _ZIP_FILE_PATH));
 
 		Assert.assertNull(zipReader.getEntryAsInputStream("foo.txt"));
 	}
@@ -163,7 +175,8 @@ public class ZipReaderImplTest {
 	@Test
 	public void testGetEntryAsInputStreamThatIsADirectory() throws Exception {
 		ZipReader zipReader = new ZipReaderImpl(
-			_getDependencyAsInputStream(_ZIP_FILE_PATH));
+			DependenciesTestUtil.getDependencyAsInputStream(
+				getClass(), _ZIP_FILE_PATH));
 
 		Assert.assertNull(zipReader.getEntryAsInputStream("1"));
 		Assert.assertNull(zipReader.getEntryAsInputStream("/1"));
@@ -172,7 +185,8 @@ public class ZipReaderImplTest {
 	@Test
 	public void testGetEntryAsInputStreamWithEmptyName() throws Exception {
 		ZipReader zipReader = new ZipReaderImpl(
-			_getDependencyAsInputStream(_ZIP_FILE_PATH));
+			DependenciesTestUtil.getDependencyAsInputStream(
+				getClass(), _ZIP_FILE_PATH));
 
 		Assert.assertNull(zipReader.getEntryAsInputStream(""));
 		Assert.assertNull(zipReader.getEntryAsInputStream(null));
@@ -181,7 +195,8 @@ public class ZipReaderImplTest {
 	@Test
 	public void testGetEntryAsString() throws Exception {
 		ZipReader zipReader = new ZipReaderImpl(
-			_getDependencyAsFile(_ZIP_FILE_PATH));
+			DependenciesTestUtil.getDependencyAsFile(
+				getClass(), _ZIP_FILE_PATH));
 
 		String content = zipReader.getEntryAsString(_FILE_PATH_0);
 
@@ -207,7 +222,8 @@ public class ZipReaderImplTest {
 	@Test
 	public void testGetEntryAsStringThatDoesNotExist() throws Exception {
 		ZipReader zipReader = new ZipReaderImpl(
-			_getDependencyAsInputStream(_ZIP_FILE_PATH));
+			DependenciesTestUtil.getDependencyAsInputStream(
+				getClass(), _ZIP_FILE_PATH));
 
 		Assert.assertNull(zipReader.getEntryAsString("foo.txt"));
 	}
@@ -215,7 +231,8 @@ public class ZipReaderImplTest {
 	@Test
 	public void testGetEntryAsStringThatIsADirectory() throws Exception {
 		ZipReader zipReader = new ZipReaderImpl(
-			_getDependencyAsInputStream(_ZIP_FILE_PATH));
+			DependenciesTestUtil.getDependencyAsInputStream(
+				getClass(), _ZIP_FILE_PATH));
 
 		Assert.assertNull(zipReader.getEntryAsString("1"));
 		Assert.assertNull(zipReader.getEntryAsString("/1"));
@@ -224,7 +241,8 @@ public class ZipReaderImplTest {
 	@Test
 	public void testGetEntryAsStringWithEmptyName() throws Exception {
 		ZipReader zipReader = new ZipReaderImpl(
-			_getDependencyAsInputStream(_ZIP_FILE_PATH));
+			DependenciesTestUtil.getDependencyAsInputStream(
+				getClass(), _ZIP_FILE_PATH));
 
 		Assert.assertNull(zipReader.getEntryAsString(""));
 		Assert.assertNull(zipReader.getEntryAsString(null));
@@ -233,7 +251,8 @@ public class ZipReaderImplTest {
 	@Test
 	public void testGetFolderEntries() throws Exception {
 		ZipReader zipReader = new ZipReaderImpl(
-			_getDependencyAsInputStream(_ZIP_FILE_PATH));
+			DependenciesTestUtil.getDependencyAsInputStream(
+				getClass(), _ZIP_FILE_PATH));
 
 		List<String> entries = zipReader.getFolderEntries("");
 
@@ -261,25 +280,13 @@ public class ZipReaderImplTest {
 	@Test
 	public void testGetFolderEntriesThatDoesNotExists() throws Exception {
 		ZipReader zipReader = new ZipReaderImpl(
-			_getDependencyAsInputStream(_ZIP_FILE_PATH));
+			DependenciesTestUtil.getDependencyAsInputStream(
+				getClass(), _ZIP_FILE_PATH));
 
 		List<String> entries = zipReader.getFolderEntries("foo");
 
 		Assert.assertNotNull(entries);
 		Assert.assertTrue(entries.isEmpty());
-	}
-
-	private static File _getDependencyAsFile(String name) throws Exception {
-		URL url = ZipReaderImplTest.class.getResource("dependencies/" + name);
-
-		return new File(url.toURI());
-	}
-
-	private static InputStream _getDependencyAsInputStream(String name)
-		throws Exception {
-
-		return ZipReaderImplTest.class.getResourceAsStream(
-			"dependencies/" + name);
 	}
 
 	private static final String _FILE_PATH_0 = "0.txt";

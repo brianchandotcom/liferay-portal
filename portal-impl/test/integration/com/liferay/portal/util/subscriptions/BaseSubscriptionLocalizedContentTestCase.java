@@ -61,6 +61,10 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 	public void testSubscriptionLocalizedContentWhenAddingBaseModel()
 		throws Exception {
 
+		Map<Locale, String> previousLocalizedContents = new HashMap<>();
+
+		previousLocalizedContents.putAll(localizedContents);
+
 		localizedContents.put(LocaleUtil.GERMANY, GERMAN_BODY);
 
 		setBaseModelSubscriptionBodyPreferences(
@@ -76,12 +80,18 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 			"Body", GERMAN_BODY);
 
 		Assert.assertEquals(1, messages.size());
+
+		localizedContents = previousLocalizedContents;
 	}
 
 
 	@Test
 	public void testSubscriptionLocalizedContentWhenUpdatingBaseModel()
 		throws Exception {
+
+		Map<Locale, String> previousLocalizedContents = new HashMap<>();
+
+		previousLocalizedContents.putAll(localizedContents);
 
 		localizedContents.put(LocaleUtil.SPAIN, SPANISH_BODY);
 
@@ -100,6 +110,8 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 			"Body", SPANISH_BODY);
 
 		Assert.assertEquals(1, messages.size());
+
+		localizedContents = previousLocalizedContents;
 	}
 
 	protected abstract void addSubscriptionContainerModel(long containerModelId)

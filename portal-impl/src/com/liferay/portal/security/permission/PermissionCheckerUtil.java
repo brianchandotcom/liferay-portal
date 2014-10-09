@@ -39,7 +39,6 @@ import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
-import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 import com.liferay.portlet.journal.service.permission.JournalFolderPermission;
@@ -113,11 +112,8 @@ public class PermissionCheckerUtil {
 			return DLPermission.contains(permissionChecker, classPK, actionId);
 		}
 		else if (className.equals(JournalArticle.class.getName())) {
-			JournalArticle article = JournalArticleLocalServiceUtil.getArticle(
-				classPK);
-
 			return JournalArticlePermission.contains(
-				permissionChecker, article, actionId);
+				permissionChecker, classPK, actionId);
 		}
 		else if (className.equals(JournalFolder.class.getName())) {
 			Group group = GroupLocalServiceUtil.fetchGroup(classPK);

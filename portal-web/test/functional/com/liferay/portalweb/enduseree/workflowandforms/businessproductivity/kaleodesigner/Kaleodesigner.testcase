@@ -13,7 +13,6 @@
 		</execute>
 
 		<execute macro="Workflow#tearDownWorkflowDefinitionsViaWorkflowCP" />
-
 		<execute macro="Workflow#tearDownWorkflowDefinitionDraftsViaKDCP" />
 	</tear-down>
 

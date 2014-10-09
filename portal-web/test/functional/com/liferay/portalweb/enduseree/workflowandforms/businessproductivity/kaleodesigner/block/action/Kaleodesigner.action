@@ -17,6 +17,12 @@
 		</case>
 	</command>
 
+	<command name="keyPress">
+		<case locator-key1="VIEW_FORM_CONNECTOR">
+			<execute function="KeyPress#keyPressNoError" />
+		</case>
+	</command>
+
 	<command name="type">
 		<case locator-key1="SOURCE_KALEO_XML_CONTENT">
 			<execute function="Type#typeAceEditorNoMouseOver" />

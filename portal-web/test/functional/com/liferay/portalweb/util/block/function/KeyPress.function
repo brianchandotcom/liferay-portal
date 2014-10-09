@@ -8,4 +8,10 @@
 
 		<execute selenium="assertLiferayErrors" />
 	</command>
+
+	<command name="keyPressNoError">
+		<execute selenium="mouseOver" />
+
+		<execute selenium="keyPress" />
+	</command>
 </definition>

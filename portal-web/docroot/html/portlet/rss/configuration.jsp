@@ -206,7 +206,7 @@ configurationRenderURL.setParameter("portletResource", portletResource);
 				<aui:button onClick='<%= renderResponse.getNamespace() + "saveSettings();" %>' type="submit" />
 			</aui:button-row>
 
-			<aui:script use="aui-base">
+			<aui:script use="aui-base,liferay-auto-fields">
 				var subscriptionsTable = A.one('#<portlet:namespace />subscriptions');
 
 				if (subscriptionsTable) {
@@ -218,6 +218,14 @@ configurationRenderURL.setParameter("portletResource", portletResource);
 						'.remove-subscription'
 					);
 				}
+
+				new Liferay.AutoFields(
+					{
+						contentBox: 'fieldset.subscriptions',
+						fieldIndexes: '<portlet:namespace />subscriptionIndexes',
+						namespace: '<portlet:namespace />'
+					}
+				).render();
 			</aui:script>
 		</c:when>
 		<c:when test="<%= typeSelection.equals(JournalArticle.class.getName()) %>">
@@ -280,14 +288,4 @@ configurationRenderURL.setParameter("portletResource", portletResource);
 
 		submitForm(document.<portlet:namespace />fm);
 	}
-</aui:script>
-
-<aui:script use="liferay-auto-fields">
-	new Liferay.AutoFields(
-		{
-			contentBox: 'fieldset.subscriptions',
-			fieldIndexes: '<portlet:namespace />subscriptionIndexes',
-			namespace: '<portlet:namespace />'
-		}
-	).render();
 </aui:script>

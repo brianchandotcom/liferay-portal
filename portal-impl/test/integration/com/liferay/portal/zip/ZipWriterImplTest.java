@@ -29,6 +29,7 @@ import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -213,6 +214,23 @@ public class ZipWriterImplTest {
 		byte[] bytes = zipWriter.finish();
 
 		Assert.assertArrayEquals(FileUtil.getBytes(tempZipFile), bytes);
+	}
+
+	/**
+	 * Throws an ArchiveFileNotFoundException if and only if this file is a
+	 * true archive file, not just a false positive, including RAES
+	 * encrypted ZIP files for which key prompting has been cancelled or
+	 * disabled.
+	 */
+	@Test(expected = FileNotFoundException.class)
+	public void testFinishIfZipFileIsTrueArchiveFile() throws Exception {
+		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
+
+		FileUtil.copyFile(_getDependencyAsFile(_ZIP_FILE_PATH), tempZipFile);
+
+		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
+
+		zipWriter.finish();
 	}
 
 	@Test(expected = IOException.class)

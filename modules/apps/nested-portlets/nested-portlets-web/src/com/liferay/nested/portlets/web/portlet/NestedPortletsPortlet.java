@@ -14,7 +14,9 @@
 
 package com.liferay.nested.portlets.web.portlet;
 
-import com.liferay.nested.portlets.web.portlet.util.NestedPortletUtil;
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.nested.portlets.web.configuration.NestedPortletsConfiguration;
 import com.liferay.nested.portlets.web.upgrade.NestedPortletUpgrade;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -49,13 +51,18 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Fellwock
  */
 @Component(
+	configurationPid = "com.liferay.nested.portlets.web",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL,
 	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-nested-portlets",
@@ -91,8 +98,9 @@ public class NestedPortletsPortlet extends MVCPortlet {
 
 		PortletPreferences portletPreferences = renderRequest.getPreferences();
 
-		String layoutTemplateId = NestedPortletUtil.getLayoutTemplateId(
-			portletPreferences);
+		String layoutTemplateId = portletPreferences.getValue(
+			"layoutTemplateId",
+			_nestedPortletsConfiguration.getLayoutTemplateDefault());
 
 		String velocityTemplateId = StringPool.BLANK;
 		String velocityTemplateContent = StringPool.BLANK;
@@ -161,7 +169,18 @@ public class NestedPortletsPortlet extends MVCPortlet {
 			renderRequest.setAttribute(WebKeys.VM_VARIABLES, columnIds);
 		}
 
+		renderRequest.setAttribute(
+			NestedPortletsConfiguration.class.getName(),
+			_nestedPortletsConfiguration);
+
 		super.include(viewTemplate, renderRequest, renderResponse);
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_nestedPortletsConfiguration = Configurable.createConfigurable(
+			NestedPortletsConfiguration.class, properties);
 	}
 
 	protected void checkLayout(Layout layout, Collection<String> columnIds) {
@@ -217,5 +236,7 @@ public class NestedPortletsPortlet extends MVCPortlet {
 		"([<].*?id=[\"'])([^ ]*?)([\"'].*?[>])", Pattern.DOTALL);
 	private static Pattern _processColumnPattern = Pattern.compile(
 		"(processColumn[(]\")(.*?)(\"(?:, *\"(?:.*?)\")?[)])", Pattern.DOTALL);
+
+	private volatile NestedPortletsConfiguration _nestedPortletsConfiguration;
 
 }

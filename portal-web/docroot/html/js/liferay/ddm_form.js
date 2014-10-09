@@ -682,6 +682,7 @@ AUI.add(
 												instance.setPercentUploaded(0);
 											}
 											else {
+												data.tempFile = true;
 												data.title = data.name;
 
 												instance.setValue(data);

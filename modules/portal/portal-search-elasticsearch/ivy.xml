@@ -11,30 +11,6 @@
 	</info>
 
 	<dependencies defaultconf="default">
-		<dependency name="elasticsearch" org="org.elasticsearch" rev="1.3.0" />
-		<dependency name="elasticsearch-analysis-icu" org="org.elasticsearch" rev="2.2.0" />
-		<dependency name="elasticsearch-analysis-kuromoji" org="org.elasticsearch" rev="2.2.0" />
-		<dependency name="elasticsearch-analysis-smartcn" org="org.elasticsearch" rev="2.1.0" />
-		<dependency name="icu4j" org="com.ibm.icu" rev="53.1" />
-		<dependency name="lucene-analyzers-common" org="org.apache.lucene" rev="4.9.0" />
-		<dependency name="lucene-analyzers-icu" org="org.apache.lucene" rev="4.9.0" />
-		<dependency name="lucene-analyzers-kuromoji" org="org.apache.lucene" rev="4.9.0" />
-		<dependency name="lucene-analyzers-smartcn" org="org.apache.lucene" rev="4.9.0" />
-		<dependency name="lucene-codecs" org="org.apache.lucene" rev="4.9.0" />
-		<dependency name="lucene-core" org="org.apache.lucene" rev="4.9.0" />
-		<dependency name="lucene-grouping" org="org.apache.lucene" rev="4.9.0" />
-		<dependency name="lucene-highlighter" org="org.apache.lucene" rev="4.9.0" />
-		<dependency name="lucene-join" org="org.apache.lucene" rev="4.9.0" />
-		<dependency name="lucene-memory" org="org.apache.lucene" rev="4.9.0" />
-		<dependency name="lucene-misc" org="org.apache.lucene" rev="4.9.0" />
-		<dependency name="lucene-queries" org="org.apache.lucene" rev="4.9.0" />
-		<dependency name="lucene-queryparser" org="org.apache.lucene" rev="4.9.0" />
-		<dependency name="lucene-sandbox" org="org.apache.lucene" rev="4.9.0" />
-		<dependency name="lucene-spatial" org="org.apache.lucene" rev="4.9.0" />
-		<dependency name="lucene-suggest" org="org.apache.lucene" rev="4.9.0" />
-		<dependency name="log4j-over-slf4j" org="org.slf4j" rev="1.7.7" />
-		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
-		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
-		<dependency name="spatial4j" org="com.spatial4j" rev="0.4.1" />
+		<dependency name="elasticsearch" org="org.elasticsearch" rev="1.3.4" />
 	</dependencies>
 </ivy-module>

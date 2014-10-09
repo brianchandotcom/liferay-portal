@@ -23,7 +23,7 @@ import org.apache.commons.lang.time.StopWatch;
 /**
  * @author Alexander Chow
  */
-public abstract class ConvertProcess {
+public abstract class BaseConvertProcess implements ConvertProcess {
 
 	public void convert() throws ConvertException {
 		try {
@@ -57,8 +57,6 @@ public abstract class ConvertProcess {
 		}
 	}
 
-	public abstract String getDescription();
-
 	public String getParameterDescription() {
 		return null;
 	}
@@ -75,8 +73,6 @@ public abstract class ConvertProcess {
 		return null;
 	}
 
-	public abstract boolean isEnabled();
-
 	public void setParameterValues(String[] values) {
 		_paramValues = values;
 	}
@@ -89,7 +85,7 @@ public abstract class ConvertProcess {
 
 	protected abstract void doConvert() throws Exception;
 
-	private static Log _log = LogFactoryUtil.getLog(ConvertProcess.class);
+	private static Log _log = LogFactoryUtil.getLog(BaseConvertProcess.class);
 
 	private String[] _paramValues = null;
 

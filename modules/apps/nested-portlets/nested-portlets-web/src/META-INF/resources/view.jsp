@@ -38,8 +38,8 @@
 
 <%
 try {
-	String velocityTemplateId = (String)request.getAttribute("NESTED_PORTLET_VELOCITY_TEMPLATE_ID");
-	String velocityTemplateContent = (String)request.getAttribute("NESTED_PORTLET_VELOCITY_TEMPLATE_CONTENT");
+	String templateId = (String)request.getAttribute(NestedPortletsConfiguration.TEMPLATE_ID);
+	String templateContent = (String)request.getAttribute(NestedPortletsConfiguration.TEMPLATE_CONTENT);
 
 	if (Validator.isNotNull(velocityTemplateId) && Validator.isNotNull(velocityTemplateContent)) {
 		RuntimePageUtil.processTemplate(request, response, new StringTemplateResource(velocityTemplateId, velocityTemplateContent));

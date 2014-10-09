@@ -74,7 +74,6 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.config-template=/configuration.jsp",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.preferences=classpath:/META-INF/portlet-preferences/default-portlet-preferences.xml",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user"
 	},
@@ -145,9 +144,9 @@ public class NestedPortletsPortlet extends MVCPortlet {
 		checkLayout(themeDisplay.getLayout(), columnIds.values());
 
 		renderRequest.setAttribute(
-			WebKeys.NESTED_PORTLET_VELOCITY_TEMPLATE_ID, velocityTemplateId);
+			NestedPortletsConfiguration.TEMPLATE_ID, velocityTemplateId);
 		renderRequest.setAttribute(
-			WebKeys.NESTED_PORTLET_VELOCITY_TEMPLATE_CONTENT,
+			NestedPortletsConfiguration.TEMPLATE_CONTENT,
 			velocityTemplateContent);
 
 		@SuppressWarnings("unchecked")

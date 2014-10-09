@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Loan Calculator Web
-Bundle-SymbolicName: com.liferay.loan.calculator
+Bundle-SymbolicName: com.liferay.loan.calculator.web
 Bundle-Version: 1.0.0
 Import-Package:\
 	${bnd.jsp.support.imports},\

@@ -40,12 +40,12 @@
 </tr>
 <tr>
 	<td>UNIT_FROM_SELECT</td>
-	<td>//select[@name='_27_fromId']</td>
+	<td>//select[@name='_27_fromUnit']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>UNIT_TO_SELECT</td>
-	<td>//select[@name='_27_toId']</td>
+	<td>//select[@name='_27_toUnit']</td>
 	<td></td>
 </tr>
 <tr>

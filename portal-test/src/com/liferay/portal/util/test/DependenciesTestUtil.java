@@ -16,6 +16,7 @@ package com.liferay.portal.util.test;
 
 import java.io.File;
 import java.io.InputStream;
+
 import java.net.URL;
 
 /**

@@ -41,13 +41,10 @@ page import="com.liferay.portal.service.permission.LayoutPermissionUtil" %>
 
 <%@ page import="java.util.List" %>
 
-<%@ page import="javax.portlet.WindowState" %>
-
 <liferay-theme:defineObjects />
 <portlet:defineObjects />
 
 <%
-WindowState windowState = liferayPortletRequest.getWindowState();
 %>
 
 <%@ include file="/init-ext.jsp" %>

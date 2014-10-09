@@ -13,6 +13,7 @@
  * details.
  */
 --%>
+
 <%@ taglib uri="/META-INF/c.tld" prefix="c" %>
 <%@ taglib uri="/META-INF/aui.tld" prefix="aui" %>
 <%@ taglib uri="/META-INF/liferay-portlet-ext.tld" prefix="liferay-portlet" %>
@@ -22,7 +23,7 @@
 
 <%@ page contentType="text/html; charset=UTF-8" %>
 
-<%@ page import="com.liferay.nested.portlets.web.portlet.util.NestedPortletUtil" %><%@
+<%@ page import="com.liferay.nested.portlets.web.configuration.NestedPortletsConfiguration" %><%@
 page import="com.liferay.portal.kernel.log.Log" %><%@
 page import="com.liferay.portal.kernel.log.LogFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.template.StringTemplateResource" %><%@
@@ -46,6 +47,7 @@ page import="com.liferay.portal.service.permission.LayoutPermissionUtil" %>
 <portlet:defineObjects />
 
 <%
+NestedPortletsConfiguration nestedPortletsConfiguration = (NestedPortletsConfiguration)request.getAttribute(NestedPortletsConfiguration.class.getName());
 %>
 
 <%@ include file="/init-ext.jsp" %>

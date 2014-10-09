@@ -41,15 +41,15 @@ try {
 	String templateId = (String)request.getAttribute(NestedPortletsConfiguration.TEMPLATE_ID);
 	String templateContent = (String)request.getAttribute(NestedPortletsConfiguration.TEMPLATE_CONTENT);
 
-	if (Validator.isNotNull(velocityTemplateId) && Validator.isNotNull(velocityTemplateContent)) {
-		RuntimePageUtil.processTemplate(request, response, new StringTemplateResource(velocityTemplateId, velocityTemplateContent));
+	if (Validator.isNotNull(templateId) && Validator.isNotNull(templateContent)) {
+		RuntimePageUtil.processTemplate(request, response, new StringTemplateResource(templateId, templateContent));
 	}
 }
 catch (Exception e) {
 	_log.error("Cannot render Nested Portlets portlet", e);
 }
 finally {
-	NestedPortletUtil.defineObjects(portletConfig, renderResponse, renderRequest);
+	liferayPortletRequest.defineObjects(portletConfig, renderResponse);
 }
 %>
 

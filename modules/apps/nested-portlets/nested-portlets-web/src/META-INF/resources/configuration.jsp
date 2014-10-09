@@ -30,13 +30,13 @@
 		<%
 		int CELLS_PER_ROW = 4;
 
-		String layoutTemplateId = NestedPortletUtil.getLayoutTemplateId(portletPreferences);
+		String layoutTemplateId = portletPreferences.getValue("layoutTemplateId", nestedPortletsConfiguration.getLayoutTemplateDefault());
 
 		List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates(theme.getThemeId());
 
 		layoutTemplates = PluginUtil.restrictPlugins(layoutTemplates, user);
 
-		List<String> unsupportedLayoutTemplates = ListUtil.fromArray(PropsUtil.getArray(portletPreferences.getValue("nested.portlets.layout.template.unsupported", StringPool.BLANK)));
+		List<String> unsupportedLayoutTemplates = ListUtil.fromArray(nestedPortletsConfiguration.getLayoutTemplatesUnsupported());
 
 		int i = 0;
 

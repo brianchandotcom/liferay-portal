@@ -34,7 +34,7 @@
 
 		List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates(theme.getThemeId());
 
-		layoutTemplates = com.liferay.portal.plugin.PluginUtil.restrictPlugins(layoutTemplates, user);
+		layoutTemplates = PluginUtil.restrictPlugins(layoutTemplates, user);
 
 		List<String> unsupportedLayoutTemplates = ListUtil.fromArray(PropsUtil.getArray(portletPreferences.getValue("nested.portlets.layout.template.unsupported", StringPool.BLANK)));
 

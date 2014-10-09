@@ -35,6 +35,7 @@ page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.layoutconfiguration.util.RuntimePageUtil" %><%@
 page import="com.liferay.portal.model.LayoutTemplate" %><%@
+page import="com.liferay.portal.plugin.PluginUtil" %><%@
 page import="com.liferay.portal.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.service.LayoutTemplateLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.permission.LayoutPermissionUtil" %>

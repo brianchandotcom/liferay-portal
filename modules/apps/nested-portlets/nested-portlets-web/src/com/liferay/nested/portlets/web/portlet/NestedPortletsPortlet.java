@@ -147,8 +147,8 @@ public class NestedPortletsPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			WebKeys.NESTED_PORTLET_VELOCITY_TEMPLATE_ID, velocityTemplateId);
 		renderRequest.setAttribute(
-				WebKeys.NESTED_PORTLET_VELOCITY_TEMPLATE_CONTENT,
-				velocityTemplateContent);
+			WebKeys.NESTED_PORTLET_VELOCITY_TEMPLATE_CONTENT,
+			velocityTemplateContent);
 
 		@SuppressWarnings("unchecked")
 		Map<String, Object> vmVariables =
@@ -217,7 +217,6 @@ public class NestedPortletsPortlet extends MVCPortlet {
 	private static Pattern _columnIdPattern = Pattern.compile(
 		"([<].*?id=[\"'])([^ ]*?)([\"'].*?[>])", Pattern.DOTALL);
 	private static Pattern _processColumnPattern = Pattern.compile(
-			"(processColumn[(]\")(.*?)(\"(?:, *\"(?:.*?)\")?[)])",
-			Pattern.DOTALL);
+		"(processColumn[(]\")(.*?)(\"(?:, *\"(?:.*?)\")?[)])", Pattern.DOTALL);
 
 }

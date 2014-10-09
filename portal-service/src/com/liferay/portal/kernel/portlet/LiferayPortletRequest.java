@@ -14,16 +14,24 @@
 
 package com.liferay.portal.kernel.portlet;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.util.Map;
 
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public interface LiferayPortletRequest extends PortletRequest {
+
+	public void defineObjects(
+		PortletConfig portletConfig, PortletResponse portletResponse);
 
 	public HttpServletRequest getHttpServletRequest();
 

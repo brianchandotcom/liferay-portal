@@ -125,6 +125,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		_request.removeAttribute(WebKeys.PORTLET_CONTENT);
 	}
 
+	@Override
 	public void defineObjects(
 		PortletConfig portletConfig, PortletResponse portletResponse) {
 

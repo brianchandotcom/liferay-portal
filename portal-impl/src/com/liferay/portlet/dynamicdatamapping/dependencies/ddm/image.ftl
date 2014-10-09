@@ -162,7 +162,7 @@
 					notice.show();
 				}
 			},
-			uploadURL: '<@liferay_portlet.actionURL><@liferay_portlet.param name="struts_action" value="/journal/upload_image"></@liferay_portlet.param><@liferay_portlet.param name="cmd" value="add_dynamic"></@liferay_portlet.param><@liferay_portlet.param name="repositoryId" value="${scopeGroupId?c}"></@liferay_portlet.param><@liferay_portlet.param name="folderId" value="${folderId}"></@liferay_portlet.param></@liferay_portlet.actionURL>',
+			uploadURL: '<@liferay_portlet.actionURL><@liferay_portlet.param name="struts_action" value="/journal/upload_image"></@liferay_portlet.param><@liferay_portlet.param name="cmd" value="add_temp"></@liferay_portlet.param><@liferay_portlet.param name="folderId" value="${folderId}"></@liferay_portlet.param></@liferay_portlet.actionURL>',
 			withCredentials: false
 		}
 	).render('#${portletNamespace}${namespacedFieldName}ImageUpload');

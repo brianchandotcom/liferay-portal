@@ -10,4 +10,5 @@ Include-Resource:\
 	@lib/javax.servlet.jsp.jstl.jar!/META-INF/*.tld,\
 	@../../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*,\
 	@../../../../util-taglib/util-taglib.jar
+
 -metatype: *

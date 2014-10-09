@@ -116,6 +116,27 @@ public class ZipWriterImplTest {
 	}
 
 	@Test
+	public void testAddEntryFromInputStreamThatStartsWithSlash()
+		throws Exception {
+
+		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
+
+		FileUtil.copyFile(_getDependencyAsFile(_ZIP_FILE_PATH), tempZipFile);
+
+		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
+
+		zipWriter.addEntry(
+			"/" + _ENTRY_FILE_PATH,
+			_getDependencyAsInputStream(_ENTRY_FILE_PATH));
+
+		ZipReader zipReader = new ZipReaderImpl(tempZipFile);
+
+		Assert.assertEquals(
+			_expectedEntryContent,
+			zipReader.getEntryAsString(_ENTRY_FILE_PATH));
+	}
+
+	@Test
 	public void testAddEntryFromInputStreamThatIsNull() throws Exception {
 		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
 

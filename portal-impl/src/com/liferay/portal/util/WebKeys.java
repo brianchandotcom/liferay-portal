@@ -296,10 +296,6 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String MOBILE_DEVICE_RULES_RULE_TYPE = "MOBILE_DEVICE_RULES_RULE_TYPE";
 
-	public static final String NESTED_PORTLET_VELOCITY_TEMPLATE_CONTENT = "NESTED_PORTLET_VELOCITY_TEMPLATE_CONTENT";
-
-	public static final String NESTED_PORTLET_VELOCITY_TEMPLATE_ID = "NESTED_PORTLET_VELOCITY_TEMPLATE_ID";
-
 	public static final String NETVIBES = "NETVIBES";
 
 	public static final String NOTES_LIST = "NOTES_LIST";

@@ -97,11 +97,19 @@ public class ZipWriterImpl implements ZipWriter {
 
 	@Override
 	public void addEntry(String name, String s) throws IOException {
+		if (s == null) {
+			return;
+		}
+
 		addEntry(name, s.getBytes(StringPool.UTF8));
 	}
 
 	@Override
 	public void addEntry(String name, StringBuilder sb) throws IOException {
+		if (sb == null) {
+			return;
+		}
+
 		addEntry(name, sb.toString());
 	}
 

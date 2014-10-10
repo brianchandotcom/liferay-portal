@@ -16,6 +16,7 @@ package com.liferay.portal.zip;
 
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
@@ -31,9 +32,7 @@ import java.util.Date;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 
 /**
@@ -51,12 +50,13 @@ public class ZipWriterImplTest {
 
 	@Before
 	public void setUp() {
-		_tempZipFilePath = new Date().getTime() + "-file.zip";
+		_tempZipFilePath = SystemProperties.get(SystemProperties.TMP_DIR) +
+			File.separatorChar + new Date().getTime() + "-file.zip";
 	}
 
 	@Test
 	public void testAddEntryFromBytes() throws Exception {
-		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
+		File tempZipFile = new File(_tempZipFilePath);
 
 		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
 
@@ -82,7 +82,7 @@ public class ZipWriterImplTest {
 
 	@Test
 	public void testAddEntryFromBytesThatAreEmpty() throws Exception {
-		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
+		File tempZipFile = new File(_tempZipFilePath);
 
 		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
 
@@ -100,7 +100,7 @@ public class ZipWriterImplTest {
 
 	@Test
 	public void testAddEntryFromInputStream() throws Exception {
-		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
+		File tempZipFile = new File(_tempZipFilePath);
 
 		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
 
@@ -121,7 +121,7 @@ public class ZipWriterImplTest {
 
 	@Test
 	public void testAddEntryFromInputStreamThatIsNull() throws Exception {
-		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
+		File tempZipFile = new File(_tempZipFilePath);
 
 		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
 
@@ -141,7 +141,7 @@ public class ZipWriterImplTest {
 	public void testAddEntryFromInputStreamThatStartsWithSlash()
 		throws Exception {
 
-		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
+		File tempZipFile = new File(_tempZipFilePath);
 
 		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
 
@@ -162,7 +162,7 @@ public class ZipWriterImplTest {
 
 	@Test
 	public void testAddEntryFromString() throws Exception {
-		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
+		File tempZipFile = new File(_tempZipFilePath);
 
 		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
 
@@ -179,7 +179,7 @@ public class ZipWriterImplTest {
 
 	@Test
 	public void testAddEntryFromStringBuilder() throws Exception {
-		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
+		File tempZipFile = new File(_tempZipFilePath);
 
 		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
 
@@ -200,7 +200,7 @@ public class ZipWriterImplTest {
 
 	@Test
 	public void testAddEntryFromStringBuilderThatIsEmpty() throws Exception {
-		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
+		File tempZipFile = new File(_tempZipFilePath);
 
 		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
 
@@ -218,7 +218,7 @@ public class ZipWriterImplTest {
 
 	@Test
 	public void testAddEntryFromStringBuilderThatIsNull() throws Exception {
-		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
+		File tempZipFile = new File(_tempZipFilePath);
 
 		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
 
@@ -236,7 +236,7 @@ public class ZipWriterImplTest {
 
 	@Test
 	public void testAddEntryFromStringThatIsEmpty() throws Exception {
-		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
+		File tempZipFile = new File(_tempZipFilePath);
 
 		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
 
@@ -254,7 +254,7 @@ public class ZipWriterImplTest {
 
 	@Test
 	public void testAddEntryFromStringThatIsNull() throws Exception {
-		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
+		File tempZipFile = new File(_tempZipFilePath);
 
 		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
 
@@ -277,7 +277,7 @@ public class ZipWriterImplTest {
 		Assert.assertNotNull(zipWriter);
 		Assert.assertNotNull(zipWriter.getFile());
 
-		File zipFile = temporaryFolder.newFile(_tempZipFilePath);
+		File zipFile = new File(_tempZipFilePath);
 
 		zipWriter = new ZipWriterImpl(zipFile);
 
@@ -293,7 +293,7 @@ public class ZipWriterImplTest {
 
 	@Test
 	public void testFinish() throws Exception {
-		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
+		File tempZipFile = new File(_tempZipFilePath);
 
 		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
 
@@ -322,7 +322,7 @@ public class ZipWriterImplTest {
 	 */
 	@Test(expected = FileNotFoundException.class)
 	public void testFinishIfZipFileIsTrueArchiveFile() throws Exception {
-		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
+		File tempZipFile = new File(_tempZipFilePath);
 
 		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
 
@@ -332,9 +332,6 @@ public class ZipWriterImplTest {
 		finally {
 		}
 	}
-
-	@Rule
-	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
 	private static final String _ENTRY_FILE_PATH = "entry.txt";
 

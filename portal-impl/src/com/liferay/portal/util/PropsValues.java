@@ -824,6 +824,10 @@ public class PropsValues {
 
 	public static final boolean INDEX_WITH_THREAD = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.INDEX_WITH_THREAD));
 
+	public static String[] INTERRUPTED_PORTLET_REQUEST_WHITELIST = PropsUtil.getArray(PropsKeys.INTERRUPTED_PORTLET_REQUEST_WHITELIST);
+
+	public static String[] INTERRUPTED_PORTLET_REQUEST_WHITELIST_ACTIONS = PropsUtil.getArray(PropsKeys.INTERRUPTED_PORTLET_REQUEST_WHITELIST_ACTIONS);
+
 	public static final String INTRABAND_PROXY_DUMP_CLASSES_DIR = PropsUtil.get(PropsKeys.INTRABAND_PROXY_DUMP_CLASSES_DIR);
 
 	public static final boolean INTRABAND_PROXY_DUMP_CLASSES_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.INTRABAND_PROXY_DUMP_CLASSES_ENABLED));

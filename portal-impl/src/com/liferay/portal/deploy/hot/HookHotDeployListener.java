@@ -94,6 +94,7 @@ import com.liferay.portal.security.auth.EmailAddressGenerator;
 import com.liferay.portal.security.auth.EmailAddressValidator;
 import com.liferay.portal.security.auth.FullNameGenerator;
 import com.liferay.portal.security.auth.FullNameValidator;
+import com.liferay.portal.security.auth.InterruptedPortletRequestWhitelistUtil;
 import com.liferay.portal.security.auth.ScreenNameGenerator;
 import com.liferay.portal.security.auth.ScreenNameValidator;
 import com.liferay.portal.security.lang.DoPrivilegedBean;
@@ -2249,6 +2250,21 @@ public class HookHotDeployListener
 		}
 
 		if (containsKey(
+				portalProperties, INTERRUPTED_PORTLET_REQUEST_WHITELIST)) {
+
+		InterruptedPortletRequestWhitelistUtil.
+			resetPortletInvocationWhitelist();
+		}
+
+		if (containsKey(
+				portalProperties,
+				INTERRUPTED_PORTLET_REQUEST_WHITELIST_ACTIONS)) {
+
+			InterruptedPortletRequestWhitelistUtil.
+				resetPortletInvocationWhitelistActions();
+		}
+
+		if (containsKey(
 				portalProperties,
 				PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST)) {
 
@@ -2393,6 +2409,8 @@ public class HookHotDeployListener
 		"company.settings.form.identification",
 		"company.settings.form.miscellaneous", "company.settings.form.social",
 		"dockbar.add.portlets", "journal.article.form.add",
+		"interrupted.portlet.request.whitelist",
+		"interrupted.portlet.request.whitelist.actions",
 		"journal.article.form.translate", "journal.article.form.update",
 		"layout.form.add", "layout.form.update", "layout.set.form.update",
 		"layout.static.portlets.all", "login.form.navigation.post",

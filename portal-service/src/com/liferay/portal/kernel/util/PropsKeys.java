@@ -1101,6 +1101,10 @@ public interface PropsKeys {
 
 	public static final String INDEX_WITH_THREAD = "index.with.thread";
 
+	public static final String INTERRUPTED_PORTLET_REQUEST_WHITELIST = "interrupted.portlet.request.whitelist";
+
+	public static final String INTERRUPTED_PORTLET_REQUEST_WHITELIST_ACTIONS = "interrupted.portlet.request.whitelist.actions";
+
 	public static final String INTRABAND_IMPL = "intraband.impl";
 
 	public static final String INTRABAND_MAILBOX_REAPER_THREAD_ENABLED = "intraband.mailbox.reaper.thread.enabled";

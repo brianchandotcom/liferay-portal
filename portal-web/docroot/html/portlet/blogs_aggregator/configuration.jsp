@@ -43,7 +43,7 @@ if (organizationId > 0) {
 			<aui:option label="scope" />
 		</aui:select>
 
-		<div class="form-group <%= selectionMethod.equals("users") ? StringPool.BLANK :  "hide" %>" id="<portlet:namespace />usersSelectionOptions">
+		<div class='form-group <%= selectionMethod.equals("users") ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />usersSelectionOptions">
 			<aui:input label="organization" name="organizationName" type="resource"  value="<%= organizationName %>" />
 
 			<aui:button name="selectOrganizationButton" value="select" />
@@ -106,10 +106,9 @@ if (organizationId > 0) {
 
 		Liferay.Util.toggleDisabled('#<portlet:namespace />removeOrganizationButton', true);
 	}
-</aui:script>
 
-<aui:script>
-	AUI.$('#<portlet:namespace />selectOrganizationButton').click(
+	AUI.$('#<portlet:namespace />selectOrganizationButton').on(
+		'click',
 		function(event) {
 			Liferay.Util.selectEntity(
 				{
@@ -134,13 +133,14 @@ if (organizationId > 0) {
 
 	var selectionMethod = AUI.$('#<portlet:namespace />selectionMethod');
 
-	function showHiddenFields() {
-		var usersSelectionOptions = AUI.$('#<portlet:namespace />usersSelectionOptions');
+	selectionMethod.on(
+		'change',
+		function() {
+			var usersSelectionOptions = AUI.$('#<portlet:namespace />usersSelectionOptions');
 
-		var showUsersSelectionOptions = !(selectionMethod.val() === 'users');
+			var showUsersSelectionOptions = !(selectionMethod.val() === 'users');
 
-		usersSelectionOptions.toggleClass('hide', showUsersSelectionOptions);
-	}
-
-	selectionMethod.change(showHiddenFields);
+			usersSelectionOptions.toggleClass('hide', showUsersSelectionOptions);
+		}
+	);
 </aui:script>

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/password_generator/init.jsp" %>
+<%@ include file="init.jsp" %>
 
 <%
 int length = ParamUtil.getInteger(request, "length", 8);
@@ -45,9 +45,7 @@ catch (Exception e) {
 }
 %>
 
-<liferay-portlet:renderURL var="generatePasswordUrl" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-	<portlet:param name="struts_action" value="/password_generator/view" />
-</liferay-portlet:renderURL>
+<liferay-portlet:renderURL var="generatePasswordUrl" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>" />
 
 <aui:form action="<%= generatePasswordUrl %>" method="post" name="fm">
 	<aui:fieldset>

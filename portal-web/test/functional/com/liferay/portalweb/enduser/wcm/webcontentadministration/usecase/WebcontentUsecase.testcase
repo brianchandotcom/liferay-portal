@@ -235,7 +235,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-49842, LPS-50293, LPS-50660" name="AddWebContentWithGlobalStructureAndEditedDefaultValues" priority="4">
+	<command known-issues="LPS-49842,LPS-50293,LPS-50660" name="AddWebContentWithGlobalStructureAndEditedDefaultValues" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="siteScopeName" value="Global" />
 		</execute>
@@ -308,14 +308,12 @@
 			<var name="userScreenName" value="test1test" />
 		</execute>
 
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test1@liferay.com" />
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test1@liferay.com" />
+			<var name="userLoginFullName" value="test1 test1" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP" />
+		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
 

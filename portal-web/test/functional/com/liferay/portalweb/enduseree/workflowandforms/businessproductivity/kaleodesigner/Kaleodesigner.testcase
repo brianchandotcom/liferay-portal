@@ -285,6 +285,7 @@
 
 		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
 			<var name="connectorName" value="Submit" />
+			<var name="newNode" value="Task" />
 			<var name="newNodeDescription" value="Task Node Description" />
 			<var name="newNodeName" value="Task" />
 			<var name="newNodeType" value="task" />
@@ -293,6 +294,7 @@
 
 		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
 			<var name="connectorName" value="Approve" />
+			<var name="newNode" value="End" />
 			<var name="newNodeDescription" value="End Node Description" />
 			<var name="newNodeName" value="End" />
 			<var name="newNodeType" value="end" />
@@ -501,6 +503,7 @@
 
 		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
 			<var name="connectorName" value="Submit" />
+			<var name="newNode" value="Task" />
 			<var name="newNodeDescription" value="Task Node Description" />
 			<var name="newNodeName" value="Task" />
 			<var name="newNodeType" value="task" />
@@ -509,6 +512,7 @@
 
 		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
 			<var name="connectorName" value="Approve" />
+			<var name="newNode" value="End" />
 			<var name="newNodeDescription" value="End Node Description" />
 			<var name="newNodeName" value="End" />
 			<var name="newNodeType" value="end" />
@@ -710,6 +714,7 @@
 
 		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
 			<var name="connectorName" value="Submit" />
+			<var name="newNode" value="Task" />
 			<var name="newNodeDescription" value="Task Node Description" />
 			<var name="newNodeName" value="Task" />
 			<var name="newNodeType" value="task" />
@@ -724,6 +729,7 @@
 
 		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
 			<var name="connectorName" value="Complete" />
+			<var name="newNode" value="End" />
 			<var name="newNodeDescription" value="End Node Description" />
 			<var name="newNodeName" value="End" />
 			<var name="newNodeType" value="end" />
@@ -835,6 +841,7 @@
 
 		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
 			<var name="connectorName" value="Submit" />
+			<var name="newNode" value="Task" />
 			<var name="newNodeDescription" value="Task Node Description" />
 			<var name="newNodeName" value="Task" />
 			<var name="newNodeType" value="task" />
@@ -849,6 +856,7 @@
 
 		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
 			<var name="connectorName" value="Complete" />
+			<var name="newNode" value="End" />
 			<var name="newNodeDescription" value="End Node Description" />
 			<var name="newNodeName" value="End" />
 			<var name="newNodeType" value="end" />

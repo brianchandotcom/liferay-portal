@@ -5,7 +5,7 @@
 		<if>
 			<equals arg1="${down}" arg2="true" />
 			<then>
-				<execute action="Kaleodesigner#sikuliDragAndDrop" locator-key1="NODE_CORNER" value1="50,300" />
+				<execute action="Kaleodesigner#sikuliDragAndDrop" locator-key1="NODE_CORNER" value1="50,100" />
 			</then>
 			<elseif>
 				<equals arg1="${up}" arg2="true" />

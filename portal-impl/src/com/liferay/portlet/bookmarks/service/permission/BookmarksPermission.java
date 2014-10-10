@@ -55,15 +55,15 @@ public class BookmarksPermission {
 		}
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, classPK, RESOURCE_NAME, classPK,
-			PortletKeys.BOOKMARKS, actionId);
+			permissionChecker, group.getGroupId(), RESOURCE_NAME,
+			group.getGroupId(), PortletKeys.BOOKMARKS, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();
 		}
 
 		return permissionChecker.hasPermission(
-			classPK, RESOURCE_NAME, classPK, actionId);
+			classPK, RESOURCE_NAME, group.getGroupId(), actionId);
 	}
 
 }

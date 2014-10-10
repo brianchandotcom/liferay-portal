@@ -50,15 +50,15 @@ public class BlogsPermission {
 		}
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, classPK, RESOURCE_NAME, classPK,
-			PortletKeys.BLOGS, actionId);
+			permissionChecker, group.getGroupId(), RESOURCE_NAME,
+			group.getGroupId(), PortletKeys.BLOGS, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();
 		}
 
 		return permissionChecker.hasPermission(
-			classPK, RESOURCE_NAME, classPK, actionId);
+			classPK, RESOURCE_NAME, group.getGroupId(), actionId);
 	}
 
 }

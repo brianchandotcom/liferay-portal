@@ -724,14 +724,6 @@
 		<put name="portlet_content" value="/portlet/journal/view_feeds.jsp" />
 	</definition>
 
-	<!-- Journal Articles -->
-
-	<definition name="portlet.journal_articles" extends="portlet" />
-
-	<definition name="portlet.journal_articles.view" extends="portlet.journal_articles">
-		<put name="portlet_content" value="/portlet/journal_articles/view.jsp" />
-	</definition>
-
 	<!-- Journal Content -->
 
 	<definition name="portlet.journal_content" extends="portlet" />

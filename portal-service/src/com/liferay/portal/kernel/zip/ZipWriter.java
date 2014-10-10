@@ -33,8 +33,6 @@ public interface ZipWriter {
 
 	public void addEntry(String name, StringBuilder sb) throws IOException;
 
-	public void close();
-
 	public byte[] finish() throws IOException;
 
 	public File getFile();

@@ -30,15 +30,15 @@ public class SourceMismatchException extends PortalException {
 		_formattedSource = formattedSource;
 	}
 
-	String getFileName() {
+	public String getFileName() {
 		return _fileName;
 	}
 
-	String getFormattedSource() {
+	public String getFormattedSource() {
 		return _formattedSource;
 	}
 
-	String getOriginalSource() {
+	public String getOriginalSource() {
 		return _originalSource;
 	}
 

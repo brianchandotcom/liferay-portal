@@ -431,28 +431,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"(?<=[\\W&&[^.\"]])(" + oldName + ")\\b", newName);
 	}
 
-	protected String checkStaticableFieldType(
-		JavaField javaField, Type javaFieldType, String content) {
-
-		String[] lines = StringUtil.splitLines(content);
-
-		String initializationExpression = StringUtil.trim(
-			javaField.getInitializationExpression());
-
-		if (javaField.isStatic() || initializationExpression.isEmpty() ||
-			javaFieldType.isArray()) {
-
-			return content;
-		}
-
-		String line = lines[javaField.getLineNumber() - 1];
-
-		String newLine = StringUtil.replace(
-			line, "private final", "private static final");
-
-		return StringUtil.replace(content, line, newLine);
-	}
-
 	protected String checkJavaFieldTypes(
 		String fileName, String packagePath, String className, String content) {
 
@@ -586,6 +564,28 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				fileName,
 				"create pattern as global var: " + fileName + " " + lineCount);
 		}
+	}
+
+	protected String checkStaticableFieldType(
+		JavaField javaField, Type javaFieldType, String content) {
+
+		String[] lines = StringUtil.splitLines(content);
+
+		String initializationExpression = StringUtil.trim(
+			javaField.getInitializationExpression());
+
+		if (javaField.isStatic() || initializationExpression.isEmpty() ||
+			javaFieldType.isArray()) {
+
+			return content;
+		}
+
+		String line = lines[javaField.getLineNumber() - 1];
+
+		String newLine = StringUtil.replace(
+			line, "private final", "private static final");
+
+		return StringUtil.replace(content, line, newLine);
 	}
 
 	protected void checkSystemEventAnnotations(String content, String fileName)

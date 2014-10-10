@@ -3,7 +3,7 @@
 
 <project>
 	<property name="osgi.ide.dependencies" value="axis.jar" />
-	<property name="osgi.runtime.dependencies" value="org.apache.aries.*.jar,org.apache.felix.*.jar,org.eclipse.equinox.console.jar,org.eclipse.equinox.http.servlet.jar" />
+	<property name="osgi.runtime.dependencies" value="commons-fileupload.jar,commons-io.jar,org.apache.aries.*.jar,org.apache.felix.*.jar,org.eclipse.equinox.console.jar,json.jar,org.eclipse.equinox.http.servlet.jar" />
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 

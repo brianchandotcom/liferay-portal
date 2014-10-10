@@ -17,6 +17,9 @@
 	</publications>
 
 	<dependencies defaultconf="default">
+		<dependency name="commons-fileupload" org="commons-fileupload" rev="1.2.1" />
+		<dependency name="commons-io" org="commons-io" rev="1.4" />
+		<dependency name="json" org="org.json" rev="20070829" />
 		<dependency name="org.apache.aries.jmx.api" org="org.apache.aries.jmx" rev="1.1.1" />
 		<dependency name="org.apache.aries.jmx.core" org="org.apache.aries.jmx" rev="1.1.2" />
 		<dependency name="org.apache.aries.jmx.core.whiteboard" org="org.apache.aries.jmx" rev="1.1.1" />
@@ -27,6 +30,7 @@
 		<dependency name="org.apache.felix.gogo.runtime" org="org.apache.felix" rev="0.10.0" />
 		<dependency name="org.apache.felix.gogo.shell" org="org.apache.felix" rev="0.10.0" />
 		<dependency name="org.apache.felix.metatype" org="org.apache.felix" rev="1.0.8" />
+		<dependency name="org.apache.felix.webconsole" org="org.apache.felix" rev="4.2.2" />
 		<dependency name="org.eclipse.equinox.console" org="org.eclipse.equinox" rev="1.1.100-SNAPSHOT" />
 		<dependency name="org.eclipse.equinox.http.servlet" org="org.eclipse.equinox" rev="1.2.0-SNAPSHOT" />
 		<dependency name="org.eclipse.osgi.services" org="org.eclipse.osgi" rev="3.5.0-SNAPSHOT" />

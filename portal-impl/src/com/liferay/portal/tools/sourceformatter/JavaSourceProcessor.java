@@ -816,6 +816,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
+		// LPS-49294
+
 		String newContent = checkJavaFieldTypes(
 			fileName, packagePath, className, content);
 

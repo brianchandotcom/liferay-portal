@@ -15,6 +15,7 @@
 package com.liferay.portlet.journal.social;
 
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
@@ -49,9 +50,11 @@ public class JournalArticleActivityInterpreter
 			JournalArticleLocalServiceUtil.getLatestArticle(
 				activity.getClassPK());
 
-		if (Validator.isNotNull(article.getLayoutUuid())) {
+		Layout layout = article.getLayout();
+
+		if (layout != null) {
 			String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
-				serviceContext.getScopeGroup(), false,
+				layout.getGroup(), layout.isPrivateLayout(),
 				serviceContext.getThemeDisplay());
 
 			return groupFriendlyURL.concat(

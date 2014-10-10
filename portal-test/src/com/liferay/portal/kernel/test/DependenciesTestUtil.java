@@ -12,19 +12,24 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.service;
+package com.liferay.portal.kernel.test;
 
-import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordTestUtil;
-import com.liferay.portlet.dynamicdatamapping.service.BaseDDMServiceTestCase;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.io.InputStream;
 
 /**
- * @author Marcellus Tavares
+ * @author André de Oliveira
  */
-public class BaseDDLServiceTestCase extends BaseDDMServiceTestCase {
+public class DependenciesTestUtil {
 
-	@Override
-	protected String getBasePath() {
-		return DDLRecordTestUtil.getBasePath();
+	public static String readText(Class<?> clazz, String name)
+		throws Exception {
+
+		ClassLoader classLoader = clazz.getClassLoader();
+		InputStream inputStream = classLoader.getResourceAsStream(name);
+
+		return StringUtil.read(inputStream);
 	}
 
 }

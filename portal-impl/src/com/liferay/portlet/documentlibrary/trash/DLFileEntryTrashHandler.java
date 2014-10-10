@@ -258,7 +258,8 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 			return;
 		}
 
-		DLAppLocalServiceUtil.restoreFileEntryFromTrash(userId, classPK);
+		RepositoryTrashUtil.restoreFileEntryFromTrash(
+			userId, dlFileEntry.getRepositoryId(), classPK);
 	}
 
 	@Override

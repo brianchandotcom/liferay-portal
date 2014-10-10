@@ -1352,9 +1352,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		Folder folder = message.addAttachmentsFolder();
 
-		PortletFileRepositoryUtil.restorePortletFileEntryFromTrash(
-			message.getGroupId(), userId, folder.getFolderId(),
-			deletedFileName);
+		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+			message.getGroupId(), folder.getFolderId(), deletedFileName);
+
+		RepositoryTrashUtil.restoreFileEntryFromTrash(
+			userId, fileEntry.getRepositoryId(), fileEntry.getFileEntryId());
 	}
 
 	@Override

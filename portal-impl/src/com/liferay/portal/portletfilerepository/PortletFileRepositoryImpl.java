@@ -583,6 +583,10 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		return movePortletFileEntryToTrash(userId, fileEntry.getFileEntryId());
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link com.liferay.portal.kernel.repository.util.RepositoryTrashUtil.restoreFileEntryFromTrash(long, long, long)}
+	 */
+	@Deprecated
 	@Override
 	public void restorePortletFileEntryFromTrash(long userId, long fileEntryId)
 		throws PortalException {
@@ -592,14 +596,22 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		try {
 			DLAppHelperThreadLocal.setEnabled(false);
 
-			DLAppLocalServiceUtil.restoreFileEntryFromTrash(
-				userId, fileEntryId);
+			LocalRepository localRepository =
+				RepositoryLocalServiceUtil.getLocalRepositoryImpl(
+					0, fileEntryId, 0);
+
+			RepositoryTrashUtil.restoreFileEntryFromTrash(
+				userId, localRepository.getRepositoryId(), fileEntryId);
 		}
 		finally {
 			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void restorePortletFileEntryFromTrash(
 			long groupId, long userId, long folderId, String fileName)

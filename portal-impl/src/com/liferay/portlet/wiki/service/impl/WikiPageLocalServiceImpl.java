@@ -1799,8 +1799,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		extraDataJSONObject.put("title", page.getTitle());
 		extraDataJSONObject.put("version", page.getVersion());
 
-		PortletFileRepositoryUtil.restorePortletFileEntryFromTrash(
-			userId, fileEntry.getFileEntryId());
+		RepositoryTrashUtil.restoreFileEntryFromTrash(
+			userId, fileEntry.getRepositoryId(), fileEntry.getFileEntryId());
 
 		socialActivityLocalService.addActivity(
 			userId, page.getGroupId(), WikiPage.class.getName(),

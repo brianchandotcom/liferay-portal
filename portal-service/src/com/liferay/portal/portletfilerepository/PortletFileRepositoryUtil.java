@@ -298,6 +298,10 @@ public class PortletFileRepositoryUtil {
 			groupId, userId, folderId, fileName);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link com.liferay.portal.kernel.repository.util.RepositoryTrashUtil.restoreFileEntryFromTrash(long, long, long)}
+	 */
+	@Deprecated
 	public static void restorePortletFileEntryFromTrash(
 			long userId, long fileEntryId)
 		throws PortalException {
@@ -306,6 +310,10 @@ public class PortletFileRepositoryUtil {
 			userId, fileEntryId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static void restorePortletFileEntryFromTrash(
 			long groupId, long userId, long folderId, String fileName)
 		throws PortalException {

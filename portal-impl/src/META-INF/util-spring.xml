@@ -13,7 +13,6 @@
 	<bean class="com.liferay.portal.convert.ConvertDatabase" />
 	<bean class="com.liferay.portal.convert.ConvertDocumentLibrary" />
 	<bean class="com.liferay.portal.convert.ConvertDocumentLibraryExtraSettings" />
-	<bean class="com.liferay.portal.convert.ConvertWikiCreole" />
 	<bean id="com.liferay.portal.events.StartupHelperUtil" class="com.liferay.portal.events.StartupHelperUtil">
 		<property name="startupHelper">
 			<bean class="com.liferay.portal.events.StartupHelper" />

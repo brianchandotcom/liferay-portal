@@ -34,8 +34,6 @@ String targetPortletId = StringPool.BLANK;
 if (!showListed) {
 	targetPortletId = PrefsParamUtil.getString(portletPreferences, request, "targetPortletId", StringPool.BLANK);
 }
-
-String type = PrefsParamUtil.getString(portletPreferences, request, "type", StringPool.BLANK);
 %>
 
 <%@ include file="/html/portlet/journal_content_search/init-ext.jsp" %>

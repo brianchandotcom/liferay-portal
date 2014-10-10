@@ -29,21 +29,6 @@
 	</div>
 
 	<aui:fieldset>
-		<aui:select label="web-content-type" name="preferences--type--">
-			<aui:option value="" />
-
-			<%
-			for (int i = 0; i < JournalArticleConstants.TYPES.length; i++) {
-			%>
-
-				<aui:option label="<%= JournalArticleConstants.TYPES[i] %>" selected="<%= type.equals(JournalArticleConstants.TYPES[i]) %>" />
-
-			<%
-			}
-			%>
-
-		</aui:select>
-
 		<aui:input label="only-show-results-for-web-content-listed-in-a-web-content-display-portlet" name="preferences--showListed--" type="checkbox" value="<%= showListed %>" />
 
 		<div class="<%= !showListed ? StringPool.BLANK : " hide" %>" id="<portlet:namespace />webContentDisplay">

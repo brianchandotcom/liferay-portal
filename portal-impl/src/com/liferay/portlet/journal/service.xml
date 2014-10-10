@@ -37,7 +37,6 @@
 		<column name="urlTitle" type="String" />
 		<column name="description" type="String" localized="true" />
 		<column name="content" type="String" />
-		<column name="type" type="String" />
 		<column name="structureId" type="String" />
 		<column name="templateId" type="String" />
 		<column name="layoutUuid" type="String" />
@@ -391,7 +390,6 @@
 		<column name="feedId" type="String" />
 		<column name="name" type="String" />
 		<column name="description" type="String" />
-		<column name="type" type="String" />
 		<column name="structureId" type="String" />
 		<column name="templateId" type="String" />
 		<column name="rendererTemplateId" type="String" />
@@ -539,7 +537,6 @@
 		<exception>ArticleSmallImageName</exception>
 		<exception>ArticleSmallImageSize</exception>
 		<exception>ArticleTitle</exception>
-		<exception>ArticleType</exception>
 		<exception>ArticleVersion</exception>
 		<exception>DuplicateArticleId</exception>
 		<exception>DuplicateArticleImageId</exception>

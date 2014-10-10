@@ -21,7 +21,6 @@
 <%
 long groupId = GetterUtil.getLong(portletPreferences.getValue("groupId", String.valueOf(themeDisplay.getScopeGroupId())));
 String ddmStructureKey = portletPreferences.getValue("ddmStructureKey", StringPool.BLANK);
-String type = portletPreferences.getValue("type", StringPool.BLANK);
 String pageUrl = portletPreferences.getValue("pageUrl", "maximized");
 int pageDelta = GetterUtil.getInteger(portletPreferences.getValue("pageDelta", StringPool.BLANK));
 String orderByCol = portletPreferences.getValue("orderByCol", StringPool.BLANK);

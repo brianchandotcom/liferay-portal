@@ -75,9 +75,6 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  content the HTML content wrapped in XML. For more information,
 	 *         see the content example in the class description for {@link
 	 *         JournalArticleLocalServiceImpl}.
-	 * @param  type the structure's type, if the web content article is related
-	 *         to a DDM structure. For more information, see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
 	 * @param  ddmStructureKey the primary key of the web content article's DDM
 	 *         structure, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
@@ -137,17 +134,17 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			long groupId, long folderId, long classNameId, long classPK,
 			String articleId, boolean autoArticleId,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String content, String type, String ddmStructureKey,
-			String ddmTemplateKey, String layoutUuid, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
-			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
-			boolean neverReview, boolean indexable, boolean smallImage,
-			String smallImageURL, File smallFile, Map<String, byte[]> images,
-			String articleURL, ServiceContext serviceContext)
+			String content, String ddmStructureKey, String ddmTemplateKey,
+			String layoutUuid, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire, int reviewDateMonth,
+			int reviewDateDay, int reviewDateYear, int reviewDateHour,
+			int reviewDateMinute, boolean neverReview, boolean indexable,
+			boolean smallImage, String smallImageURL, File smallFile,
+			Map<String, byte[]> images, String articleURL,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		JournalFolderPermission.check(
@@ -156,7 +153,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		return journalArticleLocalService.addArticle(
 			getUserId(), groupId, folderId, classNameId, classPK, articleId,
 			autoArticleId, JournalArticleConstants.VERSION_DEFAULT, titleMap,
-			descriptionMap, content, type, ddmStructureKey, ddmTemplateKey,
+			descriptionMap, content, ddmStructureKey, ddmTemplateKey,
 			layoutUuid, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,
 			expirationDateDay, expirationDateYear, expirationDateHour,
@@ -188,9 +185,6 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  content the HTML content wrapped in XML. For more information,
 	 *         see the content example in the class description for {@link
 	 *         JournalArticleLocalServiceImpl}.
-	 * @param  type the structure's type, if the web content article is related
-	 *         to a DDM structure. For more information, see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
 	 * @param  ddmStructureKey the primary key of the web content article's DDM
 	 *         structure, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
@@ -246,16 +240,15 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			long groupId, long folderId, long classNameId, long classPK,
 			String articleId, boolean autoArticleId,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String content, String type, String ddmStructureKey,
-			String ddmTemplateKey, String layoutUuid, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
-			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
-			boolean neverReview, boolean indexable, String articleURL,
-			ServiceContext serviceContext)
+			String content, String ddmStructureKey, String ddmTemplateKey,
+			String layoutUuid, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire, int reviewDateMonth,
+			int reviewDateDay, int reviewDateYear, int reviewDateHour,
+			int reviewDateMinute, boolean neverReview, boolean indexable,
+			String articleURL, ServiceContext serviceContext)
 		throws PortalException {
 
 		JournalFolderPermission.check(
@@ -264,7 +257,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		return journalArticleLocalService.addArticle(
 			getUserId(), groupId, folderId, classNameId, classPK, articleId,
 			autoArticleId, JournalArticleConstants.VERSION_DEFAULT, titleMap,
-			descriptionMap, content, type, ddmStructureKey, ddmTemplateKey,
+			descriptionMap, content, ddmStructureKey, ddmTemplateKey,
 			layoutUuid, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,
 			expirationDateDay, expirationDateYear, expirationDateHour,
@@ -1523,8 +1516,6 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         query criteria; otherwise it uses the AND operator.
 	 * @param  version the web content article's version (optionally
 	 *         <code>null</code>)
-	 * @param  type the web content article's type (optionally
-	 *         <code>null</code>)
 	 * @param  ddmStructureKey the primary key of the web content article's DDM
 	 *         structure, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
@@ -1552,13 +1543,13 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	@Override
 	public List<JournalArticle> search(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
-		String keywords, Double version, String type, String ddmStructureKey,
+		String keywords, Double version, String ddmStructureKey,
 		String ddmTemplateKey, Date displayDateGT, Date displayDateLT,
 		int status, Date reviewDate, int start, int end,
 		OrderByComparator<JournalArticle> obc) {
 
 		return journalArticleFinder.filterFindByKeywords(
-			companyId, groupId, folderIds, classNameId, keywords, version, type,
+			companyId, groupId, folderIds, classNameId, keywords, version,
 			ddmStructureKey, ddmTemplateKey, displayDateGT, displayDateLT,
 			status, reviewDate, start, end, obc);
 	}
@@ -1597,8 +1588,6 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         <code>null</code>)
 	 * @param  content the content keywords (space separated, optionally
 	 *         <code>null</code>)
-	 * @param  type the web content article's type (optionally
-	 *         <code>null</code>)
 	 * @param  ddmStructureKey the primary key of the web content article's DDM
 	 *         structure, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
@@ -1630,9 +1619,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	public List<JournalArticle> search(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String articleId, Double version, String title, String description,
-		String content, String type, String ddmStructureKey,
-		String ddmTemplateKey, Date displayDateGT, Date displayDateLT,
-		int status, Date reviewDate, boolean andOperator, int start, int end,
+		String content, String ddmStructureKey, String ddmTemplateKey,
+		Date displayDateGT, Date displayDateLT, int status, Date reviewDate,
+		boolean andOperator, int start, int end,
 		OrderByComparator<JournalArticle> obc) {
 
 		QueryDefinition<JournalArticle> queryDefinition =
@@ -1640,7 +1629,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 		return journalArticleFinder.filterFindByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleId, version,
-			title, description, content, type, ddmStructureKey, ddmTemplateKey,
+			title, description, content, ddmStructureKey, ddmTemplateKey,
 			displayDateGT, displayDateLT, reviewDate, andOperator,
 			queryDefinition);
 	}
@@ -1679,8 +1668,6 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         <code>null</code>)
 	 * @param  content the content keywords (space separated, optionally
 	 *         <code>null</code>)
-	 * @param  type the web content article's type (optionally
-	 *         <code>null</code>)
 	 * @param  ddmStructureKeys the primary keys of the web content article's
 	 *         DDM structures, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
@@ -1714,9 +1701,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	public List<JournalArticle> search(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String articleId, Double version, String title, String description,
-		String content, String type, String[] ddmStructureKeys,
-		String[] ddmTemplateKeys, Date displayDateGT, Date displayDateLT,
-		int status, Date reviewDate, boolean andOperator, int start, int end,
+		String content, String[] ddmStructureKeys, String[] ddmTemplateKeys,
+		Date displayDateGT, Date displayDateLT, int status, Date reviewDate,
+		boolean andOperator, int start, int end,
 		OrderByComparator<JournalArticle> obc) {
 
 		QueryDefinition<JournalArticle> queryDefinition =
@@ -1724,9 +1711,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 		return journalArticleFinder.filterFindByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleId, version,
-			title, description, content, type, ddmStructureKeys,
-			ddmTemplateKeys, displayDateGT, displayDateLT, reviewDate,
-			andOperator, queryDefinition);
+			title, description, content, ddmStructureKeys, ddmTemplateKeys,
+			displayDateGT, displayDateLT, reviewDate, andOperator,
+			queryDefinition);
 	}
 
 	/**
@@ -1750,8 +1737,6 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         query criteria; otherwise it uses the AND operator.
 	 * @param  version the web content article's version (optionally
 	 *         <code>null</code>)
-	 * @param  type the web content article's type (optionally
-	 *         <code>null</code>)
 	 * @param  ddmStructureKey the primary key of the web content article's DDM
 	 *         structure, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
@@ -1773,12 +1758,12 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	@Override
 	public int searchCount(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
-		String keywords, Double version, String type, String ddmStructureKey,
+		String keywords, Double version, String ddmStructureKey,
 		String ddmTemplateKey, Date displayDateGT, Date displayDateLT,
 		int status, Date reviewDate) {
 
 		return journalArticleFinder.filterCountByKeywords(
-			companyId, groupId, folderIds, classNameId, keywords, version, type,
+			companyId, groupId, folderIds, classNameId, keywords, version,
 			ddmStructureKey, ddmTemplateKey, displayDateGT, displayDateLT,
 			status, reviewDate);
 	}
@@ -1807,8 +1792,6 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         <code>null</code>)
 	 * @param  content the content keywords (space separated, optionally
 	 *         <code>null</code>)
-	 * @param  type the web content article's type (optionally
-	 *         <code>null</code>)
 	 * @param  ddmStructureKey the primary key of the web content article's DDM
 	 *         structure, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
@@ -1834,13 +1817,13 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	public int searchCount(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String articleId, Double version, String title, String description,
-		String content, String type, String ddmStructureKey,
-		String ddmTemplateKey, Date displayDateGT, Date displayDateLT,
+		String content, String ddmStructureKey, String ddmTemplateKey,
+		Date displayDateGT, Date displayDateLT,
 		int status, Date reviewDate, boolean andOperator) {
 
 		return journalArticleFinder.filterCountByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleId, version,
-			title, description, content, type, ddmStructureKey, ddmTemplateKey,
+			title, description, content, ddmStructureKey, ddmTemplateKey,
 			displayDateGT, displayDateLT, reviewDate, andOperator,
 			new QueryDefinition<JournalArticle>(status));
 	}
@@ -1869,8 +1852,6 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         <code>null</code>)
 	 * @param  content the content keywords (space separated, optionally
 	 *         <code>null</code>)
-	 * @param  type the web content article's type (optionally
-	 *         <code>null</code>)
 	 * @param  ddmStructureKeys the primary keys of the web content article's
 	 *         DDM structures, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
@@ -1898,15 +1879,15 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	public int searchCount(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String articleId, Double version, String title, String description,
-		String content, String type, String[] ddmStructureKeys,
-		String[] ddmTemplateKeys, Date displayDateGT, Date displayDateLT,
+		String content, String[] ddmStructureKeys, String[] ddmTemplateKeys,
+		Date displayDateGT, Date displayDateLT,
 		int status, Date reviewDate, boolean andOperator) {
 
 		return journalArticleFinder.filterCountByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleId, version,
-			title, description, content, type, ddmStructureKeys,
-			ddmTemplateKeys, displayDateGT, displayDateLT, reviewDate,
-			andOperator, new QueryDefinition<JournalArticle>(status));
+			title, description, content, ddmStructureKeys, ddmTemplateKeys,
+			displayDateGT, displayDateLT, reviewDate, andOperator,
+			new QueryDefinition<JournalArticle>(status));
 	}
 
 	/**
@@ -2011,9 +1992,6 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  content the HTML content wrapped in XML. For more information,
 	 *         see the content example in the class description for {@link
 	 *         JournalArticleLocalServiceImpl}.
-	 * @param  type the structure's type, if the web content article is related
-	 *         to a DDM structure. For more information, see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
 	 * @param  ddmStructureKey the primary key of the web content article's DDM
 	 *         structure, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
@@ -2085,17 +2063,17 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	public JournalArticle updateArticle(
 			long groupId, long folderId, String articleId, double version,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String content, String type, String ddmStructureKey,
-			String ddmTemplateKey, String layoutUuid, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
-			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
-			boolean neverReview, boolean indexable, boolean smallImage,
-			String smallImageURL, File smallFile, Map<String, byte[]> images,
-			String articleURL, ServiceContext serviceContext)
+			String content, String ddmStructureKey, String ddmTemplateKey,
+			String layoutUuid, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire, int reviewDateMonth,
+			int reviewDateDay, int reviewDateYear, int reviewDateHour,
+			int reviewDateMinute, boolean neverReview, boolean indexable,
+			boolean smallImage, String smallImageURL, File smallFile,
+			Map<String, byte[]> images, String articleURL,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		JournalArticlePermission.check(
@@ -2104,7 +2082,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 		return journalArticleLocalService.updateArticle(
 			getUserId(), groupId, folderId, articleId, version, titleMap,
-			descriptionMap, content, type, ddmStructureKey, ddmTemplateKey,
+			descriptionMap, content, ddmStructureKey, ddmTemplateKey,
 			layoutUuid, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,
 			expirationDateDay, expirationDateYear, expirationDateHour,

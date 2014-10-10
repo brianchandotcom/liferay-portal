@@ -15,7 +15,6 @@
 package com.liferay.portal.zip;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.memory.DeleteFileFinalizeAction;
@@ -30,7 +29,6 @@ import de.schlichtherle.io.ArchiveDetector;
 import de.schlichtherle.io.ArchiveException;
 import de.schlichtherle.io.DefaultArchiveDetector;
 import de.schlichtherle.io.File;
-import de.schlichtherle.io.FileInputStream;
 import de.schlichtherle.io.FileOutputStream;
 import de.schlichtherle.io.archive.zip.ZipDriver;
 
@@ -115,20 +113,9 @@ public class ZipWriterImpl implements ZipWriter {
 
 	@Override
 	public byte[] finish() throws IOException {
-		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-			new UnsyncByteArrayOutputStream();
+		java.io.File file = getFile();
 
-		InputStream inputStream = new FileInputStream(_file);
-
-		try {
-			File.cat(inputStream, unsyncByteArrayOutputStream);
-		}
-		finally {
-			unsyncByteArrayOutputStream.close();
-			inputStream.close();
-		}
-
-		return unsyncByteArrayOutputStream.toByteArray();
+		return FileUtil.getBytes(file);
 	}
 
 	@Override

@@ -230,7 +230,7 @@ public class SyncFile extends StateAwareModel {
 	}
 
 	public boolean isFolder() {
-		return type.equals(TYPE_FOLDER);
+		return !isFile();
 	}
 
 	public boolean isSystem() {

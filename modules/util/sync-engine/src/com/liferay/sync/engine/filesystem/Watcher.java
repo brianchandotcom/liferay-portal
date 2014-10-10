@@ -324,7 +324,9 @@ public class Watcher implements Runnable {
 	}
 
 	protected boolean isIgnoredFilePath(Path filePath) {
-		if (_downloadedFilePathNames.remove(filePath.toString())) {
+		if (_downloadedFilePathNames.remove(filePath.toString()) ||
+			Files.notExists(filePath)) {
+
 			return true;
 		}
 

@@ -125,6 +125,17 @@ public class SyncFilePersistence extends BasePersistenceImpl<SyncFile, Long> {
 		return query(queryBuilder.prepare());
 	}
 
+	public List<SyncFile> findByP_S(long parentFolderId, long syncAccountId)
+		throws SQLException {
+
+		Map<String, Object> fieldValues = new HashMap<String, Object>();
+
+		fieldValues.put("parentFolderId", parentFolderId);
+		fieldValues.put("syncAccountId", syncAccountId);
+
+		return queryForFieldValues(fieldValues);
+	}
+
 	public List<SyncFile> findByS_U(long syncAccountId, int uiEvent)
 		throws SQLException {
 

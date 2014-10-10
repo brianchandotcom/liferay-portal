@@ -26,8 +26,13 @@ import com.liferay.sync.engine.util.Encryptor;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.OSDetector;
 
+import java.io.File;
+import java.io.IOException;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 import java.sql.SQLException;
 
@@ -250,7 +255,7 @@ public class SyncAccountService {
 		_activeSyncAccountIds = null;
 	}
 
-	public static void setFilePathName(
+	public static SyncAccount setFilePathName(
 		long syncAccountId, String targetFilePathName) {
 
 		// Sync account
@@ -292,6 +297,8 @@ public class SyncAccountService {
 
 			SyncSiteService.update(syncSite);
 		}
+
+		return syncAccount;
 	}
 
 	public static SyncAccount synchronizeSyncAccount(
@@ -328,6 +335,48 @@ public class SyncAccountService {
 			}
 
 			return null;
+		}
+	}
+
+	public static void updateSyncAccountSyncFile(
+		Path filePath, long syncAccountId, boolean moveFile) {
+
+		if (moveFile && Files.exists(filePath)) {
+			File file = filePath.toFile();
+
+			String[] fileList = file.list();
+
+			if (fileList.length > 0) {
+				return;
+			}
+		}
+
+		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
+			syncAccountId);
+
+		syncAccount.setActive(false);
+
+		SyncAccountService.update(syncAccount);
+
+		try {
+			if (moveFile) {
+				Files.createDirectories(filePath);
+
+				Files.move(
+					Paths.get(syncAccount.getFilePathName()), filePath,
+					StandardCopyOption.REPLACE_EXISTING);
+			}
+
+			syncAccount = setFilePathName(syncAccountId, filePath.toString());
+
+			syncAccount.setActive(true);
+
+			SyncAccountService.update(syncAccount);
+		}
+		catch (IOException ioe) {
+			if (_logger.isDebugEnabled()) {
+				_logger.debug(ioe.getMessage(), ioe);
+			}
 		}
 	}
 

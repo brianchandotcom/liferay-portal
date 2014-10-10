@@ -30,7 +30,7 @@ import java.util.Enumeration;
 public class InetAddressUtil {
 
 	public static String getLocalHostName() throws Exception {
-		return LocalHostNameHolder._localHostName;
+		return LocalHostNameHolder._LOCAL_HOST_NAME;
 	}
 
 	public static InetAddress getLocalInetAddress() throws Exception {

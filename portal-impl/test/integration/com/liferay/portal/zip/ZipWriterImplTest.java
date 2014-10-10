@@ -23,8 +23,6 @@ import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.DependenciesTestUtil;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Date;
@@ -330,6 +328,12 @@ public class ZipWriterImplTest {
 
 		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
 
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("This is a String");
+
+		zipWriter.addEntry("string.txt", sb);
+
 		byte[] bytes = zipWriter.finish();
 
 		Assert.assertArrayEquals(FileUtil.getBytes(tempZipFile), bytes);
@@ -337,15 +341,11 @@ public class ZipWriterImplTest {
 		zipWriter.getFile().delete();
 	}
 
-	@Test(expected = IOException.class)
+	@Test
 	public void testFinishIfZipFileIsNotSet() throws Exception {
 		ZipWriter zipWriter = new ZipWriterImpl();
 
-		try {
-			zipWriter.finish();
-		}
-		finally {
-		}
+		zipWriter.finish();
 
 		zipWriter.getFile().delete();
 	}
@@ -356,17 +356,13 @@ public class ZipWriterImplTest {
 	 * encrypted ZIP files for which key prompting has been cancelled or
 	 * disabled.
 	 */
-	@Test(expected = FileNotFoundException.class)
-	public void testFinishIfZipFileIsTrueArchiveFile() throws Exception {
+	@Test
+	public void testFinishIfZipFileIsSet() throws Exception {
 		File tempZipFile = new File(_tempZipFilePath);
 
 		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
 
-		try {
-			zipWriter.finish();
-		}
-		finally {
-		}
+		zipWriter.finish();
 
 		zipWriter.getFile().delete();
 	}

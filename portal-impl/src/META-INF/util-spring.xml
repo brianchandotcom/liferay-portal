@@ -10,6 +10,10 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
 >
 	<bean id="com.liferay.mail.util.DummyHook" class="com.liferay.mail.util.DummyHook" />
+	<bean class="com.liferay.portal.convert.ConvertDatabase" />
+	<bean class="com.liferay.portal.convert.ConvertDocumentLibrary" />
+	<bean class="com.liferay.portal.convert.ConvertDocumentLibraryExtraSettings" />
+	<bean class="com.liferay.portal.convert.ConvertWikiCreole" />
 	<bean id="com.liferay.portal.events.StartupHelperUtil" class="com.liferay.portal.events.StartupHelperUtil">
 		<property name="startupHelper">
 			<bean class="com.liferay.portal.events.StartupHelper" />

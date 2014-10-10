@@ -21,7 +21,8 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 /**
  * @author Alexander Chow
  */
-public class ConvertDocumentLibraryExtraSettings extends BaseConvertProcess {
+public class ConvertDocumentLibraryExtraSettings extends BaseConvertProcess
+	implements ConvertProcess {
 
 	@Override
 	public String getDescription() {

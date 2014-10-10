@@ -485,11 +485,12 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 				public void addCriteria(DynamicQuery dynamicQuery) {
 					addCriteriaMethod.addCriteria(dynamicQuery);
 
-					Property property = PropertyFactoryUtil.forName(
+					Property repositoryIdProperty = PropertyFactoryUtil.forName(
 						"repositoryId");
 
 					dynamicQuery.add(
-						property.eq(portletDataContext.getScopeGroupId()));
+						repositoryIdProperty.eq(
+							portletDataContext.getScopeGroupId()));
 
 					DynamicQuery fileVersionDynamicQuery =
 						DynamicQueryFactoryUtil.forClass(

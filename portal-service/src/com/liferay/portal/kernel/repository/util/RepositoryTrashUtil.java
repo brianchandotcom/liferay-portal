@@ -47,6 +47,14 @@ public class RepositoryTrashUtil {
 			userId, repositoryId, fileEntryId);
 	}
 
+	public static void restoreFileEntryFromTrash(
+			long userId, long repositoryId, long fileEntryId)
+		throws PortalException {
+
+		getRepositoryTrash().restoreFileEntryFromTrash(
+			userId, repositoryId, fileEntryId);
+	}
+
 	public void setRepositoryTrash(RepositoryTrash repositoryTrash) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 

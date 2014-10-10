@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.LocalRepository;
-import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -820,12 +819,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Restores the file entry with the primary key from the trash portlet.
-	 *
-	 * @param  userId the primary key of the user
-	 * @param  fileEntryId the primary key of the file entry
-	 * @throws PortalException if the file entry could not be found
+	 * @deprecated As of 7.0.0, replaced by {@link com.liferay.portal.kernel.repository.util.RepositoryTrashUtil.restoreFileEntryFromTrash(long, long, long)}
 	 */
+	@Deprecated
 	@Override
 	public void restoreFileEntryFromTrash(long userId, long fileEntryId)
 		throws PortalException {
@@ -833,12 +829,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		LocalRepository localRepository = getFileEntryLocalRepository(
 			fileEntryId);
 
-		TrashCapability trashCapability = localRepository.getCapability(
-			TrashCapability.class);
-
-		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
-
-		trashCapability.restoreFileEntryFromTrash(userId, fileEntry);
+		RepositoryTrashUtil.restoreFileEntryFromTrash(
+			userId, localRepository.getRepositoryId(), fileEntryId);
 	}
 
 	/**

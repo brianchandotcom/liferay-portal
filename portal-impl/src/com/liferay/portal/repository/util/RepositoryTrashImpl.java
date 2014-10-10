@@ -68,6 +68,24 @@ public class RepositoryTrashImpl implements RepositoryTrash {
 		return trashCapability.moveFileEntryToTrash(userId, fileEntry);
 	}
 
+	@Override
+	public void restoreFileEntryFromTrash(
+			long userId, long repositoryId, long fileEntryId)
+		throws PortalException {
+
+		LocalRepository localRepository =
+			RepositoryLocalServiceUtil.getLocalRepositoryImpl(repositoryId);
+
+		validateCapability(localRepository);
+
+		TrashCapability trashCapability = localRepository.getCapability(
+			TrashCapability.class);
+
+		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
+
+		trashCapability.restoreFileEntryFromTrash(userId, fileEntry);
+	}
+
 	protected void validateCapability(LocalRepository localRepository)
 		throws InvalidRepositoryException {
 

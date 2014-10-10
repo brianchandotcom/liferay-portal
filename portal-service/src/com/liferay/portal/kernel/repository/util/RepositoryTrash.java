@@ -32,4 +32,8 @@ public interface RepositoryTrash {
 			long userId, long repositoryId, long fileEntryId)
 		throws PortalException;
 
+	public void restoreFileEntryFromTrash(
+			long userId, long repositoryId, long fileEntryId)
+		throws PortalException;
+
 }

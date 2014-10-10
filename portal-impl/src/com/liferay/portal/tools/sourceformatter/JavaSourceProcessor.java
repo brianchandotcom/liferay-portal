@@ -29,13 +29,14 @@ import com.liferay.portal.kernel.util.Validator;
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.ClassLibrary;
 import com.thoughtworks.qdox.model.JavaField;
-import com.thoughtworks.qdox.model.Type;
 import com.thoughtworks.qdox.model.JavaMethod;
 import com.thoughtworks.qdox.model.JavaSource;
+import com.thoughtworks.qdox.model.Type;
 import com.thoughtworks.qdox.parser.ParseException;
 
 import java.io.File;
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -210,18 +211,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	protected String checkFinalableFieldTypes(
 		com.thoughtworks.qdox.model.JavaClass javaClass,
 		com.thoughtworks.qdox.model.JavaClass[] javaClasses,
-		com.thoughtworks.qdox.model.JavaField javaField, String content) {
+		JavaField javaField, String content) {
 
-		com.thoughtworks.qdox.model.Type javaClassType =
-			javaClass.asType();
+		Type javaClassType = javaClass.asType();
 
-		if (javaClass.isEnum() &&
-				(javaClassType.equals(javaField.getType()))) {
+		if ((javaClass.isEnum() && javaClassType.equals(javaField.getType())) ||
+			javaField.isFinal() || !javaField.isPrivate()) {
 
-			return content;
-		}
-
-		if (!javaField.isPrivate() || javaField.isFinal()) {
 			return content;
 		}
 
@@ -234,18 +230,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		Pattern pattern = Pattern.compile(sb.toString());
 
-		for (com.thoughtworks.qdox.model.JavaClass javaSubClass :
-				javaClasses) {
-
+		for (com.thoughtworks.qdox.model.JavaClass javaSubClass : javaClasses) {
 			for (JavaMethod javaMethod : javaSubClass.getMethods()) {
-				if (javaMethod.isConstructor() &&
-						(javaSubClass == javaClass)) {
-
+				if (javaMethod.isConstructor() && (javaSubClass == javaClass)) {
 					continue;
 				}
 
-				Matcher matcher = pattern.matcher(
-					javaMethod.getCodeBlock());
+				Matcher matcher = pattern.matcher(javaMethod.getCodeBlock());
 
 				if (matcher.find()) {
 					return content;
@@ -457,8 +448,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		String initializationExpression = StringUtil.trim(
 			javaField.getInitializationExpression());
 
-		if (javaField.isStatic() || initializationExpression.isEmpty()
-				|| type.isArray()) {
+		if (javaField.isStatic() || initializationExpression.isEmpty() ||
+			type.isArray()) {
 
 			return content;
 		}
@@ -468,9 +459,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		String newLine = StringUtil.replace(
 			line, "private final", "private static final");
 
-		content = StringUtil.replace(content, line, newLine);
-
-		return content;
+		return StringUtil.replace(content, line, newLine);
 	}
 
 	protected String checkImmutableStaticableAndFinalableFieldTypes(
@@ -503,7 +492,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			javaDocBuilder.getClasses();
 
 		for (com.thoughtworks.qdox.model.JavaClass javaClass: javaClasses) {
-
 			for (JavaField javaField : javaClass.getFields()) {
 				content = checkImmutableAndStaticableFieldTypes(
 					javaClass, javaField, content);

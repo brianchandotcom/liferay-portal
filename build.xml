@@ -483,7 +483,27 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 		</copy>
 
 		<antcall target="deploy-properties" />
+		<antcall target="deploy-additional-jars" />
+		<antcall target="update-app-server-scripts" />
 
+		<mkdir dir="${app.server.log.dir}" />
+		<mkdir dir="${app.server.temp.dir}" />
+		<mkdir dir="${app.server.work.dir}" />
+
+		<ant-execute
+			ant.dir="${project.dir}/modules/core/registry-api"
+			ant.target="deploy"
+		/>
+
+		<ant-execute
+			ant.dir="${project.dir}/modules"
+			ant.target="deploy"
+		/>
+
+		<antcall target="print-current-time" />
+	</target>
+
+	<target name="deploy-additional-jars">
 		<copy todir="${app.server.lib.global.dir}">
 			<fileset dir="lib/development" includes="hsql.jar,jtds.jar,mysql.jar,postgresql.jar" />
 			<fileset dir="lib/global" />
@@ -537,43 +557,6 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 				<if>
 					<equals arg1="${app.server.jboss.major.version}" arg2="5" />
 					<then>
-						<loadfile property="run.conf.content" srcfile="${app.server.bin.dir}/run.conf" />
-
-						<antelope:stringutil string="${run.conf.content}" property="run.conf.content.index">
-							<indexof string="-Dfile.encoding=UTF-8" fromindex="0" />
-						</antelope:stringutil>
-
-						<if>
-							<equals arg1="${run.conf.content.index}" arg2="-1" />
-							<then>
-								<echo file="${app.server.bin.dir}/run.conf" append="true">
-		JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Djboss.vfs.forceVfsJar=true -Dorg.jboss.logging.Log4jService.catchSystemOut=false -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=384m"</echo>
-							</then>
-						</if>
-
-						<loadfile property="run.conf.bat.content" srcfile="${app.server.bin.dir}/run.conf.bat" />
-
-						<antelope:stringutil string="${run.conf.bat.content}" property="run.conf.bat.content.index">
-							<indexof string="-Dfile.encoding=UTF-8" fromindex="0" />
-						</antelope:stringutil>
-
-						<if>
-							<equals arg1="${run.conf.bat.content.index}" arg2="-1" />
-							<then>
-								<replace file="${app.server.bin.dir}/run.conf.bat">
-									<replacetoken><![CDATA[:JAVA_OPTS_SET]]></replacetoken>
-									<replacevalue><![CDATA[set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Djboss.vfs.forceVfsJar=true -Dorg.jboss.logging.Log4jService.catchSystemOut=false -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=384m"
-
-		:JAVA_OPTS_SET]]></replacevalue>
-								</replace>
-							</then>
-						</if>
-
-						<replace file="${app.server.deploy.dir}/jbossweb.sar/server.xml">
-							<replacetoken><![CDATA[redirectPort="8443" />]]></replacetoken>
-							<replacevalue><![CDATA[redirectPort="8443" URIEncoding="UTF-8" />]]></replacevalue>
-						</replace>
-
 						<move
 							failonerror="false"
 							file="${app.server.dir}/common/lib/hibernate-validator.jar"
@@ -594,18 +577,6 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 						</delete>
 					</then>
 					<else>
-						<if>
-							<not>
-								<available file="${app.server.lib.global.dir}/module.xml" />
-							</not>
-							<then>
-								<copy
-									file="tools/servers/jboss/modules/module.xml"
-									tofile="${app.server.lib.global.dir}/module.xml"
-								/>
-							</then>
-						</if>
-
 						<delete>
 							<fileset
 								dir="${app.server.lib.portal.dir}"
@@ -620,18 +591,6 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 		<if>
 			<equals arg1="${app.server.type}" arg2="jetty" />
 			<then>
-				<if>
-					<not>
-						<available file="${app.server.dir}/contexts/root.xml" />
-					</not>
-					<then>
-						<copy
-							file="tools/servers/jetty/contexts/root.xml"
-							tofile="${app.server.dir}/contexts/root.xml"
-						/>
-					</then>
-				</if>
-
 				<copy todir="${app.server.lib.global.dir}">
 					<fileset
 						dir="lib/development"
@@ -676,19 +635,6 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 				<if>
 					<equals arg1="${app.server.type}" arg2="tomcat" />
 					<then>
-						<if>
-							<not>
-								<available file="${app.server.dir}/conf/Catalina/localhost/${app.server.tomcat.portal.context}.xml" />
-							</not>
-							<then>
-								<copy
-									file="tools/servers/tomcat/conf/Catalina/localhost/ROOT.xml"
-									tofile="${app.server.dir}/conf/Catalina/localhost/${app.server.tomcat.portal.context}.xml"
-									overwrite="true"
-								/>
-							</then>
-						</if>
-
 						<ant dir="support-tomcat" target="deploy" inheritAll="false" />
 					</then>
 				</if>
@@ -742,10 +688,6 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 			</then>
 		</if>
 
-		<mkdir dir="${app.server.log.dir}" />
-		<mkdir dir="${app.server.temp.dir}" />
-		<mkdir dir="${app.server.work.dir}" />
-
 		<if>
 			<or>
 				<equals arg1="${app.server.type}" arg2="glassfish" />
@@ -771,80 +713,8 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 			<equals arg1="${app.server.type}" arg2="websphere" />
 			<then>
 				<ant dir="support-websphere" target="deploy" inheritAll="false" />
-
-				<exec dir="${app.server.websphere.bin.dir}" executable="/bin/sh" os="${os.unix}">
-					<arg line="startServer.sh server1" />
-				</exec>
-
-				<exec dir="${app.server.websphere.bin.dir}" executable="cmd.exe" os="${os.windows}">
-					<arg line="/c startServer.bat server1" />
-				</exec>
-
-				<echo>Installing liferay-portal.war.</echo>
-
-				<echo file="wsadmin.py">
-def isAppInstalled(appName):
-	appNames = AdminApp.list()
-
-	if len(appNames) > 0:
-		for curAppName in appNames.split('\n'):
-			curAppName = curAppName.rstrip()
-
-			if curAppName.find(appName) >= 0:
-				return 1
-
-	return 0
-
-if isAppInstalled('DefaultApplication'):
-	print AdminApp.uninstall('DefaultApplication')
-
-	print AdminConfig.save()
-
-appManager = AdminControl.queryNames('type=ApplicationManager,process=server1,*')
-
-if isAppInstalled('liferay-portal'):
-	print AdminControl.invoke(appManager, 'stopApplication', 'liferay-portal')
-
-	print AdminApp.update('liferay-portal', 'app', '[-contents ${app.server.websphere.instance.dir}/wsadmin-deploy/liferay-portal.war -contextroot / -operation update]')
-else:
-	print AdminApp.install('${app.server.websphere.instance.dir}/wsadmin-deploy/liferay-portal.war', '[-appname liferay-portal -contextroot /]')
-
-print AdminConfig.save()
-
-print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
-				</echo>
-
-				<exec dir="${app.server.websphere.bin.dir}" executable="/bin/sh" os="${os.unix}">
-					<arg line="wsadmin.sh -f ${basedir}/wsadmin.py" />
-				</exec>
-
-				<exec dir="${app.server.websphere.bin.dir}" executable="cmd.exe" os="${os.windows}">
-					<arg line="/c wsadmin.bat -f ${basedir}\wsadmin.py" />
-				</exec>
-
-				<delete file="wsadmin.py" />
-
-				<exec dir="${app.server.websphere.bin.dir}" executable="/bin/sh" os="${os.unix}">
-					<arg line="stopServer.sh server1" />
-				</exec>
-
-				<exec dir="${app.server.websphere.bin.dir}" executable="cmd.exe" os="${os.windows}">
-					<arg line="/c stopServer.bat server1" />
-				</exec>
 			</then>
 		</if>
-
-		<ant-execute
-			ant.dir="${project.dir}/modules/core/registry-api"
-			ant.target="deploy"
-		/>
-
-		<ant-execute
-			ant.dir="${project.dir}/modules"
-			ant.target="deploy"
-		/>
-
-		<antcall target="print-current-time" />
 	</target>
 
 	<target name="deploy-properties">
@@ -1179,6 +1049,168 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 
 	<target name="test-unit">
 		<ant antfile="build-test.xml" target="test-unit" inheritAll="false" />
+	</target>
+
+	<target name="update-app-server-scripts">
+		<if>
+			<equals arg1="${app.server.type}" arg2="jboss" />
+			<then>
+				<if>
+					<equals arg1="${app.server.jboss.major.version}" arg2="5" />
+					<then>
+						<loadfile property="run.conf.content" srcfile="${app.server.bin.dir}/run.conf" />
+
+						<antelope:stringutil string="${run.conf.content}" property="run.conf.content.index">
+							<indexof string="-Dfile.encoding=UTF-8" fromindex="0" />
+						</antelope:stringutil>
+
+						<if>
+							<equals arg1="${run.conf.content.index}" arg2="-1" />
+							<then>
+								<echo file="${app.server.bin.dir}/run.conf" append="true">
+		JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Djboss.vfs.forceVfsJar=true -Dorg.jboss.logging.Log4jService.catchSystemOut=false -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=384m"</echo>
+							</then>
+						</if>
+
+						<loadfile property="run.conf.bat.content" srcfile="${app.server.bin.dir}/run.conf.bat" />
+
+						<antelope:stringutil string="${run.conf.bat.content}" property="run.conf.bat.content.index">
+							<indexof string="-Dfile.encoding=UTF-8" fromindex="0" />
+						</antelope:stringutil>
+
+						<if>
+							<equals arg1="${run.conf.bat.content.index}" arg2="-1" />
+							<then>
+								<replace file="${app.server.bin.dir}/run.conf.bat">
+									<replacetoken><![CDATA[:JAVA_OPTS_SET]]></replacetoken>
+									<replacevalue><![CDATA[set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Djboss.vfs.forceVfsJar=true -Dorg.jboss.logging.Log4jService.catchSystemOut=false -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=384m"
+
+		:JAVA_OPTS_SET]]></replacevalue>
+								</replace>
+							</then>
+						</if>
+
+						<replace file="${app.server.deploy.dir}/jbossweb.sar/server.xml">
+							<replacetoken><![CDATA[redirectPort="8443" />]]></replacetoken>
+							<replacevalue><![CDATA[redirectPort="8443" URIEncoding="UTF-8" />]]></replacevalue>
+						</replace>
+					</then>
+					<else>
+						<if>
+							<not>
+								<available file="${app.server.lib.global.dir}/module.xml" />
+							</not>
+							<then>
+								<copy
+									file="tools/servers/jboss/modules/module.xml"
+									tofile="${app.server.lib.global.dir}/module.xml"
+								/>
+							</then>
+						</if>
+					</else>
+				</if>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${app.server.type}" arg2="jetty" />
+			<then>
+				<if>
+					<not>
+						<available file="${app.server.dir}/contexts/root.xml" />
+					</not>
+					<then>
+						<copy
+							file="tools/servers/jetty/contexts/root.xml"
+							tofile="${app.server.dir}/contexts/root.xml"
+						/>
+					</then>
+				</if>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${app.server.type}" arg2="tomcat" />
+			<then>
+				<if>
+					<not>
+						<available file="${app.server.dir}/conf/Catalina/localhost/${app.server.tomcat.portal.context}.xml" />
+					</not>
+					<then>
+						<copy
+							file="tools/servers/tomcat/conf/Catalina/localhost/ROOT.xml"
+							tofile="${app.server.dir}/conf/Catalina/localhost/${app.server.tomcat.portal.context}.xml"
+							overwrite="true"
+						/>
+					</then>
+				</if>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${app.server.type}" arg2="websphere" />
+			<then>
+				<exec dir="${app.server.websphere.bin.dir}" executable="/bin/sh" os="${os.unix}">
+					<arg line="startServer.sh server1" />
+				</exec>
+
+				<exec dir="${app.server.websphere.bin.dir}" executable="cmd.exe" os="${os.windows}">
+					<arg line="/c startServer.bat server1" />
+				</exec>
+
+				<echo>Installing liferay-portal.war.</echo>
+
+				<echo file="wsadmin.py">
+def isAppInstalled(appName):
+	appNames = AdminApp.list()
+
+	if len(appNames) > 0:
+		for curAppName in appNames.split('\n'):
+			curAppName = curAppName.rstrip()
+
+			if curAppName.find(appName) >= 0:
+				return 1
+
+	return 0
+
+if isAppInstalled('DefaultApplication'):
+	print AdminApp.uninstall('DefaultApplication')
+
+	print AdminConfig.save()
+
+appManager = AdminControl.queryNames('type=ApplicationManager,process=server1,*')
+
+if isAppInstalled('liferay-portal'):
+	print AdminControl.invoke(appManager, 'stopApplication', 'liferay-portal')
+
+	print AdminApp.update('liferay-portal', 'app', '[-contents ${app.server.websphere.instance.dir}/wsadmin-deploy/liferay-portal.war -contextroot / -operation update]')
+else:
+	print AdminApp.install('${app.server.websphere.instance.dir}/wsadmin-deploy/liferay-portal.war', '[-appname liferay-portal -contextroot /]')
+
+print AdminConfig.save()
+
+print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
+				</echo>
+
+				<exec dir="${app.server.websphere.bin.dir}" executable="/bin/sh" os="${os.unix}">
+					<arg line="wsadmin.sh -f ${basedir}/wsadmin.py" />
+				</exec>
+
+				<exec dir="${app.server.websphere.bin.dir}" executable="cmd.exe" os="${os.windows}">
+					<arg line="/c wsadmin.bat -f ${basedir}\wsadmin.py" />
+				</exec>
+
+				<delete file="wsadmin.py" />
+
+				<exec dir="${app.server.websphere.bin.dir}" executable="/bin/sh" os="${os.unix}">
+					<arg line="stopServer.sh server1" />
+				</exec>
+
+				<exec dir="${app.server.websphere.bin.dir}" executable="cmd.exe" os="${os.windows}">
+					<arg line="/c stopServer.bat server1" />
+				</exec>
+			</then>
+		</if>
 	</target>
 
 	<target name="update-ivy-cache">

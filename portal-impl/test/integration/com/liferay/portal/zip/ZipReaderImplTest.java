@@ -65,11 +65,15 @@ public class ZipReaderImplTest {
 
 		Assert.assertNotNull(zipReader);
 
+		zipReader.close();
+
 		zipReader = new ZipReaderImpl(
 			DependenciesTestUtil.getDependencyAsFile(
 				getClass(), _ZIP_FILE_PATH));
 
 		Assert.assertNotNull(zipReader);
+
+		zipReader.close();
 	}
 
 	@Test
@@ -86,6 +90,8 @@ public class ZipReaderImplTest {
 		Assert.assertEquals(_FILE_PATH_2, entries.get(2));
 		Assert.assertEquals(_FILE_PATH_3, entries.get(3));
 		Assert.assertEquals(_FILE_PATH_4, entries.get(4));
+
+		zipReader.close();
 	}
 
 	@Test
@@ -109,6 +115,8 @@ public class ZipReaderImplTest {
 		content = zipReader.getEntryAsByteArray(_FILE_PATH_3);
 
 		Assert.assertArrayEquals(_expectedContent_3.getBytes(_UTF_8), content);
+
+		zipReader.close();
 	}
 
 	@Test
@@ -118,6 +126,8 @@ public class ZipReaderImplTest {
 				getClass(), _ZIP_FILE_PATH));
 
 		Assert.assertNull(zipReader.getEntryAsByteArray("foo.txt"));
+
+		zipReader.close();
 	}
 
 	@Test
@@ -128,6 +138,8 @@ public class ZipReaderImplTest {
 
 		Assert.assertNull(zipReader.getEntryAsByteArray("1"));
 		Assert.assertNull(zipReader.getEntryAsByteArray("/1"));
+
+		zipReader.close();
 	}
 
 	@Test
@@ -138,6 +150,8 @@ public class ZipReaderImplTest {
 
 		Assert.assertNull(zipReader.getEntryAsByteArray(""));
 		Assert.assertNull(zipReader.getEntryAsByteArray(null));
+
+		zipReader.close();
 	}
 
 	@Test
@@ -161,6 +175,8 @@ public class ZipReaderImplTest {
 		is = zipReader.getEntryAsInputStream(_FILE_PATH_3);
 
 		Assert.assertTrue(is instanceof FileInputStream);
+
+		zipReader.close();
 	}
 
 	@Test
@@ -170,6 +186,8 @@ public class ZipReaderImplTest {
 				getClass(), _ZIP_FILE_PATH));
 
 		Assert.assertNull(zipReader.getEntryAsInputStream("foo.txt"));
+
+		zipReader.close();
 	}
 
 	@Test
@@ -180,6 +198,8 @@ public class ZipReaderImplTest {
 
 		Assert.assertNull(zipReader.getEntryAsInputStream("1"));
 		Assert.assertNull(zipReader.getEntryAsInputStream("/1"));
+
+		zipReader.close();
 	}
 
 	@Test
@@ -190,6 +210,8 @@ public class ZipReaderImplTest {
 
 		Assert.assertNull(zipReader.getEntryAsInputStream(""));
 		Assert.assertNull(zipReader.getEntryAsInputStream(null));
+
+		zipReader.close();
 	}
 
 	@Test
@@ -217,6 +239,8 @@ public class ZipReaderImplTest {
 		content = zipReader.getEntryAsString(_FILE_PATH_3);
 
 		Assert.assertEquals(_expectedContent_3, content);
+
+		zipReader.close();
 	}
 
 	@Test
@@ -226,6 +250,8 @@ public class ZipReaderImplTest {
 				getClass(), _ZIP_FILE_PATH));
 
 		Assert.assertNull(zipReader.getEntryAsString("foo.txt"));
+
+		zipReader.close();
 	}
 
 	@Test
@@ -236,6 +262,8 @@ public class ZipReaderImplTest {
 
 		Assert.assertNull(zipReader.getEntryAsString("1"));
 		Assert.assertNull(zipReader.getEntryAsString("/1"));
+
+		zipReader.close();
 	}
 
 	@Test
@@ -246,6 +274,8 @@ public class ZipReaderImplTest {
 
 		Assert.assertNull(zipReader.getEntryAsString(""));
 		Assert.assertNull(zipReader.getEntryAsString(null));
+
+		zipReader.close();
 	}
 
 	@Test
@@ -275,6 +305,8 @@ public class ZipReaderImplTest {
 		Assert.assertEquals(2, entries.size());
 		Assert.assertEquals(_FILE_PATH_2, entries.get(0));
 		Assert.assertEquals(_FILE_PATH_3, entries.get(1));
+
+		zipReader.close();
 	}
 
 	@Test
@@ -287,6 +319,8 @@ public class ZipReaderImplTest {
 
 		Assert.assertNotNull(entries);
 		Assert.assertTrue(entries.isEmpty());
+
+		zipReader.close();
 	}
 
 	private static final String _FILE_PATH_0 = "0.txt";

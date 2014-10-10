@@ -1019,7 +1019,7 @@
 
 		<execute macro="Site#addBlankCP">
 			<var name="parentSiteName" value="Site Name" />
-			<var name="siteName" value="Child Site Name" />
+			<var name="siteName" value="Child SiteName" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -1027,14 +1027,14 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="siteName" value="Child Site Name" />
+			<var name="siteName" value="Child SiteName" />
 			<var name="sitePageName" value="Page Name" />
 			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
-			<var name="siteScopeName" value="Child Site Name" />
+			<var name="siteScopeName" value="Child SiteName" />
 		</execute>
 
 		<execute macro="ContentTargetingCampaign#addCP">
@@ -1052,7 +1052,7 @@
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
-			<var name="siteScopeName" value="Site Name" />
+			<var name="siteScopeName" value="Child SiteName" />
 		</execute>
 
 		<execute macro="ContentTargetingCampaign#viewCampaignCP">
@@ -1300,7 +1300,7 @@
 
 		<execute macro="Site#addBlankCP">
 			<var name="parentSiteName" value="Site Name" />
-			<var name="siteName" value="Child Site" />
+			<var name="siteName" value="Child SiteName" />
 		</execute>
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -1321,7 +1321,7 @@
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
-			<var name="siteScopeName" value="Child Site" />
+			<var name="siteScopeName" value="Child SiteName" />
 		</execute>
 
 		<execute macro="WebContent#addWithCategoryCP">

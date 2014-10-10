@@ -12,20 +12,28 @@
  * details.
  */
 
-package com.liferay.portal.convert;
+package com.liferay.wiki.convert;
 
+import com.liferay.portal.convert.BaseConvertProcess;
+import com.liferay.portal.convert.ConvertProcess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.util.MaintenanceUtil;
-import com.liferay.portlet.wiki.model.WikiPage;
-import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.portlet.wiki.translators.ClassicToCreoleTranslator;
+
+import com.liferay.wiki.model.WikiPage;
+import com.liferay.wiki.service.WikiPageLocalService;
+import com.liferay.wiki.translators.ClassicToCreoleTranslator;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
 
 /**
  * @author Jorge Ferrer
  */
+@Component(
+	service = ConvertProcess.class
+)
 public class ConvertWikiCreole extends BaseConvertProcess {
 
 	@Override
@@ -38,7 +46,7 @@ public class ConvertWikiCreole extends BaseConvertProcess {
 		boolean enabled = false;
 
 		try {
-			int pagesCount = WikiPageLocalServiceUtil.getPagesCount(
+			int pagesCount = _wikiPageLocalService.getPagesCount(
 				"classic_wiki");
 
 			if (pagesCount > 0) {
@@ -54,8 +62,7 @@ public class ConvertWikiCreole extends BaseConvertProcess {
 
 	@Override
 	protected void doConvert() throws Exception {
-		List<WikiPage> pages = WikiPageLocalServiceUtil.getPages(
-			"classic_wiki");
+		List<WikiPage> pages = _wikiPageLocalService.getPages("classic_wiki");
 
 		ClassicToCreoleTranslator translator = new ClassicToCreoleTranslator();
 
@@ -74,11 +81,19 @@ public class ConvertWikiCreole extends BaseConvertProcess {
 
 			page.setContent(translator.translate(page.getContent()));
 
-			WikiPageLocalServiceUtil.updateWikiPage(page);
+			_wikiPageLocalService.updateWikiPage(page);
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ConvertWikiCreole.class);
+	@Reference
+	protected void setWikiPageLocalService(
+		WikiPageLocalService wikiPageLocalService) {
+
+		_wikiPageLocalService = wikiPageLocalService;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(ConvertWikiCreole.class);
+
+	private WikiPageLocalService _wikiPageLocalService;
 
 }

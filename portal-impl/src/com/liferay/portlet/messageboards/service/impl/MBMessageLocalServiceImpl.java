@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.util.RepositoryTrashUtil;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -1336,8 +1337,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 			message.getGroupId(), folderId, fileName);
 
-		PortletFileRepositoryUtil.movePortletFileEntryToTrash(
-			userId, fileEntry.getFileEntryId());
+		RepositoryTrashUtil.moveFileEntryToTrash(
+			userId, fileEntry.getRepositoryId(), fileEntry.getFileEntryId());
 
 		return fileEntry.getFileEntryId();
 	}

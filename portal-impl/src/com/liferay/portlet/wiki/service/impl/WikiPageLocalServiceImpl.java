@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.util.RepositoryTrashUtil;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -1536,8 +1537,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 			page.getGroupId(), page.getAttachmentsFolderId(), fileName);
 
-		fileEntry = PortletFileRepositoryUtil.movePortletFileEntryToTrash(
-			userId, fileEntry.getFileEntryId());
+		fileEntry = RepositoryTrashUtil.moveFileEntryToTrash(
+			userId, fileEntry.getRepositoryId(), fileEntry.getFileEntryId());
 
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 

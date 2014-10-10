@@ -16,6 +16,7 @@ package com.liferay.portlet.trash.service;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.util.RepositoryTrashUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
@@ -45,7 +46,6 @@ import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portal.util.test.UserTestUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.util.TrashUtil;
@@ -224,8 +224,9 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 
 		User user = UserTestUtil.getAdminUser(fileEntry.getCompanyId());
 
-		DLAppLocalServiceUtil.moveFileEntryToTrash(
-			user.getUserId(), fileEntry.getFileEntryId());
+		RepositoryTrashUtil.moveFileEntryToTrash(
+			user.getUserId(), fileEntry.getRepositoryId(),
+			fileEntry.getFileEntryId());
 
 		if (expired) {
 			int maxAge = TrashUtil.getMaxAge(group);

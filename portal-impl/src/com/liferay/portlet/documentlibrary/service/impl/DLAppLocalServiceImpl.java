@@ -58,10 +58,10 @@ import java.util.List;
 
 /**
  * Provides the local service for accessing, adding, deleting, moving,
- * subscription handling of, trash handling of, and updating document library
- * file entries, file ranks, and folders. All portlets should interact with the
- * document library through this class or through DLAppService, rather than
- * through the individual document library service classes.
+ * subscription handling of, and updating document library file entries, file
+ * ranks, and folders. All portlets should interact with the document library
+ * through this class or through DLAppService, rather than through the
+ * individual document library service classes.
  *
  * <p>
  * This class provides a unified interface to all Liferay and third party

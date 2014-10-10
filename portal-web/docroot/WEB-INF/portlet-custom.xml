@@ -501,40 +501,6 @@
 		</security-role-ref>
 	</portlet>
 	<portlet>
-		<portlet-name>56</portlet-name>
-		<display-name>Journal Content</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
-		<init-param>
-			<name>config-template</name>
-			<value>/html/portlet/journal_content/configuration.jsp</value>
-		</init-param>
-		<init-param>
-			<name>template-path</name>
-			<value>/html/portlet/journal_content/</value>
-		</init-param>
-		<init-param>
-			<name>view-action</name>
-			<value>/journal_content/view</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<supports>
-			<mime-type>application/vnd.wap.xhtml+xml</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<security-role-ref>
-			<role-name>guest</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
-	</portlet>
-	<portlet>
 		<portlet-name>58</portlet-name>
 		<display-name>Login</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>

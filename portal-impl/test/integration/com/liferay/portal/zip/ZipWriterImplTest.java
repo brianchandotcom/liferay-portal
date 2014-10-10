@@ -307,6 +307,8 @@ public class ZipWriterImplTest {
 		Assert.assertNotNull(zipWriter);
 		Assert.assertNotNull(zipWriter.getFile());
 
+		zipWriter.getFile().delete();
+
 		File zipFile = new File(_tempZipFilePath);
 
 		zipWriter = new ZipWriterImpl(zipFile);

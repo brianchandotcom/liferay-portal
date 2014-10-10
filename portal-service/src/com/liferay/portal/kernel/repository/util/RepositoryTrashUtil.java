@@ -14,7 +14,10 @@
 
 package com.liferay.portal.kernel.repository.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.service.ServiceContext;
 
 /**
  * @author Adolfo Pérez
@@ -25,6 +28,15 @@ public class RepositoryTrashUtil {
 		PortalRuntimePermission.checkGetBeanProperty(RepositoryTrashUtil.class);
 
 		return _repositoryTrash;
+	}
+
+	public static FileEntry moveFileEntryFromTrash(
+			long userId, long repositoryId, long fileEntryId, long newFolderId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return getRepositoryTrash().moveFileEntryFromTrash(
+			userId, repositoryId, fileEntryId, newFolderId, serviceContext);
 	}
 
 	public void setRepositoryTrash(RepositoryTrash repositoryTrash) {

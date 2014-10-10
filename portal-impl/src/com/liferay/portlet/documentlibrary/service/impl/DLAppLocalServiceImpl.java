@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
-import com.liferay.portal.InvalidRepositoryException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -26,6 +25,7 @@ import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.util.RepositoryTrashUtil;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -734,6 +734,10 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link com.liferay.portal.kernel.repository.util.RepositoryTrashUtil.moveFileEntryFromTrash(long, long, long, long, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public FileEntry moveFileEntryFromTrash(
 			long userId, long fileEntryId, long newFolderId,
@@ -743,20 +747,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		LocalRepository localRepository = getFileEntryLocalRepository(
 			fileEntryId);
 
-		if (!localRepository.isCapabilityProvided(TrashCapability.class)) {
-			throw new InvalidRepositoryException(
-				"Repository " + localRepository.getRepositoryId() +
-					" does not support trash operations");
-		}
-
-		TrashCapability trashCapability = localRepository.getCapability(
-			TrashCapability.class);
-
-		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
-		Folder destinationFolder = localRepository.getFolder(newFolderId);
-
-		return trashCapability.moveFileEntryFromTrash(
-			userId, fileEntry, destinationFolder, serviceContext);
+		return RepositoryTrashUtil.moveFileEntryFromTrash(
+			userId, localRepository.getRepositoryId(), fileEntryId, newFolderId,
+			serviceContext);
 	}
 
 	/**

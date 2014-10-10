@@ -14,8 +14,18 @@
 
 package com.liferay.portal.kernel.repository.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.service.ServiceContext;
+
 /**
  * @author Adolfo Pérez
  */
 public interface RepositoryTrash {
+
+	public FileEntry moveFileEntryFromTrash(
+			long userId, long repositoryId, long fileEntryId, long newFolderId,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 }

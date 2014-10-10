@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.journalcontent.action;
+package com.liferay.journal.content.web.portlet.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
@@ -35,7 +35,8 @@ import javax.portlet.PortletRequest;
  * @author Douglas Wong
  * @author Raymond Augé
  */
-public class ConfigurationActionImpl extends DefaultConfigurationAction {
+public class JournalContentConfigurationAction
+	extends DefaultConfigurationAction {
 
 	@Override
 	public void processAction(

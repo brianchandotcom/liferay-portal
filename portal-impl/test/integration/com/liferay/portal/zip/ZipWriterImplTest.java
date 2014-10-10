@@ -67,11 +67,9 @@ public class ZipWriterImplTest {
 
 		File file = zipWriter.getFile();
 
-		File tempFile = new File(file.getPath());
+		Assert.assertTrue(file.exists());
 
-		Assert.assertTrue(tempFile.exists());
-
-		ZipReader zipReader = new ZipReaderImpl(tempZipFile);
+		ZipReader zipReader = new ZipReaderImpl(file);
 
 		Assert.assertEquals(
 			_expectedEntryContent,
@@ -92,8 +90,9 @@ public class ZipWriterImplTest {
 
 		zipWriter.addEntry("empty.txt", emptyBytes);
 
+		File file = zipWriter.getFile();
 
-		ZipReader zipReader = new ZipReaderImpl(tempZipFile);
+		ZipReader zipReader = new ZipReaderImpl(file);
 
 		Assert.assertEquals("", zipReader.getEntryAsString("empty.txt"));
 
@@ -113,8 +112,9 @@ public class ZipWriterImplTest {
 			DependenciesTestUtil.getDependencyAsInputStream(
 				getClass(), _ENTRY_FILE_PATH));
 
+		File file = zipWriter.getFile();
 
-		ZipReader zipReader = new ZipReaderImpl(tempZipFile);
+		ZipReader zipReader = new ZipReaderImpl(file);
 
 		Assert.assertEquals(
 			_expectedEntryContent,
@@ -135,8 +135,9 @@ public class ZipWriterImplTest {
 
 		zipWriter.addEntry("null.txt", nullableInputStream);
 
+		File file = zipWriter.getFile();
 
-		ZipReader zipReader = new ZipReaderImpl(tempZipFile);
+		ZipReader zipReader = new ZipReaderImpl(file);
 
 		Assert.assertNull(zipReader.getEntryAsString("null.txt"));
 
@@ -158,8 +159,9 @@ public class ZipWriterImplTest {
 			DependenciesTestUtil.getDependencyAsInputStream(
 				getClass(), _ENTRY_FILE_PATH));
 
+		File file = zipWriter.getFile();
 
-		ZipReader zipReader = new ZipReaderImpl(tempZipFile);
+		ZipReader zipReader = new ZipReaderImpl(file);
 
 		Assert.assertEquals(
 			_expectedEntryContent,
@@ -178,8 +180,9 @@ public class ZipWriterImplTest {
 
 		zipWriter.addEntry("string.txt", "This is a String");
 
+		File file = zipWriter.getFile();
 
-		ZipReader zipReader = new ZipReaderImpl(tempZipFile);
+		ZipReader zipReader = new ZipReaderImpl(file);
 
 		Assert.assertEquals(
 			"This is a String", zipReader.getEntryAsString("string.txt"));
@@ -201,8 +204,9 @@ public class ZipWriterImplTest {
 
 		zipWriter.addEntry("string.txt", sb);
 
+		File file = zipWriter.getFile();
 
-		ZipReader zipReader = new ZipReaderImpl(tempZipFile);
+		ZipReader zipReader = new ZipReaderImpl(file);
 
 		Assert.assertEquals(
 			"This is a String", zipReader.getEntryAsString("string.txt"));
@@ -222,8 +226,9 @@ public class ZipWriterImplTest {
 
 		zipWriter.addEntry("empty.txt", emptyStringBuilder);
 
+		File file = zipWriter.getFile();
 
-		ZipReader zipReader = new ZipReaderImpl(tempZipFile);
+		ZipReader zipReader = new ZipReaderImpl(file);
 
 		Assert.assertEquals("", zipReader.getEntryAsString("empty.txt"));
 
@@ -242,8 +247,9 @@ public class ZipWriterImplTest {
 
 		zipWriter.addEntry("null.txt", nullStringBuilder);
 
+		File file = zipWriter.getFile();
 
-		ZipReader zipReader = new ZipReaderImpl(tempZipFile);
+		ZipReader zipReader = new ZipReaderImpl(file);
 
 		Assert.assertNull(zipReader.getEntryAsString("null.txt"));
 
@@ -262,8 +268,9 @@ public class ZipWriterImplTest {
 
 		zipWriter.addEntry("empty.txt", emptyString);
 
+		File file = zipWriter.getFile();
 
-		ZipReader zipReader = new ZipReaderImpl(tempZipFile);
+		ZipReader zipReader = new ZipReaderImpl(file);
 
 		Assert.assertEquals("", zipReader.getEntryAsString("empty.txt"));
 
@@ -282,8 +289,9 @@ public class ZipWriterImplTest {
 
 		zipWriter.addEntry("null.txt", nullString);
 
+		File file = zipWriter.getFile();
 
-		ZipReader zipReader = new ZipReaderImpl(tempZipFile);
+		ZipReader zipReader = new ZipReaderImpl(file);
 
 		Assert.assertNull(zipReader.getEntryAsString("null.txt"));
 

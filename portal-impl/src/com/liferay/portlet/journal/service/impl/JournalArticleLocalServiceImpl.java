@@ -7095,7 +7095,7 @@ public class JournalArticleLocalServiceImpl
 		DDMForm ddmForm = ddmStructure.getDDMForm();
 
 		Map<String, DDMFormField> ddmFormFieldsMap =
-			ddmForm.getDDMFormFieldsMap(true);
+			ddmStructure.getFullHierarchyDDMFormFieldsMap(true);
 
 		Map<String, String> fieldsValuesMap = createFieldsValuesMap(content);
 

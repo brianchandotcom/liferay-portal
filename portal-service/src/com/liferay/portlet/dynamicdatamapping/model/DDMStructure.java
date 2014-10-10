@@ -34,6 +34,9 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public com.liferay.portlet.dynamicdatamapping.model.DDMForm createFullHierarchyDDMForm()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public java.util.List<java.lang.String> getChildrenFieldNames(
 		java.lang.String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -45,8 +48,7 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMFormField> getDDMFormFields(
-		boolean includeTransientFields)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		boolean includeTransientFields);
 
 	public java.lang.String getFieldDataType(java.lang.String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -59,8 +61,7 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 		java.lang.String locale)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.util.Set<java.lang.String> getFieldNames()
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public java.util.Set<java.lang.String> getFieldNames();
 
 	public java.lang.String getFieldProperty(java.lang.String fieldName,
 		java.lang.String property)
@@ -83,15 +84,12 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 	public java.lang.String getFieldType(java.lang.String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.portlet.dynamicdatamapping.model.DDMForm getFullHierarchyDDMForm()
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public com.liferay.portlet.dynamicdatamapping.model.DDMForm getFullHierarchyDDMForm();
 
 	public java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.model.DDMFormField> getFullHierarchyDDMFormFieldsMap(
-		boolean includeNestedDDMFormFields)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		boolean includeNestedDDMFormFields);
 
-	public java.util.List<java.lang.String> getRootFieldNames()
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public java.util.List<java.lang.String> getRootFieldNames();
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates();
 
@@ -113,8 +111,7 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 		com.liferay.portal.theme.ThemeDisplay themeDisplay,
 		java.lang.String webDAVToken);
 
-	public boolean hasField(java.lang.String fieldName)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public boolean hasField(java.lang.String fieldName);
 
 	public boolean isFieldPrivate(java.lang.String fieldName);
 
@@ -126,6 +123,9 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 
 	public void setDDMForm(
 		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm);
+
+	public void setFullHierarchyDDMForm(
+		com.liferay.portlet.dynamicdatamapping.model.DDMForm fullHierarchyDDMForm);
 
 	public void updateDDMForm(
 		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm);

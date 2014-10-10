@@ -59,6 +59,26 @@ import java.util.Set;
 public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 	@Override
+	public DDMForm createFullHierarchyDDMForm() throws PortalException {
+		DDMForm fullHierarchyDDMForm = DDMFormXSDDeserializerUtil.deserialize(
+			getDefinition());
+
+		DDMStructure parentDDMStructure = getParentDDMStructure();
+
+		if (parentDDMStructure != null) {
+			DDMForm ancestorsDDMForm =
+				parentDDMStructure.createFullHierarchyDDMForm();
+
+			List<DDMFormField> ddmFormFields =
+				fullHierarchyDDMForm.getDDMFormFields();
+
+			ddmFormFields.addAll(ancestorsDDMForm.getDDMFormFields());
+		}
+
+		return fullHierarchyDDMForm;
+	}
+
+	@Override
 	public String[] getAvailableLanguageIds() {
 		DDMForm ddmForm = getDDMForm();
 
@@ -84,7 +104,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 				_ddmForm = DDMFormXSDDeserializerUtil.deserialize(
 					getDefinition());
 
-				addDDMFormPrivateDDMFormFields();
+				addDDMFormPrivateDDMFormFields(_ddmForm);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -111,9 +131,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	}
 
 	@Override
-	public List<DDMFormField> getDDMFormFields(boolean includeTransientFields)
-		throws PortalException {
-
+	public List<DDMFormField> getDDMFormFields(boolean includeTransientFields) {
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			getFullHierarchyDDMFormFieldsMap(true);
 
@@ -160,7 +178,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	}
 
 	@Override
-	public Set<String> getFieldNames() throws PortalException {
+	public Set<String> getFieldNames() {
 		List<DDMFormField> ddmFormFields = getDDMFormFields(false);
 
 		List<String> ddmFormFieldNames = getDDMFormFieldNames(ddmFormFields);
@@ -217,27 +235,24 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	}
 
 	@Override
-	public DDMForm getFullHierarchyDDMForm() throws PortalException {
-		DDMForm ddmForm = getDDMForm();
+	public DDMForm getFullHierarchyDDMForm() {
+		if (_fullHierarchyDDMForm == null) {
+			try {
+				_fullHierarchyDDMForm = createFullHierarchyDDMForm();
 
-		DDMStructure parentDDMStructure = getParentDDMStructure();
-
-		if (parentDDMStructure != null) {
-			DDMForm ancestorsDDMForm =
-				parentDDMStructure.getFullHierarchyDDMForm();
-
-			List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
-
-			ddmFormFields.addAll(ancestorsDDMForm.getDDMFormFields());
+				addDDMFormPrivateDDMFormFields(_fullHierarchyDDMForm);
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
 		}
 
-		return ddmForm;
+		return _fullHierarchyDDMForm;
 	}
 
 	@Override
 	public Map<String, DDMFormField> getFullHierarchyDDMFormFieldsMap(
-			boolean includeNestedDDMFormFields)
-		throws PortalException {
+		boolean includeNestedDDMFormFields) {
 
 		DDMForm ddmForm = getFullHierarchyDDMForm();
 
@@ -245,7 +260,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	}
 
 	@Override
-	public List<String> getRootFieldNames() throws PortalException {
+	public List<String> getRootFieldNames() {
 		DDMForm ddmForm = getFullHierarchyDDMForm();
 
 		return getDDMFormFieldNames(ddmForm.getDDMFormFields());
@@ -338,7 +353,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	}
 
 	@Override
-	public boolean hasField(String fieldName) throws PortalException {
+	public boolean hasField(String fieldName) {
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			getFullHierarchyDDMFormFieldsMap(true);
 
@@ -402,6 +417,12 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		super.setDefinition(definition);
 
 		_ddmForm = null;
+		_fullHierarchyDDMForm = null;
+	}
+
+	@Override
+	public void setFullHierarchyDDMForm(DDMForm fullHierarchyDDMForm) {
+		_fullHierarchyDDMForm = fullHierarchyDDMForm;
 	}
 
 	@Override
@@ -409,8 +430,8 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		setDefinition(DDMFormXSDSerializerUtil.serialize(ddmForm));
 	}
 
-	protected void addDDMFormPrivateDDMFormFields() {
-		List<DDMFormField> ddmFormFields = _ddmForm.getDDMFormFields();
+	protected void addDDMFormPrivateDDMFormFields(DDMForm ddmForm) {
+		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
 
 		String[] privateFieldNames =
 			PropsValues.DYNAMIC_DATA_MAPPING_STRUCTURE_PRIVATE_FIELD_NAMES;
@@ -488,5 +509,8 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 	@CacheField(methodName = "DDMForm")
 	private DDMForm _ddmForm;
+
+	@CacheField(methodName = "FullHierarchyDDMForm")
+	private DDMForm _fullHierarchyDDMForm;
 
 }

@@ -86,8 +86,8 @@ public class DDMStructureClassType implements ClassType {
 		return _classTypeName;
 	}
 
-	protected List<ClassTypeField> getClassTypeFields(DDMStructure ddmStructure)
-		throws PortalException {
+	protected List<ClassTypeField> getClassTypeFields(
+		DDMStructure ddmStructure) {
 
 		List<ClassTypeField> classTypeFields = new ArrayList<ClassTypeField>();
 

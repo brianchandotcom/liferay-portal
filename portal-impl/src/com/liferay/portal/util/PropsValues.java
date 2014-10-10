@@ -870,8 +870,6 @@ public class PropsValues {
 
 	public static String[] JOURNAL_ARTICLE_FORM_DEFAULT_VALUES = PropsUtil.getArray(PropsKeys.JOURNAL_ARTICLE_FORM_DEFAULT_VALUES);
 
-	public static String[] JOURNAL_ARTICLE_FORM_TRANSLATE = PropsUtil.getArray(PropsKeys.JOURNAL_ARTICLE_FORM_TRANSLATE);
-
 	public static String[] JOURNAL_ARTICLE_FORM_UPDATE = PropsUtil.getArray(PropsKeys.JOURNAL_ARTICLE_FORM_UPDATE);
 
 	public static boolean JOURNAL_ARTICLE_INDEX_ALL_VERSIONS = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS));

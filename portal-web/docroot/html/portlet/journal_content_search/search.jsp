@@ -34,7 +34,6 @@
 			<portlet:param name="struts_action" value="/journal_content_search/search" />
 			<portlet:param name="showListed" value="<%= String.valueOf(showListed) %>" />
 			<portlet:param name="targetPortletId" value="<%= targetPortletId %>" />
-			<portlet:param name="type" value="<%= type %>" />
 		</portlet:renderURL>
 
 		<aui:form action="<%= searchURL %>" method="post" name="fm">
@@ -59,7 +58,6 @@
 
 				SearchContext searchContext = SearchContextFactory.getInstance(request);
 
-				searchContext.setAttribute("articleType", type);
 				searchContext.setGroupIds(null);
 				searchContext.setKeywords(keywords);
 
@@ -138,7 +136,6 @@
 		<liferay-ui:journal-content-search
 			showListed="<%= showListed %>"
 			targetPortletId="<%= targetPortletId %>"
-			type="<%= type %>"
 		/>
 	</c:otherwise>
 </c:choose>

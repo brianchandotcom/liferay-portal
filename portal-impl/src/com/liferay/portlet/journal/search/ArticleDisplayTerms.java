@@ -63,8 +63,6 @@ public class ArticleDisplayTerms extends DisplayTerms {
 
 	public static final String TITLE = "title";
 
-	public static final String TYPE = "type";
-
 	public static final String VERSION = "version";
 
 	public ArticleDisplayTerms(PortletRequest portletRequest) {
@@ -79,7 +77,6 @@ public class ArticleDisplayTerms extends DisplayTerms {
 		structureId = ParamUtil.getString(portletRequest, STRUCTURE_ID);
 		templateId = ParamUtil.getString(portletRequest, TEMPLATE_ID);
 		title = ParamUtil.getString(portletRequest, TITLE);
-		type = ParamUtil.getString(portletRequest, TYPE);
 		version = ParamUtil.getDouble(portletRequest, VERSION);
 
 		groupId = setGroupId(portletRequest);
@@ -143,10 +140,6 @@ public class ArticleDisplayTerms extends DisplayTerms {
 
 	public String getTitle() {
 		return title;
-	}
-
-	public String getType() {
-		return type;
 	}
 
 	public double getVersion() {
@@ -246,7 +239,6 @@ public class ArticleDisplayTerms extends DisplayTerms {
 	protected String structureId;
 	protected String templateId;
 	protected String title;
-	protected String type;
 	protected double version;
 
 }

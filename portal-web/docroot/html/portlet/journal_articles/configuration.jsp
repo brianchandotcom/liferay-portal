@@ -58,21 +58,6 @@ groupId = ParamUtil.getLong(request, "groupId", groupId);
 
 				</aui:select>
 
-				<aui:select label="web-content-type" name="preferences--type--">
-					<aui:option value="" />
-
-					<%
-					for (int i = 0; i < JournalArticleConstants.TYPES.length; i++) {
-					%>
-
-						<aui:option label="<%= JournalArticleConstants.TYPES[i] %>" selected="<%= type.equals(JournalArticleConstants.TYPES[i]) %>" />
-
-					<%
-					}
-					%>
-
-				</aui:select>
-
 				<%
 				String ddmStructureName = StringPool.BLANK;
 				String ddmStructureDescription = StringPool.BLANK;

@@ -58,7 +58,8 @@ public class ConcurrentIdentityHashMapTest {
 			_testValue1, concurrentIdentityHashMap.get(_TEST_KEY_1));
 		Assert.assertNull(concurrentIdentityHashMap.get(_TEST_KEY_2));
 		Assert.assertSame(
-			_testValue1, concurrentIdentityHashMap.put(_TEST_KEY_1, _testValue2));
+			_testValue1,
+			concurrentIdentityHashMap.put(_TEST_KEY_1, _testValue2));
 		Assert.assertTrue(concurrentIdentityHashMap.containsKey(_TEST_KEY_1));
 		Assert.assertFalse(
 			concurrentIdentityHashMap.containsValue(_testValue1));

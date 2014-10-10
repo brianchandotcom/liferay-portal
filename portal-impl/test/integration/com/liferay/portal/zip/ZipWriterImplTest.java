@@ -292,14 +292,6 @@ public class ZipWriterImplTest {
 	}
 
 	@Test
-	public void testClose() throws Exception {
-		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
-
-		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
-
-	}
-
-	@Test
 	public void testFinish() throws Exception {
 		File tempZipFile = temporaryFolder.newFile(_tempZipFilePath);
 

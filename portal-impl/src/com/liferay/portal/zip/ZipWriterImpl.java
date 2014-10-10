@@ -56,7 +56,7 @@ public class ZipWriterImpl implements ZipWriter {
 	}
 
 	public ZipWriterImpl(java.io.File file) {
-		_file = new File(file);
+		_file = new File(file.getAbsolutePath());
 
 		_file.mkdir();
 	}

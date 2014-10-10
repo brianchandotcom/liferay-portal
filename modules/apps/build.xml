@@ -11,6 +11,7 @@
 		<dirset dir="invitation" includes="*" />
 		<dirset dir="loan-calculator" includes="*" />
 		<dirset dir="network-utilities" includes="*" />
+		<dirset dir="password-generator" includes="*" />
 		<dirset dir="polls" includes="*" />
 		<dirset dir="social" includes="*" />
 		<dirset dir="web-proxy" includes="*" />

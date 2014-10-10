@@ -271,7 +271,7 @@ public class LanguageResources {
 	private static final Map<Locale, Map<String, String>> _languageMaps =
 		new ConcurrentHashMap<Locale, Map<String, String>>(64);
 	private static final Locale _nullLocale = new Locale(StringPool.BLANK);
-	private static final ServiceTracker<ResourceBundle, ResourceBundle> 
+	private static final ServiceTracker<ResourceBundle, ResourceBundle>
 		_serviceTracker;
 	private static final Map<Locale, Locale> _superLocales =
 		new ConcurrentHashMap<Locale, Locale>();

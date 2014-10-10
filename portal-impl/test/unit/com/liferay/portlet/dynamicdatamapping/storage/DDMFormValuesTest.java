@@ -53,7 +53,7 @@ public class DDMFormValuesTest extends BaseDDMTestCase {
 		Assert.assertEquals(3, ddmFormFieldValues.size());
 	}
 
-	private final String _FIELD_NAME = StringUtil.randomString();
+	private static final String _FIELD_NAME = StringUtil.randomString();
 
 	private DDMFormValues _ddmFormValues;
 

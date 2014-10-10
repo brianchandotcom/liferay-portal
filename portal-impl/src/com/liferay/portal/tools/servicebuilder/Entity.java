@@ -178,6 +178,7 @@ public class Entity {
 		_cacheEnabled = cacheEnabled;
 
 		boolean containerModel = false;
+
 		if ((_columnList != null) && !_columnList.isEmpty()) {
 			for (EntityColumn col : _columnList) {
 				if (col.isContainerModel() || col.isParentContainerModel()) {

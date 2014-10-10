@@ -266,7 +266,7 @@ public class AnnotationLocatorTest {
 		while ((clazz = queue.poll()) != null) {
 			actualClassHierarchy.add(clazz);
 
-			_queueSuperTypesMethod.invoke(null, queue, clazz);
+			_QUEUE_SUPER_TYPES_METHOD.invoke(null, queue, clazz);
 		}
 
 		Assert.assertEquals(expectedClassHierarchy, actualClassHierarchy);
@@ -711,8 +711,9 @@ public class AnnotationLocatorTest {
 		};
 	}
 
+	private static final java.lang.reflect.Method _QUEUE_SUPER_TYPES_METHOD;
+
 	private static final java.lang.reflect.Method[] _interfaceMethods;
-	private static final java.lang.reflect.Method _queueSuperTypesMethod;
 
 	static {
 		try {
@@ -731,10 +732,10 @@ public class AnnotationLocatorTest {
 			_interfaceMethods[5] = TestInterface2.class.getDeclaredMethod(
 				"testMethod2");
 
-			_queueSuperTypesMethod = AnnotationLocator.class.getDeclaredMethod(
+			_QUEUE_SUPER_TYPES_METHOD = AnnotationLocator.class.getDeclaredMethod(
 				"_queueSuperTypes", Queue.class, Class.class);
 
-			_queueSuperTypesMethod.setAccessible(true);
+			_QUEUE_SUPER_TYPES_METHOD.setAccessible(true);
 		}
 		catch (Exception e) {
 			throw new ExceptionInInitializerError(e);

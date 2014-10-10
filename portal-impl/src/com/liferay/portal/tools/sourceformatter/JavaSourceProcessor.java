@@ -213,6 +213,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		com.thoughtworks.qdox.model.JavaClass[] javaClasses,
 		JavaField javaField, String content) {
 
+		if (true) {
+			return content;
+		}
+
 		Type javaClassType = javaClass.asType();
 
 		if ((javaClass.isEnum() && javaClassType.equals(javaField.getType())) ||

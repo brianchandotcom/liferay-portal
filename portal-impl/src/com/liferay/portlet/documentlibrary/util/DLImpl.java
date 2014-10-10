@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -59,6 +60,7 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
+import com.liferay.portlet.documentlibrary.action.EditFileEntryAction;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -738,6 +740,49 @@ public class DLImpl implements DL {
 	@Override
 	public String getFileIconCssClass(String extension) {
 		return "icon-file-alt";
+	}
+
+	@Override
+	public String getFileName(
+		long groupId, long folderId, String tempFileName) {
+
+		String extension = FileUtil.getExtension(tempFileName);
+
+		int pos = tempFileName.lastIndexOf(
+			EditFileEntryAction.TEMP_RANDOM_SUFFIX);
+
+		if (pos != -1) {
+			tempFileName = tempFileName.substring(0, pos);
+
+			if (Validator.isNotNull(extension)) {
+				tempFileName = tempFileName + StringPool.PERIOD + extension;
+			}
+		}
+
+		while (true) {
+			try {
+				DLAppLocalServiceUtil.getFileEntry(
+					groupId, folderId, tempFileName);
+
+				StringBundler sb = new StringBundler(5);
+
+				sb.append(FileUtil.stripExtension(tempFileName));
+				sb.append(StringPool.DASH);
+				sb.append(StringUtil.randomString());
+
+				if (Validator.isNotNull(extension)) {
+					sb.append(StringPool.PERIOD);
+					sb.append(extension);
+				}
+
+				tempFileName = sb.toString();
+			}
+			catch (Exception e) {
+				break;
+			}
+		}
+
+		return tempFileName;
 	}
 
 	@Override

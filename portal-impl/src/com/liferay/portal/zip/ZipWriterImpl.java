@@ -114,6 +114,20 @@ public class ZipWriterImpl implements ZipWriter {
 	}
 
 	@Override
+	public void close() {
+		if (_file == null) {
+			return;
+		}
+
+		try {
+			File.umount(_file, true);
+		}
+		catch (ArchiveException ae) {
+			_log.error(ae, ae);
+		}
+	}
+
+	@Override
 	public byte[] finish() throws IOException {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();

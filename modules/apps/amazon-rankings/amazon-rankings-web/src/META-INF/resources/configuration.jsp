@@ -56,14 +56,6 @@ isbnsString = StringUtil.merge(isbns, StringPool.SPACE);
 	</liferay-ui:error>
 
 	<aui:fieldset>
-		<aui:input cssClass="lfr-input-text-container" name="preferences--amazon.access.key.id--" value="<%= amazonAccessKeyId %>" />
-
-		<aui:input cssClass="lfr-input-text-container" name="preferences--amazon.associate.tag--" value="<%= amazonAssociateTag %>" />
-
-		<aui:input cssClass="lfr-input-text-container" name="preferences--amazon.secret.access.key--" value="<%= amazonSecretAccessKey %>" />
-	</aui:fieldset>
-
-	<aui:fieldset>
 		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" cssClass="lfr-textarea-container" label="add-all-isbn-numbers-separated-by-spaces" name="preferences--isbns--" type="textarea" value="<%= isbnsString %>" wrap="soft" />
 	</aui:fieldset>
 

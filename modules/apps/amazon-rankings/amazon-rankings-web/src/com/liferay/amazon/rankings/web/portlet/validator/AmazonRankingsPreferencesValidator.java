@@ -14,6 +14,9 @@
 
 package com.liferay.amazon.rankings.web.portlet.validator;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration;
 import com.liferay.amazon.rankings.web.model.AmazonRankings;
 import com.liferay.amazon.rankings.web.util.AmazonRankingsUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -22,20 +25,27 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PreferencesValidator;
 import javax.portlet.ValidatorException;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @Component(
+	configurationPid = "com.liferay.amazon.rankings",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL,
 	immediate = true,
 	property = {
-		"javax.portlet.name=com_liferay_amazon_rankings_web_portlet_AmazonRankingsPortlet"
+		"javax.portlet.name=com_liferay_amazon_rankings_web_portlet_" +
+			"AmazonRankingsPortlet"
 	}
 )
 public class AmazonRankingsPreferencesValidator
@@ -47,20 +57,15 @@ public class AmazonRankingsPreferencesValidator
 
 		List<String> badIsbns = new ArrayList<String>();
 
-		String amazonAccessKeyId = portletPreferences.getValue(
-			"amazon.access.key.id", StringPool.BLANK);
-		String amazonAssociateTag = portletPreferences.getValue(
-			"amazon.associate.tag" , StringPool.BLANK);
-		String amazonSecretAccessKey = portletPreferences.getValue(
-			"amazon.secret.access.key", StringPool.BLANK);
 		String[] isbns = portletPreferences.getValues(
 			"isbns", StringPool.EMPTY_ARRAY);
 
 		for (String isbn : isbns) {
 			AmazonRankings amazonRankings =
 				AmazonRankingsUtil.getAmazonRankings(
-					amazonAccessKeyId, amazonAssociateTag,
-					amazonSecretAccessKey, isbn);
+					_amazonRankingsConfiguration.amazonAccessKeyId(),
+					_amazonRankingsConfiguration.amazonAssociateTag(),
+					_amazonRankingsConfiguration.amazonSecretAccessKey(), isbn);
 
 			if (amazonRankings == null) {
 				badIsbns.add(isbn);
@@ -76,7 +81,16 @@ public class AmazonRankingsPreferencesValidator
 		}
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_amazonRankingsConfiguration = Configurable.createConfigurable(
+			AmazonRankingsConfiguration.class, properties);
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		AmazonRankingsPreferencesValidator.class);
+
+	private volatile AmazonRankingsConfiguration _amazonRankingsConfiguration;
 
 }

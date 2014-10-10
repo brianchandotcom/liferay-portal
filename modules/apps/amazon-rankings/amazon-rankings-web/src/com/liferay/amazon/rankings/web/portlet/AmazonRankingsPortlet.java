@@ -14,12 +14,25 @@
 
 package com.liferay.amazon.rankings.web.portlet;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration;
 import com.liferay.amazon.rankings.web.upgrade.AmazonRankingsUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
-import javax.portlet.Portlet;
+import java.io.IOException;
 
+import java.util.Map;
+
+import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -27,6 +40,8 @@ import org.osgi.service.component.annotations.Reference;
 * @author Peter Fellwock
 */
 @Component(
+	configurationPid = "com.liferay.amazon.rankings",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL,
 	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-amazon-rankings",
@@ -50,9 +65,30 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AmazonRankingsPortlet extends MVCPortlet {
 
+	@Override
+	public void doView(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			AmazonRankingsConfiguration.class.getName(),
+			_amazonRankingsConfiguration);
+
+		super.doView(renderRequest, renderResponse);
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_amazonRankingsConfiguration = Configurable.createConfigurable(
+			AmazonRankingsConfiguration.class, properties);
+	}
+
 	@Reference(unbind = "-")
 	protected void setAmazonRankingsUpgrade(
 		AmazonRankingsUpgrade amazonRankingsUpgrade) {
 	}
+
+	private volatile AmazonRankingsConfiguration _amazonRankingsConfiguration;
 
 }

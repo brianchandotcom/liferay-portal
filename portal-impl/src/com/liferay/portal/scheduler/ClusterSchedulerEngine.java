@@ -641,6 +641,8 @@ public class ClusterSchedulerEngine
 			String groupName = SchedulerEngineHelperUtil.namespaceGroupName(
 				schedulerResponse.getGroupName(), StorageType.MEMORY_CLUSTERED);
 
+			schedulerResponse.setGroupName(groupName);
+
 			Trigger newTrigger = TriggerFactoryUtil.buildTrigger(
 				oldTrigger.getTriggerType(), jobName, groupName,
 				oldTrigger.getStartDate(), oldTrigger.getEndDate(),

@@ -732,10 +732,13 @@ public class AnnotationLocatorTest {
 			_interfaceMethods[5] = TestInterface2.class.getDeclaredMethod(
 				"testMethod2");
 
-			_QUEUE_SUPER_TYPES_METHOD = AnnotationLocator.class.getDeclaredMethod(
-				"_queueSuperTypes", Queue.class, Class.class);
+			java.lang.reflect.Method queueSuperTypesMethod =
+				AnnotationLocator.class.getDeclaredMethod(
+					"_queueSuperTypes", Queue.class, Class.class);
 
-			_QUEUE_SUPER_TYPES_METHOD.setAccessible(true);
+			queueSuperTypesMethod.setAccessible(true);
+
+			_QUEUE_SUPER_TYPES_METHOD = queueSuperTypesMethod;
 		}
 		catch (Exception e) {
 			throw new ExceptionInInitializerError(e);

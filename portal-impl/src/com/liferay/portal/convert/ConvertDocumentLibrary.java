@@ -61,7 +61,8 @@ import java.util.List;
  * @author Alexander Chow
  * @author László Csontos
  */
-public class ConvertDocumentLibrary extends BaseConvertProcess {
+public class ConvertDocumentLibrary extends BaseConvertProcess
+	implements ConvertProcess {
 
 	@Override
 	public String getDescription() {

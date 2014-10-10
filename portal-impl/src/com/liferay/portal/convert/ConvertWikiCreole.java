@@ -26,7 +26,8 @@ import java.util.List;
 /**
  * @author Jorge Ferrer
  */
-public class ConvertWikiCreole extends BaseConvertProcess {
+public class ConvertWikiCreole extends BaseConvertProcess
+	implements ConvertProcess {
 
 	@Override
 	public String getDescription() {

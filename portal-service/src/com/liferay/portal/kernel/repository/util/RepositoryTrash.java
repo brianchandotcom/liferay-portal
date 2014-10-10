@@ -28,4 +28,8 @@ public interface RepositoryTrash {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public FileEntry moveFileEntryToTrash(
+			long userId, long repositoryId, long fileEntryId)
+		throws PortalException;
+
 }

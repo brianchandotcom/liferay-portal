@@ -38,11 +38,7 @@ public class RepositoryTrashImpl implements RepositoryTrash {
 		LocalRepository localRepository =
 			RepositoryLocalServiceUtil.getLocalRepositoryImpl(repositoryId);
 
-		if (!localRepository.isCapabilityProvided(TrashCapability.class)) {
-			throw new InvalidRepositoryException(
-				"Repository " + localRepository.getRepositoryId() +
-					" does not support trash operations");
-		}
+		validateCapability(localRepository);
 
 		TrashCapability trashCapability = localRepository.getCapability(
 			TrashCapability.class);
@@ -52,6 +48,34 @@ public class RepositoryTrashImpl implements RepositoryTrash {
 
 		return trashCapability.moveFileEntryFromTrash(
 			userId, fileEntry, destinationFolder, serviceContext);
+	}
+
+	@Override
+	public FileEntry moveFileEntryToTrash(
+			long userId, long repositoryId, long fileEntryId)
+		throws PortalException {
+
+		LocalRepository localRepository =
+			RepositoryLocalServiceUtil.getLocalRepositoryImpl(repositoryId);
+
+		validateCapability(localRepository);
+
+		TrashCapability trashCapability = localRepository.getCapability(
+			TrashCapability.class);
+
+		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
+
+		return trashCapability.moveFileEntryToTrash(userId, fileEntry);
+	}
+
+	protected void validateCapability(LocalRepository localRepository)
+		throws InvalidRepositoryException {
+
+		if (!localRepository.isCapabilityProvided(TrashCapability.class)) {
+			throw new InvalidRepositoryException(
+				"Repository " + localRepository.getRepositoryId() +
+					" does not support trash operations");
+		}
 	}
 
 }

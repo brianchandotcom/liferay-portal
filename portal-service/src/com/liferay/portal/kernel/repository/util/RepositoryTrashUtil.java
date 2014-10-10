@@ -39,6 +39,14 @@ public class RepositoryTrashUtil {
 			userId, repositoryId, fileEntryId, newFolderId, serviceContext);
 	}
 
+	public static FileEntry moveFileEntryToTrash(
+			long userId, long repositoryId, long fileEntryId)
+		throws PortalException {
+
+		return getRepositoryTrash().moveFileEntryToTrash(
+			userId, repositoryId, fileEntryId);
+	}
+
 	public void setRepositoryTrash(RepositoryTrash repositoryTrash) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 

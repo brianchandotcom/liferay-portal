@@ -753,13 +753,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Moves the file entry with the primary key to the trash portlet.
-	 *
-	 * @param  userId the primary key of the user
-	 * @param  fileEntryId the primary key of the file entry
-	 * @return the file entry
-	 * @throws PortalException if the file entry could not be found
+	 * @deprecated As of 7.0.0, replaced by {@link com.liferay.portal.kernel.repository.util.RepositoryTrashUtil.moveFileEntryToTrash(long, long, long)}
 	 */
+	@Deprecated
 	@Override
 	public FileEntry moveFileEntryToTrash(long userId, long fileEntryId)
 		throws PortalException {
@@ -767,12 +763,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		LocalRepository localRepository = getFileEntryLocalRepository(
 			fileEntryId);
 
-		TrashCapability trashCapability = localRepository.getCapability(
-			TrashCapability.class);
-
-		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
-
-		return trashCapability.moveFileEntryToTrash(userId, fileEntry);
+		return RepositoryTrashUtil.moveFileEntryToTrash(
+			userId, localRepository.getRepositoryId(), fileEntryId);
 	}
 
 	@Override

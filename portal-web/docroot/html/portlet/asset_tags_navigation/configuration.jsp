@@ -91,14 +91,15 @@
 </aui:form>
 
 <aui:script>
-	var showAssetCount = AUI.$('#<portlet:namespace />showAssetCount');
 	var assetCountOptions = AUI.$('#<portlet:namespace />assetCountOptions');
+	var showAssetCount = AUI.$('#<portlet:namespace />showAssetCount');
 
-	function showHiddenFields() {
-		var isChecked = showAssetCount.prop('checked');
+	showAssetCount.on(
+		'change',
+		function() {
+			var checked = showAssetCount.prop('checked');
 
-		assetCountOptions.toggleClass('hide', !isChecked);
-	}
-
-	showAssetCount.on('change', showHiddenFields);
+			assetCountOptions.toggleClass('hide', !checked);
+		}
+	);
 </aui:script>

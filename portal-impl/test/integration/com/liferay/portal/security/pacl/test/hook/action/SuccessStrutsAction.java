@@ -25,11 +25,10 @@ import javax.servlet.http.HttpServletResponse;
 public class SuccessStrutsAction extends BaseStrutsAction {
 
 	public static boolean isInstantiated() {
-		return _instantiated;
+		return _INSTANTIATED;
 	}
 
 	public SuccessStrutsAction() {
-		_instantiated = true;
 	}
 
 	@Override
@@ -40,6 +39,6 @@ public class SuccessStrutsAction extends BaseStrutsAction {
 		return null;
 	}
 
-	private static boolean _instantiated;
+	private static final boolean _INSTANTIATED = true;
 
 }

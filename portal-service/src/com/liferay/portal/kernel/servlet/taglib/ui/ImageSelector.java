@@ -23,6 +23,8 @@ public class ImageSelector {
 
 	public ImageSelector(long imageId) {
 		_imageId = imageId;
+
+		_imageURL = null;
 	}
 
 	public ImageSelector(long imageId, String imageURL) {
@@ -32,6 +34,8 @@ public class ImageSelector {
 	}
 
 	public ImageSelector(String imageURL) {
+		_imageId = 0;
+
 		_imageURL = imageURL;
 	}
 

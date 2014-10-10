@@ -32,7 +32,7 @@ public class ChromeWebDriverImpl extends BaseWebDriverImpl {
 			projectDirName, browserURL, new ChromeDriver(_desiredCapabilities));
 	}
 
-	private static DesiredCapabilities _desiredCapabilities = null;
+	private static final DesiredCapabilities _desiredCapabilities;
 
 	static {
 		_desiredCapabilities = DesiredCapabilities.chrome();

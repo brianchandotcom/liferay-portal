@@ -33,7 +33,7 @@ public class MockWelder implements Welder {
 	}
 
 	public boolean isServerWelded() {
-		return _serverWelded;
+		return _SERVER_WELDED;
 	}
 
 	@Override
@@ -43,7 +43,8 @@ public class MockWelder implements Welder {
 		return new MockRegistrationReference(intraband);
 	}
 
+	private static final boolean _SERVER_WELDED = false;
+
 	private boolean _clientWelded;
-	private boolean _serverWelded;
 
 }

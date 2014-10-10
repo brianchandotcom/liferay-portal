@@ -22,13 +22,12 @@ import com.liferay.portal.kernel.search.BaseIndexerPostProcessor;
 public class OrganizationIndexerPostProcessor extends BaseIndexerPostProcessor {
 
 	public static boolean isInstantiated() {
-		return _instantiated;
+		return _INSTANTIATED;
 	}
 
 	public OrganizationIndexerPostProcessor() {
-		_instantiated = true;
 	}
 
-	private static boolean _instantiated;
+	private static final boolean _INSTANTIATED = true;
 
 }

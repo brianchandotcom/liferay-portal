@@ -31,8 +31,8 @@ public class AppiumMobileDriverImpl extends BaseMobileDriverImpl {
 			new AppiumDriver(_url, _desiredCapabilities));
 	}
 
-	private static DesiredCapabilities _desiredCapabilities;
-	private static URL _url;
+	private static final DesiredCapabilities _desiredCapabilities;
+	private static final URL _url;
 
 	static {
 		_desiredCapabilities = DesiredCapabilities.android();
@@ -42,11 +42,15 @@ public class AppiumMobileDriverImpl extends BaseMobileDriverImpl {
 		_desiredCapabilities.setCapability("platformName", "Android");
 		_desiredCapabilities.setCapability("platformVersion", "4.4");
 
+		URL url = null;
+
 		try {
-			_url = new URL("http://0.0.0.0:4723/wd/hub/");
+			url = new URL("http://0.0.0.0:4723/wd/hub/");
 		}
 		catch (Exception e) {
 		}
+
+		_url = url;
 	}
 
 }

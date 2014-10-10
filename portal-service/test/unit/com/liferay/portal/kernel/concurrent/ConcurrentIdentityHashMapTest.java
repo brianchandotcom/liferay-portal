@@ -41,38 +41,39 @@ public class ConcurrentIdentityHashMapTest {
 		ConcurrentIdentityHashMap<String, Object> concurrentIdentityHashMap =
 			new ConcurrentIdentityHashMap<String, Object>();
 
-		Assert.assertFalse(concurrentIdentityHashMap.containsKey(_testKey1));
+		Assert.assertFalse(concurrentIdentityHashMap.containsKey(_TEST_KEY_1));
 		Assert.assertFalse(
 			concurrentIdentityHashMap.containsValue(_testValue1));
-		Assert.assertFalse(concurrentIdentityHashMap.containsKey(_testKey2));
+		Assert.assertFalse(concurrentIdentityHashMap.containsKey(_TEST_KEY_2));
 		Assert.assertFalse(
 			concurrentIdentityHashMap.containsValue(_testValue2));
 		Assert.assertNull(
-			concurrentIdentityHashMap.put(_testKey1, _testValue1));
-		Assert.assertTrue(concurrentIdentityHashMap.containsKey(_testKey1));
+			concurrentIdentityHashMap.put(_TEST_KEY_1, _testValue1));
+		Assert.assertTrue(concurrentIdentityHashMap.containsKey(_TEST_KEY_1));
 		Assert.assertTrue(concurrentIdentityHashMap.containsValue(_testValue1));
-		Assert.assertFalse(concurrentIdentityHashMap.containsKey(_testKey2));
+		Assert.assertFalse(concurrentIdentityHashMap.containsKey(_TEST_KEY_2));
 		Assert.assertFalse(
 			concurrentIdentityHashMap.containsValue(_testValue2));
 		Assert.assertSame(
-			_testValue1, concurrentIdentityHashMap.get(_testKey1));
-		Assert.assertNull(concurrentIdentityHashMap.get(_testKey2));
+			_testValue1, concurrentIdentityHashMap.get(_TEST_KEY_1));
+		Assert.assertNull(concurrentIdentityHashMap.get(_TEST_KEY_2));
 		Assert.assertSame(
-			_testValue1, concurrentIdentityHashMap.put(_testKey1, _testValue2));
-		Assert.assertTrue(concurrentIdentityHashMap.containsKey(_testKey1));
+			_testValue1,
+			concurrentIdentityHashMap.put(_TEST_KEY_1, _testValue2));
+		Assert.assertTrue(concurrentIdentityHashMap.containsKey(_TEST_KEY_1));
 		Assert.assertFalse(
 			concurrentIdentityHashMap.containsValue(_testValue1));
-		Assert.assertFalse(concurrentIdentityHashMap.containsKey(_testKey2));
+		Assert.assertFalse(concurrentIdentityHashMap.containsKey(_TEST_KEY_2));
 		Assert.assertTrue(concurrentIdentityHashMap.containsValue(_testValue2));
 		Assert.assertSame(
-			_testValue2, concurrentIdentityHashMap.get(_testKey1));
-		Assert.assertNull(concurrentIdentityHashMap.get(_testKey2));
+			_testValue2, concurrentIdentityHashMap.get(_TEST_KEY_1));
+		Assert.assertNull(concurrentIdentityHashMap.get(_TEST_KEY_2));
 
 		Set<String> keySet = concurrentIdentityHashMap.keySet();
 
 		Iterator<String> iterator = keySet.iterator();
 
-		Assert.assertSame(_testKey1, iterator.next());
+		Assert.assertSame(_TEST_KEY_1, iterator.next());
 		Assert.assertFalse(iterator.hasNext());
 	}
 
@@ -101,14 +102,16 @@ public class ConcurrentIdentityHashMapTest {
 	protected Map<String, Object> createDataMap() {
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		map.put(_testKey1, _testValue1);
+		map.put(_TEST_KEY_1, _testValue1);
 		map.put("testKey2", _testValue2);
 
 		return map;
 	}
 
-	private final String _testKey1 = "testKey";
-	private final String _testKey2 = new String(_testKey1);
+	private static final String _TEST_KEY_1 = "testKey";
+
+	private static final String _TEST_KEY_2 = new String(_TEST_KEY_1);
+
 	private final Object _testValue1 = new Object();
 	private final Object _testValue2 = new Object();
 

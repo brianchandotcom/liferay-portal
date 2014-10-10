@@ -373,8 +373,6 @@ public class ZipWriterImplTest {
 
 	private static final String _ENTRY_FILE_PATH = "entry.txt";
 
-	private static final String _ZIP_FILE_PATH = "file.zip";
-
 	private static String _expectedEntryContent;
 
 	private String _tempZipFilePath;

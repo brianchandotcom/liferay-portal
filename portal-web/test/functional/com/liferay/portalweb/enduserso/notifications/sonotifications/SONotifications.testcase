@@ -3062,7 +3062,7 @@
 		<execute action="SONotifications#assertElementNotPresent" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" />
 	</command>
 
-	<command known-issues="LPS-50417" name="ViewNoBlogsEntryNotifications" priority="4">
+	<command name="ViewNoBlogsEntryNotifications" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryContentEdit" value="Blogs Entry Content Edit" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -3201,7 +3201,7 @@
 		<execute macro="Notifications#viewDefaultContent" />
 	</command>
 
-	<command known-issues="LPS-50417" name="ViewNoCategoryThreadNotifications" priority="4">
+	<command name="ViewNoCategoryThreadNotifications" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="pageName" value="Forums" />
 		<var name="siteDescription" value="Open Site Description" />
@@ -3349,7 +3349,7 @@
 		<execute macro="Notifications#viewDefaultContent" />
 	</command>
 
-	<command known-issues="LPS-50417" name="ViewNoDashboardAnnouncementEntryNotification" priority="4">
+	<command name="ViewNoDashboardAnnouncementEntryNotification" priority="4">
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
@@ -3411,7 +3411,7 @@
 		<execute macro="Notifications#viewDefaultContent" />
 	</command>
 
-	<command known-issues="LPS-50417" name="ViewNoFolderDocumentNotifications" priority="4">
+	<command name="ViewNoFolderDocumentNotifications" priority="4">
 		<var name="dmDocumentDescription" value="DM Folder Document Description" />
 		<var name="dmDocumentDescriptionEdit" value="DM Folder Document Description Edit" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
@@ -3567,7 +3567,7 @@
 		<execute macro="Notifications#viewDefaultContent" />
 	</command>
 
-	<command known-issues="SOS-2479,LPS-50417" name="ViewNoMessageNotificationViaEmail" priority="4">
+	<command known-issues="SOS-2479" name="ViewNoMessageNotificationViaEmail" priority="4">
 		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain=" />
 
 		<var name="messageBody" value="Message Body" />
@@ -3719,7 +3719,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-50417" name="ViewNoMessageNotificationViaWebsite" priority="4">
+	<command name="ViewNoMessageNotificationViaWebsite" priority="4">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageReplyBody" value="Message Reply Body" />
 		<var name="messageSubject" value="Message Subject" />
@@ -3863,7 +3863,7 @@
 		<execute macro="Notifications#viewDefaultContent" />
 	</command>
 
-	<command known-issues="LPS-50417" name="ViewNoMicroblogsEntryViewableByConnectionsCommentNotification" priority="4">
+	<command name="ViewNoMicroblogsEntryViewableByConnectionsCommentNotification" priority="4">
 		<var name="microblogsEntryCommentContent" value="Microblogs Post Comment" />
 		<var name="microblogsEntryContent" value="Microblogs Post" />
 		<var name="pageName" value="Microblogs" />
@@ -3941,7 +3941,7 @@
 		<execute macro="Notifications#viewDefaultContent" />
 	</command>
 
-	<command known-issues="LPS-50417" name="ViewNoMicroblogsEntryViewableByEveryoneCommentNotification" priority="4">
+	<command name="ViewNoMicroblogsEntryViewableByEveryoneCommentNotification" priority="4">
 		<var name="microblogsEntryCommentContent" value="Microblogs Post Comment" />
 		<var name="microblogsEntryContent" value="Microblogs Post" />
 		<var name="pageName" value="Microblogs" />
@@ -4010,7 +4010,7 @@
 		<execute macro="Notifications#viewDefaultContent" />
 	</command>
 
-	<command known-issues="LPS-50417" name="ViewNoMicroblogsEntryViewableByFollowersCommentNotification" priority="4">
+	<command name="ViewNoMicroblogsEntryViewableByFollowersCommentNotification" priority="4">
 		<var name="microblogsEntryCommentContent" value="Microblogs Post Comment" />
 		<var name="microblogsEntryContent" value="Microblogs Post" />
 		<var name="pageName" value="Microblogs" />
@@ -4089,7 +4089,7 @@
 		<execute macro="Notifications#viewDefaultContent" />
 	</command>
 
-	<command known-issues="LPS-50417" name="ViewNoSiteAnnouncementEntryNotification" priority="4">
+	<command name="ViewNoSiteAnnouncementEntryNotification" priority="4">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryURL" value="http://www.google.com" />
@@ -4165,7 +4165,7 @@
 		<execute macro="Notifications#viewDefaultContent" />
 	</command>
 
-	<command known-issues="LPS-50417" name="ViewNoTaskNotification" priority="4">
+	<command name="ViewNoTaskNotification" priority="4">
 		<var name="taskDescription" value="Task Description" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
@@ -4227,7 +4227,7 @@
 		<execute macro="Notifications#viewDefaultContent" />
 	</command>
 
-	<command known-issues="LPS-50417" name="ViewNoWikiPageNotifications" priority="4">
+	<command name="ViewNoWikiPageNotifications" priority="4">
 		<var name="pageName" value="Wiki" />
 		<var name="siteDescription" value="Open Site Description" />
 		<var name="siteName" value="Open Site Name" />

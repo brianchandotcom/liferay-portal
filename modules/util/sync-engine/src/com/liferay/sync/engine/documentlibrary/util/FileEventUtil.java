@@ -34,12 +34,14 @@ import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.model.SyncSite;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.service.SyncSiteService;
+import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.PropsValues;
 
 import java.io.IOException;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import java.util.HashMap;
 import java.util.List;
@@ -281,7 +283,9 @@ public class FileEventUtil {
 		getSyncDLObjectUpdateEvent.run();
 	}
 
-	public static void retryFileTransfers(long syncAccountId) {
+	public static void retryFileTransfers(long syncAccountId)
+		throws IOException {
+
 		List<SyncFile> downloadingSyncFiles = SyncFileService.findSyncFiles(
 			syncAccountId, SyncFile.UI_EVENT_DOWNLOADING);
 
@@ -293,20 +297,29 @@ public class FileEventUtil {
 			syncAccountId, SyncFile.UI_EVENT_UPLOADING);
 
 		for (SyncFile uploadingSyncFile : uploadingSyncFiles) {
+			Path filePath = Paths.get(uploadingSyncFile.getFilePathName());
+
+			if (Files.notExists(filePath)) {
+				continue;
+			}
+
+			String checksum = FileUtil.getChecksum(filePath);
+
+			uploadingSyncFile.setChecksum(checksum);
+
+			SyncFileService.update(uploadingSyncFile);
+
 			if (uploadingSyncFile.getTypePK() > 0) {
-
-				// Reset the checksum and let the engine retry the upload
-
-				uploadingSyncFile.setChecksum("");
-
-				SyncFileService.update(uploadingSyncFile);
+				updateFile(
+					filePath, syncAccountId, uploadingSyncFile, null,
+					uploadingSyncFile.getName(), null, null, null, checksum);
 			}
 			else {
-
-				// If the file does not exist on the portal yet, delete the
-				// database entry and let the engine recreate it.
-
-				SyncFileService.deleteSyncFile(uploadingSyncFile, false);
+				addFile(
+					filePath, uploadingSyncFile.getParentFolderId(),
+					uploadingSyncFile.getRepositoryId(), syncAccountId,
+					checksum, uploadingSyncFile.getName(),
+					uploadingSyncFile.getMimeType(), uploadingSyncFile);
 			}
 		}
 	}

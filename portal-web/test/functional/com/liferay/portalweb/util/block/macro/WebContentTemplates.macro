@@ -99,6 +99,21 @@
 		<execute action="CPWebcontentTemplatesAddtemplate#selectFrame" />
 		<execute action="CPWebcontentTemplatesAddtemplate#selectFrame" locator-key1="TEMPLATES_IFRAME" />
 		<execute action="CPWebcontentTemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<if>
+			<isset var="addRoleViewPermissions" />
+			<then>
+				<var name="key_templateName" value="${templateName}" />
+
+				<execute action="CPWebcontentTemplates#click" locator-key1="TEMPLATE_TABLE_ACTIONS" />
+				<execute action="CPWebcontentTemplates#assertClick" locator-key1="TEMPLATE_MENULIST_PERMISSIONS" value1="Permissions" />
+
+				<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
+					<var name="addOrRemoveViewPermission" value="Add" />
+					<var name="roleList" value="${addRoleViewPermissions}" />
+				</execute>
+			</then>
+		</if>
 	</command>
 
 	<command name="addField">

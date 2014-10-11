@@ -68,6 +68,21 @@
 
 		<execute action="CPWebcontentStructuresAddstructure#selectFrame" locator-key1="STRUCTURES_IFRAME" />
 		<execute action="CPWebcontentStructures#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<if>
+			<isset var="addRoleViewPermissions" />
+			<then>
+				<var name="key_structureName" value="${structureName}" />
+
+				<execute action="CPWebcontentStructures#click" locator-key1="STRUCTURE_TABLE_ACTIONS" />
+				<execute action="CPWebcontentStructures#assertClick" locator-key1="STRUCTURE_MENULIST_PERMISSIONS" value1="Permissions" />
+
+				<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
+					<var name="addOrRemoveViewPermission" value="Add" />
+					<var name="roleList" value="${addRoleViewPermissions}" />
+				</execute>
+			</then>
+		</if>
 	</command>
 
 	<command name="addNullCP">

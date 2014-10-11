@@ -19,6 +19,7 @@ import com.liferay.sync.engine.documentlibrary.event.AddFolderEvent;
 import com.liferay.sync.engine.documentlibrary.event.CancelCheckOutEvent;
 import com.liferay.sync.engine.documentlibrary.event.CheckInFileEntryEvent;
 import com.liferay.sync.engine.documentlibrary.event.CheckOutFileEntryEvent;
+import com.liferay.sync.engine.documentlibrary.event.DownloadFileEvent;
 import com.liferay.sync.engine.documentlibrary.event.GetAllFolderSyncDLObjectsEvent;
 import com.liferay.sync.engine.documentlibrary.event.GetSyncDLObjectUpdateEvent;
 import com.liferay.sync.engine.documentlibrary.event.MoveFileEntryEvent;
@@ -31,6 +32,7 @@ import com.liferay.sync.engine.documentlibrary.event.UpdateFolderEvent;
 import com.liferay.sync.engine.documentlibrary.handler.GetAllFolderSyncDLObjectsHandler;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.model.SyncSite;
+import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.service.SyncSiteService;
 import com.liferay.sync.engine.util.PropsValues;
 
@@ -182,6 +184,35 @@ public class FileEventUtil {
 		moveFolderToTrashEvent.run();
 	}
 
+	public static void downloadFile(long syncAccountId, SyncFile syncFile) {
+		Map<String, Object> parameters = new HashMap<String, Object>();
+
+		parameters.put("patch", false);
+		parameters.put("syncFile", syncFile);
+
+		DownloadFileEvent downloadFileEvent = new DownloadFileEvent(
+			syncAccountId, parameters);
+
+		downloadFileEvent.run();
+	}
+
+	public static void downloadPatch(
+		String sourceVersion, long syncAccountId, SyncFile syncFile,
+		String targetVersion) {
+
+		Map<String, Object> parameters = new HashMap<String, Object>();
+
+		parameters.put("patch", true);
+		parameters.put("sourceVersion", sourceVersion);
+		parameters.put("syncFile", syncFile);
+		parameters.put("targetVersion", targetVersion);
+
+		DownloadFileEvent downloadFileEvent = new DownloadFileEvent(
+			syncAccountId, parameters);
+
+		downloadFileEvent.run();
+	}
+
 	public static List<SyncFile> getAllFolders(
 		long companyId, long repositoryId, long syncAccountId) {
 
@@ -248,6 +279,36 @@ public class FileEventUtil {
 			new GetSyncDLObjectUpdateEvent(syncAccountId, parameters);
 
 		getSyncDLObjectUpdateEvent.run();
+	}
+
+	public static void retryFileTransfers(long syncAccountId) {
+		List<SyncFile> downloadingSyncFiles = SyncFileService.findSyncFiles(
+			syncAccountId, SyncFile.UI_EVENT_DOWNLOADING);
+
+		for (SyncFile downloadingSyncFile : downloadingSyncFiles) {
+			downloadFile(syncAccountId, downloadingSyncFile);
+		}
+
+		List<SyncFile> uploadingSyncFiles = SyncFileService.findSyncFiles(
+			syncAccountId, SyncFile.UI_EVENT_UPLOADING);
+
+		for (SyncFile uploadingSyncFile : uploadingSyncFiles) {
+			if (uploadingSyncFile.getTypePK() > 0) {
+
+				// Reset the checksum and let the engine retry the upload
+
+				uploadingSyncFile.setChecksum("");
+
+				SyncFileService.update(uploadingSyncFile);
+			}
+			else {
+
+				// If the file does not exist on the portal yet, delete the
+				// database entry and let the engine recreate it.
+
+				SyncFileService.deleteSyncFile(uploadingSyncFile, false);
+			}
+		}
 	}
 
 	public static void updateFile(

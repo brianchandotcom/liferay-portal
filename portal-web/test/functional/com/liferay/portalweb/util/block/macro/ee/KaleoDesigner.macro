@@ -478,6 +478,21 @@
 		<execute action="Kaleodesigner#assertClick" locator-key1="DRAFT_HISTORY_UNDO_BUTTON" value1="Undo" />
 	</command>
 
+	<command name="viewButtons">
+		<execute action="Kaleodesigner#assertTextEquals" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
+
+		<if>
+			<equals arg1="${cancelButton}" arg2="true" />
+			<then>
+				<execute action="Kaleodesigner#assertTextEquals" locator-key1="CANCEL_BUTTON" value1="Cancel" />
+
+				<execute action="Kaleodesigner#assertClick" locator-key1="CANCEL_BUTTON" value1="Cancel" />
+			</then>
+		</if>
+	</command>
+
 	<command name="viewConnectorNotPresent">
 		<var name="key_connectorLabel" value="${connectorLabel}" />
 
@@ -640,6 +655,10 @@
 
 	<command name="viewNodeType">
 		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_TYPE" value1="${nodeType}" />
+	</command>
+
+	<command name="viewNoWorkflowDefinitionsViaKaleoDesignerCP">
+		<execute action="CPKaleodesignerconfiguration#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No workflow definitions are defined." />
 	</command>
 
 	<command name="viewSourceXMLLine">

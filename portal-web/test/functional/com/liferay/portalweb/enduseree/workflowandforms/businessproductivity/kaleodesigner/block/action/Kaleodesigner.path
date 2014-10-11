@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//div[contains(@class,'button-holder')]/button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFIRMATION</td>
 	<td></td>
 	<td></td>

@@ -1166,7 +1166,61 @@
 		</execute>
 	</command>
 
-	<command name="ViewWorkflowButtons" priority="5">
+	<command name="ViewWorkflowDefinitionButtonsViaKaleoDesignerCP" priority="5">
+		<description message="This is a use case for LPS-47352 and LPS-48912." />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Kaleo Designer" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaKaleoDesignerCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewButtons">
+			<var name="cancelButton" value="true" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNoWorkflowDefinitionsViaKaleoDesignerCP" />
+	</command>
+
+	<command name="ViewWorkflowDefinitionButtonsViaKaleoFormsAdmin" priority="5">
+		<description message="This is a use case for LPS-47352 and LPS-48912." />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Kaleo Forms Admin" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#addProcess" />
+
+		<execute macro="KaleoFormsAdmin#addProcessDetails">
+			<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#next" />
+
+		<execute macro="KaleoFormsAdmin#chooseFieldSet">
+			<var name="kfFieldSetName" value="To Do" />
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#next" />
+
+		<execute macro="KaleoFormsAdmin#addWorkflow">
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="workflowDefinitionTitle" value="Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewButtons">
+			<var name="cancelButton" value="true" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#viewPublishedWorkflowDefinitions" />
+		<execute macro="KaleoFormsAdmin#viewNoUnpublishedWorkflowDefinitions" />
+	</command>
+
+	<command name="ViewWorkflowDefinitionButtonsViaWorkflowCP" priority="5">
 		<description message="This is a use case for LPS-47352 and LPS-48912." />
 
 		<execute macro="Page#gotoCP">
@@ -1174,9 +1228,9 @@
 		</execute>
 
 		<execute macro="KaleoDesigner#addNewDefinitionViaWorkflowCP">
-			<var name="workflowDefinitionName" value="New Workflow Definition Name" />
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
 		</execute>
 
-		<execute action="Kaleodesigner#assertTextEquals" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute macro="KaleoDesigner#viewButtons" />
 	</command>
 </definition>

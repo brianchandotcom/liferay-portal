@@ -328,6 +328,11 @@
 	<td>//tr[contains(.,'${key_kfProcessName}')]/td[4]/span</td>
 	<td></td>
 </tr>
+<tr>
+	<td>MY_COMPLETED_REQUESTS_TABLE_EXTRA_COLUMN</td>
+	<td>//tr[contains(.,'${key_kfProcessName}')]/td[5]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

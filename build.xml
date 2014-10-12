@@ -3,67 +3,6 @@
 <project name="portal" basedir="." default="compile" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-common.xml" />
 
-	<macrodef name="setup-jrebel">
-		<sequential>
-			<echo file="${app.server.lib.global.dir}/rebel.xml"><![CDATA[<?xml version="1.0"?>
-
-<application
-	xmlns="http://www.zeroturnaround.com"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.zeroturnaround.com http://www.zeroturnaround.com/alderaan/rebel-2_0.xsd"
->
-	<classpath>
-		<dir name="${basedir}/portal-service/classes" />
-	</classpath>
-</application>]]></echo>
-
-		<echo file="${app.server.classes.portal.dir}/rebel.xml"><![CDATA[<?xml version="1.0"?>
-
-<application
-	xmlns="http://www.zeroturnaround.com"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.zeroturnaround.com http://www.zeroturnaround.com/alderaan/rebel-2_0.xsd"
->
-	<classpath>
-		<dir name="${basedir}/portal-impl/classes" />
-		<dir name="${basedir}/portal-pacl/classes" />
-		<dir name="${basedir}/util-java/classes" />
-		<dir name="${basedir}/util-bridges/classes" />
-		<dir name="${basedir}/util-taglib/classes" />
-		<dir name="${basedir}/util-slf4j/classes" />
-	</classpath>
-	<web>
-		<link target="/">
-			<dir name="${basedir}/portal-web/docroot/" />
-		</link>
-	</web>
-</application>]]></echo>
-
-			<if>
-				<not>
-					<resourcecontains
-						resource="portal-impl/src/system-ext.properties"
-						substring="liferay.lib.portal.dir"
-					/>
-				</not>
-				<then>
-					<echo
-						append="true"
-						file="portal-impl/src/system-ext.properties"
-					>
-						liferay.lib.portal.dir=${app.server.lib.portal.dir}
-					</echo>
-
-					<copy
-						file="portal-impl/src/system-ext.properties"
-						overwrite="true"
-						tofile="portal-impl/classes/system-ext.properties"
-					/>
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="setup-sdk">
 		<sequential>
 			<delete dir="${project.dir}/tools/sdk" />
@@ -1008,10 +947,6 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 				/>
 			</then>
 		</if>
-	</target>
-
-	<target name="setup-jrebel">
-		<setup-jrebel />
 	</target>
 
 	<target name="setup-sdk">

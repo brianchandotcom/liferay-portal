@@ -14,6 +14,9 @@
 
 package com.liferay.taglib.util;
 
+import com.liferay.kernel.servlet.taglib.IncludeTagExtension;
+import com.liferay.kernel.servlet.taglib.IncludeTagExtension.ExtensionPoint;
+import com.liferay.kernel.servlet.taglib.IncludeTagExtensionUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.LogUtil;
@@ -23,6 +26,7 @@ import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.TrackedServletRequest;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
@@ -34,8 +38,13 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.CustomJspRegistryUtil;
+import com.liferay.portal.util.TagIdResolver;
 import com.liferay.taglib.FileAvailabilityUtil;
+import com.liferay.taglib.servlet.JspContextHttpResponseWrapper;
 import com.liferay.taglib.servlet.PipingServletResponse;
+
+import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -49,6 +58,7 @@ import javax.servlet.jsp.tagext.BodyContent;
  * @author Shuyang Zhou
  * @author Eduardo Lundgren
  * @author Raymond Augé
+ * @author Carlos Sierra
  */
 public class IncludeTag extends AttributesTagSupport {
 
@@ -81,7 +91,11 @@ public class IncludeTag extends AttributesTagSupport {
 				return processEndTag();
 			}
 
+			invokeExtensionAt(ExtensionPoint.BEFORE_END, false);
+
 			doInclude(page);
+
+			invokeExtensionAt(ExtensionPoint.AFTER_END, false);
 
 			return EVAL_PAGE;
 		}
@@ -121,7 +135,11 @@ public class IncludeTag extends AttributesTagSupport {
 				return processStartTag();
 			}
 
+			invokeExtensionAt(ExtensionPoint.BEFORE_START, true);
+
 			doInclude(page);
+
+			invokeExtensionAt(ExtensionPoint.AFTER_START, true);
 
 			return EVAL_BODY_INCLUDE;
 		}
@@ -365,6 +383,46 @@ public class IncludeTag extends AttributesTagSupport {
 		}
 
 		return exists;
+	}
+
+	private void invokeExtensionAt(ExtensionPoint point, boolean ascending) {
+		TagIdResolver tagResolver = IncludeTagExtensionUtil.getTagIdResolver(
+			this.getClass().getName());
+
+		if (tagResolver != null) {
+			JspContextHttpResponseWrapper wrappedResponse =
+				new JspContextHttpResponseWrapper(pageContext);
+
+			HttpServletRequest request = (HttpServletRequest)
+				pageContext.getRequest();
+
+			String extensionId = tagResolver.getId(
+				request, wrappedResponse, this);
+
+			if (extensionId != null) {
+				List<IncludeTagExtension> viewExtensions =
+					IncludeTagExtensionUtil.getIncludeTagExtension(
+						extensionId + ":" + point);
+
+				if (viewExtensions != null) {
+					Iterator<IncludeTagExtension> iterator;
+
+					if (ascending) {
+						iterator = viewExtensions.iterator();
+					}
+					else {
+						iterator = ListUtil.descendingIterator(viewExtensions);
+					}
+					while (iterator.hasNext()) {
+						IncludeTagExtension includeTagExtension =
+							iterator.next();
+
+						includeTagExtension.include(
+							request, wrappedResponse, point);
+					}
+				}
+			}
+		}
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = false;

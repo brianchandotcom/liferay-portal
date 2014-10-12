@@ -16,16 +16,11 @@ package com.liferay.taglib.util;
 
 import com.liferay.kernel.servlet.taglib.DynamicIncludeUtil;
 import com.liferay.taglib.TagSupport;
+import com.liferay.taglib.servlet.JspContextHttpResponseWrapper;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspWriter;
 
 /**
  * @author Carlos Sierra Andrés
@@ -61,31 +56,7 @@ public class DynamicIncludeTag extends TagSupport {
 	}
 
 	protected HttpServletResponse getResponse() {
-		HttpServletResponse httpServletResponse =
-			(HttpServletResponse)pageContext.getResponse();
-
-		return new HttpServletResponseWrapper(httpServletResponse) {
-
-			@Override
-			public ServletOutputStream getOutputStream() {
-				return new ServletOutputStream() {
-
-					@Override
-					public void write(int b) throws IOException {
-						JspWriter jspWriter = pageContext.getOut();
-
-						jspWriter.write(b);
-					}
-
-				};
-			}
-
-			@Override
-			public PrintWriter getWriter() {
-				return new PrintWriter(pageContext.getOut(), true);
-			}
-
-		};
+		return new JspContextHttpResponseWrapper(pageContext);
 	}
 
 	private String _key;

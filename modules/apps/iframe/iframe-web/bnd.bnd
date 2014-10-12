@@ -1,5 +1,5 @@
 Bundle-Name: Liferay IFrame Web
-Bundle-SymbolicName: com.liferay.iframe
+Bundle-SymbolicName: com.liferay.iframe.web
 Bundle-Version: 1.0.0
 Import-Package:\
 	${bnd.jsp.support.imports},\

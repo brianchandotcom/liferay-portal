@@ -10,6 +10,7 @@
 		<dirset dir="iframe" includes="*" />
 		<dirset dir="invitation" includes="*" />
 		<dirset dir="loan-calculator" includes="*" />
+		<dirset dir="nested-portlets" includes="*" />
 		<dirset dir="network-utilities" includes="*" />
 		<dirset dir="password-generator" includes="*" />
 		<dirset dir="polls" includes="*" />

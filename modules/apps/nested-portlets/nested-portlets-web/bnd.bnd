@@ -1,0 +1,17 @@
+Bundle-Name: Liferay Nested Portlets Web
+Bundle-SymbolicName: com.liferay.nested.portlets.web
+Bundle-Version: 1.0.0
+Import-Package:\
+	${bnd.jsp.support.imports},\
+	com.liferay.portal.layoutconfiguration.util,\
+	com.liferay.portal.plugin,\
+	com.liferay.portal.service.permission,\
+	*
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/META-INF/resources,\
+	@lib/javax.servlet.jsp.jstl.jar!/META-INF/*.tld,\
+	@../../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*,\
+	@../../../../util-taglib/util-taglib.jar
+
+-metatype: *

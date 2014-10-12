@@ -919,21 +919,6 @@
 		<css-class-wrapper>portlet-blogs-aggregator</css-class-wrapper>
 	</portlet>
 	<portlet>
-		<portlet-name>118</portlet-name>
-		<icon>/html/icons/default.png</icon>
-		<struts-path>nested_portlets</struts-path>
-		<configuration-action-class>com.liferay.portlet.nestedportlets.action.ConfigurationActionImpl</configuration-action-class>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
-		<layout-cacheable>true</layout-cacheable>
-		<instanceable>true</instanceable>
-		<single-page-application>false</single-page-application>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<css-class-wrapper>portlet-nested-portlets</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>119</portlet-name>
 		<icon>/html/icons/default.png</icon>
 		<struts-path>asset</struts-path>

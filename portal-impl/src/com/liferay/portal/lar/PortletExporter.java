@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.PortletDataHandlerStatusMessageSenderUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -233,15 +232,15 @@ public class PortletExporter {
 
 		portletDataContext.addZipEntry(path, data);
 
-		Date endDate = portletDataContext.getEndDate();
-
 		boolean updateLastPublishDate = MapUtil.getBoolean(
 			portletDataContext.getParameterMap(),
 			PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE);
 
 		if (updateLastPublishDate) {
-			StagingUtil.updateLastPublishDate(
-				portletId, jxPortletPreferences, endDate);
+			ExportImportDateUtil.updateLastPublishDate(
+				portletId, jxPortletPreferences,
+				portletDataContext.getDateRange(),
+				portletDataContext.getEndDate());
 		}
 	}
 

@@ -214,13 +214,13 @@ public class LayoutStagingBackgroundTaskExecutor
 						_sourceGroupId);
 
 					if (!sourceGroup.hasStagingGroup()) {
-						StagingUtil.updateLastPublishDate(
-							_sourceGroupId, privateLayout,
+						ExportImportDateUtil.updateLastPublishDate(
+							_sourceGroupId, privateLayout, dateRange,
 							dateRange.getEndDate());
 					}
 					else {
-						StagingUtil.updateLastPublishDate(
-							_targetGroupId, privateLayout,
+						ExportImportDateUtil.updateLastPublishDate(
+							_targetGroupId, privateLayout, dateRange,
 							dateRange.getEndDate());
 					}
 				}

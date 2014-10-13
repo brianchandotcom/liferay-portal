@@ -73,9 +73,6 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param content the HTML content wrapped in XML. For more information,
 	see the content example in the class description for {@link
 	JournalArticleLocalServiceImpl}.
-	* @param type the structure's type, if the web content article is related
-	to a DDM structure. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
 	* @param ddmStructureKey the primary key of the web content article's DDM
 	structure, if the article is related to a DDM structure, or
 	<code>null</code> otherwise
@@ -136,15 +133,15 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		double version,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String content, java.lang.String type,
-		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
-		java.lang.String layoutUuid, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		int reviewDateMonth, int reviewDateDay, int reviewDateYear,
-		int reviewDateHour, int reviewDateMinute, boolean neverReview,
-		boolean indexable, boolean smallImage, java.lang.String smallImageURL,
+		java.lang.String content, java.lang.String ddmStructureKey,
+		java.lang.String ddmTemplateKey, java.lang.String layoutUuid,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire, int reviewDateMonth,
+		int reviewDateDay, int reviewDateYear, int reviewDateHour,
+		int reviewDateMinute, boolean neverReview, boolean indexable,
+		boolean smallImage, java.lang.String smallImageURL,
 		java.io.File smallImageFile,
 		java.util.Map<java.lang.String, byte[]> images,
 		java.lang.String articleURL,
@@ -2208,8 +2205,6 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	<code>null</code>)
 	* @param content the content keywords (space separated, optionally
 	<code>null</code>)
-	* @param type the web content article's type (optionally
-	<code>null</code>)
 	* @param status the web content article's workflow status. For more
 	information see {@link WorkflowConstants} for constants starting
 	with the "STATUS_" prefix.
@@ -2236,16 +2231,15 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	public com.liferay.portal.kernel.search.Hits search(long companyId,
 		long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String articleId, java.lang.String title,
-		java.lang.String description, java.lang.String content,
-		java.lang.String type, int status, java.lang.String ddmStructureKey,
-		java.lang.String ddmTemplateKey,
+		java.lang.String description, java.lang.String content, int status,
+		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andSearch, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort);
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #search(long, long, List,
-	long, String, String, String, String, String, int, String,
+	long, String, String, String, String, int, String,
 	String, LinkedHashMap, boolean, int, int, Sort)}
 	*/
 	@java.lang.Deprecated
@@ -2266,7 +2260,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* article ID, title, description, and content, a DDM structure key
 	* parameter, a DDM template key parameter, and an AND operator switch. It
 	* is preferable to use the indexed version {@link #search(long, long, List,
-	* long, String, String, String, String, String, int, String, String,
+	* long, String, String, String, String, int, String, String,
 	* LinkedHashMap, boolean, int, int, Sort)} instead of this method wherever
 	* possible for performance reasons.
 	*
@@ -2296,8 +2290,6 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param description the description keywords (space separated, optionally
 	<code>null</code>)
 	* @param content the content keywords (space separated, optionally
-	<code>null</code>)
-	* @param type the web content article's type (optionally
 	<code>null</code>)
 	* @param ddmStructureKey the primary key of the web content article's DDM
 	structure, if the article is related to a DDM structure, or
@@ -2331,10 +2323,10 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
-		java.lang.String content, java.lang.String type,
-		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
-		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
-		java.util.Date reviewDate, boolean andOperator, int start, int end,
+		java.lang.String content, java.lang.String ddmStructureKey,
+		java.lang.String ddmTemplateKey, java.util.Date displayDateGT,
+		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
+		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> obc);
 
 	/**
@@ -2371,8 +2363,6 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	<code>null</code>)
 	* @param content the content keywords (space separated, optionally
 	<code>null</code>)
-	* @param type the web content article's type (optionally
-	<code>null</code>)
 	* @param ddmStructureKeys the primary keys of the web content article's
 	DDM structures, if the article is related to a DDM structure, or
 	<code>null</code> otherwise
@@ -2407,8 +2397,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
-		java.lang.String content, java.lang.String type,
-		java.lang.String[] ddmStructureKeys,
+		java.lang.String content, java.lang.String[] ddmStructureKeys,
 		java.lang.String[] ddmTemplateKeys, java.util.Date displayDateGT,
 		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
 		boolean andOperator, int start, int end,
@@ -2499,8 +2488,6 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	query criteria; otherwise it uses the AND operator.
 	* @param version the web content article's version (optionally
 	<code>null</code>)
-	* @param type the web content article's type (optionally
-	<code>null</code>)
 	* @param ddmStructureKey the primary key of the web content article's DDM
 	structure, if the article is related to a DDM structure, or
 	<code>null</code> otherwise
@@ -2529,10 +2516,9 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> search(
 		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String keywords, java.lang.Double version,
-		java.lang.String type, java.lang.String ddmStructureKey,
-		java.lang.String ddmTemplateKey, java.util.Date displayDateGT,
-		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
-		int start, int end,
+		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
+		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
+		java.util.Date reviewDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> obc);
 
 	/**
@@ -2655,8 +2641,6 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	<code>null</code>)
 	* @param content the content keywords (space separated, optionally
 	<code>null</code>)
-	* @param type the web content article's type (optionally
-	<code>null</code>)
 	* @param ddmStructureKey the primary key of the web content article's DDM
 	structure, if the article is related to a DDM structure, or
 	<code>null</code> otherwise
@@ -2683,10 +2667,10 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		java.util.List<java.lang.Long> folderIds, long classNameId,
 		java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
-		java.lang.String content, java.lang.String type,
-		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
-		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
-		java.util.Date reviewDate, boolean andOperator);
+		java.lang.String content, java.lang.String ddmStructureKey,
+		java.lang.String ddmTemplateKey, java.util.Date displayDateGT,
+		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
+		boolean andOperator);
 
 	/**
 	* Returns the number of web content articles matching the parameters,
@@ -2711,8 +2695,6 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param description the description keywords (space separated, optionally
 	<code>null</code>)
 	* @param content the content keywords (space separated, optionally
-	<code>null</code>)
-	* @param type the web content article's type (optionally
 	<code>null</code>)
 	* @param ddmStructureKeys the primary keys of the web content article's
 	DDM structures, if the article is related to a DDM structure, or
@@ -2742,8 +2724,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		java.util.List<java.lang.Long> folderIds, long classNameId,
 		java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
-		java.lang.String content, java.lang.String type,
-		java.lang.String[] ddmStructureKeys,
+		java.lang.String content, java.lang.String[] ddmStructureKeys,
 		java.lang.String[] ddmTemplateKeys, java.util.Date displayDateGT,
 		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
 		boolean andOperator);
@@ -2769,8 +2750,6 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	query criteria; otherwise it uses the AND operator.
 	* @param version the web content article's version (optionally
 	<code>null</code>)
-	* @param type the web content article's type (optionally
-	<code>null</code>)
 	* @param ddmStructureKey the primary key of the web content article's DDM
 	structure, if the article is related to a DDM structure, or
 	<code>null</code> otherwise
@@ -2793,9 +2772,9 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	public int searchCount(long companyId, long groupId,
 		java.util.List<java.lang.Long> folderIds, long classNameId,
 		java.lang.String keywords, java.lang.Double version,
-		java.lang.String type, java.lang.String ddmStructureKey,
-		java.lang.String ddmTemplateKey, java.util.Date displayDateGT,
-		java.util.Date displayDateLT, int status, java.util.Date reviewDate);
+		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
+		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
+		java.util.Date reviewDate);
 
 	/**
 	* Returns the number of web content articles matching the group, folder,
@@ -2866,8 +2845,6 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	<code>null</code>)
 	* @param content the content keywords (space separated, optionally
 	<code>null</code>)
-	* @param type the web content article's type (optionally
-	<code>null</code>)
 	* @param status the web content article's workflow status. For more
 	information see {@link WorkflowConstants} for constants starting
 	with the "STATUS_" prefix.
@@ -2896,9 +2873,8 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portlet.journal.model.JournalArticle> searchJournalArticles(
 		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String articleId, java.lang.String title,
-		java.lang.String description, java.lang.String content,
-		java.lang.String type, int status, java.lang.String ddmStructureKey,
-		java.lang.String ddmTemplateKey,
+		java.lang.String description, java.lang.String content, int status,
+		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andSearch, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
@@ -3082,48 +3058,6 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* Updates the web content article matching the version, replacing its
-	* folder, title, description, content, and layout UUID.
-	*
-	* @param userId the primary key of the user updating the web content
-	article
-	* @param groupId the primary key of the web content article's group
-	* @param folderId the primary key of the web content article folder
-	* @param articleId the primary key of the web content article
-	* @param version the web content article's version
-	* @param titleMap the web content article's locales and localized titles
-	* @param descriptionMap the web content article's locales and localized
-	descriptions
-	* @param content the HTML content wrapped in XML. For more information,
-	see the content example in the class description for {@link
-	JournalArticleLocalServiceImpl}.
-	* @param layoutUuid the unique string identifying the web content
-	article's display page
-	* @param serviceContext the service context to be applied. Can set the
-	modification date, expando bridge attributes, asset category IDs,
-	asset tag names, asset link entry IDs, workflow actions, the
-	"defaultLanguageId" and "urlTitle" attributes, and can set
-	whether to add the default command update for the web content
-	article. With respect to social activities, by setting the
-	service context's command to {@link
-	com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
-	is considered a web content update activity; otherwise it is
-	considered a web content add activity.
-	* @return the updated web content article
-	* @throws PortalException if a user with the primary key or a matching web
-	content article could not be found, or if a portal exception
-	occurred
-	*/
-	public com.liferay.portlet.journal.model.JournalArticle updateArticle(
-		long userId, long groupId, long folderId, java.lang.String articleId,
-		double version,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String content, java.lang.String layoutUuid,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
 	* Updates the web content article with additional parameters.
 	*
 	* @param userId the primary key of the user updating the web content
@@ -3138,9 +3072,6 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param content the HTML content wrapped in XML. For more information,
 	see the content example in the class description for {@link
 	JournalArticleLocalServiceImpl}.
-	* @param type the structure's type, if the web content article is related
-	to a DDM structure. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
 	* @param ddmStructureKey the primary key of the web content article's DDM
 	structure, if the article is related to a DDM structure, or
 	<code>null</code> otherwise
@@ -3213,18 +3144,60 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		double version,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String content, java.lang.String type,
-		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
-		java.lang.String layoutUuid, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		int reviewDateMonth, int reviewDateDay, int reviewDateYear,
-		int reviewDateHour, int reviewDateMinute, boolean neverReview,
-		boolean indexable, boolean smallImage, java.lang.String smallImageURL,
+		java.lang.String content, java.lang.String ddmStructureKey,
+		java.lang.String ddmTemplateKey, java.lang.String layoutUuid,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire, int reviewDateMonth,
+		int reviewDateDay, int reviewDateYear, int reviewDateHour,
+		int reviewDateMinute, boolean neverReview, boolean indexable,
+		boolean smallImage, java.lang.String smallImageURL,
 		java.io.File smallImageFile,
 		java.util.Map<java.lang.String, byte[]> images,
 		java.lang.String articleURL,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* Updates the web content article matching the version, replacing its
+	* folder, title, description, content, and layout UUID.
+	*
+	* @param userId the primary key of the user updating the web content
+	article
+	* @param groupId the primary key of the web content article's group
+	* @param folderId the primary key of the web content article folder
+	* @param articleId the primary key of the web content article
+	* @param version the web content article's version
+	* @param titleMap the web content article's locales and localized titles
+	* @param descriptionMap the web content article's locales and localized
+	descriptions
+	* @param content the HTML content wrapped in XML. For more information,
+	see the content example in the class description for {@link
+	JournalArticleLocalServiceImpl}.
+	* @param layoutUuid the unique string identifying the web content
+	article's display page
+	* @param serviceContext the service context to be applied. Can set the
+	modification date, expando bridge attributes, asset category IDs,
+	asset tag names, asset link entry IDs, workflow actions, the
+	"defaultLanguageId" and "urlTitle" attributes, and can set
+	whether to add the default command update for the web content
+	article. With respect to social activities, by setting the
+	service context's command to {@link
+	com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
+	is considered a web content update activity; otherwise it is
+	considered a web content add activity.
+	* @return the updated web content article
+	* @throws PortalException if a user with the primary key or a matching web
+	content article could not be found, or if a portal exception
+	occurred
+	*/
+	public com.liferay.portlet.journal.model.JournalArticle updateArticle(
+		long userId, long groupId, long folderId, java.lang.String articleId,
+		double version,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String content, java.lang.String layoutUuid,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 

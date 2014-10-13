@@ -754,7 +754,7 @@ public class EditGroupAction extends PortletAction {
 			LayoutSetServiceUtil.updateVirtualHost(
 				stagingGroup.getGroupId(), true, privateVirtualHost);
 
-			stagingGroup = GroupServiceUtil.updateGroup(
+			GroupServiceUtil.updateGroup(
 				stagingGroup.getGroupId(), typeSettingsProperties.toString());
 		}
 

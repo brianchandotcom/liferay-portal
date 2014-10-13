@@ -16,6 +16,9 @@ package com.liferay.portal.settings;
 
 import com.liferay.portal.NoSuchPortletItemException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.io.resource.Resource;
+import com.liferay.portal.kernel.io.resource.loader.ClassLoaderResourceLoader;
+import com.liferay.portal.kernel.io.resource.loader.ResourceLoader;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.settings.ArchivedSettings;
 import com.liferay.portal.kernel.settings.FallbackKeys;
@@ -23,6 +26,7 @@ import com.liferay.portal.kernel.settings.FallbackSettings;
 import com.liferay.portal.kernel.settings.PortletPreferencesSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -34,6 +38,8 @@ import com.liferay.portal.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.service.PortletItemLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
+
+import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -62,7 +68,8 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		long companyId, String serviceName) {
 
 		return applyFallbackKeys(
-			serviceName, getCompanySettings(companyId, serviceName));
+			serviceName,
+			getCompanySettings(companyId, serviceName));
 	}
 
 	@Override
@@ -80,7 +87,8 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		throws PortalException {
 
 		return applyFallbackKeys(
-			serviceName, getGroupSettings(groupId, serviceName));
+			serviceName,
+			getGroupSettings(groupId, serviceName));
 	}
 
 	@Override
@@ -176,7 +184,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	@Override
 	public void registerSettingsMetadata(
 		String settingsId, FallbackKeys fallbackKeys,
-		String[] multiValuedKeysArray) {
+		String[] multiValuedKeysArray, ResourceLoader resourceLoader) {
 
 		settingsId = PortletConstants.getRootPortletId(settingsId);
 
@@ -194,6 +202,8 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		multiValuedKeysList = Collections.unmodifiableList(multiValuedKeysList);
 
 		_multiValuedKeysMap.put(settingsId, multiValuedKeysList);
+
+		_resourceLoaders.put(settingsId, resourceLoader);
 	}
 
 	protected Settings applyFallbackKeys(String settingsId, Settings settings) {
@@ -254,7 +264,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 		return new PortletPreferencesSettings(
 			getPortalPreferences(companyId),
-			getPortalPropertiesSettings(settingsId));
+			getPortletPropertiesSettings(settingsId));
 	}
 
 	protected Properties getPortalProperties(String settingsId) {
@@ -274,7 +284,10 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	protected PropertiesSettings getPortalPropertiesSettings(
 		String settingsId) {
 
-		return new PropertiesSettings(getPortalProperties(settingsId));
+		return new PropertiesSettings(
+			getPortalProperties(settingsId),
+			new ClassLoaderResourceLoader(
+				PortalClassLoaderUtil.getClassLoader()));
 	}
 
 	protected PortletPreferences getPortletInstancePortletPreferences(
@@ -293,11 +306,48 @@ public class SettingsFactoryImpl implements SettingsFactory {
 			portletId);
 	}
 
+	protected Properties getPortletProperties(ResourceLoader resourceLoader) {
+		Properties properties = new Properties();
+
+		if (resourceLoader == null) {
+			return properties;
+		}
+
+		Resource resource = resourceLoader.getResource("portlet.properties");
+
+		InputStream inputStream = resource.getInputStream();
+
+		try {
+			properties.load(inputStream);
+		}
+		catch (Exception e) {
+		}
+
+		return properties;
+	}
+
+	protected PropertiesSettings getPortletPropertiesSettings(
+		String settingsId) {
+
+		ResourceLoader resourceLoader = getResourceLoader(settingsId);
+
+		return new PropertiesSettings(
+			getPortletProperties(resourceLoader), resourceLoader,
+			getPortalPropertiesSettings(settingsId));
+	}
+
+	protected ResourceLoader getResourceLoader(String settingsId) {
+		settingsId = PortletConstants.getRootPortletId(settingsId);
+
+		return _resourceLoaders.get(settingsId);
+	}
+
 	private ConcurrentMap<String, FallbackKeys> _fallbackKeysMap =
-		new ConcurrentHashMap<String, FallbackKeys>();
+		new ConcurrentHashMap<>();
 	private ConcurrentMap<String, List<String>> _multiValuedKeysMap =
-		new ConcurrentHashMap<String, List<String>>();
-	private Map<String, Properties> _propertiesMap =
-		new ConcurrentHashMap<String, Properties>();
+		new ConcurrentHashMap<>();
+	private Map<String, Properties> _propertiesMap = new ConcurrentHashMap<>();
+	private Map<String, ResourceLoader> _resourceLoaders =
+		new ConcurrentHashMap<>();
 
 }

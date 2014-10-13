@@ -15,6 +15,8 @@
 package com.liferay.portlet.wiki;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.io.resource.loader.ClassLoaderResourceLoader;
+import com.liferay.portal.kernel.io.resource.loader.ResourceLoader;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
@@ -150,12 +152,16 @@ public class WikiSettings {
 
 	private static final String[] _MULTI_VALUED_KEYS = {};
 
+	private static final ResourceLoader _resourceLoader =
+		new ClassLoaderResourceLoader(WikiSettings.class.getClassLoader());
+
 	static {
 		SettingsFactory settingsFactory =
 			SettingsFactoryUtil.getSettingsFactory();
 
 		settingsFactory.registerSettingsMetadata(
-			WikiConstants.SERVICE_NAME, _getFallbackKeys(), _MULTI_VALUED_KEYS);
+			WikiConstants.SERVICE_NAME, _getFallbackKeys(), _MULTI_VALUED_KEYS,
+			_resourceLoader);
 	}
 
 	private TypedSettings _typedSettings;

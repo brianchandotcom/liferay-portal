@@ -142,10 +142,12 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			portletDataContext.getGroupId());
 
 		DDMTemplateLocalServiceUtil.deleteTemplates(
-			portletDataContext.getScopeGroupId());
+			portletDataContext.getScopeGroupId(),
+			PortalUtil.getClassNameId(DDMStructure.class));
 
 		DDMStructureLocalServiceUtil.deleteStructures(
-			portletDataContext.getScopeGroupId());
+			portletDataContext.getScopeGroupId(),
+			PortalUtil.getClassNameId(JournalArticle.class));
 
 		return portletPreferences;
 	}

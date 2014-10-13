@@ -486,9 +486,31 @@ public class DDMStructureLocalServiceImpl
 		List<DDMStructure> structures = ddmStructurePersistence.findByGroupId(
 			groupId);
 
-		for (DDMStructure structure : structures) {
-			ddmStructureLocalService.deleteStructure(structure);
-		}
+		deleteStructures(structures);
+	}
+
+	/**
+	 * Deletes the matching structures and its resources.
+	 *
+	 * <p>
+	 * Before deleting the structures, the system verifies whether each
+	 * structure is required by another entity. If any of the structures are
+	 * needed, an exception is thrown.
+	 * </p>
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  classNameId the primary key of the class name for the structure's
+	 *         related model
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public void deleteStructures(long groupId, long classNameId)
+		throws PortalException {
+
+		List<DDMStructure> structures = ddmStructurePersistence.findByG_C(
+			groupId, classNameId);
+
+		deleteStructures(structures);
 	}
 
 	/**
@@ -1313,6 +1335,33 @@ public class DDMStructureLocalServiceImpl
 		return doUpdateStructure(
 			parentStructureId, nameMap, descriptionMap, definition,
 			serviceContext, structure);
+	}
+
+	protected Set<Long> deleteStructures(List<DDMStructure> structures)
+		throws PortalException {
+
+		Set<Long> deletedStructureIds = new HashSet<Long>();
+
+		for (DDMStructure structure : structures) {
+			if (deletedStructureIds.contains(structure.getStructureId())) {
+				continue;
+			}
+
+			if (!GroupThreadLocal.isDeleteInProcess()) {
+				List<DDMStructure> childrenDDMStructures =
+					ddmStructurePersistence.findByParentStructureId(
+						structure.getStructureId());
+
+				deletedStructureIds.addAll(
+					deleteStructures(childrenDDMStructures));
+			}
+
+			ddmStructureLocalService.deleteStructure(structure);
+
+			deletedStructureIds.add(structure.getStructureId());
+		}
+
+		return deletedStructureIds;
 	}
 
 	protected DDMStructure doUpdateStructure(

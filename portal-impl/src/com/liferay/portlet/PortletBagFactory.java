@@ -15,6 +15,8 @@
 package com.liferay.portlet;
 
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.log.Log;
@@ -75,7 +77,6 @@ import com.liferay.portlet.social.model.impl.SocialActivityInterpreterImpl;
 import com.liferay.portlet.social.model.impl.SocialRequestInterpreterImpl;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerList;
-import com.liferay.util.portlet.PortletProps;
 
 import java.io.InputStream;
 
@@ -281,11 +282,12 @@ public class PortletBagFactory {
 	protected String getPluginPropertyValue(String propertyKey)
 		throws Exception {
 
-		Class<?> clazz = _classLoader.loadClass(PortletProps.class.getName());
+		if (_configuration == null) {
+			_configuration = ConfigurationFactoryUtil.getConfiguration(
+				_classLoader, "portlet");
+		}
 
-		java.lang.reflect.Method method = clazz.getMethod("get", String.class);
-
-		return (String)method.invoke(null, propertyKey);
+		return _configuration.get(propertyKey);
 	}
 
 	protected javax.portlet.Portlet getPortletInstance(Portlet portlet)
@@ -1059,6 +1061,7 @@ public class PortletBagFactory {
 	private static Log _log = LogFactoryUtil.getLog(PortletBagFactory.class);
 
 	private ClassLoader _classLoader;
+	private Configuration _configuration;
 	private ServletContext _servletContext;
 	private Boolean _warFile;
 

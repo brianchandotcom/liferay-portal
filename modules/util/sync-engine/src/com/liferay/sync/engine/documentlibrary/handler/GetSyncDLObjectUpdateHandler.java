@@ -17,9 +17,9 @@ package com.liferay.sync.engine.documentlibrary.handler;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.liferay.sync.engine.documentlibrary.event.DownloadFileEvent;
 import com.liferay.sync.engine.documentlibrary.event.Event;
 import com.liferay.sync.engine.documentlibrary.model.SyncDLObjectUpdate;
+import com.liferay.sync.engine.documentlibrary.util.FileEventUtil;
 import com.liferay.sync.engine.filesystem.Watcher;
 import com.liferay.sync.engine.filesystem.WatcherRegistry;
 import com.liferay.sync.engine.model.SyncFile;
@@ -38,9 +38,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -149,27 +146,17 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 	protected void downloadFile(
 		SyncFile syncFile, String sourceVersion, boolean patch) {
 
-		Map<String, Object> parameters = new HashMap<String, Object>();
-
-		parameters.put("syncFile", syncFile);
-
 		String targetVersion = syncFile.getVersion();
 
 		if (patch &&
 			(Double.valueOf(targetVersion) > Double.valueOf(sourceVersion))) {
 
-			parameters.put("patch", true);
-			parameters.put("sourceVersion", sourceVersion);
-			parameters.put("targetVersion", targetVersion);
+			FileEventUtil.downloadPatch(
+				sourceVersion, getSyncAccountId(), syncFile, targetVersion);
 		}
 		else {
-			parameters.put("patch", false);
+			FileEventUtil.downloadFile(getSyncAccountId(), syncFile);
 		}
-
-		DownloadFileEvent downloadFileEvent = new DownloadFileEvent(
-			getSyncAccountId(), parameters);
-
-		downloadFileEvent.run();
 	}
 
 	protected boolean isIgnoredFilePath(SyncFile syncFile, String filePathName)

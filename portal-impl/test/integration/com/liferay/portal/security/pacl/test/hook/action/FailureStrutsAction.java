@@ -16,6 +16,8 @@ package com.liferay.portal.security.pacl.test.hook.action;
 
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,10 +27,11 @@ import javax.servlet.http.HttpServletResponse;
 public class FailureStrutsAction extends BaseStrutsAction {
 
 	public static boolean isInstantiated() {
-		return _INSTANTIATED;
+		return _instantiated.get();
 	}
 
 	public FailureStrutsAction() {
+		_instantiated.set(true);
 	}
 
 	@Override
@@ -39,6 +42,6 @@ public class FailureStrutsAction extends BaseStrutsAction {
 		return null;
 	}
 
-	private static final boolean _INSTANTIATED = true;
+	private static final AtomicBoolean _instantiated = new AtomicBoolean();
 
 }

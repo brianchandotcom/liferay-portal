@@ -2324,8 +2324,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				"java.lang.Character", "java.lang.Class", "java.lang.Double",
 				"java.lang.Float", "java.lang.Int", "java.lang.Long",
 				"java.lang.Number", "java.lang.Short", "java.lang.String",
-				"java.lang.reflect.Constructor", "java.lang.reflect.Field",
-				"java.lang.reflect.Method"
 			});
 
 		_immutableFieldTypes.addAll(getPropertyList("immutable.field.types"));

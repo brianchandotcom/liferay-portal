@@ -209,6 +209,12 @@ public class DLUtil {
 		return getDL().getFileIconCssClass(extension);
 	}
 
+	public static String getFileName(
+		long groupId, long folderId, String tempFileName) {
+
+		return getDL().getFileName(groupId, folderId, tempFileName);
+	}
+
 	public static String getGenericName(String extension) {
 		return getDL().getGenericName(extension);
 	}

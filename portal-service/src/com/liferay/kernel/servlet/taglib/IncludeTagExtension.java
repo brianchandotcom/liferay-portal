@@ -24,15 +24,14 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface IncludeTagExtension {
 
+	public EnumSet<Point> getPoints();
+
 	public String getTagKey();
 
-	public EnumSet<ExtensionPoint> getExtensionPoints();
-
 	public void include(
-		HttpServletRequest request, HttpServletResponse response,
-		ExtensionPoint point);
+		HttpServletRequest request, HttpServletResponse response, Point point);
 
-	public static enum ExtensionPoint {
+	public static enum Point {
 
 		BEFORE_START, AFTER_START, BEFORE_END, AFTER_END
 

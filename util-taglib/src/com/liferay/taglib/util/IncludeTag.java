@@ -14,8 +14,9 @@
 
 package com.liferay.taglib.util;
 
+import static com.liferay.kernel.servlet.taglib.IncludeTagExtension.Point;
+
 import com.liferay.kernel.servlet.taglib.IncludeTagExtension;
-import com.liferay.kernel.servlet.taglib.IncludeTagExtension.ExtensionPoint;
 import com.liferay.kernel.servlet.taglib.IncludeTagExtensionUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -38,7 +39,7 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.CustomJspRegistryUtil;
-import com.liferay.portal.util.TagIdResolver;
+import com.liferay.portal.util.TagKeyResolver;
 import com.liferay.taglib.FileAvailabilityUtil;
 import com.liferay.taglib.servlet.JspWriterHttpServletResponse;
 import com.liferay.taglib.servlet.PipingServletResponse;
@@ -91,11 +92,11 @@ public class IncludeTag extends AttributesTagSupport {
 				return processEndTag();
 			}
 
-			invokeExtensionAt(ExtensionPoint.BEFORE_END, false);
+			invokeExtensionAt(Point.BEFORE_END, false);
 
 			doInclude(page);
 
-			invokeExtensionAt(ExtensionPoint.AFTER_END, false);
+			invokeExtensionAt(Point.AFTER_END, false);
 
 			return EVAL_PAGE;
 		}
@@ -135,11 +136,11 @@ public class IncludeTag extends AttributesTagSupport {
 				return processStartTag();
 			}
 
-			invokeExtensionAt(ExtensionPoint.BEFORE_START, true);
+			invokeExtensionAt(Point.BEFORE_START, true);
 
 			doInclude(page);
 
-			invokeExtensionAt(ExtensionPoint.AFTER_START, true);
+			invokeExtensionAt(Point.AFTER_START, true);
 
 			return EVAL_BODY_INCLUDE;
 		}
@@ -385,8 +386,10 @@ public class IncludeTag extends AttributesTagSupport {
 		return exists;
 	}
 
-	private void invokeExtensionAt(ExtensionPoint point, boolean ascending) {
-		TagIdResolver tagResolver = IncludeTagExtensionUtil.getTagIdResolver(
+	private void invokeExtensionAt(
+		IncludeTagExtension.Point point, boolean ascending) {
+
+		TagKeyResolver tagResolver = IncludeTagExtensionUtil.getTagIdResolver(
 			this.getClass().getName());
 
 		if (tagResolver != null) {
@@ -396,7 +399,7 @@ public class IncludeTag extends AttributesTagSupport {
 			HttpServletRequest request = (HttpServletRequest)
 				pageContext.getRequest();
 
-			String extensionId = tagResolver.getId(
+			String extensionId = tagResolver.getKey(
 				request, wrappedResponse, this);
 
 			if (extensionId != null) {

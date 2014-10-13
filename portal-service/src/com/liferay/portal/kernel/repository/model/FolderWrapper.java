@@ -176,6 +176,11 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	}
 
 	@Override
+	public int getRestrictionType() {
+		return _folder.getRestrictionType();
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return _folder.getStagedModelType();
 	}

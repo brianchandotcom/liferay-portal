@@ -81,6 +81,8 @@ public interface Folder extends RepositoryModel<Folder> {
 
 	public long getRepositoryId();
 
+	public int getRestrictionType();
+
 	@Override
 	public long getUserId();
 

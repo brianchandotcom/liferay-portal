@@ -15,6 +15,8 @@
 package com.liferay.portlet.wiki;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.io.resource.loader.ClassLoaderResourceLoader;
+import com.liferay.portal.kernel.io.resource.loader.ResourceLoader;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
@@ -166,16 +168,23 @@ public class WikiPortletInstanceSettings {
 		"hiddenNodes", "visibleNodes"
 	};
 
+	private static final ResourceLoader _resourceLoader =
+		new ClassLoaderResourceLoader(
+			WikiPortletInstanceSettings.class.getClassLoader());
+
 	static {
 		SettingsFactory settingsFactory =
 			SettingsFactoryUtil.getSettingsFactory();
 
 		settingsFactory.registerSettingsMetadata(
-			PortletKeys.WIKI, _getFallbackKeys(), _MULTI_VALUED_KEYS);
+			PortletKeys.WIKI, _getFallbackKeys(), _MULTI_VALUED_KEYS,
+			_resourceLoader);
 		settingsFactory.registerSettingsMetadata(
-			PortletKeys.WIKI_ADMIN, _getFallbackKeys(), _MULTI_VALUED_KEYS);
+			PortletKeys.WIKI_ADMIN, _getFallbackKeys(), _MULTI_VALUED_KEYS,
+			_resourceLoader);
 		settingsFactory.registerSettingsMetadata(
-			PortletKeys.WIKI_DISPLAY, _getFallbackKeys(), _MULTI_VALUED_KEYS);
+			PortletKeys.WIKI_DISPLAY, _getFallbackKeys(), _MULTI_VALUED_KEYS,
+			_resourceLoader);
 	}
 
 	private TypedSettings _typedSettings;

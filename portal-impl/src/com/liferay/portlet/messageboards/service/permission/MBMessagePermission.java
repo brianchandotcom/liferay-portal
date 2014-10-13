@@ -70,12 +70,15 @@ public class MBMessagePermission implements BaseModelPermissionChecker {
 
 		MBThread mbThread = MBThreadLocalServiceUtil.fetchThread(classPK);
 
-		if (mbThread == null) {
-			return false;
-		}
+		MBMessage message = null;
 
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(
-			mbThread.getRootMessageId());
+		if (mbThread == null) {
+			message = MBMessageLocalServiceUtil.getMessage(classPK);
+		}
+		else {
+			message = MBMessageLocalServiceUtil.getMessage(
+				mbThread.getRootMessageId());
+		}
 
 		return contains(permissionChecker, message, actionId);
 	}

@@ -1366,6 +1366,17 @@ public class JournalArticleLocalServiceImpl
 			groupId, articleId, version);
 	}
 
+	@Override
+	public JournalArticle fetchLatestArticle(long resourcePrimKey)
+		throws PortalException {
+
+		OrderByComparator<JournalArticle> orderByComparator =
+			new ArticleVersionComparator();
+
+		return journalArticlePersistence.fetchByResourcePrimKey_First(
+			resourcePrimKey, orderByComparator);
+	}
+
 	/**
 	 * Returns the latest web content article matching the resource primary key
 	 * and workflow status, optionally preferring articles with approved

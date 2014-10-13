@@ -465,19 +465,20 @@ public interface JournalFeedModel extends BaseModel<JournalFeed>,
 	public Object clone();
 
 	@Override
-	public int compareTo(JournalFeed journalFeed);
+	public int compareTo(
+		com.liferay.portlet.journal.model.JournalFeed journalFeed);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<JournalFeed> toCacheModel();
+	public CacheModel<com.liferay.portlet.journal.model.JournalFeed> toCacheModel();
 
 	@Override
-	public JournalFeed toEscapedModel();
+	public com.liferay.portlet.journal.model.JournalFeed toEscapedModel();
 
 	@Override
-	public JournalFeed toUnescapedModel();
+	public com.liferay.portlet.journal.model.JournalFeed toUnescapedModel();
 
 	@Override
 	public String toString();

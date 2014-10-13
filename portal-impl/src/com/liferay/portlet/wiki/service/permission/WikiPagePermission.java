@@ -77,11 +77,14 @@ public class WikiPagePermission implements BaseModelPermissionChecker {
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, long resourcePrimKey,
-			String actionId)
+			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		WikiPage page = WikiPageLocalServiceUtil.getPage(resourcePrimKey);
+		WikiPage page = WikiPageLocalServiceUtil.fetchPage(classPK);
+
+		if (page == null) {
+			page = WikiPageLocalServiceUtil.getPageByPageId(classPK);
+		}
 
 		return contains(permissionChecker, page, actionId);
 	}

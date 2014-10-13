@@ -562,19 +562,20 @@ public interface JournalFolderModel extends BaseModel<JournalFolder>,
 	public Object clone();
 
 	@Override
-	public int compareTo(JournalFolder journalFolder);
+	public int compareTo(
+		com.liferay.portlet.journal.model.JournalFolder journalFolder);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<JournalFolder> toCacheModel();
+	public CacheModel<com.liferay.portlet.journal.model.JournalFolder> toCacheModel();
 
 	@Override
-	public JournalFolder toEscapedModel();
+	public com.liferay.portlet.journal.model.JournalFolder toEscapedModel();
 
 	@Override
-	public JournalFolder toUnescapedModel();
+	public com.liferay.portlet.journal.model.JournalFolder toUnescapedModel();
 
 	@Override
 	public String toString();

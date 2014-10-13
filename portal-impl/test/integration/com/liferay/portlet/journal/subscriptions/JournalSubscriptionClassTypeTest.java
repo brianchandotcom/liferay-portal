@@ -98,7 +98,7 @@ public class JournalSubscriptionClassTypeTest
 	}
 
 	@Override
-	protected void deleteSubscriptionClassType(Long classTypeId)
+	protected void deleteSubscriptionClassType(long classTypeId)
 		throws Exception {
 
 		JournalArticleLocalServiceUtil.unsubscribeStructure(

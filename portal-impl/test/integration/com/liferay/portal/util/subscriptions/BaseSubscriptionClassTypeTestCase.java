@@ -98,7 +98,7 @@ public abstract class BaseSubscriptionClassTypeTestCase
 	protected abstract void addSubscriptionClassType(long classTypeId)
 		throws Exception;
 
-	protected abstract void deleteSubscriptionClassType(Long classTypeId)
+	protected abstract void deleteSubscriptionClassType(long classTypeId)
 		throws Exception;
 
 	protected abstract Long getDefaultClassTypeId() throws Exception;

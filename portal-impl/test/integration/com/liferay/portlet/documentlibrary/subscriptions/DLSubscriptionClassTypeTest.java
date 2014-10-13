@@ -78,7 +78,7 @@ public class DLSubscriptionClassTypeTest
 	}
 
 	@Override
-	protected void deleteSubscriptionClassType(Long classTypeId)
+	protected void deleteSubscriptionClassType(long classTypeId)
 		throws Exception {
 
 		DLAppServiceUtil.unsubscribeFileEntryType(

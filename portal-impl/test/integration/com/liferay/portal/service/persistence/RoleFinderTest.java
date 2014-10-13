@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.persistence;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.ResourceAction;
@@ -34,8 +35,8 @@ import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.ResourceBlockPermissionTestUtil;
 import com.liferay.portal.util.test.ResourceBlockTestUtil;
 import com.liferay.portal.util.test.ResourcePermissionTestUtil;
-import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -72,17 +73,15 @@ public class RoleFinderTest {
 			_arbitraryResourceAction.getBitwiseValue(),
 			_arbitraryResourceAction.getName(), _arbitraryRole.getRoleId());
 
-		_bookmarkFolderResourceAction =
-			ResourceActionLocalServiceUtil.getResourceAction(
-				BookmarksFolder.class.getName(), ActionKeys.VIEW);
+		_modelResourceAction = getModelResourceAction();
 
 		_resourceBlock = ResourceBlockTestUtil.addResourceBlock(
-			_bookmarkFolderResourceAction.getName());
+			_modelResourceAction.getName());
 
 		_resourceBlockPermission =
 			ResourceBlockPermissionTestUtil.addResourceBlockPermission(
 				_resourceBlock.getResourceBlockId(), _arbitraryRole.getRoleId(),
-				_bookmarkFolderResourceAction.getBitwiseValue());
+				_modelResourceAction.getBitwiseValue());
 	}
 
 	@AfterClass
@@ -118,7 +117,7 @@ public class RoleFinderTest {
 	public void testFindByR_N_A() throws Exception {
 		List<Role> roles = RoleFinderUtil.findByR_N_A(
 			_resourceBlock.getResourceBlockId(), _resourceBlock.getName(),
-			_bookmarkFolderResourceAction.getActionId());
+			_modelResourceAction.getActionId());
 
 		for (Role role : roles) {
 			if (role.getRoleId() == _arbitraryRole.getRoleId()) {
@@ -131,9 +130,26 @@ public class RoleFinderTest {
 				_arbitraryRole.getRoleId());
 	}
 
+	protected static ResourceAction getModelResourceAction()
+		throws PortalException {
+
+		List<String> list = new ArrayList<String>();
+
+		list.add(ActionKeys.UPDATE);
+		list.add(ActionKeys.VIEW);
+
+		String modelName = "TestModel";
+
+		ResourceActionLocalServiceUtil.checkResourceActions(
+			modelName, list, true);
+
+		return ResourceActionLocalServiceUtil.getResourceAction(
+			modelName, ActionKeys.VIEW);
+	}
+
 	private static ResourceAction _arbitraryResourceAction;
 	private static Role _arbitraryRole;
-	private static ResourceAction _bookmarkFolderResourceAction;
+	private static ResourceAction _modelResourceAction;
 	private static ResourceBlock _resourceBlock;
 	private static ResourceBlockPermission _resourceBlockPermission;
 	private static ResourcePermission _resourcePermission;

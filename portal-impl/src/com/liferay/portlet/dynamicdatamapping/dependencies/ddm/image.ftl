@@ -42,11 +42,11 @@
 	<@aui["button-row"]>
 		<@aui.button cssClass="upload-button" id="${namespacedFieldName}UploadButton" value="upload" />
 
-		<@aui.button cssClass="select-button" id="${namespacedFieldName}SelectButton" value="choose-from-library" />
+		<@aui.button cssClass="select-button" id="${namespacedFieldName}SelectButton" value="choose-from-document-library" />
 
-		<@aui.button cssClass="clear-button ${(imageData?has_content)?string('','hide')}" id="${namespacedFieldName}ClearButton" value="clear" />
+		<@aui.button cssClass="clear-button ${(imageData?has_content)?string('', 'hide')}" id="${namespacedFieldName}ClearButton" value="clear" />
 
-		<@aui.button cssClass="preview-button ${(imageData?has_content)?string('','hide')}" id="${namespacedFieldName}PreviewButton" value="preview" />
+		<@aui.button cssClass="preview-button ${(imageData?has_content)?string('', 'hide')}" id="${namespacedFieldName}PreviewButton" value="preview" />
 	</@>
 
 	<@aui.input label="image-description" name="${namespacedFieldName}Alt" type="text" value="${alt}" />

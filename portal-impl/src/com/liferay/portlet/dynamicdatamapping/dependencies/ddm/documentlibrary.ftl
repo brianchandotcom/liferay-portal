@@ -36,9 +36,9 @@
 	<@aui["button-row"]>
 		<@aui.button cssClass="upload-button" id="${namespacedFieldName}UploadButton" value="upload" />
 
-		<@aui.button cssClass="select-button" id="${namespacedFieldName}SelectButton" value="choose-from-library" />
+		<@aui.button cssClass="select-button" id="${namespacedFieldName}SelectButton" value="choose-from-document-library" />
 
-		<@aui.button cssClass="clear-button ${(fieldRawValue?has_content)?string('','hide')}" id="${namespacedFieldName}ClearButton" value="clear" />
+		<@aui.button cssClass="clear-button ${(fieldRawValue?has_content)?string('', 'hide')}" id="${namespacedFieldName}ClearButton" value="clear" />
 	</@>
 
 	${fieldStructure.children}

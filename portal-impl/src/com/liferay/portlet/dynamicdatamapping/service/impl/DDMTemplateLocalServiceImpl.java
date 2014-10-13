@@ -461,6 +461,24 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	/**
+	 * Deletes the matching templates and its resources.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public void deleteTemplates(long groupId, long classNameId)
+		throws PortalException {
+
+		List<DDMTemplate> templates = ddmTemplatePersistence.findByG_C(
+			groupId, classNameId);
+
+		for (DDMTemplate template : templates) {
+			ddmTemplateLocalService.deleteTemplate(template);
+		}
+	}
+
+	/**
 	 * Returns the template matching the group and template key.
 	 *
 	 * @param  groupId the primary key of the group

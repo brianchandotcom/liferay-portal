@@ -189,17 +189,32 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		UnicodeProperties typeSettingsProperties =
 			liveGroup.getTypeSettingsProperties();
 
+		boolean forceDisable = GetterUtil.getBoolean(
+			serviceContext.getAttribute("forceDisable"));
 		boolean stagedRemotely = GetterUtil.getBoolean(
 			typeSettingsProperties.getProperty("stagedRemotely"));
 
-		if (stagedRemotely) {
-			String remoteURL = StagingUtil.buildRemoteURL(
-				typeSettingsProperties);
+		try {
+			if (stagedRemotely) {
+				String remoteURL = StagingUtil.buildRemoteURL(
+					typeSettingsProperties);
 
-			long remoteGroupId = GetterUtil.getLong(
-				typeSettingsProperties.getProperty("remoteGroupId"));
+				long remoteGroupId = GetterUtil.getLong(
+					typeSettingsProperties.getProperty("remoteGroupId"));
 
-			disableRemoteStaging(remoteURL, remoteGroupId);
+				disableRemoteStaging(remoteURL, remoteGroupId);
+			}
+		}
+		catch (RemoteExportException ree) {
+			if (!forceDisable ||
+				(ree.getType() != RemoteExportException.BAD_CONNECTION)) {
+
+				throw ree;
+			}
+
+			if (_log.isWarnEnabled()) {
+				_log.warn("Force disabling remote staging");
+			}
 		}
 
 		typeSettingsProperties.remove("branchingPrivate");

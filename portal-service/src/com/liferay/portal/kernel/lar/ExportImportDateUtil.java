@@ -17,6 +17,8 @@ package com.liferay.portal.kernel.lar;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -26,6 +28,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.ExportImportConfiguration;
@@ -180,6 +183,56 @@ public class ExportImportDateUtil {
 			endDateYear, endDateMonth, endDateDay, endDateHour, endDateMinute,
 			portletId, groupId, plid, privateLayout, themeDisplay.getLocale(),
 			themeDisplay.getTimeZone());
+	}
+
+	public static void updateLastPublishDate(
+			long groupId, boolean privateLayout, DateRange dateRange,
+			Date lastPublishDate)
+		throws PortalException {
+
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			groupId, privateLayout);
+
+		if (lastPublishDate == null) {
+			lastPublishDate = new Date();
+		}
+
+		UnicodeProperties settingsProperties =
+			layoutSet.getSettingsProperties();
+
+		settingsProperties.setProperty(
+			"last-publish-date", String.valueOf(lastPublishDate.getTime()));
+
+		LayoutSetLocalServiceUtil.updateSettings(
+			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
+			settingsProperties.toString());
+	}
+
+	public static void updateLastPublishDate(
+		String portletId, PortletPreferences portletPreferences,
+		DateRange dateRange, Date lastPublishDate) {
+
+		if (lastPublishDate == null) {
+			lastPublishDate = new Date();
+		}
+
+		try {
+			portletPreferences.setValue(
+				"last-publish-date", String.valueOf(lastPublishDate.getTime()));
+
+			portletPreferences.store();
+		}
+		catch (UnsupportedOperationException uoe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Not updating the portlet setup for " + portletId +
+						" because no setup was returned for the current " +
+						"page");
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
 	}
 
 	protected static Calendar getCalendar(

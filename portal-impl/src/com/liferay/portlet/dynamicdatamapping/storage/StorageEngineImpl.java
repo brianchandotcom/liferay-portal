@@ -14,6 +14,9 @@
 
 package com.liferay.portlet.dynamicdatamapping.storage;
 
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.StorageException;
@@ -23,7 +26,11 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalService
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.query.Condition;
 
+import java.io.Serializable;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -36,6 +43,8 @@ public class StorageEngineImpl implements StorageEngine {
 			long companyId, long ddmStructureId, Fields fields,
 			ServiceContext serviceContext)
 		throws StorageException {
+
+		sanitizeHTMLFields(fields, serviceContext);
 
 		StorageAdapter storageAdapter = getStructureStorageAdapter(
 			ddmStructureId);
@@ -181,6 +190,8 @@ public class StorageEngineImpl implements StorageEngine {
 			ServiceContext serviceContext)
 		throws StorageException {
 
+		sanitizeHTMLFields(fields, serviceContext);
+
 		StorageAdapter storageAdapter = getClassStorageAdapter(classPK);
 
 		storageAdapter.update(classPK, fields, mergeFields, serviceContext);
@@ -190,6 +201,8 @@ public class StorageEngineImpl implements StorageEngine {
 	public void update(
 			long classPK, Fields fields, ServiceContext serviceContext)
 		throws StorageException {
+
+		sanitizeHTMLFields(fields, serviceContext);
 
 		StorageAdapter storageAdapter = getClassStorageAdapter(classPK);
 
@@ -238,6 +251,45 @@ public class StorageEngineImpl implements StorageEngine {
 		}
 		catch (Exception e) {
 			throw new StorageException(e);
+		}
+	}
+
+	protected void sanitizeHTMLFields(
+			Fields fields, ServiceContext serviceContext)
+		throws StorageException {
+
+		try {
+			for (Field field : fields) {
+				if (field.getDataType().equals(FieldConstants.HTML)) {
+					for (Locale locale : field.getAvailableLocales()) {
+						List<Serializable> values = field.getValues(locale);
+
+						if (values == null) {
+							continue;
+						}
+
+						List<Serializable> sanitizedValues = new ArrayList<>(
+							values.size());
+
+						for (Serializable value : values) {
+							String sanitizedValue = SanitizerUtil.sanitize(
+								serviceContext.getCompanyId(),
+								serviceContext.getScopeGroupId(),
+								serviceContext.getUserId(),
+								Field.class.getName(), 0,
+								ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+								value.toString(), null);
+
+							sanitizedValues.add(sanitizedValue);
+						}
+
+						field.setValues(locale, sanitizedValues);
+					}
+				}
+			}
+		}
+		catch (Exception e) {
+			throw new StorageException("Unable to sanitize DDM Field", e);
 		}
 	}
 

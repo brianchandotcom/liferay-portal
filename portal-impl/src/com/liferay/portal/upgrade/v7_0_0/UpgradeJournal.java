@@ -15,29 +15,20 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.dao.shard.ShardUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.model.ResourceConstants;
-import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.upgrade.v7_0_0.util.JournalArticleTable;
@@ -57,7 +48,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -66,7 +56,7 @@ import java.util.Map;
  * @author Gergely Mathe
  * @author Eudaldo Alonso
  */
-public class UpgradeJournal extends UpgradeDynamicDataMapping {
+public class UpgradeJournal extends UpgradeBaseJournal {
 
 	protected String addBasicWebContentStructureAndTemplate(long companyId)
 		throws Exception {
@@ -293,51 +283,6 @@ public class UpgradeJournal extends UpgradeDynamicDataMapping {
 		return ddmTemplateId;
 	}
 
-	protected void addResourcePermission(
-			long companyId, String className, long primKey, long roleId,
-			long actionIds)
-		throws Exception {
-
-		Connection con = null;
-		PreparedStatement ps = null;
-
-		try {
-			long resourcePermissionId = increment(
-				ResourcePermission.class.getName());
-
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			StringBundler sb = new StringBundler(3);
-
-			sb.append("insert into ResourcePermission (resourcePermissionId, ");
-			sb.append("companyId, name, scope, primKey, roleId, ownerId, ");
-			sb.append("actionIds) values (?, ?, ?, ?, ?, ?, ?, ?)");
-
-			String sql = sb.toString();
-
-			ps = con.prepareStatement(sql);
-
-			ps.setLong(1, resourcePermissionId);
-			ps.setLong(2, companyId);
-			ps.setString(3, className);
-			ps.setInt(4, ResourceConstants.SCOPE_INDIVIDUAL);
-			ps.setLong(5, primKey);
-			ps.setLong(6, roleId);
-			ps.setLong(7, 0);
-			ps.setLong(8, actionIds);
-
-			ps.executeUpdate();
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to add resource permission " + className, e);
-			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps);
-		}
-	}
-
 	protected String convertStaticContentToDynamic(String content)
 		throws Exception {
 
@@ -412,101 +357,6 @@ public class UpgradeJournal extends UpgradeDynamicDataMapping {
 		updateBasicWebContentStructure();
 	}
 
-	protected long getBitwiseValue(
-		Map<String, Long> bitwiseValues, List<String> actionIds) {
-
-		long bitwiseValue = 0;
-
-		for (String actionId : actionIds) {
-			Long actionIdBitwiseValue = bitwiseValues.get(actionId);
-
-			if (actionIdBitwiseValue == null) {
-				continue;
-			}
-
-			bitwiseValue |= actionIdBitwiseValue;
-		}
-
-		return bitwiseValue;
-	}
-
-	protected Map<String, Long> getBitwiseValues(String name) throws Exception {
-		Map<String, Long> bitwiseValues = _bitwiseValues.get(name);
-
-		if (bitwiseValues != null) {
-			return bitwiseValues;
-		}
-
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		String currentShardName = null;
-
-		try {
-			currentShardName = ShardUtil.setTargetSource(
-				PropsUtil.get(PropsKeys.SHARD_DEFAULT_NAME));
-
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"select actionId, bitwiseValue from ResourceAction " +
-					"where name = ?");
-
-			ps.setString(1, name);
-
-			rs = ps.executeQuery();
-
-			bitwiseValues = new HashMap<String, Long>();
-
-			while (rs.next()) {
-				String actionId = rs.getString("actionId");
-				long bitwiseValue = rs.getLong("bitwiseValue");
-
-				bitwiseValues.put(actionId, bitwiseValue);
-			}
-
-			_bitwiseValues.put(name, bitwiseValues);
-
-			return bitwiseValues;
-		}
-		finally {
-			if (Validator.isNotNull(currentShardName)) {
-				ShardUtil.setTargetSource(currentShardName);
-			}
-
-			DataAccess.cleanUp(con, ps, rs);
-		}
-	}
-
-	protected long getCompanyGroupId(long companyId) throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"select groupId from Group_ where classNameId = ? and " +
-					"classPK = ?");
-
-			ps.setLong(1, PortalUtil.getClassNameId(Company.class.getName()));
-			ps.setLong(2, companyId);
-
-			rs = ps.executeQuery();
-
-			if (rs.next()) {
-				return rs.getLong("groupId");
-			}
-
-			return 0;
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-	}
-
 	protected String getContent(String fileName) {
 		return ContentUtil.get(
 			"com/liferay/portal/events/dependencies/" + fileName);
@@ -524,71 +374,6 @@ public class UpgradeJournal extends UpgradeDynamicDataMapping {
 		Element rootElement = document.getRootElement();
 
 		return rootElement.elements("structure");
-	}
-
-	protected long getDefaultUserId(long companyId) throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"select userId from User_ where companyId = ? and " +
-					"defaultUser = ?");
-
-			ps.setLong(1, companyId);
-			ps.setBoolean(2, true);
-
-			rs = ps.executeQuery();
-
-			if (rs.next()) {
-				return rs.getLong("userId");
-			}
-
-			return 0;
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-	}
-
-	protected long getRoleId(long companyId, String name) throws Exception {
-		String roleIdsKey = companyId + StringPool.POUND + name;
-
-		Long roleId = _roleIds.get(roleIdsKey);
-
-		if (roleId != null) {
-			return roleId;
-		}
-
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"select roleId from Role_ where companyId = ? and name = ?");
-
-			ps.setLong(1, companyId);
-			ps.setString(2, name);
-
-			rs = ps.executeQuery();
-
-			if (rs.next()) {
-				roleId = rs.getLong("roleId");
-			}
-
-			_roleIds.put(roleIdsKey, roleId);
-
-			return roleId;
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
 	}
 
 	protected long getStagingGroupId(long groupId) throws Exception {
@@ -649,22 +434,6 @@ public class UpgradeJournal extends UpgradeDynamicDataMapping {
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
-	}
-
-	protected String localize(
-			long groupId, String key, String defaultLanguageId)
-		throws Exception {
-
-		Map<Locale, String> localizationMap = new HashMap<Locale, String>();
-
-		Locale[] locales = LanguageUtil.getAvailableLocales(groupId);
-
-		for (Locale locale : locales) {
-			localizationMap.put(locale, LanguageUtil.get(locale, key));
-		}
-
-		return LocalizationUtil.updateLocalization(
-			localizationMap, StringPool.BLANK, key, defaultLanguageId);
 	}
 
 	protected void updateBasicWebContentStructure() throws Exception {
@@ -746,10 +515,6 @@ public class UpgradeJournal extends UpgradeDynamicDataMapping {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(UpgradeJournal.class);
-
-	private Map<String, Map<String, Long>> _bitwiseValues =
-		new HashMap<String, Map<String, Long>>();
-	private Map<String, Long> _roleIds = new HashMap<String, Long>();
+	private static Log _log = LogFactoryUtil.getLog(UpgradeJournal.class);
 
 }

@@ -21,13 +21,13 @@
 <@aui["field-wrapper"] data=data>
 	<div class="hide" id="${portletNamespace}${namespacedFieldName}UploadContainer"></div>
 
-	<@aui.input helpMessage=escape(fieldStructure.tip) inlineField=true label=escape(label) name="${namespacedFieldName}Title" readonly="readonly" type="text" value=fileEntryTitle>
+	<@aui.input helpMessage=escape(fieldStructure.tip) inlineField=true label=escape(label) name="${namespacedFieldName}Title" readonly="readonly" type="text" value=(fileEntryTitle?has_content)?string(fileEntryTitle, languageUtil.get(locale, "drag-file-here"))>
 		<#if required>
 			<@aui.validator name="required" />
 		</#if>
 	</@aui.input>
 
-	<div class="document-upload-progress hide" id="${portletNamespace}${namespacedFieldName}Progress">
+	<div class="file-entry-upload-progress hide" id="${portletNamespace}${namespacedFieldName}Progress">
 		<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="progress-bar" role="progressbar"></div>
 	</div>
 

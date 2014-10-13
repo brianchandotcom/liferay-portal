@@ -718,7 +718,7 @@ AUI.add(
 
 						var titleNode = A.one('#' + instance.getInputName() + 'Title');
 
-						titleNode.val(parsedValue.title || '');
+						titleNode.val(parsedValue.title || Liferay.Language.get('drag-file-here'));
 
 						var clearButtonNode = A.one('#' + instance.getInputName() + 'ClearButton');
 
@@ -835,7 +835,7 @@ AUI.add(
 
 						portletURL.setParameter('cmd', 'add_temp');
 						portletURL.setParameter('p_auth', Liferay.authToken);
-						portletURL.setParameter('struts_action', '/journal/upload_document');
+						portletURL.setParameter('struts_action', '/journal/upload_file_entry');
 
 						portletURL.setPortletId(15);
 

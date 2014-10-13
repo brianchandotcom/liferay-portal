@@ -33,7 +33,7 @@
 		</#if>
 	</@aui.input>
 
-	<div class="document-upload-progress hide" id="${portletNamespace}${namespacedFieldName}Progress">
+	<div class="file-entry-upload-progress hide" id="${portletNamespace}${namespacedFieldName}Progress">
 		<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="progress-bar" role="progressbar"></div>
 	</div>
 

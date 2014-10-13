@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.settings;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.io.resource.loader.ResourceLoader;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.Layout;
 
@@ -98,10 +99,10 @@ public class SettingsFactoryUtil {
 
 	public static void registerSettingsMetadata(
 		String settingsId, FallbackKeys fallbackKeys,
-		String[] multiValuedKeys) {
+		String[] multiValuedKeys, ResourceLoader resourceLoader) {
 
 		getSettingsFactory().registerSettingsMetadata(
-			settingsId, fallbackKeys, multiValuedKeys);
+			settingsId, fallbackKeys, multiValuedKeys, resourceLoader);
 	}
 
 	public void setSettingsFactory(SettingsFactory settingsFactory) {

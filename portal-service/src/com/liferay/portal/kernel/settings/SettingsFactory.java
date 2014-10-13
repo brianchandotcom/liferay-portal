@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.settings;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.io.resource.loader.ResourceLoader;
 import com.liferay.portal.model.Layout;
 
 import java.util.List;
@@ -57,6 +58,6 @@ public interface SettingsFactory {
 
 	public void registerSettingsMetadata(
 		String settingsId, FallbackKeys fallbackKeys,
-		String[] multiValuedKeysArray);
+		String[] multiValuedKeysArray, ResourceLoader resourceLoader);
 
 }

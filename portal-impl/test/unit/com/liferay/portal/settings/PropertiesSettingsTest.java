@@ -14,6 +14,8 @@
 
 package com.liferay.portal.settings;
 
+import com.liferay.portal.kernel.io.resource.loader.ClassLoaderResourceLoader;
+
 import java.util.Properties;
 
 import org.junit.Assert;
@@ -32,7 +34,10 @@ public class PropertiesSettingsTest {
 		_properties.put(_SINGLE_KEY, _SINGLE_VALUE);
 		_properties.put(_MULTIPLE_KEY, _MULTIPLE_VALUES);
 
-		_propertiesSettings = new PropertiesSettings(_properties);
+		Class<? extends PropertiesSettingsTest> clazz = getClass();
+
+		_propertiesSettings = new PropertiesSettings(
+			_properties, new ClassLoaderResourceLoader(clazz.getClassLoader()));
 	}
 
 	@Test

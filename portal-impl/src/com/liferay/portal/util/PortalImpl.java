@@ -1563,9 +1563,6 @@ public class PortalImpl implements Portal {
 		if (className.startsWith("com.liferay.portlet.blogs")) {
 			portletId = PortletKeys.BLOGS;
 		}
-		else if (className.startsWith("com.liferay.portlet.bookmarks")) {
-			portletId = PortletKeys.BOOKMARKS;
-		}
 		else if (className.startsWith("com.liferay.portlet.documentlibrary")) {
 			portletId = PortletKeys.DOCUMENT_LIBRARY;
 		}

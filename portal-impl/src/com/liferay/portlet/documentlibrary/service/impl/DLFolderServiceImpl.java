@@ -19,6 +19,7 @@ import com.liferay.portal.NoSuchLockException;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -520,11 +521,31 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		dlFolderLocalService.unlockFolder(folderId, lockUuid);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by more general {@link #updateFolder(
+	 *             long, String, String, long, List, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public DLFolder updateFolder(
 			long folderId, String name, String description,
 			long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
 			boolean overrideFileEntryTypes, ServiceContext serviceContext)
+		throws PortalException {
+
+		int restrictionType = ParamUtil.getInteger(
+			serviceContext, "restrictionType");
+
+		return dlFolderLocalService.updateFolder(
+			folderId, name, description, defaultFileEntryTypeId,
+			fileEntryTypeIds, restrictionType, serviceContext);
+	}
+
+	@Override
+	public DLFolder updateFolder(
+			long folderId, String name, String description,
+			long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
+			int restrictionType, ServiceContext serviceContext)
 		throws PortalException {
 
 		DLFolderPermission.check(
@@ -535,7 +556,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 		return dlFolderLocalService.updateFolder(
 			folderId, name, description, defaultFileEntryTypeId,
-			fileEntryTypeIds, overrideFileEntryTypes, serviceContext);
+			fileEntryTypeIds, restrictionType, serviceContext);
 	}
 
 	@Override

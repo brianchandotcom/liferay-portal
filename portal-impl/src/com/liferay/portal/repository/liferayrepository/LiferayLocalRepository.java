@@ -345,12 +345,12 @@ public class LiferayLocalRepository
 			serviceContext, "defaultFileEntryTypeId");
 		SortedArrayList<Long> fileEntryTypeIds = getLongList(
 			serviceContext, "dlFileEntryTypesSearchContainerPrimaryKeys");
-		boolean overrideFileEntryTypes = ParamUtil.getBoolean(
-			serviceContext, "overrideFileEntryTypes");
+		int restrictionType = ParamUtil.getInteger(
+			serviceContext, "restrictionType");
 
 		DLFolder dlFolder = dlFolderLocalService.updateFolder(
 			toFolderId(folderId), toFolderId(parentFolderId), name, description,
-			defaultFileEntryTypeId, fileEntryTypeIds, overrideFileEntryTypes,
+			defaultFileEntryTypeId, fileEntryTypeIds, restrictionType,
 			serviceContext);
 
 		return new LiferayFolder(dlFolder);

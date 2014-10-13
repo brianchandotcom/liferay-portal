@@ -47,13 +47,13 @@ public class UserGroupMembershipPolicyFactoryImpl
 		_serviceTracker.open();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		UserGroupMembershipPolicyFactoryImpl.class);
 
-	private static UserGroupMembershipPolicyFactoryImpl
+	private static final UserGroupMembershipPolicyFactoryImpl
 		_instance = new UserGroupMembershipPolicyFactoryImpl();
 
-	private ServiceTracker<?, UserGroupMembershipPolicy> _serviceTracker;
+	private final ServiceTracker<?, UserGroupMembershipPolicy> _serviceTracker;
 
 	private class UserGroupMembershipPolicyTrackerCustomizer
 		implements

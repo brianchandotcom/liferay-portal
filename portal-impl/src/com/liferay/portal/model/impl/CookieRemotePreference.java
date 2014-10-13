@@ -47,7 +47,7 @@ public class CookieRemotePreference implements RemotePreference {
 		return _cookie.getValue();
 	}
 
-	private Cookie _cookie;
-	private String _name;
+	private final Cookie _cookie;
+	private final String _name;
 
 }

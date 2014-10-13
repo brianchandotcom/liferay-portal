@@ -765,7 +765,7 @@ public class TranslationToXHTMLTest {
 	private static final String _NEW_LINE = StringPool.NEW_LINE;
 
 	private Creole10Parser _creole10parser;
-	private XhtmlTranslationVisitor _xhtmlTranslationVisitor =
+	private final XhtmlTranslationVisitor _xhtmlTranslationVisitor =
 		new XhtmlTranslationVisitor();
 
 }

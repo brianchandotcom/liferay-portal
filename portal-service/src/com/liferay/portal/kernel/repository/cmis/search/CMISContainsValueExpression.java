@@ -47,6 +47,6 @@ public class CMISContainsValueExpression implements CMISCriterion {
 		return sb.toString();
 	}
 
-	private String _value;
+	private final String _value;
 
 }

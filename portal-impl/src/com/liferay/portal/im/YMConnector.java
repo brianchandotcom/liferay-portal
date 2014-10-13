@@ -107,9 +107,9 @@ public class YMConnector {
 
 	private static final String _SESSION = "ymsg.network.Session";
 
-	private static Log _log = LogFactoryUtil.getLog(YMConnector.class);
+	private static final Log _log = LogFactoryUtil.getLog(YMConnector.class);
 
-	private static YMConnector _instance = new YMConnector();
+	private static final YMConnector _instance = new YMConnector();
 
 	private boolean _jYMSGLibraryFound = true;
 	private Method _loginMethod;

@@ -409,6 +409,6 @@ public class PropertyImpl extends ProjectionImpl implements Property {
 		throw new IllegalArgumentException("Uanble to unwrap " + subselect);
 	}
 
-	private org.hibernate.criterion.Property _property;
+	private final org.hibernate.criterion.Property _property;
 
 }

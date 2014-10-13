@@ -72,8 +72,8 @@ public class UserLockoutException extends PortalException {
 			return _ldapMessage;
 		}
 
-		private String _fullUserDN;
-		private String _ldapMessage;
+		private final String _fullUserDN;
+		private final String _ldapMessage;
 
 	}
 
@@ -102,8 +102,8 @@ public class UserLockoutException extends PortalException {
 			return _user;
 		}
 
-		private PasswordPolicy _passwordPolicy;
-		private User _user;
+		private final PasswordPolicy _passwordPolicy;
+		private final User _user;
 
 	}
 

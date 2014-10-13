@@ -233,27 +233,27 @@ public class JournalArticleDisplayImpl implements JournalArticleDisplay {
 		_smallImageURL = smallImageURL;
 	}
 
-	private String _articleId;
-	private String[] _availableLocales;
+	private final String _articleId;
+	private final String[] _availableLocales;
 	private boolean _cacheable;
-	private long _companyId;
+	private final long _companyId;
 	private String _content;
 	private int _currentPage;
 	private String _ddmStructureKey;
 	private String _ddmTemplateKey;
-	private String _description;
-	private long _groupId;
-	private long _id;
+	private final String _description;
+	private final long _groupId;
+	private final long _id;
 	private int _numberOfPages;
 	private boolean _paginate;
-	private long _resourcePrimKey;
+	private final long _resourcePrimKey;
 	private boolean _smallImage;
 	private long _smallImageId;
 	private String _smallImageURL;
-	private String _title;
-	private String _type;
-	private String _urlTitle;
-	private long _userId;
-	private double _version;
+	private final String _title;
+	private final String _type;
+	private final String _urlTitle;
+	private final long _userId;
+	private final double _version;
 
 }

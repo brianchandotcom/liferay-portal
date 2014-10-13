@@ -54,7 +54,7 @@ public class AssetTagNameComparator implements Comparator<AssetTag> {
 		}
 	}
 
-	private boolean _ascending;
-	private boolean _caseSensitive;
+	private final boolean _ascending;
+	private final boolean _caseSensitive;
 
 }

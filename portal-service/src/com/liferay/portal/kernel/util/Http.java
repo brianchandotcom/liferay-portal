@@ -228,11 +228,11 @@ public interface Http {
 			return _username;
 		}
 
-		private String _host;
-		private String _password;
-		private int _port;
-		private String _realm;
-		private String _username;
+		private final String _host;
+		private final String _password;
+		private final int _port;
+		private final String _realm;
+		private final String _username;
 
 	}
 
@@ -256,8 +256,8 @@ public interface Http {
 			return _contentType;
 		}
 
-		private String _charset;
-		private String _content;
+		private final String _charset;
+		private final String _content;
 		private String _contentType;
 
 	}
@@ -295,11 +295,11 @@ public interface Http {
 			return _value;
 		}
 
-		private String _charSet;
+		private final String _charSet;
 		private String _contentType;
-		private String _fileName;
-		private String _name;
-		private byte[] _value;
+		private final String _fileName;
+		private final String _name;
+		private final byte[] _value;
 
 	}
 

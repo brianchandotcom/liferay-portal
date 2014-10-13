@@ -29,6 +29,6 @@ public class NullWrapper implements Serializable {
 		return _className;
 	}
 
-	private String _className;
+	private final String _className;
 
 }

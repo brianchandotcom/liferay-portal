@@ -65,7 +65,7 @@ public class ClusterBridgeMessageListener extends BaseMessageListener {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterBridgeMessageListener.class);
 
 	private boolean _active = true;

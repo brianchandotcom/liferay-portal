@@ -85,7 +85,7 @@ public class PortletSessionTracker {
 		}
 	}
 
-	private static ConcurrentMap<String, Map<String, HttpSession>> _sessions =
-		new ConcurrentHashMap<String, Map<String, HttpSession>>();
+	private static final ConcurrentMap<String, Map<String, HttpSession>>
+		_sessions = new ConcurrentHashMap<String, Map<String, HttpSession>>();
 
 }

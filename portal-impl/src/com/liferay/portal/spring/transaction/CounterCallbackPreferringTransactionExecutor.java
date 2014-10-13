@@ -66,8 +66,8 @@ public class CounterCallbackPreferringTransactionExecutor
 			_methodInvocation = methodInvocation;
 		}
 
-		private MethodInvocation _methodInvocation;
-		private TransactionAttribute _transactionAttribute;
+		private final MethodInvocation _methodInvocation;
+		private final TransactionAttribute _transactionAttribute;
 
 	}
 

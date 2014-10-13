@@ -121,7 +121,7 @@ public class EventTimeComparator implements Comparator<CalEvent> {
 		}
 	}
 
-	private Locale _locale;
-	private TimeZone _timeZone;
+	private final Locale _locale;
+	private final TimeZone _timeZone;
 
 }

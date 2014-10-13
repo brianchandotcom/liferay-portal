@@ -135,12 +135,12 @@ public class NullSession implements HttpSession {
 		_maxInactiveInterval = maxInactiveInterval;
 	}
 
-	private Map<String, Object> _attributes;
-	private long _creationTime;
-	private String _id;
-	private long _lastAccessedTime;
+	private final Map<String, Object> _attributes;
+	private final long _creationTime;
+	private final String _id;
+	private final long _lastAccessedTime;
 	private int _maxInactiveInterval;
-	private boolean _new;
-	private ServletContext _servletContext;
+	private final boolean _new;
+	private final ServletContext _servletContext;
 
 }

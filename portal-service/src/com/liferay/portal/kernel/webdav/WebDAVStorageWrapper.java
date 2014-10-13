@@ -165,6 +165,6 @@ public class WebDAVStorageWrapper implements WebDAVStorage {
 		return _webDAVStorage.unlockResource(webDAVRequest, token);
 	}
 
-	private WebDAVStorage _webDAVStorage;
+	private final WebDAVStorage _webDAVStorage;
 
 }

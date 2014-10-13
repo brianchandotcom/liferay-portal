@@ -337,12 +337,12 @@ public class VerifyGroup extends VerifyProcess {
 		}
 	}
 
-	private static String[] _LEGACY_STAGED_PORTLET_TYPE_SETTINGS_KEYS = {
+	private static final String[] _LEGACY_STAGED_PORTLET_TYPE_SETTINGS_KEYS = {
 		"staged-portlet_39", "staged-portlet_54", "staged-portlet_56",
 		"staged-portlet_59", "staged-portlet_107", "staged-portlet_108",
 		"staged-portlet_110", "staged-portlet_166", "staged-portlet_169"
 	};
 
-	private static Log _log = LogFactoryUtil.getLog(VerifyGroup.class);
+	private static final Log _log = LogFactoryUtil.getLog(VerifyGroup.class);
 
 }

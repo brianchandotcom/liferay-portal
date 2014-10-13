@@ -351,7 +351,7 @@ public class UpgradePortletSettings extends UpgradeProcess {
 			rs.getString("portletId"), rs.getString("preferences"));
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradePortletSettings.class);
 
 }

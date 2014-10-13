@@ -218,6 +218,7 @@ public class ExportPageAction extends PortletAction {
 
 	private static final String _LOCALHOST_IP = "127.0.0.1";
 
-	private static Log _log = LogFactoryUtil.getLog(ExportPageAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ExportPageAction.class);
 
 }

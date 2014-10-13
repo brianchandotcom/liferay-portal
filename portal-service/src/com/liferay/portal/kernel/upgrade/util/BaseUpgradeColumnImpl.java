@@ -88,7 +88,7 @@ public abstract class BaseUpgradeColumnImpl implements UpgradeColumn {
 		_oldValue = oldValue;
 	}
 
-	private String _name;
+	private final String _name;
 	private Object _newValue;
 	private Integer _oldColumnType;
 	private Object _oldValue;

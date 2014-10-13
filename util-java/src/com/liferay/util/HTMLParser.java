@@ -43,8 +43,8 @@ public class HTMLParser {
 		return _links;
 	}
 
-	private List<String> _images = new ArrayList<String>();
-	private List<String> _links = new ArrayList<String>();
+	private final List<String> _images = new ArrayList<String>();
+	private final List<String> _links = new ArrayList<String>();
 
 	private class DefaultParser extends HTMLEditorKit {
 

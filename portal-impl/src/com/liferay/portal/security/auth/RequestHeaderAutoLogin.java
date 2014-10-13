@@ -106,9 +106,9 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 		return credentials;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		RequestHeaderAutoLogin.class);
 
-	private Set<String> _hostsAllowed = new HashSet<String>();
+	private final Set<String> _hostsAllowed = new HashSet<String>();
 
 }

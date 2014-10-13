@@ -223,7 +223,7 @@ public class ContentTransformerListener extends BaseTransformerListener {
 			script, "$editInPlace(" + field + ")", wrappedField);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ContentTransformerListener.class);
 
 }

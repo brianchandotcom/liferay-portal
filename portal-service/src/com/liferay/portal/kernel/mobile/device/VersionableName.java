@@ -126,7 +126,7 @@ public class VersionableName
 		return sb.toString();
 	}
 
-	private String _name;
+	private final String _name;
 	private Set<String> _versions;
 
 }

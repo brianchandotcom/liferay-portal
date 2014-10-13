@@ -244,11 +244,11 @@ public class Encryptor {
 		return (Provider)providerClass.newInstance();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(Encryptor.class);
+	private static final Log _log = LogFactoryUtil.getLog(Encryptor.class);
 
-	private static Map<String, Cipher> _decryptCipherMap =
+	private static final Map<String, Cipher> _decryptCipherMap =
 		new ConcurrentHashMap<String, Cipher>(1, 1f, 1);
-	private static Map<String, Cipher> _encryptCipherMap =
+	private static final Map<String, Cipher> _encryptCipherMap =
 		new ConcurrentHashMap<String, Cipher>(1, 1f, 1);
 
 }

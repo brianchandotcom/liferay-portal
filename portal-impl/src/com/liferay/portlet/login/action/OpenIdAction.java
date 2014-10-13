@@ -501,6 +501,6 @@ public class OpenIdAction extends PortletAction {
 
 	private static final String _OPEN_ID_SREG_ATTR_FULLNAME = "fullname";
 
-	private static Log _log = LogFactoryUtil.getLog(OpenIdAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(OpenIdAction.class);
 
 }

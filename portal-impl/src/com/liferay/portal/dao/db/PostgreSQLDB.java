@@ -209,6 +209,6 @@ public class PostgreSQLDB extends BaseDB {
 
 	private static final boolean _SUPPORTS_QUERYING_AFTER_EXCEPTION = false;
 
-	private static PostgreSQLDB _instance = new PostgreSQLDB();
+	private static final PostgreSQLDB _instance = new PostgreSQLDB();
 
 }

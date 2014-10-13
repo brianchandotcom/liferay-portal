@@ -60,9 +60,9 @@ public abstract class DoAsUserThread extends Thread {
 
 	protected abstract void doRun() throws Exception;
 
-	private static Log _log = LogFactoryUtil.getLog(DoAsUserThread.class);
+	private static final Log _log = LogFactoryUtil.getLog(DoAsUserThread.class);
 
 	private boolean _success;
-	private long _userId;
+	private final long _userId;
 
 }

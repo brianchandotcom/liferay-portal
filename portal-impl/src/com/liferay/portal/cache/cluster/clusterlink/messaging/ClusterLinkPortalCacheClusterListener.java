@@ -109,7 +109,7 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterLinkPortalCacheClusterListener.class);
 
 }

@@ -60,7 +60,7 @@ public class BeanAnalyzerTransformer extends TypeJsonVisitor {
 		_propertiesList.add(properties);
 	}
 
-	private static JsonSerializer _jsonSerializer = new JsonSerializer();
+	private static final JsonSerializer _jsonSerializer = new JsonSerializer();
 
 	private List<Map<String, String>> _propertiesList = new ArrayList<>();
 

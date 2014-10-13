@@ -41,9 +41,9 @@ public class ImageURLMatcher extends CallbackMatcher {
 	private static final String _REGEX =
 		"<a href=\"[^\"]*?Special:Upload[^\"]*?topic=Image:([^\"]*?)\".*?</a>";
 
-	private String _attachmentURLPrefix;
+	private final String _attachmentURLPrefix;
 
-	private Callback _callBack = new Callback() {
+	private final Callback _callBack = new Callback() {
 
 		@Override
 		public String foundMatch(MatchResult matchResult) {

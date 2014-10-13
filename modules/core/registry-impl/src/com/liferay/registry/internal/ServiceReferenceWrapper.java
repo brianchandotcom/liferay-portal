@@ -101,6 +101,6 @@ public class ServiceReferenceWrapper<T> implements ServiceReference<T> {
 		return _serviceReference.toString();
 	}
 
-	private org.osgi.framework.ServiceReference<T> _serviceReference;
+	private final org.osgi.framework.ServiceReference<T> _serviceReference;
 
 }

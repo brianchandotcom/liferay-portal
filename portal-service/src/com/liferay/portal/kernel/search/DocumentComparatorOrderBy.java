@@ -39,8 +39,8 @@ public class DocumentComparatorOrderBy {
 		return _caseSensitive;
 	}
 
-	private boolean _asc;
-	private boolean _caseSensitive;
-	private String _name;
+	private final boolean _asc;
+	private final boolean _caseSensitive;
+	private final String _name;
 
 }

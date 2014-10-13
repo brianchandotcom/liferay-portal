@@ -1043,9 +1043,9 @@ public class AssetPublisherDisplayContext {
 	private String _orderByType2;
 	private String _paginationType;
 	private Long _portletDisplayDDMTemplateId;
-	private PortletPreferences _portletPreferences;
+	private final PortletPreferences _portletPreferences;
 	private String _portletResource;
-	private HttpServletRequest _request;
+	private final HttpServletRequest _request;
 	private String _rootPortletId;
 	private Integer _rssDelta;
 	private String _rssDisplayStyle;

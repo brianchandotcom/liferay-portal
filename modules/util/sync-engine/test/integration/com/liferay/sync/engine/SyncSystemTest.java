@@ -555,16 +555,16 @@ public class SyncSystemTest {
 		}
 	}
 
-	private static Logger _logger = LoggerFactory.getLogger(
+	private static final Logger _logger = LoggerFactory.getLogger(
 		SyncSystemTest.class);
 
 	private static boolean _liferayStarted;
 	private static String _rootFilePathName;
 	private static SyncAccount _syncAccount;
-	private static Map<String, Long> _syncAccountIds =
+	private static final Map<String, Long> _syncAccountIds =
 		new HashMap<String, Long>();
 
-	private Map<String, Long> _syncSiteIds = new HashMap<String, Long>();
-	private Path _testFilePath;
+	private final Map<String, Long> _syncSiteIds = new HashMap<String, Long>();
+	private final Path _testFilePath;
 
 }

@@ -49,7 +49,7 @@ public class ChannelHubAppStartupAction extends SimpleAction {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ChannelHubAppStartupAction.class);
 
 }

@@ -977,7 +977,7 @@ public class RemoteSPITest {
 		return new MockRegistrationReference(mockIntraband);
 	}
 
-	private static File _currentDir = new File(".");
+	private static final File _currentDir = new File(".");
 
 	private MockRemoteSPI _mockRemoteSPI;
 	private SPIConfiguration _spiConfiguration;

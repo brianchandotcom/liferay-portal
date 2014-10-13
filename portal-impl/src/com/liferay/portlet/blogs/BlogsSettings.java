@@ -161,6 +161,6 @@ public class BlogsSettings {
 			_MULTI_VALUED_KEYS);
 	}
 
-	private TypedSettings _typedSettings;
+	private final TypedSettings _typedSettings;
 
 }

@@ -58,7 +58,7 @@ public class EhcacheBootstrapLoaderAdapter implements BootstrapLoader {
 		_bootstrapCacheLoader.load(EhcacheUnwrapUtil.getEhcache(portalCache));
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		EhcacheBootstrapLoaderAdapter.class);
 
 	private final BootstrapCacheLoader _bootstrapCacheLoader;

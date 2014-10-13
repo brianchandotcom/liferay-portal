@@ -33,6 +33,6 @@ public class DocumentHelper {
 		_document.addKeyword(Field.ENTRY_CLASS_PK, String.valueOf(classPK));
 	}
 
-	private Document _document;
+	private final Document _document;
 
 }

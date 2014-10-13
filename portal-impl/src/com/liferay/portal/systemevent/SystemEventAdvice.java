@@ -325,9 +325,10 @@ public class SystemEventAdvice
 
 	private static final int _PHASE_DURING_FINALLY = 2;
 
-	private static Log _log = LogFactoryUtil.getLog(SystemEventAdvice.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		SystemEventAdvice.class);
 
-	private static SystemEvent _nullSystemEvent = new SystemEvent() {
+	private static final SystemEvent _nullSystemEvent = new SystemEvent() {
 
 		@Override
 		public Class<? extends Annotation> annotationType() {

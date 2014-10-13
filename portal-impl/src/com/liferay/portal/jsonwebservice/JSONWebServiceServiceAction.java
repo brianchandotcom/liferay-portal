@@ -204,7 +204,7 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 
 	private static final String _REROUTE_PATH = "/jsonws";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		JSONWebServiceServiceAction.class);
 
 }

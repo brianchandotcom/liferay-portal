@@ -281,7 +281,7 @@ public class PACLContext implements Context {
 		}
 	}
 
-	private Context _context;
-	private PACLPolicy _paclPolicy;
+	private final Context _context;
+	private final PACLPolicy _paclPolicy;
 
 }

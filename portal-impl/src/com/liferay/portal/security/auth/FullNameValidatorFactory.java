@@ -37,10 +37,10 @@ public class FullNameValidatorFactory {
 		_serviceTracker.open();
 	}
 
-	private static FullNameValidatorFactory _instance =
+	private static final FullNameValidatorFactory _instance =
 		new FullNameValidatorFactory();
 
-	private ServiceTracker<FullNameValidator, FullNameValidator>
+	private final ServiceTracker<FullNameValidator, FullNameValidator>
 		_serviceTracker;
 
 }

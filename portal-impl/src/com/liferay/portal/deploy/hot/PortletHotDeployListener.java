@@ -632,12 +632,12 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 	private static final String _JNDI_JDBC_LIFERAY_POOL =
 		_JNDI_JDBC + "/LiferayPool";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortletHotDeployListener.class);
 
-	private static Map<String, Boolean> _dataSourceBindStates =
+	private static final Map<String, Boolean> _dataSourceBindStates =
 		new HashMap<String, Boolean>();
-	private static Map<String, List<Portlet>> _portlets =
+	private static final Map<String, List<Portlet>> _portlets =
 		new HashMap<String, List<Portlet>>();
 
 }

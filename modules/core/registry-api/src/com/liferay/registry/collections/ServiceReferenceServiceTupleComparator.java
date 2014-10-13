@@ -48,6 +48,6 @@ public class ServiceReferenceServiceTupleComparator<S>
 			serviceReferenceServiceTuple2.getServiceReference());
 	}
 
-	private Comparator<ServiceReference<S>> _comparator;
+	private final Comparator<ServiceReference<S>> _comparator;
 
 }

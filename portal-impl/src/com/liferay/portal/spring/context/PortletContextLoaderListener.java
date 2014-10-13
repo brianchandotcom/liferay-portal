@@ -190,7 +190,7 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 	private static final String _PORTAL_CONFIG_LOCATION_PARAM =
 		"portalContextConfigLocation";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortletContextLoaderListener.class);
 
 }

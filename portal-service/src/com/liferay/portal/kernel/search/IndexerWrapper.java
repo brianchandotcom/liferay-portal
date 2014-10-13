@@ -240,6 +240,6 @@ public class IndexerWrapper implements Indexer {
 		_indexer.updateFullQuery(searchContext);
 	}
 
-	private Indexer _indexer;
+	private final Indexer _indexer;
 
 }

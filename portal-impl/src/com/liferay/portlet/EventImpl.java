@@ -46,8 +46,8 @@ public class EventImpl implements Event, Serializable {
 		return _value;
 	}
 
-	private String _name;
-	private QName _qName;
-	private Serializable _value;
+	private final String _name;
+	private final QName _qName;
+	private final Serializable _value;
 
 }

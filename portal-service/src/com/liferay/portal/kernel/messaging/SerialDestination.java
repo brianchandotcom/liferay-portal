@@ -87,6 +87,7 @@ public class SerialDestination extends BaseAsyncDestination {
 
 	private static final int _WORKERS_MAX_SIZE = 1;
 
-	private static Log _log = LogFactoryUtil.getLog(SerialDestination.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		SerialDestination.class);
 
 }

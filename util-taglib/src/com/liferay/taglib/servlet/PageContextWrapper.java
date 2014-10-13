@@ -235,6 +235,6 @@ public class PageContextWrapper extends PageContext {
 		_pageContext.setAttribute(name, value, scope);
 	}
 
-	private PageContext _pageContext;
+	private final PageContext _pageContext;
 
 }

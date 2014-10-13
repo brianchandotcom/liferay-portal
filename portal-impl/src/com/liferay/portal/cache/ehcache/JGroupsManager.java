@@ -273,7 +273,7 @@ public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 
 	private static final String _SCHEME = "JGroups";
 
-	private static Log _log = LogFactoryUtil.getLog(JGroupsManager.class);
+	private static final Log _log = LogFactoryUtil.getLog(JGroupsManager.class);
 
 	private final CacheManager _cacheManager;
 	private final JChannel _jChannel;

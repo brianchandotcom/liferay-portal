@@ -198,7 +198,7 @@ public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
 
 	private static final String _REQUEST_TYPE_SPELL_CHECK = "spellCheckRequest";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchQuerySuggester.class);
 
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;

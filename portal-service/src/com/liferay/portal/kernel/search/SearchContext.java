@@ -411,7 +411,8 @@ public class SearchContext implements Serializable {
 	private long _companyId;
 	private int _end = QueryUtil.ALL_POS;
 	private String[] _entryClassNames;
-	private Map<String, Facet> _facets = new ConcurrentHashMap<String, Facet>();
+	private final Map<String, Facet> _facets =
+		new ConcurrentHashMap<String, Facet>();
 	private long[] _folderIds;
 	private Set<String> _fullQueryEntryClassNames;
 	private long[] _groupIds;

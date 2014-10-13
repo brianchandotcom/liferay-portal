@@ -235,6 +235,6 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 	}
 
 	private InvokerPortletFactory _invokerPortletFactory;
-	private Map<String, Map<String, InvokerPortlet>> _pool;
+	private final Map<String, Map<String, InvokerPortlet>> _pool;
 
 }

@@ -222,6 +222,6 @@ public class StartupAction extends SimpleAction {
 		CachedLoggerProvider.install();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(StartupAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(StartupAction.class);
 
 }

@@ -174,9 +174,9 @@ public class ServerStatistics
 	}
 
 	private CompanyLocalService _companyLocalService;
-	private Map<Long, CompanyStatistics> _companyStatisticsByCompanyId =
+	private final Map<Long, CompanyStatistics> _companyStatisticsByCompanyId =
 		new TreeMap<Long, CompanyStatistics>();
-	private Map<String, CompanyStatistics> _companyStatisticsByWebId =
+	private final Map<String, CompanyStatistics> _companyStatisticsByWebId =
 		new TreeMap<String, CompanyStatistics>();
 
 }

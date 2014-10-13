@@ -119,12 +119,12 @@ public class DDMXSDImplTest extends BaseDDMTestCase {
 
 	private static final String _PORTLET_NAMESPACE = "_portletNamespace_";
 
-	private DDMXSDImpl _ddmXSD = new DDMXSDImpl();
+	private final DDMXSDImpl _ddmXSD = new DDMXSDImpl();
 	private Document _document;
 	private String _fieldsContextKey;
-	private MockHttpServletRequest _mockHttpServletRequest =
+	private final MockHttpServletRequest _mockHttpServletRequest =
 		new MockHttpServletRequest();
-	private MockHttpServletResponse _mockHttpServletResponse =
+	private final MockHttpServletResponse _mockHttpServletResponse =
 		new MockHttpServletResponse();
 
 }

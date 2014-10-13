@@ -33,6 +33,6 @@ public class StringOutputStream extends OutputStream {
 		_sb.append(b);
 	}
 
-	private StringBundler _sb = new StringBundler();
+	private final StringBundler _sb = new StringBundler();
 
 }

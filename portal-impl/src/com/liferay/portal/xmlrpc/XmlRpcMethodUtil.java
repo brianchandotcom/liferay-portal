@@ -93,15 +93,16 @@ public class XmlRpcMethodUtil {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(XmlRpcMethodUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		XmlRpcMethodUtil.class);
 
-	private static XmlRpcMethodUtil _instance = new XmlRpcMethodUtil();
+	private static final XmlRpcMethodUtil _instance = new XmlRpcMethodUtil();
 
-	private Map<String, Map<String, Method>> _methodRegistry =
+	private final Map<String, Map<String, Method>> _methodRegistry =
 		new ConcurrentHashMap<String, Map<String, Method>>();
-	private ServiceRegistrationMap<Method> _serviceRegistrations =
+	private final ServiceRegistrationMap<Method> _serviceRegistrations =
 		new ServiceRegistrationMap<Method>();
-	private ServiceTracker<Method, Method> _serviceTracker;
+	private final ServiceTracker<Method, Method> _serviceTracker;
 
 	private class MethodServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<Method, Method> {

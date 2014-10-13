@@ -265,6 +265,7 @@ public class AssetCategoryIndexer extends BaseIndexer {
 		actionableDynamicQuery.performActions();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(AssetCategoryIndexer.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetCategoryIndexer.class);
 
 }

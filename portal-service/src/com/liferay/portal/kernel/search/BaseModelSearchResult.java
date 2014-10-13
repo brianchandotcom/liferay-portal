@@ -39,7 +39,7 @@ public class BaseModelSearchResult<T extends BaseModel<T>>
 		return _length;
 	}
 
-	private List<T> _baseModels;
-	private int _length;
+	private final List<T> _baseModels;
+	private final int _length;
 
 }

@@ -39,6 +39,6 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 		return _externalRepositoryFactory.getInstance();
 	}
 
-	private ExternalRepositoryFactory _externalRepositoryFactory;
+	private final ExternalRepositoryFactory _externalRepositoryFactory;
 
 }

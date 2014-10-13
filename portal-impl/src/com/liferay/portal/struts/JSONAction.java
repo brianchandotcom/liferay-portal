@@ -217,9 +217,9 @@ public abstract class JSONAction extends Action {
 		return true;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(JSONAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(JSONAction.class);
 
-	private Set<String> _hostsAllowed = SetUtil.fromArray(
+	private final Set<String> _hostsAllowed = SetUtil.fromArray(
 		PropsValues.JSON_SERVICE_AUTH_TOKEN_HOSTS_ALLOWED);
 	private ServletContext _servletContext;
 

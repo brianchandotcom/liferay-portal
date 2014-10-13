@@ -372,36 +372,41 @@ public class PortletBagImpl implements PortletBag {
 		}
 	}
 
-	private List<AssetRendererFactory> _assetRendererFactoryInstances;
-	private List<AtomCollectionAdapter<?>> _atomCollectionAdapterInstances;
-	private List<ConfigurationAction> _configurationActionInstances;
-	private List<ControlPanelEntry> _controlPanelEntryInstances;
-	private List<CustomAttributesDisplay> _customAttributesDisplayInstances;
-	private List<DDMDisplay> _ddmDisplayInstances;
-	private FriendlyURLMapperTracker _friendlyURLMapperTracker;
-	private List<Indexer> _indexerInstances;
-	private List<OpenSearch> _openSearchInstances;
-	private List<PermissionPropagator> _permissionPropagatorInstances;
-	private List<PollerProcessor> _pollerProcessorInstances;
-	private List<MessageListener> _popMessageListenerInstances;
-	private List<PortletDataHandler> _portletDataHandlerInstances;
+	private final List<AssetRendererFactory> _assetRendererFactoryInstances;
+	private final List<AtomCollectionAdapter<?>>
+		_atomCollectionAdapterInstances;
+	private final List<ConfigurationAction> _configurationActionInstances;
+	private final List<ControlPanelEntry> _controlPanelEntryInstances;
+	private final List<CustomAttributesDisplay>
+		_customAttributesDisplayInstances;
+	private final List<DDMDisplay> _ddmDisplayInstances;
+	private final FriendlyURLMapperTracker _friendlyURLMapperTracker;
+	private final List<Indexer> _indexerInstances;
+	private final List<OpenSearch> _openSearchInstances;
+	private final List<PermissionPropagator> _permissionPropagatorInstances;
+	private final List<PollerProcessor> _pollerProcessorInstances;
+	private final List<MessageListener> _popMessageListenerInstances;
+	private final List<PortletDataHandler> _portletDataHandlerInstances;
 	private Portlet _portletInstance;
-	private List<PortletLayoutListener> _portletLayoutListenerInstances;
+	private final List<PortletLayoutListener> _portletLayoutListenerInstances;
 	private String _portletName;
-	private List<PreferencesValidator> _preferencesValidatorInstances;
-	private ResourceBundleTracker _resourceBundleTracker;
-	private List<SchedulerEntry> _schedulerEntryInstances;
-	private ServletContext _servletContext;
-	private List<SocialActivityInterpreter> _socialActivityInterpreterInstances;
-	private List<SocialRequestInterpreter> _socialRequestInterpreterInstances;
-	private List<StagedModelDataHandler<?>> _stagedModelDataHandlerInstances;
-	private List<TemplateHandler> _templateHandlerInstances;
-	private List<TrashHandler> _trashHandlerInstances;
-	private List<URLEncoder> _urlEncoderInstances;
-	private List<UserNotificationHandler>
+	private final List<PreferencesValidator> _preferencesValidatorInstances;
+	private final ResourceBundleTracker _resourceBundleTracker;
+	private final List<SchedulerEntry> _schedulerEntryInstances;
+	private final ServletContext _servletContext;
+	private final List<SocialActivityInterpreter>
+		_socialActivityInterpreterInstances;
+	private final List<SocialRequestInterpreter>
+		_socialRequestInterpreterInstances;
+	private final List<StagedModelDataHandler<?>>
+		_stagedModelDataHandlerInstances;
+	private final List<TemplateHandler> _templateHandlerInstances;
+	private final List<TrashHandler> _trashHandlerInstances;
+	private final List<URLEncoder> _urlEncoderInstances;
+	private final List<UserNotificationHandler>
 		_userNotificationHandlerInstances;
-	private List<WebDAVStorage> _webDAVStorageInstances;
-	private List<WorkflowHandler<?>> _workflowHandlerInstances;
-	private List<Method> _xmlRpcMethodInstances;
+	private final List<WebDAVStorage> _webDAVStorageInstances;
+	private final List<WorkflowHandler<?>> _workflowHandlerInstances;
+	private final List<Method> _xmlRpcMethodInstances;
 
 }

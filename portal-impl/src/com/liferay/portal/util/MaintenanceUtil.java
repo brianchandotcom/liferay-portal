@@ -119,9 +119,10 @@ public class MaintenanceUtil {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(MaintenanceUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		MaintenanceUtil.class);
 
-	private static MaintenanceUtil _instance = new MaintenanceUtil();
+	private static final MaintenanceUtil _instance = new MaintenanceUtil();
 
 	private String _className;
 	private boolean _maintaining = false;

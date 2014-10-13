@@ -505,7 +505,8 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		return parentStructure;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DDMStructureImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMStructureImpl.class);
 
 	@CacheField(methodName = "DDMForm")
 	private DDMForm _ddmForm;

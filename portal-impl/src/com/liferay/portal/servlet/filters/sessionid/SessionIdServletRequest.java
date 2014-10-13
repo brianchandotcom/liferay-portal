@@ -98,9 +98,9 @@ public class SessionIdServletRequest extends HttpServletRequestWrapper {
 	private static final String _JESSIONID_ALREADY_SET =
 		"JESSIONID_ALREADY_SET";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		SessionIdServletRequest.class);
 
-	private HttpServletResponse _response;
+	private final HttpServletResponse _response;
 
 }

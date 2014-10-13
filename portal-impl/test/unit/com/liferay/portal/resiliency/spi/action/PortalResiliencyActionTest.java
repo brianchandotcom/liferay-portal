@@ -323,7 +323,7 @@ public class PortalResiliencyActionTest {
 	private Layout _layout;
 	private MockHttpServletRequest _mockHttpServletRequest;
 	private MockPortletContainer _mockPortletContainer;
-	private PortalResiliencyAction _portalResiliencyAction =
+	private final PortalResiliencyAction _portalResiliencyAction =
 		new PortalResiliencyAction();
 	private Portlet _portlet;
 	private HttpServletResponse _response;

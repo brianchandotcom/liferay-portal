@@ -33,6 +33,6 @@ public class JoddJsonTransformer implements TypeJsonSerializer<Object> {
 		_jsonTransformer.transform(new JoddJSONContext(jsonContext), object);
 	}
 
-	private JSONTransformer _jsonTransformer;
+	private final JSONTransformer _jsonTransformer;
 
 }

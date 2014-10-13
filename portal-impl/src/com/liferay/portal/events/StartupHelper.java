@@ -182,7 +182,7 @@ public class StartupHelper {
 		return StringUtil.split(GetterUtil.getString(PropsUtil.get(key)));
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(StartupHelper.class);
+	private static final Log _log = LogFactoryUtil.getLog(StartupHelper.class);
 
 	private boolean _dropIndexes;
 	private boolean _startupFinished;

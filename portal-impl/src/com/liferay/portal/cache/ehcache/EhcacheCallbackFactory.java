@@ -163,7 +163,7 @@ public class EhcacheCallbackFactory implements CallbackFactory {
 	private EhcacheCallbackFactory() {
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		EhcacheCallbackFactory.class);
 
 }

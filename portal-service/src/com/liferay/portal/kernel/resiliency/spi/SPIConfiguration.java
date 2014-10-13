@@ -213,17 +213,17 @@ public class SPIConfiguration implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private String _baseDir;
-	private int _connectorPort;
-	private String _extraSettings;
-	private String _javaExecutable;
-	private String _jvmArguments;
-	private long _pingInterval;
-	private String[] _portletIds;
-	private long _registerTimeout;
-	private String[] _servletContextNames;
-	private long _shutdownTimeout;
-	private String _spiAgentClassName;
-	private String _spiId;
+	private final String _baseDir;
+	private final int _connectorPort;
+	private final String _extraSettings;
+	private final String _javaExecutable;
+	private final String _jvmArguments;
+	private final long _pingInterval;
+	private final String[] _portletIds;
+	private final long _registerTimeout;
+	private final String[] _servletContextNames;
+	private final long _shutdownTimeout;
+	private final String _spiAgentClassName;
+	private final String _spiId;
 
 }

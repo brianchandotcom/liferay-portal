@@ -819,7 +819,8 @@ public class PortletRequestModel implements Serializable {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PortletRequestModel.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortletRequestModel.class);
 
 	private final String _actionURL;
 	private Map<String, Object> _applicationScopeSessionAttributes;

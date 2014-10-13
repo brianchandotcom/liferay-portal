@@ -100,6 +100,7 @@ public class RESTProxyAction extends Action {
 		return false;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(RESTProxyAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		RESTProxyAction.class);
 
 }

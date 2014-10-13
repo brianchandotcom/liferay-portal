@@ -109,7 +109,7 @@ public class TranslatorUtil {
 			return value1.compareTo(value2);
 		}
 
-		private Map<String, String> _map;
+		private final Map<String, String> _map;
 
 	}
 

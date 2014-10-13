@@ -35,7 +35,7 @@ public class PortalClassLoaderFactory {
 		return classLoader;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortalClassLoaderFactory.class);
 
 }

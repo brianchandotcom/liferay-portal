@@ -95,12 +95,12 @@ public class ICQConnector implements Observer {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ICQConnector.class);
+	private static final Log _log = LogFactoryUtil.getLog(ICQConnector.class);
 
-	private static ICQConnector _instance = new ICQConnector();
+	private static final ICQConnector _instance = new ICQConnector();
 
 	private boolean _connecting;
 	private OscarConnection _icq;
-	private List<KeyValuePair> _messages;
+	private final List<KeyValuePair> _messages;
 
 }

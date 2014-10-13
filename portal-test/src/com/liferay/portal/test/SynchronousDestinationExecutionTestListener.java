@@ -170,15 +170,16 @@ public class SynchronousDestinationExecutionTestListener
 			_sync = sync;
 		}
 
-		private List<String> _absentDestinationNames = new ArrayList<String>();
-		private List<Destination> _asyncServiceDestinations =
+		private final List<String> _absentDestinationNames =
+			new ArrayList<String>();
+		private final List<Destination> _asyncServiceDestinations =
 			new ArrayList<Destination>();
 		private boolean _forceSync;
 		private Sync _sync;
 
 	}
 
-	private static TransactionAttribute _transactionAttribute;
+	private static final TransactionAttribute _transactionAttribute;
 
 	static {
 		TransactionAttribute.Builder builder =

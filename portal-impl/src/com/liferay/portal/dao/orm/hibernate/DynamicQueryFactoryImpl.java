@@ -130,12 +130,12 @@ public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 		return clazz;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DynamicQueryFactoryImpl.class);
 
-	private Map<ClassLoader, Map<String, Class<?>>> _classes =
+	private final Map<ClassLoader, Map<String, Class<?>>> _classes =
 		new HashMap<ClassLoader, Map<String, Class<?>>>();
-	private ClassLoader _portalClassLoader =
+	private final ClassLoader _portalClassLoader =
 		DynamicQueryFactoryImpl.class.getClassLoader();
 
 	private class DynamicQueryPrivilegedAction
@@ -156,8 +156,8 @@ public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 			return new DynamicQueryImpl(DetachedCriteria.forClass(_clazz));
 		}
 
-		private String _alias;
-		private Class<?> _clazz;
+		private final String _alias;
+		private final Class<?> _clazz;
 
 	}
 

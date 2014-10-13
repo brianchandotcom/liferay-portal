@@ -54,6 +54,7 @@ public class SCProductVersionImpl extends SCProductVersionBaseImpl {
 		return productEntry;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SCProductVersionImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		SCProductVersionImpl.class);
 
 }

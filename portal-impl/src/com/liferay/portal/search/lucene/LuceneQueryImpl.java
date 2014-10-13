@@ -40,6 +40,6 @@ public class LuceneQueryImpl extends BaseQueryImpl implements Query {
 		return _query.toString();
 	}
 
-	private org.apache.lucene.search.Query _query;
+	private final org.apache.lucene.search.Query _query;
 
 }

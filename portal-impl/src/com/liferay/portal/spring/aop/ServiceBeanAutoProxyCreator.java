@@ -141,6 +141,6 @@ public class ServiceBeanAutoProxyCreator
 
 	private BeanMatcher _beanMatcher;
 	private MethodInterceptor _methodInterceptor;
-	private ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
+	private final ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
 
 }

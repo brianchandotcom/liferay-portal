@@ -309,19 +309,20 @@ public class DeleteAfterTestRunRule implements TestRule {
 			return _fields;
 		}
 
-		private Class<?> _fieldClass;
-		private List<Field> _fields = new ArrayList<Field>();
+		private final Class<?> _fieldClass;
+		private final List<Field> _fields = new ArrayList<Field>();
 
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DeleteAfterTestRunRule.class);
 
-	private static Set<Class<?>> _orderedClasses = new LinkedHashSet<Class<?>>(
-		Arrays.<Class<?>>asList(
-			User.class, Organization.class, Role.class, UserGroup.class,
-			Group.class, Company.class));
+	private static final Set<Class<?>> _orderedClasses =
+		new LinkedHashSet<Class<?>>(
+			Arrays.<Class<?>>asList(
+				User.class, Organization.class, Role.class, UserGroup.class,
+				Group.class, Company.class));
 
-	private Object _instance;
+	private final Object _instance;
 
 }

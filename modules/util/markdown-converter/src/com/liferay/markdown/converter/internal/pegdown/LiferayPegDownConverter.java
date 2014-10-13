@@ -41,6 +41,6 @@ public class LiferayPegDownConverter implements MarkdownConverter {
 			markdown, new LinkRenderer());
 	}
 
-	private LiferayPegDownProcessor _liferayPegDownProcessor;
+	private final LiferayPegDownProcessor _liferayPegDownProcessor;
 
 }

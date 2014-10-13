@@ -205,14 +205,15 @@ public class SandboxDeployDir {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SandboxDeployDir.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		SandboxDeployDir.class);
 
-	private File _deployDir;
-	private DirectoryFilter _directoryFilter = new DirectoryFilter();
+	private final File _deployDir;
+	private final DirectoryFilter _directoryFilter = new DirectoryFilter();
 	private List<File> _existingDirs;
-	private long _interval;
-	private String _name;
-	private List<SandboxDeployListener> _sandboxDeployListeners;
+	private final long _interval;
+	private final String _name;
+	private final List<SandboxDeployListener> _sandboxDeployListeners;
 	private SandboxDeployScanner _sandboxDeployScanner;
 
 }

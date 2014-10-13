@@ -156,11 +156,11 @@ public class NewClassLoaderJUnitTestRunner extends BlockJUnit4ClassRunner {
 			method.invoke(object);
 		}
 
-		private List<MethodKey> _afterMethodKeys;
-		private List<MethodKey> _beforeMethodKeys;
-		private ClassLoader _newClassLoader;
-		private String _testClassName;
-		private MethodKey _testMethodKey;
+		private final List<MethodKey> _afterMethodKeys;
+		private final List<MethodKey> _beforeMethodKeys;
+		private final ClassLoader _newClassLoader;
+		private final String _testClassName;
+		private final MethodKey _testMethodKey;
 
 	}
 

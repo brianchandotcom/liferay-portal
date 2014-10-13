@@ -103,7 +103,7 @@ public class AbsoluteRedirectsFilter
 
 	private static final boolean _FILTER_ENABLED = true;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		AbsoluteRedirectsFilter.class);
 
 }

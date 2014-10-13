@@ -138,7 +138,8 @@ public abstract class BaseIndexWriter
 		_spellCheckIndexWriter = spellCheckIndexWriter;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(BaseIndexWriter.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseIndexWriter.class);
 
 	private SpellCheckIndexWriter _spellCheckIndexWriter;
 

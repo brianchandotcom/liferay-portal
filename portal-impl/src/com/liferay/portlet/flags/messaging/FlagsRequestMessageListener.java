@@ -250,7 +250,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		subscriptionSender.flushNotificationsAsync();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		FlagsRequestMessageListener.class);
 
 }

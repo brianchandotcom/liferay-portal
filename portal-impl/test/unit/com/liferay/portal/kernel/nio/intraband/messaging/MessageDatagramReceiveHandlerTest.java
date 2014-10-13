@@ -269,8 +269,8 @@ public class MessageDatagramReceiveHandlerTest {
 				actualMessageRoutingBag, "_routingTrace"));
 	}
 
-	private MockIntraband _mockIntraband = new MockIntraband();
-	private MockRegistrationReference _mockRegistrationReference =
+	private final MockIntraband _mockIntraband = new MockIntraband();
+	private final MockRegistrationReference _mockRegistrationReference =
 		new MockRegistrationReference(_mockIntraband);
 
 }

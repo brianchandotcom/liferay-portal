@@ -26,7 +26,7 @@ public class MarkdownConverterFactoryUtil {
 		return _markdownConverterFactory.create();
 	}
 
-	private static MarkdownConverterFactory _markdownConverterFactory =
+	private static final MarkdownConverterFactory _markdownConverterFactory =
 		new MarkdownConverterFactoryImpl();
 
 }

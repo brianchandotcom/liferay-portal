@@ -68,6 +68,6 @@ public class ProtectedPrincipal implements Principal, Serializable {
 		return _name;
 	}
 
-	private String _name;
+	private final String _name;
 
 }

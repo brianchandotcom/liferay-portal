@@ -172,8 +172,8 @@ public class ClusterNode implements Comparable<ClusterNode>, Serializable {
 		return sb.toString();
 	}
 
-	private InetAddress _bindInetAddress;
-	private String _clusterNodeId;
+	private final InetAddress _bindInetAddress;
+	private final String _clusterNodeId;
 	private InetSocketAddress _portalInetSocketAddress;
 
 }

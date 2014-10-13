@@ -129,6 +129,7 @@ public class GoogleGadgetServlet extends HttpServlet {
 		return sb.toString();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(GoogleGadgetServlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		GoogleGadgetServlet.class);
 
 }

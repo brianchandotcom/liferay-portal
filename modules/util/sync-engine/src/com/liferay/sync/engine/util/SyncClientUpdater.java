@@ -208,11 +208,11 @@ public class SyncClientUpdater {
 		return httpGet;
 	}
 
-	private static Logger _logger = LoggerFactory.getLogger(
+	private static final Logger _logger = LoggerFactory.getLogger(
 		SyncClientUpdater.class);
 
 	private static Future<?> _autoUpdateChecker;
-	private static ScheduledExecutorService _scheduledExecutorService =
+	private static final ScheduledExecutorService _scheduledExecutorService =
 		Executors.newSingleThreadScheduledExecutor();
 
 }

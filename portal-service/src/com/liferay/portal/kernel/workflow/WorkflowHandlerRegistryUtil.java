@@ -312,19 +312,20 @@ public class WorkflowHandlerRegistryUtil {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		WorkflowHandlerRegistryUtil.class);
 
-	private static WorkflowHandlerRegistryUtil _instance =
+	private static final WorkflowHandlerRegistryUtil _instance =
 		new WorkflowHandlerRegistryUtil();
 
-	private Map<String, WorkflowHandler<?>> _scopeableWorkflowHandlerMap =
+	private final Map<String, WorkflowHandler<?>> _scopeableWorkflowHandlerMap =
 		new ConcurrentSkipListMap<String, WorkflowHandler<?>>();
-	private ServiceRegistrationMap<WorkflowHandler<?>> _serviceRegistrations =
-		new ServiceRegistrationMap<WorkflowHandler<?>>();
-	private ServiceTracker<WorkflowHandler<?>, WorkflowHandler<?>>
+	private final ServiceRegistrationMap<WorkflowHandler<?>>
+		_serviceRegistrations =
+			new ServiceRegistrationMap<WorkflowHandler<?>>();
+	private final ServiceTracker<WorkflowHandler<?>, WorkflowHandler<?>>
 		_serviceTracker;
-	private Map<String, WorkflowHandler<?>> _workflowHandlerMap =
+	private final Map<String, WorkflowHandler<?>> _workflowHandlerMap =
 		new TreeMap<String, WorkflowHandler<?>>();
 
 	private class WorkflowHandlerServiceTrackerCustomizer

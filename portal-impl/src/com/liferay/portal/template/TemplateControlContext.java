@@ -36,7 +36,7 @@ public class TemplateControlContext {
 		return _classLoader;
 	}
 
-	private AccessControlContext _accessControlContext;
-	private ClassLoader _classLoader;
+	private final AccessControlContext _accessControlContext;
+	private final ClassLoader _classLoader;
 
 }

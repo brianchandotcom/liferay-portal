@@ -342,12 +342,12 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		return portletURL.toString();
 	}
 
-	private static Set<String> _templateLanguageTypes =
+	private static final Set<String> _templateLanguageTypes =
 		SetUtil.fromArray(
 			new String[] {
 				TemplateConstants.LANG_TYPE_FTL, TemplateConstants.LANG_TYPE_VM
 			});
-	private static Set<String> _viewTemplateExcludedColumnNames =
+	private static final Set<String> _viewTemplateExcludedColumnNames =
 		SetUtil.fromArray(new String[] {"structure"});
 
 }

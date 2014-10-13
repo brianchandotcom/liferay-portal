@@ -69,6 +69,6 @@ public class BaseReceiver implements Receiver {
 
 	protected volatile View view;
 
-	private static Log _log = LogFactoryUtil.getLog(BaseReceiver.class);
+	private static final Log _log = LogFactoryUtil.getLog(BaseReceiver.class);
 
 }

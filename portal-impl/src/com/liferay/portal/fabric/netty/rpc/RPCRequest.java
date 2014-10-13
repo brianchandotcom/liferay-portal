@@ -137,7 +137,7 @@ public class RPCRequest<T extends Serializable> extends RPCSerializable {
 
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(RPCRequest.class);
+	private static final Log _log = LogFactoryUtil.getLog(RPCRequest.class);
 
 	private static final long serialVersionUID = 1L;
 

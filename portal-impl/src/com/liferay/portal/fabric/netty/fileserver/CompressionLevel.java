@@ -50,7 +50,7 @@ public enum CompressionLevel {
 		_level = level;
 	}
 
-	private static Map<Integer, CompressionLevel> _compressionLevels =
+	private static final Map<Integer, CompressionLevel> _compressionLevels =
 		new HashMap<Integer, CompressionLevel>();
 
 	static {

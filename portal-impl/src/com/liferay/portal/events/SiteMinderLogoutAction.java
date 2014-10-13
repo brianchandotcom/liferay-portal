@@ -78,7 +78,7 @@ public class SiteMinderLogoutAction extends Action {
 
 	private static final String _SMSESSION = "SMSESSION";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		SiteMinderLogoutAction.class);
 
 }

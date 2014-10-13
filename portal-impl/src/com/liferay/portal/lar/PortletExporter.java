@@ -1212,13 +1212,14 @@ public class PortletExporter {
 	private PortletExporter() {
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PortletExporter.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortletExporter.class);
 
-	private static PortletExporter _instance = new PortletExporter();
+	private static final PortletExporter _instance = new PortletExporter();
 
-	private DeletionSystemEventExporter _deletionSystemEventExporter =
+	private final DeletionSystemEventExporter _deletionSystemEventExporter =
 		DeletionSystemEventExporter.getInstance();
-	private PermissionExporter _permissionExporter =
+	private final PermissionExporter _permissionExporter =
 		PermissionExporter.getInstance();
 
 }

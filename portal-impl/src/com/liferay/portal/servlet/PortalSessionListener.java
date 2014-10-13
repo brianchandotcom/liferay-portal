@@ -81,9 +81,9 @@ public class PortalSessionListener implements HttpSessionListener {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortalSessionListener.class);
 
-	private AtomicInteger _counter = new AtomicInteger();
+	private final AtomicInteger _counter = new AtomicInteger();
 
 }

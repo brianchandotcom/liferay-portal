@@ -373,7 +373,7 @@ public class IncludeTag extends AttributesTagSupport {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.THEME_JSP_OVERRIDE_ENABLED));
 
-	private static Log _log = LogFactoryUtil.getLog(IncludeTag.class);
+	private static final Log _log = LogFactoryUtil.getLog(IncludeTag.class);
 
 	private String _page;
 	private boolean _strict;

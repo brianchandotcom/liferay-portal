@@ -103,16 +103,16 @@ public class StubHolder<T> {
 		return _stubCreator.onInvalidation(_stubId, _stub, _originalT);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(StubHolder.class);
+	private static final Log _log = LogFactoryUtil.getLog(StubHolder.class);
 
-	private static ProcessCallable<Boolean> _startupFinishedProcessCallable =
-		new StartupFinishedProcessCallable();
+	private static final ProcessCallable<Boolean>
+		_startupFinishedProcessCallable = new StartupFinishedProcessCallable();
 
-	private T _originalT;
-	private RegistrationReference _registrationReference;
+	private final T _originalT;
+	private final RegistrationReference _registrationReference;
 	private volatile T _stub;
-	private StubCreator<T> _stubCreator;
-	private String _stubId;
+	private final StubCreator<T> _stubCreator;
+	private final String _stubId;
 
 	private static class StartupFinishedProcessCallable
 		implements ProcessCallable<Boolean> {

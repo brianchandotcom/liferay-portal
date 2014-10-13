@@ -85,6 +85,6 @@ public class CurrencyConverterWebCacheItem implements WebCacheItem {
 
 	private static final long _REFRESH_TIME = Time.MINUTE * 20;
 
-	private String _symbol;
+	private final String _symbol;
 
 }

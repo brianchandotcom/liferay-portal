@@ -101,7 +101,7 @@ public class DynamicDataSourceAdvice extends ChainableMethodAdvice {
 			MasterDataSource.class, null);
 	}
 
-	private static MasterDataSource _nullMasterDataSource =
+	private static final MasterDataSource _nullMasterDataSource =
 		new MasterDataSource() {
 
 			@Override

@@ -65,9 +65,9 @@ public class HookExplodedTomcatListener extends BaseExplodedTomcatListener {
 		return AutoDeployer.CODE_DEFAULT;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		HookExplodedTomcatListener.class);
 
-	private ExplodedTomcatDeployer _deployer;
+	private final ExplodedTomcatDeployer _deployer;
 
 }

@@ -232,12 +232,12 @@ public class CurrencyConverterUtil {
 		_currencyIds.add("ZWD");
 	}
 
-	private static CurrencyConverterUtil _instance =
+	private static final CurrencyConverterUtil _instance =
 		new CurrencyConverterUtil();
 
-	private static Map<String, Map<String, String>> _symbolsPool =
+	private static final Map<String, Map<String, String>> _symbolsPool =
 		new ConcurrentHashMap<String, Map<String, String>>();
 
-	private Set<String> _currencyIds;
+	private final Set<String> _currencyIds;
 
 }

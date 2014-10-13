@@ -149,7 +149,7 @@ public class ElasticsearchSpellCheckIndexWriter
 		LogUtil.logActionResponse(_log, deleteByQueryResponse);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchSpellCheckIndexWriter.class);
 
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;

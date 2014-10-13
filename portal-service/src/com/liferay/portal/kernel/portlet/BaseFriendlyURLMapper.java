@@ -256,7 +256,7 @@ public abstract class BaseFriendlyURLMapper implements FriendlyURLMapper {
 
 	private static final boolean _CHECK_MAPPING_WITH_PREFIX = true;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		BaseFriendlyURLMapper.class);
 
 	private String _mapping;

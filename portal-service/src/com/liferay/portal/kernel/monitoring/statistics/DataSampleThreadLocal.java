@@ -65,26 +65,27 @@ public class DataSampleThreadLocal {
 		return _dataSamples;
 	}
 
-	private static ThreadLocal<DataSampleThreadLocal> _dataSampleThreadLocal =
-		new AutoResetThreadLocal<DataSampleThreadLocal>(
-			DataSampleThreadLocal.class + "._dataSampleThreadLocal") {
+	private static final ThreadLocal<DataSampleThreadLocal>
+		_dataSampleThreadLocal =
+			new AutoResetThreadLocal<DataSampleThreadLocal>(
+				DataSampleThreadLocal.class + "._dataSampleThreadLocal") {
 
-				@Override
-				protected DataSampleThreadLocal copy(
-					DataSampleThreadLocal dataSampleThreadLocal) {
+					@Override
+					protected DataSampleThreadLocal copy(
+						DataSampleThreadLocal dataSampleThreadLocal) {
 
-					return dataSampleThreadLocal;
-				}
+						return dataSampleThreadLocal;
+					}
 
-				@Override
-				protected DataSampleThreadLocal initialValue() {
-					return new DataSampleThreadLocal();
-				}
+					@Override
+					protected DataSampleThreadLocal initialValue() {
+						return new DataSampleThreadLocal();
+					}
 
-			};
+				};
 
-	private Queue<DataSample> _dataSamples =
+	private final Queue<DataSample> _dataSamples =
 		new ConcurrentLinkedQueue<DataSample>();
-	private long _monitorTime;
+	private final long _monitorTime;
 
 }

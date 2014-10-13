@@ -57,6 +57,6 @@ public class AccessControlContext {
 	private AuthVerifierResult _authVerifierResult;
 	private HttpServletRequest _request;
 	private HttpServletResponse _response;
-	private Map<String, Object> _settings = new HashMap<String, Object>();
+	private final Map<String, Object> _settings = new HashMap<String, Object>();
 
 }

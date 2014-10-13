@@ -632,18 +632,18 @@ public class LayoutTemplateLocalServiceImpl
 		return layoutTemplates;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutTemplateLocalServiceImpl.class);
 
-	private static Map<String, LayoutTemplate> _portalCustom =
+	private static final Map<String, LayoutTemplate> _portalCustom =
 		new LinkedHashMap<String, LayoutTemplate>();
-	private static Map<String, LayoutTemplate> _portalStandard =
+	private static final Map<String, LayoutTemplate> _portalStandard =
 		new LinkedHashMap<String, LayoutTemplate>();
-	private static Map<String, Map<String, LayoutTemplate>> _themes =
+	private static final Map<String, Map<String, LayoutTemplate>> _themes =
 		new LinkedHashMap<String, Map<String, LayoutTemplate>>();
-	private static Map<String, LayoutTemplate> _warCustom =
+	private static final Map<String, LayoutTemplate> _warCustom =
 		new LinkedHashMap<String, LayoutTemplate>();
-	private static Map<String, LayoutTemplate> _warStandard =
+	private static final Map<String, LayoutTemplate> _warStandard =
 		new LinkedHashMap<String, LayoutTemplate>();
 
 }

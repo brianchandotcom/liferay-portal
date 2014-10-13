@@ -45,7 +45,7 @@ public class HitsProcessorRegistryUtil {
 	}
 
 	private static HitsProcessor _defaultHitsProcessor;
-	private static Map<String, HitsProcessor> _hitsProcessors =
+	private static final Map<String, HitsProcessor> _hitsProcessors =
 		new HashMap<String, HitsProcessor>();
 
 }

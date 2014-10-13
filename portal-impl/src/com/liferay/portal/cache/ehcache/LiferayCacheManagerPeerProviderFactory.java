@@ -110,11 +110,12 @@ public class LiferayCacheManagerPeerProviderFactory
 			cacheManager, portalProperties);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayCacheManagerPeerProviderFactory.class);
 
-	private static HtmlImpl _htmlUtil = new HtmlImpl();
+	private static final HtmlImpl _htmlUtil = new HtmlImpl();
 
-	private CacheManagerPeerProviderFactory _cacheManagerPeerProviderFactory;
+	private final CacheManagerPeerProviderFactory
+		_cacheManagerPeerProviderFactory;
 
 }

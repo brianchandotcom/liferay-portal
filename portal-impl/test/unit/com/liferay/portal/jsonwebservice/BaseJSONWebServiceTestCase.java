@@ -243,7 +243,7 @@ public abstract class BaseJSONWebServiceTestCase extends PowerMockito {
 			return _mockServletContext;
 		}
 
-		private MockServletContext _mockServletContext;
+		private final MockServletContext _mockServletContext;
 
 	}
 

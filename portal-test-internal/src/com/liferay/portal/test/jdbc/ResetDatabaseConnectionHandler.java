@@ -92,6 +92,6 @@ public class ResetDatabaseConnectionHandler implements InvocationHandler {
 		return new Class<?>[] {Statement.class};
 	}
 
-	private Connection _connection;
+	private final Connection _connection;
 
 }

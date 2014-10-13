@@ -147,10 +147,10 @@ public abstract class BaseExplodedTomcatListener implements AutoDeployListener {
 
 	protected abstract int deploy(File file) throws AutoDeployException;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		BaseExplodedTomcatListener.class);
 
-	private static SystemConfiguration _systemConfiguration =
+	private static final SystemConfiguration _systemConfiguration =
 		new SystemConfiguration();
 
 }

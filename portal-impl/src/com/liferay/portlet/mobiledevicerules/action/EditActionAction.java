@@ -250,6 +250,7 @@ public class EditActionAction extends EditRuleAction {
 		}
 	}
 
-	private Map<Class<?>, String> _editorJSPs = new HashMap<Class<?>, String>();
+	private final Map<Class<?>, String> _editorJSPs =
+		new HashMap<Class<?>, String>();
 
 }

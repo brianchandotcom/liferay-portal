@@ -59,6 +59,6 @@ public class FileImplTest {
 		Assert.assertEquals("aaa.bbb", _fileImpl.getShortFileName("aaa.bbb"));
 	}
 
-	private FileImpl _fileImpl = new FileImpl();
+	private final FileImpl _fileImpl = new FileImpl();
 
 }

@@ -341,6 +341,7 @@ public class HttpClientSPIAgent implements SPIAgent {
 	protected final SocketAddress socketAddress;
 	protected final BlockingQueue<Socket> socketBlockingQueue;
 
-	private static Log _log = LogFactoryUtil.getLog(HttpClientSPIAgent.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		HttpClientSPIAgent.class);
 
 }

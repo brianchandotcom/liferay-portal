@@ -35,6 +35,6 @@ public class PipingPageContext extends PageContextWrapper {
 		return _jspWriter;
 	}
 
-	private JspWriter _jspWriter;
+	private final JspWriter _jspWriter;
 
 }

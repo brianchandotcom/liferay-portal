@@ -42,7 +42,7 @@ public class ChannelHubAppShutdownAction extends SimpleAction {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ChannelHubAppShutdownAction.class);
 
 }

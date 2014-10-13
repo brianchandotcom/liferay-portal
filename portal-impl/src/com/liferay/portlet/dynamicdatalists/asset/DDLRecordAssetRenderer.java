@@ -197,7 +197,7 @@ public class DDLRecordAssetRenderer extends BaseAssetRenderer {
 		return themeDisplay.getPathThemeImages() + "/common/history.png";
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DDLRecordAssetRenderer.class);
 
 	private final DDMStructure _ddmStructure;

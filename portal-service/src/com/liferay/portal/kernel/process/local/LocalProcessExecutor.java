@@ -233,7 +233,8 @@ public class LocalProcessExecutor implements ProcessExecutor {
 		return _threadPoolExecutor;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LocalProcessExecutor.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LocalProcessExecutor.class);
 
 	private final Map<Process, NoticeableFuture<?>> _managedProcesses =
 		new ConcurrentHashMap<Process, NoticeableFuture<?>>();

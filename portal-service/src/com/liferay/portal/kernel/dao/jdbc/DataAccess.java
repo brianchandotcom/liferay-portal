@@ -146,9 +146,9 @@ public class DataAccess {
 
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DataAccess.class);
+	private static final Log _log = LogFactoryUtil.getLog(DataAccess.class);
 
-	private static PACL _pacl = new NoPACL();
+	private static final PACL _pacl = new NoPACL();
 
 	private static class NoPACL implements PACL {
 

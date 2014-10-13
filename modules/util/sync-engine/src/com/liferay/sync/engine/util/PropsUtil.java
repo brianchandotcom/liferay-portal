@@ -77,11 +77,12 @@ public class PropsUtil {
 		_compositeConfiguration.setProperty(key, value);
 	}
 
-	private static Logger _logger = LoggerFactory.getLogger(PropsUtil.class);
+	private static final Logger _logger = LoggerFactory.getLogger(
+		PropsUtil.class);
 
-	private static PropsUtil _instance = new PropsUtil();
+	private static final PropsUtil _instance = new PropsUtil();
 
-	private CompositeConfiguration _compositeConfiguration =
+	private final CompositeConfiguration _compositeConfiguration =
 		new CompositeConfiguration();
 
 }

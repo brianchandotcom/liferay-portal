@@ -20,6 +20,7 @@ package com.liferay.registry.internal;
 public class TrackedOne {
 
 	public TrackedOne() {
+		_key = null;
 	}
 
 	public TrackedOne(String key) {
@@ -30,6 +31,6 @@ public class TrackedOne {
 		return _key;
 	}
 
-	private String _key;
+	private final String _key;
 
 }

@@ -114,6 +114,7 @@ public class BaseBodyTagSupport extends TagSupport {
 
 	protected BodyContent bodyContent;
 
-	private static Log _log = LogFactoryUtil.getLog(BaseBodyTagSupport.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseBodyTagSupport.class);
 
 }

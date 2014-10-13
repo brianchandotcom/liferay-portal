@@ -401,7 +401,7 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 		JCRStore.class.getName(), S3Store.class.getName()
 	};
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ConvertDocumentLibrary.class);
 
 	private Store _sourceStore;

@@ -37,9 +37,9 @@ public class ScreenNameGeneratorFactory {
 		_serviceTracker.open();
 	}
 
-	private static ScreenNameGeneratorFactory _instance =
+	private static final ScreenNameGeneratorFactory _instance =
 		new ScreenNameGeneratorFactory();
 
-	private ServiceTracker<?, ScreenNameGenerator> _serviceTracker;
+	private final ServiceTracker<?, ScreenNameGenerator> _serviceTracker;
 
 }

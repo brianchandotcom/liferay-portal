@@ -72,7 +72,7 @@ public abstract class BaseRedirectActionHandler implements ActionHandler {
 			HttpServletResponse response)
 		throws PortalException;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		BaseRedirectActionHandler.class);
 
 }

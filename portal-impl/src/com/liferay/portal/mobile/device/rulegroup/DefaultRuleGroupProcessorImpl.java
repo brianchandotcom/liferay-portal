@@ -162,7 +162,7 @@ public class DefaultRuleGroupProcessorImpl implements RuleGroupProcessor {
 		return null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultRuleGroupProcessorImpl.class);
 
 	@BeanReference(type = MDRRuleGroupInstanceLocalService.class)
@@ -171,7 +171,7 @@ public class DefaultRuleGroupProcessorImpl implements RuleGroupProcessor {
 	@BeanReference(type = MDRRuleGroupLocalService.class)
 	private MDRRuleGroupLocalService _mdrRuleGroupLocalService;
 
-	private Map<String, RuleHandler> _ruleHandlers =
+	private final Map<String, RuleHandler> _ruleHandlers =
 		new HashMap<String, RuleHandler>();
 
 }

@@ -83,6 +83,6 @@ public class ConfigurationCapabilityImpl implements ConfigurationCapability {
 		return clazz.getName() + StringPool.POUND + key;
 	}
 
-	private DocumentRepository _repository;
+	private final DocumentRepository _repository;
 
 }

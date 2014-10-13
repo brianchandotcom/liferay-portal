@@ -348,6 +348,7 @@ public class ScriptingPortlet extends GenericPortlet {
 
 	private static final String _ERROR = ScriptingPortlet.class + ".ERROR";
 
-	private static Log _log = LogFactoryUtil.getLog(ScriptingPortlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ScriptingPortlet.class);
 
 }

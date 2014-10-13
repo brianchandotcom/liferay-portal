@@ -325,7 +325,7 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LayoutSetImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(LayoutSetImpl.class);
 
 	private UnicodeProperties _settingsProperties;
 

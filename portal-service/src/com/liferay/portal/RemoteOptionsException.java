@@ -73,6 +73,6 @@ public class RemoteOptionsException extends PortalException {
 	private long _remoteGroupId;
 	private String _remotePathContext;
 	private int _remotePort;
-	private int _type;
+	private final int _type;
 
 }

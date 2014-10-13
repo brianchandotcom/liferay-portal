@@ -53,7 +53,7 @@ public class DynamicServletConfig implements ServletConfig {
 		return _servletConfig.getServletName();
 	}
 
-	private Map<String, String> _params;
-	private ServletConfig _servletConfig;
+	private final Map<String, String> _params;
+	private final ServletConfig _servletConfig;
 
 }

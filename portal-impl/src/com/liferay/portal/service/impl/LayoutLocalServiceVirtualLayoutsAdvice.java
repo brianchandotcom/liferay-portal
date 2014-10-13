@@ -313,10 +313,10 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 		Integer.TYPE
 	};
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutLocalServiceVirtualLayoutsAdvice.class);
 
-	private static ThreadLocal<Long> _virtualLayoutTargetGroupId =
+	private static final ThreadLocal<Long> _virtualLayoutTargetGroupId =
 		new AutoResetThreadLocal<Long>(
 			LayoutLocalServiceVirtualLayoutsAdvice.class +
 				"._virtualLayoutTargetGroupId",

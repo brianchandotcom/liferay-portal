@@ -207,6 +207,6 @@ public class HttpImplTest extends PowerMockito {
 		Assert.assertEquals(sb.toString(), newURL);
 	}
 
-	private HttpImpl _httpImpl = new HttpImpl();
+	private final HttpImpl _httpImpl = new HttpImpl();
 
 }

@@ -92,7 +92,7 @@ public class LoggerHandler implements InvocationHandler {
 		}
 	}
 
-	private LiferaySelenium _liferaySelenium;
-	private Logger _logger;
+	private final LiferaySelenium _liferaySelenium;
+	private final Logger _logger;
 
 }

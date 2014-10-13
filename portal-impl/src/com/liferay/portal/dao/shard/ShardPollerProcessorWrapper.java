@@ -55,6 +55,6 @@ public class ShardPollerProcessorWrapper implements PollerProcessor {
 		}
 	}
 
-	private PollerProcessor _pollerProcessor;
+	private final PollerProcessor _pollerProcessor;
 
 }

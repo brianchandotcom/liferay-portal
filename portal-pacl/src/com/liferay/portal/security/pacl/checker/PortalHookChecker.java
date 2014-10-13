@@ -274,7 +274,8 @@ public class PortalHookChecker extends BaseChecker {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PortalHookChecker.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortalHookChecker.class);
 
 	private boolean _customJspDir;
 	private Set<String> _indexers;

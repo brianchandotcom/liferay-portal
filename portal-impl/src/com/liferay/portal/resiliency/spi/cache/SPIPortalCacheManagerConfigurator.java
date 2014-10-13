@@ -121,9 +121,9 @@ public class SPIPortalCacheManagerConfigurator {
 				_portalCacheManagerName);
 		}
 
-		private boolean _manager;
+		private final boolean _manager;
 		private transient PortalCacheManager<?, ?> _portalCacheManager;
-		private String _portalCacheManagerName;
+		private final String _portalCacheManagerName;
 
 	}
 

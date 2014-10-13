@@ -45,12 +45,12 @@ public class PortletContextBag {
 		return _servletContextName;
 	}
 
-	private Map<String, CustomUserAttributes> _customUserAttributes =
+	private final Map<String, CustomUserAttributes> _customUserAttributes =
 		new HashMap<String, CustomUserAttributes>();
-	private Map<String, PortletFilter> _portletFilters =
+	private final Map<String, PortletFilter> _portletFilters =
 		new HashMap<String, PortletFilter>();
-	private String _servletContextName;
-	private Map<String, PortletURLGenerationListener> _urlListeners =
+	private final String _servletContextName;
+	private final Map<String, PortletURLGenerationListener> _urlListeners =
 		new HashMap<String, PortletURLGenerationListener>();
 
 }

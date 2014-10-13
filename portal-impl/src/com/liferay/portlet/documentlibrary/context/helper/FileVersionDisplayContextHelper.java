@@ -80,7 +80,7 @@ public class FileVersionDisplayContextHelper {
 
 	private Boolean _approved;
 	private Boolean _draft;
-	private FileVersion _fileVersion;
+	private final FileVersion _fileVersion;
 	private Boolean _officeDoc;
 	private Boolean _pending;
 

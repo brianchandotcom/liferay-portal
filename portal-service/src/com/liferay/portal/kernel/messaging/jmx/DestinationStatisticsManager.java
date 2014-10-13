@@ -130,7 +130,7 @@ public class DestinationStatisticsManager
 		"Liferay:product=Portal,type=MessagingDestinationStatistics,name=";
 
 	private boolean _autoRefresh;
-	private Destination _destination;
+	private final Destination _destination;
 	private DestinationStatistics _destinationStatistics;
 	private long _lastRefresh;
 

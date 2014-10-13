@@ -180,14 +180,15 @@ public class BeanLocatorImpl implements BeanLocator {
 		return _pacl.getBean(bean, _classLoader);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(BeanLocatorImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		BeanLocatorImpl.class);
 
-	private static PACL _pacl = new NoPACL();
+	private static final PACL _pacl = new NoPACL();
 
 	private ApplicationContext _applicationContext;
-	private ClassLoader _classLoader;
+	private final ClassLoader _classLoader;
 	private String _paclServletContextName;
-	private Map<String, Object> _velocityBeans =
+	private final Map<String, Object> _velocityBeans =
 		new ConcurrentHashMap<String, Object>();
 
 	private static class NoPACL implements PACL {

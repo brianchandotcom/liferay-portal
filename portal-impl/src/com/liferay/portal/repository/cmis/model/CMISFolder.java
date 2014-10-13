@@ -480,11 +480,11 @@ public class CMISFolder extends CMISModel implements Folder {
 		return _cmisRepository;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(CMISFolder.class);
+	private static final Log _log = LogFactoryUtil.getLog(CMISFolder.class);
 
-	private org.apache.chemistry.opencmis.client.api.Folder _cmisFolder;
-	private CMISRepository _cmisRepository;
+	private final org.apache.chemistry.opencmis.client.api.Folder _cmisFolder;
+	private final CMISRepository _cmisRepository;
 	private long _folderId;
-	private String _uuid;
+	private final String _uuid;
 
 }

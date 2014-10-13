@@ -37,6 +37,6 @@ public class ConfigurationActionRequest
 		return _portletPreferences;
 	}
 
-	private PortletPreferences _portletPreferences;
+	private final PortletPreferences _portletPreferences;
 
 }

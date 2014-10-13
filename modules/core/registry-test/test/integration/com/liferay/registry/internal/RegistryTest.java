@@ -764,10 +764,10 @@ public class RegistryTest {
 			TrackedOne trackedOne) {
 		}
 
-		private InterfaceOne _interfaceOneA;
-		private InterfaceOne _interfaceOneB;
-		private AtomicReference<TrackedOne> _referenceA;
-		private AtomicReference<TrackedOne> _referenceB;
+		private final InterfaceOne _interfaceOneA;
+		private final InterfaceOne _interfaceOneB;
+		private final AtomicReference<TrackedOne> _referenceA;
+		private final AtomicReference<TrackedOne> _referenceB;
 
 	}
 

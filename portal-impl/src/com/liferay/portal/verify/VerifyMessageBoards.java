@@ -178,6 +178,7 @@ public class VerifyMessageBoards extends VerifyProcess {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(VerifyMessageBoards.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		VerifyMessageBoards.class);
 
 }

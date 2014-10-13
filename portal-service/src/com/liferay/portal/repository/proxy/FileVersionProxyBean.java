@@ -349,6 +349,6 @@ public class FileVersionProxyBean
 		return newFileVersionProxyBean(fileVersion);
 	}
 
-	private FileVersion _fileVersion;
+	private final FileVersion _fileVersion;
 
 }

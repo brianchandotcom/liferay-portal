@@ -68,9 +68,9 @@ public class SyncEngineUtil {
 		_syncEngineListeners.remove(syncEngineListener);
 	}
 
-	private static ExecutorService _executorService =
+	private static final ExecutorService _executorService =
 		Executors.newSingleThreadScheduledExecutor();
-	private static List<SyncEngineListener> _syncEngineListeners =
+	private static final List<SyncEngineListener> _syncEngineListeners =
 		new ArrayList<SyncEngineListener>();
 
 }

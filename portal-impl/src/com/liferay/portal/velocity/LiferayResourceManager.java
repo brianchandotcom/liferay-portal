@@ -182,7 +182,7 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 		return template;
 	}
 
-	private PortalCache<TemplateResource, Object> _portalCache;
+	private final PortalCache<TemplateResource, Object> _portalCache;
 
 	private class LiferayTemplate extends Template {
 
@@ -212,7 +212,7 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 			}
 		}
 
-		private Reader _reader;
+		private final Reader _reader;
 
 	}
 
@@ -232,9 +232,9 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 			return doGetResource(_resourceName, _resourceType, _encoding);
 		}
 
-		private String _encoding;
-		private String _resourceName;
-		private int _resourceType;
+		private final String _encoding;
+		private final String _resourceName;
+		private final int _resourceType;
 
 	}
 

@@ -694,7 +694,7 @@ public class SeleniumBuilderContextTest {
 		"../../../../../../../../../../portal-web/test/functional/com/liferay" +
 			"/portalweb/portal/util/liferayselenium/";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		SeleniumBuilderContextTest.class);
 
 	private static SeleniumBuilderContext _seleniumBuilderContext;

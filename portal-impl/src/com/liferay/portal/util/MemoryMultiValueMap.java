@@ -111,6 +111,6 @@ public class MemoryMultiValueMap<K extends Serializable, V extends Serializable>
 		return value;
 	}
 
-	private Map<K, Set<V>> _map = new HashMap<K, Set<V>>();
+	private final Map<K, Set<V>> _map = new HashMap<K, Set<V>>();
 
 }

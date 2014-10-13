@@ -335,7 +335,8 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 
 	private static final int _WORKERS_MAX_SIZE = 5;
 
-	private static Log _log = LogFactoryUtil.getLog(BaseAsyncDestination.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseAsyncDestination.class);
 
 	private int _maximumQueueSize = Integer.MAX_VALUE;
 	private RejectedExecutionHandler _rejectedExecutionHandler;

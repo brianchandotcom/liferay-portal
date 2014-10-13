@@ -89,7 +89,8 @@ public class PollerCometHandler extends BaseCometHandler {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PollerCometHandler.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		PollerCometHandler.class);
 
 	private ChannelListener _channelListener;
 	private long _companyId;

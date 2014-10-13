@@ -50,6 +50,6 @@ public class BooleanClauseOccurImpl implements BooleanClauseOccur {
 		return _name;
 	}
 
-	private String _name;
+	private final String _name;
 
 }

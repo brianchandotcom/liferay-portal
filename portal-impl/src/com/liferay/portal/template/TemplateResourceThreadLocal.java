@@ -41,7 +41,7 @@ public class TemplateResourceThreadLocal {
 		templateResources.put(templateType, templateResource);
 	}
 
-	private static ThreadLocal<Map<String, TemplateResource>>
+	private static final ThreadLocal<Map<String, TemplateResource>>
 		_templateResources =
 			new InitialThreadLocal<Map<String, TemplateResource>>(
 				TemplateResourceThreadLocal.class.getName() +

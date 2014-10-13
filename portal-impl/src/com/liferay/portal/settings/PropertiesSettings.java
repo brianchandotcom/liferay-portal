@@ -79,6 +79,6 @@ public class PropertiesSettings extends BaseSettings {
 		return false;
 	}
 
-	private Properties _properties;
+	private final Properties _properties;
 
 }

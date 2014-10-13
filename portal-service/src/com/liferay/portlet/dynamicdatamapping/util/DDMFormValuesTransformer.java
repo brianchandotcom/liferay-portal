@@ -86,9 +86,9 @@ public class DDMFormValuesTransformer {
 		}
 	}
 
-	private Map<String, DDMFormFieldValueTransformer>
+	private final Map<String, DDMFormFieldValueTransformer>
 		_ddmFormFieldValueTransformersMap =
 			new HashMap<String, DDMFormFieldValueTransformer>();
-	private DDMFormValues _ddmFormValues;
+	private final DDMFormValues _ddmFormValues;
 
 }

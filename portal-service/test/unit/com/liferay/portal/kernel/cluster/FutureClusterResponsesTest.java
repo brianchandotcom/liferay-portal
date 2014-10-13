@@ -174,7 +174,7 @@ public class FutureClusterResponsesTest {
 			return _address;
 		}
 
-		private String _address;
+		private final String _address;
 
 	}
 

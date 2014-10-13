@@ -403,10 +403,10 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 		}
 	}
 
-	private Map<String, List<LayoutFriendlyURL>> _layoutFriendlyURLs =
+	private final Map<String, List<LayoutFriendlyURL>> _layoutFriendlyURLs =
 		new HashMap<String, List<LayoutFriendlyURL>>();
 	private LayoutPrototype _layoutPrototype;
-	private Map<String, List<Layout>> _layouts =
+	private final Map<String, List<Layout>> _layouts =
 		new HashMap<String, List<Layout>>();
 	private LayoutSetPrototype _layoutSetPrototype;
 

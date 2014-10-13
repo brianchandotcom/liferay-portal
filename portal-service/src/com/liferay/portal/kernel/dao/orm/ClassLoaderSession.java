@@ -458,7 +458,7 @@ public class ClassLoaderSession implements Session {
 		}
 	}
 
-	private ClassLoader _classLoader;
-	private Session _session;
+	private final ClassLoader _classLoader;
+	private final Session _session;
 
 }

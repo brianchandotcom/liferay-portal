@@ -512,18 +512,18 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 		return (EventRequest)_portletRequest;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortletServletRequest.class);
 
-	private boolean _include;
-	private String _lifecycle;
-	private boolean _named;
-	private String _pathInfo;
-	private PortletRequest _portletRequest;
-	private PortletRequestImpl _portletRequestImpl;
-	private String _queryString;
-	private HttpServletRequest _request;
-	private String _requestURI;
-	private String _servletPath;
+	private final boolean _include;
+	private final String _lifecycle;
+	private final boolean _named;
+	private final String _pathInfo;
+	private final PortletRequest _portletRequest;
+	private final PortletRequestImpl _portletRequestImpl;
+	private final String _queryString;
+	private final HttpServletRequest _request;
+	private final String _requestURI;
+	private final String _servletPath;
 
 }

@@ -339,7 +339,7 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 		return 0;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultLDAPToPortalConverter.class);
 
 }

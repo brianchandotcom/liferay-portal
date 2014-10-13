@@ -95,7 +95,7 @@ public class DefaultScreenNameGeneratorTest {
 			"postfix." + TestPropsValues.getUserId(), screenName);
 	}
 
-	private ScreenNameGenerator _screenNameGenerator =
+	private final ScreenNameGenerator _screenNameGenerator =
 		new DefaultScreenNameGenerator();
 
 }

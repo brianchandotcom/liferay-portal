@@ -65,6 +65,6 @@ public class SharedSessionAttributeCache implements Serializable {
 	private static final String _SESSION_KEY =
 		SharedSessionAttributeCache.class.getName();
 
-	private Map<String, Object> _attributes;
+	private final Map<String, Object> _attributes;
 
 }

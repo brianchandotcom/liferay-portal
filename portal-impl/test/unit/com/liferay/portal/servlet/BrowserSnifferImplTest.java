@@ -229,6 +229,7 @@ public class BrowserSnifferImplTest {
 				clazz.getResourceAsStream("dependencies/user_agents.csv")));
 	}
 
-	private BrowserSnifferImpl _browserSnifferImpl = new BrowserSnifferImpl();
+	private final BrowserSnifferImpl _browserSnifferImpl =
+		new BrowserSnifferImpl();
 
 }

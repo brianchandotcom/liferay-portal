@@ -36,10 +36,10 @@ public class FullNameGeneratorFactory {
 		_serviceTracker.open();
 	}
 
-	private static FullNameGeneratorFactory _instance =
+	private static final FullNameGeneratorFactory _instance =
 		new FullNameGeneratorFactory();
 
-	private ServiceTracker<FullNameGenerator, FullNameGenerator>
+	private final ServiceTracker<FullNameGenerator, FullNameGenerator>
 		_serviceTracker;
 
 }

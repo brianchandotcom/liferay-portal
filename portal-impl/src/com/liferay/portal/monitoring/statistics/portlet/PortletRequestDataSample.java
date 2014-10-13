@@ -77,8 +77,8 @@ public class PortletRequestDataSample extends BaseDataSample {
 		return sb.toString();
 	}
 
-	private String _displayName;
-	private String _portletId;
-	private PortletRequestType _requestType;
+	private final String _displayName;
+	private final String _portletId;
+	private final PortletRequestType _requestType;
 
 }

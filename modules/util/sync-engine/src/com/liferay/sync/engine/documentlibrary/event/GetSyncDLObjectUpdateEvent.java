@@ -89,6 +89,6 @@ public class GetSyncDLObjectUpdateEvent extends BaseEvent {
 	private static final String _URL_PATH =
 		"/sync-web.syncdlobject/get-sync-dl-object-update";
 
-	private Handler<Void> _handler;
+	private final Handler<Void> _handler;
 
 }

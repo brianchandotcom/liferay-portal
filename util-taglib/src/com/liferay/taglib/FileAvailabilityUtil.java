@@ -74,7 +74,7 @@ public class FileAvailabilityUtil {
 		_availabilities.clear();
 	}
 
-	private static Map<String, Boolean> _availabilities =
+	private static final Map<String, Boolean> _availabilities =
 		new ConcurrentHashMap<String, Boolean>();
 
 	private static class ResourcePrivilegedExceptionAction
@@ -92,8 +92,8 @@ public class FileAvailabilityUtil {
 			return _servletContext.getResource(_path);
 		}
 
-		private String _path;
-		private ServletContext _servletContext;
+		private final String _path;
+		private final ServletContext _servletContext;
 
 	}
 

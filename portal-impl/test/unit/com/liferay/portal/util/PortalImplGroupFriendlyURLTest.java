@@ -90,6 +90,6 @@ public class PortalImplGroupFriendlyURLTest {
 		Assert.assertNull(groupFriendlyURLIndex);
 	}
 
-	private PortalImpl _portalImpl = new PortalImpl();
+	private final PortalImpl _portalImpl = new PortalImpl();
 
 }

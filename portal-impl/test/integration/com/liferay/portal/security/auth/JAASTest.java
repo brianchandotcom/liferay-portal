@@ -471,8 +471,8 @@ public class JAASTest {
 			}
 		}
 
-		private String _name;
-		private String _password;
+		private final String _name;
+		private final String _password;
 
 	}
 

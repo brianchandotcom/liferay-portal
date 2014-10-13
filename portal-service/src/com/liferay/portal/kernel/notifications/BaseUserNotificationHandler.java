@@ -177,7 +177,7 @@ public abstract class BaseUserNotificationHandler
 		_selector = selector;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		BaseUserNotificationHandler.class);
 
 	private boolean _actionable;

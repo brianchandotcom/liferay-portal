@@ -39,7 +39,7 @@ public abstract class AbstractStatementCallback extends Statement {
 		return _testContextHandler;
 	}
 
-	private Statement _statement;
-	private TestContextHandler _testContextHandler;
+	private final Statement _statement;
+	private final TestContextHandler _testContextHandler;
 
 }

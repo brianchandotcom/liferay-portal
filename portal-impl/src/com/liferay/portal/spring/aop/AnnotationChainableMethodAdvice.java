@@ -141,7 +141,7 @@ public abstract class AnnotationChainableMethodAdvice<T extends Annotation>
 			_annotationClass, this);
 	}
 
-	private Class<? extends Annotation> _annotationClass;
-	private T _nullAnnotation;
+	private final Class<? extends Annotation> _annotationClass;
+	private final T _nullAnnotation;
 
 }

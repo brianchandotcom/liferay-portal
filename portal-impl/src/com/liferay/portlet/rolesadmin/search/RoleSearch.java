@@ -118,6 +118,6 @@ public class RoleSearch extends SearchContainer<Role> {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(RoleSearch.class);
+	private static final Log _log = LogFactoryUtil.getLog(RoleSearch.class);
 
 }

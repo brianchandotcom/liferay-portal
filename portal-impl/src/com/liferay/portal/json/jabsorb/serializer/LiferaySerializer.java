@@ -364,6 +364,7 @@ public class LiferaySerializer extends AbstractSerializer {
 	private static final Class<?>[] _SERIALIZABLE_CLASSES =
 		{Serializable.class};
 
-	private static Log _log = LogFactoryUtil.getLog(LiferaySerializer.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LiferaySerializer.class);
 
 }

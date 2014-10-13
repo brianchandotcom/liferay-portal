@@ -110,7 +110,7 @@ public class TransactionalCallableUtilTest {
 		}
 	}
 
-	private TransactionAttribute _transactionAttribute =
+	private final TransactionAttribute _transactionAttribute =
 		TransactionAttributeBuilder.build(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 

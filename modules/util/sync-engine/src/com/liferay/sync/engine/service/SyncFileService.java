@@ -701,7 +701,7 @@ public class SyncFileService {
 		return name;
 	}
 
-	private static Logger _logger = LoggerFactory.getLogger(
+	private static final Logger _logger = LoggerFactory.getLogger(
 		SyncFileService.class);
 
 	private static SyncFilePersistence _syncFilePersistence =

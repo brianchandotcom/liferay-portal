@@ -107,6 +107,6 @@ public class RepositoryModelCreateDateComparator<T>
 		}
 	}
 
-	private boolean _ascending;
+	private final boolean _ascending;
 
 }

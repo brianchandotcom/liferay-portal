@@ -150,7 +150,7 @@ public class JavaScriptExecutor extends BaseScriptingExecutor {
 
 	private static final String _LANGUAGE = "javascript";
 
-	private PortalCache<String, Script> _portalCache =
+	private final PortalCache<String, Script> _portalCache =
 		SingleVMPoolUtil.getCache(_CACHE_NAME);
 
 }

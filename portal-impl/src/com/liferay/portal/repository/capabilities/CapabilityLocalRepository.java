@@ -296,6 +296,6 @@ public class CapabilityLocalRepository
 		return folder;
 	}
 
-	private RepositoryEventTrigger _repositoryEventTrigger;
+	private final RepositoryEventTrigger _repositoryEventTrigger;
 
 }

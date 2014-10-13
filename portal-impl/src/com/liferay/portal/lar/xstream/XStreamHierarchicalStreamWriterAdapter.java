@@ -66,6 +66,6 @@ class XStreamHierarchicalStreamWriterAdapter
 			_hierarchicalStreamWriter.underlyingWriter());
 	}
 
-	private HierarchicalStreamWriter _hierarchicalStreamWriter;
+	private final HierarchicalStreamWriter _hierarchicalStreamWriter;
 
 }

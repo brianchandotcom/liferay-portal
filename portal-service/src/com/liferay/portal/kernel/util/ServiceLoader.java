@@ -133,9 +133,9 @@ public class ServiceLoader {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ServiceLoader.class);
+	private static final Log _log = LogFactoryUtil.getLog(ServiceLoader.class);
 
-	private static ServiceLoaderCondition _serviceLoaderCondition =
+	private static final ServiceLoaderCondition _serviceLoaderCondition =
 		new DefaultServiceLoaderCondition();
 
 }

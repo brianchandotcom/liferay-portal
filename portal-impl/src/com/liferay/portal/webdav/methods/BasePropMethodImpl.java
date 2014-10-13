@@ -426,6 +426,7 @@ public abstract class BasePropMethodImpl implements Method {
 			GETCONTENTLENGTH, ISREADONLY, LOCKDISCOVERY, RESOURCETYPE
 		});
 
-	private static Log _log = LogFactoryUtil.getLog(BasePropMethodImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		BasePropMethodImpl.class);
 
 }

@@ -39,6 +39,6 @@ public class AxisConfigurationFactory implements EngineConfigurationFactory {
 		return _engineConfigurationFactory.getServerEngineConfig();
 	}
 
-	private EngineConfigurationFactory _engineConfigurationFactory;
+	private final EngineConfigurationFactory _engineConfigurationFactory;
 
 }

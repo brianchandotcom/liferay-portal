@@ -50,7 +50,7 @@ public class PACLInitialContextFactoryBuilder
 
 	// This must not be static because of LPS-33404
 
-	private Log _log = LogFactoryUtil.getLog(
+	private final Log _log = LogFactoryUtil.getLog(
 		PACLInitialContextFactoryBuilder.class.getName());
 
 }

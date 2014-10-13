@@ -233,12 +233,12 @@ public class Element {
 		"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 
 	private boolean _elementClosed;
-	private LinkedList<Element> _elementStack;
-	private String _name;
+	private final LinkedList<Element> _elementStack;
+	private final String _name;
 	private boolean _openTagClosed;
 	private Element _parentElement;
-	private StringBundler _stringBundler;
-	private String _text;
+	private final StringBundler _stringBundler;
+	private final String _text;
 	private String _xmlString;
 
 }

@@ -923,7 +923,7 @@ public class DLImpl implements DL {
 			title, StringPool.SLASH, StringPool.UNDERLINE);
 
 		if (Validator.isNotNull(extension) &&
-			!fileName.endsWith(StringPool.PERIOD + extension)) {
+			!StringUtil.endsWith(fileName, StringPool.PERIOD + extension)) {
 
 			fileName += StringPool.PERIOD + extension;
 		}
@@ -932,7 +932,7 @@ public class DLImpl implements DL {
 			int x = fileName.length() - 1;
 
 			if (Validator.isNotNull(extension)) {
-				x = fileName.lastIndexOf(StringPool.PERIOD + extension);
+				x = fileName.lastIndexOf(StringPool.PERIOD);
 			}
 
 			int y = x - (fileName.length() - 255);

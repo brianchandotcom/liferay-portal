@@ -64,6 +64,12 @@ public class SyncWatchEventProcessor implements Runnable {
 			return;
 		}
 
+		Watcher watcher = WatcherRegistry.getWatcher(_syncAccountId);
+
+		List<String> createdFilePathNames = watcher.getCreatedFilePathNames();
+
+		createdFilePathNames.clear();
+
 		if (_logger.isTraceEnabled()) {
 			_logger.trace("Processing sync watch events");
 		}

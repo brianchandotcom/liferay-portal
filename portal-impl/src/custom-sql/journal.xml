@@ -70,7 +70,7 @@
 				([$FOLDER_ID$]) AND
 				(JournalArticle.classNameId = ?) AND
 				([$STATUS$]) AND
-				([$TYPE_STRUCTURE_TEMPLATE$]) AND
+				([$STRUCTURE_TEMPLATE$]) AND
 				(tempJournalArticle.id_ IS NULL) AND
 				(
 					(JournalArticle.articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
@@ -204,7 +204,7 @@
 				([$FOLDER_ID$]) AND
 				(JournalArticle.classNameId = ?) AND
 				([$STATUS$]) AND
-				([$TYPE_STRUCTURE_TEMPLATE$]) AND
+				([$STRUCTURE_TEMPLATE$]) AND
 				(tempJournalArticle.id_ IS NULL) AND
 				(
 					(JournalArticle.articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]

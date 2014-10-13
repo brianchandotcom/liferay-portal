@@ -169,19 +169,20 @@ public interface DLSyncEventModel extends BaseModel<DLSyncEvent> {
 	public Object clone();
 
 	@Override
-	public int compareTo(DLSyncEvent dlSyncEvent);
+	public int compareTo(
+		com.liferay.portlet.documentlibrary.model.DLSyncEvent dlSyncEvent);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<DLSyncEvent> toCacheModel();
+	public CacheModel<com.liferay.portlet.documentlibrary.model.DLSyncEvent> toCacheModel();
 
 	@Override
-	public DLSyncEvent toEscapedModel();
+	public com.liferay.portlet.documentlibrary.model.DLSyncEvent toEscapedModel();
 
 	@Override
-	public DLSyncEvent toUnescapedModel();
+	public com.liferay.portlet.documentlibrary.model.DLSyncEvent toUnescapedModel();
 
 	@Override
 	public String toString();

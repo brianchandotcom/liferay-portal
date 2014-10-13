@@ -653,19 +653,20 @@ public interface DLFolderModel extends BaseModel<DLFolder>, ContainerModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(DLFolder dlFolder);
+	public int compareTo(
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<DLFolder> toCacheModel();
+	public CacheModel<com.liferay.portlet.documentlibrary.model.DLFolder> toCacheModel();
 
 	@Override
-	public DLFolder toEscapedModel();
+	public com.liferay.portlet.documentlibrary.model.DLFolder toEscapedModel();
 
 	@Override
-	public DLFolder toUnescapedModel();
+	public com.liferay.portlet.documentlibrary.model.DLFolder toUnescapedModel();
 
 	@Override
 	public String toString();

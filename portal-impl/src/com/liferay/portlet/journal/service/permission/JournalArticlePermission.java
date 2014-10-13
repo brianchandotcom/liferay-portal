@@ -180,16 +180,14 @@ public class JournalArticlePermission implements BaseModelPermissionChecker {
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, long classPK,
-			String actionId)
+			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
 		JournalArticle article =
 			JournalArticleLocalServiceUtil.fetchLatestArticle(classPK);
 
 		if (article == null) {
-			article =
-				JournalArticleLocalServiceUtil.getArticle(classPK);
+			article = JournalArticleLocalServiceUtil.getArticle(classPK);
 		}
 
 		return contains(permissionChecker, article, actionId);

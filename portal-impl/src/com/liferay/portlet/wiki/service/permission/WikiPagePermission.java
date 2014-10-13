@@ -77,8 +77,7 @@ public class WikiPagePermission implements BaseModelPermissionChecker {
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, long classPK,
-			String actionId)
+			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
 		WikiPage page = WikiPageLocalServiceUtil.fetchPage(classPK);

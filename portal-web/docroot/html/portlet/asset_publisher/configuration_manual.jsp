@@ -213,7 +213,7 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 	<aui:button onClick='<%= renderResponse.getNamespace() + "saveSelectBoxes();" %>' type="submit" />
 </aui:button-row>
 
-<aui:script>
+<aui:script sandbox="<%= true %>">
 	function selectAsset(assetEntryId, assetClassName, assetType, assetEntryTitle, groupName) {
 		var form = document.<portlet:namespace />fm;
 
@@ -224,13 +224,13 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 		submitForm(form);
 	}
 
-	AUI.$('body').delegate(
-		'.asset-selector a',
+	$('body').on(
 		'click',
+		'.asset-selector a',
 		function(event) {
 			event.preventDefault();
 
-			var currentTarget = AUI.$(event.currentTarget);
+			var currentTarget = $(event.currentTarget);
 
 			Liferay.Util.selectEntity(
 				{

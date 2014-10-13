@@ -527,24 +527,24 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 	<aui:button onClick='<%= renderResponse.getNamespace() + "saveSelectBoxes();" %>' type="submit" />
 </aui:button-row>
 
-<aui:script>
+<aui:script sandbox="<%= true %>">
 	var MAP_DDM_STRUCTURES = {};
 
-	var assetSelector = AUI.$('#<portlet:namespace />anyAssetType');
-	var assetMultipleSelector = AUI.$('#<portlet:namespace />currentClassNameIds');
-	var ddmStructureFieldName = AUI.$('#<portlet:namespace />ddmStructureFieldName');
-	var orderByColumn1 = AUI.$('#<portlet:namespace />orderByColumn1');
-	var orderByColumn2 = AUI.$('#<portlet:namespace />orderByColumn2');
-	var sourcePanel = AUI.$('#assetPublisherSourcePanel');
+	var assetSelector = $('#<portlet:namespace />anyAssetType');
+	var assetMultipleSelector = $('#<portlet:namespace />currentClassNameIds');
+	var ddmStructureFieldName = $('#<portlet:namespace />ddmStructureFieldName');
+	var orderByColumn1 = $('#<portlet:namespace />orderByColumn1');
+	var orderByColumn2 = $('#<portlet:namespace />orderByColumn2');
+	var sourcePanel = $('#assetPublisherSourcePanel');
 
 	<%
 	for (AssetRendererFactory curRendererFactory : classTypesAssetRendererFactories) {
 		String className = AssetPublisherUtil.getClassName(curRendererFactory);
 	%>
 
-		Liferay.Util.toggleSelectBox('<portlet:namespace />anyClassType<%= className %>','false','<portlet:namespace /><%= className %>Boxes');
+		Liferay.Util.toggleSelectBox('<portlet:namespace />anyClassType<%= className %>', 'false', '<portlet:namespace /><%= className %>Boxes');
 
-		var <%= className %>Options = AUI.$('#<portlet:namespace /><%= className %>Options');
+		var <%= className %>Options = $('#<portlet:namespace /><%= className %>Options');
 
 		function <portlet:namespace />toggle<%= className %>(removeOrderBySubtype) {
 			var assetOptions = assetMultipleSelector.find('option');
@@ -555,17 +555,8 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 			<%= className %>Options.toggleClass('hide', !showOptions);
 
 			if (removeOrderBySubtype) {
-				var orderByColumn1Subtype = orderByColumn1.find('.order-by-subtype');
-
-				if (orderByColumn1Subtype.length) {
-					orderByColumn1Subtype.remove();
-				}
-
-				var orderByColumn2Subtype = orderByColumn2.find('.order-by-subtype');
-
-				if (orderByColumn2Subtype.length) {
-					orderByColumn2Subtype.remove();
-				}
+				orderByColumn1.find('.order-by-subtype').remove();
+				orderByColumn2.find('.order-by-subtype').remove();
 			}
 
 			<c:if test="<%= assetPublisherDisplayContext.isShowSubtypeFieldsFilter() %>">
@@ -631,33 +622,22 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 		}
 		%>
 
-		var <%= className %>SubtypeSelector = AUI.$('#<portlet:namespace />anyClassType<%= className %>');
+		var <%= className %>SubtypeSelector = $('#<portlet:namespace />anyClassType<%= className %>');
 
 		<c:if test="<%= assetPublisherDisplayContext.isShowSubtypeFieldsFilter() %>">
 			function <%= className %>toggleSubclassesFields(hideSubtypeFilterEnableWrapper) {
-				var subtypeFieldsWrapper = AUI.$('#<portlet:namespace /><%= className %>subtypeFieldsWrapper');
-				var subtypeFieldsFilterEnableWrapper = AUI.$('#<portlet:namespace /><%= className %>subtypeFieldsFilterEnableWrapper');
+				var subtypeFieldsWrapper = $('#<portlet:namespace /><%= className %>subtypeFieldsWrapper');
+				var subtypeFieldsFilterEnableWrapper = $('#<portlet:namespace /><%= className %>subtypeFieldsFilterEnableWrapper');
 
 				var selectedSubtype = <%= className %>SubtypeSelector.val();
 
-				var structureOptions = AUI.$('#<portlet:namespace />' + selectedSubtype + '_<%= className %>Options');
+				var structureOptions = $('#<portlet:namespace />' + selectedSubtype + '_<%= className %>Options');
 
-				if (structureOptions.length) {
-					structureOptions.removeClass('hide');
-				}
+				structureOptions.removeClass('hide');
 
 				if ((selectedSubtype != 'false') && (selectedSubtype != 'true')) {
-					var orderByColumn1Subtype = orderByColumn1.find('.order-by-subtype');
-
-					if (orderByColumn1Subtype.length) {
-						orderByColumn1Subtype.remove();
-					}
-
-					var orderByColumn2Subtype = orderByColumn2.find('.order-by-subtype');
-
-					if (orderByColumn2Subtype.length) {
-						orderByColumn2Subtype.remove();
-					}
+					orderByColumn1.find('.order-by-subtype').remove();
+					orderByColumn2.find('.order-by-subtype').remove();
 
 					orderByColumn1.append(MAP_DDM_STRUCTURES['<%= className %>_' + selectedSubtype + '_optTextOrderByColumn1']);
 					orderByColumn2.append(MAP_DDM_STRUCTURES['<%= className %>_' + selectedSubtype + '_optTextOrderByColumn2']);
@@ -679,17 +659,15 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 			<%= className %>toggleSubclassesFields(false);
 
-			<%= className %>SubtypeSelector.change(
+			<%= className %>SubtypeSelector.on(
+				'change',
 				function(event) {
 					setDDMFields('<%= className %>', '', '', '', '');
 
-					var subtypeFieldsFilterEnabled = AUI.$('#<portlet:namespace />subtypeFieldsFilterEnabled<%= className %>');
+					var subtypeFieldsFilterEnabled = $('#<portlet:namespace />subtypeFieldsFilterEnabled<%= className %>');
 
 					subtypeFieldsFilterEnabled.val(false);
-
-					var subtypeFieldsFilterEnabledCheckbox = AUI.$('#<portlet:namespace />subtypeFieldsFilterEnabled<%= className %>');
-
-					subtypeFieldsFilterEnabledCheckbox.prop('checked', false);
+					subtypeFieldsFilterEnabled.prop('checked', false);
 
 					sourcePanel.find('.asset-subtypefields').addClass('hide');
 
@@ -719,9 +697,10 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 	<portlet:namespace />toggleSubclasses(false);
 
-	assetSelector.change(
+	assetSelector.on(
+		'change',
 		function(event) {
-			var ddmStructureFieldValue = AUI.$('#<portlet:namespace />ddmStructureFieldValue');
+			var ddmStructureFieldValue = $('#<portlet:namespace />ddmStructureFieldValue');
 
 			ddmStructureFieldName.val('');
 			ddmStructureFieldValue.val('');
@@ -730,13 +709,13 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 		}
 	);
 
-	sourcePanel.delegate(
-		'.asset-subtypefields-wrapper-enable .field',
+	sourcePanel.on(
 		'click',
+		'.asset-subtypefields-wrapper-enable .field',
 		function(event) {
-			var assetSubtypeFieldsPopupNodes = AUI.$('.asset-subtypefields-popup .btn');
+			var assetSubtypeFieldsPopupNodes = $('.asset-subtypefields-popup .btn');
 
-			var target = AUI.$(event.target);
+			var target = $(event.target);
 
 			Liferay.Util.toggleDisabled(assetSubtypeFieldsPopupNodes, !target.prop('checked'));
 		}
@@ -751,12 +730,12 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 		}
 	);
 
-	sourcePanel.delegate(
-		'.asset-subtypefields-popup',
+	sourcePanel.on(
 		'click',
+		'.asset-subtypefields-popup',
 		function(event) {
-			var currentTarget = AUI.$(event.currentTarget);
-			var target = AUI.$(event.target);
+			var currentTarget = $(event.currentTarget);
+			var target = $(event.target);
 
 			Liferay.Util.selectEntity(
 				{
@@ -766,7 +745,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 						width: 600
 					},
 					eventName: '<portlet:namespace />selectDDMStructureField',
-					id: '<portlet:namespace />selectDDMStructure' + currentTarget.prop('id'),
+					id: '<portlet:namespace />selectDDMStructure' + currentTarget.attr('id'),
 					title: '<liferay-ui:message arguments="structure-field" key="select-x" />',
 					uri: target.data('href')
 				},
@@ -778,21 +757,21 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 	);
 
 	function setDDMFields(className, name, value, displayValue, message) {
-		var ddmStructureFieldName = AUI.$('#<portlet:namespace />ddmStructureFieldName');
+		var ddmStructureFieldName = $('#<portlet:namespace />ddmStructureFieldName');
 
 		ddmStructureFieldName.val(name);
 
-		var ddmStructureFieldvalue = AUI.$('#<portlet:namespace />ddmStructureFieldValue');
+		var ddmStructureFieldvalue = $('#<portlet:namespace />ddmStructureFieldValue');
 
 		ddmStructureFieldvalue.val(value);
 
-		var ddmStructureDisplayFieldvalue = AUI.$('#<portlet:namespace />ddmStructureDisplayFieldValue');
+		var ddmStructureDisplayFieldvalue = $('#<portlet:namespace />ddmStructureDisplayFieldValue');
 
 		ddmStructureDisplayFieldvalue.val(displayValue);
 
-		var ddmStructureFieldMessage = AUI.$('#<portlet:namespace />' + className + 'ddmStructureFieldMessage');
+		var ddmStructureFieldMessage = $('#<portlet:namespace />' + className + 'ddmStructureFieldMessage');
 
-		ddmStructureFieldMessage.html(AUI._.escape(message));
+		ddmStructureFieldMessage.html(_.escape(message));
 	}
 </aui:script>
 

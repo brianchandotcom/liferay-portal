@@ -183,52 +183,35 @@
 	</aui:field-wrapper>
 </aui:fieldset>
 
-<aui:script>
-	var selectDisplayStyle = AUI.$('#<portlet:namespace />displayStyle');
+<aui:script sandbox="<%= true %>">
+	var selectDisplayStyle = $('#<portlet:namespace />displayStyle');
 
 	function showHiddenFields() {
-		var assetLinkBehavior = AUI.$('.asset-link-behavior');
-		var hiddenFields = AUI.$('.hidden-field');
+		var hiddenFields = $('.hidden-field');
 
-		if (hiddenFields) {
-			hiddenFields.parent().addClass('hide');
-		}
+		hiddenFields.parentsUntil('.general-display-settings', '.checkbox, .form-group').addClass('hide');
 
 		var displayStyle = selectDisplayStyle.val();
 
 		if (displayStyle == 'full-content') {
-			var showAssetTitle = AUI.$('.show-asset-title');
-			var showContextLink = AUI.$('.show-context-link');
-			var showExtraInfo = AUI.$('.show-extra-info');
-
-			if (showAssetTitle) {
-				showAssetTitle.parent().removeClass('hide');
-			}
-
-			if (showContextLink) {
-				showContextLink.parent().removeClass('hide');
-			}
-
-			if (showExtraInfo) {
-				showExtraInfo.parent().removeClass('hide');
-			}
+			showParent('.show-asset-title', '.checkbox');
+			showParent('.show-context-link', '.checkbox');
+			showParent('.show-extra-info', '.checkbox');
 		}
 		else {
 			if (displayStyle == 'abstracts') {
-				var abstractLength = AUI.$('.abstract-length');
-
-				if (abstractLength) {
-					abstractLength.parent().removeClass('hide');
-				}
+				showParent('.abstract-length', '.form-group');
 			}
 
-			if (assetLinkBehavior) {
-				assetLinkBehavior.parent().removeClass('hide');
-			}
+			showParent('.asset-link-behavior', '.form-group');
 		}
+	}
+
+	function showParent(child, parent) {
+		$(child).parentsUntil('.general-display-settings', parent).removeClass('hide');
 	}
 
 	showHiddenFields();
 
-	selectDisplayStyle.change(showHiddenFields);
+	selectDisplayStyle.on('change', showHiddenFields);
 </aui:script>

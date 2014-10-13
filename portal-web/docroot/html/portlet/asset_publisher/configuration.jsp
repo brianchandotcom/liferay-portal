@@ -254,16 +254,16 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 	</c:choose>
 </aui:form>
 
-<aui:script>
+<aui:script sandbox="<%= true %>">
 	var form = document.<portlet:namespace />fm;
 
-	AUI.$('body').delegate(
-		'.scope-selector a',
+	$('body').on(
 		'click',
+		'.scope-selector a',
 		function(event) {
 			event.preventDefault();
 
-			var currentTarget = AUI.$(event.currentTarget);
+			var currentTarget = $(event.currentTarget);
 
 			Liferay.Util.selectEntity(
 				{
@@ -286,6 +286,10 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 			);
 		}
 	);
+</aui:script>
+
+<aui:script>
+	var form = document.<portlet:namespace />fm;
 
 	function <portlet:namespace />chooseSelectionStyle() {
 		form.<portlet:namespace /><%= Constants.CMD %>.value = 'selection-style';
@@ -335,5 +339,5 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 		['liferay-util-list-fields']
 	);
 
-	Liferay.Util.toggleSelectBox('<portlet:namespace />anyAssetType','false','<portlet:namespace />classNamesBoxes');
+	Liferay.Util.toggleSelectBox('<portlet:namespace />anyAssetType', 'false', '<portlet:namespace />classNamesBoxes');
 </aui:script>

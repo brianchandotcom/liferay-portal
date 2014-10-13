@@ -75,20 +75,20 @@ if (queryLogicIndex >= 0) {
 	</div>
 </div>
 
-<aui:script>
-	var select = AUI.$('#<portlet:namespace /><%= randomNamespace %>selector');
+<aui:script sandbox="<%= true %>">
+	var select = $('#<portlet:namespace /><%= randomNamespace %>selector');
 	var row = select.closest('.query-row');
 
-	if (row) {
-		select.change(
-			function(event) {
-				var tagsSelector = row.find('.tags-selector');
-				var categoriesSelector = row.find('.categories-selector');
-				var isAssetTags = (select.val() == 'assetTags');
+	select.on(
+		'change',
+		function(event) {
+			var tagsSelector = row.find('.tags-selector');
+			var categoriesSelector = row.find('.categories-selector');
 
-				tagsSelector.toggleClass('hide', !isAssetTags);
-				categoriesSelector.toggleClass('hide', isAssetTags);
-			}
-		);
-	}
+			var assetTags = (select.val() == 'assetTags');
+
+			tagsSelector.toggleClass('hide', !assetTags);
+			categoriesSelector.toggleClass('hide', assetTags);
+		}
+	);
 </aui:script>

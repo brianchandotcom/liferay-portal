@@ -20,6 +20,7 @@ package com.liferay.registry.internal;
 public class TrackedOne {
 
 	public TrackedOne() {
+		_key = null;
 	}
 
 	public TrackedOne(String key) {

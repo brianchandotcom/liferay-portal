@@ -998,7 +998,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		else {
 			if (name.equals(User.class.getName())) {
 				User user = UserLocalServiceUtil.fetchUser(
-					GetterUtil.getInteger(primKey));
+					GetterUtil.getLong(primKey));
 
 				if (user != null) {
 					companyId = user.getCompanyId();
@@ -1025,7 +1025,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			}
 
 			if (name.equals(Organization.class.getName())) {
-				long organizationId = GetterUtil.getInteger(primKey);
+				long organizationId = GetterUtil.getLong(primKey);
 
 				if (isOrganizationAdminImpl(organizationId)) {
 					return true;

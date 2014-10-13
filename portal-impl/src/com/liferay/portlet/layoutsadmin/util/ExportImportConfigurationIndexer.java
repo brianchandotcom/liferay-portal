@@ -180,12 +180,18 @@ public class ExportImportConfigurationIndexer extends BaseIndexer {
 			return;
 		}
 
-		Map<Long, Boolean> layoutIdMap = (Map<Long, Boolean>)settingsMap.get(
-			"layoutIdMap");
+		Map<Number, Boolean> layoutIdMap =
+			(Map<Number, Boolean>)settingsMap.get("layoutIdMap");
 
-		Set<Long> layoutIdSet = layoutIdMap.keySet();
+		Set<Number> layoutIdSet = layoutIdMap.keySet();
 
-		Long[] layoutIds = layoutIdSet.toArray(new Long[layoutIdSet.size()]);
+		Long[] layoutIds = new Long[layoutIdSet.size()];
+
+		int i = 0;
+
+		for (Number layoutIdNumber : layoutIdSet) {
+			layoutIds[i++] = GetterUtil.getLong(layoutIdNumber);
+		}
 
 		document.addKeyword("layoutIds", layoutIds);
 	}

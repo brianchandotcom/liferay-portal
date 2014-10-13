@@ -226,8 +226,7 @@ public class DLAppLocalServiceTest {
 			Folder folder = addFolder(_group.getGroupId(), false, "Old Name");
 
 			DLAppLocalServiceUtil.updateFolder(
-				folder.getGroupId(), folder.getFolderId(),
-				folder.getParentFolderId(), "New Name",
+				folder.getFolderId(), folder.getParentFolderId(), "New Name",
 				RandomTestUtil.randomString(), serviceContext);
 
 			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(

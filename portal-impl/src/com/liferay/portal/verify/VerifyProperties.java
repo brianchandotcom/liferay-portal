@@ -33,6 +33,16 @@ import com.liferay.portlet.documentlibrary.store.StoreFactory;
  */
 public class VerifyProperties extends VerifyProcess {
 
+	protected boolean checkIfPortalPropertyExists(String key) {
+		String value = PropsUtil.get(key);
+
+		if (value != null) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Override
 	protected void doVerify() throws Exception {
 
@@ -76,6 +86,14 @@ public class VerifyProperties extends VerifyProcess {
 			verifyObsoletePortalProperty(key);
 		}
 
+		for (String[] keys : _EXTRACTED_FROM_CORE_PORTAL_KEYS) {
+			String oldKey = keys[0];
+			String newKey = keys[1];
+			String moduleName = keys[2];
+
+			verifyExtractedPortalProperty(oldKey, newKey, moduleName);
+		}
+
 		// Document library
 
 		StoreFactory.checkProperties();
@@ -83,6 +101,21 @@ public class VerifyProperties extends VerifyProcess {
 		// LDAP
 
 		verifyLDAPProperties();
+	}
+
+	protected void verifyExtractedPortalProperty(
+			String oldKey, String newKey, String moduleName)
+		throws Exception {
+
+		boolean exists = checkIfPortalPropertyExists(oldKey);
+
+		if (exists) {
+			_log.error(
+				"Portal property \"" + oldKey +
+					"\" was migrated to the module property \"" + newKey +
+						"\" and it should be defined within the module \"" +
+							moduleName + "\"");
+		}
 	}
 
 	protected void verifyLDAPProperties() throws Exception {
@@ -118,9 +151,9 @@ public class VerifyProperties extends VerifyProcess {
 	protected void verifyMigratedPortalProperty(String oldKey, String newKey)
 		throws Exception {
 
-		String value = PropsUtil.get(oldKey);
+		boolean exists = checkIfPortalPropertyExists(oldKey);
 
-		if (value != null) {
+		if (exists) {
 			_log.error(
 				"Portal property \"" + oldKey +
 					"\" was migrated to the system property \"" + newKey +
@@ -142,9 +175,9 @@ public class VerifyProperties extends VerifyProcess {
 	}
 
 	protected void verifyObsoletePortalProperty(String key) throws Exception {
-		String value = PropsUtil.get(key);
+		boolean exists = checkIfPortalPropertyExists(key);
 
-		if (value != null) {
+		if (exists) {
 			_log.error("Portal property \"" + key + "\" is obsolete");
 		}
 	}
@@ -160,9 +193,9 @@ public class VerifyProperties extends VerifyProcess {
 	protected void verifyRenamedPortalProperty(String oldKey, String newKey)
 		throws Exception {
 
-		String value = PropsUtil.get(oldKey);
+		boolean exists = checkIfPortalPropertyExists(oldKey);
 
-		if (value != null) {
+		if (exists) {
 			_log.error(
 				"Portal property \"" + oldKey + "\" was renamed to \"" +
 					newKey + "\"");
@@ -180,6 +213,13 @@ public class VerifyProperties extends VerifyProcess {
 					newKey + "\"");
 		}
 	}
+
+	private static final String[][] _EXTRACTED_FROM_CORE_PORTAL_KEYS = {
+		new String[] {
+			"polls.publish.to.live.by.default", "publish.to.live.by.default",
+			"polls-service"
+		}
+	};
 
 	private static final String[] _LDAP_KEYS = {
 		PropsKeys.LDAP_CONTACT_CUSTOM_MAPPINGS, PropsKeys.LDAP_CONTACT_MAPPINGS,

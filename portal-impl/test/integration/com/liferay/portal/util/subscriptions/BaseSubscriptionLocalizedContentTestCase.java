@@ -84,7 +84,6 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 		localizedContents = previousLocalizedContents;
 	}
 
-
 	@Test
 	public void testSubscriptionLocalizedContentWhenUpdatingBaseModel()
 		throws Exception {

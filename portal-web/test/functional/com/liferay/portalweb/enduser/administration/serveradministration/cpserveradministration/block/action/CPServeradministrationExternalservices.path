@@ -28,10 +28,41 @@
 	<td></td>
 	<td></td>
 </tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--OPEN_OFFICE_INTEGRATION-->
 <tr>
 	<td>OPEN_OFFICE_INTEGRATION_ENABLED_CHECKBOX</td>
 	<td>//input[contains(@id,'openOfficeEnabled')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--XUGGLER-->
+<tr>
+	<td>XUGGLER_JAR_FILE_SELECT</td>
+	<td>//select[contains(@id,'jarName')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>XUGGLER_INSTALL_BUTTON</td>
+	<td>//button[contains(@id,'installXugglerButton')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>XUGGLER_ENABLED_CHECKBOX</td>
+	<td>//input[contains(@id,'xugglerEnabled')]</td>
 	<td></td>
 </tr>
 </tbody>

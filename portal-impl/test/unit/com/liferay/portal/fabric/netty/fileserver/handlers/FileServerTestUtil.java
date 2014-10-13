@@ -1,0 +1,201 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.fabric.netty.fileserver.handlers;
+
+import com.liferay.portal.fabric.netty.fileserver.FileHelperUtil;
+
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+
+import java.io.IOException;
+
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
+
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
+
+import org.junit.Assert;
+
+/**
+ * @author Shuyang Zhou
+ */
+public class FileServerTestUtil {
+
+	public static void assertFileEquals(final Path file1, Path file2)
+		throws IOException {
+
+		Files.walkFileTree(file1, new FolderCompareFileVisitor(file1, file2));
+		Files.walkFileTree(file2, new FolderCompareFileVisitor(file2, file1));
+	}
+
+	public static void cleanUp() {
+		FileHelperUtil.delete(true, _paths.toArray(new Path[_paths.size()]));
+
+		_paths.clear();
+	}
+
+	public static Path createEmptyFile(Path file) throws IOException {
+		FileHelperUtil.delete(true, file);
+
+		file = Files.createFile(file);
+
+		_paths.add(file);
+
+		return file;
+	}
+
+	public static Path createFileWithData(Path file) throws IOException {
+		file = Files.write(file, createRandomData(1024));
+
+		_paths.add(file);
+
+		return file;
+	}
+
+	public static Path createFolderWithFiles(Path folder) throws IOException {
+		/**
+		 * folder
+		 *		|
+		 *		|->subFolder1
+		 *		|			|
+		 *		|			|->file1
+		 *		|			|->file2
+		 *		|
+		 *		|->subFolder2
+		 *		|			|
+		 *		|			|->file3
+		 *		|
+		 *		|->subFolder3
+		 *					|
+		 *					|->subFolder4
+		 */
+
+		FileHelperUtil.delete(folder);
+
+		_paths.add(Files.createDirectories(folder));
+
+		Path subFolder1 = folder.resolve("subFolder1");
+
+		Files.createDirectory(subFolder1);
+
+		createFileWithData(subFolder1.resolve("file1"));
+		createFileWithData(subFolder1.resolve("file2"));
+
+		Path subFolder2 = subFolder1.resolve("subFolder2");
+
+		Files.createDirectory(subFolder2);
+
+		createFileWithData(subFolder2.resolve("file3"));
+
+		Path subFolder3 = folder.resolve("subFolder3");
+
+		Files.createDirectory(subFolder3);
+
+		Files.createDirectory(subFolder3.resolve("subFolder4"));
+
+		return folder;
+	}
+
+	public static Path createNotExistFile(Path file) throws IOException {
+		FileHelperUtil.delete(true, file);
+
+		return file;
+	}
+
+	public static byte[] createRandomData(int size) {
+		byte[] data = new byte[size];
+
+		Random random = new Random();
+
+		random.nextBytes(data);
+
+		return data;
+	}
+
+	public static long getFileSystemTime(long time) throws IOException {
+		Path path = Files.createTempFile(null, null);
+
+		Files.setLastModifiedTime(path, FileTime.fromMillis(time));
+
+		try {
+			FileTime fileTime = Files.getLastModifiedTime(path);
+
+			return fileTime.toMillis();
+		}
+		finally {
+			Files.delete(path);
+		}
+	}
+
+	public static Path registerForCleanUp(Path path) {
+		_paths.add(path);
+
+		return path;
+	}
+
+	public static ByteBuf wrapFirstHalf(byte[] data) {
+		return Unpooled.wrappedBuffer(data, 0, data.length / 2);
+	}
+
+	public static ByteBuf wrapSecondHalf(byte[] data) {
+		return Unpooled.wrappedBuffer(
+			data, data.length / 2, data.length - data.length / 2);
+	}
+
+	protected static final Set<Path> _paths = new HashSet<Path>();
+
+	protected static class FolderCompareFileVisitor
+		extends SimpleFileVisitor<Path> {
+
+		@Override
+		public FileVisitResult visitFile(
+				Path file, BasicFileAttributes basicFileAttributes)
+			throws IOException {
+
+			Path relativePath = _path1.relativize(file);
+
+			Path otherFile = _path2.resolve(relativePath.toString());
+
+			Assert.assertTrue(
+				otherFile.toAbsolutePath() + " does not exist",
+				Files.exists(otherFile));
+			Assert.assertTrue(
+				otherFile.toAbsolutePath() + " is not file",
+				Files.isRegularFile(otherFile));
+			Assert.assertArrayEquals(
+				"File content does not match, file1 " + file.toAbsolutePath() +
+					", file2 " + otherFile.toAbsolutePath(),
+				Files.readAllBytes(file), Files.readAllBytes(otherFile));
+
+			return FileVisitResult.CONTINUE;
+		}
+
+		protected FolderCompareFileVisitor(Path path1, Path path2) {
+			_path1 = path1;
+			_path2 = path2;
+		}
+
+		private final Path _path1;
+		private final Path _path2;
+
+	}
+
+}

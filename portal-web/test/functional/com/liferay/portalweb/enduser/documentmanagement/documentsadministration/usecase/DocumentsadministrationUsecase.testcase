@@ -459,6 +459,107 @@
 		</execute>
 	</command>
 
+	<command name="ConfigureXugglerVideoPreviewSizePG" priority="5">
+		<property name="custom.properties" value="dl.file.entry.preview.video.width=0$${line.separator}dl.file.entry.preview.video.height=0" />
+
+		<var name="videoGenerationTimeCounter" value="0" />
+		<var name="videoGenerationTimeMaxWaitTime" value="6" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#configureExternalServices">
+			<var name="installXuggler" value="true" />
+			<var name="xugglerJarFile" value="Linux 64-bit JVM (with GNU libc v6) (xuggle-xuggler-arch-x86_64-pc-linux-gnu.jar)" />
+		</execute>
+
+		<execute macro="Portlet#shutdownServer" />
+
+		<execute macro="Portlet#startServer" />
+
+		<execute macro="Page#openURL" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#configureExternalServices">
+			<var name="enableXuggler" value="true" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.mp4" />
+			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
+		</execute>
+
+		<execute action="Home#pause" locator1="180000" />
+
+		<execute macro="DMDocument#gotoPG">
+			<var name="dmDocumentTitle" value="Document_1.mp4" />
+		</execute>
+
+		<while>
+			<and>
+				<not>
+					<equals arg1="${videoGenerationTimeCounter}" arg2="${videoGenerationTimeMaxWaitTime}" />
+				</not>
+				<condition action="PGDocumentsandmediaDocument#isElementPresent" locator-key1="INFO_MESSAGE" />
+			</and>
+			<then>
+				<var name="videoGenerationTimeCounter" value="${videoGenerationTimeCounter?increment()}" />
+
+				<execute action="Home#pause" locator1="30000" />
+
+				<execute macro="Page#gotoPG">
+					<var name="pageName" value="Documents and Media Page" />
+				</execute>
+
+				<execute macro="DMDocument#gotoPG">
+					<var name="dmDocumentTitle" value="Document_1.mp4" />
+				</execute>
+			</then>
+		</while>
+
+		<var attribute="poster" locator="//video" name="videoPreviewThumbnailLink" />
+
+		<execute action="Home#open" locator1="${videoPreviewThumbnailLink}" />
+		<execute action="Home#pause" locator1="1000" />
+
+		<var name="key_videoGenerationThumbnailResolution" value="640" />
+
+		<execute action="PGDocumentsandmediaVideoGenerationThumbnail#assertElementNotPresent" locator-key1="VIDEO_GENERATION_THUMBNAIL_RESOLUTION" />
+
+		<var name="key_videoGenerationThumbnailResolution" value="360" />
+
+		<execute action="PGDocumentsandmediaVideoGenerationThumbnail#assertElementNotPresent" locator-key1="VIDEO_GENERATION_THUMBNAIL_RESOLUTION" />
+
+		<var name="key_videoGenerationThumbnailResolution" value="1280" />
+
+		<execute action="PGDocumentsandmediaVideoGenerationThumbnail#assertElementPresent" locator-key1="VIDEO_GENERATION_THUMBNAIL_RESOLUTION" />
+
+		<var name="key_videoGenerationThumbnailResolution" value="720" />
+
+		<execute action="PGDocumentsandmediaVideoGenerationThumbnail#assertElementPresent" locator-key1="VIDEO_GENERATION_THUMBNAIL_RESOLUTION" />
+	</command>
+
 	<command name="ImportDocumentWithDBStore" priority="5">
 		<property name="custom.properties" value="dl.store.impl=com.liferay.portlet.documentlibrary.store.DBStore" />
 

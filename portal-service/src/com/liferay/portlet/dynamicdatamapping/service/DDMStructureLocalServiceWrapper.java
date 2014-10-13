@@ -473,6 +473,26 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 		_ddmStructureLocalService.deleteStructures(groupId);
 	}
 
+	/**
+	* Deletes the matching structures and its resources.
+	*
+	* <p>
+	* Before deleting the structures, the system verifies whether each
+	* structure is required by another entity. If any of the structures are
+	* needed, an exception is thrown.
+	* </p>
+	*
+	* @param groupId the primary key of the group
+	* @param classNameId the primary key of the class name for the structure's
+	related model
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Override
+	public void deleteStructures(long groupId, long classNameId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_ddmStructureLocalService.deleteStructures(groupId, classNameId);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _ddmStructureLocalService.dynamicQuery();

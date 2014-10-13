@@ -282,6 +282,17 @@ public interface DDMTemplateLocalService extends BaseLocalService,
 	public void deleteTemplates(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	/**
+	* Deletes the matching templates and its resources.
+	*
+	* @param groupId the primary key of the group
+	 * @param  classNameId the primary key of the class name for the template's
+	 *         related model
+	* @throws PortalException if a portal exception occurred
+	*/
+	public void deleteTemplates(long groupId, long classNameId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
 	/**

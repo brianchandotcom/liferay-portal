@@ -54,37 +54,12 @@ public class DDMTemplateVariableCodeHandler
 		String content = getTemplateContent(
 			template, templateVariableDefinition, language);
 
-		String[] lines = getContentLines(content);
-
-		String[] dataContentArray = getDataContentArray(lines);
-
-		if (!templateVariableDefinition.isRepeatable()) {
-			return dataContentArray;
+		if (templateVariableDefinition.isRepeatable()) {
+			content = handleRepeatableField(
+				templateVariableDefinition, language, content);
 		}
 
-		return handleRepeatableField(
-			templateVariableDefinition, language, dataContentArray);
-	}
-
-	protected String[] getContentLines(String content) {
-		String[] lines = StringUtil.splitLines(content);
-
-		for (int i = 0; i < lines.length; i++) {
-			lines[i] = StringUtil.trim(lines[i]);
-		}
-
-		return lines;
-	}
-
-	protected String[] getDataContentArray(String[] lines) {
-		String[] dataContentArray = new String[] {
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK};
-
-		for (int i = 0; i < lines.length; i++) {
-			dataContentArray[i] = lines[i];
-		}
-
-		return dataContentArray;
+		return new String[] {content};
 	}
 
 	protected String getResourceName(String dataType) {
@@ -120,7 +95,7 @@ public class DDMTemplateVariableCodeHandler
 
 		template.processTemplate(writer);
 
-		return writer.toString();
+		return StringUtil.trim(writer.toString());
 	}
 
 	protected TemplateResource getTemplateResource(String resource) {
@@ -133,27 +108,21 @@ public class DDMTemplateVariableCodeHandler
 		return new URLTemplateResource(resource, url);
 	}
 
-	protected String[] handleRepeatableField(
+	protected String handleRepeatableField(
 			TemplateVariableDefinition templateVariableDefinition,
-			String language, String[] dataContentArray)
+			String language, String templateContent)
 		throws Exception {
 
 		Template template = getTemplate(_templatePath + "repeatable.ftl");
 
-		String content = getTemplateContent(
+		templateContent = StringUtil.replace(
+			templateContent, StringPool.NEW_LINE,
+			StringPool.NEW_LINE + StringPool.TAB + StringPool.TAB);
+
+		template.put("templateContent", templateContent);
+
+		return getTemplateContent(
 			template, templateVariableDefinition, language);
-
-		String[] lines = getContentLines(content);
-
-		String tempDataContent0 = dataContentArray[0];
-
-		dataContentArray[0] =
-			lines[0] + StringPool.NEW_LINE + StringPool.TAB + lines[1];
-		dataContentArray[1] =
-			tempDataContent0 + dataContentArray[1] + dataContentArray[2];
-		dataContentArray[2] = lines[2] + StringPool.NEW_LINE + lines[3];
-
-		return dataContentArray;
 	}
 
 	protected boolean isCommonResource(String dataType) {

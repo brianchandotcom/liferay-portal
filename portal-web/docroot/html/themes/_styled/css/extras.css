@@ -27,7 +27,7 @@
 	@include box-shadow(0 0 5px rgba(0, 0, 0, 0.5));
 }
 
-.lfr-ddm-container .document-upload-progress {
+.lfr-ddm-container .file-entry-upload-progress {
 	@include border-radius(0 0 4px 4px);
 }
 

@@ -33,8 +33,6 @@ import com.liferay.portal.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portlet.bookmarks.model.BookmarksEntry;
-import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -158,9 +156,11 @@ public class UpgradePermission extends UpgradeProcess {
 		updatePermissions("com.liferay.portlet.shopping", true, true);
 
 		convertResourcePermissions(
-			BookmarksEntry.class.getName(), "BookmarksEntry", "entryId");
+			"com.liferay.portlet.bookmarks.model.BookmarksEntry",
+			"BookmarksEntry", "entryId");
 		convertResourcePermissions(
-			BookmarksFolder.class.getName(), "BookmarksFolder", "folderId");
+			"com.liferay.portlet.bookmarks.model.BookmarksFolder",
+			"BookmarksFolder", "folderId");
 	}
 
 	protected ResourceBlockPermissionsContainer

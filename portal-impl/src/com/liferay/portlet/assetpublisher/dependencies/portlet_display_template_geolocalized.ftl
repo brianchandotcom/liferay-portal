@@ -12,10 +12,14 @@
 <#assign companyPortletPreferences = prefsPropsUtil.getPreferences(companyId) />
 
 <#if mapsAPIProvider = "">
-	<#assign mapsAPIProvider = companyPortletPreferences.getValue("mapsAPIProvider", "googleMaps") />
+	<#assign mapsAPIProvider = companyPortletPreferences.getValue("mapsAPIProvider", "Google") />
 </#if>
 
-<#assign jsonArray = jsonFactoryUtil.createJSONArray() />
+<#assign featureCollection = jsonFactoryUtil.createJSONObject() />
+
+<@liferay.silently featureCollection.put("type", "FeatureCollection") />
+
+<#assign featureArray = jsonFactoryUtil.createJSONArray() />
 
 <#list entries as entry>
 	<#assign assetRenderer = entry.getAssetRenderer() />
@@ -25,17 +29,37 @@
 	<#assign fields = ddmReader.getFields("geolocation") />
 
 	<#list fields.iterator() as field>
-		<#assign jsonObject = jsonFactoryUtil.createJSONObject(field.getValue()) />
+		<#assign featureObject = jsonFactoryUtil.createJSONObject() />
 
-		<@liferay.silently jsonObject.put("title", assetRenderer.getTitle(locale)) />
+		<@liferay.silently featureObject.put("type", "Feature") />
+
+		<#assign geometryObject = jsonFactoryUtil.createJSONObject() />
+
+		<@liferay.silently geometryObject.put("type", "Point") />
+
+		<#assign coordinatesArray = jsonFactoryUtil.createJSONArray() />
+
+		<#assign coordinatesObject = jsonFactoryUtil.createJSONObject(field.getValue()) />
+
+		<@liferay.silently coordinatesArray.put(coordinatesObject.getDouble("longitude")) />
+
+		<@liferay.silently coordinatesArray.put(coordinatesObject.getDouble("latitude")) />
+
+		<@liferay.silently geometryObject.put("coordinates", coordinatesArray) />
+
+		<@liferay.silently featureObject.put("geometry", geometryObject) />
+
+		<#assign propertiesObject = jsonFactoryUtil.createJSONObject() />
+
+		<@liferay.silently propertiesObject.put("title", assetRenderer.getTitle(locale)) />
 
 		<#assign entryAbstract>
 			<@getAbstract asset = entry />
 		</#assign>
 
-		<@liferay.silently jsonObject.put("abstract", entryAbstract) />
+		<@liferay.silently propertiesObject.put("abstract", entryAbstract) />
 
-		<#if mapsAPIProvider = "googleMaps">
+		<#if mapsAPIProvider = "Google">
 			<#assign
 				images = {
 					"com.liferay.portlet.documentlibrary.model.DLFileEntry": "${themeDisplay.getProtocol()}://maps.google.com/mapfiles/ms/icons/green-dot.png",
@@ -46,225 +70,72 @@
 			/>
 
 			<#if images?keys?seq_contains(entry.getClassName())>
-				<@liferay.silently jsonObject.put("icon", images[entry.getClassName()]) />
+				<@liferay.silently propertiesObject.put("icon", images[entry.getClassName()]) />
 			<#else>
-				<@liferay.silently jsonObject.put("icon", images["default"]) />
+				<@liferay.silently propertiesObject.put("icon", images["default"]) />
 			</#if>
 		</#if>
 
-		<@liferay.silently jsonArray.put(jsonObject) />
+		<@liferay.silently featureObject.put("properties", propertiesObject) />
+
+		<@liferay.silently featureArray.put(featureObject) />
 	</#list>
 </#list>
 
-<div class="map-canvas" id="<@liferay_portlet.namespace />mapCanvas"></div>
+<@liferay.silently featureCollection.put("features", featureArray) />
 
-<#if mapsAPIProvider = "googleMaps" >
-	<style type="text/css">
-		#<@liferay_portlet.namespace />assetEntryAbstract {
-			min-width: 400px;
-		}
+<style type="text/css">
+	#<@liferay_portlet.namespace />assetEntryAbstract {
+		min-width: 400px;
+	}
 
-		#<@liferay_portlet.namespace />assetEntryAbstract .asset-entry-abstract-image {
-			float: left;
-		}
+	#<@liferay_portlet.namespace />assetEntryAbstract .asset-entry-abstract-image {
+		float: left;
+	}
 
-		#<@liferay_portlet.namespace />assetEntryAbstract .asset-entry-abstract-image img {
-			display: block;
-			margin-right: 2em;
-		}
+	#<@liferay_portlet.namespace />assetEntryAbstract .asset-entry-abstract-image img {
+		display: block;
+		margin-right: 2em;
+	}
 
-		#<@liferay_portlet.namespace />assetEntryAbstract .taglib-icon {
-			float: right;
-		}
+	#<@liferay_portlet.namespace />assetEntryAbstract .taglib-icon {
+		float: right;
+	}
 
-		#<@liferay_portlet.namespace />mapCanvas {
-			min-height: 400px;
-		}
+	#<@liferay_portlet.namespace />mapCanvas {
+		min-height: 400px;
+	}
 
-		#<@liferay_portlet.namespace />mapCanvas img {
-			max-width: none;
-		}
-	</style>
+	#<@liferay_portlet.namespace />mapCanvas img {
+		max-width: none;
+	}
+</style>
 
-	<#assign apiKey = group.getLiveParentTypeSettingsProperty("googleMapsAPIKey")!"" />
+<#assign apiKey = group.getLiveParentTypeSettingsProperty("googleMapsAPIKey")!"" />
 
-	<#if apiKey = "">
-		<#assign apiKey = companyPortletPreferences.getValue("googleMapsAPIKey", "") />
-	</#if>
+<#if apiKey = "">
+	<#assign apiKey = companyPortletPreferences.getValue("googleMapsAPIKey", "") />
+</#if>
 
-	<#if apiKey = "">
-		<script src="${themeDisplay.getProtocol()}://maps.googleapis.com/maps/api/js?sensor=true" type="text/javascript"></script>
-	<#else>
-		<script src="${themeDisplay.getProtocol()}://maps.googleapis.com/maps/api/js?key=${apiKey}&sensor=true" type="text/javascript"></script>
-	</#if>
+<@liferay_ui["map"] name='Map' points="${featureCollection}" />
 
-	<@liferay_aui.script>
-		(function() {
-			var putMarkers = function(map) {
-				var bounds;
+<@liferay_aui.script use="liferay-map-base">
+	var map = Liferay.component('<@liferay_portlet.namespace />Map');
 
-				var points = ${jsonArray};
+	map.on(
+		'featureClick',
+		function(event) {
+			var feature = event.feature;
 
-				var len = points.length;
-
-				if (len) {
-					bounds = new google.maps.LatLngBounds();
-
-					for (var i = 0; i < len; i++) {
-						var point = points[i];
-
-						var marker = new google.maps.Marker(
-							{
-								icon: point.icon,
-								map: map,
-								position: new google.maps.LatLng(point.latitude, point.longitude),
-								title: point.title
-							}
-						);
-
-						bounds.extend(marker.position);
-
-						(function(marker) {
-							var infoWindow = new google.maps.InfoWindow(
-								{
-									content: point.abstract || point.title
-								}
-							);
-
-							google.maps.event.addListener(
-								marker,
-								'click',
-								function() {
-									infoWindow.open(map, marker);
-								}
-							);
-						})(marker);
-					}
+			map.openDialog(
+				{
+					content: feature.getProperty('abstract'),
+					position: feature.getGeometry().get('location')
 				}
-
-				return bounds;
-			};
-
-			var drawMap = function(mapOptions) {
-				var map = new google.maps.Map(document.getElementById('<@liferay_portlet.namespace />mapCanvas'), mapOptions);
-
-				var bounds = putMarkers(map);
-
-				if (bounds) {
-					map.fitBounds(bounds);
-					map.panToBounds(bounds);
-				}
-			};
-
-			var drawDefaultMap = function() {
-				drawMap(
-					{
-						center: new google.maps.LatLng(${defaultLatitude}, ${defaultLongitude}),
-						zoom: 8
-					}
-				);
-			};
-
-			Liferay.Util.getGeolocation(
-				function(latitude, longitude) {
-					drawMap(
-						{
-							center: new google.maps.LatLng(latitude, longitude),
-							zoom: 8
-						}
-					);
-				},
-				drawDefaultMap
 			);
-		})();
-	</@liferay_aui.script>
-</#if>
-
-<#if mapsAPIProvider = "openStreetMap">
-	<style type="text/css">
-		#<@liferay_portlet.namespace />assetEntryAbstract {
-			min-width: 400px;
-			overflow: auto;
 		}
-
-		#<@liferay_portlet.namespace />assetEntryAbstract .asset-entry-abstract-image {
-			float: left;
-			margin-right: 2em;
-		}
-
-		#<@liferay_portlet.namespace />assetEntryAbstract .asset-entry-abstract-image img {
-			display: block;
-		}
-
-		#<@liferay_portlet.namespace />assetEntryAbstract .taglib-icon {
-			float: right;
-		}
-
-		#<@liferay_portlet.namespace />mapCanvas {
-			min-height: 400px;
-		}
-	</style>
-
-	<link href="${themeDisplay.getProtocol()}://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" rel="stylesheet" />
-
-	<script src="${themeDisplay.getProtocol()}://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
-
-	<@liferay_aui.script>
-		(function() {
-			var putMarkers = function(map) {
-				var bounds;
-
-				L.tileLayer(
-					'${themeDisplay.getProtocol()}://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-					{
-						attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-					}
-				).addTo(map);
-
-				var points = ${jsonArray};
-
-				var len = points.length;
-
-				if (len) {
-					bounds = L.latLngBounds([]);
-
-					for (var i = 0; i < len; i++) {
-						var point = points[i];
-
-						var latLng = L.latLng(point.latitude, point.longitude);
-
-						L.marker(latLng).addTo(map).bindPopup(
-							point.abstract,
-							{
-								maxWidth: 500
-							}
-						);
-
-						bounds.extend(latLng);
-					}
-				}
-
-				return bounds;
-			};
-
-			var drawMap = function(lat, lng) {
-				var map = L.map('<@liferay_portlet.namespace />mapCanvas').setView([lat, lng], 8);
-
-				var bounds = putMarkers(map);
-
-				if (bounds) {
-					map.fitBounds(bounds);
-				}
-			};
-
-			var drawDefaultMap = function() {
-				drawMap(${defaultLatitude}, ${defaultLongitude});
-			};
-
-			Liferay.Util.getGeolocation(drawMap, drawDefaultMap);
-		})();
-	</@liferay_aui.script>
-</#if>
+	);
+</@liferay_aui.script>
 
 <#macro getAbstract asset>
 	<div class="asset-entry-abstract" id="<@liferay_portlet.namespace />assetEntryAbstract">

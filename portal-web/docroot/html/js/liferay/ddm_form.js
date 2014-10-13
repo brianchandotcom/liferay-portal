@@ -1122,51 +1122,33 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						var container = instance.get('container');
-
-						container.one('.geolocate-button').on('click', instance.getGeolocation, instance);
-					},
-
-					getGeolocation: function() {
-						var instance = this;
-
-						var inputName = instance.getInputName();
-
-						var coordinatesNode = A.one('#' + inputName + 'Coordinates');
-						var coordinatesContainerNode = A.one('#' + inputName + 'CoordinatesContainer');
-
-						coordinatesContainerNode.show();
-
-						coordinatesNode.html(Liferay.Language.get('loading'));
-
-						Liferay.Util.getGeolocation(
-							function(latitude, longitude) {
-								instance.setValue(
-									AJSON.stringify(
-										{
-											latitude: latitude,
-											longitude: longitude
-										}
-									)
-								);
+						Liferay.MapBase.get(
+							instance.getInputName(),
+							function(map) {
+								map.on('positionChange', instance.onPositionChange, instance);
 							}
 						);
 					},
 
-					setValue: function(value) {
+					onPositionChange: function(event) {
 						var instance = this;
 
-						if (Lang.isString(value) && value !== '') {
-							var inputNode = instance.getInputNode();
+						var inputName = instance.getInputName();
 
-							inputNode.val(value);
+						var location = event.newVal.location;
 
-							value = AJSON.parse(value);
+						instance.setValue(
+							AJSON.stringify(
+								{
+									latitude: location.lat,
+									longitude: location.lng
+								}
+							)
+						);
 
-							var coordinatesNode = A.one('#' + instance.getInputName() + 'Coordinates');
+						var locationNode = A.one('#' + inputName + 'Location');
 
-							coordinatesNode.html([value.latitude, value.longitude].join(', '));
-						}
+						locationNode.html(event.newVal.address);
 					}
 				}
 			}
@@ -1588,6 +1570,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-datatype', 'aui-image-viewer', 'aui-io-request', 'aui-parse-content', 'aui-set', 'aui-sortable-list', 'json', 'liferay-notice', 'liferay-portlet-url', 'liferay-translation-manager', 'uploader']
+		requires: ['aui-base', 'aui-datatype', 'aui-image-viewer', 'aui-io-request', 'aui-parse-content', 'aui-set', 'aui-sortable-list', 'json', 'liferay-map-base', 'liferay-notice', 'liferay-portlet-url', 'liferay-translation-manager', 'uploader']
 	}
 );

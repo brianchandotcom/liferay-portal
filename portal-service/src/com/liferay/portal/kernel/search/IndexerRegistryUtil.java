@@ -170,9 +170,11 @@ public class IndexerRegistryUtil {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(IndexerRegistryUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		IndexerRegistryUtil.class);
 
-	private static final IndexerRegistryUtil _instance = new IndexerRegistryUtil();
+	private static final IndexerRegistryUtil _instance =
+		new IndexerRegistryUtil();
 
 	private static final Indexer _dummyIndexer = new DummyIndexer();
 

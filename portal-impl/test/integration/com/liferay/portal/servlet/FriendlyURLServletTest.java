@@ -106,7 +106,8 @@ public class FriendlyURLServletTest {
 		Assert.assertEquals(actualRedirectArray, expectedRedirectArray);
 	}
 
-	private final FriendlyURLServlet _friendlyURLServlet = new FriendlyURLServlet();
+	private final FriendlyURLServlet _friendlyURLServlet =
+		new FriendlyURLServlet();
 
 	@DeleteAfterTestRun
 	private Group _group;

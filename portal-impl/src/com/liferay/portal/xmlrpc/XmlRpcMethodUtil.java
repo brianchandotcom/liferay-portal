@@ -93,7 +93,8 @@ public class XmlRpcMethodUtil {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(XmlRpcMethodUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		XmlRpcMethodUtil.class);
 
 	private static final XmlRpcMethodUtil _instance = new XmlRpcMethodUtil();
 

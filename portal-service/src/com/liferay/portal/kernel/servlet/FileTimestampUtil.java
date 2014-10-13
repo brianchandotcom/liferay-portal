@@ -110,7 +110,8 @@ public class FileTimestampUtil {
 		_timestamps.clear();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(FileTimestampUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		FileTimestampUtil.class);
 
 	private static final Map<String, Long> _timestamps =
 		new ConcurrentHashMap<String, Long>();

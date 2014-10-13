@@ -66,7 +66,8 @@ public class FacetFactoryUtil {
 		_serviceTracker.open();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(FacetFactoryUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		FacetFactoryUtil.class);
 
 	private static final FacetFactoryUtil _instance = new FacetFactoryUtil();
 

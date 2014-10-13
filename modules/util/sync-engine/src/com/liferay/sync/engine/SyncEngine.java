@@ -386,7 +386,8 @@ public class SyncEngine {
 		retryFileTransfers(syncAccountId);
 	}
 
-	private static final Logger _logger = LoggerFactory.getLogger(SyncEngine.class);
+	private static final Logger _logger = LoggerFactory.getLogger(
+		SyncEngine.class);
 
 	private static final ScheduledExecutorService _eventScheduledExecutorService =
 		Executors.newScheduledThreadPool(5);

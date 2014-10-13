@@ -109,7 +109,8 @@ public class FilterDefinition {
 	private boolean _asyncSupported;
 	private final List<String> _dispatchers = new ArrayList<String>();
 	private Filter _filter;
-	private final Map<String, String> _initParameters = new HashMap<String, String>();
+	private final Map<String, String> _initParameters =
+		new HashMap<String, String>();
 	private String _name;
 	private int _priority;
 	private final List<String> _servletNames = new ArrayList<String>();

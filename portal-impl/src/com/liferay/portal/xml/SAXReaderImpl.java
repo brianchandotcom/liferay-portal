@@ -644,6 +644,7 @@ public class SAXReaderImpl implements SAXReader {
 
 	private static final SAXReaderImpl _instance = new SAXReaderImpl();
 
-	private final DocumentFactory _documentFactory = DocumentFactory.getInstance();
+	private final DocumentFactory _documentFactory =
+		DocumentFactory.getInstance();
 
 }

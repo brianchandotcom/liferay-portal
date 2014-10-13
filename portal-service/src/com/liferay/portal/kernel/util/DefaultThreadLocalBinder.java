@@ -152,7 +152,8 @@ public class DefaultThreadLocalBinder implements ThreadLocalBinder {
 		};
 
 	private ClassLoader _classLoader;
-	private final Set<ThreadLocal<?>> _threadLocals = new HashSet<ThreadLocal<?>>();
+	private final Set<ThreadLocal<?>> _threadLocals =
+		new HashSet<ThreadLocal<?>>();
 	private Map<String, String> _threadLocalSources;
 
 }

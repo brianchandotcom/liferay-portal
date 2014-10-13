@@ -263,6 +263,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private static final long _CLASS_NAME_ID = PortalUtil.getClassNameId(AssetEntry.class);
+	private static final long _CLASS_NAME_ID = PortalUtil.getClassNameId(
+		AssetEntry.class);
 
 }

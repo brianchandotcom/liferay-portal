@@ -234,6 +234,7 @@ public class LuceneIndexWriter extends BaseIndexWriter {
 		return luceneDocument;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(LuceneIndexWriter.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LuceneIndexWriter.class);
 
 }

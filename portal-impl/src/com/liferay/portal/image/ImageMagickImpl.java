@@ -241,7 +241,8 @@ public class ImageMagickImpl implements ImageMagick {
 		return _processExecutor;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(ImageMagickImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ImageMagickImpl.class);
 
 	private static final ImageMagickImpl _instance = new ImageMagickImpl();
 

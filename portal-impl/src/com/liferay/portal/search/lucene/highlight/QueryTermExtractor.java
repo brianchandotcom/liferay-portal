@@ -108,7 +108,8 @@ public class QueryTermExtractor {
 		return weightedTerms.toArray(new WeightedTerm[weightedTerms.size()]);
 	}
 
-	private static final WeightedTerm[] _emptyWeightedTermArray = new WeightedTerm[0];
+	private static final WeightedTerm[] _emptyWeightedTermArray =
+		new WeightedTerm[0];
 	private static final CopyOnWriteArrayList<Class<? extends Query>> _queryClasses =
 		new CopyOnWriteArrayList<Class<? extends Query>>();
 

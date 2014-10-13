@@ -123,7 +123,8 @@ public abstract class BasePortalCacheClusterChannel
 	private static final Log _log = LogFactoryUtil.getLog(
 		BasePortalCacheClusterChannel.class);
 
-	private static final AtomicInteger _dispatchThreadCounter = new AtomicInteger(0);
+	private static final AtomicInteger _dispatchThreadCounter =
+		new AtomicInteger(0);
 
 	private volatile boolean _destroy = false;
 	private final Thread _dispatchThread;

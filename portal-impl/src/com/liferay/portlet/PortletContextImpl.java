@@ -226,7 +226,8 @@ public class PortletContextImpl implements LiferayPortletContext {
 
 	private static final int _MINOR_VERSION = 0;
 
-	private static final Log _log = LogFactoryUtil.getLog(PortletContextImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortletContextImpl.class);
 
 	private final Portlet _portlet;
 	private final ServletContext _servletContext;

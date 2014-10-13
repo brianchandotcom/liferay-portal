@@ -98,7 +98,8 @@ public class PollerProcessorUtil {
 		return _pollerPorcessors.get(portletId);
 	}
 
-	private static final PollerProcessorUtil _instance = new PollerProcessorUtil();
+	private static final PollerProcessorUtil _instance =
+		new PollerProcessorUtil();
 
 	private final StubMap<PollerProcessor> _pollerPorcessors =
 		new StubMap<PollerProcessor>(

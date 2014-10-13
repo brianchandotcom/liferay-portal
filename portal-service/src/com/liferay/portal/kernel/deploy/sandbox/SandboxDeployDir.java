@@ -205,7 +205,8 @@ public class SandboxDeployDir {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(SandboxDeployDir.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		SandboxDeployDir.class);
 
 	private final File _deployDir;
 	private final DirectoryFilter _directoryFilter = new DirectoryFilter();

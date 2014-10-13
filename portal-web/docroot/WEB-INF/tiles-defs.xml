@@ -552,10 +552,6 @@
 		<put name="portlet_content" value="/portlet/dynamic_data_lists/select_dynamic_data_mapping_structure.jsp" />
 	</definition>
 
-	<definition name="portlet.dynamic_data_lists.update_translation_redirect" extends="portlet.dynamic_data_lists">
-		<put name="portlet_content" value="/portlet/dynamic_data_lists/update_translation_redirect.jsp" />
-	</definition>
-
 	<definition name="portlet.dynamic_data_lists.view" extends="portlet.dynamic_data_lists">
 		<put name="portlet_content" value="/portlet/dynamic_data_lists/view.jsp" />
 	</definition>
@@ -738,10 +734,6 @@
 
 	<definition name="portlet.journal.select_version" extends="portlet.journal">
 		<put name="portlet_content" value="/portlet/journal/select_version.jsp" />
-	</definition>
-
-	<definition name="portlet.journal.update_translation_redirect" extends="portlet.journal">
-		<put name="portlet_content" value="/portlet/journal/update_translation_redirect.jsp" />
 	</definition>
 
 	<definition name="portlet.journal.view" extends="portlet.journal">

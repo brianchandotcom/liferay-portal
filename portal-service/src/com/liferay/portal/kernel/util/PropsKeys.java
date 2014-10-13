@@ -1201,8 +1201,6 @@ public interface PropsKeys {
 
 	public static final String JOURNAL_ARTICLE_FORM_DEFAULT_VALUES = "journal.article.form.default.values";
 
-	public static final String JOURNAL_ARTICLE_FORM_TRANSLATE = "journal.article.form.translate";
-
 	public static final String JOURNAL_ARTICLE_FORM_UPDATE = "journal.article.form.update";
 
 	public static final String JOURNAL_ARTICLE_INDEX_ALL_VERSIONS = "journal.articles.index.all.versions";

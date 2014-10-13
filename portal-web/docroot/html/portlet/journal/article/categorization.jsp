@@ -28,8 +28,6 @@ if (Validator.isNull(type)) {
 }
 
 DDMStructure ddmStructure = (DDMStructure)request.getAttribute("edit_article.jsp-structure");
-
-String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageId");
 %>
 
 <liferay-ui:error-marker key="errorSection" value="categorization" />
@@ -38,11 +36,9 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 
 <h3><liferay-ui:message key="categorization" /></h3>
 
-<c:if test="<%= Validator.isNull(toLanguageId) %>">
-	<liferay-ui:asset-categories-error />
+<liferay-ui:asset-categories-error />
 
-	<liferay-ui:asset-tags-error />
-</c:if>
+<liferay-ui:asset-tags-error />
 
 <liferay-ui:error exception="<%= ArticleTypeException.class %>" message="please-select-a-type" />
 

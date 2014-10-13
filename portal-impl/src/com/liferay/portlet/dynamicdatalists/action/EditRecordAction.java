@@ -66,15 +66,8 @@ public class EditRecordAction extends PortletAction {
 			else if (cmd.equals(Constants.REVERT)) {
 				revertRecord(actionRequest);
 			}
-			else if (cmd.equals(Constants.TRANSLATE)) {
-				updateRecord(actionRequest);
 
-				setForward(
-					actionRequest,
-					"portlet.dynamic_data_lists.update_translation_redirect");
-			}
-
-			if (Validator.isNotNull(cmd) && !cmd.equals(Constants.TRANSLATE)) {
+			if (Validator.isNotNull(cmd)) {
 				sendRedirect(actionRequest, actionResponse);
 			}
 		}

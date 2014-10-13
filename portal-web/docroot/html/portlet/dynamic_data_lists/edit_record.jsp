@@ -162,43 +162,26 @@ if (translating) {
 		</c:if>
 
 		<aui:button-row>
-			<c:choose>
-				<c:when test="<%= translating %>">
-					<aui:button name="saveTranslationButton" onClick='<%= renderResponse.getNamespace() + "saveTranslation(event);" %>' type="submit" value="add-translation" />
 
-					<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
+			<%
+			String saveButtonLabel = "save";
 
-					<aui:script>
-						function <portlet:namespace />saveTranslation (event) {
-							<portlet:namespace />setWorkflowAction(false);
+			if ((recordVersion == null) || recordVersion.isDraft() || recordVersion.isApproved()) {
+				saveButtonLabel = "save-as-draft";
+			}
 
-							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.TRANSLATE %>';
-						}
-					</aui:script>
-				</c:when>
-				<c:otherwise>
+			String publishButtonLabel = "publish";
 
-					<%
-					String saveButtonLabel = "save";
+			if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, DDLRecordSet.class.getName(), recordSetId)) {
+				publishButtonLabel = "submit-for-publication";
+			}
+			%>
 
-					if ((recordVersion == null) || recordVersion.isDraft() || recordVersion.isApproved()) {
-						saveButtonLabel = "save-as-draft";
-					}
+			<aui:button name="saveButton" onClick='<%= renderResponse.getNamespace() + "setWorkflowAction(true);" %>' primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
 
-					String publishButtonLabel = "publish";
+			<aui:button disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "setWorkflowAction(false);" %>' type="submit" value="<%= publishButtonLabel %>" />
 
-					if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, DDLRecordSet.class.getName(), recordSetId)) {
-						publishButtonLabel = "submit-for-publication";
-					}
-					%>
-
-					<aui:button name="saveButton" onClick='<%= renderResponse.getNamespace() + "setWorkflowAction(true);" %>' primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
-
-					<aui:button disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "setWorkflowAction(false);" %>' type="submit" value="<%= publishButtonLabel %>" />
-
-					<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
-				</c:otherwise>
-			</c:choose>
+			<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
 		</aui:button-row>
 	</aui:fieldset>
 </aui:form>

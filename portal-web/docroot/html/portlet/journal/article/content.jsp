@@ -36,25 +36,11 @@ DDMStructure ddmStructure = (DDMStructure)request.getAttribute("edit_article.jsp
 DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute("edit_article.jsp-template");
 
 String defaultLanguageId = (String)request.getAttribute("edit_article.jsp-defaultLanguageId");
-String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageId");
-
-String requestedLanguageId = defaultLanguageId;
-
-if (Validator.isNotNull(toLanguageId)) {
-	requestedLanguageId = toLanguageId;
-}
 
 Fields ddmFields = null;
 
 if (article != null) {
-	String content = null;
-
-	if (Validator.isNotNull(toLanguageId)) {
-		content = JournalArticleImpl.getContentByLocale(article.getDocument(), toLanguageId);
-	}
-	else {
-		content = JournalArticleImpl.getContentByLocale(article.getDocument(), defaultLanguageId);
-	}
+	String content = article.getContent();
 
 	if (Validator.isNotNull(content)) {
 		ddmFields = JournalConverterUtil.getDDMFields(ddmStructure, content);
@@ -119,86 +105,84 @@ if (ddmFields != null) {
 				</c:if>
 			</div>
 
-			<c:if test="<%= Validator.isNull(toLanguageId) %>">
-				<div class="article-structure-template-toolbar journal-metadata">
-					<span class="alert alert-warning hide structure-message" id="<portlet:namespace />structureMessage">
-						<liferay-ui:message key="this-structure-has-not-been-saved" />
+			<div class="article-structure-template-toolbar journal-metadata">
+				<span class="alert alert-warning hide structure-message" id="<portlet:namespace />structureMessage">
+					<liferay-ui:message key="this-structure-has-not-been-saved" />
 
-						<liferay-ui:message arguments='<%= new Object[] {"journal-save-structure-trigger", "#"} %>' key="click-here-to-save-it-now" />
-					</span>
+					<liferay-ui:message arguments='<%= new Object[] {"journal-save-structure-trigger", "#"} %>' key="click-here-to-save-it-now" />
+				</span>
 
-					<aui:row>
-						<aui:col cssClass="article-structure" width="<%= 50 %>">
-							<span class="article-structure-label"><liferay-ui:message key="structure" />:</span>
+				<aui:row>
+					<aui:col cssClass="article-structure" width="<%= 50 %>">
+						<span class="article-structure-label"><liferay-ui:message key="structure" />:</span>
 
-							<aui:fieldset cssClass="article-structure-toolbar">
-								<div class="journal-form-presentation-label">
-									<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
-									<aui:input name="structureId" type="hidden" value="<%= ddmStructure.getStructureKey() %>" />
-									<aui:input name="structureName" type="hidden" value="<%= ddmStructure.getName(locale) %>" />
-									<aui:input name="structureDescription" type="hidden" value="<%= ddmStructure.getDescription(locale) %>" />
+						<aui:fieldset cssClass="article-structure-toolbar">
+							<div class="journal-form-presentation-label">
+								<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
+								<aui:input name="structureId" type="hidden" value="<%= ddmStructure.getStructureKey() %>" />
+								<aui:input name="structureName" type="hidden" value="<%= ddmStructure.getName(locale) %>" />
+								<aui:input name="structureDescription" type="hidden" value="<%= ddmStructure.getDescription(locale) %>" />
 
-									<span class="structure-name-label" id="<portlet:namespace />structureNameLabel">
-										<c:choose>
-											<c:when test="<%= DDMStructurePermission.contains(permissionChecker, ddmStructure, PortletKeys.JOURNAL, ActionKeys.UPDATE) %>">
-												<aui:a href="javascript:;" id="editDDMStructure" label="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>" />
-											</c:when>
-											<c:otherwise>
-												<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>
-											</c:otherwise>
-										</c:choose>
-									</span>
+								<span class="structure-name-label" id="<portlet:namespace />structureNameLabel">
+									<c:choose>
+										<c:when test="<%= DDMStructurePermission.contains(permissionChecker, ddmStructure, PortletKeys.JOURNAL, ActionKeys.UPDATE) %>">
+											<aui:a href="javascript:;" id="editDDMStructure" label="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>" />
+										</c:when>
+										<c:otherwise>
+											<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>
+										</c:otherwise>
+									</c:choose>
+								</span>
 
-									<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
-										<liferay-ui:icon
-											iconCssClass="icon-search"
-											id="selectStructure"
-											label="<%= true %>"
-											linkCssClass="btn btn-default"
-											message="select"
-											url="javascript:;"
-										/>
-									</c:if>
-								</div>
-							</aui:fieldset>
-						</aui:col>
-
-						<aui:col cssClass="article-template" width="<%= 50 %>">
-							<span class="article-template-label"><liferay-ui:message key="template" />:</span>
-
-							<aui:fieldset cssClass="article-template-toolbar">
-								<div class="journal-form-presentation-label">
-									<aui:input name="templateId" type="hidden" value="<%= (ddmTemplate != null) ? ddmTemplate.getTemplateKey() : StringPool.BLANK %>" />
-
-									<span class="template-name-label" id="<portlet:namespace />templateNameLabel">
-										<c:if test="<%= (ddmTemplate != null) && ddmTemplate.isSmallImage() %>">
-											<img alt="" class="article-template-image" id="<portlet:namespace />templateImage" src="<%= HtmlUtil.escapeAttribute(ddmTemplate.getTemplateImageURL(themeDisplay)) %>" />
-										</c:if>
-
-										<c:choose>
-											<c:when test="<%= (ddmTemplate != null) && DDMTemplatePermission.contains(permissionChecker, scopeGroupId, ddmTemplate, PortletKeys.JOURNAL, ActionKeys.UPDATE) %>">
-												<aui:a href="javascript:;" id="editDDMTemplate" label="<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>" />
-											</c:when>
-											<c:otherwise>
-												<%= (ddmTemplate != null) ? HtmlUtil.escape(ddmTemplate.getName(locale)) : LanguageUtil.get(request, "none") %>
-											</c:otherwise>
-										</c:choose>
-									</span>
-
+								<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
 									<liferay-ui:icon
 										iconCssClass="icon-search"
-										id="selectTemplate"
+										id="selectStructure"
 										label="<%= true %>"
 										linkCssClass="btn btn-default"
 										message="select"
 										url="javascript:;"
 									/>
-								</div>
-							</aui:fieldset>
-						</aui:col>
-					</aui:row>
-				</div>
-			</c:if>
+								</c:if>
+							</div>
+						</aui:fieldset>
+					</aui:col>
+
+					<aui:col cssClass="article-template" width="<%= 50 %>">
+						<span class="article-template-label"><liferay-ui:message key="template" />:</span>
+
+						<aui:fieldset cssClass="article-template-toolbar">
+							<div class="journal-form-presentation-label">
+								<aui:input name="templateId" type="hidden" value="<%= (ddmTemplate != null) ? ddmTemplate.getTemplateKey() : StringPool.BLANK %>" />
+
+								<span class="template-name-label" id="<portlet:namespace />templateNameLabel">
+									<c:if test="<%= (ddmTemplate != null) && ddmTemplate.isSmallImage() %>">
+										<img alt="" class="article-template-image" id="<portlet:namespace />templateImage" src="<%= HtmlUtil.escapeAttribute(ddmTemplate.getTemplateImageURL(themeDisplay)) %>" />
+									</c:if>
+
+									<c:choose>
+										<c:when test="<%= (ddmTemplate != null) && DDMTemplatePermission.contains(permissionChecker, scopeGroupId, ddmTemplate, PortletKeys.JOURNAL, ActionKeys.UPDATE) %>">
+											<aui:a href="javascript:;" id="editDDMTemplate" label="<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>" />
+										</c:when>
+										<c:otherwise>
+											<%= (ddmTemplate != null) ? HtmlUtil.escape(ddmTemplate.getName(locale)) : LanguageUtil.get(request, "none") %>
+										</c:otherwise>
+									</c:choose>
+								</span>
+
+								<liferay-ui:icon
+									iconCssClass="icon-search"
+									id="selectTemplate"
+									label="<%= true %>"
+									linkCssClass="btn btn-default"
+									message="select"
+									url="javascript:;"
+								/>
+							</div>
+						</aui:fieldset>
+					</aui:col>
+				</aui:row>
+			</div>
 
 			<aui:translation-manager
 				availableLocales="<%= availableLocales %>"
@@ -208,7 +192,7 @@ if (ddmFields != null) {
 		</div>
 
 		<div class="journal-article-general-fields">
-			<aui:input autoFocus="<%= (((article != null) && !article.isNew()) && !PropsValues.JOURNAL_ARTICLE_FORCE_AUTOGENERATE_ID && windowState.equals(WindowState.MAXIMIZED)) || windowState.equals(LiferayWindowState.POP_UP) %>" defaultLanguageId="<%= Validator.isNotNull(toLanguageId) ? toLanguageId : defaultLanguageId %>" languageId="<%= Validator.isNotNull(toLanguageId) ? toLanguageId : defaultLanguageId %>" name="title">
+			<aui:input autoFocus="<%= (((article != null) && !article.isNew()) && !PropsValues.JOURNAL_ARTICLE_FORCE_AUTOGENERATE_ID && windowState.equals(WindowState.MAXIMIZED)) || windowState.equals(LiferayWindowState.POP_UP) %>" name="title">
 				<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
 					<aui:validator name="required" />
 				</c:if>
@@ -223,19 +207,12 @@ if (ddmFields != null) {
 				classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
 				classPK="<%= ddmStructure.getStructureId() %>"
 				fields="<%= ddmFields %>"
-				repeatable="<%= Validator.isNull(toLanguageId) %>"
-				requestedLocale="<%= LocaleUtil.fromLanguageId(requestedLanguageId) %>"
+				requestedLocale="<%= LocaleUtil.fromLanguageId(defaultLanguageId) %>"
 			/>
 
-			<c:if test="<%= Validator.isNull(toLanguageId) %>">
-				<aui:input label="searchable" name="indexable" />
-			</c:if>
+			<aui:input label="searchable" name="indexable" />
 		</div>
 	</div>
-
-	<c:if test="<%= Validator.isNotNull(toLanguageId) %>">
-		<aui:input name="structureId" type="hidden" value="<%= ddmStructure.getStructureKey() %>" />
-	</c:if>
 </div>
 
 <liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="editStructureURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

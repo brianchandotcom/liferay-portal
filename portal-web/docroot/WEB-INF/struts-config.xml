@@ -586,7 +586,6 @@
 		<action path="/dynamic_data_list_display/edit_record" type="com.liferay.portlet.dynamicdatalists.action.EditRecordAction">
 			<forward name="portlet.dynamic_data_lists.edit_record" path="portlet.dynamic_data_lists.edit_record" />
 			<forward name="portlet.dynamic_data_lists.error" path="portlet.dynamic_data_lists.error" />
-			<forward name="portlet.dynamic_data_lists.update_translation_redirect" path="portlet.dynamic_data_lists.update_translation_redirect" />
 		</action>
 
 		<action path="/dynamic_data_list_display/view" forward="portlet.dynamic_data_list_display.view" />
@@ -611,7 +610,6 @@
 		<action path="/dynamic_data_lists/edit_record" type="com.liferay.portlet.dynamicdatalists.action.EditRecordAction">
 			<forward name="portlet.dynamic_data_lists.edit_record" path="portlet.dynamic_data_lists.edit_record" />
 			<forward name="portlet.dynamic_data_lists.error" path="portlet.dynamic_data_lists.error" />
-			<forward name="portlet.dynamic_data_lists.update_translation_redirect" path="portlet.dynamic_data_lists.update_translation_redirect" />
 		</action>
 
 		<action path="/dynamic_data_lists/edit_record_file" type="com.liferay.portlet.dynamicdatalists.action.EditRecordFileAction" />
@@ -857,7 +855,6 @@
 			<forward name="portlet.journal.asset.add_asset_redirect" path="portlet.journal.asset.add_asset_redirect" />
 			<forward name="portlet.journal.edit_article" path="portlet.journal.edit_article" />
 			<forward name="portlet.journal.error" path="portlet.journal.error" />
-			<forward name="portlet.journal.update_translation_redirect" path="portlet.journal.update_translation_redirect" />
 		</action>
 
 		<action path="/journal/edit_article_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">

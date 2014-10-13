@@ -25,12 +25,6 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 
 long classNameId = BeanParamUtil.getLong(article, request, "classNameId");
 
-String toLanguageId = ParamUtil.getString(request, "toLanguageId");
-
-if ((article != null) && Validator.isNotNull(toLanguageId)) {
-	redirect = null;
-}
-
 boolean localizeTitle = true;
 String title = "new-web-content";
 
@@ -40,12 +34,7 @@ if (classNameId > JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
 else if ((article != null) && !article.isNew()) {
 	localizeTitle = false;
 
-	if (Validator.isNotNull(toLanguageId)) {
-		title = article.getTitle(toLanguageId);
-	}
-	else {
-		title = article.getTitle(locale);
-	}
+	title = article.getTitle(locale);
 }
 %>
 

@@ -24,6 +24,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface IncludeTagExtension {
 
+	public String getTagKey();
+
 	public EnumSet<ExtensionPoint> getExtensionPoints();
 
 	public void include(

@@ -278,9 +278,10 @@ public class PortalPolicy extends Policy {
 	private final Field _field;
 	private final PACLPolicy _paclPolicy =
 		PACLPolicyManager.getDefaultPACLPolicy();
-	private final ConcurrentMap<Object, PermissionCollection> _permissionCollections =
-		new ConcurrentReferenceValueHashMap<Object, PermissionCollection>(
-			FinalizeManager.WEAK_REFERENCE_FACTORY);
+	private final ConcurrentMap<Object, PermissionCollection>
+		_permissionCollections =
+			new ConcurrentReferenceValueHashMap<Object, PermissionCollection>(
+				FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private final Policy _policy;
 	private final ConcurrentMap<URLWrapper, PermissionCollection>
 		_urlPermissionCollections = new ConcurrentReferenceValueHashMap

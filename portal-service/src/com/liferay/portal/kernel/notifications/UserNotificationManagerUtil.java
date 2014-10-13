@@ -286,8 +286,9 @@ public class UserNotificationManagerUtil {
 	private final ServiceRegistrationMap<UserNotificationHandler>
 		_userNotificationHandlerServiceRegistrations =
 			new ServiceRegistrationMap<UserNotificationHandler>();
-	private final ServiceTracker<UserNotificationHandler, UserNotificationHandler>
-		_userNotificationHandlerServiceTracker;
+	private final
+		ServiceTracker<UserNotificationHandler, UserNotificationHandler>
+			_userNotificationHandlerServiceTracker;
 
 	private class UserNotificationDefinitionServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer

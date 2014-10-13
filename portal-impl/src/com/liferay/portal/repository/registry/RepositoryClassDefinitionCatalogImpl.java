@@ -153,8 +153,9 @@ public class RepositoryClassDefinitionCatalogImpl
 	private final Set<String> _externalRepositoriesClassNames =
 		new ConcurrentHashSet<String>();
 	private RepositoryFactory _legacyExternalRepositoryFactory;
-	private final Map<String, RepositoryClassDefinition> _repositoryClassDefinitions =
-		new ConcurrentHashMap<String, RepositoryClassDefinition>();
+	private final Map<String, RepositoryClassDefinition>
+		_repositoryClassDefinitions =
+			new ConcurrentHashMap<String, RepositoryClassDefinition>();
 	private List<RepositoryDefiner> _repositoryDefiners;
 	private final StringServiceRegistrationMap<RepositoryDefiner>
 		_serviceRegistrations =

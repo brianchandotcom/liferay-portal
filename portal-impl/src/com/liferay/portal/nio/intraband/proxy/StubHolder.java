@@ -105,8 +105,8 @@ public class StubHolder<T> {
 
 	private static final Log _log = LogFactoryUtil.getLog(StubHolder.class);
 
-	private static final ProcessCallable<Boolean> _startupFinishedProcessCallable =
-		new StartupFinishedProcessCallable();
+	private static final ProcessCallable<Boolean>
+		_startupFinishedProcessCallable = new StartupFinishedProcessCallable();
 
 	private final T _originalT;
 	private final RegistrationReference _registrationReference;

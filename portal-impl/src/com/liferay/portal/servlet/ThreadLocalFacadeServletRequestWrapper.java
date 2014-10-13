@@ -129,17 +129,18 @@ public class ThreadLocalFacadeServletRequestWrapper
 		_nextServletRequestThreadLocal.set(servletRequest);
 	}
 
-	private static final ThreadLocal<ServletRequest> _nextServletRequestThreadLocal =
-		new AutoResetThreadLocal<ServletRequest>(
-			ThreadLocalFacadeServletRequestWrapper.class +
-				"._nextServletRequestThreadLocal") {
+	private static final ThreadLocal<ServletRequest>
+		_nextServletRequestThreadLocal =
+			new AutoResetThreadLocal<ServletRequest>(
+				ThreadLocalFacadeServletRequestWrapper.class +
+					"._nextServletRequestThreadLocal") {
 
-			@Override
-			protected ServletRequest copy(ServletRequest servletRequest) {
-				return servletRequest;
-			}
+				@Override
+				protected ServletRequest copy(ServletRequest servletRequest) {
+					return servletRequest;
+				}
 
-		};
+			};
 
 	private final List<Locale> _locales;
 	private final ServletRequestWrapper _servletRequestWrapper;

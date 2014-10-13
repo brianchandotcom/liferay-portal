@@ -110,7 +110,7 @@ public class QueryTermExtractor {
 
 	private static final WeightedTerm[] _emptyWeightedTermArray =
 		new WeightedTerm[0];
-	private static final CopyOnWriteArrayList<Class<? extends Query>> _queryClasses =
-		new CopyOnWriteArrayList<Class<? extends Query>>();
+	private static final CopyOnWriteArrayList<Class<? extends Query>>
+		_queryClasses = new CopyOnWriteArrayList<Class<? extends Query>>();
 
 }

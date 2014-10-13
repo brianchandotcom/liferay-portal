@@ -160,7 +160,8 @@ public class PollerProcessorUtil {
 	private final StringServiceRegistrationMap<PollerProcessor>
 		_serviceRegistrations =
 			new StringServiceRegistrationMap<PollerProcessor>();
-	private final ServiceTracker<PollerProcessor, PollerProcessor> _serviceTracker;
+	private final ServiceTracker<PollerProcessor, PollerProcessor>
+		_serviceTracker;
 
 	private static class PollerProcessorTargetLocator implements TargetLocator {
 

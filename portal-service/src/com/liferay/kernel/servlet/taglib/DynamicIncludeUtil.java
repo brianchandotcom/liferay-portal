@@ -74,6 +74,7 @@ public class DynamicIncludeUtil {
 	private static final DynamicIncludeUtil _instance =
 		new DynamicIncludeUtil();
 
-	private final ServiceTrackerMap<String, List<DynamicInclude>> _dynamicIncludes;
+	private final ServiceTrackerMap<String, List<DynamicInclude>>
+		_dynamicIncludes;
 
 }

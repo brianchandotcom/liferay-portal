@@ -115,6 +115,7 @@ public class LiferayCacheManagerPeerProviderFactory
 
 	private static final HtmlImpl _htmlUtil = new HtmlImpl();
 
-	private final CacheManagerPeerProviderFactory _cacheManagerPeerProviderFactory;
+	private final CacheManagerPeerProviderFactory
+		_cacheManagerPeerProviderFactory;
 
 }

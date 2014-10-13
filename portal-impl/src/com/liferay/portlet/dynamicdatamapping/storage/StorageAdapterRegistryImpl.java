@@ -74,7 +74,8 @@ public class StorageAdapterRegistryImpl implements StorageAdapterRegistry {
 	}
 
 	private String _defaultStorageType;
-	private final ServiceTracker<StorageAdapter, StorageAdapter> _serviceTracker;
+	private final ServiceTracker<StorageAdapter, StorageAdapter>
+		_serviceTracker;
 	private final Map<String, StorageAdapter> _storageAdaptersMap =
 		new ConcurrentHashMap<String, StorageAdapter>();
 

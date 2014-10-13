@@ -105,7 +105,7 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 
 		updateBaseModel(baseModelId);
 
-		List<MailMessage>  messages = MailServiceTestUtil.getMailMessages(
+		List<MailMessage> messages = MailServiceTestUtil.getMailMessages(
 			"Body", SPANISH_BODY);
 
 		Assert.assertEquals(1, messages.size());

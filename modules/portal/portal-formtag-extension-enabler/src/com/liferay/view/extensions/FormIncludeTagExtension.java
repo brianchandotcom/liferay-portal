@@ -24,16 +24,22 @@ import java.util.EnumSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.liferay.portal.util.PortletKeys;
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Carlos Sierra Andrés
  */
 @Component(
-	immediate = true, property = {"tagId=58-fm"},
+	immediate = true,
 	service = IncludeTagExtension.class
 )
 public class FormIncludeTagExtension implements IncludeTagExtension {
+
+	@Override
+	public String getTagKey() {
+		return PortletKeys.LOGIN+"-fm";
+	}
 
 	@Override
 	public EnumSet<IncludeTagExtension.ExtensionPoint> getExtensionPoints() {

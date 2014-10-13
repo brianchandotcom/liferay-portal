@@ -57,7 +57,7 @@ public class IncludeTagExtensionUtil {
 	private ServiceTrackerMap<String, List<IncludeTagExtension>>
 		_viewExtensions =
 			ServiceTrackerCollections.multiValueMap(
-				IncludeTagExtension.class, "(tagId=*)",
+				IncludeTagExtension.class, null,
 				new ServiceReferenceMapper<String, IncludeTagExtension>() {
 
 					@Override
@@ -77,9 +77,7 @@ public class IncludeTagExtensionUtil {
 							for (ExtensionPoint extensionPoint :
 									extensionPoints) {
 
-								String prefix =
-									(String)serviceReference.getProperty(
-										"tagId");
+								String prefix = extension.getTagKey();
 
 								String key = prefix + ":" + extensionPoint;
 

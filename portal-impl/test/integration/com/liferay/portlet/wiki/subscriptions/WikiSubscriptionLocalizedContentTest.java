@@ -80,14 +80,12 @@ public class WikiSubscriptionLocalizedContentTest
 	}
 
 	@Override
-	protected String getSubscriptionAddedBodyPreferenceName() throws Exception {
+	protected String getSubscriptionAddedBodyPreferenceName() {
 		return "emailPageAddedBody";
 	}
 
 	@Override
-	protected String getSubscriptionUpdatedBodyPreferenceName()
-		throws Exception {
-
+	protected String getSubscriptionUpdatedBodyPreferenceName() {
 		return "emailPageUpdatedBody";
 	}
 

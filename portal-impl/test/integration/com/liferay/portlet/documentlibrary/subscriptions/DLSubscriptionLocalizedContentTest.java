@@ -70,14 +70,12 @@ public class DLSubscriptionLocalizedContentTest
 	}
 
 	@Override
-	protected String getSubscriptionAddedBodyPreferenceName() throws Exception {
+	protected String getSubscriptionAddedBodyPreferenceName() {
 		return "emailFileEntryAddedBody";
 	}
 
 	@Override
-	protected String getSubscriptionUpdatedBodyPreferenceName()
-		throws Exception {
-
+	protected String getSubscriptionUpdatedBodyPreferenceName() {
 		return "emailFileEntryUpdatedBody";
 	}
 

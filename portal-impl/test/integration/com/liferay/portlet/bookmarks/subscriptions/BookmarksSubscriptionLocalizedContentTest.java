@@ -75,14 +75,12 @@ public class BookmarksSubscriptionLocalizedContentTest
 	}
 
 	@Override
-	protected String getSubscriptionAddedBodyPreferenceName() throws Exception {
+	protected String getSubscriptionAddedBodyPreferenceName() {
 		return "emailEntryAddedBody";
 	}
 
 	@Override
-	protected String getSubscriptionUpdatedBodyPreferenceName()
-		throws Exception {
-
+	protected String getSubscriptionUpdatedBodyPreferenceName() {
 		return "emailEntryUpdatedBody";
 	}
 

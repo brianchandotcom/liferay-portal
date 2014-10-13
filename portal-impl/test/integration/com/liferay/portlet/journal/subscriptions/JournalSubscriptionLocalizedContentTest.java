@@ -71,14 +71,12 @@ public class JournalSubscriptionLocalizedContentTest
 	}
 
 	@Override
-	protected String getSubscriptionAddedBodyPreferenceName() throws Exception {
+	protected String getSubscriptionAddedBodyPreferenceName() {
 		return "emailArticleAddedBody";
 	}
 
 	@Override
-	protected String getSubscriptionUpdatedBodyPreferenceName()
-		throws Exception {
-
+	protected String getSubscriptionUpdatedBodyPreferenceName() {
 		return "emailArticleUpdatedBody";
 	}
 

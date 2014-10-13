@@ -122,11 +122,9 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 		return StringPool.BLANK;
 	}
 
-	protected abstract String getSubscriptionAddedBodyPreferenceName()
-		throws Exception;
+	protected abstract String getSubscriptionAddedBodyPreferenceName();
 
-	protected abstract String getSubscriptionUpdatedBodyPreferenceName()
-		throws Exception;
+	protected abstract String getSubscriptionUpdatedBodyPreferenceName();
 
 	protected void setBaseModelSubscriptionBodyPreferences(
 			String bodyPreferenceName)

@@ -70,14 +70,12 @@ public class MBSubscriptionLocalizedContentTest
 	}
 
 	@Override
-	protected String getSubscriptionAddedBodyPreferenceName() throws Exception {
+	protected String getSubscriptionAddedBodyPreferenceName() {
 		return "emailMessageAddedBody";
 	}
 
 	@Override
-	protected String getSubscriptionUpdatedBodyPreferenceName()
-		throws Exception {
-
+	protected String getSubscriptionUpdatedBodyPreferenceName() {
 		return "emailMessageUpdatedBody";
 	}
 

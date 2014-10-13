@@ -68,6 +68,7 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
@@ -1532,29 +1533,40 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			long userId, long nodeId, String title, String fileName)
 		throws PortalException {
 
-		WikiPage page = getPage(nodeId, title);
+		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
 
-		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
-			page.getGroupId(), page.getAttachmentsFolderId(), fileName);
+		try {
+			DLAppHelperThreadLocal.setEnabled(false);
 
-		fileEntry = RepositoryTrashUtil.moveFileEntryToTrash(
-			userId, fileEntry.getRepositoryId(), fileEntry.getFileEntryId());
+			WikiPage page = getPage(nodeId, title);
 
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+			FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+				page.getGroupId(), page.getAttachmentsFolderId(), fileName);
 
-		extraDataJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
-		extraDataJSONObject.put(
-			"fileEntryTitle", TrashUtil.getOriginalTitle(fileEntry.getTitle()));
-		extraDataJSONObject.put("title", page.getTitle());
-		extraDataJSONObject.put("version", page.getVersion());
+			fileEntry = RepositoryTrashUtil.moveFileEntryToTrash(
+				userId, fileEntry.getRepositoryId(),
+				fileEntry.getFileEntryId());
 
-		socialActivityLocalService.addActivity(
-			userId, page.getGroupId(), WikiPage.class.getName(),
-			page.getResourcePrimKey(),
-			SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH,
-			extraDataJSONObject.toString(), 0);
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
-		return fileEntry;
+			extraDataJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
+			extraDataJSONObject.put(
+				"fileEntryTitle",
+				TrashUtil.getOriginalTitle(fileEntry.getTitle()));
+			extraDataJSONObject.put("title", page.getTitle());
+			extraDataJSONObject.put("version", page.getVersion());
+
+			socialActivityLocalService.addActivity(
+				userId, page.getGroupId(), WikiPage.class.getName(),
+				page.getResourcePrimKey(),
+				SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH,
+				extraDataJSONObject.toString(), 0);
+
+			return fileEntry;
+		}
+		finally {
+			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
+		}
 	}
 
 	@Override
@@ -1786,27 +1798,38 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			long userId, long nodeId, String title, String fileName)
 		throws PortalException {
 
-		WikiPage page = getPage(nodeId, title);
+		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
 
-		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
-			page.getGroupId(), page.getAttachmentsFolderId(), fileName);
+		try {
+			DLAppHelperThreadLocal.setEnabled(false);
 
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+			WikiPage page = getPage(nodeId, title);
 
-		extraDataJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
-		extraDataJSONObject.put("fileEntryTitle", TrashUtil.getOriginalTitle(
-			fileEntry.getTitle()));
-		extraDataJSONObject.put("title", page.getTitle());
-		extraDataJSONObject.put("version", page.getVersion());
+			FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+				page.getGroupId(), page.getAttachmentsFolderId(), fileName);
 
-		RepositoryTrashUtil.restoreFileEntryFromTrash(
-			userId, fileEntry.getRepositoryId(), fileEntry.getFileEntryId());
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
-		socialActivityLocalService.addActivity(
-			userId, page.getGroupId(), WikiPage.class.getName(),
-			page.getResourcePrimKey(),
-			SocialActivityConstants.TYPE_RESTORE_ATTACHMENT_FROM_TRASH,
-			extraDataJSONObject.toString(), 0);
+			extraDataJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
+			extraDataJSONObject.put(
+				"fileEntryTitle",
+				TrashUtil.getOriginalTitle(fileEntry.getTitle()));
+			extraDataJSONObject.put("title", page.getTitle());
+			extraDataJSONObject.put("version", page.getVersion());
+
+			RepositoryTrashUtil.restoreFileEntryFromTrash(
+				userId, fileEntry.getRepositoryId(),
+				fileEntry.getFileEntryId());
+
+			socialActivityLocalService.addActivity(
+				userId, page.getGroupId(), WikiPage.class.getName(),
+				page.getResourcePrimKey(),
+				SocialActivityConstants.TYPE_RESTORE_ATTACHMENT_FROM_TRASH,
+				extraDataJSONObject.toString(), 0);
+		}
+		finally {
+			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
+		}
 	}
 
 	@Override

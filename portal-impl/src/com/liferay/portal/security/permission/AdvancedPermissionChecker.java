@@ -36,6 +36,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Team;
+import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -46,6 +47,7 @@ import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.TeamLocalServiceUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 
 import java.util.ArrayList;
@@ -992,6 +994,16 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 			companyId = group.getCompanyId();
+		}
+		else {
+			if (name.equals(User.class.getName())) {
+				long userId = GetterUtil.getInteger(primKey);
+				User user = UserLocalServiceUtil.fetchUser(userId);
+
+				if (user != null) {
+					companyId = user.getCompanyId();
+				}
+			}
 		}
 
 		boolean hasLayoutManagerPermission = true;

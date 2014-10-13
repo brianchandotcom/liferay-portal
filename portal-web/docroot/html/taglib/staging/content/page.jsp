@@ -66,7 +66,7 @@
 									<aui:fieldset cssClass="portlet-data-section" label="date-range">
 
 										<%
-										String selectedRange = MapUtil.getString(parameterMap, "range", ExportImportDateUtil.RANGE_ALL);
+										String selectedRange = MapUtil.getString(parameterMap, "range", defaultRange);
 										%>
 
 										<aui:input checked="<%= selectedRange.equals(ExportImportDateUtil.RANGE_ALL) %>" disabled="<%= disableInputs %>" id="rangeAll" label="all" name="range" type="radio" value="<%= ExportImportDateUtil.RANGE_ALL %>" />

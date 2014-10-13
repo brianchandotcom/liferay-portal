@@ -20,9 +20,9 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Carlos Sierra Andrés
  */
-public interface TagIdResolver {
+public interface TagKeyResolver {
 
-	public String getId(
+	public String getKey(
 		HttpServletRequest request, HttpServletResponse response,
 		Object jspTag);
 

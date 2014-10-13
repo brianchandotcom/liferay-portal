@@ -15,6 +15,7 @@
 package com.liferay.view.extensions;
 
 import com.liferay.kernel.servlet.taglib.IncludeTagExtension;
+import com.liferay.portal.util.PortletKeys;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -24,17 +25,20 @@ import java.util.EnumSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.liferay.portal.util.PortletKeys;
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Carlos Sierra Andrés
  */
 @Component(
-	immediate = true,
-	service = IncludeTagExtension.class
+	immediate = true, service = IncludeTagExtension.class
 )
 public class FormIncludeTagExtension implements IncludeTagExtension {
+
+	@Override
+	public EnumSet<Point> getPoints() {
+		return EnumSet.of(Point.BEFORE_START);
+	}
 
 	@Override
 	public String getTagKey() {
@@ -42,14 +46,9 @@ public class FormIncludeTagExtension implements IncludeTagExtension {
 	}
 
 	@Override
-	public EnumSet<IncludeTagExtension.ExtensionPoint> getExtensionPoints() {
-		return EnumSet.of(ExtensionPoint.BEFORE_START);
-	}
-
-	@Override
 	public void include(
 		HttpServletRequest request, HttpServletResponse response,
-		ExtensionPoint point) {
+		Point point) {
 
 		try {
 			PrintWriter writer = response.getWriter();

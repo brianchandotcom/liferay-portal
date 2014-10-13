@@ -14,8 +14,7 @@
 
 package com.liferay.kernel.servlet.taglib;
 
-import com.liferay.kernel.servlet.taglib.IncludeTagExtension.ExtensionPoint;
-import com.liferay.portal.util.TagIdResolver;
+import com.liferay.portal.util.TagKeyResolver;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -37,7 +36,7 @@ public class IncludeTagExtensionUtil {
 		return _instance._viewExtensions.getService(extensionId);
 	}
 
-	public static TagIdResolver getTagIdResolver(String target) {
+	public static TagKeyResolver getTagIdResolver(String target) {
 		return _instance._tagResolvers.getService(target);
 	}
 
@@ -50,9 +49,9 @@ public class IncludeTagExtensionUtil {
 	private static IncludeTagExtensionUtil _instance =
 		new IncludeTagExtensionUtil();
 
-	private ServiceTrackerMap<String, TagIdResolver>
+	private ServiceTrackerMap<String, TagKeyResolver>
 		_tagResolvers = ServiceTrackerCollections.singleValueMap(
-			TagIdResolver.class, "target");
+			TagKeyResolver.class, "target");
 
 	private ServiceTrackerMap<String, List<IncludeTagExtension>>
 		_viewExtensions =
@@ -67,14 +66,14 @@ public class IncludeTagExtensionUtil {
 
 						Registry registry = RegistryUtil.getRegistry();
 
-						IncludeTagExtension extension =
-							registry.getService(serviceReference);
+						IncludeTagExtension extension = registry.getService(
+							serviceReference);
 
 						try {
-							EnumSet<ExtensionPoint> extensionPoints =
-								extension.getExtensionPoints();
+							EnumSet<IncludeTagExtension.Point> extensionPoints =
+								extension.getPoints();
 
-							for (ExtensionPoint extensionPoint :
+							for (IncludeTagExtension.Point extensionPoint :
 									extensionPoints) {
 
 								String prefix = extension.getTagKey();

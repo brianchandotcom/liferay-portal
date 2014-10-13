@@ -17,7 +17,7 @@ package com.liferay.view.extension.resolver;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.TagIdResolver;
+import com.liferay.portal.util.TagKeyResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,12 +29,12 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true, property = {"target=com.liferay.taglib.aui.FormTag"},
-	service = TagIdResolver.class
+	service = TagKeyResolver.class
 )
-public class FormTagIdResolver implements TagIdResolver {
+public class FormTagKeyResolver implements TagKeyResolver {
 
 	@Override
-	public String getId(
+	public String getKey(
 		HttpServletRequest request, HttpServletResponse response,
 		Object jspTag) {
 

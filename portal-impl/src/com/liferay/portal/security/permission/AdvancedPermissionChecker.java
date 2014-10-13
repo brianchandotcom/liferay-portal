@@ -995,14 +995,12 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			companyId = group.getCompanyId();
 		}
-		else {
-			if (name.equals(User.class.getName())) {
-				User user = UserLocalServiceUtil.fetchUser(
-					GetterUtil.getLong(primKey));
+		else if (name.equals(User.class.getName())) {
+			User user = UserLocalServiceUtil.fetchUser(
+				GetterUtil.getLong(primKey));
 
-				if (user != null) {
-					companyId = user.getCompanyId();
-				}
+			if (user != null) {
+				companyId = user.getCompanyId();
 			}
 		}
 
@@ -1025,9 +1023,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			}
 
 			if (name.equals(Organization.class.getName())) {
-				long organizationId = GetterUtil.getLong(primKey);
-
-				if (isOrganizationAdminImpl(organizationId)) {
+				if (isOrganizationAdminImpl(GetterUtil.getLong(primKey))) {
 					return true;
 				}
 			}

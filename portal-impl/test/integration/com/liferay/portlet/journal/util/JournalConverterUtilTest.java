@@ -116,46 +116,6 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
-	public void testGetContentFromDocumentLibraryField() throws Exception {
-		Fields fields = new Fields();
-
-		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			"Test 2.txt");
-
-		Field docLibrary = getDocumentLibraryField(
-			fileEntry, _ddmStructure.getStructureId());
-
-		fields.put(docLibrary);
-
-		Field fieldsDisplayField = getFieldsDisplayField(
-			_ddmStructure.getStructureId(),
-			"document_library_INSTANCE_4aGOvP3N");
-
-		fields.put(fieldsDisplayField);
-
-		String expectedContent = readText(
-			"test-journal-content-doc-library-field.xml");
-
-		XPath xPathSelector = SAXReaderUtil.createXPath("//dynamic-content");
-
-		Document document = SAXReaderUtil.read(expectedContent);
-
-		Element element = (Element)xPathSelector.selectSingleNode(document);
-
-		String previewURL = DLUtil.getPreviewURL(
-			fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
-			false, true);
-
-		element.addCDATA(previewURL);
-
-		String actualContent = JournalConverterUtil.getContent(
-			_ddmStructure, fields);
-
-		assertEquals(document.asXML(), actualContent);
-	}
-
-	@Test
 	public void testGetContentFromLinkToLayoutField() throws Exception {
 		Fields fields = new Fields();
 
@@ -640,6 +600,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put("groupId", fileEntry.getGroupId());
+		jsonObject.put("title", fileEntry.getTitle());
 		jsonObject.put("uuid", fileEntry.getUuid());
 		jsonObject.put("version", fileEntry.getVersion());
 

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
@@ -172,13 +173,34 @@ public class PortletExporter {
 			return;
 		}
 
-		String data = null;
+		Date originalStartDate = portletDataContext.getStartDate();
+
+		String range = MapUtil.getString(
+			portletDataContext.getParameterMap(), "range");
+
+		Date startDate = originalStartDate;
+
+		if (range.equals(ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE)) {
+			Date lastPublishDate = ExportImportDateUtil.getLastPublishDate(
+				jxPortletPreferences);
+
+			if (lastPublishDate == null) {
+				startDate = null;
+			}
+			else if (lastPublishDate.before(startDate)) {
+				startDate = lastPublishDate;
+			}
+		}
+
+		portletDataContext.setStartDate(startDate);
 
 		long groupId = portletDataContext.getGroupId();
 
 		portletDataContext.setGroupId(portletDataContext.getScopeGroupId());
 
 		portletDataContext.clearScopedPrimaryKeys();
+
+		String data = null;
 
 		try {
 			data = portletDataHandler.exportData(
@@ -192,6 +214,7 @@ public class PortletExporter {
 		}
 		finally {
 			portletDataContext.setGroupId(groupId);
+			portletDataContext.setStartDate(originalStartDate);
 		}
 
 		if (Validator.isNull(data)) {

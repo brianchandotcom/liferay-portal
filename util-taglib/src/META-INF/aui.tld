@@ -2235,6 +2235,12 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
+			<name>sandbox</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<name>use</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

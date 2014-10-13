@@ -757,6 +757,13 @@ public class JournalArticleLocalServiceWrapper
 			articleId, status);
 	}
 
+	@Override
+	public com.liferay.portlet.journal.model.JournalArticle fetchLatestArticle(
+		long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _journalArticleLocalService.fetchLatestArticle(resourcePrimKey);
+	}
+
 	/**
 	* Returns the latest web content article matching the resource primary key
 	* and workflow status, optionally preferring articles with approved

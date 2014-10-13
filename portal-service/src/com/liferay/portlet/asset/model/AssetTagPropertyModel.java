@@ -256,19 +256,20 @@ public interface AssetTagPropertyModel extends AuditedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(AssetTagProperty assetTagProperty);
+	public int compareTo(
+		com.liferay.portlet.asset.model.AssetTagProperty assetTagProperty);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<AssetTagProperty> toCacheModel();
+	public CacheModel<com.liferay.portlet.asset.model.AssetTagProperty> toCacheModel();
 
 	@Override
-	public AssetTagProperty toEscapedModel();
+	public com.liferay.portlet.asset.model.AssetTagProperty toEscapedModel();
 
 	@Override
-	public AssetTagProperty toUnescapedModel();
+	public com.liferay.portlet.asset.model.AssetTagProperty toUnescapedModel();
 
 	@Override
 	public String toString();

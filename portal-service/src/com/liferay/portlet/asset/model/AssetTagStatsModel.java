@@ -165,19 +165,20 @@ public interface AssetTagStatsModel extends BaseModel<AssetTagStats>, TypedModel
 	public Object clone();
 
 	@Override
-	public int compareTo(AssetTagStats assetTagStats);
+	public int compareTo(
+		com.liferay.portlet.asset.model.AssetTagStats assetTagStats);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<AssetTagStats> toCacheModel();
+	public CacheModel<com.liferay.portlet.asset.model.AssetTagStats> toCacheModel();
 
 	@Override
-	public AssetTagStats toEscapedModel();
+	public com.liferay.portlet.asset.model.AssetTagStats toEscapedModel();
 
 	@Override
-	public AssetTagStats toUnescapedModel();
+	public com.liferay.portlet.asset.model.AssetTagStats toUnescapedModel();
 
 	@Override
 	public String toString();

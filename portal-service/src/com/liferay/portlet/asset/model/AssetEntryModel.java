@@ -795,19 +795,19 @@ public interface AssetEntryModel extends AttachedModel, BaseModel<AssetEntry>,
 	public Object clone();
 
 	@Override
-	public int compareTo(AssetEntry assetEntry);
+	public int compareTo(com.liferay.portlet.asset.model.AssetEntry assetEntry);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<AssetEntry> toCacheModel();
+	public CacheModel<com.liferay.portlet.asset.model.AssetEntry> toCacheModel();
 
 	@Override
-	public AssetEntry toEscapedModel();
+	public com.liferay.portlet.asset.model.AssetEntry toEscapedModel();
 
 	@Override
-	public AssetEntry toUnescapedModel();
+	public com.liferay.portlet.asset.model.AssetEntry toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -256,19 +256,19 @@ public interface AssetTagModel extends BaseModel<AssetTag>, GroupedModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(AssetTag assetTag);
+	public int compareTo(com.liferay.portlet.asset.model.AssetTag assetTag);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<AssetTag> toCacheModel();
+	public CacheModel<com.liferay.portlet.asset.model.AssetTag> toCacheModel();
 
 	@Override
-	public AssetTag toEscapedModel();
+	public com.liferay.portlet.asset.model.AssetTag toEscapedModel();
 
 	@Override
-	public AssetTag toUnescapedModel();
+	public com.liferay.portlet.asset.model.AssetTag toUnescapedModel();
 
 	@Override
 	public String toString();

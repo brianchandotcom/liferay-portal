@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.bookmarks.model.BookmarksEntry;
-import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -52,7 +50,9 @@ public class UpgradeSearch extends BaseUpgradePortletPreferences {
 		for (int i = 0; i < valuesJSONArray.length(); i++) {
 			String value = valuesJSONArray.getString(i);
 
-			if (value.equals(BookmarksEntry.class.getName())) {
+			if (value.equals(
+					"com.liferay.portlet.bookmarks.model.BookmarksEntry")) {
+
 				hasBookmarksEntry = true;
 			}
 
@@ -70,7 +70,8 @@ public class UpgradeSearch extends BaseUpgradePortletPreferences {
 		}
 
 		if (hasBookmarksEntry) {
-			valuesJSONArray.put(BookmarksFolder.class.getName());
+			valuesJSONArray.put(
+				"com.liferay.portlet.bookmarks.model.BookmarksFolder");
 		}
 
 		if (hasDLFileEntry) {

@@ -14,9 +14,6 @@
 
 package com.liferay.portal.upgrade.v6_0_12_to_6_1_0;
 
-import com.liferay.portlet.bookmarks.model.BookmarksEntry;
-import com.liferay.portlet.bookmarks.model.BookmarksFolder;
-
 /**
  * @author Alexander Chow
  * @author Connor McKay
@@ -27,9 +24,11 @@ public class UpgradePermission
 	@Override
 	protected void doUpgrade() throws Exception {
 		convertResourcePermissions(
-			BookmarksEntry.class.getName(), "BookmarksEntry", "entryId");
+			"com.liferay.portlet.bookmarks.model.BookmarksEntry",
+			"BookmarksEntry", "entryId");
 		convertResourcePermissions(
-			BookmarksFolder.class.getName(), "BookmarksFolder", "folderId");
+			"com.liferay.portlet.bookmarks.model.BookmarksFolder",
+			"BookmarksFolder", "folderId");
 	}
 
 }

@@ -240,19 +240,19 @@ public interface AssetLinkModel extends BaseModel<AssetLink> {
 	public Object clone();
 
 	@Override
-	public int compareTo(AssetLink assetLink);
+	public int compareTo(com.liferay.portlet.asset.model.AssetLink assetLink);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<AssetLink> toCacheModel();
+	public CacheModel<com.liferay.portlet.asset.model.AssetLink> toCacheModel();
 
 	@Override
-	public AssetLink toEscapedModel();
+	public com.liferay.portlet.asset.model.AssetLink toEscapedModel();
 
 	@Override
-	public AssetLink toUnescapedModel();
+	public com.liferay.portlet.asset.model.AssetLink toUnescapedModel();
 
 	@Override
 	public String toString();

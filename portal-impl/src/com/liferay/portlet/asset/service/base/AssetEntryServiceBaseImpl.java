@@ -42,8 +42,6 @@ import com.liferay.portlet.asset.service.persistence.AssetTagFinder;
 import com.liferay.portlet.asset.service.persistence.AssetTagPersistence;
 import com.liferay.portlet.blogs.service.persistence.BlogsEntryFinder;
 import com.liferay.portlet.blogs.service.persistence.BlogsEntryPersistence;
-import com.liferay.portlet.bookmarks.service.persistence.BookmarksEntryFinder;
-import com.liferay.portlet.bookmarks.service.persistence.BookmarksEntryPersistence;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryPersistence;
 import com.liferay.portlet.journal.service.persistence.JournalArticleFinder;
@@ -622,82 +620,6 @@ public abstract class AssetEntryServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setBlogsEntryFinder(BlogsEntryFinder blogsEntryFinder) {
 		this.blogsEntryFinder = blogsEntryFinder;
-	}
-
-	/**
-	 * Returns the bookmarks entry local service.
-	 *
-	 * @return the bookmarks entry local service
-	 */
-	public com.liferay.portlet.bookmarks.service.BookmarksEntryLocalService getBookmarksEntryLocalService() {
-		return bookmarksEntryLocalService;
-	}
-
-	/**
-	 * Sets the bookmarks entry local service.
-	 *
-	 * @param bookmarksEntryLocalService the bookmarks entry local service
-	 */
-	public void setBookmarksEntryLocalService(
-		com.liferay.portlet.bookmarks.service.BookmarksEntryLocalService bookmarksEntryLocalService) {
-		this.bookmarksEntryLocalService = bookmarksEntryLocalService;
-	}
-
-	/**
-	 * Returns the bookmarks entry remote service.
-	 *
-	 * @return the bookmarks entry remote service
-	 */
-	public com.liferay.portlet.bookmarks.service.BookmarksEntryService getBookmarksEntryService() {
-		return bookmarksEntryService;
-	}
-
-	/**
-	 * Sets the bookmarks entry remote service.
-	 *
-	 * @param bookmarksEntryService the bookmarks entry remote service
-	 */
-	public void setBookmarksEntryService(
-		com.liferay.portlet.bookmarks.service.BookmarksEntryService bookmarksEntryService) {
-		this.bookmarksEntryService = bookmarksEntryService;
-	}
-
-	/**
-	 * Returns the bookmarks entry persistence.
-	 *
-	 * @return the bookmarks entry persistence
-	 */
-	public BookmarksEntryPersistence getBookmarksEntryPersistence() {
-		return bookmarksEntryPersistence;
-	}
-
-	/**
-	 * Sets the bookmarks entry persistence.
-	 *
-	 * @param bookmarksEntryPersistence the bookmarks entry persistence
-	 */
-	public void setBookmarksEntryPersistence(
-		BookmarksEntryPersistence bookmarksEntryPersistence) {
-		this.bookmarksEntryPersistence = bookmarksEntryPersistence;
-	}
-
-	/**
-	 * Returns the bookmarks entry finder.
-	 *
-	 * @return the bookmarks entry finder
-	 */
-	public BookmarksEntryFinder getBookmarksEntryFinder() {
-		return bookmarksEntryFinder;
-	}
-
-	/**
-	 * Sets the bookmarks entry finder.
-	 *
-	 * @param bookmarksEntryFinder the bookmarks entry finder
-	 */
-	public void setBookmarksEntryFinder(
-		BookmarksEntryFinder bookmarksEntryFinder) {
-		this.bookmarksEntryFinder = bookmarksEntryFinder;
 	}
 
 	/**
@@ -1437,14 +1359,6 @@ public abstract class AssetEntryServiceBaseImpl extends BaseServiceImpl
 	protected BlogsEntryPersistence blogsEntryPersistence;
 	@BeanReference(type = BlogsEntryFinder.class)
 	protected BlogsEntryFinder blogsEntryFinder;
-	@BeanReference(type = com.liferay.portlet.bookmarks.service.BookmarksEntryLocalService.class)
-	protected com.liferay.portlet.bookmarks.service.BookmarksEntryLocalService bookmarksEntryLocalService;
-	@BeanReference(type = com.liferay.portlet.bookmarks.service.BookmarksEntryService.class)
-	protected com.liferay.portlet.bookmarks.service.BookmarksEntryService bookmarksEntryService;
-	@BeanReference(type = BookmarksEntryPersistence.class)
-	protected BookmarksEntryPersistence bookmarksEntryPersistence;
-	@BeanReference(type = BookmarksEntryFinder.class)
-	protected BookmarksEntryFinder bookmarksEntryFinder;
 	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService.class)
 	protected com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService dlFileEntryLocalService;
 	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileEntryService.class)

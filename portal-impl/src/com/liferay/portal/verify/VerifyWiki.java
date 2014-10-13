@@ -110,6 +110,6 @@ public class VerifyWiki extends VerifyProcess {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(VerifyWiki.class);
+	private static final Log _log = LogFactoryUtil.getLog(VerifyWiki.class);
 
 }

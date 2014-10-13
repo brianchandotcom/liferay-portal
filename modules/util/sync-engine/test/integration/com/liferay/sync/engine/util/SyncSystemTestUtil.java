@@ -263,7 +263,7 @@ public class SyncSystemTestUtil {
 		return objectMapper.readTree(response);
 	}
 
-	private static Logger _logger = LoggerFactory.getLogger(
+	private static final Logger _logger = LoggerFactory.getLogger(
 		SyncSystemTestUtil.class);
 
 	private static long _adminRoleId;

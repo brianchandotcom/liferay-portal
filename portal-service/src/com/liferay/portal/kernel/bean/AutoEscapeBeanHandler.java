@@ -81,6 +81,6 @@ public class AutoEscapeBeanHandler implements InvocationHandler, Serializable {
 		return result;
 	}
 
-	private Serializable _bean;
+	private final Serializable _bean;
 
 }

@@ -38,6 +38,6 @@ public class StaticMarkerBinder implements MarkerFactoryBinder {
 	private StaticMarkerBinder() {
 	}
 
-	private IMarkerFactory _iMarkerFactory = new BasicMarkerFactory();
+	private final IMarkerFactory _iMarkerFactory = new BasicMarkerFactory();
 
 }

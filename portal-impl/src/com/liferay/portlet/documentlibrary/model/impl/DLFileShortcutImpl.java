@@ -100,6 +100,6 @@ public class DLFileShortcutImpl extends DLFileShortcutBaseImpl {
 		return false;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DLFileShortcutImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(DLFileShortcutImpl.class);
 
 }

@@ -197,11 +197,11 @@ public class GZipResponse extends MetaInfoCacheServletResponse {
 
 	private static final String _GZIP = "gzip";
 
-	private static Log _log = LogFactoryUtil.getLog(GZipResponse.class);
+	private static final Log _log = LogFactoryUtil.getLog(GZipResponse.class);
 
-	private boolean _firefox;
+	private final boolean _firefox;
 	private PrintWriter _printWriter;
-	private HttpServletResponse _response;
+	private final HttpServletResponse _response;
 	private ServletOutputStream _servletOutputStream;
 	private UnsyncByteArrayOutputStream _unsyncByteArrayOutputStream;
 

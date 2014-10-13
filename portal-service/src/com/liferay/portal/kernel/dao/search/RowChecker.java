@@ -243,7 +243,7 @@ public class RowChecker {
 	private int _colspan = COLSPAN;
 	private String _cssClass = CSS_CLASS;
 	private String _formName;
-	private PortletResponse _portletResponse;
+	private final PortletResponse _portletResponse;
 	private String _rowIds;
 	private String _valign = VALIGN;
 

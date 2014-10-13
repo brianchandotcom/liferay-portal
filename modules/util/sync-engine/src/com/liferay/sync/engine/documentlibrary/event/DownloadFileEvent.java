@@ -70,6 +70,6 @@ public class DownloadFileEvent extends BaseEvent {
 
 	private static final String _URL_PATH = "/sync-web/download";
 
-	private Handler<Void> _handler;
+	private final Handler<Void> _handler;
 
 }

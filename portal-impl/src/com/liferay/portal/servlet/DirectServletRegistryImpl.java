@@ -203,13 +203,13 @@ public class DirectServletRegistryImpl implements DirectServletRegistry {
 		file.setLastModified(System.currentTimeMillis());
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DirectServletRegistryImpl.class);
 
-	private Map<String, Long> _dependantTimestamps =
+	private final Map<String, Long> _dependantTimestamps =
 		new ConcurrentHashMap<String, Long>();
 	private boolean _reloadDependants = true;
-	private Map<String, ServletInfo> _servletInfos =
+	private final Map<String, ServletInfo> _servletInfos =
 		new ConcurrentHashMap<String, ServletInfo>();
 
 	private class ServletInfo {

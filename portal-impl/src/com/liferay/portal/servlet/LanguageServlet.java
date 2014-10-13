@@ -127,6 +127,6 @@ public class LanguageServlet extends HttpServlet {
 	private static final String _CONTENT_DISPOSITION =
 		"attachment; filename=language.txt";
 
-	private static Log _log = LogFactoryUtil.getLog(LanguageServlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(LanguageServlet.class);
 
 }

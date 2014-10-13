@@ -60,6 +60,6 @@ public class IntervalTrigger extends BaseTrigger {
 		return sb.toString();
 	}
 
-	private Long _interval;
+	private final Long _interval;
 
 }

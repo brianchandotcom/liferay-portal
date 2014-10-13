@@ -116,7 +116,7 @@ public class SampleAppStartupAction extends SimpleAction {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		SampleAppStartupAction.class);
 
 }

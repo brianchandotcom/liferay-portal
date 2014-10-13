@@ -182,6 +182,6 @@ public class StrutsUtil {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(StrutsUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(StrutsUtil.class);
 
 }

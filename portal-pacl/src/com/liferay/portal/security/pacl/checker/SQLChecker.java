@@ -382,7 +382,7 @@ public class SQLChecker extends BaseChecker {
 	private Set<String> _dropTableNames;
 	private Set<String> _indexTableNames;
 	private Set<String> _insertTableNames;
-	private JSqlParser _jSqlParser = new CCJSqlParserManager();
+	private final JSqlParser _jSqlParser = new CCJSqlParserManager();
 	private Set<String> _replaceTableNames;
 	private Set<String> _selectTableNames;
 	private Set<String> _sqls;

@@ -167,7 +167,7 @@ public class DDMFormValuesTransformerTest extends BaseDDMTestCase {
 			_prefix = prefix;
 		}
 
-		private String _prefix;
+		private final String _prefix;
 
 	}
 

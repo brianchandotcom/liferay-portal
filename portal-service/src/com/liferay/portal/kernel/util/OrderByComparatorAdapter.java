@@ -70,6 +70,6 @@ public abstract class OrderByComparatorAdapter<T, V>
 		return _orderByComparator.toString();
 	}
 
-	private OrderByComparator<V> _orderByComparator;
+	private final OrderByComparator<V> _orderByComparator;
 
 }

@@ -28,6 +28,6 @@ public abstract class BaseWatchEventListener implements WatchEventListener {
 		return _syncAccountId;
 	}
 
-	private long _syncAccountId;
+	private final long _syncAccountId;
 
 }

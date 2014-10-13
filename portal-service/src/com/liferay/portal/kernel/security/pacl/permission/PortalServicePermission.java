@@ -116,10 +116,10 @@ public class PortalServicePermission extends BasicPermission {
 		_className = nameParts[2];
 	}
 
-	private static PACL _pacl = new NoPACL();
+	private static final PACL _pacl = new NoPACL();
 
 	private String _className;
-	private String _methodName;
+	private final String _methodName;
 	private String _servletContextName;
 	private String _shortName;
 

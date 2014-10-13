@@ -701,6 +701,6 @@ public class DLFileEntryIndexer extends BaseIndexer {
 		actionableDynamicQuery.performActions();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DLFileEntryIndexer.class);
+	private static final Log _log = LogFactoryUtil.getLog(DLFileEntryIndexer.class);
 
 }

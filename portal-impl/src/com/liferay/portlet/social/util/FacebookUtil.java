@@ -100,6 +100,6 @@ public class FacebookUtil {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(FacebookUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(FacebookUtil.class);
 
 }

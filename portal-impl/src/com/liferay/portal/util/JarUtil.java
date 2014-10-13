@@ -173,9 +173,9 @@ public class JarUtil {
 
 	private static final long _REPOSITORY = CompanyConstants.SYSTEM;
 
-	private static Log _log = LogFactoryUtil.getLog(JarUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(JarUtil.class);
 
-	private static MethodKey _installJarKey = new MethodKey(
+	private static final MethodKey _installJarKey = new MethodKey(
 		JarUtil.class, "installJar", boolean.class, String.class);
 
 }

@@ -57,6 +57,6 @@ public class UpdateFileEntryEvent extends BaseEvent {
 	private static final String _URL_PATH =
 		"/sync-web.syncdlobject/update-file-entry";
 
-	private Handler<Void> _handler;
+	private final Handler<Void> _handler;
 
 }

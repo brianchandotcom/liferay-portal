@@ -85,8 +85,8 @@ public class IntrabandBridgeMessageListenerTest {
 		Assert.assertEquals(payload, receivedMessage.getPayload());
 	}
 
-	private MockIntraband _mockIntraband = new MockIntraband();
-	private MockRegistrationReference _mockRegistrationReference =
+	private final MockIntraband _mockIntraband = new MockIntraband();
+	private final MockRegistrationReference _mockRegistrationReference =
 		new MockRegistrationReference(_mockIntraband);
 
 }

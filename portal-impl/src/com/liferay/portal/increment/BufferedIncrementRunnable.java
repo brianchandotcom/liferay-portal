@@ -91,7 +91,7 @@ public class BufferedIncrementRunnable implements Runnable {
 		CentralizedThreadLocal.clearShortLivedThreadLocals();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		BufferedIncrementRunnable.class);
 
 	private final BatchablePipe<Serializable, Increment<?>> _batchablePipe;

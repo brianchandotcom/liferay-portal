@@ -95,6 +95,6 @@ public class TextReplacer {
 		}
 	}
 
-	private static FileImpl _fileUtil = FileImpl.getInstance();
+	private static final FileImpl _fileUtil = FileImpl.getInstance();
 
 }

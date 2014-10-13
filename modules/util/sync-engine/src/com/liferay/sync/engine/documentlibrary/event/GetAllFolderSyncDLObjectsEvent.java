@@ -40,6 +40,6 @@ public class GetAllFolderSyncDLObjectsEvent extends BaseEvent {
 	private static final String _URL_PATH =
 		"/sync-web.syncdlobject/get-all-folder-sync-dl-objects";
 
-	private Handler<Void> _handler;
+	private final Handler<Void> _handler;
 
 }

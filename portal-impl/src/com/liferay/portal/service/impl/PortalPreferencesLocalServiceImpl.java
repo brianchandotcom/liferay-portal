@@ -228,7 +228,7 @@ public class PortalPreferencesLocalServiceImpl
 		return portalPreferencesWrapper.clone();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortalPreferencesLocalServiceImpl.class);
 
 }

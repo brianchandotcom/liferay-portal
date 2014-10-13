@@ -81,6 +81,6 @@ public class PortletAutoDeployer
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PortletAutoDeployer.class);
+	private static final Log _log = LogFactoryUtil.getLog(PortletAutoDeployer.class);
 
 }

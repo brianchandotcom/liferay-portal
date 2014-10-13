@@ -146,6 +146,6 @@ public class FirebirdDB extends BaseDB {
 		" varchar(4000)", " blob", " varchar", "", "commit"
 	};
 
-	private static FirebirdDB _instance = new FirebirdDB();
+	private static final FirebirdDB _instance = new FirebirdDB();
 
 }

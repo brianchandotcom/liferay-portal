@@ -49,7 +49,7 @@ public class ConvertDocumentLibraryExtraSettings extends ConvertProcess {
 	protected void doConvert() throws Exception {
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ConvertDocumentLibraryExtraSettings.class);
 
 }

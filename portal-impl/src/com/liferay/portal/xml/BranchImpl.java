@@ -259,6 +259,6 @@ public class BranchImpl extends NodeImpl implements Branch {
 		return _branch.toString();
 	}
 
-	private org.dom4j.Branch _branch;
+	private final org.dom4j.Branch _branch;
 
 }

@@ -264,6 +264,6 @@ public class DDMIndexerImpl implements DDMIndexer {
 		return sb.toString();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DDMIndexerImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(DDMIndexerImpl.class);
 
 }

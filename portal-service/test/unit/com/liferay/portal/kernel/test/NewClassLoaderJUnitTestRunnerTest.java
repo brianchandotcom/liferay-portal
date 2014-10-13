@@ -98,7 +98,7 @@ public class NewClassLoaderJUnitTestRunnerTest {
 	private static final String _PROPERTY_KEY = "PROPERTY_KEY";
 
 	private ClassLoader _classLoader;
-	private AtomicInteger _counter = new AtomicInteger();
+	private final AtomicInteger _counter = new AtomicInteger();
 
 	private static class ValueClass {
 

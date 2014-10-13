@@ -289,6 +289,6 @@ public class SchemeAwareContextWrapper implements Context {
 		return _context;
 	}
 
-	private Context _context;
+	private final Context _context;
 
 }

@@ -65,7 +65,7 @@ public class NonceUtil {
 	private static final long _NONCE_EXPIRATION =
 		PropsValues.WEBDAV_NONCE_EXPIRATION * Time.MINUTE;
 
-	private static DelayQueue<NonceDelayed> _nonceDelayQueue =
+	private static final DelayQueue<NonceDelayed> _nonceDelayQueue =
 		new DelayQueue<NonceDelayed>();
 
 	private static class NonceDelayed implements Delayed {

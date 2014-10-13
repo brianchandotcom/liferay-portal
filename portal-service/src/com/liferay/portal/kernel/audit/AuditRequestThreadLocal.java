@@ -102,7 +102,7 @@ public class AuditRequestThreadLocal {
 		_sessionID = sessionID;
 	}
 
-	private static ThreadLocal<AuditRequestThreadLocal>
+	private static final ThreadLocal<AuditRequestThreadLocal>
 		_auditRequestThreadLocal =
 			new AutoResetThreadLocal<AuditRequestThreadLocal>(
 				AuditRequestThreadLocal.class + "._auditRequestThreadLocal");

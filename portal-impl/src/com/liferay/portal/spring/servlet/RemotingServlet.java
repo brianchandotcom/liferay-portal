@@ -73,6 +73,6 @@ public class RemotingServlet extends DispatcherServlet {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(RemotingServlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(RemotingServlet.class);
 
 }

@@ -94,6 +94,6 @@ public class CopyMethodImpl implements Method {
 		return HttpServletResponse.SC_FORBIDDEN;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(CopyMethodImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(CopyMethodImpl.class);
 
 }

@@ -324,7 +324,7 @@ public class UploadPortletRequestImpl
 		}
 	}
 
-	private String _namespace;
-	private UploadServletRequest _uploadServletRequest;
+	private final String _namespace;
+	private final UploadServletRequest _uploadServletRequest;
 
 }

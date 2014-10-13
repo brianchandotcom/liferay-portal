@@ -88,7 +88,7 @@ public class Modifications {
 	private Modifications() {
 	}
 
-	private List<ModificationItem> _modificationItems =
+	private final List<ModificationItem> _modificationItems =
 		new ArrayList<ModificationItem>();
 
 }

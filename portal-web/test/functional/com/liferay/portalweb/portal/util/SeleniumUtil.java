@@ -195,9 +195,9 @@ public class SeleniumUtil extends TestPropsValues {
 			new LoggerHandler(liferaySelenium));
 	}
 
-	private static SeleniumUtil _instance = new SeleniumUtil();
+	private static final SeleniumUtil _instance = new SeleniumUtil();
 
 	private LiferaySelenium _selenium;
-	private String _timestamp;
+	private final String _timestamp;
 
 }

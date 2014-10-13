@@ -78,6 +78,6 @@ public class StreamUtil {
 		}
 	}
 
-	private static Logger _log = LoggerFactory.getLogger(StreamUtil.class);
+	private static final Logger _log = LoggerFactory.getLogger(StreamUtil.class);
 
 }

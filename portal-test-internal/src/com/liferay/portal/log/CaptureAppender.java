@@ -75,7 +75,7 @@ public class CaptureAppender extends AppenderSkeleton {
 		_loggingEvents.add(loggingEvent);
 	}
 
-	private static Field _parentField;
+	private static final Field _parentField;
 
 	static {
 		try {
@@ -87,10 +87,10 @@ public class CaptureAppender extends AppenderSkeleton {
 		}
 	}
 
-	private Level _level;
-	private Logger _logger;
-	private List<LoggingEvent> _loggingEvents =
+	private final Level _level;
+	private final Logger _logger;
+	private final List<LoggingEvent> _loggingEvents =
 		new CopyOnWriteArrayList<LoggingEvent>();
-	private Category _parentCategory;
+	private final Category _parentCategory;
 
 }

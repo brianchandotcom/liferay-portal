@@ -51,10 +51,10 @@ public class PortalHookPermission extends BasicPermission {
 
 	}
 
-	private static PACL _pacl = new NoPACL();
+	private static final PACL _pacl = new NoPACL();
 
-	private transient ClassLoader _classLoader;
-	private transient Object _subject;
+	private final transient ClassLoader _classLoader;
+	private final transient Object _subject;
 
 	private static class NoPACL implements PACL {
 

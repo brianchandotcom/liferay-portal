@@ -131,6 +131,6 @@ public class AttributeImpl extends NodeImpl implements Attribute {
 		return _attribute.toString();
 	}
 
-	private org.dom4j.Attribute _attribute;
+	private final org.dom4j.Attribute _attribute;
 
 }

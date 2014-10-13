@@ -29,7 +29,7 @@ public class AsyncInvokeThreadLocal {
 		_enabled.set(enabled);
 	}
 
-	private static ThreadLocal<Boolean> _enabled =
+	private static final ThreadLocal<Boolean> _enabled =
 		new AutoResetThreadLocal<Boolean>(
 			AsyncInvokeThreadLocal.class + "._enabled", false);
 

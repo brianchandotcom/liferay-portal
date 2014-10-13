@@ -60,9 +60,9 @@ public class ThemeExplodedTomcatListener extends BaseExplodedTomcatListener {
 		return AutoDeployer.CODE_DEFAULT;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ThemeExplodedTomcatListener.class);
 
-	private ExplodedTomcatDeployer _deployer;
+	private final ExplodedTomcatDeployer _deployer;
 
 }

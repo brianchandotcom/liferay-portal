@@ -182,10 +182,10 @@ public class BeanReferenceAnnotationBeanPostProcessor
 
 	private static final String _ORG_SPRINGFRAMEWORK = "org.springframework";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		BeanReferenceAnnotationBeanPostProcessor.class);
 
 	private BeanFactory _beanFactory;
-	private Map<String, Object> _beans = new HashMap<String, Object>();
+	private final Map<String, Object> _beans = new HashMap<String, Object>();
 
 }

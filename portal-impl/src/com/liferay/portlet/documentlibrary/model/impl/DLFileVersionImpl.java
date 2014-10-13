@@ -150,7 +150,7 @@ public class DLFileVersionImpl extends DLFileVersionBaseImpl {
 		super.setExtraSettings(_extraSettingsProperties.toString());
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DLFileVersionImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(DLFileVersionImpl.class);
 
 	private transient ExpandoBridge _expandoBridge;
 	private UnicodeProperties _extraSettingsProperties;

@@ -261,7 +261,7 @@ public class BaseJSONHandler extends BaseHandler {
 	protected void processResponse(String response) throws Exception {
 	}
 
-	private static Logger _logger = LoggerFactory.getLogger(
+	private static final Logger _logger = LoggerFactory.getLogger(
 		BaseJSONHandler.class);
 
 }

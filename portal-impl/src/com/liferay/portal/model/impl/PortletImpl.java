@@ -3947,7 +3947,7 @@ public class PortletImpl extends PortletBaseImpl {
 	/**
 	 * Log instance for this class.
 	 */
-	private static Log _log = LogFactoryUtil.getLog(PortletImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(PortletImpl.class);
 
 	/**
 	 * Map of the ready states of all portlets keyed by their root portlet ID.

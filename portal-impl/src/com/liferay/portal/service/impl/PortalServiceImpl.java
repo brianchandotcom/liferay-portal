@@ -239,6 +239,6 @@ public class PortalServiceImpl extends PortalServiceBaseImpl {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PortalServiceImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(PortalServiceImpl.class);
 
 }

@@ -708,13 +708,13 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 		return _cmisRepository;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(CMISFileEntry.class);
+	private static final Log _log = LogFactoryUtil.getLog(CMISFileEntry.class);
 
 	private List<Document> _allVersions;
-	private CMISRepository _cmisRepository;
+	private final CMISRepository _cmisRepository;
 	private Document _document;
 	private long _fileEntryId;
 	private FileVersion _latestFileVersion;
-	private String _uuid;
+	private final String _uuid;
 
 }

@@ -30,6 +30,6 @@ public class VerifierImpl implements Verifier {
 		return _verifier;
 	}
 
-	private org.scribe.model.Verifier _verifier;
+	private final org.scribe.model.Verifier _verifier;
 
 }

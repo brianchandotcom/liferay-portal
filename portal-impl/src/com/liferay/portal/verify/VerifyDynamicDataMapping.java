@@ -593,7 +593,7 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		return DDMXMLUtil.formatXML(document.asXML());
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		VerifyDynamicDataMapping.class);
 
 	private long _ddlRecordSetClassNameId;

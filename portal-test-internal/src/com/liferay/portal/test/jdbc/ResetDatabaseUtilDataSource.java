@@ -54,7 +54,7 @@ public class ResetDatabaseUtilDataSource extends DataSourceWrapper {
 			new ResetDatabaseConnectionHandler(super.getConnection()));
 	}
 
-	private static DataSourceFactoryImpl.PACL _pacl =
+	private static final DataSourceFactoryImpl.PACL _pacl =
 		new DataSourceFactoryImpl.PACL() {
 
 			@Override
@@ -64,7 +64,7 @@ public class ResetDatabaseUtilDataSource extends DataSourceWrapper {
 
 		};
 
-	private static Field _paclField;
+	private static final Field _paclField;
 
 	static {
 		try {

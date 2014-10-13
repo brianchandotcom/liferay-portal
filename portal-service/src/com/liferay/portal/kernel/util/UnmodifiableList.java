@@ -245,6 +245,6 @@ public class UnmodifiableList<E> implements List<E>, Serializable {
 	private static final String _MESSAGE =
 		"Please make a copy of this read-only list before modifying it.";
 
-	private List<? extends E> _list;
+	private final List<? extends E> _list;
 
 }

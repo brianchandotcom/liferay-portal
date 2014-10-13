@@ -48,7 +48,7 @@ public class MultiValueServiceTrackerBucketFactory<SR, TS>
 		return new ListServiceTrackerBucket();
 	}
 
-	private Comparator<ServiceReference<SR>> _comparator;
+	private final Comparator<ServiceReference<SR>> _comparator;
 
 	private class ListServiceTrackerBucket
 		implements ServiceTrackerBucket<SR, TS, List<TS>> {
@@ -106,7 +106,7 @@ public class MultiValueServiceTrackerBucketFactory<SR, TS>
 					serviceReferenceServiceTupleComparator);
 		}
 
-		private Set<ServiceReferenceServiceTuple<SR, TS>>
+		private final Set<ServiceReferenceServiceTuple<SR, TS>>
 			_serviceReferenceServiceTuples;
 		private List<TS> _services = new ArrayList<TS>();
 

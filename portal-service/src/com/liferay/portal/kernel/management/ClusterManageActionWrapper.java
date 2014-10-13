@@ -103,7 +103,7 @@ public class ClusterManageActionWrapper
 		}
 	}
 
-	private ClusterGroup _clusterGroup;
-	private ManageAction<?> _manageAction;
+	private final ClusterGroup _clusterGroup;
+	private final ManageAction<?> _manageAction;
 
 }

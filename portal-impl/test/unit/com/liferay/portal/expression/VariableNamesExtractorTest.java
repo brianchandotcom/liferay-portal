@@ -61,7 +61,7 @@ public class VariableNamesExtractorTest {
 		Assert.assertEquals("variable", variableNames.get(0));
 	}
 
-	private VariableNamesExtractor _variableNamesExtractor =
+	private final VariableNamesExtractor _variableNamesExtractor =
 		new VariableNamesExtractor();
 
 }

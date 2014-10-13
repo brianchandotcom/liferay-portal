@@ -31,6 +31,6 @@ public class ReturnArgumentCalledAnswer<T> implements Answer<T> {
 		return (T)invocationOnMock.getArguments()[_position];
 	}
 
-	private int _position;
+	private final int _position;
 
 }

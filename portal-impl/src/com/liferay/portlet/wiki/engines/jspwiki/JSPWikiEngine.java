@@ -293,14 +293,14 @@ public class JSPWikiEngine implements WikiEngine {
 		"__GRA__", "__QUE__", "__SLA__", "__STA__"
 	};
 
-	private static Log _log = LogFactoryUtil.getLog(JSPWikiEngine.class);
+	private static final Log _log = LogFactoryUtil.getLog(JSPWikiEngine.class);
 
-	private static Pattern _wikiCommentPattern = Pattern.compile(
+	private static final Pattern _wikiCommentPattern = Pattern.compile(
 		"[\\{]{3,3}(.*?)[\\}]{3,3}", Pattern.DOTALL);
-	private static Pattern _wikiLinkPattern = Pattern.compile(
+	private static final Pattern _wikiLinkPattern = Pattern.compile(
 		"[\\[]{1,2}(.+?)[\\]]{1,2}", Pattern.DOTALL);
 
-	private Map<Long, LiferayJSPWikiEngine> _engines =
+	private final Map<Long, LiferayJSPWikiEngine> _engines =
 		new ConcurrentHashMap<Long, LiferayJSPWikiEngine>();
 	private Properties _properties;
 

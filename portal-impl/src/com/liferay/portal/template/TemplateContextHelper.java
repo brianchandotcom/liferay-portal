@@ -892,12 +892,12 @@ public class TemplateContextHelper {
 		template.put("tilesSelectable", tilesSelectable);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		TemplateContextHelper.class);
 
-	private static PACL _pacl = new NoPACL();
+	private static final PACL _pacl = new NoPACL();
 
-	private Map<ClassLoader, Map<String, Object>[]> _helperUtilitiesMaps =
+	private final Map<ClassLoader, Map<String, Object>[]> _helperUtilitiesMaps =
 		new ConcurrentHashMap<ClassLoader, Map<String, Object>[]>();
 
 	private static class NoPACL implements PACL {

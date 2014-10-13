@@ -322,7 +322,7 @@ public class ClusterRequestReceiverTest
 
 	}
 
-	private static MethodKey _testMethod4MethodKey = new MethodKey(
+	private static final MethodKey _testMethod4MethodKey = new MethodKey(
 		TestBean.class, "testMethod4", String.class);
 
 }

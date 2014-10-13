@@ -81,7 +81,7 @@ public class ElasticsearchConnectionManager {
 		_elasticsearchConnection.set(null);
 	}
 
-	private AtomicReference<ElasticsearchConnection> _elasticsearchConnection =
+	private final AtomicReference<ElasticsearchConnection> _elasticsearchConnection =
 		new AtomicReference<ElasticsearchConnection>();
 
 }

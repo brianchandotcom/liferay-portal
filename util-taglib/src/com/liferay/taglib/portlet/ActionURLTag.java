@@ -317,7 +317,7 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 		return liferayPortletConfig.getPortletId();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ActionURLTag.class);
+	private static final Log _log = LogFactoryUtil.getLog(ActionURLTag.class);
 
 	private Boolean _anchor;
 	private String _cacheability;

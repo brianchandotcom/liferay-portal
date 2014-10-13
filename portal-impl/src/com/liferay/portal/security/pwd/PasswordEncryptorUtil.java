@@ -108,7 +108,7 @@ public class PasswordEncryptorUtil {
 		_passwordEncryptor = passwordEncryptor;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PasswordEncryptorUtil.class);
 
 	private static PasswordEncryptor _passwordEncryptor;

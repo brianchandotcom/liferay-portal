@@ -89,8 +89,8 @@ public class AntCommands extends Thread {
 		}
 	}
 
-	private String _fileName;
-	private LiferaySelenium _liferaySelenium;
-	private String _target;
+	private final String _fileName;
+	private final LiferaySelenium _liferaySelenium;
+	private final String _target;
 
 }

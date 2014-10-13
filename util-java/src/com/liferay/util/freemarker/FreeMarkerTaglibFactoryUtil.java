@@ -146,8 +146,8 @@ public class FreeMarkerTaglibFactoryUtil implements CacheRegistryItem {
 			return false;
 		}
 
-		private TaglibFactory _taglibFactory;
-		private Map<String, TemplateModel> _templateModels;
+		private final TaglibFactory _taglibFactory;
+		private final Map<String, TemplateModel> _templateModels;
 
 	}
 

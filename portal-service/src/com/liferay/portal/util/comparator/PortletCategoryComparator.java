@@ -43,6 +43,6 @@ public class PortletCategoryComparator
 		return name1.compareTo(name2);
 	}
 
-	private Locale _locale;
+	private final Locale _locale;
 
 }

@@ -57,7 +57,7 @@ public class MessageValuesThreadLocal {
 		messageValues.put(key, value);
 	}
 
-	private static ThreadLocal<Map<String, Object>> _messageValuesThreadLocal =
+	private static final ThreadLocal<Map<String, Object>> _messageValuesThreadLocal =
 		new AutoResetThreadLocal<Map<String, Object>>(
 			MessageValuesThreadLocal.class.getName());
 

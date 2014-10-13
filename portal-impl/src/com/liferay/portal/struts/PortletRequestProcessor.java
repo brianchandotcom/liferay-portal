@@ -644,7 +644,7 @@ public class PortletRequestProcessor extends TilesRequestProcessor {
 	private static final String _PATH_PORTAL_PORTLET_INACTIVE =
 		"/portal/portlet_inactive";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortletRequestProcessor.class);
 
 }

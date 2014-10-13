@@ -46,8 +46,8 @@ public class NodeChangeException extends PortalException {
 		return _type;
 	}
 
-	private String _nodeName;
-	private String _pageTitle;
-	private int _type;
+	private final String _nodeName;
+	private final String _pageTitle;
+	private final int _type;
 
 }

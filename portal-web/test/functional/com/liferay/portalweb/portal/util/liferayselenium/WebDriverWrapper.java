@@ -99,6 +99,6 @@ public class WebDriverWrapper implements WebDriver {
 		return _webDriver.switchTo();
 	}
 
-	private WebDriver _webDriver;
+	private final WebDriver _webDriver;
 
 }

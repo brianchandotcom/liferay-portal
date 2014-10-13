@@ -135,7 +135,7 @@ public class ModuleFrameworkUtilAdapter {
 	}
 
 	private static ModuleFramework _moduleFramework;
-	private static ModuleFrameworkAdapterHelper _moduleFrameworkAdapterHelper =
+	private static final ModuleFrameworkAdapterHelper _moduleFrameworkAdapterHelper =
 		new ModuleFrameworkAdapterHelper(
 			"com.liferay.portal.bootstrap.ModuleFrameworkUtil");
 

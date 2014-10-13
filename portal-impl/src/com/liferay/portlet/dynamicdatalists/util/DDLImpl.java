@@ -456,9 +456,9 @@ public class DDLImpl implements DDL {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DDLImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(DDLImpl.class);
 
-	private Transformer _transformer = new Transformer(
+	private final Transformer _transformer = new Transformer(
 		PropsKeys.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE, true);
 
 }

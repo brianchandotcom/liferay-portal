@@ -40,6 +40,6 @@ public class TokenImpl implements Token {
 		return _token;
 	}
 
-	private org.scribe.model.Token _token;
+	private final org.scribe.model.Token _token;
 
 }

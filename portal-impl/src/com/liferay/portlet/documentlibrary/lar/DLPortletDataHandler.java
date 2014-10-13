@@ -647,6 +647,6 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		return exportActionableDynamicQuery;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DLPortletDataHandler.class);
+	private static final Log _log = LogFactoryUtil.getLog(DLPortletDataHandler.class);
 
 }

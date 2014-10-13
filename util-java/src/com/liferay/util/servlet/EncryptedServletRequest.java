@@ -83,7 +83,7 @@ public class EncryptedServletRequest extends HttpServletRequestWrapper {
 		return _params.get(name);
 	}
 
-	private Key _key;
-	private Map<String, String[]> _params;
+	private final Key _key;
+	private final Map<String, String[]> _params;
 
 }

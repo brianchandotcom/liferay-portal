@@ -53,6 +53,6 @@ public class MemorySettingsTest extends PowerMockito {
 		Assert.assertEquals("value1", _memorySettings.getValue("key", null));
 	}
 
-	private MemorySettings _memorySettings = new MemorySettings();
+	private final MemorySettings _memorySettings = new MemorySettings();
 
 }

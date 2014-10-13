@@ -78,6 +78,6 @@ public class FolderIdComparator extends OrderByComparator<JournalFolder> {
 		return _ascending;
 	}
 
-	private boolean _ascending;
+	private final boolean _ascending;
 
 }

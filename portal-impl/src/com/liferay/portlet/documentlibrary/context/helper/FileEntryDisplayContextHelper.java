@@ -216,14 +216,14 @@ public class FileEntryDisplayContextHelper {
 
 	private Boolean _checkedOut;
 	private Boolean _dlFileEntry;
-	private FileEntry _fileEntry;
+	private final FileEntry _fileEntry;
 	private Boolean _hasDeletePermission;
 	private Boolean _hasLock;
 	private Boolean _hasOverrideCheckoutPermission;
 	private Boolean _hasPermissionsPermission;
 	private Boolean _hasUpdatePermission;
 	private Boolean _hasViewPermission;
-	private PermissionChecker _permissionChecker;
+	private final PermissionChecker _permissionChecker;
 	private Boolean _supportsLocking;
 
 }

@@ -141,7 +141,7 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 	private final ConcurrentMap<ClassLoader, GroovyShell> _groovyShells =
 		new ConcurrentReferenceKeyHashMap<ClassLoader, GroovyShell>(
 			FinalizeManager.WEAK_REFERENCE_FACTORY);
-	private PortalCache<String, Script> _portalCache =
+	private final PortalCache<String, Script> _portalCache =
 		SingleVMPoolUtil.getCache(_CACHE_NAME);
 
 }

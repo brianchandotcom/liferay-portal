@@ -133,6 +133,6 @@ public class PropfindMethodImpl extends BasePropMethodImpl implements Method {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PropfindMethodImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(PropfindMethodImpl.class);
 
 }

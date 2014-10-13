@@ -83,6 +83,6 @@ public class NamespaceImpl extends NodeImpl implements Namespace {
 		return _namespace.toString();
 	}
 
-	private org.dom4j.Namespace _namespace;
+	private final org.dom4j.Namespace _namespace;
 
 }

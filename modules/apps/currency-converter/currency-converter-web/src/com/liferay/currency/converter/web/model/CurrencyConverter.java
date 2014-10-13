@@ -54,7 +54,7 @@ public class CurrencyConverter implements Serializable {
 		return DEFAULT_TO;
 	}
 
-	private double _rate;
-	private String _symbol;
+	private final double _rate;
+	private final String _symbol;
 
 }

@@ -32,6 +32,6 @@ public class JavaScriptPortletResourcePredicateFilter
 		return !_themeDisplay.isIncludedJs(resource);
 	}
 
-	private ThemeDisplay _themeDisplay;
+	private final ThemeDisplay _themeDisplay;
 
 }

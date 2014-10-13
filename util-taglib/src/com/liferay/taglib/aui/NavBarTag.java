@@ -52,6 +52,6 @@ public class NavBarTag extends BaseNavBarTag implements BodyTag {
 		return EVAL_BODY_BUFFERED;
 	}
 
-	private StringBundler _responsiveButtonsSB = new StringBundler();
+	private final StringBundler _responsiveButtonsSB = new StringBundler();
 
 }

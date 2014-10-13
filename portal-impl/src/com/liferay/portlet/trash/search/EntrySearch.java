@@ -105,6 +105,6 @@ public class EntrySearch extends SearchContainer<TrashEntry> {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(EntrySearch.class);
+	private static final Log _log = LogFactoryUtil.getLog(EntrySearch.class);
 
 }

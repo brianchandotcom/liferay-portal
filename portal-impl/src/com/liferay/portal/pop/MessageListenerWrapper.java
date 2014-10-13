@@ -95,9 +95,9 @@ public class MessageListenerWrapper implements MessageListener {
 		return _listener.getId().hashCode();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		MessageListenerWrapper.class);
 
-	private MessageListener _listener;
+	private final MessageListener _listener;
 
 }

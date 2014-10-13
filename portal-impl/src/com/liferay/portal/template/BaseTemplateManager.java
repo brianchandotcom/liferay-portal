@@ -106,9 +106,9 @@ public abstract class BaseTemplateManager implements TemplateManager {
 				_classLoader, _restricted);
 		}
 
-		private ClassLoader _classLoader;
+		private final ClassLoader _classLoader;
 		private boolean _restricted;
-		private TemplateContextHelper _templateContextHelper;
+		private final TemplateContextHelper _templateContextHelper;
 
 	}
 
@@ -133,10 +133,10 @@ public abstract class BaseTemplateManager implements TemplateManager {
 				_helperUtilities, true);
 		}
 
-		private TemplateResource _errorTemplateResource;
-		private Map<String, Object> _helperUtilities;
+		private final TemplateResource _errorTemplateResource;
+		private final Map<String, Object> _helperUtilities;
 		private boolean _restricted;
-		private TemplateResource _templateResource;
+		private final TemplateResource _templateResource;
 
 	}
 

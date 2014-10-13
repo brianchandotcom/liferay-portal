@@ -236,7 +236,7 @@ public class RSSPortletDataHandler extends BasePortletDataHandler {
 		return portletPreferences;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		RSSPortletDataHandler.class);
 
 }

@@ -99,12 +99,12 @@ public class PortletContextFactory {
 		_pool.remove(portlet.getRootPortletId());
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortletContextFactory.class);
 
-	private static PortletContextFactory _instance =
+	private static final PortletContextFactory _instance =
 		new PortletContextFactory();
 
-	private Map<String, Map<String, PortletContext>> _pool;
+	private final Map<String, Map<String, PortletContext>> _pool;
 
 }

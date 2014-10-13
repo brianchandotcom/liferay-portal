@@ -49,9 +49,9 @@ public class InvalidWord implements Serializable {
 		return _wordContextPosition;
 	}
 
-	private String _invalidWord;
-	private List<String> _suggestions;
-	private String _wordContext;
-	private int _wordContextPosition;
+	private final String _invalidWord;
+	private final List<String> _suggestions;
+	private final String _wordContext;
+	private final int _wordContextPosition;
 
 }

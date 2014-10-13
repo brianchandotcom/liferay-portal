@@ -131,7 +131,7 @@ public class XugglerImpl implements Xuggler {
 		_log.error(sb.toString());
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(XugglerImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(XugglerImpl.class);
 
 	private static boolean _informAdministrator = true;
 	private static boolean _nativeLibraryInstalled;

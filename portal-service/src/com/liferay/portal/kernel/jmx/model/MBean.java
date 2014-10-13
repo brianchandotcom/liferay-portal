@@ -125,7 +125,7 @@ public class MBean implements Serializable {
 		return _loaded;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(MBean.class);
+	private static final Log _log = LogFactoryUtil.getLog(MBean.class);
 
 	private final String _domainName;
 	private final boolean _loaded;

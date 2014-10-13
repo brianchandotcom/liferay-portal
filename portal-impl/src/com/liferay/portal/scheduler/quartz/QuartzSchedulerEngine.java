@@ -1164,7 +1164,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 	@BeanReference(name = "com.liferay.portal.service.QuartzLocalService")
 	protected QuartzLocalService quartzLocalService;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		QuartzSchedulerEngine.class);
 
 	private Scheduler _memoryScheduler;

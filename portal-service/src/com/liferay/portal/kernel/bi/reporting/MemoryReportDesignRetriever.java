@@ -48,8 +48,8 @@ public class MemoryReportDesignRetriever implements ReportDesignRetriever {
 		return _reportName;
 	}
 
-	private byte[] _bytes;
-	private Date _modifiedDate;
-	private String _reportName;
+	private final byte[] _bytes;
+	private final Date _modifiedDate;
+	private final String _reportName;
 
 }

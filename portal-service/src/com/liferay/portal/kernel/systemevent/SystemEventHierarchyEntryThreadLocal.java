@@ -163,7 +163,7 @@ public class SystemEventHierarchyEntryThreadLocal {
 		return push(PortalUtil.getClassNameId(className), classPK, action);
 	}
 
-	private static ThreadLocal<Stack<SystemEventHierarchyEntry>>
+	private static final ThreadLocal<Stack<SystemEventHierarchyEntry>>
 		_systemEventHierarchyEntries =
 			new AutoResetThreadLocal<Stack<SystemEventHierarchyEntry>>(
 				SystemEventHierarchyEntryThreadLocal.class +

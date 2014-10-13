@@ -87,7 +87,7 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		initChecker(_sqlChecker);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ActivePACLPolicy.class);
+	private static final Log _log = LogFactoryUtil.getLog(ActivePACLPolicy.class);
 
 	private JNDIChecker _jndiChecker;
 	private SQLChecker _sqlChecker;

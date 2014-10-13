@@ -53,9 +53,9 @@ public class LiferayCacheEventListenerFactory
 		return _cacheEventListenerFactory.createCacheEventListener(properties);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayCacheEventListenerFactory.class);
 
-	private CacheEventListenerFactory _cacheEventListenerFactory;
+	private final CacheEventListenerFactory _cacheEventListenerFactory;
 
 }

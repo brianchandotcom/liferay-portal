@@ -166,6 +166,6 @@ public class PortletSandboxHandler extends BaseSandboxHandler {
 
 	private static final String _PLUGIN_TYPE = "portlet";
 
-	private Deployer _deployer;
+	private final Deployer _deployer;
 
 }

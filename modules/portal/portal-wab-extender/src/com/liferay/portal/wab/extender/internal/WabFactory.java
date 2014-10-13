@@ -114,7 +114,7 @@ public class WabFactory {
 		_extendedHttpService = null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(WabFactory.class);
+	private static final Log _log = LogFactoryUtil.getLog(WabFactory.class);
 
 	private BundleContext _bundleContext;
 	private ExtendedHttpService _extendedHttpService;

@@ -39,7 +39,7 @@ public class AssetCategoryException extends PortalException {
 		return _vocabulary;
 	}
 
-	private int _type;
-	private AssetVocabulary _vocabulary;
+	private final int _type;
+	private final AssetVocabulary _vocabulary;
 
 }

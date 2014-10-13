@@ -961,7 +961,7 @@ public class SQLNullTest {
 	private static final String _SQL_NOT_LIKE_NULL =
 		"SELECT DISTINCT 1 FROM ClassName_ WHERE ? NOT LIKE NULL";
 
-	private SessionFactory _sessionFactory =
+	private final SessionFactory _sessionFactory =
 		(SessionFactory)PortalBeanLocatorUtil.locate("liferaySessionFactory");
 
 }

@@ -113,6 +113,6 @@ public class UserGroupSearch extends SearchContainer<UserGroup> {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UserGroupSearch.class);
+	private static final Log _log = LogFactoryUtil.getLog(UserGroupSearch.class);
 
 }

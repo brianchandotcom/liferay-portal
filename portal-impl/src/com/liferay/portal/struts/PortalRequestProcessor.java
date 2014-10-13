@@ -1040,14 +1040,14 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 	private static final String _PATH_PORTAL_VERIFY_EMAIL_ADDRESS =
 		"/portal/verify_email_address";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortalRequestProcessor.class);
 
-	private static Pattern _strutsPortletIgnoredParamtersPattern =
+	private static final Pattern _strutsPortletIgnoredParamtersPattern =
 		Pattern.compile(PropsValues.STRUTS_PORTLET_IGNORED_PARAMETERS_REGEXP);
 
-	private Set<String> _lastPaths;
-	private Set<String> _publicPaths;
-	private Set<String> _trackerIgnorePaths;
+	private final Set<String> _lastPaths;
+	private final Set<String> _publicPaths;
+	private final Set<String> _trackerIgnorePaths;
 
 }

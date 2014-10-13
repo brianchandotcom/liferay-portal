@@ -44,6 +44,6 @@ public class AssetRendererFactoryTypeNameComparator
 		return assetRendererFactoryType1.compareTo(assetRendererFactoryType2);
 	}
 
-	private Locale _locale;
+	private final Locale _locale;
 
 }

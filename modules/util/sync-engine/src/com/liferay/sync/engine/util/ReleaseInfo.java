@@ -56,7 +56,7 @@ public class ReleaseInfo {
 
 	private static final String _VERSION = "2.0.0";
 
-	private static Pattern _pattern = Pattern.compile(
+	private static final Pattern _pattern = Pattern.compile(
 		"(?:[0-9]+\\.){3}([0-9]+)");
 
 }

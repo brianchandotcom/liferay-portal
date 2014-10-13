@@ -200,7 +200,7 @@ public class FileUploadChannelHandler extends ChannelInboundHandlerAdapter {
 	protected final FileResponse fileResponse;
 	protected final Path tempFilePath;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		FileUploadChannelHandler.class);
 
 }

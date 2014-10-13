@@ -341,7 +341,7 @@ public class ServerDetector {
 
 	private static final boolean _SUPPORTS_COMET = false;
 
-	private static Log _log = LogFactoryUtil.getLog(ServerDetector.class);
+	private static final Log _log = LogFactoryUtil.getLog(ServerDetector.class);
 
 	private static ServerDetector _instance;
 

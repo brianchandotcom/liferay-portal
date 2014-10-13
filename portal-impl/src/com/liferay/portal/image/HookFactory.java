@@ -48,7 +48,7 @@ public class HookFactory {
 		_hook = hook;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(HookFactory.class);
+	private static final Log _log = LogFactoryUtil.getLog(HookFactory.class);
 
 	private static Hook _hook;
 

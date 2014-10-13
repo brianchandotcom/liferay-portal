@@ -74,6 +74,6 @@ public class PortalImplTest extends PowerMockito {
 		verifyStatic();
 	}
 
-	private PortalImpl _portalImpl = new PortalImpl();
+	private final PortalImpl _portalImpl = new PortalImpl();
 
 }

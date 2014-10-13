@@ -42,6 +42,6 @@ public class DisjunctionImpl extends CriterionImpl implements Disjunction {
 		return _disjunction;
 	}
 
-	private org.hibernate.criterion.Disjunction _disjunction;
+	private final org.hibernate.criterion.Disjunction _disjunction;
 
 }

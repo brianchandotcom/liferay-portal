@@ -86,6 +86,6 @@ public class StagedGroupImpl extends GroupImpl implements StagedGroup {
 		throw new UnsupportedOperationException();
 	}
 
-	private Group _group;
+	private final Group _group;
 
 }

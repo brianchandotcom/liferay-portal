@@ -259,6 +259,6 @@ public class StoreWrapper implements Store {
 			toVersionLabel);
 	}
 
-	private Store _store;
+	private final Store _store;
 
 }

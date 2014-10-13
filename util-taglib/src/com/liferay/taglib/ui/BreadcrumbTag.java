@@ -355,7 +355,7 @@ public class BreadcrumbTag extends IncludeTag {
 	private static final boolean _SHOW_PARENT_GROUPS = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.BREADCRUMB_SHOW_PARENT_GROUPS));
 
-	private static Log _log = LogFactoryUtil.getLog(BreadcrumbTag.class);
+	private static final Log _log = LogFactoryUtil.getLog(BreadcrumbTag.class);
 
 	private String _displayStyle = _DISPLAY_STYLE;
 	private boolean _showCurrentGroup = true;

@@ -60,7 +60,7 @@ public class PortletDisplayTemplatePortletDataHandlerTest
 		return PortletKeys.PORTLET_DISPLAY_TEMPLATES;
 	}
 
-	private Class<?>[] _DDM_TEMPLATE_CLASSES = {
+	private final Class<?>[] _DDM_TEMPLATE_CLASSES = {
 		AssetCategory.class, AssetEntry.class, AssetTag.class, BlogsEntry.class,
 		DDLRecordSet.class, FileEntry.class, JournalArticle.class,
 		LayoutSet.class, WikiPage.class

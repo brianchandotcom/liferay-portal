@@ -140,10 +140,10 @@ public class PortletRenderer {
 	private static final String _RENDER_PATH =
 		"/html/portal/load_render_portlet.jsp";
 
-	private Integer _columnCount;
-	private String _columnId;
-	private Integer _columnPos;
-	private Portlet _portlet;
+	private final Integer _columnCount;
+	private final String _columnId;
+	private final Integer _columnPos;
+	private final Portlet _portlet;
 	private RestrictPortletServletRequest _restrictPortletServletRequest;
 
 	private class PortletRendererCallable
@@ -195,8 +195,8 @@ public class PortletRenderer {
 			}
 		}
 
-		private HttpServletRequest _request;
-		private HttpServletResponse _response;
+		private final HttpServletRequest _request;
+		private final HttpServletResponse _response;
 	}
 
 }

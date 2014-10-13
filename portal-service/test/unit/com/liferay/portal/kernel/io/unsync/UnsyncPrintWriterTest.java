@@ -198,7 +198,7 @@ public class UnsyncPrintWriterTest {
 	private static final String _TEST_FILE_NAME =
 		"UnsyncPrintWriterTest.testFile";
 
-	private static Field _writerField;
+	private static final Field _writerField;
 
 	static {
 		try {

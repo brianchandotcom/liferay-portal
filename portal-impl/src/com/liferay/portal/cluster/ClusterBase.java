@@ -194,7 +194,7 @@ public abstract class ClusterBase {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ClusterBase.class);
+	private static final Log _log = LogFactoryUtil.getLog(ClusterBase.class);
 
 	private static boolean _initialized;
 

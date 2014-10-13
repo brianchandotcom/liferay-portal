@@ -168,8 +168,8 @@ public class TypedSettings {
 		modifiableSettings.setValues(key, values);
 	}
 
-	private Locale[] _availableLocales;
-	private Locale _defaultLocale;
-	private Settings _settings;
+	private final Locale[] _availableLocales;
+	private final Locale _defaultLocale;
+	private final Settings _settings;
 
 }

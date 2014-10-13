@@ -62,7 +62,7 @@ public class VelocityBeanHandler implements InvocationHandler {
 		}
 	}
 
-	private Object _bean;
-	private ClassLoader _classLoader;
+	private final Object _bean;
+	private final ClassLoader _classLoader;
 
 }

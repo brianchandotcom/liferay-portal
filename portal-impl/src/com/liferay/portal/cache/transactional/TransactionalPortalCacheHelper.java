@@ -192,11 +192,11 @@ public class TransactionalPortalCacheHelper {
 		portalCacheMaps.add(new PortalCacheMap());
 	}
 
-	private static ValueEntry _NULL_HOLDER_VALUE_ENTRY = new ValueEntry(
+	private static final ValueEntry _NULL_HOLDER_VALUE_ENTRY = new ValueEntry(
 		TransactionalPortalCache.NULL_HOLDER, PortalCache.DEFAULT_TIME_TO_LIVE,
 		false);
 
-	private static ThreadLocal<List<PortalCacheMap>>
+	private static final ThreadLocal<List<PortalCacheMap>>
 		_portalCacheMapsThreadLocal =
 			new InitialThreadLocal<List<PortalCacheMap>>(
 				TransactionalPortalCacheHelper.class.getName() +
@@ -249,7 +249,7 @@ public class TransactionalPortalCacheHelper {
 		}
 
 		private boolean _removeAll;
-		private Map<Serializable, ValueEntry> _uncommittedMap =
+		private final Map<Serializable, ValueEntry> _uncommittedMap =
 			new HashMap<Serializable, ValueEntry>();
 
 	}
@@ -283,7 +283,7 @@ public class TransactionalPortalCacheHelper {
 		}
 
 		private boolean _quiet;
-		private int _ttl;
+		private final int _ttl;
 		private Object _value;
 
 	}

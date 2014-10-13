@@ -91,6 +91,6 @@ public class PortalPreferencesWrapper
 		_portalPreferencesImpl.store();
 	}
 
-	private PortalPreferencesImpl _portalPreferencesImpl;
+	private final PortalPreferencesImpl _portalPreferencesImpl;
 
 }

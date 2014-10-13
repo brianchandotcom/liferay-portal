@@ -38,6 +38,6 @@ public class LRUMap<K, V> extends LinkedHashMap<K, V> {
 		}
 	}
 
-	private int _capacity;
+	private final int _capacity;
 
 }

@@ -83,6 +83,6 @@ public class WikiNodeTrashRenderer extends BaseTrashRenderer {
 		return TYPE;
 	}
 
-	private WikiNode _node;
+	private final WikiNode _node;
 
 }

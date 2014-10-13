@@ -206,6 +206,6 @@ public class DLPortletInstanceSettings {
 			_MULTI_VALUED_KEYS);
 	}
 
-	private TypedSettings _typedSettings;
+	private final TypedSettings _typedSettings;
 
 }

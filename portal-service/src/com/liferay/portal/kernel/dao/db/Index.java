@@ -37,8 +37,8 @@ public class Index {
 		return _unique;
 	}
 
-	private String _indexName;
-	private String _tableName;
-	private boolean _unique;
+	private final String _indexName;
+	private final String _tableName;
+	private final boolean _unique;
 
 }

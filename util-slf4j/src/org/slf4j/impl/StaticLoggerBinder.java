@@ -53,6 +53,6 @@ public class StaticLoggerBinder implements LoggerFactoryBinder {
 	private static final StaticLoggerBinder _SINGLETON =
 		new StaticLoggerBinder();
 
-	private ILoggerFactory _iLoggerFactory;
+	private final ILoggerFactory _iLoggerFactory;
 
 }

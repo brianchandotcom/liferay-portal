@@ -46,8 +46,8 @@ public class VariableDependencies {
 		return _variableName;
 	}
 
-	private List<String> _affectedVariableNames = new ArrayList<String>();
-	private List<String> _requiredVariableNames = new ArrayList<String>();
-	private String _variableName;
+	private final List<String> _affectedVariableNames = new ArrayList<String>();
+	private final List<String> _requiredVariableNames = new ArrayList<String>();
+	private final String _variableName;
 
 }

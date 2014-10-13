@@ -117,7 +117,7 @@ public class BlogsEntryLocalServiceImplTest {
 	@Mock
 	private BlogsEntry _blogsEntry;
 
-	private BlogsEntryLocalServiceImpl _blogsEntryLocalServiceImpl =
+	private final BlogsEntryLocalServiceImpl _blogsEntryLocalServiceImpl =
 		new BlogsEntryLocalServiceImpl();
 
 	@Mock

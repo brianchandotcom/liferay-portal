@@ -100,7 +100,7 @@ public class AsyncBroker<K, V> {
 
 	private static final Field _REFERENT_FIELD;
 
-	private static Log _log = LogFactoryUtil.getLog(AsyncBroker.class);
+	private static final Log _log = LogFactoryUtil.getLog(AsyncBroker.class);
 
 	static {
 		Field referentField = null;

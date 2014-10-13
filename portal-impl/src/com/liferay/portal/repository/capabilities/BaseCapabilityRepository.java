@@ -63,6 +63,6 @@ public abstract class BaseCapabilityRepository<R> extends BaseCapabilityProvider
 			getRepositoryId());
 	}
 
-	private R _repository;
+	private final R _repository;
 
 }

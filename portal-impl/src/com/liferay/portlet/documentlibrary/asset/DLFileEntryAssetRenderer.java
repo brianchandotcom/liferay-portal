@@ -384,7 +384,7 @@ public class DLFileEntryAssetRenderer
 		super.setAddToPagePreferences(preferences, portletId, themeDisplay);
 	}
 
-	private FileEntry _fileEntry;
+	private final FileEntry _fileEntry;
 	private FileVersion _fileVersion;
 
 }

@@ -55,6 +55,6 @@ public class WebDAVEnvironmentConfigTestListener
 		}
 	}
 
-	private BaseWebDAVTestCase _baseWebDAVTestCase = new BaseWebDAVTestCase();
+	private final BaseWebDAVTestCase _baseWebDAVTestCase = new BaseWebDAVTestCase();
 
 }

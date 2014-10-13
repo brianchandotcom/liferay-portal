@@ -82,7 +82,7 @@ public class PortalGroup
 		}
 	}
 
-	private Map<Principal, Principal> _members =
+	private final Map<Principal, Principal> _members =
 		new HashMap<Principal, Principal>();
 
 }

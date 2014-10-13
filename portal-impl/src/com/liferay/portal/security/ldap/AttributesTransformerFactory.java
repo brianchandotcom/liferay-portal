@@ -37,10 +37,10 @@ public class AttributesTransformerFactory {
 		_serviceTracker.open();
 	}
 
-	private static AttributesTransformerFactory _instance =
+	private static final AttributesTransformerFactory _instance =
 		new AttributesTransformerFactory();
 
-	private ServiceTracker<AttributesTransformer, AttributesTransformer>
+	private final ServiceTracker<AttributesTransformer, AttributesTransformer>
 		_serviceTracker;
 
 }

@@ -605,7 +605,7 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 		private String _contentType;
 		private boolean _error;
 		private String _errorMessage;
-		private Map<String, Set<Header>> _headers =
+		private final Map<String, Set<Header>> _headers =
 			new HashMap<String, Set<Header>>();
 		private Locale _locale;
 		private String _location;
@@ -629,6 +629,6 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 	protected boolean calledGetWriter;
 
 	private boolean _committed;
-	private MetaData _metaData = new MetaData();
+	private final MetaData _metaData = new MetaData();
 
 }

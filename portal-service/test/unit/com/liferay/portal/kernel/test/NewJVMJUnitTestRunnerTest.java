@@ -89,7 +89,7 @@ public class NewJVMJUnitTestRunnerTest {
 		return pid;
 	}
 
-	private AtomicInteger _counter = new AtomicInteger();
+	private final AtomicInteger _counter = new AtomicInteger();
 	private Integer _processId;
 
 }

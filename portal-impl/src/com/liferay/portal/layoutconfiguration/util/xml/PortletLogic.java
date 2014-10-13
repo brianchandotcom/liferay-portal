@@ -148,7 +148,7 @@ public class PortletLogic extends RuntimeLogic {
 		return portlet;
 	}
 
-	private HttpServletRequest _request;
-	private HttpServletResponse _response;
+	private final HttpServletRequest _request;
+	private final HttpServletResponse _response;
 
 }

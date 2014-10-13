@@ -610,7 +610,7 @@ public class ServiceTrackerCollectionTest {
 			_counter.incrementAndGet();
 		}
 
-		private AtomicInteger _counter;
+		private final AtomicInteger _counter;
 
 	}
 

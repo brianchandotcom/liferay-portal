@@ -41,7 +41,7 @@ public class WabURLStreamHandlerService
 		return new WabURLConnection(_bundleContext, _classLoader, url);
 	}
 
-	private BundleContext _bundleContext;
-	private ClassLoader _classLoader;
+	private final BundleContext _bundleContext;
+	private final ClassLoader _classLoader;
 
 }

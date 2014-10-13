@@ -603,7 +603,7 @@ public class PortletPermissionImpl implements PortletPermission {
 		return false;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortletPermissionImpl.class);
 
 }

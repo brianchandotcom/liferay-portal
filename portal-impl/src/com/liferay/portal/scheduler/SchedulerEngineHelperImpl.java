@@ -793,7 +793,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		SchedulerEngineHelperImpl.class);
 
 	private SchedulerEngine _schedulerEngine;

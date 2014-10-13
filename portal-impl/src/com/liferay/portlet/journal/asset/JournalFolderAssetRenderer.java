@@ -241,6 +241,6 @@ public class JournalFolderAssetRenderer
 		}
 	}
 
-	private JournalFolder _folder;
+	private final JournalFolder _folder;
 
 }

@@ -176,12 +176,12 @@ public class PACLPolicyManager {
 		policy.refresh();
 	}
 
-	private static Map<ClassLoader, PACLPolicy> _classLoaderPACLPolicies =
+	private static final Map<ClassLoader, PACLPolicy> _classLoaderPACLPolicies =
 		new ConcurrentHashMap<ClassLoader, PACLPolicy>();
-	private static PACLPolicy _defaultPACLPolicy = new InactivePACLPolicy(
+	private static final PACLPolicy _defaultPACLPolicy = new InactivePACLPolicy(
 		StringPool.BLANK, PACLPolicyManager.class.getClassLoader(),
 		new Properties());
-	private static Map<URLWrapper, PACLPolicy> _urlPACLPolicies =
+	private static final Map<URLWrapper, PACLPolicy> _urlPACLPolicies =
 		new ConcurrentHashMap<URLWrapper, PACLPolicy>();
 
 	private static class PACLPolicyPrivilegedAction

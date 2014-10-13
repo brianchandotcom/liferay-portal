@@ -181,7 +181,7 @@ public class DownloadFileHandler extends BaseHandler {
 		}
 	}
 
-	private static Logger _logger = LoggerFactory.getLogger(
+	private static final Logger _logger = LoggerFactory.getLogger(
 		DownloadFileHandler.class);
 
 }

@@ -499,10 +499,10 @@ public class ActionUtil {
 						DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
 							uuid, groupId);
 
-					byte[] fileEntryBytes = FileUtil.getBytes(
+					byte[] bytes = FileUtil.getBytes(
 						fileEntry.getContentStream());
 
-					images.put(sb.toString(), fileEntryBytes);
+					images.put(sb.toString(), bytes);
 				}
 			}
 		}

@@ -1755,6 +1755,12 @@ public class StagingImpl implements Staging {
 		layout.setTypeSettingsProperties(typeSettingsProperties);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.kernel.lar.ExportImportDateUtil#updateLastPublishDate(
+	 *             long, boolean, DateRange, Date)}
+	 */
+	@Deprecated
 	@Override
 	public void updateLastPublishDate(
 			long groupId, boolean privateLayout, Date lastPublishDate)
@@ -1764,6 +1770,12 @@ public class StagingImpl implements Staging {
 			groupId, privateLayout, null, lastPublishDate);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.kernel.lar.ExportImportDateUtil#updateLastPublishDate(
+	 *             String, PortletPreferences, DateRange, Date)}
+	 */
+	@Deprecated
 	@Override
 	public void updateLastPublishDate(
 		String portletId, PortletPreferences portletPreferences,

@@ -63,9 +63,6 @@ public class JournalArticleServiceUtil {
 	* @param content the HTML content wrapped in XML. For more information,
 	see the content example in the class description for {@link
 	JournalArticleLocalServiceImpl}.
-	* @param type the structure's type, if the web content article is related
-	to a DDM structure. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
 	* @param ddmStructureKey the primary key of the web content article's DDM
 	structure, if the article is related to a DDM structure, or
 	<code>null</code> otherwise
@@ -121,20 +118,20 @@ public class JournalArticleServiceUtil {
 		java.lang.String articleId, boolean autoArticleId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String content, java.lang.String type,
-		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
-		java.lang.String layoutUuid, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		int reviewDateMonth, int reviewDateDay, int reviewDateYear,
-		int reviewDateHour, int reviewDateMinute, boolean neverReview,
-		boolean indexable, java.lang.String articleURL,
+		java.lang.String content, java.lang.String ddmStructureKey,
+		java.lang.String ddmTemplateKey, java.lang.String layoutUuid,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire, int reviewDateMonth,
+		int reviewDateDay, int reviewDateYear, int reviewDateHour,
+		int reviewDateMinute, boolean neverReview, boolean indexable,
+		java.lang.String articleURL,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addArticle(groupId, folderId, classNameId, classPK,
-			articleId, autoArticleId, titleMap, descriptionMap, content, type,
+			articleId, autoArticleId, titleMap, descriptionMap, content,
 			ddmStructureKey, ddmTemplateKey, layoutUuid, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
@@ -166,9 +163,6 @@ public class JournalArticleServiceUtil {
 	* @param content the HTML content wrapped in XML. For more information,
 	see the content example in the class description for {@link
 	JournalArticleLocalServiceImpl}.
-	* @param type the structure's type, if the web content article is related
-	to a DDM structure. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
 	* @param ddmStructureKey the primary key of the web content article's DDM
 	structure, if the article is related to a DDM structure, or
 	<code>null</code> otherwise
@@ -228,22 +222,22 @@ public class JournalArticleServiceUtil {
 		java.lang.String articleId, boolean autoArticleId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String content, java.lang.String type,
-		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
-		java.lang.String layoutUuid, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		int reviewDateMonth, int reviewDateDay, int reviewDateYear,
-		int reviewDateHour, int reviewDateMinute, boolean neverReview,
-		boolean indexable, boolean smallImage, java.lang.String smallImageURL,
+		java.lang.String content, java.lang.String ddmStructureKey,
+		java.lang.String ddmTemplateKey, java.lang.String layoutUuid,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire, int reviewDateMonth,
+		int reviewDateDay, int reviewDateYear, int reviewDateHour,
+		int reviewDateMinute, boolean neverReview, boolean indexable,
+		boolean smallImage, java.lang.String smallImageURL,
 		java.io.File smallFile, java.util.Map<java.lang.String, byte[]> images,
 		java.lang.String articleURL,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addArticle(groupId, folderId, classNameId, classPK,
-			articleId, autoArticleId, titleMap, descriptionMap, content, type,
+			articleId, autoArticleId, titleMap, descriptionMap, content,
 			ddmStructureKey, ddmTemplateKey, layoutUuid, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
@@ -1237,8 +1231,6 @@ public class JournalArticleServiceUtil {
 	<code>null</code>)
 	* @param content the content keywords (space separated, optionally
 	<code>null</code>)
-	* @param type the web content article's type (optionally
-	<code>null</code>)
 	* @param ddmStructureKey the primary key of the web content article's DDM
 	structure, if the article is related to a DDM structure, or
 	<code>null</code> otherwise
@@ -1270,16 +1262,16 @@ public class JournalArticleServiceUtil {
 		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
-		java.lang.String content, java.lang.String type,
-		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
-		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
-		java.util.Date reviewDate, boolean andOperator, int start, int end,
+		java.lang.String content, java.lang.String ddmStructureKey,
+		java.lang.String ddmTemplateKey, java.util.Date displayDateGT,
+		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
+		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> obc) {
 		return getService()
 				   .search(companyId, groupId, folderIds, classNameId,
-			articleId, version, title, description, content, type,
-			ddmStructureKey, ddmTemplateKey, displayDateGT, displayDateLT,
-			status, reviewDate, andOperator, start, end, obc);
+			articleId, version, title, description, content, ddmStructureKey,
+			ddmTemplateKey, displayDateGT, displayDateLT, status, reviewDate,
+			andOperator, start, end, obc);
 	}
 
 	/**
@@ -1316,8 +1308,6 @@ public class JournalArticleServiceUtil {
 	<code>null</code>)
 	* @param content the content keywords (space separated, optionally
 	<code>null</code>)
-	* @param type the web content article's type (optionally
-	<code>null</code>)
 	* @param ddmStructureKeys the primary keys of the web content article's
 	DDM structures, if the article is related to a DDM structure, or
 	<code>null</code> otherwise
@@ -1351,17 +1341,16 @@ public class JournalArticleServiceUtil {
 		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
-		java.lang.String content, java.lang.String type,
-		java.lang.String[] ddmStructureKeys,
+		java.lang.String content, java.lang.String[] ddmStructureKeys,
 		java.lang.String[] ddmTemplateKeys, java.util.Date displayDateGT,
 		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
 		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> obc) {
 		return getService()
 				   .search(companyId, groupId, folderIds, classNameId,
-			articleId, version, title, description, content, type,
-			ddmStructureKeys, ddmTemplateKeys, displayDateGT, displayDateLT,
-			status, reviewDate, andOperator, start, end, obc);
+			articleId, version, title, description, content, ddmStructureKeys,
+			ddmTemplateKeys, displayDateGT, displayDateLT, status, reviewDate,
+			andOperator, start, end, obc);
 	}
 
 	/**
@@ -1395,8 +1384,6 @@ public class JournalArticleServiceUtil {
 	query criteria; otherwise it uses the AND operator.
 	* @param version the web content article's version (optionally
 	<code>null</code>)
-	* @param type the web content article's type (optionally
-	<code>null</code>)
 	* @param ddmStructureKey the primary key of the web content article's DDM
 	structure, if the article is related to a DDM structure, or
 	<code>null</code> otherwise
@@ -1424,15 +1411,14 @@ public class JournalArticleServiceUtil {
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> search(
 		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String keywords, java.lang.Double version,
-		java.lang.String type, java.lang.String ddmStructureKey,
-		java.lang.String ddmTemplateKey, java.util.Date displayDateGT,
-		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
-		int start, int end,
+		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
+		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
+		java.util.Date reviewDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> obc) {
 		return getService()
 				   .search(companyId, groupId, folderIds, classNameId,
-			keywords, version, type, ddmStructureKey, ddmTemplateKey,
-			displayDateGT, displayDateLT, status, reviewDate, start, end, obc);
+			keywords, version, ddmStructureKey, ddmTemplateKey, displayDateGT,
+			displayDateLT, status, reviewDate, start, end, obc);
 	}
 
 	/**
@@ -1493,8 +1479,6 @@ public class JournalArticleServiceUtil {
 	<code>null</code>)
 	* @param content the content keywords (space separated, optionally
 	<code>null</code>)
-	* @param type the web content article's type (optionally
-	<code>null</code>)
 	* @param ddmStructureKey the primary key of the web content article's DDM
 	structure, if the article is related to a DDM structure, or
 	<code>null</code> otherwise
@@ -1520,15 +1504,15 @@ public class JournalArticleServiceUtil {
 		java.util.List<java.lang.Long> folderIds, long classNameId,
 		java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
-		java.lang.String content, java.lang.String type,
-		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
-		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
-		java.util.Date reviewDate, boolean andOperator) {
+		java.lang.String content, java.lang.String ddmStructureKey,
+		java.lang.String ddmTemplateKey, java.util.Date displayDateGT,
+		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
+		boolean andOperator) {
 		return getService()
 				   .searchCount(companyId, groupId, folderIds, classNameId,
-			articleId, version, title, description, content, type,
-			ddmStructureKey, ddmTemplateKey, displayDateGT, displayDateLT,
-			status, reviewDate, andOperator);
+			articleId, version, title, description, content, ddmStructureKey,
+			ddmTemplateKey, displayDateGT, displayDateLT, status, reviewDate,
+			andOperator);
 	}
 
 	/**
@@ -1554,8 +1538,6 @@ public class JournalArticleServiceUtil {
 	* @param description the description keywords (space separated, optionally
 	<code>null</code>)
 	* @param content the content keywords (space separated, optionally
-	<code>null</code>)
-	* @param type the web content article's type (optionally
 	<code>null</code>)
 	* @param ddmStructureKeys the primary keys of the web content article's
 	DDM structures, if the article is related to a DDM structure, or
@@ -1584,16 +1566,15 @@ public class JournalArticleServiceUtil {
 		java.util.List<java.lang.Long> folderIds, long classNameId,
 		java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
-		java.lang.String content, java.lang.String type,
-		java.lang.String[] ddmStructureKeys,
+		java.lang.String content, java.lang.String[] ddmStructureKeys,
 		java.lang.String[] ddmTemplateKeys, java.util.Date displayDateGT,
 		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
 		boolean andOperator) {
 		return getService()
 				   .searchCount(companyId, groupId, folderIds, classNameId,
-			articleId, version, title, description, content, type,
-			ddmStructureKeys, ddmTemplateKeys, displayDateGT, displayDateLT,
-			status, reviewDate, andOperator);
+			articleId, version, title, description, content, ddmStructureKeys,
+			ddmTemplateKeys, displayDateGT, displayDateLT, status, reviewDate,
+			andOperator);
 	}
 
 	/**
@@ -1617,8 +1598,6 @@ public class JournalArticleServiceUtil {
 	query criteria; otherwise it uses the AND operator.
 	* @param version the web content article's version (optionally
 	<code>null</code>)
-	* @param type the web content article's type (optionally
-	<code>null</code>)
 	* @param ddmStructureKey the primary key of the web content article's DDM
 	structure, if the article is related to a DDM structure, or
 	<code>null</code> otherwise
@@ -1640,13 +1619,13 @@ public class JournalArticleServiceUtil {
 	public static int searchCount(long companyId, long groupId,
 		java.util.List<java.lang.Long> folderIds, long classNameId,
 		java.lang.String keywords, java.lang.Double version,
-		java.lang.String type, java.lang.String ddmStructureKey,
-		java.lang.String ddmTemplateKey, java.util.Date displayDateGT,
-		java.util.Date displayDateLT, int status, java.util.Date reviewDate) {
+		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
+		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
+		java.util.Date reviewDate) {
 		return getService()
 				   .searchCount(companyId, groupId, folderIds, classNameId,
-			keywords, version, type, ddmStructureKey, ddmTemplateKey,
-			displayDateGT, displayDateLT, status, reviewDate);
+			keywords, version, ddmStructureKey, ddmTemplateKey, displayDateGT,
+			displayDateLT, status, reviewDate);
 	}
 
 	/**
@@ -1739,9 +1718,6 @@ public class JournalArticleServiceUtil {
 	* @param content the HTML content wrapped in XML. For more information,
 	see the content example in the class description for {@link
 	JournalArticleLocalServiceImpl}.
-	* @param type the structure's type, if the web content article is related
-	to a DDM structure. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
 	* @param ddmStructureKey the primary key of the web content article's DDM
 	structure, if the article is related to a DDM structure, or
 	<code>null</code> otherwise
@@ -1814,29 +1790,29 @@ public class JournalArticleServiceUtil {
 		double version,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String content, java.lang.String type,
-		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
-		java.lang.String layoutUuid, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		int reviewDateMonth, int reviewDateDay, int reviewDateYear,
-		int reviewDateHour, int reviewDateMinute, boolean neverReview,
-		boolean indexable, boolean smallImage, java.lang.String smallImageURL,
+		java.lang.String content, java.lang.String ddmStructureKey,
+		java.lang.String ddmTemplateKey, java.lang.String layoutUuid,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire, int reviewDateMonth,
+		int reviewDateDay, int reviewDateYear, int reviewDateHour,
+		int reviewDateMinute, boolean neverReview, boolean indexable,
+		boolean smallImage, java.lang.String smallImageURL,
 		java.io.File smallFile, java.util.Map<java.lang.String, byte[]> images,
 		java.lang.String articleURL,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateArticle(groupId, folderId, articleId, version,
-			titleMap, descriptionMap, content, type, ddmStructureKey,
-			ddmTemplateKey, layoutUuid, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			reviewDateMonth, reviewDateDay, reviewDateYear, reviewDateHour,
-			reviewDateMinute, neverReview, indexable, smallImage,
-			smallImageURL, smallFile, images, articleURL, serviceContext);
+			titleMap, descriptionMap, content, ddmStructureKey, ddmTemplateKey,
+			layoutUuid, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, reviewDateMonth, reviewDateDay,
+			reviewDateYear, reviewDateHour, reviewDateMinute, neverReview,
+			indexable, smallImage, smallImageURL, smallFile, images,
+			articleURL, serviceContext);
 	}
 
 	/**

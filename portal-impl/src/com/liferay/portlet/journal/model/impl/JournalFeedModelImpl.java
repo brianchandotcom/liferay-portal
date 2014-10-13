@@ -82,7 +82,6 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 			{ "feedId", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
-			{ "type_", Types.VARCHAR },
 			{ "structureId", Types.VARCHAR },
 			{ "templateId", Types.VARCHAR },
 			{ "rendererTemplateId", Types.VARCHAR },
@@ -95,7 +94,7 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 			{ "feedFormat", Types.VARCHAR },
 			{ "feedVersion", Types.DOUBLE }
 		};
-	public static final String TABLE_SQL_CREATE = "create table JournalFeed (uuid_ VARCHAR(75) null,id_ LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,feedId VARCHAR(75) null,name VARCHAR(75) null,description STRING null,type_ VARCHAR(75) null,structureId VARCHAR(75) null,templateId VARCHAR(75) null,rendererTemplateId VARCHAR(75) null,delta INTEGER,orderByCol VARCHAR(75) null,orderByType VARCHAR(75) null,targetLayoutFriendlyUrl VARCHAR(255) null,targetPortletId VARCHAR(75) null,contentField VARCHAR(75) null,feedFormat VARCHAR(75) null,feedVersion DOUBLE)";
+	public static final String TABLE_SQL_CREATE = "create table JournalFeed (uuid_ VARCHAR(75) null,id_ LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,feedId VARCHAR(75) null,name VARCHAR(75) null,description STRING null,structureId VARCHAR(75) null,templateId VARCHAR(75) null,rendererTemplateId VARCHAR(75) null,delta INTEGER,orderByCol VARCHAR(75) null,orderByType VARCHAR(75) null,targetLayoutFriendlyUrl VARCHAR(255) null,targetPortletId VARCHAR(75) null,contentField VARCHAR(75) null,feedFormat VARCHAR(75) null,feedVersion DOUBLE)";
 	public static final String TABLE_SQL_DROP = "drop table JournalFeed";
 	public static final String ORDER_BY_JPQL = " ORDER BY journalFeed.feedId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY JournalFeed.feedId ASC";
@@ -140,7 +139,6 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		model.setFeedId(soapModel.getFeedId());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
-		model.setType(soapModel.getType());
 		model.setStructureId(soapModel.getStructureId());
 		model.setTemplateId(soapModel.getTemplateId());
 		model.setRendererTemplateId(soapModel.getRendererTemplateId());
@@ -227,7 +225,6 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		attributes.put("feedId", getFeedId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
-		attributes.put("type", getType());
 		attributes.put("structureId", getStructureId());
 		attributes.put("templateId", getTemplateId());
 		attributes.put("rendererTemplateId", getRendererTemplateId());
@@ -312,12 +309,6 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 		if (description != null) {
 			setDescription(description);
-		}
-
-		String type = (String)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
 		}
 
 		String structureId = (String)attributes.get("structureId");
@@ -594,22 +585,6 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 	@JSON
 	@Override
-	public String getType() {
-		if (_type == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _type;
-		}
-	}
-
-	@Override
-	public void setType(String type) {
-		_type = type;
-	}
-
-	@JSON
-	@Override
 	public String getStructureId() {
 		if (_structureId == null) {
 			return StringPool.BLANK;
@@ -822,7 +797,6 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		journalFeedImpl.setFeedId(getFeedId());
 		journalFeedImpl.setName(getName());
 		journalFeedImpl.setDescription(getDescription());
-		journalFeedImpl.setType(getType());
 		journalFeedImpl.setStructureId(getStructureId());
 		journalFeedImpl.setTemplateId(getTemplateId());
 		journalFeedImpl.setRendererTemplateId(getRendererTemplateId());
@@ -979,14 +953,6 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 			journalFeedCacheModel.description = null;
 		}
 
-		journalFeedCacheModel.type = getType();
-
-		String type = journalFeedCacheModel.type;
-
-		if ((type != null) && (type.length() == 0)) {
-			journalFeedCacheModel.type = null;
-		}
-
 		journalFeedCacheModel.structureId = getStructureId();
 
 		String structureId = journalFeedCacheModel.structureId;
@@ -1069,7 +1035,7 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1093,8 +1059,6 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		sb.append(getName());
 		sb.append(", description=");
 		sb.append(getDescription());
-		sb.append(", type=");
-		sb.append(getType());
 		sb.append(", structureId=");
 		sb.append(getStructureId());
 		sb.append(", templateId=");
@@ -1124,7 +1088,7 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(73);
+		StringBundler sb = new StringBundler(70);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.journal.model.JournalFeed");
@@ -1173,10 +1137,6 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		sb.append(
 			"<column><column-name>description</column-name><column-value><![CDATA[");
 		sb.append(getDescription());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>structureId</column-name><column-value><![CDATA[");
@@ -1249,7 +1209,6 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 	private String _originalFeedId;
 	private String _name;
 	private String _description;
-	private String _type;
 	private String _structureId;
 	private String _templateId;
 	private String _rendererTemplateId;

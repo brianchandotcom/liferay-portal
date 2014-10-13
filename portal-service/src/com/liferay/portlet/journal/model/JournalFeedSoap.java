@@ -45,7 +45,6 @@ public class JournalFeedSoap implements Serializable {
 		soapModel.setFeedId(model.getFeedId());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
-		soapModel.setType(model.getType());
 		soapModel.setStructureId(model.getStructureId());
 		soapModel.setTemplateId(model.getTemplateId());
 		soapModel.setRendererTemplateId(model.getRendererTemplateId());
@@ -197,14 +196,6 @@ public class JournalFeedSoap implements Serializable {
 		_description = description;
 	}
 
-	public String getType() {
-		return _type;
-	}
-
-	public void setType(String type) {
-		_type = type;
-	}
-
 	public String getStructureId() {
 		return _structureId;
 	}
@@ -304,7 +295,6 @@ public class JournalFeedSoap implements Serializable {
 	private String _feedId;
 	private String _name;
 	private String _description;
-	private String _type;
 	private String _structureId;
 	private String _templateId;
 	private String _rendererTemplateId;

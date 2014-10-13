@@ -73,6 +73,27 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SCREENSHOTS-->
+<tr>
+	<td>SCREENSHOTS_NOTIFICATIONS_LONG_MICROBLOGS_COMMENT_PNG</td>
+	<td>so/screenshots/notifications/notifications_long_microblogs_comment.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCREENSHOTS_NOTIFICATIONS_PROFILE_PICTURE_PNG</td>
+	<td>so/screenshots/notifications/notifications_profile_picture.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCREENSHOTS_NOTIFICATIONS_LONG_FORUM_THREAD_SUBJECT_PNG</td>
+	<td>so/screenshots/notifications/notifications_long_forum_thread_subject.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCREENSHOTS_NOTIFICATIONS_LONG_ANNOUNCEMENT_ENTRY_TITLE_PNG</td>
+	<td>so/screenshots/notifications/notifications_long_announcement_entry_title.png</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

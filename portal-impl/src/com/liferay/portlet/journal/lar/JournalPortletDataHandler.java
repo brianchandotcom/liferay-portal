@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.lar.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -142,10 +143,12 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			portletDataContext.getGroupId());
 
 		DDMTemplateLocalServiceUtil.deleteTemplates(
-			portletDataContext.getScopeGroupId());
+			portletDataContext.getScopeGroupId(),
+			ClassNameLocalServiceUtil.getClassNameId(DDMStructure.class));
 
 		DDMStructureLocalServiceUtil.deleteStructures(
-			portletDataContext.getScopeGroupId());
+			portletDataContext.getScopeGroupId(),
+			ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class));
 
 		return portletPreferences;
 	}

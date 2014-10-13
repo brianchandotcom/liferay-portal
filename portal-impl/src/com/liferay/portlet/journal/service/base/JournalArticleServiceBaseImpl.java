@@ -1029,6 +1029,44 @@ public abstract class JournalArticleServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the d l app local service.
+	 *
+	 * @return the d l app local service
+	 */
+	public com.liferay.portlet.documentlibrary.service.DLAppLocalService getDLAppLocalService() {
+		return dlAppLocalService;
+	}
+
+	/**
+	 * Sets the d l app local service.
+	 *
+	 * @param dlAppLocalService the d l app local service
+	 */
+	public void setDLAppLocalService(
+		com.liferay.portlet.documentlibrary.service.DLAppLocalService dlAppLocalService) {
+		this.dlAppLocalService = dlAppLocalService;
+	}
+
+	/**
+	 * Returns the d l app remote service.
+	 *
+	 * @return the d l app remote service
+	 */
+	public com.liferay.portlet.documentlibrary.service.DLAppService getDLAppService() {
+		return dlAppService;
+	}
+
+	/**
+	 * Sets the d l app remote service.
+	 *
+	 * @param dlAppService the d l app remote service
+	 */
+	public void setDLAppService(
+		com.liferay.portlet.documentlibrary.service.DLAppService dlAppService) {
+		this.dlAppService = dlAppService;
+	}
+
+	/**
 	 * Returns the d d m structure local service.
 	 *
 	 * @return the d d m structure local service
@@ -1865,6 +1903,10 @@ public abstract class JournalArticleServiceBaseImpl extends BaseServiceImpl
 	protected AssetTagPersistence assetTagPersistence;
 	@BeanReference(type = AssetTagFinder.class)
 	protected AssetTagFinder assetTagFinder;
+	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLAppLocalService.class)
+	protected com.liferay.portlet.documentlibrary.service.DLAppLocalService dlAppLocalService;
+	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLAppService.class)
+	protected com.liferay.portlet.documentlibrary.service.DLAppService dlAppService;
 	@BeanReference(type = com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService.class)
 	protected com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService ddmStructureLocalService;
 	@BeanReference(type = com.liferay.portlet.dynamicdatamapping.service.DDMStructureService.class)

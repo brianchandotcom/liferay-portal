@@ -185,6 +185,46 @@ public class ExportImportDateUtil {
 			themeDisplay.getTimeZone());
 	}
 
+	public static Date getLastPublishDate(Layout layout)
+		throws PortalException {
+
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			layout.getGroupId(), layout.isPrivateLayout());
+
+		return getLastPublishDate(layoutSet);
+	}
+
+	public static Date getLastPublishDate(LayoutSet layoutSet)
+		throws PortalException {
+
+		UnicodeProperties settingsProperties =
+			layoutSet.getSettingsProperties();
+
+		long lastPublishDate = GetterUtil.getLong(
+			settingsProperties.getProperty(
+				"last-publish-date", StringPool.BLANK));
+
+		if (lastPublishDate == 0) {
+			return null;
+		}
+
+		return new Date(lastPublishDate);
+	}
+
+	public static Date getLastPublishDate(
+		PortletPreferences jxPortletPreferences) {
+
+		long lastPublishDate = GetterUtil.getLong(
+			jxPortletPreferences.getValue(
+				"last-publish-date", StringPool.BLANK));
+
+		if (lastPublishDate == 0) {
+			return null;
+		}
+
+		return new Date(lastPublishDate);
+	}
+
 	public static void updateLastPublishDate(
 			long groupId, boolean privateLayout, DateRange dateRange,
 			Date lastPublishDate)
@@ -192,6 +232,17 @@ public class ExportImportDateUtil {
 
 		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 			groupId, privateLayout);
+
+		if (dateRange != null) {
+			Date startDate = dateRange.getStartDate();
+			Date originalLastPublishDate = getLastPublishDate(layoutSet);
+
+			if ((originalLastPublishDate != null) && (startDate != null) &&
+				startDate.after(originalLastPublishDate)) {
+
+				return;
+			}
+		}
 
 		if (lastPublishDate == null) {
 			lastPublishDate = new Date();
@@ -211,6 +262,18 @@ public class ExportImportDateUtil {
 	public static void updateLastPublishDate(
 		String portletId, PortletPreferences portletPreferences,
 		DateRange dateRange, Date lastPublishDate) {
+
+		if (dateRange != null) {
+			Date startDate = dateRange.getStartDate();
+			Date originalLastPublishDate = getLastPublishDate(
+				portletPreferences);
+
+			if ((originalLastPublishDate != null) && (startDate != null) &&
+				startDate.after(originalLastPublishDate)) {
+
+				return;
+			}
+		}
 
 		if (lastPublishDate == null) {
 			lastPublishDate = new Date();
@@ -325,5 +388,7 @@ public class ExportImportDateUtil {
 
 		return new DateRange(startDate, endDate);
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(ExportImportDateUtil.class);
 
 }

@@ -179,12 +179,6 @@ public class FileEntryStagedModelDataHandler
 			}
 		}
 
-		FileVersion fileVersion = fileEntry.getFileVersion();
-
-		if (!fileVersion.isApproved() && !fileEntry.isInTrash()) {
-			return;
-		}
-
 		if (fileEntry.getFolderId() !=
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
@@ -195,7 +189,7 @@ public class FileEntryStagedModelDataHandler
 
 		LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;
 
-		liferayFileEntry.setCachedFileVersion(fileVersion);
+		liferayFileEntry.setCachedFileVersion(fileEntry.getFileVersion());
 
 		if (!portletDataContext.isPerformDirectBinaryImport()) {
 			InputStream is = null;

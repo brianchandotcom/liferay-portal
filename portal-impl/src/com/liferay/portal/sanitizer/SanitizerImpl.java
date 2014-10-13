@@ -77,7 +77,9 @@ public class SanitizerImpl implements Sanitizer {
 		}
 
 		if (_sanitizers.size() == 1) {
-			sanitize(
+			Sanitizer sanitizer = _sanitizers.get(0);
+
+			sanitizer.sanitize(
 				companyId, groupId, userId, className, classPK, contentType,
 				modes, inputStream, outputStream, options);
 

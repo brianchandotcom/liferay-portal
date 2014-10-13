@@ -21,7 +21,22 @@
 	%>
 
 	<c:if test="<%= ree.getType() == RemoteExportException.BAD_CONNECTION %>">
-		<liferay-ui:message arguments='<%= "<em>" + ree.getURL() + "</em>" %>' key="could-not-connect-to-address-x.-please-verify-that-the-specified-port-is-correct-and-that-the-remote-server-is-configured-to-accept-requests-from-this-server" translateArguments="<%= false %>" />
+		<c:choose>
+			<c:when test="<%= stagedRemotely %>">
+				<liferay-ui:message arguments='<%= "<em>" + ree.getURL() + "</em>" %>' key="could-not-connect-to-address-x.-please-verify-that-the-specified-port-is-correct-and-that-the-remote-server-is-configured-to-accept-requests-from-this-server" translateArguments="<%= false %>" />
+
+				<liferay-util:buffer var="forceDisableLinkBuffer">
+					<aui:a href="javascript:;" id="forceDisableLink">
+						<liferay-ui:message key="this-link" />
+					</aui:a>
+				</liferay-util:buffer>
+
+				<liferay-ui:message arguments="<%= forceDisableLinkBuffer %>" key="if-you-want-to-force-disabling-remote-staging,-click-x" />
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:message arguments='<%= "<em>" + ree.getURL() + "</em>" %>' key="could-not-connect-to-address-x.-please-verify-that-the-specified-port-is-correct-and-that-the-remote-server-is-configured-to-accept-requests-from-this-server" translateArguments="<%= false %>" />
+			</c:otherwise>
+		</c:choose>
 	</c:if>
 
 	<c:if test="<%= ree.getType() == RemoteExportException.INVALID_GROUP %>">
@@ -36,3 +51,21 @@
 		<liferay-ui:message arguments="<%= ree.getGroupId() %>" key="you-do-not-have-permissions-to-edit-the-site-with-id-x-on-the-remote-server.-please-verify-that-you-have-the-proper-permissions-in-both-the-live-environment-and-the-staging-environment" translateArguments="<%= false %>" />
 	</c:if>
 </liferay-ui:error>
+
+<aui:script use="aui">
+	var forceDisableLink = A.one('#<portlet:namespace />forceDisableLink');
+
+	if (forceDisableLink) {
+		forceDisableLink.on('click',
+			function() {
+				event.preventDefault();
+
+				document.<portlet:namespace />fm.<portlet:namespace />forceDisable.value = true;
+				document.<portlet:namespace />fm.<portlet:namespace />none.checked = true;
+				document.<portlet:namespace />fm.<portlet:namespace />local.checked = false;
+				document.<portlet:namespace />fm.<portlet:namespace />remote.checked = false;
+
+				<portlet:namespace />saveGroup();
+		});
+	}
+</aui:script>

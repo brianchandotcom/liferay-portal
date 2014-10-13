@@ -98,6 +98,11 @@ String[][] categorySections = {mainSections};
 
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
+
+Group liveGroup = layoutsAdminDisplayContext.getLiveGroup();
+
+boolean stagedLocally = liveGroup.isStaged() && !liveGroup.isStagedRemotely();
+boolean stagedRemotely = liveGroup.isStaged() && !stagedLocally;
 %>
 
 <c:if test="<%= !portletName.equals(PortletKeys.DOCKBAR) %>">

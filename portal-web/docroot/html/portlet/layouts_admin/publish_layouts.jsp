@@ -66,6 +66,8 @@ long layoutSetBranchId = MapUtil.getLong(parameterMap, "layoutSetBranchId", Para
 String layoutSetBranchName = MapUtil.getString(parameterMap, "layoutSetBranchName", ParamUtil.getString(request, "layoutSetBranchName"));
 
 boolean localPublishing = true;
+boolean stagedLocally = liveGroup.isStaged() && !liveGroup.isStagedRemotely();
+boolean stagedRemotely = liveGroup.isStaged() && !stagedLocally;
 
 if ((liveGroup.isStaged() && liveGroup.isStagedRemotely()) || cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
 	localPublishing = false;

@@ -255,8 +255,6 @@
 						(description LIKE ? [$AND_OR_NULL_CHECK$])
 					)
 				)
-			ORDER BY
-				DLFileEntryType.name ASC
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileRankFinder.findByStaleRanks">

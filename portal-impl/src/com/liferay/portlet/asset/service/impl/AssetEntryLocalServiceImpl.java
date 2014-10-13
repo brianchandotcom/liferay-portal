@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.increment.BufferedIncrement;
 import com.liferay.portal.kernel.increment.NumberIncrement;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -35,7 +34,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.NoSuchEntryException;
@@ -909,83 +907,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		}
 
 		return classNameIds;
-	}
-
-	protected AssetEntry getEntry(Document document) throws PortalException {
-		String portletId = GetterUtil.getString(document.get(Field.PORTLET_ID));
-
-		if (portletId.equals(PortletKeys.BLOGS)) {
-			long entryId = GetterUtil.getLong(
-				document.get(Field.ENTRY_CLASS_PK));
-
-			long classNameId = classNameLocalService.getClassNameId(
-				BlogsEntry.class.getName());
-			long classPK = entryId;
-
-			return assetEntryPersistence.findByC_C(classNameId, classPK);
-		}
-		else if (portletId.equals(PortletKeys.BOOKMARKS)) {
-			long entryId = GetterUtil.getLong(
-				document.get(Field.ENTRY_CLASS_PK));
-
-			long classNameId = classNameLocalService.getClassNameId(
-				BookmarksEntry.class.getName());
-			long classPK = entryId;
-
-			return assetEntryPersistence.findByC_C(classNameId, classPK);
-		}
-		else if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY)) {
-			long fileEntryId = GetterUtil.getLong(
-				document.get(Field.ENTRY_CLASS_PK));
-
-			long classNameId = classNameLocalService.getClassNameId(
-				DLFileEntry.class.getName());
-			long classPK = fileEntryId;
-
-			return assetEntryPersistence.findByC_C(classNameId, classPK);
-		}
-		else if (portletId.equals(PortletKeys.JOURNAL)) {
-			long groupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
-			String articleId = document.get("articleId");
-			//double version = GetterUtil.getDouble(document.get("version"));
-
-			long articleResourcePrimKey =
-				journalArticleResourceLocalService.getArticleResourcePrimKey(
-					groupId, articleId);
-
-			long classNameId = classNameLocalService.getClassNameId(
-				JournalArticle.class.getName());
-			long classPK = articleResourcePrimKey;
-
-			return assetEntryPersistence.findByC_C(classNameId, classPK);
-		}
-		else if (portletId.equals(PortletKeys.MESSAGE_BOARDS)) {
-			long messageId = GetterUtil.getLong(
-				document.get(Field.ENTRY_CLASS_PK));
-
-			long classNameId = classNameLocalService.getClassNameId(
-				MBMessage.class.getName());
-			long classPK = messageId;
-
-			return assetEntryPersistence.findByC_C(classNameId, classPK);
-		}
-		else if (portletId.equals(PortletKeys.WIKI)) {
-			long nodeId = GetterUtil.getLong(
-				document.get(Field.ENTRY_CLASS_PK));
-			String title = document.get(Field.TITLE);
-
-			long pageResourcePrimKey =
-				wikiPageResourceLocalService.getPageResourcePrimKey(
-					nodeId, title);
-
-			long classNameId = classNameLocalService.getClassNameId(
-				WikiPage.class.getName());
-			long classPK = pageResourcePrimKey;
-
-			return assetEntryPersistence.findByC_C(classNameId, classPK);
-		}
-
-		return null;
 	}
 
 	protected AssetEntry updateVisible(AssetEntry entry, boolean visible)

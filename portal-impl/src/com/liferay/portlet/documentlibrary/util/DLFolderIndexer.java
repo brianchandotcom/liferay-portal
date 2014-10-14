@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.FolderIndexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
@@ -51,7 +52,7 @@ import javax.portlet.WindowStateException;
 /**
  * @author Alexander Chow
  */
-public class DLFolderIndexer extends BaseIndexer {
+public class DLFolderIndexer extends BaseIndexer implements FolderIndexer {
 
 	public static final String[] CLASS_NAMES = {DLFolder.class.getName()};
 
@@ -67,6 +68,11 @@ public class DLFolderIndexer extends BaseIndexer {
 
 	@Override
 	public String[] getClassNames() {
+		return CLASS_NAMES;
+	}
+
+	@Override
+	public String[] getFolderClassNames() {
 		return CLASS_NAMES;
 	}
 

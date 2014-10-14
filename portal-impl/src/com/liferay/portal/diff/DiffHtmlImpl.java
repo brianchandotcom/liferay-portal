@@ -62,6 +62,14 @@ public class DiffHtmlImpl implements DiffHtml {
 	 */
 	@Override
 	public String diff(Reader source, Reader target) throws Exception {
+		if (source == null) {
+			throw new NullPointerException("null isn't a valid diff source");
+		}
+
+		if (target == null) {
+			throw new NullPointerException("null isn't a valid diff target");
+		}
+
 		InputSource oldSource = new InputSource(source);
 		InputSource newSource = new InputSource(target);
 

@@ -28,12 +28,6 @@ AUI.add(
 		var DDMPortletSupport = function() {};
 
 		DDMPortletSupport.ATTRS = {
-			classNameId: {
-			},
-
-			classPK: {
-			},
-
 			doAsGroupId: {
 			},
 
@@ -62,6 +56,9 @@ AUI.add(
 
 			fields: {
 				valueFn: '_valueFields'
+			},
+
+			mode: {
 			},
 
 			values: {
@@ -148,11 +145,11 @@ AUI.add(
 					themeDisplay.getPathMain() + '/dynamic_data_mapping/render_structure_field',
 					{
 						data: {
-							classNameId: instance.get('classNameId'),
-							classPK: instance.get('classPK'),
 							controlPanelCategory: 'portlet',
+							definition: AJSON.stringify(instance.get('definition')),
 							doAsGroupId: instance.get('doAsGroupId'),
 							fieldName: instance.get('name'),
+							mode: instance.get('mode'),
 							namespace: instance.get('namespace'),
 							p_l_id: instance.get('p_l_id'),
 							p_p_id: '166',

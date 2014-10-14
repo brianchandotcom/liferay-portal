@@ -14,19 +14,13 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.portlet.bookmarks.model.BookmarksFolder;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.journal.model.JournalFolder;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Eduardo Garcia
  */
 public class FolderSearcher extends BaseSearcher {
-
-	public static final String[] CLASS_NAMES = {
-		BookmarksFolder.class.getName(), DLFolder.class.getName(),
-		JournalFolder.class.getName()
-	};
 
 	public static Indexer getInstance() {
 		return new FolderSearcher();
@@ -36,11 +30,28 @@ public class FolderSearcher extends BaseSearcher {
 		setDefaultSelectedFieldNames(Field.TITLE);
 		setFilterSearch(true);
 		setPermissionAware(true);
+
+		List<String> folderClassNames = new ArrayList<String>();
+
+		for (Indexer indexer : IndexerRegistryUtil.getIndexers()) {
+			if (indexer instanceof FolderIndexer) {
+				FolderIndexer folderIndexer = (FolderIndexer)indexer;
+
+				for (String folderClassName :
+						folderIndexer.getFolderClassNames()) {
+
+					folderClassNames.add(folderClassName);
+				}
+			}
+		}
+
+		classNames = folderClassNames.toArray(
+			new String[folderClassNames.size()]);
 	}
 
 	@Override
 	public String[] getClassNames() {
-		return CLASS_NAMES;
+		return classNames;
 	}
 
 	@Override
@@ -61,5 +72,7 @@ public class FolderSearcher extends BaseSearcher {
 
 		return super.createFullQuery(contextQuery, searchContext);
 	}
+
+	private final String[] classNames;
 
 }

@@ -2252,8 +2252,8 @@ public class HookHotDeployListener
 		if (containsKey(
 				portalProperties, INTERRUPTED_PORTLET_REQUEST_WHITELIST)) {
 
-		InterruptedPortletRequestWhitelistUtil.
-			resetPortletInvocationWhitelist();
+			InterruptedPortletRequestWhitelistUtil.
+				resetPortletInvocationWhitelist();
 		}
 
 		if (containsKey(

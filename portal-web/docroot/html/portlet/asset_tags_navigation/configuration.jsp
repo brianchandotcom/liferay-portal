@@ -33,7 +33,7 @@
 			<li class="tree-item">
 				<aui:input name="preferences--showAssetCount--" type="checkbox" value="<%= showAssetCount %>" />
 
-				<ul class='<%= showAssetCount ? "" : "hide" %> lfr-tree list-unstyled' id="<portlet:namespace />assetCountOptions">
+				<ul class="<%= showAssetCount ? "" : "hide" %> lfr-tree list-unstyled" id="<portlet:namespace />assetCountOptions">
 					<li class="tree-item">
 						<aui:select helpMessage="asset-type-asset-count-help" label="asset-type" name="preferences--classNameId--">
 							<aui:option label="any" value="<%= classNameId == 0 %>" />

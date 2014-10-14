@@ -112,6 +112,6 @@ public class DocumentImpl extends BranchImpl implements Document {
 		return _document.toString();
 	}
 
-	private org.dom4j.Document _document;
+	private final org.dom4j.Document _document;
 
 }

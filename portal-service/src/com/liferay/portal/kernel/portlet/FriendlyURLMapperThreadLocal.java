@@ -29,7 +29,7 @@ public class FriendlyURLMapperThreadLocal {
 		_prpIdentifiers.set(prpIdentifiers);
 	}
 
-	private static ThreadLocal<Map<String, String>> _prpIdentifiers =
+	private static final ThreadLocal<Map<String, String>> _prpIdentifiers =
 		new ThreadLocal<Map<String, String>>();
 
 }

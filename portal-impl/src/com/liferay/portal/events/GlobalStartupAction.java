@@ -351,7 +351,8 @@ public class GlobalStartupAction extends SimpleAction {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(GlobalStartupAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		GlobalStartupAction.class);
 
 	private static List<AutoDeployListener> _autoDeployListeners;
 	private static List<HotDeployListener> _hotDeployListeners;

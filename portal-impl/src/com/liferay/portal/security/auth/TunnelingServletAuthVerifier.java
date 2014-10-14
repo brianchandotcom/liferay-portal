@@ -211,7 +211,7 @@ public class TunnelingServletAuthVerifier implements AuthVerifier {
 		return credentials;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		TunnelingServletAuthVerifier.class);
 
 }

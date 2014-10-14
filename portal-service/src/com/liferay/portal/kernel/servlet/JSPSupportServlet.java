@@ -42,8 +42,8 @@ public class JSPSupportServlet extends HttpServlet {
 		return _servletContext;
 	}
 
-	private ServletConfig _servletConfig;
-	private ServletContext _servletContext;
+	private final ServletConfig _servletConfig;
+	private final ServletContext _servletContext;
 
 	private class JSPSupportServletConfig implements ServletConfig {
 

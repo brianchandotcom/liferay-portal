@@ -413,15 +413,15 @@ public class MPIHelperUtil {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(MPIHelperUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(MPIHelperUtil.class);
 
-	private static Intraband _intraband;
-	private static MPI _mpi;
-	private static MPI _mpiImpl;
-	private static ConcurrentMap<String, SPIProviderContainer>
+	private static final Intraband _intraband;
+	private static final MPI _mpi;
+	private static final MPI _mpiImpl;
+	private static final ConcurrentMap<String, SPIProviderContainer>
 		_spiProviderContainers =
 			new ConcurrentHashMap<String, SPIProviderContainer>();
-	private static ThreadLocal<SPI> _unregisteringSPIThreadLocal =
+	private static final ThreadLocal<SPI> _unregisteringSPIThreadLocal =
 		new CentralizedThreadLocal<SPI>(true);
 
 	static {
@@ -491,8 +491,8 @@ public class MPIHelperUtil {
 			return _spis.remove(spiId, spi);
 		}
 
-		private SPIProvider _spiProvider;
-		private ConcurrentMap<String, SPI> _spis =
+		private final SPIProvider _spiProvider;
+		private final ConcurrentMap<String, SPI> _spis =
 			new ConcurrentHashMap<String, SPI>();
 
 	}

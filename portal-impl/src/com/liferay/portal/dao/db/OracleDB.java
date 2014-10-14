@@ -305,9 +305,9 @@ public class OracleDB extends BaseDB {
 
 	private static final boolean _SUPPORTS_INLINE_DISTINCT = false;
 
-	private static OracleDB _instance = new OracleDB();
+	private static final OracleDB _instance = new OracleDB();
 
-	private static Pattern _varcharPattern = Pattern.compile(
+	private static final Pattern _varcharPattern = Pattern.compile(
 		"VARCHAR\\((\\d+)\\)");
 
 }

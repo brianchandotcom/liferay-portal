@@ -124,10 +124,10 @@ public class DirectRequestDispatcherFactoryImpl
 		return _pacl.getRequestDispatcher(servletContext, requestDispatcher);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DirectRequestDispatcherFactoryImpl.class);
 
-	private static PACL _pacl = new NoPACL();
+	private static final PACL _pacl = new NoPACL();
 
 	private static class NoPACL implements PACL {
 

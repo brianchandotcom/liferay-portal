@@ -98,7 +98,7 @@ public class SyncUserService {
 		}
 	}
 
-	private static Logger _logger = LoggerFactory.getLogger(
+	private static final Logger _logger = LoggerFactory.getLogger(
 		SyncUserService.class);
 
 	private static SyncUserPersistence _syncUserPersistence =

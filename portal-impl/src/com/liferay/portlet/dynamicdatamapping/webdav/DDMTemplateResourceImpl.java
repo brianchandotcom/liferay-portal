@@ -64,6 +64,6 @@ public class DDMTemplateResourceImpl extends BaseResourceImpl {
 		return false;
 	}
 
-	private DDMTemplate _template;
+	private final DDMTemplate _template;
 
 }

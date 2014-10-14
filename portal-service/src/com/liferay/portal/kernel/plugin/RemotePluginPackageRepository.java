@@ -139,16 +139,16 @@ public class RemotePluginPackageRepository {
 		}
 	}
 
-	private Map<String, PluginPackage> _artifactURLIndex =
+	private final Map<String, PluginPackage> _artifactURLIndex =
 		new HashMap<String, PluginPackage>();
-	private Map<String, List<PluginPackage>> _groupAndArtifactIndex =
+	private final Map<String, List<PluginPackage>> _groupAndArtifactIndex =
 		new HashMap<String, List<PluginPackage>>();
-	private Map<String, PluginPackage> _moduleIdIndex =
+	private final Map<String, PluginPackage> _moduleIdIndex =
 		new HashMap<String, PluginPackage>();
-	private List<PluginPackage> _pluginPackages =
+	private final List<PluginPackage> _pluginPackages =
 		new ArrayList<PluginPackage>();
-	private String _repositoryURL;
+	private final String _repositoryURL;
 	private Properties _settings = null;
-	private Set<String> _tags = new TreeSet<String>();
+	private final Set<String> _tags = new TreeSet<String>();
 
 }

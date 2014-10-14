@@ -242,6 +242,7 @@ public class VerifyPermission extends VerifyProcess {
 			new Object[] {ActionKeys.PUBLISH_STAGING, 16384L, 4096L}
 		};
 
-	private static Log _log = LogFactoryUtil.getLog(VerifyPermission.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		VerifyPermission.class);
 
 }

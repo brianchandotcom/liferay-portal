@@ -47,7 +47,7 @@ public class LegacyExternalRepositoryDefiner extends BaseRepositoryDefiner {
 		repositoryFactoryRegistry.setRepositoryFactory(_repositoryFactory);
 	}
 
-	private String _className;
-	private RepositoryFactory _repositoryFactory;
+	private final String _className;
+	private final RepositoryFactory _repositoryFactory;
 
 }

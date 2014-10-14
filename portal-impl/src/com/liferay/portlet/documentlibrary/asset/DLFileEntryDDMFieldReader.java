@@ -73,7 +73,7 @@ public class DLFileEntryDDMFieldReader extends BaseDDMFieldReader {
 		return fields;
 	}
 
-	private FileEntry _fileEntry;
-	private FileVersion _fileVersion;
+	private final FileEntry _fileEntry;
+	private final FileVersion _fileVersion;
 
 }

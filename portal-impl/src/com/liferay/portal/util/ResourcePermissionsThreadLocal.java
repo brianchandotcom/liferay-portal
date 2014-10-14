@@ -50,7 +50,7 @@ public class ResourcePermissionsThreadLocal {
 		}
 	}
 
-	private static ThreadLocal<Map<Long, ResourcePermission>>
+	private static final ThreadLocal<Map<Long, ResourcePermission>>
 		_resourcePermissions = new InitialThreadLocal
 			<Map<Long, ResourcePermission>>(
 				ResourcePermissionsThreadLocal.class + "._resourcePermissions",

@@ -79,7 +79,7 @@ public class PrivilegedTemplateWrapper implements Template {
 		_template.put(key, value);
 	}
 
-	private AccessControlContext _accessControlContext;
+	private final AccessControlContext _accessControlContext;
 	private Template _template;
 
 	private static class ProcessTemplatePrivilegedExceptionAction
@@ -100,7 +100,7 @@ public class PrivilegedTemplateWrapper implements Template {
 		}
 
 		private Template _template;
-		private Writer _writer;
+		private final Writer _writer;
 
 	}
 

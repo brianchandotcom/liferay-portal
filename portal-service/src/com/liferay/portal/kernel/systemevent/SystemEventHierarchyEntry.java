@@ -106,13 +106,13 @@ public class SystemEventHierarchyEntry {
 		_uuid = uuid;
 	}
 
-	private int _action;
+	private final int _action;
 	private long _classNameId;
 	private long _classPK;
 	private JSONObject _extraDataJSONObject;
-	private long _parentSystemEventId;
-	private long _systemEventId;
-	private long _systemEventSetKey;
+	private final long _parentSystemEventId;
+	private final long _systemEventId;
+	private final long _systemEventSetKey;
 	private String _uuid;
 
 }

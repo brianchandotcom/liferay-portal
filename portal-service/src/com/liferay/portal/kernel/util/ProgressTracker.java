@@ -128,8 +128,8 @@ public class ProgressTracker implements Serializable {
 	}
 
 	private int _percent;
-	private Map<Integer, Tuple> _progress = new HashMap<Integer, Tuple>();
-	private String _progressId;
+	private final Map<Integer, Tuple> _progress = new HashMap<Integer, Tuple>();
+	private final String _progressId;
 	private int _status = ProgressStatusConstants.PREPARED;
 
 }

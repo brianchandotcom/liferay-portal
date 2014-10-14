@@ -90,6 +90,6 @@ public class DLPermission {
 			classPK, RESOURCE_NAME, classPK, actionId);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DLPermission.class);
+	private static final Log _log = LogFactoryUtil.getLog(DLPermission.class);
 
 }

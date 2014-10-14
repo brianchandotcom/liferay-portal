@@ -55,7 +55,7 @@ public class YahooJavaScriptMinifier implements JavaScriptMinifier {
 		return unsyncStringWriter.toString();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		YahooJavaScriptMinifier.class);
 
 	private class JavaScriptErrorReporter implements ErrorReporter {

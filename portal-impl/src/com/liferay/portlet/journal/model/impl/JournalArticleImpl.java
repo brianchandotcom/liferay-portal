@@ -369,7 +369,8 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		_defaultLanguageId = null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(JournalArticleImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalArticleImpl.class);
 
 	@CacheField
 	private String _defaultLanguageId;

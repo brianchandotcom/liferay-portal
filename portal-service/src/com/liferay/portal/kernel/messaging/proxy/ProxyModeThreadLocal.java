@@ -29,7 +29,7 @@ public class ProxyModeThreadLocal {
 		_forceSync.set(forceSync);
 	}
 
-	private static ThreadLocal<Boolean> _forceSync =
+	private static final ThreadLocal<Boolean> _forceSync =
 		new AutoResetThreadLocal<Boolean>(
 			ProxyModeThreadLocal.class + "_forceSync", Boolean.FALSE);
 

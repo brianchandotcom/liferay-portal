@@ -95,6 +95,6 @@ public class TemplateResourceCacheListener
 		_portalCache.removeAll();
 	}
 
-	private PortalCache<TemplateResource, ?> _portalCache;
+	private final PortalCache<TemplateResource, ?> _portalCache;
 
 }

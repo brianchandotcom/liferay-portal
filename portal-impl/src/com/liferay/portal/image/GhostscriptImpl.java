@@ -164,7 +164,8 @@ public class GhostscriptImpl implements Ghostscript {
 		"gswin32c", "gswin64c"
 	};
 
-	private static Log _log = LogFactoryUtil.getLog(GhostscriptImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		GhostscriptImpl.class);
 
 	private String _commandPath;
 	private String _globalSearchPath;

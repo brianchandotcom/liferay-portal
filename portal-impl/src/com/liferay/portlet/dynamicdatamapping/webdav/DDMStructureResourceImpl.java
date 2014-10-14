@@ -65,6 +65,6 @@ public class DDMStructureResourceImpl extends BaseResourceImpl {
 		return false;
 	}
 
-	private DDMStructure _structure;
+	private final DDMStructure _structure;
 
 }

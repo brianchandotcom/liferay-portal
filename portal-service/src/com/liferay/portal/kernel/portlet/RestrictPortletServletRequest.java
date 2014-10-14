@@ -205,11 +205,12 @@ public class RestrictPortletServletRequest
 	private static final String[] _REQUEST_SHARED_ATTRIBUTES =
 		PropsUtil.getArray(PropsKeys.REQUEST_SHARED_ATTRIBUTES);
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		RestrictPortletServletRequest.class);
 
-	private static Object _nullValue = new Object();
+	private static final Object _nullValue = new Object();
 
-	private Map<String, Object> _attributes = new HashMap<String, Object>();
+	private final Map<String, Object> _attributes =
+		new HashMap<String, Object>();
 
 }

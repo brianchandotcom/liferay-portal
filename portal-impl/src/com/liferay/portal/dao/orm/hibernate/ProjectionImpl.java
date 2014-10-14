@@ -34,6 +34,6 @@ public class ProjectionImpl implements Projection {
 		return _projection.toString();
 	}
 
-	private org.hibernate.criterion.Projection _projection;
+	private final org.hibernate.criterion.Projection _projection;
 
 }

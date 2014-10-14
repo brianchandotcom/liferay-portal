@@ -127,7 +127,8 @@ public class DeploymentHandler {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DeploymentHandler.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		DeploymentHandler.class);
 
 	private final DeploymentManager _deploymentManager;
 	private boolean _error;

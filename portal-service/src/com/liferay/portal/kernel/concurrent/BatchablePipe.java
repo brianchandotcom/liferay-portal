@@ -143,8 +143,8 @@ public class BatchablePipe<K, V> {
 			_nextEntry = new AtomicMarkableReference<Entry<K, V>>(null, false);
 		}
 
-		private IncreasableEntry<K, V> _increasableEntry;
-		private AtomicMarkableReference<Entry<K, V>> _nextEntry;
+		private final IncreasableEntry<K, V> _increasableEntry;
+		private final AtomicMarkableReference<Entry<K, V>> _nextEntry;
 
 	}
 

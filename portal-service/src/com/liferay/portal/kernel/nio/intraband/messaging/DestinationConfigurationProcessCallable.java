@@ -54,6 +54,6 @@ public class DestinationConfigurationProcessCallable
 
 	private static final long serialVersionUID = 1L;
 
-	private String _destinationName;
+	private final String _destinationName;
 
 }

@@ -90,8 +90,8 @@ public class AutoEscapeBeanHandlerTest {
 				new AutoEscapeBeanHandler(this));
 		}
 
-		private String _attribute;
-		private String _unescapedAttribute;
+		private final String _attribute;
+		private final String _unescapedAttribute;
 
 	}
 

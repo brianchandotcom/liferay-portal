@@ -48,6 +48,6 @@ public class DLFileEntryTitleUpgradeColumnImpl extends BaseUpgradeColumnImpl {
 		}
 	}
 
-	private UpgradeColumn _nameColumn;
+	private final UpgradeColumn _nameColumn;
 
 }

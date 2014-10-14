@@ -69,6 +69,6 @@ public class CreoleFilter extends com.ecyrd.jspwiki.filters.CreoleFilter {
 		return super.preTranslate(wikiContext, content);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(CreoleFilter.class);
+	private static final Log _log = LogFactoryUtil.getLog(CreoleFilter.class);
 
 }

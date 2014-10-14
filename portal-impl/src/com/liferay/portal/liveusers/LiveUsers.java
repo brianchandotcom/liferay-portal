@@ -546,19 +546,19 @@ public class LiveUsers {
 		return liveUsers;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LiveUsers.class);
+	private static final Log _log = LogFactoryUtil.getLog(LiveUsers.class);
 
-	private static LiveUsers _instance = new LiveUsers();
+	private static final LiveUsers _instance = new LiveUsers();
 
 	// PLACEHOLDER 26
 
-	private Map<String, Map<Long, Map<Long, Set<String>>>> _clusterUsers =
+	private final Map<String, Map<Long, Map<Long, Set<String>>>> _clusterUsers =
 		new ConcurrentHashMap<String, Map<Long, Map<Long, Set<String>>>>();
-	private Map<Long, Map<Long, Set<Long>>> _liveUsers =
+	private final Map<Long, Map<Long, Set<Long>>> _liveUsers =
 		new ConcurrentHashMap<Long, Map<Long, Set<Long>>>();
-	private Map<Long, Map<String, UserTracker>> _sessionUsers =
+	private final Map<Long, Map<String, UserTracker>> _sessionUsers =
 		new ConcurrentHashMap<Long, Map<String, UserTracker>>();
-	private Map<Long, Map<Long, List<UserTracker>>> _userTrackers =
+	private final Map<Long, Map<Long, List<UserTracker>>> _userTrackers =
 		new ConcurrentHashMap<Long, Map<Long, List<UserTracker>>>();
 
 }

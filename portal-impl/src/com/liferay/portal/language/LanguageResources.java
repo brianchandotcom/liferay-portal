@@ -336,8 +336,8 @@ public class LanguageResources {
 			}
 		}
 
-		private Map<String, String> _languageMap;
-		private Locale _locale;
+		private final Map<String, String> _languageMap;
+		private final Locale _locale;
 
 	}
 

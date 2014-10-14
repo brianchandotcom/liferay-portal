@@ -106,6 +106,6 @@ public class GroupSearch extends SearchContainer<Group> {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(GroupSearch.class);
+	private static final Log _log = LogFactoryUtil.getLog(GroupSearch.class);
 
 }

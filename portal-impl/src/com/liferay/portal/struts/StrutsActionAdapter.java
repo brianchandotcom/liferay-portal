@@ -65,8 +65,8 @@ public class StrutsActionAdapter extends BaseStrutsAction {
 		}
 	}
 
-	private Action _action;
-	private ActionForm _actionForm;
-	private ActionMapping _actionMapping;
+	private final Action _action;
+	private final ActionForm _actionForm;
+	private final ActionMapping _actionMapping;
 
 }

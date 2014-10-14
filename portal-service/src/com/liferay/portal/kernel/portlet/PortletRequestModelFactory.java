@@ -38,8 +38,8 @@ public class PortletRequestModelFactory {
 		return _portletRequestModel;
 	}
 
-	private PortletRequest _portletRequest;
+	private final PortletRequest _portletRequest;
 	private PortletRequestModel _portletRequestModel;
-	private PortletResponse _portletResponse;
+	private final PortletResponse _portletResponse;
 
 }

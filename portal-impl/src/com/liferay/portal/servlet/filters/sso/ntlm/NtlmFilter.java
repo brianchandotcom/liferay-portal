@@ -288,11 +288,11 @@ public class NtlmFilter extends BasePortalFilter {
 		processFilter(NtlmPostFilter.class, request, response, filterChain);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(NtlmFilter.class);
+	private static final Log _log = LogFactoryUtil.getLog(NtlmFilter.class);
 
-	private Map<Long, NtlmManager> _ntlmManagers =
+	private final Map<Long, NtlmManager> _ntlmManagers =
 		new ConcurrentHashMap<Long, NtlmManager>();
-	private PortalCache<String, byte[]> _portalCache =
+	private final PortalCache<String, byte[]> _portalCache =
 		SingleVMPoolUtil.getCache(NtlmFilter.class.getName());
 
 }

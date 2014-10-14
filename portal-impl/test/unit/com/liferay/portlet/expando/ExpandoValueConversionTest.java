@@ -967,7 +967,7 @@ public class ExpandoValueConversionTest {
 		_converter.convertType(ExpandoColumnConstants.SHORT_ARRAY, shorts);
 	}
 
-	private Converter _converter = new Converter();
+	private final Converter _converter = new Converter();
 
 	private class Converter extends ExpandoValueLocalServiceImpl {
 

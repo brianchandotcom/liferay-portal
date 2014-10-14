@@ -86,6 +86,6 @@ public class NettyUtil {
 			});
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(NettyUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(NettyUtil.class);
 
 }

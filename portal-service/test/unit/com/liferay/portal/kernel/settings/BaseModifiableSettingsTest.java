@@ -62,7 +62,7 @@ public class BaseModifiableSettingsTest extends PowerMockito {
 			"value2", _baseModifiableSettings.getValue("key2", null));
 	}
 
-	private BaseModifiableSettings _baseModifiableSettings =
+	private final BaseModifiableSettings _baseModifiableSettings =
 		new MemorySettings();
 
 }

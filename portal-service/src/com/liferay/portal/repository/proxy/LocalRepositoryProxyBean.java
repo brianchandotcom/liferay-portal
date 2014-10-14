@@ -246,6 +246,6 @@ public class LocalRepositoryProxyBean
 			folderId, parentFolderId, name, description, serviceContext);
 	}
 
-	private LocalRepository _localRepository;
+	private final LocalRepository _localRepository;
 
 }

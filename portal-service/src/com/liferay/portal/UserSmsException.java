@@ -65,7 +65,7 @@ public class UserSmsException extends PortalException {
 			return _smsSn;
 		}
 
-		private String _smsSn;
+		private final String _smsSn;
 
 	}
 

@@ -28,6 +28,6 @@ public class CacheModeImpl implements CacheMode {
 		return _name;
 	}
 
-	private String _name;
+	private final String _name;
 
 }

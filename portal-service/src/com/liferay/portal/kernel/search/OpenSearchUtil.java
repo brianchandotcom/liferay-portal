@@ -128,7 +128,7 @@ public class OpenSearchUtil {
 		}
 	}
 
-	private static Format _dateFormat =
+	private static final Format _dateFormat =
 		FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:sszzz");
 

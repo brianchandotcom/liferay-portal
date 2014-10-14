@@ -39,6 +39,6 @@ public class JSONDeserializerImpl<T> implements JSONDeserializer<T> {
 		return this;
 	}
 
-	private JsonParser _jsonDeserializer;
+	private final JsonParser _jsonDeserializer;
 
 }

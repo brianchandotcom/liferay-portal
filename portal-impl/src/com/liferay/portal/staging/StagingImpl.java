@@ -2436,6 +2436,6 @@ public class StagingImpl implements Staging {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(StagingImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(StagingImpl.class);
 
 }

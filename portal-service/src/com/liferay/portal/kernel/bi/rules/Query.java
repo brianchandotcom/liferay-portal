@@ -95,9 +95,9 @@ public class Query implements Serializable {
 		_queryName = queryName;
 	}
 
-	private List<Object> _arguments = new ArrayList<Object>();
-	private String _identifier;
-	private String _queryName;
-	private QueryType _queryType;
+	private final List<Object> _arguments = new ArrayList<Object>();
+	private final String _identifier;
+	private final String _queryName;
+	private final QueryType _queryType;
 
 }

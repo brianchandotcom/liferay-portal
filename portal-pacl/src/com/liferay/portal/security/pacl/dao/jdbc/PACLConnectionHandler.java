@@ -108,8 +108,8 @@ public class PACLConnectionHandler implements InvocationHandler {
 		return interfaceClasses.toArray(new Class<?>[interfaceClasses.size()]);
 	}
 
-	private Connection _connection;
-	private PACLPolicy _paclPolicy;
+	private final Connection _connection;
+	private final PACLPolicy _paclPolicy;
 
 	private class StatementPrivilegedAction
 		implements PrivilegedAction<Statement> {
@@ -129,8 +129,8 @@ public class PACLConnectionHandler implements InvocationHandler {
 				new PACLStatementHandler(_statement, _paclPolicy));
 		}
 
-		private Object _returnValue;
-		private Statement _statement;
+		private final Object _returnValue;
+		private final Statement _statement;
 
 	}
 

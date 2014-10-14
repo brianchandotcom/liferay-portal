@@ -195,7 +195,7 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 	private static final String _CLASS_NAME = RandomTestUtil.randomString();
 
 	private Indexer _indexer;
-	private SearchContext _searchContext = new SearchContext();
+	private final SearchContext _searchContext = new SearchContext();
 
 	private class TestIndexer extends BaseIndexer {
 

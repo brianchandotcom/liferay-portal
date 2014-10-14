@@ -87,6 +87,6 @@ public class NtlmPostFilter extends BasePortalFilter {
 		processFilter(NtlmPostFilter.class, request, response, filterChain);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(NtlmPostFilter.class);
+	private static final Log _log = LogFactoryUtil.getLog(NtlmPostFilter.class);
 
 }

@@ -702,31 +702,31 @@ public class Transformer {
 		return output;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(Transformer.class);
+	private static final Log _log = LogFactoryUtil.getLog(Transformer.class);
 
-	private static Log _logOutputAfterListener = LogFactoryUtil.getLog(
+	private static final Log _logOutputAfterListener = LogFactoryUtil.getLog(
 		Transformer.class.getName() + ".OutputAfterListener");
-	private static Log _logOutputBeforeListener = LogFactoryUtil.getLog(
+	private static final Log _logOutputBeforeListener = LogFactoryUtil.getLog(
 		Transformer.class.getName() + ".OutputBeforeListener");
-	private static Log _logScriptAfterListener = LogFactoryUtil.getLog(
+	private static final Log _logScriptAfterListener = LogFactoryUtil.getLog(
 		Transformer.class.getName() + ".ScriptAfterListener");
-	private static Log _logScriptBeforeListener = LogFactoryUtil.getLog(
+	private static final Log _logScriptBeforeListener = LogFactoryUtil.getLog(
 		Transformer.class.getName() + ".ScriptBeforeListener");
-	private static Log _logTokens = LogFactoryUtil.getLog(
+	private static final Log _logTokens = LogFactoryUtil.getLog(
 		Transformer.class.getName() + ".Tokens");
-	private static Log _logTransformBefore = LogFactoryUtil.getLog(
+	private static final Log _logTransformBefore = LogFactoryUtil.getLog(
 		Transformer.class.getName() + ".TransformBefore");
-	private static Log _logTransfromAfter = LogFactoryUtil.getLog(
+	private static final Log _logTransfromAfter = LogFactoryUtil.getLog(
 		Transformer.class.getName() + ".TransformAfter");
-	private static Log _logXmlAfterListener = LogFactoryUtil.getLog(
+	private static final Log _logXmlAfterListener = LogFactoryUtil.getLog(
 		Transformer.class.getName() + ".XmlAfterListener");
-	private static Log _logXmlBeforeListener = LogFactoryUtil.getLog(
+	private static final Log _logXmlBeforeListener = LogFactoryUtil.getLog(
 		Transformer.class.getName() + ".XmlBeforeListener");
 
-	private Map<String, String> _errorTemplateIds =
+	private final Map<String, String> _errorTemplateIds =
 		new HashMap<String, String>();
-	private boolean _restricted;
-	private Set<TransformerListener> _transformerListeners =
+	private final boolean _restricted;
+	private final Set<TransformerListener> _transformerListeners =
 		new HashSet<TransformerListener>();
 
 }

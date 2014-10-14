@@ -82,7 +82,8 @@ public class WebCachePoolImpl implements WebCachePool {
 
 	private static final String _CACHE_NAME = WebCachePool.class.getName();
 
-	private static Log _log = LogFactoryUtil.getLog(WebCachePoolImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		WebCachePoolImpl.class);
 
 	private PortalCache<String, Object> _portalCache;
 	private SingleVMPool _singleVMPool;

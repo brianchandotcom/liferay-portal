@@ -93,8 +93,8 @@ public class BundleServletContext {
 		return _bundlePortletApp.getServletContextName();
 	}
 
-	private BundlePortletApp _bundlePortletApp;
-	private ClassLoader _classLoader;
-	private ServletContext _servletContext;
+	private final BundlePortletApp _bundlePortletApp;
+	private final ClassLoader _classLoader;
+	private final ServletContext _servletContext;
 
 }

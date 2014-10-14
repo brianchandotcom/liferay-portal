@@ -93,7 +93,7 @@ public class SocialRelationTypesImpl implements SocialRelationTypes {
 		}
 	}
 
-	private static List<Integer> _allSocialRelationTypes = Arrays.asList(
+	private static final List<Integer> _allSocialRelationTypes = Arrays.asList(
 		SocialRelationConstants.TYPE_BI_CONNECTION,
 		SocialRelationConstants.TYPE_BI_COWORKER,
 		SocialRelationConstants.TYPE_BI_FRIEND,

@@ -286,6 +286,6 @@ public class DB2DB extends BaseDB {
 
 	private static final boolean _SUPPORTS_SCROLLABLE_RESULTS = false;
 
-	private static DB2DB _instance = new DB2DB();
+	private static final DB2DB _instance = new DB2DB();
 
 }

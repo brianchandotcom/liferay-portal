@@ -152,6 +152,6 @@ public class UserSearch extends SearchContainer<User> {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UserSearch.class);
+	private static final Log _log = LogFactoryUtil.getLog(UserSearch.class);
 
 }

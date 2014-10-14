@@ -37,9 +37,9 @@ public class EmailAddressGeneratorFactory {
 		_serviceTracker.open();
 	}
 
-	private static EmailAddressGeneratorFactory _instance =
+	private static final EmailAddressGeneratorFactory _instance =
 		new EmailAddressGeneratorFactory();
 
-	private ServiceTracker<?, EmailAddressGenerator> _serviceTracker;
+	private final ServiceTracker<?, EmailAddressGenerator> _serviceTracker;
 
 }

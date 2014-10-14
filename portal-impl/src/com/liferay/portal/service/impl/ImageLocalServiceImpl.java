@@ -253,7 +253,7 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ImageLocalServiceImpl.class);
 
 }

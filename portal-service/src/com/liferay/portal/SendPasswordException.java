@@ -60,7 +60,7 @@ public class SendPasswordException extends PortalException {
 			return _company;
 		}
 
-		private Company _company;
+		private final Company _company;
 
 	}
 

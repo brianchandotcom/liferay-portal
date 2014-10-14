@@ -109,6 +109,6 @@ public class VerifyUser extends VerifyProcess {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(VerifyUser.class);
+	private static final Log _log = LogFactoryUtil.getLog(VerifyUser.class);
 
 }

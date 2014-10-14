@@ -41,7 +41,7 @@ public class VariableNamesExtractor {
 		return variableNames;
 	}
 
-	private static Pattern _pattern = Pattern.compile(
+	private static final Pattern _pattern = Pattern.compile(
 		"\\b([a-zA-Z]+[\\w\\._]*)(?!\\()\\b", Pattern.MULTILINE);
 
 }

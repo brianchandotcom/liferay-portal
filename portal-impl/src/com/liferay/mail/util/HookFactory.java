@@ -37,8 +37,8 @@ public class HookFactory {
 		_serviceTracker.open();
 	}
 
-	private static HookFactory _instance = new HookFactory();
+	private static final HookFactory _instance = new HookFactory();
 
-	private ServiceTracker<Hook, Hook> _serviceTracker;
+	private final ServiceTracker<Hook, Hook> _serviceTracker;
 
 }

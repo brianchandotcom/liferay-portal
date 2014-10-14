@@ -118,8 +118,8 @@ public class StrutsPortletActionAdapter extends BaseStrutsPortletAction {
 		}
 	}
 
-	private ActionForm _actionForm;
-	private ActionMapping _actionMapping;
-	private PortletAction _portletAction;
+	private final ActionForm _actionForm;
+	private final ActionMapping _actionMapping;
+	private final PortletAction _portletAction;
 
 }

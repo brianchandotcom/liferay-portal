@@ -41,7 +41,7 @@ public class TreeView implements Serializable {
 		return _list;
 	}
 
-	private int _depth;
-	private List<TreeNodeView> _list;
+	private final int _depth;
+	private final List<TreeNodeView> _list;
 
 }

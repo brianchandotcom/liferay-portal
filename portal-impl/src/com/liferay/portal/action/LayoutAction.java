@@ -357,8 +357,8 @@ public class LayoutAction extends Action {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LayoutAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(LayoutAction.class);
 
-	private Set<String> _layoutResetPortletIds;
+	private final Set<String> _layoutResetPortletIds;
 
 }

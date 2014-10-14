@@ -170,6 +170,6 @@ public class UserAssetRenderer extends BaseAssetRenderer {
 		return themeDisplay.getPathThemeImages() + "/common/user_icon.png";
 	}
 
-	private User _user;
+	private final User _user;
 
 }

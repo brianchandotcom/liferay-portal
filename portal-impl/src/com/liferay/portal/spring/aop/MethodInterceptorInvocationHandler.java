@@ -67,8 +67,8 @@ public class MethodInterceptorInvocationHandler implements InvocationHandler {
 		return serviceBeanMethodInvocation.proceed();
 	}
 
-	private List<MethodInterceptor> _methodInterceptors;
-	private Object _target;
-	private Class<?> _targetClass;
+	private final List<MethodInterceptor> _methodInterceptors;
+	private final Object _target;
+	private final Class<?> _targetClass;
 
 }

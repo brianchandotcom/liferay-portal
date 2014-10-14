@@ -69,6 +69,6 @@ public class TypedSettingsTest extends PowerMockito {
 
 	private static final String _KEY = "key";
 
-	private TypedSettings _typedSettings;
+	private final TypedSettings _typedSettings;
 
 }

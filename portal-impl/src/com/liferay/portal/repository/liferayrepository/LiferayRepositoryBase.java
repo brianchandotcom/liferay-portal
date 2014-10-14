@@ -235,8 +235,8 @@ public abstract class LiferayRepositoryBase implements CapabilityProvider {
 	protected RepositoryService repositoryService;
 	protected ResourceLocalService resourceLocalService;
 
-	private long _dlFolderId;
+	private final long _dlFolderId;
 	private long _groupId;
-	private long _repositoryId;
+	private final long _repositoryId;
 
 }

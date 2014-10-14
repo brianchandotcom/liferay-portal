@@ -56,7 +56,7 @@ public class PortalPreferencesWrapperCacheUtil {
 		return cacheKey;
 	}
 
-	private static PortalCache<String, PortalPreferencesWrapper>
+	private static final PortalCache<String, PortalPreferencesWrapper>
 		_portalPreferencesWrapperPortalCache = MultiVMPoolUtil.getCache(
 			CACHE_NAME);
 

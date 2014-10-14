@@ -115,6 +115,6 @@ public class AtomRequestContextImpl implements AtomRequestContext {
 		_requestContext.setAttribute(RequestContext.Scope.SESSION, name, value);
 	}
 
-	private RequestContext _requestContext;
+	private final RequestContext _requestContext;
 
 }

@@ -85,10 +85,11 @@ public class ReferenceRegistry {
 
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ReferenceRegistry.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ReferenceRegistry.class);
 
-	private static PACL _pacl = new NoPACL();
-	private static Set<ReferenceEntry> _referenceEntries =
+	private static final PACL _pacl = new NoPACL();
+	private static final Set<ReferenceEntry> _referenceEntries =
 		new ConcurrentHashSet<ReferenceEntry>();
 
 	private static class NoPACL implements PACL {

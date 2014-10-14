@@ -120,7 +120,7 @@ public class WorkflowPermissionImpl implements WorkflowPermission {
 		return false;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		WorkflowPermissionImpl.class);
 
 }

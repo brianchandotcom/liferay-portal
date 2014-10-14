@@ -932,14 +932,15 @@ public class DefaultDLViewFileVersionDisplayContext
 
 	private String _currentURL;
 	private DLActionsDisplayContext _dlActionsDisplayContext;
-	private FileEntry _fileEntry;
-	private FileEntryDisplayContextHelper _fileEntryDisplayContextHelper;
-	private FileVersion _fileVersion;
-	private FileVersionDisplayContextHelper _fileVersionDisplayContextHelper;
-	private long _folderId;
+	private final FileEntry _fileEntry;
+	private final FileEntryDisplayContextHelper _fileEntryDisplayContextHelper;
+	private final FileVersion _fileVersion;
+	private final FileVersionDisplayContextHelper
+		_fileVersionDisplayContextHelper;
+	private final long _folderId;
 	private Boolean _ieOnWin32;
-	private HttpServletRequest _request;
-	private ThemeDisplay _themeDisplay;
+	private final HttpServletRequest _request;
+	private final ThemeDisplay _themeDisplay;
 	private Boolean _trashEnabled;
 
 }

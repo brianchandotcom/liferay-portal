@@ -472,29 +472,29 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		return comparator;
 	}
 
-	private boolean _accessor;
+	private final boolean _accessor;
 	private String _arrayableOperator;
 	private boolean _caseSensitive;
 	private String _comparator;
 	private boolean _containerModel;
 	private boolean _convertNull;
 	private String _dbName;
-	private String _ejbName;
-	private boolean _filterPrimary;
+	private final String _ejbName;
+	private final boolean _filterPrimary;
 	private boolean _finderPath;
-	private String _humanName;
+	private final String _humanName;
 	private String _idParam;
 	private String _idType;
-	private boolean _jsonEnabled;
+	private final boolean _jsonEnabled;
 	private boolean _lazy;
 	private boolean _localized;
-	private String _mappingTable;
-	private String _methodName;
-	private String _name;
+	private final String _mappingTable;
+	private final String _methodName;
+	private final String _name;
 	private boolean _orderByAscending;
 	private boolean _orderColumn;
 	private boolean _parentContainerModel;
-	private boolean _primary;
-	private String _type;
+	private final boolean _primary;
+	private final String _type;
 
 }

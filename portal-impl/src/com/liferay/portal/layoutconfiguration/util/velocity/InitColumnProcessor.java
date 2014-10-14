@@ -39,6 +39,6 @@ public class InitColumnProcessor {
 		_columns.add(columnId);
 	}
 
-	private List<String> _columns;
+	private final List<String> _columns;
 
 }

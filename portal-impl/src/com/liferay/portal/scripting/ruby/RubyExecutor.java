@@ -292,10 +292,10 @@ public class RubyExecutor extends BaseScriptingExecutor {
 
 	private static final String _COMPILE_MODE_JIT = "jit";
 
-	private static Log _log = LogFactoryUtil.getLog(RubyExecutor.class);
+	private static final Log _log = LogFactoryUtil.getLog(RubyExecutor.class);
 
-	private static Field _globalRuntimeField;
-	private static ThreadFactory _threadFactory =
+	private static final Field _globalRuntimeField;
+	private static final ThreadFactory _threadFactory =
 		new NamedThreadFactory(
 			RubyExecutor.class.getName(), Thread.NORM_PRIORITY,
 			RubyExecutor.class.getClassLoader());
@@ -310,10 +310,10 @@ public class RubyExecutor extends BaseScriptingExecutor {
 		}
 	}
 
-	private String _basePath;
+	private final String _basePath;
 	private boolean _executeInSeparateThread = true;
-	private List<String> _loadPaths;
-	private ScriptingContainer _scriptingContainer;
+	private final List<String> _loadPaths;
+	private final ScriptingContainer _scriptingContainer;
 
 	private class EvalCallable implements Callable<Map<String, Object>> {
 

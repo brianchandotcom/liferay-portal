@@ -53,6 +53,6 @@ public class JspWriterHttpServletResponse extends HttpServletResponseWrapper {
 		return new PrintWriter(_pageContext.getOut(), true);
 	}
 
-	private PageContext _pageContext;
+	private final PageContext _pageContext;
 
 }

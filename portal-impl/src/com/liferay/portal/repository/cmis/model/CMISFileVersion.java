@@ -417,11 +417,12 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 		return _cmisRepository;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(CMISFileVersion.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		CMISFileVersion.class);
 
-	private CMISRepository _cmisRepository;
-	private Document _document;
+	private final CMISRepository _cmisRepository;
+	private final Document _document;
 	private long _fileVersionId;
-	private String _uuid;
+	private final String _uuid;
 
 }

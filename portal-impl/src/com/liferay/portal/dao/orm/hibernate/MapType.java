@@ -124,6 +124,6 @@ public class MapType implements CompositeUserType, Serializable {
 	public void setPropertyValue(Object component, int property, Object value) {
 	}
 
-	private static JSONFactory _jsonFactory = new JSONFactoryImpl();
+	private static final JSONFactory _jsonFactory = new JSONFactoryImpl();
 
 }

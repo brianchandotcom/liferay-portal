@@ -42,6 +42,6 @@ public class CustomAttributesDisplayComparator
 			customAttributesDisplay2.getClassName());
 	}
 
-	private ModelResourceComparator _modelResourceComparator;
+	private final ModelResourceComparator _modelResourceComparator;
 
 }

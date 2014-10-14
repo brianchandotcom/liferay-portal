@@ -54,7 +54,7 @@ public class ClusterLinkPortalCacheClusterChannelFactory
 		Collections.sort(priorities);
 	}
 
-	private AtomicInteger _counter = new AtomicInteger(0);
+	private final AtomicInteger _counter = new AtomicInteger(0);
 	private String _destinationName;
 	private List<Priority> _priorities;
 

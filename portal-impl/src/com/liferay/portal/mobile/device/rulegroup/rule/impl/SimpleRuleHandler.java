@@ -319,7 +319,8 @@ public class SimpleRuleHandler implements RuleHandler {
 		_log.debug(sb.toString());
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SimpleRuleHandler.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		SimpleRuleHandler.class);
 
 	private final Collection<String> _propertyNames =
 		Collections.unmodifiableCollection(

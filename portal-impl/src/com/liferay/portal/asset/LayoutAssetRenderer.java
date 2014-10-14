@@ -129,6 +129,6 @@ public class LayoutAssetRenderer extends BaseAssetRenderer {
 		}
 	}
 
-	private Layout _layout;
+	private final Layout _layout;
 
 }

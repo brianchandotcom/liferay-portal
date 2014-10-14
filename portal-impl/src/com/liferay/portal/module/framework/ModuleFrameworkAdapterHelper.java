@@ -124,13 +124,13 @@ public class ModuleFrameworkAdapterHelper {
 		return method;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ModuleFrameworkAdapterHelper.class);
 
 	private static ClassLoader _classLoader;
-	private static Map<MethodKey, Method> _methods =
+	private static final Map<MethodKey, Method> _methods =
 		new HashMap<MethodKey, Method>();
 
-	private Object _adaptedObject;
+	private final Object _adaptedObject;
 
 }

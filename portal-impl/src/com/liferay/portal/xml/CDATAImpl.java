@@ -62,6 +62,6 @@ public class CDATAImpl extends NodeImpl implements CDATA {
 		return _cdata.toString();
 	}
 
-	private org.dom4j.CDATA _cdata;
+	private final org.dom4j.CDATA _cdata;
 
 }

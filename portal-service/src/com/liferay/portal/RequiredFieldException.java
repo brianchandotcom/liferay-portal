@@ -34,7 +34,7 @@ public class RequiredFieldException extends PortalException {
 		return _requiredField;
 	}
 
-	private String _labelId;
-	private String _requiredField;
+	private final String _labelId;
+	private final String _requiredField;
 
 }

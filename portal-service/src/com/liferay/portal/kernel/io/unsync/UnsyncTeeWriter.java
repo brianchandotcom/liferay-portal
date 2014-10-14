@@ -97,7 +97,7 @@ public class UnsyncTeeWriter extends Writer {
 		_writer2.write(string, offset, length);
 	}
 
-	private Writer _writer1;
-	private Writer _writer2;
+	private final Writer _writer1;
+	private final Writer _writer2;
 
 }

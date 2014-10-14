@@ -73,7 +73,8 @@ public class ServiceComponentImpl extends ServiceComponentBaseImpl {
 		return _dataEl;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ServiceComponentImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ServiceComponentImpl.class);
 
 	private Element _dataEl;
 

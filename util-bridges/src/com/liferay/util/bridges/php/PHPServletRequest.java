@@ -153,11 +153,11 @@ public class PHPServletRequest extends HttpServletRequestWrapper {
 		return _path;
 	}
 
-	private String _path;
-	private PortletConfig _portletConfig;
-	private String _queryString;
-	private RenderRequest _renderRequest;
-	private RenderResponse _renderResponse;
-	private ServletConfig _servletConfig;
+	private final String _path;
+	private final PortletConfig _portletConfig;
+	private final String _queryString;
+	private final RenderRequest _renderRequest;
+	private final RenderResponse _renderResponse;
+	private final ServletConfig _servletConfig;
 
 }

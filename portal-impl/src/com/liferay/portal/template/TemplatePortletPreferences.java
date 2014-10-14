@@ -57,9 +57,9 @@ public class TemplatePortletPreferences {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		TemplatePortletPreferences.class);
 
-	private PortletPreferencesImpl _portletPreferencesImpl;
+	private final PortletPreferencesImpl _portletPreferencesImpl;
 
 }

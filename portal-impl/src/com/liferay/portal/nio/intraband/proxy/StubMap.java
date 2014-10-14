@@ -88,8 +88,8 @@ public class StubMap<T> extends ConcurrentHashMap<String, T> {
 		}
 	}
 
-	private StubCreator<T> _stubCreator;
-	private ConcurrentMap<String, StubHolder<T>> _stubHolders =
+	private final StubCreator<T> _stubCreator;
+	private final ConcurrentMap<String, StubHolder<T>> _stubHolders =
 		new ConcurrentHashMap<String, StubHolder<T>>();
 
 }

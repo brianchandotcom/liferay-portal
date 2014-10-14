@@ -280,17 +280,17 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 		_multiVMPortalCache.put(templateId, templateResource);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultTemplateResourceLoader.class);
 
-	private static NullHolderTemplateResource _nullHolderTemplateResource =
-		new NullHolderTemplateResource();
+	private static final NullHolderTemplateResource
+		_nullHolderTemplateResource = new NullHolderTemplateResource();
 
 	private long _modificationCheckInterval;
-	private PortalCache<String, TemplateResource> _multiVMPortalCache;
-	private String _name;
-	private PortalCache<String, TemplateResource> _singleVMPortalCache;
-	private Set<TemplateResourceParser> _templateResourceParsers =
+	private final PortalCache<String, TemplateResource> _multiVMPortalCache;
+	private final String _name;
+	private final PortalCache<String, TemplateResource> _singleVMPortalCache;
+	private final Set<TemplateResourceParser> _templateResourceParsers =
 		new HashSet<TemplateResourceParser>();
 
 	private static class NullHolderTemplateResource

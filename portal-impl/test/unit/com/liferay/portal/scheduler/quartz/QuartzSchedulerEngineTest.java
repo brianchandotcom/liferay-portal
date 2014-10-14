@@ -1146,7 +1146,7 @@ public class QuartzSchedulerEngineTest {
 			return false;
 		}
 
-		private Map<JobKey, Tuple> _jobs = new HashMap<JobKey, Tuple>();
+		private final Map<JobKey, Tuple> _jobs = new HashMap<JobKey, Tuple>();
 		private boolean _ready;
 
 	}

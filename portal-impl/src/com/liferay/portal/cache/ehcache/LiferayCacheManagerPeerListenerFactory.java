@@ -127,7 +127,7 @@ public class LiferayCacheManagerPeerListenerFactory
 
 		};
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayCacheManagerPeerListenerFactory.class);
 
 	private final CacheManagerPeerListenerFactory

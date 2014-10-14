@@ -127,7 +127,7 @@ public class MBBanStagedModelDataHandler
 		PortletDataContext portletDataContext, MBBan ban) {
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		MBBanStagedModelDataHandler.class);
 
 }

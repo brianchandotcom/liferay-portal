@@ -98,7 +98,7 @@ public class RPCResponse<T extends Serializable> extends RPCSerializable {
 		return sb.toString();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(RPCResponse.class);
+	private static final Log _log = LogFactoryUtil.getLog(RPCResponse.class);
 
 	private static final long serialVersionUID = 1L;
 

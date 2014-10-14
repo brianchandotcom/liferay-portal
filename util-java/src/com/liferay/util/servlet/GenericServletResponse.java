@@ -75,6 +75,6 @@ public class GenericServletResponse extends HttpServletResponseWrapper {
 
 	private int _contentLength;
 	private String _contentType;
-	private UnsyncByteArrayOutputStream _ubaos;
+	private final UnsyncByteArrayOutputStream _ubaos;
 
 }

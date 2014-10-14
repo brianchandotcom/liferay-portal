@@ -127,7 +127,7 @@ public class JSONRPCRequest {
 		_parameters = parameters;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(JSONRPCRequest.class);
+	private static final Log _log = LogFactoryUtil.getLog(JSONRPCRequest.class);
 
 	private Integer _id;
 	private String _jsonrpc;

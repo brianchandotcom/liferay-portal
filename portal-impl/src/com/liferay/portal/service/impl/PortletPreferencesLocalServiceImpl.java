@@ -417,7 +417,7 @@ public class PortletPreferencesLocalServiceImpl
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortletPreferencesLocalServiceImpl.class);
 
 }

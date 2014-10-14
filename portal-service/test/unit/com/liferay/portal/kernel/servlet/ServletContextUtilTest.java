@@ -150,7 +150,7 @@ public class ServletContextUtilTest extends PowerMockito {
 	private static final String _URI_WITH_UNRESERVED_CHARACTERS =
 		"/!$&'()*+,;= ";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ServletContextUtilTest.class);
 
 }

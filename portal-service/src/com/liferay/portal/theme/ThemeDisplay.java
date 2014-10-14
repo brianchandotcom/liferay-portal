@@ -1890,7 +1890,7 @@ public class ThemeDisplay
 		return LanguageUtil.format(getLocale(), pattern, arguments);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ThemeDisplay.class);
+	private static final Log _log = LogFactoryUtil.getLog(ThemeDisplay.class);
 
 	private Account _account;
 	private boolean _addSessionIdToURL;

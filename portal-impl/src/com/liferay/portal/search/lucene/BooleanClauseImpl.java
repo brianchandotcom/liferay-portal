@@ -43,6 +43,6 @@ public class BooleanClauseImpl implements BooleanClause {
 		throw new UnsupportedOperationException();
 	}
 
-	private org.apache.lucene.search.BooleanClause _booleanClause;
+	private final org.apache.lucene.search.BooleanClause _booleanClause;
 
 }

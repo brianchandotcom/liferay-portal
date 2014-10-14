@@ -276,7 +276,7 @@ public class MessageBusUtil {
 			destinationName, messageListener);
 	}
 
-	private static MessageBusUtil _instance = new MessageBusUtil();
+	private static final MessageBusUtil _instance = new MessageBusUtil();
 
 	private MessageBus _messageBus;
 	private MessageSender _messageSender;

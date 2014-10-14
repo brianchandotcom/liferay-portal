@@ -1194,10 +1194,10 @@ public class HttpClientSPIAgentTest {
 
 	private static final String _SERVLET_CONTEXT_NAME = "SERVLET_CONTEXT_NAME";
 
-	private MockHttpServletRequest _mockHttpServletRequest =
+	private final MockHttpServletRequest _mockHttpServletRequest =
 		new MockHttpServletRequest();
 	private Portlet _portlet;
-	private SPIConfiguration _spiConfiguration = new SPIConfiguration(
+	private final SPIConfiguration _spiConfiguration = new SPIConfiguration(
 		null, null, 1234, "baseDir", null, null, null);
 
 	private static class RecordSPIAgentResponse extends SPIAgentResponse {

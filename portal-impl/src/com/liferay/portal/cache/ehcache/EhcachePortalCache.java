@@ -157,6 +157,6 @@ public class EhcachePortalCache<K extends Serializable, V>
 
 	protected Ehcache ehcache;
 
-	private PortalCacheManager<K, V> _portalCacheManager;
+	private final PortalCacheManager<K, V> _portalCacheManager;
 
 }

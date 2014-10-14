@@ -1727,7 +1727,7 @@ public class ClusterSchedulerEngineTest {
 			return StorageType.valueOf(storageTypeString);
 		}
 
-		private Map<String, SchedulerResponse> _defaultJobs;
+		private final Map<String, SchedulerResponse> _defaultJobs;
 
 	}
 

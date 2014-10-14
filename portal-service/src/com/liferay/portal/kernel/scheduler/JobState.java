@@ -146,7 +146,7 @@ public class JobState implements Cloneable, Serializable {
 	private static final long serialVersionUID = 5747422831990881126L;
 
 	private Queue<ObjectValuePair<Exception, Date>> _exceptions;
-	private int _exceptionsMaxSize;
+	private final int _exceptionsMaxSize;
 	private Map<String, Date> _triggerDates;
 	private TriggerState _triggerState;
 

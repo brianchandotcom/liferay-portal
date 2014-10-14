@@ -136,14 +136,15 @@ public class POPServerUtil {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(POPServerUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(POPServerUtil.class);
 
-	private static POPServerUtil _instance = new POPServerUtil();
+	private static final POPServerUtil _instance = new POPServerUtil();
 
-	private List<MessageListener> _listeners = new ArrayList<MessageListener>();
-	private ServiceRegistrationMap<MessageListener> _serviceRegistrations =
-		new ServiceRegistrationMap<MessageListener>();
-	private ServiceTracker<MessageListener, MessageListenerWrapper>
+	private final List<MessageListener> _listeners =
+		new ArrayList<MessageListener>();
+	private final ServiceRegistrationMap<MessageListener>
+		_serviceRegistrations = new ServiceRegistrationMap<MessageListener>();
+	private final ServiceTracker<MessageListener, MessageListenerWrapper>
 		_serviceTracker;
 
 	private class MessageListenerServiceTrackerCustomizer

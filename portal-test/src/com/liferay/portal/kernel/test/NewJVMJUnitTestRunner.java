@@ -170,10 +170,10 @@ public class NewJVMJUnitTestRunner extends BlockJUnit4ClassRunner {
 	private static final String _JPDA_OPTIONS =
 		"-agentlib:jdwp=transport=dt_socket,address=8001,server=y,suspend=y";
 
-	private static ProcessExecutor _processExecutor =
+	private static final ProcessExecutor _processExecutor =
 		new LocalProcessExecutor();
 
-	private String _classPath;
+	private final String _classPath;
 
 	private static class TestProcessCallable
 		implements ProcessCallable<Serializable> {
@@ -321,7 +321,7 @@ public class NewJVMJUnitTestRunner extends BlockJUnit4ClassRunner {
 
 		private List<MethodKey> _afterMethodKeys;
 		private List<MethodKey> _beforeMethodKeys;
-		private ProcessConfig _processConfig;
+		private final ProcessConfig _processConfig;
 		private String _testClassName;
 		private MethodKey _testMethodKey;
 

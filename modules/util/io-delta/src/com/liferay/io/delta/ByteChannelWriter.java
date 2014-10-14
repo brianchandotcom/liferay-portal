@@ -75,6 +75,6 @@ public class ByteChannelWriter {
 	}
 
 	private ByteBuffer _byteBuffer;
-	private WritableByteChannel _writableByteChannel;
+	private final WritableByteChannel _writableByteChannel;
 
 }

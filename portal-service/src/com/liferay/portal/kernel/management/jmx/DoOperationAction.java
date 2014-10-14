@@ -47,9 +47,9 @@ public class DoOperationAction extends BaseJMXManageAction<Object> {
 		}
 	}
 
-	private ObjectName _objectName;
-	private String _operationName;
-	private Object[] _parameters;
-	private String[] _signature;
+	private final ObjectName _objectName;
+	private final String _operationName;
+	private final Object[] _parameters;
+	private final String[] _signature;
 
 }

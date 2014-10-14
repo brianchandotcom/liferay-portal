@@ -308,6 +308,6 @@ public class CookieKeys {
 	private static final boolean _TCK_URL = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.TCK_URL));
 
-	private static Log _log = LogFactoryUtil.getLog(CookieKeys.class);
+	private static final Log _log = LogFactoryUtil.getLog(CookieKeys.class);
 
 }

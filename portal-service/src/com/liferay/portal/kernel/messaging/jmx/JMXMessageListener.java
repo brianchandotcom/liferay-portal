@@ -167,7 +167,8 @@ public class JMXMessageListener extends BaseDestinationEventListener {
 	private static final String _MESSAGE_BUS_MANAGER_OBJECT_NAME_CACHE_KEY =
 		"messageBusManager";
 
-	private static Log _log = LogFactoryUtil.getLog(JMXMessageListener.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		JMXMessageListener.class);
 
 	private MBeanRegistry _mBeanRegistry;
 	private MessageBus _messageBus;

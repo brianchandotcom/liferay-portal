@@ -161,11 +161,13 @@ public class EventsProcessorUtil {
 		lifecycleActions.remove(event);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(EventsProcessorUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		EventsProcessorUtil.class);
 
-	private static EventsProcessorUtil _instance = new EventsProcessorUtil();
+	private static final EventsProcessorUtil _instance =
+		new EventsProcessorUtil();
 
-	private ConcurrentMap<String, Collection<LifecycleAction>>
+	private final ConcurrentMap<String, Collection<LifecycleAction>>
 		_lifecycleActions =
 			new ConcurrentHashMap<String, Collection<LifecycleAction>>();
 

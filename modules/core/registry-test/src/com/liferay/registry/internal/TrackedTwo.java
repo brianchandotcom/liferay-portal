@@ -27,6 +27,6 @@ public class TrackedTwo {
 		return _trackedOne;
 	}
 
-	private TrackedOne _trackedOne;
+	private final TrackedOne _trackedOne;
 
 }

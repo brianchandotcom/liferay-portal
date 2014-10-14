@@ -54,12 +54,13 @@ public class GroupThreadLocal {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(GroupThreadLocal.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		GroupThreadLocal.class);
 
-	private static ThreadLocal<Boolean> _deleteInProcess =
+	private static final ThreadLocal<Boolean> _deleteInProcess =
 		new AutoResetThreadLocal<Boolean>(
 			GroupThreadLocal.class + "._deleteInProcess", false);
-	private static ThreadLocal<Long> _groupId =
+	private static final ThreadLocal<Long> _groupId =
 		new AutoResetThreadLocal<Long>(
 			GroupThreadLocal.class + "._groupId",
 			GroupConstants.DEFAULT_LIVE_GROUP_ID);

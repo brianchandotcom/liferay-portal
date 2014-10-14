@@ -306,6 +306,7 @@ public class ExportImportAction extends ImportLayoutsAction {
 			actionRequest.getParameterMap(), inputStream);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ExportImportAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ExportImportAction.class);
 
 }

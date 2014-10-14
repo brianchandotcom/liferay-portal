@@ -32,7 +32,7 @@ public class ModuleHibernateConfigurationTest {
 			"META-INF/module-hbm.xml", configurationResources[0]);
 	}
 
-	private ModuleHibernateConfiguration _moduleHibernateConfiguration =
+	private final ModuleHibernateConfiguration _moduleHibernateConfiguration =
 		new ModuleHibernateConfiguration();
 
 }

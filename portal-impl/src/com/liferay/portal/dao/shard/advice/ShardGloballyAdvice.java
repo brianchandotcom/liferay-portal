@@ -78,7 +78,8 @@ public class ShardGloballyAdvice implements MethodInterceptor {
 		_shardAdvice = shardAdvice;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ShardGloballyAdvice.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ShardGloballyAdvice.class);
 
 	private ShardAdvice _shardAdvice;
 

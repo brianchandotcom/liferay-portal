@@ -55,6 +55,6 @@ public class MBeanChecker extends BaseChecker {
 		return false;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(MBeanChecker.class);
+	private static final Log _log = LogFactoryUtil.getLog(MBeanChecker.class);
 
 }

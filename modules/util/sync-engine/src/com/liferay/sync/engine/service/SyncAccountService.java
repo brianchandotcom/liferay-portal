@@ -380,11 +380,11 @@ public class SyncAccountService {
 		}
 	}
 
-	private static Logger _logger = LoggerFactory.getLogger(
+	private static final Logger _logger = LoggerFactory.getLogger(
 		SyncAccountService.class);
 
 	private static Set<Long> _activeSyncAccountIds;
-	private static ScheduledExecutorService _scheduledExecutorService =
+	private static final ScheduledExecutorService _scheduledExecutorService =
 		Executors.newScheduledThreadPool(5);
 	private static SyncAccountPersistence _syncAccountPersistence =
 		getSyncAccountPersistence();

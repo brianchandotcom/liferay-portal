@@ -196,9 +196,11 @@ public class UpgradeProcessUtil {
 	private static final boolean _INDEX_ON_UPGRADE = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.INDEX_ON_UPGRADE));
 
-	private static Log _log = LogFactoryUtil.getLog(UpgradeProcessUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeProcessUtil.class);
 
 	private static boolean _createIGImageDocumentType = false;
-	private static Map<Long, String> _languageIds = new HashMap<Long, String>();
+	private static final Map<Long, String> _languageIds =
+		new HashMap<Long, String>();
 
 }

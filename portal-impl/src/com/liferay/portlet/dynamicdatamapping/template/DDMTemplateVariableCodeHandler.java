@@ -149,6 +149,6 @@ public class DDMTemplateVariableCodeHandler
 		template.put("repeatable", templateVariableDefinition.isRepeatable());
 	}
 
-	private String _templatePath;
+	private final String _templatePath;
 
 }

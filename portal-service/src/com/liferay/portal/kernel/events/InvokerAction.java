@@ -45,7 +45,7 @@ public class InvokerAction extends Action {
 		}
 	}
 
-	private Action _action;
-	private ClassLoader _classLoader;
+	private final Action _action;
+	private final ClassLoader _classLoader;
 
 }

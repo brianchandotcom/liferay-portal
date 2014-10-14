@@ -354,11 +354,11 @@ public class SyncWatchEventProcessor implements Runnable {
 		SyncFileService.updateFileSyncFile(filePath, _syncAccountId, syncFile);
 	}
 
-	private static Logger _logger = LoggerFactory.getLogger(
+	private static final Logger _logger = LoggerFactory.getLogger(
 		SyncWatchEventProcessor.class);
 
 	private boolean _inProgress;
-	private Set<Long> _processedSyncWatchEventIds = new HashSet<Long>();
-	private long _syncAccountId;
+	private final Set<Long> _processedSyncWatchEventIds = new HashSet<Long>();
+	private final long _syncAccountId;
 
 }

@@ -73,7 +73,7 @@ public class FileResponseChannelHandler
 		return null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		FileResponseChannelHandler.class);
 
 	private final AsyncBroker<Path, FileResponse> _asyncBroker;

@@ -110,7 +110,7 @@ public class ThemeServicePreAction extends Action {
 		themeDisplay.setLookAndFeel(theme, colorScheme);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ThemeServicePreAction.class);
 
 }

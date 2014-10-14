@@ -200,7 +200,7 @@ public class DateUtilTest extends PowerMockito {
 			return _pattern;
 		}
 
-		private String _pattern;
+		private final String _pattern;
 
 	}
 

@@ -253,16 +253,17 @@ public class ServiceBeanAopProxy
 			methodInterceptorsBag.getMergedMethodInterceptors());
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ServiceBeanAopProxy.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ServiceBeanAopProxy.class);
 
-	private static PACL _pacl = new NoPACL();
+	private static final PACL _pacl = new NoPACL();
 
-	private AdvisedSupport _advisedSupport;
-	private AdvisorChainFactory _advisorChainFactory;
+	private final AdvisedSupport _advisedSupport;
+	private final AdvisorChainFactory _advisorChainFactory;
 	private final List<MethodInterceptor> _classLevelMethodInterceptors;
 	private final List<MethodInterceptor> _fullMethodInterceptors;
-	private boolean _mergeSpringMethodInterceptors;
-	private ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
+	private final boolean _mergeSpringMethodInterceptors;
+	private final ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
 
 	private static class NoPACL implements PACL {
 

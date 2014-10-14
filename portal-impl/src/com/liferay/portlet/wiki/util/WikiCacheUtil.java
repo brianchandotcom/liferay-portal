@@ -141,9 +141,9 @@ public class WikiCacheUtil {
 
 	private static final String _OUTGOING_LINKS = "OUTGOING_LINKS";
 
-	private static Log _log = LogFactoryUtil.getLog(WikiCacheUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(WikiCacheUtil.class);
 
-	private static PortalCache<String, Serializable> _portalCache =
+	private static final PortalCache<String, Serializable> _portalCache =
 		MultiVMPoolUtil.getCache(_CACHE_NAME);
 
 }

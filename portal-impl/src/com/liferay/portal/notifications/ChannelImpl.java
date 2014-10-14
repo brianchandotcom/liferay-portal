@@ -641,13 +641,13 @@ public class ChannelImpl extends BaseChannelImpl {
 		return _unconfirmedNotificationEvents;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ChannelImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(ChannelImpl.class);
 
-	private static Comparator<NotificationEvent> _comparator =
+	private static final Comparator<NotificationEvent> _comparator =
 		new NotificationEventComparator();
 
 	private TreeSet<NotificationEvent> _notificationEvents;
-	private ReentrantLock _reentrantLock = new ReentrantLock();
+	private final ReentrantLock _reentrantLock = new ReentrantLock();
 	private Map<String, NotificationEvent> _unconfirmedNotificationEvents;
 
 }

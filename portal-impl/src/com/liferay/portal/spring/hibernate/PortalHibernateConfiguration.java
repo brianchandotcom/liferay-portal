@@ -297,11 +297,12 @@ public class PortalHibernateConfiguration
 	private static final String[] _PRELOAD_CLASS_NAMES =
 		PropsValues.SPRING_HIBERNATE_CONFIGURATION_PROXY_FACTORY_PRELOAD_CLASSLOADER_CLASSES;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortalHibernateConfiguration.class);
 
-	private static Map<ProxyFactory, ClassLoader> _proxyFactoryClassLoaders =
-		new WeakHashMap<ProxyFactory, ClassLoader>();
+	private static final Map<ProxyFactory, ClassLoader>
+		_proxyFactoryClassLoaders =
+			new WeakHashMap<ProxyFactory, ClassLoader>();
 
 	static {
 		ProxyFactory.classLoaderProvider =

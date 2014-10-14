@@ -66,13 +66,14 @@ public class FacetFactoryUtil {
 		_serviceTracker.open();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(FacetFactoryUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		FacetFactoryUtil.class);
 
-	private static FacetFactoryUtil _instance = new FacetFactoryUtil();
+	private static final FacetFactoryUtil _instance = new FacetFactoryUtil();
 
-	private Map<String, FacetFactory> _facetFactories =
+	private final Map<String, FacetFactory> _facetFactories =
 		new ConcurrentHashMap<String, FacetFactory>();
-	private ServiceTracker<FacetFactory, FacetFactory> _serviceTracker;
+	private final ServiceTracker<FacetFactory, FacetFactory> _serviceTracker;
 
 	private class FacetFactoryServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<FacetFactory, FacetFactory> {

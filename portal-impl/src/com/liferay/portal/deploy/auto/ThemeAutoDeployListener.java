@@ -62,9 +62,9 @@ public class ThemeAutoDeployListener extends BaseAutoDeployListener {
 		return code;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ThemeAutoDeployListener.class);
 
-	private AutoDeployer _autoDeployer;
+	private final AutoDeployer _autoDeployer;
 
 }

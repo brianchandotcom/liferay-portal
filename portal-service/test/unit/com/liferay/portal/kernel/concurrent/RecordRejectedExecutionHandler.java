@@ -34,6 +34,7 @@ public class RecordRejectedExecutionHandler
 		_rejectedList.add(runnable);
 	}
 
-	private List<Runnable> _rejectedList = new CopyOnWriteArrayList<Runnable>();
+	private final List<Runnable> _rejectedList =
+		new CopyOnWriteArrayList<Runnable>();
 
 }

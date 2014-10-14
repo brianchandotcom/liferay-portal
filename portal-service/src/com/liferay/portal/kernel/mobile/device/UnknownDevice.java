@@ -96,6 +96,6 @@ public class UnknownDevice extends AbstractDevice {
 	private UnknownDevice() {
 	}
 
-	private static UnknownDevice _instance = new UnknownDevice();
+	private static final UnknownDevice _instance = new UnknownDevice();
 
 }

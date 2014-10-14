@@ -43,6 +43,7 @@ public class TestRedirectAction extends Action {
 		return actionMapping.findForward("portal.test_redirect");
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(TestRedirectAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		TestRedirectAction.class);
 
 }

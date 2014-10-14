@@ -139,16 +139,16 @@ public class StrutsActionRegistryUtil {
 		}
 	}
 
-	private static StrutsActionRegistryUtil _instance =
+	private static final StrutsActionRegistryUtil _instance =
 		new StrutsActionRegistryUtil();
 
-	private Map<String, Action> _actions =
+	private final Map<String, Action> _actions =
 		new ConcurrentHashMap<String, Action>();
-	private ServiceTracker<?, Action> _serviceTracker;
-	private StringServiceRegistrationMap<StrutsAction>
+	private final ServiceTracker<?, Action> _serviceTracker;
+	private final StringServiceRegistrationMap<StrutsAction>
 		_strutsActionServiceRegistrations =
 			new StringServiceRegistrationMap<StrutsAction>();
-	private StringServiceRegistrationMap<StrutsPortletAction>
+	private final StringServiceRegistrationMap<StrutsPortletAction>
 		_strutsPortletActionServiceRegistrations =
 			new StringServiceRegistrationMap<StrutsPortletAction>();
 

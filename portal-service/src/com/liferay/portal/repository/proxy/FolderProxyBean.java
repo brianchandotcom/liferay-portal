@@ -334,6 +334,6 @@ public class FolderProxyBean
 		return newFolderProxyBean(folder);
 	}
 
-	private Folder _folder;
+	private final Folder _folder;
 
 }

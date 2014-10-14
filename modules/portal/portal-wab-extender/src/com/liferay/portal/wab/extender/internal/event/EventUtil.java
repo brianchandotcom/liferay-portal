@@ -196,7 +196,7 @@ public class EventUtil
 		DEPLOYED, DEPLOYING, FAILED, UNDEPLOYED, UNDEPLOYING
 	};
 
-	private static Log _log = LogFactoryUtil.getLog(EventUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(EventUtil.class);
 
 	private static EventUtil _instance;
 

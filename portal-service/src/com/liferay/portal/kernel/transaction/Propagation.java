@@ -44,7 +44,7 @@ public enum Propagation {
 		return _value;
 	}
 
-	private static Map<Integer, Propagation> _propagations =
+	private static final Map<Integer, Propagation> _propagations =
 		new HashMap<Integer, Propagation>();
 
 	static {
@@ -53,6 +53,6 @@ public enum Propagation {
 		}
 	}
 
-	private int _value;
+	private final int _value;
 
 }

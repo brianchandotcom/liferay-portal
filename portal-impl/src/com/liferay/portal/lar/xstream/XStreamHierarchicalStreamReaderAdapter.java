@@ -93,6 +93,6 @@ public class XStreamHierarchicalStreamReaderAdapter
 			_hierarchicalStreamReader.underlyingReader());
 	}
 
-	private HierarchicalStreamReader _hierarchicalStreamReader;
+	private final HierarchicalStreamReader _hierarchicalStreamReader;
 
 }

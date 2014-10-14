@@ -163,6 +163,6 @@ public class ArticleSearch extends SearchContainer<JournalArticle> {
 		this(portletRequest, 0, DEFAULT_DELTA, iteratorURL);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ArticleSearch.class);
+	private static final Log _log = LogFactoryUtil.getLog(ArticleSearch.class);
 
 }

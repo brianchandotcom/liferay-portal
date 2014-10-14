@@ -335,6 +335,6 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 		return new FolderWrapper(_folder.toUnescapedModel());
 	}
 
-	private Folder _folder;
+	private final Folder _folder;
 
 }

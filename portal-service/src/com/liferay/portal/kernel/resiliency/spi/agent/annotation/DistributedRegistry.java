@@ -193,11 +193,11 @@ public class DistributedRegistry {
 		}
 	}
 
-	private static ConcurrentMap<String, Direction> _exactDirections =
+	private static final ConcurrentMap<String, Direction> _exactDirections =
 		new ConcurrentHashMap<String, Direction>();
-	private static ConcurrentMap<String, Direction> _postfixDirections =
+	private static final ConcurrentMap<String, Direction> _postfixDirections =
 		new ConcurrentHashMap<String, Direction>();
-	private static ConcurrentMap<String, Direction> _prefixDirections =
+	private static final ConcurrentMap<String, Direction> _prefixDirections =
 		new ConcurrentHashMap<String, Direction>();
 
 }

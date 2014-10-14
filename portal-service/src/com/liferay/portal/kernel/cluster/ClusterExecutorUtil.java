@@ -202,7 +202,8 @@ public class ClusterExecutorUtil {
 		_clusterExecutor = clusterExecutor;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ClusterExecutorUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ClusterExecutorUtil.class);
 
 	private static ClusterExecutor _clusterExecutor;
 

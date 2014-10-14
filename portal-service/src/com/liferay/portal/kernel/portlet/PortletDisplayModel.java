@@ -54,11 +54,11 @@ public class PortletDisplayModel {
 		return _title;
 	}
 
-	private String _id;
-	private String _instanceId;
-	private String _portletName;
-	private String _resourcePK;
-	private String _rootPortletId;
-	private String _title;
+	private final String _id;
+	private final String _instanceId;
+	private final String _portletName;
+	private final String _resourcePK;
+	private final String _rootPortletId;
+	private final String _title;
 
 }

@@ -134,7 +134,7 @@ public class LiferayPackageAutoDeployer implements AutoDeployer {
 		return new LiferayPackageAutoDeployer();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayPackageAutoDeployer.class);
 
 	private final String _baseDir;

@@ -31,6 +31,6 @@ public class ModuleBeanFactoryPostProcessor
 		return _classLoader;
 	}
 
-	private ClassLoader _classLoader;
+	private final ClassLoader _classLoader;
 
 }

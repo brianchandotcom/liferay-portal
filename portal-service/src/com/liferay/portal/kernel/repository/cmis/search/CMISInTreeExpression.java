@@ -28,6 +28,6 @@ public class CMISInTreeExpression implements CMISCriterion {
 		return "IN_TREE('".concat(_objectId).concat("')");
 	}
 
-	private String _objectId;
+	private final String _objectId;
 
 }

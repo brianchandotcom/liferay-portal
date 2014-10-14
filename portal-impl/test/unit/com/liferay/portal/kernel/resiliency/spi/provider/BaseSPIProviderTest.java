@@ -180,9 +180,9 @@ public class BaseSPIProviderTest {
 		}
 	}
 
-	private MockProcessExecutor _mockProcessExecutor =
+	private final MockProcessExecutor _mockProcessExecutor =
 		new MockProcessExecutor();
-	private SPIConfiguration _spiConfiguration = new SPIConfiguration(
+	private final SPIConfiguration _spiConfiguration = new SPIConfiguration(
 		"testId", "java", "", MockSPIAgent.class.getName(), 8081, "",
 		new String[0], new String[0], 10, 10, 10, "");
 	private TestSPIProvider _testSPIProvider;

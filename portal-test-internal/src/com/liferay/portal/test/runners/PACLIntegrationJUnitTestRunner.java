@@ -218,9 +218,10 @@ public class PACLIntegrationJUnitTestRunner
 			return super.loadClass(name, resolve);
 		}
 
-		private Map<String, Class<?>> _classes =
+		private final Map<String, Class<?>> _classes =
 			new ConcurrentHashMap<String, Class<?>>();
-		private Map<String, URL> _urls = new ConcurrentHashMap<String, URL>();
+		private final Map<String, URL> _urls =
+			new ConcurrentHashMap<String, URL>();
 
 	}
 

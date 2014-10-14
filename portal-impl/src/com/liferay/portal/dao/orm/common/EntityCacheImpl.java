@@ -413,7 +413,8 @@ public class EntityCacheImpl
 
 	private static final boolean _LOCAL_CACHE_AVAILABLE;
 
-	private static Log _log = LogFactoryUtil.getLog(EntityCacheImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		EntityCacheImpl.class);
 
 	private static final ThreadLocal<LRUMap> _localCache;
 

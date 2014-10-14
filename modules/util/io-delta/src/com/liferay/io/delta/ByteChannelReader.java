@@ -127,6 +127,6 @@ public class ByteChannelReader {
 
 	private ByteBuffer _byteBuffer;
 	private boolean _eof;
-	private ReadableByteChannel _readableByteChannel;
+	private final ReadableByteChannel _readableByteChannel;
 
 }

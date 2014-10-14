@@ -269,13 +269,14 @@ public abstract class BasePACLPolicy implements PACLPolicy {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(BasePACLPolicy.class);
+	private static final Log _log = LogFactoryUtil.getLog(BasePACLPolicy.class);
 
-	private Map<String, Checker> _checkers = new HashMap<String, Checker>();
-	private ClassLoader _classLoader;
+	private final Map<String, Checker> _checkers =
+		new HashMap<String, Checker>();
+	private final ClassLoader _classLoader;
 	private Policy _policy;
-	private Properties _properties;
-	private String _servletContextName;
-	private List<URL> _urls = new ArrayList<URL>();
+	private final Properties _properties;
+	private final String _servletContextName;
+	private final List<URL> _urls = new ArrayList<URL>();
 
 }

@@ -820,6 +820,6 @@ public class SeleniumWrapper implements Selenium {
 		_selenium.windowMaximize();
 	}
 
-	private Selenium _selenium;
+	private final Selenium _selenium;
 
 }

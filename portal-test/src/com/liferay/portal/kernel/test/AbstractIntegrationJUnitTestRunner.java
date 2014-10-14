@@ -93,6 +93,6 @@ public abstract class AbstractIntegrationJUnitTestRunner
 			_testContextHandler);
 	}
 
-	private TestContextHandler _testContextHandler;
+	private final TestContextHandler _testContextHandler;
 
 }

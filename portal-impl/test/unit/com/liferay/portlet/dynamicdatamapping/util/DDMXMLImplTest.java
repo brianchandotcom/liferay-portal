@@ -133,6 +133,6 @@ public class DDMXMLImplTest extends BaseDDMTestCase {
 		Assert.assertFalse(expectedResult);
 	}
 
-	private DDMXML _ddmXML = new DDMXMLImpl();
+	private final DDMXML _ddmXML = new DDMXMLImpl();
 
 }

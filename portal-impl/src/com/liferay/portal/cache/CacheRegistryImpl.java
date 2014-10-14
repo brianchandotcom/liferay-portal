@@ -102,10 +102,11 @@ public class CacheRegistryImpl implements CacheRegistry {
 		_cacheRegistryItems.remove(name);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(CacheRegistryImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		CacheRegistryImpl.class);
 
 	private boolean _active = true;
-	private Map<String, CacheRegistryItem> _cacheRegistryItems =
+	private final Map<String, CacheRegistryItem> _cacheRegistryItems =
 		new ConcurrentHashMap<String, CacheRegistryItem>();
 
 }

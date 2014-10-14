@@ -232,9 +232,10 @@ public class IODeltaUtil {
 		}
 	}
 
-	private static Logger _logger = LoggerFactory.getLogger(IODeltaUtil.class);
+	private static final Logger _logger = LoggerFactory.getLogger(
+		IODeltaUtil.class);
 
-	private static Set<String> _syncFilePatchingIgnoreFileExtensions =
+	private static final Set<String> _syncFilePatchingIgnoreFileExtensions =
 		new HashSet<String>(
 			Arrays.asList(
 				PropsValues.SYNC_FILE_PATCHING_IGNORE_FILE_EXTENSIONS));

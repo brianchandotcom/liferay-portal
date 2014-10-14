@@ -316,6 +316,6 @@ public class NodeImpl implements Node {
 		_node.write(writer);
 	}
 
-	private org.dom4j.Node _node;
+	private final org.dom4j.Node _node;
 
 }

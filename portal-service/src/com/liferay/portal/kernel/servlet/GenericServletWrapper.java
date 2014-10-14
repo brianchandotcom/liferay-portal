@@ -40,6 +40,6 @@ public class GenericServletWrapper extends GenericServlet {
 		_servlet.service(servletRequest, servletResponse);
 	}
 
-	private Servlet _servlet;
+	private final Servlet _servlet;
 
 }

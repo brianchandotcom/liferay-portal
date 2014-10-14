@@ -327,11 +327,11 @@ public class SecureFilter extends BasePortalFilter {
 	private static final String _DIGEST_REALM =
 		"Digest realm=\"" + Portal.PORTAL_REALM + "\"";
 
-	private static Log _log = LogFactoryUtil.getLog(SecureFilter.class);
+	private static final Log _log = LogFactoryUtil.getLog(SecureFilter.class);
 
 	private boolean _basicAuthEnabled;
 	private boolean _digestAuthEnabled;
-	private Set<String> _hostsAllowed = new HashSet<String>();
+	private final Set<String> _hostsAllowed = new HashSet<String>();
 	private boolean _httpsRequired;
 	private boolean _usePermissionChecker;
 

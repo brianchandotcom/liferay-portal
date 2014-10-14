@@ -128,6 +128,12 @@ AUI.add(
 						instance._documentLibraryContainer.purge(true);
 					},
 
+					getFolderId: function() {
+						var instance = this;
+
+						return instance._folderId;
+					},
+
 					_openDocument: function(event) {
 						var instance = this;
 

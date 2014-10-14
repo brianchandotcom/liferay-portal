@@ -111,7 +111,7 @@
 				checked = ArrayUtil.contains(requestValues, valueString);
 			}
 			else {
-				checked = !Validator.equals(ParamUtil.getString(request, name, null), StringPool.FALSE);
+				checked = ParamUtil.getBoolean(request, name, checked);
 			}
 		}
 		%>

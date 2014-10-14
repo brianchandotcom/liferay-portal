@@ -16,12 +16,16 @@ package com.liferay.polls.service.impl;
 
 import com.liferay.polls.exception.QuestionExpirationDateException;
 import com.liferay.polls.model.PollsChoice;
+import com.liferay.polls.model.PollsChoiceModel;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.service.base.PollsQuestionServiceBaseImpl;
 import com.liferay.polls.service.permission.PollsPermission;
 import com.liferay.polls.service.permission.PollsQuestionPermission;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.Accessor;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -44,7 +48,7 @@ public class PollsQuestionServiceImpl extends PollsQuestionServiceBaseImpl {
 			int expirationDateMonth, int expirationDateDay,
 			int expirationDateYear, int expirationDateHour,
 			int expirationDateMinute, boolean neverExpire,
-			List<PollsChoice> choices, ServiceContext serviceContext)
+			List<Map<String, Object>> choices, ServiceContext serviceContext)
 		throws PortalException {
 
 		PollsPermission.check(
@@ -66,7 +70,11 @@ public class PollsQuestionServiceImpl extends PollsQuestionServiceBaseImpl {
 			pollsQuestion.setExpirationDate(date);
 		}
 
-		for (PollsChoice choice : choices) {
+		for (Map<String, Object> choiceMap : choices) {
+			PollsChoice choice = pollsQuestion.createChoice();
+
+			choice.setModelAttributes(choiceMap);
+
 			pollsQuestion.addChoice(choice);
 		}
 
@@ -97,7 +105,7 @@ public class PollsQuestionServiceImpl extends PollsQuestionServiceBaseImpl {
 			Map<Locale, String> descriptionMap, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, List<PollsChoice> choices,
+			boolean neverExpire, List<Map<String, Object>> choices,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -120,21 +128,32 @@ public class PollsQuestionServiceImpl extends PollsQuestionServiceBaseImpl {
 				expirationDateMonth, expirationDateDay, expirationDateYear,
 				expirationDateHour, expirationDateMinute,
 				QuestionExpirationDateException.class);
-
 		}
 
 		pollsQuestion.setExpirationDate(date);
 
 		List<PollsChoice> currentChoices = pollsQuestion.getChoices();
 
-		Iterator<PollsChoice> iterator = choices.iterator();
+		List<String> choiceNames = ListUtil.toList(
+			currentChoices, PollsChoice.CHOICE_NAME_ACCESSOR);
 
-		while (iterator.hasNext()) {
-			PollsChoice cursor = iterator.next();
+		for (Map<String, Object> choiceMap : choices) {
+			int index = choiceNames.indexOf(choiceMap.get("name"));
 
-			if (!currentChoices.contains(cursor)) {
-				pollsQuestion.addChoice(cursor);
+			PollsChoice choice;
+
+			if (index == -1) {
+				choice = pollsQuestion.createChoice();
+
+				pollsQuestion.addChoice(choice);
 			}
+			else {
+				choice = currentChoices.get(index);
+			}
+
+			choice.setModelAttributes(choiceMap);
+
+			choice.persist();
 		}
 
 		pollsQuestion.persist();

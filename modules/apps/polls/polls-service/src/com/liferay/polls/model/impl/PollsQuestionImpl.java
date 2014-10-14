@@ -149,8 +149,7 @@ public class PollsQuestionImpl extends PollsQuestionBaseImpl {
 						setCreateDate(now);
 						setPrimaryKey(CounterLocalServiceUtil.increment());
 
-						PollsQuestionUtil.update(
-							PollsQuestionImpl.this);
+						PollsQuestionUtil.update(PollsQuestionImpl.this);
 
 						// Resources
 
@@ -183,6 +182,8 @@ public class PollsQuestionImpl extends PollsQuestionBaseImpl {
 							choice.persist();
 						}
 					}
+
+					PollsQuestionUtil.update(PollsQuestionImpl.this);
 
 					return null;
 				};

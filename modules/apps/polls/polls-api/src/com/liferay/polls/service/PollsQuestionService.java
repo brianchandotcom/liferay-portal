@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.security.ac.AccessControlled;
 import com.liferay.portal.service.BaseService;
 
+import java.util.Map;
+
 /**
  * Provides the remote service interface for PollsQuestion. Methods of this
  * service are expected to have security checks based on the propagated JAAS
@@ -52,7 +54,7 @@ public interface PollsQuestionService extends BaseService {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		java.util.List<com.liferay.polls.model.PollsChoice> choices,
+		java.util.List<Map<String, Object>> choices,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -83,7 +85,7 @@ public interface PollsQuestionService extends BaseService {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		java.util.List<com.liferay.polls.model.PollsChoice> choices,
+		java.util.List<Map<String, Object>> choices,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 }

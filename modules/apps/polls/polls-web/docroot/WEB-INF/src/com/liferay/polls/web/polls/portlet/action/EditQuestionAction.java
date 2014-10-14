@@ -47,6 +47,7 @@ import com.liferay.portal.util.WebKeys;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -237,7 +238,8 @@ public class EditQuestionAction extends PortletAction {
 			expirationDateHour += 12;
 		}
 
-		List<PollsChoice> choices = new ArrayList<PollsChoice>();
+		List<Map<String, Object>> choices =
+			new ArrayList<Map<String, Object>>();
 
 		Set<String> readParameters = new HashSet<String>();
 
@@ -263,12 +265,12 @@ public class EditQuestionAction extends PortletAction {
 						LocalizationUtil.getLocalizationMap(
 							actionRequest, CHOICE_DESCRIPTION_PREFIX + id);
 
-					PollsChoice choice = PollsChoiceUtil.create();
+					Map<String, Object> choiceMap = new HashMap<>();
 
-					choice.setName(choiceName);
-					choice.setDescriptionMap(localeChoiceDescriptionMap);
+					choiceMap.put("name", choiceName);
+					choiceMap.put("descriptionMap", localeChoiceDescriptionMap);
 
-					choices.add(choice);
+					choices.add(choiceMap);
 
 					readParameters.add(id);
 				}

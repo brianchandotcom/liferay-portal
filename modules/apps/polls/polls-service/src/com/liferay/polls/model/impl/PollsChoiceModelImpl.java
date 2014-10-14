@@ -239,6 +239,13 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		if (description != null) {
 			setDescription(description);
 		}
+
+		Map<Locale, String> descriptionMap =
+			(Map<Locale, String>)attributes.get("descriptionMap");
+
+		if (descriptionMap != null) {
+			setDescriptionMap(descriptionMap);
+		}
 	}
 
 	@JSON

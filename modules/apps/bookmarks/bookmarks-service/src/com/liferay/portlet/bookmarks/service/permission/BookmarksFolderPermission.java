@@ -15,7 +15,6 @@
 package com.liferay.portlet.bookmarks.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -28,14 +27,17 @@ import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  */
-@OSGiBeanProperties(
+@Component(
 	property = {
 		"model.class.name=com.liferay.portlet.bookmarks.model.BookmarksFolder"
-	}
+	},
+	service = BaseModelPermissionChecker.class
 )
 public class BookmarksFolderPermission implements BaseModelPermissionChecker {
 

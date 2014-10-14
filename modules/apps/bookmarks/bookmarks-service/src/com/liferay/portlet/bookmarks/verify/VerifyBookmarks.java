@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.verify;
+package com.liferay.portlet.bookmarks.verify;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;

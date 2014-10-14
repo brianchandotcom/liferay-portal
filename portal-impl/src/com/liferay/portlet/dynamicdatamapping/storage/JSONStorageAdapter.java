@@ -116,7 +116,15 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		throw new UnsupportedOperationException();
+		long ddmStructureId = fields.getDDMStructureId();
+
+		DDMStructure ddmStructure =
+			DDMStructureLocalServiceUtil.getDDMStructure(ddmStructureId);
+
+		DDMFormValues ddmFormValues =
+			FieldsToDDMFormValuesConverterUtil.convert(ddmStructure, fields);
+
+		_doUpdate(classPK, ddmFormValues, serviceContext);
 	}
 
 	private long _doCreate(
@@ -140,6 +148,25 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 			serviceContext);
 
 		return ddmContent.getPrimaryKey();
+	}
+
+	private void _doUpdate(
+			long classPK, DDMFormValues ddmFormValues,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		DDMContent ddmContent = DDMContentLocalServiceUtil.getContent(classPK);
+
+		ddmContent.setModifiedDate(serviceContext.getModifiedDate(null));
+
+		String serializedDDMFormValues =
+			DDMFormValuesJSONSerializerUtil.serialize(ddmFormValues);
+
+		ddmContent.setData(serializedDDMFormValues);
+
+		DDMContentLocalServiceUtil.updateContent(
+			ddmContent.getPrimaryKey(), ddmContent.getName(),
+			ddmContent.getDescription(), ddmContent.getData(), serviceContext);
 	}
 
 }

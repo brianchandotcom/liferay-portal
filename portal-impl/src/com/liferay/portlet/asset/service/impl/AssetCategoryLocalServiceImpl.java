@@ -269,7 +269,7 @@ public class AssetCategoryLocalServiceImpl
 
 		// Entries
 
-		List<AssetEntry> entries = assetTagPersistence.getAssetEntries(
+		List<AssetEntry> entries = assetCategoryPersistence.getAssetEntries(
 			category.getCategoryId());
 
 		// Properties

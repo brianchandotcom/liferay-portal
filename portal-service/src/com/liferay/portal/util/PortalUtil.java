@@ -895,6 +895,13 @@ public class PortalUtil {
 	}
 
 	public static Map<String, Serializable> getExpandoBridgeAttributes(
+			ExpandoBridge expandoBridge, HttpServletRequest request)
+		throws PortalException {
+
+		return getPortal().getExpandoBridgeAttributes(expandoBridge, request);
+	}
+
+	public static Map<String, Serializable> getExpandoBridgeAttributes(
 			ExpandoBridge expandoBridge, PortletRequest portletRequest)
 		throws PortalException {
 
@@ -902,13 +909,12 @@ public class PortalUtil {
 			expandoBridge, portletRequest);
 	}
 
-	public static Map<String, Serializable> getExpandoBridgeAttributes(
-			ExpandoBridge expandoBridge,
-			UploadPortletRequest uploadPortletRequest)
+	public static Serializable getExpandoValue(
+			HttpServletRequest request, String name, int type,
+			String displayType)
 		throws PortalException {
 
-		return getPortal().getExpandoBridgeAttributes(
-			expandoBridge, uploadPortletRequest);
+		return getPortal().getExpandoValue(request, name, type, displayType);
 	}
 
 	public static Serializable getExpandoValue(
@@ -918,15 +924,6 @@ public class PortalUtil {
 
 		return getPortal().getExpandoValue(
 			portletRequest, name, type, displayType);
-	}
-
-	public static Serializable getExpandoValue(
-			UploadPortletRequest uploadPortletRequest, String name, int type,
-			String displayType)
-		throws PortalException {
-
-		return getPortal().getExpandoValue(
-			uploadPortletRequest, name, type, displayType);
 	}
 
 	public static String getFacebookURL(

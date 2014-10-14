@@ -670,21 +670,20 @@ public interface Portal {
 		PortletPreferences preferences, long companyId, String defaultValue);
 
 	public Map<String, Serializable> getExpandoBridgeAttributes(
-			ExpandoBridge expandoBridge, PortletRequest portletRequest)
+			ExpandoBridge expandoBridge, HttpServletRequest request)
 		throws PortalException;
 
 	public Map<String, Serializable> getExpandoBridgeAttributes(
-			ExpandoBridge expandoBridge,
-			UploadPortletRequest uploadPortletRequest)
+			ExpandoBridge expandoBridge, PortletRequest portletRequest)
 		throws PortalException;
 
 	public Serializable getExpandoValue(
-			PortletRequest portletRequest, String name, int type,
+			HttpServletRequest request, String name, int type,
 			String displayType)
 		throws PortalException;
 
 	public Serializable getExpandoValue(
-			UploadPortletRequest uploadPortletRequest, String name, int type,
+			PortletRequest portletRequest, String name, int type,
 			String displayType)
 		throws PortalException;
 

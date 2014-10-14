@@ -115,6 +115,24 @@ public class ScriptTag extends BaseScriptTag {
 
 			String use = getUse();
 
+			if (getSandbox() || (use != null)) {
+				StringBundler sb = new StringBundler();
+
+				if (use == null) {
+					sb.append("(function() {");
+				}
+
+				sb.append("var $ = AUI.$;");
+				sb.append("var _ = AUI._;");
+				sb.append(bodyContentSB);
+
+				if (use == null) {
+					sb.append("})();");
+				}
+
+				bodyContentSB = sb;
+			}
+
 			if (isPositionInLine()) {
 				ScriptData scriptData = new ScriptData();
 

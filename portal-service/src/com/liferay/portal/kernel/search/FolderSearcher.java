@@ -27,7 +27,7 @@ public class FolderSearcher extends BaseSearcher {
 	}
 
 	public FolderSearcher() {
-		setDefaultSelectedFieldNames(Field.TITLE);
+		setDefaultSelectedFieldNames(Field.TITLE, Field.UID);
 		setFilterSearch(true);
 		setPermissionAware(true);
 

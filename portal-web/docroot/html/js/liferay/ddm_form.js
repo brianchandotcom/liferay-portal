@@ -475,7 +475,7 @@ AUI.add(
 						var labelNode = instance.getLabelNode();
 
 						if (Lang.isValue(label)) {
-							labelNode.html(label);
+							labelNode.html(A.Escape.html(label));
 						}
 					},
 
@@ -596,7 +596,7 @@ AUI.add(
 						var inputNode = instance.getInputNode();
 
 						if (Lang.isValue(label)) {
-							labelNode.html('&nbsp;' + label);
+							labelNode.html('&nbsp;' + A.Escape.html(label));
 
 							labelNode.prepend(inputNode);
 						}
@@ -1219,7 +1219,7 @@ AUI.add(
 								var optionLabel = optionDefinition.label[instance.get('displayLocale')];
 
 								if (Lang.isValue(optionLabel)) {
-									item.html(optionLabel);
+									item.html(A.Escape.html(optionLabel));
 
 									item.prepend(inputNode);
 								}
@@ -1277,7 +1277,7 @@ AUI.add(
 								var optionLabel = optionDefinition.label[instance.get('displayLocale')];
 
 								if (Lang.isValue(optionLabel)) {
-									item.html(optionLabel);
+									item.html(A.Escape.html(optionLabel));
 								}
 							}
 						);

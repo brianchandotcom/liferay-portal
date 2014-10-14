@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.util.test.RandomTestUtil;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -190,6 +192,51 @@ public class StringUtilTest {
 		Assert.assertEquals("1", StringUtil.merge(new int[] {1}));
 		Assert.assertEquals("1,2,3", StringUtil.merge(new long[] {1, 2, 3}));
 		Assert.assertEquals("1", StringUtil.merge(new long[] {1}));
+	}
+
+	@Test
+	public void testRemoveLeadingEmpty() throws Exception {
+		Assert.assertEquals(
+			StringPool.BLANK,
+			StringUtil.removeLeading(
+				StringPool.BLANK, RandomTestUtil.randomChar()));
+	}
+
+	@Test
+	public void testRemoveLeadingInner() throws Exception {
+		char c = RandomTestUtil.randomChar();
+
+		Assert.assertEquals(
+			"ab" + c + "de", StringUtil.removeLeading("ab" + c + "de", c));
+	}
+
+	@Test
+	public void testRemoveLeadingNoOccurrences() throws Exception {
+		Assert.assertEquals(
+			"abcde",
+			StringUtil.removeLeading("abcde", RandomTestUtil.randomChar()));
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void testRemoveLeadingNull() throws Exception {
+		StringUtil.removeLeading(null, RandomTestUtil.randomChar());
+	}
+
+	@Test
+	public void testRemoveLeadingPrefix() throws Exception {
+		char c = RandomTestUtil.randomChar();
+
+		Assert.assertEquals(
+			"abcde",
+			StringUtil.removeLeading(String.valueOf(c) + c + "abcde", c));
+	}
+
+	@Test
+	public void testRemoveLeadingSuffix() throws Exception {
+		char c = RandomTestUtil.randomChar();
+
+		Assert.assertEquals(
+			"abcde" + c, StringUtil.removeLeading("abcde" + c, c));
 	}
 
 	@Test

@@ -23,14 +23,11 @@ import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.BaseServiceImpl;
 import com.liferay.portal.service.persistence.ClassNamePersistence;
-import com.liferay.portal.service.persistence.GroupFinder;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.SubscriptionPersistence;
-import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.util.PortalUtil;
 
-import com.liferay.portlet.asset.service.persistence.AssetEntryFinder;
 import com.liferay.portlet.asset.service.persistence.AssetEntryPersistence;
 import com.liferay.portlet.asset.service.persistence.AssetLinkPersistence;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
@@ -40,7 +37,6 @@ import com.liferay.portlet.bookmarks.service.persistence.BookmarksEntryPersisten
 import com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderFinder;
 import com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderPersistence;
 import com.liferay.portlet.expando.service.persistence.ExpandoRowPersistence;
-import com.liferay.portlet.social.service.persistence.SocialActivityFinder;
 import com.liferay.portlet.social.service.persistence.SocialActivityPersistence;
 import com.liferay.portlet.trash.service.persistence.TrashEntryPersistence;
 import com.liferay.portlet.trash.service.persistence.TrashVersionPersistence;
@@ -352,24 +348,6 @@ public abstract class BookmarksFolderServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the group finder.
-	 *
-	 * @return the group finder
-	 */
-	public GroupFinder getGroupFinder() {
-		return groupFinder;
-	}
-
-	/**
-	 * Sets the group finder.
-	 *
-	 * @param groupFinder the group finder
-	 */
-	public void setGroupFinder(GroupFinder groupFinder) {
-		this.groupFinder = groupFinder;
-	}
-
-	/**
 	 * Returns the resource local service.
 	 *
 	 * @return the resource local service
@@ -483,24 +461,6 @@ public abstract class BookmarksFolderServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the user finder.
-	 *
-	 * @return the user finder
-	 */
-	public UserFinder getUserFinder() {
-		return userFinder;
-	}
-
-	/**
-	 * Sets the user finder.
-	 *
-	 * @param userFinder the user finder
-	 */
-	public void setUserFinder(UserFinder userFinder) {
-		this.userFinder = userFinder;
-	}
-
-	/**
 	 * Returns the asset entry local service.
 	 *
 	 * @return the asset entry local service
@@ -555,24 +515,6 @@ public abstract class BookmarksFolderServiceBaseImpl extends BaseServiceImpl
 	public void setAssetEntryPersistence(
 		AssetEntryPersistence assetEntryPersistence) {
 		this.assetEntryPersistence = assetEntryPersistence;
-	}
-
-	/**
-	 * Returns the asset entry finder.
-	 *
-	 * @return the asset entry finder
-	 */
-	public AssetEntryFinder getAssetEntryFinder() {
-		return assetEntryFinder;
-	}
-
-	/**
-	 * Sets the asset entry finder.
-	 *
-	 * @param assetEntryFinder the asset entry finder
-	 */
-	public void setAssetEntryFinder(AssetEntryFinder assetEntryFinder) {
-		this.assetEntryFinder = assetEntryFinder;
 	}
 
 	/**
@@ -706,25 +648,6 @@ public abstract class BookmarksFolderServiceBaseImpl extends BaseServiceImpl
 	public void setSocialActivityPersistence(
 		SocialActivityPersistence socialActivityPersistence) {
 		this.socialActivityPersistence = socialActivityPersistence;
-	}
-
-	/**
-	 * Returns the social activity finder.
-	 *
-	 * @return the social activity finder
-	 */
-	public SocialActivityFinder getSocialActivityFinder() {
-		return socialActivityFinder;
-	}
-
-	/**
-	 * Sets the social activity finder.
-	 *
-	 * @param socialActivityFinder the social activity finder
-	 */
-	public void setSocialActivityFinder(
-		SocialActivityFinder socialActivityFinder) {
-		this.socialActivityFinder = socialActivityFinder;
 	}
 
 	/**
@@ -910,8 +833,6 @@ public abstract class BookmarksFolderServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portal.service.GroupService groupService;
 	@BeanReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
-	@BeanReference(type = GroupFinder.class)
-	protected GroupFinder groupFinder;
 	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
 	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
 	@BeanReference(type = com.liferay.portal.service.SubscriptionLocalService.class)
@@ -924,16 +845,12 @@ public abstract class BookmarksFolderServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portal.service.UserService userService;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	@BeanReference(type = UserFinder.class)
-	protected UserFinder userFinder;
 	@BeanReference(type = com.liferay.portlet.asset.service.AssetEntryLocalService.class)
 	protected com.liferay.portlet.asset.service.AssetEntryLocalService assetEntryLocalService;
 	@BeanReference(type = com.liferay.portlet.asset.service.AssetEntryService.class)
 	protected com.liferay.portlet.asset.service.AssetEntryService assetEntryService;
 	@BeanReference(type = AssetEntryPersistence.class)
 	protected AssetEntryPersistence assetEntryPersistence;
-	@BeanReference(type = AssetEntryFinder.class)
-	protected AssetEntryFinder assetEntryFinder;
 	@BeanReference(type = com.liferay.portlet.asset.service.AssetLinkLocalService.class)
 	protected com.liferay.portlet.asset.service.AssetLinkLocalService assetLinkLocalService;
 	@BeanReference(type = AssetLinkPersistence.class)
@@ -948,8 +865,6 @@ public abstract class BookmarksFolderServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portlet.social.service.SocialActivityService socialActivityService;
 	@BeanReference(type = SocialActivityPersistence.class)
 	protected SocialActivityPersistence socialActivityPersistence;
-	@BeanReference(type = SocialActivityFinder.class)
-	protected SocialActivityFinder socialActivityFinder;
 	@BeanReference(type = com.liferay.portlet.trash.service.TrashEntryLocalService.class)
 	protected com.liferay.portlet.trash.service.TrashEntryLocalService trashEntryLocalService;
 	@BeanReference(type = com.liferay.portlet.trash.service.TrashEntryService.class)

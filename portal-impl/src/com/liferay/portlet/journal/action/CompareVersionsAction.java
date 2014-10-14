@@ -23,12 +23,12 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.portlet.journal.util.comparator.ArticleVersionComparator;
-import com.liferay.portlet.wiki.NoSuchPageException;
 
 import java.util.HashSet;
 import java.util.List;
@@ -65,7 +65,7 @@ public class CompareVersionsAction extends PortletAction {
 			compareVersions(renderRequest, renderResponse);
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchPageException) {
+			if (e instanceof NoSuchArticleException) {
 				SessionErrors.add(renderRequest, e.getClass());
 
 				return actionMapping.findForward("portlet.journal.error");

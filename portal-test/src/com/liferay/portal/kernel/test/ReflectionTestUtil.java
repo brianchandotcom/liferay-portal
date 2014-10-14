@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.ReflectionUtil;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 
 import java.util.Arrays;
 
@@ -69,7 +68,7 @@ public class ReflectionTestUtil {
 
 			field.setAccessible(true);
 
-			_unfinalField(field);
+			ReflectionUtil.unfinalField(field);
 
 			return field;
 		}
@@ -85,7 +84,7 @@ public class ReflectionTestUtil {
 
 				field.setAccessible(true);
 
-				_unfinalField(field);
+				ReflectionUtil.unfinalField(field);
 
 				return field;
 			}
@@ -338,15 +337,6 @@ public class ReflectionTestUtil {
 		}
 
 		return null;
-	}
-
-	private static void _unfinalField(Field field) throws Exception {
-		int modifiers = field.getModifiers();
-
-		Field modifiersField = ReflectionUtil.getDeclaredField(
-			Field.class, "modifiers");
-
-		modifiersField.setInt(field, modifiers & ~Modifier.FINAL);
 	}
 
 }

@@ -650,19 +650,20 @@ public interface MBThreadModel extends BaseModel<MBThread>, ContainerModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(MBThread mbThread);
+	public int compareTo(
+		com.liferay.portlet.messageboards.model.MBThread mbThread);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<MBThread> toCacheModel();
+	public CacheModel<com.liferay.portlet.messageboards.model.MBThread> toCacheModel();
 
 	@Override
-	public MBThread toEscapedModel();
+	public com.liferay.portlet.messageboards.model.MBThread toEscapedModel();
 
 	@Override
-	public MBThread toUnescapedModel();
+	public com.liferay.portlet.messageboards.model.MBThread toUnescapedModel();
 
 	@Override
 	public String toString();

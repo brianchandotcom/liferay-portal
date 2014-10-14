@@ -302,19 +302,20 @@ public interface MBDiscussionModel extends AttachedModel, BaseModel<MBDiscussion
 	public Object clone();
 
 	@Override
-	public int compareTo(MBDiscussion mbDiscussion);
+	public int compareTo(
+		com.liferay.portlet.messageboards.model.MBDiscussion mbDiscussion);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<MBDiscussion> toCacheModel();
+	public CacheModel<com.liferay.portlet.messageboards.model.MBDiscussion> toCacheModel();
 
 	@Override
-	public MBDiscussion toEscapedModel();
+	public com.liferay.portlet.messageboards.model.MBDiscussion toEscapedModel();
 
 	@Override
-	public MBDiscussion toUnescapedModel();
+	public com.liferay.portlet.messageboards.model.MBDiscussion toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -411,7 +411,6 @@
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBThread" />
 		<reference package-path="com.liferay.portlet.ratings" entity="RatingsStats" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
-		<reference package-path="com.liferay.portlet.wiki" entity="WikiPage" />
 	</entity>
 	<entity name="MBStatsUser" human-name="message boards stats user" local-service="true" remote-service="false">
 

@@ -196,19 +196,20 @@ public interface MBStatsUserModel extends BaseModel<MBStatsUser> {
 	public Object clone();
 
 	@Override
-	public int compareTo(MBStatsUser mbStatsUser);
+	public int compareTo(
+		com.liferay.portlet.messageboards.model.MBStatsUser mbStatsUser);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<MBStatsUser> toCacheModel();
+	public CacheModel<com.liferay.portlet.messageboards.model.MBStatsUser> toCacheModel();
 
 	@Override
-	public MBStatsUser toEscapedModel();
+	public com.liferay.portlet.messageboards.model.MBStatsUser toEscapedModel();
 
 	@Override
-	public MBStatsUser toUnescapedModel();
+	public com.liferay.portlet.messageboards.model.MBStatsUser toUnescapedModel();
 
 	@Override
 	public String toString();

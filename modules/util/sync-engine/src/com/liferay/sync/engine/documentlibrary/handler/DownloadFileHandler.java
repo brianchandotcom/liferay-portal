@@ -163,6 +163,8 @@ public class DownloadFileHandler extends BaseHandler {
 			SyncFileService.update(syncFile);
 
 			SyncFileService.updateFileKeySyncFile(syncFile);
+
+			IODeltaUtil.checksums(syncFile);
 		}
 		catch (FileSystemException fse) {
 			downloadedFilePathNames.remove(filePath.toString());

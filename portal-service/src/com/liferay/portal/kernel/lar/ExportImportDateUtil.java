@@ -208,7 +208,7 @@ public class ExportImportDateUtil {
 
 		long lastPublishDate = GetterUtil.getLong(
 			settingsProperties.getProperty(
-				"last-publish-date", StringPool.BLANK));
+				_LAST_PUBLISH_DATE, StringPool.BLANK));
 
 		if (lastPublishDate == 0) {
 			return null;
@@ -222,7 +222,7 @@ public class ExportImportDateUtil {
 
 		long lastPublishDate = GetterUtil.getLong(
 			jxPortletPreferences.getValue(
-				"last-publish-date", StringPool.BLANK));
+				_LAST_PUBLISH_DATE, StringPool.BLANK));
 
 		if (lastPublishDate == 0) {
 			return null;
@@ -258,7 +258,7 @@ public class ExportImportDateUtil {
 			layoutSet.getSettingsProperties();
 
 		settingsProperties.setProperty(
-			"last-publish-date", String.valueOf(lastPublishDate.getTime()));
+			_LAST_PUBLISH_DATE, String.valueOf(lastPublishDate.getTime()));
 
 		LayoutSetLocalServiceUtil.updateSettings(
 			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
@@ -287,7 +287,7 @@ public class ExportImportDateUtil {
 
 		try {
 			portletPreferences.setValue(
-				"last-publish-date", String.valueOf(lastPublishDate.getTime()));
+				_LAST_PUBLISH_DATE, String.valueOf(lastPublishDate.getTime()));
 
 			portletPreferences.store();
 		}
@@ -367,15 +367,14 @@ public class ExportImportDateUtil {
 						layout, portletId);
 
 				lastPublishDate = GetterUtil.getLong(
-					preferences.getValue(
-						"last-publish-date", StringPool.BLANK));
+					preferences.getValue(_LAST_PUBLISH_DATE, StringPool.BLANK));
 			}
 			else {
 				LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 					groupId, privateLayout);
 
 				lastPublishDate = GetterUtil.getLong(
-					layoutSet.getSettingsProperty("last-publish-date"));
+					layoutSet.getSettingsProperty(_LAST_PUBLISH_DATE));
 			}
 
 			if (lastPublishDate > 0) {
@@ -394,6 +393,8 @@ public class ExportImportDateUtil {
 
 		return new DateRange(startDate, endDate);
 	}
+
+	private static final String _LAST_PUBLISH_DATE = "last-publish-date";
 
 	private static Log _log = LogFactoryUtil.getLog(ExportImportDateUtil.class);
 

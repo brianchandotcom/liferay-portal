@@ -20,6 +20,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
+import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
@@ -55,7 +56,53 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 		setUpDDMFormXSDSerializerUtil();
 		setUpDDMStructureLocalServiceUtil();
 		setUpHtmlUtil();
+		setUpPropsUtil();
 		setUpSAXReaderUtil();
+	}
+
+	@Test
+	public void testConversionWithBooleanField() throws Exception {
+		DDMForm ddmForm = createDDMForm();
+
+		DDMFormField booleanDDMFormField = new DDMFormField(
+			"Boolean", "checkbox");
+
+		booleanDDMFormField.setDataType("boolean");
+
+		LocalizedValue localizedValue = booleanDDMFormField.getLabel();
+
+		localizedValue.addString(LocaleUtil.US, "Boolean Field");
+
+		addDDMFormFields(ddmForm, booleanDDMFormField);
+
+		DDMStructure ddmStructure = createStructure("Test Structure", ddmForm);
+
+		DDMFormValues ddmFormValues = createDDMFormValues(
+			ddmForm, _availableLocales, LocaleUtil.US);
+
+		DDMFormFieldValue titleDDMFormFieldValue = createDDMFormFieldValue(
+			"rztm", "Boolean", new UnlocalizedValue("true"));
+
+		ddmFormValues.addDDMFormFieldValue(titleDDMFormFieldValue);
+
+		Fields fields = DDMFormValuesToFieldsConverterUtil.convert(
+			ddmStructure, ddmFormValues);
+
+		Assert.assertNotNull(fields);
+
+		Field field = fields.get("Boolean");
+
+		Serializable value = field.getValue();
+
+		Class<?> clazz = value.getClass();
+
+		Assert.assertEquals(true, clazz.isAssignableFrom(Boolean.class));
+		Assert.assertEquals(true, (Boolean)value);
+
+		Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
+
+		Assert.assertEquals(
+			"Boolean_INSTANCE_rztm", fieldsDisplayField.getValue());
 	}
 
 	@Test
@@ -210,7 +257,7 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 	}
 
 	@Test
-	public void testConversionWithSimpleField() throws Exception {
+	public void testConversionWithTextField() throws Exception {
 		DDMForm ddmForm = createDDMForm();
 
 		addDDMFormFields(

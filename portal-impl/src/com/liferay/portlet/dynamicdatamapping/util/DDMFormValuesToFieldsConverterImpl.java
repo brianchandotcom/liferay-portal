@@ -126,7 +126,8 @@ public class DDMFormValuesToFieldsConverterImpl
 		ddmField.setDefaultLocale(defaultLocale);
 		ddmField.setName(ddmFormFieldValue.getName());
 
-		String type = ddmStructure.getFieldType(ddmFormFieldValue.getName());
+		String type = ddmStructure.getFieldDataType(
+			ddmFormFieldValue.getName());
 
 		setDDMFieldValue(
 			ddmField, type, ddmFormFieldValue.getValue(), defaultLocale);

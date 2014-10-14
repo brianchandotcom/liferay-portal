@@ -44,13 +44,12 @@
 		<aui:script use="liferay-ddm-form">
 			new Liferay.DDM.Form(
 				{
-					classNameId: <%= classNameId %>,
-					classPK: <%= classPK %>,
 					container: '#<%= randomNamespace %>',
 					ddmFormValuesInput: '#<portlet:namespace /><%= ddmFormValuesInputName %>',
 					definition: <%= DDMFormJSONSerializerUtil.serialize(ddmForm) %>,
 					doAsGroupId: <%= scopeGroupId %>,
 					fieldsNamespace: '<%= fieldsNamespace %>',
+					mode: '<%= mode %>',
 					p_l_id: <%= themeDisplay.getPlid() %>,
 					portletNamespace: '<portlet:namespace />',
 					repeatable: <%= repeatable %>

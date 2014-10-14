@@ -15,22 +15,23 @@
 package com.liferay.portlet.messageboards.action;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.ActionResponseImpl;
 import com.liferay.portlet.messageboards.LockedThreadException;
+import com.liferay.portlet.messageboards.MBSettings;
 import com.liferay.portlet.messageboards.MessageBodyException;
 import com.liferay.portlet.messageboards.MessageSubjectException;
 import com.liferay.portlet.messageboards.NoSuchMessageException;
 import com.liferay.portlet.messageboards.NoSuchThreadException;
 import com.liferay.portlet.messageboards.RequiredMessageException;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.MBThreadConstants;
 import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
@@ -44,7 +45,6 @@ import java.util.Collections;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -121,8 +121,10 @@ public class MoveThreadAction extends PortletAction {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		PortletPreferences portletPreferences = actionRequest.getPreferences();
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
+		long groupId = themeDisplay.getScopeGroupId();
 		long categoryId = ParamUtil.getLong(actionRequest, "mbCategoryId");
 		long threadId = ParamUtil.getLong(actionRequest, "threadId");
 
@@ -137,15 +139,14 @@ public class MoveThreadAction extends PortletAction {
 			String subject = ParamUtil.getString(actionRequest, "subject");
 			String body = ParamUtil.getString(actionRequest, "body");
 
-			String format = GetterUtil.getString(
-				portletPreferences.getValue("messageFormat", null),
-				MBMessageConstants.DEFAULT_FORMAT);
+			MBSettings mbSettings = MBSettings.getInstance(groupId);
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				MBMessage.class.getName(), actionRequest);
 
 			MBMessageServiceUtil.addMessage(
-				thread.getRootMessageId(), subject, body, format,
+				thread.getRootMessageId(), subject, body,
+				mbSettings.getMessageFormat(),
 				Collections.<ObjectValuePair<String, InputStream>>emptyList(),
 				false, MBThreadConstants.PRIORITY_NOT_GIVEN, false,
 				serviceContext);

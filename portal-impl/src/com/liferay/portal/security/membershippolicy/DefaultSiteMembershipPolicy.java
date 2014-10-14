@@ -14,10 +14,12 @@
 
 package com.liferay.portal.security.membershippolicy;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -215,34 +217,40 @@ public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 	protected void verifyLimitedParentMembership(final Group group)
 		throws PortalException {
 
-		int count = UserLocalServiceUtil.getGroupUsersCount(group.getGroupId());
+		final List<Long> userIds = new ArrayList<Long>();
 
-		int pages = count / DELETE_INTERVAL;
+		ActionableDynamicQuery userActionableDynamicQuery =
+			UserLocalServiceUtil.getActionableDynamicQuery();
 
-		int start = 0;
+		userActionableDynamicQuery.setCompanyId(group.getCompanyId());
+		userActionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
 
-		for (int i = 0; i <= pages; i++) {
-			int end = start + DELETE_INTERVAL;
+				@Override
+				public void performAction(Object object)
+					throws PortalException {
 
-			List<User> users = UserLocalServiceUtil.getGroupUsers(
-				group.getGroupId(), start, end);
+					User user = (User)object;
 
-			for (User user : users) {
-				if (!UserLocalServiceUtil.hasGroupUser(
-						group.getParentGroupId(), user.getUserId())) {
+					if (UserLocalServiceUtil.hasGroupUser(
+							group.getGroupId(), user.getUserId()) &&
+						!UserLocalServiceUtil.hasGroupUser(
+							group.getParentGroupId(), user.getUserId())) {
 
-					UserLocalServiceUtil.unsetGroupUsers(
-						group.getGroupId(), new long[] {user.getUserId()},
-						null);
+						userIds.add(user.getUserId());
+					}
 				}
-				else {
-					start++;
-				}
-			}
-		}
+
+			});
+
+		userActionableDynamicQuery.performActions();
+
+		UserLocalServiceUtil.unsetGroupUsers(
+			group.getGroupId(),
+			ArrayUtil.toArray(userIds.toArray(new Long[userIds.size()])), null);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultSiteMembershipPolicy.class);
 
 }

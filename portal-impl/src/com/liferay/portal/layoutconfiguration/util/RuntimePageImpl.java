@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
-import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -266,9 +265,7 @@ public class RuntimePageImpl implements RuntimePage {
 				pluginServletContextName);
 
 			if (pluginServletContext != null) {
-				pluginClassLoader =
-					(ClassLoader)pluginServletContext.getAttribute(
-						PluginContextListener.PLUGIN_CLASS_LOADER);
+				pluginClassLoader = pluginServletContext.getClassLoader();
 			}
 		}
 

@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.servlet.filters.invoker;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
@@ -26,6 +25,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -238,10 +238,9 @@ public class InvokerFilterHelper {
 	}
 
 	protected ClassLoader getPluginClassLoader(ServletContext servletContext) {
-		ClassLoader classLoader = (ClassLoader)servletContext.getAttribute(
-			PluginContextListener.PLUGIN_CLASS_LOADER);
+		ClassLoader classLoader = servletContext.getClassLoader();
 
-		if (classLoader != null) {
+		if (classLoader != ClassLoaderUtil.getPortalClassLoader()) {
 			return classLoader;
 		}
 

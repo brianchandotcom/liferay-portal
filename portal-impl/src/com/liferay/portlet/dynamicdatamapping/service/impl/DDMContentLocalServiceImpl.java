@@ -16,16 +16,12 @@ package com.liferay.portlet.dynamicdatamapping.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.DocumentException;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.dynamicdatamapping.ContentDataException;
 import com.liferay.portlet.dynamicdatamapping.ContentException;
 import com.liferay.portlet.dynamicdatamapping.ContentNameException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMContent;
 import com.liferay.portlet.dynamicdatamapping.service.base.DDMContentLocalServiceBaseImpl;
-import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -43,13 +39,6 @@ public class DDMContentLocalServiceImpl extends DDMContentLocalServiceBaseImpl {
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
-
-		try {
-			data = DDMXMLUtil.formatXML(data);
-		}
-		catch (Exception e) {
-			throw new ContentDataException(e);
-		}
 
 		Date now = new Date();
 
@@ -121,13 +110,6 @@ public class DDMContentLocalServiceImpl extends DDMContentLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		try {
-			data = DDMXMLUtil.formatXML(data);
-		}
-		catch (Exception e) {
-			throw new ContentDataException();
-		}
-
 		validate(name, data);
 
 		DDMContent content = ddmContentPersistence.findByPrimaryKey(contentId);
@@ -142,19 +124,12 @@ public class DDMContentLocalServiceImpl extends DDMContentLocalServiceBaseImpl {
 		return content;
 	}
 
-	protected void validate(String name, String xml) throws PortalException {
+	protected void validate(String name, String data) throws PortalException {
 		if (Validator.isNull(name)) {
 			throw new ContentNameException();
 		}
 
-		if (Validator.isNull(xml)) {
-			throw new ContentException();
-		}
-
-		try {
-			SAXReaderUtil.read(xml);
-		}
-		catch (DocumentException de) {
+		if (Validator.isNull(data)) {
 			throw new ContentException();
 		}
 	}

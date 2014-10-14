@@ -1006,6 +1006,7 @@
 		<property name="storageAdapters">
 			<list>
 				<bean class="com.liferay.portlet.dynamicdatamapping.storage.ExpandoStorageAdapter" />
+				<bean class="com.liferay.portlet.dynamicdatamapping.storage.JSONStorageAdapter" />
 				<bean class="com.liferay.portlet.dynamicdatamapping.storage.XMLStorageAdapter" />
 			</list>
 		</property>

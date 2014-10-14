@@ -17,24 +17,21 @@ package com.liferay.portal.kernel.resource;
 import java.io.InputStream;
 
 /**
- * @author Shuyang Zhou
+ * @author Miguel Pastor
  */
-public class ContextClassLoaderResourceRetriever implements ResourceRetriever {
+public class ClassLoaderResourceRetriever implements ResourceRetriever {
 
-	public ContextClassLoaderResourceRetriever(String fileName) {
-		Thread currentThread = Thread.currentThread();
+	public ClassLoaderResourceRetriever(
+		ClassLoader classLoader, String fileName) {
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		_resourceRetriever = new ClassLoaderResourceRetriever(
-			contextClassLoader, fileName);
+		_inputStream = classLoader.getResourceAsStream(fileName);
 	}
 
 	@Override
 	public InputStream getInputStream() {
-		return _resourceRetriever.getInputStream();
+		return _inputStream;
 	}
 
-	private final ResourceRetriever _resourceRetriever;
+	private final InputStream _inputStream;
 
 }

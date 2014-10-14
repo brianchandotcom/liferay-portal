@@ -15,6 +15,8 @@
 package com.liferay.portlet.documentlibrary;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.resource.manager.ClassLoaderResourceManager;
+import com.liferay.portal.kernel.resource.manager.ResourceManager;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.settings.Settings;
@@ -180,6 +182,10 @@ public class DLPortletInstanceSettings {
 		return fallbackKeys;
 	}
 
+	private static final ResourceManager __RESOURCE_MANAGER =
+		new ClassLoaderResourceManager(
+			DLPortletInstanceSettings.class.getClassLoader());
+
 	private static final String[] _MIME_TYPES_DEFAULT = ArrayUtil.toStringArray(
 		DLUtil.getAllMediaGalleryMimeTypes());
 
@@ -194,16 +200,16 @@ public class DLPortletInstanceSettings {
 
 		settingsFactory.registerSettingsMetadata(
 			PortletKeys.DOCUMENT_LIBRARY, _getFallbackKeys(),
-			_MULTI_VALUED_KEYS);
+			_MULTI_VALUED_KEYS, __RESOURCE_MANAGER);
 		settingsFactory.registerSettingsMetadata(
 			PortletKeys.DOCUMENT_LIBRARY_ADMIN, _getFallbackKeys(),
-			_MULTI_VALUED_KEYS);
+			_MULTI_VALUED_KEYS, __RESOURCE_MANAGER);
 		settingsFactory.registerSettingsMetadata(
 			PortletKeys.DOCUMENT_LIBRARY_DISPLAY, _getFallbackKeys(),
-			_MULTI_VALUED_KEYS);
+			_MULTI_VALUED_KEYS, __RESOURCE_MANAGER);
 		settingsFactory.registerSettingsMetadata(
 			PortletKeys.MEDIA_GALLERY_DISPLAY, _getFallbackKeys(),
-			_MULTI_VALUED_KEYS);
+			_MULTI_VALUED_KEYS, __RESOURCE_MANAGER);
 	}
 
 	private final TypedSettings _typedSettings;

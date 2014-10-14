@@ -15,6 +15,8 @@
 package com.liferay.portlet.blogs;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.resource.manager.ClassLoaderResourceManager;
+import com.liferay.portal.kernel.resource.manager.ResourceManager;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
@@ -150,6 +152,9 @@ public class BlogsSettings {
 		return fallbackKeys;
 	}
 
+	private static final ResourceManager __RESOURCE_MANAGER =
+		new ClassLoaderResourceManager(BlogsSettings.class.getClassLoader());
+
 	private static final String[] _MULTI_VALUED_KEYS = {};
 
 	static {
@@ -157,8 +162,8 @@ public class BlogsSettings {
 			SettingsFactoryUtil.getSettingsFactory();
 
 		settingsFactory.registerSettingsMetadata(
-			BlogsConstants.SERVICE_NAME, _getFallbackKeys(),
-			_MULTI_VALUED_KEYS);
+			BlogsConstants.SERVICE_NAME, _getFallbackKeys(), _MULTI_VALUED_KEYS,
+			__RESOURCE_MANAGER);
 	}
 
 	private final TypedSettings _typedSettings;

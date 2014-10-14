@@ -14,10 +14,14 @@
 
 package com.liferay.portal.settings;
 
+import com.liferay.portal.kernel.resource.ResourceRetriever;
+import com.liferay.portal.kernel.resource.manager.ResourceManager;
 import com.liferay.portal.kernel.settings.BaseSettings;
+import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.util.ContentUtil;
+
+import java.io.IOException;
 
 import java.util.Properties;
 
@@ -27,19 +31,25 @@ import java.util.Properties;
  */
 public class PropertiesSettings extends BaseSettings {
 
-	public PropertiesSettings(Properties properties) {
+	public PropertiesSettings(
+		Properties properties, ResourceManager resourceManager) {
+
+		this(properties, resourceManager, null);
+	}
+
+	public PropertiesSettings(
+		Properties properties, ResourceManager resourceManager,
+		Settings parentSettings) {
+
+		super(parentSettings);
+
 		_properties = properties;
+		_resourceManager = resourceManager;
 	}
 
 	@Override
 	protected String doGetValue(String key) {
-		String value = _properties.getProperty(key);
-
-		if (isLocationVariable("resource", value)) {
-			return ContentUtil.get(getLocation("resource", value));
-		}
-
-		return value;
+		return readProperty(key);
 	}
 
 	@Override
@@ -48,13 +58,26 @@ public class PropertiesSettings extends BaseSettings {
 	}
 
 	protected String getProperty(String key) {
+		return readProperty(key);
+	}
+
+	protected String readProperty(String key) {
 		String value = _properties.getProperty(key);
 
-		if (isLocationVariable("resource", value)) {
-			return ContentUtil.get(getLocation("resource", value));
+		if (!isLocationVariable("resource", value)) {
+			return value;
 		}
 
-		return value;
+		ResourceRetriever resourceRetriever =
+			_resourceManager.getResourceRetriever(
+				getLocation("resource", value));
+
+		try {
+			return StringUtil.read(resourceRetriever.getInputStream());
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to read " + value, ioe);
+		}
 	}
 
 	private String getLocation(String protocol, String value) {
@@ -80,5 +103,6 @@ public class PropertiesSettings extends BaseSettings {
 	}
 
 	private final Properties _properties;
+	private final ResourceManager _resourceManager;
 
 }

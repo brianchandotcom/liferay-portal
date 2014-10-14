@@ -239,18 +239,10 @@ public class ExportImportDateUtil {
 		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 			groupId, privateLayout);
 
-		if (dateRange != null) {
-			Date startDate = dateRange.getStartDate();
-			Date endDate = dateRange.getEndDate();
-			Date originalLastPublishDate = getLastPublishDate(layoutSet);
+		Date originalLastPublishDate = getLastPublishDate(layoutSet);
 
-			if ((originalLastPublishDate != null) && (endDate != null) &&
-				originalLastPublishDate.before(endDate) &&
-				(startDate != null) &&
-				startDate.after(originalLastPublishDate)) {
-
-				return;
-			}
+		if (!isValidDateRange(dateRange, originalLastPublishDate)) {
+			return;
 		}
 
 		if (lastPublishDate == null) {
@@ -272,19 +264,10 @@ public class ExportImportDateUtil {
 		String portletId, PortletPreferences portletPreferences,
 		DateRange dateRange, Date lastPublishDate) {
 
-		if (dateRange != null) {
-			Date startDate = dateRange.getStartDate();
-			Date endDate = dateRange.getEndDate();
-			Date originalLastPublishDate = getLastPublishDate(
-				portletPreferences);
+		Date originalLastPublishDate = getLastPublishDate(portletPreferences);
 
-			if ((originalLastPublishDate != null) && (endDate != null) &&
-				originalLastPublishDate.before(endDate) &&
-				(startDate != null) &&
-				startDate.after(originalLastPublishDate)) {
-
-				return;
-			}
+		if (!isValidDateRange(dateRange, originalLastPublishDate)) {
+			return;
 		}
 
 		if (lastPublishDate == null) {
@@ -398,6 +381,37 @@ public class ExportImportDateUtil {
 		}
 
 		return new DateRange(startDate, endDate);
+	}
+
+	protected static boolean isValidDateRange(
+		DateRange dateRange, Date originalLastPublishDate) {
+
+		if (dateRange == null) {
+
+			// This is a valid scenario when publishing all
+
+			return true;
+		}
+
+		Date startDate = dateRange.getStartDate();
+		Date endDate = dateRange.getEndDate();
+
+		if (originalLastPublishDate != null) {
+			if ((startDate != null) &&
+				startDate.after(originalLastPublishDate)) {
+
+				return false;
+			}
+
+			if ((endDate != null) && endDate.before(originalLastPublishDate)) {
+				return false;
+			}
+		}
+		else if ((startDate != null) || (endDate != null)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final String _LAST_PUBLISH_DATE = "last-publish-date";

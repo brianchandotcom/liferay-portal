@@ -194,27 +194,14 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		boolean stagedRemotely = GetterUtil.getBoolean(
 			typeSettingsProperties.getProperty("stagedRemotely"));
 
-		try {
-			if (stagedRemotely) {
-				String remoteURL = StagingUtil.buildRemoteURL(
-					typeSettingsProperties);
+		if (stagedRemotely) {
+			String remoteURL = StagingUtil.buildRemoteURL(
+				typeSettingsProperties);
 
-				long remoteGroupId = GetterUtil.getLong(
-					typeSettingsProperties.getProperty("remoteGroupId"));
+			long remoteGroupId = GetterUtil.getLong(
+				typeSettingsProperties.getProperty("remoteGroupId"));
 
-				disableRemoteStaging(remoteURL, remoteGroupId);
-			}
-		}
-		catch (RemoteExportException ree) {
-			if (!forceDisable ||
-				(ree.getType() != RemoteExportException.BAD_CONNECTION)) {
-
-				throw ree;
-			}
-
-			if (_log.isWarnEnabled()) {
-				_log.warn("Force disabling remote staging");
-			}
+			disableRemoteStaging(remoteURL, remoteGroupId, forceDisable);
 		}
 
 		typeSettingsProperties.remove("branchingPrivate");
@@ -355,7 +342,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			if (!remoteURL.equals(oldRemoteURL) ||
 				(remoteGroupId != oldRemoteGroupId)) {
 
-				disableRemoteStaging(oldRemoteURL, oldRemoteGroupId);
+				disableRemoteStaging(oldRemoteURL, oldRemoteGroupId, false);
 
 				stagedRemotely = false;
 			}
@@ -616,7 +603,8 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			groupId, privateLayout, true);
 	}
 
-	protected void disableRemoteStaging(String remoteURL, long remoteGroupId)
+	protected void disableRemoteStaging(
+			String remoteURL, long remoteGroupId, boolean force)
 		throws PortalException {
 
 		PermissionChecker permissionChecker =
@@ -650,12 +638,18 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			throw rae;
 		}
 		catch (SystemException se) {
-			RemoteExportException ree = new RemoteExportException(
-				RemoteExportException.BAD_CONNECTION);
+			if (!force) {
+				RemoteExportException ree = new RemoteExportException(
+					RemoteExportException.BAD_CONNECTION);
 
-			ree.setURL(remoteURL);
+				ree.setURL(remoteURL);
 
-			throw ree;
+				throw ree;
+			}
+
+			if (_log.isWarnEnabled()) {
+				_log.warn("Force disabling remote staging");
+			}
 		}
 	}
 

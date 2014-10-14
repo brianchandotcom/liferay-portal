@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -224,9 +223,7 @@ public class ConvertDatabase extends BaseConvertProcess {
 				ServletContext servletContext = ServletContextPool.get(
 					servletContextName);
 
-				ClassLoader classLoader =
-					(ClassLoader)servletContext.getAttribute(
-						PluginContextListener.PLUGIN_CLASS_LOADER);
+				ClassLoader classLoader = servletContext.getClassLoader();
 
 				return classLoader.loadClass(implClassName);
 			}

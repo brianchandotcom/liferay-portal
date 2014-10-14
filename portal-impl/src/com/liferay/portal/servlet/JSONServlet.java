@@ -17,7 +17,6 @@ package com.liferay.portal.servlet;
 import com.liferay.portal.action.JSONServiceAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.security.ac.AccessControlThreadLocal;
 import com.liferay.portal.struts.JSONAction;
@@ -41,8 +40,7 @@ public class JSONServlet extends HttpServlet {
 	public void init(ServletConfig servletConfig) {
 		ServletContext servletContext = servletConfig.getServletContext();
 
-		_pluginClassLoader = (ClassLoader)servletContext.getAttribute(
-			PluginContextListener.PLUGIN_CLASS_LOADER);
+		_pluginClassLoader = servletContext.getClassLoader();
 
 		_jsonAction = getJSONAction(servletContext);
 	}
@@ -57,7 +55,7 @@ public class JSONServlet extends HttpServlet {
 		try {
 			AccessControlThreadLocal.setRemoteAccess(true);
 
-			if (_pluginClassLoader == null) {
+			if (_pluginClassLoader == ClassLoaderUtil.getPortalClassLoader()) {
 				_jsonAction.execute(null, null, request, response);
 			}
 			else {

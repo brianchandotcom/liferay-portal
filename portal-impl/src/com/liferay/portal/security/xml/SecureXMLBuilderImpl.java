@@ -47,7 +47,8 @@ public class SecureXMLBuilderImpl implements SecureXMLBuilder {
 		catch (Exception e) {
 			_log.error(
 				"Unable to initialize safe SAX parser! Your system may be " +
-					"vulnerable to XML Bomb attacks!", e);
+					"vulnerable to XML bomb attacks!",
+				e);
 		}
 
 		try {
@@ -56,20 +57,21 @@ public class SecureXMLBuilderImpl implements SecureXMLBuilder {
 		catch (Exception e) {
 			_log.error(
 				"Unable to initialize safe SAX parser! Your system may be " +
-					"vulnerable to XML Bomb attacks!", e);
+					"vulnerable to XML bomb attacks!",
+				e);
 		}
 
 		try {
 			documentBuilderFactory.setFeature(
 				_FEATURES_EXTERNAL_GENERAL_ENTITIES, false);
-
 			documentBuilderFactory.setFeature(
 				_FEATURES_EXTERNAL_PARAMETER_ENTITIES, false);
 		}
 		catch (Exception e) {
 			_log.error(
 				"Unable to initialize safe SAX parser! Your system may be " +
-					"vulnerable to XXE attacks!", e);
+					"vulnerable to XXE attacks!",
+				e);
 		}
 
 		return documentBuilderFactory;
@@ -85,10 +87,8 @@ public class SecureXMLBuilderImpl implements SecureXMLBuilder {
 
 		xmlInputFactory.setProperty(
 			XMLInputFactory.IS_REPLACING_ENTITY_REFERENCES, Boolean.FALSE);
-
 		xmlInputFactory.setProperty(
 			XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, Boolean.FALSE);
-
 		xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, Boolean.FALSE);
 
 		return xmlInputFactory;
@@ -108,7 +108,8 @@ public class SecureXMLBuilderImpl implements SecureXMLBuilder {
 		catch (Exception e) {
 			_log.error(
 				"Unable to initialize safe SAX parser! Your system may be " +
-					"vulnerable to XML Bomb attacks!", e);
+					"vulnerable to XML bomb attacks!",
+				e);
 		}
 
 		try {
@@ -118,7 +119,8 @@ public class SecureXMLBuilderImpl implements SecureXMLBuilder {
 		catch (Exception e) {
 			_log.error(
 				"Unable to initialize safe SAX parser! Your system may be " +
-					"vulnerable to XXE attacks!", e);
+					"vulnerable to XXE attacks!",
+				e);
 		}
 
 		return xmlReader;

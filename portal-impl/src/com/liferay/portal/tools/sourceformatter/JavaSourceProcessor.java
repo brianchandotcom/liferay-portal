@@ -791,23 +791,21 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				fileName,
 				"Use SecureXMLBuilderUtil.newDocumentBuilderFactory " +
 					"instead of DocumentBuilderFactory.newInstance: " +
-					fileName);
+						fileName);
 		}
 
 		if (content.contains("SAXParserFactory.newInstance")) {
 			processErrorMessage(
 				fileName,
 				"Use SecureXMLBuilderUtil.newXMLReader instead of " +
-					"SAXParserFactory.newInstance: " +
-					fileName);
+					"SAXParserFactory.newInstance: " + fileName);
 		}
 
 		if (content.contains("new SAXParser")) {
 			processErrorMessage(
 				fileName,
 				"Use SecureXMLBuilderUtil.newXMLReader instead of " +
-					"new SAXParser: " +
-					fileName);
+					"new SAXParser: " + fileName);
 		}
 
 		if (content.contains("XMLInputFactory.newInstance") ||
@@ -816,8 +814,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			processErrorMessage(
 				fileName,
 				"Use SecureXMLBuilderUtil.newXMLInputFactory instead of " +
-					"XMLInputFactory.new*: " +
-					fileName);
+					"XMLInputFactory.new*: " + fileName);
 		}
 	}
 

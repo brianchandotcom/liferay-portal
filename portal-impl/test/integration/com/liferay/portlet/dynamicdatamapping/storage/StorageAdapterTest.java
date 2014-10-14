@@ -32,9 +32,11 @@ import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.service.BaseDDMServiceTestCase;
+import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -80,6 +82,13 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		fields.put(booleanField);
 
+		Field fieldsDisplayField = createFieldsDisplayField(
+			structure.getStructureId(),
+			"boolean_INSTANCE_rztm,boolean_INSTANCE_ovho," +
+			"boolean_INSTANCE_krvx");
+
+		fields.put(fieldsDisplayField);
+
 		validate(structure.getStructureId(), fields);
 	}
 
@@ -117,6 +126,12 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		fields.put(dateField);
 
+		Field fieldsDisplayField = createFieldsDisplayField(
+			structure.getStructureId(),
+			"date_INSTANCE_rztm,date_INSTANCE_ovho");
+
+		fields.put(fieldsDisplayField);
+
 		validate(structure.getStructureId(), fields);
 	}
 
@@ -147,6 +162,13 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 			structure.getStructureId(), "decimal", dataMap, _enLocale);
 
 		fields.put(decimalField);
+
+		Field fieldsDisplayField = createFieldsDisplayField(
+			structure.getStructureId(),
+			"decimal_INSTANCE_rztm,decimal_INSTANCE_ovho," +
+			"decimal_INSTANCE_krvx");
+
+		fields.put(fieldsDisplayField);
 
 		validate(structure.getStructureId(), fields);
 	}
@@ -183,7 +205,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		dataMap.put(_enLocale, enValues);
 
 		List<Serializable> ptValues = ListUtil.fromArray(
-			new Serializable[] {file1Value});
+			new Serializable[] {file1Value, file2Value});
 
 		dataMap.put(_ptLocale, ptValues);
 
@@ -191,6 +213,12 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 			structure.getStructureId(), "doc_library", dataMap, _enLocale);
 
 		fields.put(documentLibraryField);
+
+		Field fieldsDisplayField = createFieldsDisplayField(
+			structure.getStructureId(),
+			"doc_library_INSTANCE_rztm,doc_library_INSTANCE_ovho");
+
+		fields.put(fieldsDisplayField);
 
 		validate(structure.getStructureId(), fields);
 	}
@@ -222,6 +250,13 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 			structure.getStructureId(), "integer", dataMap, _enLocale);
 
 		fields.put(integerField);
+
+		Field fieldsDisplayField = createFieldsDisplayField(
+			structure.getStructureId(),
+			"integer_INSTANCE_rztm,integer_INSTANCE_ovho," +
+			"integer_INSTANCE_krvx");
+
+		fields.put(fieldsDisplayField);
 
 		validate(structure.getStructureId(), fields);
 	}
@@ -256,6 +291,11 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		fields.put(linkToPageField);
 
+		Field fieldsDisplayField = createFieldsDisplayField(
+			structure.getStructureId(), "link_to_page_INSTANCE_rztm");
+
+		fields.put(fieldsDisplayField);
+
 		validate(structure.getStructureId(), fields);
 	}
 
@@ -286,6 +326,13 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 			structure.getStructureId(), "number", dataMap, _enLocale);
 
 		fields.put(numberField);
+
+		Field fieldsDisplayField = createFieldsDisplayField(
+			structure.getStructureId(),
+			"number_INSTANCE_rztm,number_INSTANCE_ovho," +
+			"number_INSTANCE_krvx");
+
+		fields.put(fieldsDisplayField);
 
 		validate(structure.getStructureId(), fields);
 	}
@@ -318,6 +365,12 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		fields.put(radioField);
 
+		Field fieldsDisplayField = createFieldsDisplayField(
+			structure.getStructureId(),
+			"radio_INSTANCE_rztm,radio_INSTANCE_ovho");
+
+		fields.put(fieldsDisplayField);
+
 		validate(structure.getStructureId(), fields);
 	}
 
@@ -348,6 +401,12 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 			structure.getStructureId(), "select", dataMap, _enLocale);
 
 		fields.put(selectField);
+
+		Field fieldsDisplayField = createFieldsDisplayField(
+			structure.getStructureId(),
+			"select_INSTANCE_rztm,select_INSTANCE_ovho");
+
+		fields.put(fieldsDisplayField);
 
 		validate(structure.getStructureId(), fields);
 	}
@@ -380,6 +439,12 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		fields.put(textField);
 
+		Field fieldsDisplayField = createFieldsDisplayField(
+			structure.getStructureId(),
+			"text_INSTANCE_rztm,text_INSTANCE_ovho,text_INSTANCE_krvx");
+
+		fields.put(fieldsDisplayField);
+
 		validate(structure.getStructureId(), fields);
 	}
 
@@ -390,6 +455,28 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		return storageAdapter.create(
 			TestPropsValues.getCompanyId(), ddmStructureId, fields,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+	}
+
+	protected Field createFieldsDisplayField(
+		long ddmStructureId, String value) {
+
+		Field fieldsDisplayField = new Field(
+			ddmStructureId, DDMImpl.FIELDS_DISPLAY_NAME,
+			createValuesList(value), LocaleUtil.US);
+
+		fieldsDisplayField.setDefaultLocale(LocaleUtil.US);
+
+		return fieldsDisplayField;
+	}
+
+	protected List<Serializable> createValuesList(String... valuesString) {
+		List<Serializable> values = new ArrayList<Serializable>();
+
+		for (String valueString : valuesString) {
+			values.add(valueString);
+		}
+
+		return values;
 	}
 
 	protected String getDocLibraryFieldValue(FileEntry fileEntry) {

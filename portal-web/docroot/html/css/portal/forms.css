@@ -118,6 +118,11 @@
 			}
 		}
 
+		.file-entry-upload-progress {
+			height: 6px;
+			margin-top: -7px;
+		}
+
 		.lfr-ddm-repeatable-add-button, .lfr-ddm-repeatable-delete-button {
 			display: block;
 			height: 16px;

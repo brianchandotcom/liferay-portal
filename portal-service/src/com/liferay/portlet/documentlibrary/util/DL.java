@@ -142,6 +142,8 @@ public interface DL {
 
 	public String getFileIconCssClass(String extension);
 
+	public String getFileName(long groupId, long folderId, String tempFileName);
+
 	public String getGenericName(String extension);
 
 	public String getImagePreviewURL(

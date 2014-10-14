@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
@@ -97,6 +98,7 @@ import com.liferay.portal.webserver.WebServerServletTokenUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldNameException;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
@@ -6177,7 +6179,10 @@ public class JournalArticleLocalServiceImpl
 				"instance-id", StringPool.BLANK);
 			String elType = element.attributeValue("type", StringPool.BLANK);
 
-			if (elType.equals("image")) {
+			if (elType.equals("document_library")) {
+				formatDocumentLibrary(element);
+			}
+			else if (elType.equals("image")) {
 				String elName = element.attributeValue(
 					"name", StringPool.BLANK);
 				String elIndex = element.attributeValue(
@@ -6247,6 +6252,45 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		return content;
+	}
+
+	protected void formatDocumentLibrary(Element dynamicElementElement)
+		throws PortalException {
+
+		for (Element dynamicContentElement :
+				dynamicElementElement.elements("dynamic-content")) {
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				dynamicContentElement.getText());
+
+			String uuid = jsonObject.getString("uuid");
+			long groupId = jsonObject.getLong("groupId");
+			boolean tempFile = jsonObject.getBoolean("tempFile");
+
+			FileEntry fileEntry =
+				dlAppLocalService.getFileEntryByUuidAndGroupId(uuid, groupId);
+
+			if (tempFile) {
+				String fileEntryName = DLUtil.getFileName(
+					fileEntry.getGroupId(), fileEntry.getFolderId(),
+					fileEntry.getFileName());
+
+				fileEntry = dlAppLocalService.addFileEntry(
+					fileEntry.getUserId(), fileEntry.getGroupId(), 0,
+					fileEntryName, fileEntry.getMimeType(), fileEntryName,
+					StringPool.BLANK, StringPool.BLANK,
+					fileEntry.getContentStream(), fileEntry.getSize(),
+					new ServiceContext());
+			}
+
+			String previewURL = DLUtil.getPreviewURL(
+				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
+				false, true);
+
+			dynamicContentElement.clearContent();
+
+			dynamicContentElement.addCDATA(previewURL);
+		}
 	}
 
 	protected void formatImage(

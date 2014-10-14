@@ -151,7 +151,6 @@ public class EditFeedAction extends PortletAction {
 
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
-		String type = ParamUtil.getString(actionRequest, "type");
 		String structureId = ParamUtil.getString(actionRequest, "structureId");
 		String templateId = ParamUtil.getString(actionRequest, "templateId");
 		String rendererTemplateId = ParamUtil.getString(
@@ -179,18 +178,18 @@ public class EditFeedAction extends PortletAction {
 			// Add feed
 
 			JournalFeedServiceUtil.addFeed(
-				groupId, feedId, autoFeedId, name, description, type,
-				structureId, templateId, rendererTemplateId, delta, orderByCol,
-				orderByType, targetLayoutFriendlyUrl, targetPortletId,
-				contentField, feedFormat, feedVersion, serviceContext);
+				groupId, feedId, autoFeedId, name, description, structureId,
+				templateId, rendererTemplateId, delta, orderByCol, orderByType,
+				targetLayoutFriendlyUrl, targetPortletId, contentField,
+				feedFormat, feedVersion, serviceContext);
 		}
 		else {
 
 			// Update feed
 
 			JournalFeedServiceUtil.updateFeed(
-				groupId, feedId, name, description, type, structureId,
-				templateId, rendererTemplateId, delta, orderByCol, orderByType,
+				groupId, feedId, name, description, structureId, templateId,
+				rendererTemplateId, delta, orderByCol, orderByType,
 				targetLayoutFriendlyUrl, targetPortletId, contentField,
 				feedFormat, feedVersion, serviceContext);
 		}

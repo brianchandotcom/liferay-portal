@@ -93,7 +93,6 @@ public class ViewArticleContentAction extends Action {
 					uploadServletRequest, "title");
 				String description = ParamUtil.getString(
 					uploadServletRequest, "description");
-				String type = ParamUtil.getString(uploadServletRequest, "type");
 				String structureId = ParamUtil.getString(
 					uploadServletRequest, "structureId");
 				String templateId = ParamUtil.getString(
@@ -138,7 +137,6 @@ public class ViewArticleContentAction extends Action {
 				article.setTitle(title);
 				article.setDescription(description);
 				article.setContent(xml);
-				article.setType(type);
 				article.setStructureId(structureId);
 				article.setTemplateId(templateId);
 				article.setDisplayDate(displayDate);

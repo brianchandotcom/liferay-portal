@@ -29770,7 +29770,6 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		journalArticleImpl.setUrlTitle(journalArticle.getUrlTitle());
 		journalArticleImpl.setDescription(journalArticle.getDescription());
 		journalArticleImpl.setContent(journalArticle.getContent());
-		journalArticleImpl.setType(journalArticle.getType());
 		journalArticleImpl.setStructureId(journalArticle.getStructureId());
 		journalArticleImpl.setTemplateId(journalArticle.getTemplateId());
 		journalArticleImpl.setLayoutUuid(journalArticle.getLayoutUuid());
@@ -30182,7 +30181,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static final Log _log = LogFactoryUtil.getLog(JournalArticlePersistenceImpl.class);
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid", "id", "type"
+				"uuid", "id"
 			});
 	private static final JournalArticle _nullJournalArticle = new JournalArticleImpl() {
 			@Override

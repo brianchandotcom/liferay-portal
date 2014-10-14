@@ -105,7 +105,6 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 			{ "urlTitle", Types.VARCHAR },
 			{ "description", Types.CLOB },
 			{ "content", Types.CLOB },
-			{ "type_", Types.VARCHAR },
 			{ "structureId", Types.VARCHAR },
 			{ "templateId", Types.VARCHAR },
 			{ "layoutUuid", Types.VARCHAR },
@@ -121,7 +120,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 			{ "statusByUserName", Types.VARCHAR },
 			{ "statusDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table JournalArticle (uuid_ VARCHAR(75) null,id_ LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,folderId LONG,classNameId LONG,classPK LONG,treePath STRING null,articleId VARCHAR(75) null,version DOUBLE,title STRING null,urlTitle VARCHAR(150) null,description TEXT null,content TEXT null,type_ VARCHAR(75) null,structureId VARCHAR(75) null,templateId VARCHAR(75) null,layoutUuid VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,reviewDate DATE null,indexable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL STRING null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table JournalArticle (uuid_ VARCHAR(75) null,id_ LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,folderId LONG,classNameId LONG,classPK LONG,treePath STRING null,articleId VARCHAR(75) null,version DOUBLE,title STRING null,urlTitle VARCHAR(150) null,description TEXT null,content TEXT null,structureId VARCHAR(75) null,templateId VARCHAR(75) null,layoutUuid VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,reviewDate DATE null,indexable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL STRING null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table JournalArticle";
 	public static final String ORDER_BY_JPQL = " ORDER BY journalArticle.articleId ASC, journalArticle.version DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY JournalArticle.articleId ASC, JournalArticle.version DESC";
@@ -188,7 +187,6 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		model.setUrlTitle(soapModel.getUrlTitle());
 		model.setDescription(soapModel.getDescription());
 		model.setContent(soapModel.getContent());
-		model.setType(soapModel.getType());
 		model.setStructureId(soapModel.getStructureId());
 		model.setTemplateId(soapModel.getTemplateId());
 		model.setLayoutUuid(soapModel.getLayoutUuid());
@@ -286,7 +284,6 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		attributes.put("urlTitle", getUrlTitle());
 		attributes.put("description", getDescription());
 		attributes.put("content", getContent());
-		attributes.put("type", getType());
 		attributes.put("structureId", getStructureId());
 		attributes.put("templateId", getTemplateId());
 		attributes.put("layoutUuid", getLayoutUuid());
@@ -422,12 +419,6 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 		if (content != null) {
 			setContent(content);
-		}
-
-		String type = (String)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
 		}
 
 		String structureId = (String)attributes.get("structureId");
@@ -1101,22 +1092,6 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	@JSON
 	@Override
-	public String getType() {
-		if (_type == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _type;
-		}
-	}
-
-	@Override
-	public void setType(String type) {
-		_type = type;
-	}
-
-	@JSON
-	@Override
 	public String getStructureId() {
 		if (_structureId == null) {
 			return StringPool.BLANK;
@@ -1759,7 +1734,6 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		journalArticleImpl.setUrlTitle(getUrlTitle());
 		journalArticleImpl.setDescription(getDescription());
 		journalArticleImpl.setContent(getContent());
-		journalArticleImpl.setType(getType());
 		journalArticleImpl.setStructureId(getStructureId());
 		journalArticleImpl.setTemplateId(getTemplateId());
 		journalArticleImpl.setLayoutUuid(getLayoutUuid());
@@ -2019,14 +1993,6 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 			journalArticleCacheModel.content = null;
 		}
 
-		journalArticleCacheModel.type = getType();
-
-		String type = journalArticleCacheModel.type;
-
-		if ((type != null) && (type.length() == 0)) {
-			journalArticleCacheModel.type = null;
-		}
-
 		journalArticleCacheModel.structureId = getStructureId();
 
 		String structureId = journalArticleCacheModel.structureId;
@@ -2122,7 +2088,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(69);
+		StringBundler sb = new StringBundler(67);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -2162,8 +2128,6 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		sb.append(getDescription());
 		sb.append(", content=");
 		sb.append(getContent());
-		sb.append(", type=");
-		sb.append(getType());
 		sb.append(", structureId=");
 		sb.append(getStructureId());
 		sb.append(", templateId=");
@@ -2199,7 +2163,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(106);
+		StringBundler sb = new StringBundler(103);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.journal.model.JournalArticle");
@@ -2280,10 +2244,6 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		sb.append(
 			"<column><column-name>content</column-name><column-value><![CDATA[");
 		sb.append(getContent());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>structureId</column-name><column-value><![CDATA[");
@@ -2391,7 +2351,6 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	private String _description;
 	private String _descriptionCurrentLanguageId;
 	private String _content;
-	private String _type;
 	private String _structureId;
 	private String _originalStructureId;
 	private String _templateId;

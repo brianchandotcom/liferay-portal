@@ -29,10 +29,10 @@ public class JournalArticleDisplayImpl implements JournalArticleDisplay {
 		long companyId, long id, long resourcePrimKey, long groupId,
 		long userId, String articleId, double version, String title,
 		String urlTitle, String description, String[] availableLocales,
-		String content, String type, String ddmStructureKey,
-		String ddmTemplateKey, boolean smallImage, long smallImageId,
-		String smallImageURL, int numberOfPages, int currentPage,
-		boolean paginate, boolean cacheable) {
+		String content, String ddmStructureKey, String ddmTemplateKey,
+		boolean smallImage, long smallImageId, String smallImageURL,
+		int numberOfPages, int currentPage, boolean paginate,
+		boolean cacheable) {
 
 		_companyId = companyId;
 		_id = id;
@@ -46,7 +46,6 @@ public class JournalArticleDisplayImpl implements JournalArticleDisplay {
 		_description = description;
 		_availableLocales = availableLocales;
 		_content = content;
-		_type = type;
 		_ddmStructureKey = ddmStructureKey;
 		_ddmTemplateKey = ddmTemplateKey;
 		_smallImage = smallImage;
@@ -149,11 +148,6 @@ public class JournalArticleDisplayImpl implements JournalArticleDisplay {
 	}
 
 	@Override
-	public String getType() {
-		return _type;
-	}
-
-	@Override
 	public String getUrlTitle() {
 		return _urlTitle;
 	}
@@ -251,7 +245,6 @@ public class JournalArticleDisplayImpl implements JournalArticleDisplay {
 	private long _smallImageId;
 	private String _smallImageURL;
 	private final String _title;
-	private final String _type;
 	private final String _urlTitle;
 	private final long _userId;
 	private final double _version;

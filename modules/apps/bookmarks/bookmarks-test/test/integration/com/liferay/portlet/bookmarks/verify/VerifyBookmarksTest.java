@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.verify;
+package com.liferay.portlet.bookmarks.verify;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.Group;
@@ -24,6 +24,8 @@ import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
+import com.liferay.portal.verify.BaseVerifyTestCase;
+import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;

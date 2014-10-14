@@ -858,9 +858,9 @@ public class WebServerServlet extends HttpServlet {
 			fileEntry.getFileEntryId(), version);
 
 		if (fileEntry.getModel() instanceof DLFileEntry) {
-			LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;
+			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
-			if (liferayFileEntry.isInTrash()) {
+			if (dlFileEntry.isInTrash()) {
 				int status = ParamUtil.getInteger(
 					request, "status", WorkflowConstants.STATUS_APPROVED);
 

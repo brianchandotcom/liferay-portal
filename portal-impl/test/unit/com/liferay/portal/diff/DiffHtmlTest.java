@@ -19,9 +19,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.StringReader;
 
+import org.junit.Assert;
 import org.junit.Test;
-
-import org.testng.Assert;
 
 /**
  * @author Adolfo Pérez

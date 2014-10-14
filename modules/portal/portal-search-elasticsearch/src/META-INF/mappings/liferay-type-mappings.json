@@ -6,6 +6,17 @@
 				"store": "yes",
 				"type": "string"
 			},
+			"ddmContent": {
+				"index": "analyzed",
+				"store": "yes",
+				"term_vector": "with_positions_offsets",
+				"type": "string"
+			},
+			"endTime": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "long"
+			},
 			"folderId": {
 				"index": "not_analyzed",
 				"store": "yes",
@@ -31,7 +42,22 @@
 				"store": "yes",
 				"type": "string"
 			},
+			"parentCategoryId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"parentCategoryIds": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
 			"path": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"recordSetId": {
 				"index": "not_analyzed",
 				"store": "yes",
 				"type": "string"
@@ -42,6 +68,16 @@
 				"type": "string"
 			},
 			"treePath": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"userGroupId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"version": {
 				"index": "not_analyzed",
 				"store": "yes",
 				"type": "string"

@@ -15,6 +15,8 @@
 package com.liferay.portlet.shopping;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.resource.manager.ClassLoaderResourceManager;
+import com.liferay.portal.kernel.resource.manager.ResourceManager;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
@@ -333,6 +335,9 @@ public class ShoppingSettings {
 		return fallbackKeys;
 	}
 
+	private static final ResourceManager __RESOURCE_MANAGER =
+		new ClassLoaderResourceManager(ShoppingSettings.class.getClassLoader());
+
 	private static final String[] _MULTI_VALUED_KEYS = {
 		"ccTypes", "insurance", "shipping"
 	};
@@ -343,7 +348,7 @@ public class ShoppingSettings {
 
 		settingsFactory.registerSettingsMetadata(
 			ShoppingConstants.SERVICE_NAME, _getFallbackKeys(),
-			_MULTI_VALUED_KEYS);
+			_MULTI_VALUED_KEYS, __RESOURCE_MANAGER);
 	}
 
 	private TypedSettings _typedSettings;

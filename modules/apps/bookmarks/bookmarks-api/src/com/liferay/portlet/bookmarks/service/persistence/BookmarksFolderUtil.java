@@ -16,13 +16,16 @@ package com.liferay.portlet.bookmarks.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 import java.util.List;
 
@@ -170,7 +173,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder findByResourceBlockId_First(
 		long resourceBlockId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByResourceBlockId_First(resourceBlockId,
 			orderByComparator);
@@ -202,7 +205,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder findByResourceBlockId_Last(
 		long resourceBlockId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByResourceBlockId_Last(resourceBlockId,
 			orderByComparator);
@@ -235,7 +238,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder[] findByResourceBlockId_PrevAndNext(
 		long folderId, long resourceBlockId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByResourceBlockId_PrevAndNext(folderId,
 			resourceBlockId, orderByComparator);
@@ -318,7 +321,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder findByUuid_First(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -346,7 +349,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder findByUuid_Last(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -375,7 +378,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder[] findByUuid_PrevAndNext(
 		long folderId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(folderId, uuid, orderByComparator);
 	}
@@ -409,7 +412,7 @@ public class BookmarksFolderUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder findByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -447,7 +450,7 @@ public class BookmarksFolderUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder removeByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -525,7 +528,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder findByUuid_C_First(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -557,7 +560,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -590,7 +593,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder[] findByUuid_C_PrevAndNext(
 		long folderId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(folderId, uuid, companyId,
 			orderByComparator);
@@ -676,7 +679,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder findByGroupId_First(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -704,7 +707,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder findByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -733,7 +736,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder[] findByGroupId_PrevAndNext(
 		long folderId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(folderId, groupId,
 			orderByComparator);
@@ -799,7 +802,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder[] filterFindByGroupId_PrevAndNext(
 		long folderId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(folderId, groupId,
 			orderByComparator);
@@ -893,7 +896,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder findByCompanyId_First(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -923,7 +926,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder findByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -954,7 +957,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder[] findByCompanyId_PrevAndNext(
 		long folderId, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(folderId, companyId,
 			orderByComparator);
@@ -1043,7 +1046,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder findByG_P_First(
 		long groupId, long parentFolderId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_P_First(groupId, parentFolderId, orderByComparator);
 	}
@@ -1075,7 +1078,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder findByG_P_Last(
 		long groupId, long parentFolderId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_P_Last(groupId, parentFolderId, orderByComparator);
 	}
@@ -1108,7 +1111,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder[] findByG_P_PrevAndNext(
 		long folderId, long groupId, long parentFolderId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_P_PrevAndNext(folderId, groupId, parentFolderId,
 			orderByComparator);
@@ -1180,7 +1183,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder[] filterFindByG_P_PrevAndNext(
 		long folderId, long groupId, long parentFolderId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
 				   .filterFindByG_P_PrevAndNext(folderId, groupId,
 			parentFolderId, orderByComparator);
@@ -1282,7 +1285,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder findByC_NotS_First(
 		long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByC_NotS_First(companyId, status, orderByComparator);
 	}
@@ -1314,7 +1317,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder findByC_NotS_Last(
 		long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByC_NotS_Last(companyId, status, orderByComparator);
 	}
@@ -1347,7 +1350,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder[] findByC_NotS_PrevAndNext(
 		long folderId, long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByC_NotS_PrevAndNext(folderId, companyId, status,
 			orderByComparator);
@@ -1443,7 +1446,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder findByG_P_S_First(
 		long groupId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_P_S_First(groupId, parentFolderId, status,
 			orderByComparator);
@@ -1479,7 +1482,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder findByG_P_S_Last(
 		long groupId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_P_S_Last(groupId, parentFolderId, status,
 			orderByComparator);
@@ -1516,7 +1519,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder[] findByG_P_S_PrevAndNext(
 		long folderId, long groupId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_P_S_PrevAndNext(folderId, groupId, parentFolderId,
 			status, orderByComparator);
@@ -1594,7 +1597,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder[] filterFindByG_P_S_PrevAndNext(
 		long folderId, long groupId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
 				   .filterFindByG_P_S_PrevAndNext(folderId, groupId,
 			parentFolderId, status, orderByComparator);
@@ -1707,7 +1710,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder findByG_P_NotS_First(
 		long groupId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_P_NotS_First(groupId, parentFolderId, status,
 			orderByComparator);
@@ -1743,7 +1746,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder findByG_P_NotS_Last(
 		long groupId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_P_NotS_Last(groupId, parentFolderId, status,
 			orderByComparator);
@@ -1780,7 +1783,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder[] findByG_P_NotS_PrevAndNext(
 		long folderId, long groupId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_P_NotS_PrevAndNext(folderId, groupId,
 			parentFolderId, status, orderByComparator);
@@ -1858,7 +1861,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder[] filterFindByG_P_NotS_PrevAndNext(
 		long folderId, long groupId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
 				   .filterFindByG_P_NotS_PrevAndNext(folderId, groupId,
 			parentFolderId, status, orderByComparator);
@@ -1980,7 +1983,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder findByF_C_P_NotS_First(
 		long folderId, long companyId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByF_C_P_NotS_First(folderId, companyId, parentFolderId,
 			status, orderByComparator);
@@ -2018,7 +2021,7 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder findByF_C_P_NotS_Last(
 		long folderId, long companyId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByF_C_P_NotS_Last(folderId, companyId, parentFolderId,
 			status, orderByComparator);
@@ -2112,7 +2115,7 @@ public class BookmarksFolderUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder remove(
 		long folderId)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence().remove(folderId);
 	}
 
@@ -2130,7 +2133,7 @@ public class BookmarksFolderUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder findByPrimaryKey(
 		long folderId)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException {
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException {
 		return getPersistence().findByPrimaryKey(folderId);
 	}
 
@@ -2210,14 +2213,7 @@ public class BookmarksFolderUtil {
 	}
 
 	public static BookmarksFolderPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence = (BookmarksFolderPersistence)PortalBeanLocatorUtil.locate(BookmarksFolderPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(BookmarksFolderUtil.class,
-				"_persistence");
-		}
-
-		return _persistence;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -2227,5 +2223,14 @@ public class BookmarksFolderUtil {
 	public void setPersistence(BookmarksFolderPersistence persistence) {
 	}
 
-	private static BookmarksFolderPersistence _persistence;
+	private static ServiceTracker<BookmarksFolderPersistence, BookmarksFolderPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(BookmarksFolderUtil.class);
+
+		_serviceTracker = new ServiceTracker<BookmarksFolderPersistence, BookmarksFolderPersistence>(bundle.getBundleContext(),
+				BookmarksFolderPersistence.class, null);
+
+		_serviceTracker.open();
+	}
 }

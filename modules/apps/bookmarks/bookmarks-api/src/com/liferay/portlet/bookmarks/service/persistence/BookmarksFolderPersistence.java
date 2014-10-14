@@ -92,7 +92,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder findByResourceBlockId_First(
 		long resourceBlockId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Returns the first bookmarks folder in the ordered set where resourceBlockId = &#63;.
@@ -116,7 +116,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder findByResourceBlockId_Last(
 		long resourceBlockId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Returns the last bookmarks folder in the ordered set where resourceBlockId = &#63;.
@@ -141,7 +141,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder[] findByResourceBlockId_PrevAndNext(
 		long folderId, long resourceBlockId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Removes all the bookmarks folders where resourceBlockId = &#63; from the database.
@@ -210,7 +210,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder findByUuid_First(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Returns the first bookmarks folder in the ordered set where uuid = &#63;.
@@ -234,7 +234,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder findByUuid_Last(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Returns the last bookmarks folder in the ordered set where uuid = &#63;.
@@ -259,7 +259,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder[] findByUuid_PrevAndNext(
 		long folderId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Removes all the bookmarks folders where uuid = &#63; from the database.
@@ -286,7 +286,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	*/
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder findByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Returns the bookmarks folder where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -318,7 +318,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	*/
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder removeByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Returns the number of bookmarks folders where uuid = &#63; and groupId = &#63;.
@@ -385,7 +385,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder findByUuid_C_First(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Returns the first bookmarks folder in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -411,7 +411,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Returns the last bookmarks folder in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -438,7 +438,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder[] findByUuid_C_PrevAndNext(
 		long folderId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Removes all the bookmarks folders where uuid = &#63; and companyId = &#63; from the database.
@@ -509,7 +509,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder findByGroupId_First(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Returns the first bookmarks folder in the ordered set where groupId = &#63;.
@@ -533,7 +533,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder findByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Returns the last bookmarks folder in the ordered set where groupId = &#63;.
@@ -558,7 +558,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder[] findByGroupId_PrevAndNext(
 		long folderId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Returns all the bookmarks folders that the user has permission to view where groupId = &#63;.
@@ -613,7 +613,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder[] filterFindByGroupId_PrevAndNext(
 		long folderId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Removes all the bookmarks folders where groupId = &#63; from the database.
@@ -690,7 +690,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder findByCompanyId_First(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Returns the first bookmarks folder in the ordered set where companyId = &#63;.
@@ -714,7 +714,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder findByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Returns the last bookmarks folder in the ordered set where companyId = &#63;.
@@ -739,7 +739,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder[] findByCompanyId_PrevAndNext(
 		long folderId, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Removes all the bookmarks folders where companyId = &#63; from the database.
@@ -812,7 +812,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder findByG_P_First(
 		long groupId, long parentFolderId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Returns the first bookmarks folder in the ordered set where groupId = &#63; and parentFolderId = &#63;.
@@ -838,7 +838,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder findByG_P_Last(
 		long groupId, long parentFolderId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Returns the last bookmarks folder in the ordered set where groupId = &#63; and parentFolderId = &#63;.
@@ -865,7 +865,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder[] findByG_P_PrevAndNext(
 		long folderId, long groupId, long parentFolderId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Returns all the bookmarks folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63;.
@@ -924,7 +924,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder[] filterFindByG_P_PrevAndNext(
 		long folderId, long groupId, long parentFolderId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Removes all the bookmarks folders where groupId = &#63; and parentFolderId = &#63; from the database.
@@ -1008,7 +1008,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder findByC_NotS_First(
 		long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Returns the first bookmarks folder in the ordered set where companyId = &#63; and status &ne; &#63;.
@@ -1034,7 +1034,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder findByC_NotS_Last(
 		long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Returns the last bookmarks folder in the ordered set where companyId = &#63; and status &ne; &#63;.
@@ -1061,7 +1061,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder[] findByC_NotS_PrevAndNext(
 		long folderId, long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Removes all the bookmarks folders where companyId = &#63; and status &ne; &#63; from the database.
@@ -1140,7 +1140,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder findByG_P_S_First(
 		long groupId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Returns the first bookmarks folder in the ordered set where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
@@ -1168,7 +1168,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder findByG_P_S_Last(
 		long groupId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Returns the last bookmarks folder in the ordered set where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
@@ -1197,7 +1197,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder[] findByG_P_S_PrevAndNext(
 		long folderId, long groupId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Returns all the bookmarks folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
@@ -1260,7 +1260,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder[] filterFindByG_P_S_PrevAndNext(
 		long folderId, long groupId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Removes all the bookmarks folders where groupId = &#63; and parentFolderId = &#63; and status = &#63; from the database.
@@ -1351,7 +1351,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder findByG_P_NotS_First(
 		long groupId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Returns the first bookmarks folder in the ordered set where groupId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
@@ -1379,7 +1379,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder findByG_P_NotS_Last(
 		long groupId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Returns the last bookmarks folder in the ordered set where groupId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
@@ -1408,7 +1408,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder[] findByG_P_NotS_PrevAndNext(
 		long folderId, long groupId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Returns all the bookmarks folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
@@ -1471,7 +1471,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder[] filterFindByG_P_NotS_PrevAndNext(
 		long folderId, long groupId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Removes all the bookmarks folders where groupId = &#63; and parentFolderId = &#63; and status &ne; &#63; from the database.
@@ -1569,7 +1569,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder findByF_C_P_NotS_First(
 		long folderId, long companyId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Returns the first bookmarks folder in the ordered set where folderId &gt; &#63; and companyId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
@@ -1599,7 +1599,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder findByF_C_P_NotS_Last(
 		long folderId, long companyId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksFolder> orderByComparator)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Returns the last bookmarks folder in the ordered set where folderId &gt; &#63; and companyId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
@@ -1672,7 +1672,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	*/
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder remove(
 		long folderId)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder updateImpl(
 		com.liferay.portlet.bookmarks.model.BookmarksFolder bookmarksFolder);
@@ -1686,7 +1686,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	*/
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder findByPrimaryKey(
 		long folderId)
-		throws com.liferay.portlet.bookmarks.NoSuchFolderException;
+		throws com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 	/**
 	* Returns the bookmarks folder with the primary key or returns <code>null</code> if it could not be found.

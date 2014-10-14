@@ -16,8 +16,10 @@ package com.liferay.portlet.bookmarks.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for BookmarksEntry. This utility wraps
@@ -201,14 +203,7 @@ public class BookmarksEntryServiceUtil {
 	}
 
 	public static BookmarksEntryService getService() {
-		if (_service == null) {
-			_service = (BookmarksEntryService)PortalBeanLocatorUtil.locate(BookmarksEntryService.class.getName());
-
-			ReferenceRegistry.registerReference(BookmarksEntryServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -218,5 +213,14 @@ public class BookmarksEntryServiceUtil {
 	public void setService(BookmarksEntryService service) {
 	}
 
-	private static BookmarksEntryService _service;
+	private static ServiceTracker<BookmarksEntryService, BookmarksEntryService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(BookmarksEntryServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<BookmarksEntryService, BookmarksEntryService>(bundle.getBundleContext(),
+				BookmarksEntryService.class, null);
+
+		_serviceTracker.open();
+	}
 }

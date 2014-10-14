@@ -36,7 +36,7 @@ public class BookmarksSearcher extends BaseSearcher {
 
 	public BookmarksSearcher() {
 		setDefaultSelectedFieldNames(
-			Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK);
+			Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK, Field.UID);
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}

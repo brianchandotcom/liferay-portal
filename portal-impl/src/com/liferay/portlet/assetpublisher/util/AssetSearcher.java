@@ -46,7 +46,7 @@ public class AssetSearcher extends BaseSearcher {
 
 	public AssetSearcher() {
 		setDefaultSelectedFieldNames(
-			Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK);
+			Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK, Field.UID);
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}

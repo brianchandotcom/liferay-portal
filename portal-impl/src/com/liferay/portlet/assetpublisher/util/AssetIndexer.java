@@ -41,7 +41,7 @@ public class AssetIndexer extends BaseIndexer {
 
 	public AssetIndexer() {
 		setDefaultSelectedFieldNames(
-			Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK);
+			Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK, Field.UID);
 	}
 
 	@Override

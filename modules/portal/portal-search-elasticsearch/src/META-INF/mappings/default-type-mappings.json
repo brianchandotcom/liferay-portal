@@ -28,7 +28,7 @@
 					"match": "ddm__*",
 					"match_mapping_type": "string",
 					"mapping": {
-						"index": "not_analyzed",
+						"index": "analyzed",
 						"store": "true",
 						"type": "string"
 					}

@@ -929,15 +929,15 @@ AUI.add(
 
 						var parsedValue = instance.getParsedValue(instance.getValue());
 
-						var isNotEmpty = instance.isNotEmpty(parsedValue);
+						var notEmpty = instance.isNotEmpty(parsedValue);
 
 						var altNode = A.one('#' + instance.getInputName() + 'Alt');
 
-						altNode.attr('disabled', !isNotEmpty);
+						altNode.attr('disabled', !notEmpty);
 
 						var titleNode = A.one('#' + instance.getInputName() + 'Title');
 
-						if (isNotEmpty) {
+						if (notEmpty) {
 							altNode.val(parsedValue.alt || '');
 
 							titleNode.val(parsedValue.name || '');
@@ -950,11 +950,11 @@ AUI.add(
 
 						var clearButtonNode = A.one('#' + instance.getInputName() + 'ClearButton');
 
-						clearButtonNode.toggle(isNotEmpty);
+						clearButtonNode.toggle(notEmpty);
 
 						var previewButtonNode = A.one('#' + instance.getInputName() + 'PreviewButton');
 
-						previewButtonNode.toggle(isNotEmpty);
+						previewButtonNode.toggle(notEmpty);
 					},
 
 					_getImagePreviewURL: function() {
@@ -1038,7 +1038,7 @@ AUI.add(
 
 							parsedValue.alt = altNode.val();
 
-							value = AJSON.stringify(parsedValue)
+							value = AJSON.stringify(parsedValue);
 						}
 						else {
 							value = '';

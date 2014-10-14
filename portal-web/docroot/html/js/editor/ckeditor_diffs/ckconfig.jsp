@@ -120,88 +120,95 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 	config.stylesCombo_stylesSet = 'liferayStyles';
 
 	config.toolbar_editInPlace = [
+		['Bold', 'Italic', 'Underline', 'Strike', '-', 'Subscript', 'Superscript', '-', 'RemoveFormat'],
+		['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
+		'/',
 		['Styles'],
-		['Bold', 'Italic', 'Underline', 'Strike'],
-		['Subscript', 'Superscript', 'SpecialChar'],
+		['SpellChecker', 'Scayt', '-', 'SpecialChar'],
 		['Undo', 'Redo'],
-		['SpellChecker', 'Scayt'],
-		['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'], ['Source', 'RemoveFormat'],
+		['Source'],
 		['A11YBtn']
 	];
 
 	config.toolbar_email = [
-		['FontSize', 'TextColor', 'BGColor', '-', 'Bold', 'Italic', 'Underline', 'Strike'],
+		['Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat'],
+		['TextColor', 'BGColor'],
 		['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-		['SpellChecker', 'Scayt'],
-		'/',
-		['Undo', 'Redo', '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'SelectAll', 'RemoveFormat'],
-		['Source'],
+		['FontSize'],
 		['Link', 'Unlink'],
 		['Image'],
+		'/',
+		['Cut', 'Copy', 'Paste', '-', 'PasteText', 'PasteFromWord', '-', 'SelectAll', '-', 'Undo', 'Redo' ],
+		['SpellChecker', 'Scayt'],
+		['Source'],
 		['A11YBtn']
 	];
 
 	config.toolbar_liferay = [
-		['Bold', 'Italic', 'Underline', 'Strike'],
+		['Bold', 'Italic', 'Underline', 'Strike', '-', 'Subscript', 'Superscript', '-', 'RemoveFormat'],
+		['TextColor', 'BGColor'],
+		['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+		['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
+		'/',
+		['Styles', 'FontSize'],
+		['Link', 'Unlink', 'Anchor'],
+
+		['Table', '-', 'Image', <c:if test="<%= XugglerUtil.isEnabled() %>"> 'Audio', 'Video',</c:if> 'Flash', '-', 'Smiley', 'SpecialChar'],
+		'/',
 
 		<c:if test="<%= inlineEdit %>">
 			['AjaxSave', '-', 'Restore'],
 		</c:if>
 
-		['Undo', 'Redo', '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord' ],
-		['Styles', 'FontSize', '-', 'TextColor', 'BGColor'],
-		'/',
-		['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
-		['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-		['Image', 'Link', 'Unlink', 'Anchor'],
-		['Flash', <c:if test="<%= XugglerUtil.isEnabled() %>"> 'Audio', 'Video',</c:if> 'Table', '-', 'Smiley', 'SpecialChar'],
-		['Find', 'Replace', 'SpellChecker', 'Scayt'],
-		['SelectAll', 'RemoveFormat'],
-		['Subscript', 'Superscript']
+		['Cut', 'Copy', 'Paste', '-', 'PasteText', 'PasteFromWord', '-', 'SelectAll' , '-', 'Undo', 'Redo'],
+		['Find', 'Replace', '-', 'SpellChecker', 'Scayt'],
 
 		<c:if test="<%= !inlineEdit %>">
-			,['Source']
+			['Source'],
 		</c:if>
 
-		,['A11YBtn']
+		['A11YBtn']
 	];
 
 	config.toolbar_liferayArticle = [
-		['Styles', 'FontSize', '-', 'TextColor', 'BGColor'],
-		['Bold', 'Italic', 'Underline', 'Strike'],
-		['Subscript', 'Superscript'],
-		'/',
-		['Undo', 'Redo', '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'SelectAll', 'RemoveFormat'],
-		['Find', 'Replace', 'SpellChecker', 'Scayt'],
-		['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
+		['Bold', 'Italic', 'Underline', 'Strike', '-', 'Subscript', 'Superscript', '-', 'RemoveFormat'],
+		['TextColor', 'BGColor'],
 		['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+		['NumberedList', 'BulletedList', '-' ,'Outdent', 'Indent', '-', 'Blockquote'],
 		'/',
-		['Source'],
+		['Styles', 'FontSize'],
 		['Link', 'Unlink', 'Anchor'],
-		['Image', 'Flash', <c:if test="<%= XugglerUtil.isEnabled() %>">'Audio', 'Video',</c:if> 'Table', '-', 'Smiley', 'SpecialChar', 'LiferayPageBreak'],
+		['Table', '-', 'Image', <c:if test="<%= XugglerUtil.isEnabled() %>">'Audio', 'Video',</c:if>, 'Flash', '-', 'LiferayPageBreak', '-', 'Smiley', 'SpecialChar'],
+		'/',
+		['Cut', 'Copy', 'Paste', '-', 'PasteText', 'PasteFromWord', '-', 'SelectAll', '-', 'Undo', 'Redo'],
+		['Find', 'Replace', '-', 'SpellChecker', 'Scayt'],
+		['Source'],
 		['A11YBtn']
 	];
 
 	config.toolbar_phone = [
 		['Bold', 'Italic', 'Underline'],
 		['NumberedList', 'BulletedList'],
-		['Image', 'Link', 'Unlink'],
+		['Link', 'Unlink'],
+		['Image'],
 		['Source']
 	];
 
 	config.toolbar_simple = [
 		['Bold', 'Italic', 'Underline', 'Strike'],
 		['NumberedList', 'BulletedList'],
-		['Image', 'Link', 'Unlink', 'Table'],
+		['Link', 'Unlink'],
+		['Table', 'Image'],
 		['Source']
 	];
 
 	config.toolbar_tablet = [
 		['Bold', 'Italic', 'Underline', 'Strike'],
-		['NumberedList', 'BulletedList'],
-		['Image', 'Link', 'Unlink'],
 		['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+		['NumberedList', 'BulletedList'],
 		['Styles', 'FontSize'],
+		['Link', 'Unlink'],
+		['Image'],
 		['Source']
 	];
 

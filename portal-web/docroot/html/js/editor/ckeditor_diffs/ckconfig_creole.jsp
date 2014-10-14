@@ -110,39 +110,37 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 	config.resize_enabled = <%= resizable %>;
 
 	config.toolbar_creole = [
-		['Cut','Copy','Paste','PasteText','PasteFromWord'],
-		['Undo','Redo'],
-		['Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
+		['Bold', 'Italic', '-' ,'RemoveFormat'],
+		['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
 		['Format'],
-
-		<%
-		String linkButtonBar = "['Link', 'Unlink']";
-
-		if (wikiPageResourcePrimKey > 0) {
-			linkButtonBar = "['Link', 'Unlink', 'Image']";
-		}
-		%>
-
-		<%= linkButtonBar %>,
-
-		['Table', '-', 'HorizontalRule', 'SpecialChar' ],
-		['Find','Replace','-','SelectAll','RemoveFormat'],
+		['Link', 'Unlink'],
+		['Table', '-', <c:if test="<%= (wikiPageResourcePrimKey > 0) %>">'Image', '-', </c:if> 'HorizontalRule', '-', 'SpecialChar' ],
+		'/',
+		['Cut', 'Copy', 'Paste', '-', 'PasteText', 'PasteFromWord', '-', 'SelectAll', '-', 'Undo', 'Redo'],
+		['Find','Replace'],
 		['Source'],
 		['A11YBtn']
 	];
 
 	config.toolbar_phone = [
-		['Bold', 'Italic', 'Underline'],
+		['Bold', 'Italic'],
 		['NumberedList', 'BulletedList'],
-		['Image', 'Link', 'Unlink']
+		['Link', 'Unlink']
+
+		<c:if test="<%= (wikiPageResourcePrimKey > 0) %>">
+		, ['Image']
+		</c:if>
 	];
 
 	config.toolbar_tablet = [
-		['Bold', 'Italic', 'Underline', 'Strike'],
-		['NumberedList', 'BulletedList'],
-		['Image', 'Link', 'Unlink'],
-		['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-		['Styles', 'FontSize']
+		['Bold', 'Italic'],
+		['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
+		['Format'],
+		['Link', 'Unlink']
+
+		<c:if test="<%= (wikiPageResourcePrimKey > 0) %>">
+		, ['Image']
+		</c:if>
 	];
 
 	ckEditor.on(

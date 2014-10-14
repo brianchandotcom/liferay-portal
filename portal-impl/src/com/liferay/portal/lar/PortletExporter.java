@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerStatusMessageSenderUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
@@ -237,9 +238,11 @@ public class PortletExporter {
 			PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE);
 
 		if (updateLastPublishDate) {
+			DateRange adjustedDateRange = new DateRange(
+				startDate, portletDataContext.getEndDate());
+
 			ExportImportDateUtil.updateLastPublishDate(
-				portletId, jxPortletPreferences,
-				portletDataContext.getDateRange(),
+				portletId, jxPortletPreferences, adjustedDateRange,
 				portletDataContext.getEndDate());
 		}
 	}

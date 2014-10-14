@@ -66,6 +66,21 @@ public class ExportImportDateUtil {
 
 	public static final String RANGE_LAST = "last";
 
+	public static void clearLastPublishDate(long groupId, boolean privateLayout)
+		throws PortalException {
+
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			groupId, privateLayout);
+
+		UnicodeProperties settingsProperties =
+			layoutSet.getSettingsProperties();
+
+		settingsProperties.remove(_LAST_PUBLISH_DATE);
+
+		LayoutSetLocalServiceUtil.updateSettings(
+			groupId, privateLayout, settingsProperties.toString());
+	}
+
 	public static Calendar getCalendar(
 		PortletRequest portletRequest, String paramPrefix,
 		boolean timeZoneSensitive) {

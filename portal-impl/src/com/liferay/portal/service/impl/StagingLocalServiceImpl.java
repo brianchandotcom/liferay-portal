@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.log.Log;
@@ -43,7 +44,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutRevision;
-import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.LayoutSetBranchConstants;
 import com.liferay.portal.model.LayoutStagingHandler;
@@ -121,7 +121,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			deleteLayoutSetBranches(targetGroupId, false);
 		}
 		else if (layoutSetBranch != null) {
-			clearLastPublishDate(targetGroupId, false);
+			ExportImportDateUtil.clearLastPublishDate(targetGroupId, false);
 		}
 
 		layoutSetBranch = layoutSetBranchLocalService.fetchLayoutSetBranch(
@@ -136,7 +136,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			deleteLayoutSetBranches(targetGroupId, true);
 		}
 		else if (layoutSetBranch != null) {
-			clearLastPublishDate(targetGroupId, false);
+			ExportImportDateUtil.clearLastPublishDate(targetGroupId, true);
 		}
 	}
 
@@ -540,21 +540,6 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		return groupLocalService.updateGroup(
 			stagingGroup.getGroupId(),
 			stagingTypeSettingsProperties.toString());
-	}
-
-	protected void clearLastPublishDate(long groupId, boolean privateLayout)
-		throws PortalException {
-
-		LayoutSet layoutSet = layoutSetLocalService.getLayoutSet(
-			groupId, privateLayout);
-
-		UnicodeProperties settingsProperties =
-			layoutSet.getSettingsProperties();
-
-		settingsProperties.remove("last-publish-date");
-
-		layoutSetLocalService.updateSettings(
-			groupId, privateLayout, settingsProperties.toString());
 	}
 
 	protected void deleteLayoutSetBranches(long groupId, boolean privateLayout)

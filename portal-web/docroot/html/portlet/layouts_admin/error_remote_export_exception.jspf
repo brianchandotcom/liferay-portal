@@ -21,22 +21,17 @@
 	%>
 
 	<c:if test="<%= ree.getType() == RemoteExportException.BAD_CONNECTION %>">
-		<c:choose>
-			<c:when test="<%= stagedRemotely %>">
-				<liferay-ui:message arguments='<%= "<em>" + ree.getURL() + "</em>" %>' key="could-not-connect-to-address-x.-please-verify-that-the-specified-port-is-correct-and-that-the-remote-server-is-configured-to-accept-requests-from-this-server" translateArguments="<%= false %>" />
+		<liferay-ui:message arguments='<%= "<em>" + ree.getURL() + "</em>" %>' key="could-not-connect-to-address-x.-please-verify-that-the-specified-port-is-correct-and-that-the-remote-server-is-configured-to-accept-requests-from-this-server" translateArguments="<%= false %>" />
 
-				<liferay-util:buffer var="forceDisableLinkBuffer">
-					<aui:a href="javascript:;" id="forceDisableLink">
-						<liferay-ui:message key="this-link" />
-					</aui:a>
-				</liferay-util:buffer>
+		<c:if test="<%= liveGroup.isStaged() && liveGroup.isStagedRemotely() %>">
+			<liferay-util:buffer var="forceDisableLinkBuffer">
+				<aui:a href="javascript:;" id="forceDisableLink">
+					<liferay-ui:message key="this-link" />
+				</aui:a>
+			</liferay-util:buffer>
 
-				<liferay-ui:message arguments="<%= forceDisableLinkBuffer %>" key="if-you-want-to-force-disabling-remote-staging,-click-x" />
-			</c:when>
-			<c:otherwise>
-				<liferay-ui:message arguments='<%= "<em>" + ree.getURL() + "</em>" %>' key="could-not-connect-to-address-x.-please-verify-that-the-specified-port-is-correct-and-that-the-remote-server-is-configured-to-accept-requests-from-this-server" translateArguments="<%= false %>" />
-			</c:otherwise>
-		</c:choose>
+			<liferay-ui:message arguments="<%= forceDisableLinkBuffer %>" key="if-you-want-to-force-disabling-remote-staging,-click-x" />
+		</c:if>
 	</c:if>
 
 	<c:if test="<%= ree.getType() == RemoteExportException.INVALID_GROUP %>">

@@ -319,7 +319,7 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewCountAlert">
 			<var name="notificationCount" value="1" />
 		</execute>
 
@@ -332,7 +332,7 @@
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewCountAlert">
 			<var name="notificationCount" value="1" />
 		</execute>
 

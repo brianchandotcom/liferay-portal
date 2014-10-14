@@ -108,9 +108,7 @@
 	</command>
 
 	<command name="approveTaskByNotifications">
-		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
-
-		<execute action="PGNotificationsdockbar#assertClick" locator-key1="COUNT" value1="${notificationCount}" />
+		<execute action="PGNotificationsdockbar#assertClick" locator-key1="COUNT_ALERT" value1="${notificationCount}" />
 		<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATIONS_CONTENT_GENERIC" value1="${notificationContent}" />
 
 		<execute action="CPMyworkflowtasksTask#selectFrame" locator-key1="MANAGE_MY_ACCOUNT_IFRAME" />
@@ -118,8 +116,6 @@
 		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="MENU_APPROVE" value1="Approve" />
 		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="DIALOG_BOX_OK_BUTTON" value1="OK" />
 		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="assignToMeTaskByActions">
@@ -225,9 +221,7 @@
 	</command>
 
 	<command name="assignToMeTaskByNotifications">
-		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
-
-		<execute action="PGNotificationsdockbar#assertClick" locator-key1="COUNT" value1="${notificationCount}" />
+		<execute action="PGNotificationsdockbar#assertClick" locator-key1="COUNT_ALERT" value1="${notificationCount}" />
 		<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATIONS_CONTENT_GENERIC" value1="${notificationContent}" />
 
 		<execute action="CPMyworkflowtasksTask#selectFrame" locator-key1="MANAGE_MY_ACCOUNT_IFRAME" />
@@ -235,8 +229,6 @@
 		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="MENU_ASSIGN_TO_ME" value1="Assign to Me" />
 		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="DIALOG_BOX_OK_BUTTON" value1="OK" />
 		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="configureDocumentsAndMediaWorkflow">

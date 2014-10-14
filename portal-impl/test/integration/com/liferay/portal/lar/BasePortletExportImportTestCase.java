@@ -17,6 +17,7 @@ package com.liferay.portal.lar;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.ExportImportClassedModelUtil;
+import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.template.TemplateHandler;
@@ -225,10 +226,10 @@ public abstract class BasePortletExportImportTestCase
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
 				layout, getPortletId());
 
-		long lastPublishDate = GetterUtil.getLong(
-			portletPreferences.getValue("last-publish-date", StringPool.BLANK));
+		Date lastPublishDate = ExportImportDateUtil.getLastPublishDate(
+			portletPreferences);
 
-		Assert.assertEquals(endDate.getTime(), lastPublishDate);
+		Assert.assertEquals(endDate.getTime(), lastPublishDate.getTime());
 	}
 
 	protected AssetLink addAssetLink(

@@ -41,7 +41,7 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -65,8 +65,6 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
-		sb.append(", type=");
-		sb.append(type);
 		sb.append(", structureId=");
 		sb.append(structureId);
 		sb.append(", templateId=");
@@ -150,13 +148,6 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 		}
 		else {
 			journalFeedImpl.setDescription(description);
-		}
-
-		if (type == null) {
-			journalFeedImpl.setType(StringPool.BLANK);
-		}
-		else {
-			journalFeedImpl.setType(type);
 		}
 
 		if (structureId == null) {
@@ -244,7 +235,6 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 		feedId = objectInput.readUTF();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
-		type = objectInput.readUTF();
 		structureId = objectInput.readUTF();
 		templateId = objectInput.readUTF();
 		rendererTemplateId = objectInput.readUTF();
@@ -302,13 +292,6 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 		}
 		else {
 			objectOutput.writeUTF(description);
-		}
-
-		if (type == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(type);
 		}
 
 		if (structureId == null) {
@@ -390,7 +373,6 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 	public String feedId;
 	public String name;
 	public String description;
-	public String type;
 	public String structureId;
 	public String templateId;
 	public String rendererTemplateId;

@@ -102,7 +102,6 @@ public class GetArticlesAction extends Action {
 		String title = null;
 		String description = null;
 		String content = null;
-		String type = ParamUtil.getString(request, "type");
 		String[] structureIds = StringUtil.split(
 			ParamUtil.getString(request, "structureId"));
 		String[] templateIds = StringUtil.split(
@@ -165,9 +164,8 @@ public class GetArticlesAction extends Action {
 
 		return JournalArticleServiceUtil.search(
 			companyId, groupId, folderIds, 0, articleId, version, title,
-			description, content, type, structureIds, templateIds,
-			displayDateGT, displayDateLT, status, reviewDate, andOperator,
-			start, end, obc);
+			description, content, structureIds, templateIds, displayDateGT,
+			displayDateLT, status, reviewDate, andOperator, start, end, obc);
 	}
 
 	protected byte[] getContent(

@@ -55,7 +55,7 @@ public class JournalFeedLocalServiceImpl
 	@Override
 	public JournalFeed addFeed(
 			long userId, long groupId, String feedId, boolean autoFeedId,
-			String name, String description, String type, String structureId,
+			String name, String description, String structureId,
 			String templateId, String rendererTemplateId, int delta,
 			String orderByCol, String orderByType,
 			String targetLayoutFriendlyUrl, String targetPortletId,
@@ -91,7 +91,6 @@ public class JournalFeedLocalServiceImpl
 		feed.setFeedId(feedId);
 		feed.setName(name);
 		feed.setDescription(description);
-		feed.setType(type);
 		feed.setStructureId(structureId);
 		feed.setTemplateId(templateId);
 		feed.setRendererTemplateId(rendererTemplateId);
@@ -286,11 +285,11 @@ public class JournalFeedLocalServiceImpl
 	@Override
 	public JournalFeed updateFeed(
 			long groupId, String feedId, String name, String description,
-			String type, String structureId, String templateId,
-			String rendererTemplateId, int delta, String orderByCol,
-			String orderByType, String targetLayoutFriendlyUrl,
-			String targetPortletId, String contentField, String feedFormat,
-			double feedVersion, ServiceContext serviceContext)
+			String structureId, String templateId, String rendererTemplateId,
+			int delta, String orderByCol, String orderByType,
+			String targetLayoutFriendlyUrl, String targetPortletId,
+			String contentField, String feedFormat, double feedVersion,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Feed
@@ -304,7 +303,6 @@ public class JournalFeedLocalServiceImpl
 		feed.setModifiedDate(serviceContext.getModifiedDate(null));
 		feed.setName(name);
 		feed.setDescription(description);
-		feed.setType(type);
 		feed.setStructureId(structureId);
 		feed.setTemplateId(templateId);
 		feed.setRendererTemplateId(rendererTemplateId);

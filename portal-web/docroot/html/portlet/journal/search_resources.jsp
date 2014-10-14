@@ -144,7 +144,6 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 					searchContext.setAttribute(Field.DESCRIPTION, searchTerms.getDescription());
 					searchContext.setAttribute(Field.STATUS, searchTerms.getStatus());
 					searchContext.setAttribute(Field.TITLE, searchTerms.getTitle());
-					searchContext.setAttribute(Field.TYPE, searchTerms.getType());
 				}
 				else {
 					indexer = JournalSearcher.getInstance();

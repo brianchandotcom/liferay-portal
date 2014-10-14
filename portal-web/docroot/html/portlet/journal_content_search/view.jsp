@@ -19,5 +19,4 @@
 <liferay-ui:journal-content-search
 	showListed="<%= showListed %>"
 	targetPortletId="<%= targetPortletId %>"
-	type="<%= type %>"
 />

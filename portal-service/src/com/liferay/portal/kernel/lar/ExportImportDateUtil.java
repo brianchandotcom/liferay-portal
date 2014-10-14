@@ -200,15 +200,6 @@ public class ExportImportDateUtil {
 			themeDisplay.getTimeZone());
 	}
 
-	public static Date getLastPublishDate(Layout layout)
-		throws PortalException {
-
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			layout.getGroupId(), layout.isPrivateLayout());
-
-		return getLastPublishDate(layoutSet);
-	}
-
 	public static Date getLastPublishDate(LayoutSet layoutSet)
 		throws PortalException {
 

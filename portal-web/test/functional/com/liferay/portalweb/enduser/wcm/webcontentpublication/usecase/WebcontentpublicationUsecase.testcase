@@ -842,7 +842,9 @@
 			<var name="portletName" value="Server Administration" />
 		</execute>
 
-		<execute macro="ServerAdministration#enableOpenOfficeIntegration" />
+		<execute macro="ServerAdministration#configureExternalServices">
+			<var name="enableOpenOfficeIntegration" value="true" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

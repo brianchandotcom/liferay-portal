@@ -1,0 +1,7 @@
+<definition>
+	<command name="assertElementPresent">
+		<case locator-key1="VIDEO_GENERATION_THUMBNAIL_RESOLUTION">
+			<execute function="AssertElementPresent#assertElementPresent" />
+		</case>
+	</command>
+</definition>

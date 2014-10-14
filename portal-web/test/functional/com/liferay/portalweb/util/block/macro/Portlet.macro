@@ -230,6 +230,18 @@
 		</if>
 	</command>
 
+	<command name="shutdownServer">
+		<description message="This will shutdown the server at master-bundles\tomcat." />
+
+		<execute action="BaseLiferay#antCommand" locator1="build-test.xml" value1="stop-app-server" />
+	</command>
+
+	<command name="startServer">
+		<description message="This will start the server at master-bundles\tomcat." />
+
+		<execute action="BaseLiferay#antCommand" locator1="build-test.xml" value1="start-app-server" />
+	</command>
+
 	<command name="tearDownPG">
 		<description message="Delete all ${portletName} portlets from the Welcome Page, except default portlets." />
 

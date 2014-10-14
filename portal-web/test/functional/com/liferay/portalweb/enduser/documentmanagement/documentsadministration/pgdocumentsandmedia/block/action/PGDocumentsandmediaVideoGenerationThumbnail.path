@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>PGDocumentsandmediaVideoGenerationThumbnail</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGDocumentsandmediaVideoGenerationThumbnail</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGDocumentsandmediaVideoGenerationThumbnail</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIDEO_GENERATION_THUMBNAIL_RESOLUTION</td>
+	<td>//head/title[contains(.,'${key_videoGenerationThumbnailResolution}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

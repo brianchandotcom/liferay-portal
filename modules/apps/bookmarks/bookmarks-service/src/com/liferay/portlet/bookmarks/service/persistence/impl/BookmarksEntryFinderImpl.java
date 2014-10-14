@@ -14,10 +14,12 @@
 
 package com.liferay.portlet.bookmarks.service.persistence.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.impl.BookmarksEntryImpl;
 import com.liferay.portlet.bookmarks.service.persistence.BookmarksEntryFinder;
@@ -48,6 +50,10 @@ public class BookmarksEntryFinderImpl
 
 			q.addEntity("BookmarksEntry", BookmarksEntryImpl.class);
 
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(_BOOKMARKS_ENTRY_CLASS_NAME_ID);
+
 			return q.list(true);
 		}
 		catch (Exception e) {
@@ -57,5 +63,8 @@ public class BookmarksEntryFinderImpl
 			closeSession(session);
 		}
 	}
+
+	private static final long _BOOKMARKS_ENTRY_CLASS_NAME_ID =
+		PortalUtil.getClassNameId(BookmarksEntry.class);
 
 }

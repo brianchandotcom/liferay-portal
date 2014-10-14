@@ -60,7 +60,7 @@
 					FROM
 						AssetEntry
 					WHERE
-						classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.BOOKMARKS.MODEL.BOOKMARKSFOLDER$]
+						classNameId = ?
 				))
 		]]>
 	</sql>
@@ -123,7 +123,7 @@
 					FROM
 						AssetEntry
 					WHERE
-						classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.BOOKMARKS.MODEL.BOOKMARKSENTRY$]
+						classNameId = ?
 				))
 		]]>
 	</sql>

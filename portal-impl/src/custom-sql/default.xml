@@ -5,7 +5,6 @@
 	<sql file="custom-sql/announcements.xml" />
 	<sql file="custom-sql/asset.xml" />
 	<sql file="custom-sql/blogs.xml" />
-	<sql file="custom-sql/bookmarks.xml" />
 	<sql file="custom-sql/calendar.xml" />
 	<sql file="custom-sql/documentlibrary.xml" />
 	<sql file="custom-sql/dynamicdatalists.xml" />

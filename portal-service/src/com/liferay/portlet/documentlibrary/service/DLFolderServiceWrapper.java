@@ -298,6 +298,12 @@ public class DLFolderServiceWrapper implements DLFolderService,
 		_dlFolderService.unlockFolder(groupId, parentFolderId, name, lockUuid);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by more general {@link
+	#updateFolder(long, String, String, long, List, int,
+	ServiceContext)}
+	*/
+	@Deprecated
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
 		long folderId, java.lang.String name, java.lang.String description,
@@ -308,6 +314,18 @@ public class DLFolderServiceWrapper implements DLFolderService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderService.updateFolder(folderId, name, description,
 			defaultFileEntryTypeId, fileEntryTypeIds, overrideFileEntryTypes,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
+		long folderId, java.lang.String name, java.lang.String description,
+		long defaultFileEntryTypeId,
+		java.util.List<java.lang.Long> fileEntryTypeIds, int restrictionType,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFolderService.updateFolder(folderId, name, description,
+			defaultFileEntryTypeId, fileEntryTypeIds, restrictionType,
 			serviceContext);
 	}
 

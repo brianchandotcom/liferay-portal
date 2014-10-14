@@ -282,6 +282,12 @@ public class DLFolderServiceUtil {
 		getService().unlockFolder(groupId, parentFolderId, name, lockUuid);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by more general {@link
+	#updateFolder(long, String, String, long, List, int,
+	ServiceContext)}
+	*/
+	@Deprecated
 	public static com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
 		long folderId, java.lang.String name, java.lang.String description,
 		long defaultFileEntryTypeId,
@@ -292,6 +298,18 @@ public class DLFolderServiceUtil {
 		return getService()
 				   .updateFolder(folderId, name, description,
 			defaultFileEntryTypeId, fileEntryTypeIds, overrideFileEntryTypes,
+			serviceContext);
+	}
+
+	public static com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
+		long folderId, java.lang.String name, java.lang.String description,
+		long defaultFileEntryTypeId,
+		java.util.List<java.lang.Long> fileEntryTypeIds, int restrictionType,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateFolder(folderId, name, description,
+			defaultFileEntryTypeId, fileEntryTypeIds, restrictionType,
 			serviceContext);
 	}
 

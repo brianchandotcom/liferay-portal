@@ -1647,7 +1647,7 @@
 		<field name="lastPostDate" type="Date" />
 		<field name="defaultFileEntryTypeId" type="long" />
 		<field name="hidden" type="boolean" />
-		<field name="overrideFileEntryTypes" type="boolean" />
+		<field name="restrictionType" type="int" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />

@@ -155,7 +155,7 @@ public class DLFolderPersistenceTest {
 
 		newDLFolder.setHidden(RandomTestUtil.randomBoolean());
 
-		newDLFolder.setOverrideFileEntryTypes(RandomTestUtil.randomBoolean());
+		newDLFolder.setRestrictionType(RandomTestUtil.nextInt());
 
 		newDLFolder.setStatus(RandomTestUtil.nextInt());
 
@@ -204,8 +204,8 @@ public class DLFolderPersistenceTest {
 			newDLFolder.getDefaultFileEntryTypeId());
 		Assert.assertEquals(existingDLFolder.getHidden(),
 			newDLFolder.getHidden());
-		Assert.assertEquals(existingDLFolder.getOverrideFileEntryTypes(),
-			newDLFolder.getOverrideFileEntryTypes());
+		Assert.assertEquals(existingDLFolder.getRestrictionType(),
+			newDLFolder.getRestrictionType());
 		Assert.assertEquals(existingDLFolder.getStatus(),
 			newDLFolder.getStatus());
 		Assert.assertEquals(existingDLFolder.getStatusByUserId(),
@@ -501,8 +501,8 @@ public class DLFolderPersistenceTest {
 			"repositoryId", true, "mountPoint", true, "parentFolderId", true,
 			"treePath", true, "name", true, "description", true,
 			"lastPostDate", true, "defaultFileEntryTypeId", true, "hidden",
-			true, "overrideFileEntryTypes", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
+			true, "restrictionType", true, "status", true, "statusByUserId",
+			true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -768,7 +768,7 @@ public class DLFolderPersistenceTest {
 
 		dlFolder.setHidden(RandomTestUtil.randomBoolean());
 
-		dlFolder.setOverrideFileEntryTypes(RandomTestUtil.randomBoolean());
+		dlFolder.setRestrictionType(RandomTestUtil.nextInt());
 
 		dlFolder.setStatus(RandomTestUtil.nextInt());
 

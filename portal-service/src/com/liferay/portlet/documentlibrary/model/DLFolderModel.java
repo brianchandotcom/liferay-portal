@@ -358,25 +358,18 @@ public interface DLFolderModel extends BaseModel<DLFolder>, ContainerModel,
 	public void setHidden(boolean hidden);
 
 	/**
-	 * Returns the override file entry types of this document library folder.
+	 * Returns the restriction type of this document library folder.
 	 *
-	 * @return the override file entry types of this document library folder
+	 * @return the restriction type of this document library folder
 	 */
-	public boolean getOverrideFileEntryTypes();
+	public int getRestrictionType();
 
 	/**
-	 * Returns <code>true</code> if this document library folder is override file entry types.
+	 * Sets the restriction type of this document library folder.
 	 *
-	 * @return <code>true</code> if this document library folder is override file entry types; <code>false</code> otherwise
+	 * @param restrictionType the restriction type of this document library folder
 	 */
-	public boolean isOverrideFileEntryTypes();
-
-	/**
-	 * Sets whether this document library folder is override file entry types.
-	 *
-	 * @param overrideFileEntryTypes the override file entry types of this document library folder
-	 */
-	public void setOverrideFileEntryTypes(boolean overrideFileEntryTypes);
+	public void setRestrictionType(int restrictionType);
 
 	/**
 	 * Returns the status of this document library folder.

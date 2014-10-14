@@ -460,6 +460,12 @@ public class DLFolderServiceSoap {
 		}
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by more general {@link
+	#updateFolder(long, String, String, long, List, int,
+	ServiceContext)}
+	*/
+	@Deprecated
 	public static com.liferay.portlet.documentlibrary.model.DLFolderSoap updateFolder(
 		long folderId, java.lang.String name, java.lang.String description,
 		long defaultFileEntryTypeId, Long[] fileEntryTypeIds,
@@ -470,6 +476,27 @@ public class DLFolderServiceSoap {
 			com.liferay.portlet.documentlibrary.model.DLFolder returnValue = DLFolderServiceUtil.updateFolder(folderId,
 					name, description, defaultFileEntryTypeId,
 					ListUtil.toList(fileEntryTypeIds), overrideFileEntryTypes,
+					serviceContext);
+
+			return com.liferay.portlet.documentlibrary.model.DLFolderSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.documentlibrary.model.DLFolderSoap updateFolder(
+		long folderId, java.lang.String name, java.lang.String description,
+		long defaultFileEntryTypeId, Long[] fileEntryTypeIds,
+		int restrictionType,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.portlet.documentlibrary.model.DLFolder returnValue = DLFolderServiceUtil.updateFolder(folderId,
+					name, description, defaultFileEntryTypeId,
+					ListUtil.toList(fileEntryTypeIds), restrictionType,
 					serviceContext);
 
 			return com.liferay.portlet.documentlibrary.model.DLFolderSoap.toSoapModel(returnValue);

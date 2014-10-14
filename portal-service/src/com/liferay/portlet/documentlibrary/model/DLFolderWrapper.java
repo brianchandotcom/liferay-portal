@@ -70,7 +70,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 		attributes.put("lastPostDate", getLastPostDate());
 		attributes.put("defaultFileEntryTypeId", getDefaultFileEntryTypeId());
 		attributes.put("hidden", getHidden());
-		attributes.put("overrideFileEntryTypes", getOverrideFileEntryTypes());
+		attributes.put("restrictionType", getRestrictionType());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -184,11 +184,10 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 			setHidden(hidden);
 		}
 
-		Boolean overrideFileEntryTypes = (Boolean)attributes.get(
-				"overrideFileEntryTypes");
+		Integer restrictionType = (Integer)attributes.get("restrictionType");
 
-		if (overrideFileEntryTypes != null) {
-			setOverrideFileEntryTypes(overrideFileEntryTypes);
+		if (restrictionType != null) {
+			setRestrictionType(restrictionType);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -390,16 +389,6 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	}
 
 	/**
-	* Returns the override file entry types of this document library folder.
-	*
-	* @return the override file entry types of this document library folder
-	*/
-	@Override
-	public boolean getOverrideFileEntryTypes() {
-		return _dlFolder.getOverrideFileEntryTypes();
-	}
-
-	/**
 	* Returns the parent container model ID of this document library folder.
 	*
 	* @return the parent container model ID of this document library folder
@@ -460,6 +449,16 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	@Override
 	public long getRepositoryId() {
 		return _dlFolder.getRepositoryId();
+	}
+
+	/**
+	* Returns the restriction type of this document library folder.
+	*
+	* @return the restriction type of this document library folder
+	*/
+	@Override
+	public int getRestrictionType() {
+		return _dlFolder.getRestrictionType();
 	}
 
 	/**
@@ -744,16 +743,6 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	}
 
 	/**
-	* Returns <code>true</code> if this document library folder is override file entry types.
-	*
-	* @return <code>true</code> if this document library folder is override file entry types; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isOverrideFileEntryTypes() {
-		return _dlFolder.isOverrideFileEntryTypes();
-	}
-
-	/**
 	* Returns <code>true</code> if this document library folder is pending.
 	*
 	* @return <code>true</code> if this document library folder is pending; <code>false</code> otherwise
@@ -932,16 +921,6 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	}
 
 	/**
-	* Sets whether this document library folder is override file entry types.
-	*
-	* @param overrideFileEntryTypes the override file entry types of this document library folder
-	*/
-	@Override
-	public void setOverrideFileEntryTypes(boolean overrideFileEntryTypes) {
-		_dlFolder.setOverrideFileEntryTypes(overrideFileEntryTypes);
-	}
-
-	/**
 	* Sets the parent container model ID of this document library folder.
 	*
 	* @param parentContainerModelId the parent container model ID of this document library folder
@@ -984,6 +963,16 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	@Override
 	public void setRepositoryId(long repositoryId) {
 		_dlFolder.setRepositoryId(repositoryId);
+	}
+
+	/**
+	* Sets the restriction type of this document library folder.
+	*
+	* @param restrictionType the restriction type of this document library folder
+	*/
+	@Override
+	public void setRestrictionType(int restrictionType) {
+		_dlFolder.setRestrictionType(restrictionType);
 	}
 
 	/**

@@ -539,8 +539,6 @@ public interface PropsKeys {
 
 	public static final String CONTROL_PANEL_NAVIGATION_MAX_SITES = "control.panel.navigation.max.sites";
 
-	public static final String CONVERT_PROCESSES = "convert.processes";
-
 	public static final String COOKIE_HTTP_ONLY_NAMES_EXCLUDES = "cookie.http.only.names.excludes";
 
 	public static final String COUNTER_INCREMENT = "counter.increment";

@@ -57,7 +57,7 @@ import org.hibernate.dialect.Dialect;
 /**
  * @author Alexander Chow
  */
-public class ConvertDatabase extends ConvertProcess {
+public class ConvertDatabase extends BaseConvertProcess {
 
 	@Override
 	public String getDescription() {

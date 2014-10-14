@@ -25,10 +25,6 @@ import com.liferay.portlet.blogs.asset.BlogsEntryAssetRendererFactory;
 import com.liferay.portlet.blogs.trash.BlogsEntryTrashHandler;
 import com.liferay.portlet.blogs.util.BlogsIndexer;
 import com.liferay.portlet.blogs.workflow.BlogsEntryWorkflowHandler;
-import com.liferay.portlet.bookmarks.asset.BookmarksEntryAssetRendererFactory;
-import com.liferay.portlet.bookmarks.asset.BookmarksFolderAssetRendererFactory;
-import com.liferay.portlet.bookmarks.util.BookmarksEntryIndexer;
-import com.liferay.portlet.bookmarks.util.BookmarksFolderIndexer;
 import com.liferay.portlet.directory.asset.UserAssetRendererFactory;
 import com.liferay.portlet.directory.workflow.UserWorkflowHandler;
 import com.liferay.portlet.documentlibrary.asset.DLFileEntryAssetRendererFactory;
@@ -107,8 +103,6 @@ public class PortalRegisterTestUtil {
 		IndexerRegistryUtil.register(new AssetIndexer());
 		IndexerRegistryUtil.register(new BlogsIndexer());
 		IndexerRegistryUtil.register(new ContactIndexer());
-		IndexerRegistryUtil.register(new BookmarksEntryIndexer());
-		IndexerRegistryUtil.register(new BookmarksFolderIndexer());
 		IndexerRegistryUtil.register(new DDLIndexer());
 		IndexerRegistryUtil.register(new DLFileEntryIndexer());
 		IndexerRegistryUtil.register(new DLFolderIndexer());
@@ -163,8 +157,6 @@ public class PortalRegisterTestUtil {
 
 	private static final Class<?>[] _ASSET_RENDERER_FACTORY_CLASSES = {
 		BlogsEntryAssetRendererFactory.class,
-		BookmarksEntryAssetRendererFactory.class,
-		BookmarksFolderAssetRendererFactory.class,
 		DDLRecordAssetRendererFactory.class,
 		DLFileEntryAssetRendererFactory.class,
 		DLFolderAssetRendererFactory.class,

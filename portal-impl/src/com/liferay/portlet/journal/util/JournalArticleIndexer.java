@@ -476,9 +476,8 @@ public class JournalArticleIndexer extends BaseIndexer {
 		return new Summary(snippetLocale, title, content, portletURL);
 	}
 
-	@Override
-	protected void doReindex(Object obj) throws Exception {
-		JournalArticle article = (JournalArticle)obj;
+	protected void doReindex(JournalArticle article, boolean allversions)
+		throws Exception {
 
 		if (PortalUtil.getClassNameId(DDMStructure.class) ==
 				article.getClassNameId()) {
@@ -492,7 +491,21 @@ public class JournalArticleIndexer extends BaseIndexer {
 			return;
 		}
 
-		reindexArticleVersions(article);
+		if (allversions) {
+			reindexArticleVersions(article);
+		}
+		else {
+			SearchEngineUtil.updateDocument(
+				getSearchEngineId(), article.getCompanyId(),
+				getDocument(article), isCommitImmediately());
+		}
+	}
+
+	@Override
+	protected void doReindex(Object obj) throws Exception {
+		JournalArticle article = (JournalArticle)obj;
+
+		doReindex(article, true);
 	}
 
 	@Override
@@ -538,7 +551,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 				ddmStructureKeys);
 
 		for (JournalArticle article : articles) {
-			doReindex(article);
+			doReindex(article, false);
 		}
 	}
 

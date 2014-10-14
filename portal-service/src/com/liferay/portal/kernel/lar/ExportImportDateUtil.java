@@ -241,9 +241,12 @@ public class ExportImportDateUtil {
 
 		if (dateRange != null) {
 			Date startDate = dateRange.getStartDate();
+			Date endDate = dateRange.getEndDate();
 			Date originalLastPublishDate = getLastPublishDate(layoutSet);
 
-			if ((originalLastPublishDate != null) && (startDate != null) &&
+			if ((originalLastPublishDate != null) && (endDate != null) &&
+				originalLastPublishDate.before(endDate) &&
+				(startDate != null) &&
 				startDate.after(originalLastPublishDate)) {
 
 				return;
@@ -271,10 +274,13 @@ public class ExportImportDateUtil {
 
 		if (dateRange != null) {
 			Date startDate = dateRange.getStartDate();
+			Date endDate = dateRange.getEndDate();
 			Date originalLastPublishDate = getLastPublishDate(
 				portletPreferences);
 
-			if ((originalLastPublishDate != null) && (startDate != null) &&
+			if ((originalLastPublishDate != null) && (endDate != null) &&
+				originalLastPublishDate.before(endDate) &&
+				(startDate != null) &&
 				startDate.after(originalLastPublishDate)) {
 
 				return;

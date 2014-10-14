@@ -12,7 +12,7 @@
 			<@aui.input name=namespacedFieldName type="hidden" value=fieldValue />
 		</#if>
 
-		${escape(fieldValue)}
+		${fieldValue}
 	</#if>
 
 	${fieldStructure.children}

@@ -34,6 +34,11 @@ public class PluginContextListener
 	extends BasePortalLifecycle
 	implements ServletContextAttributeListener, ServletContextListener {
 
+	/**
+	 * @deprecated As of 7.0.0, with no replacement. Use <code>
+	 *             javax.servlet.ServletContext.getClassLoader()</code>.
+	 */
+	@Deprecated
 	public static final String PLUGIN_CLASS_LOADER = "PLUGIN_CLASS_LOADER";
 
 	@Override

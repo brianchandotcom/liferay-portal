@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.bookmarks;
+package com.liferay.portlet.bookmarks.settings;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.resource.manager.ClassLoaderResourceManager;

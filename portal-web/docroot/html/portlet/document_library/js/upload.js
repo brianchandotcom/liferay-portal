@@ -172,7 +172,7 @@ AUI.add(
 						getter: function() {
 							var instance = this;
 
-							return instance.get(STR_HOST)._folderId;
+							return instance.get(STR_HOST).getFolderId();
 						},
 						readonly: true,
 						setter: Lang.toInt,

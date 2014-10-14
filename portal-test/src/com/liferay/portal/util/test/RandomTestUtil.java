@@ -56,6 +56,12 @@ public class RandomTestUtil {
 		return string.getBytes();
 	}
 
+	public static char randomChar() {
+		String s = randomString(1);
+
+		return s.charAt(0);
+	}
+
 	public static int randomInt() {
 		int value = _random.nextInt();
 

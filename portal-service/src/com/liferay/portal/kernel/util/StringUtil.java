@@ -2289,6 +2289,20 @@ public class StringUtil {
 		return s;
 	}
 
+	public static String removeLeading(String s, char c) {
+		int i = 0;
+
+		while ((i < s.length()) && (s.charAt(i) == c)) {
+			i++;
+		}
+
+		if (i == 0) {
+			return s;
+		}
+
+		return s.substring(i);
+	}
+
 	/**
 	 * Replaces all occurrences of the character with the new character.
 	 *

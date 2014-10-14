@@ -359,6 +359,12 @@ public class ZipWriterImplTest {
 		file.delete();
 	}
 
+	/**
+     * Throws an ArchiveFileNotFoundException if and only if this file is a
+     * true archive file, not just a false positive, including RAES
+     * encrypted ZIP files for which key prompting has been cancelled or
+     * disabled.
+     */
 	@Test
 	public void testFinishIfZipFileIsSet() throws Exception {
 		File tempZipFile = new File(_tempZipFilePath);

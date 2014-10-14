@@ -198,16 +198,6 @@ public class LiferaySyncCapability implements SyncCapability {
 			return;
 		}
 
-		if (!event.equals(DLSyncConstants.EVENT_DELETE) &&
-			!event.equals(DLSyncConstants.EVENT_TRASH)) {
-
-			FileVersion fileVersion = fileEntry.getFileVersion();
-
-			if (!fileVersion.isApproved()) {
-				return;
-			}
-		}
-
 		registerDLSyncEventCallback(
 			event, DLSyncConstants.TYPE_FILE, fileEntry.getFileEntryId());
 	}

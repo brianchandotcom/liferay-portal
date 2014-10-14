@@ -13,25 +13,24 @@
 				}
 			},
 			{
+				"template_assetCategoryTitles": {
+					"match": "assetCategoryTitles*",
+					"match_mapping_type": "string",
+					"mapping": {
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					}
+				}
+			},
+			{
 				"template_ddm": {
 					"match": "ddm__*",
 					"match_mapping_type": "string",
 					"mapping": {
 						"index": "analyzed",
 						"store": "true",
-						"type": "string"
-					}
-				}
-			},
-			{
-				"template_assetCategoryTitles": {
-					"match": "assetCategoryTitles*",
-					"match_mapping_type": "string",
-					"match_pattern": "regex",
-					"mapping": {
-						"index": "analyzed",
-						"store": "true",
-						"term_vector": "with_positions_offsets",
 						"type": "string"
 					}
 				}

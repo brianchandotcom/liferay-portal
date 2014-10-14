@@ -497,9 +497,6 @@
 	</target>
 
 	<target name="build-dist-tcat-tomcat">
-		<mkdir dir="${app.server.tcat.dir}/admin/temp" />
-		<mkdir dir="${app.server.tcat.dir}/agent/temp" />
-
 		<mkdir dir="${app.server.tcat.dir}/tomcat" />
 
 		<copy todir="${app.server.tcat.dir}/tomcat">

@@ -51,6 +51,9 @@ plugins.includes=marketplace-portlet</echo>
 			</fileset>
 		</chmod>
 
+		<mkdir dir="${app.server.tcat.dir}/admin/temp" />
+		<mkdir dir="${app.server.tcat.dir}/agent/temp" />
+
 		<antcall target="revert-test-properties" />
 
 		<ant dir="portal-impl" target="build-selenium-new-test-case" />

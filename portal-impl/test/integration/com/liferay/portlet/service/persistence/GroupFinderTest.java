@@ -15,6 +15,7 @@
 package com.liferay.portlet.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
@@ -40,7 +41,6 @@ import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.ResourcePermissionTestUtil;
 import com.liferay.portal.util.test.ResourceTypePermissionTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
-import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -80,14 +80,12 @@ public class GroupFinderTest {
 			StringUtil.valueOf(_group.getGroupId()),
 			ResourceConstants.SCOPE_GROUP);
 
-		_bookmarkFolderResourceAction =
-			ResourceActionLocalServiceUtil.getResourceAction(
-				BookmarksFolder.class.getName(), ActionKeys.VIEW);
+		_modelResourceAction = getModelResourceAction();
 
 		_resourceTypePermission =
 			ResourceTypePermissionTestUtil.addResourceTypePermission(
-				_bookmarkFolderResourceAction.getBitwiseValue(),
-				_group.getGroupId(), _bookmarkFolderResourceAction.getName());
+				_modelResourceAction.getBitwiseValue(), _group.getGroupId(),
+				_modelResourceAction.getName());
 	}
 
 	@AfterClass
@@ -125,7 +123,7 @@ public class GroupFinderTest {
 		throws Exception {
 
 		List<Group> groups = findByC_C_N_D(
-			_bookmarkFolderResourceAction.getActionId(),
+			_modelResourceAction.getActionId(),
 			_resourceTypePermission.getName(),
 			_resourceTypePermission.getRoleId());
 
@@ -196,6 +194,23 @@ public class GroupFinderTest {
 		Assert.assertTrue(groups.isEmpty());
 	}
 
+	protected static ResourceAction getModelResourceAction()
+		throws PortalException {
+
+		String name = "TestModel";
+
+		List<String> actionIds = new ArrayList<String>();
+
+		actionIds.add(ActionKeys.UPDATE);
+		actionIds.add(ActionKeys.VIEW);
+
+		ResourceActionLocalServiceUtil.checkResourceActions(
+			name, actionIds, true);
+
+		return ResourceActionLocalServiceUtil.getResourceAction(
+			name, ActionKeys.VIEW);
+	}
+
 	protected void addLayout(long groupId) throws Exception {
 		LayoutTestUtil.addLayout(groupId, RandomTestUtil.randomString(), false);
 
@@ -235,8 +250,8 @@ public class GroupFinderTest {
 	}
 
 	private static ResourceAction _arbitraryResourceAction;
-	private static ResourceAction _bookmarkFolderResourceAction;
 	private static Group _group;
+	private static ResourceAction _modelResourceAction;
 	private static ResourcePermission _resourcePermission;
 	private static ResourceTypePermission _resourceTypePermission;
 

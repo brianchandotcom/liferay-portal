@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
-import com.liferay.portal.kernel.servlet.PluginContextListener;
 
 import javax.servlet.ServletContext;
 
@@ -52,8 +51,7 @@ public class PortletClassInvoker {
 		if (portletBag != null) {
 			ServletContext servletContext = portletBag.getServletContext();
 
-			portletClassLoader = (ClassLoader)servletContext.getAttribute(
-				PluginContextListener.PLUGIN_CLASS_LOADER);
+			portletClassLoader = servletContext.getClassLoader();
 		}
 
 		Thread currentThread = Thread.currentThread();

@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.servlet.filters.invoker;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
@@ -238,16 +237,7 @@ public class InvokerFilterHelper {
 	}
 
 	protected ClassLoader getPluginClassLoader(ServletContext servletContext) {
-		ClassLoader classLoader = (ClassLoader)servletContext.getAttribute(
-			PluginContextListener.PLUGIN_CLASS_LOADER);
-
-		if (classLoader != null) {
-			return classLoader;
-		}
-
-		Thread currentThread = Thread.currentThread();
-
-		return currentThread.getContextClassLoader();
+		return servletContext.getClassLoader();
 	}
 
 	protected void initFilter(

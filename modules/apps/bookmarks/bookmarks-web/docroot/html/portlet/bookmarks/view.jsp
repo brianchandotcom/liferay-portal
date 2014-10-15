@@ -142,7 +142,7 @@ if (folder != null) {
 								/>
 
 								<liferay-ui:search-container-row
-									className="com.liferay.portlet.bookmarks.model.BookmarksFolder"
+									className="com.liferay.bookmarks.model.BookmarksFolder"
 									escapedModel="<%= true %>"
 									keyProperty="folderId"
 									modelVar="curFolder"
@@ -222,7 +222,7 @@ if (folder != null) {
 				/>
 
 				<liferay-ui:search-container-row
-					className="com.liferay.portlet.bookmarks.model.BookmarksEntry"
+					className="com.liferay.bookmarks.model.BookmarksEntry"
 					escapedModel="<%= true %>"
 					keyProperty="entryId"
 					modelVar="entry"

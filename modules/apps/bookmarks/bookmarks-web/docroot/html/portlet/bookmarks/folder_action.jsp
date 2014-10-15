@@ -48,7 +48,7 @@ if (folder != null) {
 	showPermissionsURL = BookmarksFolderPermission.contains(permissionChecker, folder, ActionKeys.PERMISSIONS);
 }
 else {
-	modelResource = "com.liferay.portlet.bookmarks";
+	modelResource = "com.liferay.bookmarks";
 	modelResourceDescription = themeDisplay.getScopeGroupName();
 	resourcePrimKey = String.valueOf(scopeGroupId);
 

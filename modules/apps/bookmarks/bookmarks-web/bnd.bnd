@@ -31,23 +31,23 @@ Import-Package: \
 	com.liferay.portlet.asset,\
 	com.liferay.portlet.asset.model,\
 	com.liferay.portlet.asset.service,\
-	com.liferay.portlet.bookmarks.asset,\
-	com.liferay.portlet.bookmarks.constants,\
-	com.liferay.portlet.bookmarks.customattributes,\
-	com.liferay.portlet.bookmarks.indexer,\
-	com.liferay.portlet.bookmarks.lar,\
-	com.liferay.portlet.bookmarks.model,\
-	com.liferay.portlet.bookmarks.notifications,\
-	com.liferay.portlet.bookmarks.opensearch,\
-	com.liferay.portlet.bookmarks.routes,\
-	com.liferay.portlet.bookmarks.service,\
-	com.liferay.portlet.bookmarks.service.permission,\
-	com.liferay.portlet.bookmarks.settings,\
-	com.liferay.portlet.bookmarks.social,\
-	com.liferay.portlet.bookmarks.search,\
-	com.liferay.portlet.bookmarks.trash,\
-	com.liferay.portlet.bookmarks.util,\
-	com.liferay.portlet.bookmarks.*,\
+	com.liferay.bookmarks.asset,\
+	com.liferay.bookmarks.constants,\
+	com.liferay.bookmarks.customattributes,\
+	com.liferay.bookmarks.indexer,\
+	com.liferay.bookmarks.lar,\
+	com.liferay.bookmarks.model,\
+	com.liferay.bookmarks.notifications,\
+	com.liferay.bookmarks.opensearch,\
+	com.liferay.bookmarks.routes,\
+	com.liferay.bookmarks.service,\
+	com.liferay.bookmarks.service.permission,\
+	com.liferay.bookmarks.settings,\
+	com.liferay.bookmarks.social,\
+	com.liferay.bookmarks.search,\
+	com.liferay.bookmarks.trash,\
+	com.liferay.bookmarks.util,\
+	com.liferay.bookmarks.*,\
 	com.liferay.portlet.trash.model,\
 	\
 	org.apache.struts.action,\

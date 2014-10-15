@@ -16,22 +16,22 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.bookmarks.constants.BookmarksConstants" %><%@
-page import="com.liferay.portlet.bookmarks.exception.EntryURLException" %><%@
-page import="com.liferay.portlet.bookmarks.exception.FolderNameException" %><%@
-page import="com.liferay.portlet.bookmarks.exception.NoSuchEntryException" %><%@
-page import="com.liferay.portlet.bookmarks.exception.NoSuchFolderException" %><%@
-page import="com.liferay.portlet.bookmarks.model.BookmarksEntry" %><%@
-page import="com.liferay.portlet.bookmarks.model.BookmarksFolder" %><%@
-page import="com.liferay.portlet.bookmarks.model.BookmarksFolderConstants" %><%@
-page import="com.liferay.portlet.bookmarks.search.BookmarksSearcher" %><%@
-page import="com.liferay.portlet.bookmarks.service.BookmarksEntryServiceUtil" %><%@
-page import="com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil" %><%@
-page import="com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil" %><%@
-page import="com.liferay.portlet.bookmarks.service.permission.BookmarksEntryPermission" %><%@
-page import="com.liferay.portlet.bookmarks.service.permission.BookmarksFolderPermission" %><%@
-page import="com.liferay.portlet.bookmarks.settings.BookmarksSettings" %><%@
-page import="com.liferay.portlet.bookmarks.util.BookmarksUtil" %>
+<%@ page import="com.liferay.bookmarks.constants.BookmarksConstants" %><%@
+page import="com.liferay.bookmarks.exception.EntryURLException" %><%@
+page import="com.liferay.bookmarks.exception.FolderNameException" %><%@
+page import="com.liferay.bookmarks.exception.NoSuchEntryException" %><%@
+page import="com.liferay.bookmarks.exception.NoSuchFolderException" %><%@
+page import="com.liferay.bookmarks.model.BookmarksEntry" %><%@
+page import="com.liferay.bookmarks.model.BookmarksFolder" %><%@
+page import="com.liferay.bookmarks.model.BookmarksFolderConstants" %><%@
+page import="com.liferay.bookmarks.search.BookmarksSearcher" %><%@
+page import="com.liferay.bookmarks.service.BookmarksEntryServiceUtil" %><%@
+page import="com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil" %><%@
+page import="com.liferay.bookmarks.service.BookmarksFolderServiceUtil" %><%@
+page import="com.liferay.bookmarks.service.permission.BookmarksEntryPermission" %><%@
+page import="com.liferay.bookmarks.service.permission.BookmarksFolderPermission" %><%@
+page import="com.liferay.bookmarks.settings.BookmarksSettings" %><%@
+page import="com.liferay.bookmarks.util.BookmarksUtil" %>
 
 <%
 BookmarksSettings bookmarksSettings = BookmarksSettings.getInstance(scopeGroupId);

@@ -93,7 +93,9 @@ if (!draggableImage.equals("none")) {
 		imageSelector.plug(
 			Liferay.CoverCropper,
 			{
-				direction: '<%= draggableImage %>'
+				direction: '<%= draggableImage %>',
+				imageContainerSelector: '.image-wrapper',
+				imageSelector: '#image'
 			}
 		);
 	</c:if>

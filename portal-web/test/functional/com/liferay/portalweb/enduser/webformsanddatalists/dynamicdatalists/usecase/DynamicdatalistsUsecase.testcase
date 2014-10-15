@@ -1756,6 +1756,95 @@
 		<execute macro="DDLTemplate#saveFormTemplateCP" />
 	</command>
 
+	<command name="ViewFormTemplateFieldsAfterBackNavigation" priority="3">
+		<description message="This is a use case for LPS-48591." />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#addCP">
+			<var name="ddlDataDefinitionName" value="Data Definition" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text Box" />
+			<var name="fieldFieldLabel" value="Text Box" />
+			<var name="fieldName" value="Text_Box" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLTemplate#addFormTemplateCP">
+			<var name="ddlDataDefinitionName" value="Data Definition" />
+			<var name="ddlFormTemplateName" value="Data Definition Form Template Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewCannotAddField">
+			<var name="field" value="Text Box" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewCannotAddField">
+			<var name="field" value="Text" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewCanAddField">
+			<var name="field" value="Separator" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="Text Box" />
+			<var name="fieldFieldLabel" value="Text Box" />
+			<var name="fieldName" value="Text_Box" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
+
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#click" locator-key1="BACK_TAB" />
+
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertClick" locator-key1="TOOLBAR_ADD_FORM_TEMPLATE" value1="Add Form Template" />
+
+		<execute macro="DynamicDataMapping#viewCannotAddField">
+			<var name="field" value="Text Box" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewCannotAddField">
+			<var name="field" value="Text" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewCanAddField">
+			<var name="field" value="Separator" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="Text Box" />
+			<var name="fieldFieldLabel" value="Text Box" />
+			<var name="fieldName" value="Text_Box" />
+		</execute>
+	</command>
+
 	<command name="ViewNestedFieldEntryWithBlankParentField" priority="4">
 		<description message="This is a use case for LPS-48969." />
 

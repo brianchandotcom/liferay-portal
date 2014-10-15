@@ -16,7 +16,8 @@
 				<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ADD_MENULIST_TEMPLATE" value1="${kbTemplateTitle}" />
 			</then>
 			<else>
-				<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ADD_ARTICLE_BUTTON" value1="Add Article" />
+				<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ADD_BUTTON" value1="Add" />
+				<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ADD_MENULIST_ADD_ARTICLE" value1="Add Article" />
 			</else>
 		</if>
 
@@ -105,7 +106,7 @@
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute action="CPKnowledgebaseadmin#check" locator-key1="ARTICLE_TABLE_CHECKBOX" />
-		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ACTIONS_MENULIST" value1="Actions" />
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ACTIONS_BUTTON" value1="Actions" />
 		<execute action="CPKnowledgebaseadmin#assertClickNoError" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
 		<execute action="CPKnowledgebaseadmin#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected articles?" />
 		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -229,6 +230,16 @@
 		<execute action="PGKnowledgebasearticleConfiguration#selectFrame" value1="relative=top" />
 	</command>
 
+	<command name="setPriorityCP">
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+
+		<execute action="CPKnowledgebaseadmin#type" locator-key1="ARTICLE_TABLE_PRIORITY" value1="${kbPriority}" />
+		<execute action="CPKnowledgebaseadmin#check" locator-key1="ARTICLE_TABLE_CHECKBOX" />
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ACTIONS_BUTTON" value1="Actions" />
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ACTIONS_MENULIST_SAVE" value1="Save" />
+		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="tearDownCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
@@ -238,7 +249,7 @@
 			<condition action="CPKnowledgebaseadmin#isElementPresent" locator-key1="SELECT_ALL_CHECKBOX" />
 			<then>
 				<execute action="CPKnowledgebaseadmin#check" locator-key1="SELECT_ALL_CHECKBOX" />
-				<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ACTIONS_MENULIST" value1="Actions" />
+				<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ACTIONS_BUTTON" value1="Actions" />
 				<execute action="CPKnowledgebaseadmin#assertClickNoError" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
 				<execute action="CPKnowledgebaseadmin#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected articles?" />
 				<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -275,38 +286,23 @@
 		<execute action="CPKnowledgebaseadmin#assertElementNotPresent" locator-key1="ARTICLE_TABLE_TITLE_GENERIC" />
 	</command>
 
-	<command name="viewDefaultPGViaKBArticle">
+	<command name="viewDefaultViaKBArticlePG">
 		<execute action="PGKnowledgebasearticle#assertTextEquals" locator-key1="CONFIGURE_INFO_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
 		<execute action="PGKnowledgebasearticle#assertElementNotPresent" locator-key1="ARTICLE_TITLE" />
 	</command>
 
-	<command name="viewDefaultPGViaKBDisplay">
+	<command name="viewDefaultViaKBDisplayPG">
 		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
 		<execute action="PGKnowledgebasedisplay#assertElementNotPresent" locator-key1="ARTICLE_TITLE" />
 	</command>
 
-	<command name="viewNoPGViaKBDisplay">
+	<command name="viewNoViaKBDisplayPG">
 		<execute action="PGKnowledgebasedisplay#assertTextNotPresent" value1="${kbArticleTitle}" />
 	</command>
 
-	<command name="viewNoPGViaKBSection">
+	<command name="viewNoViaKBSectionPG">
 		<execute action="PGKnowledgebasesection#assertTextEquals" locator-key1="SECTIONS_TITLE" value1="General" />
 		<execute action="PGKnowledgebasesection#assertTextEquals" locator-key1="PORTLET_BODY" value1="No articles were found" />
-	</command>
-
-	<command name="viewPGViaKBArticle">
-		<execute action="PGKnowledgebasearticle#assertTextEquals" locator-key1="ARTICLE_TITLE" value1="${kbArticleTitle}" />
-		<execute action="PGKnowledgebasearticle#assertTextEquals" locator-key1="ARTICLE_CONTENT" value1="${kbArticleContent}" />
-	</command>
-
-	<command name="viewPGViaKBSearch">
-		<execute action="PGKnowledgebasesearchArticle#assertTextEquals" locator-key1="ARTICLE_TITLE" value1="${kbArticleTitle}" />
-		<execute action="PGKnowledgebasesearchArticle#assertTextEquals" locator-key1="ARTICLE_CONTENT" value1="${kbArticleContent}" />
-	</command>
-
-	<command name="viewPGViaKBSection">
-		<execute action="PGKnowledgebasesectionArticle#assertTextEquals" locator-key1="ARTICLE_TITLE" value1="${kbArticleTitle}" />
-		<execute action="PGKnowledgebasesectionArticle#assertTextEquals" locator-key1="ARTICLE_CONTENT" value1="${kbArticleContent}" />
 	</command>
 
 	<command name="viewRelatedAssetCP">
@@ -355,6 +351,11 @@
 		</for>
 	</command>
 
+	<command name="viewViaKBArticlePG">
+		<execute action="PGKnowledgebasearticle#assertTextEquals" locator-key1="ARTICLE_TITLE" value1="${kbArticleTitle}" />
+		<execute action="PGKnowledgebasearticle#assertTextEquals" locator-key1="ARTICLE_CONTENT" value1="${kbArticleContent}" />
+	</command>
+
 	<command name="viewViaKBDisplayPG">
 		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_TITLE" value1="${kbArticleTitle}" />
 		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_CONTENT" value1="${kbArticleContent}" />
@@ -368,5 +369,15 @@
 				<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
 			</then>
 		</if>
+	</command>
+
+	<command name="viewViaKBSearchPG">
+		<execute action="PGKnowledgebasesearchArticle#assertTextEquals" locator-key1="ARTICLE_TITLE" value1="${kbArticleTitle}" />
+		<execute action="PGKnowledgebasesearchArticle#assertTextEquals" locator-key1="ARTICLE_CONTENT" value1="${kbArticleContent}" />
+	</command>
+
+	<command name="viewViaKBSectionPG">
+		<execute action="PGKnowledgebasesectionArticle#assertTextEquals" locator-key1="ARTICLE_TITLE" value1="${kbArticleTitle}" />
+		<execute action="PGKnowledgebasesectionArticle#assertTextEquals" locator-key1="ARTICLE_CONTENT" value1="${kbArticleContent}" />
 	</command>
 </definition>

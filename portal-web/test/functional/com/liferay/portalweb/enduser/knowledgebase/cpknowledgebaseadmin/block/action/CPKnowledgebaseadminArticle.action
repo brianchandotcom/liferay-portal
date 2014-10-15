@@ -1,7 +1,0 @@
-<definition>
-	<command name="assertClick">
-		<case locator-key1="RELATED_ASSETS_LINKS">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-	</command>
-</definition>

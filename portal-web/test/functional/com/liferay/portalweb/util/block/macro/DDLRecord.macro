@@ -354,12 +354,23 @@
 		<execute action="CPDynamicdatalists#click" locator-key1="LIST_TABLE_NAME_1" value1="${ddlListName}" />
 
 		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="HEADER_TITLE" value1="${ddlListName}" />
-		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_ONE_NAME" value1="Text" />
-		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="${ddlRecordText}" />
-		<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
+
+		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
+		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+
+		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="RECORD_TABLE_ENTRY" value1="${ddlRecordFieldData}" />
+		<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_TABLE_ACTIONS" />
 		<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_MENULIST_VIEW" />
 
-		<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator-key1="FIELD_1" value1="Text ${ddlRecordText}" />
+		<if>
+			<equals arg1="${nestedField}" arg2="true" />
+			<then>
+				<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator-key1="FIELD_NESTED" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
+			</then>
+			<else>
+				<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator-key1="FIELD" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
+			</else>
+		</if>
 
 		<execute action="CPDynamicdatalists#selectFrameTop" />
 	</command>

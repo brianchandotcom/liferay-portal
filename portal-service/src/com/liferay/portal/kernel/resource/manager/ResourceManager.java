@@ -12,18 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.kernel.resource;
+package com.liferay.portal.kernel.resource.manager;
 
-import java.io.InputStream;
+import com.liferay.portal.kernel.resource.ResourceRetriever;
 
 /**
- * @author Shuyang Zhou
+ * @author Miguel Pastor
  */
-public class ContextClassLoaderResourceRetriever
-	extends ClassLoaderResourceRetriever {
+public interface ResourceManager {
 
-	public ContextClassLoaderResourceRetriever(String fileName) {
-		super(Thread.currentThread().getContextClassLoader(), fileName);
-	}
+	public ResourceRetriever getResourceRetriever(String location);
 
 }

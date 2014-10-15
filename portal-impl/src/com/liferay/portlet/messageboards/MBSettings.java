@@ -15,6 +15,8 @@
 package com.liferay.portlet.messageboards;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.resource.manager.ClassLoaderResourceManager;
+import com.liferay.portal.kernel.resource.manager.ResourceManager;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
@@ -260,6 +262,9 @@ public class MBSettings {
 		return fallbackKeys;
 	}
 
+	private static final ResourceManager __RESOURCE_MANAGER =
+		new ClassLoaderResourceManager(MBSettings.class.getClassLoader());
+
 	private static final String[] _MULTI_VALUED_KEYS = {"ranks"};
 
 	static {
@@ -267,7 +272,8 @@ public class MBSettings {
 			SettingsFactoryUtil.getSettingsFactory();
 
 		settingsFactory.registerSettingsMetadata(
-			MBConstants.SERVICE_NAME, _getFallbackKeys(), _MULTI_VALUED_KEYS);
+			MBConstants.SERVICE_NAME, _getFallbackKeys(), _MULTI_VALUED_KEYS,
+			__RESOURCE_MANAGER);
 	}
 
 	private final TypedSettings _typedSettings;

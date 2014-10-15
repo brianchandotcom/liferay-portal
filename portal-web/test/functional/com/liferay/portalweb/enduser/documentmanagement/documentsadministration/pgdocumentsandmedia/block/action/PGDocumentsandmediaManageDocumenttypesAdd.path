@@ -235,7 +235,7 @@
 <!--FORM-->
 <tr>
 	<td>FORM_BUILDER</td>
-	<td>//div[@class='diagram-builder-drop-container']</td>
+	<td>//div[@class='property-builder-drop-container']</td>
 	<td></td>
 </tr>
 <tr>

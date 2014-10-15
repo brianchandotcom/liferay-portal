@@ -3,7 +3,7 @@
 
 <resource-action-mapping>
 	<portlet-resource>
-		<portlet-name>28</portlet-name>
+		<portlet-name>28_WAR_bookmarksweb</portlet-name>
 		<permissions>
 			<supports>
 				<action-key>ADD_TO_PAGE</action-key>
@@ -22,7 +22,7 @@
 		</permissions>
 	</portlet-resource>
 	<portlet-resource>
-		<portlet-name>198</portlet-name>
+		<portlet-name>198_WAR_bookmarksweb</portlet-name>
 		<permissions>
 			<supports>
 				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>

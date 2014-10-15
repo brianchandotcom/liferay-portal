@@ -21,7 +21,7 @@ import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
-import com.liferay.portlet.bookmarks.util.test.BookmarksTestUtil;
+import com.liferay.portlet.bookmarks.util.BookmarksTestUtil;
 
 import org.junit.Assert;
 import org.junit.Test;

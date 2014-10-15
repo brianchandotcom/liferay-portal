@@ -32,7 +32,7 @@ import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.portlet.bookmarks.service.BookmarksEntryServiceUtil;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil;
-import com.liferay.portlet.bookmarks.util.test.BookmarksTestUtil;
+import com.liferay.portlet.bookmarks.util.BookmarksTestUtil;
 
 import org.junit.Ignore;
 import org.junit.Test;

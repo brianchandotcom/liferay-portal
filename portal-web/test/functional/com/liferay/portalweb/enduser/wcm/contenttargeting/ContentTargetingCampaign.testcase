@@ -290,7 +290,7 @@
 		<execute macro="ContentTargetingCampaign#viewTrackingActionsCP">
 			<var name="campaignName" value="Campaign Name" />
 			<var name="pageAlias" value="Page Alias" />
-			<var name="pageFriendlyURL" value="/home" />
+			<var name="pageFriendlyURL" value="/test-page-name" />
 			<var name="pageTrackingActionSelect" value="View" />
 			<var name="viewTrackingActionsList" value="Page" />
 		</execute>

@@ -1959,7 +1959,7 @@
 
 		<execute macro="ContentTargetingSimulator#viewUserSegmentsViaSimulatorPG">
 			<var name="viewUserSegmentMatched" value="Male User Segment Name" />
-			<var name="viewUserSegmentsOther" value="Female User Segment Name" />
+			<var name="viewUserSegmentOther" value="Female User Segment Name" />
 		</execute>
 
 		<execute macro="ContentTargetingSimulator#configureUserSegmentMatchedPG">
@@ -2201,8 +2201,8 @@
 		<execute action="Home#refresh" />
 
 		<execute macro="UserSegmentContentListPortlet#viewContent">
-			<var name="entryContent" value="Web Content Content" />
-			<var name="entryTitle" value="Web Content Title" />
+			<var name="viewEntryContentList" value="Web Content Content" />
+			<var name="viewEntryTitleList" value="Web Content Title" />
 		</execute>
 	</command>
 </definition>

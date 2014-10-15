@@ -298,38 +298,6 @@
 		<put name="portlet_content" value="/portlet/blogs_aggregator/view.jsp" />
 	</definition>
 
-	<!-- Bookmarks -->
-
-	<definition name="portlet.bookmarks" extends="portlet" />
-
-	<definition name="portlet.bookmarks.edit_entry" extends="portlet.bookmarks">
-		<put name="portlet_content" value="/portlet/bookmarks/edit_entry.jsp" />
-	</definition>
-
-	<definition name="portlet.bookmarks.edit_folder" extends="portlet.bookmarks">
-		<put name="portlet_content" value="/portlet/bookmarks/edit_folder.jsp" />
-	</definition>
-
-	<definition name="portlet.bookmarks.error" extends="portlet.bookmarks">
-		<put name="portlet_content" value="/portlet/bookmarks/error.jsp" />
-	</definition>
-
-	<definition name="portlet.bookmarks.search" extends="portlet.bookmarks">
-		<put name="portlet_content" value="/portlet/bookmarks/search.jsp" />
-	</definition>
-
-	<definition name="portlet.bookmarks.select_folder" extends="portlet.bookmarks">
-		<put name="portlet_content" value="/portlet/bookmarks/select_folder.jsp" />
-	</definition>
-
-	<definition name="portlet.bookmarks.view" extends="portlet.bookmarks">
-		<put name="portlet_content" value="/portlet/bookmarks/view.jsp" />
-	</definition>
-
-	<definition name="portlet.bookmarks.view_entry" extends="portlet.bookmarks">
-		<put name="portlet_content" value="/portlet/bookmarks/view_entry.jsp" />
-	</definition>
-
 	<!-- Breadcrumb -->
 
 	<definition name="portlet.breadcrumb" extends="portlet" />

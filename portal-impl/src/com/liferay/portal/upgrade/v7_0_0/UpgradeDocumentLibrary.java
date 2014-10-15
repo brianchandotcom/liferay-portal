@@ -20,14 +20,11 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.upgrade.v7_0_0.util.DLFileEntryTable;
-import com.liferay.portal.upgrade.v7_0_0.util.DLFileVersionTable;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 /**
  * @author Michael Young
@@ -39,29 +36,13 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 		// DLFileEntry
 
-		try {
-			runSQL("alter table DLFileEntry add fileName VARCHAR(255) null");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				DLFileEntryTable.TABLE_NAME, DLFileEntryTable.TABLE_COLUMNS,
-				DLFileEntryTable.TABLE_SQL_CREATE,
-				DLFileEntryTable.TABLE_SQL_ADD_INDEXES);
-		}
+		runSQL("alter table DLFileEntry add fileName VARCHAR(255) null");
 
 		updateFileEntryFileNames();
 
 		// DLFileVersion
 
-		try {
-			runSQL("alter table DLFileVersion add fileName VARCHAR(255) null");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				DLFileVersionTable.TABLE_NAME, DLFileVersionTable.TABLE_COLUMNS,
-				DLFileVersionTable.TABLE_SQL_CREATE,
-				DLFileVersionTable.TABLE_SQL_ADD_INDEXES);
-		}
+		runSQL("alter table DLFileVersion add fileName VARCHAR(255) null");
 
 		updateFileVersionFileNames();
 	}

@@ -17,6 +17,9 @@ package com.liferay.portal.template;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.net.URL;
 
@@ -44,7 +47,48 @@ public class ClassLoaderResourceParser extends URLResourceParser {
 			_log.debug("Loading " + templateId);
 		}
 
+		templateId = _normalizePath(templateId);
+
 		return classLoader.getResource(templateId);
+	}
+
+	private String _normalizePath(String path) {
+		StringBundler sb = new StringBundler();
+
+		int startIndex = 0;
+
+		if (path.startsWith(StringPool.SLASH)) {
+			sb.append(StringPool.SLASH);
+
+			startIndex = 1;
+		}
+
+		for (int i = startIndex; i < path.length(); i++) {
+			if ((path.charAt(i) != CharPool.SLASH) || (i == startIndex)) {
+				continue;
+			}
+
+			String pathSlice = path.substring(startIndex, i);
+
+			if (pathSlice.equals(StringPool.DOUBLE_PERIOD)) {
+				if (sb.index() < 2) {
+					throw new IllegalArgumentException(
+						"Unable to parse path " + path);
+				}
+
+				sb.setIndex(sb.index() - 2);
+			}
+			else if (!pathSlice.equals(StringPool.PERIOD)) {
+				sb.append(pathSlice);
+				sb.append(StringPool.SLASH);
+			}
+
+			startIndex = i + 1;
+		}
+
+		sb.append(path.substring(startIndex));
+
+		return sb.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

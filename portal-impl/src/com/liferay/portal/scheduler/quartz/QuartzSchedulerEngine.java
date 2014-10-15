@@ -857,13 +857,12 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		return schedulerResponses;
 	}
 
-	protected Scheduler getScheduler(StorageType storageType) throws Exception {
-		if (storageType.equals(StorageType.PERSISTED)) {
+	protected Scheduler getScheduler(StorageType storageType) {
+		if (storageType == StorageType.PERSISTED) {
 			return _persistedScheduler;
 		}
-		else {
-			return _memoryScheduler;
-		}
+
+		return _memoryScheduler;
 	}
 
 	protected StorageType getStorageType(String groupName) {

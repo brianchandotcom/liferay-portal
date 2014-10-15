@@ -432,7 +432,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String checkJavaFieldTypes(
-		String fileName, String packagePath, String className, String content) {
+		String fileName, String absolutePath, String packagePath,
+		String className, String content) {
 
 		if (!portalSource) {
 			return content;
@@ -480,8 +481,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						javaField, javaFieldType, content);
 				}
 
-				content = checkFinalableFieldType(
-					javaClass, javaClasses, javaField, content);
+				if (!isExcluded(_finalableFieldTypesExclusions, absolutePath)) {
+					content = checkFinalableFieldType(
+						javaClass, javaClasses, javaField, content);
+				}
 			}
 		}
 
@@ -819,7 +822,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-49294
 
 		String newContent = checkJavaFieldTypes(
-			fileName, packagePath, className, content);
+			fileName, absolutePath, packagePath, className, content);
 
 		if (newContent.contains("$\n */")) {
 			processErrorMessage(fileName, "*: " + fileName);
@@ -1283,6 +1286,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			getProperty("add.missing.deprecation.release.version"));
 		_allowUseServiceUtilInServiceImpl = GetterUtil.getBoolean(
 			getProperty("allow.use.service.util.in.service.impl"));
+		_finalableFieldTypesExclusions = getPropertyList(
+			"finalable.field.types.excludes.files");
 		_fitOnSingleLineExclusions = getPropertyList(
 			"fit.on.single.line.excludes.files");
 		_hibernateSQLQueryExclusions = getPropertyList(
@@ -2586,6 +2591,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"\\(\n*\t*(.*)\\);\n");
 	private Pattern _fetchByPrimaryKeysMethodPattern = Pattern.compile(
 		"@Override\n\tpublic Map<(.+)> fetchByPrimaryKeys\\(");
+	private List<String> _finalableFieldTypesExclusions;
 	private List<String> _fitOnSingleLineExclusions;
 	private List<String> _hibernateSQLQueryExclusions;
 	private Set<String> _immutableFieldTypes;

@@ -17,7 +17,7 @@ package com.liferay.portlet.bookmarks.action;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
-import com.liferay.portlet.bookmarks.NoSuchFolderException;
+import com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;

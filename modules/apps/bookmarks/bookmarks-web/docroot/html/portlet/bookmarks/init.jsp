@@ -16,21 +16,21 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.bookmarks.BookmarksSettings" %><%@
-page import="com.liferay.portlet.bookmarks.EntryURLException" %><%@
-page import="com.liferay.portlet.bookmarks.FolderNameException" %><%@
-page import="com.liferay.portlet.bookmarks.NoSuchEntryException" %><%@
-page import="com.liferay.portlet.bookmarks.NoSuchFolderException" %><%@
+<%@ page import="com.liferay.portlet.bookmarks.constants.BookmarksConstants" %><%@
+page import="com.liferay.portlet.bookmarks.exception.EntryURLException" %><%@
+page import="com.liferay.portlet.bookmarks.exception.FolderNameException" %><%@
+page import="com.liferay.portlet.bookmarks.exception.NoSuchEntryException" %><%@
+page import="com.liferay.portlet.bookmarks.exception.NoSuchFolderException" %><%@
 page import="com.liferay.portlet.bookmarks.model.BookmarksEntry" %><%@
 page import="com.liferay.portlet.bookmarks.model.BookmarksFolder" %><%@
 page import="com.liferay.portlet.bookmarks.model.BookmarksFolderConstants" %><%@
+page import="com.liferay.portlet.bookmarks.search.BookmarksSearcher" %><%@
 page import="com.liferay.portlet.bookmarks.service.BookmarksEntryServiceUtil" %><%@
 page import="com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil" %><%@
 page import="com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil" %><%@
 page import="com.liferay.portlet.bookmarks.service.permission.BookmarksEntryPermission" %><%@
 page import="com.liferay.portlet.bookmarks.service.permission.BookmarksFolderPermission" %><%@
-page import="com.liferay.portlet.bookmarks.util.BookmarksConstants" %><%@
-page import="com.liferay.portlet.bookmarks.util.BookmarksSearcher" %><%@
+page import="com.liferay.portlet.bookmarks.settings.BookmarksSettings" %><%@
 page import="com.liferay.portlet.bookmarks.util.BookmarksUtil" %>
 
 <%
@@ -67,25 +67,25 @@ if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 
 String allFolderColumns = "folder,num-of-folders,num-of-entries";
 
-if (portletId.equals(PortletKeys.BOOKMARKS) || portletId.equals(PortletKeys.BOOKMARKS_ADMIN)) {
+if (portletId.equals(BookmarksPortletKeys.BOOKMARKS) || portletId.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN)) {
 	allFolderColumns += ",action";
 }
 
 String[] folderColumns = bookmarksSettings.getFolderColumns();
 
-if (!portletId.equals(PortletKeys.BOOKMARKS) && !portletId.equals(PortletKeys.BOOKMARKS_ADMIN)) {
+if (!portletId.equals(BookmarksPortletKeys.BOOKMARKS) && !portletId.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN)) {
 	folderColumns = ArrayUtil.remove(folderColumns, "action");
 }
 
 String allEntryColumns = "name,url,visits,modified-date";
 
-if (portletId.equals(PortletKeys.BOOKMARKS) || portletId.equals(PortletKeys.BOOKMARKS_ADMIN)) {
+if (portletId.equals(BookmarksPortletKeys.BOOKMARKS) || portletId.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN)) {
 	allEntryColumns += ",action";
 }
 
 String[] entryColumns = bookmarksSettings.getEntryColumns();
 
-if (!portletId.equals(PortletKeys.BOOKMARKS) && !portletId.equals(PortletKeys.BOOKMARKS_ADMIN)) {
+if (!portletId.equals(BookmarksPortletKeys.BOOKMARKS) && !portletId.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN)) {
 	entryColumns = ArrayUtil.remove(entryColumns, "action");
 }
 

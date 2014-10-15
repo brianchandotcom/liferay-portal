@@ -89,6 +89,7 @@
 		<column name="definition" type="String" />
 		<column name="storageType" type="String" />
 		<column name="type" type="int" />
+		<column name="version" type="String" />
 
 		<!-- Relationships -->
 
@@ -141,6 +142,7 @@
 		<reference package-path="com.liferay.portal" entity="User" />
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFileEntryType" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructureLink" />
+		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructureVersion" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMTemplate" />
 		<reference package-path="com.liferay.portlet.journal" entity="JournalFolder" />
 	</entity>

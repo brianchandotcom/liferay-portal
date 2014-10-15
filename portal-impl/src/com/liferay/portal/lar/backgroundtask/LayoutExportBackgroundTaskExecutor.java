@@ -102,8 +102,8 @@ public class LayoutExportBackgroundTaskExecutor
 			parameterMap, PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE);
 
 		if (updateLastPublishDate) {
-			StagingUtil.updateLastPublishDate(
-				groupId, privateLayout, dateRange.getEndDate());
+			ExportImportDateUtil.updateLastPublishDate(
+				groupId, privateLayout, dateRange, dateRange.getEndDate());
 		}
 
 		return BackgroundTaskResult.SUCCESS;

@@ -82,7 +82,6 @@ import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutBranch;
 import com.liferay.portal.model.LayoutRevision;
-import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.StagedModel;
@@ -102,7 +101,6 @@ import com.liferay.portal.service.LayoutBranchLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
-import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
@@ -1757,55 +1755,34 @@ public class StagingImpl implements Staging {
 		layout.setTypeSettingsProperties(typeSettingsProperties);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.kernel.lar.ExportImportDateUtil#updateLastPublishDate(
+	 *             long, boolean, DateRange, Date)}
+	 */
+	@Deprecated
 	@Override
 	public void updateLastPublishDate(
 			long groupId, boolean privateLayout, Date lastPublishDate)
 		throws PortalException {
 
-		if (lastPublishDate == null) {
-			lastPublishDate = new Date();
-		}
-
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			groupId, privateLayout);
-
-		UnicodeProperties settingsProperties =
-			layoutSet.getSettingsProperties();
-
-		settingsProperties.setProperty(
-			"last-publish-date", String.valueOf(lastPublishDate.getTime()));
-
-		LayoutSetLocalServiceUtil.updateSettings(
-			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
-			settingsProperties.toString());
+		ExportImportDateUtil.updateLastPublishDate(
+			groupId, privateLayout, null, lastPublishDate);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.kernel.lar.ExportImportDateUtil#updateLastPublishDate(
+	 *             String, PortletPreferences, DateRange, Date)}
+	 */
+	@Deprecated
 	@Override
 	public void updateLastPublishDate(
 		String portletId, PortletPreferences portletPreferences,
 		Date lastPublishDate) {
 
-		if (lastPublishDate == null) {
-			lastPublishDate = new Date();
-		}
-
-		try {
-			portletPreferences.setValue(
-				"last-publish-date", String.valueOf(lastPublishDate.getTime()));
-
-			portletPreferences.store();
-		}
-		catch (UnsupportedOperationException uoe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Not updating the portlet setup for " + portletId +
-						" because no setup was returned for the current " +
-							"page");
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
+		ExportImportDateUtil.updateLastPublishDate(
+			portletId, portletPreferences, null, lastPublishDate);
 	}
 
 	@Override

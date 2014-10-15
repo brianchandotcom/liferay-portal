@@ -163,41 +163,29 @@ public class BookmarksSettings {
 	private static FallbackKeys _getFallbackKeys() {
 		FallbackKeys fallbackKeys = new FallbackKeys();
 
+		fallbackKeys.add("emailEntryAddedBody", "email.entry.added.body");
+		fallbackKeys.add("emailEntryAddedEnabled","email.entry.added.enabled");
+		fallbackKeys.add("emailEntryAddedSubject", "email.entry.added.subject");
+		fallbackKeys.add("emailEntryUpdatedBody", "email.entry.updated.body");
 		fallbackKeys.add(
-			"emailEntryAddedBody", PropsKeys.BOOKMARKS_EMAIL_ENTRY_ADDED_BODY);
+			"emailEntryUpdatedEnabled", "email.entry.updated.enabled");
 		fallbackKeys.add(
-			"emailEntryAddedEnabled",
-			PropsKeys.BOOKMARKS_EMAIL_ENTRY_ADDED_ENABLED);
+			"emailEntryUpdatedSubject", "email.entry.updated.subject");
 		fallbackKeys.add(
-			"emailEntryAddedSubject",
-			PropsKeys.BOOKMARKS_EMAIL_ENTRY_ADDED_SUBJECT);
-		fallbackKeys.add(
-			"emailEntryUpdatedBody",
-			PropsKeys.BOOKMARKS_EMAIL_ENTRY_UPDATED_BODY);
-		fallbackKeys.add(
-			"emailEntryUpdatedEnabled",
-			PropsKeys.BOOKMARKS_EMAIL_ENTRY_UPDATED_ENABLED);
-		fallbackKeys.add(
-			"emailEntryUpdatedSubject",
-			PropsKeys.BOOKMARKS_EMAIL_ENTRY_UPDATED_SUBJECT);
-		fallbackKeys.add(
-			"emailFromAddress", PropsKeys.BOOKMARKS_EMAIL_FROM_ADDRESS,
+			"emailFromAddress", "email.from.address",
 			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS );
 		fallbackKeys.add(
-			"emailFromName", PropsKeys.BOOKMARKS_EMAIL_FROM_NAME,
+			"emailFromName", "email.from.name",
 			PropsKeys.ADMIN_EMAIL_FROM_NAME);
-		fallbackKeys.add(
-			"enableRelatedAssets", PropsKeys.BOOKMARKS_RELATED_ASSETS_ENABLED);
+		fallbackKeys.add("enableRelatedAssets", "related.assets.enabled");
 		fallbackKeys.add(
 			"entriesPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
-		fallbackKeys.add("entryColumns", PropsKeys.BOOKMARKS_ENTRY_COLUMNS);
-		fallbackKeys.add("folderColumns", PropsKeys.BOOKMARKS_FOLDER_COLUMNS);
+		fallbackKeys.add("entryColumns", "entry.columns");
+		fallbackKeys.add("folderColumns", "folder.columns");
 		fallbackKeys.add(
 			"foldersPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
-		fallbackKeys.add(
-			"showFoldersSearch", PropsKeys.BOOKMARKS_FOLDERS_SEARCH_VISIBLE);
-		fallbackKeys.add(
-			"showSubfolders", PropsKeys.BOOKMARKS_SUBFOLDERS_VISIBLE);
+		fallbackKeys.add("showFoldersSearch", "folders.search.visible");
+		fallbackKeys.add("showSubfolders", "subfolders.visible");
 
 		return fallbackKeys;
 	}

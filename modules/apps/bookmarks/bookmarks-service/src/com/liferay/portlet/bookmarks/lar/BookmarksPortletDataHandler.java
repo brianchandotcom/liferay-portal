@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
@@ -64,8 +63,6 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 				NAMESPACE, "entries", true, false, null,
 				BookmarksEntry.class.getName()));
 		setImportControls(getExportControls());
-		setPublishToLiveByDefault(
-			PropsValues.BOOKMARKS_PUBLISH_TO_LIVE_BY_DEFAULT);
 
 		XStreamAliasRegistryUtil.register(
 			BookmarksEntryImpl.class, "BookmarksEntry");

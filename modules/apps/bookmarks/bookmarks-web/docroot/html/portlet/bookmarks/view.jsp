@@ -67,7 +67,7 @@ if (folder != null) {
 
 <liferay-ui:trash-undo />
 
-<liferay-util:include page="/html/portlet/bookmarks/top_links.jsp" />
+<liferay-util:include page="/html/portlet/bookmarks/top_links.jsp" servletContext="<%= application %>" />
 
 <c:choose>
 	<c:when test="<%= useAssetEntryQuery %>">
@@ -184,7 +184,7 @@ if (folder != null) {
 				request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 				%>
 
-				<liferay-util:include page="/html/portlet/bookmarks/folder_action.jsp" />
+				<liferay-util:include page="/html/portlet/bookmarks/folder_action.jsp" servletContext="<%= application %>" />
 			</aui:col>
 		</aui:row>
 

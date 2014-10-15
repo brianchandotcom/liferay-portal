@@ -49,7 +49,7 @@ else {
 %>
 
 <c:if test="<%= !windowState.equals(LiferayWindowState.POP_UP) %>">
-	<liferay-util:include page="/html/portlet/bookmarks/top_links.jsp" />
+	<liferay-util:include page="/html/portlet/bookmarks/top_links.jsp" servletContext="<%= application %>" />
 </c:if>
 
 <portlet:actionURL var="editFolderURL">

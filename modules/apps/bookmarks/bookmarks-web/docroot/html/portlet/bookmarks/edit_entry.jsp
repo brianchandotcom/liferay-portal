@@ -47,7 +47,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 %>
 
 <c:if test="<%= Validator.isNull(referringPortletResource) %>">
-	<liferay-util:include page="/html/portlet/bookmarks/top_links.jsp" />
+	<liferay-util:include page="/html/portlet/bookmarks/top_links.jsp" servletContext="<%= application %>" />
 </c:if>
 
 <portlet:actionURL var="editEntryURL">

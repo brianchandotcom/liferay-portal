@@ -36,7 +36,7 @@ request.setAttribute("view_entry.jsp-entry", entry);
 BookmarksUtil.addPortletBreadcrumbEntries(entry, request, renderResponse);
 %>
 
-<liferay-util:include page="/html/portlet/bookmarks/top_links.jsp" />
+<liferay-util:include page="/html/portlet/bookmarks/top_links.jsp" servletContext="<%= application %>" />
 
 <c:choose>
 	<c:when test="<%= Validator.isNull(redirect) %>">

@@ -132,7 +132,7 @@
 		<execute action="PGCalendar#assertClick" locator-key1="ADD_EVENT_BUTTON" value1="Add Event" />
 
 		<execute action="PGCalendarAddevent#selectFrame" locator-key1="ADD_EVENT_IFRAME" />
-		<execute action="PGCalendarAddevent#pause" locator1="1000" />
+		<execute action="PGCalendarAddevent#pause" value1="1000" />
 		<execute action="PGCalendarAddevent#type" locator-key1="TITLE_FIELD" value1="${eventTitle}" />
 		<execute action="PGCalendarAddevent#assertElementPresent" locator-key1="START_DATE" />
 		<execute action="PGCalendarAddevent#assertElementPresent" locator-key1="START_DATE_TIME" />
@@ -337,7 +337,7 @@
 		<var name="key_rsvp" value="${rsvp}" />
 
 		<execute action="PGCalendar#assertClick" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_ATTEND_ACTIVE" value1="${rsvp}" />
-		<execute action="PGCalendar#pause" locator1="3000" />
+		<execute action="PGCalendar#pause" value1="3000" />
 		<execute action="PGCalendar#assertClick" locator-key1="SCHEDULER_EVENT_SPECIFIC" value1="${eventTitle}" />
 		<execute action="PGCalendar#assertTextEquals" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_ATTEND_INACTIVE" value1="${rsvp}" />
 	</command>
@@ -785,7 +785,7 @@
 					<execute action="PGCalendarEditevent#click" locator-key1="START_DATE_TIME" />
 					<execute action="PGCalendarEditevent#type" locator-key1="END_DATE_TIME" value1="${endDateTime}" />
 					<execute action="PGCalendarEditevent#click" locator-key1="END_DATE_TIME" />
-					<execute action="PGCalendarEditevent#pause" locator1="1000" />
+					<execute action="PGCalendarEditevent#pause" value1="1000" />
 
 					<if>
 						<equals arg1="${optionSet}" arg2="true" />
@@ -812,7 +812,7 @@
 					<execute action="PGCalendarEditevent#click" locator-key1="START_DATE_TIME" />
 					<execute action="PGCalendarEditevent#type" locator-key1="END_DATE_TIME" value1="${endDateTime}" />
 					<execute action="PGCalendarEditevent#click" locator-key1="END_DATE_TIME" />
-					<execute action="PGCalendarEditevent#pause" locator1="1000" />
+					<execute action="PGCalendarEditevent#pause" value1="1000" />
 					<execute action="PGCalendarEditevent#assertChecked" locator-key1="REPEAT_CHECKBOX" />
 					<execute action="PGCalendarEditevent#assertTextEquals" locator-key1="REPEAT_SUMMARY_1" value1="Daily, 1 Times" />
 					<execute action="PGCalendarEditevent#click" locator-key1="SAVE_BUTTON" />
@@ -893,7 +893,7 @@
 		<execute action="PGCalendarEditevent#click" locator-key1="START_DATE_TIME" />
 		<execute action="PGCalendarEditevent#type" locator-key1="END_DATE_TIME" value1="${endDateTime}" />
 		<execute action="PGCalendarEditevent#click" locator-key1="END_DATE_TIME" />
-		<execute action="PGCalendarEditevent#pause" locator1="1000" />
+		<execute action="PGCalendarEditevent#pause" value1="1000" />
 		<execute action="PGCalendarEditevent#click" locator-key1="SAVE_BUTTON" />
 
 		<execute action="PGCalendarEditevent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -1113,7 +1113,7 @@
 			</then>
 		</while>
 
-		<execute action="PGCalendarAgendaView#pause" locator1="1000" />
+		<execute action="PGCalendarAgendaView#pause" value1="1000" />
 		<execute action="PGCalendarAgendaView#clickNoError" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
 		<execute action="PGCalendarAgendaView#confirm" locator-key1="CONFIRMATION" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
 
@@ -1288,6 +1288,9 @@
 		<execute macro="CalendarEvent#changeViewPG">
 			<var name="viewType" value="Day" />
 		</execute>
+
+		<execute action="PGCalendarDayView#refresh" />
+		<execute action="PGCalendarDayView#pause" value1="1000" />
 
 		<var name="i" value="1" />
 		<var name="key_eventTitle" value="${eventTitle}" />

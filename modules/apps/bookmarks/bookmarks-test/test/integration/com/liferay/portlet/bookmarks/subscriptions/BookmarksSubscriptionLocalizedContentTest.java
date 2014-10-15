@@ -23,11 +23,11 @@ import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.subscriptions.BaseSubscriptionLocalizedContentTestCase;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
+import com.liferay.portlet.bookmarks.constants.BookmarksConstants;
 import com.liferay.portlet.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
-import com.liferay.portlet.bookmarks.util.BookmarksConstants;
 import com.liferay.portlet.bookmarks.util.BookmarksTestUtil;
 
 import org.junit.runner.RunWith;

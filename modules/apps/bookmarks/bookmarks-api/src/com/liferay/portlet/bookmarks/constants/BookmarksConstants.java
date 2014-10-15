@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.bookmarks.util;
+package com.liferay.portlet.bookmarks.constants;
 
 /**
  * @author Iván Zaera

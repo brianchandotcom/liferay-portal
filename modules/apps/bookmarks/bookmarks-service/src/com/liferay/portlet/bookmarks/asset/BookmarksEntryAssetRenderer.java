@@ -23,10 +23,10 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRenderer;
+import com.liferay.portlet.bookmarks.constants.BookmarksConstants;
 import com.liferay.portlet.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.service.permission.BookmarksEntryPermission;
-import com.liferay.portlet.bookmarks.util.BookmarksConstants;
 
 import java.util.Date;
 import java.util.Locale;

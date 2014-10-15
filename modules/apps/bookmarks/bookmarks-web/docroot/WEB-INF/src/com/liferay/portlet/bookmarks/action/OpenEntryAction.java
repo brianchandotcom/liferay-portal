@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.bookmarks.NoSuchEntryException;
+import com.liferay.portlet.bookmarks.exception.NoSuchEntryException;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.service.BookmarksEntryServiceUtil;
 

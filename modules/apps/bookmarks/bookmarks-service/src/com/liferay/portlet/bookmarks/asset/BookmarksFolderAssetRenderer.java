@@ -25,12 +25,12 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRenderer;
+import com.liferay.portlet.bookmarks.constants.BookmarksConstants;
 import com.liferay.portlet.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.service.BookmarksEntryServiceUtil;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil;
 import com.liferay.portlet.bookmarks.service.permission.BookmarksFolderPermission;
-import com.liferay.portlet.bookmarks.util.BookmarksConstants;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.Date;

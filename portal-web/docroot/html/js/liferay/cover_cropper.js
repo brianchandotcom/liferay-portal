@@ -21,6 +21,8 @@ AUI.add(
 					}
 				},
 
+				AUGMENTS: [Liferay.CropRegion],
+
 				EXTENDS: A.Plugin.Base,
 
 				NAME: 'covercropper',
@@ -139,67 +141,23 @@ AUI.add(
 						return constrain;
 					},
 
-					_getCropRegion: function() {
-						var instance = this;
-
-						var host = instance.get(STR_HOST);
-
-						var imagePreview = host._image;
-
-						var imagePreviewWrapper = host._imageWrapper;
-
-						var naturalSize = instance._getImgNaturalSize(imagePreview);
-
-						var scaleY = naturalSize.height / imagePreview.height();
-						var scaleX = naturalSize.width / imagePreview.width();
-
-						var posX = 0;
-
-						if (naturalSize.width > imagePreviewWrapper.width()) {
-							posX = Math.ceil((imagePreviewWrapper.getX() - imagePreview.getX()) * scaleX);
-						}
-
-						var posY = 0;
-
-						if (naturalSize.height > imagePreviewWrapper.height()) {
-							posY = Math.ceil((imagePreviewWrapper.getY() - imagePreview.getY()) * scaleY);
-						}
-
-						var cropRegion = {
-							height: Math.ceil(imagePreviewWrapper.height() * scaleY),
-							width: naturalSize.width,
-							x: posX,
-							y: posY
-						};
-
-						return cropRegion;
-					},
-
-					_getImgNaturalSize: function(img) {
-						var imageHeight = img.get('naturalHeight');
-						var imageWidth = img.get('naturalWidth');
-
-						if (Lang.isUndefined(imageHeight) || Lang.isUndefined(imageWidth)) {
-							var tmp = new Image();
-
-							tmp.src = img.attr('src');
-
-							imageHeight = tmp.height;
-							imageWidth = tmp.width;
-						}
-
-						return {
-							height: imageHeight,
-							width: imageWidth
-						};
-					},
-
 					_onImageUpdated: function(event) {
 						var instance = this;
 
 						var host = instance.get(STR_HOST);
 
-						var cropRegion = instance._getCropRegion();
+						var previewWrapper = host._imageWrapper;
+
+						var imagePreview = host._image;
+
+						var cropRegion = instance._getCropRegion(
+							host._image,
+							{
+								height: previewWrapper.height(),
+								x: previewWrapper.getX() - imagePreview.getX(),
+								y: previewWrapper.getY() - imagePreview.getY()
+							}
+						);
 
 						var cropRegionNode = host.rootNode.one('#' + host.get('paramName') + 'CropRegion');
 
@@ -213,6 +171,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'dd-constrain', 'dd-drag', 'plugin']
+		requires: ['aui-base', 'dd-constrain', 'dd-drag', 'liferay-crop-region', 'plugin']
 	}
 );

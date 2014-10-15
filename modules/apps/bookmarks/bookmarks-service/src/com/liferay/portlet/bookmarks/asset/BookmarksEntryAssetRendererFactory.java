@@ -21,10 +21,10 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
+import com.liferay.portlet.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.portlet.bookmarks.service.permission.BookmarksEntryPermission;
@@ -85,7 +85,7 @@ public class BookmarksEntryAssetRendererFactory
 		LiferayPortletResponse liferayPortletResponse) {
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL(
-			PortletKeys.BOOKMARKS);
+			BookmarksPortletKeys.BOOKMARKS);
 
 		portletURL.setParameter("struts_action", "/bookmarks/edit_entry");
 		portletURL.setParameter(
@@ -104,7 +104,7 @@ public class BookmarksEntryAssetRendererFactory
 
 		LiferayPortletURL liferayPortletURL =
 			liferayPortletResponse.createLiferayPortletURL(
-				PortletKeys.BOOKMARKS, PortletRequest.RENDER_PHASE);
+				BookmarksPortletKeys.BOOKMARKS, PortletRequest.RENDER_PHASE);
 
 		try {
 			liferayPortletURL.setWindowState(windowState);

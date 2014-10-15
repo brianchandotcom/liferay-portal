@@ -51,10 +51,6 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String BLOGS_ENTRY = "BLOGS_ENTRY";
 
-	public static final String BOOKMARKS_ENTRY = "BOOKMARKS_ENTRY";
-
-	public static final String BOOKMARKS_FOLDER = "BOOKMARKS_FOLDER";
-
 	public static final String CACHE_PORTLET_RESPONSES = "CACHE_PORTLET_RESPONSES";
 
 	public static final String CALENDAR_EVENT = "CALENDAR_EVENT";

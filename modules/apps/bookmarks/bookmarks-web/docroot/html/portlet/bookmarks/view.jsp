@@ -19,7 +19,7 @@
 <%
 String topLink = ParamUtil.getString(request, "topLink", "home");
 
-BookmarksFolder folder = (BookmarksFolder)request.getAttribute(WebKeys.BOOKMARKS_FOLDER);
+BookmarksFolder folder = (BookmarksFolder)request.getAttribute(BookmarksConstants.BOOKMARKS_FOLDER);
 
 long folderId = BeanParamUtil.getLong(folder, request, "folderId", rootFolderId);
 
@@ -189,7 +189,7 @@ if (folder != null) {
 		</aui:row>
 
 		<%
-		if (!defaultFolderView && (folder != null) && (portletName.equals(PortletKeys.BOOKMARKS) || portletName.equals(PortletKeys.BOOKMARKS_ADMIN))) {
+		if (!defaultFolderView && (folder != null) && (portletName.equals(BookmarksPortletKeys.BOOKMARKS) || portletName.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN))) {
 			PortalUtil.setPageSubtitle(folder.getName(), request);
 			PortalUtil.setPageDescription(folder.getDescription(), request);
 		}

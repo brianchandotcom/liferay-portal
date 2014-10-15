@@ -22,14 +22,15 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRenderer;
+import com.liferay.portlet.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.service.BookmarksEntryServiceUtil;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil;
 import com.liferay.portlet.bookmarks.service.permission.BookmarksFolderPermission;
+import com.liferay.portlet.bookmarks.util.BookmarksConstants;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.Date;
@@ -156,7 +157,7 @@ public class BookmarksFolderAssetRenderer
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
 			getControlPanelPlid(liferayPortletRequest),
-			PortletKeys.BOOKMARKS_ADMIN, PortletRequest.RENDER_PHASE);
+			BookmarksPortletKeys.BOOKMARKS_ADMIN, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("struts_action", "/bookmarks/edit_folder");
 		portletURL.setParameter(
@@ -233,7 +234,8 @@ public class BookmarksFolderAssetRenderer
 		throws Exception {
 
 		if (template.equals(TEMPLATE_FULL_CONTENT)) {
-			renderRequest.setAttribute(WebKeys.BOOKMARKS_FOLDER, _folder);
+			renderRequest.setAttribute(
+				BookmarksConstants.BOOKMARKS_FOLDER, _folder);
 
 			return "/html/portlet/bookmarks/asset/folder_" + template + ".jsp";
 		}

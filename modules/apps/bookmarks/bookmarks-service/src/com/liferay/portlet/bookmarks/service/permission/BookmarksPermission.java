@@ -21,8 +21,8 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourcePermissionChecker;
+import com.liferay.portlet.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 
@@ -63,7 +63,7 @@ public class BookmarksPermission implements ResourcePermissionChecker {
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, group.getGroupId(), RESOURCE_NAME,
-			group.getGroupId(), PortletKeys.BOOKMARKS, actionId);
+			group.getGroupId(), BookmarksPortletKeys.BOOKMARKS, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();

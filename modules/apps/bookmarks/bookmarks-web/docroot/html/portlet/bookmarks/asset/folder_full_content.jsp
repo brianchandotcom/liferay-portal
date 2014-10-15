@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/bookmarks/init.jsp" %>
 
 <%
-BookmarksFolder folder = (BookmarksFolder)request.getAttribute(WebKeys.BOOKMARKS_FOLDER);
+BookmarksFolder folder = (BookmarksFolder)request.getAttribute(BookmarksConstants.BOOKMARKS_FOLDER);
 %>
 
 <c:if test="<%= folder != null %>">

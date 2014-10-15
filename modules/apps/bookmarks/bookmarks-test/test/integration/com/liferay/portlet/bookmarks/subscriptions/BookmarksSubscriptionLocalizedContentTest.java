@@ -20,15 +20,15 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.subscriptions.BaseSubscriptionLocalizedContentTestCase;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
+import com.liferay.portlet.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.portlet.bookmarks.util.BookmarksConstants;
-import com.liferay.portlet.bookmarks.util.test.BookmarksTestUtil;
+import com.liferay.portlet.bookmarks.util.BookmarksTestUtil;
 
 import org.junit.runner.RunWith;
 
@@ -66,7 +66,7 @@ public class BookmarksSubscriptionLocalizedContentTest
 
 	@Override
 	protected String getPortletId() {
-		return PortletKeys.BOOKMARKS;
+		return BookmarksPortletKeys.BOOKMARKS;
 	}
 
 	@Override

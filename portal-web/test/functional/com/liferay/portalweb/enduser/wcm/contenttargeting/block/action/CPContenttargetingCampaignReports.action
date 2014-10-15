@@ -1,0 +1,7 @@
+<definition>
+	<command name="assertTextEquals">
+		<case locator-key1="TRACKING_REPORT_TABLE_COUNT">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+</definition>

@@ -371,10 +371,8 @@
 	<command name="viewTrackingReportCP">
 		<var name="key_trackingAlias" value="${trackingAlias}" />
 
-		<execute action="CPContenttargetingCampaignReports#assertTextEquals" locator-key1="TRACKING_GRAPH_ALIAS_USER_SEGMENT" value1="${trackingAlias} (${userSegmentName})" />
 		<execute action="CPContenttargetingCampaignReports#assertTextEquals" locator-key1="TRACKING_REPORT_TABLE_ALIAS" value1="${trackingAlias}" />
 		<execute action="CPContenttargetingCampaignReports#assertTextEquals" locator-key1="TRACKING_REPORT_TABLE_EVENT" value1="${trackingEvent}" />
-		<execute action="CPContenttargetingCampaignReports#assertTextEquals" locator-key1="TRACKING_REPORT_TABLE_USER_SEGMENT" value1="${trackingUserSegment}" />
 		<execute action="CPContenttargetingCampaignReports#assertTextEquals" locator-key1="TRACKING_REPORT_TABLE_COUNT" value1="${trackingCount}" />
 	</command>
 </definition>

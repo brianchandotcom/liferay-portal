@@ -28,7 +28,7 @@ import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
-import com.liferay.portlet.bookmarks.util.test.BookmarksTestUtil;
+import com.liferay.portlet.bookmarks.util.BookmarksTestUtil;
 
 import java.util.List;
 

@@ -22,7 +22,7 @@ import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
-import com.liferay.portlet.bookmarks.util.test.BookmarksTestUtil;
+import com.liferay.portlet.bookmarks.util.BookmarksTestUtil;
 import com.liferay.portlet.social.BaseSocialActivityInterpreterTestCase;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.bookmarks.util.test;
+package com.liferay.portlet.bookmarks.util;
 
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;

@@ -41,7 +41,7 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -75,6 +75,8 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		sb.append(storageType);
 		sb.append(", type=");
 		sb.append(type);
+		sb.append(", version=");
+		sb.append(version);
 		sb.append("}");
 
 		return sb.toString();
@@ -157,6 +159,13 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 
 		ddmStructureImpl.setType(type);
 
+		if (version == null) {
+			ddmStructureImpl.setVersion(StringPool.BLANK);
+		}
+		else {
+			ddmStructureImpl.setVersion(version);
+		}
+
 		ddmStructureImpl.resetOriginalValues();
 
 		ddmStructureImpl.setDDMForm(_ddmForm);
@@ -185,6 +194,7 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		definition = objectInput.readUTF();
 		storageType = objectInput.readUTF();
 		type = objectInput.readInt();
+		version = objectInput.readUTF();
 
 		_ddmForm = (com.liferay.portlet.dynamicdatamapping.model.DDMForm)objectInput.readObject();
 		_fullHierarchyDDMForm = (com.liferay.portlet.dynamicdatamapping.model.DDMForm)objectInput.readObject();
@@ -254,6 +264,13 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 
 		objectOutput.writeInt(type);
 
+		if (version == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(version);
+		}
+
 		objectOutput.writeObject(_ddmForm);
 		objectOutput.writeObject(_fullHierarchyDDMForm);
 	}
@@ -274,6 +291,7 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 	public String definition;
 	public String storageType;
 	public int type;
+	public String version;
 	public com.liferay.portlet.dynamicdatamapping.model.DDMForm _ddmForm;
 	public com.liferay.portlet.dynamicdatamapping.model.DDMForm _fullHierarchyDDMForm;
 }

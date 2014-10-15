@@ -58,6 +58,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureFinder;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureLinkPersistence;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructurePersistence;
+import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureVersionPersistence;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplatePersistence;
 import com.liferay.portlet.journal.service.persistence.JournalFolderFinder;
@@ -1249,6 +1250,63 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the d d m structure version local service.
+	 *
+	 * @return the d d m structure version local service
+	 */
+	public com.liferay.portlet.dynamicdatamapping.service.DDMStructureVersionLocalService getDDMStructureVersionLocalService() {
+		return ddmStructureVersionLocalService;
+	}
+
+	/**
+	 * Sets the d d m structure version local service.
+	 *
+	 * @param ddmStructureVersionLocalService the d d m structure version local service
+	 */
+	public void setDDMStructureVersionLocalService(
+		com.liferay.portlet.dynamicdatamapping.service.DDMStructureVersionLocalService ddmStructureVersionLocalService) {
+		this.ddmStructureVersionLocalService = ddmStructureVersionLocalService;
+	}
+
+	/**
+	 * Returns the d d m structure version remote service.
+	 *
+	 * @return the d d m structure version remote service
+	 */
+	public com.liferay.portlet.dynamicdatamapping.service.DDMStructureVersionService getDDMStructureVersionService() {
+		return ddmStructureVersionService;
+	}
+
+	/**
+	 * Sets the d d m structure version remote service.
+	 *
+	 * @param ddmStructureVersionService the d d m structure version remote service
+	 */
+	public void setDDMStructureVersionService(
+		com.liferay.portlet.dynamicdatamapping.service.DDMStructureVersionService ddmStructureVersionService) {
+		this.ddmStructureVersionService = ddmStructureVersionService;
+	}
+
+	/**
+	 * Returns the d d m structure version persistence.
+	 *
+	 * @return the d d m structure version persistence
+	 */
+	public DDMStructureVersionPersistence getDDMStructureVersionPersistence() {
+		return ddmStructureVersionPersistence;
+	}
+
+	/**
+	 * Sets the d d m structure version persistence.
+	 *
+	 * @param ddmStructureVersionPersistence the d d m structure version persistence
+	 */
+	public void setDDMStructureVersionPersistence(
+		DDMStructureVersionPersistence ddmStructureVersionPersistence) {
+		this.ddmStructureVersionPersistence = ddmStructureVersionPersistence;
+	}
+
+	/**
 	 * Returns the d d m template local service.
 	 *
 	 * @return the d d m template local service
@@ -1443,6 +1501,12 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	protected com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalService ddmStructureLinkLocalService;
 	@BeanReference(type = DDMStructureLinkPersistence.class)
 	protected DDMStructureLinkPersistence ddmStructureLinkPersistence;
+	@BeanReference(type = com.liferay.portlet.dynamicdatamapping.service.DDMStructureVersionLocalService.class)
+	protected com.liferay.portlet.dynamicdatamapping.service.DDMStructureVersionLocalService ddmStructureVersionLocalService;
+	@BeanReference(type = com.liferay.portlet.dynamicdatamapping.service.DDMStructureVersionService.class)
+	protected com.liferay.portlet.dynamicdatamapping.service.DDMStructureVersionService ddmStructureVersionService;
+	@BeanReference(type = DDMStructureVersionPersistence.class)
+	protected DDMStructureVersionPersistence ddmStructureVersionPersistence;
 	@BeanReference(type = com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalService.class)
 	protected com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalService ddmTemplateLocalService;
 	@BeanReference(type = com.liferay.portlet.dynamicdatamapping.service.DDMTemplateService.class)

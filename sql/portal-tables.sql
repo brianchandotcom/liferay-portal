@@ -525,7 +525,8 @@ create table DDMStructure (
 	description STRING null,
 	definition TEXT null,
 	storageType VARCHAR(75) null,
-	type_ INTEGER
+	type_ INTEGER,
+	version VARCHAR(75) null
 );
 
 create table DDMStructureLink (

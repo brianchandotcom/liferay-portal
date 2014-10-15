@@ -1823,6 +1823,7 @@
 		</field>
 		<field name="storageType" type="String" />
 		<field name="type" type="int" />
+		<field name="version" type="String" />
 	</model>
 	<model name="com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink">
 		<field name="structureLinkId" type="long" />

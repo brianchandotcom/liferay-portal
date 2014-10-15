@@ -93,9 +93,10 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 			{ "description", Types.VARCHAR },
 			{ "definition", Types.CLOB },
 			{ "storageType", Types.VARCHAR },
-			{ "type_", Types.INTEGER }
+			{ "type_", Types.INTEGER },
+			{ "version", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DDMStructure (uuid_ VARCHAR(75) null,structureId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentStructureId LONG,classNameId LONG,structureKey VARCHAR(75) null,name STRING null,description STRING null,definition TEXT null,storageType VARCHAR(75) null,type_ INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table DDMStructure (uuid_ VARCHAR(75) null,structureId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentStructureId LONG,classNameId LONG,structureKey VARCHAR(75) null,name STRING null,description STRING null,definition TEXT null,storageType VARCHAR(75) null,type_ INTEGER,version VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table DDMStructure";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddmStructure.structureId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DDMStructure.structureId ASC";
@@ -150,6 +151,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		model.setDefinition(soapModel.getDefinition());
 		model.setStorageType(soapModel.getStorageType());
 		model.setType(soapModel.getType());
+		model.setVersion(soapModel.getVersion());
 
 		return model;
 	}
@@ -255,6 +257,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		attributes.put("definition", getDefinition());
 		attributes.put("storageType", getStorageType());
 		attributes.put("type", getType());
+		attributes.put("version", getVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -358,6 +361,12 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 
 		if (type != null) {
 			setType(type);
+		}
+
+		String version = (String)attributes.get("version");
+
+		if (version != null) {
+			setVersion(version);
 		}
 	}
 
@@ -864,6 +873,22 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		_type = type;
 	}
 
+	@JSON
+	@Override
+	public String getVersion() {
+		if (_version == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _version;
+		}
+	}
+
+	@Override
+	public void setVersion(String version) {
+		_version = version;
+	}
+
 	public com.liferay.portlet.dynamicdatamapping.model.DDMForm getDDMForm() {
 		return null;
 	}
@@ -1015,6 +1040,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		ddmStructureImpl.setDefinition(getDefinition());
 		ddmStructureImpl.setStorageType(getStorageType());
 		ddmStructureImpl.setType(getType());
+		ddmStructureImpl.setVersion(getVersion());
 
 		ddmStructureImpl.resetOriginalValues();
 
@@ -1200,6 +1226,14 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 
 		ddmStructureCacheModel.type = getType();
 
+		ddmStructureCacheModel.version = getVersion();
+
+		String version = ddmStructureCacheModel.version;
+
+		if ((version != null) && (version.length() == 0)) {
+			ddmStructureCacheModel.version = null;
+		}
+
 		ddmStructureCacheModel._ddmForm = getDDMForm();
 
 		ddmStructureCacheModel._fullHierarchyDDMForm = getFullHierarchyDDMForm();
@@ -1209,7 +1243,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1243,6 +1277,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		sb.append(getStorageType());
 		sb.append(", type=");
 		sb.append(getType());
+		sb.append(", version=");
+		sb.append(getVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -1250,7 +1286,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.dynamicdatamapping.model.DDMStructure");
@@ -1320,6 +1356,10 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 			"<column><column-name>type</column-name><column-value><![CDATA[");
 		sb.append(getType());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>version</column-name><column-value><![CDATA[");
+		sb.append(getVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1360,6 +1400,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 	private String _definition;
 	private String _storageType;
 	private int _type;
+	private String _version;
 	private long _columnBitmask;
 	private DDMStructure _escapedModel;
 }

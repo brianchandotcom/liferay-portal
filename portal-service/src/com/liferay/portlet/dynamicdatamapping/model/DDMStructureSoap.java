@@ -50,6 +50,7 @@ public class DDMStructureSoap implements Serializable {
 		soapModel.setDefinition(model.getDefinition());
 		soapModel.setStorageType(model.getStorageType());
 		soapModel.setType(model.getType());
+		soapModel.setVersion(model.getVersion());
 
 		return soapModel;
 	}
@@ -230,6 +231,14 @@ public class DDMStructureSoap implements Serializable {
 		_type = type;
 	}
 
+	public String getVersion() {
+		return _version;
+	}
+
+	public void setVersion(String version) {
+		_version = version;
+	}
+
 	private String _uuid;
 	private long _structureId;
 	private long _groupId;
@@ -246,4 +255,5 @@ public class DDMStructureSoap implements Serializable {
 	private String _definition;
 	private String _storageType;
 	private int _type;
+	private String _version;
 }

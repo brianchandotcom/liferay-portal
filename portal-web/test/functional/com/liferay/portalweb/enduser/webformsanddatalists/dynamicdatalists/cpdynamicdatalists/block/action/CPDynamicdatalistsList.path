@@ -132,6 +132,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RECORD_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_ddlRecordFieldData}')]/td/div[contains(@class,'btn-group')]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RECORD_TABLE_ACTIONS_1</td>
 	<td>//tr/td[5]/div/a</td>
 	<td></td>

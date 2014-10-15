@@ -58,7 +58,7 @@ if (folder != null) {
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portlet.bookmarks.model.BookmarksFolder"
+			className="com.liferay.bookmarks.model.BookmarksFolder"
 			modelVar="curFolder"
 		>
 

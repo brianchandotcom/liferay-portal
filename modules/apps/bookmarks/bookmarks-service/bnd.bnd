@@ -2,19 +2,19 @@ Bundle-Name: Liferay Bookmarks Service
 Bundle-SymbolicName: com.liferay.bookmarks.service
 Bundle-Version: 1.0.0
 Export-Package:\
-	com.liferay.portlet.bookmarks.asset,\
-	com.liferay.portlet.bookmarks.customattributes,\
-	com.liferay.portlet.bookmarks.indexer,\
-	com.liferay.portlet.bookmarks.lar,\
-	com.liferay.portlet.bookmarks.notifications,\
-	com.liferay.portlet.bookmarks.opensearch,\
-	com.liferay.portlet.bookmarks.routes,\
-	com.liferay.portlet.bookmarks.search,\
-	com.liferay.portlet.bookmarks.service.configuration.configurator,\
-	com.liferay.portlet.bookmarks.settings,\
-	com.liferay.portlet.bookmarks.social,\
-	com.liferay.portlet.bookmarks.trash,\
-	com.liferay.portlet.bookmarks.util
+	com.liferay.bookmarks.asset,\
+	com.liferay.bookmarks.customattributes,\
+	com.liferay.bookmarks.indexer,\
+	com.liferay.bookmarks.lar,\
+	com.liferay.bookmarks.notifications,\
+	com.liferay.bookmarks.opensearch,\
+	com.liferay.bookmarks.routes,\
+	com.liferay.bookmarks.search,\
+	com.liferay.bookmarks.service.configuration.configurator,\
+	com.liferay.bookmarks.settings,\
+	com.liferay.bookmarks.social,\
+	com.liferay.bookmarks.trash,\
+	com.liferay.bookmarks.util
 Import-Package:\
 	!aQute.bnd.ant,\
 	!aQute.bnd.differ,\

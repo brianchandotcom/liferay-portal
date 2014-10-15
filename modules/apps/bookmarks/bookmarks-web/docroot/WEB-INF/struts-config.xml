@@ -7,35 +7,35 @@
 
 		<!-- Bookmarks -->
 
-		<action path="/bookmarks/edit_entry" type="com.liferay.portlet.bookmarks.action.EditEntryAction">
+		<action path="/bookmarks/edit_entry" type="com.liferay.bookmarks.web.action.EditEntryAction">
 			<forward name="portlet.bookmarks.edit_entry" path="/portlet/bookmarks/edit_entry.jsp" />
 			<forward name="portlet.bookmarks.error" path="/portlet/bookmarks/error.jsp" />
 		</action>
 
-		<action path="/bookmarks/edit_folder" type="com.liferay.portlet.bookmarks.action.EditFolderAction">
+		<action path="/bookmarks/edit_folder" type="com.liferay.bookmarks.web.action.EditFolderAction">
 			<forward name="portlet.bookmarks.edit_folder" path="/portlet/bookmarks/edit_folder.jsp" />
 			<forward name="portlet.bookmarks.error" path="/portlet/bookmarks/error.jsp" />
 		</action>
 
-		<action path="/bookmarks/find_entry" type="com.liferay.portlet.bookmarks.action.FindEntryAction" />
+		<action path="/bookmarks/find_entry" type="com.liferay.bookmarks.web.action.FindEntryAction" />
 
-		<action path="/bookmarks/find_folder" type="com.liferay.portlet.bookmarks.action.FindFolderAction" />
+		<action path="/bookmarks/find_folder" type="com.liferay.bookmarks.web.action.FindFolderAction" />
 
-		<action path="/bookmarks/open_entry" type="com.liferay.portlet.bookmarks.action.OpenEntryAction" />
+		<action path="/bookmarks/open_entry" type="com.liferay.bookmarks.web.action.OpenEntryAction" />
 
 		<action path="/bookmarks/search" forward="portlet.bookmarks.search" />
 
-		<action path="/bookmarks/select_folder" type="com.liferay.portlet.bookmarks.action.EditFolderAction">
+		<action path="/bookmarks/select_folder" type="com.liferay.bookmarks.web.action.EditFolderAction">
 			<forward name="portlet.bookmarks.edit_folder" path="/portlet/bookmarks/select_folder" />
 			<forward name="portlet.bookmarks.error" path="/portlet/bookmarks/error.jsp" />
 		</action>
 
-		<action path="/bookmarks/view" type="com.liferay.portlet.bookmarks.action.ViewAction">
+		<action path="/bookmarks/view" type="com.liferay.bookmarks.web.action.ViewAction">
 			<forward name="portlet.bookmarks.error" path="/portlet/bookmarks/error.jsp" />
 			<forward name="portlet.bookmarks.view" path="/portlet/bookmarks/view.jsp" />
 		</action>
 
-		<action path="/bookmarks/view_entry" type="com.liferay.portlet.bookmarks.action.EditEntryAction">
+		<action path="/bookmarks/view_entry" type="com.liferay.bookmarks.web.action.EditEntryAction">
 			<forward name="portlet.bookmarks.edit_entry" path="/portlet/bookmarks/view_entry.jsp" />
 			<forward name="portlet.bookmarks.error" path="/portlet/bookmarks/error.jsp" />
 		</action>

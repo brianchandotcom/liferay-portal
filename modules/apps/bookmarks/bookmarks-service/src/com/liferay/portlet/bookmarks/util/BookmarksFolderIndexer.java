@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.portlet.bookmarks.service.permission.BookmarksFolderPermission;
@@ -53,7 +53,7 @@ public class BookmarksFolderIndexer extends BaseIndexer {
 	public static final String[] CLASS_NAMES =
 		{BookmarksFolder.class.getName()};
 
-	public static final String PORTLET_ID = PortletKeys.BOOKMARKS;
+	public static final String PORTLET_ID = BookmarksPortletKeys.BOOKMARKS;
 
 	public BookmarksFolderIndexer() {
 		setDefaultSelectedFieldNames(

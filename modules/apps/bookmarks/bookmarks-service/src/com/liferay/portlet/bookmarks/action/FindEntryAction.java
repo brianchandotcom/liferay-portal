@@ -15,7 +15,7 @@
 package com.liferay.portlet.bookmarks.action;
 
 import com.liferay.portal.struts.FindAction;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
 
@@ -48,7 +48,7 @@ public class FindEntryAction extends FindAction {
 
 	@Override
 	protected String[] initPortletIds() {
-		return new String[] {PortletKeys.BOOKMARKS};
+		return new String[] {BookmarksPortletKeys.BOOKMARKS};
 	}
 
 }

@@ -19,6 +19,10 @@ package com.liferay.portlet.bookmarks.util;
  */
 public class BookmarksConstants {
 
+	public static final String BOOKMARKS_ENTRY = "BOOKMARKS_ENTRY";
+
+	public static final String BOOKMARKS_FOLDER = "BOOKMARKS_FOLDER";
+
 	public static final String SERVICE_NAME = "com.liferay.portlet.bookmarks";
 
 }

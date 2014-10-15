@@ -21,9 +21,9 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourcePermissionChecker;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.bookmarks.NoSuchFolderException;
+import com.liferay.portlet.bookmarks.exception.NoSuchFolderException;
+import com.liferay.portlet.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
@@ -71,7 +71,7 @@ public class BookmarksEntryPermission
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, entry.getGroupId(),
 			BookmarksEntry.class.getName(), entry.getEntryId(),
-			PortletKeys.BOOKMARKS, actionId);
+			BookmarksPortletKeys.BOOKMARKS, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();

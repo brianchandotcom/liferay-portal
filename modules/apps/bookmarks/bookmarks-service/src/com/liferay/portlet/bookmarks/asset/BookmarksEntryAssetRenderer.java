@@ -20,12 +20,13 @@ import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRenderer;
+import com.liferay.portlet.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.service.permission.BookmarksEntryPermission;
+import com.liferay.portlet.bookmarks.util.BookmarksConstants;
 
 import java.util.Date;
 import java.util.Locale;
@@ -117,7 +118,7 @@ public class BookmarksEntryAssetRenderer
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
 			getControlPanelPlid(liferayPortletRequest),
-			PortletKeys.BOOKMARKS_ADMIN, PortletRequest.RENDER_PHASE);
+			BookmarksPortletKeys.BOOKMARKS_ADMIN, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("struts_action", "/bookmarks/edit_entry");
 		portletURL.setParameter(
@@ -207,7 +208,8 @@ public class BookmarksEntryAssetRenderer
 		throws Exception {
 
 		if (template.equals(TEMPLATE_FULL_CONTENT)) {
-			renderRequest.setAttribute(WebKeys.BOOKMARKS_ENTRY, _entry);
+			renderRequest.setAttribute(
+				BookmarksConstants.BOOKMARKS_ENTRY, _entry);
 
 			return "/html/portlet/bookmarks/asset/" + template + ".jsp";
 		}

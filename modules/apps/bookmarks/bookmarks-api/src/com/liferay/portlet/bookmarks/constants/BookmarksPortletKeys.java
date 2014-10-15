@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -12,19 +12,15 @@
  * details.
  */
 
-package com.liferay.portlet.bookmarks.notifications;
-
-import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
-import com.liferay.portlet.bookmarks.constants.BookmarksPortletKeys;
+package com.liferay.portlet.bookmarks.constants;
 
 /**
- * @author Roberto Díaz
+ * @author Miguel Pastor
  */
-public class BookmarksUserNotificationHandler
-	extends BaseModelUserNotificationHandler {
+public class BookmarksPortletKeys {
 
-	public BookmarksUserNotificationHandler() {
-		setPortletId(BookmarksPortletKeys.BOOKMARKS);
-	}
+	public static final String BOOKMARKS = "28_WAR_bookmarksweb";
+
+	public static final String BOOKMARKS_ADMIN = "198_WAR_bookmarksweb";
 
 }

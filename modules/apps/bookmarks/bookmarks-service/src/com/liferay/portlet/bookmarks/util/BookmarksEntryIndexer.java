@@ -34,7 +34,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
@@ -57,7 +57,7 @@ public class BookmarksEntryIndexer extends BaseIndexer {
 
 	public static final String[] CLASS_NAMES = {BookmarksEntry.class.getName()};
 
-	public static final String PORTLET_ID = PortletKeys.BOOKMARKS;
+	public static final String PORTLET_ID = BookmarksPortletKeys.BOOKMARKS;
 
 	public BookmarksEntryIndexer() {
 		setDefaultSelectedFieldNames(

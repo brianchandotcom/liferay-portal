@@ -27,6 +27,7 @@ import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.portlet.bookmarks.service.BookmarksEntryServiceUtil;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil;
 import com.liferay.portlet.bookmarks.service.permission.BookmarksPermission;
+import com.liferay.portlet.bookmarks.util.BookmarksConstants;
 
 import javax.portlet.PortletRequest;
 
@@ -50,7 +51,7 @@ public class ActionUtil {
 			}
 		}
 
-		request.setAttribute(WebKeys.BOOKMARKS_ENTRY, entry);
+		request.setAttribute(BookmarksConstants.BOOKMARKS_ENTRY, entry);
 	}
 
 	public static void getEntry(PortletRequest portletRequest)
@@ -85,7 +86,7 @@ public class ActionUtil {
 				themeDisplay.getScopeGroupId(), ActionKeys.VIEW);
 		}
 
-		request.setAttribute(WebKeys.BOOKMARKS_FOLDER, folder);
+		request.setAttribute(BookmarksConstants.BOOKMARKS_FOLDER, folder);
 	}
 
 	public static void getFolder(PortletRequest portletRequest)

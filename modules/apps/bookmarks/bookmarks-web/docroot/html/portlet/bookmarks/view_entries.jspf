@@ -19,12 +19,12 @@ String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
 
 if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
-	portalPreferences.setValue(PortletKeys.BOOKMARKS, "entries-order-by-col", orderByCol);
-	portalPreferences.setValue(PortletKeys.BOOKMARKS, "entries-order-by-type", orderByType);
+	portalPreferences.setValue(BookmarksPortletKeys.BOOKMARKS, "entries-order-by-col", orderByCol);
+	portalPreferences.setValue(BookmarksPortletKeys.BOOKMARKS, "entries-order-by-type", orderByType);
 }
 else {
-	orderByCol = portalPreferences.getValue(PortletKeys.BOOKMARKS, "entries-order-by-col", "name");
-	orderByType = portalPreferences.getValue(PortletKeys.BOOKMARKS, "entries-order-by-type", "asc");
+	orderByCol = portalPreferences.getValue(BookmarksPortletKeys.BOOKMARKS, "entries-order-by-col", "name");
+	orderByType = portalPreferences.getValue(BookmarksPortletKeys.BOOKMARKS, "entries-order-by-type", "asc");
 }
 
 OrderByComparator<BookmarksEntry> orderByComparator = BookmarksUtil.getEntryOrderByComparator(orderByCol, orderByType);

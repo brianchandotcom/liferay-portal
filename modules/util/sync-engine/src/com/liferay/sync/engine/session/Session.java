@@ -350,7 +350,6 @@ public class Session {
 		Session.class);
 
 	private static HttpRoutePlanner _httpRoutePlanner;
-	private static String _token;
 
 	private BasicHttpContext _basicHttpContext;
 	private final ExecutorService _executorService;
@@ -358,5 +357,6 @@ public class Session {
 	private final HttpHost _httpHost;
 	private final Set<String> _ignoredParameterKeys = new HashSet<String>(
 		Arrays.asList("filePath", "syncFile", "syncSite", "uiEvent"));
+	private String _token;
 
 }

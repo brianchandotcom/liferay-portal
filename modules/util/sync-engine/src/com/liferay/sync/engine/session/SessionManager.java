@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SessionManager {
 
-	public static Session getSession(long syncAccountId) {
+	public static synchronized Session getSession(long syncAccountId) {
 		Session session = _sessions.get(syncAccountId);
 
 		if (session != null) {

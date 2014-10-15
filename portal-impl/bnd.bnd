@@ -26,6 +26,7 @@ Export-Package:\
 	com.liferay.portal.spring.hibernate,\
 	com.liferay.portal.spring.transaction,\
 	com.liferay.portal.systemevent,\
+	com.liferay.portal.upgrade.v7_0_0,\
 	com.liferay.portal.verify,\
 	com.liferay.portal.xml,\
 	\

@@ -373,41 +373,6 @@
 			<forward name="portlet.blogs.error" path="portlet.blogs.error" />
 		</action>
 
-		<!-- Bookmarks -->
-
-		<action path="/bookmarks/edit_entry" type="com.liferay.portlet.bookmarks.action.EditEntryAction">
-			<forward name="portlet.bookmarks.edit_entry" path="portlet.bookmarks.edit_entry" />
-			<forward name="portlet.bookmarks.error" path="portlet.bookmarks.error" />
-		</action>
-
-		<action path="/bookmarks/edit_folder" type="com.liferay.portlet.bookmarks.action.EditFolderAction">
-			<forward name="portlet.bookmarks.edit_folder" path="portlet.bookmarks.edit_folder" />
-			<forward name="portlet.bookmarks.error" path="portlet.bookmarks.error" />
-		</action>
-
-		<action path="/bookmarks/find_entry" type="com.liferay.portlet.bookmarks.action.FindEntryAction" />
-
-		<action path="/bookmarks/find_folder" type="com.liferay.portlet.bookmarks.action.FindFolderAction" />
-
-		<action path="/bookmarks/open_entry" type="com.liferay.portlet.bookmarks.action.OpenEntryAction" />
-
-		<action path="/bookmarks/search" forward="portlet.bookmarks.search" />
-
-		<action path="/bookmarks/select_folder" type="com.liferay.portlet.bookmarks.action.EditFolderAction">
-			<forward name="portlet.bookmarks.edit_folder" path="portlet.bookmarks.select_folder" />
-			<forward name="portlet.bookmarks.error" path="portlet.bookmarks.error" />
-		</action>
-
-		<action path="/bookmarks/view" type="com.liferay.portlet.bookmarks.action.ViewAction">
-			<forward name="portlet.bookmarks.error" path="portlet.bookmarks.error" />
-			<forward name="portlet.bookmarks.view" path="portlet.bookmarks.view" />
-		</action>
-
-		<action path="/bookmarks/view_entry" type="com.liferay.portlet.bookmarks.action.EditEntryAction">
-			<forward name="portlet.bookmarks.edit_entry" path="portlet.bookmarks.view_entry" />
-			<forward name="portlet.bookmarks.error" path="portlet.bookmarks.error" />
-		</action>
-
 		<!-- Breadcrumb -->
 
 		<action path="/breadcrumb/view" forward="portlet.breadcrumb.view" />

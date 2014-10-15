@@ -33,7 +33,6 @@ public class SyncFileModelListener implements ModelListener<SyncFile> {
 
 	@Override
 	public void onCreate(SyncFile syncFile) {
-		IODeltaUtil.checksums(syncFile);
 	}
 
 	@Override
@@ -55,12 +54,6 @@ public class SyncFileModelListener implements ModelListener<SyncFile> {
 	@Override
 	public void onUpdate(
 		SyncFile syncFile, Map<String, Object> originalValues) {
-
-		if (!originalValues.containsKey("checksum")) {
-			return;
-		}
-
-		IODeltaUtil.checksums(syncFile);
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

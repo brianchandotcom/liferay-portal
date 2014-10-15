@@ -30,11 +30,13 @@ public class DownloadFileEvent extends BaseEvent {
 		long syncAccountId, Map<String, Object> parameters) {
 
 		super(syncAccountId, _URL_PATH, parameters);
+
+		_handler = new DownloadFileHandler(this);
 	}
 
 	@Override
 	public Handler<Void> getHandler() {
-		return new DownloadFileHandler(this);
+		return _handler;
 	}
 
 	@Override

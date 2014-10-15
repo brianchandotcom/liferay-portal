@@ -487,7 +487,12 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				group.getCompanyId(), groupId, parameterMap,
 				getUserIdStrategy(userId, userIdStrategy), zipReader);
 
-		return getManifestSummary(portletDataContext);
+		try {
+			return getManifestSummary(portletDataContext);
+		}
+		finally {
+			zipReader.close();
+		}
 	}
 
 	@Override
@@ -500,6 +505,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		InputStream inputStream = DLFileEntryLocalServiceUtil.getFileAsStream(
 			fileEntry.getFileEntryId(), fileEntry.getVersion(), false);
 
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
 		ManifestSummary manifestSummary = null;
 
 		try {
@@ -508,7 +515,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			Group group = GroupLocalServiceUtil.getGroup(groupId);
 			String userIdStrategy = MapUtil.getString(
 				parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
-			ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
 
 			PortletDataContext portletDataContext =
 				PortletDataContextFactoryUtil.createImportPortletDataContext(
@@ -519,6 +525,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);
+
+			zipReader.close();
 
 			FileUtil.delete(file);
 		}
@@ -1658,7 +1666,12 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				group.getCompanyId(), groupId, parameterMap,
 				getUserIdStrategy(userId, userIdStrategy), zipReader);
 
-		return validateMissingReferences(portletDataContext);
+		try {
+			return validateMissingReferences(portletDataContext);
+		}
+		finally {
+			zipReader.close();
+		}
 	}
 
 	@Override

@@ -37,7 +37,10 @@ public abstract class BaseSubscriptionTestCase {
 
 	protected long addContainerModel(long containerModelId) throws Exception {
 		return 0;
-	};
+	}
+
+	protected void updateBaseModel(long baseModelId) throws Exception {
+	}
 
 	protected static final long PARENT_CONTAINER_MODEL_ID_DEFAULT = 0;
 

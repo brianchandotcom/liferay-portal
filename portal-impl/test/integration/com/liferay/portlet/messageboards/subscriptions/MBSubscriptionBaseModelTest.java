@@ -64,12 +64,10 @@ public class MBSubscriptionBaseModelTest
 	}
 
 	@Override
-	protected long updateEntry(long baseModelId) throws Exception {
+	protected void updateBaseModel(long baseModelId) throws Exception {
 		MBMessage message = MBMessageLocalServiceUtil.getMessage(baseModelId);
 
-		message = MBTestUtil.updateMessage(message, true);
-
-		return message.getMessageId();
+		MBTestUtil.updateMessage(message, true);
 	}
 
 }

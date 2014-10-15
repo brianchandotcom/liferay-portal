@@ -73,13 +73,11 @@ public class BookmarksSubscriptionBaseModelTest
 	}
 
 	@Override
-	protected long updateEntry(long baseModelId) throws Exception {
+	protected void updateBaseModel(long baseModelId) throws Exception {
 		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(
 			baseModelId);
 
-		entry = BookmarksTestUtil.updateEntry(entry);
-
-		return entry.getEntryId();
+		BookmarksTestUtil.updateEntry(entry);
 	}
 
 }

@@ -39,7 +39,6 @@ import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.runner.RunWith;
 
 /**
@@ -83,18 +82,26 @@ public class JournalSubscriptionClassTypeTest
 
 	@Override
 	protected long addClassType() throws Exception {
-		_ddmStructure = DDMStructureTestUtil.addStructure(
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			group.getGroupId(), JournalArticle.class.getName());
 
-		_ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			group.getGroupId(), _ddmStructure.getStructureId());
+		DDMTemplateTestUtil.addTemplate(
+			group.getGroupId(), ddmStructure.getStructureId());
 
-		return _ddmStructure.getStructureId();
+		return ddmStructure.getStructureId();
 	}
 
 	@Override
 	protected void addSubscriptionClassType(long classTypeId) throws Exception {
 		JournalArticleLocalServiceUtil.subscribeStructure(
+			group.getGroupId(), TestPropsValues.getUserId(), classTypeId);
+	}
+
+	@Override
+	protected void deleteSubscriptionClassType(long classTypeId)
+		throws Exception {
+
+		JournalArticleLocalServiceUtil.unsubscribeStructure(
 			group.getGroupId(), TestPropsValues.getUserId(), classTypeId);
 	}
 
@@ -108,12 +115,15 @@ public class JournalSubscriptionClassTypeTest
 			PortalUtil.getClassNameId(JournalArticle.class),
 			"BASIC-WEB-CONTENT");
 
-		Assert.assertNotNull(ddmStructure);
-
 		return ddmStructure.getStructureId();
 	}
 
-	protected DDMStructure _ddmStructure;
-	protected DDMTemplate _ddmTemplate;
+	@Override
+	protected void updateBaseModel(long baseModelId) throws Exception {
+		JournalArticle article =
+			JournalArticleLocalServiceUtil.getLatestArticle(baseModelId);
+
+		JournalTestUtil.updateArticleWithWorkflow(article, true);
+	}
 
 }

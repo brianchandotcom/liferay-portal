@@ -78,6 +78,14 @@ public class DLSubscriptionClassTypeTest
 	}
 
 	@Override
+	protected void deleteSubscriptionClassType(long classTypeId)
+		throws Exception {
+
+		DLAppServiceUtil.unsubscribeFileEntryType(
+			group.getGroupId(), classTypeId);
+	}
+
+	@Override
 	protected Long getDefaultClassTypeId() throws Exception {
 		DLFileEntryType basicEntryType =
 			DLFileEntryTypeLocalServiceUtil.getDLFileEntryType(
@@ -86,6 +94,12 @@ public class DLSubscriptionClassTypeTest
 		Assert.assertNotNull(basicEntryType);
 
 		return basicEntryType.getPrimaryKey();
+	}
+
+	@Override
+	protected void updateBaseModel(long baseModelId) throws Exception {
+		DLAppTestUtil.updateFileEntryWithWorkflow(
+			group.getGroupId(), baseModelId, false, true);
 	}
 
 }

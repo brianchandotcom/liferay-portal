@@ -63,6 +63,6 @@
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 
-		<execute macro="KBArticle#viewDefaultPGViaKBArticle" />
+		<execute macro="KBArticle#viewDefaultViaKBArticlePG" />
 	</command>
 </definition>

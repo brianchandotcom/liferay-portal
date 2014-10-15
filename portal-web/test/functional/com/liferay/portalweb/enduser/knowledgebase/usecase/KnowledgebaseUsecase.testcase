@@ -120,7 +120,7 @@
 			<var name="pageName" value="Knowledge Base Article Page" />
 		</execute>
 
-		<execute macro="KBArticle#viewPGViaKBArticle">
+		<execute macro="KBArticle#viewViaKBArticlePG">
 			<var name="kbArticleContent" value="This is the second article created from the KB Admin." />
 			<var name="kbArticleTitle" value="KB Admin Article2" />
 		</execute>
@@ -129,7 +129,7 @@
 			<var name="pageName" value="Knowledge Base Section Page" />
 		</execute>
 
-		<execute macro="KBArticle#viewNoPGViaKBSection" />
+		<execute macro="KBArticle#viewNoViaKBSectionPG" />
 
 		<execute macro="KBArticle#configureKBSection">
 			<var name="kbArticleSection" value="Plugins" />
@@ -148,7 +148,7 @@
 			<var name="kbArticleTitle" value="KB Admin Article3" />
 		</execute>
 
-		<execute macro="KBArticle#viewPGViaKBSection">
+		<execute macro="KBArticle#viewViaKBSectionPG">
 			<var name="kbArticleContent" value="This is the third article created from the KB Admin." />
 			<var name="kbArticleTitle" value="KB Admin Article3" />
 		</execute>
@@ -193,7 +193,7 @@
 			<var name="kbArticleTitle" value="KB Admin Article3" />
 		</execute>
 
-		<execute macro="KBArticle#viewPGViaKBSearch">
+		<execute macro="KBArticle#viewViaKBSearchPG">
 			<var name="kbArticleContent" value="This is the third article created from the KB Admin." />
 			<var name="kbArticleTitle" value="KB Admin Article3" />
 		</execute>

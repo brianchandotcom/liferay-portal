@@ -1092,6 +1092,8 @@
 	</command>
 
 	<command name="EditSOBlogsEntryInline" priority="5">
+		<property name="custom.properties" value="editor.inline.editing.enabled=true" />
+
 		<var name="entryContentOriginal">Integer in rhoncus nisl, et tempus dui. Phasellus et hendrerit dolor. Curabitur ornare erat vel purus vestibulum luctus. Donec condimentum placerat lectus in dignissim. Vivamus libero ipsum, sodales vel pellentesque sit amet, posuere a justo. Nulla quis dolor aliquet, hendrerit tellus ac, accumsan dui. Nullam quis mattis mauris. Integer laoreet sit amet lacus nec porttitor. Maecenas vestibulum in tortor in interdum. Vivamus blandit quis purus laoreet dictum. In lacinia magna eget imperdiet interdum. Etiam arcu augue, auctor eget mattis eu, consequat ac tellus. Aenean id neque vitae massa porta sollicitudin vel sed ante.</var>
 		<var name="entryContentEdit">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pharetra tortor nec volutpat convallis. Integer quis dignissim turpis, iaculis tempor diam. Sed tempus pretium tellus, id venenatis nibh consequat a. Sed cursus felis a tempor euismod. Nullam ut rutrum nisi, quis condimentum nulla. Vestibulum imperdiet laoreet dui eu cursus. Praesent ut blandit nulla, eu tincidunt nunc. Etiam ac lorem urna. Duis aliquet, neque sed elementum eleifend, sapien nisl consectetur turpis, vitae sollicitudin mi velit in mi. Praesent facilisis, purus eu ultrices auctor, massa nisl tincidunt mauris, et fermentum urna tortor quis sapien. Morbi iaculis viverra tellus egestas imperdiet. Integer hendrerit feugiat risus a porttitor. Vivamus ornare, dui sed laoreet dictum, mauris tellus eleifend dolor, eu iaculis arcu orci et erat. </var>
 		<var name="entryContentFull">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pharetra tortor nec volutpat convallis. Integer quis dignissim turpis, iaculis tempor diam. Sed tempus pretium tellus, id venenatis nibh consequat a. Sed cursus felis a tempor euismod. Nullam ut rutrum nisi, quis condimentum nulla. Vestibulum imperdiet laoreet dui eu cursus. Praesent ut blandit nulla, eu tincidunt nunc. Etiam ac lorem urna. Duis aliquet, neque sed elementum eleifend, sapien nisl consectetur turpis, vitae sollicitudin mi velit in mi. Praesent facilisis, purus eu ultrices auctor, massa nisl tincidunt mauris, et fermentum urna tortor quis sapien. Morbi iaculis viverra tellus egestas imperdiet. Integer hendrerit feugiat risus a porttitor. Vivamus ornare, dui sed laoreet dictum, mauris tellus eleifend dolor, eu iaculis arcu orci et erat. Integer in rhoncus nisl, et tempus dui. Phasellus et hendrerit dolor. Curabitur ornare erat vel purus vestibulum luctus. Donec condimentum placerat lectus in dignissim. Vivamus libero ipsum, sodales vel pellentesque sit amet, posuere a justo. Nulla quis dolor aliquet, hendrerit tellus ac, accumsan dui. Nullam quis mattis mauris. Integer laoreet sit amet lacus nec porttitor. Maecenas vestibulum in tortor in interdum. Vivamus blandit quis purus laoreet dictum. In lacinia magna eget imperdiet interdum. Etiam arcu augue, auctor eget mattis eu, consequat ac tellus. Aenean id neque vitae massa porta sollicitudin vel sed ante.</var>
@@ -1108,12 +1110,12 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
+		<execute macro="SOUserBar#showEditControls" />
+
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
-
-		<execute macro="SOUserBar#showEditControls" />
 
 		<execute macro="BlogsEntry#editContentInlinePG">
 			<var name="entryContent" value="${entryContentOriginal}" />

@@ -44,7 +44,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ACTIONS_MENULIST</td>
+	<td>ACTIONS_BUTTON</td>
 	<td>//a[contains(.,'Actions')]</td>
 	<td></td>
 </tr>
@@ -80,6 +80,21 @@
 	<td></td>
 </tr>
 <!--ADD_MENULIST-->
+<tr>
+	<td>ADD_MENULIST_ADD_ARTICLE</td>
+	<td>//ul[@class='dropdown-menu']//a[contains(.,'Add Article')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_MENULIST_FOLDER</td>
+	<td>//ul[@class='dropdown-menu']//a[contains(.,'Folder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_MENULIST_IMPORT</td>
+	<td>//ul[@class='dropdown-menu']//a[contains(.,'Import')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>ADD_MENULIST_BASIC_ARTICLE</td>
 	<td>//ul[@class='dropdown-menu']//a[contains(.,'Basic Article')]</td>

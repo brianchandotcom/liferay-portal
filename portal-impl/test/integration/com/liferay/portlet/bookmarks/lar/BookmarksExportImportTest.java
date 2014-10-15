@@ -18,15 +18,19 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BasePortletExportImportTestCase;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
+import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.portlet.bookmarks.util.test.BookmarksTestUtil;
 
+import java.util.Date;
 import java.util.Map;
 
 import org.junit.runner.RunWith;
@@ -56,6 +60,21 @@ public class BookmarksExportImportTest extends BasePortletExportImportTestCase {
 	@Override
 	protected StagedModel addStagedModel(long groupId) throws Exception {
 		return BookmarksTestUtil.addEntry(groupId, true);
+	}
+
+	@Override
+	protected StagedModel addStagedModel(long groupId, Date createdDate)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		serviceContext.setCreateDate(createdDate);
+		serviceContext.setModifiedDate(createdDate);
+
+		return BookmarksTestUtil.addEntry(
+			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID, true,
+			serviceContext);
 	}
 
 	@Override

@@ -30,6 +30,7 @@ import com.liferay.portal.util.test.RandomTestUtil;
 
 import java.io.File;
 
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -84,6 +85,12 @@ public class BaseExportImportTestCase {
 	}
 
 	protected StagedModel addStagedModel(long groupId) throws Exception {
+		return null;
+	}
+
+	protected StagedModel addStagedModel(long groupId, Date createdDate)
+		throws Exception {
+
 		return null;
 	}
 

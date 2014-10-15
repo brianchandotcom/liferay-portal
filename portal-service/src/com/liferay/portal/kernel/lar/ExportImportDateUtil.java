@@ -344,7 +344,7 @@ public class ExportImportDateUtil {
 			endDate = endCalendar.getTime();
 		}
 		else if (range.equals(RANGE_FROM_LAST_PUBLISH_DATE)) {
-			long lastPublishDate = 0;
+			Date lastPublishDate = null;
 
 			if (Validator.isNotNull(portletId) && (plid > 0)) {
 				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
@@ -353,21 +353,19 @@ public class ExportImportDateUtil {
 					PortletPreferencesFactoryUtil.getStrictPortletSetup(
 						layout, portletId);
 
-				lastPublishDate = GetterUtil.getLong(
-					preferences.getValue(_LAST_PUBLISH_DATE, StringPool.BLANK));
+				lastPublishDate = getLastPublishDate(preferences);
 			}
 			else {
 				LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 					groupId, privateLayout);
 
-				lastPublishDate = GetterUtil.getLong(
-					layoutSet.getSettingsProperty(_LAST_PUBLISH_DATE));
+				lastPublishDate = getLastPublishDate(layoutSet);
 			}
 
-			if (lastPublishDate > 0) {
+			if (lastPublishDate != null) {
 				endDate = new Date();
 
-				startDate = new Date(lastPublishDate);
+				startDate = lastPublishDate;
 			}
 		}
 		else if (range.equals(RANGE_LAST)) {

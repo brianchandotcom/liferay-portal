@@ -30,7 +30,7 @@ public abstract class BaseSubscriptionBaseModelTestCase
 		throws Exception {
 
 		long containerModelId = addContainerModel(
-			PARENT_CONTAINER_MODEL_ID_DEFAULT);
+			BaseSubscriptionTestCase.PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
 		long baseModelId = addBaseModel(containerModelId);
 
@@ -45,7 +45,7 @@ public abstract class BaseSubscriptionBaseModelTestCase
 	public void testSubscriptionBaseModelWhenInRootContainerModel()
 		throws Exception {
 
-		long baseModelId = addBaseModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
+		long baseModelId = addBaseModel(BaseSubscriptionTestCase.PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
 		addSubscriptionBaseModel(baseModelId);
 

@@ -63,10 +63,10 @@ public class SchedulerEventMessageListenerWrapper implements MessageListener {
 			message.getString(SchedulerEngine.DESTINATION_NAME));
 
 		if (destinationName.equals(DestinationNames.SCHEDULER_DISPATCH)) {
-			ReceiverKey receiverKey = (ReceiverKey)message.get(
-				SchedulerEngine.RECEIVER_KEY);
+			String messageListenerUUID = message.getString(
+				SchedulerEngine.MESSAGE_LISTENER_UUID);
 
-			if (!_receiverKey.equals(receiverKey)) {
+			if (!_messageListenerUUID.equals(messageListenerUUID)) {
 				return;
 			}
 		}

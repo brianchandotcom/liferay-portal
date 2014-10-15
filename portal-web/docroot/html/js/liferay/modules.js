@@ -188,6 +188,15 @@
 						path: 'browser_selectors.js',
 						requires: ['yui-base']
 					},
+					'liferay-cover-cropper': {
+						path: 'cover_cropper.js',
+						requires: [
+							'aui-base',
+							'dd-constrain',
+							'dd-drag',
+							'plugin'
+						]
+					},
 					'liferay-ddm-form': {
 						path: 'ddm_form.js',
 						requires: [

@@ -70,17 +70,31 @@ if (fileEntryId != 0) {
 
 <%
 String uploadImageURL = themeDisplay.getPathMain() + "/portal/image_selector?p_auth=" + AuthTokenUtil.getToken(request);
+
+String modules = "liferay-image-selector";
+
+if (!draggableImage.equals("none")) {
+	modules += ",liferay-cover-cropper";
+}
 %>
 
-<aui:script use="liferay-image-selector">
-	new Liferay.ImageSelector(
+<aui:script use="<%= modules %>">
+	var imageSelector = new Liferay.ImageSelector(
 		{
 			documentSelectorURL: '<%= documentSelectorURL.toString() %>',
-			draggableImage: '<%= draggableImage %>',
 			namespace: '<%= randomNamespace %>',
 			paramName: '<portlet:namespace /><%= paramName %>',
 			rootNode: '#<%= randomNamespace %>taglibImageSelector',
 			uploadURL: '<%= uploadImageURL %>'
 		}
 	);
+
+	<c:if test='<%= !draggableImage.equals("none") %>'>
+		imageSelector.plug(
+			Liferay.CoverCropper,
+			{
+				direction: '<%= draggableImage %>'
+			}
+		);
+	</c:if>
 </aui:script>

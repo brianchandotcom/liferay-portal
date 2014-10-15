@@ -1932,7 +1932,7 @@
 			<var name="assetTitle" value="Blogs Entry Title" />
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentRelatedAsset" value="true" />
-			<var name="dmDocumentSize" value="12k" />
+			<var name="dmDocumentSize" value="12KB" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
 			<var name="dmDocumentUploader" value="Test Test" />
 			<var name="dmDocumentVersionNumber" value="1.0" />
@@ -1958,7 +1958,7 @@
 			<var name="assetTitle" value="Blogs Entry Title" />
 			<var name="dmDocumentDescription" value="DM Document Description Edit" />
 			<var name="dmDocumentRelatedAsset" value="true" />
-			<var name="dmDocumentSize" value="12k" />
+			<var name="dmDocumentSize" value="12KB" />
 			<var name="dmDocumentTitle" value="DM Document Title Edit" />
 			<var name="dmDocumentUploader" value="Test Test" />
 			<var name="dmDocumentVersionNumber" value="1.1" />

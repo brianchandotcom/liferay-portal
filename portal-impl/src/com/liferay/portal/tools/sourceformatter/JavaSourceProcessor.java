@@ -214,11 +214,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		JavaField javaField, String content) {
 
 		Type javaClassType = javaClass.asType();
-		String javaClassName = javaClass.getFullyQualifiedName();
-
-		if (javaClass.getFullyQualifiedName().endsWith("ServiceBeanAopCacheManager")) {
-			return content;
-		}
 
 		if ((javaClass.isEnum() && javaClassType.equals(javaField.getType())) ||
 			javaField.isFinal()) {

@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.bookmarks.configurator;
+package com.liferay.portlet.bookmarks.service.configuration.configurator;
 
 import com.liferay.portal.service.configuration.ServiceComponentConfiguration;
 import com.liferay.portal.service.configuration.configurator.ServiceConfigurator;
 import com.liferay.portal.spring.extender.loader.ModuleResourceLoader;
 
-import com.liferay.portlet.bookmarks.verify.VerifyBookmarks;
+import com.liferay.portlet.bookmarks.upgrade.BookmarksServicesUpgrade;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Activate;
@@ -32,20 +32,13 @@ import org.springframework.context.ApplicationContext;
  * @author Miguel Pastor
  */
 @Component(
-	immediate = true, service = BookmarkServicesConfigurator.class
+	immediate = true, service = BookmarksServiceConfigurator.class
 )
-public class BookmarkServicesConfigurator {
-
-	public static final String BUNDLE_SYMBOLYC_NAME =
-		"com.liferay.bookmarks.service";
+public class BookmarksServiceConfigurator {
 
 	@Activate
 	protected void activate() throws Exception {
 		_serviceConfigurator.initServices(getConfiguration(), getClassLoader());
-
-		VerifyBookmarks verifyBookmarks = new VerifyBookmarks();
-
-		verifyBookmarks.verify();
 	}
 
 	@Deactivate
@@ -55,7 +48,7 @@ public class BookmarkServicesConfigurator {
 	}
 
 	protected ClassLoader getClassLoader() {
-		Class<? extends BookmarkServicesConfigurator> clazz = getClass();
+		Class<? extends BookmarksServiceConfigurator> clazz = getClass();
 
 		return clazz.getClassLoader();
 	}
@@ -66,14 +59,19 @@ public class BookmarkServicesConfigurator {
 		return new ModuleResourceLoader(bundle);
 	}
 
+	@Reference(unbind = "-")
+	protected void setBookmarksServicesUpgrade(
+		BookmarksServicesUpgrade bookmarksServicesUpgrade) {
+	}
+
 	@Reference(
 		target =
 			"(org.springframework.context.service.name=" +
-				BUNDLE_SYMBOLYC_NAME + ")",
+				"com.liferay.bookmarks.service)",
 		unbind = "-"
 	)
-	protected void setApplicationContext(ApplicationContext applicationContext)
-		throws Exception {
+	protected void setApplicationContext(
+		ApplicationContext applicationContext) {
 	}
 
 	@Reference(unbind = "-")

@@ -12,20 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_0_0;
+package com.liferay.portlet.bookmarks.upgrade.portlet;
 
-import com.liferay.portal.kernel.upgrade.BaseUpgradeAdminPortlets;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.upgrade.util.UpgradePortletId;
 
 /**
- * @author Sergio González
+ * @author Miguel Pastor
  */
-public class UpgradeAdminPortlets extends BaseUpgradeAdminPortlets {
+public class UpgradeBookmarksPortlets extends UpgradePortletId {
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		updateAccessInControlPanelPermission(
-			PortletKeys.DOCUMENT_LIBRARY, PortletKeys.DOCUMENT_LIBRARY_ADMIN);
+	protected String[][] getRenamePortletIdsArray() {
+		return new String[][] {
+			new String[] {"28", "28_WAR_bookmarksweb"},
+			new String[] {"198", "198_WAR_bookmarksweb"}
+		};
 	}
 
 }

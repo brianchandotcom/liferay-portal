@@ -23,6 +23,6 @@ public class BookmarksConstants {
 
 	public static final String BOOKMARKS_FOLDER = "BOOKMARKS_FOLDER";
 
-	public static final String SERVICE_NAME = "com.liferay.portlet.bookmarks";
+	public static final String SERVICE_NAME = "com.liferay.bookmarks";
 
 }

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeAdminPortlets;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeAsset;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeBackgroundTask;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeBookmarksPreferences;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeCalEvent;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeDLPreferences;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeDocumentLibrary;
@@ -55,7 +54,6 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(UpgradeAdminPortlets.class);
 		upgrade(UpgradeAsset.class);
 		upgrade(UpgradeBackgroundTask.class);
-		upgrade(UpgradeBookmarksPreferences.class);
 		upgrade(UpgradeCalEvent.class);
 		upgrade(UpgradeDLPreferences.class);
 		upgrade(UpgradeDocumentLibrary.class);

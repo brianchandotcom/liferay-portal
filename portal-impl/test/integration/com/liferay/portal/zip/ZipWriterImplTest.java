@@ -360,11 +360,13 @@ public class ZipWriterImplTest {
 	}
 
 	/**
-     * Throws an ArchiveFileNotFoundException if and only if this file is a
-     * true archive file, not just a false positive, including RAES
-     * encrypted ZIP files for which key prompting has been cancelled or
-     * disabled.
-     */
+	 * Tests if the file is an archive file. If the file is a <code>true</code>
+	 * archive file, and not a <code>false</code> positive like RAES encrypted
+	 * ZIP files for which key prompting has been cancelled or disabled, an
+	 * <code>ArchiveFileNotFoundException</code> is thrown.
+	 *
+	 * @throws Exception if an exception occurred
+	 */
 	@Test
 	public void testFinishIfZipFileIsSet() throws Exception {
 		File tempZipFile = new File(_tempZipFilePath);

@@ -194,7 +194,14 @@
 							'aui-base',
 							'dd-constrain',
 							'dd-drag',
+							'liferay-crop-region',
 							'plugin'
+						]
+					},
+					'liferay-crop-region': {
+						path: 'crop_region.js',
+						requires: [
+							'aui-base'
 						]
 					},
 					'liferay-ddm-form': {
@@ -530,6 +537,7 @@
 						requires: [
 							'aui-image-cropper',
 							'aui-io-request',
+							'liferay-crop-region',
 							'liferay-portlet-base',
 							'liferay-storage-formatter'
 						]

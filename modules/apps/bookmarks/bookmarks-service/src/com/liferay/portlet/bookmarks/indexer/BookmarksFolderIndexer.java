@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.bookmarks.util;
+package com.liferay.portlet.bookmarks.indexer;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;

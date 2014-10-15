@@ -43,7 +43,7 @@ TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler
 				</div>
 			</aui:fieldset>
 
-			<aui:fieldset cssClass="checkBoxes">
+			<aui:fieldset id="checkBoxes">
 				<aui:col width="<%= 50 %>">
 					<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(portletResource) + "_showCurrentGroup" %>' label="show-current-site" name="preferences--showCurrentGroup--" type="checkbox" value="<%= showCurrentGroup %>" />
 					<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(portletResource) + "_showGuestGroup" %>' label="show-guest-site" name="preferences--showGuestGroup--" type="checkbox" value="<%= showGuestGroup %>" />
@@ -77,9 +77,7 @@ TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler
 	</aui:col>
 </aui:row>
 
-<aui:script use="aui-base">
-	var formNode = A.one('#<portlet:namespace />fm');
-
+<aui:script sandbox="<%= true %>">
 	var data = {
 		'_<%= HtmlUtil.escapeJS(portletResource) %>_displayStyle': '<%= displayStyle %>',
 		'_<%= HtmlUtil.escapeJS(portletResource) %>_showCurrentGroup': <%= showCurrentGroup %>,
@@ -89,30 +87,28 @@ TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler
 		'_<%= HtmlUtil.escapeJS(portletResource) %>_showPortletBreadcrumb': <%= showPortletBreadcrumb %>
 	}
 
-	var selectDisplayStyle = formNode.one('#<portlet:namespace />displayStyle');
+	var selectDisplayStyle = $('#<portlet:namespace />displayStyle');
 
-	if (selectDisplayStyle) {
-		selectDisplayStyle.on(
-			'change',
-			function(event) {
-				var currentTarget = event.currentTarget;
+	selectDisplayStyle.on(
+		'change',
+		function(event) {
+			if (selectDisplayStyle[0].selectedIndex > -1) {
+				data['_<%= HtmlUtil.escapeJS(portletResource) %>_displayStyle'] = selectDisplayStyle.val();
 
-				if (currentTarget.attr('selectedIndex') > -1) {
-					data['_<%= HtmlUtil.escapeJS(portletResource) %>_displayStyle'] = currentTarget.val();
-
-					Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(portletResource) %>_', data);
-				}
+				Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(portletResource) %>_', data);
 			}
-		);
-	};
+		}
+	);
 
-	var toggleCustomFields = function(event) {
-		var target = event.currentTarget;
+	$('#<portlet:namespace />checkBoxes').on(
+		'change',
+		'input[type="checkbox"]',
+		function(event) {
+			var currentTarget = $(event.currentTarget);
 
-		data[target.attr('data-key')] = target.get('checked');
+			data[currentTarget.data('key')] = currentTarget.prop('checked');
 
-		Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(portletResource) %>_', data);
-	};
-
-	A.one('.checkBoxes').delegate('change', toggleCustomFields, 'input[type="checkbox"]');
+			Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(portletResource) %>_', data);
+		}
+	);
 </aui:script>

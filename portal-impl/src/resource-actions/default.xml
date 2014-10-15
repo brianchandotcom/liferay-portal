@@ -6,7 +6,6 @@
 	<resource file="resource-actions/announcements.xml" />
 	<resource file="resource-actions/asset.xml" />
 	<resource file="resource-actions/blogs.xml" />
-	<resource file="resource-actions/bookmarks.xml" />
 	<resource file="resource-actions/breadcrumb.xml" />
 	<resource file="resource-actions/calendar.xml" />
 	<resource file="resource-actions/cms.xml" />

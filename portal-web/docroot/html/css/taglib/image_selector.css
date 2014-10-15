@@ -15,23 +15,17 @@
 	}
 
 	&.draggable-image {
-		&.vertical {
-			.current-image {
-				max-height: inherit;
-			}
+		&.vertical .current-image {
+			max-height: inherit;
 		}
 
-		&.horizontal {
-			.current-image {
-				max-width: inherit;
-			}
+		&.horizontal .current-image {
+			max-width: inherit;
 		}
 
-		&.both {
-			.current-image {
-				max-height: inherit;
-				max-width: inherit;
-			}
+		&.both .current-image {
+			max-height: inherit;
+			max-width: inherit;
 		}
 
 		.image-wrapper {

@@ -456,7 +456,7 @@
 					"match": "*",
 					"match_mapping_type": "string",
 					"mapping": {
-						"index": "not_analyzed",
+						"index": "analyzed",
 						"store": "true",
 						"type": "string"
 					}
@@ -469,11 +469,6 @@
 				"store": "yes",
 				"type": "string"
 			},
-			"assetCategoryTitle": {
-				"index": "analyzed",
-				"store": "yes",
-				"type": "string"
-			},
 			"assetTagIds": {
 				"index": "not_analyzed",
 				"store": "yes",
@@ -483,11 +478,6 @@
 				"index": "analyzed",
 				"store": "yes",
 				"term_vector": "with_positions_offsets",
-				"type": "string"
-			},
-			"assetVocabularyId": {
-				"index": "not_analyzed",
-				"store": "yes",
 				"type": "string"
 			},
 			"assetVocabularyIds": {
@@ -576,11 +566,6 @@
 				"index": "not_analyzed",
 				"type": "string"
 			},
-			"roleId": {
-				"index": "not_analyzed",
-				"store": "yes",
-				"type": "string"
-			},
 			"roleIds": {
 				"index": "not_analyzed",
 				"store": "yes",
@@ -623,11 +608,6 @@
 				"type": "string"
 			},
 			"uid": {
-				"index": "not_analyzed",
-				"store": "yes",
-				"type": "string"
-			},
-			"url": {
 				"index": "not_analyzed",
 				"store": "yes",
 				"type": "string"

@@ -35,9 +35,6 @@ AUI.add(
 					initializer: function(config) {
 						var instance = this;
 
-						instance._image = instance.one('#image');
-						instance._imageWrapper = instance.one('.image-wrapper');
-
 						instance._bindUI();
 
 						instance._renderUploader();

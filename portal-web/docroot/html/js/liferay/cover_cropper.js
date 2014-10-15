@@ -17,7 +17,15 @@ AUI.add(
 			{
 				ATTRS: {
 					direction: {
-						validator: A.Lang.isString
+						validator: Lang.isString
+					},
+
+					imageContainerSelector: {
+						validator: Lang.isString
+					},
+
+					imageSelector: {
+						validator: Lang.isString
 					}
 				},
 
@@ -35,9 +43,12 @@ AUI.add(
 
 						var host = instance.get(STR_HOST);
 
+						instance._image = host.one(instance.get('imageSelector'));
+						instance._imageContainer = host.one(instance.get('imageContainerSelector'));
+
 						var dd = new A.DD.Drag(
 							{
-								node: host._image,
+								node: instance._image,
 								on: {
 									'drag:drag': A.bind('_constrainDrag', instance),
 									'drag:end': A.bind('_onImageUpdated', instance)
@@ -64,10 +75,8 @@ AUI.add(
 					_bindUI: function() {
 						var instance = this;
 
-						var host = instance.get(STR_HOST);
-
 						instance._eventHandles = [
-							host._image.on('load', instance._onImageUpdated, instance)
+							instance._image.on('load', instance._onImageUpdated, instance)
 						];
 					},
 
@@ -76,18 +85,16 @@ AUI.add(
 
 						var direction = instance.get(STR_DIRECTION);
 
-						var host = instance.get(STR_HOST);
+						var image = instance._image;
 
-						var previewWrapper = host._imageWrapper;
+						var imageContainer = instance._imageContainer;
 
-						var previewPosition = previewWrapper.getXY();
-
-						var image = host._image;
+						var containerPos = imageContainer.getXY();
 
 						if (direction === STR_HORIZONTAL || direction === STR_BOTH) {
-							var left = previewPosition[0];
+							var left = containerPos[0];
 
-							var right = left + previewWrapper.width() - image.width();
+							var right = left + imageContainer.width() - image.width();
 
 							var pageX = event.pageX;
 
@@ -95,10 +102,11 @@ AUI.add(
 								event.preventDefault();
 							}
 						}
-						else if (direction === STR_VERTICAL || direction === STR_BOTH) {
-							var top = previewPosition[1];
 
-							var bottom = top + previewWrapper.height() - image.height();
+						if (direction === STR_VERTICAL || direction === STR_BOTH) {
+							var top = containerPos[1];
+
+							var bottom = top + imageContainer.height() - image.height();
 
 							var pageY = event.pageY;
 
@@ -113,28 +121,26 @@ AUI.add(
 
 						var constrain = {};
 
-						var host = instance.get(STR_HOST);
-
-						var previewWrapper = host._imageWrapper;
-
-						var previewWrapperPos = previewWrapper.getXY();
-
 						var direction = instance.get(STR_DIRECTION);
 
+						var imageContainer = instance._imageContainer;
+
+						var containerPos = imageContainer.getXY();
+
 						if (direction === STR_VERTICAL) {
-							var peviewWrapperX = previewWrapperPos[0];
+							var containerX = containerPos[0];
 
 							constrain = {
-								left: peviewWrapperX,
-								right: peviewWrapperX + previewWrapper.width()
+								left: containerX,
+								right: containerX + imageContainer.width()
 							};
 						}
 						else if (direction === STR_HORIZONTAL) {
-							var previewWrapperY = previewWrapperPos[1];
+							var containerY = containerPos[1];
 
 							constrain = {
-								bottom: previewWrapperY + previewWrapper.height(),
-								top: previewWrapperY
+								bottom: containerY + imageContainer.height(),
+								top: containerY
 							};
 						}
 
@@ -146,16 +152,20 @@ AUI.add(
 
 						var host = instance.get(STR_HOST);
 
-						var previewWrapper = host._imageWrapper;
+						var imageContainer = instance._imageContainer;
 
-						var imagePreview = host._image;
+						var containerPos = imageContainer.getXY();
+
+						var image = instance._image;
+
+						var imagePos = image.getXY();
 
 						var cropRegion = instance._getCropRegion(
-							host._image,
+							image,
 							{
-								height: previewWrapper.height(),
-								x: previewWrapper.getX() - imagePreview.getX(),
-								y: previewWrapper.getY() - imagePreview.getY()
+								height: imageContainer.height(),
+								x: containerPos[0] - imagePos[0],
+								y: containerPos[1] - imagePos[1]
 							}
 						);
 

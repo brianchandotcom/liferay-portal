@@ -57,7 +57,7 @@
 				<span class="badge badge-warning deletions"><%= modelDeletionCount > 0 ? (modelDeletionCount + StringPool.SPACE + LanguageUtil.get(request, "deletions")) : StringPool.BLANK %></span>
 			</liferay-util:buffer>
 
-			<aui:input checked="<%= showPortletDataInput %>" disabled="<%= disableInputs %>" label="<%= portletTitle + badgeHTML %>" name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId() %>" type="checkbox" value="<%= showPortletDataInput %>" />
+			<aui:input checked="<%= showPortletDataInput %>" disabled="<%= disableInputs %>" label="<%= portletTitle + badgeHTML %>" name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId() %>" type="checkbox" />
 
 			<%
 			PortletDataHandlerControl[] exportControls = portletDataHandler.getExportControls();

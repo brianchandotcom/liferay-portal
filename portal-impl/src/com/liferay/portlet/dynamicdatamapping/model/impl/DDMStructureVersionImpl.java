@@ -27,11 +27,8 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class DDMStructureVersionImpl extends DDMStructureVersionBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a d d m structure version model instance should use the {@link com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion} interface instead.
-	 */
+
 	public DDMStructureVersionImpl() {
 	}
+
 }

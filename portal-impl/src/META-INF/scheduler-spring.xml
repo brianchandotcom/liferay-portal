@@ -69,8 +69,6 @@
 		</property>
 	</bean>
 	<bean id="messageListener.scheduler_scripting" class="com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper">
-		<property name="groupName" value="com.liferay.portal.scheduler.messaging.ScriptingMessageListener" />
-		<property name="jobName" value="com.liferay.portal.scheduler.messaging.ScriptingMessageListener" />
 		<property name="messageListener">
 			<bean class="com.liferay.portal.scheduler.messaging.ScriptingMessageListener" />
 		</property>

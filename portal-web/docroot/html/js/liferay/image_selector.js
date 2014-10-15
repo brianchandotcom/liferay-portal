@@ -75,9 +75,9 @@ AUI.add(
 					},
 
 					_constrainHorizontal: function(event) {
-						var pageX = event.pageX;
-
 						var instance = this;
+
+						var pageX = event.pageX;
 
 						var previewWrapper = instance._imageWrapper;
 
@@ -91,9 +91,9 @@ AUI.add(
 					},
 
 					_constrainVertical: function(event) {
-						var pageY = event.pageY;
-
 						var instance = this;
+
+						var pageY = event.pageY;
 
 						var previewWrapper = instance._imageWrapper;
 

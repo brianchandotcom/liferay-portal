@@ -2510,7 +2510,16 @@ public class PortalImpl implements Portal {
 			value = GetterUtil.getShortValues(values);
 		}
 		else if (type == ExpandoColumnConstants.STRING_ARRAY) {
-			value = uploadPortletRequest.getParameterValues(name);
+			String[] values = uploadPortletRequest.getParameterValues(name);
+
+			if (displayType.equals(
+					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) &&
+				!ArrayUtil.isEmpty(values)) {
+
+				values = StringUtil.splitLines(values[0]);
+			}
+
+			value = values;
 		}
 		else if (type == ExpandoColumnConstants.STRING_LOCALIZED) {
 			value = (Serializable)LocalizationUtil.getLocalizationMap(

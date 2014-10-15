@@ -1,7 +1,37 @@
 {
 	"LiferayDocumentType": {
 		"properties": {
+			"ancestorOrganizationIds": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
 			"articleId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"assetCategoryId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"assetTagId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"assetVocabularyId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"classTypeId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"dataRepositoryId": {
 				"index": "not_analyzed",
 				"store": "yes",
 				"type": "string"
@@ -12,12 +42,58 @@
 				"term_vector": "with_positions_offsets",
 				"type": "string"
 			},
+			"ddmStructureKey": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"ddmTemplateKey": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"discussion": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"displayDate": {
+				"format" : "yyyyMMddHHmmss",
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "date"
+			},
 			"endTime": {
 				"index": "not_analyzed",
 				"store": "yes",
 				"type": "long"
 			},
+			"extension": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"fileEntryTypeId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
 			"folderId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"groupIds": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"head": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"hidden": {
 				"index": "not_analyzed",
 				"store": "yes",
 				"type": "string"
@@ -32,12 +108,32 @@
 				"store": "yes",
 				"type": "string"
 			},
+			"layoutUuid": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
 			"leftOrganizationId": {
 				"index": "not_analyzed",
 				"store": "yes",
 				"type": "string"
 			},
+			"mimeType": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
 			"nodeId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"organizationId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"organizationIds": {
 				"index": "not_analyzed",
 				"store": "yes",
 				"type": "string"
@@ -52,7 +148,17 @@
 				"store": "yes",
 				"type": "string"
 			},
+			"parentOrganizationId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
 			"path": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"readCount": {
 				"index": "not_analyzed",
 				"store": "yes",
 				"type": "string"
@@ -67,12 +173,37 @@
 				"store": "yes",
 				"type": "string"
 			},
+			"roleId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"size": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"teamIds": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"threadId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
 			"treePath": {
 				"index": "not_analyzed",
 				"store": "yes",
 				"type": "string"
 			},
 			"userGroupId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"userGroupIds": {
 				"index": "not_analyzed",
 				"store": "yes",
 				"type": "string"

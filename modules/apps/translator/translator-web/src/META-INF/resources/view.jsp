@@ -14,10 +14,10 @@
  */
 --%>
 
-<%@ include file="/html/portlet/translator/init.jsp" %>
+<%@ include file="init.jsp" %>
 
 <%
-Translation translation = (Translation)request.getAttribute(WebKeys.TRANSLATOR_TRANSLATION);
+Translation translation = (Translation)request.getAttribute("TRANSLATOR_TRANSLATION");
 
 Map<String, String> languageIdsMap = TranslatorUtil.getLanguageIdsMap(locale);
 

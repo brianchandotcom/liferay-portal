@@ -2025,6 +2025,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			String nextLine = getNextLine(content, lineCount);
 
+			if (nextLine == null) {
+				return null;
+			}
+
 			if (removeTabOnNextLine) {
 				return StringUtil.replace(
 					content,
@@ -2050,7 +2054,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		String secondLine = line;
 
 		if (addToPreviousLine) {
+			if (extraSpace) {
+				firstLine += StringPool.SPACE;
+			}
+
 			firstLine += linePart;
+
 			secondLine = StringUtil.replaceFirst(
 				line, linePart, StringPool.BLANK);
 		}
@@ -2072,6 +2081,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				return null;
 			}
 		}
+
+		firstLine = StringUtil.trimTrailing(firstLine);
 
 		return StringUtil.replace(
 			content, "\n" + previousLine + "\n" + line + "\n",
@@ -2450,7 +2461,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			x = content.indexOf("\n", x + 1);
 		}
 
+		if (x == -1) {
+			return null;
+		}
+
 		int y = content.indexOf("\n", x + 1);
+
+		if (y == -1) {
+			return content.substring(x + 1);
+		}
 
 		return content.substring(x + 1, y);
 	}

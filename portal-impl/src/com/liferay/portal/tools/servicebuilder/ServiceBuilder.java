@@ -2161,7 +2161,7 @@ public class ServiceBuilder {
 	}
 
 	private void _createFinderUtil(Entity entity) throws Exception {
-		if (!entity.hasFinderClass()) {
+		if (!entity.hasFinderClass() || _osgiModule) {
 			_removeFinderUtil(entity);
 
 			return;

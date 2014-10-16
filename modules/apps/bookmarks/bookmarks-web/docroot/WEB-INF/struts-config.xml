@@ -23,7 +23,7 @@
 
 		<action path="/bookmarks/open_entry" type="com.liferay.bookmarks.web.action.OpenEntryAction" />
 
-		<action path="/bookmarks/search" forward="portlet.bookmarks.search" />
+		<action path="/bookmarks/search" forward="/portlet/bookmarks/search.jsp" />
 
 		<action path="/bookmarks/select_folder" type="com.liferay.bookmarks.web.action.EditFolderAction">
 			<forward name="portlet.bookmarks.edit_folder" path="/portlet/bookmarks/select_folder" />

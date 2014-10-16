@@ -11,9 +11,10 @@ Import-Package: \
 	com.liferay.portal.kernel.notifications,\
 	com.liferay.portal.kernel.lar,\
 	com.liferay.portal.kernel.portlet,\
-	com.liferay.portal.kernel.trash,\
+	com.liferay.portal.kernel.search,\
 	com.liferay.portal.kernel.servlet.filters.invoker,\
 	com.liferay.portal.kernel.servlet.*,\
+	com.liferay.portal.kernel.trash,\
 	com.liferay.portal.kernel.util,\
 	com.liferay.portal.kernel.workflow,\
 	com.liferay.portal.lar,\

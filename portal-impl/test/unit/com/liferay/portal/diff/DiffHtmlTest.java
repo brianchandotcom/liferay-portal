@@ -75,6 +75,6 @@ public class DiffHtmlTest {
 		_diffHtml.diff(new StringReader(StringUtil.randomString()), null);
 	}
 
-	private DiffHtml _diffHtml = new DiffHtmlImpl();
+	private final DiffHtml _diffHtml = new DiffHtmlImpl();
 
 }

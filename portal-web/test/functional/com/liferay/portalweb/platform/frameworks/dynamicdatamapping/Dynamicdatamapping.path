@@ -65,6 +65,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELDS_FIELD_PNG</td>
+	<td>portal/screenshots/ddm/${key_field}_field_icon.png</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELDS_FIELD_UNSELECTABLE</td>
 	<td>//div[@class='tab-content']/div/ul/li[@title='${key_field}' and not(contains(@class,'property-builder-field-draggable'))]/div</td>
 	<td></td>
@@ -234,6 +239,11 @@
 <tr>
 	<td>FORM_FIELD</td>
 	<td>//div[contains(@class,'component form-builder-field')]/div/label[.='${key_fieldFieldLabel}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELD_PNG</td>
+	<td>portal/screenshots/ddm/form_field_${key_formField}.png</td>
 	<td></td>
 </tr>
 <tr>

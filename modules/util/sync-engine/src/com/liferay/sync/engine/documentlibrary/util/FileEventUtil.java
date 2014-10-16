@@ -303,6 +303,15 @@ public class FileEventUtil {
 				continue;
 			}
 
+			if (uploadingSyncFile.isFolder()) {
+				addFolder(
+					uploadingSyncFile.getParentFolderId(),
+					uploadingSyncFile.getRepositoryId(), syncAccountId,
+					uploadingSyncFile.getName(), uploadingSyncFile);
+
+				return;
+			}
+
 			String checksum = FileUtil.getChecksum(filePath);
 
 			uploadingSyncFile.setChecksum(checksum);

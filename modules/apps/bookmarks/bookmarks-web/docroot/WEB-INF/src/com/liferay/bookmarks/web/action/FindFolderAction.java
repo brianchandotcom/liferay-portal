@@ -14,10 +14,10 @@
 
 package com.liferay.bookmarks.web.action;
 
-import com.liferay.portal.struts.FindAction;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
+import com.liferay.portal.struts.FindAction;
 
 import javax.servlet.http.HttpServletRequest;
 

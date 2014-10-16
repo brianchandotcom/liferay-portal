@@ -14,8 +14,8 @@
 
 package com.liferay.bookmarks.web.upgrade.admin;
 
-import com.liferay.portal.kernel.upgrade.BaseUpgradeAdminPortlets;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
+import com.liferay.portal.kernel.upgrade.BaseUpgradeAdminPortlets;
 
 /**
  * @author Miguel Pastor

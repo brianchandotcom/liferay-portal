@@ -14,14 +14,14 @@
 
 package com.liferay.bookmarks.service;
 
+import com.liferay.bookmarks.model.BookmarksEntry;
+import com.liferay.bookmarks.util.BookmarksTestUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.GroupTestUtil;
-import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.bookmarks.util.BookmarksTestUtil;
 
 import org.junit.Before;
 import org.junit.Test;

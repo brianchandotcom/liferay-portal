@@ -14,6 +14,18 @@
 
 package com.liferay.bookmarks.util;
 
+import com.liferay.bookmarks.constants.BookmarksPortletKeys;
+import com.liferay.bookmarks.model.BookmarksEntry;
+import com.liferay.bookmarks.model.BookmarksFolder;
+import com.liferay.bookmarks.model.BookmarksFolderConstants;
+import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
+import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
+import com.liferay.bookmarks.util.comparator.EntryCreateDateComparator;
+import com.liferay.bookmarks.util.comparator.EntryModifiedDateComparator;
+import com.liferay.bookmarks.util.comparator.EntryNameComparator;
+import com.liferay.bookmarks.util.comparator.EntryPriorityComparator;
+import com.liferay.bookmarks.util.comparator.EntryURLComparator;
+import com.liferay.bookmarks.util.comparator.EntryVisitsComparator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -33,18 +45,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
-import com.liferay.bookmarks.constants.BookmarksPortletKeys;
-import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.bookmarks.model.BookmarksFolder;
-import com.liferay.bookmarks.model.BookmarksFolderConstants;
-import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
-import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
-import com.liferay.bookmarks.util.comparator.EntryCreateDateComparator;
-import com.liferay.bookmarks.util.comparator.EntryModifiedDateComparator;
-import com.liferay.bookmarks.util.comparator.EntryNameComparator;
-import com.liferay.bookmarks.util.comparator.EntryPriorityComparator;
-import com.liferay.bookmarks.util.comparator.EntryURLComparator;
-import com.liferay.bookmarks.util.comparator.EntryVisitsComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;

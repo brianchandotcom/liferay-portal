@@ -14,8 +14,8 @@
 
 package com.liferay.bookmarks.notifications;
 
-import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
+import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 
 /**
  * @author Roberto Díaz

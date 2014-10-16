@@ -14,18 +14,18 @@
 
 package com.liferay.bookmarks.web.upgrade;
 
+import com.liferay.bookmarks.web.upgrade.portlet.UpgradeBookmarksPortlets;
+import com.liferay.bookmarks.web.upgrade.settings.UpgradeBookmarksSettings;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
-import com.liferay.bookmarks.web.upgrade.portlet.UpgradeBookmarksPortlets;
-import com.liferay.bookmarks.web.upgrade.settings.UpgradeBookmarksSettings;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Miguel Pastor

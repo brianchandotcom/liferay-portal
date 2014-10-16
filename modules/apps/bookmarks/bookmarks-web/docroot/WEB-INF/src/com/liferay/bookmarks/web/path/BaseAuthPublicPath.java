@@ -25,6 +25,11 @@ public class BaseAuthPublicPath implements AuthPublicPath {
 
 	public static final String AUTH_PUBLIC_PATH = "auth.public.path";
 
+	@Override
+	public String path() {
+		return _path;
+	}
+
 	protected void updatePath(Map<String, String> properties) {
 		if (!properties.containsKey(AUTH_PUBLIC_PATH)) {
 			_path = null;
@@ -35,11 +40,6 @@ public class BaseAuthPublicPath implements AuthPublicPath {
 		String path = properties.get(AUTH_PUBLIC_PATH);
 
 		_path = path;
-	}
-
-	@Override
-	public String path() {
-		return _path;
 	}
 
 	private String _path;

@@ -313,11 +313,9 @@ public abstract class BaseStorageAdapter implements StorageAdapter {
 			new DDMFormValuesTransformer(ddmFormValues);
 
 		ddmFormValuesTransformer.addTransformer(
-			"ddm-documentlibrary",
 			new DocumentLibraryDDMFormFieldValueTransformer());
 
 		ddmFormValuesTransformer.addTransformer(
-			"ddm-text-html",
 			new HTMLSanitizerDDMFormFieldValueTransformer(
 				serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
 				serviceContext.getUserId()));

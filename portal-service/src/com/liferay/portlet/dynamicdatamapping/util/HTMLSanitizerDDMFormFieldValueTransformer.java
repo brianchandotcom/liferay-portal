@@ -37,6 +37,11 @@ public class HTMLSanitizerDDMFormFieldValueTransformer
 	}
 
 	@Override
+	public String getFieldType() {
+		return "ddm-text-html";
+	}
+
+	@Override
 	public void transform(Value value) throws PortalException {
 		for (Locale locale : value.getAvailableLocales()) {
 			String sanitizedValue = sanitize(value.getString(locale));

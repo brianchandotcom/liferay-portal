@@ -14,14 +14,73 @@
 
 package com.liferay.portal.template;
 
+import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.test.CaptureHandler;
+import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
 public class ClassLoaderResourceParserTest {
+
+	@ClassRule
+	public static CodeCoverageAssertor codeCoverageAssertor =
+		new CodeCoverageAssertor();
+
+	@Test
+	public void testGetURL() {
+		ClassLoaderResourceParser classLoaderResourceParser =
+			new ClassLoaderResourceParser();
+
+		Assert.assertNull(
+			classLoaderResourceParser.getURL(
+				TemplateConstants.JOURNAL_SEPARATOR));
+
+		Assert.assertNull(
+			classLoaderResourceParser.getURL(
+				TemplateConstants.SERVLET_SEPARATOR));
+
+		Assert.assertNull(
+			classLoaderResourceParser.getURL(
+				TemplateConstants.TEMPLATE_SEPARATOR));
+
+		Assert.assertNull(
+			classLoaderResourceParser.getURL(
+				TemplateConstants.THEME_LOADER_SEPARATOR));
+
+		Assert.assertNull(classLoaderResourceParser.getURL("DummyFile"));
+
+		CaptureHandler captureHandler = null;
+
+		try {
+			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+				ClassLoaderResourceParser.class.getName(), Level.ALL);
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertNull(classLoaderResourceParser.getURL("DummyFile"));
+
+			Assert.assertEquals(1, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals("Loading DummyFile", logRecord.getMessage());
+		}
+		finally {
+			if (captureHandler != null) {
+				captureHandler.close();
+			}
+		}
+	}
 
 	@Test
 	public void testNormalizePath() {

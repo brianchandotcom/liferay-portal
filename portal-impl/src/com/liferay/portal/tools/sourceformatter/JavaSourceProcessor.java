@@ -2616,10 +2616,22 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return content;
 		}
 
-		String prefix = content.substring(0, componentPropertyMatcher.start(1));
-		String postfix = content.substring(componentPropertyMatcher.end(1));
+		String santizedContent = content.substring(
+			componentPropertyMatcher.start(1), componentPropertyMatcher.end(1));
 
-		return prefix.concat(postfix);
+		String[] sanitizedContentLines = StringUtil.splitLines(santizedContent);
+
+		StringBundler sb = new StringBundler(3 + sanitizedContentLines.length);
+
+		sb.append(content.substring(0, componentPropertyMatcher.start(1)));
+
+		for (int i = 0; i< sanitizedContentLines.length + 1; i++) {
+			sb.append("\n");
+		}
+
+		sb.append(content.substring(componentPropertyMatcher.end(1)));
+
+		return sb.toString();
 	}
 
 	protected String sortExceptions(String line) {

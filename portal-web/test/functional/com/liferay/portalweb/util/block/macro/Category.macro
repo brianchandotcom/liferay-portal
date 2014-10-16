@@ -69,8 +69,8 @@
 						<var name="pathNumber" value="${pathNumber?increment()}" />
 						<var name="pathNumber" value="${pathNumber?increment()}" />
 
-						<execute action="CPCategoriesAdd#type" locator-key1="PROPERTIES_KEY_FIELD" value1="${propertiesKeyField}" />
-						<execute action="CPCategoriesAdd#type" locator-key1="PROPERTIES_VALUE_FIELD" value1="${propertiesValueField}" />
+						<execute action="CPCategoriesAdd#type" locator-key1="PROPERTIES_KEY_FIELD" value1="${propertiesKeyField} ${i}" />
+						<execute action="CPCategoriesAdd#type" locator-key1="PROPERTIES_VALUE_FIELD" value1="${propertiesValueField} ${i}" />
 						<execute action="CPCategoriesAdd#click" locator-key1="PROPERTIES_ADD_ROW_BUTTON" />
 					</then>
 				</while>
@@ -280,20 +280,20 @@
 				<execute action="CPCategoriesEdit#assertTextEquals" locator-key1="PROPERTIES_VALUE_FIELD" value1="${propertiesValueField}" />
 			</then>
 			<else>
+				<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
+				<execute action="CPCategories#click" locator-key1="CATEGORY_ENTRY_MENULIST_ARROW" />
+				<execute action="CPCategories#assertClick" locator-key1="CATEGORY_ENTRY_MENULIST_EDIT" value1="Edit" />
+
 				<while>
 					<not>
 						<equals arg1="${i}" arg2="${propertyNumber}" />
 					</not>
 					<then>
 						<var name="i" value="${i?increment()}" />
+						<var name="key_pathNumber" value="${i}" />
 
-						<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
-						<execute action="CPCategories#click" locator-key1="CATEGORY_ENTRY_MENULIST_ARROW" />
-						<execute action="CPCategories#assertClick" locator-key1="CATEGORY_ENTRY_MENULIST_EDIT" value1="Edit" />
-
-						<var name="key_pathNumber" value="${pathNumber}" />
-
-						<execute action="CPCategories#assertTextEquals" locator-key1="CATEGORY_DETAILS_PROPERTY_KEY_2" value1="${propertiesKeyField}" /> <execute action="CPCategories#assertTextEquals" locator-key1="CATEGORY_DETAILS_PROPERTY_VALUE_2" value1="${propertiesValueField}" />
+						<execute action="CPCategories#assertTextEquals" locator-key1="CATEGORY_DETAILS_PROPERTY_KEY_2" value1="${propertiesKeyField} ${i}" />
+						<execute action="CPCategories#assertTextEquals" locator-key1="CATEGORY_DETAILS_PROPERTY_VALUE_2" value1="${propertiesValueField} ${i}" />
 					</then>
 				</while>
 			</else>

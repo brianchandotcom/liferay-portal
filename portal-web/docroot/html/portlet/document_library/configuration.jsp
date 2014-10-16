@@ -113,8 +113,8 @@ DLConfigurationDisplayContext dlConfigurationDisplayContext = new DLConfiguratio
 				</liferay-ui:panel>
 			</liferay-ui:panel-container>
 
-			<aui:script use="aui-base">
-				A.one('#<portlet:namespace />selectFolderButton').on(
+			<aui:script>
+				AUI.$('#<portlet:namespace />selectFolderButton').on(
 					'click',
 					function(event) {
 						Liferay.Util.selectEntity(

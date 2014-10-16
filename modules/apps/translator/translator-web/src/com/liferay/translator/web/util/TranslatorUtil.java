@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.translator.util;
+package com.liferay.translator.web.util;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.webcache.WebCacheException;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
-import com.liferay.portlet.translator.model.Translation;
+import com.liferay.translator.web.model.Translation;
 
 import java.util.Comparator;
 import java.util.HashMap;

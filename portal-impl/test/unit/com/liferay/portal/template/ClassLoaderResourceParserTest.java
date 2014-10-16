@@ -44,41 +44,37 @@ public class ClassLoaderResourceParserTest {
 		Assert.assertNull(
 			classLoaderResourceParser.getURL(
 				TemplateConstants.JOURNAL_SEPARATOR));
-
 		Assert.assertNull(
 			classLoaderResourceParser.getURL(
 				TemplateConstants.SERVLET_SEPARATOR));
-
 		Assert.assertNull(
 			classLoaderResourceParser.getURL(
 				TemplateConstants.TEMPLATE_SEPARATOR));
-
 		Assert.assertNull(
 			classLoaderResourceParser.getURL(
 				TemplateConstants.THEME_LOADER_SEPARATOR));
 
-		Assert.assertNull(classLoaderResourceParser.getURL("DummyFile"));
+		String templateId = "DummyFile";
 
-		CaptureHandler captureHandler = null;
+		Assert.assertNull(classLoaderResourceParser.getURL(templateId));
+
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			ClassLoaderResourceParser.class.getName(), Level.FINEST);
 
 		try {
-			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-				ClassLoaderResourceParser.class.getName(), Level.ALL);
+			Assert.assertNull(classLoaderResourceParser.getURL(templateId));
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
-
-			Assert.assertNull(classLoaderResourceParser.getURL("DummyFile"));
 
 			Assert.assertEquals(1, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
-			Assert.assertEquals("Loading DummyFile", logRecord.getMessage());
+			Assert.assertEquals(
+				"Loading " + templateId, logRecord.getMessage());
 		}
 		finally {
-			if (captureHandler != null) {
-				captureHandler.close();
-			}
+			captureHandler.close();
 		}
 	}
 

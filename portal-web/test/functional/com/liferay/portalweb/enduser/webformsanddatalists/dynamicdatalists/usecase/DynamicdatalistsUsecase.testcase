@@ -1756,7 +1756,7 @@
 		<execute macro="DDLTemplate#saveFormTemplateCP" />
 	</command>
 
-	<command name="ViewNestedFieldEntryWhenParentFieldIsBlank" priority="4">
+	<command name="ViewNestedFieldEntryWithBlankParentField" priority="4">
 		<description message="This is a use case for LPS-48969." />
 
 		<execute macro="Page#gotoContentCP">

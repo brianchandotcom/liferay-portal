@@ -301,6 +301,9 @@
 	<bean id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureFinder" class="com.liferay.portlet.dynamicdatamapping.service.persistence.impl.DDMStructureFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalService" class="com.liferay.portlet.dynamicdatamapping.service.impl.DDMStructureLinkLocalServiceImpl" />
 	<bean id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureLinkPersistence" class="com.liferay.portlet.dynamicdatamapping.service.persistence.impl.DDMStructureLinkPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.dynamicdatamapping.service.DDMStructureVersionLocalService" class="com.liferay.portlet.dynamicdatamapping.service.impl.DDMStructureVersionLocalServiceImpl" />
+	<bean id="com.liferay.portlet.dynamicdatamapping.service.DDMStructureVersionService" class="com.liferay.portlet.dynamicdatamapping.service.impl.DDMStructureVersionServiceImpl" />
+	<bean id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureVersionPersistence" class="com.liferay.portlet.dynamicdatamapping.service.persistence.impl.DDMStructureVersionPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalService" class="com.liferay.portlet.dynamicdatamapping.service.impl.DDMTemplateLocalServiceImpl" />
 	<bean id="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateService" class="com.liferay.portlet.dynamicdatamapping.service.impl.DDMTemplateServiceImpl" />
 	<bean id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplatePersistence" class="com.liferay.portlet.dynamicdatamapping.service.persistence.impl.DDMTemplatePersistenceImpl" parent="basePersistence" />

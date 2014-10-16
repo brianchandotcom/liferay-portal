@@ -156,6 +156,8 @@ create index IX_D43E4208 on DDMStructureLink (classNameId);
 create unique index IX_C803899D on DDMStructureLink (classPK);
 create index IX_17692B58 on DDMStructureLink (structureId);
 
+create unique index IX_51DF529B on DDMStructureVersion (ddmStructureId, version);
+
 create index IX_B6356F93 on DDMTemplate (classNameId, classPK, type_);
 create index IX_32F83D16 on DDMTemplate (classPK);
 create index IX_F0C3449 on DDMTemplate (groupId, classNameId, classPK, type_, mode_);

@@ -22,6 +22,8 @@ import com.liferay.portlet.dynamicdatamapping.model.Value;
  */
 public interface DDMFormFieldValueTransformer {
 
+	public String getFieldType();
+
 	public void transform(Value value) throws PortalException;
 
 }

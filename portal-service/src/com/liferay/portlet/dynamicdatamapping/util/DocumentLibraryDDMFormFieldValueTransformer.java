@@ -35,6 +35,11 @@ public class DocumentLibraryDDMFormFieldValueTransformer
 	implements DDMFormFieldValueTransformer {
 
 	@Override
+	public String getFieldType() {
+		return "ddm-documentlibrary";
+	}
+
+	@Override
 	public void transform(Value value) throws PortalException {
 		for (Locale locale : value.getAvailableLocales()) {
 			FileEntry tempFileEntry = fetchTempFileEntry(

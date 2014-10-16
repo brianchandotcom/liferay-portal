@@ -34,11 +34,11 @@ public class DDMFormValuesTransformer {
 	}
 
 	public void addTransformer(
-		String fieldType,
 		DDMFormFieldValueTransformer ddmFormFieldValueTransformer) {
 
 		_ddmFormFieldValueTransformersMap.put(
-			fieldType, ddmFormFieldValueTransformer);
+			ddmFormFieldValueTransformer.getFieldType(),
+			ddmFormFieldValueTransformer);
 	}
 
 	public void transform() throws PortalException {

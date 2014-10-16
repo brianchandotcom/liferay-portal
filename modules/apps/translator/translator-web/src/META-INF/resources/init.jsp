@@ -14,10 +14,38 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ taglib uri="/META-INF/aui.tld" prefix="aui" %>
+<%@ taglib uri="/META-INF/c.tld" prefix="c" %>
+<%@ taglib uri="/META-INF/liferay-portlet-ext.tld" prefix="liferay-portlet" %>
+<%@ taglib uri="/META-INF/liferay-portlet_2_0.tld" prefix="portlet" %>
+<%@ taglib uri="/META-INF/liferay-theme.tld" prefix="liferay-theme" %>
+<%@ taglib uri="/META-INF/liferay-ui.tld" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorException" %><%@
-page import="com.liferay.portlet.translator.model.Translation" %><%@
-page import="com.liferay.portlet.translator.util.TranslatorUtil" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
-<%@ include file="/html/portlet/translator/init-ext.jsp" %>
+<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorException" %><%@
+page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.PropsKeys" %><%@
+page import="com.liferay.portal.kernel.util.PropsUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringPool" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.translator.web.model.Translation" %><%@
+page import="com.liferay.translator.web.util.TranslatorUtil" %>
+
+<%@ page import="javax.portlet.WindowState" %>
+
+<%@ page import="java.util.Locale" %><%@
+page import="java.util.Map" %>
+
+<liferay-theme:defineObjects />
+<portlet:defineObjects />
+
+<%
+WindowState windowState = liferayPortletRequest.getWindowState();
+%>
+
+<%@ include file="init-ext.jsp" %>

@@ -195,7 +195,13 @@ public abstract class BasePortletExportImportTestCase
 
 	@Test
 	public void testUpdateLastPublishDate() throws Exception {
-		StagedModel stagedModel = addStagedModel(group.getGroupId());
+		Date lastPublishDate = new Date(System.currentTimeMillis() - Time.HOUR);
+
+		Date stagedModelCreationDate = new Date(
+			lastPublishDate.getTime() + Time.MINUTE);
+
+		StagedModel stagedModel = addStagedModel(
+			group.getGroupId(), stagedModelCreationDate);
 
 		if (stagedModel == null) {
 			return;
@@ -205,31 +211,49 @@ public abstract class BasePortletExportImportTestCase
 			TestPropsValues.getUserId(), layout, getPortletId(), "column-1",
 			new HashMap<String, String[]>());
 
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.getStrictPortletSetup(
+				layout, getPortletId());
+
+		portletPreferences.setValue(
+			"last-publish-date", String.valueOf(lastPublishDate.getTime()));
+
+		portletPreferences.store();
+
 		Map<String, String[]> exportParameterMap =
 			new LinkedHashMap<String, String[]>();
 
 		exportParameterMap.put(
 			PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE,
 			new String[] {String.valueOf(true)});
+		exportParameterMap.put(
+			"range",
+			new String[] {ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE});
 
 		Map<String, String[]> importParameterMap =
 			new LinkedHashMap<String, String[]>();
 
-		Date startDate = new Date(System.currentTimeMillis() - Time.HOUR);
+		Date startDate = new Date(
+			stagedModelCreationDate.getTime() + Time.MINUTE);
 		Date endDate = new Date();
 
 		exportImportPortlet(
 			getPortletId(), exportParameterMap, importParameterMap, startDate,
 			endDate);
 
-		PortletPreferences portletPreferences =
+		portletPreferences =
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
 				layout, getPortletId());
 
-		Date lastPublishDate = ExportImportDateUtil.getLastPublishDate(
+		lastPublishDate = ExportImportDateUtil.getLastPublishDate(
 			portletPreferences);
 
 		Assert.assertEquals(endDate.getTime(), lastPublishDate.getTime());
+
+		StagedModel importedStagedModel = getStagedModel(
+			getStagedModelUuid(stagedModel), importedGroup.getGroupId());
+
+		Assert.assertNotNull(importedStagedModel);
 	}
 
 	protected AssetLink addAssetLink(

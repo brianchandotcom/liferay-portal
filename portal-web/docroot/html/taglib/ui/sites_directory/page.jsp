@@ -115,6 +115,14 @@
 										else {
 											layoutSet = childGroup.getPrivateLayoutSet();
 										}
+
+										String url = null;
+
+										if (childGroup.getGroupId() != scopeGroupId) {
+											url = PortalUtil.getGroupFriendlyURL(childGroup, !childGroup.hasPublicLayouts(), themeDisplay);
+
+											url = PortalUtil.addPreservedParameters(themeDisplay, url);
+										}
 										%>
 
 										<liferay-ui:app-view-entry
@@ -127,7 +135,7 @@
 											showCheckbox="<%= false %>"
 											thumbnailSrc='<%= themeDisplay.getPathImage() + "/layout_set_logo?img_id=" + layoutSet.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(layoutSet.getLogoId()) %>'
 											title="<%= HtmlUtil.escape(childGroup.getDescriptiveName(locale)) %>"
-											url="<%= (childGroup.getGroupId() != scopeGroupId) ? PortalUtil.getGroupFriendlyURL(childGroup, !childGroup.hasPublicLayouts(), themeDisplay) : null %>"
+											url="<%= url %>"
 										/>
 									</liferay-ui:search-container-row>
 

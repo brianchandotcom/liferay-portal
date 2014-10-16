@@ -1,30 +1,65 @@
 <definition component-name="portal-application-standards-ee">
+	<property name="app.server.bundles.size" value="1" />
 	<property name="portlet.plugins.includes" value="saml-portlet" />
 	<property name="testray.main.component.name" value="Application Standards" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />
-	</set-up>
 
-	<command name="SetUpSAMLAdminIdP" priority="5">
+		<!-- Startup first instance on http://localhost:8080 with database lportal and saml deployed -->
+
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="SAML Admin" />
 		</execute>
 
-		<execute macro="SAMLRole#addCP">
-			<var name="samlEntityName" value="samlip" />
+		<execute macro="SAMLRole#setupIdPCP">
+			<var name="samlEntityName" value="samlidp" />
+			<var name="samlKeyPassword" value="samlidp" />
 			<var name="samlRoleType" value="Identity Provider" />
 		</execute>
-	</command>
 
-	<command name="SetUpSAMLAdminSP" priority="5">
+		<!-- Startup second instance on http://www.able.com:9080 with database lportal1 and saml deployed -->
+
+		<execute macro="User#loginPG">
+			<var name="nodePort" value="9080" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="nodePort" value="9080" />
+			<var name="portletName" value="SAML Admin" />
+		</execute>
+
+		<execute macro="SAMLRole#setupSPCP">
+			<var name="samlEntityName" value="samlsp" />
+			<var name="samlKeyPassword" value="samlsp" />
+			<var name="samlRoleType" value="Service Provider" />
+		</execute>
+
+		<!-- Go back to first instance, Add SP (Service Provider) to IdP (Identity Provider) -->
+
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="SAML Admin" />
 		</execute>
 
-		<execute macro="SAMLRole#addCP">
-			<var name="samlEntityName" value="samlsp" />
-			<var name="samlRoleType" value="Service Provider" />
+		<execute macro="SAMLRole#addSPtoIdPCP">
+			<var name="samlSPEntityName" value="samlsp" />
+			<var name="samlSPName" value="samlsp" />
 		</execute>
-	</command>
+
+		<execute macro="SAMLRole#viewSPCP">
+			<var name="samlSPEntityName" value="samlsp" />
+			<var name="samlSPName" value="samlsp" />
+		</execute>
+
+		<execute macro="SAMLRole#executeIdPInitiatedSSO" />
+
+		<!-- Go to second instance, execute SP initiated SSO -->
+
+		<execute macro="SAMLRole#executeSPInitiatedSSO" />
+
+		<!-- At this point, both instances will be signed off. All tests starting after this setup will need to begin with a login -->
+
+	</set-up>
 </definition>

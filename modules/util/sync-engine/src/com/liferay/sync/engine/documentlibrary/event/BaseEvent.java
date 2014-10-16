@@ -43,7 +43,7 @@ public abstract class BaseEvent implements Event {
 		Session session = SessionManager.getSession(_syncAccountId);
 
 		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
-			getSyncAccountId());
+			_syncAccountId);
 
 		session.executeAsynchronousGet(
 			syncAccount.getUrl() + urlPath, _handler);
@@ -56,7 +56,7 @@ public abstract class BaseEvent implements Event {
 		Session session = SessionManager.getSession(_syncAccountId);
 
 		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
-			getSyncAccountId());
+			_syncAccountId);
 
 		session.executeAsynchronousPost(
 			syncAccount.getUrl() + "/api/jsonws" + urlPath, parameters,
@@ -67,7 +67,7 @@ public abstract class BaseEvent implements Event {
 		Session session = SessionManager.getSession(_syncAccountId);
 
 		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
-			getSyncAccountId());
+			_syncAccountId);
 
 		session.executeGet(syncAccount.getUrl() + urlPath, _handler);
 	}
@@ -78,7 +78,7 @@ public abstract class BaseEvent implements Event {
 		Session session = SessionManager.getSession(_syncAccountId);
 
 		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
-			getSyncAccountId());
+			_syncAccountId);
 
 		session.executePost(
 			syncAccount.getUrl() + "/api/jsonws" + urlPath, parameters,

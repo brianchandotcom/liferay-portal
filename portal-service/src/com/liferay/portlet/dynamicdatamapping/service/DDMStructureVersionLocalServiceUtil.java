@@ -205,6 +205,14 @@ public class DDMStructureVersionLocalServiceUtil {
 		return getService().getDDMStructureVersion(ddmStructureVersionId);
 	}
 
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> getDDMStructureVersions(
+		long ddmStructureId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> orderByComparator) {
+		return getService()
+				   .getDDMStructureVersions(ddmStructureId, start, end,
+			orderByComparator);
+	}
+
 	/**
 	* Returns a range of all the d d m structure versions.
 	*
@@ -230,6 +238,15 @@ public class DDMStructureVersionLocalServiceUtil {
 		return getService().getDDMStructureVersionsCount();
 	}
 
+	public static int getDDMStructureVersionsCount(long ddmStructureId) {
+		return getService().getDDMStructureVersionsCount(ddmStructureId);
+	}
+
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion getLatestVersion(
+		long ddmStructureId) {
+		return getService().getLatestVersion(ddmStructureId);
+	}
+
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -243,6 +260,16 @@ public class DDMStructureVersionLocalServiceUtil {
 	*/
 	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
 		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion updateDDMStructureVersion(
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure,
+		boolean majorVersion,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateDDMStructureVersion(ddmStructure, majorVersion,
+			serviceContext);
 	}
 
 	/**

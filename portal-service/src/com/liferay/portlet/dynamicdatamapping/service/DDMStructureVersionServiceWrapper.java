@@ -44,6 +44,35 @@ public class DDMStructureVersionServiceWrapper
 		return _ddmStructureVersionService.getBeanIdentifier();
 	}
 
+	@Override
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion getDDMStructureVersion(
+		long ddmStructureVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmStructureVersionService.getDDMStructureVersion(ddmStructureVersionId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> getDDMStructureVersions(
+		long ddmStructureId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmStructureVersionService.getDDMStructureVersions(ddmStructureId,
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public int getDDMStructureVersionsCount(long ddmStructureId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmStructureVersionService.getDDMStructureVersionsCount(ddmStructureId);
+	}
+
+	@Override
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion getLatestVersion(
+		long ddmStructureId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmStructureVersionService.getLatestVersion(ddmStructureId);
+	}
+
 	/**
 	* Sets the Spring bean ID for this bean.
 	*

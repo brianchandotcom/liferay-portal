@@ -14,8 +14,8 @@
 
 package com.liferay.bookmarks.util.comparator;
 
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.bookmarks.model.BookmarksFolder;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
  * @author Shinn Lok

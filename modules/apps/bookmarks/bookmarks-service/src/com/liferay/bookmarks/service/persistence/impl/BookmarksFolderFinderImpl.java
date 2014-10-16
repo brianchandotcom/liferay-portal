@@ -14,6 +14,12 @@
 
 package com.liferay.bookmarks.service.persistence.impl;
 
+import com.liferay.bookmarks.model.BookmarksEntry;
+import com.liferay.bookmarks.model.BookmarksFolder;
+import com.liferay.bookmarks.model.impl.BookmarksFolderImpl;
+import com.liferay.bookmarks.service.persistence.BookmarksEntryUtil;
+import com.liferay.bookmarks.service.persistence.BookmarksFolderFinder;
+import com.liferay.bookmarks.service.persistence.BookmarksFolderUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -28,12 +34,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.bookmarks.model.BookmarksFolder;
-import com.liferay.bookmarks.model.impl.BookmarksFolderImpl;
-import com.liferay.bookmarks.service.persistence.BookmarksEntryUtil;
-import com.liferay.bookmarks.service.persistence.BookmarksFolderFinder;
-import com.liferay.bookmarks.service.persistence.BookmarksFolderUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;

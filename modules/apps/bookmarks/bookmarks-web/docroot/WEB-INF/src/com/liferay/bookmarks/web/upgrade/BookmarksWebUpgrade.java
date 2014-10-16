@@ -14,12 +14,12 @@
 
 package com.liferay.bookmarks.web.upgrade;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.bookmarks.service.configuration.configurator.BookmarksServiceConfigurator;
 import com.liferay.bookmarks.web.upgrade.admin.UpgradeAdminPortlets;
 import com.liferay.bookmarks.web.upgrade.preferences.UpgradeBookmarksPreferences;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.service.ReleaseLocalService;
 
 import java.util.ArrayList;
 import java.util.List;

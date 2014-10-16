@@ -14,9 +14,9 @@
 
 package com.liferay.bookmarks.web.upgrade.preferences;
 
+import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 
 import javax.portlet.PortletPreferences;
 

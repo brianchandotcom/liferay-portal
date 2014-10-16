@@ -14,9 +14,9 @@
 
 package com.liferay.bookmarks.util.comparator;
 
+import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.bookmarks.model.BookmarksEntry;
 
 /**
  * @author Brian Wing Shun Chan

@@ -14,8 +14,8 @@
 
 package com.liferay.bookmarks.customattributes;
 
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.bookmarks.model.BookmarksEntry;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
 
 /**

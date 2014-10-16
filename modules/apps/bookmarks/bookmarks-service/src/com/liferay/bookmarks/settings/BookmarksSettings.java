@@ -14,6 +14,8 @@
 
 package com.liferay.bookmarks.settings;
 
+import com.liferay.bookmarks.constants.BookmarksConstants;
+import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.resource.manager.ClassLoaderResourceManager;
 import com.liferay.portal.kernel.resource.manager.ResourceManager;
@@ -25,8 +27,6 @@ import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.bookmarks.constants.BookmarksConstants;
-import com.liferay.bookmarks.model.BookmarksFolderConstants;
 
 import java.util.Map;
 

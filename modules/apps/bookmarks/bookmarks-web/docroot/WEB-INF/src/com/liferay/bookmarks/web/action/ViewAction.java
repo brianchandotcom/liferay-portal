@@ -14,10 +14,10 @@
 
 package com.liferay.bookmarks.web.action;
 
+import com.liferay.bookmarks.exception.NoSuchFolderException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
-import com.liferay.bookmarks.exception.NoSuchFolderException;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;

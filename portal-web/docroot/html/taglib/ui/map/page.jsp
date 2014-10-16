@@ -57,29 +57,29 @@ String modules = "liferay-map-" + mapsAPIProvider.toLowerCase();
 <div class="lfr-map" id="<%= name %>Map"></div>
 
 <aui:script use="<%= modules %>">
+	var MapControls = Liferay.MapBase.CONTROLS;
+
 	var mapConfig = {
 		boundingBox: '#<%= name %>Map',
 		geolocation: <%= geolocation %>
-	};
 
 	<c:if test="<%= Validator.isNotNull(points) %>">
-		mapConfig.data = <%= points %>;
+		,data: <%= points %>
 	</c:if>
 
 	<c:if test="<%= geolocation %>">
-		var MapControls = Liferay.MapBase.CONTROLS;
-
-		mapConfig.controls = [MapControls.GEOLOCATION, MapControls.HOME, MapControls.PAN, MapControls.SEARCH, MapControls.TYPE, MapControls.ZOOM];
+		,controls: [MapControls.GEOLOCATION, MapControls.HOME, MapControls.PAN, MapControls.SEARCH, MapControls.TYPE, MapControls.ZOOM]
 	</c:if>
 
 	<c:if test="<%= Validator.isNotNull(latitude) && Validator.isNotNull(longitude) %>">
-		mapConfig.position = {
+		,position: {
 			location: {
 				lat: <%= latitude %>,
 				lng: <%= longitude %>
 			}
-		};
+		}
 	</c:if>
+	};
 
 	var map = new Liferay['<%= mapsAPIProvider %>Map'](mapConfig).render();
 

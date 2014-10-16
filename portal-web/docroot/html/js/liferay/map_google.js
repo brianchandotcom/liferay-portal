@@ -85,8 +85,6 @@ AUI.add(
 					},
 
 					_handleGeocoderResponse: function(response, status, callback) {
-						var instance = this;
-
 						var result = {
 							data: {},
 							err: status === google.maps.GeocoderStatus.OK ? null : status
@@ -161,8 +159,6 @@ AUI.add(
 					},
 
 					_getFeatureStyle: function(feature) {
-						var instance = this;
-
 						var style = {
 							icon: feature.getProperty('icon')
 						};
@@ -171,8 +167,6 @@ AUI.add(
 					},
 
 					_wrapNativeFeature: function(feature) {
-						var instance = this;
-
 						return feature;
 					}
 				}

@@ -49,11 +49,11 @@ public class MapTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
-		_points = null;
 		_geolocation = false;
 		_latitude = 0;
 		_longitude = 0;
 		_name = null;
+		_points = null;
 		_provider = null;
 	}
 
@@ -64,11 +64,11 @@ public class MapTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-ui:map:points", _points);
 		request.setAttribute("liferay-ui:map:geolocation", _geolocation);
 		request.setAttribute("liferay-ui:map:latitude", _latitude);
 		request.setAttribute("liferay-ui:map:longitude", _longitude);
 		request.setAttribute("liferay-ui:map:name", _name);
+		request.setAttribute("liferay-ui:map:points", _points);
 		request.setAttribute("liferay-ui:map:provider", _provider);
 	}
 

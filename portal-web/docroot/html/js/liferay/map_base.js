@@ -158,7 +158,7 @@ AUI.add(
 
 				var location = (position && position.location) ? position.location : {};
 
-				if (!location.lat && !location.lng) {
+				if (!location.lat || !location.lng) {
 					Liferay.Util.getGeolocation(
 						function(latitude, longitude) {
 							var location = {
@@ -299,7 +299,6 @@ AUI.add(
 						}
 					);
 				}
-
 			},
 
 			_createCustomControls: function() {

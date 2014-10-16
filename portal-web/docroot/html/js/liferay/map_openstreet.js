@@ -116,14 +116,10 @@ AUI.add(
 					},
 
 					_handleForwardJSONP: function(response, callback) {
-						var instance = this;
-
 						callback(response);
 					},
 
 					_handleReverseJSONP: function(response, callback) {
-						var instance = this;
-
 						var result = {
 							data: {},
 							err: response.error
@@ -191,8 +187,6 @@ AUI.add(
 					},
 
 					_getFeatureStyle: function(feature) {
-						var instance = this;
-
 						var style = {
 							icon: feature.getProperty('icon')
 						};
@@ -201,8 +195,6 @@ AUI.add(
 					},
 
 					_wrapNativeFeature: function(feature) {
-						var instance = this;
-
 						var geometry = feature.geometry;
 
 						return {
@@ -283,6 +275,13 @@ AUI.add(
 
 		var OpenstreetMap = A.Component.create(
 			{
+				ATTRS : {
+					tileURI: {
+						validator: Lang.isString,
+						value: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+					}
+				},
+
 				AUGMENTS: [MapBase],
 
 				EXTENDS: A.Widget,
@@ -338,7 +337,7 @@ AUI.add(
 
 						var mapConfig = {
 							center: location,
-							layers: [L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')],
+							layers: [L.tileLayer(instance.get('tileURI'))],
 							zoom: instance.get('zoom')
 						};
 

@@ -27,9 +27,6 @@
 		<struts-path>polls_display</struts-path>
 		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
 		<portlet-data-handler-class>com.liferay.polls.lar.PollsDisplayPortletDataHandler</portlet-data-handler-class>
-		<staged-model-data-handler-class>com.liferay.polls.lar.PollsChoiceStagedModelDataHandler</staged-model-data-handler-class>
-		<staged-model-data-handler-class>com.liferay.polls.lar.PollsQuestionStagedModelDataHandler</staged-model-data-handler-class>
-		<staged-model-data-handler-class>com.liferay.polls.lar.PollsVoteStagedModelDataHandler</staged-model-data-handler-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<instanceable>true</instanceable>
 		<private-request-attributes>false</private-request-attributes>

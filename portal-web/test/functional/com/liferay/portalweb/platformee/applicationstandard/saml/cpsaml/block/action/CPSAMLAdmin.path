@@ -65,6 +65,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAVIGATION_IDENTITY_PROVIDER_CONNECTION</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Identity Provider Connection')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -124,22 +129,22 @@
 <!--SERVICE_PROVIDER_CONNECTIONS_TABLE-->
 <tr>
 	<td>SERVICE_PROVIDER_CONNECTIONS_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_samlSP}')]/td[1]/a</td>
+	<td>//tr[contains(.,'${key_samlSPName}')]/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SERVICE_PROVIDER_CONNECTIONS_ENTITY_ID</td>
-	<td>//tr[contains(.,'${key_samlSP}')]/td[2]/a</td>
+	<td>//tr[contains(.,'${key_samlSPName}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SERVICE_PROVIDER_CONNECTIONS_ENABLED</td>
-	<td>//tr[contains(.,'${key_samlSP}')]/td[3]/a</td>
+	<td>//tr[contains(.,'${key_samlSPName}')]/td[3]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SERVICE_PROVIDER_CONNECTIONS_ACTIONS</td>
-	<td>//tr[contains(.,'${key_samlSP}')]/td[4]/div/a</td>
+	<td>//tr[contains(.,'${key_samlSPName}')]/td[4]/div/a</td>
 	<td></td>
 </tr>
 <tr>

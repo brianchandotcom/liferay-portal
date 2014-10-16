@@ -81,19 +81,14 @@ public class EhcachePortalCache<K extends Serializable, V>
 	}
 
 	@Override
-	protected void doPut(K key, V value, int timeToLive, boolean quiet) {
+	protected void doPut(K key, V value, int timeToLive) {
 		Element element = new Element(key, value);
 
 		if (timeToLive != DEFAULT_TIME_TO_LIVE) {
 			element.setTimeToLive(timeToLive);
 		}
 
-		if (quiet) {
-			ehcache.putQuiet(element);
-		}
-		else {
-			ehcache.put(element);
-		}
+		ehcache.put(element);
 	}
 
 	@Override

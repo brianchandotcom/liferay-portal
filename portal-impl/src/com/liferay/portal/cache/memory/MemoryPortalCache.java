@@ -83,12 +83,8 @@ public class MemoryPortalCache<K extends Serializable, V>
 	}
 
 	@Override
-	protected void doPut(K key, V value, int timeToLive, boolean quiet) {
+	protected void doPut(K key, V value, int timeToLive) {
 		V oldValue = _concurrentMap.put(key, value);
-
-		if (quiet) {
-			return;
-		}
 
 		if (oldValue != null) {
 			aggregatedCacheListener.notifyEntryUpdated(

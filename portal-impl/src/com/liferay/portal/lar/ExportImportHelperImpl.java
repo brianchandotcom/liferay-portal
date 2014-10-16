@@ -505,7 +505,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		InputStream inputStream = DLFileEntryLocalServiceUtil.getFileAsStream(
 			fileEntry.getFileEntryId(), fileEntry.getVersion(), false);
 
-		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+		ZipReader zipReader = null;
 
 		ManifestSummary manifestSummary = null;
 
@@ -515,6 +515,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			Group group = GroupLocalServiceUtil.getGroup(groupId);
 			String userIdStrategy = MapUtil.getString(
 				parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
+
+			zipReader = ZipReaderFactoryUtil.getZipReader(file);
 
 			PortletDataContext portletDataContext =
 				PortletDataContextFactoryUtil.createImportPortletDataContext(
@@ -526,7 +528,9 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		finally {
 			StreamUtil.cleanUp(inputStream);
 
-			zipReader.close();
+			if (zipReader != null) {
+				zipReader.close();
+			}
 
 			FileUtil.delete(file);
 		}

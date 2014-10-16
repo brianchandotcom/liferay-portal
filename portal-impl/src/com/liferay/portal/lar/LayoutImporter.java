@@ -137,13 +137,15 @@ public class LayoutImporter {
 			Map<String, String[]> parameterMap, File file)
 		throws Exception {
 
-		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+		ZipReader zipReader = null;
 
 		try {
 			ExportImportThreadLocal.setLayoutValidationInProcess(true);
 
 			LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 				groupId, privateLayout);
+
+			zipReader = ZipReaderFactoryUtil.getZipReader(file);
 
 			validateFile(
 				layoutSet.getCompanyId(), groupId, parameterMap, zipReader);
@@ -178,7 +180,9 @@ public class LayoutImporter {
 		finally {
 			ExportImportThreadLocal.setLayoutValidationInProcess(false);
 
-			zipReader.close();
+			if (zipReader != null) {
+				zipReader.close();
+			}
 		}
 	}
 

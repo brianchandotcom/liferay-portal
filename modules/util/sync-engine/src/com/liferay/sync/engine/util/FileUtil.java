@@ -190,12 +190,24 @@ public class FileUtil {
 		return !checksum.equals(syncFile.getChecksum());
 	}
 
-	public static boolean isIgnoredFilePath(Path filePath) throws Exception {
+	public static boolean isHidden(Path filePath) {
+		if (!Files.exists(filePath)) {
+			return false;
+		}
+
+		try {
+			return Files.isHidden(filePath);
+		}
+		catch (IOException ioe) {
+			return false;
+		}
+	}
+
+	public static boolean isIgnoredFilePath(Path filePath) {
 		String fileName = String.valueOf(filePath.getFileName());
 
 		if (_syncFileIgnoreNames.contains(fileName) ||
-			(PropsValues.SYNC_FILE_IGNORE_HIDDEN &&
-			 Files.isHidden(filePath)) ||
+			(PropsValues.SYNC_FILE_IGNORE_HIDDEN && isHidden(filePath)) ||
 			Files.isSymbolicLink(filePath) || fileName.endsWith(".lnk")) {
 
 			return true;

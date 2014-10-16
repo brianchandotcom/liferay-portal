@@ -63,7 +63,7 @@ public class RetryUtil {
 		_delays.remove(syncAccountId);
 	}
 
-	private static final long _INITIAL_INTERVAL = 100;
+	private static final long _INITIAL_INTERVAL = 1000;
 
 	private static final long _MAX_INTERVAL = 30000;
 

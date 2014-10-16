@@ -336,29 +336,20 @@ public class Watcher implements Runnable {
 			return true;
 		}
 
-		try {
-			String fileName = String.valueOf(filePath.getFileName());
+		String fileName = String.valueOf(filePath.getFileName());
 
-			if (FileUtil.isIgnoredFilePath(filePath) ||
-				((Files.isDirectory(filePath) && (fileName.length() > 100)) ||
-				 (!Files.isDirectory(filePath) && (fileName.length() > 255)))) {
+		if (FileUtil.isIgnoredFilePath(filePath) ||
+			((Files.isDirectory(filePath) && (fileName.length() > 100)) ||
+			 (!Files.isDirectory(filePath) && (fileName.length() > 255)))) {
 
-				if (_logger.isDebugEnabled()) {
-					_logger.debug("Ignored file path {}", filePath);
-				}
-
-				return true;
-			}
-
-			return false;
-		}
-		catch (Exception e) {
 			if (_logger.isDebugEnabled()) {
-				_logger.debug(e.getMessage(), e);
+				_logger.debug("Ignored file path {}", filePath);
 			}
 
-			return false;
+			return true;
 		}
+
+		return false;
 	}
 
 	protected void processMissingFilePath(Path filePath) {

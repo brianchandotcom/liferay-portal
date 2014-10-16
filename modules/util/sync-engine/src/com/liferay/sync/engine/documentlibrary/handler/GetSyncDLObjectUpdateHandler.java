@@ -159,8 +159,8 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 		}
 	}
 
-	protected boolean isIgnoredFilePath(SyncFile syncFile, String filePathName)
-		throws Exception {
+	protected boolean isIgnoredFilePath(
+		SyncFile syncFile, String filePathName) {
 
 		if (syncFile != null) {
 			filePathName = syncFile.getFilePathName();

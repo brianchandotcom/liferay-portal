@@ -63,8 +63,8 @@ public class ClassLoaderResourceParser extends URLResourceParser {
 		int previousIndex = -1;
 
 		for (int index;
-			 (index = path.indexOf(CharPool.SLASH, previousIndex + 1)) != -1;
-			 previousIndex = index) {
+			(index = path.indexOf(CharPool.SLASH, previousIndex + 1)) != -1;
+			previousIndex = index) {
 
 			if ((previousIndex + 1) == index) {
 

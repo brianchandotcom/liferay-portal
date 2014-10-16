@@ -86,6 +86,13 @@ public class GroupFinderTest {
 			ResourceTypePermissionTestUtil.addResourceTypePermission(
 				_modelResourceAction.getBitwiseValue(), _group.getGroupId(),
 				_modelResourceAction.getName());
+
+		ResourcePermissionTestUtil.addResourcePermission(
+			_modelResourceAction.getBitwiseValue(),
+			_modelResourceAction.getName(),
+			StringUtil.valueOf(_group.getGroupId()),
+			_resourceTypePermission.getRoleId(),
+			ResourceConstants.SCOPE_GROUP);
 	}
 
 	@AfterClass

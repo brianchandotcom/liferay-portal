@@ -414,19 +414,24 @@ public class WebDriverToSeleniumBridge
 		String locatorOfObjectToBeDragged,
 		String locatorOfDragDestinationObject) {
 
-		int x = WebDriverHelper.getElementPositionCenterX(
-			this, locatorOfDragDestinationObject);
+		WebElement objectToBeDraggedWebElement = getWebElement(
+			locatorOfObjectToBeDragged);
 
-		x -= WebDriverHelper.getElementPositionCenterX(
-			this, locatorOfObjectToBeDragged);
+		WrapsDriver wrapsDriver = (WrapsDriver)objectToBeDraggedWebElement;
 
-		int y = WebDriverHelper.getElementPositionCenterY(
-			this, locatorOfDragDestinationObject);
+		WebDriver webDriver = wrapsDriver.getWrappedDriver();
 
-		y -= WebDriverHelper.getElementPositionCenterY(
-			this, locatorOfObjectToBeDragged);
+		Actions actions = new Actions(webDriver);
 
-		dragAndDrop(locatorOfObjectToBeDragged, x + "," + y);
+		WebElement dragDestinationObjectWebElement = getWebElement(
+			locatorOfDragDestinationObject);
+
+		actions.dragAndDrop(
+			objectToBeDraggedWebElement, dragDestinationObjectWebElement);
+
+		Action action = actions.build();
+
+		action.perform();
 	}
 
 	@Override

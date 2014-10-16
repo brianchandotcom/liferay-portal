@@ -30,6 +30,7 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesToFieldsConverte
 import com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesTransformer;
 import com.liferay.portlet.dynamicdatamapping.util.DocumentLibraryDDMFormFieldValueTransformer;
 import com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterUtil;
+import com.liferay.portlet.dynamicdatamapping.util.HTMLSanitizerDDMFormFieldValueTransformer;
 
 import java.util.List;
 import java.util.Map;
@@ -50,7 +51,7 @@ public abstract class BaseStorageAdapter implements StorageAdapter {
 		try {
 			validateDDMStructureFields(ddmStructureId, fields);
 
-			fields = transformFields(ddmStructureId, fields);
+			fields = transformFields(ddmStructureId, fields, serviceContext);
 
 			return doCreate(companyId, ddmStructureId, fields, serviceContext);
 		}
@@ -239,7 +240,8 @@ public abstract class BaseStorageAdapter implements StorageAdapter {
 
 			validateDDMStructureFields(ddmStorageLink.getStructureId(), fields);
 
-			fields = transformFields(ddmStorageLink.getStructureId(), fields);
+			fields = transformFields(
+				ddmStorageLink.getStructureId(), fields, serviceContext);
 
 			doUpdate(classPK, fields, mergeFields, serviceContext);
 		}
@@ -297,7 +299,8 @@ public abstract class BaseStorageAdapter implements StorageAdapter {
 			ServiceContext serviceContext)
 		throws Exception;
 
-	protected Fields transformFields(long ddmStructureId, Fields fields)
+	protected Fields transformFields(
+			long ddmStructureId, Fields fields, ServiceContext serviceContext)
 		throws PortalException {
 
 		DDMStructure ddmStructure =
@@ -312,6 +315,12 @@ public abstract class BaseStorageAdapter implements StorageAdapter {
 		ddmFormValuesTransformer.addTransformer(
 			"ddm-documentlibrary",
 			new DocumentLibraryDDMFormFieldValueTransformer());
+
+		ddmFormValuesTransformer.addTransformer(
+			"ddm-text-html",
+			new HTMLSanitizerDDMFormFieldValueTransformer(
+				serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
+				serviceContext.getUserId()));
 
 		ddmFormValuesTransformer.transform();
 

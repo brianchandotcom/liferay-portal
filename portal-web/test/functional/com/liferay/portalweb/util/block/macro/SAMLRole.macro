@@ -1,15 +1,130 @@
 <definition>
-	<command name="addCP">
+	<command name="addCmdCP">
 		<execute action="CPSAMLAdmin#select" locator-key1="SAML_ROLE_SELECT" value1="${samlRoleType}" />
 		<execute action="CPSAMLAdmin#type" locator-key1="SAML_ENTITY_ID_FIELD" value1="${samlEntityName}" />
 		<execute action="CPSAMLAdmin#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
-		<execute action="CPSAMLAdmin#type" locator-key1="CERTIFICATE_AND_PRIVATE_KEY_COMMON_NAME_FIELD" value1="liferay" />
-		<execute action="CPSAMLAdmin#type" locator-key1="CERTIFICATE_AND_PRIVATE_KEY_ORGANIZATION_FIELD" value1="liferay" />
+		<execute action="CPSAMLAdmin#type" locator-key1="CERTIFICATE_AND_PRIVATE_KEY_COMMON_NAME_FIELD" value1="Liferay QA" />
+		<execute action="CPSAMLAdmin#type" locator-key1="CERTIFICATE_AND_PRIVATE_KEY_ORGANIZATION_FIELD" value1="Liferay" />
 		<execute action="CPSAMLAdmin#type" locator-key1="CERTIFICATE_AND_PRIVATE_KEY_COUNTRY_FIELD" value1="USA" />
 		<execute action="CPSAMLAdmin#select" locator-key1="CERTIFICATE_AND_PRIVATE_KEY_KEY_ALGORITHM_SELECT" value1="RSA" />
 		<execute action="CPSAMLAdmin#select" locator-key1="CERTIFICATE_AND_PRIVATE_KEY_KEY_LENGTH_SELECT" value1="2048" />
-		<execute action="CPSAMLAdmin#type" locator-key1="CERTIFICATE_AND_PRIVATE_KEY_KEY_PASSWORD_FIELD" value1="liferay" />
+		<execute action="CPSAMLAdmin#type" locator-key1="CERTIFICATE_AND_PRIVATE_KEY_KEY_PASSWORD_FIELD" value1="${samlKeyPassword}" />
 		<execute action="CPSAMLAdmin#assertClick" locator-key1="CERTIFICATE_AND_PRIVATE_KEY_SAVE_BUTTON" value1="Save" />
+		<execute action="CPSAMLAdmin#assertClick" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="addSPtoIdPCP">
+		<execute action="CPSAMLAdmin#assertClick" locator-key1="NAVIGATION_SERVICE_PROVIDER_CONNECTIONS" value1="Service Provider Connections" />
+		<execute action="CPSAMLAdmin#assertClick" locator-key1="SERVICE_PROVIDER_CONNECTIONS_ADD_SERVICE_PROVIDER_BUTTON" value1="Add Service Provider" />
+
+		<execute action="CPSAMLAdminAddServiceProvider#type" locator-key1="SERVICE_PROVIDER_NAME_FIELD" value1="${samlSPName}" />
+		<execute action="CPSAMLAdminAddServiceProvider#type" locator-key1="SERVICE_PROVIDER_ENTITY_ID_FIELD" value1="${samlSPEntityName}" />
+		<execute action="CPSAMLAdminAddServiceProvider#check" locator-key1="SERVICE_PROVIDER_ENABLED_CHECKBOX" />
+		<execute action="CPSAMLAdminAddServiceProvider#type" locator-key1="SERVICE_PROVIDER_METADATA_URL_FIELD" value1="http://www.able.com:9080/c/portal/saml/metadata" />
+		<execute action="CPSAMLAdminAddServiceProvider#select" locator-key1="SERVICE_PROVIDER_NAME_IDENTIFIER_FORMAT_SELECT" value1="Email Address" />
+		<execute action="CPSAMLAdminAddServiceProvider#type" locator-key1="SERVICE_PROVIDER_NAME_IDENTIFIER_ATTRIBUTE_NAME_FIELD" value1="emailAddress" />
+
+		<execute action="CPSAMLAdminAddServiceProvider#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPSAMLAdminAddServiceProvider#assertClick" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="executeIdPInitiatedSSO">
+		<var name="url" value="http://localhost:8080/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080" />
+
+		<!-- Watch the IdP redirecting to the SP. If the same users with the same email address are present on both instances, it will authenticate and show the SP. SAML can authenticate across major portal versions, that is, the IdP can be Portal 6.1 EE GA3 and the SP can be Portal 6.2. EE GA1. For testing purposes, it is obvious if the authentication succeeds or fails if the IdP and SP are different portal versions. -->
+
+		<execute action="Home#open" locator1="${url}" />
+		<execute action="Home#pause" locator1="10000" />
+
+		<!-- Go back to first instance, Idp initiated SSO (single sign on) -->
+
+		<execute macro="Page#openURL" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute action="Home#pause" locator1="5000" />
+
+		<!-- Go to second instance -->
+
+		<execute action="Home#refresh" />
+
+		<execute macro="User#viewLoginPG" />
+	</command>
+
+	<command name="executeSPInitiatedSSO">
+		<execute action="Dockbar#assertClick" locator-key1="USER_SIGN_IN" value1="Sign In" />
+
+		<execute action="PGLogin#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+		<execute action="PGLogin#type" locator-key1="PASSWORD_FIELD" value1="${emailPassword}" />
+		<execute action="PGLogin#assertClick" locator-key1="SIGN_IN_BUTTON" value1="Sign In" />
+
+		<execute action="Home#assertLocation" value1="http://www.able.com:9080" />
+
+		<!-- Go to first instance -->
+
+		<execute action="Home#refresh" />
+		<execute action="Dockbar#assertElementPresent" locator-key1="USER_NAME" />
+
+		<!-- Go to second instance -->
+
+		<execute macro="User#logoutPG" />
+
+		<!-- Go to first instance -->
+
+		<execute action="Home#refresh" />
+
+		<execute macro="User#viewLoginPG" />
+	</command>
+
+	<command name="setupIdPCP">
+		<execute macro="SAMLRole#addCmdCP">
+			<var name="samlEntityName" value="${samlEntityName}" />
+			<var name="samlKeyPassword" value="${samlKeyPassword}" />
+			<var name="samlRoleType" value="${samlRoleType}" />
+		</execute>
+
+		<execute action="CPSAMLAdmin#check" locator-key1="SAML_ENABLED_CHECKBOX" />
+		<execute action="CPSAMLAdmin#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPSAMLAdmin#assertClick" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute action="CPSAMLAdmin#assertClick" locator-key1="NAVIGATION_IDENTITY_PROVIDER" value1="Identity Provider" />
+
+		<execute action="CPSAMLAdminIdentityProvider#check" locator-key1="IDENTITY_PROVIDER_SIGN_METADATA_CHECKBOX" />
+		<execute action="CPSAMLAdminIdentityProvider#check" locator-key1="IDENTITY_PROVIDER_AUTH_REQUEST_SIGNATURE_REQUIRED_CHECKBOX" />
+		<execute action="CPSAMLAdminIdentityProvider#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPSAMLAdminIdentityProvider#assertClick" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="setupSPCP">
+		<execute macro="SAMLRole#addCmdCP">
+			<var name="samlEntityName" value="${samlEntityName}" />
+			<var name="samlKeyPassword" value="${samlKeyPassword}" />
+			<var name="samlRoleType" value="${samlRoleType}" />
+		</execute>
+
+		<execute action="CPSAMLAdmin#assertClick" locator-key1="NAVIGATION_IDENTITY_PROVIDER_CONNECTION" value1="Identity Provider Connection" />
+
+		<execute action="CPSAMLAdminIdentityProviderConnection#type" locator-key1="IDENTITY_PROVIDER_CONNECTION_NAME_FIELD" value1="samlidp" />
+		<execute action="CPSAMLAdminIdentityProviderConnection#type" locator-key1="IDENTITY_PROVIDER_CONNECTION_ENTITY_ID_FIELD" value1="samlidp" />
+		<execute action="CPSAMLAdminIdentityProviderConnection#type" locator-key1="IDENTITY_PROVIDER_CONNECTION_METADATA_URL_FIELD" value1="http://localhost:8080/c/portal/saml/metadata" />
+		<execute action="CPSAMLAdminIdentityProviderConnection#select" locator-key1="IDENTITY_PROVIDER_CONNECTION_NAME_IDENTIFIER_FORMAT_SELECT" value1="Email Address" />
+		<execute action="CPSAMLAdminIdentityProviderConnection#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPSAMLAdminIdentityProviderConnection#assertClick" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute action="CPSAMLAdmin#assertClick" locator-key1="NAVIGATION_GENERAL" value1="General" />
+
+		<execute action="CPSAMLAdmin#check" locator-key1="SAML_ENABLED_CHECKBOX" />
+		<execute action="CPSAMLAdmin#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPSAMLAdmin#assertClick" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="viewSPCP">
+		<var name="key_samlSPName" value="${samlSPName}" />
+
+		<execute action="CPSAMLAdmin#assertTextEquals" locator-key1="SERVICE_PROVIDER_CONNECTIONS_TABLE_NAME" value1="${samlSPName}" />
+		<execute action="CPSAMLAdmin#assertTextEquals" locator-key1="SERVICE_PROVIDER_CONNECTIONS_ENTITY_ID" value1="${samlSPEntityName}" />
+		<execute action="CPSAMLAdmin#assertTextEquals" locator-key1="SERVICE_PROVIDER_CONNECTIONS_ENABLED" value1="${samlSPEnabled}" />
+		<execute action="CPSAMLAdmin#assertElementPresent" locator-key1="SERVICE_PROVIDER_CONNECTIONS_ACTIONS" />
 	</command>
 </definition>

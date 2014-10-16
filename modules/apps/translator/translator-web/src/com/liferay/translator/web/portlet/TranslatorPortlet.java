@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.translator;
+package com.liferay.translator.web.portlet;
 
 import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -21,16 +21,43 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webcache.WebCacheException;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.translator.model.Translation;
-import com.liferay.portlet.translator.util.TranslatorUtil;
+import com.liferay.translator.web.model.Translation;
+import com.liferay.translator.web.upgrade.TranslatorUpgrade;
+import com.liferay.translator.web.util.TranslatorUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Peter Fellwock
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.css-class-wrapper=portlet-translator",
+		"com.liferay.portlet.display-category=category.tools",
+		"com.liferay.portlet.icon=/icons/translator.png",
+		"com.liferay.portlet.private-request-attributes=false",
+		"com.liferay.portlet.private-session-attributes=false",
+		"com.liferay.portlet.remoteable=true",
+		"com.liferay.portlet.render-weight=50",
+		"com.liferay.portlet.struts-path=translator",
+		"com.liferay.portlet.use-default-template=true",
+		"javax.portlet.display-name=Translator",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=power-user,user"
+	},
+	service = Portlet.class
+)
 public class TranslatorPortlet extends MVCPortlet {
 
 	@Override
@@ -66,6 +93,10 @@ public class TranslatorPortlet extends MVCPortlet {
 		catch (Exception e) {
 			throw new PortletException(e);
 		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setTranslatorUpgrade(TranslatorUpgrade translatorUpgrade) {
 	}
 
 }

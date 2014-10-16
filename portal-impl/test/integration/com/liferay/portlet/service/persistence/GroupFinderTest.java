@@ -91,8 +91,7 @@ public class GroupFinderTest {
 			_modelResourceAction.getBitwiseValue(),
 			_modelResourceAction.getName(),
 			StringUtil.valueOf(_group.getGroupId()),
-			_resourceTypePermission.getRoleId(),
-			ResourceConstants.SCOPE_GROUP);
+			_resourceTypePermission.getRoleId(), ResourceConstants.SCOPE_GROUP);
 	}
 
 	@AfterClass

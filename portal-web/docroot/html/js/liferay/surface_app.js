@@ -99,7 +99,7 @@ AUI.add(
 
 						var surface = Surface.app.surfaces[surfaceId];
 
-						if (surface && !surface.activeChild.inDoc()) {
+						if (surface && surface.activeChild && !surface.activeChild.inDoc()) {
 							surface = null;
 						}
 

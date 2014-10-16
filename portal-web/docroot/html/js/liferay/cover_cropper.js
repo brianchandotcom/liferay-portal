@@ -70,6 +70,8 @@ AUI.add(
 						var instance = this;
 
 						instance._dd.destroy();
+
+						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 
 					_bindUI: function() {

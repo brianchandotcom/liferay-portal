@@ -14,12 +14,10 @@
 
 package com.liferay.portal.cache.mvcc;
 
-import com.liferay.portal.cache.ehcache.LockBasedMVCCEhcachePortalCache;
 import com.liferay.portal.kernel.cache.LowLevelCache;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheWrapper;
 import com.liferay.portal.model.MVCCModel;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
 
@@ -33,14 +31,8 @@ public class MVCCPortalCacheFactory {
 			PortalCache<K, ?> portalCache) {
 
 		if (portalCache instanceof LowLevelCache) {
-			if (PropsValues.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED) {
-				return new MVCCPortalCache<K, MVCCModel>(
-					(LowLevelCache<K, MVCCModel>)portalCache);
-			}
-			else {
-				return new LockBasedMVCCEhcachePortalCache<K, MVCCModel>(
-					(LowLevelCache<K, MVCCModel>)portalCache);
-			}
+			return new MVCCPortalCache<K, MVCCModel>(
+				(LowLevelCache<K, MVCCModel>)portalCache);
 		}
 
 		PortalCache<K, ?> currentPortalCache = portalCache;
@@ -53,15 +45,8 @@ public class MVCCPortalCacheFactory {
 				portalCacheWrapper.getWrappedPortalCache();
 
 			if (nextPortalCache instanceof LowLevelCache) {
-				if (PropsValues.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED) {
-					nextPortalCache = new MVCCPortalCache<K, MVCCModel>(
-						(LowLevelCache<K, MVCCModel>)nextPortalCache);
-				}
-				else {
-					nextPortalCache =
-						new LockBasedMVCCEhcachePortalCache<K, MVCCModel>(
-							(LowLevelCache<K, MVCCModel>)nextPortalCache);
-				}
+				nextPortalCache = new MVCCPortalCache<K, MVCCModel>(
+					(LowLevelCache<K, MVCCModel>)nextPortalCache);
 
 				portalCacheWrapper.setPortalCache(nextPortalCache);
 

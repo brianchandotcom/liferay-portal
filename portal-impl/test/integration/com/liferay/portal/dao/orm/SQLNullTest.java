@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.TransactionalTestRule;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.runners.PACLIntegrationJUnitTestRunner;
 
 import java.util.List;
 
@@ -436,7 +436,7 @@ import org.junit.runner.RunWith;
  *
  * @author Shuyang Zhou
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
+@RunWith(PACLIntegrationJUnitTestRunner.class)
 public class SQLNullTest {
 
 	@ClassRule

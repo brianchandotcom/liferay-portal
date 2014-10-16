@@ -126,6 +126,8 @@ public class PluginIntegrationTestHotDeployListener
 			classes.add(clazz);
 		}
 
+		zipReader.close();
+
 		return classes;
 	}
 

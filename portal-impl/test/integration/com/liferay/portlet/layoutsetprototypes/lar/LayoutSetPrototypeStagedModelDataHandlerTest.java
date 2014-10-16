@@ -16,6 +16,7 @@ package com.liferay.portlet.layoutsetprototypes.lar;
 
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -315,7 +316,14 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 
 		Assert.assertEquals(1, importedLayouts.size());
 
-		return importedLayouts.get(0);
+		try {
+			return importedLayouts.get(0);
+		}
+		finally {
+			zipReader.close();
+
+			StreamUtil.cleanUp(inputStream);
+		}
 	}
 
 	@Override

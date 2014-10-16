@@ -650,6 +650,8 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		Assert.assertEquals(1, weakMissingReferences.size());
 
 		FileUtil.delete(zipWriter.getFile());
+
+		zipReader.close();
 	}
 
 	protected void assertLinksToLayouts(

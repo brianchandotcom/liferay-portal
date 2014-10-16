@@ -51,6 +51,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.base.DDMStructureLocalServiceBaseImpl;
@@ -177,8 +178,6 @@ public class DDMStructureLocalServiceImpl
 		structure.setStorageType(storageType);
 		structure.setType(type);
 
-		ddmStructurePersistence.update(structure);
-
 		// Resources
 
 		if (serviceContext.isAddGroupPermissions() ||
@@ -193,6 +192,15 @@ public class DDMStructureLocalServiceImpl
 				structure, serviceContext.getGroupPermissions(),
 				serviceContext.getGuestPermissions());
 		}
+
+		// DDMStructure version
+
+		ddmStructureVersionLocalService.updateDDMStructureVersion(
+			structure, false, serviceContext);
+
+		// Persist
+
+		ddmStructurePersistence.update(structure);
 
 		return structure;
 	}
@@ -1373,6 +1381,14 @@ public class DDMStructureLocalServiceImpl
 		structure.setNameMap(nameMap);
 		structure.setDescriptionMap(descriptionMap);
 		structure.setDefinition(definition);
+
+		// DDMStructure version
+
+		DDMStructureVersion ddmStructureVersion =
+			ddmStructureVersionLocalService.updateDDMStructureVersion(
+				structure, false, serviceContext);
+
+		// Persist
 
 		ddmStructurePersistence.update(structure);
 

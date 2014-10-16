@@ -15,18 +15,17 @@
 package com.liferay.portal.kernel.ldap;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.ldap.LDAPFilterValidator;
 
 import java.text.DateFormat;
 
 import java.util.Date;
 import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
@@ -37,6 +36,7 @@ import javax.naming.directory.Attributes;
  * @author Michael Young
  * @author Brian Wing Shun Chan
  * @author James Lefeu
+ * @author Vilmos Papp
  */
 public class LDAPUtil {
 
@@ -185,77 +185,14 @@ public class LDAPUtil {
 		return baseURL + StringPool.SLASH + baseDN;
 	}
 
+	public static LDAPFilterValidator getLDAPFilterValidator() {
+		PortalRuntimePermission.checkGetBeanProperty(LDAPUtil.class);
+
+		return _ldapFilterValidator;
+	}
+
 	public static boolean isValidFilter(String filter) {
-		if (Validator.isNull(filter)) {
-			return true;
-		}
-
-		filter = filter.trim();
-
-		if (filter.equals(StringPool.STAR)) {
-			return true;
-		}
-
-		filter = StringUtil.replace(filter, StringPool.SPACE, StringPool.BLANK);
-
-		if (!filter.startsWith(StringPool.OPEN_PARENTHESIS) ||
-			!filter.endsWith(StringPool.CLOSE_PARENTHESIS)) {
-
-			return false;
-		}
-
-		int count = 0;
-
-		for (int i = 0; i < filter.length(); i++) {
-			char c = filter.charAt(i);
-
-			if (c == CharPool.CLOSE_PARENTHESIS) {
-				count--;
-			}
-			else if (c == CharPool.OPEN_PARENTHESIS) {
-				count++;
-			}
-
-			if (count < 0) {
-				return false;
-			}
-		}
-
-		if (count > 0) {
-			return false;
-		}
-
-		// Cannot have two filter types in a sequence
-
-		Matcher matcher = _pattern1.matcher(filter);
-
-		if (matcher.matches()) {
-			return false;
-		}
-
-		// Cannot have a filter type after an opening parenthesis
-
-		matcher = _pattern2.matcher(filter);
-
-		if (matcher.matches()) {
-			return false;
-		}
-
-		// Cannot have an attribute without a filter type or extensible
-
-		matcher = _pattern3.matcher(filter);
-
-		if (matcher.matches()) {
-			return false;
-		}
-
-		matcher = _pattern4.matcher(filter);
-
-		if (matcher.matches()) {
-			return false;
-		}
-
-		return true;
+		return getLDAPFilterValidator().isValidFilter(filter);
 	}
 
 	public static Date parseDate(String date) throws Exception {
@@ -305,9 +242,14 @@ public class LDAPUtil {
 		}
 	}
 
-	private static Pattern _pattern1 = Pattern.compile(".*[~<>]*=[~<>]*=.*");
-	private static Pattern _pattern2 = Pattern.compile("\\([~<>]*=.*");
-	private static Pattern _pattern3 = Pattern.compile("\\([^~<>=]*\\)");
-	private static Pattern _pattern4 = Pattern.compile(".*[^~<>=]*[~<>]*=\\)");
+	public void setLDAPFilterValidator(
+		LDAPFilterValidator ldapFilterValidator) {
+
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
+		_ldapFilterValidator = ldapFilterValidator;
+	}
+
+	private static LDAPFilterValidator _ldapFilterValidator;
 
 }

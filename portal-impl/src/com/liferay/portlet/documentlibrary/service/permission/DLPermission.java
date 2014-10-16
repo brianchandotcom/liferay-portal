@@ -18,11 +18,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.ResourcePermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
@@ -32,7 +34,12 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 /**
  * @author Jorge Ferrer
  */
-public class DLPermission {
+@OSGiBeanProperties(
+	property = {
+		"model.class.name=com.liferay.portal.kernel.repository.model.Folder"
+	}
+)
+public class DLPermission implements ResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME =
 		"com.liferay.portlet.documentlibrary";
@@ -88,6 +95,14 @@ public class DLPermission {
 
 		return permissionChecker.hasPermission(
 			classPK, RESOURCE_NAME, classPK, actionId);
+	}
+
+	@Override
+	public Boolean checkResource(
+			PermissionChecker permissionChecker, long classPK, String actionId)
+		throws PortalException {
+
+		return contains(permissionChecker, classPK, actionId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(DLPermission.class);

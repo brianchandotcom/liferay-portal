@@ -125,6 +125,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	</aui:form>
 </div>
 
-<aui:script use="aui-base">
+<aui:script>
 	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectAssetFm', '<%= HtmlUtil.escapeJS(eventName) %>');
 </aui:script>

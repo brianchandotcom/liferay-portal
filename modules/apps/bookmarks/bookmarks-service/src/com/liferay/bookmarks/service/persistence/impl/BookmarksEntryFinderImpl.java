@@ -52,7 +52,7 @@ public class BookmarksEntryFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(_BOOKMARKS_ENTRY_CLASS_NAME_ID);
+			qPos.add(PortalUtil.getClassNameId(BookmarksEntry.class));
 
 			return q.list(true);
 		}
@@ -63,8 +63,5 @@ public class BookmarksEntryFinderImpl
 			closeSession(session);
 		}
 	}
-
-	private static final long _BOOKMARKS_ENTRY_CLASS_NAME_ID =
-		PortalUtil.getClassNameId(BookmarksEntry.class);
 
 }

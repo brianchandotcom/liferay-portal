@@ -111,7 +111,7 @@ public class BookmarksFolderFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(_BOOKMARKS_FOLDER_CLASS_NAME_ID);
+			qPos.add(PortalUtil.getClassNameId(BookmarksFolder.class));
 
 			return q.list(true);
 		}
@@ -344,8 +344,5 @@ public class BookmarksFolderFinderImpl
 
 		return sql;
 	}
-
-	private static final long _BOOKMARKS_FOLDER_CLASS_NAME_ID =
-		PortalUtil.getClassNameId(BookmarksFolder.class);
 
 }

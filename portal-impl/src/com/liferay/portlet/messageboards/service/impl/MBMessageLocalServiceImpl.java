@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.repository.util.RepositoryTrashUtil;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -70,7 +69,6 @@ import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
 import com.liferay.portlet.messageboards.MBSettings;
 import com.liferay.portlet.messageboards.MessageBodyException;
 import com.liferay.portlet.messageboards.MessageSubjectException;
@@ -1331,27 +1329,17 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			long userId, long messageId, String fileName)
 		throws PortalException {
 
-		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
+		MBMessage message = getMessage(messageId);
 
-		try {
-			DLAppHelperThreadLocal.setEnabled(false);
+		long folderId = message.getAttachmentsFolderId();
 
-			MBMessage message = getMessage(messageId);
+		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+			message.getGroupId(), folderId, fileName);
 
-			long folderId = message.getAttachmentsFolderId();
+		PortletFileRepositoryUtil.movePortletFileEntryToTrash(
+			userId, fileEntry.getFileEntryId());
 
-			FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
-				message.getGroupId(), folderId, fileName);
-
-			RepositoryTrashUtil.moveFileEntryToTrash(
-				userId, fileEntry.getRepositoryId(),
-				fileEntry.getFileEntryId());
-
-			return fileEntry.getFileEntryId();
-		}
-		finally {
-			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
-		}
+		return fileEntry.getFileEntryId();
 	}
 
 	@Override
@@ -1359,25 +1347,13 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			long userId, long messageId, String deletedFileName)
 		throws PortalException {
 
-		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
+		MBMessage message = getMessage(messageId);
 
-		try {
-			DLAppHelperThreadLocal.setEnabled(false);
+		Folder folder = message.addAttachmentsFolder();
 
-			MBMessage message = getMessage(messageId);
-
-			Folder folder = message.addAttachmentsFolder();
-
-			FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
-				message.getGroupId(), folder.getFolderId(), deletedFileName);
-
-			RepositoryTrashUtil.restoreFileEntryFromTrash(
-				userId, fileEntry.getRepositoryId(),
-				fileEntry.getFileEntryId());
-		}
-		finally {
-			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
-		}
+		PortletFileRepositoryUtil.restorePortletFileEntryFromTrash(
+			message.getGroupId(), userId, folder.getFolderId(),
+			deletedFileName);
 	}
 
 	@Override

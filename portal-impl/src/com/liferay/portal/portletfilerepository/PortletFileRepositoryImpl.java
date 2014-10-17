@@ -543,12 +543,6 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		return RepositoryLocalServiceUtil.getRepository(groupId, portletId);
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portal.kernel.repository.util.RepositoryTrashUtil.moveFileEntryToTrash(
-	 *             long, long, long)}
-	 */
-	@Deprecated
 	@Override
 	public FileEntry movePortletFileEntryToTrash(long userId, long fileEntryId)
 		throws PortalException {
@@ -570,10 +564,6 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		}
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
 	@Override
 	public FileEntry movePortletFileEntryToTrash(
 			long groupId, long userId, long folderId, String fileName)
@@ -585,12 +575,6 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		return movePortletFileEntryToTrash(userId, fileEntry.getFileEntryId());
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portal.kernel.repository.util.RepositoryTrashUtil.restoreFileEntryFromTrash(
-	 *             long, long, long)}
-	 */
-	@Deprecated
 	@Override
 	public void restorePortletFileEntryFromTrash(long userId, long fileEntryId)
 		throws PortalException {
@@ -612,10 +596,6 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		}
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
 	@Override
 	public void restorePortletFileEntryFromTrash(
 			long groupId, long userId, long folderId, String fileName)

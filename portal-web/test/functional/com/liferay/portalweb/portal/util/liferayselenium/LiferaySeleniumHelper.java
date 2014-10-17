@@ -833,6 +833,15 @@ public class LiferaySeleniumHelper {
 			}
 		}
 
+		// LPS-50936
+
+		if (line.matches(
+				"Liferay does not have the Xuggler native libraries " +
+					"installed.")) {
+
+			return true;
+		}
+
 		if (Validator.equals(
 				TestPropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.1") ||
 			Validator.equals(

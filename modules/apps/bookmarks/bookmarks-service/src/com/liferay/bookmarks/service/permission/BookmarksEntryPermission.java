@@ -14,7 +14,6 @@
 
 package com.liferay.bookmarks.service.permission;
 
-
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.exception.NoSuchFolderException;
 import com.liferay.bookmarks.model.BookmarksEntry;
@@ -39,8 +38,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"model.class.name=com.liferay.portlet.bookmarks.model.BookmarksEntry"
-	},
-	service = BaseModelPermissionChecker.class
+	}
 )
 public class BookmarksEntryPermission
 	implements BaseModelPermissionChecker, ResourcePermissionChecker {

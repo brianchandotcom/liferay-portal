@@ -213,7 +213,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		com.thoughtworks.qdox.model.JavaClass[] javaClasses,
 		JavaField javaField, String content) {
 
-		Type javaClassType = javaClass.asType();
 		Annotation[] annotations = javaField.getAnnotations();
 
 		List<String> annotationExclusions = new ArrayList<String>();
@@ -225,12 +224,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		for (Annotation annotation: annotations) {
 			Type annotationType = annotation.getType();
+
 			String annotationTypeString = annotationType.toString();
 
 			if (annotationExclusions.contains(annotationTypeString)) {
 				return content;
 			}
 		}
+
+		Type javaClassType = javaClass.asType();
 
 		if ((javaClass.isEnum() && javaClassType.equals(javaField.getType())) ||
 			javaField.isFinal()) {

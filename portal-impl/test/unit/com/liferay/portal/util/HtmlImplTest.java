@@ -72,6 +72,11 @@ public class HtmlImplTest {
 	}
 
 	@Test
+	public void testEscapeHtmlEncodingRightSingleQuote() {
+		Assert.assertEquals("&rsquo;", _htmlImpl.escape("\u2019"));
+	}
+
+	@Test
 	public void testEscapeHtmlEncodingScriptTag() {
 		Assert.assertEquals("&lt;script&gt;", _htmlImpl.escape("<script>"));
 	}
@@ -283,6 +288,11 @@ public class HtmlImplTest {
 	@Test
 	public void testUnescapeHtmlEncodingAmpersandInBetween() {
 		Assert.assertEquals("You & Me", _htmlImpl.unescape("You &amp; Me"));
+	}
+
+	@Test
+	public void testUnescapeHtmlEncodingRightSingleQuote() {
+		Assert.assertEquals("\u2019", _htmlImpl.unescape("&rsquo;"));
 	}
 
 	protected void assertUnchangedEscape(String input) {

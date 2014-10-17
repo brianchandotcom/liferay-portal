@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
+import com.thoughtworks.qdox.model.Annotation;
 import com.thoughtworks.qdox.model.ClassLibrary;
 import com.thoughtworks.qdox.model.JavaField;
 import com.thoughtworks.qdox.model.JavaMethod;
@@ -213,6 +214,18 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		JavaField javaField, String content) {
 
 		Type javaClassType = javaClass.asType();
+		Annotation[] annotations = javaField.getAnnotations();
+
+		for (Annotation annotation: annotations) {
+			Type annotationType = annotation.getType();
+			String annotationTypeString = annotationType.toString();
+
+			if (annotationTypeString.equals(
+				"com.liferay.portal.kernel.bean.BeanReference")) {
+
+				return content;
+			}
+		}
 
 		if ((javaClass.isEnum() && javaClassType.equals(javaField.getType())) ||
 			javaField.isFinal()) {

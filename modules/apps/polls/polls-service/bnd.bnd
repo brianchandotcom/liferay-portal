@@ -6,7 +6,7 @@ Export-Package:\
 	com.liferay.polls.service.configuration.configurator
 Include-Resource: classes
 Liferay-Service: true
-Require-Capability :\
+Require-Capability:\
 	liferay.extender;\
 	filter:="(&(liferay.extender=spring.extender)(version=1.0))"
 Spring-Context: META-INF/*-spring.xml

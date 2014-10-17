@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.portal.fabric.InputResource;
+import com.liferay.portal.fabric.OutputResource;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -360,8 +362,7 @@ public class AudioProcessorImpl
 					new LiferayAudioProcessCallable(
 						ServerDetector.getServerId(),
 						PropsUtil.get(PropsKeys.LIFERAY_HOME),
-						Log4JUtil.getCustomLogSettings(),
-						srcFile.getCanonicalPath(), destFile.getCanonicalPath(),
+						Log4JUtil.getCustomLogSettings(), srcFile, destFile,
 						containerType,
 						PropsUtil.getProperties(
 							PropsKeys.DL_FILE_ENTRY_PREVIEW_AUDIO, false));
@@ -468,15 +469,15 @@ public class AudioProcessorImpl
 
 		public LiferayAudioProcessCallable(
 			String serverId, String liferayHome,
-			Map<String, String> customLogSettings, String inputURL,
-			String outputURL, String audioContainer,
+			Map<String, String> customLogSettings, File inputFile,
+			File outputFile, String audioContainer,
 			Properties audioProperties) {
 
 			_serverId = serverId;
 			_liferayHome = liferayHome;
 			_customLogSettings = customLogSettings;
-			_inputURL = inputURL;
-			_outputURL = outputURL;
+			_inputFile = inputFile;
+			_outputFile = outputFile;
 			_audioContainer = audioContainer;
 			_audioProperties = audioProperties;
 		}
@@ -497,7 +498,9 @@ public class AudioProcessorImpl
 
 			try {
 				LiferayConverter liferayConverter = new LiferayAudioConverter(
-					_inputURL, _outputURL, _audioContainer, _audioProperties);
+					_inputFile.getCanonicalPath(),
+					_outputFile.getCanonicalPath(), _audioContainer,
+					_audioProperties);
 
 				liferayConverter.convert();
 			}
@@ -513,9 +516,15 @@ public class AudioProcessorImpl
 		private String _audioContainer;
 		private Properties _audioProperties;
 		private Map<String, String> _customLogSettings;
-		private String _inputURL;
+
+		@InputResource
+		private File _inputFile;
+
 		private String _liferayHome;
-		private String _outputURL;
+
+		@OutputResource
+		private File _outputFile;
+
 		private String _serverId;
 
 	}

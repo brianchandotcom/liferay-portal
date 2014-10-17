@@ -85,9 +85,6 @@ public class DefaultSiteMembershipPolicyTest
 		for (int i = 0; i < DefaultSiteMembershipPolicy.DELETE_INTERVAL; i++) {
 			User user = UserTestUtil.addUser();
 
-			GroupLocalServiceUtil.setUserGroups(
-				user.getUserId(), new long[]{_group.getGroupId()});
-
 			userIds.add(user.getUserId());
 		}
 

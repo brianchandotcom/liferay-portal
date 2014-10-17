@@ -177,6 +177,13 @@ public class DDMStructureLocalServiceImpl
 		structure.setDefinition(definition);
 		structure.setStorageType(storageType);
 		structure.setType(type);
+		structure.setVersion(DDMStructureConstants.VERSION_DEFAULT);
+
+		ddmStructurePersistence.update(structure);
+
+		// Structure version
+
+		addStructureVersion(structure, DDMStructureConstants.VERSION_DEFAULT);
 
 		// Resources
 
@@ -192,15 +199,6 @@ public class DDMStructureLocalServiceImpl
 				structure, serviceContext.getGroupPermissions(),
 				serviceContext.getGuestPermissions());
 		}
-
-		// DDMStructure version
-
-		ddmStructureVersionLocalService.updateDDMStructureVersion(
-			structure, false, serviceContext);
-
-		// Persist
-
-		ddmStructurePersistence.update(structure);
 
 		return structure;
 	}
@@ -1331,6 +1329,32 @@ public class DDMStructureLocalServiceImpl
 			serviceContext, structure);
 	}
 
+	protected DDMStructureVersion addStructureVersion(
+		DDMStructure structure, String version) {
+
+		long structureVersionId = counterLocalService.increment();
+
+		DDMStructureVersion structureVersion =
+			ddmStructureVersionPersistence.create(structureVersionId);
+
+		structureVersion.setGroupId(structure.getGroupId());
+		structureVersion.setCompanyId(structure.getCompanyId());
+		structureVersion.setUserId(structure.getUserId());
+		structureVersion.setUserName(structure.getUserName());
+		structureVersion.setCreateDate(structure.getModifiedDate());
+		structureVersion.setStructureId(structure.getStructureId());
+		structureVersion.setName(structure.getName());
+		structureVersion.setDescription(structure.getDescription());
+		structureVersion.setDefinition(structure.getDefinition());
+		structureVersion.setStorageType(structure.getStorageType());
+		structureVersion.setType(structure.getType());
+		structureVersion.setVersion(version);
+
+		ddmStructureVersionPersistence.update(structureVersion);
+
+		return structureVersion;
+	}
+
 	protected Set<Long> deleteStructures(List<DDMStructure> structures)
 		throws PortalException {
 
@@ -1382,17 +1406,26 @@ public class DDMStructureLocalServiceImpl
 		structure.setDescriptionMap(descriptionMap);
 		structure.setDefinition(definition);
 
-		// DDMStructure version
+		DDMStructureVersion latestStructureVersion =
+			ddmStructureVersionLocalService.getLatestStructureVersion(
+				structure.getStructureId());
 
-		DDMStructureVersion ddmStructureVersion =
-			ddmStructureVersionLocalService.updateDDMStructureVersion(
-				structure, false, serviceContext);
+		String version = getNextVersion(
+			latestStructureVersion.getVersion(), false);
 
-		// Persist
+		structure.setVersion(version);
 
 		ddmStructurePersistence.update(structure);
 
+		// Structure version
+
+		addStructureVersion(structure, version);
+
+		// Sync structure templates
+
 		syncStructureTemplatesFields(structure);
+
+		// Indexer
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(
 			structure.getClassName());
@@ -1466,6 +1499,23 @@ public class DDMStructureLocalServiceImpl
 		}
 
 		return elementNames;
+	}
+
+	protected String getNextVersion(
+		String currentVersion, boolean majorVersion) {
+
+		int[] versionParts = StringUtil.split(
+			currentVersion, StringPool.PERIOD, 0);
+
+		if (majorVersion) {
+			versionParts[0]++;
+			versionParts[1] = 0;
+		}
+		else {
+			versionParts[1]++;
+		}
+
+		return versionParts[0] + StringPool.PERIOD + versionParts[1];
 	}
 
 	protected DDMForm getParentDDMForm(long parentStructureId) {

@@ -56,34 +56,36 @@ public class InvokerFilterContainerImpl
 			Portlet portlet, PortletContext portletContext)
 		throws PortletException {
 
-		String filterString = "(javax.portlet.name=" + _portletId + ")";
+		String rootPortletId = portlet.getRootPortletId();
+
+		String filterString = "(javax.portlet.name=" + rootPortletId + ")";
 
 		Map<String, Object> properties = new HashMap<String, Object>();
 
-		properties.put("javax.portlet.name", _portletId);
+		properties.put("javax.portlet.name", rootPortletId);
 
 		_actionFilters = ServiceTrackerCollections.list(
 			ActionFilter.class, filterString,
 			new PortletFilterServiceTrackerCustomizer<ActionFilter>(
-				_liferayPortletContext),
+				portletContext),
 			properties);
 		_eventFilters = ServiceTrackerCollections.list(
 			EventFilter.class, filterString,
 			new PortletFilterServiceTrackerCustomizer<EventFilter>(
-				_liferayPortletContext),
+				portletContext),
 			properties);
 		_renderFilters = ServiceTrackerCollections.list(
 			RenderFilter.class, filterString,
 			new PortletFilterServiceTrackerCustomizer<RenderFilter>(
-				_liferayPortletContext),
+				portletContext),
 			properties);
 		_resourceFilters = ServiceTrackerCollections.list(
 			ResourceFilter.class, filterString,
 			new PortletFilterServiceTrackerCustomizer<ResourceFilter>(
-				_liferayPortletContext),
+				portletContext),
 			properties);
 
-		PortletApp portletApp = _portletModel.getPortletApp();
+		PortletApp portletApp = portlet.getPortletApp();
 
 		PortletContextBag portletContextBag = PortletContextBagPool.get(
 			portletApp.getServletContextName());
@@ -93,7 +95,7 @@ public class InvokerFilterContainerImpl
 		}
 
 		Map<String, com.liferay.portal.model.PortletFilter> portletFilters =
-			_portletModel.getPortletFilters();
+			portlet.getPortletFilters();
 
 		for (Map.Entry<String, com.liferay.portal.model.PortletFilter> entry :
 				portletFilters.entrySet()) {
@@ -102,7 +104,7 @@ public class InvokerFilterContainerImpl
 				entry.getValue();
 
 			PortletFilter portletFilter = PortletFilterFactory.create(
-				portletFilterModel, _liferayPortletContext);
+				portletFilterModel, portletContext);
 
 			Set<String> lifecycles = portletFilterModel.getLifecycles();
 
@@ -139,7 +141,7 @@ public class InvokerFilterContainerImpl
 						Collections.<String, String>emptyMap(), portletApp);
 
 				PortletFilter portletFilter = PortletFilterFactory.create(
-					portletFilterModel, _liferayPortletContext);
+					portletFilterModel, portletContext);
 
 				_systemPortletFilters.add(portletFilter);
 
@@ -213,7 +215,7 @@ public class InvokerFilterContainerImpl
 			T portletFilter = registry.getService(serviceReference);
 
 			String filterName = GetterUtil.getString(
-				serviceReference.getProperty("service.pid"),
+				serviceReference.getProperty("service.id"),
 				ClassUtil.getClassName(portletFilter));
 
 			Map<String, String> params = new HashMap<String, String>();

@@ -2,11 +2,7 @@
 <!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
 
 <struts-config>
-
 	<action-mappings>
-
-		<!-- Bookmarks -->
-
 		<action path="/bookmarks/edit_entry" type="com.liferay.bookmarks.web.action.EditEntryAction">
 			<forward name="portlet.bookmarks.edit_entry" path="/portlet/bookmarks/edit_entry.jsp" />
 			<forward name="portlet.bookmarks.error" path="/portlet/bookmarks/error.jsp" />

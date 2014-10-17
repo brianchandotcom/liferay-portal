@@ -17,12 +17,15 @@ package com.google.ical.compat.javautil;
 import java.util.Date;
 import java.util.Iterator;
 
+/**
+ * @author Brian Wing Shun Chan
+ */
 public interface DateIterator extends Iterator<Date> {
 
   /**
    * skips all dates in the series before the given date.
    *
-   * @param newStartUtc non null.
+   * @param newStartUtc non <code>null</code>.
    */
   void advanceTo(Date newStartUtc);
 

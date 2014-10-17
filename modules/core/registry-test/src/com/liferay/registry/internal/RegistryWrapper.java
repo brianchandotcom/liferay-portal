@@ -26,8 +26,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
-* @author Carlos Sierra Andrés
-*/
+ * @author Carlos Sierra Andrés
+ */
 public class RegistryWrapper implements Registry {
 
 	public RegistryWrapper(Registry registry) {

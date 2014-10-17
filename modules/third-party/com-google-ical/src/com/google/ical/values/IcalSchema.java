@@ -21,28 +21,38 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
- * ical objects are made up of parameters (key=value pairs) and the contents
- * are often one or more value types or key=value pairs.
- * This schema encapsulates rules that can be applied to parse each part before
- * inserting the results into the {@link IcalObject}.
+ * ical objects are made up of parameters (key=value pairs) and the contents are
+ * often one or more value types or key=value pairs. This schema encapsulates
+ * rules that can be applied to parse each part before inserting the results
+ * into the {@link IcalObject}.
  *
  * @author mikesamuel+svn@gmail.com (Mike Samuel)
  */
 class IcalSchema {
 
-  /** rules for decoding parameter values */
+  /**
+   * rules for decoding parameter values
+   */
   private final Map<String, ParamRule> paramRules;
 
-  /** rules for decoding parts of the content body */
+  /**
+   * rules for decoding parts of the content body
+   */
   private final Map<String, ContentRule> contentRules;
 
-  /** rules for breaking the content body or parameters into parts */
+  /**
+   * rules for breaking the content body or parameters into parts
+   */
   private final Map<String, ObjectRule> objectRules;
 
-  /** rules for parsing value types */
+  /**
+   * rules for parsing value types
+   */
   private final Map<String, XformRule> xformRules;
 
-  /** list of productions that we're processing for debugging. */
+  /**
+   * list of productions that we're processing for debugging.
+   */
   private final List<String> ruleStack = new ArrayList<String>();
 
   private static final Pattern EXTENSION_PARAM_NAME_RE =

@@ -25,15 +25,17 @@ import com.google.ical.util.TimeUtils;
 
 
 /**
- * predicates used to filter out dates produced by a generator that do not
- * pass some secondary criterion.  For example, the recurrence rule
+ * predicates used to filter out dates produced by a generator that do not pass
+ * some secondary criterion. For example, the recurrence rule
  * <tt>FREQ=MONTHLY;BYDAY=FR;BYMONTHDAY=13</tt> should generate every friday the
- * 13th.  It is implemented as a generator that generates the 13th of every
- * month -- a byMonthDay generator, and then the results of that are filtered
- * by a byDayFilter that tests whether the date falls on Friday.
+ * 13th. It is implemented as a generator that generates the 13th of every month
+ * -- a byMonthDay generator, and then the results of that are filtered by a
+ * byDayFilter that tests whether the date falls on Friday.
  *
- * <p>A filter returns true to indicate the item is included in the
- * recurrence.</p>
+ * <p>
+ * A filter returns <code>true</code> to indicate the item is included in the
+ * recurrence.
+ * </p>
  *
  * @author mikesamuel+svn@gmail.com (Mike Samuel)
  */
@@ -41,9 +43,10 @@ class Filters {
 
   /**
    * constructs a day filter based on a BYDAY rule.
-   * @param days non null
-   * @param weeksInYear are the week numbers meant to be weeks in the
-   *   current year, or weeks in the current month.
+   *
+   * @param days non <code>null</code>
+   * @param weeksInYear are the week numbers meant to be weeks in the current
+   *        year, or weeks in the current month.
    */
   static Predicate<DateValue> byDayFilter(
       final WeekdayNum[] days, final boolean weeksInYear, final Weekday wkst) {
@@ -107,6 +110,7 @@ class Filters {
 
   /**
    * constructs a day filter based on a BYDAY rule.
+   *
    * @param monthDays days of the month in [-31, 31] != 0
    */
   static Predicate<DateValue> byMonthDayFilter(final int[] monthDays) {
@@ -126,9 +130,10 @@ class Filters {
   /**
    * constructs a filter that accepts only every interval-th week from the week
    * containing dtStart.
+   *
    * @param interval > 0 number of weeks
    * @param wkst day of the week that the week starts on.
-   * @param dtStart non null
+   * @param dtStart non <code>null</code>
    */
   static Predicate<DateValue> weekIntervalFilter(
       final int interval, final Weekday wkst, final DateValue dtStart) {
@@ -159,6 +164,7 @@ class Filters {
 
   /**
    * constructs an hour filter based on a BYHOUR rule.
+   *
    * @param hours hours of the day in [0, 23]
    */
   static Predicate<DateValue> byHourFilter(int[] hours) {
@@ -179,6 +185,7 @@ class Filters {
 
   /**
    * constructs a minute filter based on a BYMINUTE rule.
+   *
    * @param minutes minutes of the hour in [0, 59]
    */
   static Predicate<DateValue> byMinuteFilter(int[] minutes) {
@@ -200,6 +207,7 @@ class Filters {
 
   /**
    * constructs a second filter based on a BYMINUTE rule.
+   *
    * @param seconds seconds of the minute in [0, 59]
    */
   static Predicate<DateValue> bySecondFilter(int[] seconds) {

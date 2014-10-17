@@ -17,19 +17,21 @@ package com.google.ical.values;
 import java.util.Map;
 
 /**
- *
  * @author mikesamuel+svn@gmail.com (Mike Samuel)
  */
 public interface IcalObject {
 
-  /** the name of the content line, such as EXRULE, SUMMARY, ORGANIZER. */
+  /**
+   * the name of the content line, such as EXRULE, SUMMARY, ORGANIZER.
+   */
   String getName();
-  /** returns a String containing ical content lines. */
+  /**
+   * returns a String containing ical content lines.
+   */
   String toIcal();
   /**
-   * map of extension parameters such as X-Google-Foo=bar.
-   * The iteration order is the order they appear in the
-   * content line.
+   * map of extension parameters such as X-Google-Foo=bar. The iteration order
+   * is the order they appear in the content line.
    */
   Map<String, String> getExtParams();
 

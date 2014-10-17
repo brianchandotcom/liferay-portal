@@ -36,7 +36,7 @@ abstract class AbstractIcalObject implements IcalObject {
 
   private String name;
   /**
-   * paramter values.  Does not currently allow multiple values for the same
+   * paramter values. Does not currently allow multiple values for the same
    * property.
    */
   private Map<String, String> extParams = null;
@@ -82,9 +82,13 @@ abstract class AbstractIcalObject implements IcalObject {
     schema.applyObjectSchema(this.name, params, content, this);
   }
 
-  /** the object name such as RRULE, EXRULE, VEVENT.  @see #setName */
+  /**
+   * the object name such as RRULE, EXRULE, VEVENT. @see #setName
+   */
   public String getName() { return name; }
-  /** @see #getName */
+  /**
+   * @see #getName
+   */
   public void setName(String name) { this.name = name; }
   /**
    * a map of any extension parameters such as the X-FOO=BAR in RRULE;X-FOO=BAR.

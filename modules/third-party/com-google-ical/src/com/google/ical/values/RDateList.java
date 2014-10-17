@@ -72,7 +72,9 @@ public class RDateList extends AbstractIcalObject {
     this.valueType = valueType;
   }
 
-  /** returns a String containing ical content lines. */
+  /**
+   * returns a String containing ical content lines.
+   */
   public String toIcal() {
     StringBuilder buf = new StringBuilder();
     buf.append(this.getName().toUpperCase());

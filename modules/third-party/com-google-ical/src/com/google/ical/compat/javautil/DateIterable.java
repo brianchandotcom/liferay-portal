@@ -23,6 +23,7 @@ import java.util.Date;
  */
 public interface DateIterable extends Iterable<Date> {
 
+  @Override
   DateIterator iterator();
 
 }

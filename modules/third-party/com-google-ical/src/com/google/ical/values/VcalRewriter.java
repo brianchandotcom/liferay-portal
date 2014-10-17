@@ -27,67 +27,62 @@ final class VcalRewriter {
   private static final String DATE = "[0-9]{8,}(?:T[0-9]{6}Z?)?";
   /**
    * <a href="http://www.imc.org/pdi/vcal-10.txt"
-   * >http://www.imc.org/pdi/vcal-10.txt</a>
-   * <xmp>
-   * Grammar
-   * {}         0 or more
-   * []         0 or 1
+   * >http://www.imc.org/pdi/vcal-10.txt</a> <xmp> Grammar {} 0 or more [] 0 or
+   * 1
    *
-   * start           ::= <daily> [<enddate>] |
-   *                     <weekly> [<enddate>] |
-   *                     <monthlybypos> [<enddate>] |
-   *                     <monthlybyday> [<enddate>] |
-   *                     <yearlybymonth> [<enddate>] |
-   *                     <yearlybyday> [<enddate>]
-   * digit           ::= <0|1|2|3|4|5|6|7|8|9>
-   * digits          ::= <digit> {<digits>}
-   * enddate         ::= ISO 8601_date_time value(e.g., 19940712T101530Z)
-   * interval        ::= <digits>
-   * duration        ::= #<digits>
-   * lastday         ::= LD
-   * plus            ::= +
-   * minus           ::= -
-   * daynumber       ::= <1-31> [<plus>|<minus>]| <lastday>
-   * daynumberlist   ::= daynumber {<daynumberlist>}
-   * month           ::= <1-12>
-   * monthlist       ::= <month> {<monthlist>}
-   * day             ::= <1-366>
-   * daylist         ::= <day> {<daylist>}
-   * occurrence      ::= <1-5><plus> | <1-5><minus>
-   * occurrencelist  ::= <occurrence> {<occurrencelist>}
-   * weekday         ::= <SU|MO|TU|WE|TH|FR|SA>
-   * weekdaylist     ::= <weekday> {<weekdaylist>}
-   * daily           ::= D<interval> [<duration>]
-   * weekly          ::= W<interval> [<weekdaylist>] [<duration>]
-   * monthlybypos    ::= MP<interval> [<occurrencelist> <weekdaylist>]
-   *                     [<duration>]
-   * monthlybyday    ::= MD<interval> [<daynumberlist>] [<duration>]
-   * yearlybymonth   ::= YM<interval> [<monthlist>] [<duration>]
-   * yearlybyday     ::= YD<interval> [<daylist>] [<duration>]
-   *
+   * start ::= <daily> [<enddate>] |
+   * <weekly> [<enddate>] |
+   * <monthlybypos> [<enddate>] |
+   * <monthlybyday> [<enddate>] |
+   * <yearlybymonth> [<enddate>] |
+   * <yearlybyday> [<enddate>]
+   * digit ::= <0|1|2|3|4|5|6|7|8|9>
+   * digits ::= <digit> {<digits>}
+   * enddate ::= ISO 8601_date_time value(e.g., 19940712T101530Z)
+   * interval ::= <digits>
+   * duration ::= #<digits>
+   * lastday ::= LD
+   * plus ::= +
+   * minus ::= -
+   * daynumber ::= <1-31> [<plus>|<minus>]| <lastday>
+   * daynumberlist ::= daynumber {<daynumberlist>}
+   * month ::= <1-12>
+   * monthlist ::= <month> {<monthlist>}
+   * day ::= <1-366>
+   * daylist ::= <day> {<daylist>}
+   * occurrence ::= <1-5><plus> | <1-5><minus>
+   * occurrencelist ::= <occurrence> {<occurrencelist>}
+   * weekday ::= <SU|MO|TU|WE|TH|FR|SA>
+   * weekdaylist ::= <weekday> {<weekdaylist>}
+   * daily ::= D<interval> [<duration>]
+   * weekly ::= W<interval> [<weekdaylist>] [<duration>]
+   * monthlybypos ::= MP<interval> [<occurrencelist> <weekdaylist>]
+   * [<duration>]
+   * monthlybyday ::= MD<interval> [<daynumberlist>] [<duration>]
+   * yearlybymonth ::= YM<interval> [<monthlist>] [<duration>]
+   * yearlybyday ::= YD<interval> [<daylist>] [<duration>]
    *
    * Glossary
-   * enddate         Controls when a repeating event terminates. The enddate is
-   *                 the last time an event can occur.
-   * interval        Defines the frequency in which a rule repeats.
-   * duration        Controls the number of events a rule generates.
-   * lastday         Can be used as a replacement to daynumber to indicate the
-   *                 last day of the month.
-   * daynumber       A number representing a day of the month.
-   * month           A number representing a month of the year.
-   * day             A number representing a day of the year.
-   * occurrence      Controls which week of the month a particular weekday event
-   *                 occurs.
-   * weekday         A symbol representing a day of the week.
-   * daily           Defines a rule that repeats on a daily basis.
-   * weekly          Defines a rule that repeats on a weekly basis.
-   * monthlybypos    Defines a rule that repeats on a monthly basis on a
-   *                 relative day and week.
-   * monthlybyday    Defines a rule that repeats on a monthly basis on an
-   *                 absolute day.
-   * yearlybymonth   Defines a rule that repeats on specific months of the year.
-   * yearlybyday     Defines a rule that repeats on specific days of the year.
-   *
+   * enddate Controls when a repeating event terminates. The enddate is
+   * the last time an event can occur.
+   * interval Defines the frequency in which a rule repeats.
+   * duration Controls the number of events a rule generates.
+   * lastday Can be used as a replacement to daynumber to indicate the
+   * last day of the month.
+   * daynumber A number representing a day of the month.
+   * month A number representing a month of the year.
+   * day A number representing a day of the year.
+   * occurrence Controls which week of the month a particular weekday event
+   * occurs.
+   * weekday A symbol representing a day of the week.
+   * daily Defines a rule that repeats on a daily basis.
+   * weekly Defines a rule that repeats on a weekly basis.
+   * monthlybypos Defines a rule that repeats on a monthly basis on a
+   * relative day and week.
+   * monthlybyday Defines a rule that repeats on a monthly basis on an
+   * absolute day.
+   * yearlybymonth Defines a rule that repeats on specific months of the year.
+   * yearlybyday Defines a rule that repeats on specific days of the year.
    *
    * Policies
    * The duration portion of a rule defines the total number of events the rule
@@ -109,13 +104,13 @@ final class VcalRewriter {
    * repeating events defined by its recurrence rule. The following is not
    * allowed:
    *
-   *         Initial Appt Date:        7/1/94  (Friday)
-   *         Recurrence Rule:          W1 MO TH #5
+   * Initial Appt Date: 7/1/94 (Friday)
+   * Recurrence Rule: W1 MO TH #5
    *
    * The following is acceptable:
    *
-   *         Initial Appt Date:        7/1/94  (Friday)
-   *         Recurrence Rule:          W1 MO FR #5  or W1 #5
+   * Initial Appt Date: 7/1/94 (Friday)
+   * Recurrence Rule: W1 MO FR #5 or W1 #5
    * If the optional <occurrencelist> and <weekdaylist> information is missing
    * from a <monthlybypos> occurrence the information is derived from the entry
    * attributes. The <occurrence> used in the recurring event is a count from

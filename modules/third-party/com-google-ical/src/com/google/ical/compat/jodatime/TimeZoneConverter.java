@@ -28,10 +28,9 @@ import org.joda.time.DateTimeZone;
 /**
  * Replacement for Joda-time's broken {@link DateTimeZone#toTimeZone} which
  * returns a <code>java.util.TimeZone</code> that supposedly is equivalent to
- * the <code>DateTimeZone</code>.
- * Joda time's implementation simply uses the ID to look up the corresponding
- * <code>java.util.TimeZone</code>s which should not be used since they're
- * frequently out-of-date re Brazilian timezones.
+ * the <code>DateTimeZone</code>. Joda time's implementation simply uses the ID
+ * to look up the corresponding <code>java.util.TimeZone</code>s which should
+ * not be used since they're frequently out-of-date re Brazilian timezones.
  *
  * <p>See <a href="http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4328058"
  * >Sun bug 4328058</a>.
@@ -57,8 +56,8 @@ final class TimeZoneConverter {
   }
 
   /**
-   * return a <code>java.util.Timezone</code> object that delegates to
-   * the given Joda <code>DateTimeZone</code>.
+   * return a <code>java.util.Timezone</code> object that delegates to the given
+   * Joda <code>DateTimeZone</code>.
    */
   public static TimeZone toTimeZone(final DateTimeZone dtz) {
 
@@ -171,8 +170,8 @@ final class TimeZoneConverter {
   }
 
   /**
-   * If tzid is of the form [+-]hh:mm, we rewrite it to GMT[+-]hh:mm
-   * Otherwise return it unchanged.
+   * If tzid is of the form [+-]hh:mm, we rewrite it to GMT[+-]hh:mm Otherwise
+   * return it unchanged.
    */
   static String cleanUpTzid(String tzid) {
     Matcher m = HOUR_MINUTE.matcher(tzid);

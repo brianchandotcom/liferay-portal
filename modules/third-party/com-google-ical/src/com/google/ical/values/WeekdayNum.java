@@ -15,9 +15,9 @@
 package com.google.ical.values;
 
 /**
- * represents a day of the week in a month or year such as the
- * third monday of the month.  A negative num indicates it counts from the
- * end of the month or year.
+ * represents a day of the week in a month or year such as the third monday of
+ * the month. A negative num indicates it counts from the end of the month or
+ * year.
  *
  * <blockquote>
  * Each BYDAY value can also be preceded by a positive (+n) or negative
@@ -38,7 +38,7 @@ public class WeekdayNum {
 
   /**
    * @param num in -53,53
-   * @param wday non null.
+   * @param wday non <code>null</code>.
    */
   public WeekdayNum(int num, Weekday wday) {
     if (!(-53 <= num && 53 >= num && null != wday)) {

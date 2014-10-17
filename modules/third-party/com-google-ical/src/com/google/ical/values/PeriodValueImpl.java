@@ -27,9 +27,10 @@ public class PeriodValueImpl implements PeriodValue {
 
   /**
    * returns a period with the given start and end dates.
-   * @param start non null.
+   *
+   * @param start non <code>null</code>.
    * @param end on or after start.  May/must have a time if the start has a
-   *   time.
+   *        time.
    */
   public static PeriodValue create(DateValue start, DateValue end) {
     return new PeriodValueImpl(start, end);
@@ -37,7 +38,8 @@ public class PeriodValueImpl implements PeriodValue {
 
   /**
    * returns a period with the given start date and duration.
-   * @param start non null.
+   *
+   * @param start non <code>null</code>.
    * @param dur a positive duration represented as a DateValue.
    */
   public static PeriodValue createFromDuration(DateValue start, DateValue dur) {
@@ -66,7 +68,9 @@ public class PeriodValueImpl implements PeriodValue {
 
   public DateValue end() { return end; }
 
-  /** true iff this period overlaps the given period. */
+  /**
+   * <code>true</code> iff this period overlaps the given period.
+   */
   public boolean intersects(PeriodValue pv) {
     DateValue sa = this.start,
               ea = this.end,
@@ -76,7 +80,9 @@ public class PeriodValueImpl implements PeriodValue {
     return sa.compareTo(eb) < 0 && sb.compareTo(ea) < 0;
   }
 
-  /** true iff this period completely contains the given period. */
+  /**
+   * <code>true</code> iff this period completely contains the given period.
+   */
   public boolean contains(PeriodValue pv) {
     DateValue sa = this.start,
               ea = this.end,

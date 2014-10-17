@@ -7,6 +7,8 @@ import java.util.Collection;
 
 /**
  * static methods for creating the standard set of {@link Predicate} objects.
+ *
+ * @author Brian Wing Shun Chan
  */
 public class Predicates {
 
@@ -14,18 +16,13 @@ public class Predicates {
     // uninstantiable
   }
 
-  /*
-   * For constant Predicates a single instance will suffice; we'll cast it to
-   * the right parameterized type on demand.
-   */
-
   private static final Predicate<?> ALWAYS_TRUE =
       new AlwaysTruePredicate<Object>();
   private static final Predicate<?> ALWAYS_FALSE =
       new AlwaysFalsePredicate<Object>();
 
   /**
-   * Returns a Predicate that always evaluates to true.
+   * Returns a Predicate that always evaluates to <code>true</code>.
    */
   @SuppressWarnings("unchecked")
   public static <T> Predicate<T> alwaysTrue() {
@@ -33,7 +30,7 @@ public class Predicates {
   }
 
   /**
-   * Returns a Predicate that always evaluates to false.
+   * Returns a Predicate that always evaluates to <code>false</code>.
    */
   @SuppressWarnings("unchecked")
   public static <T> Predicate<T> alwaysFalse() {
@@ -41,8 +38,8 @@ public class Predicates {
   }
 
   /**
-   * Returns a Predicate that evaluates to true iff the given Predicate
-   * evaluates to false.
+   * Returns a Predicate that evaluates to <code>true</code> iff the given
+   * Predicate evaluates to <code>false</code>.
    */
   public static <T> Predicate<T> not(Predicate<? super T> predicate) {
     assert null != predicate;
@@ -50,11 +47,11 @@ public class Predicates {
   }
 
   /**
-   * Returns a Predicate that evaluates to true iff each of its components
-   * evaluates to true.  The components are evaluated in order, and evaluation
-   * will be "short-circuited" as soon as the answer is determined.  Does not
-   * defensively copy the array passed in, so future changes to it will alter
-   * the behavior of this Predicate.
+   * Returns a Predicate that evaluates to <code>true</code> iff each of its
+   * components evaluates to <code>true</code>. The components are evaluated in
+   * order, and evaluation will be "short-circuited" as soon as the answer is
+   * determined. Does not defensively copy the array passed in, so future
+   * changes to it will alter the behavior of this Predicate.
    */
   public static <T> Predicate<T> and(Predicate<? super T>... components) {
     assert null != components;
@@ -79,11 +76,11 @@ public class Predicates {
   }
 
   /**
-   * Returns a Predicate that evaluates to true iff each of its components
-   * evaluates to true.  The components are evaluated in order, and evaluation
-   * will be "short-circuited" as soon as the answer is determined.  Does not
-   * defensively copy the array passed in, so future changes to it will alter
-   * the behavior of this Predicate.
+   * Returns a Predicate that evaluates to <code>true</code> iff each of its
+   * components evaluates to <code>true</code>. The components are evaluated in
+   * order, and evaluation will be "short-circuited" as soon as the answer is
+   * determined. Does not defensively copy the array passed in, so future
+   * changes to it will alter the behavior of this Predicate.
    */
   public static <T> Predicate<T> and(
       Collection<Predicate<? super T>> components) {
@@ -95,11 +92,11 @@ public class Predicates {
   }
 
   /**
-   * Returns a Predicate that evaluates to true iff any one of its components
-   * evaluates to true.  The components are evaluated in order, and evaluation
-   * will be "short-circuited" as soon as the answer is determined.  Does not
-   * defensively copy the array passed in, so future changes to it will alter
-   * the behavior of this Predicate.
+   * Returns a Predicate that evaluates to <code>true</code> iff any one of its
+   * components evaluates to <code>true</code>. The components are evaluated in
+   * order, and evaluation will be "short-circuited" as soon as the answer is
+   * determined. Does not defensively copy the array passed in, so future
+   * changes to it will alter the behavior of this Predicate.
    */
   public static <T> Predicate<T> or(Predicate<? super T>... components) {
     assert components != null;

@@ -16,9 +16,9 @@ package com.google.ical.values;
 
 
 /**
- * a half-open range of {@link DateValue}s.  The start is inclusive, and the
- * end is exclusive.  The end must be on or after the start.  When the start and
- * end are the same, the period is zero width, i.e. contains zero seconds.
+ * a half-open range of {@link DateValue}s. The start is inclusive, and the end
+ * is exclusive. The end must be on or after the start. When the start and end
+ * are the same, the period is zero width, i.e. contains zero seconds.
  *
  * @author mikesamuel+svn@gmail.com (Mike Samuel)
  */
@@ -26,28 +26,31 @@ public interface PeriodValue {
 
   /**
    * the start of the period.
-   * @return non null.
+   *
+   * @return non <code>null</code>.
    */
   DateValue start();
 
   /**
-   * the end of the period.
-   * The end must be &gt;= {@link #start()}, and
-   * <tt>(start() instanceof {@link TimeValue}) ==
-   *     (end() instanceof TimeValue)</tt>.
-   * @return non null.
+   * the end of the period. The end must be &gt;= {@link #start()}, and
+   * <tt>(start() instanceof {@link TimeValue}) == (end() instanceof
+   * TimeValue)</tt>.
+   *
+   * @return non <code>null</code>.
    */
   DateValue end();
 
   /**
-   * true iff this period overlaps the given period.
-   * @param pv not null.
+   * <code>true</code> iff this period overlaps the given period.
+   *
+   * @param pv not <code>null</code>.
    */
   boolean intersects(PeriodValue pv);
 
   /**
-   * true iff this period completely contains the given period.
-   * @param pv not null.
+   * <code>true</code> iff this period completely contains the given period.
+   *
+   * @param pv not <code>null</code>.
    */
   boolean contains(PeriodValue pv);
 

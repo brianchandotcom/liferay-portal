@@ -36,9 +36,9 @@ import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
-* @author Raymond Augé
-* @author Peter Fellwock
-*/
+ * @author Raymond Augé
+ * @author Peter Fellwock
+ */
 @Component(
 	configurationPid = "com.liferay.amazon.rankings.web",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,

@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import org.osgi.service.component.annotations.Component;
 
 /**
-* @author Carlos Sierra Andrés
-*/
+ * @author Carlos Sierra Andrés
+ */
 @Component(
 	property = {
 		"json.web.service.context.name=test",

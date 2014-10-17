@@ -23,6 +23,7 @@ import com.google.ical.values.DateValue;
  */
 public interface RecurrenceIterable extends Iterable<DateValue> {
 
+  @Override
   RecurrenceIterator iterator();
 
 }

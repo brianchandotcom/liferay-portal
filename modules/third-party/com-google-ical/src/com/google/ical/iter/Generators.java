@@ -31,12 +31,11 @@ import java.util.Arrays;
 final class Generators {
 
   /**
-   * the maximum number of years generated between instances.
-   * See {@link ThrottledGenerator} for a description of the problem this
-   * solves.
-   * Note: this counts the maximum number of years generated, so for
-   * FREQ=YEARLY;INTERVAL=4 the generator would try 100 individual years over
-   * a span of 400 years before giving up and concluding that the rule generates
+   * the maximum number of years generated between instances. See {@link
+   * ThrottledGenerator} for a description of the problem this solves. Note:
+   * this counts the maximum number of years generated, so for
+   * FREQ=YEARLY;INTERVAL=4 the generator would try 100 individual years over a
+   * span of 400 years before giving up and concluding that the rule generates
    * no usable dates.
    */
   private static final int MAX_YEARS_BETWEEN_INSTANCES = 100;
@@ -44,10 +43,11 @@ final class Generators {
   /**
    * constructs a generator that generates years successively counting from the
    * first year passed in.
-   * @param interval number of years to advance each step.
-   * @param dtStart non null
+   *
+   * @param  interval number of years to advance each step.
+   * @param  dtStart non <code>null</code>
    * @return the year in dtStart the first time called and interval + last
-   *   return value on subsequent calls.
+   *         return value on subsequent calls.
    */
   static ThrottledGenerator serialYearGenerator(
       final int interval, final DateValue dtStart) {
@@ -82,10 +82,11 @@ final class Generators {
   /**
    * constructs a generator that generates months in the given builder's year
    * successively counting from the first month passed in.
-   * @param interval number of months to advance each step.
-   * @param dtStart non null.
+   *
+   * @param  interval number of months to advance each step.
+   * @param  dtStart non <code>null</code>.
    * @return the year in dtStart the first time called and interval + last
-   *   return value on subsequent calls.
+   *         return value on subsequent calls.
    */
   static Generator serialMonthGenerator(
       final int interval, final DateValue dtStart) {
@@ -189,10 +190,11 @@ final class Generators {
   /**
    * constructs a generator that generates hours in the given builder's day
    * successively counting from the first hour passed in.
-   * @param interval number of hours to advance each step.
-   * @param dtStart non null.
-   * @return the day in dtStart the first time called and interval + last
-   *   return value on subsequent calls.
+   *
+   * @param  interval number of hours to advance each step.
+   * @param  dtStart non <code>null</code>.
+   * @return the day in dtStart the first time called and interval + last return
+   *         value on subsequent calls.
    */
   static Generator serialHourGenerator(
       final int interval, final DateValue dtStart) {
@@ -238,10 +240,11 @@ final class Generators {
   /**
    * constructs a generator that generates minutes in the given builder's hour
    * successively counting from the first minute passed in.
-   * @param interval number of minutes to advance each step.
-   * @param dtStart non null.
-   * @return the day in dtStart the first time called and interval + last
-   *   return value on subsequent calls.
+   *
+   * @param  interval number of minutes to advance each step.
+   * @param  dtStart non <code>null</code>.
+   * @return the day in dtStart the first time called and interval + last return
+   *         value on subsequent calls.
    */
   static Generator serialMinuteGenerator(
       final int interval, final DateValue dtStart) {
@@ -294,10 +297,11 @@ final class Generators {
   /**
    * constructs a generator that generates seconds in the given builder's minute
    * successively counting from the first second passed in.
-   * @param interval number of seconds to advance each step.
-   * @param dtStart non null.
-   * @return the day in dtStart the first time called and interval + last
-   *   return value on subsequent calls.
+   *
+   * @param  interval number of seconds to advance each step.
+   * @param  dtStart non <code>null</code>.
+   * @return the day in dtStart the first time called and interval + last return
+   *         value on subsequent calls.
    */
   static Generator serialSecondGenerator(
       final int interval, final DateValue dtStart) {
@@ -377,8 +381,9 @@ final class Generators {
   /**
    * constructs a generator that yields the specified months in increasing order
    * for each year.
+   *
    * @param months values in [1-12]
-   * @param dtStart non null
+   * @param dtStart non <code>null</code>
    */
   static Generator byMonthGenerator(int[] months, final DateValue dtStart) {
     final int[] umonths = Util.uniquify(months);
@@ -408,8 +413,9 @@ final class Generators {
   /**
    * constructs a generator that yields the specified hours in increasing order
    * for each day.
+   *
    * @param hours values in [0-23]
-   * @param dtStart non null
+   * @param dtStart non <code>null</code>
    */
   static Generator byHourGenerator(int[] hours, final DateValue dtStart) {
     int startHour = dtStart instanceof TimeValue
@@ -484,8 +490,9 @@ final class Generators {
   /**
    * constructs a generator that yields the specified minutes in increasing
    * order for each hour.
+   *
    * @param minutes values in [0-59]
-   * @param dtStart non null
+   * @param dtStart non <code>null</code>
    */
   static Generator byMinuteGenerator(
       int[] minutes, final DateValue dtStart) {
@@ -566,8 +573,9 @@ final class Generators {
   /**
    * constructs a generator that yields the specified seconds in increasing
    * order for each minute.
+   *
    * @param seconds values in [0-59]
-   * @param dtStart non null
+   * @param dtStart non <code>null</code>
    */
   static Generator bySecondGenerator(
       int[] seconds, final DateValue dtStart) {
@@ -654,11 +662,11 @@ final class Generators {
   }
 
   /**
-   * constructs a function that yields the specified dates
-   * (possibly relative to end of month) in increasing order
-   * for each month seen.
+   * constructs a function that yields the specified dates (possibly relative to
+   * end of month) in increasing order for each month seen.
+   *
    * @param dates elements in [-53,53] != 0
-   * @param dtStart non null
+   * @param dtStart non <code>null</code>
    */
   static Generator byMonthDayGenerator(int[] dates, final DateValue dtStart) {
     final int[] udates = Util.uniquify(dates);
@@ -713,11 +721,11 @@ final class Generators {
   /**
    * constructs a day generator based on a BYDAY rule.
    *
-   * @param days day of week, number pairs,
-   *   e.g. SU,3MO means every sunday and the 3rd monday.
-   * @param weeksInYear are the week numbers meant to be weeks in the
-   *   current year, or weeks in the current month.
-   * @param dtStart non null
+   * @param days day of week, number pairs, e.g. SU,3MO means every sunday and
+   *        the 3rd monday.
+   * @param weeksInYear are the week numbers meant to be weeks in the current
+   *        year, or weeks in the current month.
+   * @param dtStart non <code>null</code>
    */
   static Generator byDayGenerator(
       WeekdayNum[] days, final boolean weeksInYear, final DateValue dtStart) {
@@ -805,9 +813,10 @@ final class Generators {
   /**
    * constructs a generator that yields each day in the current month that falls
    * in one of the given weeks of the year.
+   *
    * @param weekNos (elements in [-53,53] != 0) week numbers
    * @param wkst (in RRULE_WDAY_*) day of the week that the week starts on.
-   * @param dtStart non null
+   * @param dtStart non <code>null</code>
    */
   static Generator byWeekNoGenerator(
       int[] weekNos, final Weekday wkst, final DateValue dtStart) {
@@ -915,6 +924,7 @@ final class Generators {
   /**
    * constructs a day generator that generates dates in the current month that
    * fall on one of the given days of the year.
+   *
    * @param yearDays elements in [-366,366] != 0
    */
   static Generator byYearDayGenerator(int[] yearDays, final DateValue dtStart) {

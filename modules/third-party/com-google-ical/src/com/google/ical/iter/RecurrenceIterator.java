@@ -18,35 +18,39 @@ import com.google.ical.values.DateValue;
 import java.util.Iterator;
 
 /**
- * an iterator over date values in order.  Does not support the
+ * an iterator over date values in order. Does not support the
  * <code>remove</code> operation.
  *
  * @author mikesamuel+svn@gmail.com (Mike Samuel)
  */
 public interface RecurrenceIterator extends Iterator<DateValue> {
 
-  /** true iff there are more dates in the series. */
+  /**
+   * <code>true</code> iff there are more dates in the series.
+   */
+  @Override
   boolean hasNext();
 
   /**
-   * returns the next date in the series, in UTC.
-   * If <code>!hasNext()</code>, then behavior is undefined.
+   * returns the next date in the series, in UTC. If <code>!hasNext()</code>,
+   * then behavior is undefined.
    *
    * @return a DateValue that is strictly later than any date previously
-   *   returned by this iterator.
+   *         returned by this iterator.
    */
+  @Override
   DateValue next();
 
   /**
    * skips all dates in the series before the given date.
    *
-   * @param newStartUtc non null.
+   * @param newStartUtc non <code>null</code>.
    */
   void advanceTo(DateValue newStartUtc);
 
   /**
    * unsupported.
-   * @throws UnsupportedOperationException always
    */
+  @Override
   void remove();
 }

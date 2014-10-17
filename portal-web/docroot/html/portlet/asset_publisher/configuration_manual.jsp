@@ -215,13 +215,11 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 
 <aui:script sandbox="<%= true %>">
 	function selectAsset(assetEntryId, assetClassName, assetType, assetEntryTitle, groupName) {
-		var form = document.<portlet:namespace />fm;
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'add-selection';
+		document.<portlet:namespace />fm.<portlet:namespace />assetEntryId.value = assetEntryId;
+		document.<portlet:namespace />fm.<portlet:namespace />assetEntryType.value = assetClassName;
 
-		form.<portlet:namespace /><%= Constants.CMD %>.value = 'add-selection';
-		form.<portlet:namespace />assetEntryId.value = assetEntryId;
-		form.<portlet:namespace />assetEntryType.value = assetClassName;
-
-		submitForm(form);
+		submitForm(document.<portlet:namespace />fm);
 	}
 
 	$('body').on(

@@ -77,6 +77,7 @@ if (queryLogicIndex >= 0) {
 
 <aui:script sandbox="<%= true %>">
 	var select = $('#<portlet:namespace /><%= randomNamespace %>selector');
+
 	var row = select.closest('.query-row');
 
 	select.on(

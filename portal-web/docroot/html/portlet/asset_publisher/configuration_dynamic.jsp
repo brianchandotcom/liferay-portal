@@ -626,8 +626,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 		<c:if test="<%= assetPublisherDisplayContext.isShowSubtypeFieldsFilter() %>">
 			function <%= className %>toggleSubclassesFields(hideSubtypeFilterEnableWrapper) {
-				var subtypeFieldsWrapper = $('#<portlet:namespace /><%= className %>subtypeFieldsWrapper');
-				var subtypeFieldsFilterEnableWrapper = $('#<portlet:namespace /><%= className %>subtypeFieldsFilterEnableWrapper');
+				var subtypeFieldsWrapper = $('#<portlet:namespace /><%= className %>subtypeFieldsWrapper, #<portlet:namespace /><%= className %>subtypeFieldsFilterEnableWrapper');
 
 				var selectedSubtype = <%= className %>SubtypeSelector.val();
 
@@ -644,16 +643,13 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 					if (structureOptions.length) {
 						subtypeFieldsWrapper.removeClass('hide');
-						subtypeFieldsFilterEnableWrapper.removeClass('hide');
 					}
 					else if (hideSubtypeFilterEnableWrapper) {
 						subtypeFieldsWrapper.addClass('hide');
-						subtypeFieldsFilterEnableWrapper.addClass('hide');
 					}
 				}
 				else if (hideSubtypeFilterEnableWrapper) {
 					subtypeFieldsWrapper.addClass('hide');
-					subtypeFieldsFilterEnableWrapper.addClass('hide');
 				}
 			}
 
@@ -667,6 +663,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					var subtypeFieldsFilterEnabled = $('#<portlet:namespace />subtypeFieldsFilterEnabled<%= className %>');
 
 					subtypeFieldsFilterEnabled.val(false);
+
 					subtypeFieldsFilterEnabled.prop('checked', false);
 
 					sourcePanel.find('.asset-subtypefields').addClass('hide');
@@ -700,10 +697,9 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 	assetSelector.on(
 		'change',
 		function(event) {
-			var ddmStructureFieldValue = $('#<portlet:namespace />ddmStructureFieldValue');
-
 			ddmStructureFieldName.val('');
-			ddmStructureFieldValue.val('');
+
+			$('#<portlet:namespace />ddmStructureFieldValue').val('');
 
 			<portlet:namespace />toggleSubclasses(true);
 		}
@@ -715,16 +711,14 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 		function(event) {
 			var assetSubtypeFieldsPopupNodes = $('.asset-subtypefields-popup .btn');
 
-			var target = $(event.target);
-
-			Liferay.Util.toggleDisabled(assetSubtypeFieldsPopupNodes, !target.prop('checked'));
+			Liferay.Util.toggleDisabled(assetSubtypeFieldsPopupNodes, !$(event.target).prop('checked'));
 		}
 	);
 
 	Liferay.after(
 		'inputmoveboxes:moveItem',
 		function(event) {
-			if ((event.fromBox.get('id') == '<portlet:namespace />currentClassNameIds') || (event.toBox.get('id') == '<portlet:namespace />currentClassNameIds')) {
+			if ((event.fromBox.attr('id') == '<portlet:namespace />currentClassNameIds') || (event.toBox.attr('id') == '<portlet:namespace />currentClassNameIds')) {
 				<portlet:namespace />toggleSubclasses();
 			}
 		}
@@ -757,21 +751,11 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 	);
 
 	function setDDMFields(className, name, value, displayValue, message) {
-		var ddmStructureFieldName = $('#<portlet:namespace />ddmStructureFieldName');
+		$('#<portlet:namespace />ddmStructureFieldName').val(name);
+		$('#<portlet:namespace />ddmStructureFieldValue').val(value);
+		$('#<portlet:namespace />ddmStructureDisplayFieldValue').val(displayValue);
 
-		ddmStructureFieldName.val(name);
-
-		var ddmStructureFieldvalue = $('#<portlet:namespace />ddmStructureFieldValue');
-
-		ddmStructureFieldvalue.val(value);
-
-		var ddmStructureDisplayFieldvalue = $('#<portlet:namespace />ddmStructureDisplayFieldValue');
-
-		ddmStructureDisplayFieldvalue.val(displayValue);
-
-		var ddmStructureFieldMessage = $('#<portlet:namespace />' + className + 'ddmStructureFieldMessage');
-
-		ddmStructureFieldMessage.html(_.escape(message));
+		$('#<portlet:namespace />' + className + 'ddmStructureFieldMessage').html(_.escape(message));
 	}
 </aui:script>
 

@@ -14,8 +14,8 @@
 
 package com.liferay.bookmarks.asset;
 
-import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
+import com.liferay.bookmarks.constants.BookmarksWebKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.service.permission.BookmarksEntryPermission;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -209,7 +209,7 @@ public class BookmarksEntryAssetRenderer
 
 		if (template.equals(TEMPLATE_FULL_CONTENT)) {
 			renderRequest.setAttribute(
-				BookmarksConstants.BOOKMARKS_ENTRY, _entry);
+				BookmarksWebKeys.BOOKMARKS_ENTRY, _entry);
 
 			return "/html/portlet/bookmarks/asset/" + template + ".jsp";
 		}

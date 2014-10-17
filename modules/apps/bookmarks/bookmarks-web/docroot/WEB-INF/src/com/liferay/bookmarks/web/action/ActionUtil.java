@@ -14,7 +14,7 @@
 
 package com.liferay.bookmarks.web.action;
 
-import com.liferay.bookmarks.constants.BookmarksConstants;
+import com.liferay.bookmarks.constants.BookmarksWebKeys;
 import com.liferay.bookmarks.exception.NoSuchEntryException;
 import com.liferay.bookmarks.exception.NoSuchFolderException;
 import com.liferay.bookmarks.model.BookmarksEntry;
@@ -51,7 +51,7 @@ public class ActionUtil {
 			}
 		}
 
-		request.setAttribute(BookmarksConstants.BOOKMARKS_ENTRY, entry);
+		request.setAttribute(BookmarksWebKeys.BOOKMARKS_ENTRY, entry);
 	}
 
 	public static void getEntry(PortletRequest portletRequest)
@@ -86,7 +86,7 @@ public class ActionUtil {
 				themeDisplay.getScopeGroupId(), ActionKeys.VIEW);
 		}
 
-		request.setAttribute(BookmarksConstants.BOOKMARKS_FOLDER, folder);
+		request.setAttribute(BookmarksWebKeys.BOOKMARKS_FOLDER, folder);
 	}
 
 	public static void getFolder(PortletRequest portletRequest)

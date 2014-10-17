@@ -22,7 +22,7 @@ String backURL = ParamUtil.getString(request, "backURL");
 
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 
-BookmarksEntry entry = (BookmarksEntry)request.getAttribute(BookmarksConstants.BOOKMARKS_ENTRY);
+BookmarksEntry entry = (BookmarksEntry)request.getAttribute(BookmarksWebKeys.BOOKMARKS_ENTRY);
 
 long entryId = BeanParamUtil.getLong(entry, request, "entryId");
 

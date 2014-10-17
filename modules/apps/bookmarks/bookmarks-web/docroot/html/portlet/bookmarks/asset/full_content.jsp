@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/bookmarks/init.jsp" %>
 
 <%
-BookmarksEntry entry = (BookmarksEntry)request.getAttribute(BookmarksConstants.BOOKMARKS_ENTRY);
+BookmarksEntry entry = (BookmarksEntry)request.getAttribute(BookmarksWebKeys.BOOKMARKS_ENTRY);
 %>
 
 <aui:a href='<%= themeDisplay.getPathMain() + "/bookmarks/open_entry?entryId=" + entry.getEntryId() + (portletName.equals(PortletKeys.TRASH) ? "&status=" + WorkflowConstants.STATUS_IN_TRASH : StringPool.BLANK) %>' target="_blank"><%= HtmlUtil.escape(entry.getName()) %> (<%= HtmlUtil.escape(entry.getUrl()) %>)</aui:a>

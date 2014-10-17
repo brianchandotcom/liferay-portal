@@ -19,7 +19,7 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-BookmarksEntry entry = (BookmarksEntry)request.getAttribute(BookmarksConstants.BOOKMARKS_ENTRY);
+BookmarksEntry entry = (BookmarksEntry)request.getAttribute(BookmarksWebKeys.BOOKMARKS_ENTRY);
 
 entry = entry.toEscapedModel();
 

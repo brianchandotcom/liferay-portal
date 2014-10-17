@@ -16,8 +16,7 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.bookmarks.constants.BookmarksConstants" %><%@
-page import="com.liferay.bookmarks.exception.EntryURLException" %><%@
+<%@ page import="com.liferay.bookmarks.exception.EntryURLException" %><%@
 page import="com.liferay.bookmarks.exception.FolderNameException" %><%@
 page import="com.liferay.bookmarks.exception.NoSuchEntryException" %><%@
 page import="com.liferay.bookmarks.exception.NoSuchFolderException" %><%@

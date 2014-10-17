@@ -17,8 +17,10 @@ package com.liferay.bookmarks.constants;
 /**
  * @author Iván Zaera
  */
-public class BookmarksConstants {
+public class BookmarksWebKeys {
 
-	public static final String SERVICE_NAME = "com.liferay.bookmarks";
+	public static final String BOOKMARKS_ENTRY = "BOOKMARKS_ENTRY";
+
+	public static final String BOOKMARKS_FOLDER = "BOOKMARKS_FOLDER";
 
 }

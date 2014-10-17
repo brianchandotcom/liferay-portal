@@ -19,7 +19,7 @@
 <%
 String topLink = ParamUtil.getString(request, "topLink", "home");
 
-BookmarksFolder folder = (BookmarksFolder)request.getAttribute(BookmarksConstants.BOOKMARKS_FOLDER);
+BookmarksFolder folder = (BookmarksFolder)request.getAttribute(BookmarksWebKeys.BOOKMARKS_FOLDER);
 
 long folderId = BeanParamUtil.getLong(folder, request, "folderId", rootFolderId);
 

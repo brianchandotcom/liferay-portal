@@ -235,8 +235,10 @@ private void _buildSitesList(Group rootGroup, Group curGroup, List<Group> branch
 		}
 
 		if (childGroup.getGroupId() != themeDisplay.getScopeGroupId()) {
+			String url = PortalUtil.getGroupFriendlyURL(childGroup, !childGroup.hasPublicLayouts(), themeDisplay);
+
 			sb.append("href=\"");
-			sb.append(HtmlUtil.escapeHREF(PortalUtil.getGroupFriendlyURL(childGroup, !childGroup.hasPublicLayouts(), themeDisplay)));
+			sb.append(HtmlUtil.escapeHREF(PortalUtil.addPreservedParameters(themeDisplay, url)));
 			sb.append("\"");
 		}
 

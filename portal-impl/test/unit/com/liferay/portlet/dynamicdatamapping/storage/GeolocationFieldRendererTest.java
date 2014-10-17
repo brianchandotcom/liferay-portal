@@ -107,6 +107,6 @@ public class GeolocationFieldRendererTest extends PowerMockito {
 	}
 
 	@Mock
-	private Language _language;
+	private final Language _language;
 
 }

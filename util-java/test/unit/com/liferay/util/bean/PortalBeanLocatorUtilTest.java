@@ -90,6 +90,6 @@ public class PortalBeanLocatorUtilTest extends PowerMockito {
 	}
 
 	@Mock
-	private BeanLocator _beanLocator;
+	private final BeanLocator _beanLocator;
 
 }

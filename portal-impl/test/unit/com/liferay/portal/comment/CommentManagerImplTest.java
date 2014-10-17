@@ -190,9 +190,9 @@ public class CommentManagerImplTest extends Mockito {
 	private CommentManagerImpl _commentManagerImpl;
 
 	@Mock
-	private Function<String, ServiceContext> _serviceContextFunction;
+	private final Function<String, ServiceContext> _serviceContextFunction;
 
 	@Mock
-	private ServiceTracker<Object, Object> _serviceTracker;
+	private final ServiceTracker<Object, Object> _serviceTracker;
 
 }

@@ -188,23 +188,23 @@ public class TrackbackImplTest extends PowerMockito {
 	}
 
 	@Mock
-	private BlogsEntry _blogsEntry;
+	private final BlogsEntry _blogsEntry;
 
 	@Mock
-	private CommentManager _commentManager;
+	private final CommentManager _commentManager;
 
 	@Mock
-	private LinkbackConsumer _linkbackConsumer;
+	private final LinkbackConsumer _linkbackConsumer;
 
 	@Mock
-	private Portal _portal;
+	private final Portal _portal;
 
 	@Mock
-	private Function<String, ServiceContext> _serviceContextFunction;
+	private final Function<String, ServiceContext> _serviceContextFunction;
 
 	private ThemeDisplay _themeDisplay;
 
 	@Mock
-	private UserLocalService _userLocalService;
+	private final UserLocalService _userLocalService;
 
 }

@@ -512,14 +512,14 @@ public class CMISQueryBuilderTest extends PowerMockito {
 	private BeanLocator _beanLocator;
 
 	@Mock
-	private DLAppService _dlAppService;
+	private final DLAppService _dlAppService;
 
 	private BeanLocator _mockBeanLocator;
 
 	@Mock
-	private RepositoryEntry _repositoryEntry;
+	private final RepositoryEntry _repositoryEntry;
 
 	@Mock
-	private RepositoryEntryLocalService _repositoryEntryLocalService;
+	private final RepositoryEntryLocalService _repositoryEntryLocalService;
 
 }

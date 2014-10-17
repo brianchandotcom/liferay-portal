@@ -570,7 +570,7 @@ public class ServiceTrackerCollectionTest {
 	}
 
 	@ArquillianResource
-	private Bundle _bundle;
+	private final Bundle _bundle;
 
 	private Registry _registry;
 

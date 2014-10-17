@@ -135,15 +135,15 @@ public class BundleResolverClassLoaderTest extends PowerMockito {
 	private static final String _NAME = "name";
 
 	@Mock
-	private Bundle _bundle1;
+	private final Bundle _bundle1;
 
 	@Mock
-	private Bundle _bundle2;
+	private final Bundle _bundle2;
 
 	@Mock
-	private Enumeration<URL> _enumeration;
+	private final Enumeration<URL> _enumeration;
 
 	@Mock
-	private URL _url;
+	private final URL _url;
 
 }

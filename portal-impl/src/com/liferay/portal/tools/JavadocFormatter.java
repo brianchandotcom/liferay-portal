@@ -779,6 +779,8 @@ public class JavadocFormatter {
 
 		if (fileName.endsWith("JavadocFormatter.java") ||
 			fileName.endsWith("SourceFormatter.java") ||
+			fileName.endsWith("WebProxyPortlet.java") ||
+			fileName.endsWith("Application.java") ||
 			_hasGeneratedTag(originalContent)) {
 
 			return;
@@ -1581,6 +1583,13 @@ public class JavadocFormatter {
 				continue;
 			}
 
+			int blankLines = 0;
+
+			while (line.equals(StringPool.BLANK)) {
+				line = lines[--pos];
+				blankLines++;
+			}
+
 			line = line.trim();
 
 			if (line.endsWith("*/")) {
@@ -1592,6 +1601,10 @@ public class JavadocFormatter {
 					}
 
 					line = lines[--pos].trim();
+				}
+
+				for (int i = 0; i < blankLines; i++) {
+					lines[lineNumber-i-2] = null;
 				}
 			}
 		}

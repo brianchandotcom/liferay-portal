@@ -345,6 +345,18 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 					"VARCHAR(75) null");
 
 			runSQL("alter_column_type JournalArticle description TEXT null");
+
+			runSQL(
+				"alter_column_name JournalFeed structureId DDMStructureKey " +
+					"TEXT null");
+
+			runSQL(
+				"alter_column_name JournalFeed templateId DDMTemplateKey " +
+					"TEXT null");
+
+			runSQL(
+				"alter_column_name JournalFeed rendererTemplateId " +
+					"DDMRendererTemplateKey TEXT null");
 		}
 		catch (SQLException sqle) {
 			upgradeTable(

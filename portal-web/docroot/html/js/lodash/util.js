@@ -1,9 +1,11 @@
 ;(function(_) {
+	var REGEX_SUB = /\{\s*([^|}]+?)\s*(?:\|([^}]*))?\s*\}/g;
+
 	_.mixin(
 		{
 			sub: function(string, data) {
 				return string.replace ? string.replace(
-					/\{\s*([^|}]+?)\s*(?:\|([^}]*))?\s*\}/g,
+					REGEX_SUB,
 					function (match, key) {
 						return _.isUndefined(data[key]) ? match : data[key];
 					}
@@ -11,4 +13,4 @@
 			}
 		}
 	);
-})(_);
+})(AUI._);

@@ -15,8 +15,9 @@
 package com.liferay.portal.tools.sourceformatter;
 
 import java.io.File;
-
 import java.util.List;
+
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Hugo Huijser
@@ -28,7 +29,9 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		return trimContent(content, false);
+		content = trimContent(content, false);
+
+		return StringUtil.replace(content, "\n\n\n", "\n\n");
 	}
 
 	@Override

@@ -75,39 +75,21 @@ if (queryLogicIndex >= 0) {
 	</div>
 </div>
 
-<aui:script use="aui-base">
-	var select = A.one('#<portlet:namespace /><%= randomNamespace %>selector');
+<aui:script sandbox="<%= true %>">
+	var select = $('#<portlet:namespace /><%= randomNamespace %>selector');
 
-	if (select) {
-		var row = select.ancestor('.query-row');
+	var row = select.closest('.query-row');
 
-		if (row) {
-			select.on(
-				'change',
-				function(event) {
-					var tagsSelector = row.one('.tags-selector');
-					var categoriesSelector = row.one('.categories-selector');
+	select.on(
+		'change',
+		function(event) {
+			var tagsSelector = row.find('.tags-selector');
+			var categoriesSelector = row.find('.categories-selector');
 
-					if (select.val() == 'assetTags') {
-						if (tagsSelector) {
-							tagsSelector.show();
-						}
+			var assetTags = (select.val() == 'assetTags');
 
-						if (categoriesSelector) {
-							categoriesSelector.hide();
-						}
-					}
-					else {
-						if (tagsSelector) {
-							tagsSelector.hide();
-						}
-
-						if (categoriesSelector) {
-							categoriesSelector.show();
-						}
-					}
-				}
-			);
+			tagsSelector.toggleClass('hide', !assetTags);
+			categoriesSelector.toggleClass('hide', assetTags);
 		}
-	}
+	);
 </aui:script>

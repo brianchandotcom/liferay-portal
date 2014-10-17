@@ -254,13 +254,16 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 	</c:choose>
 </aui:form>
 
-<aui:script use="aui-base">
-	A.getBody().delegate(
+<aui:script sandbox="<%= true %>">
+	var form = document.<portlet:namespace />fm;
+
+	$('body').on(
 		'click',
+		'.scope-selector a',
 		function(event) {
 			event.preventDefault();
 
-			var currentTarget = event.currentTarget;
+			var currentTarget = $(event.currentTarget);
 
 			Liferay.Util.selectEntity(
 				{
@@ -271,18 +274,17 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 					},
 					eventName: '<%= eventName %>',
 					id: '<%= eventName %>' + currentTarget.attr('id'),
-					title: currentTarget.attr('data-title'),
-					uri: currentTarget.attr('data-href')
+					title: currentTarget.data('title'),
+					uri: currentTarget.data('href')
 				},
 				function(event) {
-					document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'add-scope';
-					document.<portlet:namespace />fm.<portlet:namespace />scopeId.value = event.scopeid;
+					form.<portlet:namespace /><%= Constants.CMD %>.value = 'add-scope';
+					form.<portlet:namespace />scopeId.value = event.scopeid;
 
-					submitForm(document.<portlet:namespace />fm);
+					submitForm(form);
 				}
 			);
-		},
-		'.scope-selector a'
+		}
 	);
 </aui:script>
 
@@ -335,5 +337,5 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 		['liferay-util-list-fields']
 	);
 
-	Liferay.Util.toggleSelectBox('<portlet:namespace />anyAssetType','false','<portlet:namespace />classNamesBoxes');
+	Liferay.Util.toggleSelectBox('<portlet:namespace />anyAssetType', 'false', '<portlet:namespace />classNamesBoxes');
 </aui:script>

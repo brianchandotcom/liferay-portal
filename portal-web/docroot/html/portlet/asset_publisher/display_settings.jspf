@@ -183,57 +183,35 @@
 	</aui:field-wrapper>
 </aui:fieldset>
 
-<aui:script use="aui-base">
-	var selectDisplayStyle = A.one('#<portlet:namespace />displayStyle');
+<aui:script sandbox="<%= true %>">
+	var selectDisplayStyle = $('#<portlet:namespace />displayStyle');
 
-	function showHiddenFields () {
-		var assetLinkBehavior = A.one('.asset-link-behavior');
-		var hiddenFields = A.all('.hidden-field');
-		var selectDisplayStyle = A.one('#<portlet:namespace />displayStyle');
+	function showHiddenFields() {
+		var hiddenFields = $('.hidden-field');
 
-		if (hiddenFields) {
-			hiddenFields.get('parentNode').hide();
+		hiddenFields.parentsUntil('.general-display-settings', '.checkbox, .form-group').addClass('hide');
+
+		var displayStyle = selectDisplayStyle.val();
+
+		if (displayStyle == 'full-content') {
+			showParent('.show-asset-title', '.checkbox');
+			showParent('.show-context-link', '.checkbox');
+			showParent('.show-extra-info', '.checkbox');
 		}
-
-		if (selectDisplayStyle) {
-			var displayStyle = selectDisplayStyle.val();
-
-			if (displayStyle == 'full-content') {
-				var showAssetTitle = A.one('.show-asset-title');
-				var showContextLink = A.one('.show-context-link');
-				var showExtraInfo = A.one('.show-extra-info');
-
-				if (showAssetTitle) {
-					showAssetTitle.get('parentNode').show();
-				}
-
-				if (showContextLink) {
-					showContextLink.get('parentNode').show();
-				}
-
-				if (showExtraInfo) {
-					showExtraInfo.get('parentNode').show();
-				}
+		else {
+			if (displayStyle == 'abstracts') {
+				showParent('.abstract-length', '.form-group');
 			}
-			else {
-				if (displayStyle == 'abstracts') {
-					var abstractLength = A.one('.abstract-length');
 
-					if (abstractLength) {
-						abstractLength.get('parentNode').show();
-					}
-				}
-
-				if (assetLinkBehavior) {
-					assetLinkBehavior.get('parentNode').show();
-				}
-			}
+			showParent('.asset-link-behavior', '.form-group');
 		}
+	}
+
+	function showParent(child, parent) {
+		$(child).parentsUntil('.general-display-settings', parent).removeClass('hide');
 	}
 
 	showHiddenFields();
 
-	if (selectDisplayStyle) {
-		selectDisplayStyle.on('change', showHiddenFields);
-	}
+	selectDisplayStyle.on('change', showHiddenFields);
 </aui:script>

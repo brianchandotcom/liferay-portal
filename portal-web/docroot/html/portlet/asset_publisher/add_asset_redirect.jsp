@@ -24,7 +24,7 @@ redirect = PortalUtil.escapeRedirect(redirect);
 Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
 %>
 
-<aui:script use="aui-base">
+<aui:script>
 	Liferay.fire(
 		'closeWindow',
 		{

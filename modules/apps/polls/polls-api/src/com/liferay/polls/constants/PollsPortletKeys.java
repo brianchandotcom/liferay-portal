@@ -12,13 +12,16 @@
  * details.
  */
 
-package com.liferay.polls.web.util;
+package com.liferay.polls.constants;
 
 /**
  * @author Carlos Sierra Andrés
+ * @author Miguel Pastor
  */
-public class PollsWebKeys {
+public class PollsPortletKeys {
 
-	public static final String POLLS_QUESTION = "POLLS_QUESTION";
+	public static final String POLLS = "25_WAR_pollsweb";
+
+	public static final String POLLS_DISPLAY = "59_WAR_pollsweb";
 
 }

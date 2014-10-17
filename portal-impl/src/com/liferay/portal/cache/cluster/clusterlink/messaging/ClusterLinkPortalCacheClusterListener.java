@@ -14,8 +14,8 @@
 
 package com.liferay.portal.cache.cluster.clusterlink.messaging;
 
-import com.liferay.portal.kernel.cache.AggregatedCacheListener;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheProvider;
 import com.liferay.portal.kernel.cache.cluster.PortalCacheClusterEvent;
@@ -74,38 +74,31 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 		PortalCacheClusterEventType portalCacheClusterEventType =
 			portalCacheClusterEvent.getEventType();
 
-		boolean remoteInvoke = AggregatedCacheListener.isRemoteInvoke();
+		if (portalCacheClusterEventType.equals(
+				PortalCacheClusterEventType.REMOVE_ALL)) {
 
-		AggregatedCacheListener.setRemoteInvoke(true);
+			PortalCacheHelperUtil.removeAllWithoutReplicator(portalCache);
+		}
+		else if (portalCacheClusterEventType.equals(
+					PortalCacheClusterEventType.PUT) ||
+				 portalCacheClusterEventType.equals(
+					PortalCacheClusterEventType.UPDATE)) {
 
-		try {
-			if (portalCacheClusterEventType.equals(
-					PortalCacheClusterEventType.REMOVE_ALL)) {
+			Serializable key = portalCacheClusterEvent.getElementKey();
+			Serializable value = portalCacheClusterEvent.getElementValue();
 
-				portalCache.removeAll();
-			}
-			else if (portalCacheClusterEventType.equals(
-						PortalCacheClusterEventType.PUT) ||
-					 portalCacheClusterEventType.equals(
-						PortalCacheClusterEventType.UPDATE)) {
-
-				Serializable key = portalCacheClusterEvent.getElementKey();
-				Serializable value = portalCacheClusterEvent.getElementValue();
-
-				if (value == null) {
-					portalCache.remove(key);
-				}
-				else {
-					portalCache.put(
-						key, value, portalCacheClusterEvent.getTimeToLive());
-				}
+			if (value == null) {
+				PortalCacheHelperUtil.removeWithoutReplicator(portalCache, key);
 			}
 			else {
-				portalCache.remove(portalCacheClusterEvent.getElementKey());
+				PortalCacheHelperUtil.putWithoutReplicator(
+					portalCache, key, value,
+					portalCacheClusterEvent.getTimeToLive());
 			}
 		}
-		finally {
-			AggregatedCacheListener.setRemoteInvoke(remoteInvoke);
+		else {
+			PortalCacheHelperUtil.removeWithoutReplicator(
+				portalCache, portalCacheClusterEvent.getElementKey());
 		}
 	}
 

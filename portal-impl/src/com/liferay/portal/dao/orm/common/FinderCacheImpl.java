@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -194,7 +195,8 @@ public class FinderCacheImpl
 		Serializable cacheKey = finderPath.encodeCacheKey(args);
 
 		if (quiet) {
-			portalCache.putQuiet(cacheKey, primaryKey);
+			PortalCacheHelperUtil.putWithoutReplicator(
+				portalCache, cacheKey, primaryKey);
 		}
 		else {
 			portalCache.put(cacheKey, primaryKey);

@@ -256,23 +256,15 @@ public class TransactionalPortalCacheHelper {
 		public void removeAll(boolean skipReplicator) {
 			_uncommittedMap.clear();
 
-			if (_removeAll) {
-				if (!_skipReplicator) {
-					_skipReplicator = false;
-				}
-				else {
-					_skipReplicator = skipReplicator;
-				}
-
-				return;
-			}
-
 			_removeAll = true;
-			_skipReplicator = skipReplicator;
+
+			if (_skipReplicator) {
+				_skipReplicator = skipReplicator;
+			}
 		}
 
 		private boolean _removeAll;
-		private boolean _skipReplicator;
+		private boolean _skipReplicator = true;
 		private final Map<Serializable, ValueEntry> _uncommittedMap =
 			new HashMap<Serializable, ValueEntry>();
 

@@ -648,8 +648,8 @@
 		</execute>
 
 		<execute macro="KaleoDesigner#editSourceXML">
-			<var name="kdsourceXML" value=" NAME EDIT " />
-			<var name="linePNG" value="name" />
+			<var name="kdSourceXML"><![CDATA[<name>NAME EDIT]]></var>
+			<var name="line" value="3" />
 		</execute>
 
 		<execute macro="KaleoDesigner#publishWorkflowDefinitionViaWorkflowCP" />
@@ -658,9 +658,9 @@
 			<var name="portletName" value="Workflow" />
 		</execute>
 
-		<var name="key_workflowDefinitionName" value="Test D NAME EDIT efinition" />
+		<var name="key_workflowDefinitionName" value="NAME EDIT" />
 
-		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_NAME" value1="Test D NAME EDIT efinition" />
+		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_NAME" value1="NAME EDIT" />
 
 		<execute macro="KaleoDesigner#editWorkflowDefinitionViaWorkflowCP">
 			<var name="workflowDefinitionTitle" value="Test Definition" />
@@ -669,7 +669,7 @@
 		<execute macro="KaleoDesigner#viewSourceXMLTab" />
 
 		<execute macro="KaleoDesigner#viewSourceXMLLine">
-			<var name="kdsourceXML"><![CDATA[<name>Test D NAME EDIT efinition</name>]]></var>
+			<var name="kdSourceXML"><![CDATA[<name>NAME EDIT</name>]]></var>
 			<var name="line" value="3" />
 		</execute>
 	</command>
@@ -1017,7 +1017,7 @@
 		<execute macro="KaleoDesigner#viewSourceXMLTab" />
 
 		<execute macro="KaleoDesigner#viewSourceXMLLine">
-			<var name="kdsourceXML" ><![CDATA[<![CDATA[The file sent by]]></var>
+			<var name="kdSourceXML" ><![CDATA[<![CDATA[The file sent by]]></var>
 			<var name="line" value="16" />
 		</execute>
 	</command>
@@ -1034,16 +1034,15 @@
 		</execute>
 
 		<execute macro="KaleoDesigner#editSourceXML">
-			<var name="kdsourceXML" value="INVALID" />
+			<var name="kdSourceXML" value="INVALID" />
 			<var name="line" value="6" />
-			<var name="linePNG" value="state" />
 		</execute>
 
 		<execute macro="KaleoDesigner#viewViewTab" />
 		<execute macro="KaleoDesigner#viewSourceXMLTab" />
 
 		<execute macro="KaleoDesigner#viewSourceXMLLine">
-			<var name="kdsourceXML"><![CDATA[<stINVALIDate>]]></var>
+			<var name="kdSourceXML" value="INVALID" />
 			<var name="line" value="6" />
 		</execute>
 	</command>
@@ -1073,7 +1072,7 @@
 		<execute macro="KaleoDesigner#viewSourceXMLTab" />
 
 		<execute macro="KaleoDesigner#viewSourceXMLLine">
-			<var name="kdsourceXML" ><![CDATA[<![CDATA[A file has been submitted.]]></var>
+			<var name="kdSourceXML" ><![CDATA[<![CDATA[A file has been submitted.]]></var>
 			<var name="line" value="15" />
 		</execute>
 
@@ -1102,7 +1101,7 @@
 		<execute macro="KaleoDesigner#viewSourceXMLTab" />
 
 		<execute macro="KaleoDesigner#viewSourceXMLLine">
-			<var name="kdsourceXML" ><![CDATA[<![CDATA[The file sent by]]></var>
+			<var name="kdSourceXML" ><![CDATA[<![CDATA[The file sent by]]></var>
 			<var name="line" value="16" />
 		</execute>
 	</command>

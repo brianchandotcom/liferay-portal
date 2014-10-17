@@ -6,7 +6,7 @@
 	</command>
 
 	<command name="assertTextEquals">
-		<case locator-key1="SOURCE_KALEO_XML_CONTENT_SPECIFIC_LINE">
+		<case locator-key1="SOURCE_KALEO_XML_CONTENT_SPECIFIC_LINE_CONTENT">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 	</command>

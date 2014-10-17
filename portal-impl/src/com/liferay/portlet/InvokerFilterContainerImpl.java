@@ -25,16 +25,20 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 
 import java.io.Closeable;
+import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
@@ -94,6 +98,8 @@ public class InvokerFilterContainerImpl
 			return;
 		}
 
+		Registry registry = RegistryUtil.getRegistry();
+
 		Map<String, com.liferay.portal.model.PortletFilter> portletFilters =
 			portlet.getPortletFilters();
 
@@ -108,21 +114,30 @@ public class InvokerFilterContainerImpl
 
 			Set<String> lifecycles = portletFilterModel.getLifecycles();
 
+			List<String> lifecycleInterfaces = new ArrayList<>();
+
 			if (lifecycles.contains(PortletRequest.ACTION_PHASE)) {
-				_actionFilters.add((ActionFilter)portletFilter);
+				lifecycleInterfaces.add(ActionFilter.class.getName());
 			}
 
 			if (lifecycles.contains(PortletRequest.EVENT_PHASE)) {
-				_eventFilters.add((EventFilter)portletFilter);
+				lifecycleInterfaces.add(EventFilter.class.getName());
 			}
 
 			if (lifecycles.contains(PortletRequest.RENDER_PHASE)) {
-				_renderFilters.add((RenderFilter)portletFilter);
+				lifecycleInterfaces.add(RenderFilter.class.getName());
 			}
 
 			if (lifecycles.contains(PortletRequest.RESOURCE_PHASE)) {
-				_resourceFilters.add((ResourceFilter)portletFilter);
+				lifecycleInterfaces.add(ResourceFilter.class.getName());
 			}
+
+			ServiceRegistration<PortletFilter> serviceRegistration =
+				registry.registerService(
+					lifecycleInterfaces.toArray(new String[0]), portletFilter,
+					properties);
+
+			_portletFilterRegistrations.add(serviceRegistration);
 		}
 
 		ClassLoader classLoader = ClassLoaderUtil.getContextClassLoader();
@@ -143,23 +158,30 @@ public class InvokerFilterContainerImpl
 				PortletFilter portletFilter = PortletFilterFactory.create(
 					portletFilterModel, portletContext);
 
-				_systemPortletFilters.add(portletFilter);
+				List<String> lifecycleInterfaces = new ArrayList<>();
 
 				if (portletFilter instanceof ActionFilter) {
-					_actionFilters.add((ActionFilter)portletFilter);
+					lifecycleInterfaces.add(ActionFilter.class.getName());
 				}
 
 				if (portletFilter instanceof EventFilter) {
-					_eventFilters.add((EventFilter)portletFilter);
+					lifecycleInterfaces.add(EventFilter.class.getName());
 				}
 
 				if (portletFilter instanceof RenderFilter) {
-					_renderFilters.add((RenderFilter)portletFilter);
+					lifecycleInterfaces.add(RenderFilter.class.getName());
 				}
 
 				if (portletFilter instanceof ResourceFilter) {
-					_resourceFilters.add((ResourceFilter)portletFilter);
+					lifecycleInterfaces.add(ResourceFilter.class.getName());
 				}
+
+				ServiceRegistration<PortletFilter> serviceRegistration =
+					registry.registerService(
+						lifecycleInterfaces.toArray(new String[0]),
+						portletFilter, properties);
+
+				_portletFilterRegistrations.add(serviceRegistration);
 			}
 		}
 		finally {
@@ -169,6 +191,23 @@ public class InvokerFilterContainerImpl
 
 	@Override
 	public void close() {
+		for (ServiceRegistration<?> registration :
+				_portletFilterRegistrations) {
+
+			registration.unregister();
+		}
+
+		_portletFilterRegistrations.clear();
+
+		try {
+			((Closeable)_actionFilters).close();
+			((Closeable)_eventFilters).close();
+			((Closeable)_renderFilters).close();
+			((Closeable)_resourceFilters).close();
+		}
+		catch (IOException e) {
+			_log.error(e, e);
+		}
 	}
 
 	@Override
@@ -196,6 +235,8 @@ public class InvokerFilterContainerImpl
 
 	private List<ActionFilter> _actionFilters;
 	private List<EventFilter> _eventFilters;
+	private List<ServiceRegistration<PortletFilter>>
+		_portletFilterRegistrations = new CopyOnWriteArrayList<>();
 	private List<RenderFilter> _renderFilters;
 	private List<ResourceFilter> _resourceFilters;
 
@@ -235,6 +276,8 @@ public class InvokerFilterContainerImpl
 			}
 			catch (PortletException e) {
 				_log.error(e, e);
+
+				registry.ungetService(serviceReference);
 
 				return null;
 			}

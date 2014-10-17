@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.Session;
@@ -224,7 +225,8 @@ public class EntityCacheImpl
 						result = ((BaseModel<?>)loadResult).toCacheModel();
 					}
 
-					portalCache.putQuiet(cacheKey, result);
+					PortalCacheHelperUtil.putWithoutReplicator(
+						portalCache, cacheKey, result);
 
 					sessionFactory.closeSession(session);
 				}
@@ -288,7 +290,8 @@ public class EntityCacheImpl
 		Serializable cacheKey = _encodeCacheKey(primaryKey);
 
 		if (quiet) {
-			portalCache.putQuiet(cacheKey, result);
+			PortalCacheHelperUtil.putWithoutReplicator(
+				portalCache, cacheKey, result);
 		}
 		else {
 			portalCache.put(cacheKey, result);

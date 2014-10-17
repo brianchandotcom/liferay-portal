@@ -1571,6 +1571,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							StringPool.TAB + StringPool.LESS_THAN) &&
 						!previousLine.contains(
 							StringPool.TAB + StringPool.SPACE) &&
+						!previousLine.contains(StringPool.TAB + "for (") &&
 						!previousLine.contains(
 							StringPool.TAB + "implements ") &&
 						!previousLine.contains(StringPool.TAB + "throws ")) {

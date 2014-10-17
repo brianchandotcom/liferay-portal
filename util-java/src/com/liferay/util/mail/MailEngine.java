@@ -58,8 +58,6 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-import org.apache.commons.lang.time.StopWatch;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Brian Myunghun Kim
@@ -178,11 +176,11 @@ public class MailEngine {
 			List<FileAttachment> fileAttachments, SMTPAccount smtpAccount)
 		throws MailEngineException {
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = 0;
 
 		if (_log.isDebugEnabled()) {
+			startTime = System.currentTimeMillis();
+
 			_log.debug("From: " + from);
 			_log.debug("To: " + Arrays.toString(to));
 			_log.debug("CC: " + Arrays.toString(cc));
@@ -366,7 +364,9 @@ public class MailEngine {
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Sending mail takes " + stopWatch.getTime() + " ms");
+			_log.debug(
+				"Sending mail takes " +
+					(System.currentTimeMillis() - startTime) + " ms");
 		}
 	}
 

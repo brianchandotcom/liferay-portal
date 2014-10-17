@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence.impl;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.RowMapper;
@@ -428,7 +429,8 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 			Arrays.sort(primaryKeys);
 
 			if (updateCache) {
-				portalCache.putQuiet(masterPrimaryKey, primaryKeys);
+				PortalCacheHelperUtil.putWithoutReplicator(
+					portalCache, masterPrimaryKey, primaryKeys);
 			}
 		}
 

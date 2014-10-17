@@ -79,22 +79,22 @@ public class BlockingPortalCache<K extends Serializable, V>
 
 	@Override
 	public void put(K key, V value) {
-		doPut(key, value, DEFAULT_TIME_TO_LIVE, false);
+		put(key, value, DEFAULT_TIME_TO_LIVE);
 	}
 
 	@Override
 	public void put(K key, V value, int timeToLive) {
-		doPut(key, value, timeToLive, false);
-	}
+		portalCache.put(key, value, timeToLive);
 
-	@Override
-	public void putQuiet(K key, V value) {
-		doPut(key, value, DEFAULT_TIME_TO_LIVE, true);
-	}
+		CompeteLatch competeLatch = _competeLatch.get();
 
-	@Override
-	public void putQuiet(K key, V value, int timeToLive) {
-		doPut(key, value, timeToLive, true);
+		if (competeLatch != null) {
+			competeLatch.done();
+
+			_competeLatch.set(null);
+		}
+
+		_competeLatchMap.remove(key);
 	}
 
 	@Override
@@ -112,25 +112,6 @@ public class BlockingPortalCache<K extends Serializable, V>
 	public void removeAll() {
 		portalCache.removeAll();
 		_competeLatchMap.clear();
-	}
-
-	protected void doPut(K key, V value, int timeToLive, boolean quiet) {
-		if (quiet) {
-			portalCache.putQuiet(key, value, timeToLive);
-		}
-		else {
-			portalCache.put(key, value, timeToLive);
-		}
-
-		CompeteLatch competeLatch = _competeLatch.get();
-
-		if (competeLatch != null) {
-			competeLatch.done();
-
-			_competeLatch.set(null);
-		}
-
-		_competeLatchMap.remove(key);
 	}
 
 	private static final ThreadLocal<CompeteLatch> _competeLatch =

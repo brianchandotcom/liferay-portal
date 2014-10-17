@@ -15,6 +15,7 @@
 package com.liferay.portal.cache.bootstrap;
 
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheProvider;
 import com.liferay.portal.kernel.cluster.Address;
@@ -245,8 +246,9 @@ public class ClusterLinkBootstrapLoaderHelperUtil {
 					if (object instanceof CacheElement) {
 						CacheElement cacheElement = (CacheElement)object;
 
-						portalCache.putQuiet(
-							cacheElement.getKey(), cacheElement.getValue());
+						PortalCacheHelperUtil.putWithoutReplicator(
+							portalCache, cacheElement.getKey(),
+							cacheElement.getValue());
 					}
 					else if (object instanceof String) {
 						if (_COMMAND_SOCKET_CLOSE.equals(object)) {

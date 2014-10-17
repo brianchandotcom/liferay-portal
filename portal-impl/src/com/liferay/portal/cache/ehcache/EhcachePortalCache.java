@@ -37,7 +37,8 @@ public class EhcachePortalCache<K extends Serializable, V>
 	public EhcachePortalCache(
 		PortalCacheManager<K, V> portalCacheManager, Ehcache ehcache) {
 
-		_portalCacheManager = portalCacheManager;
+		super(portalCacheManager);
+
 		this.ehcache = ehcache;
 
 		RegisteredEventListeners registeredEventListeners =
@@ -60,11 +61,6 @@ public class EhcachePortalCache<K extends Serializable, V>
 	}
 
 	@Override
-	public PortalCacheManager<K, V> getPortalCacheManager() {
-		return _portalCacheManager;
-	}
-
-	@Override
 	public void removeAll() {
 		ehcache.removeAll();
 	}
@@ -81,19 +77,14 @@ public class EhcachePortalCache<K extends Serializable, V>
 	}
 
 	@Override
-	protected void doPut(K key, V value, int timeToLive, boolean quiet) {
+	protected void doPut(K key, V value, int timeToLive) {
 		Element element = new Element(key, value);
 
 		if (timeToLive != DEFAULT_TIME_TO_LIVE) {
 			element.setTimeToLive(timeToLive);
 		}
 
-		if (quiet) {
-			ehcache.putQuiet(element);
-		}
-		else {
-			ehcache.put(element);
-		}
+		ehcache.put(element);
 	}
 
 	@Override
@@ -156,7 +147,5 @@ public class EhcachePortalCache<K extends Serializable, V>
 	}
 
 	protected Ehcache ehcache;
-
-	private final PortalCacheManager<K, V> _portalCacheManager;
 
 }

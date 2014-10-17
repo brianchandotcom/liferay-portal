@@ -47,12 +47,6 @@ public interface PortalCache<K extends Serializable, V> {
 	@Proxy
 	public void put(K key, V value, int timeToLive);
 
-	@Proxy
-	public void putQuiet(K key, V value);
-
-	@Proxy
-	public void putQuiet(K key, V value, int timeToLive);
-
 	public void registerCacheListener(CacheListener<K, V> cacheListener);
 
 	public void registerCacheListener(

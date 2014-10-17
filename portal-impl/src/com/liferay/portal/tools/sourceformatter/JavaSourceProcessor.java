@@ -1991,9 +1991,20 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		String[] lines = StringUtil.splitLines(content);
 
-		String line = lines[javaField.getLineNumber() - 1];
+		String line = null;
+		int lineNumber = javaField.getLineNumber() - 1;
 
-		lines[javaField.getLineNumber() - 1] = StringUtil.replace(
+		while (true) {
+			line = lines[lineNumber];
+
+			if (line.contains(oldFieldType)) {
+				break;
+			}
+
+			lineNumber++;
+		}
+
+		lines[lineNumber] = StringUtil.replace(
 			line, oldFieldType, newFieldType);
 
 		StringBundler sb = new StringBundler(2 * lines.length);
@@ -2005,9 +2016,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		sb.setIndex(sb.index() - 1);
 
-		content = sb.toString();
-
-		return content;
+		return sb.toString();
 	}
 
 	protected String getCombinedLinesContent(

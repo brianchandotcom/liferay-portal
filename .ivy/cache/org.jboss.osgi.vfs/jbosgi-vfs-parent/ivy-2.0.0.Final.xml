@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0" xmlns:m="http://ant.apache.org/ivy/maven">
+	<info organisation="org.jboss.osgi.vfs"
+		module="jbosgi-vfs-parent"
+		revision="2.0.0.Final"
+		status="release"
+		publication="20130619034837"
+	>
+		<description homepage="">
+		The JBossOSGi VFS Abstration
+		</description>
+		<m:properties__version.install.plugin>2.4</m:properties__version.install.plugin>
+		<m:properties__version.jar.plugin>2.4</m:properties__version.jar.plugin>
+		<m:properties__version.resources.plugin>2.6</m:properties__version.resources.plugin>
+		<m:properties__version.javadoc.plugin>2.9</m:properties__version.javadoc.plugin>
+		<m:properties__version.assembly.plugin>2.4</m:properties__version.assembly.plugin>
+		<m:properties__jboss.snapshots.repo.url>https://repository.jboss.org/nexus/content/repositories/snapshots</m:properties__jboss.snapshots.repo.url>
+		<m:dependency.management__org.jboss.logging__jboss-logging-processor__version>1.1.0.Final</m:dependency.management__org.jboss.logging__jboss-logging-processor__version>
+		<m:dependency.management__junit__junit__version>4.10</m:dependency.management__junit__junit__version>
+		<m:properties__jboss.releases.repo.url>https://repository.jboss.org/nexus/service/local/staging/deploy/maven2</m:properties__jboss.releases.repo.url>
+		<m:dependency.management__org.jboss.logging__jboss-logging__version>3.1.3.GA</m:dependency.management__org.jboss.logging__jboss-logging__version>
+		<m:properties__version.jboss.logging>3.1.3.GA</m:properties__version.jboss.logging>
+		<m:properties__version.junit>4.10</m:properties__version.junit>
+		<m:maven.plugins>null__maven-compiler-plugin__null|null__maven-jar-plugin__null|null__maven-release-plugin__null|null__maven-source-plugin__null|null__maven-surefire-plugin__null|org.codehaus.mojo__license-maven-plugin__null|null__maven-compiler-plugin__null|null__maven-jar-plugin__null|null__maven-release-plugin__null|null__maven-source-plugin__null|null__maven-surefire-plugin__null|org.codehaus.mojo__license-maven-plugin__null|org.codehaus.mojo__license-maven-plugin__null</m:maven.plugins>
+		<m:properties__version.compiler.plugin>3.1</m:properties__version.compiler.plugin>
+		<m:properties__version.build.helper.plugin>1.8</m:properties__version.build.helper.plugin>
+		<m:properties__version.license.plugin>1.5</m:properties__version.license.plugin>
+		<m:properties__version.bundle.plugin>2.4.0</m:properties__version.bundle.plugin>
+		<m:dependency.management__org.jboss__jboss-vfs__version>3.1.0.Final</m:dependency.management__org.jboss__jboss-vfs__version>
+		<m:properties__version.source.plugin>2.2.1</m:properties__version.source.plugin>
+		<m:properties__version.osgi>5.0.0</m:properties__version.osgi>
+		<m:dependency.management__org.jboss.logmanager__jboss-logmanager__version>1.4.1.Final</m:dependency.management__org.jboss.logmanager__jboss-logmanager__version>
+		<m:properties__version.clean.plugin>2.5</m:properties__version.clean.plugin>
+		<m:dependency.management__org.jboss.shrinkwrap__shrinkwrap-impl-base__version>1.0.0</m:dependency.management__org.jboss.shrinkwrap__shrinkwrap-impl-base__version>
+		<m:properties__version.surefire.plugin>2.15</m:properties__version.surefire.plugin>
+		<m:properties__project.build.sourceEncoding>UTF-8</m:properties__project.build.sourceEncoding>
+		<m:properties__version.release.plugin>2.4</m:properties__version.release.plugin>
+		<m:properties__version.jboss.logging.processor>1.1.0.Final</m:properties__version.jboss.logging.processor>
+		<m:properties__version.deploy.plugin>2.7</m:properties__version.deploy.plugin>
+		<m:dependency.management__org.osgi__org.osgi.core__version>5.0.0</m:dependency.management__org.osgi__org.osgi.core__version>
+		<m:properties__version.jboss.shrinkwrap>1.0.0</m:properties__version.jboss.shrinkwrap>
+		<m:properties__version.jboss.logmanager>1.4.1.Final</m:properties__version.jboss.logmanager>
+		<m:properties__version.antrun.plugin>1.7</m:properties__version.antrun.plugin>
+		<m:properties__version.jboss.vfs>3.1.0.Final</m:properties__version.jboss.vfs>
+	</info>
+	<configurations>
+		<conf name="default" visibility="public" description="runtime dependencies and master artifact can be used with this conf" extends="runtime,master"/>
+		<conf name="master" visibility="public" description="contains only the artifact published by this module itself, with no transitive dependencies"/>
+		<conf name="compile" visibility="public" description="this is the default scope, used if none is specified. Compile dependencies are available in all classpaths."/>
+		<conf name="provided" visibility="public" description="this is much like compile, but indicates you expect the JDK or a container to provide it. It is only available on the compilation classpath, and is not transitive."/>
+		<conf name="runtime" visibility="public" description="this scope indicates that the dependency is not required for compilation, but is for execution. It is in the runtime and test classpaths, but not the compile classpath." extends="compile"/>
+		<conf name="test" visibility="private" description="this scope indicates that the dependency is not required for normal use of the application, and is only available for the test compilation and execution phases." extends="runtime"/>
+		<conf name="system" visibility="public" description="this scope is similar to provided except that you have to provide the JAR which contains it explicitly. The artifact is always available and is not looked up in a repository."/>
+		<conf name="sources" visibility="public" description="this configuration contains the source artifact of this module, if any."/>
+		<conf name="javadoc" visibility="public" description="this configuration contains the javadoc artifact of this module, if any."/>
+		<conf name="optional" visibility="public" description="contains all optional dependencies"/>
+	</configurations>
+	<publications>
+	</publications>
+</ivy-module>

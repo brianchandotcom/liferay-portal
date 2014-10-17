@@ -2609,28 +2609,26 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String sanitizeContent(String content) {
-		Matcher componentPropertyMatcher = _componentPropertyPattern.matcher(
-			content);
+		Matcher matcher = _componentPropertyPattern.matcher(content);
 
-		if (!componentPropertyMatcher.find()) {
+		if (!matcher.find()) {
 			return content;
 		}
 
-		String componentProperty = content.substring(
-			componentPropertyMatcher.start(1), componentPropertyMatcher.end(1));
+		String componentProperty = matcher.group(1);
 
 		int newLineCount = StringUtil.count(
 			componentProperty, StringPool.NEW_LINE);
 
 		StringBundler sb = new StringBundler(newLineCount + 2);
 
-		sb.append(content.substring(0, componentPropertyMatcher.start(1)));
+		sb.append(content.substring(0, matcher.start(1)));
 
 		for (int i = 0; i< newLineCount; i++) {
 			sb.append(StringPool.NEW_LINE);;
 		}
 
-		sb.append(content.substring(componentPropertyMatcher.end(1)));
+		sb.append(content.substring(matcher.end(1)));
 
 		return sb.toString();
 	}

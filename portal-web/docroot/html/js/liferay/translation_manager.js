@@ -55,7 +55,7 @@ AUI.add(
 
 		var TPL_LOCALE_IMAGE = '<img src="' + themeDisplay.getPathThemeImages() + '/language/{locale}.png" />';
 
-		var TPL_AVAILABLE_TRANSLATION_LINK = '<span class="' + CSS_TRANSLATION + ' {cssClass}" locale="{locale}">' + TPL_LOCALE_IMAGE + '{displayName} <a class="' + CSS_DELETE_TRANSLATION + ' icon icon-remove" href="javascript:;"></a></span>';
+		var TPL_AVAILABLE_TRANSLATION_LINK = '<span class="' + CSS_TRANSLATION + ' {cssClass}" locale="{locale}">' + TPL_LOCALE_IMAGE + '{displayName} <i class="' + CSS_DELETE_TRANSLATION + ' icon icon-remove"></i></span>';
 
 		var TPL_AVAILABLE_TRANSLATIONS_LINKS_NODE = '<span class="' + CSS_AVAILABLE_TRANSLATIONS_LINKS + '"></span>';
 

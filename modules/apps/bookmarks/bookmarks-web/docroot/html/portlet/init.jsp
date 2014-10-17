@@ -13,6 +13,7 @@
  * details.
  */
 --%>
+
 <%@ taglib uri="http://alloy.liferay.com/tld/aui" prefix="aui" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -82,9 +83,9 @@ page import="javax.portlet.WindowState" %>
 <liferay-theme:defineObjects/>
 
 <%
-	PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
+WindowState windowState = liferayPortletRequest.getWindowState();
 
-	String currentURL = currentURLObj.toString();
+PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
 
-	WindowState windowState = liferayPortletRequest.getWindowState();
+String currentURL = currentURLObj.toString();
 %>

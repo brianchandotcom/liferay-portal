@@ -442,6 +442,12 @@
 		<execute action="Kaleodesigner#assertClick" locator-key1="DRAFT_HISTORY_LATEST_VERSION_BUTTON" value1="Latest Version" />
 	</command>
 
+	<command name="publishInvalidWorkflowDefinitionViaWorkflowCP">
+		<execute action="Kaleodesigner#assertClickNoError" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="Kaleodesigner#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+		<execute action="Kaleodesigner#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter valid content." />
+	</command>
+
 	<command name="publishWorkflowDefinitionViaKDCP">
 		<execute action="Kaleodesigner#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -657,10 +663,6 @@
 	</command>
 
 	<command name="viewNoWorkflowDefinitionsViaKDCP">
-		<execute action="CPKaleodesignerconfiguration#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No workflow definitions are defined." />
-	</command>
-
-	<command name="viewNoWorkflowDraftsViaKDCP">
 		<execute action="CPKaleodesignerconfiguration#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No workflow definitions are defined." />
 	</command>
 

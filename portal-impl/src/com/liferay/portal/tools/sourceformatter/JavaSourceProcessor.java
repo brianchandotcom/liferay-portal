@@ -2616,16 +2616,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return content;
 		}
 
-		String santizedContent = content.substring(
+		String componentProperty = content.substring(
 			componentPropertyMatcher.start(1), componentPropertyMatcher.end(1));
 
-		String[] sanitizedContentLines = StringUtil.splitLines(santizedContent);
+		String[] componentPropertyLines = StringUtil.splitLines(
+			componentProperty);
 
-		StringBundler sb = new StringBundler(3 + sanitizedContentLines.length);
+		StringBundler sb = new StringBundler(3 + componentPropertyLines.length);
 
 		sb.append(content.substring(0, componentPropertyMatcher.start(1)));
 
-		for (int i = 0; i< sanitizedContentLines.length + 1; i++) {
+		for (int i = 0; i< componentPropertyLines.length + 1; i++) {
 			sb.append("\n");
 		}
 

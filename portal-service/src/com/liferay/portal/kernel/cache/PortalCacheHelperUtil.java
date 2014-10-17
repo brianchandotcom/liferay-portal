@@ -47,8 +47,8 @@ public class PortalCacheHelperUtil {
 		}
 	}
 
-	public static <K extends Serializable, V> void removeAllWithoutReplicator(
-		PortalCache<K, V> portalCache) {
+	public static void removeAllWithoutReplicator(
+		PortalCache<?, ?> portalCache) {
 
 		boolean remoteInvoke = AggregatedCacheListener.isRemoteInvoke();
 
@@ -66,8 +66,8 @@ public class PortalCacheHelperUtil {
 		}
 	}
 
-	public static <K extends Serializable, V> void removeWithoutReplicator(
-		PortalCache<K, V> portalCache, K key) {
+	public static <K extends Serializable> void removeWithoutReplicator(
+		PortalCache<K, ?> portalCache, K key) {
 
 		boolean remoteInvoke = AggregatedCacheListener.isRemoteInvoke();
 

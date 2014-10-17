@@ -289,34 +289,32 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 </aui:script>
 
 <aui:script>
-	var form = document.<portlet:namespace />fm;
-
 	function <portlet:namespace />chooseSelectionStyle() {
-		form.<portlet:namespace /><%= Constants.CMD %>.value = 'selection-style';
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'selection-style';
 
-		submitForm(form);
+		submitForm(document.<portlet:namespace />fm);
 	}
 
 	function <portlet:namespace />moveSelectionDown(assetEntryOrder) {
-		form.<portlet:namespace /><%= Constants.CMD %>.value = 'move-selection-down';
-		form.<portlet:namespace />assetEntryOrder.value = assetEntryOrder;
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'move-selection-down';
+		document.<portlet:namespace />fm.<portlet:namespace />assetEntryOrder.value = assetEntryOrder;
 
-		submitForm(form);
+		submitForm(document.<portlet:namespace />fm);
 	}
 
 	function <portlet:namespace />moveSelectionUp(assetEntryOrder) {
-		form.<portlet:namespace /><%= Constants.CMD %>.value = 'move-selection-up';
-		form.<portlet:namespace />assetEntryOrder.value = assetEntryOrder;
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'move-selection-up';
+		document.<portlet:namespace />fm.<portlet:namespace />assetEntryOrder.value = assetEntryOrder;
 
-		submitForm(form);
+		submitForm(document.<portlet:namespace />fm);
 	}
 
 	Liferay.provide(
 		window,
 		'<portlet:namespace />saveSelectBoxes',
 		function() {
-			if (form.<portlet:namespace />classNameIds) {
-				form.<portlet:namespace />classNameIds.value = Liferay.Util.listSelect(form.<portlet:namespace />currentClassNameIds);
+			if (document.<portlet:namespace />fm.<portlet:namespace />classNameIds) {
+				document.<portlet:namespace />fm.<portlet:namespace />classNameIds.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentClassNameIds);
 			}
 
 			<%
@@ -324,17 +322,17 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 				String className = AssetPublisherUtil.getClassName(curRendererFactory);
 			%>
 
-				if (form.<portlet:namespace />classTypeIds<%= className %>) {
-					form.<portlet:namespace />classTypeIds<%= className %>.value = Liferay.Util.listSelect(form.<portlet:namespace /><%= className %>currentClassTypeIds);
+				if (document.<portlet:namespace />fm.<portlet:namespace />classTypeIds<%= className %>) {
+					document.<portlet:namespace />fm.<portlet:namespace />classTypeIds<%= className %>.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace /><%= className %>currentClassTypeIds);
 				}
 
 			<%
 			}
 			%>
 
-			form.<portlet:namespace />metadataFields.value = Liferay.Util.listSelect(form.<portlet:namespace />currentMetadataFields);
+			document.<portlet:namespace />fm.<portlet:namespace />metadataFields.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentMetadataFields);
 
-			submitForm(form);
+			submitForm(document.<portlet:namespace />fm);
 		},
 		['liferay-util-list-fields']
 	);

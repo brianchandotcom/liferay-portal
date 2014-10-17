@@ -537,13 +537,13 @@ create table DDMStructureLink (
 );
 
 create table DDMStructureVersion (
-	ddmStructureVersionId LONG not null primary key,
+	structureVersionId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
-	ddmStructureId LONG,
+	structureId LONG,
 	name STRING null,
 	description STRING null,
 	definition TEXT null,

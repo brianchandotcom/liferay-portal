@@ -179,6 +179,11 @@ if (!portletName.equals(PortletKeys.SITE_SETTINGS)) {
 	<portlet:param name="struts_action" value="/sites_admin/edit_site" />
 </portlet:actionURL>
 
+<portlet:renderURL var="forceDisableRedirectURL">
+	<portlet:param name="struts_action" value="/sites_admin/edit_site" />
+	<portlet:param name="historyKey" value='<%= renderResponse.getNamespace() + "staging" %>' />
+</portlet:renderURL>
+
 <aui:form action="<%= editSiteURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveGroup();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
@@ -210,7 +215,7 @@ if (!portletName.equals(PortletKeys.SITE_SETTINGS)) {
 </aui:form>
 
 <aui:script>
-	function <portlet:namespace />saveGroup() {
+	function <portlet:namespace />saveGroup(forceDisable) {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (group == null) ? Constants.ADD : Constants.UPDATE %>';
 
 		var ok = true;
@@ -250,6 +255,14 @@ if (!portletName.equals(PortletKeys.SITE_SETTINGS)) {
 		</c:if>
 
 		if (ok) {
+			if (forceDisable) {
+				document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= forceDisableRedirectURL %>';
+				document.<portlet:namespace />fm.<portlet:namespace />forceDisable.value = true;
+				document.<portlet:namespace />fm.<portlet:namespace />none.checked = true;
+				document.<portlet:namespace />fm.<portlet:namespace />local.checked = false;
+				document.<portlet:namespace />fm.<portlet:namespace />remote.checked = false;
+			}
+
 			<c:if test="<%= (group != null) && !group.isCompany() %>">
 				<portlet:namespace />saveLocales();
 			</c:if>

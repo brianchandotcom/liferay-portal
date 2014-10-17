@@ -26,11 +26,11 @@
 		<c:if test="<%= liveGroup.isStaged() && liveGroup.isStagedRemotely() %>">
 			<liferay-util:buffer var="forceDisableLinkBuffer">
 				<aui:a href="javascript:;" id="forceDisableLink">
-					<liferay-ui:message key="this-link" />
+					<liferay-ui:message key="force-disable" />
 				</aui:a>
 			</liferay-util:buffer>
 
-			<liferay-ui:message arguments="<%= forceDisableLinkBuffer %>" key="if-you-want-to-force-disabling-remote-staging,-click-x" />
+			<liferay-ui:message arguments="<%= forceDisableLinkBuffer %>" key="you-also-have-the-option-to-x-remote-staging" />
 		</c:if>
 	</c:if>
 
@@ -53,14 +53,7 @@
 	if (forceDisableLink) {
 		forceDisableLink.on('click',
 			function() {
-				event.preventDefault();
-
-				document.<portlet:namespace />fm.<portlet:namespace />forceDisable.value = true;
-				document.<portlet:namespace />fm.<portlet:namespace />none.checked = true;
-				document.<portlet:namespace />fm.<portlet:namespace />local.checked = false;
-				document.<portlet:namespace />fm.<portlet:namespace />remote.checked = false;
-
-				<portlet:namespace />saveGroup();
+				<portlet:namespace />saveGroup(true);
 		});
 	}
 </aui:script>

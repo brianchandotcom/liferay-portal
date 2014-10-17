@@ -14,12 +14,10 @@
 
 package com.liferay.portal.security.membershippolicy;
 
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -216,40 +214,34 @@ public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 	protected void verifyLimitedParentMembership(final Group group)
 		throws PortalException {
 
-		final List<Long> userIds = new ArrayList<Long>();
+		int count = UserLocalServiceUtil.getGroupUsersCount(group.getGroupId());
 
-		ActionableDynamicQuery userActionableDynamicQuery =
-			UserLocalServiceUtil.getActionableDynamicQuery();
+		int pages = count / DELETE_INTERVAL;
 
-		userActionableDynamicQuery.setCompanyId(group.getCompanyId());
-		userActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+		int start = 0;
 
-				@Override
-				public void performAction(Object object)
-					throws PortalException {
+		for (int i = 0; i <= pages; i++) {
+			int end = start + DELETE_INTERVAL;
 
-					User user = (User)object;
+			List<User> users = UserLocalServiceUtil.getGroupUsers(
+				group.getGroupId(), start, end);
 
-					if (UserLocalServiceUtil.hasGroupUser(
-							group.getGroupId(), user.getUserId()) &&
-						!UserLocalServiceUtil.hasGroupUser(
-							group.getParentGroupId(), user.getUserId())) {
+			for (User user : users) {
+				if (!UserLocalServiceUtil.hasGroupUser(
+						group.getParentGroupId(), user.getUserId())) {
 
-						userIds.add(user.getUserId());
-					}
+					UserLocalServiceUtil.unsetGroupUsers(
+						group.getGroupId(), new long[] {user.getUserId()},
+						null);
 				}
-
-			});
-
-		userActionableDynamicQuery.performActions();
-
-		UserLocalServiceUtil.unsetGroupUsers(
-			group.getGroupId(),
-			ArrayUtil.toArray(userIds.toArray(new Long[userIds.size()])), null);
+				else {
+					start++;
+				}
+			}
+		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
+	private static Log _log = LogFactoryUtil.getLog(
 		DefaultSiteMembershipPolicy.class);
 
 }

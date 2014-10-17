@@ -367,10 +367,18 @@
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
 		<execute macro="Subcategory#addCP">
 			<var name="categoryName" value="${categoryName}" />
 			<var name="subcategoryName" value="${subcategoryName}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
 		</execute>
 
 		<execute macro="Subcategory#viewCP">
@@ -936,27 +944,27 @@
 	</command>
 
 	<command name="DeleteSubcategoryViaArrow" priority="5">
-		<var name="categoryName" value="Category Name" />
-		<var name="subcategoryName" value="Subcategory Name" />
-		<var name="vocabularyName" value="Vocabulary Name" />
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
 
 		<execute macro="Vocabulary#addCP">
-			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
 		<execute macro="Category#addCP">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
 		</execute>
 
 		<execute macro="Subcategory#addCP">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="subcategoryName" value="${subcategoryName}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="categoryName" value="Category Name" />
+			<var name="subcategoryName" value="Subcategory Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -964,9 +972,9 @@
 		</execute>
 
 		<execute macro="Subcategory#deleteViaArrowCP">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="subcategoryName" value="${subcategoryName}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="categoryName" value="Category Name" />
+			<var name="subcategoryName" value="Subcategory Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 	</command>
 

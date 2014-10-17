@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Markdown Converter
 Bundle-SymbolicName: com.liferay.markdown.converter
-Bundle-Version: 1.0.2
+Bundle-Version: 1.0.3
 Export-Package:\
 	com.liferay.markdown.converter,\
 	com.liferay.markdown.converter.factory,\

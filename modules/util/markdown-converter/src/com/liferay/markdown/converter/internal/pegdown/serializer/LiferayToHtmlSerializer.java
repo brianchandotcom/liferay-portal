@@ -40,6 +40,8 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 
 	@Override
 	public void visit(HeaderNode node) {
+		boolean anchorInserted = false;
+
 		if (node.getLevel() != 1) {
 			List<Node> childNodes = node.getChildren();
 
@@ -59,12 +61,19 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 
 					text = text.replace(' ', '-');
 
-					printer.print("<a id=\"" + text + "\"></a>");
+					printer.print(
+						"<a href=\"#" + text + "\" id=\"" + text + "\">");
+
+					anchorInserted = true;
 				}
 			}
 		}
 
 		super.visit(node);
+
+		if (anchorInserted) {
+			printer.print("</a>");
+		}
 	}
 
 	@Override

@@ -84,7 +84,7 @@ public class AmazonRankingsPreferencesValidator
 			AmazonRankingsConfiguration.class, properties);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		AmazonRankingsPreferencesValidator.class);
 
 	private volatile AmazonRankingsConfiguration _amazonRankingsConfiguration;

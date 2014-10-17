@@ -179,7 +179,7 @@ public class IPGeocoderImpl implements IPGeocoder {
 		}
 	}
 
-	private static Logger _logger = Logger.getLogger(IPGeocoderImpl.class);
+	private static final Logger _logger = Logger.getLogger(IPGeocoderImpl.class);
 
 	private static LookupService _lookupService;
 

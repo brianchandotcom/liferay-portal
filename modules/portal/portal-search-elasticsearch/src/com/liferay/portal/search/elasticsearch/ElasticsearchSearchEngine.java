@@ -374,7 +374,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 
 	private static final String _BACKUP_REPOSITORY_NAME = "liferay_backup";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchSearchEngine.class);
 
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;

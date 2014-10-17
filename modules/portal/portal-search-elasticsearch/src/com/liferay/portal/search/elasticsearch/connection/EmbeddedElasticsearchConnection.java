@@ -112,7 +112,7 @@ public class EmbeddedElasticsearchConnection
 		return client;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		EmbeddedElasticsearchConnection.class);
 
 	private Node _node;

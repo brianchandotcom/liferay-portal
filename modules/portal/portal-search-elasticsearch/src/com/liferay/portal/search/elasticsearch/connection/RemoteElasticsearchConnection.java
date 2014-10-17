@@ -128,7 +128,7 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 		return transportClient;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		RemoteElasticsearchConnection.class);
 
 	private Set<String> _transportAddresses = new HashSet<String>();

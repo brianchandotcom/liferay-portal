@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.portal.fabric.InputResource;
+import com.liferay.portal.fabric.OutputResource;
 import com.liferay.portal.kernel.image.GhostscriptUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
@@ -803,12 +805,21 @@ public class PDFProcessorImpl
 		private boolean _generatePreview;
 		private boolean _generateThumbnail;
 		private int _height;
+
+		@InputResource
 		private File _inputFile;
+
 		private String _liferayHome;
+
+		@OutputResource
 		private File[] _previewFiles;
+
 		private String _serverId;
 		private String _thumbnailExtension;
+
+		@OutputResource
 		private File _thumbnailFile;
+
 		private int _width;
 
 	}

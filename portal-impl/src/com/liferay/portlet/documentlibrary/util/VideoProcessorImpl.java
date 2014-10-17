@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.portal.fabric.InputResource;
+import com.liferay.portal.fabric.OutputResource;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageToolUtil;
@@ -333,9 +335,8 @@ public class VideoProcessorImpl
 						new LiferayVideoThumbnailProcessCallable(
 							ServerDetector.getServerId(),
 							PropsUtil.get(PropsKeys.LIFERAY_HOME),
-							Log4JUtil.getCustomLogSettings(),
-							file.getCanonicalPath(), thumbnailTempFile,
-							THUMBNAIL_TYPE, height, width,
+							Log4JUtil.getCustomLogSettings(), file,
+							thumbnailTempFile, THUMBNAIL_TYPE, height, width,
 							PropsValues.
 								DL_FILE_ENTRY_THUMBNAIL_VIDEO_FRAME_PERCENTAGE);
 
@@ -510,9 +511,8 @@ public class VideoProcessorImpl
 				new LiferayVideoProcessCallable(
 					ServerDetector.getServerId(),
 					PropsUtil.get(PropsKeys.LIFERAY_HOME),
-					Log4JUtil.getCustomLogSettings(),
-					sourceFile.getCanonicalPath(),
-					destinationFile.getCanonicalPath(), containerType,
+					Log4JUtil.getCustomLogSettings(), sourceFile,
+					destinationFile, containerType,
 					PropsUtil.getProperties(
 						PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO, false),
 					PropsUtil.getProperties(PropsKeys.XUGGLER_FFPRESET, true));
@@ -615,15 +615,15 @@ public class VideoProcessorImpl
 
 		public LiferayVideoProcessCallable(
 			String serverId, String liferayHome,
-			Map<String, String> customLogSettings, String inputURL,
-			String outputURL, String videoContainer, Properties videoProperties,
+			Map<String, String> customLogSettings, File inputFile,
+			File outputFile, String videoContainer, Properties videoProperties,
 			Properties ffpresetProperties) {
 
 			_serverId = serverId;
 			_liferayHome = liferayHome;
 			_customLogSettings = customLogSettings;
-			_inputURL = inputURL;
-			_outputURL = outputURL;
+			_inputFile = inputFile;
+			_outputFile = outputFile;
 			_videoContainer = videoContainer;
 			_videoProperties = videoProperties;
 			_ffpresetProperties = ffpresetProperties;
@@ -645,8 +645,9 @@ public class VideoProcessorImpl
 
 			try {
 				LiferayConverter liferayConverter = new LiferayVideoConverter(
-					_inputURL, _outputURL, _videoContainer, _videoProperties,
-					_ffpresetProperties);
+					_inputFile.getCanonicalPath(),
+					_outputFile.getCanonicalPath(), _videoContainer,
+					_videoProperties, _ffpresetProperties);
 
 				liferayConverter.convert();
 			}
@@ -661,9 +662,15 @@ public class VideoProcessorImpl
 
 		private Map<String, String> _customLogSettings;
 		private Properties _ffpresetProperties;
-		private String _inputURL;
+
+		@InputResource
+		private File _inputFile;
+
 		private String _liferayHome;
-		private String _outputURL;
+
+		@OutputResource
+		private File _outputFile;
+
 		private String _serverId;
 		private String _videoContainer;
 		private Properties _videoProperties;
@@ -675,14 +682,14 @@ public class VideoProcessorImpl
 
 		public LiferayVideoThumbnailProcessCallable(
 			String serverId, String liferayHome,
-			Map<String, String> customLogSettings, String inputURL,
+			Map<String, String> customLogSettings, File inputFile,
 			File outputFile, String extension, int height, int width,
 			int percentage) {
 
 			_serverId = serverId;
 			_liferayHome = liferayHome;
 			_customLogSettings = customLogSettings;
-			_inputURL = inputURL;
+			_inputFile = inputFile;
 			_outputFile = outputFile;
 			_extension = extension;
 			_height = height;
@@ -706,8 +713,8 @@ public class VideoProcessorImpl
 			try {
 				LiferayConverter liferayConverter =
 					new LiferayVideoThumbnailConverter(
-						_inputURL, _outputFile, _extension, _height, _width,
-						_percentage);
+						_inputFile.getCanonicalPath(), _outputFile, _extension,
+						_height, _width, _percentage);
 
 				liferayConverter.convert();
 			}
@@ -723,9 +730,15 @@ public class VideoProcessorImpl
 		private Map<String, String> _customLogSettings;
 		private String _extension;
 		private int _height;
-		private String _inputURL;
+
+		@InputResource
+		private File _inputFile;
+
 		private String _liferayHome;
+
+		@OutputResource
 		private File _outputFile;
+
 		private int _percentage;
 		private String _serverId;
 		private int _width;

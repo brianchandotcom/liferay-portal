@@ -298,25 +298,6 @@
 		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
-	<command name="editWorkflowDefinitionTitleViaWorkflowCP">
-		<execute action="Kaleodesigner#type" locator-key1="TITLE_FIELD" value1="${workflowDefinitionTitle}" />
-	</command>
-
-	<command name="editWorkflowDefinitionViaWorkflowCP">
-		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
-
-		<execute action="CPPortalWorkflowconfiguration#click" locator-key1="DEFINITION_TABLE_SPECIFIC_DEFINITION_ACTIONS" />
-		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_MENULIST_EDIT" value1="Edit" />
-
-		<execute action="Kaleodesigner#selectFrame" locator-key1="IFRAME" />
-	</command>
-
-	<command name="publishWorkflowDefinitionViaWorkflowCP">
-		<execute action="Kaleodesigner#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="Kaleodesigner#selectFrameTop" locator-key1="IFRAME" value1="relative=top" />
-	</command>
-
 	<command name="reactivateInactiveWorkflowDefinition">
 		<var name="key_workflowDefinitionName" value="${workflowDefinitionName}" />
 
@@ -700,10 +681,6 @@
 		<execute action="CPMysubmissions#assertElementPresent" locator-key1="PENDING_TABLE_END_DATE" />
 
 		<execute action="Myaccount#selectFrame" value1="relative=top" />
-	</command>
-
-	<command name="viewNoWorkflowDraftsViaKDCP">
-		<execute action="CPKaleodesignerconfiguration#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No workflow definitions are defined." />
 	</command>
 
 	<command name="viewRejectTask">

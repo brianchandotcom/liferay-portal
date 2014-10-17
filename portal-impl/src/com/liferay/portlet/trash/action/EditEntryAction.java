@@ -108,7 +108,7 @@ public class EditEntryAction extends PortletAction {
 				ParamUtil.getString(actionRequest, "redirect"));
 
 			if (Validator.isNotNull(redirect)) {
-				actionResponse.sendRedirect(redirect);
+				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
 				sendRedirect(actionRequest, actionResponse);

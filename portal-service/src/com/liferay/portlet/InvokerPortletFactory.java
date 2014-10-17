@@ -14,6 +14,8 @@
 
 package com.liferay.portlet;
 
+import aQute.bnd.annotation.ProviderType;
+
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
@@ -22,6 +24,7 @@ import javax.portlet.PortletException;
 /**
  * @author Shuyang Zhou
  */
+@ProviderType
 public interface InvokerPortletFactory {
 
 	public InvokerPortlet create(

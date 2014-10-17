@@ -14,6 +14,8 @@
 
 package com.liferay.portlet;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.monitoring.RequestStatus;
 import com.liferay.portal.kernel.monitoring.statistics.DataSampleThreadLocal;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
@@ -41,6 +43,7 @@ import javax.portlet.ResourceResponse;
  * @author Karthik Sudarshan
  * @author Raymond Augé
  */
+@ProviderType
 public class MonitoringPortlet implements InvokerPortlet {
 
 	public static boolean isMonitoringPortletActionRequest() {

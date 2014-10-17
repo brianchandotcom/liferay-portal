@@ -36,6 +36,10 @@ public class PermissionCheckerUtil {
 		ResourcePermissionChecker resourcePermissionChecker =
 			_serviceTrackerMap.getService(className);
 
+		if (resourcePermissionChecker == null) {
+			return null;
+		}
+
 		Boolean resource = resourcePermissionChecker.checkResource(
 			permissionChecker, classPK, actionId);
 

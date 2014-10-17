@@ -213,19 +213,21 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		com.thoughtworks.qdox.model.JavaClass[] javaClasses,
 		JavaField javaField, String content) {
 
-		Type javaClassType = javaClass.asType();
 		Annotation[] annotations = javaField.getAnnotations();
 
 		for (Annotation annotation: annotations) {
 			Type annotationType = annotation.getType();
+
 			String annotationTypeString = annotationType.toString();
 
 			if (annotationTypeString.equals(
-				"com.liferay.portal.kernel.bean.BeanReference")) {
+					"com.liferay.portal.kernel.bean.BeanReference")) {
 
 				return content;
 			}
 		}
+
+		Type javaClassType = javaClass.asType();
 
 		if ((javaClass.isEnum() && javaClassType.equals(javaField.getType())) ||
 			javaField.isFinal()) {

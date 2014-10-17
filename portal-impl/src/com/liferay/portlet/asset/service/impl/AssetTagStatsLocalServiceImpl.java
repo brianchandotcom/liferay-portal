@@ -73,7 +73,7 @@ public class AssetTagStatsLocalServiceImpl
 	/**
 	 * Deletes the asset tag statistics instance.
 	 *
-	 * @param  tagStats the asset tag statistics instance
+	 * @param tagStats the asset tag statistics instance
 	 */
 	@Override
 	public void deleteTagStats(AssetTagStats tagStats) {
@@ -99,7 +99,7 @@ public class AssetTagStatsLocalServiceImpl
 	 * Deletes all asset tag statistics instances associated with the asset
 	 * entry matching the class name ID.
 	 *
-	 * @param  classNameId the asset entry's class name ID
+	 * @param classNameId the asset entry's class name ID
 	 */
 	@Override
 	public void deleteTagStatsByClassNameId(long classNameId) {
@@ -114,7 +114,7 @@ public class AssetTagStatsLocalServiceImpl
 	/**
 	 * Deletes all asset tag statistics instances associated with the tag.
 	 *
-	 * @param  tagId the primary key of the tag
+	 * @param tagId the primary key of the tag
 	 */
 	@Override
 	public void deleteTagStatsByTagId(long tagId) {

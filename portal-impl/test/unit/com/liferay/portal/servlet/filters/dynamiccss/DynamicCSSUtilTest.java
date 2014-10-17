@@ -16,6 +16,9 @@ package com.liferay.portal.servlet.filters.dynamiccss;
 
 import org.junit.Assert;
 import org.junit.Test;
+/**
+ * @author Brian Wing Shun Chan
+ */
 public class DynamicCSSUtilTest {
 
 	@Test

@@ -409,7 +409,7 @@ public class ResourceBlockLocalServiceImpl
 	 * the database or deletes the resource block if the reference count reaches
 	 * zero.
 	 *
-	 * @param  resourceBlockId the primary key of the resource block
+	 * @param resourceBlockId the primary key of the resource block
 	 */
 	@Override
 	@Transactional(
@@ -464,7 +464,7 @@ public class ResourceBlockLocalServiceImpl
 	 * the database or deletes the resource block if the reference count reaches
 	 * zero.
 	 *
-	 * @param  resourceBlock the resource block
+	 * @param resourceBlock the resource block
 	 */
 	@Override
 	@Transactional(

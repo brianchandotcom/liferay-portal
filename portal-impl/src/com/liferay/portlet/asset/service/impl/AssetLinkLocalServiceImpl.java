@@ -103,7 +103,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	/**
 	 * Deletes the asset link.
 	 *
-	 * @param  link the asset link
+	 * @param link the asset link
 	 */
 	@Override
 	public void deleteLink(AssetLink link) {
@@ -135,7 +135,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	/**
 	 * Deletes all links associated with the asset entry.
 	 *
-	 * @param  entryId the primary key of the asset entry
+	 * @param entryId the primary key of the asset entry
 	 */
 	@Override
 	public void deleteLinks(long entryId) {
@@ -151,8 +151,8 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	/**
 	 * Delete all links that associate the two asset entries.
 	 *
-	 * @param  entryId1 the primary key of the first asset entry
-	 * @param  entryId2 the primary key of the second asset entry
+	 * @param entryId1 the primary key of the first asset entry
+	 * @param entryId2 the primary key of the second asset entry
 	 */
 	@Override
 	public void deleteLinks(long entryId1, long entryId2) {

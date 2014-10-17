@@ -100,7 +100,7 @@
 
 								<%= availableLocales[i].getDisplayName(locale) %>
 
-								<a class="icon icon-remove lfr-translation-manager-translation-delete" href="javascript:;"></a>
+								<aui:icon cssClass="lfr-translation-manager-delete-translation" image="remove" />
 							</span>
 
 						<%

@@ -315,7 +315,7 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 	@include border-radius(10px);
 }
 
-.lfr-token, .layout-customizable-controls, .lfr-translation-manager-delete-translation {
+.lfr-token, .layout-customizable-controls {
 	@include border-radius(8px);
 }
 

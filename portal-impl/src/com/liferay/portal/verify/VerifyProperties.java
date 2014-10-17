@@ -286,6 +286,10 @@ public class VerifyProperties extends VerifyProcess {
 		// Bookmarks
 
 		new String[] {
+			"bookmarks.email.entry.added.body", "email.entry.added.body",
+			"com.liferay.bookmarks.service"
+		},
+		new String[] {
 			"bookmarks.email.entry.added.enabled", "email.entry.added.enabled",
 			"com.liferay.bookmarks.service"
 		},
@@ -294,7 +298,7 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.bookmarks.service"
 		},
 		new String[] {
-			"bookmarks.email.entry.added.body", "email.entry.added.body",
+			"bookmarks.email.entry.updated.body", "email.entry.updated.body",
 			"com.liferay.bookmarks.service"
 		},
 		new String[] {
@@ -306,15 +310,11 @@ public class VerifyProperties extends VerifyProcess {
 			"email.entry.updated.subject", "com.liferay.bookmarks.service"
 		},
 		new String[] {
-			"bookmarks.email.entry.updated.body", "email.entry.updated.body",
+			"bookmarks.email.from.address", "email.from.address",
 			"com.liferay.bookmarks.service"
 		},
 		new String[] {
 			"bookmarks.email.from.name", "email.from.name",
-			"com.liferay.bookmarks.service"
-		},
-		new String[] {
-			"bookmarks.email.from.address", "email.from.address",
 			"com.liferay.bookmarks.service"
 		},
 		new String[] {

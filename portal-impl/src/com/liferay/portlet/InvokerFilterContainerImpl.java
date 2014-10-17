@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.portlet;
 
 import com.liferay.portal.kernel.log.Log;
@@ -177,12 +178,15 @@ public class InvokerFilterContainerImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		InvokerFilterContainerImpl.class);
 
-	private List<ActionFilter> _actionFilters = new CopyOnWriteArrayList<>();
-	private List<EventFilter> _eventFilters = new CopyOnWriteArrayList<>();
-	private List<ServiceRegistration<PortletFilter>>
+	private final List<ActionFilter> _actionFilters =
+		new CopyOnWriteArrayList<>();
+	private final List<EventFilter> _eventFilters =
+		new CopyOnWriteArrayList<>();
+	private final List<ServiceRegistration<PortletFilter>>
 		_portletFilterRegistrations = new CopyOnWriteArrayList<>();
-	private List<RenderFilter> _renderFilters = new CopyOnWriteArrayList<>();
-	private List<ResourceFilter> _resourceFilters =
+	private final List<RenderFilter> _renderFilters =
+		new CopyOnWriteArrayList<>();
+	private final List<ResourceFilter> _resourceFilters =
 		new CopyOnWriteArrayList<>();
 
 	private class PortletFilterServiceTrackerCustomizer

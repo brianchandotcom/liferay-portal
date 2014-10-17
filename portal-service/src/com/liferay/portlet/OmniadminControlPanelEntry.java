@@ -19,14 +19,12 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 /**
- * Represents the omni administrator control panel entry for portlets that shall only
- * be visible and accessible to the omni administrator. In a portlet's
+ * Represents the omni administrator control panel entry for portlets that shall
+ * only be visible and accessible to the omni administrator. In a portlet's
  * <code>liferay-portlet.xml</code> file, this class can be specified as the
- * value for the
- * <a href="http://docs.liferay.com/portal/6.2/definitions/liferay-portlet-app_6_2_0.dtd.html#control-panel-entry-class" >
- * control-panel-entry-class
- * </a>
- * element.
+ * value for the <a
+ * href="http://docs.liferay.com/portal/6.2/definitions/liferay-portlet-app_6_2_0.dtd.html#control-panel-entry-class"
+ * > control-panel-entry-class </a> element.
  *
  * @author Jorge Ferrer
  */

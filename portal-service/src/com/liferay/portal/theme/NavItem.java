@@ -43,20 +43,19 @@ import javax.servlet.http.HttpServletRequest;
 public class NavItem implements Serializable {
 
 	/**
-	 * Creates a single level of navigation items from the layouts.
-	 * Navigation items for nested layouts are only created when they
-	 * are accessed.
+	 * Creates a single level of navigation items from the layouts. Navigation
+	 * items for nested layouts are only created when they are accessed.
 	 *
 	 * <p>
-	 * No permission checks are performed in this method. Permissions of
-	 * child layouts are honored when accessing them via {@link #getChildren()}.
+	 * No permission checks are performed in this method. Permissions of child
+	 * layouts are honored when accessing them via {@link #getChildren()}.
 	 * </p>
 	 *
 	 * @param  request the currently served {@link HttpServletRequest}
 	 * @param  layouts the layouts from which to create the navigation items
 	 * @param  template the template to add navigation items to
-	 * @return a single level of navigation items from the layouts,
-	 *         or <code>null</code> if the collection of layouts was
+	 * @return a single level of navigation items from the layouts, or
+	 *         <code>null</code> if the collection of layouts was
 	 *         <code>null</code>.
 	 */
 	public static List<NavItem> fromLayouts(
@@ -86,8 +85,8 @@ public class NavItem implements Serializable {
 	}
 
 	/**
-	 * Returns all of child layouts that the current user has permission to access
-	 * from this navigation item's layout.
+	 * Returns all of child layouts that the current user has permission to
+	 * access from this navigation item's layout.
 	 *
 	 * @return the list of all child layouts that the current user has
 	 *         permission to access from this navigation item's layout
@@ -203,11 +202,11 @@ public class NavItem implements Serializable {
 	}
 
 	/**
-	 * Returns the URL of the navigation item's layout, in a format that makes it
-	 * safe to use the URL as an HREF attribute value
+	 * Returns the URL of the navigation item's layout, in a format that makes
+	 * it safe to use the URL as an HREF attribute value
 	 *
-	 * @return the URL of the navigation item's layout, in a format that makes it
-	 * safe to use the URL as an HREF attribute value
+	 * @return the URL of the navigation item's layout, in a format that makes
+	 *         it safe to use the URL as an HREF attribute value
 	 * @throws Exception if an exception occurred
 	 */
 	public String getURL() throws Exception {

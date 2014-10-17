@@ -15,8 +15,8 @@
 package com.liferay.portal.kernel.repository.event;
 
 /**
-* @author Adolfo Pérez
-*/
+ * @author Adolfo Pérez
+ */
 public interface WorkflowRepositoryEventType extends RepositoryEventType {
 
 	public interface Add extends WorkflowRepositoryEventType {

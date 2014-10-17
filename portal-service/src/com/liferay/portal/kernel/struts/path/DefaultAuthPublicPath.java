@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.struts.path;
 
+/**
+ * @author Brian Wing Shun Chan
+ */
 public class DefaultAuthPublicPath implements AuthPublicPath {
 
 	public DefaultAuthPublicPath(String path) {

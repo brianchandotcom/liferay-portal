@@ -17,9 +17,9 @@ package com.liferay.portal;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by
- * 		{@link UserScreenNameException.MustNotBeDuplicate}
+ * @author     Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             UserScreenNameException.MustNotBeDuplicate}
  */
 @Deprecated
 public class DuplicateUserScreenNameException extends PortalException {

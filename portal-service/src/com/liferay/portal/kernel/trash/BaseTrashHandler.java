@@ -131,8 +131,7 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getContainerModelName(long)}
+	 * @deprecated As of 7.0.0, replaced by {@link #getContainerModelName(long)}
 	 */
 	@Deprecated
 	@Override

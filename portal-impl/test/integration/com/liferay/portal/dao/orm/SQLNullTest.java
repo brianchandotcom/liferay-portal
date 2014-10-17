@@ -944,22 +944,22 @@ public class SQLNullTest {
 	}
 
 	private static final String _SQL_EQUALS_NULL =
-		"SELECT DISTINCT 1 FROM ClassName_ WHERE ? = NULL";
+		"SELECT DISTINCT 1 FROM Counter WHERE ? = NULL";
 
 	private static final String _SQL_IS_NOT_NULL =
-		"SELECT DISTINCT 1 FROM ClassName_ WHERE ? IS NOT NULL";
+		"SELECT DISTINCT 1 FROM Counter WHERE ? IS NOT NULL";
 
 	private static final String _SQL_IS_NULL =
-		"SELECT DISTINCT 1 FROM ClassName_ WHERE ? IS NULL";
+		"SELECT DISTINCT 1 FROM Counter WHERE ? IS NULL";
 
 	private static final String _SQL_LIKE_NULL =
-		"SELECT DISTINCT 1 FROM ClassName_ WHERE ? LIKE NULL";
+		"SELECT DISTINCT 1 FROM Counter WHERE ? LIKE NULL";
 
 	private static final String _SQL_NOT_EQUALS_NULL =
-		"SELECT DISTINCT 1 FROM ClassName_ WHERE ? != NULL";
+		"SELECT DISTINCT 1 FROM Counter WHERE ? != NULL";
 
 	private static final String _SQL_NOT_LIKE_NULL =
-		"SELECT DISTINCT 1 FROM ClassName_ WHERE ? NOT LIKE NULL";
+		"SELECT DISTINCT 1 FROM Counter WHERE ? NOT LIKE NULL";
 
 	private final SessionFactory _sessionFactory =
 		(SessionFactory)PortalBeanLocatorUtil.locate("liferaySessionFactory");

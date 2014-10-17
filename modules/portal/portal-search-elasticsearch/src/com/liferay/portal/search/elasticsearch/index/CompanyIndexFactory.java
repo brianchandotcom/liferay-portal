@@ -160,7 +160,8 @@ public class CompanyIndexFactory implements IndexFactory {
 
 	private static final String _PREFIX = "typeMappings.";
 
-	private static Log _log = LogFactoryUtil.getLog(CompanyIndexFactory.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		CompanyIndexFactory.class);
 
 	private String _indexConfigFileName;
 	private Map<String, String> _typeMappings = new HashMap<String, String>();

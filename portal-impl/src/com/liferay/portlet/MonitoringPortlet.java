@@ -25,6 +25,8 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
+import java.util.List;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.EventRequest;
@@ -37,6 +39,10 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.portlet.filter.ActionFilter;
+import javax.portlet.filter.EventFilter;
+import javax.portlet.filter.RenderFilter;
+import javax.portlet.filter.ResourceFilter;
 
 /**
  * @author Michael C. Han
@@ -44,7 +50,8 @@ import javax.portlet.ResourceResponse;
  * @author Raymond Augé
  */
 @ProviderType
-public class MonitoringPortlet implements InvokerPortlet {
+public class MonitoringPortlet
+	implements InvokerFilterContainer, InvokerPortlet {
 
 	public static boolean isMonitoringPortletActionRequest() {
 		return _monitoringPortletActionRequest;
@@ -86,9 +93,6 @@ public class MonitoringPortlet implements InvokerPortlet {
 		_monitoringPortletResourceRequest = monitoringPortletResourceRequest;
 	}
 
-	public MonitoringPortlet() {
-	}
-
 	public MonitoringPortlet(InvokerPortlet invokerPortlet) {
 		_invokerPortlet = invokerPortlet;
 	}
@@ -96,6 +100,22 @@ public class MonitoringPortlet implements InvokerPortlet {
 	@Override
 	public void destroy() {
 		_invokerPortlet.destroy();
+	}
+
+	@Override
+	public List<ActionFilter> getActionFilters() {
+		InvokerFilterContainer invokerFilterContainer =
+			(InvokerFilterContainer)_invokerPortlet;
+
+		return invokerFilterContainer.getActionFilters();
+	}
+
+	@Override
+	public List<EventFilter> getEventFilters() {
+		InvokerFilterContainer invokerFilterContainer =
+			(InvokerFilterContainer)_invokerPortlet;
+
+		return invokerFilterContainer.getEventFilters();
 	}
 
 	@Override
@@ -126,6 +146,22 @@ public class MonitoringPortlet implements InvokerPortlet {
 	@Override
 	public Portlet getPortletInstance() {
 		return _invokerPortlet.getPortletInstance();
+	}
+
+	@Override
+	public List<RenderFilter> getRenderFilters() {
+		InvokerFilterContainer invokerFilterContainer =
+			(InvokerFilterContainer)_invokerPortlet;
+
+		return invokerFilterContainer.getRenderFilters();
+	}
+
+	@Override
+	public List<ResourceFilter> getResourceFilters() {
+		InvokerFilterContainer invokerFilterContainer =
+			(InvokerFilterContainer)_invokerPortlet;
+
+		return invokerFilterContainer.getResourceFilters();
 	}
 
 	@Override

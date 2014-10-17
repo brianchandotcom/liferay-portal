@@ -105,7 +105,7 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 			%>
 
 				<div class="select-asset-selector">
-					<div class="lfr-meta-actions edit-controls">
+					<div class="edit-controls lfr-meta-actions">
 						<liferay-ui:icon-menu
 							cssClass="select-existing-selector"
 							direction="right" icon="../aui/plus"

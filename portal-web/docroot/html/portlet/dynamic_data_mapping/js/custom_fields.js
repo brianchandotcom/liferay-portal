@@ -944,7 +944,19 @@ AUI.add(
 										attributeName: attributeName,
 										editor: new A.DateCellEditor(
 											{
-												dateFormat: '%m/%d/%Y'
+												dateFormat: '%m/%d/%Y',
+												inputFormatter: function(val) {
+													var instance = this,
+														value = STR_BLANK;
+													
+													if (isValue(val) && val.length > 0) {
+														var selectedDate = val[0];
+														
+														value = instance.formatDate(selectedDate).toString();
+													}
+
+													return value;
+												}
 											}
 										),
 										name: Liferay.Language.get('predefined-value')

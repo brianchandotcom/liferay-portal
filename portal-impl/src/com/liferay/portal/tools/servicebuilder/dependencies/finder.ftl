@@ -2,6 +2,9 @@ package ${packagePath}.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+/**
+ * @generated
+ */
 @ProviderType
 public interface ${entity.name}Finder {
 

@@ -24,6 +24,10 @@
 	</command>
 
 	<command name="type">
+		<case locator-key1="SETTINGS_SCRIPT_CONTENT">
+			<execute function="Type#typeAceEditorNoMouseOver" />
+		</case>
+
 		<case locator-key1="SOURCE_KALEO_XML_CONTENT">
 			<execute function="Type#typeAceEditorNoMouseOver" />
 		</case>

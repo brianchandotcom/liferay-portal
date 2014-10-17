@@ -105,6 +105,11 @@ public class HtmlImpl implements Html {
 
 					break;
 
+				case '\u2019':
+					replacement = "&rsquo;";
+
+					break;
+
 				case '"':
 					replacement = "&#034;";
 
@@ -790,6 +795,7 @@ public class HtmlImpl implements Html {
 		_unescapeMap.put("lt", "<");
 		_unescapeMap.put("gt", ">");
 		_unescapeMap.put("amp", "&");
+		_unescapeMap.put("rsquo", "\u2019");
 		_unescapeMap.put("#034", "\"");
 		_unescapeMap.put("#039", "'");
 		_unescapeMap.put("#040", "(");

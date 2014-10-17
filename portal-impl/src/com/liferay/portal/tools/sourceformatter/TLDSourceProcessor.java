@@ -14,10 +14,11 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
-import java.io.File;
-import java.util.List;
-
 import com.liferay.portal.kernel.util.StringUtil;
+
+import java.io.File;
+
+import java.util.List;
 
 /**
  * @author Hugo Huijser

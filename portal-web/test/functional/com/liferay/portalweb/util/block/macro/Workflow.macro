@@ -537,7 +537,7 @@
 				<if>
 					<condition action="CPKaleodesignerconfiguration#isElementNotPresent" locator-key1="DEFINITION_TABLE_DEFINITION_DRAFT_ACTIONS" />
 					<then>
-						<execute macro="Workflow#viewNoWorkflowDraftsViaKDCP" />
+						<execute macro="KaleoDesigner#viewNoWorkflowDraftsViaKDCP" />
 					</then>
 				</if>
 			</then>

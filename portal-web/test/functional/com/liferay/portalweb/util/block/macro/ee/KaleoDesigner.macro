@@ -660,6 +660,10 @@
 		<execute action="CPKaleodesignerconfiguration#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No workflow definitions are defined." />
 	</command>
 
+	<command name="viewNoWorkflowDraftsViaKDCP">
+		<execute action="CPKaleodesignerconfiguration#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No workflow definitions are defined." />
+	</command>
+
 	<command name="viewSourceXMLLine">
 		<execute action="Kaleodesigner#scrollWebElementIntoView" locator-key1="SOURCE_KALEO_XML_TAB" />
 

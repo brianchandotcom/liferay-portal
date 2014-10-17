@@ -5,17 +5,17 @@
 	
 		
 <taglib>
-	<tlib-version>1.0</tlib-version>
+	<tlib-version>1.0</tlib-version>	
 	<jsp-version>1.1</jsp-version>
 	<short-name>tldsf</short-name>
 	<tag>
 		<name>trim-content</name>
 		<tag-class>com.liferay.portal.tools.sourceformatter.TLDSourceFormatterTag</tag-class>
-		<body-content>JSP</body-content>
+		<body-content>JSP</body-content>   
 		<attribute>
 			<name>trimcontent</name>
 			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<rtexprvalue>true</rtexprvalue>			
 		</attribute>
 	</tag>
 </taglib>

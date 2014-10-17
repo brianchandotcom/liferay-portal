@@ -165,17 +165,17 @@ public class JournalContentPortletDataHandler
 			portletDataContext, portletId, article);
 
 		String defaultDDMTemplateKey = article.getDDMTemplateKey();
-		String preferenceTemplateId = portletPreferences.getValue(
+		String preferenceDDMTemplateKey = portletPreferences.getValue(
 			"ddmTemplateKey", null);
 
 		if (Validator.isNotNull(defaultDDMTemplateKey) &&
-			Validator.isNotNull(preferenceTemplateId) &&
-			!defaultDDMTemplateKey.equals(preferenceTemplateId)) {
+			Validator.isNotNull(preferenceDDMTemplateKey) &&
+			!defaultDDMTemplateKey.equals(preferenceDDMTemplateKey)) {
 
 			DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
 				article.getGroupId(),
 				PortalUtil.getClassNameId(DDMStructure.class),
-				preferenceTemplateId, true);
+				preferenceDDMTemplateKey, true);
 
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, article, ddmTemplate,

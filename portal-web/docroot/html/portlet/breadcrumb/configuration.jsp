@@ -92,7 +92,7 @@ TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler
 	selectDisplayStyle.on(
 		'change',
 		function(event) {
-			if (selectDisplayStyle[0].selectedIndex > -1) {
+			if (selectDisplayStyle.prop('selectedIndex') > -1) {
 				data['_<%= HtmlUtil.escapeJS(portletResource) %>_displayStyle'] = selectDisplayStyle.val();
 
 				Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(portletResource) %>_', data);

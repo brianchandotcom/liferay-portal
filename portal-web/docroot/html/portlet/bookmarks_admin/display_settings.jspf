@@ -130,8 +130,8 @@
 	</liferay-ui:panel>
 </liferay-ui:panel-container>
 
-<aui:script>
-	AUI.$('#<portlet:namespace />selectFolderButton').on(
+<aui:script sandbox="<%= true %>">
+	$('#<portlet:namespace />selectFolderButton').on(
 		'click',
 		function(event) {
 			Liferay.Util.selectEntity(

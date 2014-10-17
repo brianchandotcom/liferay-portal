@@ -84,12 +84,12 @@
 		<column name="parentStructureId" type="long" />
 		<column name="classNameId" type="long" />
 		<column name="structureKey" type="String" />
+		<column name="version" type="String" />
 		<column name="name" type="String" localized="true" />
 		<column name="description" type="String" localized="true" />
 		<column name="definition" type="String" />
 		<column name="storageType" type="String" />
 		<column name="type" type="int" />
-		<column name="version" type="String" />
 
 		<!-- Relationships -->
 
@@ -168,6 +168,43 @@
 		</finder>
 		<finder name="StructureId" return-type="Collection">
 			<finder-column name="structureId" />
+		</finder>
+	</entity>
+	<entity name="DDMStructureVersion" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="structureVersionId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="structureId" type="long" />
+		<column name="version" type="String" />
+		<column name="name" type="String" localized="true" />
+		<column name="description" type="String" localized="true" />
+		<column name="definition" type="String" />
+		<column name="storageType" type="String" />
+		<column name="type" type="int" />
+
+		<!-- Finder methods -->
+
+		<finder name="StructureId" return-type="Collection">
+			<finder-column name="structureId" />
+		</finder>
+		<finder name="S_V" return-type="DDMStructureVersion" unique="true">
+			<finder-column name="structureId" />
+			<finder-column name="version" />
 		</finder>
 	</entity>
 	<entity name="DDMTemplate" uuid="true" local-service="true" remote-service="true">
@@ -292,45 +329,4 @@
 		<exception>TemplateSmallImageName</exception>
 		<exception>TemplateSmallImageSize</exception>
 	</exceptions>
-	<entity name="DDMStructureVersion" local-service="true" remote-service="true">
-
-		<!-- PK fields -->
-
-		<column name="ddmStructureVersionId" type="long" primary="true" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-
-		<!-- Other fields -->
-
-		<column name="ddmStructureId" type="long" />
-		<column name="name" type="String" localized="true" />
-		<column name="description" type="String" localized="true" />
-		<column name="definition" type="String" />
-		<column name="storageType" type="String" />
-		<column name="type" type="int" />
-		<column name="version" type="String" />
-
-		<!-- Finder methods -->
-
-		<finder name="DDMStructureId" return-type="Collection">
-			<finder-column name="ddmStructureId" />
-		</finder>
-		<finder name="D_V" return-type="DDMStructureVersion" unique="true">
-			<finder-column name="ddmStructureId" />
-			<finder-column name="version" />
-		</finder>
-
-		<!-- References -->
-
-		<reference package-path="com.liferay.portal" entity="User" />
-	</entity>
 </service-builder>

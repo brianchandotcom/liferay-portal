@@ -28,7 +28,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testExceedMaxLineLength() throws Exception {
-		test("ExceedMaxLineLength.testjava", "> 80:", 34);
+		test("ExceedMaxLineLength.testjava", "> 80:", 35);
 	}
 
 	@Test
@@ -173,6 +173,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testThrowsSystemException() throws Exception {
 		test("ThrowsSystemException.testjava");
+	}
+
+	@Test
+	public void testTruncateLongLines() throws Exception {
+		test("TruncateLongLines.testjava");
 	}
 
 	@Test

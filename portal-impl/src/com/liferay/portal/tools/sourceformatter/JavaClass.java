@@ -435,7 +435,9 @@ public class JavaClass {
 	}
 
 	protected void fixTabsAndIncorrectEmptyLines(JavaTerm javaTerm) {
-		if (!isInJavaTermTypeGroup(javaTerm.getType(), TYPE_METHOD)) {
+		if (!isInJavaTermTypeGroup(javaTerm.getType(), TYPE_CONSTRUCTOR) &&
+			!isInJavaTermTypeGroup(javaTerm.getType(), TYPE_METHOD)) {
+
 			return;
 		}
 

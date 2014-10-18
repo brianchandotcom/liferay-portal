@@ -22,6 +22,23 @@
 		</if>
 
 		<execute action="CPKnowledgebaseadminAddarticle#type" locator-key1="TITLE_FIELD" value1="${kbArticleTitle}" />
+
+		<if>
+			<isset var="kbArticleFriendlyURL" />
+			<then>
+				<var name="kbArticleTitleFormatted" value="/${kbArticleFriendlyURL?lowercase()}" />
+				<var name="kbArticleTitleFormatted" value="${kbArticleTitleFormatted?replace(' ', '-')}" />
+
+				<execute action="CPKnowledgebaseadminAddarticle#type" locator-key1="FRIENDLY_URL_FIELD" value1="${kbArticleTitleFormatted}" />
+			</then>
+			<else>
+				<var name="kbArticleTitleFormatted" value="/${kbArticleTitle?lowercase()}" />
+				<var name="kbArticleTitleFormatted" value="${kbArticleTitleFormatted?replace(' ', '-')}" />
+
+				<execute action="CPKnowledgebaseadminAddarticle#assertTextEquals" locator-key1="FRIENDLY_URL_FIELD" value1="${kbArticleTitleFormatted}" />
+			</else>
+		</if>
+
 		<execute action="CPKnowledgebaseadminAddarticle#type" locator-key1="CONTENT_FIELD" value1="${kbArticleContent}" />
 
 		<if>
@@ -174,6 +191,12 @@
 		<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
 
 		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
+	</command>
+
+	<command name="gotoViaKBDisplayPG">
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+
+		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_NAVIGATION" value1="${kbArticleTitle}" />
 	</command>
 
 	<command name="searchPGViaKBSearch">

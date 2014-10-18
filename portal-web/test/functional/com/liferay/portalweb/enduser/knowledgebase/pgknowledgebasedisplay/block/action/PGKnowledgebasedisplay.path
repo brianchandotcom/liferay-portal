@@ -124,6 +124,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--ARTICLE_NAVIGATION-->
+<tr>
+	<td>ARTICLE_NAVIGATION</td>
+	<td>//div[@class='kbarticle-navigation']/ul/li/a[contains(.,'${key_kbArticleTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_NAVIGATION_GENERIC</td>
+	<td>//div[@class='kbarticle-navigation']/ul/li/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--RELATED_ASSETS-->
 <tr>
 	<td>RELATED_ASSETS_HEADER</td>

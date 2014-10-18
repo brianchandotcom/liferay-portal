@@ -350,8 +350,7 @@ public class InvokerFilterHelper {
 
 	protected void registerFilterMapping(
 		String filterName, List<String> urlPatterns, List<String> dispatchers,
-		String positionFilterName,
-		boolean after) {
+		String positionFilterName, boolean after) {
 
 		Filter filter = getFilter(filterName);
 

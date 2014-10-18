@@ -790,8 +790,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	}
 
 	protected Fields toFields(
-		long ddmStructureId, Map<String, Serializable> fieldsMap,
-		Locale locale, Locale defaultLocale, boolean create) {
+		long ddmStructureId, Map<String, Serializable> fieldsMap, Locale locale,
+		Locale defaultLocale, boolean create) {
 
 		Fields fields = new Fields();
 

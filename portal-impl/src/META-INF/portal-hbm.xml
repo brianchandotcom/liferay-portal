@@ -91,8 +91,6 @@
 	<import class="com.liferay.portlet.asset.model.AssetVocabulary" />
 	<import class="com.liferay.portlet.blogs.model.BlogsEntry" />
 	<import class="com.liferay.portlet.blogs.model.BlogsStatsUser" />
-	<import class="com.liferay.portlet.bookmarks.model.BookmarksEntry" />
-	<import class="com.liferay.portlet.bookmarks.model.BookmarksFolder" />
 	<import class="com.liferay.portlet.calendar.model.CalEvent" />
 	<import class="com.liferay.portlet.documentlibrary.model.DLApp" />
 	<import class="com.liferay.portlet.documentlibrary.model.DLAppHelper" />
@@ -1507,53 +1505,6 @@
 		<property name="ratingsTotalEntries" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="ratingsTotalScore" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="ratingsAverageScore" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
-	</class>
-	<class name="com.liferay.portlet.bookmarks.model.impl.BookmarksEntryImpl" table="BookmarksEntry">
-		<cache usage="read-write" />
-		<id name="entryId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="resourceBlockId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="folderId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="treePath" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="url" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="visits" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="statusDate" type="org.hibernate.type.TimestampType" />
-	</class>
-	<class name="com.liferay.portlet.bookmarks.model.impl.BookmarksFolderImpl" table="BookmarksFolder">
-		<cache usage="read-write" />
-		<id name="folderId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="resourceBlockId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="parentFolderId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="treePath" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portlet.calendar.model.impl.CalEventImpl" table="CalEvent">
 		<cache usage="read-write" />

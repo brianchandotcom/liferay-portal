@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+	<bean id="com.liferay.bookmarks.service.BookmarksEntryLocalService" class="com.liferay.bookmarks.service.impl.BookmarksEntryLocalServiceImpl" />
+	<osgi:service interface="com.liferay.bookmarks.service.BookmarksEntryLocalService" ref="com.liferay.bookmarks.service.BookmarksEntryLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="bookmarks" />
+			<entry key="json.web.service.context.path" value="BookmarksEntry" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.bookmarks.service.BookmarksEntryService" class="com.liferay.bookmarks.service.impl.BookmarksEntryServiceImpl" />
+	<osgi:service interface="com.liferay.bookmarks.service.BookmarksEntryService" ref="com.liferay.bookmarks.service.BookmarksEntryService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="bookmarks" />
+			<entry key="json.web.service.context.path" value="BookmarksEntry" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.bookmarks.service.persistence.BookmarksEntryPersistence" class="com.liferay.bookmarks.service.persistence.impl.BookmarksEntryPersistenceImpl" parent="basePersistence" />
+	<osgi:service ref="com.liferay.bookmarks.service.persistence.BookmarksEntryPersistence" interface="com.liferay.bookmarks.service.persistence.BookmarksEntryPersistence" />
+	<bean id="com.liferay.bookmarks.service.persistence.BookmarksEntryFinder" class="com.liferay.bookmarks.service.persistence.impl.BookmarksEntryFinderImpl" parent="basePersistence" />
+	<osgi:service ref="com.liferay.bookmarks.service.persistence.BookmarksEntryFinder" interface="com.liferay.bookmarks.service.persistence.BookmarksEntryFinder" />
+	<bean id="com.liferay.bookmarks.service.BookmarksFolderLocalService" class="com.liferay.bookmarks.service.impl.BookmarksFolderLocalServiceImpl" />
+	<osgi:service interface="com.liferay.bookmarks.service.BookmarksFolderLocalService" ref="com.liferay.bookmarks.service.BookmarksFolderLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="bookmarks" />
+			<entry key="json.web.service.context.path" value="BookmarksFolder" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.bookmarks.service.BookmarksFolderService" class="com.liferay.bookmarks.service.impl.BookmarksFolderServiceImpl" />
+	<osgi:service interface="com.liferay.bookmarks.service.BookmarksFolderService" ref="com.liferay.bookmarks.service.BookmarksFolderService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="bookmarks" />
+			<entry key="json.web.service.context.path" value="BookmarksFolder" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.bookmarks.service.persistence.BookmarksFolderPersistence" class="com.liferay.bookmarks.service.persistence.impl.BookmarksFolderPersistenceImpl" parent="basePersistence" />
+	<osgi:service ref="com.liferay.bookmarks.service.persistence.BookmarksFolderPersistence" interface="com.liferay.bookmarks.service.persistence.BookmarksFolderPersistence" />
+	<bean id="com.liferay.bookmarks.service.persistence.BookmarksFolderFinder" class="com.liferay.bookmarks.service.persistence.impl.BookmarksFolderFinderImpl" parent="basePersistence" />
+	<osgi:service ref="com.liferay.bookmarks.service.persistence.BookmarksFolderFinder" interface="com.liferay.bookmarks.service.persistence.BookmarksFolderFinder" />
+</beans>

@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Bookmarks Tests
+Bundle-SymbolicName: com.liferay.bookmarks.test
+Bundle-Version: 1.0.0
+Include-Resource: classes

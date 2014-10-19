@@ -98,8 +98,8 @@ public class SettingsFactoryUtil {
 	}
 
 	public static void registerSettingsMetadata(
-		String settingsId, FallbackKeys fallbackKeys,
-		String[] multiValuedKeys, ResourceManager resourceManager) {
+		String settingsId, FallbackKeys fallbackKeys, String[] multiValuedKeys,
+		ResourceManager resourceManager) {
 
 		getSettingsFactory().registerSettingsMetadata(
 			settingsId, fallbackKeys, multiValuedKeys, resourceManager);

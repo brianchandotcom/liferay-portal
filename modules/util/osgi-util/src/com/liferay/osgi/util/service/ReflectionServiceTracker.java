@@ -153,8 +153,8 @@ public class ReflectionServiceTracker implements Closeable {
 
 		ServiceTracker<?, ?> serviceTracker =
 			new ServiceTracker<Object, Object>(
-				bundleContext,
-				(Class<Object>)injectionPoint.getParameterType(), null) {
+				bundleContext, (Class<Object>)injectionPoint.getParameterType(),
+				null) {
 
 				@Override
 				public Object addingService(

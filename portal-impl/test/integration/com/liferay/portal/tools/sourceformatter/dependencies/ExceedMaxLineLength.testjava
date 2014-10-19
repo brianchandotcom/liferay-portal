@@ -31,6 +31,7 @@ import org.osgi.service.component.annotations.Component;
 )
 public class ExceedMaxLineLength {
 
-	public static final String TEST = "This is very long line and therefore it will exceed the maximum allowed line length";
+	public static final String TEST =
+		"This is very long line and therefore it will exceed the maximum allowed line length";
 
 }

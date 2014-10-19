@@ -54,6 +54,6 @@ public class MessageBusManagerTest {
 	private MBeanServer _mBeanServer;
 
 	@Mock
-	private MessageBus _messageBus;
+	private final MessageBus _messageBus;
 
 }

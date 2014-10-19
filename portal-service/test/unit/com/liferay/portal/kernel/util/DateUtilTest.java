@@ -186,7 +186,7 @@ public class DateUtilTest extends PowerMockito {
 	}
 
 	@Mock
-	private TimeZone _timeZone;
+	private final TimeZone _timeZone;
 
 	private class TestSimpleDateFormat extends SimpleDateFormat {
 

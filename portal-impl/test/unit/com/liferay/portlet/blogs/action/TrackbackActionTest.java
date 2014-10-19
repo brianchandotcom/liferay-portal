@@ -275,16 +275,16 @@ public class TrackbackActionTest extends PowerMockito {
 	}
 
 	@Mock
-	private ActionRequest _actionRequest;
+	private final ActionRequest _actionRequest;
 
 	@Mock
-	private ActionResponse _actionResponse;
+	private final ActionResponse _actionResponse;
 
 	@Mock
-	private BlogsEntry _blogsEntry;
+	private final BlogsEntry _blogsEntry;
 
 	@Mock
-	private Http _http;
+	private final Http _http;
 
 	private final MockHttpServletRequest _mockHttpServletRequest =
 		new MockHttpServletRequest();
@@ -294,11 +294,11 @@ public class TrackbackActionTest extends PowerMockito {
 		new MockHttpServletRequest();
 
 	@Mock
-	private PortletPreferences _portletPreferences;
+	private final PortletPreferences _portletPreferences;
 
 	private final ThemeDisplay _themeDisplay = new ThemeDisplay();
 
 	@Mock
-	private Trackback _trackback;
+	private final Trackback _trackback;
 
 }

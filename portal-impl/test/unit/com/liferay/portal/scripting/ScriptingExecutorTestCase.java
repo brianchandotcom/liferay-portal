@@ -116,7 +116,7 @@ public abstract class ScriptingExecutorTestCase extends PowerMockito {
 	}
 
 	@Mock
-	private PortalCache<Serializable, Object> _portalCache;
+	private final PortalCache<Serializable, Object> _portalCache;
 
 	private ScriptingExecutor _scriptingExecutor;
 

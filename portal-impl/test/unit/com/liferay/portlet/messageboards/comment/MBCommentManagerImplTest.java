@@ -288,23 +288,23 @@ public class MBCommentManagerImplTest extends Mockito {
 		new MBCommentManagerImpl();
 
 	@Mock
-	private MBMessage _mbMessage;
+	private final MBMessage _mbMessage;
 
 	@Mock
-	private MBMessageDisplay _mbMessageDisplay;
+	private final MBMessageDisplay _mbMessageDisplay;
 
 	@Mock
-	private MBMessageLocalService _mbMessageLocalService;
+	private final MBMessageLocalService _mbMessageLocalService;
 
 	@Mock
-	private MBThread _mbThread;
+	private final MBThread _mbThread;
 
 	@Mock
-	private Portal _portal;
+	private final Portal _portal;
 
 	private final ServiceContext _serviceContext = new ServiceContext();
 
 	@Mock
-	private Function<String, ServiceContext> _serviceContextFunction;
+	private final Function<String, ServiceContext> _serviceContextFunction;
 
 }

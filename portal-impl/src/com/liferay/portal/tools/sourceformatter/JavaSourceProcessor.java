@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
+import com.thoughtworks.qdox.model.Annotation;
 import com.thoughtworks.qdox.model.ClassLibrary;
 import com.thoughtworks.qdox.model.JavaField;
 import com.thoughtworks.qdox.model.JavaMethod;
@@ -212,6 +213,20 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		com.thoughtworks.qdox.model.JavaClass[] javaClasses,
 		JavaField javaField, String content) {
 
+		Annotation[] annotations = javaField.getAnnotations();
+
+		for (Annotation annotation: annotations) {
+			Type annotationType = annotation.getType();
+
+			String annotationTypeString = annotationType.toString();
+
+			if (annotationTypeString.equals(
+					"com.liferay.portal.kernel.bean.BeanReference")) {
+
+				return content;
+			}
+		}
+
 		Type javaClassType = javaClass.asType();
 
 		if ((javaClass.isEnum() && javaClassType.equals(javaField.getType())) ||
@@ -243,31 +258,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		String[] lines = StringUtil.splitLines(content);
-
-		String line = lines[javaField.getLineNumber() - 1];
-
 		if (javaField.isStatic()) {
-			lines[javaField.getLineNumber() - 1] = StringUtil.replace(
-				line, "private static ", "private static final ");
-		}
-		else {
-			lines[javaField.getLineNumber() - 1] = StringUtil.replace(
-				line, "private ", "private final ");
+			return getChangedFieldTypeContent(
+				content, javaField, "private static", "private static final");
 		}
 
-		sb = new StringBundler(2 * lines.length);
-
-		for (String contentLine : lines) {
-			sb.append(contentLine);
-			sb.append(StringPool.NEW_LINE);
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		content = sb.toString();
-
-		return content;
+		return getChangedFieldTypeContent(
+			content, javaField, "private", "private final");
 	}
 
 	protected void checkFinderCacheInterfaceMethod(
@@ -571,8 +568,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	protected String checkStaticableFieldType(
 		JavaField javaField, Type javaFieldType, String content) {
 
-		String[] lines = StringUtil.splitLines(content);
-
 		String initializationExpression = StringUtil.trim(
 			javaField.getInitializationExpression());
 
@@ -582,12 +577,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return content;
 		}
 
-		String line = lines[javaField.getLineNumber() - 1];
-
-		String newLine = StringUtil.replace(
-			line, "private final", "private static final");
-
-		return StringUtil.replace(content, line, newLine);
+		return getChangedFieldTypeContent(
+			content, javaField, "private final", "private static final");
 	}
 
 	protected void checkSystemEventAnnotations(String content, String fileName)
@@ -2015,6 +2006,40 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return newContent;
+	}
+
+	protected String getChangedFieldTypeContent(
+		String content, JavaField javaField, String oldFieldType,
+		String newFieldType) {
+
+		String[] lines = StringUtil.splitLines(content);
+
+		String line = null;
+		int lineNumber = javaField.getLineNumber() - 1;
+
+		while (true) {
+			line = lines[lineNumber];
+
+			if (line.contains(oldFieldType)) {
+				break;
+			}
+
+			lineNumber++;
+		}
+
+		lines[lineNumber] = StringUtil.replace(
+			line, oldFieldType, newFieldType);
+
+		StringBundler sb = new StringBundler(2 * lines.length);
+
+		for (String contentLine : lines) {
+			sb.append(contentLine);
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
 	}
 
 	protected String getCombinedLinesContent(

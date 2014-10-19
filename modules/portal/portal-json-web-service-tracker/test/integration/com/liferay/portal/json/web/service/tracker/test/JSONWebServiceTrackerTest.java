@@ -101,6 +101,6 @@ public class JSONWebServiceTrackerTest {
 	}
 
 	@ArquillianResource
-	private URL _url;
+	private final URL _url;
 
 }

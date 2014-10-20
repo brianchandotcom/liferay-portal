@@ -69,36 +69,34 @@ if (ratingsEntry != null) {
 	<div class="taglib-ratings <%= type %>" id="<%= randomNamespace %>ratingContainer">
 		<c:choose>
 			<c:when test='<%= type.equals("stars") %>'>
-				<c:choose>
-					<c:when test="<%= themeDisplay.isSignedIn() && !TrashUtil.isInTrash(className, classPK) %>">
-						<div class="liferay-rating-vote" id="<%= randomNamespace %>ratingStar">
-							<div id="<%= randomNamespace %>ratingStarContent">
-								<div class="rating-label"><liferay-ui:message key="your-rating" /></div>
+				<c:if test="<%= themeDisplay.isSignedIn() && !TrashUtil.isInTrash(className, classPK) %>">
+					<div class="liferay-rating-vote" id="<%= randomNamespace %>ratingStar">
+						<div id="<%= randomNamespace %>ratingStarContent">
+							<div class="rating-label"><liferay-ui:message key="your-rating" /></div>
 
-								<liferay-util:whitespace-remover>
+							<liferay-util:whitespace-remover>
 
-									<%
-									for (int i = 1; i <= numberOfStars; i++) {
-										String ratingId = PortalUtil.generateRandomKey(request, "taglib_ui_ratings_page_rating");
-									%>
+								<%
+								for (int i = 1; i <= numberOfStars; i++) {
+									String ratingId = PortalUtil.generateRandomKey(request, "taglib_ui_ratings_page_rating");
+								%>
 
-										<a class="rating-element <%= (i <= yourScore) ? "icon-star" : "icon-star-empty" %>" href="javascript:;"></a>
+									<a class="rating-element <%= (i <= yourScore) ? "icon-star" : "icon-star-empty" %>" href="javascript:;"></a>
 
-										<div class="rating-input-container">
-											<label for="<%= ratingId %>"><liferay-ui:message arguments="<%= new Object[] {i, numberOfStars} %>" key='<%= (yourScore == i) ? "you-have-rated-this-x-stars-out-of-x" : "rate-this-x-stars-out-of-x" %>' translateArguments="<%= false %>" /></label>
+									<div class="rating-input-container">
+										<label for="<%= ratingId %>"><liferay-ui:message arguments="<%= new Object[] {i, numberOfStars} %>" key='<%= (yourScore == i) ? "you-have-rated-this-x-stars-out-of-x" : "rate-this-x-stars-out-of-x" %>' translateArguments="<%= false %>" /></label>
 
-											<input checked="<%= i == yourScore %>" class="rating-input" id="<%= ratingId %>" name="<portlet:namespace />rating" type="radio" value="<%= i %>">
-										</div>
+										<input checked="<%= i == yourScore %>" class="rating-input" id="<%= ratingId %>" name="<portlet:namespace />rating" type="radio" value="<%= i %>">
+									</div>
 
-									<%
-									}
-									%>
+								<%
+								}
+								%>
 
-								</liferay-util:whitespace-remover>
-							</div>
+							</liferay-util:whitespace-remover>
 						</div>
-					</c:when>
-				</c:choose>
+					</div>
+				</c:if>
 
 				<div class="liferay-rating-score" id="<%= randomNamespace %>ratingScore">
 					<div id="<%= randomNamespace %>ratingScoreContent">

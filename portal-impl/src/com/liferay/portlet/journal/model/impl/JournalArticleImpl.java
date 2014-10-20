@@ -272,6 +272,38 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		return new StagedModelType(JournalArticle.class);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getStructureKey()}
+	 */
+	@Override
+	public String getStructureId() {
+		return getStructureKey();
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #setStructureKey()}
+	 */
+	@Override
+	public void setStructureId(String structureKey) {
+		setStructureKey(structureKey);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getTemplateKey()}
+	 */
+	@Override
+	public String getTemplateId() {
+		return getTemplateKey();
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #setTemplateKey()}
+	 */
+	@Override
+	public void setTemplateId(String templateKey) {
+		setTemplateKey(templateKey);
+	}
+
 	@Override
 	public Map<Locale, String> getTitleMap() {
 		Locale defaultLocale = LocaleThreadLocal.getDefaultLocale();

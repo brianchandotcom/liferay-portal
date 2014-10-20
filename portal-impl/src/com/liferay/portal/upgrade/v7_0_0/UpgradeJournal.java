@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -67,7 +66,7 @@ import java.util.Map;
  * @author Gergely Mathe
  * @author Eudaldo Alonso
  */
-public class UpgradeJournal extends UpgradeProcess {
+public class UpgradeJournal extends UpgradeDynamicDataMapping {
 
 	protected String addBasicWebContentStructureAndTemplate(long companyId)
 		throws Exception {
@@ -154,8 +153,8 @@ public class UpgradeJournal extends UpgradeProcess {
 			sb.append("groupId, companyId, userId, userName, createDate, ");
 			sb.append("modifiedDate, parentStructureId, classNameId, ");
 			sb.append("structureKey, name, description, definition, ");
-			sb.append("storageType, type_) values (?, ?, ?, ?, ?, ?, ?, ?, ");
-			sb.append("?, ?, ?, ?, ?, ?, ?, ?)");
+			sb.append("storageType, type_, version) values (?, ?, ?, ?, ?, ");
+			sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 			String sql = sb.toString();
 
@@ -177,8 +176,15 @@ public class UpgradeJournal extends UpgradeProcess {
 			ps.setString(14, xsd);
 			ps.setString(15, "xml");
 			ps.setInt(16, DDMStructureConstants.TYPE_DEFAULT);
+			ps.setString(17, DDMStructureConstants.VERSION_DEFAULT);
 
 			ps.executeUpdate();
+
+			addStructureVersion(
+				increment(), groupId, companyId, getDefaultUserId(companyId),
+				StringPool.BLANK, now, ddmStructureId, localizedName,
+				localizedDescription, xsd, "xml",
+				DDMStructureConstants.TYPE_DEFAULT);
 
 			Map<String, Long> bitwiseValues = getBitwiseValues(
 				DDMStructure.class.getName());

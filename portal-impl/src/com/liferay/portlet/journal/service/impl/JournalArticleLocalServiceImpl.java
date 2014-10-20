@@ -2986,7 +2986,7 @@ public class JournalArticleLocalServiceImpl
 	public List<JournalArticle> getStructureArticles(
 		long groupId, String ddmStructureKey) {
 
-		return journalArticlePersistence.findByG_S(groupId, ddmStructureKey);
+		return journalArticlePersistence.findByG_DS(groupId, ddmStructureKey);
 	}
 
 	/**
@@ -3018,7 +3018,7 @@ public class JournalArticleLocalServiceImpl
 		long groupId, String ddmStructureKey, int start, int end,
 		OrderByComparator<JournalArticle> obc) {
 
-		return journalArticlePersistence.findByG_S(
+		return journalArticlePersistence.findByG_DS(
 			groupId, ddmStructureKey, start, end, obc);
 	}
 
@@ -3048,7 +3048,7 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public int getStructureArticlesCount(long groupId, String ddmStructureKey) {
-		return journalArticlePersistence.countByG_S(groupId, ddmStructureKey);
+		return journalArticlePersistence.countByG_DS(groupId, ddmStructureKey);
 	}
 
 	/**
@@ -3063,7 +3063,7 @@ public class JournalArticleLocalServiceImpl
 	public List<JournalArticle> getTemplateArticles(
 		long groupId, String ddmTemplateKey) {
 
-		return journalArticlePersistence.findByG_T(groupId, ddmTemplateKey);
+		return journalArticlePersistence.findByG_DT(groupId, ddmTemplateKey);
 	}
 
 	/**
@@ -3095,7 +3095,7 @@ public class JournalArticleLocalServiceImpl
 		long groupId, String ddmTemplateKey, int start, int end,
 		OrderByComparator<JournalArticle> obc) {
 
-		return journalArticlePersistence.findByG_T(
+		return journalArticlePersistence.findByG_DT(
 			groupId, ddmTemplateKey, start, end, obc);
 	}
 
@@ -3110,7 +3110,7 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public int getTemplateArticlesCount(long groupId, String ddmTemplateKey) {
-		return journalArticlePersistence.countByG_T(groupId, ddmTemplateKey);
+		return journalArticlePersistence.countByG_DT(groupId, ddmTemplateKey);
 	}
 
 	/**
@@ -5756,7 +5756,7 @@ public class JournalArticleLocalServiceImpl
 		long groupId, long classNameId, String oldDDMTemplateKey,
 		String newDDMTemplateKey) {
 
-		List<JournalArticle> articles = journalArticlePersistence.findByG_C_T(
+		List<JournalArticle> articles = journalArticlePersistence.findByG_C_DT(
 			groupId, classNameId, oldDDMTemplateKey);
 
 		for (JournalArticle article : articles) {

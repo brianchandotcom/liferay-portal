@@ -107,11 +107,11 @@
 			<finder-column name="groupId" />
 			<finder-column name="urlTitle" />
 		</finder>
-		<finder name="G_S" return-type="Collection">
+		<finder name="G_DS" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="DDMStructureKey" />
 		</finder>
-		<finder name="G_T" return-type="Collection">
+		<finder name="G_DT" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="DDMTemplateKey" />
 		</finder>
@@ -135,7 +135,7 @@
 			<finder-column name="companyId" />
 			<finder-column name="status" comparator="!=" />
 		</finder>
-		<finder name="C_T" return-type="Collection">
+		<finder name="C_DT" return-type="Collection">
 			<finder-column name="classNameId" />
 			<finder-column name="DDMTemplateKey" />
 		</finder>
@@ -163,12 +163,12 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
-		<finder name="G_C_S" return-type="JournalArticle">
+		<finder name="G_C_DS" return-type="JournalArticle">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 			<finder-column name="DDMStructureKey" />
 		</finder>
-		<finder name="G_C_T" return-type="Collection">
+		<finder name="G_C_DT" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 			<finder-column name="DDMTemplateKey" />

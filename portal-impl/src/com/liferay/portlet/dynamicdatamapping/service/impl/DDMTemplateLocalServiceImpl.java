@@ -402,7 +402,7 @@ public class DDMTemplateLocalServiceImpl
 					template.getCompanyId());
 
 				if (template.getGroupId() == companyGroup.getGroupId()) {
-					if (JournalArticleUtil.countByC_T(
+					if (JournalArticleUtil.countByC_DT(
 							JournalArticleConstants.CLASSNAME_ID_DEFAULT,
 							template.getTemplateKey()) > 0) {
 
@@ -410,7 +410,7 @@ public class DDMTemplateLocalServiceImpl
 					}
 				}
 				else {
-					if (JournalArticleUtil.countByG_C_T(
+					if (JournalArticleUtil.countByG_C_DT(
 							template.getGroupId(),
 							JournalArticleConstants.CLASSNAME_ID_DEFAULT,
 							template.getTemplateKey()) > 0) {

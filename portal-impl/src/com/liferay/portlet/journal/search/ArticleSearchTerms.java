@@ -37,7 +37,6 @@ public class ArticleSearchTerms extends ArticleDisplayTerms {
 		structureId = DAOParamUtil.getString(portletRequest, STRUCTURE_ID);
 		templateId = DAOParamUtil.getString(portletRequest, TEMPLATE_ID);
 		title = DAOParamUtil.getString(portletRequest, TITLE);
-		type = DAOParamUtil.getString(portletRequest, TYPE);
 		version = ParamUtil.getDouble(portletRequest, VERSION);
 
 		groupId = setGroupId(portletRequest);
@@ -76,10 +75,6 @@ public class ArticleSearchTerms extends ArticleDisplayTerms {
 
 	public void setStructureId(String structureId) {
 		this.structureId = structureId;
-	}
-
-	public void setType(String type) {
-		this.type = type;
 	}
 
 	public void setVersion(double version) {

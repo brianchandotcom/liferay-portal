@@ -177,16 +177,20 @@ DLDisplayConfigurationDisplayContext dlDisplayConfigurationDisplayContext = new 
 </aui:script>
 
 <c:if test="<%= SessionMessages.contains(renderRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_UPDATED_CONFIGURATION) %>">
-	<aui:script position="inline" sandbox="<%= true %>">
+	<aui:script position="inline" use="aui-base">
 		var valueMap = {};
 
-		var foldersPerPageInput = $('#<portlet:namespace />foldersPerPage');
+		var foldersPerPageInput = A.one('#<portlet:namespace />foldersPerPage');
 
-		valueMap.delta1 = foldersPerPageInput.val();
+		if (foldersPerPageInput) {
+			valueMap.delta1 = foldersPerPageInput.val();
+		}
 
-		var fileEntriesPerPageInput = $('#<portlet:namespace />fileEntriesPerPage');
+		var fileEntriesPerPageInput = A.one('#<portlet:namespace />fileEntriesPerPage');
 
-		valueMap.delta2 = fileEntriesPerPageInput.val();
+		if (fileEntriesPerPageInput) {
+			valueMap.delta2 = fileEntriesPerPageInput.val();
+		}
 
 		var portlet = Liferay.Util.getTop().AUI().one('#p_p_id<%= HtmlUtil.escapeJS(PortalUtil.getPortletNamespace(portletResource)) %>');
 

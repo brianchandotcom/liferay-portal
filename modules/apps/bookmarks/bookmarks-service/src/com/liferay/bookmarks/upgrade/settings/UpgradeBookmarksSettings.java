@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.bookmarks.web.upgrade.settings;
+package com.liferay.bookmarks.upgrade.settings;
 
 import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;

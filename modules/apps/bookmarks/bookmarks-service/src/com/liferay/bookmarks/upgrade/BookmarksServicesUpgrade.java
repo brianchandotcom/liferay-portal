@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.bookmarks.web.upgrade;
+package com.liferay.bookmarks.upgrade;
 
-import com.liferay.bookmarks.web.upgrade.portlet.UpgradeBookmarksPortlets;
-import com.liferay.bookmarks.web.upgrade.settings.UpgradeBookmarksSettings;
+import com.liferay.bookmarks.upgrade.portlet.UpgradeBookmarksPortletIds;
+import com.liferay.bookmarks.upgrade.settings.UpgradeBookmarksSettings;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
@@ -58,7 +58,7 @@ public class BookmarksServicesUpgrade {
 	protected void upgrade() throws PortalException {
 		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
 
-		upgradeProcesses.add(new UpgradeBookmarksPortlets());
+		upgradeProcesses.add(new UpgradeBookmarksPortletIds());
 
 		upgradeProcesses.add(new UpgradeBookmarksSettings());
 

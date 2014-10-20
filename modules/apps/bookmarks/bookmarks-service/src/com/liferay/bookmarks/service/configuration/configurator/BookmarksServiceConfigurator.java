@@ -14,7 +14,7 @@
 
 package com.liferay.bookmarks.service.configuration.configurator;
 
-import com.liferay.bookmarks.web.upgrade.BookmarksServicesUpgrade;
+import com.liferay.bookmarks.upgrade.BookmarksServicesUpgrade;
 import com.liferay.portal.service.configuration.ServiceComponentConfiguration;
 import com.liferay.portal.service.configuration.configurator.ServiceConfigurator;
 import com.liferay.portal.spring.extender.loader.ModuleResourceLoader;

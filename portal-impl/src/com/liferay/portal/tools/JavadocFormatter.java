@@ -777,7 +777,8 @@ public class JavadocFormatter {
 			Files.readAllBytes(Paths.get(_inputDir + fileName)),
 			StringPool.UTF8);
 
-		if (fileName.endsWith("Application.java") ||
+		if (fileName.contains("modules/third-party") ||
+			fileName.endsWith("Application.java") ||
 			fileName.endsWith("JavadocFormatter.java") ||
 			fileName.endsWith("SourceFormatter.java") ||
 			fileName.endsWith("WebProxyPortlet.java") ||

@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  * @author Peter Fellwock
-*/
+ */
 @Component(
 	immediate = true,
 	property = {

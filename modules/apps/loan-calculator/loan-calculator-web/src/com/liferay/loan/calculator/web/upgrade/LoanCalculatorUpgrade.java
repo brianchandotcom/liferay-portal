@@ -1,4 +1,3 @@
-
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -28,6 +27,10 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+/**
+ * @author Raymond Augé
+ * @author Peter Fellwock
+ */
 /**
  * @author Raymond Augé
  * @author Peter Fellwock

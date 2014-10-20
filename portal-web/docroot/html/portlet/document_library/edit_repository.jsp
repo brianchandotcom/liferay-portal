@@ -201,7 +201,7 @@ long folderId = ParamUtil.getLong(request, "folderId");
 
 		settingsSupported.append(settingsParameters.find('.settings-parameters'));
 		settingsParameters.append($('#' + select.attr('id') + '-configuration-' + select.val()));
-	}
+	};
 
 	var selectRepositoryTypes = $('#<portlet:namespace />repositoryTypes');
 

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.verify;
 
-import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -34,8 +34,10 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
+import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -71,10 +73,8 @@ import java.io.File;
 import java.io.Serializable;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Marcellus Tavares
@@ -149,27 +149,6 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 			return DLAppLocalServiceUtil.addFolder(
 				userId, groupId, parentFolderId, name, description,
 				createServiceContext());
-		}
-	}
-
-	protected boolean checkUserId(long userId) throws Exception {
-		if (_missingUserIds.contains(userId)) {
-			return false;
-		}
-
-		try {
-			UserLocalServiceUtil.getUser(userId);
-
-			return true;
-		}
-		catch (NoSuchUserException nsue) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(nsue.getMessage());
-			}
-
-			_missingUserIds.add(userId);
-
-			return false;
 		}
 	}
 
@@ -261,6 +240,35 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		return jsonObject.toString();
 	}
 
+	protected long getUserId(AuditedModel auditedModel) throws PortalException {
+		User user = UserLocalServiceUtil.fetchUser(auditedModel.getUserId());
+
+		if (user != null) {
+			return user.getUserId();
+		}
+
+		User defaultUser = UserLocalServiceUtil.getDefaultUser(
+			auditedModel.getCompanyId());
+
+		if (_log.isWarnEnabled()) {
+			StringBundler sb = new StringBundler(9);
+
+			sb.append("Using default user (userId=");
+			sb.append(defaultUser.getUserId());
+			sb.append(", companyId=");
+			sb.append(defaultUser.getCompanyId());
+			sb.append(") for model ");
+			sb.append(auditedModel.getModelClassName());
+			sb.append(" with primary key ");
+			sb.append(auditedModel.getPrimaryKeyObj());
+			sb.append(StringPool.PERIOD);
+
+			_log.warn(sb.toString());
+		}
+
+		return defaultUser.getUserId();
+	}
+
 	protected boolean hasDefaultMetadataElement(
 		Element dynamicElementElement, String defaultLanguageId) {
 
@@ -313,7 +321,7 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		for (DDLRecord ddlRecord : ddlRecords) {
 			updateFileUploadReferences(
 				ddlRecord.getCompanyId(), ddlRecord.getDDMStorageId(),
-				ddlRecord.getUserId(), ddlRecord.getGroupId(), ddlRecord,
+				getUserId(ddlRecord), ddlRecord.getGroupId(), ddlRecord,
 				ddlRecord.getStatus());
 		}
 	}
@@ -353,7 +361,7 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 
 		updateFileUploadReferences(
 			fileEntry.getCompanyId(), dlFileEntryMetadata.getDDMStorageId(),
-			fileEntry.getUserId(), fileEntry.getGroupId(), dlFileEntryMetadata,
+			getUserId(fileEntry), fileEntry.getGroupId(), dlFileEntryMetadata,
 			fileVersion.getStatus());
 	}
 
@@ -471,26 +479,6 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		Map<String, String> fieldValues = new HashMap<String, String>();
 
 		Fields fields = StorageEngineUtil.getFields(storageId);
-
-		if (!checkUserId(userId)) {
-			userId = UserLocalServiceUtil.getDefaultUserId(companyId);
-
-			if (_log.isWarnEnabled()) {
-				StringBundler sb = new StringBundler(9);
-
-				sb.append("Using default user (userId=");
-				sb.append(userId);
-				sb.append(", companyId=");
-				sb.append(companyId);
-				sb.append(") for model ");
-				sb.append(baseModel.getModelClassName());
-				sb.append(" with primary key ");
-				sb.append(baseModel.getPrimaryKeyObj());
-				sb.append(StringPool.PERIOD);
-
-				_log.warn(sb.toString());
-			}
-		}
 
 		for (Field field : fields) {
 			String dataType = field.getDataType();
@@ -644,6 +632,5 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 	private long _ddlRecordSetClassNameId;
 	private long _ddmStructureClassNameId;
 	private long _dlFileEntryMetadataClassNameId;
-	private final Set<Long> _missingUserIds = new HashSet<Long>();
 
 }

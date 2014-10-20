@@ -14,6 +14,8 @@
 
 package com.liferay.portlet;
 
+import aQute.bnd.annotation.ProviderType;
+
 import javax.portlet.EventPortlet;
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
@@ -24,6 +26,7 @@ import javax.portlet.ResourceServingPortlet;
 /**
  * @author Michael Young
  */
+@ProviderType
 public interface InvokerPortlet
 	extends EventPortlet, Portlet, ResourceServingPortlet {
 

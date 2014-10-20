@@ -174,6 +174,7 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 		InvokerPortlet instanceInvokerPortletInstance =
 			_invokerPortletFactory.create(
 				portlet, portletInstance, portletConfig, portletContext,
+				(InvokerFilterContainer)rootInvokerPortletInstance,
 				checkAuthToken, facesPortlet, strutsPortlet,
 				strutsBridgePortlet);
 
@@ -226,8 +227,11 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 
 		PortletContext portletContext = portletConfig.getPortletContext();
 
+		InvokerFilterContainer invokerFilterContainer =
+			new InvokerFilterContainerImpl(portlet, portletContext);
+
 		InvokerPortlet invokerPortlet = _invokerPortletFactory.create(
-			portlet, portletInstance, portletContext);
+			portlet, portletInstance, portletContext, invokerFilterContainer);
 
 		invokerPortlet.init(portletConfig);
 

@@ -28,13 +28,15 @@ public class MonitoringPortletFactoryImpl extends InvokerPortletFactoryImpl {
 	public InvokerPortlet create(
 			com.liferay.portal.model.Portlet portletModel, Portlet portlet,
 			PortletConfig portletConfig, PortletContext portletContext,
+			InvokerFilterContainer invokerFilterContainer,
 			boolean checkAuthToken, boolean facesPortlet, boolean strutsPortlet,
 			boolean strutsBridgePortlet)
 		throws PortletException {
 
 		InvokerPortlet invokerPortlet = super.create(
 			portletModel, portlet, portletConfig, portletContext,
-			checkAuthToken, facesPortlet, strutsPortlet, strutsBridgePortlet);
+			invokerFilterContainer, checkAuthToken, facesPortlet, strutsPortlet,
+			strutsBridgePortlet);
 
 		return new MonitoringPortlet(invokerPortlet);
 	}
@@ -42,11 +44,12 @@ public class MonitoringPortletFactoryImpl extends InvokerPortletFactoryImpl {
 	@Override
 	public InvokerPortlet create(
 			com.liferay.portal.model.Portlet portletModel, Portlet portlet,
-			PortletContext portletContext)
+			PortletContext portletContext,
+			InvokerFilterContainer invokerFilterContainer)
 		throws PortletException {
 
 		InvokerPortlet invokerPortlet = super.create(
-			portletModel, portlet, portletContext);
+			portletModel, portlet, portletContext, invokerFilterContainer);
 
 		return new MonitoringPortlet(invokerPortlet);
 	}

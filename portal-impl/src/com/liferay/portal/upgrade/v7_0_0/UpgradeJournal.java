@@ -384,9 +384,15 @@ public class UpgradeJournal extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateBasicWebContentStructure();
-
 		try {
+			runSQL(
+				"alter_column_name JournalArticle structureId DDMStructureKey " +
+					"VARCHAR(75) null");
+
+			runSQL(
+				"alter_column_name JournalArticle templateId DDMtemplateKey " +
+					"VARCHAR(75) null");
+
 			runSQL("alter_column_type JournalArticle description TEXT null");
 		}
 		catch (SQLException sqle) {
@@ -396,6 +402,8 @@ public class UpgradeJournal extends UpgradeProcess {
 				JournalArticleTable.TABLE_SQL_CREATE,
 				JournalArticleTable.TABLE_SQL_ADD_INDEXES);
 		}
+
+		updateBasicWebContentStructure();
 	}
 
 	protected long getBitwiseValue(
@@ -688,8 +696,8 @@ public class UpgradeJournal extends UpgradeProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"update JournalArticle set structureId = ?, templateId = ?, " +
-					"content = ? where id_ = ?");
+				"update JournalArticle set ddmStructureKey = ?, " +
+					"ddmTemplateKey = ?, content = ? where id_ = ?");
 
 			ps.setString(1, ddmStructureKey);
 			ps.setString(2, ddmTemplateKey);
@@ -713,8 +721,8 @@ public class UpgradeJournal extends UpgradeProcess {
 
 			ps = con.prepareStatement(
 				"select id_, content from JournalArticle where companyId = " +
-					companyId + " and structureId is NULL or structureId " +
-						"LIKE ''");
+					companyId + " and ddmStructureKey is NULL or " +
+					"ddmStructureKey LIKE ''");
 
 			String name = addBasicWebContentStructureAndTemplate(companyId);
 

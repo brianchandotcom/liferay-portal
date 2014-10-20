@@ -277,29 +277,29 @@ create index IX_3B69160F on Groups_UserGroups (userGroupId);
 
 create index IX_6A925A4D on Image (size_);
 
-create index IX_FF0E7A72 on JournalArticle (classNameId, templateId);
+create index IX_17806804 on JournalArticle (DDMStructureKey);
+create index IX_75CCA4D1 on JournalArticle (DDMTemplateKey);
+create index IX_C761B675 on JournalArticle (classNameId, DDMTemplateKey);
 create index IX_323DF109 on JournalArticle (companyId, status);
 create index IX_E82F322B on JournalArticle (companyId, version, status);
 create index IX_EA05E9E1 on JournalArticle (displayDate, status);
+create index IX_D8EB0D84 on JournalArticle (groupId, DDMStructureKey);
+create index IX_31B74F51 on JournalArticle (groupId, DDMTemplateKey);
 create index IX_4D5CD982 on JournalArticle (groupId, articleId, status);
 create unique index IX_85C52EEC on JournalArticle (groupId, articleId, version);
+create index IX_353BD560 on JournalArticle (groupId, classNameId, DDMStructureKey);
+create index IX_6E801BF5 on JournalArticle (groupId, classNameId, DDMTemplateKey);
 create index IX_9CE6E0FA on JournalArticle (groupId, classNameId, classPK);
 create index IX_A2534AC2 on JournalArticle (groupId, classNameId, layoutUuid);
-create index IX_91E78C35 on JournalArticle (groupId, classNameId, structureId);
-create index IX_F43B9FF2 on JournalArticle (groupId, classNameId, templateId);
 create index IX_F35391E8 on JournalArticle (groupId, folderId, status);
 create index IX_3C028C1E on JournalArticle (groupId, layoutUuid);
 create index IX_301D024B on JournalArticle (groupId, status);
-create index IX_2E207659 on JournalArticle (groupId, structureId);
-create index IX_8DEAE14E on JournalArticle (groupId, templateId);
 create index IX_D2D249E8 on JournalArticle (groupId, urlTitle, status);
 create index IX_43A0F80F on JournalArticle (groupId, userId, classNameId);
 create index IX_3F1EA19E on JournalArticle (layoutUuid);
 create index IX_451D63EC on JournalArticle (resourcePrimKey, indexable, status);
 create index IX_3E2765FC on JournalArticle (resourcePrimKey, status);
 create index IX_EF9B7028 on JournalArticle (smallImageId);
-create index IX_8E8710D9 on JournalArticle (structureId);
-create index IX_9106F6CE on JournalArticle (templateId);
 create index IX_71520099 on JournalArticle (uuid_, companyId);
 create unique index IX_3463D95B on JournalArticle (uuid_, groupId);
 

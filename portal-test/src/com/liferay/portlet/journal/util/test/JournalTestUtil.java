@@ -769,7 +769,7 @@ public class JournalTestUtil {
 			article.getUserId(), article.getGroupId(), article.getFolderId(),
 			article.getArticleId(), article.getVersion(), titleMap,
 			article.getDescriptionMap(), content, article.getType(),
-			article.getStructureId(), article.getTemplateId(),
+			article.getDDMStructureKey(), article.getDDMTemplateKey(),
 			article.getLayoutUuid(), displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute, 0, 0, 0, 0, 0,
 			true, 0, 0, 0, 0, 0, true, article.getIndexable(),

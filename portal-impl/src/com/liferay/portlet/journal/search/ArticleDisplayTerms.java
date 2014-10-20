@@ -43,6 +43,10 @@ public class ArticleDisplayTerms extends DisplayTerms {
 
 	public static final String CONTENT = "content";
 
+	public static final String DDM_STRUCTURE_KEY = "ddmStructureKey";
+
+	public static final String DDM_TEMPLATE_KEY = "ddmTemplateKey";
+
 	public static final String DESCRIPTION = "description";
 
 	public static final String DISPLAY_DATE_GT = "displayDateGT";
@@ -56,10 +60,6 @@ public class ArticleDisplayTerms extends DisplayTerms {
 	public static final String NAVIGATION = "navigation";
 
 	public static final String STATUS = "status";
-
-	public static final String STRUCTURE_ID = "structureId";
-
-	public static final String TEMPLATE_ID = "templateId";
 
 	public static final String TITLE = "title";
 
@@ -76,8 +76,9 @@ public class ArticleDisplayTerms extends DisplayTerms {
 		folderId = ParamUtil.getLong(portletRequest, FOLDER_ID);
 		navigation = ParamUtil.getString(portletRequest, NAVIGATION);
 		status = ParamUtil.getInteger(portletRequest, STATUS);
-		structureId = ParamUtil.getString(portletRequest, STRUCTURE_ID);
-		templateId = ParamUtil.getString(portletRequest, TEMPLATE_ID);
+		ddmStructureKey = ParamUtil.getString(
+			portletRequest, DDM_STRUCTURE_KEY);
+		ddmTemplateKey = ParamUtil.getString(portletRequest, DDM_TEMPLATE_KEY);
 		title = ParamUtil.getString(portletRequest, TITLE);
 		type = ParamUtil.getString(portletRequest, TYPE);
 		version = ParamUtil.getDouble(portletRequest, VERSION);
@@ -91,6 +92,14 @@ public class ArticleDisplayTerms extends DisplayTerms {
 
 	public String getContent() {
 		return content;
+	}
+
+	public String getDDMStructureKey() {
+		return ddmStructureKey;
+	}
+
+	public String getDDMTemplateKey() {
+		return ddmTemplateKey;
 	}
 
 	public String getDescription() {
@@ -131,14 +140,6 @@ public class ArticleDisplayTerms extends DisplayTerms {
 
 	public int getStatus() {
 		return status;
-	}
-
-	public String getStructureId() {
-		return structureId;
-	}
-
-	public String getTemplateId() {
-		return templateId;
 	}
 
 	public String getTitle() {
@@ -192,14 +193,16 @@ public class ArticleDisplayTerms extends DisplayTerms {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (Validator.isNotNull(structureId) && !structureId.equals("0")) {
+		if (Validator.isNotNull(ddmStructureKey) &&
+			!ddmStructureKey.equals("0")) {
+
 			DDMStructure ddmStructure = null;
 
 			try {
 				ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
 					themeDisplay.getSiteGroupId(),
 					PortalUtil.getClassNameId(JournalArticle.class),
-					structureId);
+					ddmStructureKey);
 			}
 			catch (SystemException se) {
 			}
@@ -209,14 +212,16 @@ public class ArticleDisplayTerms extends DisplayTerms {
 			}
 		}
 
-		if (Validator.isNotNull(templateId) && !templateId.equals("0")) {
+		if (Validator.isNotNull(ddmTemplateKey) &&
+			!ddmTemplateKey.equals("0")) {
+
 			DDMTemplate ddmTemplate = null;
 
 			try {
 				ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
 					themeDisplay.getSiteGroupId(),
 					PortalUtil.getClassNameId(JournalArticle.class),
-					templateId);
+					ddmTemplateKey);
 			}
 			catch (SystemException se) {
 			}
@@ -235,6 +240,8 @@ public class ArticleDisplayTerms extends DisplayTerms {
 
 	protected String articleId;
 	protected String content;
+	protected String ddmStructureKey;
+	protected String ddmTemplateKey;
 	protected String description;
 	protected Date displayDateGT;
 	protected Date displayDateLT;
@@ -243,8 +250,6 @@ public class ArticleDisplayTerms extends DisplayTerms {
 	protected long groupId;
 	protected String navigation;
 	protected int status;
-	protected String structureId;
-	protected String templateId;
 	protected String title;
 	protected String type;
 	protected double version;

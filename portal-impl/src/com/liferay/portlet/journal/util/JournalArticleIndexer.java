@@ -246,7 +246,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
 			article.getGroupId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
-			article.getStructureId(), true);
+			article.getDDMStructureKey(), true);
 
 		if (ddmStructure == null) {
 			return;
@@ -411,8 +411,8 @@ public class JournalArticleIndexer extends BaseIndexer {
 		document.addKeyword(Field.TYPE, article.getType());
 		document.addKeyword(Field.VERSION, article.getVersion());
 
-		document.addKeyword("ddmStructureKey", article.getStructureId());
-		document.addKeyword("ddmTemplateKey", article.getTemplateId());
+		document.addKeyword("ddmStructureKey", article.getDDMStructureKey());
+		document.addKeyword("ddmTemplateKey", article.getDDMTemplateKey());
 		document.addDate("displayDate", article.getDisplayDate());
 		document.addKeyword("head", isHead(article));
 
@@ -562,7 +562,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
 			article.getGroupId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
-			article.getStructureId(), true);
+			article.getDDMStructureKey(), true);
 
 		if (ddmStructure == null) {
 			return StringPool.BLANK;

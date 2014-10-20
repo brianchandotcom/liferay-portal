@@ -39,7 +39,7 @@ final class JournalArticleDDMFieldReader extends BaseDDMFieldReader {
 				DDMStructureLocalServiceUtil.getStructure(
 					PortalUtil.getSiteGroupId(_article.getGroupId()),
 					PortalUtil.getClassNameId(JournalArticle.class),
-					_article.getStructureId(), true);
+					_article.getDDMStructureKey(), true);
 
 			String content = _article.getContent();
 

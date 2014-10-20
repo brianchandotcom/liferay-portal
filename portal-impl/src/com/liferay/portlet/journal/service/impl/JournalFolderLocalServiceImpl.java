@@ -1373,7 +1373,7 @@ public class JournalFolderLocalServiceImpl
 				DDMStructure ddmStructure =
 					ddmStructureLocalService.fetchStructure(
 						article.getGroupId(), classNameId,
-						article.getStructureId(), true);
+						article.getDDMStructureKey(), true);
 
 				if (ddmStructure == null) {
 					throw new InvalidDDMStructureException();

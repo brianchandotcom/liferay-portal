@@ -69,7 +69,7 @@ double version = ParamUtil.getDouble(request, "version");
 		searchTerms.setType(type);
 
 		if (ddmStructure != null) {
-			searchTerms.setStructureId(ddmStructure.getStructureKey());
+			searchTerms.setDDMStructureKey(ddmStructure.getStructureKey());
 		}
 
 		searchTerms.setDisplayDateLT(new Date());

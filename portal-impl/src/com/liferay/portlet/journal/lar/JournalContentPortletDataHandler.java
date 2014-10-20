@@ -164,13 +164,13 @@ public class JournalContentPortletDataHandler
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
 			portletDataContext, portletId, article);
 
-		String defaultTemplateId = article.getTemplateId();
+		String defaultDDMTemplateKey = article.getDDMTemplateKey();
 		String preferenceTemplateId = portletPreferences.getValue(
 			"ddmTemplateKey", null);
 
-		if (Validator.isNotNull(defaultTemplateId) &&
+		if (Validator.isNotNull(defaultDDMTemplateKey) &&
 			Validator.isNotNull(preferenceTemplateId) &&
-			!defaultTemplateId.equals(preferenceTemplateId)) {
+			!defaultDDMTemplateKey.equals(preferenceTemplateId)) {
 
 			DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
 				article.getGroupId(),

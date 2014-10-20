@@ -300,7 +300,7 @@ public class JournalArticleStagedModelDataHandler
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
 			article.getGroupId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
-			article.getStructureId(), true);
+			article.getDDMStructureKey(), true);
 
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
 			portletDataContext, article, ddmStructure,
@@ -308,7 +308,7 @@ public class JournalArticleStagedModelDataHandler
 
 		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
 			article.getGroupId(), PortalUtil.getClassNameId(DDMStructure.class),
-			article.getTemplateId(), true);
+			article.getDDMTemplateKey(), true);
 
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
 			portletDataContext, article, ddmTemplate,
@@ -531,8 +531,8 @@ public class JournalArticleStagedModelDataHandler
 				DDMStructure.class + ".ddmStructureKey");
 
 		String parentDDMStructureKey = MapUtil.getString(
-			ddmStructureKeys, article.getStructureId(),
-			article.getStructureId());
+			ddmStructureKeys, article.getDDMStructureKey(),
+			article.getDDMStructureKey());
 
 		Map<String, Long> ddmStructureIds =
 			(Map<String, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -549,7 +549,8 @@ public class JournalArticleStagedModelDataHandler
 				DDMTemplate.class + ".ddmTemplateKey");
 
 		String parentDDMTemplateKey = MapUtil.getString(
-			ddmTemplateKeys, article.getTemplateId(), article.getTemplateId());
+			ddmTemplateKeys, article.getDDMTemplateKey(),
+			article.getDDMTemplateKey());
 
 		File smallFile = null;
 

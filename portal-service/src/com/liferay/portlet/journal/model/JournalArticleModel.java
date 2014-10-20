@@ -585,32 +585,34 @@ public interface JournalArticleModel extends AttachedModel,
 	public void setType(String type);
 
 	/**
-	 * Returns the structure ID of this journal article.
+	 * Returns the d d m structure key of this journal article.
 	 *
-	 * @return the structure ID of this journal article
+	 * @return the d d m structure key of this journal article
 	 */
-	public String getStructureId();
+	@AutoEscape
+	public String getDDMStructureKey();
 
 	/**
-	 * Sets the structure ID of this journal article.
+	 * Sets the d d m structure key of this journal article.
 	 *
-	 * @param structureId the structure ID of this journal article
+	 * @param DDMStructureKey the d d m structure key of this journal article
 	 */
-	public void setStructureId(String structureId);
+	public void setDDMStructureKey(String DDMStructureKey);
 
 	/**
-	 * Returns the template ID of this journal article.
+	 * Returns the d d m template key of this journal article.
 	 *
-	 * @return the template ID of this journal article
+	 * @return the d d m template key of this journal article
 	 */
-	public String getTemplateId();
+	@AutoEscape
+	public String getDDMTemplateKey();
 
 	/**
-	 * Sets the template ID of this journal article.
+	 * Sets the d d m template key of this journal article.
 	 *
-	 * @param templateId the template ID of this journal article
+	 * @param DDMTemplateKey the d d m template key of this journal article
 	 */
-	public void setTemplateId(String templateId);
+	public void setDDMTemplateKey(String DDMTemplateKey);
 
 	/**
 	 * Returns the layout uuid of this journal article.

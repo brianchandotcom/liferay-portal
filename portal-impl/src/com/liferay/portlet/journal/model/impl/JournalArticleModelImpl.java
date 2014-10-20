@@ -106,8 +106,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 			{ "description", Types.CLOB },
 			{ "content", Types.CLOB },
 			{ "type_", Types.VARCHAR },
-			{ "structureId", Types.VARCHAR },
-			{ "templateId", Types.VARCHAR },
+			{ "DDMStructureKey", Types.VARCHAR },
+			{ "DDMTemplateKey", Types.VARCHAR },
 			{ "layoutUuid", Types.VARCHAR },
 			{ "displayDate", Types.TIMESTAMP },
 			{ "expirationDate", Types.TIMESTAMP },
@@ -121,7 +121,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 			{ "statusByUserName", Types.VARCHAR },
 			{ "statusDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table JournalArticle (uuid_ VARCHAR(75) null,id_ LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,folderId LONG,classNameId LONG,classPK LONG,treePath STRING null,articleId VARCHAR(75) null,version DOUBLE,title STRING null,urlTitle VARCHAR(150) null,description TEXT null,content TEXT null,type_ VARCHAR(75) null,structureId VARCHAR(75) null,templateId VARCHAR(75) null,layoutUuid VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,reviewDate DATE null,indexable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL STRING null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table JournalArticle (uuid_ VARCHAR(75) null,id_ LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,folderId LONG,classNameId LONG,classPK LONG,treePath STRING null,articleId VARCHAR(75) null,version DOUBLE,title STRING null,urlTitle VARCHAR(150) null,description TEXT null,content TEXT null,type_ VARCHAR(75) null,DDMStructureKey VARCHAR(75) null,DDMTemplateKey VARCHAR(75) null,layoutUuid VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,reviewDate DATE null,indexable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL STRING null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table JournalArticle";
 	public static final String ORDER_BY_JPQL = " ORDER BY journalArticle.articleId ASC, journalArticle.version DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY JournalArticle.articleId ASC, JournalArticle.version DESC";
@@ -137,20 +137,20 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.journal.model.JournalArticle"),
 			true);
-	public static final long ARTICLEID_COLUMN_BITMASK = 1L;
-	public static final long CLASSNAMEID_COLUMN_BITMASK = 2L;
-	public static final long CLASSPK_COLUMN_BITMASK = 4L;
-	public static final long COMPANYID_COLUMN_BITMASK = 8L;
-	public static final long DISPLAYDATE_COLUMN_BITMASK = 16L;
-	public static final long FOLDERID_COLUMN_BITMASK = 32L;
-	public static final long GROUPID_COLUMN_BITMASK = 64L;
-	public static final long INDEXABLE_COLUMN_BITMASK = 128L;
-	public static final long LAYOUTUUID_COLUMN_BITMASK = 256L;
-	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 512L;
-	public static final long SMALLIMAGEID_COLUMN_BITMASK = 1024L;
-	public static final long STATUS_COLUMN_BITMASK = 2048L;
-	public static final long STRUCTUREID_COLUMN_BITMASK = 4096L;
-	public static final long TEMPLATEID_COLUMN_BITMASK = 8192L;
+	public static final long DDMSTRUCTUREKEY_COLUMN_BITMASK = 1L;
+	public static final long DDMTEMPLATEKEY_COLUMN_BITMASK = 2L;
+	public static final long ARTICLEID_COLUMN_BITMASK = 4L;
+	public static final long CLASSNAMEID_COLUMN_BITMASK = 8L;
+	public static final long CLASSPK_COLUMN_BITMASK = 16L;
+	public static final long COMPANYID_COLUMN_BITMASK = 32L;
+	public static final long DISPLAYDATE_COLUMN_BITMASK = 64L;
+	public static final long FOLDERID_COLUMN_BITMASK = 128L;
+	public static final long GROUPID_COLUMN_BITMASK = 256L;
+	public static final long INDEXABLE_COLUMN_BITMASK = 512L;
+	public static final long LAYOUTUUID_COLUMN_BITMASK = 1024L;
+	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 2048L;
+	public static final long SMALLIMAGEID_COLUMN_BITMASK = 4096L;
+	public static final long STATUS_COLUMN_BITMASK = 8192L;
 	public static final long URLTITLE_COLUMN_BITMASK = 16384L;
 	public static final long USERID_COLUMN_BITMASK = 32768L;
 	public static final long UUID_COLUMN_BITMASK = 65536L;
@@ -189,8 +189,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		model.setDescription(soapModel.getDescription());
 		model.setContent(soapModel.getContent());
 		model.setType(soapModel.getType());
-		model.setStructureId(soapModel.getStructureId());
-		model.setTemplateId(soapModel.getTemplateId());
+		model.setDDMStructureKey(soapModel.getDDMStructureKey());
+		model.setDDMTemplateKey(soapModel.getDDMTemplateKey());
 		model.setLayoutUuid(soapModel.getLayoutUuid());
 		model.setDisplayDate(soapModel.getDisplayDate());
 		model.setExpirationDate(soapModel.getExpirationDate());
@@ -287,8 +287,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		attributes.put("description", getDescription());
 		attributes.put("content", getContent());
 		attributes.put("type", getType());
-		attributes.put("structureId", getStructureId());
-		attributes.put("templateId", getTemplateId());
+		attributes.put("DDMStructureKey", getDDMStructureKey());
+		attributes.put("DDMTemplateKey", getDDMTemplateKey());
 		attributes.put("layoutUuid", getLayoutUuid());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
@@ -430,16 +430,16 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 			setType(type);
 		}
 
-		String structureId = (String)attributes.get("structureId");
+		String DDMStructureKey = (String)attributes.get("DDMStructureKey");
 
-		if (structureId != null) {
-			setStructureId(structureId);
+		if (DDMStructureKey != null) {
+			setDDMStructureKey(DDMStructureKey);
 		}
 
-		String templateId = (String)attributes.get("templateId");
+		String DDMTemplateKey = (String)attributes.get("DDMTemplateKey");
 
-		if (templateId != null) {
-			setTemplateId(templateId);
+		if (DDMTemplateKey != null) {
+			setDDMTemplateKey(DDMTemplateKey);
 		}
 
 		String layoutUuid = (String)attributes.get("layoutUuid");
@@ -1117,54 +1117,54 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	@JSON
 	@Override
-	public String getStructureId() {
-		if (_structureId == null) {
+	public String getDDMStructureKey() {
+		if (_DDMStructureKey == null) {
 			return StringPool.BLANK;
 		}
 		else {
-			return _structureId;
+			return _DDMStructureKey;
 		}
 	}
 
 	@Override
-	public void setStructureId(String structureId) {
-		_columnBitmask |= STRUCTUREID_COLUMN_BITMASK;
+	public void setDDMStructureKey(String DDMStructureKey) {
+		_columnBitmask |= DDMSTRUCTUREKEY_COLUMN_BITMASK;
 
-		if (_originalStructureId == null) {
-			_originalStructureId = _structureId;
+		if (_originalDDMStructureKey == null) {
+			_originalDDMStructureKey = _DDMStructureKey;
 		}
 
-		_structureId = structureId;
+		_DDMStructureKey = DDMStructureKey;
 	}
 
-	public String getOriginalStructureId() {
-		return GetterUtil.getString(_originalStructureId);
+	public String getOriginalDDMStructureKey() {
+		return GetterUtil.getString(_originalDDMStructureKey);
 	}
 
 	@JSON
 	@Override
-	public String getTemplateId() {
-		if (_templateId == null) {
+	public String getDDMTemplateKey() {
+		if (_DDMTemplateKey == null) {
 			return StringPool.BLANK;
 		}
 		else {
-			return _templateId;
+			return _DDMTemplateKey;
 		}
 	}
 
 	@Override
-	public void setTemplateId(String templateId) {
-		_columnBitmask |= TEMPLATEID_COLUMN_BITMASK;
+	public void setDDMTemplateKey(String DDMTemplateKey) {
+		_columnBitmask |= DDMTEMPLATEKEY_COLUMN_BITMASK;
 
-		if (_originalTemplateId == null) {
-			_originalTemplateId = _templateId;
+		if (_originalDDMTemplateKey == null) {
+			_originalDDMTemplateKey = _DDMTemplateKey;
 		}
 
-		_templateId = templateId;
+		_DDMTemplateKey = DDMTemplateKey;
 	}
 
-	public String getOriginalTemplateId() {
-		return GetterUtil.getString(_originalTemplateId);
+	public String getOriginalDDMTemplateKey() {
+		return GetterUtil.getString(_originalDDMTemplateKey);
 	}
 
 	@JSON
@@ -1760,8 +1760,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		journalArticleImpl.setDescription(getDescription());
 		journalArticleImpl.setContent(getContent());
 		journalArticleImpl.setType(getType());
-		journalArticleImpl.setStructureId(getStructureId());
-		journalArticleImpl.setTemplateId(getTemplateId());
+		journalArticleImpl.setDDMStructureKey(getDDMStructureKey());
+		journalArticleImpl.setDDMTemplateKey(getDDMTemplateKey());
 		journalArticleImpl.setLayoutUuid(getLayoutUuid());
 		journalArticleImpl.setDisplayDate(getDisplayDate());
 		journalArticleImpl.setExpirationDate(getExpirationDate());
@@ -1888,9 +1888,9 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 		journalArticleModelImpl._originalUrlTitle = journalArticleModelImpl._urlTitle;
 
-		journalArticleModelImpl._originalStructureId = journalArticleModelImpl._structureId;
+		journalArticleModelImpl._originalDDMStructureKey = journalArticleModelImpl._DDMStructureKey;
 
-		journalArticleModelImpl._originalTemplateId = journalArticleModelImpl._templateId;
+		journalArticleModelImpl._originalDDMTemplateKey = journalArticleModelImpl._DDMTemplateKey;
 
 		journalArticleModelImpl._originalLayoutUuid = journalArticleModelImpl._layoutUuid;
 
@@ -2027,20 +2027,20 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 			journalArticleCacheModel.type = null;
 		}
 
-		journalArticleCacheModel.structureId = getStructureId();
+		journalArticleCacheModel.DDMStructureKey = getDDMStructureKey();
 
-		String structureId = journalArticleCacheModel.structureId;
+		String DDMStructureKey = journalArticleCacheModel.DDMStructureKey;
 
-		if ((structureId != null) && (structureId.length() == 0)) {
-			journalArticleCacheModel.structureId = null;
+		if ((DDMStructureKey != null) && (DDMStructureKey.length() == 0)) {
+			journalArticleCacheModel.DDMStructureKey = null;
 		}
 
-		journalArticleCacheModel.templateId = getTemplateId();
+		journalArticleCacheModel.DDMTemplateKey = getDDMTemplateKey();
 
-		String templateId = journalArticleCacheModel.templateId;
+		String DDMTemplateKey = journalArticleCacheModel.DDMTemplateKey;
 
-		if ((templateId != null) && (templateId.length() == 0)) {
-			journalArticleCacheModel.templateId = null;
+		if ((DDMTemplateKey != null) && (DDMTemplateKey.length() == 0)) {
+			journalArticleCacheModel.DDMTemplateKey = null;
 		}
 
 		journalArticleCacheModel.layoutUuid = getLayoutUuid();
@@ -2164,10 +2164,10 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		sb.append(getContent());
 		sb.append(", type=");
 		sb.append(getType());
-		sb.append(", structureId=");
-		sb.append(getStructureId());
-		sb.append(", templateId=");
-		sb.append(getTemplateId());
+		sb.append(", DDMStructureKey=");
+		sb.append(getDDMStructureKey());
+		sb.append(", DDMTemplateKey=");
+		sb.append(getDDMTemplateKey());
 		sb.append(", layoutUuid=");
 		sb.append(getLayoutUuid());
 		sb.append(", displayDate=");
@@ -2286,12 +2286,12 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		sb.append(getType());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>structureId</column-name><column-value><![CDATA[");
-		sb.append(getStructureId());
+			"<column><column-name>DDMStructureKey</column-name><column-value><![CDATA[");
+		sb.append(getDDMStructureKey());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>templateId</column-name><column-value><![CDATA[");
-		sb.append(getTemplateId());
+			"<column><column-name>DDMTemplateKey</column-name><column-value><![CDATA[");
+		sb.append(getDDMTemplateKey());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>layoutUuid</column-name><column-value><![CDATA[");
@@ -2392,10 +2392,10 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	private String _descriptionCurrentLanguageId;
 	private String _content;
 	private String _type;
-	private String _structureId;
-	private String _originalStructureId;
-	private String _templateId;
-	private String _originalTemplateId;
+	private String _DDMStructureKey;
+	private String _originalDDMStructureKey;
+	private String _DDMTemplateKey;
+	private String _originalDDMTemplateKey;
 	private String _layoutUuid;
 	private String _originalLayoutUuid;
 	private Date _displayDate;

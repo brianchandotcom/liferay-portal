@@ -207,7 +207,7 @@ public class VerifyJournal extends VerifyProcess {
 			ps = con.prepareStatement(
 				"select id_ from JournalArticle where (content like " +
 					"'%document_library%' or content like '%link_to_layout%')" +
-						" and structureId != ''");
+						" and DDMStructureKey != ''");
 
 			rs = ps.executeQuery();
 
@@ -478,8 +478,8 @@ public class VerifyJournal extends VerifyProcess {
 						article.getId());
 			}
 
-			article.setStructureId(StringPool.BLANK);
-			article.setTemplateId(StringPool.BLANK);
+			article.setDDMStructureKey(StringPool.BLANK);
+			article.setDDMTemplateKey(StringPool.BLANK);
 
 			JournalArticleLocalServiceUtil.updateJournalArticle(article);
 		}

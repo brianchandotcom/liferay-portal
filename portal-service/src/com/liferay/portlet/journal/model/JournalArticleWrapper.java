@@ -74,8 +74,8 @@ public class JournalArticleWrapper implements JournalArticle,
 		attributes.put("description", getDescription());
 		attributes.put("content", getContent());
 		attributes.put("type", getType());
-		attributes.put("structureId", getStructureId());
-		attributes.put("templateId", getTemplateId());
+		attributes.put("DDMStructureKey", getDDMStructureKey());
+		attributes.put("DDMTemplateKey", getDDMTemplateKey());
 		attributes.put("layoutUuid", getLayoutUuid());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
@@ -214,16 +214,16 @@ public class JournalArticleWrapper implements JournalArticle,
 			setType(type);
 		}
 
-		String structureId = (String)attributes.get("structureId");
+		String DDMStructureKey = (String)attributes.get("DDMStructureKey");
 
-		if (structureId != null) {
-			setStructureId(structureId);
+		if (DDMStructureKey != null) {
+			setDDMStructureKey(DDMStructureKey);
 		}
 
-		String templateId = (String)attributes.get("templateId");
+		String DDMTemplateKey = (String)attributes.get("DDMTemplateKey");
 
-		if (templateId != null) {
-			setTemplateId(templateId);
+		if (DDMTemplateKey != null) {
+			setDDMTemplateKey(DDMTemplateKey);
 		}
 
 		String layoutUuid = (String)attributes.get("layoutUuid");
@@ -445,10 +445,30 @@ public class JournalArticleWrapper implements JournalArticle,
 		return _journalArticle.getDDMStructure();
 	}
 
+	/**
+	* Returns the d d m structure key of this journal article.
+	*
+	* @return the d d m structure key of this journal article
+	*/
+	@Override
+	public java.lang.String getDDMStructureKey() {
+		return _journalArticle.getDDMStructureKey();
+	}
+
 	@Override
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate getDDMTemplate()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalArticle.getDDMTemplate();
+	}
+
+	/**
+	* Returns the d d m template key of this journal article.
+	*
+	* @return the d d m template key of this journal article
+	*/
+	@Override
+	public java.lang.String getDDMTemplateKey() {
+		return _journalArticle.getDDMTemplateKey();
 	}
 
 	@Override
@@ -766,9 +786,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	}
 
 	/**
-	* Returns the structure ID of this journal article.
-	*
-	* @return the structure ID of this journal article
+	* @deprecated As of 7.0.0, replaced by {@link #getDDMStructureKey()}
 	*/
 	@Override
 	public java.lang.String getStructureId() {
@@ -776,9 +794,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	}
 
 	/**
-	* Returns the template ID of this journal article.
-	*
-	* @return the template ID of this journal article
+	* @deprecated As of 7.0.0, replaced by {@link #getDDMTemplateKey()}
 	*/
 	@Override
 	public java.lang.String getTemplateId() {
@@ -1230,6 +1246,26 @@ public class JournalArticleWrapper implements JournalArticle,
 		_journalArticle.setCreateDate(createDate);
 	}
 
+	/**
+	* Sets the d d m structure key of this journal article.
+	*
+	* @param DDMStructureKey the d d m structure key of this journal article
+	*/
+	@Override
+	public void setDDMStructureKey(java.lang.String DDMStructureKey) {
+		_journalArticle.setDDMStructureKey(DDMStructureKey);
+	}
+
+	/**
+	* Sets the d d m template key of this journal article.
+	*
+	* @param DDMTemplateKey the d d m template key of this journal article
+	*/
+	@Override
+	public void setDDMTemplateKey(java.lang.String DDMTemplateKey) {
+		_journalArticle.setDDMTemplateKey(DDMTemplateKey);
+	}
+
 	@Override
 	public void setDefaultLanguageId(java.lang.String defaultLanguageId) {
 		_journalArticle.setDefaultLanguageId(defaultLanguageId);
@@ -1528,23 +1564,19 @@ public class JournalArticleWrapper implements JournalArticle,
 	}
 
 	/**
-	* Sets the structure ID of this journal article.
-	*
-	* @param structureId the structure ID of this journal article
+	* @deprecated As of 7.0.0, replaced by {@link #setDDMStructureKey(String)}
 	*/
 	@Override
-	public void setStructureId(java.lang.String structureId) {
-		_journalArticle.setStructureId(structureId);
+	public void setStructureId(java.lang.String ddmStructureKey) {
+		_journalArticle.setStructureId(ddmStructureKey);
 	}
 
 	/**
-	* Sets the template ID of this journal article.
-	*
-	* @param templateId the template ID of this journal article
+	* @deprecated As of 7.0.0, replaced by {@link #setDDMTemplateKey(String)}
 	*/
 	@Override
-	public void setTemplateId(java.lang.String templateId) {
-		_journalArticle.setTemplateId(templateId);
+	public void setTemplateId(java.lang.String ddmTemplateKey) {
+		_journalArticle.setTemplateId(ddmTemplateKey);
 	}
 
 	/**

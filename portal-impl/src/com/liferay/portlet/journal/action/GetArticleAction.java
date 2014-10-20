@@ -143,7 +143,7 @@ public class GetArticleAction extends Action {
 
 		// XSL template
 
-		String templateId = article.getTemplateId();
+		String templateId = article.getDDMTemplateKey();
 
 		if (Validator.isNull(templateId)) {
 			return;

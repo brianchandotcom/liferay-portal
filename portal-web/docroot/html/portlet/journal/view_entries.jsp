@@ -61,11 +61,11 @@ articleSearchContainer.setRowChecker(entriesChecker);
 ArticleDisplayTerms displayTerms = (ArticleDisplayTerms) articleSearchContainer.getDisplayTerms();
 %>
 
-<c:if test="<%= Validator.isNotNull(displayTerms.getStructureId()) %>">
-	<aui:input name="<%= displayTerms.STRUCTURE_ID %>" type="hidden" value="<%= displayTerms.getStructureId() %>" />
+<c:if test="<%= Validator.isNotNull(displayTerms.getDDMStructureKey()) %>">
+	<aui:input name="<%= displayTerms.DDM_STRUCTURE_KEY %>" type="hidden" value="<%= displayTerms.getDDMStructureKey() %>" />
 
 	<%
-	DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(JournalArticle.class), displayTerms.getStructureId(), true);
+	DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(JournalArticle.class), displayTerms.getDDMStructureKey(), true);
 
 	if (ddmStructure != null) {
 		ddmStructureId = ddmStructure.getStructureId();
@@ -76,11 +76,11 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms) articleSearchContainer.
 
 </c:if>
 
-<c:if test="<%= Validator.isNotNull(displayTerms.getTemplateId()) %>">
-	<aui:input name="<%= displayTerms.TEMPLATE_ID %>" type="hidden" value="<%= displayTerms.getTemplateId() %>" />
+<c:if test="<%= Validator.isNotNull(displayTerms.getDDMTemplateKey()) %>">
+	<aui:input name="<%= displayTerms.DDM_TEMPLATE_KEY %>" type="hidden" value="<%= displayTerms.getDDMTemplateKey() %>" />
 </c:if>
 
-<c:if test="<%= portletName.equals(PortletKeys.JOURNAL) && !((themeDisplay.getScopeGroupId() == themeDisplay.getCompanyGroupId()) && (Validator.isNotNull(displayTerms.getStructureId()) || Validator.isNotNull(displayTerms.getTemplateId()))) %>">
+<c:if test="<%= portletName.equals(PortletKeys.JOURNAL) && !((themeDisplay.getScopeGroupId() == themeDisplay.getCompanyGroupId()) && (Validator.isNotNull(displayTerms.getDDMStructureKey()) || Validator.isNotNull(displayTerms.getDDMTemplateKey()))) %>">
 	<aui:input name="groupId" type="hidden" />
 </c:if>
 
@@ -98,8 +98,8 @@ else {
 	searchTerms.setFolderIds(new ArrayList<Long>());
 }
 
-if (Validator.isNotNull(displayTerms.getStructureId())) {
-	searchTerms.setStructureId(displayTerms.getStructureId());
+if (Validator.isNotNull(displayTerms.getDDMStructureKey())) {
+	searchTerms.setDDMStructureKey(displayTerms.getDDMStructureKey());
 }
 
 searchTerms.setVersion(-1);
@@ -139,25 +139,25 @@ int total = 0;
 		%>
 
 	</c:when>
-	<c:when test="<%= Validator.isNotNull(displayTerms.getStructureId()) %>">
+	<c:when test="<%= Validator.isNotNull(displayTerms.getDDMStructureKey()) %>">
 
 		<%
-		total = JournalArticleServiceUtil.getArticlesCountByStructureId(displayTerms.getGroupId(), searchTerms.getStructureId());
+		total = JournalArticleServiceUtil.getArticlesCountByStructureId(displayTerms.getGroupId(), searchTerms.getDDMStructureKey());
 
 		articleSearchContainer.setTotal(total);
 
-		results = JournalArticleServiceUtil.getArticlesByStructureId(displayTerms.getGroupId(), displayTerms.getStructureId(), articleSearchContainer.getStart(), articleSearchContainer.getEnd(), articleSearchContainer.getOrderByComparator());
+		results = JournalArticleServiceUtil.getArticlesByStructureId(displayTerms.getGroupId(), displayTerms.getDDMStructureKey(), articleSearchContainer.getStart(), articleSearchContainer.getEnd(), articleSearchContainer.getOrderByComparator());
 		%>
 
 	</c:when>
-	<c:when test="<%= Validator.isNotNull(displayTerms.getTemplateId()) %>">
+	<c:when test="<%= Validator.isNotNull(displayTerms.getDDMTemplateKey()) %>">
 
 		<%
-		total = JournalArticleServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), JournalArticleConstants.CLASSNAME_ID_DEFAULT, searchTerms.getKeywords(), searchTerms.getVersionObj(), null, searchTerms.getStructureId(), searchTerms.getTemplateId(), searchTerms.getDisplayDateGT(), searchTerms.getDisplayDateLT(), searchTerms.getStatus(), searchTerms.getReviewDate());
+		total = JournalArticleServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), JournalArticleConstants.CLASSNAME_ID_DEFAULT, searchTerms.getKeywords(), searchTerms.getVersionObj(), null, searchTerms.getDDMStructureKey(), searchTerms.getDDMTemplateKey(), searchTerms.getDisplayDateGT(), searchTerms.getDisplayDateLT(), searchTerms.getStatus(), searchTerms.getReviewDate());
 
 		articleSearchContainer.setTotal(total);
 
-		results = JournalArticleServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), JournalArticleConstants.CLASSNAME_ID_DEFAULT, searchTerms.getKeywords(), searchTerms.getVersionObj(), null, searchTerms.getStructureId(), searchTerms.getTemplateId(), searchTerms.getDisplayDateGT(), searchTerms.getDisplayDateLT(), searchTerms.getStatus(), searchTerms.getReviewDate(), articleSearchContainer.getStart(), articleSearchContainer.getEnd(), articleSearchContainer.getOrderByComparator());
+		results = JournalArticleServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), JournalArticleConstants.CLASSNAME_ID_DEFAULT, searchTerms.getKeywords(), searchTerms.getVersionObj(), null, searchTerms.getDDMStructureKey(), searchTerms.getDDMTemplateKey(), searchTerms.getDisplayDateGT(), searchTerms.getDisplayDateLT(), searchTerms.getStatus(), searchTerms.getReviewDate(), articleSearchContainer.getStart(), articleSearchContainer.getEnd(), articleSearchContainer.getOrderByComparator());
 		%>
 
 	</c:when>
@@ -190,7 +190,7 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(articleSearchCo
 		boolean subscribed = false;
 		boolean unsubscribable = true;
 
-		if (Validator.isNull(displayTerms.getStructureId())) {
+		if (Validator.isNull(displayTerms.getDDMStructureKey())) {
 			subscribed = JournalUtil.isSubscribedToFolder(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), folderId);
 
 			if (subscribed) {
@@ -209,12 +209,12 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(articleSearchCo
 				<c:choose>
 					<c:when test="<%= unsubscribable %>">
 						<portlet:actionURL var="unsubscribeURL">
-							<portlet:param name="struts_action" value='<%= Validator.isNull(displayTerms.getStructureId()) ? "/journal/edit_folder" : "/journal/edit_article" %>' />
+							<portlet:param name="struts_action" value='<%= Validator.isNull(displayTerms.getDDMStructureKey()) ? "/journal/edit_folder" : "/journal/edit_article" %>' />
 							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 
 							<c:choose>
-								<c:when test="<%= Validator.isNull(displayTerms.getStructureId()) %>">
+								<c:when test="<%= Validator.isNull(displayTerms.getDDMStructureKey()) %>">
 									<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 								</c:when>
 								<c:otherwise>
@@ -241,12 +241,12 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(articleSearchCo
 			</c:when>
 			<c:otherwise>
 				<portlet:actionURL var="subscribeURL">
-					<portlet:param name="struts_action" value='<%= Validator.isNull(displayTerms.getStructureId()) ? "/journal/edit_folder" : "/journal/edit_article" %>' />
+					<portlet:param name="struts_action" value='<%= Validator.isNull(displayTerms.getDDMStructureKey()) ? "/journal/edit_folder" : "/journal/edit_article" %>' />
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 
 					<c:choose>
-						<c:when test="<%= Validator.isNull(displayTerms.getStructureId()) %>">
+						<c:when test="<%= Validator.isNull(displayTerms.getDDMStructureKey()) %>">
 							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 						</c:when>
 						<c:otherwise>
@@ -269,7 +269,7 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(articleSearchCo
 <c:if test="<%= results.isEmpty() %>">
 	<div class="alert alert-info entries-empty">
 		<c:choose>
-			<c:when test="<%= Validator.isNotNull(displayTerms.getStructureId()) %>">
+			<c:when test="<%= Validator.isNotNull(displayTerms.getDDMStructureKey()) %>">
 				<c:if test="<%= total == 0 %>">
 					<liferay-ui:message arguments="<%= HtmlUtil.escape(ddmStructureName) %>" key="there-is-no-web-content-with-structure-x" translateArguments="<%= false %>" />
 				</c:if>

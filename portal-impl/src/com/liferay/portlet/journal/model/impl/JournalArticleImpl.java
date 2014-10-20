@@ -185,7 +185,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		return DDMStructureLocalServiceUtil.fetchStructure(
 			PortalUtil.getSiteGroupId(getGroupId()),
 			ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class),
-			getStructureId(), true);
+			getDDMStructureKey(), true);
 	}
 
 	@Override
@@ -193,7 +193,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		return DDMTemplateLocalServiceUtil.fetchTemplate(
 			PortalUtil.getSiteGroupId(getGroupId()),
 			ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class),
-			getStructureId(), true);
+			getDDMStructureKey(), true);
 	}
 
 	@Override
@@ -270,6 +270,22 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(JournalArticle.class);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getDDMStructureKey()}
+	 */
+	@Override
+	public String getStructureId() {
+		return getDDMStructureKey();
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getDDMTemplateKey()}
+	 */
+	@Override
+	public String getTemplateId() {
+		return getDDMTemplateKey();
 	}
 
 	@Override
@@ -360,6 +376,22 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	@Override
 	public void setSmallImageType(String smallImageType) {
 		_smallImageType = smallImageType;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #setDDMStructureKey(String)}
+	 */
+	@Override
+	public void setStructureId(String ddmStructureKey) {
+		setDDMStructureKey(ddmStructureKey);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #setDDMTemplateKey(String)}
+	 */
+	@Override
+	public void setTemplateId(String ddmTemplateKey) {
+		setDDMTemplateKey(ddmTemplateKey);
 	}
 
 	@Override

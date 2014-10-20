@@ -20,6 +20,7 @@
 String redirect = ParamUtil.getString(request, "redirect");
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
+boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput", false);
 
 String portletResource = ParamUtil.getString(request, "portletResource");
 
@@ -196,7 +197,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 						</aui:select>
 					</c:when>
 					<c:otherwise>
-						<c:if test="<%= Validator.equals(ddmDisplay.getPortletId(), PortletKeys.JOURNAL) || Validator.equals(ddmDisplay.getPortletId(), PortletKeys.JOURNAL_CONTENT) %>">
+						<c:if test="<%= showCacheableInput %>">
 							<aui:input helpMessage="journal-template-cacheable-help" name="cacheable" value="<%= cacheable %>" />
 						</c:if>
 

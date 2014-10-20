@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.util;
+package com.liferay.portlet.journal.util;
 
 import com.liferay.portal.kernel.search.BaseSearcher;
 import com.liferay.portal.kernel.search.Field;

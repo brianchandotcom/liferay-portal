@@ -777,10 +777,10 @@ public class JavadocFormatter {
 			Files.readAllBytes(Paths.get(_inputDir + fileName)),
 			StringPool.UTF8);
 
-		if (fileName.endsWith("JavadocFormatter.java") ||
+		if (fileName.endsWith("Application.java") ||
+			fileName.endsWith("JavadocFormatter.java") ||
 			fileName.endsWith("SourceFormatter.java") ||
 			fileName.endsWith("WebProxyPortlet.java") ||
-			fileName.endsWith("Application.java") ||
 			_hasGeneratedTag(originalContent)) {
 
 			return;

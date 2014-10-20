@@ -26,6 +26,8 @@ public class DDMStructureConstants {
 
 	public static final int TYPE_DEFAULT = 0;
 
+	public static final String VERSION_DEFAULT = "1.0";
+
 	public static final String XSD_NAME_RESERVED = "reserved";
 
 }

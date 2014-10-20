@@ -17,18 +17,8 @@ package com.liferay.portlet.dynamicdatamapping.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 /**
- * The extended model implementation for the DDMStructureVersion service. Represents a row in the &quot;DDMStructureVersion&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion} interface.
- * </p>
- *
  * @author Brian Wing Shun Chan
  */
 @ProviderType
 public class DDMStructureVersionImpl extends DDMStructureVersionBaseImpl {
-
-	public DDMStructureVersionImpl() {
-	}
-
 }

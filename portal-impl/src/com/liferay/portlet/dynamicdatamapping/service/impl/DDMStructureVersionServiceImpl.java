@@ -26,67 +26,60 @@ import com.liferay.portlet.dynamicdatamapping.service.permission.DDMStructurePer
 import java.util.List;
 
 /**
- * The implementation of the d d m structure version remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.portlet.dynamicdatamapping.service.DDMStructureVersionService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
  * @author Pablo Carvalho
- * @see com.liferay.portlet.dynamicdatamapping.service.base.DDMStructureVersionServiceBaseImpl
- * @see com.liferay.portlet.dynamicdatamapping.service.DDMStructureVersionServiceUtil
  */
 @ProviderType
 public class DDMStructureVersionServiceImpl
 	extends DDMStructureVersionServiceBaseImpl {
 
 	@Override
-	public DDMStructureVersion getDDMStructureVersion(
-			long ddmStructureVersionId)
+	public DDMStructureVersion getLatestStructureVersion(long structureId)
 		throws PortalException {
 
 		DDMStructurePermission.check(
-			getPermissionChecker(), ddmStructureVersionId, ActionKeys.VIEW);
+			getPermissionChecker(), structureId, ActionKeys.VIEW);
 
-		return ddmStructureVersionLocalService.getDDMStructureVersion(
-			ddmStructureVersionId);
+		return ddmStructureVersionLocalService.getLatestStructureVersion(
+			structureId);
 	}
 
 	@Override
-	public List<DDMStructureVersion> getDDMStructureVersions(
-			long ddmStructureId, int start, int end,
+	public DDMStructureVersion getStructureVersion(long structureVersionId)
+		throws PortalException {
+
+		DDMStructureVersion structureVersion =
+			ddmStructureVersionLocalService.getStructureVersion(
+				structureVersionId);
+
+		DDMStructurePermission.check(
+			getPermissionChecker(), structureVersion.getStructureId(),
+			ActionKeys.VIEW);
+
+		return structureVersion;
+	}
+
+	@Override
+	public List<DDMStructureVersion> getStructureVersions(
+			long structureId, int start, int end,
 			OrderByComparator<DDMStructureVersion> orderByComparator)
 		throws PortalException {
 
 		DDMStructurePermission.check(
-			getPermissionChecker(), ddmStructureId, ActionKeys.VIEW);
+			getPermissionChecker(), structureId, ActionKeys.VIEW);
 
-		return ddmStructureVersionLocalService.getDDMStructureVersions(
-			ddmStructureId, start, end, orderByComparator);
+		return ddmStructureVersionLocalService.getStructureVersions(
+			structureId, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getDDMStructureVersionsCount(long ddmStructureId)
+	public int getStructureVersionsCount(long structureId)
 		throws PortalException {
 
 		DDMStructurePermission.check(
-			getPermissionChecker(), ddmStructureId, ActionKeys.VIEW);
+			getPermissionChecker(), structureId, ActionKeys.VIEW);
 
-		return ddmStructureVersionLocalService.getDDMStructureVersionsCount(
-			ddmStructureId);
-	}
-
-	@Override
-	public DDMStructureVersion getLatestVersion(long ddmStructureId)
-		throws PortalException {
-
-		DDMStructurePermission.check(
-			getPermissionChecker(), ddmStructureId, ActionKeys.VIEW);
-
-		return ddmStructureVersionLocalService.getLatestVersion(ddmStructureId);
+		return ddmStructureVersionLocalService.getStructureVersionsCount(
+			structureId);
 	}
 
 }

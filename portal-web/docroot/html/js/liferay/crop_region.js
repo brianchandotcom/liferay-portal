@@ -12,15 +12,12 @@ AUI.add(
 				var naturalSize = instance._getImgNaturalSize(imagePreview);
 
 				var scaleY = naturalSize.height / imagePreview.height();
-
 				var scaleX = naturalSize.width / imagePreview.width();
 
 				var regionHeight = region.height ? (region.height * scaleY) : naturalSize.height;
-
 				var regionWidth = region.width ? (region.width * scaleX) : naturalSize.width;
 
 				var regionX = region.x ? Math.max(region.x * scaleX, 0) : 0;
-
 				var regionY = region.y ? Math.max(region.y * scaleY, 0) : 0;
 
 				return {
@@ -32,6 +29,8 @@ AUI.add(
 			},
 
 			_getImgNaturalSize: function(img) {
+				var instance = this;
+
 				var imageHeight = img.get('naturalHeight');
 				var imageWidth = img.get('naturalWidth');
 

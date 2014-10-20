@@ -349,7 +349,7 @@ public class ListServiceTrackerMapTest {
 	}
 
 	@ArquillianResource
-	private Bundle _bundle;
+	private final Bundle _bundle;
 
 	private BundleContext _bundleContext;
 	private ServiceTrackerMap<String, List<TrackedOne>> _serviceTrackerMap;

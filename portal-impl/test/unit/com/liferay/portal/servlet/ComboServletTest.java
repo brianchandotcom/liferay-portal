@@ -257,6 +257,6 @@ public class ComboServletTest extends PowerMockito {
 	private Portlet _portletUndeployed;
 
 	@Rule
-	private TemporaryFolder _temporaryFolder = new TemporaryFolder();
+	private final TemporaryFolder _temporaryFolder = new TemporaryFolder();
 
 }

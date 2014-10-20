@@ -713,10 +713,10 @@ public class RegistryTest {
 	}
 
 	@ArquillianResource
-	private Bundle _bundle;
+	private final Bundle _bundle;
 
 	@ArquillianResource
-	private BundleContext _bundleContext;
+	private final BundleContext _bundleContext;
 
 	private Registry _registry;
 

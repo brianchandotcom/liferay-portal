@@ -27,19 +27,19 @@ public class Two {
 	}
 
 	public int getFtwo() {
-		return _ftwo;
+		return _FTWO;
 	}
 
 	public long getNot() {
-		return _not;
+		return _NOT;
 	}
 
 	private static final String _FONE = "string";
 
 	@JSON
-	private int _ftwo = 173;
+	private static final int _FTWO = 173;
 
 	@JSON(include = false)
-	private long _not = -1;
+	private static final long _NOT = -1;
 
 }

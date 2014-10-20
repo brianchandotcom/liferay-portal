@@ -183,8 +183,6 @@ AUI.add(
 						LiferayFormBuilder.superclass.bindUI.apply(instance, arguments);
 
 						instance.translationManager.after('editingLocaleChange', instance._afterEditingLocaleChange, instance);
-
-						instance.on('model:change', instance._onPropertyModelChange);
 					},
 
 					createField: function() {

@@ -12,19 +12,14 @@
  * details.
  */
 
-package com.liferay.journal.content.web.portlet.ddm;
-
-import com.liferay.journal.content.web.util.JournalContentPortletKeys;
-import com.liferay.portlet.journal.ddm.JournalDDMDisplay;
+package com.liferay.journal.content.web.util;
 
 /**
- * @author Eduardo Garcia
+ * @author Eudaldo Alonso
  */
-public class JournalContentDDMDisplay extends JournalDDMDisplay {
+public class JournalContentPortletKeys {
 
-	@Override
-	public String getPortletId() {
-		return JournalContentPortletKeys.JOURNAL_CONTENT;
-	}
+	public static final String JOURNAL_CONTENT =
+		"com_liferay_journal_content_web_portlet_JournalContentPortlet";
 
 }

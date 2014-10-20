@@ -176,11 +176,9 @@ public class MailEngine {
 			List<FileAttachment> fileAttachments, SMTPAccount smtpAccount)
 		throws MailEngineException {
 
-		long startTime = 0;
+		long startTime = System.currentTimeMillis();
 
 		if (_log.isDebugEnabled()) {
-			startTime = System.currentTimeMillis();
-
 			_log.debug("From: " + from);
 			_log.debug("To: " + Arrays.toString(to));
 			_log.debug("CC: " + Arrays.toString(cc));

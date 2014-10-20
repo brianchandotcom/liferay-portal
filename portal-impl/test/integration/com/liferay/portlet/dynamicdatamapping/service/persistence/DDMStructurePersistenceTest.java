@@ -143,6 +143,8 @@ public class DDMStructurePersistenceTest {
 
 		newDDMStructure.setStructureKey(RandomTestUtil.randomString());
 
+		newDDMStructure.setVersion(RandomTestUtil.randomString());
+
 		newDDMStructure.setName(RandomTestUtil.randomString());
 
 		newDDMStructure.setDescription(RandomTestUtil.randomString());
@@ -181,6 +183,8 @@ public class DDMStructurePersistenceTest {
 			newDDMStructure.getClassNameId());
 		Assert.assertEquals(existingDDMStructure.getStructureKey(),
 			newDDMStructure.getStructureKey());
+		Assert.assertEquals(existingDDMStructure.getVersion(),
+			newDDMStructure.getVersion());
 		Assert.assertEquals(existingDDMStructure.getName(),
 			newDDMStructure.getName());
 		Assert.assertEquals(existingDDMStructure.getDescription(),
@@ -426,8 +430,9 @@ public class DDMStructurePersistenceTest {
 			true, "structureId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "parentStructureId", true, "classNameId",
-			true, "structureKey", true, "name", true, "description", true,
-			"definition", true, "storageType", true, "type", true);
+			true, "structureKey", true, "version", true, "name", true,
+			"description", true, "definition", true, "storageType", true,
+			"type", true);
 	}
 
 	@Test
@@ -675,6 +680,8 @@ public class DDMStructurePersistenceTest {
 		ddmStructure.setClassNameId(RandomTestUtil.nextLong());
 
 		ddmStructure.setStructureKey(RandomTestUtil.randomString());
+
+		ddmStructure.setVersion(RandomTestUtil.randomString());
 
 		ddmStructure.setName(RandomTestUtil.randomString());
 

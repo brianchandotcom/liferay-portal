@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -30,23 +30,21 @@ import java.io.ObjectOutput;
 import java.util.Date;
 
 /**
- * The cache model class for representing DDMStructure in entity cache.
+ * The cache model class for representing DDMStructureVersion in entity cache.
  *
  * @author Brian Wing Shun Chan
- * @see DDMStructure
+ * @see DDMStructureVersion
  * @generated
  */
 @ProviderType
-public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
+public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVersion>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(27);
 
-		sb.append("{uuid=");
-		sb.append(uuid);
-		sb.append(", structureId=");
-		sb.append(structureId);
+		sb.append("{structureVersionId=");
+		sb.append(structureVersionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -57,14 +55,8 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		sb.append(userName);
 		sb.append(", createDate=");
 		sb.append(createDate);
-		sb.append(", modifiedDate=");
-		sb.append(modifiedDate);
-		sb.append(", parentStructureId=");
-		sb.append(parentStructureId);
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-		sb.append(", structureKey=");
-		sb.append(structureKey);
+		sb.append(", structureId=");
+		sb.append(structureId);
 		sb.append(", version=");
 		sb.append(version);
 		sb.append(", name=");
@@ -83,134 +75,93 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 	}
 
 	@Override
-	public DDMStructure toEntityModel() {
-		DDMStructureImpl ddmStructureImpl = new DDMStructureImpl();
+	public DDMStructureVersion toEntityModel() {
+		DDMStructureVersionImpl ddmStructureVersionImpl = new DDMStructureVersionImpl();
 
-		if (uuid == null) {
-			ddmStructureImpl.setUuid(StringPool.BLANK);
-		}
-		else {
-			ddmStructureImpl.setUuid(uuid);
-		}
-
-		ddmStructureImpl.setStructureId(structureId);
-		ddmStructureImpl.setGroupId(groupId);
-		ddmStructureImpl.setCompanyId(companyId);
-		ddmStructureImpl.setUserId(userId);
+		ddmStructureVersionImpl.setStructureVersionId(structureVersionId);
+		ddmStructureVersionImpl.setGroupId(groupId);
+		ddmStructureVersionImpl.setCompanyId(companyId);
+		ddmStructureVersionImpl.setUserId(userId);
 
 		if (userName == null) {
-			ddmStructureImpl.setUserName(StringPool.BLANK);
+			ddmStructureVersionImpl.setUserName(StringPool.BLANK);
 		}
 		else {
-			ddmStructureImpl.setUserName(userName);
+			ddmStructureVersionImpl.setUserName(userName);
 		}
 
 		if (createDate == Long.MIN_VALUE) {
-			ddmStructureImpl.setCreateDate(null);
+			ddmStructureVersionImpl.setCreateDate(null);
 		}
 		else {
-			ddmStructureImpl.setCreateDate(new Date(createDate));
+			ddmStructureVersionImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate == Long.MIN_VALUE) {
-			ddmStructureImpl.setModifiedDate(null);
-		}
-		else {
-			ddmStructureImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		ddmStructureImpl.setParentStructureId(parentStructureId);
-		ddmStructureImpl.setClassNameId(classNameId);
-
-		if (structureKey == null) {
-			ddmStructureImpl.setStructureKey(StringPool.BLANK);
-		}
-		else {
-			ddmStructureImpl.setStructureKey(structureKey);
-		}
+		ddmStructureVersionImpl.setStructureId(structureId);
 
 		if (version == null) {
-			ddmStructureImpl.setVersion(StringPool.BLANK);
+			ddmStructureVersionImpl.setVersion(StringPool.BLANK);
 		}
 		else {
-			ddmStructureImpl.setVersion(version);
+			ddmStructureVersionImpl.setVersion(version);
 		}
 
 		if (name == null) {
-			ddmStructureImpl.setName(StringPool.BLANK);
+			ddmStructureVersionImpl.setName(StringPool.BLANK);
 		}
 		else {
-			ddmStructureImpl.setName(name);
+			ddmStructureVersionImpl.setName(name);
 		}
 
 		if (description == null) {
-			ddmStructureImpl.setDescription(StringPool.BLANK);
+			ddmStructureVersionImpl.setDescription(StringPool.BLANK);
 		}
 		else {
-			ddmStructureImpl.setDescription(description);
+			ddmStructureVersionImpl.setDescription(description);
 		}
 
 		if (definition == null) {
-			ddmStructureImpl.setDefinition(StringPool.BLANK);
+			ddmStructureVersionImpl.setDefinition(StringPool.BLANK);
 		}
 		else {
-			ddmStructureImpl.setDefinition(definition);
+			ddmStructureVersionImpl.setDefinition(definition);
 		}
 
 		if (storageType == null) {
-			ddmStructureImpl.setStorageType(StringPool.BLANK);
+			ddmStructureVersionImpl.setStorageType(StringPool.BLANK);
 		}
 		else {
-			ddmStructureImpl.setStorageType(storageType);
+			ddmStructureVersionImpl.setStorageType(storageType);
 		}
 
-		ddmStructureImpl.setType(type);
+		ddmStructureVersionImpl.setType(type);
 
-		ddmStructureImpl.resetOriginalValues();
+		ddmStructureVersionImpl.resetOriginalValues();
 
-		ddmStructureImpl.setDDMForm(_ddmForm);
-
-		ddmStructureImpl.setFullHierarchyDDMForm(_fullHierarchyDDMForm);
-
-		return ddmStructureImpl;
+		return ddmStructureVersionImpl;
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput)
-		throws ClassNotFoundException, IOException {
-		uuid = objectInput.readUTF();
-		structureId = objectInput.readLong();
+	public void readExternal(ObjectInput objectInput) throws IOException {
+		structureVersionId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
-		modifiedDate = objectInput.readLong();
-		parentStructureId = objectInput.readLong();
-		classNameId = objectInput.readLong();
-		structureKey = objectInput.readUTF();
+		structureId = objectInput.readLong();
 		version = objectInput.readUTF();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		definition = objectInput.readUTF();
 		storageType = objectInput.readUTF();
 		type = objectInput.readInt();
-
-		_ddmForm = (com.liferay.portlet.dynamicdatamapping.model.DDMForm)objectInput.readObject();
-		_fullHierarchyDDMForm = (com.liferay.portlet.dynamicdatamapping.model.DDMForm)objectInput.readObject();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(uuid);
-		}
-
-		objectOutput.writeLong(structureId);
+		objectOutput.writeLong(structureVersionId);
 		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
@@ -223,16 +174,7 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		}
 
 		objectOutput.writeLong(createDate);
-		objectOutput.writeLong(modifiedDate);
-		objectOutput.writeLong(parentStructureId);
-		objectOutput.writeLong(classNameId);
-
-		if (structureKey == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(structureKey);
-		}
+		objectOutput.writeLong(structureId);
 
 		if (version == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -270,28 +212,19 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		}
 
 		objectOutput.writeInt(type);
-
-		objectOutput.writeObject(_ddmForm);
-		objectOutput.writeObject(_fullHierarchyDDMForm);
 	}
 
-	public String uuid;
-	public long structureId;
+	public long structureVersionId;
 	public long groupId;
 	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
-	public long modifiedDate;
-	public long parentStructureId;
-	public long classNameId;
-	public String structureKey;
+	public long structureId;
 	public String version;
 	public String name;
 	public String description;
 	public String definition;
 	public String storageType;
 	public int type;
-	public com.liferay.portlet.dynamicdatamapping.model.DDMForm _ddmForm;
-	public com.liferay.portlet.dynamicdatamapping.model.DDMForm _fullHierarchyDDMForm;
 }

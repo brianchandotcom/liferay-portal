@@ -978,356 +978,366 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	* Returns all the journal articles where structureId = &#63;.
+	* Returns all the journal articles where DDMStructureKey = &#63;.
 	*
-	* @param structureId the structure ID
+	* @param DDMStructureKey the d d m structure key
 	* @return the matching journal articles
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByStructureId(
-		java.lang.String structureId) {
-		return getPersistence().findByStructureId(structureId);
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByDDMStructureKey(
+		java.lang.String DDMStructureKey) {
+		return getPersistence().findByDDMStructureKey(DDMStructureKey);
 	}
 
 	/**
-	* Returns a range of all the journal articles where structureId = &#63;.
+	* Returns a range of all the journal articles where DDMStructureKey = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param structureId the structure ID
+	* @param DDMStructureKey the d d m structure key
 	* @param start the lower bound of the range of journal articles
 	* @param end the upper bound of the range of journal articles (not inclusive)
 	* @return the range of matching journal articles
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByStructureId(
-		java.lang.String structureId, int start, int end) {
-		return getPersistence().findByStructureId(structureId, start, end);
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByDDMStructureKey(
+		java.lang.String DDMStructureKey, int start, int end) {
+		return getPersistence()
+				   .findByDDMStructureKey(DDMStructureKey, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the journal articles where structureId = &#63;.
+	* Returns an ordered range of all the journal articles where DDMStructureKey = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param structureId the structure ID
+	* @param DDMStructureKey the d d m structure key
 	* @param start the lower bound of the range of journal articles
 	* @param end the upper bound of the range of journal articles (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal articles
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByStructureId(
-		java.lang.String structureId, int start, int end,
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByDDMStructureKey(
+		java.lang.String DDMStructureKey, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
-				   .findByStructureId(structureId, start, end, orderByComparator);
+				   .findByDDMStructureKey(DDMStructureKey, start, end,
+			orderByComparator);
 	}
 
 	/**
-	* Returns the first journal article in the ordered set where structureId = &#63;.
+	* Returns the first journal article in the ordered set where DDMStructureKey = &#63;.
 	*
-	* @param structureId the structure ID
+	* @param DDMStructureKey the d d m structure key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal article
 	* @throws com.liferay.portlet.journal.NoSuchArticleException if a matching journal article could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle findByStructureId_First(
-		java.lang.String structureId,
+	public static com.liferay.portlet.journal.model.JournalArticle findByDDMStructureKey_First(
+		java.lang.String DDMStructureKey,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
-				   .findByStructureId_First(structureId, orderByComparator);
+				   .findByDDMStructureKey_First(DDMStructureKey,
+			orderByComparator);
 	}
 
 	/**
-	* Returns the first journal article in the ordered set where structureId = &#63;.
+	* Returns the first journal article in the ordered set where DDMStructureKey = &#63;.
 	*
-	* @param structureId the structure ID
+	* @param DDMStructureKey the d d m structure key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal article, or <code>null</code> if a matching journal article could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle fetchByStructureId_First(
-		java.lang.String structureId,
+	public static com.liferay.portlet.journal.model.JournalArticle fetchByDDMStructureKey_First(
+		java.lang.String DDMStructureKey,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
-				   .fetchByStructureId_First(structureId, orderByComparator);
+				   .fetchByDDMStructureKey_First(DDMStructureKey,
+			orderByComparator);
 	}
 
 	/**
-	* Returns the last journal article in the ordered set where structureId = &#63;.
+	* Returns the last journal article in the ordered set where DDMStructureKey = &#63;.
 	*
-	* @param structureId the structure ID
+	* @param DDMStructureKey the d d m structure key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal article
 	* @throws com.liferay.portlet.journal.NoSuchArticleException if a matching journal article could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle findByStructureId_Last(
-		java.lang.String structureId,
+	public static com.liferay.portlet.journal.model.JournalArticle findByDDMStructureKey_Last(
+		java.lang.String DDMStructureKey,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
-				   .findByStructureId_Last(structureId, orderByComparator);
+				   .findByDDMStructureKey_Last(DDMStructureKey,
+			orderByComparator);
 	}
 
 	/**
-	* Returns the last journal article in the ordered set where structureId = &#63;.
+	* Returns the last journal article in the ordered set where DDMStructureKey = &#63;.
 	*
-	* @param structureId the structure ID
+	* @param DDMStructureKey the d d m structure key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle fetchByStructureId_Last(
-		java.lang.String structureId,
+	public static com.liferay.portlet.journal.model.JournalArticle fetchByDDMStructureKey_Last(
+		java.lang.String DDMStructureKey,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
-				   .fetchByStructureId_Last(structureId, orderByComparator);
+				   .fetchByDDMStructureKey_Last(DDMStructureKey,
+			orderByComparator);
 	}
 
 	/**
-	* Returns the journal articles before and after the current journal article in the ordered set where structureId = &#63;.
+	* Returns the journal articles before and after the current journal article in the ordered set where DDMStructureKey = &#63;.
 	*
 	* @param id the primary key of the current journal article
-	* @param structureId the structure ID
+	* @param DDMStructureKey the d d m structure key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal article
 	* @throws com.liferay.portlet.journal.NoSuchArticleException if a journal article with the primary key could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle[] findByStructureId_PrevAndNext(
-		long id, java.lang.String structureId,
+	public static com.liferay.portlet.journal.model.JournalArticle[] findByDDMStructureKey_PrevAndNext(
+		long id, java.lang.String DDMStructureKey,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
-				   .findByStructureId_PrevAndNext(id, structureId,
+				   .findByDDMStructureKey_PrevAndNext(id, DDMStructureKey,
 			orderByComparator);
 	}
 
 	/**
-	* Returns all the journal articles where structureId = any &#63;.
+	* Returns all the journal articles where DDMStructureKey = any &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param structureIds the structure IDs
+	* @param DDMStructureKeies the d d m structure keies
 	* @return the matching journal articles
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByStructureId(
-		java.lang.String[] structureIds) {
-		return getPersistence().findByStructureId(structureIds);
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByDDMStructureKey(
+		java.lang.String[] DDMStructureKeies) {
+		return getPersistence().findByDDMStructureKey(DDMStructureKeies);
 	}
 
 	/**
-	* Returns a range of all the journal articles where structureId = any &#63;.
+	* Returns a range of all the journal articles where DDMStructureKey = any &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param structureIds the structure IDs
+	* @param DDMStructureKeies the d d m structure keies
 	* @param start the lower bound of the range of journal articles
 	* @param end the upper bound of the range of journal articles (not inclusive)
 	* @return the range of matching journal articles
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByStructureId(
-		java.lang.String[] structureIds, int start, int end) {
-		return getPersistence().findByStructureId(structureIds, start, end);
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByDDMStructureKey(
+		java.lang.String[] DDMStructureKeies, int start, int end) {
+		return getPersistence()
+				   .findByDDMStructureKey(DDMStructureKeies, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the journal articles where structureId = any &#63;.
+	* Returns an ordered range of all the journal articles where DDMStructureKey = any &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param structureIds the structure IDs
+	* @param DDMStructureKeies the d d m structure keies
 	* @param start the lower bound of the range of journal articles
 	* @param end the upper bound of the range of journal articles (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal articles
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByStructureId(
-		java.lang.String[] structureIds, int start, int end,
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByDDMStructureKey(
+		java.lang.String[] DDMStructureKeies, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
-				   .findByStructureId(structureIds, start, end,
+				   .findByDDMStructureKey(DDMStructureKeies, start, end,
 			orderByComparator);
 	}
 
 	/**
-	* Removes all the journal articles where structureId = &#63; from the database.
+	* Removes all the journal articles where DDMStructureKey = &#63; from the database.
 	*
-	* @param structureId the structure ID
+	* @param DDMStructureKey the d d m structure key
 	*/
-	public static void removeByStructureId(java.lang.String structureId) {
-		getPersistence().removeByStructureId(structureId);
+	public static void removeByDDMStructureKey(java.lang.String DDMStructureKey) {
+		getPersistence().removeByDDMStructureKey(DDMStructureKey);
 	}
 
 	/**
-	* Returns the number of journal articles where structureId = &#63;.
+	* Returns the number of journal articles where DDMStructureKey = &#63;.
 	*
-	* @param structureId the structure ID
+	* @param DDMStructureKey the d d m structure key
 	* @return the number of matching journal articles
 	*/
-	public static int countByStructureId(java.lang.String structureId) {
-		return getPersistence().countByStructureId(structureId);
+	public static int countByDDMStructureKey(java.lang.String DDMStructureKey) {
+		return getPersistence().countByDDMStructureKey(DDMStructureKey);
 	}
 
 	/**
-	* Returns the number of journal articles where structureId = any &#63;.
+	* Returns the number of journal articles where DDMStructureKey = any &#63;.
 	*
-	* @param structureIds the structure IDs
+	* @param DDMStructureKeies the d d m structure keies
 	* @return the number of matching journal articles
 	*/
-	public static int countByStructureId(java.lang.String[] structureIds) {
-		return getPersistence().countByStructureId(structureIds);
+	public static int countByDDMStructureKey(
+		java.lang.String[] DDMStructureKeies) {
+		return getPersistence().countByDDMStructureKey(DDMStructureKeies);
 	}
 
 	/**
-	* Returns all the journal articles where templateId = &#63;.
+	* Returns all the journal articles where DDMTemplateKey = &#63;.
 	*
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @return the matching journal articles
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByTemplateId(
-		java.lang.String templateId) {
-		return getPersistence().findByTemplateId(templateId);
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByDDMTemplateKey(
+		java.lang.String DDMTemplateKey) {
+		return getPersistence().findByDDMTemplateKey(DDMTemplateKey);
 	}
 
 	/**
-	* Returns a range of all the journal articles where templateId = &#63;.
+	* Returns a range of all the journal articles where DDMTemplateKey = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @param start the lower bound of the range of journal articles
 	* @param end the upper bound of the range of journal articles (not inclusive)
 	* @return the range of matching journal articles
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByTemplateId(
-		java.lang.String templateId, int start, int end) {
-		return getPersistence().findByTemplateId(templateId, start, end);
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByDDMTemplateKey(
+		java.lang.String DDMTemplateKey, int start, int end) {
+		return getPersistence().findByDDMTemplateKey(DDMTemplateKey, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the journal articles where templateId = &#63;.
+	* Returns an ordered range of all the journal articles where DDMTemplateKey = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @param start the lower bound of the range of journal articles
 	* @param end the upper bound of the range of journal articles (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal articles
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByTemplateId(
-		java.lang.String templateId, int start, int end,
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByDDMTemplateKey(
+		java.lang.String DDMTemplateKey, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
-				   .findByTemplateId(templateId, start, end, orderByComparator);
+				   .findByDDMTemplateKey(DDMTemplateKey, start, end,
+			orderByComparator);
 	}
 
 	/**
-	* Returns the first journal article in the ordered set where templateId = &#63;.
+	* Returns the first journal article in the ordered set where DDMTemplateKey = &#63;.
 	*
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal article
 	* @throws com.liferay.portlet.journal.NoSuchArticleException if a matching journal article could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle findByTemplateId_First(
-		java.lang.String templateId,
+	public static com.liferay.portlet.journal.model.JournalArticle findByDDMTemplateKey_First(
+		java.lang.String DDMTemplateKey,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
-				   .findByTemplateId_First(templateId, orderByComparator);
+				   .findByDDMTemplateKey_First(DDMTemplateKey, orderByComparator);
 	}
 
 	/**
-	* Returns the first journal article in the ordered set where templateId = &#63;.
+	* Returns the first journal article in the ordered set where DDMTemplateKey = &#63;.
 	*
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal article, or <code>null</code> if a matching journal article could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle fetchByTemplateId_First(
-		java.lang.String templateId,
+	public static com.liferay.portlet.journal.model.JournalArticle fetchByDDMTemplateKey_First(
+		java.lang.String DDMTemplateKey,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
-				   .fetchByTemplateId_First(templateId, orderByComparator);
-	}
-
-	/**
-	* Returns the last journal article in the ordered set where templateId = &#63;.
-	*
-	* @param templateId the template ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching journal article
-	* @throws com.liferay.portlet.journal.NoSuchArticleException if a matching journal article could not be found
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle findByTemplateId_Last(
-		java.lang.String templateId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
-		throws com.liferay.portlet.journal.NoSuchArticleException {
-		return getPersistence()
-				   .findByTemplateId_Last(templateId, orderByComparator);
-	}
-
-	/**
-	* Returns the last journal article in the ordered set where templateId = &#63;.
-	*
-	* @param templateId the template ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle fetchByTemplateId_Last(
-		java.lang.String templateId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
-		return getPersistence()
-				   .fetchByTemplateId_Last(templateId, orderByComparator);
-	}
-
-	/**
-	* Returns the journal articles before and after the current journal article in the ordered set where templateId = &#63;.
-	*
-	* @param id the primary key of the current journal article
-	* @param templateId the template ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next journal article
-	* @throws com.liferay.portlet.journal.NoSuchArticleException if a journal article with the primary key could not be found
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle[] findByTemplateId_PrevAndNext(
-		long id, java.lang.String templateId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
-		throws com.liferay.portlet.journal.NoSuchArticleException {
-		return getPersistence()
-				   .findByTemplateId_PrevAndNext(id, templateId,
+				   .fetchByDDMTemplateKey_First(DDMTemplateKey,
 			orderByComparator);
 	}
 
 	/**
-	* Removes all the journal articles where templateId = &#63; from the database.
+	* Returns the last journal article in the ordered set where DDMTemplateKey = &#63;.
 	*
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching journal article
+	* @throws com.liferay.portlet.journal.NoSuchArticleException if a matching journal article could not be found
 	*/
-	public static void removeByTemplateId(java.lang.String templateId) {
-		getPersistence().removeByTemplateId(templateId);
+	public static com.liferay.portlet.journal.model.JournalArticle findByDDMTemplateKey_Last(
+		java.lang.String DDMTemplateKey,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
+		throws com.liferay.portlet.journal.NoSuchArticleException {
+		return getPersistence()
+				   .findByDDMTemplateKey_Last(DDMTemplateKey, orderByComparator);
 	}
 
 	/**
-	* Returns the number of journal articles where templateId = &#63;.
+	* Returns the last journal article in the ordered set where DDMTemplateKey = &#63;.
 	*
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle fetchByDDMTemplateKey_Last(
+		java.lang.String DDMTemplateKey,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
+		return getPersistence()
+				   .fetchByDDMTemplateKey_Last(DDMTemplateKey, orderByComparator);
+	}
+
+	/**
+	* Returns the journal articles before and after the current journal article in the ordered set where DDMTemplateKey = &#63;.
+	*
+	* @param id the primary key of the current journal article
+	* @param DDMTemplateKey the d d m template key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next journal article
+	* @throws com.liferay.portlet.journal.NoSuchArticleException if a journal article with the primary key could not be found
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle[] findByDDMTemplateKey_PrevAndNext(
+		long id, java.lang.String DDMTemplateKey,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
+		throws com.liferay.portlet.journal.NoSuchArticleException {
+		return getPersistence()
+				   .findByDDMTemplateKey_PrevAndNext(id, DDMTemplateKey,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the journal articles where DDMTemplateKey = &#63; from the database.
+	*
+	* @param DDMTemplateKey the d d m template key
+	*/
+	public static void removeByDDMTemplateKey(java.lang.String DDMTemplateKey) {
+		getPersistence().removeByDDMTemplateKey(DDMTemplateKey);
+	}
+
+	/**
+	* Returns the number of journal articles where DDMTemplateKey = &#63;.
+	*
+	* @param DDMTemplateKey the d d m template key
 	* @return the number of matching journal articles
 	*/
-	public static int countByTemplateId(java.lang.String templateId) {
-		return getPersistence().countByTemplateId(templateId);
+	public static int countByDDMTemplateKey(java.lang.String DDMTemplateKey) {
+		return getPersistence().countByDDMTemplateKey(DDMTemplateKey);
 	}
 
 	/**
@@ -3080,479 +3090,486 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	* Returns all the journal articles where groupId = &#63; and structureId = &#63;.
+	* Returns all the journal articles where groupId = &#63; and DDMStructureKey = &#63;.
 	*
 	* @param groupId the group ID
-	* @param structureId the structure ID
+	* @param DDMStructureKey the d d m structure key
 	* @return the matching journal articles
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_S(
-		long groupId, java.lang.String structureId) {
-		return getPersistence().findByG_S(groupId, structureId);
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_DS(
+		long groupId, java.lang.String DDMStructureKey) {
+		return getPersistence().findByG_DS(groupId, DDMStructureKey);
 	}
 
 	/**
-	* Returns a range of all the journal articles where groupId = &#63; and structureId = &#63;.
+	* Returns a range of all the journal articles where groupId = &#63; and DDMStructureKey = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param structureId the structure ID
+	* @param DDMStructureKey the d d m structure key
 	* @param start the lower bound of the range of journal articles
 	* @param end the upper bound of the range of journal articles (not inclusive)
 	* @return the range of matching journal articles
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_S(
-		long groupId, java.lang.String structureId, int start, int end) {
-		return getPersistence().findByG_S(groupId, structureId, start, end);
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_DS(
+		long groupId, java.lang.String DDMStructureKey, int start, int end) {
+		return getPersistence().findByG_DS(groupId, DDMStructureKey, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the journal articles where groupId = &#63; and structureId = &#63;.
+	* Returns an ordered range of all the journal articles where groupId = &#63; and DDMStructureKey = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param structureId the structure ID
+	* @param DDMStructureKey the d d m structure key
 	* @param start the lower bound of the range of journal articles
 	* @param end the upper bound of the range of journal articles (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal articles
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_S(
-		long groupId, java.lang.String structureId, int start, int end,
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_DS(
+		long groupId, java.lang.String DDMStructureKey, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
-				   .findByG_S(groupId, structureId, start, end,
+				   .findByG_DS(groupId, DDMStructureKey, start, end,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the first journal article in the ordered set where groupId = &#63; and structureId = &#63;.
+	* Returns the first journal article in the ordered set where groupId = &#63; and DDMStructureKey = &#63;.
 	*
 	* @param groupId the group ID
-	* @param structureId the structure ID
+	* @param DDMStructureKey the d d m structure key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal article
 	* @throws com.liferay.portlet.journal.NoSuchArticleException if a matching journal article could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle findByG_S_First(
-		long groupId, java.lang.String structureId,
+	public static com.liferay.portlet.journal.model.JournalArticle findByG_DS_First(
+		long groupId, java.lang.String DDMStructureKey,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
-				   .findByG_S_First(groupId, structureId, orderByComparator);
+				   .findByG_DS_First(groupId, DDMStructureKey, orderByComparator);
 	}
 
 	/**
-	* Returns the first journal article in the ordered set where groupId = &#63; and structureId = &#63;.
+	* Returns the first journal article in the ordered set where groupId = &#63; and DDMStructureKey = &#63;.
 	*
 	* @param groupId the group ID
-	* @param structureId the structure ID
+	* @param DDMStructureKey the d d m structure key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal article, or <code>null</code> if a matching journal article could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_S_First(
-		long groupId, java.lang.String structureId,
+	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_DS_First(
+		long groupId, java.lang.String DDMStructureKey,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
-				   .fetchByG_S_First(groupId, structureId, orderByComparator);
-	}
-
-	/**
-	* Returns the last journal article in the ordered set where groupId = &#63; and structureId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param structureId the structure ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching journal article
-	* @throws com.liferay.portlet.journal.NoSuchArticleException if a matching journal article could not be found
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle findByG_S_Last(
-		long groupId, java.lang.String structureId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
-		throws com.liferay.portlet.journal.NoSuchArticleException {
-		return getPersistence()
-				   .findByG_S_Last(groupId, structureId, orderByComparator);
-	}
-
-	/**
-	* Returns the last journal article in the ordered set where groupId = &#63; and structureId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param structureId the structure ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_S_Last(
-		long groupId, java.lang.String structureId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
-		return getPersistence()
-				   .fetchByG_S_Last(groupId, structureId, orderByComparator);
-	}
-
-	/**
-	* Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and structureId = &#63;.
-	*
-	* @param id the primary key of the current journal article
-	* @param groupId the group ID
-	* @param structureId the structure ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next journal article
-	* @throws com.liferay.portlet.journal.NoSuchArticleException if a journal article with the primary key could not be found
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle[] findByG_S_PrevAndNext(
-		long id, long groupId, java.lang.String structureId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
-		throws com.liferay.portlet.journal.NoSuchArticleException {
-		return getPersistence()
-				   .findByG_S_PrevAndNext(id, groupId, structureId,
+				   .fetchByG_DS_First(groupId, DDMStructureKey,
 			orderByComparator);
 	}
 
 	/**
-	* Returns all the journal articles that the user has permission to view where groupId = &#63; and structureId = &#63;.
+	* Returns the last journal article in the ordered set where groupId = &#63; and DDMStructureKey = &#63;.
 	*
 	* @param groupId the group ID
-	* @param structureId the structure ID
-	* @return the matching journal articles that the user has permission to view
+	* @param DDMStructureKey the d d m structure key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching journal article
+	* @throws com.liferay.portlet.journal.NoSuchArticleException if a matching journal article could not be found
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_S(
-		long groupId, java.lang.String structureId) {
-		return getPersistence().filterFindByG_S(groupId, structureId);
+	public static com.liferay.portlet.journal.model.JournalArticle findByG_DS_Last(
+		long groupId, java.lang.String DDMStructureKey,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
+		throws com.liferay.portlet.journal.NoSuchArticleException {
+		return getPersistence()
+				   .findByG_DS_Last(groupId, DDMStructureKey, orderByComparator);
 	}
 
 	/**
-	* Returns a range of all the journal articles that the user has permission to view where groupId = &#63; and structureId = &#63;.
+	* Returns the last journal article in the ordered set where groupId = &#63; and DDMStructureKey = &#63;.
+	*
+	* @param groupId the group ID
+	* @param DDMStructureKey the d d m structure key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_DS_Last(
+		long groupId, java.lang.String DDMStructureKey,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_DS_Last(groupId, DDMStructureKey, orderByComparator);
+	}
+
+	/**
+	* Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and DDMStructureKey = &#63;.
+	*
+	* @param id the primary key of the current journal article
+	* @param groupId the group ID
+	* @param DDMStructureKey the d d m structure key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next journal article
+	* @throws com.liferay.portlet.journal.NoSuchArticleException if a journal article with the primary key could not be found
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle[] findByG_DS_PrevAndNext(
+		long id, long groupId, java.lang.String DDMStructureKey,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
+		throws com.liferay.portlet.journal.NoSuchArticleException {
+		return getPersistence()
+				   .findByG_DS_PrevAndNext(id, groupId, DDMStructureKey,
+			orderByComparator);
+	}
+
+	/**
+	* Returns all the journal articles that the user has permission to view where groupId = &#63; and DDMStructureKey = &#63;.
+	*
+	* @param groupId the group ID
+	* @param DDMStructureKey the d d m structure key
+	* @return the matching journal articles that the user has permission to view
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_DS(
+		long groupId, java.lang.String DDMStructureKey) {
+		return getPersistence().filterFindByG_DS(groupId, DDMStructureKey);
+	}
+
+	/**
+	* Returns a range of all the journal articles that the user has permission to view where groupId = &#63; and DDMStructureKey = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param structureId the structure ID
+	* @param DDMStructureKey the d d m structure key
 	* @param start the lower bound of the range of journal articles
 	* @param end the upper bound of the range of journal articles (not inclusive)
 	* @return the range of matching journal articles that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_S(
-		long groupId, java.lang.String structureId, int start, int end) {
-		return getPersistence().filterFindByG_S(groupId, structureId, start, end);
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_DS(
+		long groupId, java.lang.String DDMStructureKey, int start, int end) {
+		return getPersistence()
+				   .filterFindByG_DS(groupId, DDMStructureKey, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the journal articles that the user has permissions to view where groupId = &#63; and structureId = &#63;.
+	* Returns an ordered range of all the journal articles that the user has permissions to view where groupId = &#63; and DDMStructureKey = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param structureId the structure ID
+	* @param DDMStructureKey the d d m structure key
 	* @param start the lower bound of the range of journal articles
 	* @param end the upper bound of the range of journal articles (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal articles that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_S(
-		long groupId, java.lang.String structureId, int start, int end,
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_DS(
+		long groupId, java.lang.String DDMStructureKey, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
-				   .filterFindByG_S(groupId, structureId, start, end,
+				   .filterFindByG_DS(groupId, DDMStructureKey, start, end,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and structureId = &#63;.
+	* Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and DDMStructureKey = &#63;.
 	*
 	* @param id the primary key of the current journal article
 	* @param groupId the group ID
-	* @param structureId the structure ID
+	* @param DDMStructureKey the d d m structure key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal article
 	* @throws com.liferay.portlet.journal.NoSuchArticleException if a journal article with the primary key could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle[] filterFindByG_S_PrevAndNext(
-		long id, long groupId, java.lang.String structureId,
+	public static com.liferay.portlet.journal.model.JournalArticle[] filterFindByG_DS_PrevAndNext(
+		long id, long groupId, java.lang.String DDMStructureKey,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
-				   .filterFindByG_S_PrevAndNext(id, groupId, structureId,
+				   .filterFindByG_DS_PrevAndNext(id, groupId, DDMStructureKey,
 			orderByComparator);
 	}
 
 	/**
-	* Removes all the journal articles where groupId = &#63; and structureId = &#63; from the database.
+	* Removes all the journal articles where groupId = &#63; and DDMStructureKey = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @param structureId the structure ID
+	* @param DDMStructureKey the d d m structure key
 	*/
-	public static void removeByG_S(long groupId, java.lang.String structureId) {
-		getPersistence().removeByG_S(groupId, structureId);
+	public static void removeByG_DS(long groupId,
+		java.lang.String DDMStructureKey) {
+		getPersistence().removeByG_DS(groupId, DDMStructureKey);
 	}
 
 	/**
-	* Returns the number of journal articles where groupId = &#63; and structureId = &#63;.
+	* Returns the number of journal articles where groupId = &#63; and DDMStructureKey = &#63;.
 	*
 	* @param groupId the group ID
-	* @param structureId the structure ID
+	* @param DDMStructureKey the d d m structure key
 	* @return the number of matching journal articles
 	*/
-	public static int countByG_S(long groupId, java.lang.String structureId) {
-		return getPersistence().countByG_S(groupId, structureId);
+	public static int countByG_DS(long groupId, java.lang.String DDMStructureKey) {
+		return getPersistence().countByG_DS(groupId, DDMStructureKey);
 	}
 
 	/**
-	* Returns the number of journal articles that the user has permission to view where groupId = &#63; and structureId = &#63;.
+	* Returns the number of journal articles that the user has permission to view where groupId = &#63; and DDMStructureKey = &#63;.
 	*
 	* @param groupId the group ID
-	* @param structureId the structure ID
+	* @param DDMStructureKey the d d m structure key
 	* @return the number of matching journal articles that the user has permission to view
 	*/
-	public static int filterCountByG_S(long groupId,
-		java.lang.String structureId) {
-		return getPersistence().filterCountByG_S(groupId, structureId);
+	public static int filterCountByG_DS(long groupId,
+		java.lang.String DDMStructureKey) {
+		return getPersistence().filterCountByG_DS(groupId, DDMStructureKey);
 	}
 
 	/**
-	* Returns all the journal articles where groupId = &#63; and templateId = &#63;.
+	* Returns all the journal articles where groupId = &#63; and DDMTemplateKey = &#63;.
 	*
 	* @param groupId the group ID
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @return the matching journal articles
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_T(
-		long groupId, java.lang.String templateId) {
-		return getPersistence().findByG_T(groupId, templateId);
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_DT(
+		long groupId, java.lang.String DDMTemplateKey) {
+		return getPersistence().findByG_DT(groupId, DDMTemplateKey);
 	}
 
 	/**
-	* Returns a range of all the journal articles where groupId = &#63; and templateId = &#63;.
+	* Returns a range of all the journal articles where groupId = &#63; and DDMTemplateKey = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @param start the lower bound of the range of journal articles
 	* @param end the upper bound of the range of journal articles (not inclusive)
 	* @return the range of matching journal articles
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_T(
-		long groupId, java.lang.String templateId, int start, int end) {
-		return getPersistence().findByG_T(groupId, templateId, start, end);
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_DT(
+		long groupId, java.lang.String DDMTemplateKey, int start, int end) {
+		return getPersistence().findByG_DT(groupId, DDMTemplateKey, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the journal articles where groupId = &#63; and templateId = &#63;.
+	* Returns an ordered range of all the journal articles where groupId = &#63; and DDMTemplateKey = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @param start the lower bound of the range of journal articles
 	* @param end the upper bound of the range of journal articles (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal articles
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_T(
-		long groupId, java.lang.String templateId, int start, int end,
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_DT(
+		long groupId, java.lang.String DDMTemplateKey, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
-				   .findByG_T(groupId, templateId, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the first journal article in the ordered set where groupId = &#63; and templateId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param templateId the template ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching journal article
-	* @throws com.liferay.portlet.journal.NoSuchArticleException if a matching journal article could not be found
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle findByG_T_First(
-		long groupId, java.lang.String templateId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
-		throws com.liferay.portlet.journal.NoSuchArticleException {
-		return getPersistence()
-				   .findByG_T_First(groupId, templateId, orderByComparator);
-	}
-
-	/**
-	* Returns the first journal article in the ordered set where groupId = &#63; and templateId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param templateId the template ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching journal article, or <code>null</code> if a matching journal article could not be found
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_T_First(
-		long groupId, java.lang.String templateId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
-		return getPersistence()
-				   .fetchByG_T_First(groupId, templateId, orderByComparator);
-	}
-
-	/**
-	* Returns the last journal article in the ordered set where groupId = &#63; and templateId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param templateId the template ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching journal article
-	* @throws com.liferay.portlet.journal.NoSuchArticleException if a matching journal article could not be found
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle findByG_T_Last(
-		long groupId, java.lang.String templateId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
-		throws com.liferay.portlet.journal.NoSuchArticleException {
-		return getPersistence()
-				   .findByG_T_Last(groupId, templateId, orderByComparator);
-	}
-
-	/**
-	* Returns the last journal article in the ordered set where groupId = &#63; and templateId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param templateId the template ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_T_Last(
-		long groupId, java.lang.String templateId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
-		return getPersistence()
-				   .fetchByG_T_Last(groupId, templateId, orderByComparator);
-	}
-
-	/**
-	* Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and templateId = &#63;.
-	*
-	* @param id the primary key of the current journal article
-	* @param groupId the group ID
-	* @param templateId the template ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next journal article
-	* @throws com.liferay.portlet.journal.NoSuchArticleException if a journal article with the primary key could not be found
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle[] findByG_T_PrevAndNext(
-		long id, long groupId, java.lang.String templateId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
-		throws com.liferay.portlet.journal.NoSuchArticleException {
-		return getPersistence()
-				   .findByG_T_PrevAndNext(id, groupId, templateId,
+				   .findByG_DT(groupId, DDMTemplateKey, start, end,
 			orderByComparator);
 	}
 
 	/**
-	* Returns all the journal articles that the user has permission to view where groupId = &#63; and templateId = &#63;.
+	* Returns the first journal article in the ordered set where groupId = &#63; and DDMTemplateKey = &#63;.
 	*
 	* @param groupId the group ID
-	* @param templateId the template ID
-	* @return the matching journal articles that the user has permission to view
+	* @param DDMTemplateKey the d d m template key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching journal article
+	* @throws com.liferay.portlet.journal.NoSuchArticleException if a matching journal article could not be found
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_T(
-		long groupId, java.lang.String templateId) {
-		return getPersistence().filterFindByG_T(groupId, templateId);
+	public static com.liferay.portlet.journal.model.JournalArticle findByG_DT_First(
+		long groupId, java.lang.String DDMTemplateKey,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
+		throws com.liferay.portlet.journal.NoSuchArticleException {
+		return getPersistence()
+				   .findByG_DT_First(groupId, DDMTemplateKey, orderByComparator);
 	}
 
 	/**
-	* Returns a range of all the journal articles that the user has permission to view where groupId = &#63; and templateId = &#63;.
+	* Returns the first journal article in the ordered set where groupId = &#63; and DDMTemplateKey = &#63;.
+	*
+	* @param groupId the group ID
+	* @param DDMTemplateKey the d d m template key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching journal article, or <code>null</code> if a matching journal article could not be found
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_DT_First(
+		long groupId, java.lang.String DDMTemplateKey,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_DT_First(groupId, DDMTemplateKey, orderByComparator);
+	}
+
+	/**
+	* Returns the last journal article in the ordered set where groupId = &#63; and DDMTemplateKey = &#63;.
+	*
+	* @param groupId the group ID
+	* @param DDMTemplateKey the d d m template key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching journal article
+	* @throws com.liferay.portlet.journal.NoSuchArticleException if a matching journal article could not be found
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle findByG_DT_Last(
+		long groupId, java.lang.String DDMTemplateKey,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
+		throws com.liferay.portlet.journal.NoSuchArticleException {
+		return getPersistence()
+				   .findByG_DT_Last(groupId, DDMTemplateKey, orderByComparator);
+	}
+
+	/**
+	* Returns the last journal article in the ordered set where groupId = &#63; and DDMTemplateKey = &#63;.
+	*
+	* @param groupId the group ID
+	* @param DDMTemplateKey the d d m template key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_DT_Last(
+		long groupId, java.lang.String DDMTemplateKey,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_DT_Last(groupId, DDMTemplateKey, orderByComparator);
+	}
+
+	/**
+	* Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and DDMTemplateKey = &#63;.
+	*
+	* @param id the primary key of the current journal article
+	* @param groupId the group ID
+	* @param DDMTemplateKey the d d m template key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next journal article
+	* @throws com.liferay.portlet.journal.NoSuchArticleException if a journal article with the primary key could not be found
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle[] findByG_DT_PrevAndNext(
+		long id, long groupId, java.lang.String DDMTemplateKey,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
+		throws com.liferay.portlet.journal.NoSuchArticleException {
+		return getPersistence()
+				   .findByG_DT_PrevAndNext(id, groupId, DDMTemplateKey,
+			orderByComparator);
+	}
+
+	/**
+	* Returns all the journal articles that the user has permission to view where groupId = &#63; and DDMTemplateKey = &#63;.
+	*
+	* @param groupId the group ID
+	* @param DDMTemplateKey the d d m template key
+	* @return the matching journal articles that the user has permission to view
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_DT(
+		long groupId, java.lang.String DDMTemplateKey) {
+		return getPersistence().filterFindByG_DT(groupId, DDMTemplateKey);
+	}
+
+	/**
+	* Returns a range of all the journal articles that the user has permission to view where groupId = &#63; and DDMTemplateKey = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @param start the lower bound of the range of journal articles
 	* @param end the upper bound of the range of journal articles (not inclusive)
 	* @return the range of matching journal articles that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_T(
-		long groupId, java.lang.String templateId, int start, int end) {
-		return getPersistence().filterFindByG_T(groupId, templateId, start, end);
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_DT(
+		long groupId, java.lang.String DDMTemplateKey, int start, int end) {
+		return getPersistence()
+				   .filterFindByG_DT(groupId, DDMTemplateKey, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the journal articles that the user has permissions to view where groupId = &#63; and templateId = &#63;.
+	* Returns an ordered range of all the journal articles that the user has permissions to view where groupId = &#63; and DDMTemplateKey = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @param start the lower bound of the range of journal articles
 	* @param end the upper bound of the range of journal articles (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal articles that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_T(
-		long groupId, java.lang.String templateId, int start, int end,
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_DT(
+		long groupId, java.lang.String DDMTemplateKey, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
-				   .filterFindByG_T(groupId, templateId, start, end,
+				   .filterFindByG_DT(groupId, DDMTemplateKey, start, end,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and templateId = &#63;.
+	* Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and DDMTemplateKey = &#63;.
 	*
 	* @param id the primary key of the current journal article
 	* @param groupId the group ID
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal article
 	* @throws com.liferay.portlet.journal.NoSuchArticleException if a journal article with the primary key could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle[] filterFindByG_T_PrevAndNext(
-		long id, long groupId, java.lang.String templateId,
+	public static com.liferay.portlet.journal.model.JournalArticle[] filterFindByG_DT_PrevAndNext(
+		long id, long groupId, java.lang.String DDMTemplateKey,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
-				   .filterFindByG_T_PrevAndNext(id, groupId, templateId,
+				   .filterFindByG_DT_PrevAndNext(id, groupId, DDMTemplateKey,
 			orderByComparator);
 	}
 
 	/**
-	* Removes all the journal articles where groupId = &#63; and templateId = &#63; from the database.
+	* Removes all the journal articles where groupId = &#63; and DDMTemplateKey = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	*/
-	public static void removeByG_T(long groupId, java.lang.String templateId) {
-		getPersistence().removeByG_T(groupId, templateId);
+	public static void removeByG_DT(long groupId,
+		java.lang.String DDMTemplateKey) {
+		getPersistence().removeByG_DT(groupId, DDMTemplateKey);
 	}
 
 	/**
-	* Returns the number of journal articles where groupId = &#63; and templateId = &#63;.
+	* Returns the number of journal articles where groupId = &#63; and DDMTemplateKey = &#63;.
 	*
 	* @param groupId the group ID
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @return the number of matching journal articles
 	*/
-	public static int countByG_T(long groupId, java.lang.String templateId) {
-		return getPersistence().countByG_T(groupId, templateId);
+	public static int countByG_DT(long groupId, java.lang.String DDMTemplateKey) {
+		return getPersistence().countByG_DT(groupId, DDMTemplateKey);
 	}
 
 	/**
-	* Returns the number of journal articles that the user has permission to view where groupId = &#63; and templateId = &#63;.
+	* Returns the number of journal articles that the user has permission to view where groupId = &#63; and DDMTemplateKey = &#63;.
 	*
 	* @param groupId the group ID
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @return the number of matching journal articles that the user has permission to view
 	*/
-	public static int filterCountByG_T(long groupId, java.lang.String templateId) {
-		return getPersistence().filterCountByG_T(groupId, templateId);
+	public static int filterCountByG_DT(long groupId,
+		java.lang.String DDMTemplateKey) {
+		return getPersistence().filterCountByG_DT(groupId, DDMTemplateKey);
 	}
 
 	/**
@@ -4496,159 +4513,166 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	* Returns all the journal articles where classNameId = &#63; and templateId = &#63;.
+	* Returns all the journal articles where classNameId = &#63; and DDMTemplateKey = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @return the matching journal articles
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByC_T(
-		long classNameId, java.lang.String templateId) {
-		return getPersistence().findByC_T(classNameId, templateId);
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByC_DT(
+		long classNameId, java.lang.String DDMTemplateKey) {
+		return getPersistence().findByC_DT(classNameId, DDMTemplateKey);
 	}
 
 	/**
-	* Returns a range of all the journal articles where classNameId = &#63; and templateId = &#63;.
+	* Returns a range of all the journal articles where classNameId = &#63; and DDMTemplateKey = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @param start the lower bound of the range of journal articles
 	* @param end the upper bound of the range of journal articles (not inclusive)
 	* @return the range of matching journal articles
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByC_T(
-		long classNameId, java.lang.String templateId, int start, int end) {
-		return getPersistence().findByC_T(classNameId, templateId, start, end);
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByC_DT(
+		long classNameId, java.lang.String DDMTemplateKey, int start, int end) {
+		return getPersistence()
+				   .findByC_DT(classNameId, DDMTemplateKey, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the journal articles where classNameId = &#63; and templateId = &#63;.
+	* Returns an ordered range of all the journal articles where classNameId = &#63; and DDMTemplateKey = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @param start the lower bound of the range of journal articles
 	* @param end the upper bound of the range of journal articles (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal articles
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByC_T(
-		long classNameId, java.lang.String templateId, int start, int end,
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByC_DT(
+		long classNameId, java.lang.String DDMTemplateKey, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
-				   .findByC_T(classNameId, templateId, start, end,
+				   .findByC_DT(classNameId, DDMTemplateKey, start, end,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the first journal article in the ordered set where classNameId = &#63; and templateId = &#63;.
+	* Returns the first journal article in the ordered set where classNameId = &#63; and DDMTemplateKey = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal article
 	* @throws com.liferay.portlet.journal.NoSuchArticleException if a matching journal article could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle findByC_T_First(
-		long classNameId, java.lang.String templateId,
+	public static com.liferay.portlet.journal.model.JournalArticle findByC_DT_First(
+		long classNameId, java.lang.String DDMTemplateKey,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
-				   .findByC_T_First(classNameId, templateId, orderByComparator);
-	}
-
-	/**
-	* Returns the first journal article in the ordered set where classNameId = &#63; and templateId = &#63;.
-	*
-	* @param classNameId the class name ID
-	* @param templateId the template ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching journal article, or <code>null</code> if a matching journal article could not be found
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle fetchByC_T_First(
-		long classNameId, java.lang.String templateId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_T_First(classNameId, templateId, orderByComparator);
-	}
-
-	/**
-	* Returns the last journal article in the ordered set where classNameId = &#63; and templateId = &#63;.
-	*
-	* @param classNameId the class name ID
-	* @param templateId the template ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching journal article
-	* @throws com.liferay.portlet.journal.NoSuchArticleException if a matching journal article could not be found
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle findByC_T_Last(
-		long classNameId, java.lang.String templateId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
-		throws com.liferay.portlet.journal.NoSuchArticleException {
-		return getPersistence()
-				   .findByC_T_Last(classNameId, templateId, orderByComparator);
-	}
-
-	/**
-	* Returns the last journal article in the ordered set where classNameId = &#63; and templateId = &#63;.
-	*
-	* @param classNameId the class name ID
-	* @param templateId the template ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle fetchByC_T_Last(
-		long classNameId, java.lang.String templateId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_T_Last(classNameId, templateId, orderByComparator);
-	}
-
-	/**
-	* Returns the journal articles before and after the current journal article in the ordered set where classNameId = &#63; and templateId = &#63;.
-	*
-	* @param id the primary key of the current journal article
-	* @param classNameId the class name ID
-	* @param templateId the template ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next journal article
-	* @throws com.liferay.portlet.journal.NoSuchArticleException if a journal article with the primary key could not be found
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle[] findByC_T_PrevAndNext(
-		long id, long classNameId, java.lang.String templateId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
-		throws com.liferay.portlet.journal.NoSuchArticleException {
-		return getPersistence()
-				   .findByC_T_PrevAndNext(id, classNameId, templateId,
+				   .findByC_DT_First(classNameId, DDMTemplateKey,
 			orderByComparator);
 	}
 
 	/**
-	* Removes all the journal articles where classNameId = &#63; and templateId = &#63; from the database.
+	* Returns the first journal article in the ordered set where classNameId = &#63; and DDMTemplateKey = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching journal article, or <code>null</code> if a matching journal article could not be found
 	*/
-	public static void removeByC_T(long classNameId, java.lang.String templateId) {
-		getPersistence().removeByC_T(classNameId, templateId);
+	public static com.liferay.portlet.journal.model.JournalArticle fetchByC_DT_First(
+		long classNameId, java.lang.String DDMTemplateKey,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_DT_First(classNameId, DDMTemplateKey,
+			orderByComparator);
 	}
 
 	/**
-	* Returns the number of journal articles where classNameId = &#63; and templateId = &#63;.
+	* Returns the last journal article in the ordered set where classNameId = &#63; and DDMTemplateKey = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching journal article
+	* @throws com.liferay.portlet.journal.NoSuchArticleException if a matching journal article could not be found
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle findByC_DT_Last(
+		long classNameId, java.lang.String DDMTemplateKey,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
+		throws com.liferay.portlet.journal.NoSuchArticleException {
+		return getPersistence()
+				   .findByC_DT_Last(classNameId, DDMTemplateKey,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last journal article in the ordered set where classNameId = &#63; and DDMTemplateKey = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param DDMTemplateKey the d d m template key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle fetchByC_DT_Last(
+		long classNameId, java.lang.String DDMTemplateKey,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_DT_Last(classNameId, DDMTemplateKey,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the journal articles before and after the current journal article in the ordered set where classNameId = &#63; and DDMTemplateKey = &#63;.
+	*
+	* @param id the primary key of the current journal article
+	* @param classNameId the class name ID
+	* @param DDMTemplateKey the d d m template key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next journal article
+	* @throws com.liferay.portlet.journal.NoSuchArticleException if a journal article with the primary key could not be found
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle[] findByC_DT_PrevAndNext(
+		long id, long classNameId, java.lang.String DDMTemplateKey,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
+		throws com.liferay.portlet.journal.NoSuchArticleException {
+		return getPersistence()
+				   .findByC_DT_PrevAndNext(id, classNameId, DDMTemplateKey,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the journal articles where classNameId = &#63; and DDMTemplateKey = &#63; from the database.
+	*
+	* @param classNameId the class name ID
+	* @param DDMTemplateKey the d d m template key
+	*/
+	public static void removeByC_DT(long classNameId,
+		java.lang.String DDMTemplateKey) {
+		getPersistence().removeByC_DT(classNameId, DDMTemplateKey);
+	}
+
+	/**
+	* Returns the number of journal articles where classNameId = &#63; and DDMTemplateKey = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param DDMTemplateKey the d d m template key
 	* @return the number of matching journal articles
 	*/
-	public static int countByC_T(long classNameId, java.lang.String templateId) {
-		return getPersistence().countByC_T(classNameId, templateId);
+	public static int countByC_DT(long classNameId,
+		java.lang.String DDMTemplateKey) {
+		return getPersistence().countByC_DT(classNameId, DDMTemplateKey);
 	}
 
 	/**
@@ -5980,92 +6004,97 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	* Returns the journal article where groupId = &#63; and classNameId = &#63; and structureId = &#63; or throws a {@link com.liferay.portlet.journal.NoSuchArticleException} if it could not be found.
+	* Returns the journal article where groupId = &#63; and classNameId = &#63; and DDMStructureKey = &#63; or throws a {@link com.liferay.portlet.journal.NoSuchArticleException} if it could not be found.
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param structureId the structure ID
+	* @param DDMStructureKey the d d m structure key
 	* @return the matching journal article
 	* @throws com.liferay.portlet.journal.NoSuchArticleException if a matching journal article could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle findByG_C_S(
-		long groupId, long classNameId, java.lang.String structureId)
+	public static com.liferay.portlet.journal.model.JournalArticle findByG_C_DS(
+		long groupId, long classNameId, java.lang.String DDMStructureKey)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
-		return getPersistence().findByG_C_S(groupId, classNameId, structureId);
+		return getPersistence()
+				   .findByG_C_DS(groupId, classNameId, DDMStructureKey);
 	}
 
 	/**
-	* Returns the journal article where groupId = &#63; and classNameId = &#63; and structureId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the journal article where groupId = &#63; and classNameId = &#63; and DDMStructureKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param structureId the structure ID
+	* @param DDMStructureKey the d d m structure key
 	* @return the matching journal article, or <code>null</code> if a matching journal article could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_C_S(
-		long groupId, long classNameId, java.lang.String structureId) {
-		return getPersistence().fetchByG_C_S(groupId, classNameId, structureId);
+	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_C_DS(
+		long groupId, long classNameId, java.lang.String DDMStructureKey) {
+		return getPersistence()
+				   .fetchByG_C_DS(groupId, classNameId, DDMStructureKey);
 	}
 
 	/**
-	* Returns the journal article where groupId = &#63; and classNameId = &#63; and structureId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the journal article where groupId = &#63; and classNameId = &#63; and DDMStructureKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param structureId the structure ID
+	* @param DDMStructureKey the d d m structure key
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching journal article, or <code>null</code> if a matching journal article could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_C_S(
-		long groupId, long classNameId, java.lang.String structureId,
+	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_C_DS(
+		long groupId, long classNameId, java.lang.String DDMStructureKey,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .fetchByG_C_S(groupId, classNameId, structureId,
+				   .fetchByG_C_DS(groupId, classNameId, DDMStructureKey,
 			retrieveFromCache);
 	}
 
 	/**
-	* Removes the journal article where groupId = &#63; and classNameId = &#63; and structureId = &#63; from the database.
+	* Removes the journal article where groupId = &#63; and classNameId = &#63; and DDMStructureKey = &#63; from the database.
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param structureId the structure ID
+	* @param DDMStructureKey the d d m structure key
 	* @return the journal article that was removed
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle removeByG_C_S(
-		long groupId, long classNameId, java.lang.String structureId)
+	public static com.liferay.portlet.journal.model.JournalArticle removeByG_C_DS(
+		long groupId, long classNameId, java.lang.String DDMStructureKey)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
-		return getPersistence().removeByG_C_S(groupId, classNameId, structureId);
+		return getPersistence()
+				   .removeByG_C_DS(groupId, classNameId, DDMStructureKey);
 	}
 
 	/**
-	* Returns the number of journal articles where groupId = &#63; and classNameId = &#63; and structureId = &#63;.
+	* Returns the number of journal articles where groupId = &#63; and classNameId = &#63; and DDMStructureKey = &#63;.
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param structureId the structure ID
+	* @param DDMStructureKey the d d m structure key
 	* @return the number of matching journal articles
 	*/
-	public static int countByG_C_S(long groupId, long classNameId,
-		java.lang.String structureId) {
-		return getPersistence().countByG_C_S(groupId, classNameId, structureId);
+	public static int countByG_C_DS(long groupId, long classNameId,
+		java.lang.String DDMStructureKey) {
+		return getPersistence()
+				   .countByG_C_DS(groupId, classNameId, DDMStructureKey);
 	}
 
 	/**
-	* Returns all the journal articles where groupId = &#63; and classNameId = &#63; and templateId = &#63;.
+	* Returns all the journal articles where groupId = &#63; and classNameId = &#63; and DDMTemplateKey = &#63;.
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @return the matching journal articles
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_C_T(
-		long groupId, long classNameId, java.lang.String templateId) {
-		return getPersistence().findByG_C_T(groupId, classNameId, templateId);
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_C_DT(
+		long groupId, long classNameId, java.lang.String DDMTemplateKey) {
+		return getPersistence()
+				   .findByG_C_DT(groupId, classNameId, DDMTemplateKey);
 	}
 
 	/**
-	* Returns a range of all the journal articles where groupId = &#63; and classNameId = &#63; and templateId = &#63;.
+	* Returns a range of all the journal articles where groupId = &#63; and classNameId = &#63; and DDMTemplateKey = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -6073,20 +6102,21 @@ public class JournalArticleUtil {
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @param start the lower bound of the range of journal articles
 	* @param end the upper bound of the range of journal articles (not inclusive)
 	* @return the range of matching journal articles
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_C_T(
-		long groupId, long classNameId, java.lang.String templateId, int start,
-		int end) {
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_C_DT(
+		long groupId, long classNameId, java.lang.String DDMTemplateKey,
+		int start, int end) {
 		return getPersistence()
-				   .findByG_C_T(groupId, classNameId, templateId, start, end);
+				   .findByG_C_DT(groupId, classNameId, DDMTemplateKey, start,
+			end);
 	}
 
 	/**
-	* Returns an ordered range of all the journal articles where groupId = &#63; and classNameId = &#63; and templateId = &#63;.
+	* Returns an ordered range of all the journal articles where groupId = &#63; and classNameId = &#63; and DDMTemplateKey = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -6094,129 +6124,130 @@ public class JournalArticleUtil {
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @param start the lower bound of the range of journal articles
 	* @param end the upper bound of the range of journal articles (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal articles
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_C_T(
-		long groupId, long classNameId, java.lang.String templateId, int start,
-		int end,
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_C_DT(
+		long groupId, long classNameId, java.lang.String DDMTemplateKey,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
-				   .findByG_C_T(groupId, classNameId, templateId, start, end,
-			orderByComparator);
+				   .findByG_C_DT(groupId, classNameId, DDMTemplateKey, start,
+			end, orderByComparator);
 	}
 
 	/**
-	* Returns the first journal article in the ordered set where groupId = &#63; and classNameId = &#63; and templateId = &#63;.
+	* Returns the first journal article in the ordered set where groupId = &#63; and classNameId = &#63; and DDMTemplateKey = &#63;.
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal article
 	* @throws com.liferay.portlet.journal.NoSuchArticleException if a matching journal article could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle findByG_C_T_First(
-		long groupId, long classNameId, java.lang.String templateId,
+	public static com.liferay.portlet.journal.model.JournalArticle findByG_C_DT_First(
+		long groupId, long classNameId, java.lang.String DDMTemplateKey,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
-				   .findByG_C_T_First(groupId, classNameId, templateId,
+				   .findByG_C_DT_First(groupId, classNameId, DDMTemplateKey,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the first journal article in the ordered set where groupId = &#63; and classNameId = &#63; and templateId = &#63;.
+	* Returns the first journal article in the ordered set where groupId = &#63; and classNameId = &#63; and DDMTemplateKey = &#63;.
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal article, or <code>null</code> if a matching journal article could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_C_T_First(
-		long groupId, long classNameId, java.lang.String templateId,
+	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_C_DT_First(
+		long groupId, long classNameId, java.lang.String DDMTemplateKey,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
-				   .fetchByG_C_T_First(groupId, classNameId, templateId,
+				   .fetchByG_C_DT_First(groupId, classNameId, DDMTemplateKey,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the last journal article in the ordered set where groupId = &#63; and classNameId = &#63; and templateId = &#63;.
+	* Returns the last journal article in the ordered set where groupId = &#63; and classNameId = &#63; and DDMTemplateKey = &#63;.
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal article
 	* @throws com.liferay.portlet.journal.NoSuchArticleException if a matching journal article could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle findByG_C_T_Last(
-		long groupId, long classNameId, java.lang.String templateId,
+	public static com.liferay.portlet.journal.model.JournalArticle findByG_C_DT_Last(
+		long groupId, long classNameId, java.lang.String DDMTemplateKey,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
-				   .findByG_C_T_Last(groupId, classNameId, templateId,
+				   .findByG_C_DT_Last(groupId, classNameId, DDMTemplateKey,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the last journal article in the ordered set where groupId = &#63; and classNameId = &#63; and templateId = &#63;.
+	* Returns the last journal article in the ordered set where groupId = &#63; and classNameId = &#63; and DDMTemplateKey = &#63;.
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_C_T_Last(
-		long groupId, long classNameId, java.lang.String templateId,
+	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_C_DT_Last(
+		long groupId, long classNameId, java.lang.String DDMTemplateKey,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
-				   .fetchByG_C_T_Last(groupId, classNameId, templateId,
+				   .fetchByG_C_DT_Last(groupId, classNameId, DDMTemplateKey,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and classNameId = &#63; and templateId = &#63;.
+	* Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and classNameId = &#63; and DDMTemplateKey = &#63;.
 	*
 	* @param id the primary key of the current journal article
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal article
 	* @throws com.liferay.portlet.journal.NoSuchArticleException if a journal article with the primary key could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle[] findByG_C_T_PrevAndNext(
-		long id, long groupId, long classNameId, java.lang.String templateId,
+	public static com.liferay.portlet.journal.model.JournalArticle[] findByG_C_DT_PrevAndNext(
+		long id, long groupId, long classNameId,
+		java.lang.String DDMTemplateKey,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
-				   .findByG_C_T_PrevAndNext(id, groupId, classNameId,
-			templateId, orderByComparator);
+				   .findByG_C_DT_PrevAndNext(id, groupId, classNameId,
+			DDMTemplateKey, orderByComparator);
 	}
 
 	/**
-	* Returns all the journal articles that the user has permission to view where groupId = &#63; and classNameId = &#63; and templateId = &#63;.
+	* Returns all the journal articles that the user has permission to view where groupId = &#63; and classNameId = &#63; and DDMTemplateKey = &#63;.
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @return the matching journal articles that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_C_T(
-		long groupId, long classNameId, java.lang.String templateId) {
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_C_DT(
+		long groupId, long classNameId, java.lang.String DDMTemplateKey) {
 		return getPersistence()
-				   .filterFindByG_C_T(groupId, classNameId, templateId);
+				   .filterFindByG_C_DT(groupId, classNameId, DDMTemplateKey);
 	}
 
 	/**
-	* Returns a range of all the journal articles that the user has permission to view where groupId = &#63; and classNameId = &#63; and templateId = &#63;.
+	* Returns a range of all the journal articles that the user has permission to view where groupId = &#63; and classNameId = &#63; and DDMTemplateKey = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -6224,21 +6255,21 @@ public class JournalArticleUtil {
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @param start the lower bound of the range of journal articles
 	* @param end the upper bound of the range of journal articles (not inclusive)
 	* @return the range of matching journal articles that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_C_T(
-		long groupId, long classNameId, java.lang.String templateId, int start,
-		int end) {
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_C_DT(
+		long groupId, long classNameId, java.lang.String DDMTemplateKey,
+		int start, int end) {
 		return getPersistence()
-				   .filterFindByG_C_T(groupId, classNameId, templateId, start,
-			end);
+				   .filterFindByG_C_DT(groupId, classNameId, DDMTemplateKey,
+			start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the journal articles that the user has permissions to view where groupId = &#63; and classNameId = &#63; and templateId = &#63;.
+	* Returns an ordered range of all the journal articles that the user has permissions to view where groupId = &#63; and classNameId = &#63; and DDMTemplateKey = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -6246,78 +6277,80 @@ public class JournalArticleUtil {
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @param start the lower bound of the range of journal articles
 	* @param end the upper bound of the range of journal articles (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal articles that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_C_T(
-		long groupId, long classNameId, java.lang.String templateId, int start,
-		int end,
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_C_DT(
+		long groupId, long classNameId, java.lang.String DDMTemplateKey,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
-				   .filterFindByG_C_T(groupId, classNameId, templateId, start,
-			end, orderByComparator);
+				   .filterFindByG_C_DT(groupId, classNameId, DDMTemplateKey,
+			start, end, orderByComparator);
 	}
 
 	/**
-	* Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and classNameId = &#63; and templateId = &#63;.
+	* Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and classNameId = &#63; and DDMTemplateKey = &#63;.
 	*
 	* @param id the primary key of the current journal article
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal article
 	* @throws com.liferay.portlet.journal.NoSuchArticleException if a journal article with the primary key could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle[] filterFindByG_C_T_PrevAndNext(
-		long id, long groupId, long classNameId, java.lang.String templateId,
+	public static com.liferay.portlet.journal.model.JournalArticle[] filterFindByG_C_DT_PrevAndNext(
+		long id, long groupId, long classNameId,
+		java.lang.String DDMTemplateKey,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
-				   .filterFindByG_C_T_PrevAndNext(id, groupId, classNameId,
-			templateId, orderByComparator);
+				   .filterFindByG_C_DT_PrevAndNext(id, groupId, classNameId,
+			DDMTemplateKey, orderByComparator);
 	}
 
 	/**
-	* Removes all the journal articles where groupId = &#63; and classNameId = &#63; and templateId = &#63; from the database.
+	* Removes all the journal articles where groupId = &#63; and classNameId = &#63; and DDMTemplateKey = &#63; from the database.
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	*/
-	public static void removeByG_C_T(long groupId, long classNameId,
-		java.lang.String templateId) {
-		getPersistence().removeByG_C_T(groupId, classNameId, templateId);
+	public static void removeByG_C_DT(long groupId, long classNameId,
+		java.lang.String DDMTemplateKey) {
+		getPersistence().removeByG_C_DT(groupId, classNameId, DDMTemplateKey);
 	}
 
 	/**
-	* Returns the number of journal articles where groupId = &#63; and classNameId = &#63; and templateId = &#63;.
+	* Returns the number of journal articles where groupId = &#63; and classNameId = &#63; and DDMTemplateKey = &#63;.
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @return the number of matching journal articles
 	*/
-	public static int countByG_C_T(long groupId, long classNameId,
-		java.lang.String templateId) {
-		return getPersistence().countByG_C_T(groupId, classNameId, templateId);
+	public static int countByG_C_DT(long groupId, long classNameId,
+		java.lang.String DDMTemplateKey) {
+		return getPersistence()
+				   .countByG_C_DT(groupId, classNameId, DDMTemplateKey);
 	}
 
 	/**
-	* Returns the number of journal articles that the user has permission to view where groupId = &#63; and classNameId = &#63; and templateId = &#63;.
+	* Returns the number of journal articles that the user has permission to view where groupId = &#63; and classNameId = &#63; and DDMTemplateKey = &#63;.
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param templateId the template ID
+	* @param DDMTemplateKey the d d m template key
 	* @return the number of matching journal articles that the user has permission to view
 	*/
-	public static int filterCountByG_C_T(long groupId, long classNameId,
-		java.lang.String templateId) {
+	public static int filterCountByG_C_DT(long groupId, long classNameId,
+		java.lang.String DDMTemplateKey) {
 		return getPersistence()
-				   .filterCountByG_C_T(groupId, classNameId, templateId);
+				   .filterCountByG_C_DT(groupId, classNameId, DDMTemplateKey);
 	}
 
 	/**

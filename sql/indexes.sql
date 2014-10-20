@@ -277,12 +277,19 @@ create index IX_3B69160F on Groups_UserGroups (userGroupId);
 
 create index IX_6A925A4D on Image (size_);
 
+create index IX_17806804 on JournalArticle (DDMStructureKey);
+create index IX_75CCA4D1 on JournalArticle (DDMTemplateKey);
+create index IX_C761B675 on JournalArticle (classNameId, DDMTemplateKey);
 create index IX_FF0E7A72 on JournalArticle (classNameId, templateId);
 create index IX_323DF109 on JournalArticle (companyId, status);
 create index IX_E82F322B on JournalArticle (companyId, version, status);
 create index IX_EA05E9E1 on JournalArticle (displayDate, status);
+create index IX_D8EB0D84 on JournalArticle (groupId, DDMStructureKey);
+create index IX_31B74F51 on JournalArticle (groupId, DDMTemplateKey);
 create index IX_4D5CD982 on JournalArticle (groupId, articleId, status);
 create unique index IX_85C52EEC on JournalArticle (groupId, articleId, version);
+create index IX_353BD560 on JournalArticle (groupId, classNameId, DDMStructureKey);
+create index IX_6E801BF5 on JournalArticle (groupId, classNameId, DDMTemplateKey);
 create index IX_9CE6E0FA on JournalArticle (groupId, classNameId, classPK);
 create index IX_A2534AC2 on JournalArticle (groupId, classNameId, layoutUuid);
 create index IX_91E78C35 on JournalArticle (groupId, classNameId, structureId);

@@ -515,6 +515,6 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UpgradeJournal.class);
+	private static final Log _log = LogFactoryUtil.getLog(UpgradeJournal.class);
 
 }

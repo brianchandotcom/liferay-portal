@@ -194,6 +194,21 @@ AUI.add(
 						);
 					},
 
+					_syncElementsFocus: function() {
+						var instance = this;
+
+						var boundingBox = instance.toolbar.get('boundingBox');
+
+						var button = boundingBox.one('button');
+
+						if (button) {
+							button.focus();
+						}
+						else {
+							DLFileEntryCellEditor.superclass._syncElementsFocus.apply(instance, arguments);
+						}
+					},
+
 					_syncFileLabel: function(title, url) {
 						var instance = this;
 

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.struts.PortletAction;
@@ -74,8 +75,8 @@ public class ExportArticleAction extends PortletAction {
 			PortletPreferences portletPreferences =
 				actionRequest.getPreferences();
 
-			String[] allowedExtensions = portletPreferences.getValues(
-				"extensions", null);
+			String[] allowedExtensions = StringUtil.split(
+				portletPreferences.getValue("extensions", null));
 
 			String languageId = LanguageUtil.getLanguageId(actionRequest);
 			PortletRequestModel portletRequestModel = new PortletRequestModel(

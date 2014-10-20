@@ -70,6 +70,7 @@ public class DDMStructureWrapper implements DDMStructure,
 		attributes.put("definition", getDefinition());
 		attributes.put("storageType", getStorageType());
 		attributes.put("type", getType());
+		attributes.put("version", getVersion());
 
 		return attributes;
 	}
@@ -170,6 +171,12 @@ public class DDMStructureWrapper implements DDMStructure,
 
 		if (type != null) {
 			setType(type);
+		}
+
+		String version = (String)attributes.get("version");
+
+		if (version != null) {
+			setVersion(version);
 		}
 	}
 
@@ -654,6 +661,16 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
+	* Returns the version of this d d m structure.
+	*
+	* @return the version of this d d m structure
+	*/
+	@Override
+	public java.lang.String getVersion() {
+		return _ddmStructure.getVersion();
+	}
+
+	/**
 	* Returns the WebDAV URL to access the structure.
 	*
 	* @param themeDisplay the theme display needed to build the URL. It can
@@ -1064,6 +1081,16 @@ public class DDMStructureWrapper implements DDMStructure,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_ddmStructure.setUuid(uuid);
+	}
+
+	/**
+	* Sets the version of this d d m structure.
+	*
+	* @param version the version of this d d m structure
+	*/
+	@Override
+	public void setVersion(java.lang.String version) {
+		_ddmStructure.setVersion(version);
 	}
 
 	@Override

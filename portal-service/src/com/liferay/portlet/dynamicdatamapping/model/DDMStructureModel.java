@@ -511,6 +511,21 @@ public interface DDMStructureModel extends BaseModel<DDMStructure>,
 	 */
 	public void setType(int type);
 
+	/**
+	 * Returns the version of this d d m structure.
+	 *
+	 * @return the version of this d d m structure
+	 */
+	@AutoEscape
+	public String getVersion();
+
+	/**
+	 * Sets the version of this d d m structure.
+	 *
+	 * @param version the version of this d d m structure
+	 */
+	public void setVersion(String version);
+
 	@Override
 	public boolean isNew();
 

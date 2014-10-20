@@ -525,7 +525,8 @@ create table DDMStructure (
 	description STRING null,
 	definition TEXT null,
 	storageType VARCHAR(75) null,
-	type_ INTEGER
+	type_ INTEGER,
+	version VARCHAR(75) null
 );
 
 create table DDMStructureLink (
@@ -533,6 +534,22 @@ create table DDMStructureLink (
 	classNameId LONG,
 	classPK LONG,
 	structureId LONG
+);
+
+create table DDMStructureVersion (
+	structureVersionId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	structureId LONG,
+	name STRING null,
+	description STRING null,
+	definition TEXT null,
+	storageType VARCHAR(75) null,
+	type_ INTEGER,
+	version VARCHAR(75) null
 );
 
 create table DDMTemplate (

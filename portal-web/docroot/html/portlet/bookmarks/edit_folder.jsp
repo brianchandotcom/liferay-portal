@@ -92,8 +92,8 @@ else {
 
 				<aui:button name="selectFolderButton" value="select" />
 
-				<aui:script use="aui-base">
-					A.one('#<portlet:namespace />selectFolderButton').on(
+				<aui:script>
+					AUI.$('#<portlet:namespace />selectFolderButton').on(
 						'click',
 						function(event) {
 							Liferay.Util.selectEntity(

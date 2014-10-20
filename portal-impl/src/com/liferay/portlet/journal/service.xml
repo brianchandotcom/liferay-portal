@@ -38,8 +38,8 @@
 		<column name="description" type="String" localized="true" />
 		<column name="content" type="String" />
 		<column name="type" type="String" />
-		<column name="structureKey" type="String" db-name="structureId"/>
-		<column name="templateKey" type="String" db-name="templateId"/>
+		<column name="DDMStructureKey" type="String" db-name="structureId" />
+		<column name="DDMTemplateKey" type="String" db-name="templateId" />
 		<column name="layoutUuid" type="String" />
 		<column name="displayDate" type="Date" />
 		<column name="expirationDate" type="Date" />
@@ -71,11 +71,11 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="StructureKey" return-type="Collection">
-			<finder-column name="structureKey" arrayable-operator="OR" />
+		<finder name="DDMStructureKey" return-type="Collection">
+			<finder-column name="DDMStructureKey" arrayable-operator="OR" />
 		</finder>
-		<finder name="TemplateKey" return-type="Collection">
-			<finder-column name="templateKey" />
+		<finder name="DDMTemplateKey" return-type="Collection">
+			<finder-column name="DDMTemplateKey" />
 		</finder>
 		<finder name="LayoutUuid" return-type="Collection">
 			<finder-column name="layoutUuid" />
@@ -109,11 +109,11 @@
 		</finder>
 		<finder name="G_S" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="structureKey" />
+			<finder-column name="DDMStructureKey" />
 		</finder>
 		<finder name="G_T" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="templateKey" />
+			<finder-column name="DDMTemplateKey" />
 		</finder>
 		<finder name="G_L" return-type="Collection">
 			<finder-column name="groupId" />
@@ -137,7 +137,7 @@
 		</finder>
 		<finder name="C_T" return-type="Collection">
 			<finder-column name="classNameId" />
-			<finder-column name="templateKey" />
+			<finder-column name="DDMTemplateKey" />
 		</finder>
 		<finder name="LtD_S" return-type="Collection">
 			<finder-column name="displayDate" comparator="&lt;" />
@@ -166,12 +166,12 @@
 		<finder name="G_C_S" return-type="JournalArticle">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
-			<finder-column name="structureKey" />
+			<finder-column name="DDMStructureKey" />
 		</finder>
 		<finder name="G_C_T" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
-			<finder-column name="templateKey" />
+			<finder-column name="DDMTemplateKey" />
 		</finder>
 		<finder name="G_C_L" return-type="Collection">
 			<finder-column name="groupId" />

@@ -817,7 +817,6 @@
 		</action>
 
 		<action path="/journal/edit_article" type="com.liferay.portlet.journal.action.EditArticleAction">
-			<forward name="portlet.journal.asset.add_asset_redirect" path="portlet.journal.asset.add_asset_redirect" />
 			<forward name="portlet.journal.edit_article" path="portlet.journal.edit_article" />
 			<forward name="portlet.journal.error" path="portlet.journal.error" />
 		</action>
@@ -827,7 +826,6 @@
 		</action>
 
 		<action path="/journal/edit_entry" type="com.liferay.portlet.journal.action.EditEntryAction">
-			<forward name="portlet.journal.asset.add_asset_redirect" path="portlet.journal.asset.add_asset_redirect" />
 			<forward name="portlet.journal.error" path="portlet.journal.error" />
 		</action>
 
@@ -894,7 +892,7 @@
 
 		<!-- Journal Content -->
 
-		<action path="/journal_content/add_asset_redirect" forward="portlet.journal.asset.add_asset_redirect" />
+		<action path="/journal_content/add_asset_redirect" forward="portlet.journal_content.add_asset_redirect" />
 
 		<action path="/journal_content/edit_article_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
 			<forward name="portlet.message_boards.error" path="portlet.journal_content.error" />

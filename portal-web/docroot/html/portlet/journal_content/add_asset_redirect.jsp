@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/journal/init.jsp" %>
+<%@ include file="/html/portlet/journal_content/init.jsp" %>
 
 <%
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");

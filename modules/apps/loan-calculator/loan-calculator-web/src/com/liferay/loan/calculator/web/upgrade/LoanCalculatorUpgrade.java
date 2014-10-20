@@ -31,10 +31,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  * @author Peter Fellwock
  */
-/**
- * @author Raymond Augé
- * @author Peter Fellwock
- */
 @Component(immediate = true, service = LoanCalculatorUpgrade.class)
 public class LoanCalculatorUpgrade {
 

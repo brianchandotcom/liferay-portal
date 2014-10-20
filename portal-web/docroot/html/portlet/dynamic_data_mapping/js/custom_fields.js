@@ -946,13 +946,12 @@ AUI.add(
 											{
 												dateFormat: '%m/%d/%Y',
 												inputFormatter: function(val) {
-													var instance = this,
-														value = STR_BLANK;
-													
-													if (isValue(val) && val.length > 0) {
-														var selectedDate = val[0];
-														
-														value = instance.formatDate(selectedDate).toString();
+													var instance = this;
+
+													var value = STR_BLANK;
+
+													if (val && val.length) {
+														value = instance.formatDate(val[0]);
 													}
 
 													return value;

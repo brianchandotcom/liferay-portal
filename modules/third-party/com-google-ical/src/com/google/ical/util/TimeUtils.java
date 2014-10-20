@@ -44,10 +44,9 @@ public class TimeUtils {
   /**
    * Get a "time_t" in millis given a number of seconds since
    * Dershowitz/Reingold epoch relative to a given timezone.
-   *
-   * @param  epochSecs Number of seconds since Dershowitz/Reingold epoch,
-   *         relatve to zone.
-   * @param  zone Timezone against which epochSecs applies
+   * @param epochSecs Number of seconds since Dershowitz/Reingold
+   * epoch, relatve to zone.
+   * @param zone Timezone against which epochSecs applies
    * @return Number of milliseconds since 00:00:00 Jan 1, 1970 GMT
    */
   private static long timetMillisFromEpochSecs(long epochSecs,
@@ -130,8 +129,8 @@ public class TimeUtils {
   /**
    * the number of days between two dates.
    *
-   * @param  dv1 non <code>null</code>.
-   * @param  dv2 non <code>null</code>.
+   * @param dv1 non null.
+   * @param dv2 non null.
    * @return a number of days.
    */
   public static int daysBetween(DateValue dv1, DateValue dv2) {
@@ -151,10 +150,10 @@ public class TimeUtils {
   }
 
   /**
-   * the number of days since the <em>epoch</em>, which is the imaginary
-   * beginning of year zero in a hypothetical backward extension of the
-   * Gregorian calendar through time. See "Calendrical Calculations" by Reingold
-   * and Dershowitz.
+   * the number of days since the <em>epoch</em>,
+   * which is the imaginary beginning of year zero in a hypothetical
+   * backward extension of the Gregorian calendar through time.
+   * See "Calendrical Calculations" by Reingold and Dershowitz.
    */
   public static int fixedFromGregorian(int year, int month, int day) {
     int yearM1 = year - 1;
@@ -173,16 +172,12 @@ public class TimeUtils {
     return (year % 4 == 0) && ((year % 100 != 0) || (year % 400 == 0));
   }
 
-  /**
-   * count of days inthe given year
-   */
+  /** count of days inthe given year */
   public static int yearLength(int year) {
     return isLeapYear(year) ? 366 : 365;
   }
 
-  /**
-   * count of days in the given month (one indexed) of the given year.
-   */
+  /** count of days in the given month (one indexed) of the given year. */
   public static int monthLength(int year, int month) {
     switch (month) {
       case 1:
@@ -215,17 +210,16 @@ public class TimeUtils {
            "" + (MONTH_START_TO_DOY[11] + monthLength(1970, 12));
   }
 
-  /**
-   * the day of the year in [0-365] of the given date.
-   */
+  /** the day of the year in [0-365] of the given date. */
   public static int dayOfYear(int year, int month, int date) {
     int leapAdjust = month > 2 && isLeapYear(year) ? 1 : 0;
     return MONTH_START_TO_DOY[month - 1] + leapAdjust + date - 1;
   }
 
   /**
-   * Compute the gregorian time from the number of seconds since the Proleptic
-   * Gregorian Epoch. See "Calendrical Calculations", Reingold and Dershowitz.
+   * Compute the gregorian time from the number of seconds since the
+   * Proleptic Gregorian Epoch.
+   * See "Calendrical Calculations", Reingold and Dershowitz.
    */
   public static DateTimeValue timeFromSecsSinceEpoch(long secsSinceEpoch) {
     // TODO: should we handle -ve years?
@@ -258,8 +252,8 @@ public class TimeUtils {
   private static final long SECS_PER_DAY = 60L * 60 * 24;
 
   /**
-   * Compute the number of seconds from the Proleptic Gregorian epoch to the
-   * given time.
+   * Compute the number of seconds from the Proleptic Gregorian epoch
+   * to the given time.
    */
   public static long secsSinceEpoch(DateValue date) {
     long result = fixedFromGregorian(date) *
@@ -295,8 +289,8 @@ public class TimeUtils {
                       Pattern.CASE_INSENSITIVE);
 
   /**
-   * returns the timezone with the given name or <code>null</code> if no such
-   * timezone. calendar/common/ICalUtil uses this function
+   * returns the timezone with the given name or null if no such timezone.
+   * calendar/common/ICalUtil uses this function
    */
   public static TimeZone timeZoneForName(String tzString) {
     // This is a horrible hack since there is no easier way to get a timezone

@@ -23,7 +23,6 @@ import org.joda.time.DateTime;
  */
 public interface DateTimeIterable extends Iterable<DateTime> {
 
-  @Override
   DateTimeIterator iterator();
 
 }

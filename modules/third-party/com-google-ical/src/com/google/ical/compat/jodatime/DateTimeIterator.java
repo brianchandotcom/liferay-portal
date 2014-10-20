@@ -18,15 +18,12 @@ import org.joda.time.DateTime;
 import org.joda.time.ReadableDateTime;
 import java.util.Iterator;
 
-/**
- * @author Brian Wing Shun Chan
- */
 public interface DateTimeIterator extends Iterator<DateTime> {
 
   /**
    * skips all dates in the series before the given date.
    *
-   * @param newStart non <code>null</code>.
+   * @param newStart non null.
    */
   void advanceTo(ReadableDateTime newStart);
 

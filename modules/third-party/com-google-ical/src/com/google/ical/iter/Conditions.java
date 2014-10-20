@@ -24,9 +24,7 @@ import com.google.ical.values.DateValue;
  */
 final class Conditions {
 
-  /**
-   * constructs a condition that fails after passing count dates.
-   */
+  /** constructs a condition that fails after passing count dates. */
   static Predicate<DateValue> countCondition(final int count) {
     return new Predicate<DateValue>() {
       int count_ = count;
@@ -42,8 +40,7 @@ final class Conditions {
 
   /**
    * constructs a condition that passes for every date on or before until.
-   *
-   * @param until non <code>null</code>.
+   * @param until non null.
    */
   static Predicate<DateValue> untilCondition(final DateValue until) {
     return new Predicate<DateValue>() {

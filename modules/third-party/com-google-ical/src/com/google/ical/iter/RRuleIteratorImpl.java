@@ -30,26 +30,26 @@ import java.util.TimeZone;
  */
 final class RRuleIteratorImpl implements RecurrenceIterator {
   /**
-   * a function that determines when the recurrence ends. Takes a date builder
-   * and yields shouldContinue:boolean. The condition is applied <b>after</b>
-   * the date is converted to utc.
+   * a function that determines when the recurrence ends.
+   * Takes a date builder and yields shouldContinue:boolean.
+   * The condition is applied <b>after</b> the date is converted to utc.
    */
   private final Predicate<? super DateValue> condition_;
   /**
    * a function that applies the various period generators to generate an entire
-   * date. This may involve generating a set of dates and discarding all but
-   * those that match the BYSETPOS rule.
+   * date.
+   * This may involve generating a set of dates and discarding all but those
+   * that match the BYSETPOS rule.
    */
   private final Generator instanceGenerator_;
   /**
-   * a function that takes a builder and populates the year field. Returns
-   * <code>false</code> if there aren't more years available.
+   * a function that takes a builder and populates the year field.
+   * Returns false if there aren't more years available.
    */
   private final ThrottledGenerator yearGenerator_;
   /**
-   * a function that takes a builder and populates the month field. Returns
-   * <code>false</code> if there aren't more months available in the builder's
-   * year.
+   * a function that takes a builder and populates the month field.
+   * Returns false if there aren't more months available in the builder's year.
    */
   private final Generator monthGenerator_;
   /**
@@ -57,35 +57,29 @@ final class RRuleIteratorImpl implements RecurrenceIterator {
    */
   private DateValue pendingUtc_;
   /**
-   * used to build successive dates. At the start of the building process,
-   * contains the last date generated. Different periods are successively
-   * inserted into it.
+   * used to build successive dates.
+   * At the start of the building process, contains the last date generated.
+   * Different periods are successively inserted into it.
    */
   private DTBuilder builder_;
-  /**
-   * <code>true</code> iff the recurrence has been exhausted.
-   */
+  /** true iff the recurrence has been exhausted. */
   private boolean done_;
-  /**
-   * the start date of the recurrence
-   */
+  /** the start date of the recurrence */
   private final DateValue dtStart_;
   /**
-   * <code>false</code> iff shorcutting advance would break the semantics of the
-   * iteration. This may happen when, for example, the end condition requires
-   * that it see every item.
+   * false iff shorcutting advance would break the semantics of the iteration.
+   * This may happen when, for example, the end condition requires that it see
+   * every item.
    */
   private final boolean canShortcutAdvance_;
   /**
-   * the timezone that result dates should be converted <b>from</b>. All date
-   * fields, parameters, and local variables in this class are in the tzid_
-   * timezone, unless they carry the Utc suffix.
+   * the timezone that result dates should be converted <b>from</b>.
+   * All date fields, parameters, and local variables in this class are in
+   * the tzid_ timezone, unless they carry the Utc suffix.
    */
   private final TimeZone tzid_;
 
-  /**
-   * An iterator that generates dates from an RFC2445 Recurrence Rule
-   */
+  /** An iterator that generates dates from an RFC2445 Recurrence Rule */
   RRuleIteratorImpl(
     DateValue dtStart, TimeZone tzid, Predicate<? super DateValue> condition,
     Generator instanceGenerator, ThrottledGenerator yearGenerator,
@@ -163,17 +157,13 @@ final class RRuleIteratorImpl implements RecurrenceIterator {
     }
   }
 
-  /**
-   * are there more dates in this recurrence?
-   */
+  /** are there more dates in this recurrence? */
   public boolean hasNext() {
     if (null == this.pendingUtc_) { this.fetchNext(); }
     return null != this.pendingUtc_;
   }
 
-  /**
-   * fetch and return the next date in this recurrence.
-   */
+  /** fetch and return the next date in this recurrence. */
   public DateValue next() {
     if (null == this.pendingUtc_) {
       this.fetchNext();
@@ -186,9 +176,9 @@ final class RRuleIteratorImpl implements RecurrenceIterator {
   public void remove() { throw new UnsupportedOperationException(); }
 
   /**
-   * Skip all instances of the recurrence before the given date, so that the
-   * next call to {@link #next} will return a date on or after the given date,
-   * assuming the recurrence includes such a date.
+   * Skip all instances of the recurrence before the given date, so that
+   * the next call to {@link #next} will return a date on or after the given
+   * date, assuming the recurrence includes such a date.
    */
   public void advanceTo(DateValue dateUtc) {
     // Don't throw away a future pending date since the iterators will not
@@ -252,9 +242,7 @@ final class RRuleIteratorImpl implements RecurrenceIterator {
     }
   }
 
-  /**
-   * calculates and stored the next date in this recurrence.
-   */
+  /** calculates and stored the next date in this recurrence. */
   private void fetchNext() {
     if (null != this.pendingUtc_ || this.done_) { return; }
 
@@ -272,9 +260,9 @@ final class RRuleIteratorImpl implements RecurrenceIterator {
   private static final DateValue MIN_DATE =
     new DateValueImpl(Integer.MIN_VALUE, 1, 1);
   /**
-   * make sure the iterator is monotonically increasing. The local time is
-   * guaranteed to be monotonic, but because of daylight savings shifts, the
-   * time in UTC may not be.
+   * make sure the iterator is monotonically increasing.
+   * The local time is guaranteed to be monotonic, but because of daylight
+   * savings shifts, the time in UTC may not be.
    */
   private DateValue lastUtc_ = MIN_DATE;
   /**

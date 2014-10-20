@@ -44,9 +44,7 @@ final class RDateIteratorImpl implements RecurrenceIterator {
     }
   }
 
-  /**
-   * monotonically.
-   */
+  /** monotonically. */
   private static <C extends Comparable<C>> boolean increasing(C[] els) {
     for (int i = els.length; --i >= 1;) {
       if (els[i - 1].compareTo(els[i]) > 0) { return false; }

@@ -28,22 +28,21 @@ import org.joda.time.LocalDate;
  * <code>Iterator&lt;LocalDate&gt;</code> and
  * <code>Iterable&lt;LocalDate&gt;</code>.
  *
+ * @see RecurrenceIteratorFactory
+ *
  * @author mikesamuel+svn@gmail.com (Mike Samuel)
- * @see    RecurrenceIteratorFactory
  */
 public class LocalDateIteratorFactory {
 
   /**
-   * given a block of RRULE, EXRULE, RDATE, and EXDATE content lines, parse them
-   * into a single local date iterator.
-   *
+   * given a block of RRULE, EXRULE, RDATE, and EXDATE content lines, parse
+   * them into a single local date iterator.
    * @param rdata RRULE, EXRULE, RDATE, and EXDATE lines.
    * @param start the first occurrence of the series.
    * @param tzid the local timezone -- used to interpret any dates in RDATE and
-   *        EXDATE lines that don't have TZID params.
-   * @param strict <code>true</code> if any failure to parse should result in a
-   *        ParseException.  <code>false</code> causes bad content lines to be
-   *        logged and ignored.
+   *   EXDATE lines that don't have TZID params.
+   * @param strict true if any failure to parse should result in a
+   *   ParseException.  false causes bad content lines to be logged and ignored.
    */
   public static LocalDateIterator createLocalDateIterator(
       String rdata, LocalDate start, DateTimeZone tzid, boolean strict)
@@ -55,14 +54,12 @@ public class LocalDateIteratorFactory {
   }
 
   /**
-   * given a block of RRULE, EXRULE, RDATE, and EXDATE content lines, parse them
-   * into a single local date iterator.
-   *
+   * given a block of RRULE, EXRULE, RDATE, and EXDATE content lines, parse
+   * them into a single local date iterator.
    * @param rdata RRULE, EXRULE, RDATE, and EXDATE lines.
    * @param start the first occurrence of the series.
-   * @param strict <code>true</code> if any failure to parse should result in a
-   *        ParseException.  <code>false</code> causes bad content lines to be
-   *        logged and ignored.
+   * @param strict true if any failure to parse should result in a
+   *   ParseException.  false causes bad content lines to be logged and ignored.
    */
   public static LocalDateIterator createLocalDateIterator(
       String rdata, LocalDate start, boolean strict)
@@ -71,16 +68,14 @@ public class LocalDateIteratorFactory {
   }
 
   /**
-   * given a block of RRULE, EXRULE, RDATE, and EXDATE content lines, parse them
-   * into a single local date iterable.
-   *
+   * given a block of RRULE, EXRULE, RDATE, and EXDATE content lines, parse
+   * them into a single local date iterable.
    * @param rdata RRULE, EXRULE, RDATE, and EXDATE lines.
    * @param start the first occurrence of the series.
    * @param tzid the local timezone -- used to interpret any dates in RDATE and
-   *        EXDATE lines that don't have TZID params.
-   * @param strict <code>true</code> if any failure to parse should result in a
-   *        ParseException.  <code>false</code> causes bad content lines to be
-   *        logged and ignored.
+   *   EXDATE lines that don't have TZID params.
+   * @param strict true if any failure to parse should result in a
+   *   ParseException.  false causes bad content lines to be logged and ignored.
    */
   public static LocalDateIterable createLocalDateIterable(
       String rdata, LocalDate start, DateTimeZone tzid, boolean strict)
@@ -92,14 +87,12 @@ public class LocalDateIteratorFactory {
   }
 
   /**
-   * given a block of RRULE, EXRULE, RDATE, and EXDATE content lines, parse them
-   * into a single local date iterable.
-   *
+   * given a block of RRULE, EXRULE, RDATE, and EXDATE content lines, parse
+   * them into a single local date iterable.
    * @param rdata RRULE, EXRULE, RDATE, and EXDATE lines.
    * @param start the first occurrence of the series.
-   * @param strict <code>true</code> if any failure to parse should result in a
-   *        ParseException.  <code>false</code> causes bad content lines to be
-   *        logged and ignored.
+   * @param strict true if any failure to parse should result in a
+   *   ParseException.  false causes bad content lines to be logged and ignored.
    */
   public static LocalDateIterable createLocalDateIterable(
       String rdata, LocalDate start, boolean strict)
@@ -108,8 +101,8 @@ public class LocalDateIteratorFactory {
   }
 
   /**
-   * creates a local date iterator given a recurrence iterator from {@link
-   * com.google.ical.iter.RecurrenceIteratorFactory}.
+   * creates a local date iterator given a recurrence iterator from
+   * {@link com.google.ical.iter.RecurrenceIteratorFactory}.
    */
   public static LocalDateIterator createLocalDateIterator(
       RecurrenceIterator rit) {

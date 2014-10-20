@@ -17,7 +17,7 @@ package com.google.ical.values;
 import com.google.ical.util.TimeUtils;
 
 /**
- * days of the week enum. Names correspond to RFC2445 literals.
+ * days of the week enum.  Names correspond to RFC2445 literals.
  *
  * @author mikesamuel+svn@gmail.com (Mike Samuel)
  */

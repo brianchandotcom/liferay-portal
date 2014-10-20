@@ -138,9 +138,7 @@ public class RRule extends AbstractIcalObject {
     }
   }
 
-  /**
-   * an approximate number of days between occurences.
-   */
+  /** an approximate number of days between occurences. */
   public int approximateIntervalInDays() {
     int freqLengthDays;
     int nPerPeriod = 0;
@@ -195,16 +193,12 @@ public class RRule extends AbstractIcalObject {
     return ((freqLengthDays / nPerPeriod) * this.interval);
   }
 
-  /**
-   * the frequency of repetition
-   */
+  /** the frequency of repetition */
   public Frequency getFreq() { return this.freq; }
   public void setFreq(Frequency freq) {
     this.freq = freq;
   }
-  /**
-   * day of the week the week starts on
-   */
+  /** day of the week the week starts on */
   public Weekday getWkSt() { return this.wkst; }
   public void setWkSt(Weekday wkst) {
     this.wkst = wkst;

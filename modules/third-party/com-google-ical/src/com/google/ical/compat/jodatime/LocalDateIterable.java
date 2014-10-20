@@ -23,7 +23,6 @@ import org.joda.time.LocalDate;
  */
 public interface LocalDateIterable extends Iterable<LocalDate> {
 
-  @Override
   LocalDateIterator iterator();
 
 }

@@ -22,36 +22,24 @@ import com.google.ical.util.TimeUtils;
 import com.google.ical.values.TimeValue;
 
 /**
- * a mutable buffer that can be used to build {@link DateValue}s and {@link
- * DateTimeValue}s.
+ * a mutable buffer that can be used to build {@link DateValue}s and
+ * {@link DateTimeValue}s.
  *
  * @author mikesamuel+svn@gmail.com (Mike Samuel)
  */
 public class DTBuilder {
 
-  /**
-   * in AD. 0 -> 1BC.
-   */
+  /** in AD.  0 -> 1BC. */
   public int year;
-  /**
-   * one indexed.
-   */
+  /** one indexed. */
   public int month;
-  /**
-   * one indexed
-   */
+  /** one indexed */
   public int day;
-  /**
-   * zero indexed in 24 hour time.
-   */
+  /** zero indexed in 24 hour time. */
   public int hour;
-  /**
-   * zero indexed
-   */
+  /** zero indexed */
   public int minute;
-  /**
-   * zero indexed
-   */
+  /** zero indexed */
   public int second;
 
   public DTBuilder(int year, int month, int day,
@@ -85,8 +73,7 @@ public class DTBuilder {
   /**
    * produces a normalized date time, using zero for the time fields if none
    * were provided.
-   *
-   * @return not <code>null</code>
+   * @return not null
    */
   public DateTimeValue toDateTime() {
     normalize();
@@ -95,8 +82,7 @@ public class DTBuilder {
 
   /**
    * produces a normalized date.
-   *
-   * @return not <code>null</code>
+   * @return not null
    */
   public DateValue toDate() {
     normalize();
@@ -104,8 +90,8 @@ public class DTBuilder {
   }
 
   /**
-   * behavior undefined unless normalized. If you're not sure whether it's
-   * appropriate to use this method, use
+   * behavior undefined unless normalized.
+   * If you're not sure whether it's appropriate to use this method, use
    * <code>toDateValue().compareTo(dv)</code> instead.
    */
   public int compareTo(DateValue dv) {
@@ -125,8 +111,8 @@ public class DTBuilder {
   }
 
   /**
-   * makes sure that the fields are in the proper ranges, by e.g. converting 32
-   * January to 1 February, or month 0 to December of the year before.
+   * makes sure that the fields are in the proper ranges, by e.g. converting
+   * 32 January to 1 February, or month 0 to December of the year before.
    */
   public void normalize() {
     this.normalizeTime();

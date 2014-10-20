@@ -18,40 +18,41 @@ import com.google.ical.values.DateValue;
 import com.google.ical.values.TimeValue;
 
 /**
- * DateValue comparison methods. <p>When we're pulling dates off the priority
- * order, we need them to come off in a consistent order, so we need a total
- * ordering on date values. <p>This means that a DateValue with no time must not
- * be equal to a DateTimeValue at midnight. Since it obviously doesn't make
- * sense for a DateValue to be after a DateTimeValue the same day at 23:59:59,
- * we put the DateValue before 0 hours of the same day. <p>If we didn't have a
- * total ordering, then it would be harder to correctly handle the case
+ * DateValue comparison methods.
+ * <p>When we're pulling dates off the priority order, we need them to come off
+ * in a consistent order, so we need a total ordering on date values.
+ * <p>This means that a DateValue with no time must not be equal to a
+ * DateTimeValue at midnight.  Since it obviously doesn't make sense for a
+ * DateValue to be after a DateTimeValue the same day at 23:59:59, we put the
+ * DateValue before 0 hours of the same day.
+ * <p>If we didn't have a total ordering, then it would be harder to correctly
+ * handle the case
  * <pre>
  *   RDATE:20060607
  *   EXDATE:20060607
  *   EXDATE:20060607T000000Z
  * </pre>
  * because we'd have two exdates that are equal according to the comparison, but
- * only the first should match. <p>In the following example
+ * only the first should match.
+ * <p>In the following example
  * <pre>
  *   RDATE:20060607
  *   RDATE:20060607T000000Z
  *   EXDATE:20060607
  * </pre>
- * the problem is worse because we may pull a candidate RDATE off the priority
- * queue and then not know whether to consume the EXDATE or not. <p>Absent a
- * total ordering, the following case could only be solved with lookahead and
- * ugly logic.
+ * the problem is worse because we may pull a candidate RDATE off the
+ * priority queue and then not know whether to consume the EXDATE or not.
+ * <p>Absent a total ordering, the following case could only be solved with
+ * lookahead and ugly logic.
  * <pre>
  *   RDATE:20060607
  *   RDATE:20060607T000000Z
  *   EXDATE:20060607
  *   EXDATE:20060607T000000Z
  * </pre>
- * <p>
- * The conversion to GMT is also an implementation detail, so it's not clear
- * which timezone we should consider midnight in, and a total ordering allows us
- * to avoid timezone conversions during iteration.
- * </p>
+ * <p>The conversion to GMT is also an implementation detail, so it's not clear
+ * which timezone we should consider midnight in, and a total ordering allows
+ * us to avoid timezone conversions during iteration.</p>
  *
  * @author mikesamuel+svn@gmail.com (Mike Samuel)
  */

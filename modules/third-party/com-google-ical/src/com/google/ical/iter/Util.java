@@ -29,8 +29,7 @@ class Util {
   /**
    * advances builder to the earliest day on or after builder that falls on
    * wkst.
-   *
-   * @param builder non <code>null</code>.
+   * @param builder non null.
    * @param wkst the day of the week that the week starts on
    */
   static void rollToNextWeekStart(DTBuilder builder, Weekday wkst) {
@@ -43,7 +42,6 @@ class Util {
 
   /**
    * the earliest day on or after d that falls on wkst.
-   *
    * @param wkst the day of the week that the week starts on
    */
   static DateValue nextWeekStart(DateValue d, Weekday wkst) {
@@ -54,16 +52,12 @@ class Util {
     return builder.toDate();
   }
 
-  /**
-   * returns a sorted unique copy of ints.
-   */
+  /** returns a sorted unique copy of ints. */
   static int[] uniquify(int[] ints) {
     return uniquify(ints, 0, ints.length);
   }
 
-  /**
-   * returns a sorted unique copy of ints.
-   */
+  /** returns a sorted unique copy of ints. */
   static int[] uniquify(int[] ints, int start, int end) {
     IntSet iset = new IntSet();
     for (int i = end; --i >= start;) {
@@ -74,16 +68,16 @@ class Util {
 
   /**
    * given a weekday number, such as -1SU, returns the day of the month that it
-   * falls on. The weekday number may be refer to a week in the current month in
-   * some contexts or a week in the current year in other contexts.
-   *
-   * @param  dow0 the day of week of the first day in the current year/month.
-   * @param  nDays the number of days in the current year/month. In
-   *         [28,29,30,31,365,366].
-   * @param  weekNum -1SU in the example above.
-   * @param  d0 the number of days between the 1st day of the current year/month
-   *         and the current month.
-   * @param  nDaysInMonth the number of days in the current month.
+   * falls on.
+   * The weekday number may be refer to a week in the current month in some
+   * contexts or a week in the current year in other contexts.
+   * @param dow0 the day of week of the first day in the current year/month.
+   * @param nDays the number of days in the current year/month.
+   *   In [28,29,30,31,365,366].
+   * @param weekNum -1SU in the example above.
+   * @param d0 the number of days between the 1st day of the current
+   *   year/month and the current month.
+   * @param nDaysInMonth the number of days in the current month.
    * @return 0 indicates no such day
    */
   static int dayNumToDate(Weekday dow0, int nDays, int weekNum,
@@ -106,17 +100,18 @@ class Util {
   }
 
   /**
-   * Compute an absolute week number given a relative one. The day number -1SU
-   * refers to the last Sunday, so if there are 5 Sundays in a period that
-   * starts on dow0 with nDays, then -1SU is 5SU. Depending on where its used it
-   * may refer to the last Sunday of the year or of the month.
+   * Compute an absolute week number given a relative one.
+   * The day number -1SU refers to the last Sunday, so if there are 5 Sundays
+   * in a period that starts on dow0 with nDays, then -1SU is 5SU.
+   * Depending on where its used it may refer to the last Sunday of the year
+   * or of the month.
    *
-   * @param  weekdayNum -1SU in the example above.
-   * @param  dow0 the day of the week of the first day of the week or month. One
-   *         of the RRULE_WDAY_* constants.
-   * @param  nDays the number of days in the month or year.
-   * @return an abolute week number, e.g. 5 in the example above. Valid if in
-   *         [1,53].
+   * @param weekdayNum -1SU in the example above.
+   * @param dow0 the day of the week of the first day of the week or month.
+   *   One of the RRULE_WDAY_* constants.
+   * @param nDays the number of days in the month or year.
+   * @return an abolute week number, e.g. 5 in the example above.
+   *   Valid if in [1,53].
    */
   static int invertWeekdayNum(
       WeekdayNum weekdayNum, Weekday dow0, int nDays) {

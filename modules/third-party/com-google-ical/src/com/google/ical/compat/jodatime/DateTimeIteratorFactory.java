@@ -30,22 +30,21 @@ import org.joda.time.ReadableDateTime;
  * <code>Iterator&lt;DateTime&gt;</code> and
  * <code>Iterable&lt;DateTime&gt;</code>.
  *
+ * @see RecurrenceIteratorFactory
+ *
  * @author mikesamuel+svn@gmail.com (Mike Samuel)
- * @see    RecurrenceIteratorFactory
  */
 public class DateTimeIteratorFactory {
 
   /**
-   * given a block of RRULE, EXRULE, RDATE, and EXDATE content lines, parse them
-   * into a single date time iterator.
-   *
+   * given a block of RRULE, EXRULE, RDATE, and EXDATE content lines, parse
+   * them into a single date time iterator.
    * @param rdata RRULE, EXRULE, RDATE, and EXDATE lines.
    * @param start the first occurrence of the series.
    * @param tzid the local timezone -- used to interpret start and any dates in
-   *        RDATE and EXDATE lines that don't have TZID params.
-   * @param strict <code>true</code> if any failure to parse should result in a
-   *        ParseException.  <code>false</code> causes bad content lines to be
-   *        logged and ignored.
+   *   RDATE and EXDATE lines that don't have TZID params.
+   * @param strict true if any failure to parse should result in a
+   *   ParseException.  false causes bad content lines to be logged and ignored.
    */
   public static DateTimeIterator createDateTimeIterator(
       String rdata, ReadableDateTime start, DateTimeZone tzid, boolean strict)
@@ -57,16 +56,14 @@ public class DateTimeIteratorFactory {
   }
 
   /**
-   * given a block of RRULE, EXRULE, RDATE, and EXDATE content lines, parse them
-   * into a single date time iterable.
-   *
+   * given a block of RRULE, EXRULE, RDATE, and EXDATE content lines, parse
+   * them into a single date time iterable.
    * @param rdata RRULE, EXRULE, RDATE, and EXDATE lines.
    * @param start the first occurrence of the series.
    * @param tzid the local timezone -- used to interpret start and any dates in
-   *        RDATE and EXDATE lines that don't have TZID params.
-   * @param strict <code>true</code> if any failure to parse should result in a
-   *        ParseException.  <code>false</code> causes bad content lines to be
-   *        logged and ignored.
+   *   RDATE and EXDATE lines that don't have TZID params.
+   * @param strict true if any failure to parse should result in a
+   *   ParseException.  false causes bad content lines to be logged and ignored.
    */
   public static DateTimeIterable createDateTimeIterable(
       String rdata, ReadableDateTime start, DateTimeZone tzid, boolean strict)
@@ -78,8 +75,8 @@ public class DateTimeIteratorFactory {
   }
 
   /**
-   * creates a date-time iterator given a recurrence iterator from {@link
-   * com.google.ical.iter.RecurrenceIteratorFactory}.
+   * creates a date-time iterator given a recurrence iterator from
+   * {@link com.google.ical.iter.RecurrenceIteratorFactory}.
    */
   public static DateTimeIterator createDateTimeIterator(
       RecurrenceIterator rit) {

@@ -16,6 +16,7 @@ package com.google.ical.values;
 
 /**
  * a value type for an Ical property.
+ *
  * <pre>
  * 4.2.20 Value Data Types
  *

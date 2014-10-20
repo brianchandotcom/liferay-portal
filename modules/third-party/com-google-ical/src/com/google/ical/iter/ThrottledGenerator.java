@@ -16,13 +16,13 @@ package com.google.ical.iter;
 
 /**
  * A generator that may stop generating values after some point, if e.g. it's
- * output is never productive. This is used to stop rules like <blockquote>
- * <code>RRULE:FREQ=YEARLY;BYMONTH=2;BYMONTHDAY=30</code> </blockquote> from
- * hanging an iterator.
- *
- * <p>
- * If a rule does prove productive though, it can be alerted to the fact by the
- * {@link #workDone} method, so that any throttle can be reset.
+ * output is never productive.  This is used to stop rules like
+ *   <blockquote>
+ *     <code>RRULE:FREQ=YEARLY;BYMONTH=2;BYMONTHDAY=30</code>
+ *   </blockquote>
+ * from hanging an iterator.
+ * <p>If a rule does prove productive though, it can be alerted to the fact by
+ * the {@link #workDone} method, so that any throttle can be reset.
  * </p>
  *
  * @author mikesamuel+svn@gmail.com (Mike Samuel)
@@ -30,8 +30,8 @@ package com.google.ical.iter;
 abstract class ThrottledGenerator extends Generator {
 
   /**
-   * called to reset any throttle after work is done. This must be called in the
-   * outermost loop of any iterator.
+   * called to reset any throttle after work is done.  This must be called in
+   * the outermost loop of any iterator.
    */
   abstract void workDone();
 

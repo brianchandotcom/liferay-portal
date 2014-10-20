@@ -32,16 +32,14 @@ public final class IcalParseUtil {
       "(\\d{4,})(\\d\\d)(\\d\\d)" +
       "(?:T([0-1]\\d|2[0-3])([0-5]\\d)([0-5]\\d)(Z)?)?");
 
-  /**
-   * parses a date of the form yyyymmdd or yyyymmdd'T'hhMMss
-   */
+  /** parses a date of the form yyyymmdd or yyyymmdd'T'hhMMss */
   public static DateValue parseDateValue(String s) throws ParseException {
     return parseDateValue(s, null);
   }
 
   /**
-   * parses a date of the form yyyymmdd or yyyymmdd'T'hhMMss converting from the
-   * given timezone to UTC.
+   * parses a date of the form yyyymmdd or yyyymmdd'T'hhMMss converting from
+   * the given timezone to UTC.
    */
   public static DateValue parseDateValue(String s, TimeZone tzid)
       throws ParseException {
@@ -68,17 +66,17 @@ public final class IcalParseUtil {
   }
 
   /**
-   * parse a period value of the form &lt;start&gt;/&lt;end&gt;. This does not
-   * yet recognize the &lt;start&gt;/&lt;duration&gt; form.
+   * parse a period value of the form &lt;start&gt;/&lt;end&gt;.
+   * This does not yet recognize the &lt;start&gt;/&lt;duration&gt; form.
    */
   public static PeriodValue  parsePeriodValue(String s) throws ParseException {
     return parsePeriodValue(s, null);
   }
 
   /**
-   * parse a period value of the form &lt;start&gt;/&lt;end&gt;, converting from
-   * the given timezone to UTC. This does not yet recognize the
-   * &lt;start&gt;/&lt;duration&gt; form.
+   * parse a period value of the form &lt;start&gt;/&lt;end&gt;, converting
+   * from the given timezone to UTC.
+   * This does not yet recognize the &lt;start&gt;/&lt;duration&gt; form.
    */
   public static PeriodValue  parsePeriodValue(String s, TimeZone tzid)
       throws ParseException {

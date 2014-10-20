@@ -15,12 +15,9 @@
 package com.google.ical.values;
 
 /**
- * possible recurrence frequencies. Names correspond to RFC2445 literals.
+ * possible recurrence frequencies.  Names correspond to RFC2445 literals.
  *
- * <p>
- * According to section 4.3.10 of RFC 2445:
- * </p>
- *
+ * <p>According to section 4.3.10 of RFC 2445:</p>
  * <blockquote>
  * The FREQ rule part identifies the type of recurrence rule. This rule
  * part MUST be specified in the recurrence rule. Valid values include

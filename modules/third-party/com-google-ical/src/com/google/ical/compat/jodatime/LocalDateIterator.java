@@ -17,15 +17,12 @@ package com.google.ical.compat.jodatime;
 import org.joda.time.LocalDate;
 import java.util.Iterator;
 
-/**
- * @author Brian Wing Shun Chan
- */
 public interface LocalDateIterator extends Iterator<LocalDate> {
 
   /**
    * skips all dates in the series before the given date.
    *
-   * @param newStart non <code>null</code>.
+   * @param newStart non null.
    */
   void advanceTo(LocalDate newStart);
 

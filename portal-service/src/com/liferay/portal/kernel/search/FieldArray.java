@@ -21,7 +21,6 @@ import java.util.Map;
 
 /**
  * @author Miguel Angelo Caldas Gallindo
- *
  */
 public class FieldArray extends Field {
 

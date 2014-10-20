@@ -56,6 +56,7 @@ public interface LayoutType extends Serializable {
 	/**
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
+	@Deprecated
 	public void setLayout(Layout layout);
 
 	public void setTypeSettingsProperty(String key, String value);

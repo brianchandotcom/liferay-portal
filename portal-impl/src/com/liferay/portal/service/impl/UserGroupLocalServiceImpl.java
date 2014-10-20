@@ -78,8 +78,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	/**
 	 * Adds the user groups to the group.
 	 *
-	 * @param  groupId the primary key of the group
-	 * @param  userGroupIds the primary keys of the user groups
+	 * @param groupId the primary key of the group
+	 * @param userGroupIds the primary keys of the user groups
 	 */
 	@Override
 	public void addGroupUserGroups(long groupId, long[] userGroupIds) {
@@ -91,8 +91,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	/**
 	 * Adds the user groups to the team.
 	 *
-	 * @param  teamId the primary key of the team
-	 * @param  userGroupIds the primary keys of the user groups
+	 * @param teamId the primary key of the team
+	 * @param userGroupIds the primary keys of the user groups
 	 */
 	@Override
 	public void addTeamUserGroups(long teamId, long[] userGroupIds) {
@@ -227,7 +227,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * This method is called from {@link #deleteUserGroup(UserGroup)}.
 	 * </p>
 	 *
-	 * @param  userId the primary key of the user
+	 * @param userId the primary key of the user
 	 */
 	@Override
 	public void clearUserUserGroups(long userId) {
@@ -869,8 +869,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	/**
 	 * Removes the user groups from the group.
 	 *
-	 * @param  groupId the primary key of the group
-	 * @param  userGroupIds the primary keys of the user groups
+	 * @param groupId the primary key of the group
+	 * @param userGroupIds the primary keys of the user groups
 	 */
 	@Override
 	public void unsetGroupUserGroups(long groupId, long[] userGroupIds) {
@@ -891,8 +891,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	/**
 	 * Removes the user groups from the team.
 	 *
-	 * @param  teamId the primary key of the team
-	 * @param  userGroupIds the primary keys of the user groups
+	 * @param teamId the primary key of the team
+	 * @param userGroupIds the primary keys of the user groups
 	 */
 	@Override
 	public void unsetTeamUserGroups(long teamId, long[] userGroupIds) {

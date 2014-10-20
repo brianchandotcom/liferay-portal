@@ -77,7 +77,7 @@ public class AssetTagPropertyLocalServiceImpl
 	/**
 	 * Deletes the asset tag property with the specified tag ID.
 	 *
-	 * @param  tagId the primary key of the tag
+	 * @param tagId the primary key of the tag
 	 */
 	@Override
 	public void deleteTagProperties(long tagId) {
@@ -92,7 +92,7 @@ public class AssetTagPropertyLocalServiceImpl
 	/**
 	 * Deletes the asset tag property instance.
 	 *
-	 * @param  tagProperty the asset tag property instance
+	 * @param tagProperty the asset tag property instance
 	 */
 	@Override
 	public void deleteTagProperty(AssetTagProperty tagProperty) {

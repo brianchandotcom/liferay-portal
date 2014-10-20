@@ -72,8 +72,8 @@ public class ResourceBlockPermissionLocalServiceImpl
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getAvailableResourceBlockPermissionActionIds(
-	 *             String, long, List)}
+	 *             #getAvailableResourceBlockPermissionActionIds(String, long,
+	 *             List)}
 	 */
 	@Deprecated
 	@Override

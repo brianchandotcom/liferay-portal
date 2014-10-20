@@ -23,8 +23,8 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
-* @author Peter Fellwock
-*/
+ * @author Peter Fellwock
+ */
 @Component(
 	immediate = true,
 	property = {

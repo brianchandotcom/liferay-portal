@@ -691,8 +691,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 * com.liferay.portlet.portalsettings.action.EditLDAPServerAction} remotely
 	 * through {@link com.liferay.portal.service.CompanyService}.
 	 *
-	 * @param  companyId the primary key of the company
-	 * @param  keys the company's preferences keys to be remove
+	 * @param companyId the primary key of the company
+	 * @param keys the company's preferences keys to be remove
 	 */
 	@Override
 	public void removePreferences(long companyId, String[] keys) {
@@ -1147,20 +1147,20 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	/**
 	 * Updates the company's security properties.
 	 *
-	 * @param  companyId the primary key of the company
-	 * @param  authType the company's method of authenticating users
-	 * @param  autoLogin whether to allow users to select the "remember me"
-	 *         feature
-	 * @param  sendPassword whether to allow users to ask the company to send
-	 *         their password
-	 * @param  strangers whether to allow strangers to create accounts register
-	 *         themselves in the company
-	 * @param  strangersWithMx whether to allow strangers to create accounts
-	 *         with email addresses that match the company mail suffix
-	 * @param  strangersVerify whether to require strangers who create accounts
-	 *         to be verified via email
-	 * @param  siteLogo whether to allow site administrators to use their own
-	 *         logo instead of the enterprise logo
+	 * @param companyId the primary key of the company
+	 * @param authType the company's method of authenticating users
+	 * @param autoLogin whether to allow users to select the "remember me"
+	 *        feature
+	 * @param sendPassword whether to allow users to ask the company to send
+	 *        their password
+	 * @param strangers whether to allow strangers to create accounts register
+	 *        themselves in the company
+	 * @param strangersWithMx whether to allow strangers to create accounts with
+	 *        email addresses that match the company mail suffix
+	 * @param strangersVerify whether to require strangers who create accounts
+	 *        to be verified via email
+	 * @param siteLogo whether to allow site administrators to use their own
+	 *        logo instead of the enterprise logo
 	 */
 	@Override
 	public void updateSecurity(

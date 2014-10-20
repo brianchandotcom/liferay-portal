@@ -181,7 +181,7 @@ public class SocialRelationLocalServiceImpl
 	/**
 	 * Removes all relations involving the user from the database.
 	 *
-	 * @param  userId the primary key of the user
+	 * @param userId the primary key of the user
 	 */
 	@Override
 	public void deleteRelations(long userId) {

@@ -203,7 +203,7 @@ public class DLStoreUtil {
 	 * Ensures company's root directory exists. Only implemented by {@link
 	 * JCRStore#checkRoot(long)}.
 	 *
-	 * @param  companyId the primary key of the company
+	 * @param companyId the primary key of the company
 	 */
 	public static void checkRoot(long companyId) {
 		getStore().checkRoot(companyId);
@@ -550,8 +550,8 @@ public class DLStoreUtil {
 	 * Moves an existing directory. Only implemented by {@link
 	 * JCRStore#move(String, String)}.
 	 *
-	 * @param  srcDir the original directory's name
-	 * @param  destDir the new directory's name
+	 * @param srcDir the original directory's name
+	 * @param destDir the new directory's name
 	 */
 	public static void move(String srcDir, String destDir) {
 		getStore().move(srcDir, destDir);

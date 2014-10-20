@@ -513,13 +513,13 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 * replacing the primary key of their resource permissions with the new
 	 * primary key.
 	 *
-	 * @param  companyId the primary key of the portal instance
-	 * @param  name the resource's name, which should be a portlet ID if the
-	 *         resource is a portlet or the resource's class name otherwise
-	 * @param  scope the scope of the resource. For more information see {@link
-	 *         com.liferay.portal.model.ResourceConstants}.
-	 * @param  primKey the primary key string of the resource instance
-	 * @param  newPrimKey the new primary key string of the resource
+	 * @param companyId the primary key of the portal instance
+	 * @param name the resource's name, which should be a portlet ID if the
+	 *        resource is a portlet or the resource's class name otherwise
+	 * @param scope the scope of the resource. For more information see {@link
+	 *        com.liferay.portal.model.ResourceConstants}.
+	 * @param primKey the primary key string of the resource instance
+	 * @param newPrimKey the new primary key string of the resource
 	 */
 	@Override
 	public void updateResources(

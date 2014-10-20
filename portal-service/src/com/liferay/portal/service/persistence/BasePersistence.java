@@ -111,8 +111,6 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 * @param  primaryKey the primary key of the model instance
 	 * @return the model instance, or <code>null</code> if an instance of this
 	 *         model with the primary key could not be found
-	 * @throws SystemException if the primary key is <code>null</code>, or if a
-	 *         system exception occurred
 	 */
 	public T fetchByPrimaryKey(Serializable primaryKey);
 
@@ -127,8 +125,6 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 * @return the model instance
 	 * @throws NoSuchModelException if an instance of this model with the
 	 *         primary key could not be found
-	 * @throws SystemException if the primary key is <code>null</code>, or if a
-	 *         system exception occurred
 	 */
 	public T findByPrimaryKey(Serializable primaryKey)
 		throws NoSuchModelException;

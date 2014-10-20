@@ -24,7 +24,7 @@ import java.util.Set;
 /**
  * @author Peter Fellwock
  * @author Raymond Augé
- **/
+ */
 public class PortletPropertyValidator {
 
 	public boolean validate(String key) {

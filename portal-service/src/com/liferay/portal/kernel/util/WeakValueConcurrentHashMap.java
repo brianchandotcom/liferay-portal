@@ -20,10 +20,11 @@ import com.liferay.portal.kernel.memory.FinalizeManager;
 import java.util.Map;
 
 /**
- * @author Shuyang Zhou
+ * @author     Shuyang Zhou
  * @deprecated As of 7.0.0, replaced by {@link
  *             com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap}
  */
+@Deprecated
 public class WeakValueConcurrentHashMap<K, V>
 	extends ConcurrentReferenceValueHashMap<K, V> {
 

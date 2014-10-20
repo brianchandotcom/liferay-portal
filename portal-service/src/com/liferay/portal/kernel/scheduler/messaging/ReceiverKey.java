@@ -24,9 +24,9 @@ import java.io.Serializable;
 public class ReceiverKey implements Serializable {
 
 	/**
-	 * The empty constructor is required by
-	 * {@link com.liferay.portal.json.jabsorb.serializer.LiferaySerializer}. Do
-	 * not use this for any other purpose.
+	 * The empty constructor is required by {@link
+	 * com.liferay.portal.json.jabsorb.serializer.LiferaySerializer}. Do not use
+	 * this for any other purpose.
 	 */
 	public ReceiverKey() {
 		this(null, null);

@@ -545,8 +545,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	/**
 	 * Adds the groups to the role.
 	 *
-	 * @param  roleId the primary key of the role
-	 * @param  groupIds the primary keys of the groups
+	 * @param roleId the primary key of the role
+	 * @param groupIds the primary keys of the groups
 	 */
 	@Override
 	public void addRoleGroups(long roleId, long[] groupIds) {
@@ -558,8 +558,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	/**
 	 * Adds the user to the groups.
 	 *
-	 * @param  userId the primary key of the user
-	 * @param  groupIds the primary keys of the groups
+	 * @param userId the primary key of the user
+	 * @param groupIds the primary keys of the groups
 	 */
 	@Override
 	public void addUserGroups(long userId, long[] groupIds) {
@@ -3158,8 +3158,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * Sets the groups associated with the role, removing and adding
 	 * associations as necessary.
 	 *
-	 * @param  roleId the primary key of the role
-	 * @param  groupIds the primary keys of the groups
+	 * @param roleId the primary key of the role
+	 * @param groupIds the primary keys of the groups
 	 */
 	@Override
 	public void setRoleGroups(long roleId, long[] groupIds) {
@@ -3171,8 +3171,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	/**
 	 * Removes the groups from the role.
 	 *
-	 * @param  roleId the primary key of the role
-	 * @param  groupIds the primary keys of the groups
+	 * @param roleId the primary key of the role
+	 * @param groupIds the primary keys of the groups
 	 */
 	@Override
 	public void unsetRoleGroups(long roleId, long[] groupIds) {
@@ -3184,8 +3184,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	/**
 	 * Removes the user from the groups.
 	 *
-	 * @param  userId the primary key of the user
-	 * @param  groupIds the primary keys of the groups
+	 * @param userId the primary key of the user
+	 * @param groupIds the primary keys of the groups
 	 */
 	@Override
 	public void unsetUserGroups(long userId, long[] groupIds) {

@@ -104,7 +104,7 @@ public class SocialRequestLocalServiceImpl
 	/**
 	 * Removes all the social requests for the receiving user.
 	 *
-	 * @param  receiverUserId the primary key of the receiving user
+	 * @param receiverUserId the primary key of the receiving user
 	 */
 	@Override
 	public void deleteReceiverUserRequests(long receiverUserId) {
@@ -134,7 +134,7 @@ public class SocialRequestLocalServiceImpl
 	/**
 	 * Removes the social request from the database.
 	 *
-	 * @param  request the social request to be removed
+	 * @param request the social request to be removed
 	 */
 	@Override
 	public void deleteRequest(SocialRequest request) {
@@ -154,7 +154,7 @@ public class SocialRequestLocalServiceImpl
 	/**
 	 * Removes all the social requests for the requesting user.
 	 *
-	 * @param  userId the primary key of the requesting user
+	 * @param userId the primary key of the requesting user
 	 */
 	@Override
 	public void deleteUserRequests(long userId) {

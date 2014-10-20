@@ -28,6 +28,7 @@ public class UserEmailAddressException extends PortalException {
 	/**
 	 * @deprecated As of 7.0.0, replaced by the inner classes
 	 */
+	@Deprecated
 	public UserEmailAddressException() {
 		super();
 	}
@@ -35,6 +36,7 @@ public class UserEmailAddressException extends PortalException {
 	/**
 	 * @deprecated As of 7.0.0, replaced by the inner classes
 	 */
+	@Deprecated
 	public UserEmailAddressException(String msg) {
 		super(msg);
 	}
@@ -42,6 +44,7 @@ public class UserEmailAddressException extends PortalException {
 	/**
 	 * @deprecated As of 7.0.0, replaced by the inner classes
 	 */
+	@Deprecated
 	public UserEmailAddressException(String msg, Throwable cause) {
 		super(msg, cause);
 	}

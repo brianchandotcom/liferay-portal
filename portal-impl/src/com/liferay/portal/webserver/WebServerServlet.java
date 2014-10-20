@@ -857,9 +857,7 @@ public class WebServerServlet extends HttpServlet {
 		String tempFileId = DLUtil.getTempFileId(
 			fileEntry.getFileEntryId(), version);
 
-		if (TrashUtil.isInTrash(
-				DLFileEntry.class.getName(), fileEntry.getFileEntryId())) {
-
+		if (fileEntry.isInTrash()) {
 			int status = ParamUtil.getInteger(
 				request, "status", WorkflowConstants.STATUS_APPROVED);
 

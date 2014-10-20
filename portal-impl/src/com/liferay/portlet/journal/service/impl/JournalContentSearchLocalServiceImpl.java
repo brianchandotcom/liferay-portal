@@ -18,8 +18,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.search.DisplayInformationProvider;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortlet;
@@ -27,6 +26,8 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.journal.model.JournalContentSearch;
 import com.liferay.portlet.journal.service.base.JournalContentSearchLocalServiceBaseImpl;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,23 +79,27 @@ public class JournalContentSearchLocalServiceImpl
 				String rootPortletId = PortletConstants.getRootPortletId(
 					portletId);
 
-				if (rootPortletId.equals(PortletKeys.JOURNAL_CONTENT)) {
-					PortletPreferences preferences =
-						portletPreferencesLocalService.getPreferences(
-							layout.getCompanyId(),
-							PortletKeys.PREFS_OWNER_ID_DEFAULT,
-							PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-							layout.getPlid(), portletId);
+				DisplayInformationProvider displayInformationProvider =
+					_serviceTrackerMap.getService(rootPortletId);
 
-					String articleId = preferences.getValue(
-						"articleId", StringPool.BLANK);
-
-					if (Validator.isNotNull(articleId)) {
-						updateContentSearch(
-							layout.getGroupId(), layout.isPrivateLayout(),
-							layout.getLayoutId(), portletId, articleId);
-					}
+				if (displayInformationProvider == null) {
+					continue;
 				}
+
+				PortletPreferences preferences =
+					portletPreferencesLocalService.getPreferences(
+						layout.getCompanyId(),
+						PortletKeys.PREFS_OWNER_ID_DEFAULT,
+						PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
+						portletId);
+
+				String className = displayInformationProvider.getClassName();
+				String classPK = displayInformationProvider.getClassPK(
+					preferences);
+
+				updateContentSearch(
+					layout.getGroupId(), layout.isPrivateLayout(),
+					layout.getLayoutId(), portletId, classPK);
 			}
 		}
 	}
@@ -282,5 +287,13 @@ public class JournalContentSearchLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentSearchLocalServiceImpl.class);
+
+	private static final ServiceTrackerMap<String, DisplayInformationProvider>
+		_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
+			DisplayInformationProvider.class, "javax.portlet.name");
+
+	static {
+		_serviceTrackerMap.open();
+	}
 
 }

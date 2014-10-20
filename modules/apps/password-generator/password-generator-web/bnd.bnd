@@ -7,6 +7,5 @@ Import-Package:\
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources,\
-	@lib/javax.servlet.jsp.jstl.jar!/META-INF/*.tld,\
-	@../../../../util-java/util-java.jar!/com/liferay/util/PwdGenerator.class,\
-	@../../../../util-taglib/util-taglib.jar
+	@../../../../util-taglib/util-taglib.jar,\
+	@lib/javax.servlet.jsp.jstl.jar!/META-INF/*.tld

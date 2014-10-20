@@ -421,13 +421,15 @@ AUI.add(
 
 						var charCode = event.charCode;
 
-						if (charCode == '44') {
-							event.preventDefault();
+						if (!A.UA.gecko || event._event.charCode) {
+							if (charCode == '44') {
+								event.preventDefault();
 
-							instance._addEntries();
-						}
-						else if (MAP_INVALID_CHARACTERS[String.fromCharCode(charCode)]) {
-							event.halt();
+								instance._addEntries();
+							}
+							else if (MAP_INVALID_CHARACTERS[String.fromCharCode(charCode)]) {
+								event.halt();
+							}
 						}
 					},
 

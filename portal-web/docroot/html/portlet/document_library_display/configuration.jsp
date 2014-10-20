@@ -143,37 +143,23 @@ DLDisplayConfigurationDisplayContext dlDisplayConfigurationDisplayContext = new 
 		}
 	);
 
-	$('#<portlet:namespace />showActions').on(
+	var showActionsInput = $('#<portlet:namespace />showActions');
+
+	showActionsInput.on(
 		'change',
 		function(event) {
-			var currentFileEntryColumns = $('#<portlet:namespace />currentFileEntryColumns');
-			var currentFolderColumns = $('#<portlet:namespace />currentFolderColumns');
-			var showActionsInput = $('#<portlet:namespace />showActions');
+			var currentColumns = $('#<portlet:namespace />currentFileEntryColumns, #<portlet:namespace />currentFolderColumns');
 
 			if (showActionsInput.prop('checked')) {
-				var actionHTML = '<option value="action"><%= UnicodeLanguageUtil.get(request, "action") %></option>';
-
-				currentFileEntryColumns.append(actionHTML);
-				currentFolderColumns.append(actionHTML);
+				currentColumns.append('<option value="action"><%= UnicodeLanguageUtil.get(request, "action") %></option>');
 			}
 			else {
-				var availableFileEntryColumns = $('#<portlet:namespace />availableFileEntryColumns');
-				var availableFolderColumns = $('#<portlet:namespace />availableFolderColumns');
+				var allColumns = currentColumns.add('#<portlet:namespace />availableFileEntryColumns, #<portlet:namespace />availableFolderColumns');
 
-				_.forEach(
-					[currentFolderColumns, currentFileEntryColumns, availableFileEntryColumns, availableFolderColumns],
-					function(item, index) {
-						var actionsNode = item.find('option[value="action"]');
-
-						if (actionsNode.length) {
-							actionsNode.remove();
-						}
-					}
-				);
+				allColumns.find('option[value="action"]').remove();
 			}
 		}
 	);
-
 </aui:script>
 
 <aui:script>

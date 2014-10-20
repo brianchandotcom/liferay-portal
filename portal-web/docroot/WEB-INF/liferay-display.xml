@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE display PUBLIC "-//Liferay//DTD Display 6.1.0//EN" "http://www.liferay.com/dtd/liferay-display_6_1_0.dtd">
+<!DOCTYPE display PUBLIC "-//Liferay//DTD Display 7.0.0//EN" "http://www.liferay.com/dtd/liferay-display_7_0_0.dtd">
 
 <display>
 	<category name="category.cms">
@@ -35,7 +35,6 @@
 		<portlet id="186" />
 		<portlet id="187" />
 		<portlet id="188" />
-		<portlet id="28" />
 		<portlet id="29" />
 		<portlet id="107" />
 		<portlet id="108" />
@@ -87,7 +86,6 @@
 		<portlet id="195" />
 		<portlet id="196" />
 		<portlet id="197" />
-		<portlet id="198" />
 		<portlet id="199" />
 		<portlet id="200" />
 	</category>

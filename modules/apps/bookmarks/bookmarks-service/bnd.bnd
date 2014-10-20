@@ -1,0 +1,33 @@
+Bundle-Name: Liferay Bookmarks Service
+Bundle-SymbolicName: com.liferay.bookmarks.service
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.bookmarks.asset,\
+	com.liferay.bookmarks.customattributes,\
+	com.liferay.bookmarks.indexer,\
+	com.liferay.bookmarks.lar,\
+	com.liferay.bookmarks.notifications,\
+	com.liferay.bookmarks.opensearch,\
+	com.liferay.bookmarks.routes,\
+	com.liferay.bookmarks.search,\
+	com.liferay.bookmarks.service.configuration.configurator,\
+	com.liferay.bookmarks.service.permission,\
+	com.liferay.bookmarks.settings,\
+	com.liferay.bookmarks.social,\
+	com.liferay.bookmarks.trash,\
+	com.liferay.bookmarks.util
+Import-Package:\
+	!aQute.bnd.ant,\
+	!aQute.bnd.differ,\
+	!org.incava.util.diff,\
+	*
+Include-Resource:\
+	classes,\
+	custom-sql/default.xml=classes/META-INF/custom-sql/default.xml,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class
+Liferay-Service: true
+Require-Capability:\
+	liferay.extender;\
+	filter:="(&(liferay.extender=spring.extender)(version=1.0))"
+Spring-Context: META-INF/*-spring.xml

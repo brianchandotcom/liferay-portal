@@ -1,0 +1,198 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
+
+<service-builder package-path="com.liferay.bookmarks">
+	<namespace>Bookmarks</namespace>
+	<entity name="BookmarksEntry" uuid="true" local-service="true" remote-service="true" trash-enabled="true">
+
+		<!-- PK fields -->
+
+		<column name="entryId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Permission fields -->
+
+		<column name="resourceBlockId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="folderId" type="long" />
+		<column name="treePath" type="String" />
+		<column name="name" type="String" />
+		<column name="url" type="String" />
+		<column name="description" type="String" />
+		<column name="visits" type="int" />
+		<column name="priority" type="int" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="folderId" />
+			<order-column name="name" case-sensitive="false" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="G_F" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="folderId" arrayable-operator="OR" />
+		</finder>
+		<finder name="G_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_NotS" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="status" comparator="!=" />
+		</finder>
+		<finder name="C_NotS" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="status" comparator="!=" />
+		</finder>
+		<finder name="G_U_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_U_NotS" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
+			<finder-column name="status" comparator="!=" />
+		</finder>
+		<finder name="G_F_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="folderId" arrayable-operator="OR" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_F_NotS" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="folderId" arrayable-operator="OR" />
+			<finder-column name="status" comparator="!=" />
+		</finder>
+		<finder name="G_U_F_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
+			<finder-column name="folderId" arrayable-operator="OR" />
+			<finder-column name="status" />
+		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="Group" />
+		<reference package-path="com.liferay.portal" entity="PortletPreferences" />
+		<reference package-path="com.liferay.portal" entity="Subscription" />
+		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
+		<reference package-path="com.liferay.portlet.asset" entity="AssetLink" />
+		<reference package-path="com.liferay.portlet.asset" entity="AssetTag" />
+		<reference package-path="com.liferay.portlet.expando" entity="ExpandoRow" />
+		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
+		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
+		<reference package-path="com.liferay.portlet.trash" entity="TrashVersion" />
+	</entity>
+	<entity name="BookmarksFolder" uuid="true" local-service="true" remote-service="true" trash-enabled="true">
+
+		<!-- PK fields -->
+
+		<column name="folderId" type="long" primary="true" container-model="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Permission fields -->
+
+		<column name="resourceBlockId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="parentFolderId" type="long" parent-container-model="true" />
+		<column name="treePath" type="String" />
+		<column name="name" type="String" />
+		<column name="description" type="String" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="parentFolderId" />
+			<order-column name="name" case-sensitive="false" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="G_P" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="parentFolderId" />
+		</finder>
+		<finder name="C_NotS" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="status" comparator="!=" />
+		</finder>
+		<finder name="G_P_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="parentFolderId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_P_NotS" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="parentFolderId" />
+			<finder-column name="status" comparator="!=" />
+		</finder>
+		<finder name="F_C_P_NotS" return-type="Collection" db-index="false">
+			<finder-column name="folderId" comparator="&gt;" />
+			<finder-column name="companyId" />
+			<finder-column name="parentFolderId" />
+			<finder-column name="status" comparator="!=" />
+		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="Group" />
+		<reference package-path="com.liferay.portal" entity="Subscription" />
+		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
+		<reference package-path="com.liferay.portlet.asset" entity="AssetLink" />
+		<reference package-path="com.liferay.portlet.expando" entity="ExpandoRow" />
+		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
+		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
+		<reference package-path="com.liferay.portlet.trash" entity="TrashVersion" />
+	</entity>
+	<exceptions>
+		<exception>EntryURL</exception>
+		<exception>FolderName</exception>
+	</exceptions>
+</service-builder>

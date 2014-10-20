@@ -26,9 +26,6 @@ public class UpgradeAdminPortlets extends BaseUpgradeAdminPortlets {
 	protected void doUpgrade() throws Exception {
 		updateAccessInControlPanelPermission(
 			PortletKeys.DOCUMENT_LIBRARY, PortletKeys.DOCUMENT_LIBRARY_ADMIN);
-
-		updateAccessInControlPanelPermission(
-			PortletKeys.BOOKMARKS, PortletKeys.BOOKMARKS_ADMIN);
 	}
 
 }

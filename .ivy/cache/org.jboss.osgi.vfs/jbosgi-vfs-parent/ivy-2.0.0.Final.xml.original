@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ====================================================================== -->
+<!--                                                                        -->
+<!--  JBoss, the OpenSource J2EE webOS                                      -->
+<!--                                                                        -->
+<!--  Distributable under LGPL license.                                     -->
+<!--  See terms of license at http://www.gnu.org.                           -->
+<!--                                                                        -->
+<!-- ====================================================================== -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Parent -->
+    <parent>
+        <groupId>org.jboss.osgi</groupId>
+        <artifactId>jbosgi-parent</artifactId>
+        <version>1.0.24</version>
+    </parent>
+
+    <name>JBossOSGi VFS</name>
+    <description>The JBossOSGi VFS Abstration</description>
+
+    <groupId>org.jboss.osgi.vfs</groupId>
+    <artifactId>jbosgi-vfs-parent</artifactId>
+    <packaging>pom</packaging>
+
+    <version>2.0.0.Final</version>
+
+    <!-- Source Control -->
+    <scm>
+        <connection>scm:git:git://github.com/jbosgi/jbosgi-vfs.git</connection>
+        <developerConnection>scm:git:git@github.com:jbosgi/jbosgi-vfs.git</developerConnection>
+        <url>http://github.com/jbosgi/jbosgi-vfs</url>
+      <tag>2.0.0.Final</tag>
+  </scm>
+
+    <!-- Properties -->
+    <properties>
+        <version.jboss.logging>3.1.3.GA</version.jboss.logging>
+        <version.jboss.logmanager>1.4.1.Final</version.jboss.logmanager>
+        <version.jboss.logging.processor>1.1.0.Final</version.jboss.logging.processor>
+        <version.jboss.shrinkwrap>1.0.0</version.jboss.shrinkwrap>
+        <version.jboss.vfs>3.1.0.Final</version.jboss.vfs>
+        <version.junit>4.10</version.junit>
+        <version.osgi>5.0.0</version.osgi>
+    </properties>
+
+    <!-- Dependency Management -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jboss.logging</groupId>
+                <artifactId>jboss-logging</artifactId>
+                <version>${version.jboss.logging}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.logging</groupId>
+                <artifactId>jboss-logging-processor</artifactId>
+                <version>${version.jboss.logging.processor}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.logmanager</groupId>
+                <artifactId>jboss-logmanager</artifactId>
+                <version>${version.jboss.logmanager}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.shrinkwrap</groupId>
+                <artifactId>shrinkwrap-impl-base</artifactId>
+                <version>${version.jboss.shrinkwrap}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss</groupId>
+                <artifactId>jboss-vfs</artifactId>
+                <version>${version.jboss.vfs}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.osgi</groupId>
+                <artifactId>org.osgi.core</artifactId>
+                <version>${version.osgi}</version>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${version.junit}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- Modules -->
+    <modules>
+        <module>api</module>
+        <module>vfs30</module>
+    </modules>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<configuration>
+					<licenseName>lgpl_v2_1</licenseName>
+					<inceptionYear>2010</inceptionYear>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

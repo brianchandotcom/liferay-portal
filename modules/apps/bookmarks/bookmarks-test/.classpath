@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<classpath>
+	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="src" />
+	<classpathentry kind="src" path="/portal-master" />
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER" />
+	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="test/integration" />
+	<classpathentry kind="lib" path="/portal-master/lib/development/junit.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/development/mockito.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/development/powermock-mockito.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/development/spring-test.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/development/activation.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/development/annotations.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/development/jsp-api.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/development/mail.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/development/servlet-api.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/global/portlet.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/portal/bnd.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/portal/commons-io.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/portal/commons-lang.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/portal/commons-logging.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/portal/log4j.jar" />
+	<classpathentry kind="lib" path="/portal-master/portal-service/portal-service.jar" />
+	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
+	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
+	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.bookmarks.api.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.bookmarks.service.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.portal.spring.extender.jar" />
+	<classpathentry kind="lib" path="lib/org.osgi.core.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.arquillian.core/arquillian-core-api/jars/arquillian-core-api-1.1.2.Final.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.arquillian.core/arquillian-core-spi/jars/arquillian-core-spi-1.1.2.Final.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-api-base/jars/shrinkwrap-descriptors-api-base-2.0.0-alpha-3.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.arquillian.config/arquillian-config-api/jars/arquillian-config-api-1.1.2.Final.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-spi/jars/shrinkwrap-descriptors-spi-2.0.0-alpha-3.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.arquillian.config/arquillian-config-impl-base/jars/arquillian-config-impl-base-1.1.2.Final.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.shrinkwrap/shrinkwrap-api/jars/shrinkwrap-api-1.1.2.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.arquillian.container/arquillian-container-spi/jars/arquillian-container-spi-1.1.2.Final.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.arquillian.test/arquillian-test-api/jars/arquillian-test-api-1.1.2.Final.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.arquillian.test/arquillian-test-spi/jars/arquillian-test-spi-1.1.2.Final.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.arquillian.container/arquillian-container-test-api/jars/arquillian-container-test-api-1.1.2.Final.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.arquillian.container/arquillian-container-test-spi/jars/arquillian-container-test-spi-1.1.2.Final.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-api/jars/shrinkwrap-resolver-api-2.0.0.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-api-maven/jars/shrinkwrap-resolver-api-maven-2.0.0.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.osgi.metadata/jbosgi-metadata/jars/jbosgi-metadata-4.0.0.CR1.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.logging/jboss-logging/jars/jboss-logging-3.1.3.GA.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.osgi.vfs/jbosgi-vfs/jars/jbosgi-vfs-2.0.0.Final.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss/jboss-vfs/jars/jboss-vfs-3.1.0.Final.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.osgi.vfs/jbosgi-vfs30/jars/jbosgi-vfs30-2.0.0.Final.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.osgi.spi/jbosgi-spi/jars/jbosgi-spi-4.0.0.Final.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.slf4j/slf4j-api/jars/slf4j-api-1.5.11.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.slf4j/slf4j-log4j12/jars/slf4j-log4j12-1.5.11.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.arquillian.container/arquillian-container-osgi/jars/arquillian-container-osgi-2.1.0.CR16.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.arquillian.protocol/arquillian-protocol-jmx/jars/arquillian-protocol-jmx-1.1.2.Final.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.arquillian.protocol/arquillian-protocol-osgi/jars/arquillian-protocol-osgi-2.1.0.CR16.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.arquillian.container/arquillian-container-test-impl-base/jars/arquillian-container-test-impl-base-1.1.2.Final.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.arquillian.testenricher/arquillian-testenricher-osgi/jars/arquillian-testenricher-osgi-2.1.0.CR16.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.arquillian.container/arquillian-container-karaf-remote/jars/arquillian-container-karaf-remote-2.1.0.CR16.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.osgi/org.osgi.enterprise/jars/org.osgi.enterprise-5.0.0.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/com.liferay.arquillian/arquillian-container-liferay/jars/arquillian-container-liferay-1.0.0.Alpha1-SNAPSHOT.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/biz.aQute.bnd/bndlib/jars/bndlib-2.3.0.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.shrinkwrap.osgi/shrinkwrap-osgi/jars/shrinkwrap-osgi-1.0.0-alpha-1-SNAPSHOT.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/com.liferay.arquillian/arquillian-deployment-generator-bnd/jars/arquillian-deployment-generator-bnd-1.0.0.Alpha1-SNAPSHOT.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.arquillian.junit/arquillian-junit-core/jars/arquillian-junit-core-1.1.3.Final.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.arquillian.core/arquillian-core-impl-base/jars/arquillian-core-impl-base-1.1.3.Final.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.arquillian.test/arquillian-test-impl-base/jars/arquillian-test-impl-base-1.1.3.Final.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.arquillian.container/arquillian-container-impl-base/jars/arquillian-container-impl-base-1.1.3.Final.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.shrinkwrap/shrinkwrap-spi/jars/shrinkwrap-spi-1.2.1.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.shrinkwrap/shrinkwrap-impl-base/jars/shrinkwrap-impl-base-1.2.1.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.arquillian.junit/arquillian-junit-container/jars/arquillian-junit-container-1.1.3.Final.jar" />
+	<classpathentry kind="output" path="bin" />
+</classpath>

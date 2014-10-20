@@ -24,7 +24,9 @@
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %>
 
-<%@ page import="com.liferay.polls.exception.DuplicateVoteException" %><%@
+<%@ page import="com.liferay.polls.constants.PollsPortletKeys" %><%@
+page import="com.liferay.polls.constants.PollsWebKeys" %><%@
+page import="com.liferay.polls.exception.DuplicateVoteException" %><%@
 page import="com.liferay.polls.exception.NoSuchChoiceException" %><%@
 page import="com.liferay.polls.exception.NoSuchQuestionException" %><%@
 page import="com.liferay.polls.exception.QuestionChoiceException" %><%@
@@ -39,10 +41,8 @@ page import="com.liferay.polls.service.PollsQuestionLocalServiceUtil" %><%@
 page import="com.liferay.polls.service.PollsVoteLocalServiceUtil" %><%@
 page import="com.liferay.polls.service.permission.PollsPermission" %><%@
 page import="com.liferay.polls.service.permission.PollsQuestionPermission" %><%@
-page import="com.liferay.polls.util.PollsPortletKeys" %><%@
 page import="com.liferay.polls.web.polls.portlet.action.EditQuestionAction" %><%@
 page import="com.liferay.polls.web.util.PollsUtil" %><%@
-page import="com.liferay.polls.web.util.PollsWebKeys" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

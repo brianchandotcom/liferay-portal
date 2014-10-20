@@ -3,9 +3,6 @@
 
 <struts-config>
 	<action-mappings>
-
-		<!-- Polls -->
-
 		<action path="/polls/edit_question" type="com.liferay.polls.web.polls.portlet.action.EditQuestionAction">
 			<forward name="portlet.polls.edit_question" path="/portlet/polls/edit_question.jsp" />
 			<forward name="portlet.polls.error" path="/portlet/polls/error.jsp" />
@@ -19,8 +16,6 @@
 			<forward name="portlet.polls.edit_question" path="/portlet/polls/view_question.jsp" />
 			<forward name="portlet.polls.error" path="/portlet/polls/error.jsp" />
 		</action>
-
-		<!-- Polls Display -->
 
 		<action path="/polls_display/add_question_redirect" forward="/portlet/polls_display/add_question_redirect.jsp" />
 

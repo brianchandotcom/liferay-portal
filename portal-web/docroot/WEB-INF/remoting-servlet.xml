@@ -417,22 +417,6 @@
 		<property name="service" ref="com.liferay.portlet.blogs.service.BlogsEntryService" />
 		<property name="serviceInterface" value="com.liferay.portlet.blogs.service.BlogsEntryService" />
 	</bean>
-	<bean name="/com_liferay_portlet_bookmarks_service_spring_BookmarksEntryService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<property name="service" ref="com.liferay.portlet.bookmarks.service.BookmarksEntryService" />
-		<property name="serviceInterface" value="com.liferay.portlet.bookmarks.service.BookmarksEntryService" />
-	</bean>
-	<bean name="/com_liferay_portlet_bookmarks_service_spring_BookmarksEntryService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="com.liferay.portlet.bookmarks.service.BookmarksEntryService" />
-		<property name="serviceInterface" value="com.liferay.portlet.bookmarks.service.BookmarksEntryService" />
-	</bean>
-	<bean name="/com_liferay_portlet_bookmarks_service_spring_BookmarksFolderService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<property name="service" ref="com.liferay.portlet.bookmarks.service.BookmarksFolderService" />
-		<property name="serviceInterface" value="com.liferay.portlet.bookmarks.service.BookmarksFolderService" />
-	</bean>
-	<bean name="/com_liferay_portlet_bookmarks_service_spring_BookmarksFolderService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="com.liferay.portlet.bookmarks.service.BookmarksFolderService" />
-		<property name="serviceInterface" value="com.liferay.portlet.bookmarks.service.BookmarksFolderService" />
-	</bean>
 	<bean name="/com_liferay_portlet_documentlibrary_service_spring_DLAppService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.documentlibrary.service.DLAppService" />
 		<property name="serviceInterface" value="com.liferay.portlet.documentlibrary.service.DLAppService" />

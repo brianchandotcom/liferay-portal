@@ -6,6 +6,9 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
+/**
+ * @generated
+ */
 @ProviderType
 public class ${entity.name}FinderUtil {
 

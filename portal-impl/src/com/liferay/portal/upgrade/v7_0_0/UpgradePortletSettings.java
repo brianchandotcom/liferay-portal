@@ -26,8 +26,6 @@ import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.blogs.BlogsPortletInstanceSettings;
 import com.liferay.portlet.blogs.BlogsSettings;
 import com.liferay.portlet.blogs.util.BlogsConstants;
-import com.liferay.portlet.bookmarks.BookmarksSettings;
-import com.liferay.portlet.bookmarks.util.BookmarksConstants;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.DLSettings;
 import com.liferay.portlet.documentlibrary.util.DLConstants;
@@ -144,10 +142,6 @@ public class UpgradePortletSettings extends UpgradeProcess {
 			PortletKeys.BLOGS, BlogsConstants.SERVICE_NAME,
 			PortletKeys.PREFS_OWNER_TYPE_GROUP,
 			BlogsPortletInstanceSettings.ALL_KEYS, BlogsSettings.ALL_KEYS);
-		upgradeMainPortlet(
-			PortletKeys.BOOKMARKS, BookmarksConstants.SERVICE_NAME,
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, StringPool.EMPTY_ARRAY,
-			BookmarksSettings.ALL_KEYS);
 		upgradeMainPortlet(
 			PortletKeys.DOCUMENT_LIBRARY, DLConstants.SERVICE_NAME,
 			PortletKeys.PREFS_OWNER_TYPE_GROUP,

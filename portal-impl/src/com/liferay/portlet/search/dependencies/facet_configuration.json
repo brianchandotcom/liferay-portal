@@ -20,8 +20,6 @@
 				frequencyThreshold: 1,
 				values: [
 					'com.liferay.portal.model.User',
-					'com.liferay.portlet.bookmarks.model.BookmarksEntry',
-					'com.liferay.portlet.bookmarks.model.BookmarksFolder',
 					'com.liferay.portlet.blogs.model.BlogsEntry',
 					'com.liferay.portlet.documentlibrary.model.DLFileEntry',
 					'com.liferay.portlet.documentlibrary.model.DLFolder',

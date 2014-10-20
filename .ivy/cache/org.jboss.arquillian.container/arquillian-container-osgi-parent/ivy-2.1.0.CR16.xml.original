@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- Parent -->
+	<parent>
+		<groupId>org.jboss.arquillian.osgi</groupId>
+		<artifactId>arquillian-osgi</artifactId>
+		<version>2.1.0.CR16</version>
+	</parent>
+
+	<groupId>org.jboss.arquillian.container</groupId>
+	<artifactId>arquillian-container-osgi-parent</artifactId>
+	<packaging>pom</packaging>
+
+	<name>Arquillian OSGi :: Container</name>
+
+	<!-- Properties -->
+	<properties>
+		<surefire.system.args>-ea</surefire.system.args>
+		<version.surefire.plugin>2.17</version.surefire.plugin>
+	</properties>
+
+	<modules>
+		<module>common</module>
+		<module>tests</module>
+		<module>jbosgi</module>
+		<module>felix</module>
+		<module>equinox</module>
+		<module>karaf</module>
+	</modules>
+
+	<!-- Dependencies -->
+	<dependencies>
+		<dependency>
+			<groupId>org.jboss.arquillian.osgi</groupId>
+			<artifactId>arquillian-osgi-bundle</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<!-- Build -->
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>process-test-resources</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.jboss.arquillian.osgi</groupId>
+									<artifactId>arquillian-osgi-bundle</artifactId>
+									<version>${project.version}</version>
+								</artifactItem>
+							</artifactItems>
+							<outputDirectory>${project.build.directory}/test-libs/bundles</outputDirectory>
+							<stripVersion>true</stripVersion>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

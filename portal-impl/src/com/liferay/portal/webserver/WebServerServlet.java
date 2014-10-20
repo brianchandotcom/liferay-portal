@@ -857,26 +857,22 @@ public class WebServerServlet extends HttpServlet {
 		String tempFileId = DLUtil.getTempFileId(
 			fileEntry.getFileEntryId(), version);
 
-		if (fileEntry.getModel() instanceof DLFileEntry) {
-			LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;
+		if (fileEntry.isInTrash()) {
+			int status = ParamUtil.getInteger(
+				request, "status", WorkflowConstants.STATUS_APPROVED);
 
-			if (liferayFileEntry.isInTrash()) {
-				int status = ParamUtil.getInteger(
-					request, "status", WorkflowConstants.STATUS_APPROVED);
+			if (status != WorkflowConstants.STATUS_IN_TRASH) {
+				throw new NoSuchFileEntryException();
+			}
 
-				if (status != WorkflowConstants.STATUS_IN_TRASH) {
-					throw new NoSuchFileEntryException();
-				}
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
 
-				PermissionChecker permissionChecker =
-					PermissionThreadLocal.getPermissionChecker();
+			if (!PortletPermissionUtil.hasControlPanelAccessPermission(
+					permissionChecker, fileEntry.getGroupId(),
+					PortletKeys.TRASH)) {
 
-				if (!PortletPermissionUtil.hasControlPanelAccessPermission(
-						permissionChecker, fileEntry.getGroupId(),
-						PortletKeys.TRASH)) {
-
-					throw new PrincipalException();
-				}
+				throw new PrincipalException();
 			}
 		}
 

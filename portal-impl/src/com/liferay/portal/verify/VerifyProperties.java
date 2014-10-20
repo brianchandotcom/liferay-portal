@@ -326,6 +326,7 @@ public class VerifyProperties extends VerifyProcess {
 		"invitation.email.message.subject", "javax.persistence.validation.mode",
 		"jbi.workflow.url", "json.deserializer.strict.mode",
 		"journal.article.form.translate",
+		"journal.article.types",
 		"journal.template.language.parser[css]",
 		"journal.template.language.parser[ftl]",
 		"journal.template.language.parser[vm]",

@@ -1604,7 +1604,7 @@ public class JavadocFormatter {
 				}
 
 				for (int i = 0; i < blankLines; i++) {
-					lines[lineNumber-i-2] = null;
+					lines[lineNumber - i - 2] = null;
 				}
 			}
 		}

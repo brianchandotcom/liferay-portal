@@ -128,11 +128,11 @@ public class UserPermissionImpl
 			if (userId != ResourceConstants.PRIMKEY_DNE) {
 				user = UserLocalServiceUtil.getUserById(userId);
 
-				if ((actionId.equals(ActionKeys.VIEW) ||
-					 actionId.equals(ActionKeys.DELETE) ||
+				if ((actionId.equals(ActionKeys.DELETE) ||
 					 actionId.equals(ActionKeys.IMPERSONATE) ||
 					 actionId.equals(ActionKeys.PERMISSIONS) ||
-					 actionId.equals(ActionKeys.UPDATE)) &&
+					 actionId.equals(ActionKeys.UPDATE) ||
+					 actionId.equals(ActionKeys.VIEW)) &&
 					!permissionChecker.isOmniadmin() &&
 					(PortalUtil.isOmniadmin(user) ||
 					 (!permissionChecker.isCompanyAdmin() &&

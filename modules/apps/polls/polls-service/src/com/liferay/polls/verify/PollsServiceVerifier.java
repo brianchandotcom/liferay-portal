@@ -14,20 +14,34 @@
 
 package com.liferay.polls.verify;
 
+import com.liferay.polls.service.configuration.configurator.PollsServiceConfigurator;
 import com.liferay.polls.verify.model.PollsChoiceVerifiableModel;
 import com.liferay.polls.verify.model.PollsQuestionVerifiableModel;
 import com.liferay.polls.verify.model.PollsVoteVerifiableModel;
 import com.liferay.portal.verify.VerifyAuditedModel;
+import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.VerifyResourcePermissions;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Miguel Pastor
  */
-public class Verifier {
+@Component(immediate = true, service = PollsServiceVerifier.class)
+public class PollsServiceVerifier extends VerifyProcess {
 
-	public void verify() throws Exception {
+	@Activate
+	@Override
+	protected void doVerify() throws Exception {
 		verifyAuditedModels();
 		verifyResourcedModels();
+	}
+
+	@Reference(unbind = "-")
+	protected void setPollsServiceConfigurator(
+		PollsServiceConfigurator pollsServiceConfigurator) {
 	}
 
 	protected void verifyAuditedModels() throws Exception {

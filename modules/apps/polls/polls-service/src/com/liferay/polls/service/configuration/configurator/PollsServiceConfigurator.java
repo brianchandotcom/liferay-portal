@@ -14,7 +14,7 @@
 
 package com.liferay.polls.service.configuration.configurator;
 
-import com.liferay.polls.verify.Verifier;
+import com.liferay.polls.upgrade.PollsServiceUpgrade;
 import com.liferay.portal.service.configuration.ServiceComponentConfiguration;
 import com.liferay.portal.service.configuration.configurator.ServiceConfigurator;
 import com.liferay.portal.spring.extender.loader.ModuleResourceLoader;
@@ -25,8 +25,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-
-import org.springframework.context.ApplicationContext;
 
 /**
  * @author Miguel Pastor
@@ -39,10 +37,6 @@ public class PollsServiceConfigurator {
 	@Activate
 	protected void activate() throws Exception {
 		_serviceConfigurator.initServices(getConfiguration(), getClassLoader());
-
-		Verifier verifier = new Verifier();
-
-		verifier.verify();
 	}
 
 	@Deactivate
@@ -63,14 +57,9 @@ public class PollsServiceConfigurator {
 		return new ModuleResourceLoader(bundle);
 	}
 
-	@Reference(
-		target =
-			"(org.springframework.context.service.name=" +
-				"com.liferay.polls.service)",
-		unbind = "-"
-	)
-	protected void setApplicationContext(
-		ApplicationContext applicationContext) {
+	@Reference(unbind = "-")
+	protected void setPollsServiceUpgrade(
+		PollsServiceUpgrade pollsServiceUpgrade) {
 	}
 
 	@Reference(unbind = "-")

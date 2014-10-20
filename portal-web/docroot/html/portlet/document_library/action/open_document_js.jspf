@@ -15,29 +15,22 @@
 --%>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />openDocument',
-		function(webDavURL) {
-			var A = AUI();
+	function <portlet:namespace />openDocument(webDavURL) {
+		Liferay.Util.openDocument(
+			webDavURL,
+			null,
+			function(exception) {
+				var errorMessage = _.sub(
+					'<%= UnicodeLanguageUtil.get(request, "cannot-open-the-requested-document-due-to-the-following-reason") %>',
+					exception.message
+				);
 
-			Liferay.Util.openDocument(
-				webDavURL,
-				null,
-				function(exception) {
-					var errorMessage = A.Lang.sub(
-						'<%= UnicodeLanguageUtil.get(request, "cannot-open-the-requested-document-due-to-the-following-reason") %>',
-						[exception.message]
-					);
+				var openMSOfficeError = AUI.$('#<portlet:namespace />openMSOfficeError');
 
-					var openMSOfficeError = A.one('#<portlet:namespace />openMSOfficeError');
+				openMSOfficeError.html(errorMessage);
 
-					openMSOfficeError.html(errorMessage);
-
-					openMSOfficeError.show();
-				}
-			);
-		},
-		['aui-base']
-	);
+				openMSOfficeError.removeClass('hide');
+			}
+		);
+	}
 </aui:script>

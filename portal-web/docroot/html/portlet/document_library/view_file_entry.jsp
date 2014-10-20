@@ -565,110 +565,58 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLViewFileVers
 </div>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />compare',
-		function() {
-			var A = AUI();
+	function <portlet:namespace />compare() {
+		var rowIds = AUI.$('input[name=<portlet:namespace />rowIds]:checked');
+		var sourceFileVersionId = AUI.$('input[name="<portlet:namespace />sourceFileVersionId"]');
+		var targetFileVersionId = AUI.$('input[name="<portlet:namespace />targetFileVersionId"]');
 
-			var rowIds = A.all('input[name=<portlet:namespace />rowIds]:checked');
-			var sourceFileVersionId = A.one('input[name="<portlet:namespace />sourceFileVersionId"]');
-			var targetFileVersionId = A.one('input[name="<portlet:namespace />targetFileVersionId"]');
+		var rowIdsSize = rowIds.length;
 
-			var rowIdsSize = rowIds.size();
+		if (rowIdsSize == 1) {
+			sourceFileVersionId.val(rowIds.eq(0).val());
+		}
+		else if (rowIdsSize == 2) {
+			sourceFileVersionId.val(rowIds.eq(1).val());
 
-			if (rowIdsSize == 1) {
-				if (sourceFileVersionId) {
-					sourceFileVersionId.val(rowIds.item(0).val());
+			targetFileVersionId.val(rowIds.eq(0).val());
+		}
+
+		submitForm(document.<portlet:namespace />fm1);
+	}
+
+	function <portlet:namespace />initRowsChecked() {
+		AUI.$('input[name=<portlet:namespace />rowIds]').each(
+			function(index, item) {
+				if (index >= 2) {
+					item = AUI.$(item);
+
+					item.prop('checked', false);
 				}
 			}
-			else if (rowIdsSize == 2) {
-				if (sourceFileVersionId) {
-					sourceFileVersionId.val(rowIds.item(1).val());
-				}
+		);
+	}
 
-				if (targetFileVersionId) {
-					targetFileVersionId.val(rowIds.item(0).val());
-				}
+	function <portlet:namespace />updateRowsChecked(element) {
+		var rowsChecked = AUI.$('input[name=<portlet:namespace />rowIds]:checked');
+
+		if (rowsChecked.length > 2) {
+			var index = 2;
+
+			if (rowsChecked.eq(2).is(element)) {
+				index = 1;
 			}
 
-			submitForm(document.<portlet:namespace />fm1);
-		},
-		['aui-base', 'selector-css3']
-	);
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />initRowsChecked',
-		function() {
-			var A = AUI();
-
-			var rowIds = A.all('input[name=<portlet:namespace />rowIds]');
-
-			rowIds.each(
-				function(item, index) {
-					if (index >= 2) {
-						item.set('checked', false);
-					}
-				}
-			);
-		},
-		['aui-base']
-	);
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />updateRowsChecked',
-		function(element) {
-			var A = AUI();
-
-			var rowsChecked = A.all('input[name=<portlet:namespace />rowIds]:checked');
-
-			if (rowsChecked.size() > 2) {
-				var index = 2;
-
-				if (rowsChecked.item(2).compareTo(element)) {
-					index = 1;
-				}
-
-				rowsChecked.item(index).set('checked', false);
-			}
-		},
-		['aui-base', 'selector-css3']
-	);
+			rowsChecked.eq(index).prop('checked', false);
+		}
+	}
 </aui:script>
 
 <c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) && DLUtil.isOfficeExtension(fileVersion.getExtension()) && portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIeOnWin32(request) %>">
 	<%@ include file="/html/portlet/document_library/action/open_document_js.jspf" %>
 </c:if>
 
-<aui:script use="aui-base,aui-toolbar">
-	var showURLFile = A.one('.show-url-file');
-	var showWebDavFile = A.one('.show-webdav-url-file');
-
-	if (showURLFile) {
-		showURLFile.on(
-			'click',
-			function(event) {
-				var URLFileContainer = A.one('.url-file-container');
-
-				URLFileContainer.toggleClass('hide');
-			}
-		);
-	}
-
-	if (showWebDavFile) {
-		showWebDavFile.on(
-			'click',
-			function(event) {
-				var WebDavFileContainer = A.one('.webdav-url-file-container');
-
-				WebDavFileContainer.toggleClass('hide');
-			}
-		);
-	}
-
-	<c:if test="<%= dlActionsDisplayContext.isShowActions() %>">
+<c:if test="<%= dlActionsDisplayContext.isShowActions() %>">
+	<aui:script use="aui-toolbar">
 		var buttonRow = A.one('#<portlet:namespace />fileEntryToolbar');
 
 		var fileEntryButtonGroup = [];
@@ -691,14 +639,30 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLViewFileVers
 		).render();
 
 		buttonRow.setData('fileEntryToolbar', fileEntryToolbar);
-	</c:if>
+	</aui:script>
+</c:if>
+
+<aui:script sandbox="<%= true %>">
+	$('.show-url-file').on(
+		'click',
+		function(event) {
+			$('.url-file-container').toggleClass('hide');
+		}
+	);
+
+	$('.show-webdav-url-file').on(
+		'click',
+		function(event) {
+			$('.webdav-url-file-container').toggleClass('hide');
+		}
+	);
 
 	<portlet:namespace />initRowsChecked();
 
-	A.all('input[name=<portlet:namespace />rowIds]').on(
+	$('input[name=<portlet:namespace />rowIds]').on(
 		'click',
 		function(event) {
-			<portlet:namespace />updateRowsChecked(event.currentTarget);
+			<portlet:namespace />updateRowsChecked($(event.currentTarget));
 		}
 	);
 </aui:script>

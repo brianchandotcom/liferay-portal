@@ -149,6 +149,6 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script use="aui-base">
+<aui:script>
 	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectGroupFm', '<%= HtmlUtil.escapeJS(eventName) %>');
 </aui:script>

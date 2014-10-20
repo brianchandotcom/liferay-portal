@@ -176,66 +176,45 @@ long folderId = ParamUtil.getLong(request, "folderId");
 
 </div>
 
-<aui:script use="aui-base">
-	var settingsSupported = A.one('#<portlet:namespace />settingsSupported');
-	var settingsConfiguration = A.one('#<portlet:namespace />settingsConfiguration');
-	var settingsParameters = A.one('#<portlet:namespace />settingsParameters');
+<aui:script sandbox="<%= true %>">
+	var settingsSupported = $('#<portlet:namespace />settingsSupported');
+	var settingsConfiguration = $('#<portlet:namespace />settingsConfiguration');
+	var settingsParameters = $('#<portlet:namespace />settingsParameters');
 
 	var showConfiguration = function(select) {
-		if (settingsConfiguration) {
-			settingsSupported.append(settingsConfiguration.all('.settings-configuration'));
-		}
+		settingsSupported.append(settingsConfiguration.find('.settings-configuration'));
+		settingsSupported.append(settingsParameters.find('.settings-parameters'));
 
-		if (settingsParameters) {
-			settingsSupported.append(settingsParameters.all('.settings-parameters'));
-		}
+		var className = select.val().split('.').pop();
 
-		var value = select.val();
-		var className = value.split('.').pop();
+		var selectRepositoryConfiguration = $('#<portlet:namespace />repository-' + className);
 
-		var repositoryConfiguration = A.one('#<portlet:namespace />repository-' + className + '-wrapper');
-		var selectRepositoryConfiguration = A.one('#<portlet:namespace />repository-' + className);
+		var repositoryParameters = $('#<portlet:namespace />repository-' + className + '-configuration-' + selectRepositoryConfiguration.val());
 
-		if (selectRepositoryConfiguration) {
-			var repositoryParameters = A.one('#<portlet:namespace />repository-' + className + '-configuration-' + selectRepositoryConfiguration.val());
+		settingsConfiguration.append($('#<portlet:namespace />repository-' + className + '-wrapper'));
 
-			if (settingsConfiguration) {
-				settingsConfiguration.append(repositoryConfiguration);
-			}
-
-			if (settingsParameters) {
-				settingsParameters.append(repositoryParameters);
-			}
-		}
+		settingsParameters.append(repositoryParameters);
 	};
 
 	var showParameters = function(event) {
-		var select = event.currentTarget;
+		var select = $(event.currentTarget);
 
-		var repositoryParameters = A.one('#' + select.attr('id') + '-configuration-' + select.val());
+		settingsSupported.append(settingsParameters.find('.settings-parameters'));
+		settingsParameters.append($('#' + select.attr('id') + '-configuration-' + select.val()));
+	};
 
-		var settingsParametersChildren = settingsParameters.all('.settings-parameters');
+	var selectRepositoryTypes = $('#<portlet:namespace />repositoryTypes');
 
-		settingsSupported.append(settingsParametersChildren);
-		settingsParameters.append(repositoryParameters);
-	}
+	selectRepositoryTypes.on(
+		'change',
+		function(event) {
+			showConfiguration(selectRepositoryTypes);
+		}
+	);
 
-	var selectRepositoryTypes = A.one('#<portlet:namespace />repositoryTypes');
+	showConfiguration(selectRepositoryTypes);
 
-	if (selectRepositoryTypes) {
-		selectRepositoryTypes.on(
-			'change',
-			function(event) {
-				showConfiguration(event.currentTarget);
-			}
-		);
-
-		showConfiguration(selectRepositoryTypes);
-	}
-
-	var selectConfiguration = A.all('.repository-configuration');
-
-	selectConfiguration.on('change', showParameters);
+	$('.repository-configuration').on('change', showParameters);
 </aui:script>
 
 <%

@@ -184,6 +184,6 @@ if (folder != null) {
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script use="aui-base">
+<aui:script>
 	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectFileEntryFm', '<%= HtmlUtil.escapeJS(eventName) %>');
 </aui:script>

@@ -131,10 +131,8 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 	</aui:fieldset>
 </aui:form>
 
-<aui:script use="aui-base,escape">
-	var selectToFileEntryButton = A.one('#<portlet:namespace />selectToFileEntryButton');
-
-	A.one('#<portlet:namespace />selectGroupButton').on(
+<aui:script sandbox="<%= true %>">
+	$('#<portlet:namespace />selectGroupButton').on(
 		'click',
 		function(event) {
 			Liferay.Util.selectEntity(
@@ -154,8 +152,6 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 					uri: '<%= selectGroupURL.toString() %>'
 				},
 				function(event) {
-					var A = AUI();
-
 					if (document.<portlet:namespace />fm.<portlet:namespace />toGroupId.value != event.groupid) {
 						<portlet:namespace />selectFileEntry('', '');
 					}
@@ -163,15 +159,15 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 					document.<portlet:namespace />fm.<portlet:namespace />toGroupId.value = event.groupid;
 					document.<portlet:namespace />fm.<portlet:namespace />toFileEntryId.value = 0;
 
-					document.getElementById('<portlet:namespace />toGroupName').value = A.Escape.html(event.groupdescriptivename);
+					document.getElementById('<portlet:namespace />toGroupName').value = _.escape(event.groupdescriptivename);
 
-					Liferay.Util.toggleDisabled(selectToFileEntryButton, false);
+					Liferay.Util.toggleDisabled('#<portlet:namespace />selectToFileEntryButton', false);
 				}
 			);
 		}
 	);
 
-	selectToFileEntryButton.on(
+	$('#<portlet:namespace />selectToFileEntryButton').on(
 		'click',
 		function(event) {
 			Liferay.Util.selectEntity(

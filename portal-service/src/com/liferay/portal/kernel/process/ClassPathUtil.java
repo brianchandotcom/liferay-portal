@@ -147,6 +147,7 @@ public class ClassPathUtil {
 
 		Builder builder = new Builder();
 
+		builder.setArguments(Arrays.asList("-Djava.awt.headless=true"));
 		builder.setBootstrapClassPath(_globalClassPath);
 		builder.setReactClassLoader(PortalClassLoaderUtil.getClassLoader());
 		builder.setRuntimeClassPath(_portalClassPath);

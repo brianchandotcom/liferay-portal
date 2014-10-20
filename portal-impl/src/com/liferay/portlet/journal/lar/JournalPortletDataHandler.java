@@ -16,21 +16,23 @@ package com.liferay.portlet.journal.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.lar.xstream.XStreamAliasRegistryUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -50,9 +52,7 @@ import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalPermission;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -209,16 +209,10 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 			folderActionableDynamicQuery.performActions();
 
-			Map<JournalArticleKey, JournalArticle> latestArtciles =
-				new LinkedHashMap<JournalArticleKey, JournalArticle>();
-
 			ActionableDynamicQuery articleActionableDynamicQuery =
-				getArticleActionableDynamicQuery(
-					portletDataContext, latestArtciles);
+				getArticleActionableDynamicQuery(portletDataContext);
 
 			articleActionableDynamicQuery.performActions();
-
-			exportLatestArticles(portletDataContext, latestArtciles);
 		}
 
 		return getExportDataRootElementString(rootElement);
@@ -303,9 +297,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		ActionableDynamicQuery articleActionableDynamicQuery =
-			getArticleActionableDynamicQuery(
-				portletDataContext,
-				new LinkedHashMap<JournalArticleKey, JournalArticle>());
+			getArticleActionableDynamicQuery(portletDataContext);
 
 		articleActionableDynamicQuery.performCount();
 
@@ -343,63 +335,58 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		folderActionableDynamicQuery.performCount();
 	}
 
-	protected void exportLatestArticles(
-			PortletDataContext portletDataContext,
-			Map<JournalArticleKey, JournalArticle> latestArtciles)
-		throws PortletDataException {
-
-		for (JournalArticle article : latestArtciles.values()) {
-			StagedModelDataHandlerUtil.exportStagedModel(
-				portletDataContext, article);
-		}
-	}
-
 	protected ActionableDynamicQuery getArticleActionableDynamicQuery(
-		final PortletDataContext portletDataContext,
-		final Map<JournalArticleKey, JournalArticle> latestArtciles) {
+		final PortletDataContext portletDataContext) {
 
-		ActionableDynamicQuery actionableDynamicQuery =
+		ExportActionableDynamicQuery exportActionableDynamicQuery =
 			JournalArticleLocalServiceUtil.getExportActionableDynamicQuery(
 				portletDataContext);
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+		final ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
+			exportActionableDynamicQuery.getAddCriteriaMethod();
+
+		exportActionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
 
 				@Override
-				public void performAction(Object object)
-					throws PortalException {
-
-					JournalArticle article = (JournalArticle)object;
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					addCriteriaMethod.addCriteria(dynamicQuery);
 
 					if (portletDataContext.getBooleanParameter(
 							NAMESPACE, "version-history")) {
 
-						StagedModelDataHandlerUtil.exportStagedModel(
-							portletDataContext, article);
-
 						return;
 					}
 
-					if (!article.isApproved()) {
-						return;
-					}
+					Property versionProperty = PropertyFactoryUtil.forName(
+						"version");
 
-					JournalArticleKey articleKey = new JournalArticleKey(
-						article);
+					DynamicQuery articleVersionDynamicQuery =
+						DynamicQueryFactoryUtil.forClass(
+							JournalArticle.class, "articleVersion",
+							PortalClassLoaderUtil.getClassLoader());
 
-					JournalArticle latestArticle = latestArtciles.get(
-						articleKey);
+					articleVersionDynamicQuery.setProjection(
+						ProjectionFactoryUtil.alias(
+							ProjectionFactoryUtil.max("articleVersion.version"),
+							"articleVersion.version"));
 
-					if ((latestArticle == null) ||
-						(latestArticle.getVersion() < article.getVersion())) {
+					// We need to use the "this" default alias to make sure the
+					// database engine handles this subquery as a correlated
+					// subquery
 
-						latestArtciles.put(articleKey, article);
-					}
+					articleVersionDynamicQuery.add(
+						RestrictionsFactoryUtil.eqProperty(
+							"this.resourcePrimKey",
+							"articleVersion.resourcePrimKey"));
+
+					dynamicQuery.add(
+						versionProperty.eq(articleVersionDynamicQuery));
 				}
 
 			});
 
-		return actionableDynamicQuery;
+		return exportActionableDynamicQuery;
 	}
 
 	protected ActionableDynamicQuery getDDMStructureActionableDynamicQuery(
@@ -501,40 +488,6 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 				DDMTemplate.class.getName(), DDMStructure.class.getName()));
 
 		return exportActionableDynamicQuery;
-	}
-
-	private static class JournalArticleKey {
-
-		public JournalArticleKey(JournalArticle article) {
-			_articleId = article.getArticleId();
-			_groupId = article.getGroupId();
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj) {
-				return true;
-			}
-
-			JournalArticleKey journalArticleKey = (JournalArticleKey)obj;
-
-			if (Validator.equals(journalArticleKey._articleId, _articleId) &&
-				Validator.equals(journalArticleKey._groupId, _groupId)) {
-
-				return true;
-			}
-
-			return false;
-		}
-
-		@Override
-		public int hashCode() {
-			return (int)(_articleId.hashCode() * 11 + _groupId);
-		}
-
-		private String _articleId;
-		private long _groupId;
-
 	}
 
 }

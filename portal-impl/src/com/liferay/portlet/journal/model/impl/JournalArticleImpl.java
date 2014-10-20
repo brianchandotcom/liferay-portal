@@ -273,35 +273,19 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getStructureKey()}
+	 * @deprecated As of 7.0.0, replaced by {@link #getDDMStructureKey()}
 	 */
 	@Override
 	public String getStructureId() {
-		return getStructureKey();
+		return getDDMStructureKey();
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #setStructureKey()}
-	 */
-	@Override
-	public void setStructureId(String structureKey) {
-		setStructureKey(structureKey);
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getTemplateKey()}
+	 * @deprecated As of 7.0.0, replaced by {@link #getDDMTemplateKey()}
 	 */
 	@Override
 	public String getTemplateId() {
-		return getTemplateKey();
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #setTemplateKey()}
-	 */
-	@Override
-	public void setTemplateId(String templateKey) {
-		setTemplateKey(templateKey);
+		return getDDMTemplateKey();
 	}
 
 	@Override
@@ -392,6 +376,22 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	@Override
 	public void setSmallImageType(String smallImageType) {
 		_smallImageType = smallImageType;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #setDDMStructureKey(String)}
+	 */
+	@Override
+	public void setStructureId(String ddmStructureKey) {
+		setDDMStructureKey(ddmStructureKey);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #setDDMTemplateKey(String)}
+	 */
+	@Override
+	public void setTemplateId(String ddmTemplateKey) {
+		setDDMTemplateKey(ddmTemplateKey);
 	}
 
 	@Override

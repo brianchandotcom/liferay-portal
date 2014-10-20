@@ -125,8 +125,6 @@ public interface SchedulerEngineHelper {
 
 	public void initialize() throws SchedulerException;
 
-	public String namespaceGroupName(String groupName, StorageType storageType);
-
 	public void pause(String groupName, StorageType storageType)
 		throws SchedulerException;
 

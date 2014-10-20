@@ -1355,6 +1355,8 @@ AUI.add(
 						if (instance.formNode) {
 							instance.formNode.on('submit', instance._onSubmitForm, instance);
 
+							Liferay.on('submitForm', instance._onLiferaySubmitForm, instance);
+
 							Liferay.after('form:registered', instance._afterFormRegistered, instance);
 
 							instance.on(
@@ -1393,12 +1395,18 @@ AUI.add(
 						}
 					},
 
+					_onLiferaySubmitForm: function(event) {
+						var instance = this;
+
+						if (event.form.attr('name') === instance.formNode.attr('name')) {
+							instance.updateDDMFormInputValue();
+						}
+					},
+
 					_onSubmitForm: function(event) {
 						var instance = this;
 
-						var ddmFormValuesInput = instance.get('ddmFormValuesInput');
-
-						ddmFormValuesInput.set('value', AJSON.stringify(instance.toJSON()));
+						instance.updateDDMFormInputValue();
 					},
 
 					_valueDisplayLocale: function() {
@@ -1433,6 +1441,14 @@ AUI.add(
 							defaultLanguageId: translationManager.get('defaultLocale'),
 							fieldValues: AArray.invoke(instance.get('fields'), 'toJSON')
 						};
+					},
+
+					updateDDMFormInputValue: function() {
+						var instance = this;
+
+						var ddmFormValuesInput = instance.get('ddmFormValuesInput');
+
+						ddmFormValuesInput.val(AJSON.stringify(instance.toJSON()));
 					}
 				}
 			}

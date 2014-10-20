@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
-import com.liferay.portal.InvalidRepositoryException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,10 +21,10 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.LocalRepository;
-import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.util.RepositoryTrashUtil;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -59,10 +58,10 @@ import java.util.List;
 
 /**
  * Provides the local service for accessing, adding, deleting, moving,
- * subscription handling of, trash handling of, and updating document library
- * file entries, file ranks, and folders. All portlets should interact with the
- * document library through this class or through DLAppService, rather than
- * through the individual document library service classes.
+ * subscription handling of, and updating document library file entries, file
+ * ranks, and folders. All portlets should interact with the document library
+ * through this class or through DLAppService, rather than through the
+ * individual document library service classes.
  *
  * <p>
  * This class provides a unified interface to all Liferay and third party
@@ -426,7 +425,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * Deletes the file ranks associated to a given file entry. This method is
 	 * only supported by the Liferay repository.
 	 *
-	 * @param  fileEntryId the primary key of the file entry
+	 * @param fileEntryId the primary key of the file entry
 	 */
 	@Override
 	public void deleteFileRanksByFileEntryId(long fileEntryId) {
@@ -437,7 +436,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * Deletes the file ranks associated to a given user. This method is only
 	 * supported by the Liferay repository.
 	 *
-	 * @param  userId the primary key of the user
+	 * @param userId the primary key of the user
 	 */
 	@Override
 	public void deleteFileRanksByUserId(long userId) {
@@ -734,6 +733,12 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.kernel.repository.util.RepositoryTrashUtil.moveFileEntryFromTrash(
+	 *             long, long, long, long, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public FileEntry moveFileEntryFromTrash(
 			long userId, long fileEntryId, long newFolderId,
@@ -743,30 +748,17 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		LocalRepository localRepository = getFileEntryLocalRepository(
 			fileEntryId);
 
-		if (!localRepository.isCapabilityProvided(TrashCapability.class)) {
-			throw new InvalidRepositoryException(
-				"Repository " + localRepository.getRepositoryId() +
-					" does not support trash operations");
-		}
-
-		TrashCapability trashCapability = localRepository.getCapability(
-			TrashCapability.class);
-
-		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
-		Folder destinationFolder = localRepository.getFolder(newFolderId);
-
-		return trashCapability.moveFileEntryFromTrash(
-			userId, fileEntry, destinationFolder, serviceContext);
+		return RepositoryTrashUtil.moveFileEntryFromTrash(
+			userId, localRepository.getRepositoryId(), fileEntryId, newFolderId,
+			serviceContext);
 	}
 
 	/**
-	 * Moves the file entry with the primary key to the trash portlet.
-	 *
-	 * @param  userId the primary key of the user
-	 * @param  fileEntryId the primary key of the file entry
-	 * @return the file entry
-	 * @throws PortalException if the file entry could not be found
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.kernel.repository.util.RepositoryTrashUtil.moveFileEntryToTrash(
+	 *             long, long, long)}
 	 */
+	@Deprecated
 	@Override
 	public FileEntry moveFileEntryToTrash(long userId, long fileEntryId)
 		throws PortalException {
@@ -774,12 +766,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		LocalRepository localRepository = getFileEntryLocalRepository(
 			fileEntryId);
 
-		TrashCapability trashCapability = localRepository.getCapability(
-			TrashCapability.class);
-
-		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
-
-		return trashCapability.moveFileEntryToTrash(userId, fileEntry);
+		return RepositoryTrashUtil.moveFileEntryToTrash(
+			userId, localRepository.getRepositoryId(), fileEntryId);
 	}
 
 	@Override
@@ -835,12 +823,11 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Restores the file entry with the primary key from the trash portlet.
-	 *
-	 * @param  userId the primary key of the user
-	 * @param  fileEntryId the primary key of the file entry
-	 * @throws PortalException if the file entry could not be found
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.kernel.repository.util.RepositoryTrashUtil.restoreFileEntryFromTrash(
+	 *             long, long, long)}
 	 */
+	@Deprecated
 	@Override
 	public void restoreFileEntryFromTrash(long userId, long fileEntryId)
 		throws PortalException {
@@ -848,12 +835,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		LocalRepository localRepository = getFileEntryLocalRepository(
 			fileEntryId);
 
-		TrashCapability trashCapability = localRepository.getCapability(
-			TrashCapability.class);
-
-		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
-
-		trashCapability.restoreFileEntryFromTrash(userId, fileEntry);
+		RepositoryTrashUtil.restoreFileEntryFromTrash(
+			userId, localRepository.getRepositoryId(), fileEntryId);
 	}
 
 	/**
@@ -1248,10 +1231,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * Updates all file shortcuts to the existing file entry to the new file
 	 * entry. This method is only supported by the Liferay repository.
 	 *
-	 * @param  toRepositoryId the primary key of the repository
-	 * @param  oldToFileEntryId the primary key of the old file entry pointed to
-	 * @param  newToFileEntryId the primary key of the new file entry to point
-	 *         to
+	 * @param toRepositoryId the primary key of the repository
+	 * @param oldToFileEntryId the primary key of the old file entry pointed to
+	 * @param newToFileEntryId the primary key of the new file entry to point to
 	 */
 	@Override
 	public void updateFileShortcuts(

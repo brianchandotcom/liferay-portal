@@ -477,19 +477,20 @@ public interface DLFileEntryTypeModel extends BaseModel<DLFileEntryType>,
 	public Object clone();
 
 	@Override
-	public int compareTo(DLFileEntryType dlFileEntryType);
+	public int compareTo(
+		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<DLFileEntryType> toCacheModel();
+	public CacheModel<com.liferay.portlet.documentlibrary.model.DLFileEntryType> toCacheModel();
 
 	@Override
-	public DLFileEntryType toEscapedModel();
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType toEscapedModel();
 
 	@Override
-	public DLFileEntryType toUnescapedModel();
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType toUnescapedModel();
 
 	@Override
 	public String toString();

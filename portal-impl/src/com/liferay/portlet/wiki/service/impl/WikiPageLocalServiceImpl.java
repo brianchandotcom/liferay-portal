@@ -1793,8 +1793,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
 		extraDataJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
-		extraDataJSONObject.put("fileEntryTitle", TrashUtil.getOriginalTitle(
-			fileEntry.getTitle()));
+		extraDataJSONObject.put(
+			"fileEntryTitle", TrashUtil.getOriginalTitle(fileEntry.getTitle()));
 		extraDataJSONObject.put("title", page.getTitle());
 		extraDataJSONObject.put("version", page.getVersion());
 

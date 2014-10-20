@@ -242,6 +242,11 @@
 			<bean class="com.liferay.portal.repository.RepositoryFactoryImpl" depends-on="com.liferay.portal.model.ModelHintsUtil" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.repository.util.RepositoryTrashUtil" class="com.liferay.portal.kernel.repository.util.RepositoryTrashUtil">
+		<property name="repositoryTrash">
+			<bean class="com.liferay.portal.repository.util.RepositoryTrashImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil" class="com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil">
 		<property name="sPIRegistry">
 			<bean class="com.liferay.portal.resiliency.spi.SPIRegistryImpl">

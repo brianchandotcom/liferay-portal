@@ -20,8 +20,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.util.RepositoryTrashUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -550,8 +552,12 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		try {
 			DLAppHelperThreadLocal.setEnabled(false);
 
-			return DLAppLocalServiceUtil.moveFileEntryToTrash(
-				userId, fileEntryId);
+			LocalRepository localRepository =
+				RepositoryLocalServiceUtil.getLocalRepositoryImpl(
+					0, fileEntryId, 0);
+
+			return RepositoryTrashUtil.moveFileEntryToTrash(
+				userId, localRepository.getRepositoryId(), fileEntryId);
 		}
 		finally {
 			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
@@ -578,8 +584,12 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		try {
 			DLAppHelperThreadLocal.setEnabled(false);
 
-			DLAppLocalServiceUtil.restoreFileEntryFromTrash(
-				userId, fileEntryId);
+			LocalRepository localRepository =
+				RepositoryLocalServiceUtil.getLocalRepositoryImpl(
+					0, fileEntryId, 0);
+
+			RepositoryTrashUtil.restoreFileEntryFromTrash(
+				userId, localRepository.getRepositoryId(), fileEntryId);
 		}
 		finally {
 			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);

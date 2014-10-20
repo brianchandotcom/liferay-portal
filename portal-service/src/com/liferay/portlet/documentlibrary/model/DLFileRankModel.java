@@ -217,19 +217,20 @@ public interface DLFileRankModel extends BaseModel<DLFileRank> {
 	public Object clone();
 
 	@Override
-	public int compareTo(DLFileRank dlFileRank);
+	public int compareTo(
+		com.liferay.portlet.documentlibrary.model.DLFileRank dlFileRank);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<DLFileRank> toCacheModel();
+	public CacheModel<com.liferay.portlet.documentlibrary.model.DLFileRank> toCacheModel();
 
 	@Override
-	public DLFileRank toEscapedModel();
+	public com.liferay.portlet.documentlibrary.model.DLFileRank toEscapedModel();
 
 	@Override
-	public DLFileRank toUnescapedModel();
+	public com.liferay.portlet.documentlibrary.model.DLFileRank toUnescapedModel();
 
 	@Override
 	public String toString();

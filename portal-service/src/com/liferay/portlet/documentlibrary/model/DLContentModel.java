@@ -213,19 +213,20 @@ public interface DLContentModel extends BaseModel<DLContent> {
 	public Object clone();
 
 	@Override
-	public int compareTo(DLContent dlContent);
+	public int compareTo(
+		com.liferay.portlet.documentlibrary.model.DLContent dlContent);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<DLContent> toCacheModel();
+	public CacheModel<com.liferay.portlet.documentlibrary.model.DLContent> toCacheModel();
 
 	@Override
-	public DLContent toEscapedModel();
+	public com.liferay.portlet.documentlibrary.model.DLContent toEscapedModel();
 
 	@Override
-	public DLContent toUnescapedModel();
+	public com.liferay.portlet.documentlibrary.model.DLContent toUnescapedModel();
 
 	@Override
 	public String toString();

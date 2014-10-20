@@ -159,6 +159,23 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 		}
 	}
 
+	protected boolean hasFileChanged(
+			SyncFile sourceSyncFile, SyncFile targetSyncFile,
+			Path sourceFilePath)
+		throws IOException {
+
+		String sourceSyncFileChecksum = sourceSyncFile.getChecksum();
+		String targetSyncFileChecksum = targetSyncFile.getChecksum();
+
+		if (sourceSyncFileChecksum.equals("") ||
+			targetSyncFileChecksum.equals("")) {
+
+			return true;
+		}
+
+		return FileUtil.hasFileChanged(targetSyncFile, sourceFilePath);
+	}
+
 	protected boolean isIgnoredFilePath(
 		SyncFile syncFile, String filePathName) {
 
@@ -231,7 +248,11 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 					targetSyncFile.getRepositoryId(), getSyncAccountId(),
 					targetSyncFile.getTypePK());
 
-				if (isIgnoredFilePath(sourceSyncFile, filePathName)) {
+				if (isIgnoredFilePath(sourceSyncFile, filePathName) ||
+					((sourceSyncFile != null) &&
+					 (sourceSyncFile.getModifiedTime() ==
+						targetSyncFile.getModifiedTime()))) {
+
 					continue;
 				}
 
@@ -240,6 +261,13 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 				if (event.equals(SyncFile.EVENT_ADD) ||
 					event.equals(SyncFile.EVENT_GET) ||
 					event.equals(SyncFile.EVENT_RESTORE)) {
+
+					if (sourceSyncFile != null) {
+						updateFile(
+							sourceSyncFile, targetSyncFile, filePathName);
+
+						continue;
+					}
 
 					addFile(targetSyncFile, filePathName);
 				}
@@ -253,6 +281,12 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 					deleteFile(sourceSyncFile, true);
 				}
 				else if (event.equals(SyncFile.EVENT_UPDATE)) {
+					if (sourceSyncFile == null) {
+						addFile(targetSyncFile, filePathName);
+
+						continue;
+					}
+
 					updateFile(sourceSyncFile, targetSyncFile, filePathName);
 				}
 			}
@@ -287,12 +321,6 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 			SyncFile sourceSyncFile, SyncFile targetSyncFile,
 			String filePathName)
 		throws Exception {
-
-		if (sourceSyncFile == null) {
-			addFile(targetSyncFile, filePathName);
-
-			return;
-		}
 
 		String sourceVersion = sourceSyncFile.getVersion();
 
@@ -332,7 +360,8 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 			}
 		}
 		else if (targetSyncFile.isFile() &&
-				 FileUtil.hasFileChanged(targetSyncFile, sourceFilePath)) {
+				 hasFileChanged(
+					 sourceSyncFile, targetSyncFile, sourceFilePath)) {
 
 			downloadFile(
 				sourceSyncFile, sourceVersion,

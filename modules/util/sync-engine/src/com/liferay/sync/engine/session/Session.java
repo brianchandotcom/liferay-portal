@@ -343,7 +343,7 @@ public class Session {
 			String.valueOf(value),
 			ContentType.create(
 				ContentType.TEXT_PLAIN.getMimeType(),
-				Charset.defaultCharset()));
+				Charset.forName("UTF-8")));
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

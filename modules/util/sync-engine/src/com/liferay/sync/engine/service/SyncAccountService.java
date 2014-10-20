@@ -99,17 +99,18 @@ public class SyncAccountService {
 
 		// Sync file
 
-		Path dataFilePath = Files.createDirectories(
-			FileUtil.getFilePath(filePathName, ".data"));
+		Path filePath = Paths.get(filePathName);
+
+		Path dataFilePath = Files.createDirectories(filePath.resolve(".data"));
 
 		if (OSDetector.isWindows()) {
 			Files.setAttribute(dataFilePath, "dos:hidden", true);
 		}
 
 		SyncFileService.addSyncFile(
-			null, null, null, filePathName, null, filePathName, 0, 0,
-			SyncFile.STATE_SYNCED, syncAccount.getSyncAccountId(),
-			SyncFile.TYPE_SYSTEM);
+			null, null, null, filePathName, null,
+			String.valueOf(filePath.getFileName()), 0, 0, SyncFile.STATE_SYNCED,
+			syncAccount.getSyncAccountId(), SyncFile.TYPE_SYSTEM);
 
 		// Sync sites
 

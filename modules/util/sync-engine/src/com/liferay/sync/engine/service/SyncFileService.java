@@ -59,8 +59,6 @@ public class SyncFileService {
 			repositoryId, SyncFile.STATE_SYNCED, syncAccountId,
 			SyncFile.TYPE_FILE);
 
-		IODeltaUtil.checksums(syncFile);
-
 		// Remote sync file
 
 		FileEventUtil.addFile(
@@ -122,6 +120,8 @@ public class SyncFileService {
 		_syncFilePersistence.create(syncFile);
 
 		updateFileKeySyncFile(syncFile);
+
+		IODeltaUtil.checksums(syncFile);
 
 		return syncFile;
 	}

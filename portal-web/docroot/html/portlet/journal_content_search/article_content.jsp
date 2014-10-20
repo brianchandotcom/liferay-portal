@@ -71,7 +71,6 @@ List hitLayoutIds = JournalContentSearchLocalServiceUtil.getLayoutIds(layout.get
 			<%
 			PortletURL webContentPortletURL = PortletURLFactoryUtil.create(request, targetPortletId, plid, PortletRequest.RENDER_PHASE);
 
-			webContentPortletURL.setParameter("struts_action", "/journal_content/view");
 			webContentPortletURL.setParameter("groupId", String.valueOf(articleGroupId));
 			webContentPortletURL.setParameter("articleId", articleId);
 			%>

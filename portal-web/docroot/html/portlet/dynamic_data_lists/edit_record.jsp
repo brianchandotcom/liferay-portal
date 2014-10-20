@@ -43,22 +43,20 @@ if (recordVersion != null) {
 	fields = StorageEngineUtil.getFields(recordVersion.getDDMStorageId());
 }
 
-Locale[] availableLocales = new Locale[0];
+String defaultLanguageId = ParamUtil.getString(request, "defaultLanguageId");
+
+if (Validator.isNull(defaultLanguageId)) {
+	defaultLanguageId = themeDisplay.getLanguageId();
+}
+
+Locale[] availableLocales = new Locale[] {LocaleUtil.fromLanguageId(defaultLanguageId)};
 
 if (fields != null) {
 	Set<Locale> availableLocalesSet = fields.getAvailableLocales();
 
 	availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
-}
 
-String defaultLanguageId = ParamUtil.getString(request, "defaultLanguageId");
-
-if (Validator.isNull(defaultLanguageId)) {
-	defaultLanguageId = themeDisplay.getLanguageId();
-
-	if (fields != null) {
-		defaultLanguageId = LocaleUtil.toLanguageId(fields.getDefaultLocale());
-	}
+	defaultLanguageId = LocaleUtil.toLanguageId(fields.getDefaultLocale());
 }
 
 String languageId = ParamUtil.getString(request, "languageId", defaultLanguageId);

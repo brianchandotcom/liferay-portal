@@ -109,8 +109,8 @@ DLDisplayConfigurationDisplayContext dlDisplayConfigurationDisplayContext = new 
 	</aui:button-row>
 </aui:form>
 
-<aui:script use="aui-base">
-	A.one('#<portlet:namespace />openFolderSelectorButton').on(
+<aui:script sandbox="<%= true %>">
+	$('#<portlet:namespace />openFolderSelectorButton').on(
 		'click',
 		function(event) {
 			Liferay.Util.selectEntity(
@@ -143,29 +143,29 @@ DLDisplayConfigurationDisplayContext dlDisplayConfigurationDisplayContext = new 
 		}
 	);
 
-	A.one('#<portlet:namespace />showActions').after(
+	$('#<portlet:namespace />showActions').on(
 		'change',
 		function(event) {
-			var currentFileEntryColumns = A.one('#<portlet:namespace />currentFileEntryColumns');
-			var currentFolderColumns = A.one('#<portlet:namespace />currentFolderColumns');
-			var showActionsInput = A.one('#<portlet:namespace />showActions');
+			var currentFileEntryColumns = $('#<portlet:namespace />currentFileEntryColumns');
+			var currentFolderColumns = $('#<portlet:namespace />currentFolderColumns');
+			var showActionsInput = $('#<portlet:namespace />showActions');
 
-			if (showActionsInput.val() === 'false') {
+			if (showActionsInput.prop('checked')) {
 				var actionHTML = '<option value="action"><%= UnicodeLanguageUtil.get(request, "action") %></option>';
 
 				currentFileEntryColumns.append(actionHTML);
 				currentFolderColumns.append(actionHTML);
 			}
 			else {
-				var availableFileEntryColumns = A.one('#<portlet:namespace />availableFileEntryColumns');
-				var availableFolderColumns = A.one('#<portlet:namespace />availableFolderColumns');
+				var availableFileEntryColumns = $('#<portlet:namespace />availableFileEntryColumns');
+				var availableFolderColumns = $('#<portlet:namespace />availableFolderColumns');
 
-				A.Array.each(
+				_.forEach(
 					[currentFolderColumns, currentFileEntryColumns, availableFileEntryColumns, availableFolderColumns],
 					function(item, index) {
-						var actionsNode = item.one('option[value="action"]');
+						var actionsNode = item.find('option[value="action"]');
 
-						if (actionsNode) {
+						if (actionsNode.length) {
 							actionsNode.remove();
 						}
 					}
@@ -191,20 +191,16 @@ DLDisplayConfigurationDisplayContext dlDisplayConfigurationDisplayContext = new 
 </aui:script>
 
 <c:if test="<%= SessionMessages.contains(renderRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_UPDATED_CONFIGURATION) %>">
-	<aui:script position="inline" use="aui-base">
+	<aui:script position="inline" sandbox="<%= true %>">
 		var valueMap = {};
 
-		var foldersPerPageInput = A.one('#<portlet:namespace />foldersPerPage');
+		var foldersPerPageInput = $('#<portlet:namespace />foldersPerPage');
 
-		if (foldersPerPageInput) {
-			valueMap.delta1 = foldersPerPageInput.val();
-		}
+		valueMap.delta1 = foldersPerPageInput.val();
 
-		var fileEntriesPerPageInput = A.one('#<portlet:namespace />fileEntriesPerPage');
+		var fileEntriesPerPageInput = $('#<portlet:namespace />fileEntriesPerPage');
 
-		if (fileEntriesPerPageInput) {
-			valueMap.delta2 = fileEntriesPerPageInput.val();
-		}
+		valueMap.delta2 = fileEntriesPerPageInput.val();
 
 		var portlet = Liferay.Util.getTop().AUI().one('#p_p_id<%= HtmlUtil.escapeJS(PortalUtil.getPortletNamespace(portletResource)) %>');
 

@@ -133,7 +133,7 @@ public class DDMStructureVersionPersistenceTest {
 
 		newDDMStructureVersion.setCreateDate(RandomTestUtil.nextDate());
 
-		newDDMStructureVersion.setDdmStructureId(RandomTestUtil.nextLong());
+		newDDMStructureVersion.setStructureId(RandomTestUtil.nextLong());
 
 		newDDMStructureVersion.setName(RandomTestUtil.randomString());
 
@@ -151,8 +151,8 @@ public class DDMStructureVersionPersistenceTest {
 
 		DDMStructureVersion existingDDMStructureVersion = _persistence.findByPrimaryKey(newDDMStructureVersion.getPrimaryKey());
 
-		Assert.assertEquals(existingDDMStructureVersion.getDdmStructureVersionId(),
-			newDDMStructureVersion.getDdmStructureVersionId());
+		Assert.assertEquals(existingDDMStructureVersion.getStructureVersionId(),
+			newDDMStructureVersion.getStructureVersionId());
 		Assert.assertEquals(existingDDMStructureVersion.getGroupId(),
 			newDDMStructureVersion.getGroupId());
 		Assert.assertEquals(existingDDMStructureVersion.getCompanyId(),
@@ -164,8 +164,8 @@ public class DDMStructureVersionPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingDDMStructureVersion.getCreateDate()),
 			Time.getShortTimestamp(newDDMStructureVersion.getCreateDate()));
-		Assert.assertEquals(existingDDMStructureVersion.getDdmStructureId(),
-			newDDMStructureVersion.getDdmStructureId());
+		Assert.assertEquals(existingDDMStructureVersion.getStructureId(),
+			newDDMStructureVersion.getStructureId());
 		Assert.assertEquals(existingDDMStructureVersion.getName(),
 			newDDMStructureVersion.getName());
 		Assert.assertEquals(existingDDMStructureVersion.getDescription(),
@@ -181,11 +181,11 @@ public class DDMStructureVersionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByDDMStructureId() {
+	public void testCountByStructureId() {
 		try {
-			_persistence.countByDDMStructureId(RandomTestUtil.nextLong());
+			_persistence.countByStructureId(RandomTestUtil.nextLong());
 
-			_persistence.countByDDMStructureId(0L);
+			_persistence.countByStructureId(0L);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -193,13 +193,13 @@ public class DDMStructureVersionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByD_V() {
+	public void testCountByS_V() {
 		try {
-			_persistence.countByD_V(RandomTestUtil.nextLong(), StringPool.BLANK);
+			_persistence.countByS_V(RandomTestUtil.nextLong(), StringPool.BLANK);
 
-			_persistence.countByD_V(0L, StringPool.NULL);
+			_persistence.countByS_V(0L, StringPool.NULL);
 
-			_persistence.countByD_V(0L, (String)null);
+			_persistence.countByS_V(0L, (String)null);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -242,9 +242,9 @@ public class DDMStructureVersionPersistenceTest {
 
 	protected OrderByComparator<DDMStructureVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DDMStructureVersion",
-			"ddmStructureVersionId", true, "groupId", true, "companyId", true,
+			"structureVersionId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"ddmStructureId", true, "name", true, "description", true,
+			"structureId", true, "name", true, "description", true,
 			"definition", true, "storageType", true, "type", true, "version",
 			true);
 	}
@@ -379,8 +379,8 @@ public class DDMStructureVersionPersistenceTest {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStructureVersion.class,
 				DDMStructureVersion.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("ddmStructureVersionId",
-				newDDMStructureVersion.getDdmStructureVersionId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("structureVersionId",
+				newDDMStructureVersion.getStructureVersionId()));
 
 		List<DDMStructureVersion> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -396,7 +396,7 @@ public class DDMStructureVersionPersistenceTest {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStructureVersion.class,
 				DDMStructureVersion.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("ddmStructureVersionId",
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("structureVersionId",
 				RandomTestUtil.nextLong()));
 
 		List<DDMStructureVersion> result = _persistence.findWithDynamicQuery(dynamicQuery);
@@ -413,21 +413,20 @@ public class DDMStructureVersionPersistenceTest {
 				DDMStructureVersion.class.getClassLoader());
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"ddmStructureVersionId"));
+				"structureVersionId"));
 
-		Object newDdmStructureVersionId = newDDMStructureVersion.getDdmStructureVersionId();
+		Object newStructureVersionId = newDDMStructureVersion.getStructureVersionId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("ddmStructureVersionId",
-				new Object[] { newDdmStructureVersionId }));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("structureVersionId",
+				new Object[] { newStructureVersionId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
-		Object existingDdmStructureVersionId = result.get(0);
+		Object existingStructureVersionId = result.get(0);
 
-		Assert.assertEquals(existingDdmStructureVersionId,
-			newDdmStructureVersionId);
+		Assert.assertEquals(existingStructureVersionId, newStructureVersionId);
 	}
 
 	@Test
@@ -436,9 +435,9 @@ public class DDMStructureVersionPersistenceTest {
 				DDMStructureVersion.class.getClassLoader());
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"ddmStructureVersionId"));
+				"structureVersionId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("ddmStructureVersionId",
+		dynamicQuery.add(RestrictionsFactoryUtil.in("structureVersionId",
 				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
@@ -458,8 +457,8 @@ public class DDMStructureVersionPersistenceTest {
 
 		DDMStructureVersionModelImpl existingDDMStructureVersionModelImpl = (DDMStructureVersionModelImpl)_persistence.findByPrimaryKey(newDDMStructureVersion.getPrimaryKey());
 
-		Assert.assertEquals(existingDDMStructureVersionModelImpl.getDdmStructureId(),
-			existingDDMStructureVersionModelImpl.getOriginalDdmStructureId());
+		Assert.assertEquals(existingDDMStructureVersionModelImpl.getStructureId(),
+			existingDDMStructureVersionModelImpl.getOriginalStructureId());
 		Assert.assertTrue(Validator.equals(
 				existingDDMStructureVersionModelImpl.getVersion(),
 				existingDDMStructureVersionModelImpl.getOriginalVersion()));
@@ -481,7 +480,7 @@ public class DDMStructureVersionPersistenceTest {
 
 		ddmStructureVersion.setCreateDate(RandomTestUtil.nextDate());
 
-		ddmStructureVersion.setDdmStructureId(RandomTestUtil.nextLong());
+		ddmStructureVersion.setStructureId(RandomTestUtil.nextLong());
 
 		ddmStructureVersion.setName(RandomTestUtil.randomString());
 

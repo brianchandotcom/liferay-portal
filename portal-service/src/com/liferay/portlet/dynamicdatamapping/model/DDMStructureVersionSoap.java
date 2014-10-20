@@ -34,13 +34,13 @@ public class DDMStructureVersionSoap implements Serializable {
 	public static DDMStructureVersionSoap toSoapModel(DDMStructureVersion model) {
 		DDMStructureVersionSoap soapModel = new DDMStructureVersionSoap();
 
-		soapModel.setDdmStructureVersionId(model.getDdmStructureVersionId());
+		soapModel.setStructureVersionId(model.getStructureVersionId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
-		soapModel.setDdmStructureId(model.getDdmStructureId());
+		soapModel.setStructureId(model.getStructureId());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setDefinition(model.getDefinition());
@@ -95,19 +95,19 @@ public class DDMStructureVersionSoap implements Serializable {
 	}
 
 	public long getPrimaryKey() {
-		return _ddmStructureVersionId;
+		return _structureVersionId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setDdmStructureVersionId(pk);
+		setStructureVersionId(pk);
 	}
 
-	public long getDdmStructureVersionId() {
-		return _ddmStructureVersionId;
+	public long getStructureVersionId() {
+		return _structureVersionId;
 	}
 
-	public void setDdmStructureVersionId(long ddmStructureVersionId) {
-		_ddmStructureVersionId = ddmStructureVersionId;
+	public void setStructureVersionId(long structureVersionId) {
+		_structureVersionId = structureVersionId;
 	}
 
 	public long getGroupId() {
@@ -150,12 +150,12 @@ public class DDMStructureVersionSoap implements Serializable {
 		_createDate = createDate;
 	}
 
-	public long getDdmStructureId() {
-		return _ddmStructureId;
+	public long getStructureId() {
+		return _structureId;
 	}
 
-	public void setDdmStructureId(long ddmStructureId) {
-		_ddmStructureId = ddmStructureId;
+	public void setStructureId(long structureId) {
+		_structureId = structureId;
 	}
 
 	public String getName() {
@@ -206,13 +206,13 @@ public class DDMStructureVersionSoap implements Serializable {
 		_version = version;
 	}
 
-	private long _ddmStructureVersionId;
+	private long _structureVersionId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
-	private long _ddmStructureId;
+	private long _structureId;
 	private String _name;
 	private String _description;
 	private String _definition;

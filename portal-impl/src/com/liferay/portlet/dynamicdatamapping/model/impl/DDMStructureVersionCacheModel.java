@@ -43,8 +43,8 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 	public String toString() {
 		StringBundler sb = new StringBundler(27);
 
-		sb.append("{ddmStructureVersionId=");
-		sb.append(ddmStructureVersionId);
+		sb.append("{structureVersionId=");
+		sb.append(structureVersionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -55,8 +55,8 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 		sb.append(userName);
 		sb.append(", createDate=");
 		sb.append(createDate);
-		sb.append(", ddmStructureId=");
-		sb.append(ddmStructureId);
+		sb.append(", structureId=");
+		sb.append(structureId);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", description=");
@@ -78,7 +78,7 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 	public DDMStructureVersion toEntityModel() {
 		DDMStructureVersionImpl ddmStructureVersionImpl = new DDMStructureVersionImpl();
 
-		ddmStructureVersionImpl.setDdmStructureVersionId(ddmStructureVersionId);
+		ddmStructureVersionImpl.setStructureVersionId(structureVersionId);
 		ddmStructureVersionImpl.setGroupId(groupId);
 		ddmStructureVersionImpl.setCompanyId(companyId);
 		ddmStructureVersionImpl.setUserId(userId);
@@ -97,7 +97,7 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 			ddmStructureVersionImpl.setCreateDate(new Date(createDate));
 		}
 
-		ddmStructureVersionImpl.setDdmStructureId(ddmStructureId);
+		ddmStructureVersionImpl.setStructureId(structureId);
 
 		if (name == null) {
 			ddmStructureVersionImpl.setName(StringPool.BLANK);
@@ -143,13 +143,13 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		ddmStructureVersionId = objectInput.readLong();
+		structureVersionId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
-		ddmStructureId = objectInput.readLong();
+		structureId = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		definition = objectInput.readUTF();
@@ -161,7 +161,7 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(ddmStructureVersionId);
+		objectOutput.writeLong(structureVersionId);
 		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
@@ -174,7 +174,7 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 		}
 
 		objectOutput.writeLong(createDate);
-		objectOutput.writeLong(ddmStructureId);
+		objectOutput.writeLong(structureId);
 
 		if (name == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -214,13 +214,13 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 		}
 	}
 
-	public long ddmStructureVersionId;
+	public long structureVersionId;
 	public long groupId;
 	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
-	public long ddmStructureId;
+	public long structureId;
 	public String name;
 	public String description;
 	public String definition;

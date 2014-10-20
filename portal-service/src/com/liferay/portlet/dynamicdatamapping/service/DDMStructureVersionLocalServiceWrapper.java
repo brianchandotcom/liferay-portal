@@ -49,13 +49,13 @@ public class DDMStructureVersionLocalServiceWrapper
 	/**
 	* Creates a new d d m structure version with the primary key. Does not add the d d m structure version to the database.
 	*
-	* @param ddmStructureVersionId the primary key for the new d d m structure version
+	* @param structureVersionId the primary key for the new d d m structure version
 	* @return the new d d m structure version
 	*/
 	@Override
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion createDDMStructureVersion(
-		long ddmStructureVersionId) {
-		return _ddmStructureVersionLocalService.createDDMStructureVersion(ddmStructureVersionId);
+		long structureVersionId) {
+		return _ddmStructureVersionLocalService.createDDMStructureVersion(structureVersionId);
 	}
 
 	/**
@@ -73,15 +73,15 @@ public class DDMStructureVersionLocalServiceWrapper
 	/**
 	* Deletes the d d m structure version with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param ddmStructureVersionId the primary key of the d d m structure version
+	* @param structureVersionId the primary key of the d d m structure version
 	* @return the d d m structure version that was removed
 	* @throws PortalException if a d d m structure version with the primary key could not be found
 	*/
 	@Override
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion deleteDDMStructureVersion(
-		long ddmStructureVersionId)
+		long structureVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStructureVersionLocalService.deleteDDMStructureVersion(ddmStructureVersionId);
+		return _ddmStructureVersionLocalService.deleteDDMStructureVersion(structureVersionId);
 	}
 
 	/**
@@ -182,8 +182,8 @@ public class DDMStructureVersionLocalServiceWrapper
 
 	@Override
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion fetchDDMStructureVersion(
-		long ddmStructureVersionId) {
-		return _ddmStructureVersionLocalService.fetchDDMStructureVersion(ddmStructureVersionId);
+		long structureVersionId) {
+		return _ddmStructureVersionLocalService.fetchDDMStructureVersion(structureVersionId);
 	}
 
 	@Override
@@ -204,23 +204,15 @@ public class DDMStructureVersionLocalServiceWrapper
 	/**
 	* Returns the d d m structure version with the primary key.
 	*
-	* @param ddmStructureVersionId the primary key of the d d m structure version
+	* @param structureVersionId the primary key of the d d m structure version
 	* @return the d d m structure version
 	* @throws PortalException if a d d m structure version with the primary key could not be found
 	*/
 	@Override
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion getDDMStructureVersion(
-		long ddmStructureVersionId)
+		long structureVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStructureVersionLocalService.getDDMStructureVersion(ddmStructureVersionId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> getDDMStructureVersions(
-		long ddmStructureId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> orderByComparator) {
-		return _ddmStructureVersionLocalService.getDDMStructureVersions(ddmStructureId,
-			start, end, orderByComparator);
+		return _ddmStructureVersionLocalService.getDDMStructureVersion(structureVersionId);
 	}
 
 	/**
@@ -252,14 +244,10 @@ public class DDMStructureVersionLocalServiceWrapper
 	}
 
 	@Override
-	public int getDDMStructureVersionsCount(long ddmStructureId) {
-		return _ddmStructureVersionLocalService.getDDMStructureVersionsCount(ddmStructureId);
-	}
-
-	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion getLatestVersion(
-		long ddmStructureId) {
-		return _ddmStructureVersionLocalService.getLatestVersion(ddmStructureId);
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion getLatestStructureVersion(
+		long structureId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmStructureVersionLocalService.getLatestStructureVersion(structureId);
 	}
 
 	@Override
@@ -267,6 +255,34 @@ public class DDMStructureVersionLocalServiceWrapper
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStructureVersionLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion getStructureVersion(
+		long structureId, java.lang.String version)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmStructureVersionLocalService.getStructureVersion(structureId,
+			version);
+	}
+
+	@Override
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion getStructureVersion(
+		long structureVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmStructureVersionLocalService.getStructureVersion(structureVersionId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> getStructureVersions(
+		long ddmStructureId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> orderByComparator) {
+		return _ddmStructureVersionLocalService.getStructureVersions(ddmStructureId,
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public int getStructureVersionsCount(long structureId) {
+		return _ddmStructureVersionLocalService.getStructureVersionsCount(structureId);
 	}
 
 	/**
@@ -277,16 +293,6 @@ public class DDMStructureVersionLocalServiceWrapper
 	@Override
 	public void setBeanIdentifier(java.lang.String beanIdentifier) {
 		_ddmStructureVersionLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion updateDDMStructureVersion(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure,
-		boolean majorVersion,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStructureVersionLocalService.updateDDMStructureVersion(ddmStructure,
-			majorVersion, serviceContext);
 	}
 
 	/**

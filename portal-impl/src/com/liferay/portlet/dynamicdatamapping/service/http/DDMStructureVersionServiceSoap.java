@@ -65,11 +65,11 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class DDMStructureVersionServiceSoap {
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersionSoap getDDMStructureVersion(
-		long ddmStructureVersionId) throws RemoteException {
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersionSoap getLatestStructureVersion(
+		long structureId) throws RemoteException {
 		try {
 			com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion returnValue =
-				DDMStructureVersionServiceUtil.getDDMStructureVersion(ddmStructureVersionId);
+				DDMStructureVersionServiceUtil.getLatestStructureVersion(structureId);
 
 			return com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersionSoap.toSoapModel(returnValue);
 		}
@@ -80,13 +80,28 @@ public class DDMStructureVersionServiceSoap {
 		}
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersionSoap[] getDDMStructureVersions(
-		long ddmStructureId, int start, int end,
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersionSoap getStructureVersion(
+		long structureVersionId) throws RemoteException {
+		try {
+			com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion returnValue =
+				DDMStructureVersionServiceUtil.getStructureVersion(structureVersionId);
+
+			return com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersionSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersionSoap[] getStructureVersions(
+		long structureId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> returnValue =
-				DDMStructureVersionServiceUtil.getDDMStructureVersions(ddmStructureId,
+				DDMStructureVersionServiceUtil.getStructureVersions(structureId,
 					start, end, orderByComparator);
 
 			return com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersionSoap.toSoapModels(returnValue);
@@ -98,27 +113,12 @@ public class DDMStructureVersionServiceSoap {
 		}
 	}
 
-	public static int getDDMStructureVersionsCount(long ddmStructureId)
+	public static int getStructureVersionsCount(long structureId)
 		throws RemoteException {
 		try {
-			int returnValue = DDMStructureVersionServiceUtil.getDDMStructureVersionsCount(ddmStructureId);
+			int returnValue = DDMStructureVersionServiceUtil.getStructureVersionsCount(structureId);
 
 			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersionSoap getLatestVersion(
-		long ddmStructureId) throws RemoteException {
-		try {
-			com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion returnValue =
-				DDMStructureVersionServiceUtil.getLatestVersion(ddmStructureId);
-
-			return com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersionSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

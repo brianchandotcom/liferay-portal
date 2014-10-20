@@ -53,13 +53,13 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("ddmStructureVersionId", getDdmStructureVersionId());
+		attributes.put("structureVersionId", getStructureVersionId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
-		attributes.put("ddmStructureId", getDdmStructureId());
+		attributes.put("structureId", getStructureId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("definition", getDefinition());
@@ -72,11 +72,10 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long ddmStructureVersionId = (Long)attributes.get(
-				"ddmStructureVersionId");
+		Long structureVersionId = (Long)attributes.get("structureVersionId");
 
-		if (ddmStructureVersionId != null) {
-			setDdmStructureVersionId(ddmStructureVersionId);
+		if (structureVersionId != null) {
+			setStructureVersionId(structureVersionId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -109,10 +108,10 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 			setCreateDate(createDate);
 		}
 
-		Long ddmStructureId = (Long)attributes.get("ddmStructureId");
+		Long structureId = (Long)attributes.get("structureId");
 
-		if (ddmStructureId != null) {
-			setDdmStructureId(ddmStructureId);
+		if (structureId != null) {
+			setStructureId(structureId);
 		}
 
 		String name = (String)attributes.get("name");
@@ -186,26 +185,6 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	@Override
 	public java.util.Date getCreateDate() {
 		return _ddmStructureVersion.getCreateDate();
-	}
-
-	/**
-	* Returns the ddm structure ID of this d d m structure version.
-	*
-	* @return the ddm structure ID of this d d m structure version
-	*/
-	@Override
-	public long getDdmStructureId() {
-		return _ddmStructureVersion.getDdmStructureId();
-	}
-
-	/**
-	* Returns the ddm structure version ID of this d d m structure version.
-	*
-	* @return the ddm structure version ID of this d d m structure version
-	*/
-	@Override
-	public long getDdmStructureVersionId() {
-		return _ddmStructureVersion.getDdmStructureVersionId();
 	}
 
 	@Override
@@ -419,6 +398,26 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	}
 
 	/**
+	* Returns the structure ID of this d d m structure version.
+	*
+	* @return the structure ID of this d d m structure version
+	*/
+	@Override
+	public long getStructureId() {
+		return _ddmStructureVersion.getStructureId();
+	}
+
+	/**
+	* Returns the structure version ID of this d d m structure version.
+	*
+	* @return the structure version ID of this d d m structure version
+	*/
+	@Override
+	public long getStructureVersionId() {
+		return _ddmStructureVersion.getStructureVersionId();
+	}
+
+	/**
 	* Returns the type of this d d m structure version.
 	*
 	* @return the type of this d d m structure version
@@ -529,26 +528,6 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	@Override
 	public void setCreateDate(java.util.Date createDate) {
 		_ddmStructureVersion.setCreateDate(createDate);
-	}
-
-	/**
-	* Sets the ddm structure ID of this d d m structure version.
-	*
-	* @param ddmStructureId the ddm structure ID of this d d m structure version
-	*/
-	@Override
-	public void setDdmStructureId(long ddmStructureId) {
-		_ddmStructureVersion.setDdmStructureId(ddmStructureId);
-	}
-
-	/**
-	* Sets the ddm structure version ID of this d d m structure version.
-	*
-	* @param ddmStructureVersionId the ddm structure version ID of this d d m structure version
-	*/
-	@Override
-	public void setDdmStructureVersionId(long ddmStructureVersionId) {
-		_ddmStructureVersion.setDdmStructureVersionId(ddmStructureVersionId);
 	}
 
 	/**
@@ -744,6 +723,26 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	@Override
 	public void setStorageType(java.lang.String storageType) {
 		_ddmStructureVersion.setStorageType(storageType);
+	}
+
+	/**
+	* Sets the structure ID of this d d m structure version.
+	*
+	* @param structureId the structure ID of this d d m structure version
+	*/
+	@Override
+	public void setStructureId(long structureId) {
+		_ddmStructureVersion.setStructureId(structureId);
+	}
+
+	/**
+	* Sets the structure version ID of this d d m structure version.
+	*
+	* @param structureVersionId the structure version ID of this d d m structure version
+	*/
+	@Override
+	public void setStructureVersionId(long structureVersionId) {
+		_ddmStructureVersion.setStructureVersionId(structureVersionId);
 	}
 
 	/**

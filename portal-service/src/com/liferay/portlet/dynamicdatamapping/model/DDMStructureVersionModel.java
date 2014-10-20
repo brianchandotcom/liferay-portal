@@ -68,18 +68,18 @@ public interface DDMStructureVersionModel extends BaseModel<DDMStructureVersion>
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the ddm structure version ID of this d d m structure version.
+	 * Returns the structure version ID of this d d m structure version.
 	 *
-	 * @return the ddm structure version ID of this d d m structure version
+	 * @return the structure version ID of this d d m structure version
 	 */
-	public long getDdmStructureVersionId();
+	public long getStructureVersionId();
 
 	/**
-	 * Sets the ddm structure version ID of this d d m structure version.
+	 * Sets the structure version ID of this d d m structure version.
 	 *
-	 * @param ddmStructureVersionId the ddm structure version ID of this d d m structure version
+	 * @param structureVersionId the structure version ID of this d d m structure version
 	 */
-	public void setDdmStructureVersionId(long ddmStructureVersionId);
+	public void setStructureVersionId(long structureVersionId);
 
 	/**
 	 * Returns the group ID of this d d m structure version.
@@ -167,18 +167,18 @@ public interface DDMStructureVersionModel extends BaseModel<DDMStructureVersion>
 	public void setCreateDate(Date createDate);
 
 	/**
-	 * Returns the ddm structure ID of this d d m structure version.
+	 * Returns the structure ID of this d d m structure version.
 	 *
-	 * @return the ddm structure ID of this d d m structure version
+	 * @return the structure ID of this d d m structure version
 	 */
-	public long getDdmStructureId();
+	public long getStructureId();
 
 	/**
-	 * Sets the ddm structure ID of this d d m structure version.
+	 * Sets the structure ID of this d d m structure version.
 	 *
-	 * @param ddmStructureId the ddm structure ID of this d d m structure version
+	 * @param structureId the structure ID of this d d m structure version
 	 */
-	public void setDdmStructureId(long ddmStructureId);
+	public void setStructureId(long structureId);
 
 	/**
 	 * Returns the name of this d d m structure version.

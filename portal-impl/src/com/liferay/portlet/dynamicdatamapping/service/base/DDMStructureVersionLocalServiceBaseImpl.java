@@ -35,8 +35,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalServiceImpl;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
-import com.liferay.portal.service.persistence.UserFinder;
-import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion;
@@ -89,27 +87,27 @@ public abstract class DDMStructureVersionLocalServiceBaseImpl
 	/**
 	 * Creates a new d d m structure version with the primary key. Does not add the d d m structure version to the database.
 	 *
-	 * @param ddmStructureVersionId the primary key for the new d d m structure version
+	 * @param structureVersionId the primary key for the new d d m structure version
 	 * @return the new d d m structure version
 	 */
 	@Override
 	public DDMStructureVersion createDDMStructureVersion(
-		long ddmStructureVersionId) {
-		return ddmStructureVersionPersistence.create(ddmStructureVersionId);
+		long structureVersionId) {
+		return ddmStructureVersionPersistence.create(structureVersionId);
 	}
 
 	/**
 	 * Deletes the d d m structure version with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param ddmStructureVersionId the primary key of the d d m structure version
+	 * @param structureVersionId the primary key of the d d m structure version
 	 * @return the d d m structure version that was removed
 	 * @throws PortalException if a d d m structure version with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public DDMStructureVersion deleteDDMStructureVersion(
-		long ddmStructureVersionId) throws PortalException {
-		return ddmStructureVersionPersistence.remove(ddmStructureVersionId);
+		long structureVersionId) throws PortalException {
+		return ddmStructureVersionPersistence.remove(structureVersionId);
 	}
 
 	/**
@@ -209,22 +207,21 @@ public abstract class DDMStructureVersionLocalServiceBaseImpl
 	}
 
 	@Override
-	public DDMStructureVersion fetchDDMStructureVersion(
-		long ddmStructureVersionId) {
-		return ddmStructureVersionPersistence.fetchByPrimaryKey(ddmStructureVersionId);
+	public DDMStructureVersion fetchDDMStructureVersion(long structureVersionId) {
+		return ddmStructureVersionPersistence.fetchByPrimaryKey(structureVersionId);
 	}
 
 	/**
 	 * Returns the d d m structure version with the primary key.
 	 *
-	 * @param ddmStructureVersionId the primary key of the d d m structure version
+	 * @param structureVersionId the primary key of the d d m structure version
 	 * @return the d d m structure version
 	 * @throws PortalException if a d d m structure version with the primary key could not be found
 	 */
 	@Override
-	public DDMStructureVersion getDDMStructureVersion(
-		long ddmStructureVersionId) throws PortalException {
-		return ddmStructureVersionPersistence.findByPrimaryKey(ddmStructureVersionId);
+	public DDMStructureVersion getDDMStructureVersion(long structureVersionId)
+		throws PortalException {
+		return ddmStructureVersionPersistence.findByPrimaryKey(structureVersionId);
 	}
 
 	@Override
@@ -235,8 +232,7 @@ public abstract class DDMStructureVersionLocalServiceBaseImpl
 		actionableDynamicQuery.setClass(DDMStructureVersion.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName(
-			"ddmStructureVersionId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName("structureVersionId");
 
 		return actionableDynamicQuery;
 	}
@@ -247,8 +243,7 @@ public abstract class DDMStructureVersionLocalServiceBaseImpl
 		actionableDynamicQuery.setClass(DDMStructureVersion.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName(
-			"ddmStructureVersionId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName("structureVersionId");
 	}
 
 	/**
@@ -381,80 +376,6 @@ public abstract class DDMStructureVersionLocalServiceBaseImpl
 		this.counterLocalService = counterLocalService;
 	}
 
-	/**
-	 * Returns the user local service.
-	 *
-	 * @return the user local service
-	 */
-	public com.liferay.portal.service.UserLocalService getUserLocalService() {
-		return userLocalService;
-	}
-
-	/**
-	 * Sets the user local service.
-	 *
-	 * @param userLocalService the user local service
-	 */
-	public void setUserLocalService(
-		com.liferay.portal.service.UserLocalService userLocalService) {
-		this.userLocalService = userLocalService;
-	}
-
-	/**
-	 * Returns the user remote service.
-	 *
-	 * @return the user remote service
-	 */
-	public com.liferay.portal.service.UserService getUserService() {
-		return userService;
-	}
-
-	/**
-	 * Sets the user remote service.
-	 *
-	 * @param userService the user remote service
-	 */
-	public void setUserService(
-		com.liferay.portal.service.UserService userService) {
-		this.userService = userService;
-	}
-
-	/**
-	 * Returns the user persistence.
-	 *
-	 * @return the user persistence
-	 */
-	public UserPersistence getUserPersistence() {
-		return userPersistence;
-	}
-
-	/**
-	 * Sets the user persistence.
-	 *
-	 * @param userPersistence the user persistence
-	 */
-	public void setUserPersistence(UserPersistence userPersistence) {
-		this.userPersistence = userPersistence;
-	}
-
-	/**
-	 * Returns the user finder.
-	 *
-	 * @return the user finder
-	 */
-	public UserFinder getUserFinder() {
-		return userFinder;
-	}
-
-	/**
-	 * Sets the user finder.
-	 *
-	 * @param userFinder the user finder
-	 */
-	public void setUserFinder(UserFinder userFinder) {
-		this.userFinder = userFinder;
-	}
-
 	public void afterPropertiesSet() {
 		persistedModelLocalServiceRegistry.register("com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion",
 			ddmStructureVersionLocalService);
@@ -525,14 +446,6 @@ public abstract class DDMStructureVersionLocalServiceBaseImpl
 	protected DDMStructureVersionPersistence ddmStructureVersionPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
-	protected com.liferay.portal.service.UserLocalService userLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserService.class)
-	protected com.liferay.portal.service.UserService userService;
-	@BeanReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
-	@BeanReference(type = UserFinder.class)
-	protected UserFinder userFinder;
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private String _beanIdentifier;

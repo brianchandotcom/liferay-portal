@@ -34,6 +34,6 @@ public abstract class DDMStructureVersionActionableDynamicQuery
 
 		setClassLoader(PortalClassLoaderUtil.getClassLoader());
 
-		setPrimaryKeyPropertyName("ddmStructureVersionId");
+		setPrimaryKeyPropertyName("structureVersionId");
 	}
 }

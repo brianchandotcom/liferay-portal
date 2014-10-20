@@ -19,7 +19,7 @@
 <%
 JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
 
-String ddmTemplateKey = ParamUtil.getString(request, "ddmTemplateKey", article.getTemplateId());
+String ddmTemplateKey = ParamUtil.getString(request, "ddmTemplateKey", article.getDDMTemplateKey());
 %>
 
 <div class="journal-article-preview">

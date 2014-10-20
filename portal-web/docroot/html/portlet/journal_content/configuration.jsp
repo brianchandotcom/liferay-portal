@@ -60,13 +60,13 @@ catch (NoSuchArticleException nsae) {
 	<c:if test="<%= article != null %>">
 
 		<%
-		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(article.getGroupId(), PortalUtil.getClassNameId(JournalArticle.class), article.getStructureId(), true);
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(article.getGroupId(), PortalUtil.getClassNameId(JournalArticle.class), article.getDDMStructureKey(), true);
 
 		List<DDMTemplate> ddmTemplates = DDMTemplateLocalServiceUtil.getTemplates(article.getGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId(), true);
 
 		if (!ddmTemplates.isEmpty()) {
 			if (Validator.isNull(ddmTemplateKey)) {
-				ddmTemplateKey = article.getTemplateId();
+				ddmTemplateKey = article.getDDMTemplateKey();
 			}
 		%>
 

@@ -185,7 +185,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		return DDMStructureLocalServiceUtil.fetchStructure(
 			PortalUtil.getSiteGroupId(getGroupId()),
 			ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class),
-			getStructureId(), true);
+			getDDMStructureKey(), true);
 	}
 
 	@Override
@@ -193,7 +193,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		return DDMTemplateLocalServiceUtil.fetchTemplate(
 			PortalUtil.getSiteGroupId(getGroupId()),
 			ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class),
-			getStructureId(), true);
+			getDDMStructureKey(), true);
 	}
 
 	@Override

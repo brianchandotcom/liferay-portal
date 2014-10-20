@@ -264,7 +264,7 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 		String contentField = feed.getContentField();
 
 		if (contentField.equals(JournalFeedConstants.RENDERED_WEB_CONTENT)) {
-			String rendererTemplateId = article.getTemplateId();
+			String rendererTemplateId = article.getDDMTemplateKey();
 
 			if (Validator.isNotNull(feed.getRendererTemplateId())) {
 				rendererTemplateId = feed.getRendererTemplateId();

@@ -107,9 +107,11 @@ public class ArticleSearch extends SearchContainer<JournalArticle> {
 			ArticleDisplayTerms.STATUS,
 			String.valueOf(displayTerms.getStatus()));
 		iteratorURL.setParameter(
-			ArticleDisplayTerms.STRUCTURE_ID, displayTerms.getStructureId());
+			ArticleDisplayTerms.DDM_STRUCTURE_KEY,
+			displayTerms.getDDMStructureKey());
 		iteratorURL.setParameter(
-			ArticleDisplayTerms.TEMPLATE_ID, displayTerms.getTemplateId());
+			ArticleDisplayTerms.DDM_TEMPLATE_KEY,
+			displayTerms.getDDMTemplateKey());
 		iteratorURL.setParameter(
 			ArticleDisplayTerms.TITLE, displayTerms.getTitle());
 		iteratorURL.setParameter(

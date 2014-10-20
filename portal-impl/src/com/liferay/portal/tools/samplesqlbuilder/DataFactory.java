@@ -1560,7 +1560,6 @@ public class DataFactory {
 		journalArticleModel.setUrlTitle(urlTitle);
 
 		journalArticleModel.setContent(_journalArticleContent);
-		journalArticleModel.setType("general");
 		journalArticleModel.setStructureId(
 			_defaultJournalDDMStructureModel.getStructureKey());
 		journalArticleModel.setTemplateId(

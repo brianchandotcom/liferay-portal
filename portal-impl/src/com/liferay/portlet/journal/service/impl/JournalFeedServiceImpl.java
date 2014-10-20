@@ -32,19 +32,18 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 	@Override
 	public JournalFeed addFeed(
 			long groupId, String feedId, boolean autoFeedId, String name,
-			String description, String type, String structureId,
-			String templateId, String rendererTemplateId, int delta,
-			String orderByCol, String orderByType,
-			String targetLayoutFriendlyUrl, String targetPortletId,
-			String contentField, String feedType, double feedVersion,
-			ServiceContext serviceContext)
+			String description, String structureId, String templateId,
+			String rendererTemplateId, int delta, String orderByCol,
+			String orderByType, String targetLayoutFriendlyUrl,
+			String targetPortletId, String contentField, String feedType,
+			double feedVersion, ServiceContext serviceContext)
 		throws PortalException {
 
 		JournalPermission.check(
 			getPermissionChecker(), groupId, ActionKeys.ADD_FEED);
 
 		return journalFeedLocalService.addFeed(
-			getUserId(), groupId, feedId, autoFeedId, name, description, type,
+			getUserId(), groupId, feedId, autoFeedId, name, description,
 			structureId, templateId, rendererTemplateId, delta, orderByCol,
 			orderByType, targetLayoutFriendlyUrl, targetPortletId, contentField,
 			feedType, feedVersion, serviceContext);
@@ -109,18 +108,18 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 	@Override
 	public JournalFeed updateFeed(
 			long groupId, String feedId, String name, String description,
-			String type, String structureId, String templateId,
-			String rendererTemplateId, int delta, String orderByCol,
-			String orderByType, String targetLayoutFriendlyUrl,
-			String targetPortletId, String contentField, String feedType,
-			double feedVersion, ServiceContext serviceContext)
+			String structureId, String templateId, String rendererTemplateId,
+			int delta, String orderByCol, String orderByType,
+			String targetLayoutFriendlyUrl, String targetPortletId,
+			String contentField, String feedType, double feedVersion,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		JournalFeedPermission.check(
 			getPermissionChecker(), groupId, feedId, ActionKeys.UPDATE);
 
 		return journalFeedLocalService.updateFeed(
-			groupId, feedId, name, description, type, structureId, templateId,
+			groupId, feedId, name, description, structureId, templateId,
 			rendererTemplateId, delta, orderByCol, orderByType,
 			targetLayoutFriendlyUrl, targetPortletId, contentField, feedType,
 			feedVersion, serviceContext);

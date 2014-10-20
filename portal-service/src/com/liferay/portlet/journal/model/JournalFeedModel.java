@@ -253,21 +253,6 @@ public interface JournalFeedModel extends BaseModel<JournalFeed>,
 	public void setDescription(String description);
 
 	/**
-	 * Returns the type of this journal feed.
-	 *
-	 * @return the type of this journal feed
-	 */
-	@AutoEscape
-	public String getType();
-
-	/**
-	 * Sets the type of this journal feed.
-	 *
-	 * @param type the type of this journal feed
-	 */
-	public void setType(String type);
-
-	/**
 	 * Returns the structure ID of this journal feed.
 	 *
 	 * @return the structure ID of this journal feed

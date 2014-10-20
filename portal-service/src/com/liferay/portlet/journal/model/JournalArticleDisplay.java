@@ -56,8 +56,6 @@ public interface JournalArticleDisplay extends Serializable {
 
 	public String getTitle();
 
-	public String getType();
-
 	public String getUrlTitle();
 
 	public long getUserId();

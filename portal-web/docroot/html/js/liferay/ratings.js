@@ -78,7 +78,7 @@ AUI.add(
 						if (score == 1.0) {
 							scoreIndex = 0;
 						}
-						else if (score == -1.0) {
+						else if (score == 0.0) {
 							scoreIndex = 1;
 						}
 
@@ -243,8 +243,8 @@ AUI.add(
 				_INSTANCES: {},
 
 				_thumbScoreMap: {
-					'-1': 0,
-					'down': -1,
+					'-1': -1,
+					'down': 0,
 					'up': 1
 				}
 			}
@@ -265,7 +265,7 @@ AUI.add(
 						var instance = this;
 
 						var uri = instance.get(STR_URI);
-						var score = instance.ratings.get('selectedIndex') + 1;
+						var score = (instance.ratings.get('selectedIndex') + 1) / instance.get(STR_SIZE);
 
 						instance._sendVoteRequest(uri, score, instance._saveCallback);
 					},
@@ -314,7 +314,7 @@ AUI.add(
 
 						var description = Liferay.Language.get('average');
 
-						var averageScore = json.averageScore;
+						var averageScore = json.averageScore * instance.get(STR_SIZE);
 
 						var label = instance._getLabel(description, json.totalEntries);
 
@@ -370,7 +370,7 @@ AUI.add(
 						var instance = this;
 
 						if (themeDisplay.isSignedIn()) {
-							var description = instance._fixScore(instance.get('totalScore'));
+							var description = instance._fixScore(instance.get('totalScore') - (instance.get('totalEntries') - instance.get('totalScore')));
 
 							var totalEntries = instance.get('totalEntries');
 							var yourScore = instance.get(STR_YOUR_SCORE);
@@ -406,7 +406,7 @@ AUI.add(
 
 						var json = xhr.get(STR_RESPONSE_DATA);
 
-						var score = Math.round(json.totalEntries * json.averageScore);
+						var score = Math.round(json.totalScore - (json.totalEntries - json.totalScore));
 
 						var description = instance._fixScore(score);
 						var label = instance._getLabel(description, json.totalEntries);

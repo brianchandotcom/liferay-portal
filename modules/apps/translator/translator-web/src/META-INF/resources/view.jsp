@@ -14,15 +14,15 @@
  */
 --%>
 
-<%@ include file="init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
-Translation translation = (Translation)request.getAttribute("TRANSLATOR_TRANSLATION");
+Translation translation = (Translation)request.getAttribute(TranslatorConfiguration.TRANSLATOR_TRANSLATION);
 
-Map<String, String> languageIdsMap = TranslatorUtil.getLanguageIdsMap(locale);
+Map<String, String> languageIdsMap = TranslatorUtil.getLanguageIdsMap(locale, translatorConfiguration);
 
 if (translation == null) {
-	String translationId = PropsUtil.get(PropsKeys.TRANSLATOR_DEFAULT_LANGUAGES);
+	String translationId = translatorConfiguration.getTranslatorDefaultLanguages();
 
 	String[] fromAndTolanguageIds = TranslatorUtil.getFromAndToLanguageIds(translationId, languageIdsMap);
 

@@ -2111,9 +2111,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		String trimmedPreviousLine = StringUtil.trimLeading(previousLine);
 
-		if (trimmedLine.startsWith("// ") ||
-			trimmedPreviousLine.startsWith("// ")) {
-
+		if (line.contains("// ") || previousLine.contains("// ")) {
 			return null;
 		}
 
@@ -2155,9 +2153,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					previousLine, null, tabDiff, false, true, false);
 			}
 
-			if ((previousLine.endsWith(StringPool.EQUAL) ||
-				 trimmedPreviousLine.equals("return")) &&
-				line.endsWith(StringPool.SEMICOLON)) {
+			if (line.endsWith(StringPool.SEMICOLON) &&
+				!previousLine.endsWith(StringPool.COLON) &&
+				!previousLine.endsWith(StringPool.OPEN_BRACKET) &&
+				!previousLine.endsWith(StringPool.OPEN_CURLY_BRACE) &&
+				!previousLine.endsWith(StringPool.OPEN_PARENTHESIS) &&
+				!previousLine.endsWith(StringPool.PERIOD) &&
+				(lineTabCount == (previousLineTabCount + 1))) {
 
 				return getCombinedLinesContent(
 					content, fileName, line, trimmedLine, lineLength, lineCount,
@@ -2201,7 +2203,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		if (((trimmedLine.length() + previousLineLength) <= _MAX_LINE_LENGTH) &&
-			previousLine.endsWith(StringPool.PERIOD) &&
+			(previousLine.endsWith(StringPool.OPEN_BRACKET) ||
+			 previousLine.endsWith(StringPool.OPEN_PARENTHESIS) ||
+			 previousLine.endsWith(StringPool.PERIOD)) &&
 			line.endsWith(StringPool.SEMICOLON)) {
 
 			return getCombinedLinesContent(
@@ -2372,12 +2376,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		if ((trimmedLine.length() + previousLineLength) > _MAX_LINE_LENGTH) {
 			return null;
-		}
-
-		if (line.endsWith(StringPool.SEMICOLON)) {
-			return getCombinedLinesContent(
-				content, fileName, line, trimmedLine, lineLength, lineCount,
-				previousLine, null, tabDiff, false, false, false);
 		}
 
 		if (line.endsWith(StringPool.COMMA)) {

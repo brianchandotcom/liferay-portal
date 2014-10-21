@@ -24,6 +24,7 @@ import java.util.TreeSet;
  * Implements the comparable interface to sort routes by increasing generality.
  *
  * @author Connor McKay
+ * @author Hugo Huijser
  */
 public class ComparableRoute implements Comparable<ComparableRoute> {
 
@@ -66,6 +67,21 @@ public class ComparableRoute implements Comparable<ComparableRoute> {
 
 		String[] fragments = pattern.split("[/\\.](?!\\*)");
 
+		// Having more fragments is more general
+
+		if (_fragments.length != fragments.length) {
+			return _fragments.length - fragments.length;
+		}
+
+		// Having more capture fragments is more general
+
+		int _captureFragmentsCount = getCaptureFragmentsCount(_fragments);
+		int captureFragmentsCount = getCaptureFragmentsCount(fragments);
+
+		if (_captureFragmentsCount != captureFragmentsCount) {
+			return _captureFragmentsCount - _captureFragmentsCount;
+		}
+
 		int i;
 
 		for (i = 0; (i < _fragments.length) && (i < fragments.length); i++) {
@@ -91,12 +107,6 @@ public class ComparableRoute implements Comparable<ComparableRoute> {
 			if (isMatchAny(_fragment) && !isMatchAny(fragment)) {
 				return 1;
 			}
-		}
-
-		// Having more fragments is more general
-
-		if (_fragments.length != fragments.length) {
-			return _fragments.length - fragments.length;
 		}
 
 		// Having fewer implicit parameters is more general
@@ -129,6 +139,18 @@ public class ComparableRoute implements Comparable<ComparableRoute> {
 		else {
 			return false;
 		}
+	}
+
+	public int getCaptureFragmentsCount(String[] fragments) {
+		int count = 0;
+
+		for (String fragment : fragments) {
+			if (isCaptureFragment(fragment)) {
+				count++;
+			}
+		}
+
+		return count;
 	}
 
 	public Map<String, String> getGeneratedParameters() {

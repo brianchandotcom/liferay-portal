@@ -3,11 +3,11 @@
 
 <routes>
 	<route>
-		<pattern>/maximized{%appURL:.*}</pattern>
-		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
-	</route>
-	<route>
 		<pattern>{%appURL:.*}</pattern>
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/maximized{%appURL:.*}</pattern>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 </routes>

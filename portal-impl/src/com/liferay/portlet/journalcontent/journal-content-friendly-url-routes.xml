@@ -9,13 +9,13 @@
 		<implicit-parameter name="struts_action">/journal_content/view</implicit-parameter>
 	</route>
 	<route>
-		<pattern>/56/{groupId:\d+}/{articleId:[^/]+}/{templateId:[^/]+}</pattern>
-		<implicit-parameter name="instanceId">0000</implicit-parameter>
-		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+		<pattern>/{p_p_id}/{groupId:\d+}/{articleId:[^/]+}</pattern>
 		<implicit-parameter name="struts_action">/journal_content/view</implicit-parameter>
 	</route>
 	<route>
-		<pattern>/{p_p_id}/{groupId:\d+}/{articleId:[^/]+}</pattern>
+		<pattern>/56/{groupId:\d+}/{articleId:[^/]+}/{templateId:[^/]+}</pattern>
+		<implicit-parameter name="instanceId">0000</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 		<implicit-parameter name="struts_action">/journal_content/view</implicit-parameter>
 	</route>
 	<route>

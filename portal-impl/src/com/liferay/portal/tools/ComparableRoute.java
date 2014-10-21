@@ -24,12 +24,9 @@ import java.util.TreeSet;
  * Implements the comparable interface to sort routes by increasing generality.
  *
  * @author Connor McKay
+ * @author Hugo Huijser
  */
 public class ComparableRoute implements Comparable<ComparableRoute> {
-
-	public static boolean hasRegex(String fragment) {
-		return fragment.contains(":");
-	}
 
 	public static boolean isCaptureFragment(String fragment) {
 		return fragment.contains("{");
@@ -70,6 +67,21 @@ public class ComparableRoute implements Comparable<ComparableRoute> {
 
 		String[] fragments = pattern.split("[/\\.](?!\\*)");
 
+		// Having more fragments is more general
+
+		if (_fragments.length != fragments.length) {
+			return _fragments.length - fragments.length;
+		}
+
+		// Having more capture fragments is more general
+
+		int _captureFragmentsCount = getCaptureFragmentsCount(_fragments);
+		int captureFragmentsCount = getCaptureFragmentsCount(fragments);
+
+		if (_captureFragmentsCount != captureFragmentsCount) {
+			return _captureFragmentsCount - _captureFragmentsCount;
+		}
+
 		int i;
 
 		for (i = 0; (i < _fragments.length) && (i < fragments.length); i++) {
@@ -95,26 +107,6 @@ public class ComparableRoute implements Comparable<ComparableRoute> {
 			if (isMatchAny(_fragment) && !isMatchAny(fragment)) {
 				return 1;
 			}
-
-			// Not having a regex is more general than having a custom one
-
-			if (hasRegex(_fragment) && !hasRegex(fragment)) {
-				return -1;
-			}
-
-			if (!hasRegex(_fragment) && hasRegex(fragment)) {
-				return 1;
-			}
-		}
-
-		// Having more fragments is more general
-
-		if ((i < fragments.length) && (i >= _fragments.length)) {
-			return -1;
-		}
-
-		if ((i < _fragments.length) && (i >= fragments.length)) {
-			return 1;
 		}
 
 		// Having fewer implicit parameters is more general
@@ -122,12 +114,8 @@ public class ComparableRoute implements Comparable<ComparableRoute> {
 		Map<String, String> implicitParameters =
 			comparableRoute.getImplicitParameters();
 
-		if (_implicitParameters.size() > implicitParameters.size()) {
-			return -1;
-		}
-
-		if (_implicitParameters.size() < implicitParameters.size()) {
-			return 1;
+		if (_implicitParameters.size() != implicitParameters.size()) {
+			return implicitParameters.size() - _implicitParameters.size();
 		}
 
 		return _pattern.compareTo(comparableRoute.getPattern());
@@ -151,6 +139,18 @@ public class ComparableRoute implements Comparable<ComparableRoute> {
 		else {
 			return false;
 		}
+	}
+
+	public int getCaptureFragmentsCount(String[] fragments) {
+		int count = 0;
+
+		for (String fragment : fragments) {
+			if (isCaptureFragment(fragment)) {
+				count++;
+			}
+		}
+
+		return count;
 	}
 
 	public Map<String, String> getGeneratedParameters() {

@@ -21,14 +21,21 @@
 		<implicit-parameter name="struts_action">/blogs/rss</implicit-parameter>
 	</route>
 	<route>
+		<pattern>/{entryId:\d+}</pattern>
+		<implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
+		<implicit-parameter name="p_p_state">normal</implicit-parameter>
+		<implicit-parameter name="struts_action">/blogs/view_entry</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/{urlTitle}</pattern>
+		<implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
+		<implicit-parameter name="p_p_state">normal</implicit-parameter>
+		<implicit-parameter name="struts_action">/blogs/view_entry</implicit-parameter>
+	</route>
+	<route>
 		<pattern>/trackback/{entryId:\d+}</pattern>
 		<implicit-parameter name="p_p_lifecycle">1</implicit-parameter>
 		<implicit-parameter name="p_p_state">exclusive</implicit-parameter>
-		<implicit-parameter name="struts_action">/blogs/trackback</implicit-parameter>
-	</route>
-	<route>
-		<pattern>/trackback/{entryId:\d+}/{p_p_state}</pattern>
-		<implicit-parameter name="p_p_lifecycle">1</implicit-parameter>
 		<implicit-parameter name="struts_action">/blogs/trackback</implicit-parameter>
 	</route>
 	<route>
@@ -43,30 +50,23 @@
 		<implicit-parameter name="struts_action">/blogs/rss</implicit-parameter>
 	</route>
 	<route>
-		<pattern>/trackback/{urlTitle}/{p_p_state}</pattern>
-		<implicit-parameter name="p_p_lifecycle">1</implicit-parameter>
-		<implicit-parameter name="struts_action">/blogs/trackback</implicit-parameter>
-	</route>
-	<route>
-		<pattern>/{entryId:\d+}</pattern>
-		<implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
-		<implicit-parameter name="p_p_state">normal</implicit-parameter>
-		<implicit-parameter name="struts_action">/blogs/view_entry</implicit-parameter>
-	</route>
-	<route>
 		<pattern>/{entryId:\d+}/{p_p_state}</pattern>
 		<implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
-		<implicit-parameter name="struts_action">/blogs/view_entry</implicit-parameter>
-	</route>
-	<route>
-		<pattern>/{urlTitle}</pattern>
-		<implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
-		<implicit-parameter name="p_p_state">normal</implicit-parameter>
 		<implicit-parameter name="struts_action">/blogs/view_entry</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/{urlTitle}/{p_p_state}</pattern>
 		<implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
 		<implicit-parameter name="struts_action">/blogs/view_entry</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/trackback/{entryId:\d+}/{p_p_state}</pattern>
+		<implicit-parameter name="p_p_lifecycle">1</implicit-parameter>
+		<implicit-parameter name="struts_action">/blogs/trackback</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/trackback/{urlTitle}/{p_p_state}</pattern>
+		<implicit-parameter name="p_p_lifecycle">1</implicit-parameter>
+		<implicit-parameter name="struts_action">/blogs/trackback</implicit-parameter>
 	</route>
 </routes>

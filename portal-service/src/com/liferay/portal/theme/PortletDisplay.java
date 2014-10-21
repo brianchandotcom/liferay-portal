@@ -31,8 +31,8 @@ import javax.portlet.PortletPreferences;
 /**
  * Provides general configuration methods for the portlet, providing access to
  * the portlet's content, instance, theme, URLs, and more. This class contains
- * contextual information about the currently rendered portlet. An object of this
- * class is only available in the context of a single portlet and is not
+ * contextual information about the currently rendered portlet. An object of
+ * this class is only available in the context of a single portlet and is not
  * available in the context of any page.
  *
  * @author Brian Wing Shun Chan
@@ -200,8 +200,8 @@ public class PortletDisplay implements Serializable {
 	 * <code>liferay-portlet.xml</code> file.
 	 *
 	 * @return the control panel category where the current portlet resides, or
-	 * an empty string if the portlet is not configured to appear in the
-	 * control panel.
+	 *         an empty string if the portlet is not configured to appear in the
+	 *         control panel.
 	 */
 	public String getControlPanelCategory() {
 		return _controlPanelCategory;

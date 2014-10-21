@@ -1627,7 +1627,7 @@ public class SitesImpl implements Sites {
 	 * its linked layout set when it is first accessed.
 	 * </p>
 	 *
-	 * @param  layoutSet the site having its timestamp reset
+	 * @param layoutSet the site having its timestamp reset
 	 */
 	protected void doResetPrototype(LayoutSet layoutSet) {
 		UnicodeProperties settingsProperties =

@@ -609,9 +609,8 @@ public class PortalUtil {
 
 	/**
 	 * Returns the ID of certain portlets from the fully qualified name of one
-	 * of their classes. The portlets this method supports are: blogs,
-	 * calendar, document library, image gallery, journal, message boards, and
-	 * wiki.
+	 * of their classes. The portlets this method supports are: blogs, calendar,
+	 * document library, image gallery, journal, message boards, and wiki.
 	 *
 	 * @param  className the fully qualified name of a class in a portlet
 	 * @return the ID of the portlet the class is a part of, or an empty string

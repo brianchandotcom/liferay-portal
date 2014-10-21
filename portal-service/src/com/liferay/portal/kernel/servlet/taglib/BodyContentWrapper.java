@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.servlet.taglib;
 import com.liferay.portal.kernel.util.StringBundler;
 
 /**
-* @author Raymond Augé
+ * @author Raymond Augé
  */
 public interface BodyContentWrapper {
 

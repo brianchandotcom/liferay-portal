@@ -359,8 +359,8 @@ public class OrganizationLocalServiceImpl
 	 * Assigns the password policy to the organizations, removing any other
 	 * currently assigned password policies.
 	 *
-	 * @param  passwordPolicyId the primary key of the password policy
-	 * @param  organizationIds the primary keys of the organizations
+	 * @param passwordPolicyId the primary key of the password policy
+	 * @param organizationIds the primary keys of the organizations
 	 */
 	@Override
 	public void addPasswordPolicyOrganizations(
@@ -1676,8 +1676,8 @@ public class OrganizationLocalServiceImpl
 	/**
 	 * Removes the organizations from the password policy.
 	 *
-	 * @param  passwordPolicyId the primary key of the password policy
-	 * @param  organizationIds the primary keys of the organizations
+	 * @param passwordPolicyId the primary key of the password policy
+	 * @param organizationIds the primary keys of the organizations
 	 */
 	@Override
 	public void unsetPasswordPolicyOrganizations(

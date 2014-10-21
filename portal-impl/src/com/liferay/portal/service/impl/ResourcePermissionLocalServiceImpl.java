@@ -161,11 +161,11 @@ public class ResourcePermissionLocalServiceImpl
 	 * permissions to view all blog posts.
 	 * </p>
 	 *
-	 * @param  resourceName the resource's name, which can be either a class
-	 *         name or a portlet ID
-	 * @param  roleName the role's name
-	 * @param  scope the scope
-	 * @param  resourceActionBitwiseValue the bitwise IDs of the actions
+	 * @param resourceName the resource's name, which can be either a class name
+	 *        or a portlet ID
+	 * @param roleName the role's name
+	 * @param scope the scope
+	 * @param resourceActionBitwiseValue the bitwise IDs of the actions
 	 */
 	@Override
 	public void addResourcePermissions(
@@ -408,8 +408,8 @@ public class ResourcePermissionLocalServiceImpl
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getAvailableResourcePermissionActionIds(
-	 *             long, String, int, String, Collection)}
+	 *             #getAvailableResourcePermissionActionIds(long, String, int,
+	 *             String, Collection)}
 	 */
 	@Deprecated
 	@Override

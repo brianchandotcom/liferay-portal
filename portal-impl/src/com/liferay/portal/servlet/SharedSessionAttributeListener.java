@@ -34,9 +34,10 @@ import javax.servlet.http.HttpSessionListener;
  * with shared session attributes being modified out of sequence.
  * </p>
  *
- * @author Michael C. Han
+ * @author     Michael C. Han
  * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class SharedSessionAttributeListener
 	implements HttpSessionAttributeListener, HttpSessionListener {
 

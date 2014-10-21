@@ -139,7 +139,7 @@ public abstract class BaseStore implements Store {
 	 * Ensures company's root directory exists. Only implemented by {@link
 	 * JCRStore#checkRoot(long)}.
 	 *
-	 * @param  companyId the primary key of the company
+	 * @param companyId the primary key of the company
 	 */
 	@Override
 	public abstract void checkRoot(long companyId);
@@ -463,8 +463,8 @@ public abstract class BaseStore implements Store {
 	 * Moves an existing directory. Only implemented by {@link
 	 * JCRStore#move(String, String)}.
 	 *
-	 * @param  srcDir the original directory's name
-	 * @param  destDir the new directory's name
+	 * @param srcDir the original directory's name
+	 * @param destDir the new directory's name
 	 */
 	@Override
 	public abstract void move(String srcDir, String destDir);

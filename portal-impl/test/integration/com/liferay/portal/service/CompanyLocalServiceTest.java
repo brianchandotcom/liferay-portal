@@ -24,12 +24,7 @@ import com.liferay.portal.NoSuchShardException;
 import com.liferay.portal.NoSuchVirtualHostException;
 import com.liferay.portal.RequiredCompanyException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionAttribute;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -47,6 +42,7 @@ import com.liferay.portal.service.persistence.PortalPreferencesUtil;
 import com.liferay.portal.service.persistence.PortletUtil;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
+import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortalInstances;
@@ -69,12 +65,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 
 import org.springframework.core.io.FileSystemResourceLoader;
@@ -93,6 +90,9 @@ import org.springframework.mock.web.MockServletContext;
 @Sync
 public class CompanyLocalServiceTest {
 
+	@ClassRule
+	public static TestRule transactionalTestRule = new TransactionalTestRule();
+
 	@Before
 	public void setUp() {
 		_companyId = CompanyThreadLocal.getCompanyId();
@@ -103,17 +103,6 @@ public class CompanyLocalServiceTest {
 
 		_mockServletContext = new MockServletContext(
 			"file:" + file.getAbsolutePath(), new FileSystemResourceLoader());
-
-		// transaction properties
-
-		TransactionAttribute.Builder builder =
-			new TransactionAttribute.Builder();
-
-		builder.setPropagation(Propagation.REQUIRED);
-		builder.setRollbackForClasses(
-			PortalException.class, SystemException.class);
-
-		_transactionAttribute = builder.build();
 	}
 
 	@After
@@ -273,13 +262,7 @@ public class CompanyLocalServiceTest {
 
 	@Test(expected = NoSuchAccountException.class)
 	public void testDeleteCompanyDeletesAccount() throws Exception {
-		String webId = "webId";
-
-		Company company = CompanyLocalServiceUtil.addCompany(
-			webId, webId, webId + ".com", PropsValues.SHARD_DEFAULT_NAME, false,
-			0, true);
-
-		PortalInstances.initCompany(_mockServletContext, webId);
+		Company company = addCompany();
 
 		CompanyLocalServiceUtil.deleteCompany(company);
 
@@ -290,13 +273,7 @@ public class CompanyLocalServiceTest {
 	public void testDeleteCompanyDeletesDefaultPasswordPolicy()
 		throws Exception {
 
-		String webId = "webId";
-
-		Company company = CompanyLocalServiceUtil.addCompany(
-			webId, webId, webId + ".com", PropsValues.SHARD_DEFAULT_NAME, false,
-			0, true);
-
-		PortalInstances.initCompany(_mockServletContext, webId);
+		Company company = addCompany();
 
 		CompanyLocalServiceUtil.deleteCompany(company);
 
@@ -306,13 +283,7 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testDeleteCompanyDeletesGroups() throws Exception {
-		String webId = "webId";
-
-		Company company = CompanyLocalServiceUtil.addCompany(
-			webId, webId, webId + ".com", PropsValues.SHARD_DEFAULT_NAME, false,
-			0, true);
-
-		PortalInstances.initCompany(_mockServletContext, webId);
+		Company company = addCompany();
 
 		CompanyLocalServiceUtil.deleteCompany(company);
 
@@ -329,13 +300,7 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testDeleteCompanyDeletesLayoutPrototypes() throws Exception {
-		String webId = "webId";
-
-		Company company = CompanyLocalServiceUtil.addCompany(
-			webId, webId, webId + ".com", PropsValues.SHARD_DEFAULT_NAME, false,
-			0, true);
-
-		PortalInstances.initCompany(_mockServletContext, webId);
+		Company company = addCompany();
 
 		CompanyLocalServiceUtil.deleteCompany(company);
 
@@ -352,13 +317,7 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testDeleteCompanyDeletesLayoutSetPrototypes() throws Exception {
-		String webId = "webId";
-
-		Company company = CompanyLocalServiceUtil.addCompany(
-			webId, webId, webId + ".com", PropsValues.SHARD_DEFAULT_NAME, false,
-			0, true);
-
-		PortalInstances.initCompany(_mockServletContext, webId);
+		Company company = addCompany();
 
 		CompanyLocalServiceUtil.deleteCompany(company);
 
@@ -373,41 +332,19 @@ public class CompanyLocalServiceTest {
 	public void testDeleteCompanyDeletesNonDefaultPasswordPolicies()
 		throws Throwable {
 
-		String webId = "webId";
-
-		final Company company = CompanyLocalServiceUtil.addCompany(
-			webId, webId, webId + ".com", PropsValues.SHARD_DEFAULT_NAME, false,
-			0, true);
-
-		PortalInstances.initCompany(_mockServletContext, webId);
+		final Company company = addCompany();
 
 		CompanyLocalServiceUtil.deleteCompany(company);
 
-		TransactionInvokerUtil.invoke(
-			_transactionAttribute, new Callable<Void>() {
+		int passwordPoliciesCount = PasswordPolicyUtil.countByC_DP(
+			company.getCompanyId(), false);
 
-				@Override
-				public Void call() throws Exception {
-					int passwordPoliciesCount = PasswordPolicyUtil.countByC_DP(
-						company.getCompanyId(), false);
-
-					Assert.assertEquals(0, passwordPoliciesCount);
-
-					return null;
-				}
-			}
-		);
+		Assert.assertEquals(0, passwordPoliciesCount);
 	}
 
 	@Test
 	public void testDeleteCompanyDeletesOrganizations() throws Exception {
-		String webId = "webId";
-
-		Company company = CompanyLocalServiceUtil.addCompany(
-			webId, webId, webId + ".com", PropsValues.SHARD_DEFAULT_NAME, false,
-			0, true);
-
-		PortalInstances.initCompany(_mockServletContext, webId);
+		Company company = addCompany();
 
 		CompanyLocalServiceUtil.deleteCompany(company);
 
@@ -421,13 +358,7 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testDeleteCompanyDeletesPortalInstance() throws Exception {
-		String webId = "webId";
-
-		Company company = CompanyLocalServiceUtil.addCompany(
-			webId, webId, webId + ".com", PropsValues.SHARD_DEFAULT_NAME, false,
-			0, true);
-
-		PortalInstances.initCompany(_mockServletContext, webId);
+		Company company = addCompany();
 
 		CompanyLocalServiceUtil.deleteCompany(company);
 
@@ -440,68 +371,29 @@ public class CompanyLocalServiceTest {
 
 	@Test(expected = NoSuchPreferencesException.class)
 	public void testDeleteCompanyDeletesPortalPreferences() throws Throwable {
-		String webId = "webId";
-
-		final Company company = CompanyLocalServiceUtil.addCompany(
-			webId, webId, webId + ".com", PropsValues.SHARD_DEFAULT_NAME, false,
-			0, true);
-
-		PortalInstances.initCompany(_mockServletContext, webId);
+		final Company company = addCompany();
 
 		CompanyLocalServiceUtil.deleteCompany(company);
 
-		TransactionInvokerUtil.invoke(
-			_transactionAttribute, new Callable<Void>() {
-
-				@Override
-				public Void call() throws Exception {
-					PortalPreferencesUtil.findByO_O(
-						company.getCompanyId(),
-						PortletKeys.PREFS_OWNER_TYPE_COMPANY);
-
-					return null;
-				}
-			}
-		);
+		PortalPreferencesUtil.findByO_O(
+			company.getCompanyId(), PortletKeys.PREFS_OWNER_TYPE_COMPANY);
 	}
 
 	@Test
 	public void testDeleteCompanyDeletesPortlets() throws Throwable {
-		String webId = "webId";
-
-		final Company company = CompanyLocalServiceUtil.addCompany(
-			webId, webId, webId + ".com", PropsValues.SHARD_DEFAULT_NAME, false,
-			0, true);
-
-		PortalInstances.initCompany(_mockServletContext, webId);
+		final Company company = addCompany();
 
 		CompanyLocalServiceUtil.deleteCompany(company);
 
-		TransactionInvokerUtil.invoke(
-			_transactionAttribute, new Callable<Void>() {
+		int portletsCount = PortletUtil.countByCompanyId(
+			company.getCompanyId());
 
-				@Override
-				public Void call() throws Exception {
-					int portletsCount = PortletUtil.countByCompanyId(
-						company.getCompanyId());
-
-					Assert.assertEquals(0, portletsCount);
-
-					return null;
-				}
-			}
-		);
+		Assert.assertEquals(0, portletsCount);
 	}
 
 	@Test
 	public void testDeleteCompanyDeletesRoles() throws Exception {
-		String webId = "webId";
-
-		Company company = CompanyLocalServiceUtil.addCompany(
-			webId, webId, webId + ".com", PropsValues.SHARD_DEFAULT_NAME, false,
-			0, true);
-
-		PortalInstances.initCompany(_mockServletContext, webId);
+		Company company = addCompany();
 
 		CompanyLocalServiceUtil.deleteCompany(company);
 
@@ -513,13 +405,7 @@ public class CompanyLocalServiceTest {
 
 	@Test(expected = NoSuchShardException.class)
 	public void testDeleteCompanyDeletesShard() throws Exception {
-		String webId = "webId";
-
-		Company company = CompanyLocalServiceUtil.addCompany(
-			webId, webId, webId + ".com", PropsValues.SHARD_DEFAULT_NAME, false,
-			0, true);
-
-		PortalInstances.initCompany(_mockServletContext, webId);
+		Company company = addCompany();
 
 		CompanyLocalServiceUtil.deleteCompany(company);
 
@@ -529,13 +415,7 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testDeleteCompanyDeletesUsers() throws Exception {
-		String webId = "webId";
-
-		Company company = CompanyLocalServiceUtil.addCompany(
-			webId, webId, webId + ".com", PropsValues.SHARD_DEFAULT_NAME, false,
-			0, true);
-
-		PortalInstances.initCompany(_mockServletContext, webId);
+		Company company = addCompany();
 
 		CompanyLocalServiceUtil.deleteCompany(company);
 
@@ -547,17 +427,11 @@ public class CompanyLocalServiceTest {
 
 	@Test(expected = NoSuchVirtualHostException.class)
 	public void testDeleteCompanyDeletesVirtualHost() throws Exception {
-		String webId = "webId";
-
-		Company company = CompanyLocalServiceUtil.addCompany(
-			webId, webId, webId + ".com", PropsValues.SHARD_DEFAULT_NAME, false,
-			0, true);
-
-		PortalInstances.initCompany(_mockServletContext, webId);
+		Company company = addCompany();
 
 		CompanyLocalServiceUtil.deleteCompany(company);
 
-		VirtualHostLocalServiceUtil.getVirtualHost(webId);
+		VirtualHostLocalServiceUtil.getVirtualHost(company.getWebId());
 	}
 
 	@Test(expected = RequiredCompanyException.class)
@@ -786,6 +660,5 @@ public class CompanyLocalServiceTest {
 
 	private long _companyId;
 	private MockServletContext _mockServletContext;
-	private TransactionAttribute _transactionAttribute;
 
 }

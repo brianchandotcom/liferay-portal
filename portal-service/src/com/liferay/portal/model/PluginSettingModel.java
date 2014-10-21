@@ -205,19 +205,19 @@ public interface PluginSettingModel extends BaseModel<PluginSetting>, MVCCModel 
 	public Object clone();
 
 	@Override
-	public int compareTo(PluginSetting pluginSetting);
+	public int compareTo(com.liferay.portal.model.PluginSetting pluginSetting);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<PluginSetting> toCacheModel();
+	public CacheModel<com.liferay.portal.model.PluginSetting> toCacheModel();
 
 	@Override
-	public PluginSetting toEscapedModel();
+	public com.liferay.portal.model.PluginSetting toEscapedModel();
 
 	@Override
-	public PluginSetting toUnescapedModel();
+	public com.liferay.portal.model.PluginSetting toUnescapedModel();
 
 	@Override
 	public String toString();

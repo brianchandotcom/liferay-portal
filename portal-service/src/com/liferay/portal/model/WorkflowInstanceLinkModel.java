@@ -297,19 +297,20 @@ public interface WorkflowInstanceLinkModel extends AttachedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(WorkflowInstanceLink workflowInstanceLink);
+	public int compareTo(
+		com.liferay.portal.model.WorkflowInstanceLink workflowInstanceLink);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<WorkflowInstanceLink> toCacheModel();
+	public CacheModel<com.liferay.portal.model.WorkflowInstanceLink> toCacheModel();
 
 	@Override
-	public WorkflowInstanceLink toEscapedModel();
+	public com.liferay.portal.model.WorkflowInstanceLink toEscapedModel();
 
 	@Override
-	public WorkflowInstanceLink toUnescapedModel();
+	public com.liferay.portal.model.WorkflowInstanceLink toUnescapedModel();
 
 	@Override
 	public String toString();

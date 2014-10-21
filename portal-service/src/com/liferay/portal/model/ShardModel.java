@@ -182,19 +182,19 @@ public interface ShardModel extends AttachedModel, BaseModel<Shard>, MVCCModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(Shard shard);
+	public int compareTo(com.liferay.portal.model.Shard shard);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<Shard> toCacheModel();
+	public CacheModel<com.liferay.portal.model.Shard> toCacheModel();
 
 	@Override
-	public Shard toEscapedModel();
+	public com.liferay.portal.model.Shard toEscapedModel();
 
 	@Override
-	public Shard toUnescapedModel();
+	public com.liferay.portal.model.Shard toUnescapedModel();
 
 	@Override
 	public String toString();

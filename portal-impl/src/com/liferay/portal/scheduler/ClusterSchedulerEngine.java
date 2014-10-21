@@ -146,7 +146,7 @@ public class ClusterSchedulerEngine
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		if (storageType.equals(StorageType.MEMORY_CLUSTERED)) {
+		if (storageType == StorageType.MEMORY_CLUSTERED) {
 			String masterAddressString = getMasterAddressString(false);
 
 			if (!_localClusterNodeAddress.equals(masterAddressString)) {
@@ -191,7 +191,7 @@ public class ClusterSchedulerEngine
 	public List<SchedulerResponse> getScheduledJobs(StorageType storageType)
 		throws SchedulerException {
 
-		if (storageType.equals(StorageType.MEMORY_CLUSTERED)) {
+		if (storageType == StorageType.MEMORY_CLUSTERED) {
 			String masterAddressString = getMasterAddressString(false);
 
 			if (!_localClusterNodeAddress.equals(masterAddressString)) {
@@ -216,7 +216,7 @@ public class ClusterSchedulerEngine
 			String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		if (storageType.equals(StorageType.MEMORY_CLUSTERED)) {
+		if (storageType == StorageType.MEMORY_CLUSTERED) {
 			String masterAddressString = getMasterAddressString(false);
 
 			if (!_localClusterNodeAddress.equals(masterAddressString)) {
@@ -697,7 +697,7 @@ public class ClusterSchedulerEngine
 	protected boolean isMemoryClusteredSlaveJob(StorageType storageType)
 		throws SchedulerException {
 
-		if (!storageType.equals(StorageType.MEMORY_CLUSTERED)) {
+		if (storageType != StorageType.MEMORY_CLUSTERED) {
 			return false;
 		}
 
@@ -942,7 +942,7 @@ public class ClusterSchedulerEngine
 			boolean portalReady = (Boolean)context.get(_PORTAL_READY);
 			boolean pluginReady = (Boolean)context.get(_PLUGIN_READY);
 
-			if (storageType.equals(StorageType.PERSISTED) || !portalReady ||
+			if ((storageType == StorageType.PERSISTED) || !portalReady ||
 				!pluginReady) {
 
 				return false;

@@ -15,11 +15,11 @@
 package com.liferay.translator.web.util;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.webcache.WebCacheException;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
+import com.liferay.translator.web.configuration.TranslatorConfiguration;
 import com.liferay.translator.web.model.Translation;
 
 import java.util.Comparator;
@@ -66,11 +66,16 @@ public class TranslatorUtil {
 		return null;
 	}
 
-	public static Map<String, String> getLanguageIdsMap(Locale locale) {
+	public static Map<String, String> getLanguageIdsMap(Locale locale,
+		TranslatorConfiguration translatorConfiguration) {
+
 		Map<String, String> languageIdsMap = new HashMap<String, String>();
 
-		String[] languageIds = PrefsPropsUtil.getStringArray(
-			PropsKeys.TRANSLATOR_LANGUAGES, StringPool.COMMA);
+		String translatorLanguages =
+			translatorConfiguration.getTranslatorLanguages();
+
+		String[] languageIds = StringUtil.split(
+			translatorLanguages, StringPool.COMMA);
 
 		for (String languageId : languageIds) {
 			languageIdsMap.put(

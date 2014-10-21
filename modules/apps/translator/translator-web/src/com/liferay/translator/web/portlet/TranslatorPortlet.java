@@ -14,23 +14,34 @@
 
 package com.liferay.translator.web.portlet;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webcache.WebCacheException;
-import com.liferay.portal.util.WebKeys;
+import com.liferay.translator.web.configuration.TranslatorConfiguration;
 import com.liferay.translator.web.model.Translation;
 import com.liferay.translator.web.upgrade.TranslatorUpgrade;
 import com.liferay.translator.web.util.TranslatorUtil;
+
+import java.io.IOException;
+
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -38,7 +49,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Fellwock
  */
 @Component(
-	immediate = true,
+	configurationPid = "com.liferay.translator.web",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-translator",
 		"com.liferay.portlet.display-category=category.tools",
@@ -61,9 +73,25 @@ import org.osgi.service.component.annotations.Reference;
 public class TranslatorPortlet extends MVCPortlet {
 
 	@Override
+	public void doView(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+			renderRequest.setAttribute(
+				TranslatorConfiguration.class.getName(),
+				_translatorConfiguration);
+
+			super.include(viewTemplate, renderRequest, renderResponse);
+		}
+
+	@Override
 	public void processAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortletException {
+
+		actionRequest.setAttribute(
+				TranslatorConfiguration.class.getName(),
+				_translatorConfiguration);
 
 		try {
 			String fromLanguageId = ParamUtil.getString(
@@ -77,7 +105,8 @@ public class TranslatorPortlet extends MVCPortlet {
 					fromLanguageId, toLanguageId, fromText);
 
 				actionRequest.setAttribute(
-					WebKeys.TRANSLATOR_TRANSLATION, translation);
+					TranslatorConfiguration.TRANSLATOR_TRANSLATION,
+					translation);
 			}
 		}
 		catch (WebCacheException wce) {
@@ -95,8 +124,17 @@ public class TranslatorPortlet extends MVCPortlet {
 		}
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_translatorConfiguration = Configurable.createConfigurable(
+			TranslatorConfiguration.class, properties);
+	}
+
 	@Reference(unbind = "-")
 	protected void setTranslatorUpgrade(TranslatorUpgrade translatorUpgrade) {
 	}
+
+	private volatile TranslatorConfiguration _translatorConfiguration;
 
 }

@@ -182,13 +182,12 @@ public class JournalTestUtil {
 		return JournalArticleLocalServiceUtil.addArticle(
 			serviceContext.getUserId(), groupId, folderId, classNameId, 0,
 			StringPool.BLANK, true, JournalArticleConstants.VERSION_DEFAULT,
-			titleMap, descriptionMap, content, "general",
-			ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey(),
-			layoutUuid, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, 0, 0, 0, 0, 0, true, true, false,
-			null, null, null, null, serviceContext);
+			titleMap, descriptionMap, content, ddmStructure.getStructureKey(),
+			ddmTemplate.getTemplateKey(), layoutUuid, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire, 0, 0, 0, 0,
+			0, true, true, false, null, null, null, null, serviceContext);
 	}
 
 	public static JournalArticle addArticle(
@@ -448,9 +447,9 @@ public class JournalTestUtil {
 		return JournalArticleLocalServiceUtil.addArticle(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			folderId, classNameId, 0, StringPool.BLANK, true, 0, titleMap, null,
-			xml, "general", ddmStructureKey, ddmTemplateKey, null, 1, 1, 1965,
-			0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, null,
-			null, images, null, serviceContext);
+			xml, ddmStructureKey, ddmTemplateKey, null, 1, 1, 1965, 0, 0, 0, 0,
+			0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, null, null, images,
+			null, serviceContext);
 	}
 
 	public static JournalArticle addArticleWithXMLContent(
@@ -551,7 +550,6 @@ public class JournalTestUtil {
 		String feedId = StringPool.BLANK;
 		boolean autoFeedId = true;
 		String description = StringPool.BLANK;
-		String type = StringPool.BLANK;
 		int delta = 0;
 		String orderByCol = "modified-date";
 		String orderByType = "asc";
@@ -567,7 +565,7 @@ public class JournalTestUtil {
 			ServiceContextTestUtil.getServiceContext(groupId);
 
 		return JournalFeedLocalServiceUtil.addFeed(
-			userId, groupId, feedId, autoFeedId, name, description, type,
+			userId, groupId, feedId, autoFeedId, name, description,
 			ddmStructureKey, ddmTemplateKey, rendererTemplateKey, delta,
 			orderByCol, orderByType, friendlyURL, targetPortletId, contentField,
 			feedFormat, feedVersion, serviceContext);
@@ -768,7 +766,7 @@ public class JournalTestUtil {
 		return JournalArticleLocalServiceUtil.updateArticle(
 			article.getUserId(), article.getGroupId(), article.getFolderId(),
 			article.getArticleId(), article.getVersion(), titleMap,
-			article.getDescriptionMap(), content, article.getType(),
+			article.getDescriptionMap(), content, 
 			article.getDDMStructureKey(), article.getDDMTemplateKey(),
 			article.getLayoutUuid(), displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute, 0, 0, 0, 0, 0,

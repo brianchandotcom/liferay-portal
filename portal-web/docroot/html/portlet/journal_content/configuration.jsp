@@ -21,8 +21,6 @@ int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
 
 JournalArticle article = null;
 
-String type = ParamUtil.getString(request, "type");
-
 try {
 	if (Validator.isNotNull(articleId)) {
 		article = JournalArticleLocalServiceUtil.getLatestArticle(articleGroupId, articleId);
@@ -30,7 +28,6 @@ try {
 		article = article.toEscapedModel();
 
 		articleGroupId = article.getGroupId();
-		type = article.getType();
 	}
 }
 catch (NoSuchArticleException nsae) {
@@ -127,7 +124,6 @@ catch (NoSuchArticleException nsae) {
 
 	DynamicRenderRequest dynamicRenderRequest = new DynamicRenderRequest(renderRequest);
 
-	dynamicRenderRequest.setParameter("type", type);
 	dynamicRenderRequest.setParameter("groupId", String.valueOf(groupId));
 
 	ArticleSearch searchContainer = new ArticleSearch(dynamicRenderRequest, configurationRenderURL);
@@ -150,7 +146,6 @@ catch (NoSuchArticleException nsae) {
 		searchContainer="<%= searchContainer %>"
 	>
 		<liferay-ui:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-		<liferay-ui:param name="type" value="<%= HtmlUtil.escape(type) %>" />
 	</liferay-ui:search-form>
 
 	<br />

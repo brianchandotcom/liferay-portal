@@ -136,7 +136,6 @@ public class JournalArticleAtomCollectionProvider
 		long classNameId = 0;
 		String keywords = null;
 		Double version = null;
-		String type = atomRequestContext.getParameter("type", "general");
 		String structureId = null;
 		String templateId = null;
 		Date displayDateGT = null;
@@ -147,7 +146,7 @@ public class JournalArticleAtomCollectionProvider
 		OrderByComparator<JournalArticle> obc = new ArticleVersionComparator();
 
 		int count = JournalArticleServiceUtil.searchCount(
-			companyId, groupId, folderIds, classNameId, keywords, version, type,
+			companyId, groupId, folderIds, classNameId, keywords, version,
 			structureId, templateId, displayDateGT, displayDateLT, status,
 			reviewDate);
 
@@ -156,7 +155,7 @@ public class JournalArticleAtomCollectionProvider
 		AtomUtil.saveAtomPagerInRequest(atomRequestContext, atomPager);
 
 		journalArticles = JournalArticleServiceUtil.search(
-			companyId, groupId, folderIds, classNameId, keywords, version, type,
+			companyId, groupId, folderIds, classNameId, keywords, version,
 			structureId, templateId, displayDateGT, displayDateLT, status,
 			reviewDate, atomPager.getStart(), atomPager.getEnd() + 1, obc);
 
@@ -184,7 +183,6 @@ public class JournalArticleAtomCollectionProvider
 
 		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
 
-		String type = atomRequestContext.getParameter("type", "general");
 		String structureId = null;
 		String templateId = null;
 		String layoutUuid = null;
@@ -222,7 +220,7 @@ public class JournalArticleAtomCollectionProvider
 
 		JournalArticle journalArticle = JournalArticleServiceUtil.addArticle(
 			groupId, folderId, classNameId, classPK, articleId, autoArticleId,
-			titleMap, descriptionMap, content, type, structureId, templateId,
+			titleMap, descriptionMap, content, structureId, templateId,
 			layoutUuid, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,
 			expirationDateDay, expirationDateYear, expirationDateHour,

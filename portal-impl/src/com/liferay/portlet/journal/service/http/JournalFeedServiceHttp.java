@@ -58,10 +58,9 @@ public class JournalFeedServiceHttp {
 	public static com.liferay.portlet.journal.model.JournalFeed addFeed(
 		HttpPrincipal httpPrincipal, long groupId, java.lang.String feedId,
 		boolean autoFeedId, java.lang.String name,
-		java.lang.String description, java.lang.String type,
-		java.lang.String structureId, java.lang.String templateId,
-		java.lang.String rendererTemplateId, int delta,
-		java.lang.String orderByCol, java.lang.String orderByType,
+		java.lang.String description, java.lang.String structureId,
+		java.lang.String templateId, java.lang.String rendererTemplateId,
+		int delta, java.lang.String orderByCol, java.lang.String orderByType,
 		java.lang.String targetLayoutFriendlyUrl,
 		java.lang.String targetPortletId, java.lang.String contentField,
 		java.lang.String feedType, double feedVersion,
@@ -72,7 +71,7 @@ public class JournalFeedServiceHttp {
 					"addFeed", _addFeedParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					feedId, autoFeedId, name, description, type, structureId,
+					feedId, autoFeedId, name, description, structureId,
 					templateId, rendererTemplateId, delta, orderByCol,
 					orderByType, targetLayoutFriendlyUrl, targetPortletId,
 					contentField, feedType, feedVersion, serviceContext);
@@ -278,9 +277,9 @@ public class JournalFeedServiceHttp {
 	public static com.liferay.portlet.journal.model.JournalFeed updateFeed(
 		HttpPrincipal httpPrincipal, long groupId, java.lang.String feedId,
 		java.lang.String name, java.lang.String description,
-		java.lang.String type, java.lang.String structureId,
-		java.lang.String templateId, java.lang.String rendererTemplateId,
-		int delta, java.lang.String orderByCol, java.lang.String orderByType,
+		java.lang.String structureId, java.lang.String templateId,
+		java.lang.String rendererTemplateId, int delta,
+		java.lang.String orderByCol, java.lang.String orderByType,
 		java.lang.String targetLayoutFriendlyUrl,
 		java.lang.String targetPortletId, java.lang.String contentField,
 		java.lang.String feedType, double feedVersion,
@@ -291,7 +290,7 @@ public class JournalFeedServiceHttp {
 					"updateFeed", _updateFeedParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					feedId, name, description, type, structureId, templateId,
+					feedId, name, description, structureId, templateId,
 					rendererTemplateId, delta, orderByCol, orderByType,
 					targetLayoutFriendlyUrl, targetPortletId, contentField,
 					feedType, feedVersion, serviceContext);
@@ -323,10 +322,10 @@ public class JournalFeedServiceHttp {
 			long.class, java.lang.String.class, boolean.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, int.class,
+			java.lang.String.class, int.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, double.class,
+			java.lang.String.class, double.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteFeedParameterTypes1 = new Class[] {
@@ -350,11 +349,10 @@ public class JournalFeedServiceHttp {
 	private static final Class<?>[] _updateFeedParameterTypes7 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
+			java.lang.String.class, java.lang.String.class, int.class,
 			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, int.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, double.class,
+			java.lang.String.class, java.lang.String.class, double.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 }

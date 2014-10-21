@@ -144,8 +144,6 @@ public class JournalFeedPersistenceTest {
 
 		newJournalFeed.setDescription(RandomTestUtil.randomString());
 
-		newJournalFeed.setType(RandomTestUtil.randomString());
-
 		newJournalFeed.setStructureId(RandomTestUtil.randomString());
 
 		newJournalFeed.setTemplateId(RandomTestUtil.randomString());
@@ -195,8 +193,6 @@ public class JournalFeedPersistenceTest {
 			newJournalFeed.getName());
 		Assert.assertEquals(existingJournalFeed.getDescription(),
 			newJournalFeed.getDescription());
-		Assert.assertEquals(existingJournalFeed.getType(),
-			newJournalFeed.getType());
 		Assert.assertEquals(existingJournalFeed.getStructureId(),
 			newJournalFeed.getStructureId());
 		Assert.assertEquals(existingJournalFeed.getTemplateId(),
@@ -339,9 +335,9 @@ public class JournalFeedPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("JournalFeed", "uuid", true,
 			"id", true, "groupId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"feedId", true, "name", true, "description", true, "type", true,
-			"structureId", true, "templateId", true, "rendererTemplateId",
-			true, "delta", true, "orderByCol", true, "orderByType", true,
+			"feedId", true, "name", true, "description", true, "structureId",
+			true, "templateId", true, "rendererTemplateId", true, "delta",
+			true, "orderByCol", true, "orderByType", true,
 			"targetLayoutFriendlyUrl", true, "targetPortletId", true,
 			"contentField", true, "feedFormat", true, "feedVersion", true);
 	}
@@ -587,8 +583,6 @@ public class JournalFeedPersistenceTest {
 		journalFeed.setName(RandomTestUtil.randomString());
 
 		journalFeed.setDescription(RandomTestUtil.randomString());
-
-		journalFeed.setType(RandomTestUtil.randomString());
 
 		journalFeed.setStructureId(RandomTestUtil.randomString());
 

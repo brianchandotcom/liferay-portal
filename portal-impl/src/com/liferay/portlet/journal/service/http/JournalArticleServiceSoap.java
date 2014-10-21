@@ -92,9 +92,6 @@ public class JournalArticleServiceSoap {
 	* @param content the HTML content wrapped in XML. For more information,
 	see the content example in the class description for {@link
 	JournalArticleLocalServiceImpl}.
-	* @param type the structure's type, if the web content article is related
-	to a DDM structure. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
 	* @param ddmStructureKey the primary key of the web content article's DDM
 	structure, if the article is related to a DDM structure, or
 	<code>null</code> otherwise
@@ -152,15 +149,14 @@ public class JournalArticleServiceSoap {
 		java.lang.String[] titleMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues, java.lang.String content,
-		java.lang.String type, java.lang.String ddmStructureKey,
-		java.lang.String ddmTemplateKey, java.lang.String layoutUuid,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire, int reviewDateMonth,
-		int reviewDateDay, int reviewDateYear, int reviewDateHour,
-		int reviewDateMinute, boolean neverReview, boolean indexable,
-		java.lang.String articleURL,
+		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
+		java.lang.String layoutUuid, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		int reviewDateMonth, int reviewDateDay, int reviewDateYear,
+		int reviewDateHour, int reviewDateMinute, boolean neverReview,
+		boolean indexable, java.lang.String articleURL,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -171,7 +167,7 @@ public class JournalArticleServiceSoap {
 
 			com.liferay.portlet.journal.model.JournalArticle returnValue = JournalArticleServiceUtil.addArticle(groupId,
 					folderId, classNameId, classPK, articleId, autoArticleId,
-					titleMap, descriptionMap, content, type, ddmStructureKey,
+					titleMap, descriptionMap, content, ddmStructureKey,
 					ddmTemplateKey, layoutUuid, displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, expirationDateMonth, expirationDateDay,
@@ -1395,8 +1391,6 @@ public class JournalArticleServiceSoap {
 	query criteria; otherwise it uses the AND operator.
 	* @param version the web content article's version (optionally
 	<code>null</code>)
-	* @param type the web content article's type (optionally
-	<code>null</code>)
 	* @param ddmStructureKey the primary key of the web content article's DDM
 	structure, if the article is related to a DDM structure, or
 	<code>null</code> otherwise
@@ -1424,17 +1418,16 @@ public class JournalArticleServiceSoap {
 	public static com.liferay.portlet.journal.model.JournalArticleSoap[] search(
 		long companyId, long groupId, Long[] folderIds, long classNameId,
 		java.lang.String keywords, java.lang.Double version,
-		java.lang.String type, java.lang.String ddmStructureKey,
-		java.lang.String ddmTemplateKey, java.util.Date displayDateGT,
-		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
-		int start, int end,
+		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
+		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
+		java.util.Date reviewDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> obc)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.journal.model.JournalArticle> returnValue =
 				JournalArticleServiceUtil.search(companyId, groupId,
 					ListUtil.toList(folderIds), classNameId, keywords, version,
-					type, ddmStructureKey, ddmTemplateKey, displayDateGT,
+					ddmStructureKey, ddmTemplateKey, displayDateGT,
 					displayDateLT, status, reviewDate, start, end, obc);
 
 			return com.liferay.portlet.journal.model.JournalArticleSoap.toSoapModels(returnValue);
@@ -1480,8 +1473,6 @@ public class JournalArticleServiceSoap {
 	<code>null</code>)
 	* @param content the content keywords (space separated, optionally
 	<code>null</code>)
-	* @param type the web content article's type (optionally
-	<code>null</code>)
 	* @param ddmStructureKey the primary key of the web content article's DDM
 	structure, if the article is related to a DDM structure, or
 	<code>null</code> otherwise
@@ -1513,20 +1504,19 @@ public class JournalArticleServiceSoap {
 		long companyId, long groupId, Long[] folderIds, long classNameId,
 		java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
-		java.lang.String content, java.lang.String type,
-		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
-		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
-		java.util.Date reviewDate, boolean andOperator, int start, int end,
+		java.lang.String content, java.lang.String ddmStructureKey,
+		java.lang.String ddmTemplateKey, java.util.Date displayDateGT,
+		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
+		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> obc)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.journal.model.JournalArticle> returnValue =
 				JournalArticleServiceUtil.search(companyId, groupId,
 					ListUtil.toList(folderIds), classNameId, articleId,
-					version, title, description, content, type,
-					ddmStructureKey, ddmTemplateKey, displayDateGT,
-					displayDateLT, status, reviewDate, andOperator, start, end,
-					obc);
+					version, title, description, content, ddmStructureKey,
+					ddmTemplateKey, displayDateGT, displayDateLT, status,
+					reviewDate, andOperator, start, end, obc);
 
 			return com.liferay.portlet.journal.model.JournalArticleSoap.toSoapModels(returnValue);
 		}
@@ -1571,8 +1561,6 @@ public class JournalArticleServiceSoap {
 	<code>null</code>)
 	* @param content the content keywords (space separated, optionally
 	<code>null</code>)
-	* @param type the web content article's type (optionally
-	<code>null</code>)
 	* @param ddmStructureKeys the primary keys of the web content article's
 	DDM structures, if the article is related to a DDM structure, or
 	<code>null</code> otherwise
@@ -1606,8 +1594,7 @@ public class JournalArticleServiceSoap {
 		long companyId, long groupId, Long[] folderIds, long classNameId,
 		java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
-		java.lang.String content, java.lang.String type,
-		java.lang.String[] ddmStructureKeys,
+		java.lang.String content, java.lang.String[] ddmStructureKeys,
 		java.lang.String[] ddmTemplateKeys, java.util.Date displayDateGT,
 		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
 		boolean andOperator, int start, int end,
@@ -1617,10 +1604,9 @@ public class JournalArticleServiceSoap {
 			java.util.List<com.liferay.portlet.journal.model.JournalArticle> returnValue =
 				JournalArticleServiceUtil.search(companyId, groupId,
 					ListUtil.toList(folderIds), classNameId, articleId,
-					version, title, description, content, type,
-					ddmStructureKeys, ddmTemplateKeys, displayDateGT,
-					displayDateLT, status, reviewDate, andOperator, start, end,
-					obc);
+					version, title, description, content, ddmStructureKeys,
+					ddmTemplateKeys, displayDateGT, displayDateLT, status,
+					reviewDate, andOperator, start, end, obc);
 
 			return com.liferay.portlet.journal.model.JournalArticleSoap.toSoapModels(returnValue);
 		}
@@ -1652,8 +1638,6 @@ public class JournalArticleServiceSoap {
 	query criteria; otherwise it uses the AND operator.
 	* @param version the web content article's version (optionally
 	<code>null</code>)
-	* @param type the web content article's type (optionally
-	<code>null</code>)
 	* @param ddmStructureKey the primary key of the web content article's DDM
 	structure, if the article is related to a DDM structure, or
 	<code>null</code> otherwise
@@ -1674,15 +1658,15 @@ public class JournalArticleServiceSoap {
 	*/
 	public static int searchCount(long companyId, long groupId,
 		Long[] folderIds, long classNameId, java.lang.String keywords,
-		java.lang.Double version, java.lang.String type,
-		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
-		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
-		java.util.Date reviewDate) throws RemoteException {
+		java.lang.Double version, java.lang.String ddmStructureKey,
+		java.lang.String ddmTemplateKey, java.util.Date displayDateGT,
+		java.util.Date displayDateLT, int status, java.util.Date reviewDate)
+		throws RemoteException {
 		try {
 			int returnValue = JournalArticleServiceUtil.searchCount(companyId,
 					groupId, ListUtil.toList(folderIds), classNameId, keywords,
-					version, type, ddmStructureKey, ddmTemplateKey,
-					displayDateGT, displayDateLT, status, reviewDate);
+					version, ddmStructureKey, ddmTemplateKey, displayDateGT,
+					displayDateLT, status, reviewDate);
 
 			return returnValue;
 		}
@@ -1717,8 +1701,6 @@ public class JournalArticleServiceSoap {
 	<code>null</code>)
 	* @param content the content keywords (space separated, optionally
 	<code>null</code>)
-	* @param type the web content article's type (optionally
-	<code>null</code>)
 	* @param ddmStructureKey the primary key of the web content article's DDM
 	structure, if the article is related to a DDM structure, or
 	<code>null</code> otherwise
@@ -1744,14 +1726,14 @@ public class JournalArticleServiceSoap {
 		Long[] folderIds, long classNameId, java.lang.String articleId,
 		java.lang.Double version, java.lang.String title,
 		java.lang.String description, java.lang.String content,
-		java.lang.String type, java.lang.String ddmStructureKey,
-		java.lang.String ddmTemplateKey, java.util.Date displayDateGT,
-		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
-		boolean andOperator) throws RemoteException {
+		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
+		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
+		java.util.Date reviewDate, boolean andOperator)
+		throws RemoteException {
 		try {
 			int returnValue = JournalArticleServiceUtil.searchCount(companyId,
 					groupId, ListUtil.toList(folderIds), classNameId,
-					articleId, version, title, description, content, type,
+					articleId, version, title, description, content,
 					ddmStructureKey, ddmTemplateKey, displayDateGT,
 					displayDateLT, status, reviewDate, andOperator);
 
@@ -1788,8 +1770,6 @@ public class JournalArticleServiceSoap {
 	<code>null</code>)
 	* @param content the content keywords (space separated, optionally
 	<code>null</code>)
-	* @param type the web content article's type (optionally
-	<code>null</code>)
 	* @param ddmStructureKeys the primary keys of the web content article's
 	DDM structures, if the article is related to a DDM structure, or
 	<code>null</code> otherwise
@@ -1817,14 +1797,14 @@ public class JournalArticleServiceSoap {
 		Long[] folderIds, long classNameId, java.lang.String articleId,
 		java.lang.Double version, java.lang.String title,
 		java.lang.String description, java.lang.String content,
-		java.lang.String type, java.lang.String[] ddmStructureKeys,
+		java.lang.String[] ddmStructureKeys,
 		java.lang.String[] ddmTemplateKeys, java.util.Date displayDateGT,
 		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
 		boolean andOperator) throws RemoteException {
 		try {
 			int returnValue = JournalArticleServiceUtil.searchCount(companyId,
 					groupId, ListUtil.toList(folderIds), classNameId,
-					articleId, version, title, description, content, type,
+					articleId, version, title, description, content,
 					ddmStructureKeys, ddmTemplateKeys, displayDateGT,
 					displayDateLT, status, reviewDate, andOperator);
 

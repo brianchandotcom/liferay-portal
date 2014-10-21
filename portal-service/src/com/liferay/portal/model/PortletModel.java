@@ -190,19 +190,19 @@ public interface PortletModel extends BaseModel<Portlet>, MVCCModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(Portlet portlet);
+	public int compareTo(com.liferay.portal.model.Portlet portlet);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<Portlet> toCacheModel();
+	public CacheModel<com.liferay.portal.model.Portlet> toCacheModel();
 
 	@Override
-	public Portlet toEscapedModel();
+	public com.liferay.portal.model.Portlet toEscapedModel();
 
 	@Override
-	public Portlet toUnescapedModel();
+	public com.liferay.portal.model.Portlet toUnescapedModel();
 
 	@Override
 	public String toString();

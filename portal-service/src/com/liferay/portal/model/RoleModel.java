@@ -544,19 +544,19 @@ public interface RoleModel extends AttachedModel, BaseModel<Role>, LocalizedMode
 	public Object clone();
 
 	@Override
-	public int compareTo(Role role);
+	public int compareTo(com.liferay.portal.model.Role role);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<Role> toCacheModel();
+	public CacheModel<com.liferay.portal.model.Role> toCacheModel();
 
 	@Override
-	public Role toEscapedModel();
+	public com.liferay.portal.model.Role toEscapedModel();
 
 	@Override
-	public Role toUnescapedModel();
+	public com.liferay.portal.model.Role toUnescapedModel();
 
 	@Override
 	public String toString();

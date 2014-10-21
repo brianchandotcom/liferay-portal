@@ -308,19 +308,20 @@ public interface RepositoryEntryModel extends BaseModel<RepositoryEntry>,
 	public Object clone();
 
 	@Override
-	public int compareTo(RepositoryEntry repositoryEntry);
+	public int compareTo(
+		com.liferay.portal.model.RepositoryEntry repositoryEntry);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<RepositoryEntry> toCacheModel();
+	public CacheModel<com.liferay.portal.model.RepositoryEntry> toCacheModel();
 
 	@Override
-	public RepositoryEntry toEscapedModel();
+	public com.liferay.portal.model.RepositoryEntry toEscapedModel();
 
 	@Override
-	public RepositoryEntry toUnescapedModel();
+	public com.liferay.portal.model.RepositoryEntry toUnescapedModel();
 
 	@Override
 	public String toString();

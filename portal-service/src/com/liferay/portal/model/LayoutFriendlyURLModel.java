@@ -323,19 +323,20 @@ public interface LayoutFriendlyURLModel extends BaseModel<LayoutFriendlyURL>,
 	public Object clone();
 
 	@Override
-	public int compareTo(LayoutFriendlyURL layoutFriendlyURL);
+	public int compareTo(
+		com.liferay.portal.model.LayoutFriendlyURL layoutFriendlyURL);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<LayoutFriendlyURL> toCacheModel();
+	public CacheModel<com.liferay.portal.model.LayoutFriendlyURL> toCacheModel();
 
 	@Override
-	public LayoutFriendlyURL toEscapedModel();
+	public com.liferay.portal.model.LayoutFriendlyURL toEscapedModel();
 
 	@Override
-	public LayoutFriendlyURL toUnescapedModel();
+	public com.liferay.portal.model.LayoutFriendlyURL toUnescapedModel();
 
 	@Override
 	public String toString();

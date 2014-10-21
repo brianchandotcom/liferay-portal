@@ -95,12 +95,8 @@ public class ComparableRoute implements Comparable<ComparableRoute> {
 
 		// Having more fragments is more general
 
-		if ((i < fragments.length) && (i >= _fragments.length)) {
-			return -1;
-		}
-
-		if ((i < _fragments.length) && (i >= fragments.length)) {
-			return 1;
+		if (_fragments.length != fragments.length) {
+			return _fragments.length - fragments.length;
 		}
 
 		// Having fewer implicit parameters is more general
@@ -108,12 +104,8 @@ public class ComparableRoute implements Comparable<ComparableRoute> {
 		Map<String, String> implicitParameters =
 			comparableRoute.getImplicitParameters();
 
-		if (_implicitParameters.size() > implicitParameters.size()) {
-			return -1;
-		}
-
-		if (_implicitParameters.size() < implicitParameters.size()) {
-			return 1;
+		if (_implicitParameters.size() != implicitParameters.size()) {
+			return implicitParameters.size() - _implicitParameters.size();
 		}
 
 		return _pattern.compareTo(comparableRoute.getPattern());

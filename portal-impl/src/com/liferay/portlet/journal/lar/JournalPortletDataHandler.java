@@ -358,9 +358,6 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 						return;
 					}
 
-					Property versionProperty = PropertyFactoryUtil.forName(
-						"version");
-
 					DynamicQuery articleVersionDynamicQuery =
 						DynamicQueryFactoryUtil.forClass(
 							JournalArticle.class, "articleVersion",
@@ -379,6 +376,9 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 						RestrictionsFactoryUtil.eqProperty(
 							"this.resourcePrimKey",
 							"articleVersion.resourcePrimKey"));
+
+					Property versionProperty = PropertyFactoryUtil.forName(
+						"version");
 
 					dynamicQuery.add(
 						versionProperty.eq(articleVersionDynamicQuery));

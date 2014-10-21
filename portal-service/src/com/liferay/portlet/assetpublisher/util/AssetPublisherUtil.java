@@ -98,6 +98,16 @@ public class AssetPublisherUtil {
 	}
 
 	public static List<AssetEntry> getAssetEntries(
+		long[] classNameIds, long[]groupIds, String keywords,
+		String description, String title, String userName,
+		boolean isAdvancedSearch, boolean isAndOperator, int start, int end) {
+
+		return getAssetPublisher().getAssetEntries(classNameIds, groupIds,
+		keywords, description, title, userName, isAdvancedSearch, isAndOperator,
+		start, end);
+	}
+
+	public static List<AssetEntry> getAssetEntries(
 			PortletPreferences portletPreferences, Layout layout,
 			long scopeGroupId, int max, boolean checkPermission)
 		throws PortalException {

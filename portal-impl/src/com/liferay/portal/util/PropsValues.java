@@ -126,6 +126,8 @@ public class PropsValues {
 
 	public static String[] ASSET_PUBLISHER_QUERY_FORM_CONFIGURATION = PropsUtil.getArray(PropsKeys.ASSET_PUBLISHER_QUERY_FORM_CONFIGURATION);
 
+	public static final boolean ASSET_BROWSER_SEARCH_WITH_DATABASE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.ASSET_BROWSER_SEARCH_WITH_DATABASE));
+
 	public static final boolean ASSET_PUBLISHER_SEARCH_WITH_INDEX = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.ASSET_PUBLISHER_SEARCH_WITH_INDEX));
 
 	public static final boolean ASSET_TAG_PERMISSIONS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.ASSET_TAG_PERMISSIONS_ENABLED));

@@ -15,17 +15,29 @@
 --%>
 
 <%
-Hits hits = null;
+if (PropsValues.ASSET_BROWSER_SEARCH_WITH_DATABASE) {
+	List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(new long[] {assetRendererFactory.getClassNameId()}, groupIds, searchTerms.getKeywords(), searchTerms.getDescription(), searchTerms.getTitle(), searchTerms.getUserName(), searchTerms.isAdvancedSearch(), searchTerms.isAndOperator(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-if (searchTerms.isAdvancedSearch()) {
-	hits = AssetEntryLocalServiceUtil.search(themeDisplay.getCompanyId(), new long[] {searchTerms.getGroupId()}, themeDisplay.getUserId(), assetRendererFactory.getClassName(), subtypeSelectionId, searchTerms.getUserName(), searchTerms.getTitle(), searchTerms.getDescription(), null, null, WorkflowConstants.STATUS_APPROVED, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd());
+	int assetTotal = assetEntries.size();
+
+	assetEntries = AssetPublisherUtil.getAssetEntries(new long[] {assetRendererFactory.getClassNameId()}, groupIds, searchTerms.getKeywords(), searchTerms.getDescription(), searchTerms.getTitle(), searchTerms.getUserName(), searchTerms.isAdvancedSearch(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd());
+
+	searchContainer.setResults(assetEntries);
+	searchContainer.setTotal(assetTotal);
 }
 else {
-	hits = AssetEntryLocalServiceUtil.search(themeDisplay.getCompanyId(), groupIds, themeDisplay.getUserId(), assetRendererFactory.getClassName(), subtypeSelectionId, searchTerms.getKeywords(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd());
+	Hits hits = null;
+
+	if (searchTerms.isAdvancedSearch()) {
+		hits = AssetEntryLocalServiceUtil.search(themeDisplay.getCompanyId(), new long[] {searchTerms.getGroupId()}, themeDisplay.getUserId(), assetRendererFactory.getClassName(), subtypeSelectionId, searchTerms.getUserName(), searchTerms.getTitle(), searchTerms.getDescription(), null, null, WorkflowConstants.STATUS_APPROVED, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd());
+	}
+	else {
+		hits = AssetEntryLocalServiceUtil.search(themeDisplay.getCompanyId(), groupIds, themeDisplay.getUserId(), assetRendererFactory.getClassName(), subtypeSelectionId, searchTerms.getKeywords(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd());
+	}
+
+	List<AssetEntry> assetEntries = AssetUtil.getAssetEntries(hits);
+
+	searchContainer.setResults(assetEntries);
+	searchContainer.setTotal(hits.getLength());
 }
-
-List<AssetEntry> assetEntries = AssetUtil.getAssetEntries(hits);
-
-searchContainer.setResults(assetEntries);
-searchContainer.setTotal(hits.getLength());
 %>

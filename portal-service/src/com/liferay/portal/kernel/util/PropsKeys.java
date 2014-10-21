@@ -89,6 +89,8 @@ public interface PropsKeys {
 
 	public static final String APPLICATION_STARTUP_EVENTS = "application.startup.events";
 
+	public static final String ASSET_BROWSER_SEARCH_WITH_DATABASE = "asset.browser.search.with.database";
+
 	public static final String ASSET_CATEGORIES_NAVIGATION_DISPLAY_TEMPLATES_CONFIG = "asset.categories.navigation.display.templates.config";
 
 	public static final String ASSET_CATEGORIES_PROPERTIES_DEFAULT = "asset.categories.properties.default";

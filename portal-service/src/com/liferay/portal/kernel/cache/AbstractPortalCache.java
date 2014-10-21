@@ -22,6 +22,10 @@ import java.io.Serializable;
 public abstract class AbstractPortalCache<K extends Serializable, V>
 	implements LowLevelCache<K, V> {
 
+	public AbstractPortalCache(PortalCacheManager<K, V> portalCacheManager) {
+		_portalCacheManager = portalCacheManager;
+	}
+
 	@Override
 	public V get(K key) {
 		if (key == null) {
@@ -32,13 +36,29 @@ public abstract class AbstractPortalCache<K extends Serializable, V>
 	}
 
 	@Override
-	public void put(K key, V value) {
-		put(key, value, DEFAULT_TIME_TO_LIVE, false);
+	public PortalCacheManager<K, V> getPortalCacheManager() {
+		return _portalCacheManager;
 	}
 
 	@Override
+	public void put(K key, V value) {
+		put(key, value, DEFAULT_TIME_TO_LIVE);
+	}
+
 	public void put(K key, V value, int timeToLive) {
-		put(key, value, timeToLive, false);
+		if (key == null) {
+			throw new NullPointerException("Key is null");
+		}
+
+		if (value == null) {
+			throw new NullPointerException("Value is null");
+		}
+
+		if (timeToLive < 0) {
+			throw new IllegalArgumentException("Time to live is negative");
+		}
+
+		doPut(key, value, timeToLive);
 	}
 
 	@Override
@@ -61,16 +81,6 @@ public abstract class AbstractPortalCache<K extends Serializable, V>
 		}
 
 		return doPutIfAbsent(key, value, timeToLive);
-	}
-
-	@Override
-	public void putQuiet(K key, V value) {
-		put(key, value, DEFAULT_TIME_TO_LIVE, true);
-	}
-
-	@Override
-	public void putQuiet(K key, V value, int timeToLive) {
-		put(key, value, timeToLive, true);
 	}
 
 	@Override
@@ -169,8 +179,7 @@ public abstract class AbstractPortalCache<K extends Serializable, V>
 
 	protected abstract V doGet(K key);
 
-	protected abstract void doPut(
-		K key, V value, int timeToLive, boolean quiet);
+	protected abstract void doPut(K key, V value, int timeToLive);
 
 	protected abstract V doPutIfAbsent(K key, V value, int timeToLive);
 
@@ -183,23 +192,9 @@ public abstract class AbstractPortalCache<K extends Serializable, V>
 	protected abstract boolean doReplace(
 		K key, V oldValue, V newValue, int timeToLive);
 
-	protected void put(K key, V value, int timeToLive, boolean quiet) {
-		if (key == null) {
-			throw new NullPointerException("Key is null");
-		}
-
-		if (value == null) {
-			throw new NullPointerException("Value is null");
-		}
-
-		if (timeToLive < 0) {
-			throw new IllegalArgumentException("Time to live is negative");
-		}
-
-		doPut(key, value, timeToLive, quiet);
-	}
-
 	protected final AggregatedCacheListener<K, V> aggregatedCacheListener =
 		new AggregatedCacheListener<K, V>();
+
+	private final PortalCacheManager<K, V> _portalCacheManager;
 
 }

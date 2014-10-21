@@ -55,50 +55,11 @@ public class TransactionalPortalCache<K extends Serializable, V>
 
 	@Override
 	public void put(K key, V value) {
-		doPut(key, value, DEFAULT_TIME_TO_LIVE, false);
+		put(key, value, DEFAULT_TIME_TO_LIVE);
 	}
 
 	@Override
 	public void put(K key, V value, int timeToLive) {
-		doPut(key, value, timeToLive, false);
-	}
-
-	@Override
-	public void putQuiet(K key, V value) {
-		doPut(key, value, DEFAULT_TIME_TO_LIVE, true);
-	}
-
-	@Override
-	public void putQuiet(K key, V value, int timeToLive) {
-		doPut(key, value, timeToLive, true);
-	}
-
-	@Override
-	public void remove(K key) {
-		if (TransactionalPortalCacheHelper.isEnabled()) {
-			if (key == null) {
-				throw new NullPointerException("Key is null");
-			}
-
-			TransactionalPortalCacheHelper.put(
-				portalCache, key, (V)NULL_HOLDER, false, DEFAULT_TIME_TO_LIVE);
-		}
-		else {
-			portalCache.remove(key);
-		}
-	}
-
-	@Override
-	public void removeAll() {
-		if (TransactionalPortalCacheHelper.isEnabled()) {
-			TransactionalPortalCacheHelper.removeAll(portalCache);
-		}
-		else {
-			portalCache.removeAll();
-		}
-	}
-
-	protected void doPut(K key, V value, int timeToLive, boolean quiet) {
 		if (TransactionalPortalCacheHelper.isEnabled()) {
 			if (key == null) {
 				throw new NullPointerException("Key is null");
@@ -113,15 +74,35 @@ public class TransactionalPortalCache<K extends Serializable, V>
 			}
 
 			TransactionalPortalCacheHelper.put(
-				portalCache, key, value, quiet, timeToLive);
+				portalCache, key, value, timeToLive);
 		}
 		else {
-			if (quiet) {
-				portalCache.putQuiet(key, value, timeToLive);
+			portalCache.put(key, value, timeToLive);
+		}
+	}
+
+	@Override
+	public void remove(K key) {
+		if (TransactionalPortalCacheHelper.isEnabled()) {
+			if (key == null) {
+				throw new NullPointerException("Key is null");
 			}
-			else {
-				portalCache.put(key, value, timeToLive);
-			}
+
+			TransactionalPortalCacheHelper.put(
+				portalCache, key, (V)NULL_HOLDER, DEFAULT_TIME_TO_LIVE);
+		}
+		else {
+			portalCache.remove(key);
+		}
+	}
+
+	@Override
+	public void removeAll() {
+		if (TransactionalPortalCacheHelper.isEnabled()) {
+			TransactionalPortalCacheHelper.removeAll(portalCache);
+		}
+		else {
+			portalCache.removeAll();
 		}
 	}
 

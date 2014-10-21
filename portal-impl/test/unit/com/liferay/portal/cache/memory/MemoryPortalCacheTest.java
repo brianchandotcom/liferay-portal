@@ -16,8 +16,10 @@ package com.liferay.portal.cache.memory;
 
 import com.liferay.portal.cache.MockPortalCacheManager;
 import com.liferay.portal.cache.TestCacheListener;
+import com.liferay.portal.cache.TestCacheReplicator;
 import com.liferay.portal.kernel.cache.AbstractPortalCache;
 import com.liferay.portal.kernel.cache.CacheListenerScope;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 
@@ -56,6 +58,10 @@ public class MemoryPortalCacheTest {
 		_defaultCacheListener = new TestCacheListener<String, String>();
 
 		_memoryPortalCache.registerCacheListener(_defaultCacheListener);
+
+		_defaultCacheReplicator = new TestCacheReplicator<String, String>();
+
+		_memoryPortalCache.registerCacheListener(_defaultCacheReplicator);
 	}
 
 	@Test
@@ -81,6 +87,11 @@ public class MemoryPortalCacheTest {
 
 		_defaultCacheListener.reset();
 
+		_defaultCacheReplicator.assertActionsCount(1);
+		_defaultCacheReplicator.assertUpdated(_KEY_1, _VALUE_2);
+
+		_defaultCacheReplicator.reset();
+
 		// Unregister
 
 		_memoryPortalCache.unregisterCacheListener(cacheListener);
@@ -94,6 +105,11 @@ public class MemoryPortalCacheTest {
 
 		_defaultCacheListener.reset();
 
+		_defaultCacheReplicator.assertActionsCount(1);
+		_defaultCacheReplicator.assertUpdated(_KEY_1, _VALUE_1);
+
+		_defaultCacheReplicator.reset();
+
 		// unregister all
 
 		_memoryPortalCache.unregisterCacheListeners();
@@ -103,6 +119,8 @@ public class MemoryPortalCacheTest {
 		cacheListener.assertActionsCount(0);
 
 		_defaultCacheListener.assertActionsCount(0);
+
+		_defaultCacheReplicator.assertActionsCount(0);
 	}
 
 	@Test
@@ -113,6 +131,11 @@ public class MemoryPortalCacheTest {
 		_defaultCacheListener.assertRemoveAll();
 
 		_defaultCacheListener.reset();
+
+		_defaultCacheReplicator.assertActionsCount(1);
+		_defaultCacheReplicator.assertRemoveAll();
+
+		_defaultCacheReplicator.reset();
 	}
 
 	@Test
@@ -133,13 +156,13 @@ public class MemoryPortalCacheTest {
 
 	@Test
 	public void testGetKeys() {
-		_memoryPortalCache.put(_KEY_2, _VALUE_2);
+		Assert.assertEquals(_VALUE_1, _memoryPortalCache.get(_KEY_1));
+		Assert.assertNull(_memoryPortalCache.get(_KEY_2));
 
 		List<String> keys = _memoryPortalCache.getKeys();
 
-		Assert.assertEquals(2, keys.size());
+		Assert.assertEquals(1, keys.size());
 		Assert.assertTrue(keys.contains(_KEY_1));
-		Assert.assertTrue(keys.contains(_KEY_2));
 	}
 
 	@Test
@@ -172,6 +195,11 @@ public class MemoryPortalCacheTest {
 
 		_defaultCacheListener.reset();
 
+		_defaultCacheReplicator.assertActionsCount(1);
+		_defaultCacheReplicator.assertPut(_KEY_2, _VALUE_2);
+
+		_defaultCacheReplicator.reset();
+
 		// Put 2
 
 		_memoryPortalCache.put(_KEY_2, _VALUE_1, 10);
@@ -184,6 +212,11 @@ public class MemoryPortalCacheTest {
 
 		_defaultCacheListener.reset();
 
+		_defaultCacheReplicator.assertActionsCount(1);
+		_defaultCacheReplicator.assertUpdated(_KEY_2, _VALUE_1, 10);
+
+		_defaultCacheReplicator.reset();
+
 		// Put 3
 
 		try {
@@ -195,7 +228,11 @@ public class MemoryPortalCacheTest {
 			Assert.assertEquals("Key is null", npe.getMessage());
 		}
 
+		Assert.assertEquals(_VALUE_1, _memoryPortalCache.get(_KEY_1));
+		Assert.assertEquals(_VALUE_1, _memoryPortalCache.get(_KEY_2));
+
 		_defaultCacheListener.assertActionsCount(0);
+		_defaultCacheReplicator.assertActionsCount(0);
 
 		// Put 4
 
@@ -208,7 +245,11 @@ public class MemoryPortalCacheTest {
 			Assert.assertEquals("Value is null", npe.getMessage());
 		}
 
+		Assert.assertEquals(_VALUE_1, _memoryPortalCache.get(_KEY_1));
+		Assert.assertEquals(_VALUE_1, _memoryPortalCache.get(_KEY_2));
+
 		_defaultCacheListener.assertActionsCount(0);
+		_defaultCacheReplicator.assertActionsCount(0);
 
 		// Put 5
 
@@ -221,7 +262,41 @@ public class MemoryPortalCacheTest {
 			Assert.assertEquals("Time to live is negative", iae.getMessage());
 		}
 
+		Assert.assertEquals(_VALUE_1, _memoryPortalCache.get(_KEY_1));
+		Assert.assertEquals(_VALUE_1, _memoryPortalCache.get(_KEY_2));
+
 		_defaultCacheListener.assertActionsCount(0);
+		_defaultCacheReplicator.assertActionsCount(0);
+
+		// Put 6
+
+		PortalCacheHelperUtil.putWithoutReplicator(
+			_memoryPortalCache, _KEY_2, _VALUE_2);
+
+		Assert.assertEquals(_VALUE_1, _memoryPortalCache.get(_KEY_1));
+		Assert.assertEquals(_VALUE_2, _memoryPortalCache.get(_KEY_2));
+
+		_defaultCacheListener.assertActionsCount(1);
+		_defaultCacheListener.assertUpdated(_KEY_2, _VALUE_2);
+
+		_defaultCacheListener.reset();
+
+		_defaultCacheReplicator.assertActionsCount(0);
+
+		// Put 7
+
+		PortalCacheHelperUtil.putWithoutReplicator(
+			_memoryPortalCache, _KEY_2, _VALUE_1, 10);
+
+		Assert.assertEquals(_VALUE_1, _memoryPortalCache.get(_KEY_1));
+		Assert.assertEquals(_VALUE_1, _memoryPortalCache.get(_KEY_2));
+
+		_defaultCacheListener.assertActionsCount(1);
+		_defaultCacheListener.assertUpdated(_KEY_2, _VALUE_1, 10);
+
+		_defaultCacheListener.reset();
+
+		_defaultCacheReplicator.assertActionsCount(0);
 	}
 
 	@Test
@@ -241,6 +316,11 @@ public class MemoryPortalCacheTest {
 
 		_defaultCacheListener.reset();
 
+		_defaultCacheReplicator.assertActionsCount(1);
+		_defaultCacheReplicator.assertPut(_KEY_2, _VALUE_2);
+
+		_defaultCacheReplicator.reset();
+
 		// Put if absent 2
 
 		Assert.assertEquals(
@@ -250,6 +330,7 @@ public class MemoryPortalCacheTest {
 		Assert.assertEquals(_VALUE_2, _memoryPortalCache.get(_KEY_2));
 
 		_defaultCacheListener.assertActionsCount(0);
+		_defaultCacheReplicator.assertActionsCount(0);
 
 		// Put if absent 3
 
@@ -262,7 +343,11 @@ public class MemoryPortalCacheTest {
 			Assert.assertEquals("Key is null", npe.getMessage());
 		}
 
+		Assert.assertEquals(_VALUE_1, _memoryPortalCache.get(_KEY_1));
+		Assert.assertEquals(_VALUE_2, _memoryPortalCache.get(_KEY_2));
+
 		_defaultCacheListener.assertActionsCount(0);
+		_defaultCacheReplicator.assertActionsCount(0);
 
 		// Put if absent 4
 
@@ -275,7 +360,11 @@ public class MemoryPortalCacheTest {
 			Assert.assertEquals("Value is null", npe.getMessage());
 		}
 
+		Assert.assertEquals(_VALUE_1, _memoryPortalCache.get(_KEY_1));
+		Assert.assertEquals(_VALUE_2, _memoryPortalCache.get(_KEY_2));
+
 		_defaultCacheListener.assertActionsCount(0);
+		_defaultCacheReplicator.assertActionsCount(0);
 
 		// Put if absent 5
 
@@ -288,70 +377,11 @@ public class MemoryPortalCacheTest {
 			Assert.assertEquals("Time to live is negative", iae.getMessage());
 		}
 
-		_defaultCacheListener.assertActionsCount(0);
-	}
-
-	@Test
-	public void testPutQuiet() {
-		Assert.assertEquals(_VALUE_1, _memoryPortalCache.get(_KEY_1));
-		Assert.assertNull(_memoryPortalCache.get(_KEY_2));
-
-		// Put 1
-
-		_memoryPortalCache.putQuiet(_KEY_2, _VALUE_2);
-
 		Assert.assertEquals(_VALUE_1, _memoryPortalCache.get(_KEY_1));
 		Assert.assertEquals(_VALUE_2, _memoryPortalCache.get(_KEY_2));
 
 		_defaultCacheListener.assertActionsCount(0);
-
-		// Put 2
-
-		_memoryPortalCache.putQuiet(_KEY_2, _VALUE_1, 10);
-
-		Assert.assertEquals(_VALUE_1, _memoryPortalCache.get(_KEY_1));
-		Assert.assertEquals(_VALUE_1, _memoryPortalCache.get(_KEY_2));
-
-		_defaultCacheListener.assertActionsCount(0);
-
-		// Put 3
-
-		try {
-			_memoryPortalCache.putQuiet(null, null);
-
-			Assert.fail();
-		}
-		catch (NullPointerException npe) {
-			Assert.assertEquals("Key is null", npe.getMessage());
-		}
-
-		_defaultCacheListener.assertActionsCount(0);
-
-		// Put 4
-
-		try {
-			_memoryPortalCache.putQuiet(_KEY_1, null);
-
-			Assert.fail();
-		}
-		catch (NullPointerException npe) {
-			Assert.assertEquals("Value is null", npe.getMessage());
-		}
-
-		_defaultCacheListener.assertActionsCount(0);
-
-		// Put 5
-
-		try {
-			_memoryPortalCache.putQuiet(_KEY_1, _VALUE_1, -1);
-
-			Assert.fail();
-		}
-		catch (IllegalArgumentException iae) {
-			Assert.assertEquals("Time to live is negative", iae.getMessage());
-		}
-
-		_defaultCacheListener.assertActionsCount(0);
+		_defaultCacheReplicator.assertActionsCount(0);
 	}
 
 	@Test
@@ -371,7 +401,33 @@ public class MemoryPortalCacheTest {
 
 		_defaultCacheListener.reset();
 
+		_defaultCacheReplicator.assertActionsCount(1);
+		_defaultCacheReplicator.assertRemoved(_KEY_1, _VALUE_1);
+
+		_defaultCacheReplicator.reset();
+
 		// Remove 2
+
+		_memoryPortalCache.put(_KEY_1, _VALUE_1);
+
+		PortalCacheHelperUtil.removeWithoutReplicator(
+			_memoryPortalCache, _KEY_1);
+
+		Assert.assertNull(_memoryPortalCache.get(_KEY_1));
+		Assert.assertNull(_memoryPortalCache.get(_KEY_2));
+
+		_defaultCacheListener.assertActionsCount(2);
+		_defaultCacheListener.assertPut(_KEY_1, _VALUE_1);
+		_defaultCacheListener.assertRemoved(_KEY_1, _VALUE_1);
+
+		_defaultCacheListener.reset();
+
+		_defaultCacheReplicator.assertActionsCount(1);
+		_defaultCacheReplicator.assertPut(_KEY_1, _VALUE_1);
+
+		_defaultCacheReplicator.reset();
+
+		// Remove 3
 
 		_memoryPortalCache.remove(_KEY_2);
 
@@ -379,13 +435,11 @@ public class MemoryPortalCacheTest {
 		Assert.assertNull(_memoryPortalCache.get(_KEY_2));
 
 		_defaultCacheListener.assertActionsCount(0);
+		_defaultCacheReplicator.assertActionsCount(0);
 
-		// Remove 3
+		// Remove 4
 
 		_memoryPortalCache.put(_KEY_1, _VALUE_1);
-
-		Assert.assertEquals(_VALUE_1, _memoryPortalCache.get(_KEY_1));
-		Assert.assertNull(_memoryPortalCache.get(_KEY_2));
 
 		Assert.assertTrue(_memoryPortalCache.remove(_KEY_1, _VALUE_1));
 
@@ -398,12 +452,15 @@ public class MemoryPortalCacheTest {
 
 		_defaultCacheListener.reset();
 
-		// Remove 4
+		_defaultCacheReplicator.assertActionsCount(2);
+		_defaultCacheReplicator.assertPut(_KEY_1, _VALUE_1);
+		_defaultCacheReplicator.assertRemoved(_KEY_1, _VALUE_1);
+
+		_defaultCacheReplicator.reset();
+
+		// Remove 5
 
 		_memoryPortalCache.put(_KEY_1, _VALUE_1);
-
-		Assert.assertEquals(_VALUE_1, _memoryPortalCache.get(_KEY_1));
-		Assert.assertNull(_memoryPortalCache.get(_KEY_2));
 
 		Assert.assertFalse(_memoryPortalCache.remove(_KEY_1, _VALUE_2));
 
@@ -415,7 +472,12 @@ public class MemoryPortalCacheTest {
 
 		_defaultCacheListener.reset();
 
-		// Remove 5
+		_defaultCacheReplicator.assertActionsCount(1);
+		_defaultCacheReplicator.assertPut(_KEY_1, _VALUE_1);
+
+		_defaultCacheReplicator.reset();
+
+		// Remove 6
 
 		try {
 			_memoryPortalCache.remove(null);
@@ -426,9 +488,13 @@ public class MemoryPortalCacheTest {
 			Assert.assertEquals("Key is null", npe.getMessage());
 		}
 
-		_defaultCacheListener.assertActionsCount(0);
+		Assert.assertEquals(_VALUE_1, _memoryPortalCache.get(_KEY_1));
+		Assert.assertNull(_memoryPortalCache.get(_KEY_2));
 
-		// Remove 6
+		_defaultCacheListener.assertActionsCount(0);
+		_defaultCacheReplicator.assertActionsCount(0);
+
+		// Remove 7
 
 		try {
 			_memoryPortalCache.remove(null, _VALUE_1);
@@ -439,9 +505,13 @@ public class MemoryPortalCacheTest {
 			Assert.assertEquals("Key is null", npe.getMessage());
 		}
 
-		_defaultCacheListener.assertActionsCount(0);
+		Assert.assertEquals(_VALUE_1, _memoryPortalCache.get(_KEY_1));
+		Assert.assertNull(_memoryPortalCache.get(_KEY_2));
 
-		// Remove 7
+		_defaultCacheListener.assertActionsCount(0);
+		_defaultCacheReplicator.assertActionsCount(0);
+
+		// Remove 8
 
 		try {
 			_memoryPortalCache.remove(_KEY_1, null);
@@ -452,17 +522,57 @@ public class MemoryPortalCacheTest {
 			Assert.assertEquals("Value is null", npe.getMessage());
 		}
 
+		Assert.assertEquals(_VALUE_1, _memoryPortalCache.get(_KEY_1));
+		Assert.assertNull(_memoryPortalCache.get(_KEY_2));
+
 		_defaultCacheListener.assertActionsCount(0);
+		_defaultCacheReplicator.assertActionsCount(0);
 	}
 
 	@Test
 	public void testRemoveAll() {
+		Assert.assertEquals(_VALUE_1, _memoryPortalCache.get(_KEY_1));
+		Assert.assertNull(_memoryPortalCache.get(_KEY_2));
+
+		// Remove all 1
+
 		_memoryPortalCache.removeAll();
+
+		Assert.assertNull(_memoryPortalCache.get(_KEY_1));
+		Assert.assertNull(_memoryPortalCache.get(_KEY_2));
 
 		_defaultCacheListener.assertActionsCount(1);
 		_defaultCacheListener.assertRemoveAll();
 
 		_defaultCacheListener.reset();
+
+		_defaultCacheReplicator.assertActionsCount(1);
+		_defaultCacheReplicator.assertRemoveAll();
+
+		_defaultCacheReplicator.reset();
+
+		// Remove all 2
+
+		_memoryPortalCache.put(_KEY_1, _VALUE_1);
+		_memoryPortalCache.put(_KEY_2, _VALUE_2);
+
+		PortalCacheHelperUtil.removeAllWithoutReplicator(_memoryPortalCache);
+
+		Assert.assertNull(_memoryPortalCache.get(_KEY_1));
+		Assert.assertNull(_memoryPortalCache.get(_KEY_2));
+
+		_defaultCacheListener.assertActionsCount(3);
+		_defaultCacheListener.assertPut(_KEY_1, _VALUE_1);
+		_defaultCacheListener.assertPut(_KEY_2, _VALUE_2);
+		_defaultCacheListener.assertRemoveAll();
+
+		_defaultCacheListener.reset();
+
+		_defaultCacheReplicator.assertActionsCount(2);
+		_defaultCacheReplicator.assertPut(_KEY_1, _VALUE_1);
+		_defaultCacheReplicator.assertPut(_KEY_2, _VALUE_2);
+
+		_defaultCacheReplicator.reset();
 	}
 
 	@Test
@@ -483,6 +593,11 @@ public class MemoryPortalCacheTest {
 
 		_defaultCacheListener.reset();
 
+		_defaultCacheReplicator.assertActionsCount(1);
+		_defaultCacheReplicator.assertUpdated(_KEY_1, _VALUE_2);
+
+		_defaultCacheReplicator.reset();
+
 		// Replace 2
 
 		Assert.assertNull(_memoryPortalCache.replace(_KEY_2, _VALUE_2, 10));
@@ -491,6 +606,7 @@ public class MemoryPortalCacheTest {
 		Assert.assertNull(_memoryPortalCache.get(_KEY_2));
 
 		_defaultCacheListener.assertActionsCount(0);
+		_defaultCacheReplicator.assertActionsCount(0);
 
 		// Replace 3
 
@@ -505,6 +621,11 @@ public class MemoryPortalCacheTest {
 
 		_defaultCacheListener.reset();
 
+		_defaultCacheReplicator.assertActionsCount(1);
+		_defaultCacheReplicator.assertUpdated(_KEY_1, _VALUE_1);
+
+		_defaultCacheReplicator.reset();
+
 		// Replace 4
 
 		Assert.assertFalse(
@@ -514,6 +635,7 @@ public class MemoryPortalCacheTest {
 		Assert.assertNull(_memoryPortalCache.get(_KEY_2));
 
 		_defaultCacheListener.assertActionsCount(0);
+		_defaultCacheReplicator.assertActionsCount(0);
 
 		// Replace 5
 
@@ -526,7 +648,11 @@ public class MemoryPortalCacheTest {
 			Assert.assertEquals("Key is null", npe.getMessage());
 		}
 
+		Assert.assertEquals(_VALUE_1, _memoryPortalCache.get(_KEY_1));
+		Assert.assertNull(_memoryPortalCache.get(_KEY_2));
+
 		_defaultCacheListener.assertActionsCount(0);
+		_defaultCacheReplicator.assertActionsCount(0);
 
 		// Replace 6
 
@@ -539,7 +665,11 @@ public class MemoryPortalCacheTest {
 			Assert.assertEquals("Value is null", npe.getMessage());
 		}
 
+		Assert.assertEquals(_VALUE_1, _memoryPortalCache.get(_KEY_1));
+		Assert.assertNull(_memoryPortalCache.get(_KEY_2));
+
 		_defaultCacheListener.assertActionsCount(0);
+		_defaultCacheReplicator.assertActionsCount(0);
 
 		// Replace 7
 
@@ -552,7 +682,11 @@ public class MemoryPortalCacheTest {
 			Assert.assertEquals("Time to live is negative", iae.getMessage());
 		}
 
+		Assert.assertEquals(_VALUE_1, _memoryPortalCache.get(_KEY_1));
+		Assert.assertNull(_memoryPortalCache.get(_KEY_2));
+
 		_defaultCacheListener.assertActionsCount(0);
+		_defaultCacheReplicator.assertActionsCount(0);
 
 		// Replace 8
 
@@ -565,7 +699,11 @@ public class MemoryPortalCacheTest {
 			Assert.assertEquals("Key is null", npe.getMessage());
 		}
 
+		Assert.assertEquals(_VALUE_1, _memoryPortalCache.get(_KEY_1));
+		Assert.assertNull(_memoryPortalCache.get(_KEY_2));
+
 		_defaultCacheListener.assertActionsCount(0);
+		_defaultCacheReplicator.assertActionsCount(0);
 
 		// Replace 9
 
@@ -578,7 +716,11 @@ public class MemoryPortalCacheTest {
 			Assert.assertEquals("Old value is null", npe.getMessage());
 		}
 
+		Assert.assertEquals(_VALUE_1, _memoryPortalCache.get(_KEY_1));
+		Assert.assertNull(_memoryPortalCache.get(_KEY_2));
+
 		_defaultCacheListener.assertActionsCount(0);
+		_defaultCacheReplicator.assertActionsCount(0);
 
 		// Replace 10
 
@@ -591,7 +733,11 @@ public class MemoryPortalCacheTest {
 			Assert.assertEquals("New value is null", npe.getMessage());
 		}
 
+		Assert.assertEquals(_VALUE_1, _memoryPortalCache.get(_KEY_1));
+		Assert.assertNull(_memoryPortalCache.get(_KEY_2));
+
 		_defaultCacheListener.assertActionsCount(0);
+		_defaultCacheReplicator.assertActionsCount(0);
 
 		// Replace 11
 
@@ -604,7 +750,11 @@ public class MemoryPortalCacheTest {
 			Assert.assertEquals("Time to live is negative", iae.getMessage());
 		}
 
+		Assert.assertEquals(_VALUE_1, _memoryPortalCache.get(_KEY_1));
+		Assert.assertNull(_memoryPortalCache.get(_KEY_2));
+
 		_defaultCacheListener.assertActionsCount(0);
+		_defaultCacheReplicator.assertActionsCount(0);
 	}
 
 	private static final String _CACHE_MANAGER_NAME = "CACHE_MANAGER_NAME";
@@ -620,6 +770,7 @@ public class MemoryPortalCacheTest {
 	private static final String _VALUE_2 = "VALUE_2";
 
 	private TestCacheListener<String, String> _defaultCacheListener;
+	private TestCacheReplicator<String, String> _defaultCacheReplicator;
 	private MemoryPortalCache<String, String> _memoryPortalCache;
 
 }

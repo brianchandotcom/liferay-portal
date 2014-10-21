@@ -69,7 +69,7 @@ for (JournalArticle curArticle : articles) {
 	<portlet:param name="struts_action" value="/journal/move_entry" />
 </portlet:actionURL>
 
-<aui:form action="<%= moveArticleURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveArticle(false);" %>'>
+<aui:form action="<%= moveArticleURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveArticle();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.MOVE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="newFolderId" type="hidden" value="<%= newFolderId %>" />
@@ -248,8 +248,8 @@ for (JournalArticle curArticle : articles) {
 	</aui:fieldset>
 </aui:form>
 
-<aui:script use="aui-base">
-	A.one('#<portlet:namespace />selectFolderButton').on(
+<aui:script>
+	AUI.$('#<portlet:namespace />selectFolderButton').on(
 		'click',
 		function(event) {
 			Liferay.Util.selectEntity(
@@ -283,9 +283,7 @@ for (JournalArticle curArticle : articles) {
 			);
 		}
 	);
-</aui:script>
 
-<aui:script>
 	function <portlet:namespace />saveArticle() {
 		submitForm(document.<portlet:namespace />fm);
 	}

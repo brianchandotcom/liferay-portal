@@ -243,31 +243,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		String[] lines = StringUtil.splitLines(content);
-
-		String line = lines[javaField.getLineNumber() - 1];
-
 		if (javaField.isStatic()) {
-			lines[javaField.getLineNumber() - 1] = StringUtil.replace(
-				line, "private static ", "private static final ");
-		}
-		else {
-			lines[javaField.getLineNumber() - 1] = StringUtil.replace(
-				line, "private ", "private final ");
+			return getChangedFieldTypeContent(
+				content, javaField, "private static", "private static final");
 		}
 
-		sb = new StringBundler(2 * lines.length);
-
-		for (String contentLine : lines) {
-			sb.append(contentLine);
-			sb.append(StringPool.NEW_LINE);
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		content = sb.toString();
-
-		return content;
+		return getChangedFieldTypeContent(
+			content, javaField, "private", "private final");
 	}
 
 	protected void checkFinderCacheInterfaceMethod(
@@ -580,25 +562,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return content;
 		}
 
-		String[] lines = StringUtil.splitLines(content);
-
-		String line = lines[javaField.getLineNumber() - 1];
-
-		lines[javaField.getLineNumber() - 1] = StringUtil.replace(
-			line, "private final", "private static final");
-
-		StringBundler sb = new StringBundler(2 * lines.length);
-
-		for (String contentLine : lines) {
-			sb.append(contentLine);
-			sb.append(StringPool.NEW_LINE);
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		content = sb.toString();
-
-		return content;
+		return getChangedFieldTypeContent(
+			content, javaField, "private final", "private static final");
 	}
 
 	protected void checkSystemEventAnnotations(String content, String fileName)
@@ -2026,6 +1991,31 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return newContent;
+	}
+
+	protected String getChangedFieldTypeContent(
+		String content, JavaField javaField, String oldFieldType,
+		String newFieldType) {
+
+		String[] lines = StringUtil.splitLines(content);
+
+		String line = lines[javaField.getLineNumber() - 1];
+
+		lines[javaField.getLineNumber() - 1] = StringUtil.replace(
+			line, oldFieldType, newFieldType);
+
+		StringBundler sb = new StringBundler(2 * lines.length);
+
+		for (String contentLine : lines) {
+			sb.append(contentLine);
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		content = sb.toString();
+
+		return content;
 	}
 
 	protected String getCombinedLinesContent(

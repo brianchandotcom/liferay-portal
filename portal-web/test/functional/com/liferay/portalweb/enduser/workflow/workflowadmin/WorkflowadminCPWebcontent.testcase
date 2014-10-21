@@ -820,7 +820,7 @@
 		</execute>
 
 		<execute macro="WebContent#viewStructureWithWorkflowCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
+			<var name="webContentTitle" value="WC Folder WebContent Structure Title" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 

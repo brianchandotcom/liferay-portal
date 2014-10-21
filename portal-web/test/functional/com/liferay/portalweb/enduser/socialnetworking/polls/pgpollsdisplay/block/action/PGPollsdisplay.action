@@ -10,4 +10,10 @@
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 	</command>
+
+	<command name="click">
+		<case locator-key1="SELECT_QUESTION">
+			<execute function="Click#makeVisibleClickAt" />
+		</case>
+	</command>
 </definition>

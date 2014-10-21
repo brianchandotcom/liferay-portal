@@ -49,4 +49,69 @@
 			</for>
 		</for>
 	</command>
+
+	<command name="viewDefaultNotificationDeliveries">
+		<var name="key_contentType" value="Blogs" />
+
+		<execute action="PGNotificationsdelivery#assertTextEquals" locator-key1="NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new blog entry in a blog you are subscribed to." />
+		<execute action="PGNotificationsdelivery#assertTextEquals" locator-key1="NOTIFICATION_DELIVERY_TEXT_2" value1="updates a blog entry you are subscribed to." />
+		<execute action="PGNotificationsdelivery#assertChecked" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX_1" />
+		<execute action="PGNotificationsdelivery#assertTextEquals" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1" value1="Email" />
+		<execute action="PGNotificationsdelivery#assertChecked" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX_2" />
+		<execute action="PGNotificationsdelivery#assertTextEquals" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2" value1="Website" />
+
+		<var name="key_contentType" value="Bookmarks" />
+
+		<execute action="PGNotificationsdelivery#assertTextEquals" locator-key1="NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new bookmark in a folder you are subscribed to." />
+		<execute action="PGNotificationsdelivery#assertTextEquals" locator-key1="NOTIFICATION_DELIVERY_TEXT_2" value1="updates a bookmark you are subscribed to." />
+		<execute action="PGNotificationsdelivery#assertChecked" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX_1" />
+		<execute action="PGNotificationsdelivery#assertTextEquals" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1" value1="Email" />
+		<execute action="PGNotificationsdelivery#assertChecked" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX_2" />
+		<execute action="PGNotificationsdelivery#assertTextEquals" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2" value1="Website" />
+
+		<var name="key_contentType" value="Comments" />
+
+		<execute action="PGNotificationsdelivery#assertTextEquals" locator-key1="NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new comment to comments you are subscribed to." />
+		<execute action="PGNotificationsdelivery#assertTextEquals" locator-key1="NOTIFICATION_DELIVERY_TEXT_2" value1="updates a comment you are subscribed to." />
+		<execute action="PGNotificationsdelivery#assertChecked" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX_1" />
+		<execute action="PGNotificationsdelivery#assertTextEquals" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1" value1="Email" />
+		<execute action="PGNotificationsdelivery#assertChecked" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX_2" />
+		<execute action="PGNotificationsdelivery#assertTextEquals" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2" value1="Website" />
+
+		<var name="key_contentType" value="Documents and Media " />
+
+		<execute action="PGNotificationsdelivery#assertTextEquals" locator-key1="NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new document in a folder you are subscribed to." />
+		<execute action="PGNotificationsdelivery#assertTextEquals" locator-key1="NOTIFICATION_DELIVERY_TEXT_2" value1="updates a document you are subscribed to." />
+		<execute action="PGNotificationsdelivery#assertChecked" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX_1" />
+		<execute action="PGNotificationsdelivery#assertTextEquals" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1" value1="Email" />
+		<execute action="PGNotificationsdelivery#assertChecked" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX_2" />
+		<execute action="PGNotificationsdelivery#assertTextEquals" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2" value1="Website" />
+
+		<var name="key_contentType" value="Message Boards" />
+
+		<execute action="PGNotificationsdelivery#assertTextEquals" locator-key1="NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new post in a thread or category you are subscribed to." />
+		<execute action="PGNotificationsdelivery#assertTextEquals" locator-key1="NOTIFICATION_DELIVERY_TEXT_2" value1="updates a post you are subscribed to." />
+		<execute action="PGNotificationsdelivery#assertChecked" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX_1" />
+		<execute action="PGNotificationsdelivery#assertTextEquals" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1" value1="Email" />
+		<execute action="PGNotificationsdelivery#assertChecked" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX_2" />
+		<execute action="PGNotificationsdelivery#assertTextEquals" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2" value1="Website" />
+
+		<var name="key_contentType" value="Web Content" />
+
+		<execute action="PGNotificationsdelivery#assertTextEquals" locator-key1="NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new content in a folder you are subscribed to." />
+		<execute action="PGNotificationsdelivery#assertTextEquals" locator-key1="NOTIFICATION_DELIVERY_TEXT_2" value1="updates a web content you are subscribed to." />
+		<execute action="PGNotificationsdelivery#assertChecked" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX_1" />
+		<execute action="PGNotificationsdelivery#assertTextEquals" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1" value1="Email" />
+		<execute action="PGNotificationsdelivery#assertChecked" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX_2" />
+		<execute action="PGNotificationsdelivery#assertTextEquals" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2" value1="Website" />
+
+		<var name="key_contentType" value="Wiki" />
+
+		<execute action="PGNotificationsdelivery#assertTextEquals" locator-key1="NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new wiki page in a wiki you are subscribed to." />
+		<execute action="PGNotificationsdelivery#assertTextEquals" locator-key1="NOTIFICATION_DELIVERY_TEXT_2" value1="updates a wiki page you are subscribed to." />
+		<execute action="PGNotificationsdelivery#assertChecked" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX_1" />
+		<execute action="PGNotificationsdelivery#assertTextEquals" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1" value1="Email" />
+		<execute action="PGNotificationsdelivery#assertChecked" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX_2" />
+		<execute action="PGNotificationsdelivery#assertTextEquals" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2" value1="Website" />
+	</command>
 </definition>

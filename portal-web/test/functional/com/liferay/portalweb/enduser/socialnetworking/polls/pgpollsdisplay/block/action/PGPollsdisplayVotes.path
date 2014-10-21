@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>POLLS_TOTAL_VOTES</td>
-	<td>//form[contains(@id,'_59_INSTANCE')]/div</td>
+	<td>//form[contains(@id,'pollsweb')]/div</td>
 	<td></td>
 </tr>
 </tbody>

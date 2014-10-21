@@ -49,15 +49,14 @@
 	</command>
 
 	<command name="selectPollPG">
-		<execute action="PGPollsdisplay#assertClick" locator-key1="SELECT_QUESTION" />
+		<execute action="PGPollsdisplay#click" locator-key1="SELECT_QUESTION" />
 
 		<execute action="BasePortlet#selectFrame" locator-key1="IFRAME" />
 
-		<var name="key_pollsQuestionTitle" value="${pollsQuestionTitle}" />
-
-		<execute action="PGPollsdisplayConfiguration#click" locator-key1="TITLE_DROPDOWN" />
-		<execute action="PGPollsdisplayConfiguration#doubleClick" locator-key1="TITLE_DROPDOWN_SELECTION" value1="${pollsQuestionTitle}" />
+		<execute action="PGPollsdisplayConfiguration#select" locator-key1="TITLE_DROPDOWN_SELECT" value1="${pollsQuestionTitle}" />
 		<execute action="PGPollsdisplayConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGPollsdisplayConfiguration#assertClick" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="PGPollsdisplayConfiguration#assertSelectedLabel" locator-key1="TITLE_DROPDOWN_SELECT" value1="${pollsQuestionTitle}" />
 
 		<execute action="BasePortlet#selectFrame" value1="relative=top" />
 	</command>

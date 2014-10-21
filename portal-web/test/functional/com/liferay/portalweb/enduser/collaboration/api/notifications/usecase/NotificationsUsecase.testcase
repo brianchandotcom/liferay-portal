@@ -1,0 +1,18 @@
+<definition component-name="portal-collaboration">
+	<property name="portlet.plugins.includes" value="notifications-portlet" />
+	<property name="testray.main.component.name" value="Collaboration" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<command name="ViewDefaultNotificationsPortletDeliveryOptions" priority="5">
+		<execute macro="Notifications#gotoDockbar" />
+
+		<execute macro="Notifications#navigateToViewAllNotifications" />
+
+		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
+
+		<execute macro="NotificationsPortlet#viewDefaultNotificationDeliveries" />
+	</command>
+</definition>

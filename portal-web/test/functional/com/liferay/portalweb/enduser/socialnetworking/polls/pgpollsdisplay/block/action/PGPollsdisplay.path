@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>POLLS_QUESTION_CHOICE</td>
-	<td>//label[@class='radio' and contains(.,'${key_pollsQuestionChoice}')]</td>
+	<td>//label[contains(@for,'pollsweb') and contains(.,'${key_pollsQuestionChoice}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>SELECT_QUESTION</td>
-	<td>//span[contains(@class,'lfr-icon-action-configuration')]/a</td>
+	<td>//span[contains(@class,'taglib-text') and contains(.,'Select Poll')]</td>
 	<td></td>
 </tr>
 <tr>

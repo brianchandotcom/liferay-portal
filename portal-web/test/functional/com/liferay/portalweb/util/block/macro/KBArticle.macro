@@ -1,4 +1,17 @@
 <definition>
+	<command name="addChildPGViaKBAdmin">
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+
+		<execute action="CPKnowledgebaseadmin#click" locator-key1="ARTICLE_TABLE_ACTIONS" />
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ARTICLE_MENULIST_ADD_CHILD_ARTICLE" value1="Add Child Article" />
+
+		<execute action="CPKnowledgebaseadminAddchildarticle#type" locator-key1="TITLE_FIELD" value1="${kbChildArticleTitle}" />
+		<execute action="CPKnowledgebaseadminAddchildarticle#type" locator-key1="CONTENT_FIELD" value1="${kbChildArticleContent}" />
+		<execute action="CPKnowledgebaseadminAddchildarticle#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="addChildPGViaKBDisplay">
 		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_ACTIONS_BUTTON" value1="Actions" />
 		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ACTIONS_MENULIST_ADD_CHILD_ARTICLE" value1="Add Child Article" />
@@ -193,6 +206,20 @@
 		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
 	</command>
 
+	<command name="gotoViaKBAdminCP">
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+
+		<if>
+			<isset var="hasChildArticle" />
+			<then>
+				<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ARTICLE_TABLE_TITLE_LINK" value1="${kbArticleTitle}" />
+			</then>
+			<else>
+				<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ARTICLE_TABLE_TITLE" value1="${kbArticleTitle}" />
+			</else>
+		</if>
+	</command>
+
 	<command name="gotoViaKBDisplayPG">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
@@ -281,6 +308,21 @@
 		</if>
 	</command>
 
+	<command name="viewChildArticleCP">
+		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Child Articles for ${kbArticleTitle}." />
+
+		<var name="key_kbArticleTitle" value="${kbChildArticleTitle}" />
+
+		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="ARTICLE_TABLE_PRIORITY" value1="${kbPriority}" />
+		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="ARTICLE_TABLE_TITLE" value1="${kbChildArticleTitle}" />
+		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="ARTICLE_TABLE_AUTHOR" value1="${kbAuthor}" />
+		<execute action="CPKnowledgebaseadmin#click" locator-key1="ARTICLE_TABLE_ACTIONS" />
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ARTICLE_MENULIST_VIEW" value1="View" />
+
+		<execute action="CPKnowledgebaseadminChildarticle#assertTextEquals" locator-key1="BACK_TO_HEADER" value1="${kbChildArticleTitle}" />
+		<execute action="CPKnowledgebaseadminChildarticle#assertTextEquals" locator-key1="CONTENT" value1="${kbChildArticleContent}" />
+	</command>
+
 	<command name="viewCP">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
@@ -290,8 +332,16 @@
 		<execute action="CPKnowledgebaseadmin#click" locator-key1="ARTICLE_TABLE_ACTIONS" />
 		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ARTICLE_MENULIST_VIEW" value1="View" />
 
-		<execute action="CPKnowledgebaseadminArticle#assertTextEquals" locator-key1="TITLE" value1="${kbArticleTitle}" />
+		<execute action="CPKnowledgebaseadminArticle#assertTextEquals" locator-key1="BACK_TO_HEADER" value1="${kbArticleTitle}" />
 		<execute action="CPKnowledgebaseadminArticle#assertTextEquals" locator-key1="CONTENT" value1="${kbArticleContent}" />
+
+		<if>
+			<isset var="kbChildArticleTitle" />
+			<then>
+				<execute action="CPKnowledgebaseadminArticle#assertTextEquals" locator-key1="CHILD_ARTICLE_TITLE" value1="${kbChildArticleTitle}" />
+				<execute action="CPKnowledgebaseadminArticle#assertTextEquals" locator-key1="CHILD_ARTICLE_CONTENT" value1="${kbChildArticleContent}" />
+			</then>
+		</if>
 
 		<if>
 			<isset var="kbArticleRelatedAssetTitle" />

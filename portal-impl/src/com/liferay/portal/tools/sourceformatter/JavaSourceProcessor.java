@@ -213,21 +213,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		com.thoughtworks.qdox.model.JavaClass[] javaClasses,
 		JavaField javaField, String content) {
 
-		Annotation[] annotations = javaField.getAnnotations();
+		Set<String> annotationsExclusions = getAnnotationsExclusions();
 
-		List<String> annotationExclusions = new ArrayList<String>();
-
-		annotationExclusions.add(
-			"com.liferay.portal.kernel.bean.BeanReference");
-		annotationExclusions.add("org.mockito.Mock");
-		annotationExclusions.add("java.lang.SuppressWarnings");
-
-		for (Annotation annotation: annotations) {
+		for (Annotation annotation : javaField.getAnnotations()) {
 			Type annotationType = annotation.getType();
 
 			String annotationTypeString = annotationType.toString();
 
-			if (annotationExclusions.contains(annotationTypeString)) {
+			if (annotationsExclusions.contains(annotationTypeString)) {
 				return content;
 			}
 		}
@@ -2013,6 +2006,20 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return newContent;
 	}
 
+	protected Set<String> getAnnotationsExclusions() {
+		if (_annotationsExclusions != null) {
+			return _annotationsExclusions;
+		}
+
+		_annotationsExclusions = SetUtil.fromArray(
+			new String[] {
+				"com.liferay.portal.kernel.bean.BeanReference",
+				"org.mockito.Mock", "java.lang.SuppressWarnings"
+			});
+
+		return _annotationsExclusions;
+	}
+
 	protected String getChangedFieldTypeContent(
 		String content, JavaField javaField, String oldFieldType,
 		String newFieldType) {
@@ -2930,6 +2937,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private boolean _allowUseServiceUtilInServiceImpl;
 	private Pattern _annotationPattern = Pattern.compile(
 		"\n(\t*)@(.+)\\(\n([\\s\\S]*?)\n(\t*)\\)");
+	private Set<String> _annotationsExclusions;
 	private final Pattern _camelCasePattern = Pattern.compile(
 		"([a-z])([A-Z0-9])");
 	private Pattern _catchExceptionPattern = Pattern.compile(

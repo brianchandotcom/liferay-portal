@@ -201,8 +201,7 @@ public class DocumentConversionUtil {
 		else if (outputDocumentFormat == null) {
 			throw new SystemException(
 				"Conversion is not supported from " +
-					inputDocumentFormat.getName() + " to ." +
-						targetExtension);
+					inputDocumentFormat.getName() + " to ." + targetExtension);
 		}
 		else if (!inputDocumentFormat.isExportableTo(outputDocumentFormat)) {
 			throw new SystemException(

@@ -81,8 +81,7 @@ public class AssetPublisherExportImportTest
 	@Override
 	public String getPortletId() throws Exception {
 		return PortletKeys.ASSET_PUBLISHER +
-			PortletConstants.INSTANCE_SEPARATOR +
-				RandomTestUtil.randomString();
+			PortletConstants.INSTANCE_SEPARATOR + RandomTestUtil.randomString();
 	}
 
 	@Test

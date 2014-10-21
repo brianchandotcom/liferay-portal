@@ -84,8 +84,7 @@ public class PollerRequestHandlerImpl
 		if (!isValidPollerHeader(pollerHeader)) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Invalid poller header for request " +
-						pollerRequestString);
+					"Invalid poller header for request " + pollerRequestString);
 			}
 
 			return null;

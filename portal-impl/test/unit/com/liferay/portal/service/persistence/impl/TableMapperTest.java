@@ -438,8 +438,7 @@ public class TableMapperTest {
 		MockDeleteLeftPrimaryKeyTableMappingsSqlUpdate
 			mockDeleteLeftPrimaryKeyTableMappingsSqlUpdate =
 				(MockDeleteLeftPrimaryKeyTableMappingsSqlUpdate)
-					_tableMapperImpl.
-						deleteLeftPrimaryKeyTableMappingsSqlUpdate;
+					_tableMapperImpl.deleteLeftPrimaryKeyTableMappingsSqlUpdate;
 
 		mockDeleteLeftPrimaryKeyTableMappingsSqlUpdate.setDatabaseError(true);
 

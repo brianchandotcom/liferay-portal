@@ -66,8 +66,7 @@ public class UserServiceHttpTest {
 		boolean autoScreenName = true;
 		String screenName = StringPool.BLANK;
 		String emailAddress =
-			"UserServiceHttpTest." + RandomTestUtil.nextLong() +
-				"@liferay.com";
+			"UserServiceHttpTest." + RandomTestUtil.nextLong() + "@liferay.com";
 		long facebookId = 0;
 		String openId = StringPool.BLANK;
 		Locale locale = LocaleUtil.getDefault();

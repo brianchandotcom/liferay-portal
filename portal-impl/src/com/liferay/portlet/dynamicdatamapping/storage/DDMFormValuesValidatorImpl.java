@@ -139,8 +139,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 
 		if (Validator.isNull(ddmFormField.getDataType())) {
 			throw new StorageFieldValueException(
-				"Value should not be set for field " +
-					ddmFormField.getName());
+				"Value should not be set for field " + ddmFormField.getName());
 		}
 
 		if ((ddmFormField.isLocalizable() && !value.isLocalized()) ||

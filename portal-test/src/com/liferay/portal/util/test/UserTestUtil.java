@@ -162,8 +162,7 @@ public class UserTestUtil {
 
 		if (secure) {
 			String emailAddress =
-				"UserServiceTest." + RandomTestUtil.nextLong() +
-					"@liferay.com";
+				"UserServiceTest." + RandomTestUtil.nextLong() + "@liferay.com";
 
 			return UserServiceUtil.addUser(
 				TestPropsValues.getCompanyId(), autoPassword, password1,

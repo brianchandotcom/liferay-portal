@@ -22,6 +22,7 @@ String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 Group selGroup = (Group)request.getAttribute(WebKeys.GROUP);
 
 Group group = layoutsAdminDisplayContext.getGroup();
+Group liveGroup = layoutsAdminDisplayContext.getLiveGroup();
 
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 

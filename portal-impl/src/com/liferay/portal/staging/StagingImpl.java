@@ -1809,9 +1809,13 @@ public class StagingImpl implements Staging {
 			portletRequest, liveGroup, "branchingPublic");
 		boolean branchingPrivate = getBoolean(
 			portletRequest, liveGroup, "branchingPrivate");
+		boolean forceDisable = ParamUtil.getBoolean(
+			portletRequest, "forceDisable");
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
+
+		serviceContext.setAttribute("forceDisable", forceDisable);
 
 		if (stagingType == StagingConstants.TYPE_NOT_STAGED) {
 			if (liveGroup.hasStagingGroup() || liveGroup.isStagedRemotely()) {

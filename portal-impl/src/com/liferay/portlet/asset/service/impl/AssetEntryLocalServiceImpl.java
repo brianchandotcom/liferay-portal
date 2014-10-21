@@ -394,8 +394,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		long classTypeId, String keywords, int status, int start, int end) {
 
 		return search(
-			companyId, groupIds, userId, className, classTypeId, null, null,
-			null, null, null, status, false, start, end);
+			companyId, groupIds, userId, className, classTypeId, keywords,
+			keywords, keywords, null, null, status, false, start, end);
 	}
 
 	@Override

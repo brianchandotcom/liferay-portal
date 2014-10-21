@@ -380,6 +380,12 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 		return _ddlRecordLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	DDLRecordVersionLocalServiceImpl#getLatestRecordVersion(
+	long)}
+	*/
+	@Deprecated
 	@Override
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getLatestRecordVersion(
 		long recordId)
@@ -418,8 +424,8 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordVersionLocalServiceImpl#getRecordVersion(
-	long, String)}
+	DDLRecordVersionLocalServiceImpl#getRecordVersion(long,
+	String)}
 	*/
 	@Deprecated
 	@Override
@@ -431,8 +437,7 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordVersionLocalServiceImpl#getRecordVersion(
-	long)}
+	DDLRecordVersionLocalServiceImpl#getRecordVersion(long)}
 	*/
 	@Deprecated
 	@Override
@@ -444,8 +449,8 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordVersionLocalServiceImpl#getRecordVersions(
-	long, int, int, OrderByComparator)}
+	DDLRecordVersionLocalServiceImpl#getRecordVersions(long, int,
+	int, OrderByComparator)}
 	*/
 	@Deprecated
 	@Override
@@ -458,7 +463,7 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordVersionLocalServiceImpl#getRecordVersionsCount(
+	DDLRecordVersionLocalServiceImpl#getRecordVersionsCount(
 	long)}
 	*/
 	@Deprecated

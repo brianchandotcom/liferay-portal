@@ -243,6 +243,13 @@ public class DDLRecordVersionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getLatestRecordVersion(
+		long recordId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordVersionLocalService.getLatestRecordVersion(recordId);
+	}
+
+	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {

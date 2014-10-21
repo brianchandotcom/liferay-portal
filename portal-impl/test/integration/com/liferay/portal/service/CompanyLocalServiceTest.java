@@ -17,8 +17,17 @@ package com.liferay.portal.service;
 import com.liferay.portal.AccountNameException;
 import com.liferay.portal.CompanyMxException;
 import com.liferay.portal.CompanyVirtualHostException;
+import com.liferay.portal.NoSuchAccountException;
+import com.liferay.portal.NoSuchPasswordPolicyException;
+import com.liferay.portal.NoSuchShardException;
+import com.liferay.portal.NoSuchVirtualHostException;
 import com.liferay.portal.RequiredCompanyException;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -27,6 +36,8 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.LayoutSetPrototype;
+import com.liferay.portal.model.OrganizationConstants;
+import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.test.Sync;
@@ -49,6 +60,7 @@ import java.io.File;
 import java.lang.reflect.Field;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -239,6 +251,210 @@ public class CompanyLocalServiceTest {
 		group = GroupLocalServiceUtil.fetchGroup(group.getGroupId());
 
 		Assert.assertNull(group);
+	}
+
+	@Test(expected = NoSuchAccountException.class)
+	public void testDeleteCompanyDeletesAccount() throws Exception {
+		String webId = "webId";
+
+		Company company = CompanyLocalServiceUtil.addCompany(
+			webId, webId, webId + ".com", PropsValues.SHARD_DEFAULT_NAME, false,
+			0, true);
+
+		PortalInstances.initCompany(_mockServletContext, webId);
+
+		CompanyLocalServiceUtil.deleteCompany(company);
+
+		AccountLocalServiceUtil.getAccount(company.getAccountId());
+	}
+
+	@Test(expected = NoSuchPasswordPolicyException.class)
+	public void testDeleteCompanyDeletesDefaultPasswordPolicy()
+		throws Exception {
+
+		String webId = "webId";
+
+		Company company = CompanyLocalServiceUtil.addCompany(
+			webId, webId, webId + ".com", PropsValues.SHARD_DEFAULT_NAME, false,
+			0, true);
+
+		PortalInstances.initCompany(_mockServletContext, webId);
+
+		CompanyLocalServiceUtil.deleteCompany(company);
+
+		PasswordPolicyLocalServiceUtil.getDefaultPasswordPolicy(
+			company.getCompanyId());
+	}
+
+	@Test
+	public void testDeleteCompanyDeletesGroups() throws Exception {
+		String webId = "webId";
+
+		Company company = CompanyLocalServiceUtil.addCompany(
+			webId, webId, webId + ".com", PropsValues.SHARD_DEFAULT_NAME, false,
+			0, true);
+
+		PortalInstances.initCompany(_mockServletContext, webId);
+
+		CompanyLocalServiceUtil.deleteCompany(company);
+
+		int groupsCount = GroupLocalServiceUtil.getGroupsCount(
+			company.getCompanyId(), GroupConstants.ANY_PARENT_GROUP_ID, true);
+
+		Assert.assertEquals(0, groupsCount);
+
+		groupsCount = GroupLocalServiceUtil.getGroupsCount(
+			company.getCompanyId(), GroupConstants.ANY_PARENT_GROUP_ID, false);
+
+		Assert.assertEquals(0, groupsCount);
+	}
+
+	@Test
+	public void testDeleteCompanyDeletesLayoutPrototypes() throws Exception {
+		String webId = "webId";
+
+		Company company = CompanyLocalServiceUtil.addCompany(
+			webId, webId, webId + ".com", PropsValues.SHARD_DEFAULT_NAME, false,
+			0, true);
+
+		PortalInstances.initCompany(_mockServletContext, webId);
+
+		CompanyLocalServiceUtil.deleteCompany(company);
+
+		int searchCount = LayoutPrototypeLocalServiceUtil.searchCount(
+			company.getCompanyId(), true);
+
+		Assert.assertEquals(0, searchCount);
+
+		searchCount = LayoutPrototypeLocalServiceUtil.searchCount(
+			company.getCompanyId(), false);
+
+		Assert.assertEquals(0, searchCount);
+	}
+
+	@Test
+	public void testDeleteCompanyDeletesLayoutSetPrototypes() throws Exception {
+		String webId = "webId";
+
+		Company company = CompanyLocalServiceUtil.addCompany(
+			webId, webId, webId + ".com", PropsValues.SHARD_DEFAULT_NAME, false,
+			0, true);
+
+		PortalInstances.initCompany(_mockServletContext, webId);
+
+		CompanyLocalServiceUtil.deleteCompany(company);
+
+		List<LayoutSetPrototype> layoutSetPrototypes =
+			LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypes(
+				company.getCompanyId());
+
+		Assert.assertEquals(0, layoutSetPrototypes.size());
+	}
+
+	@Test
+	public void testDeleteCompanyDeletesOrganizations() throws Exception {
+		String webId = "webId";
+
+		Company company = CompanyLocalServiceUtil.addCompany(
+			webId, webId, webId + ".com", PropsValues.SHARD_DEFAULT_NAME, false,
+			0, true);
+
+		PortalInstances.initCompany(_mockServletContext, webId);
+
+		CompanyLocalServiceUtil.deleteCompany(company);
+
+		int organizationsCount =
+			OrganizationLocalServiceUtil.getOrganizationsCount(
+				company.getCompanyId(),
+				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
+
+		Assert.assertEquals(0, organizationsCount);
+	}
+
+	@Test
+	public void testDeleteCompanyDeletesPortalInstance() throws Exception {
+		String webId = "webId";
+
+		Company company = CompanyLocalServiceUtil.addCompany(
+			webId, webId, webId + ".com", PropsValues.SHARD_DEFAULT_NAME, false,
+			0, true);
+
+		PortalInstances.initCompany(_mockServletContext, webId);
+
+		CompanyLocalServiceUtil.deleteCompany(company);
+
+		for (long companyId : PortalInstances.getCompanyIds()) {
+			if (companyId == company.getCompanyId()) {
+				Assert.fail("Company instance was not deleted.");
+			}
+		}
+	}
+
+	@Test
+	public void testDeleteCompanyDeletesRoles() throws Exception {
+		String webId = "webId";
+
+		Company company = CompanyLocalServiceUtil.addCompany(
+			webId, webId, webId + ".com", PropsValues.SHARD_DEFAULT_NAME, false,
+			0, true);
+
+		PortalInstances.initCompany(_mockServletContext, webId);
+
+		CompanyLocalServiceUtil.deleteCompany(company);
+
+		List<Role> roles = RoleLocalServiceUtil.getRoles(
+			company.getCompanyId());
+
+		Assert.assertEquals(0, roles.size());
+	}
+
+	@Test(expected = NoSuchShardException.class)
+	public void testDeleteCompanyDeletesShard() throws Exception {
+		String webId = "webId";
+
+		Company company = CompanyLocalServiceUtil.addCompany(
+			webId, webId, webId + ".com", PropsValues.SHARD_DEFAULT_NAME, false,
+			0, true);
+
+		PortalInstances.initCompany(_mockServletContext, webId);
+
+		CompanyLocalServiceUtil.deleteCompany(company);
+
+		ShardLocalServiceUtil.getShard(
+			Company.class.getName(), company.getCompanyId());
+	}
+
+	@Test
+	public void testDeleteCompanyDeletesUsers() throws Exception {
+		String webId = "webId";
+
+		Company company = CompanyLocalServiceUtil.addCompany(
+			webId, webId, webId + ".com", PropsValues.SHARD_DEFAULT_NAME, false,
+			0, true);
+
+		PortalInstances.initCompany(_mockServletContext, webId);
+
+		CompanyLocalServiceUtil.deleteCompany(company);
+
+		List<User> users = UserLocalServiceUtil.getCompanyUsers(
+			company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(0, users.size());
+	}
+
+	@Test(expected = NoSuchVirtualHostException.class)
+	public void testDeleteCompanyDeletesVirtualHost() throws Exception {
+		String webId = "webId";
+
+		Company company = CompanyLocalServiceUtil.addCompany(
+			webId, webId, webId + ".com", PropsValues.SHARD_DEFAULT_NAME, false,
+			0, true);
+
+		PortalInstances.initCompany(_mockServletContext, webId);
+
+		CompanyLocalServiceUtil.deleteCompany(company);
+
+		VirtualHostLocalServiceUtil.getVirtualHost(webId);
 	}
 
 	@Test(expected = RequiredCompanyException.class)

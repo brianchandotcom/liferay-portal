@@ -17,7 +17,6 @@ package com.liferay.portlet.dynamicdatalists.model.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
-import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -35,9 +34,6 @@ import java.util.Locale;
  * @author Eduardo Lundgren
  */
 public class DDLRecordImpl extends DDLRecordBaseImpl {
-
-	public DDLRecordImpl() {
-	}
 
 	@Override
 	public Field getField(String fieldName) throws PortalException {
@@ -110,7 +106,8 @@ public class DDLRecordImpl extends DDLRecordBaseImpl {
 
 	@Override
 	public DDLRecordVersion getLatestRecordVersion() throws PortalException {
-		return DDLRecordLocalServiceUtil.getLatestRecordVersion(getRecordId());
+		return DDLRecordVersionLocalServiceUtil.getLatestRecordVersion(
+			getRecordId());
 	}
 
 	@Override

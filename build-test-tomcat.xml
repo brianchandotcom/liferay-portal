@@ -19,7 +19,7 @@
 
 		<antcall target="revert-test-properties" />
 
-		<ant dir="portal-impl" target="build-selenium-new-test-case" />
+		<ant dir="portal-impl" target="build-selenium-test-case" />
 
 		<if>
 			<isset property="vm.host" />

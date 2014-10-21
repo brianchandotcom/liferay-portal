@@ -331,8 +331,7 @@ public class SimpleCaptchaImpl implements Captcha {
 		String[] gimpyRendererClassNames =
 			PropsValues.CAPTCHA_ENGINE_SIMPLECAPTCHA_GIMPY_RENDERERS;
 
-		_gimpyRenderers = new GimpyRenderer[
-			gimpyRendererClassNames.length];
+		_gimpyRenderers = new GimpyRenderer[gimpyRendererClassNames.length];
 
 		for (int i = 0; i < gimpyRendererClassNames.length; i++) {
 			String gimpyRendererClassName = gimpyRendererClassNames[i];

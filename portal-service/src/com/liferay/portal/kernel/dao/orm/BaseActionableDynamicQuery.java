@@ -41,8 +41,7 @@ import java.util.concurrent.Callable;
 public abstract class BaseActionableDynamicQuery
 	implements ActionableDynamicQuery {
 
-	public static final TransactionAttribute
-		REQUIRES_NEW_TRANSACTION_ATTRIBUTE;
+	public static final TransactionAttribute REQUIRES_NEW_TRANSACTION_ATTRIBUTE;
 
 	static {
 		TransactionAttribute.Builder builder =

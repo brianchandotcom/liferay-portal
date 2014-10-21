@@ -124,8 +124,7 @@ public class ScriptingPortlet extends GenericPortlet {
 				 !filePath.endsWith(StringPool.SLASH)) {
 
 			throw new PortletException(
-				"template-path " + filePath +
-					" must start and end with a /");
+				"template-path " + filePath + " must start and end with a /");
 		}
 
 		actionFile = getInitParameter("action-file");

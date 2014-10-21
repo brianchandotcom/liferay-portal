@@ -114,8 +114,7 @@ public interface PortletBag extends Cloneable {
 
 	public List<URLEncoder> getURLEncoderInstances();
 
-	public List<UserNotificationHandler>
-		getUserNotificationHandlerInstances();
+	public List<UserNotificationHandler> getUserNotificationHandlerInstances();
 
 	public List<WebDAVStorage> getWebDAVStorageInstances();
 

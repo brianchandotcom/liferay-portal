@@ -65,8 +65,7 @@ public class UserServiceSoapTest {
 		boolean autoScreenName = true;
 		String screenName = StringPool.BLANK;
 		String emailAddress =
-			"UserServiceSoapTest." + RandomTestUtil.nextLong() +
-				"@liferay.com";
+			"UserServiceSoapTest." + RandomTestUtil.nextLong() + "@liferay.com";
 		long facebookId = 0;
 		String openId = StringPool.BLANK;
 		String locale = LocaleUtil.getDefault().toString();

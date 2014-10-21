@@ -2426,8 +2426,7 @@ public class ServiceBuilder {
 			int x = newContent.indexOf("</model-hints>");
 
 			newContent =
-				newContent.substring(0, x) + content +
-					newContent.substring(x);
+				newContent.substring(0, x) + content + newContent.substring(x);
 		}
 		else {
 			firstModel = newContent.lastIndexOf("<model", firstModel) - 1;

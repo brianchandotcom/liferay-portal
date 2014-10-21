@@ -212,8 +212,7 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 			String image =
 				"{{" + MediaWikiImporter.SHARED_IMAGES_TITLE + "/" +
 					StringUtil.toLowerCase(
-						sb.substring(imageStartPos, imageEndPos)) +
-							"}}";
+						sb.substring(imageStartPos, imageEndPos)) + "}}";
 
 			int imageLength = image.length();
 

@@ -2020,7 +2020,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	protected String getCombinedLinesContent(
 		String content, String fileName, String line, String trimmedLine,
 		int lineLength, int lineCount, String previousLine, String linePart,
-		boolean addToPreviousLine, boolean extraSpace,
+		int tabDiff, boolean addToPreviousLine, boolean extraSpace,
 		boolean removeTabOnNextLine) {
 
 		if (linePart == null) {
@@ -2046,7 +2046,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 
 			if (line.endsWith(StringPool.OPEN_CURLY_BRACE) &&
-				!previousLine.contains(" class ") &&
+				(tabDiff != 0) && !previousLine.contains(" class ") &&
 				Validator.isNull(nextLine)) {
 
 				return StringUtil.replace(
@@ -2111,22 +2111,25 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		String trimmedPreviousLine = StringUtil.trimLeading(previousLine);
 
-		if (trimmedLine.startsWith("// ") ||
-			trimmedPreviousLine.startsWith("// ")) {
+		if (line.contains("// ") || line.contains("*/") ||
+			line.contains("*/") || previousLine.contains("// ") ||
+			previousLine.contains("*/") || previousLine.contains("*/")) {
 
 			return null;
 		}
 
+		int tabDiff = lineTabCount - previousLineTabCount;
+
 		if (previousLine.endsWith(" extends")) {
 			return getCombinedLinesContent(
 				content, fileName, line, trimmedLine, lineLength, lineCount,
-				previousLine, "extends", false, false, false);
+				previousLine, "extends", tabDiff, false, false, false);
 		}
 
 		if (previousLine.endsWith(" implements")) {
 			return getCombinedLinesContent(
 				content, fileName, line, trimmedLine, lineLength, lineCount,
-				previousLine, "implements ", false, false, false);
+				previousLine, "implements ", tabDiff, false, false, false);
 		}
 
 		if (trimmedLine.startsWith("+ ") || trimmedLine.startsWith("- ") ||
@@ -2138,7 +2141,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			return getCombinedLinesContent(
 				content, fileName, line, trimmedLine, lineLength, lineCount,
-				previousLine, linePart, true, true, false);
+				previousLine, linePart, tabDiff, true, true, false);
 		}
 
 		int previousLineLength = getLineLength(previousLine);
@@ -2150,17 +2153,20 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				return getCombinedLinesContent(
 					content, fileName, line, trimmedLine, lineLength, lineCount,
-					previousLine, null, false, true, false);
+					previousLine, null, tabDiff, false, true, false);
 			}
 
-			if ((previousLine.endsWith(StringPool.EQUAL) ||
-				 previousLine.endsWith(StringPool.PERIOD) ||
-				 trimmedPreviousLine.equals("return")) &&
-				line.endsWith(StringPool.SEMICOLON)) {
+			if (line.endsWith(StringPool.SEMICOLON) &&
+				!previousLine.endsWith(StringPool.COLON) &&
+				!previousLine.endsWith(StringPool.OPEN_BRACKET) &&
+				!previousLine.endsWith(StringPool.OPEN_CURLY_BRACE) &&
+				!previousLine.endsWith(StringPool.OPEN_PARENTHESIS) &&
+				!previousLine.endsWith(StringPool.PERIOD) &&
+				(lineTabCount == (previousLineTabCount + 1))) {
 
 				return getCombinedLinesContent(
 					content, fileName, line, trimmedLine, lineLength, lineCount,
-					previousLine, null, false, true, false);
+					previousLine, null, tabDiff, false, true, false);
 			}
 
 			if ((trimmedPreviousLine.startsWith("if ") ||
@@ -2170,7 +2176,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				return getCombinedLinesContent(
 					content, fileName, line, trimmedLine, lineLength, lineCount,
-					previousLine, null, false, true, false);
+					previousLine, null, tabDiff, false, true, false);
 			}
 
 			if ((trimmedLine.startsWith("extends ") ||
@@ -2182,7 +2188,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				return getCombinedLinesContent(
 					content, fileName, line, trimmedLine, lineLength, lineCount,
-					previousLine, null, false, true, false);
+					previousLine, null, tabDiff, false, true, false);
 			}
 
 			if (previousLine.endsWith(StringPool.EQUAL) &&
@@ -2193,9 +2199,21 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				if (nextLine.endsWith(StringPool.SEMICOLON)) {
 					return getCombinedLinesContent(
 						content, fileName, line, trimmedLine, lineLength,
-						lineCount, previousLine, null, false, true, true);
+						lineCount, previousLine, null, tabDiff, false, true,
+						true);
 				}
 			}
+		}
+
+		if (((trimmedLine.length() + previousLineLength) <= _MAX_LINE_LENGTH) &&
+			(previousLine.endsWith(StringPool.OPEN_BRACKET) ||
+			 previousLine.endsWith(StringPool.OPEN_PARENTHESIS) ||
+			 previousLine.endsWith(StringPool.PERIOD)) &&
+			line.endsWith(StringPool.SEMICOLON)) {
+
+			return getCombinedLinesContent(
+				content, fileName, line, trimmedLine, lineLength, lineCount,
+				previousLine, null, tabDiff, false, false, false);
 		}
 
 		if (previousLine.endsWith(StringPool.EQUAL) &&
@@ -2274,8 +2292,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 						return getCombinedLinesContent(
 							content, fileName, line, trimmedLine, lineLength,
-							lineCount, previousLine, linePart, true, true,
-							false);
+							lineCount, previousLine, linePart, tabDiff, true,
+							true, false);
 					}
 				}
 			}
@@ -2298,13 +2316,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							return getCombinedLinesContent(
 								content, fileName, line, trimmedLine,
 								lineLength, lineCount, previousLine, null,
-								false, true, false);
+								tabDiff, false, true, false);
 						}
 						else {
 							return getCombinedLinesContent(
 								content, fileName, line, trimmedLine,
 								lineLength, lineCount, previousLine,
-								linePart + StringPool.SPACE, true, true, false);
+								linePart + StringPool.SPACE, tabDiff, true,
+								true, false);
 						}
 					}
 
@@ -2329,7 +2348,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				return getCombinedLinesContent(
 					content, fileName, line, trimmedLine, lineLength, lineCount,
-					previousLine, null, false, true, false);
+					previousLine, null, tabDiff, false, true, false);
 			}
 		}
 
@@ -2352,19 +2371,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 					return getCombinedLinesContent(
 						content, fileName, line, trimmedLine, lineLength,
-						lineCount, previousLine, filePart, false, false, false);
+						lineCount, previousLine, filePart, tabDiff, false,
+						false, false);
 				}
 			}
 		}
 
 		if ((trimmedLine.length() + previousLineLength) > _MAX_LINE_LENGTH) {
 			return null;
-		}
-
-		if (line.endsWith(StringPool.SEMICOLON)) {
-			return getCombinedLinesContent(
-				content, fileName, line, trimmedLine, lineLength, lineCount,
-				previousLine, null, false, false, false);
 		}
 
 		if (line.endsWith(StringPool.COMMA)) {
@@ -2379,7 +2393,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			if (closeParenthesisCount > openParenthesisCount) {
 				return getCombinedLinesContent(
 					content, fileName, line, trimmedLine, lineLength, lineCount,
-					previousLine, null, false, false, false);
+					previousLine, null, tabDiff, false, false, false);
 			}
 		}
 
@@ -2394,7 +2408,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			return getCombinedLinesContent(
 				content, fileName, line, trimmedLine, lineLength, lineCount,
-				previousLine, null, false, false, false);
+				previousLine, null, tabDiff, false, false, false);
 		}
 
 		return null;

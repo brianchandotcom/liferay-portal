@@ -485,8 +485,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		}
 
 		File portletPropertiesFile = new File(
-			srcFile.getAbsolutePath() +
-				"/WEB-INF/classes/portlet.properties");
+			srcFile.getAbsolutePath() + "/WEB-INF/classes/portlet.properties");
 
 		if (portletPropertiesFile.exists()) {
 			return;

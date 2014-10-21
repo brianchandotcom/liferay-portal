@@ -378,8 +378,7 @@ public class MPIHelperUtil {
 
 		if (_log.isWarnEnabled()) {
 			_log.warn(
-				"Not unregistering unregistered SPI provider " +
-					spiProvider);
+				"Not unregistering unregistered SPI provider " + spiProvider);
 		}
 
 		return false;

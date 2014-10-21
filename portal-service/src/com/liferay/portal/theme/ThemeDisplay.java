@@ -1461,8 +1461,7 @@ public class ThemeDisplay
 		setPathThemeImages(
 			cdnBaseURL + themeStaticResourcePath + theme.getImagesPath());
 		setPathThemeJavaScript(
-			cdnBaseURL + themeStaticResourcePath +
-				theme.getJavaScriptPath());
+			cdnBaseURL + themeStaticResourcePath + theme.getJavaScriptPath());
 
 		String rootPath = theme.getRootPath();
 

@@ -74,8 +74,7 @@ public class PrettyDateFormat extends DateFormat {
 
 		if (dateString.equals(dateFormatDate.format(today))) {
 			dateString =
-				_todayString + StringPool.SPACE +
-					dateFormatTime.format(date);
+				_todayString + StringPool.SPACE + dateFormatTime.format(date);
 		}
 		else if (dateString.equals(dateFormatDate.format(yesterday))) {
 			dateString =

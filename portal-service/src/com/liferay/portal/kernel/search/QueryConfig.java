@@ -162,7 +162,7 @@ public class QueryConfig implements Serializable {
 		return GetterUtil.getBoolean(
 			_attributes.get(
 				PropsKeys.INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_ENABLED),
-				_INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_ENABLED);
+			_INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_ENABLED);
 	}
 
 	public boolean isHighlightEnabled() {

@@ -2111,7 +2111,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		String trimmedPreviousLine = StringUtil.trimLeading(previousLine);
 
-		if (line.contains("// ") || previousLine.contains("// ")) {
+		if (line.contains("// ") || line.contains("*/") ||
+			line.contains("*/") || previousLine.contains("// ") ||
+			previousLine.contains("*/") || previousLine.contains("*/")) {
+
 			return null;
 		}
 

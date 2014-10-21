@@ -16,9 +16,12 @@ package com.liferay.portlet.journal.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
@@ -29,7 +32,7 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.lar.xstream.XStreamAliasRegistryUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -80,6 +83,7 @@ import javax.portlet.PortletPreferences;
  * @author Wesley Gong
  * @author Hugo Huijser
  * @author Daniel Kocsis
+ * @author László Csontos
  * @see    com.liferay.portal.kernel.lar.PortletDataHandler
  * @see    com.liferay.portlet.journal.lar.JournalContentPortletDataHandler
  * @see    com.liferay.portlet.journal.lar.JournalCreationStrategy
@@ -334,43 +338,55 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 	protected ActionableDynamicQuery getArticleActionableDynamicQuery(
 		final PortletDataContext portletDataContext) {
 
-		ActionableDynamicQuery actionableDynamicQuery =
+		ExportActionableDynamicQuery exportActionableDynamicQuery =
 			JournalArticleLocalServiceUtil.getExportActionableDynamicQuery(
 				portletDataContext);
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+		final ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
+			exportActionableDynamicQuery.getAddCriteriaMethod();
+
+		exportActionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
 
 				@Override
-				public void performAction(Object object)
-					throws PortalException {
-
-					JournalArticle article = (JournalArticle)object;
-
-					boolean latestVersion = false;
-
-					try {
-						latestVersion =
-							JournalArticleLocalServiceUtil.isLatestVersion(
-								article.getGroupId(), article.getArticleId(),
-								article.getVersion(),
-								WorkflowConstants.STATUS_APPROVED);
-					}
-					catch (Exception e) {
-					}
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					addCriteriaMethod.addCriteria(dynamicQuery);
 
 					if (portletDataContext.getBooleanParameter(
-							NAMESPACE, "version-history") ||
-						latestVersion) {
+							NAMESPACE, "version-history")) {
 
-						StagedModelDataHandlerUtil.exportStagedModel(
-							portletDataContext, article);
+						return;
 					}
+
+					DynamicQuery articleVersionDynamicQuery =
+						DynamicQueryFactoryUtil.forClass(
+							JournalArticle.class, "articleVersion",
+							PortalClassLoaderUtil.getClassLoader());
+
+					articleVersionDynamicQuery.setProjection(
+						ProjectionFactoryUtil.alias(
+							ProjectionFactoryUtil.max("articleVersion.version"),
+							"articleVersion.version"));
+
+					// We need to use the "this" default alias to make sure the
+					// database engine handles this subquery as a correlated
+					// subquery
+
+					articleVersionDynamicQuery.add(
+						RestrictionsFactoryUtil.eqProperty(
+							"this.resourcePrimKey",
+							"articleVersion.resourcePrimKey"));
+
+					Property versionProperty = PropertyFactoryUtil.forName(
+						"version");
+
+					dynamicQuery.add(
+						versionProperty.eq(articleVersionDynamicQuery));
 				}
 
 			});
 
-		return actionableDynamicQuery;
+		return exportActionableDynamicQuery;
 	}
 
 	protected ActionableDynamicQuery getDDMStructureActionableDynamicQuery(

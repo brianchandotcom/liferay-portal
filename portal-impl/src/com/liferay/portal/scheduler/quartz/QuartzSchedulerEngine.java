@@ -986,6 +986,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			JobBuilder jobBuilder = JobBuilder.newJob(MessageSenderJob.class);
 
 			jobBuilder.withIdentity(trigger.getJobKey());
+			jobBuilder.storeDurably();
 
 			JobDetail jobDetail = jobBuilder.build();
 
@@ -1095,12 +1096,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		}
 
 		unregisterMessageListener(scheduler, jobKey);
-
-		if (scheduler == _memoryScheduler) {
-			scheduler.unscheduleJob(triggerKey);
-
-			return;
-		}
 
 		JobDataMap jobDataMap = jobDetail.getJobDataMap();
 

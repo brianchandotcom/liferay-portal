@@ -14,11 +14,19 @@
 
 package com.liferay.portal.tools.sourceformatter.dependencies;
 
+import com.liferay.portal.kernel.util.StringPool;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Hugo Huijser
  */
 public class CombineLines
 	extends SuperClass {
+
+	public static final String
+		STRING_1;
 
 	public String getString(
 		String test) {
@@ -62,6 +70,27 @@ public class CombineLines
 		for (String test2 :
 				testList) {
 		}
+	}
+
+	public String method3() {
+		String test1 = getString(
+			"hello world" + "hello world" + "hello world" +
+				"hello world");
+
+		String test2 =
+			"hello world" + "hello world" + "hello world" +
+				"hello world";
+
+		return test1 +
+			test2;
+	}
+
+	public String method4() {
+		String stringWithAFairlyMediumLongName =
+			StringPool.
+				GREATER_THAN_OR_EQUAL;
+
+		return stringWithAFairlyMediumLongName;
 	}
 
 }

@@ -14,12 +14,6 @@
 		<implicit-parameter name="struts_action">/wiki/view_tagged_pages</implicit-parameter>
 	</route>
 	<route>
-		<pattern>/tag/{tag}/{p_p_state}</pattern>
-		<ignored-parameter name="nodeId" />
-		<ignored-parameter name="nodeName" />
-		<implicit-parameter name="struts_action">/wiki/view_tagged_pages</implicit-parameter>
-	</route>
-	<route>
 		<pattern>/{nodeId:\d+}/all_pages</pattern>
 		<implicit-parameter name="nodeName"></implicit-parameter>
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>
@@ -45,45 +39,6 @@
 		<implicit-parameter name="nodeName"></implicit-parameter>
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>
 		<implicit-parameter name="struts_action">/wiki/view_recent_changes</implicit-parameter>
-		<implicit-parameter name="tag"></implicit-parameter>
-	</route>
-	<route>
-		<pattern>/{nodeId:\d+}/all_pages/{p_p_state}</pattern>
-		<implicit-parameter name="nodeName"></implicit-parameter>
-		<implicit-parameter name="struts_action">/wiki/view_all_pages</implicit-parameter>
-		<implicit-parameter name="tag"></implicit-parameter>
-	</route>
-	<route>
-		<pattern>/{nodeId:\d+}/draft_pages/{p_p_state}</pattern>
-		<implicit-parameter name="nodeName"></implicit-parameter>
-		<implicit-parameter name="struts_action">/wiki/view_draft_pages</implicit-parameter>
-		<implicit-parameter name="tag"></implicit-parameter>
-	</route>
-	<route>
-		<pattern>/{nodeId:\d+}/orphan_pages/{p_p_state}</pattern>
-		<implicit-parameter name="nodeName"></implicit-parameter>
-		<implicit-parameter name="struts_action">/wiki/view_orphan_pages</implicit-parameter>
-		<implicit-parameter name="tag"></implicit-parameter>
-	</route>
-	<route>
-		<pattern>/{nodeId:\d+}/recent_changes/{p_p_state}</pattern>
-		<implicit-parameter name="nodeName"></implicit-parameter>
-		<implicit-parameter name="struts_action">/wiki/view_recent_changes</implicit-parameter>
-		<implicit-parameter name="tag"></implicit-parameter>
-	</route>
-	<route>
-		<pattern>/{nodeId:\d+}/{title:[^/]+}</pattern>
-		<implicit-parameter name="categoryId"></implicit-parameter>
-		<implicit-parameter name="nodeName"></implicit-parameter>
-		<implicit-parameter name="p_p_state">normal</implicit-parameter>
-		<implicit-parameter name="struts_action">/wiki/view</implicit-parameter>
-		<implicit-parameter name="tag"></implicit-parameter>
-	</route>
-	<route>
-		<pattern>/{nodeId:\d+}/{title:[^/]+}/{p_p_state}</pattern>
-		<implicit-parameter name="categoryId"></implicit-parameter>
-		<implicit-parameter name="nodeName"></implicit-parameter>
-		<implicit-parameter name="struts_action">/wiki/view</implicit-parameter>
 		<implicit-parameter name="tag"></implicit-parameter>
 	</route>
 	<route>
@@ -115,6 +70,36 @@
 		<implicit-parameter name="tag"></implicit-parameter>
 	</route>
 	<route>
+		<pattern>/tag/{tag}/{p_p_state}</pattern>
+		<ignored-parameter name="nodeId" />
+		<ignored-parameter name="nodeName" />
+		<implicit-parameter name="struts_action">/wiki/view_tagged_pages</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/{nodeId:\d+}/all_pages/{p_p_state}</pattern>
+		<implicit-parameter name="nodeName"></implicit-parameter>
+		<implicit-parameter name="struts_action">/wiki/view_all_pages</implicit-parameter>
+		<implicit-parameter name="tag"></implicit-parameter>
+	</route>
+	<route>
+		<pattern>/{nodeId:\d+}/draft_pages/{p_p_state}</pattern>
+		<implicit-parameter name="nodeName"></implicit-parameter>
+		<implicit-parameter name="struts_action">/wiki/view_draft_pages</implicit-parameter>
+		<implicit-parameter name="tag"></implicit-parameter>
+	</route>
+	<route>
+		<pattern>/{nodeId:\d+}/orphan_pages/{p_p_state}</pattern>
+		<implicit-parameter name="nodeName"></implicit-parameter>
+		<implicit-parameter name="struts_action">/wiki/view_orphan_pages</implicit-parameter>
+		<implicit-parameter name="tag"></implicit-parameter>
+	</route>
+	<route>
+		<pattern>/{nodeId:\d+}/recent_changes/{p_p_state}</pattern>
+		<implicit-parameter name="nodeName"></implicit-parameter>
+		<implicit-parameter name="struts_action">/wiki/view_recent_changes</implicit-parameter>
+		<implicit-parameter name="tag"></implicit-parameter>
+	</route>
+	<route>
 		<pattern>/{nodeName}/all_pages/{p_p_state}</pattern>
 		<implicit-parameter name="nodeId"></implicit-parameter>
 		<implicit-parameter name="struts_action">/wiki/view_all_pages</implicit-parameter>
@@ -139,10 +124,25 @@
 		<implicit-parameter name="tag"></implicit-parameter>
 	</route>
 	<route>
+		<pattern>/{nodeId:\d+}/{title:[^/]+}</pattern>
+		<implicit-parameter name="categoryId"></implicit-parameter>
+		<implicit-parameter name="nodeName"></implicit-parameter>
+		<implicit-parameter name="p_p_state">normal</implicit-parameter>
+		<implicit-parameter name="struts_action">/wiki/view</implicit-parameter>
+		<implicit-parameter name="tag"></implicit-parameter>
+	</route>
+	<route>
 		<pattern>/{nodeName}/{title:[^/]+}</pattern>
 		<implicit-parameter name="categoryId"></implicit-parameter>
 		<implicit-parameter name="nodeId"></implicit-parameter>
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>
+		<implicit-parameter name="struts_action">/wiki/view</implicit-parameter>
+		<implicit-parameter name="tag"></implicit-parameter>
+	</route>
+	<route>
+		<pattern>/{nodeId:\d+}/{title:[^/]+}/{p_p_state}</pattern>
+		<implicit-parameter name="categoryId"></implicit-parameter>
+		<implicit-parameter name="nodeName"></implicit-parameter>
 		<implicit-parameter name="struts_action">/wiki/view</implicit-parameter>
 		<implicit-parameter name="tag"></implicit-parameter>
 	</route>

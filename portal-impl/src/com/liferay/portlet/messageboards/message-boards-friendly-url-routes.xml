@@ -24,8 +24,18 @@
 		<implicit-parameter name="struts_action">/message_boards/search</implicit-parameter>
 	</route>
 	<route>
+		<pattern>/{topLink}</pattern>
+		<implicit-parameter name="p_p_state">normal</implicit-parameter>
+		<implicit-parameter name="struts_action">/message_boards/view</implicit-parameter>
+	</route>
+	<route>
 		<pattern>/category/{mbCategoryId:\d+}</pattern>
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>
+		<implicit-parameter name="struts_action">/message_boards/view</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/category/{p_p_state}</pattern>
+		<implicit-parameter name="mbCategoryId">0</implicit-parameter>
 		<implicit-parameter name="struts_action">/message_boards/view</implicit-parameter>
 	</route>
 	<route>
@@ -39,6 +49,14 @@
 		<implicit-parameter name="struts_action">/message_boards/view_message</implicit-parameter>
 	</route>
 	<route>
+		<pattern>/search/{p_p_state}</pattern>
+		<implicit-parameter name="struts_action">/message_boards/search</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/{topLink}/{p_p_state}</pattern>
+		<implicit-parameter name="struts_action">/message_boards/view</implicit-parameter>
+	</route>
+	<route>
 		<pattern>/category/{mbCategoryId:\d+}/{p_p_state}</pattern>
 		<implicit-parameter name="struts_action">/message_boards/view</implicit-parameter>
 	</route>
@@ -49,23 +67,5 @@
 	<route>
 		<pattern>/view_message/{messageId:\d+}/{p_p_state}</pattern>
 		<implicit-parameter name="struts_action">/message_boards/view_message</implicit-parameter>
-	</route>
-	<route>
-		<pattern>/category/{p_p_state}</pattern>
-		<implicit-parameter name="mbCategoryId">0</implicit-parameter>
-		<implicit-parameter name="struts_action">/message_boards/view</implicit-parameter>
-	</route>
-	<route>
-		<pattern>/search/{p_p_state}</pattern>
-		<implicit-parameter name="struts_action">/message_boards/search</implicit-parameter>
-	</route>
-	<route>
-		<pattern>/{topLink}</pattern>
-		<implicit-parameter name="p_p_state">normal</implicit-parameter>
-		<implicit-parameter name="struts_action">/message_boards/view</implicit-parameter>
-	</route>
-	<route>
-		<pattern>/{topLink}/{p_p_state}</pattern>
-		<implicit-parameter name="struts_action">/message_boards/view</implicit-parameter>
 	</route>
 </routes>

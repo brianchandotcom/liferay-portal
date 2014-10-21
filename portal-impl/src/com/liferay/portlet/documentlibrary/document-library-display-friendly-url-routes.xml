@@ -13,6 +13,9 @@
 		<implicit-parameter name="struts_action">/document_library_display/view</implicit-parameter>
 	</route>
 	<route>
+		<pattern>/{instanceId}/{topLink}</pattern>
+	</route>
+	<route>
 		<pattern>/{instanceId}/view/{folderId:\d+}</pattern>
 		<implicit-parameter name="struts_action">/document_library_display/view</implicit-parameter>
 	</route>
@@ -23,8 +26,5 @@
 	<route>
 		<pattern>/{instanceId}/view/{folderId:\d+}/{name}</pattern>
 		<implicit-parameter name="struts_action">/document_library_display/view_file_entry</implicit-parameter>
-	</route>
-	<route>
-		<pattern>/{instanceId}/{topLink}</pattern>
 	</route>
 </routes>

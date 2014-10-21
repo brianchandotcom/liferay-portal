@@ -449,6 +449,14 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 			projection);
 	}
 
+	/**
+	* Returns the organization with the name.
+	*
+	* @param companyId the primary key of the organization's company
+	* @param name the organization's name
+	* @return the organization with the name, or <code>null</code> if no
+	organization could be found
+	*/
 	@Override
 	public com.liferay.portal.model.Organization fetchOrganization(
 		long companyId, java.lang.String name) {
@@ -796,6 +804,21 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 			availableOrganizations);
 	}
 
+	/**
+	* Returns all the organization IDs associated with the user. If
+	* <code>includeAdministrative</code> is <code>true</code>, the result
+	* includes those organization IDs that are indirectly associated to the
+	* user because he is an administrator or owner of the organization.
+	*
+	* @param userId the primary key of the user
+	* @param includeAdministrative whether to include organizations that are
+	indirectly associated to the user because he is an administrator
+	or owner of the organization
+	* @return the organization IDs of organizations associated with the user
+	* @throws PortalException if a user with the primary key could not be found
+	or if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
 	@Override
 	public long[] getUserOrganizationIds(long userId,
 		boolean includeAdministrative)
@@ -812,14 +835,14 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 
 	/**
 	* Returns all the organizations associated with the user. If
-	* includeAdministrative is <code>true</code>, the result includes those
-	* organizations that are not directly associated to the user but he is an
-	* administrator or an owner of the organization.
+	* <code>includeAdministrative</code> is <code>true</code>, the result
+	* includes those organizations that are indirectly associated to the user
+	* because he is an administrator or owner of the organization.
 	*
 	* @param userId the primary key of the user
-	* @param includeAdministrative whether to includes organizations that are
+	* @param includeAdministrative whether to include organizations that are
 	indirectly associated to the user because he is an administrator
-	or an owner of the organization
+	or owner of the organization
 	* @return the organizations associated with the user
 	* @throws PortalException if a user with the primary key could not be found
 	*/
@@ -957,7 +980,7 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	}
 
 	/**
-	* Rebuilds the organizations tree.
+	* Rebuilds the organization's tree.
 	*
 	* <p>
 	* Only call this method if the tree has become stale through operations

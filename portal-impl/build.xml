@@ -668,10 +668,6 @@ public class Creole10Parser]]></replacevalue>
 		<ant dir="../portal-web" target="build-selenium-path" />
 	</target>
 
-	<target name="build-selenium-test-case">
-		<ant dir="../portal-web" target="build-selenium-test-case" />
-	</target>
-
 	<target name="build-selenium-server-jar">
 		<tstamp>
 			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
@@ -830,6 +826,10 @@ public class Creole10Parser]]></replacevalue>
 		<zip basedir="${tstamp.value}" destfile="${project.dir}/lib/development/selenium-server.jar.new" />
 
 		<delete dir="${tstamp.value}" />
+	</target>
+
+	<target name="build-selenium-test-case">
+		<ant dir="../portal-web" target="build-selenium-test-case" />
 	</target>
 
 	<target name="build-service">

@@ -514,26 +514,7 @@
 		</copy>
 	</target>
 
-	<target name="build-selenium-old">
-		<delete dir="test-classes" />
-
-		<!--
-		ant build-selenium -Dminimize=com/liferay/portalweb/portal/util/TearDownPageTest.html -DreportDuplicates=true
-		-->
-
-		<java
-			classname="com.liferay.portal.tools.SeleneseToJavaBuilder"
-			classpathref="project.classpath"
-			fork="true"
-			maxmemory="1024m"
-			newenvironment="true"
-		>
-			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<arg line="--basedir test/functional --minimize ${minimize} --reportDuplicates ${reportDuplicates}" />
-		</java>
-	</target>
-
-	<target name="build-selenium-new">
+	<target name="build-selenium">
 		<if>
 			<not>
 				<equals arg1="${delete.function.generated}" arg2="false" />
@@ -568,41 +549,41 @@
 		</java>
 	</target>
 
-	<target name="build-selenium-new-action">
-		<antcall target="build-selenium-new">
+	<target name="build-selenium-action">
+		<antcall target="build-selenium">
 			<param name="delete.function.generated" value="false" />
 			<param name="selenium.types" value="action" />
 		</antcall>
 	</target>
 
-	<target name="build-selenium-new-block">
-		<antcall target="build-selenium-new">
+	<target name="build-selenium-block">
+		<antcall target="build-selenium">
 			<param name="selenium.types" value="action,function,macro,path" />
 		</antcall>
 	</target>
 
-	<target name="build-selenium-new-function">
-		<antcall target="build-selenium-new">
+	<target name="build-selenium-function">
+		<antcall target="build-selenium">
 			<param name="delete.function.generated" value="false" />
 			<param name="selenium.types" value="function" />
 		</antcall>
 	</target>
 
-	<target name="build-selenium-new-macro">
-		<antcall target="build-selenium-new">
+	<target name="build-selenium-macro">
+		<antcall target="build-selenium">
 			<param name="delete.function.generated" value="false" />
 			<param name="selenium.types" value="macro" />
 		</antcall>
 	</target>
 
-	<target name="build-selenium-new-path">
-		<antcall target="build-selenium-new">
+	<target name="build-selenium-path">
+		<antcall target="build-selenium">
 			<param name="delete.function.generated" value="false" />
 			<param name="selenium.types" value="path" />
 		</antcall>
 	</target>
 
-	<target name="build-selenium-new-test-case">
+	<target name="build-selenium-test-case">
 		<if>
 			<not>
 				<isset property="test.class" />
@@ -612,7 +593,7 @@
 			</then>
 		</if>
 
-		<antcall target="build-selenium-new">
+		<antcall target="build-selenium">
 			<param name="delete.function.generated" value="false" />
 			<param name="selenium.types" value="testcase" />
 		</antcall>

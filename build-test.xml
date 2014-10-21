@@ -2752,7 +2752,7 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 			</then>
 		</if>
 
-		<ant dir="portal-impl" target="build-selenium-new-block" inheritAll="false" />
+		<ant dir="portal-impl" target="build-selenium-block" inheritAll="false" />
 
 		<antcall target="compile-test" inheritAll="false" />
 

@@ -27,10 +27,6 @@ import java.util.TreeSet;
  */
 public class ComparableRoute implements Comparable<ComparableRoute> {
 
-	public static boolean hasRegex(String fragment) {
-		return fragment.contains(":");
-	}
-
 	public static boolean isCaptureFragment(String fragment) {
 		return fragment.contains("{");
 	}
@@ -93,16 +89,6 @@ public class ComparableRoute implements Comparable<ComparableRoute> {
 			}
 
 			if (isMatchAny(_fragment) && !isMatchAny(fragment)) {
-				return 1;
-			}
-
-			// Not having a regex is more general than having a custom one
-
-			if (hasRegex(_fragment) && !hasRegex(fragment)) {
-				return -1;
-			}
-
-			if (!hasRegex(_fragment) && hasRegex(fragment)) {
 				return 1;
 			}
 		}

@@ -108,8 +108,9 @@ public class BaseAssetEntryValidator implements AssetEntryValidator {
 
 		if (!vocabulary.isMultiValued() &&
 			vocabulary.hasMoreThanOneCategorySelected(categoryIds)) {
-				throw new AssetCategoryException(
-					vocabulary, AssetCategoryException.TOO_MANY_CATEGORIES);
+
+			throw new AssetCategoryException(
+				vocabulary, AssetCategoryException.TOO_MANY_CATEGORIES);
 		}
 	}
 

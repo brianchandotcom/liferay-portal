@@ -202,7 +202,7 @@ public class DDMFormValuesValidatorTest extends BaseDDMTestCase {
 	public void testValidateDDMFormValuesWithoutDDMFormReference()
 		throws Exception {
 
-		DDMFormValues ddmFormValues = new DDMFormValues();
+		DDMFormValues ddmFormValues = new DDMFormValues(null);
 
 		DDMFormValuesValidatorUtil.validate(ddmFormValues);
 	}

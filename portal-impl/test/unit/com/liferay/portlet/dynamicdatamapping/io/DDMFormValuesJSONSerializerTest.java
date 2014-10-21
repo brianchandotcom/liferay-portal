@@ -104,7 +104,7 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 	}
 
 	protected DDMFormValues createDDMFormValues() {
-		DDMFormValues ddmFormValues = new DDMFormValues();
+		DDMFormValues ddmFormValues = new DDMFormValues(null);
 
 		ddmFormValues.setAvailableLocales(
 			createAvailableLocales(LocaleUtil.BRAZIL, LocaleUtil.US));

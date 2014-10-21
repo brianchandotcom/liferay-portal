@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
@@ -41,14 +42,15 @@ public class DDMFormValuesJSONDeserializerImpl
 	implements DDMFormValuesJSONDeserializer {
 
 	@Override
-	public DDMFormValues deserialize(String serializedDDMFormValues)
+	public DDMFormValues deserialize(
+			DDMForm ddmForm, String serializedDDMFormValues)
 		throws PortalException {
 
 		try {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				serializedDDMFormValues);
 
-			DDMFormValues ddmFormValues = new DDMFormValues();
+			DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
 			setDDMFormValuesAvailableLocales(
 				jsonObject.getJSONArray("availableLanguageIds"), ddmFormValues);

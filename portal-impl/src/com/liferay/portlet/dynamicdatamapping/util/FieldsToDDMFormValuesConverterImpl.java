@@ -123,9 +123,8 @@ public class FieldsToDDMFormValuesConverterImpl
 	protected DDMFormValues createDDMFormValues(
 		DDMForm ddmForm, Set<Locale> availableLocales, Locale defaultLocale) {
 
-		DDMFormValues ddmFormValues = new DDMFormValues();
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
-		ddmFormValues.setDDMForm(ddmForm);
 		ddmFormValues.setAvailableLocales(availableLocales);
 		ddmFormValues.setDefaultLocale(defaultLocale);
 

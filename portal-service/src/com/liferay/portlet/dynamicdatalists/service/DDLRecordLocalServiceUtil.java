@@ -54,6 +54,16 @@ public class DDLRecordLocalServiceUtil {
 
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord addRecord(
 		long userId, long groupId, long recordSetId, int displayIndex,
+		com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues ddmFormValues,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addRecord(userId, groupId, recordSetId, displayIndex,
+			ddmFormValues, serviceContext);
+	}
+
+	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord addRecord(
+		long userId, long groupId, long recordSetId, int displayIndex,
 		com.liferay.portlet.dynamicdatamapping.storage.Fields fields,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -533,6 +543,16 @@ public class DDLRecordLocalServiceUtil {
 		return getService()
 				   .updateRecord(userId, recordId, displayIndex, fieldsMap,
 			mergeFields, serviceContext);
+	}
+
+	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord updateRecord(
+		long userId, long recordId, boolean majorVersion, int displayIndex,
+		com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues ddmFormValues,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateRecord(userId, recordId, majorVersion, displayIndex,
+			ddmFormValues, serviceContext);
 	}
 
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord updateRecord(

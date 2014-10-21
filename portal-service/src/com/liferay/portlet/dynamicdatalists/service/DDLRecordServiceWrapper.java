@@ -35,6 +35,16 @@ public class DDLRecordServiceWrapper implements DDLRecordService,
 	@Override
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord addRecord(
 		long groupId, long recordSetId, int displayIndex,
+		com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues ddmFormValues,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordService.addRecord(groupId, recordSetId, displayIndex,
+			ddmFormValues, serviceContext);
+	}
+
+	@Override
+	public com.liferay.portlet.dynamicdatalists.model.DDLRecord addRecord(
+		long groupId, long recordSetId, int displayIndex,
 		com.liferay.portlet.dynamicdatamapping.storage.Fields fields,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -122,6 +132,16 @@ public class DDLRecordServiceWrapper implements DDLRecordService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordService.updateRecord(recordId, displayIndex,
 			fieldsMap, mergeFields, serviceContext);
+	}
+
+	@Override
+	public com.liferay.portlet.dynamicdatalists.model.DDLRecord updateRecord(
+		long recordId, boolean majorVersion, int displayIndex,
+		com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues ddmFormValues,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordService.updateRecord(recordId, majorVersion,
+			displayIndex, ddmFormValues, serviceContext);
 	}
 
 	@Override

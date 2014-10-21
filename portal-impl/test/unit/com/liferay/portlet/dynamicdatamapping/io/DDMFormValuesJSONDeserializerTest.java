@@ -59,7 +59,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 
 		DDMFormValues ddmFormValues =
 			DDMFormValuesJSONDeserializerUtil.deserialize(
-				serializedDDMFormValues);
+				null, serializedDDMFormValues);
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
@@ -90,7 +90,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 
 		DDMFormValues ddmFormValues =
 			DDMFormValuesJSONDeserializerUtil.deserialize(
-				serializedDDMFormValues);
+				null, serializedDDMFormValues);
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
@@ -110,7 +110,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 
 		DDMFormValues ddmFormValues =
 			DDMFormValuesJSONDeserializerUtil.deserialize(
-				serializedDDMFormValues);
+				null, serializedDDMFormValues);
 
 		testAvailableLocales(ddmFormValues);
 		testDefaultLocale(ddmFormValues);
@@ -136,7 +136,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 
 		DDMFormValues ddmFormValues =
 			DDMFormValuesJSONDeserializerUtil.deserialize(
-				serializedDDMFormValues);
+				null, serializedDDMFormValues);
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();

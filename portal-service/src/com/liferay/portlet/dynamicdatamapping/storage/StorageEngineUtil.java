@@ -29,6 +29,15 @@ import java.util.Map;
 public class StorageEngineUtil {
 
 	public static long create(
+			long companyId, long ddmStructureId, DDMFormValues ddmFormValues,
+			ServiceContext serviceContext)
+		throws StorageException {
+
+		return getStorageEngine().create(
+			companyId, ddmStructureId, ddmFormValues, serviceContext);
+	}
+
+	public static long create(
 			long companyId, long ddmStructureId, Fields fields,
 			ServiceContext serviceContext)
 		throws StorageException {
@@ -125,6 +134,14 @@ public class StorageEngineUtil {
 		throws StorageException {
 
 		return getStorageEngine().queryCount(ddmStructureId, condition);
+	}
+
+	public static void update(
+			long classPK, DDMFormValues ddmFormValues,
+			ServiceContext serviceContext)
+		throws StorageException {
+
+		getStorageEngine().update(classPK, ddmFormValues, serviceContext);
 	}
 
 	public static void update(

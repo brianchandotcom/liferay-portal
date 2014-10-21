@@ -559,6 +559,7 @@ public class DDMImpl implements DDM {
 
 		DDMFormValues ddmFormValues =
 			DDMFormValuesJSONDeserializerUtil.deserialize(
+				ddmStructure.getFullHierarchyDDMForm(),
 				serializedDDMFormValues);
 
 		return DDMFormValuesToFieldsConverterUtil.convert(

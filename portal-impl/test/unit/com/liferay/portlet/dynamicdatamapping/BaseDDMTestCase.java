@@ -188,10 +188,9 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 	protected DDMFormValues createDDMFormValues(
 		DDMForm ddmForm, Set<Locale> availableLocales, Locale defaultLocale) {
 
-		DDMFormValues ddmFormValues = new DDMFormValues();
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
 		ddmFormValues.setAvailableLocales(availableLocales);
-		ddmFormValues.setDDMForm(ddmForm);
 		ddmFormValues.setDefaultLocale(defaultLocale);
 
 		return ddmFormValues;

@@ -29,6 +29,10 @@ import java.util.Set;
  */
 public class DDMFormValues {
 
+	public DDMFormValues(DDMForm ddmForm) {
+		_ddmForm = ddmForm;
+	}
+
 	public void addDDMFormFieldValue(DDMFormFieldValue ddmFormFieldValue) {
 		ddmFormFieldValue.setDDMFormValues(this);
 
@@ -76,10 +80,6 @@ public class DDMFormValues {
 		_availableLocales = availableLocales;
 	}
 
-	public void setDDMForm(DDMForm ddmForm) {
-		_ddmForm = ddmForm;
-	}
-
 	public void setDDMFormFieldValues(
 		List<DDMFormFieldValue> ddmFormFieldValues) {
 
@@ -95,7 +95,7 @@ public class DDMFormValues {
 	}
 
 	private Set<Locale> _availableLocales;
-	private DDMForm _ddmForm;
+	private final DDMForm _ddmForm;
 	private List<DDMFormFieldValue> _ddmFormFieldValues =
 		new ArrayList<DDMFormFieldValue>();
 	private Locale _defaultLocale;

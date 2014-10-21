@@ -387,44 +387,25 @@ if (feed != null) {
 		submitForm(document.<portlet:namespace />fm);
 	}
 
-	function <portlet:namespace />selectRendererTemplate(rendererTemplateId) {
-		document.<portlet:namespace />fm.<portlet:namespace />rendererTemplateId.value = rendererTemplateId;
-	}
-
-	function <portlet:namespace />selectTemplate(structureId, templateId, dialog) {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "selecting-a-template-will-change-the-structure,-available-input-fields,-and-available-templates") %>')) {
-			document.<portlet:namespace />fm.<portlet:namespace />structureId.value = structureId;
-			document.<portlet:namespace />fm.<portlet:namespace />templateId.value = templateId;
-
-			if (dialog) {
-				dialog.hide();
-			}
-
-			submitForm(document.<portlet:namespace />fm);
-		}
-	}
-
 	Liferay.Util.disableToggleBoxes('<portlet:namespace />autoFeedId','<portlet:namespace />newFeedId', true);
-</aui:script>
 
-<aui:script use="aui-base,aui-selector">
-	var feedItemContentSelector = A.one('select#<portlet:namespace />contentFieldSelector');
+	var feedItemContentSelector = AUI.$('select#<portlet:namespace />contentFieldSelector');
 
-	var changeFeedItemContent = function() {
-		var selectedFeedItemOption = feedItemContentSelector.one(':selected');
+	feedItemContentSelector.on(
+		'change',
+		function() {
+			var selectedFeedItemOption = feedItemContentSelector.find(':selected');
 
-		var data = selectedFeedItemOption.attr('data-contentField');
-		var value = selectedFeedItemOption.attr('value');
+			var data = selectedFeedItemOption.data('contentfield');
+			var value = selectedFeedItemOption.attr('value');
 
-		if (data === '<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>') {
-			document.<portlet:namespace />fm.<portlet:namespace />rendererTemplateId.value = value;
-			document.<portlet:namespace />fm.<portlet:namespace />contentField.value = '<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>';
-		}
-		else {
-			document.<portlet:namespace />fm.<portlet:namespace />rendererTemplateId.value = '';
-			document.<portlet:namespace />fm.<portlet:namespace />contentField.value = value;
-		}
-	}
-
-	feedItemContentSelector.on('change', changeFeedItemContent);
+			if (data === '<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>') {
+				document.<portlet:namespace />fm.<portlet:namespace />rendererTemplateId.value = value;
+				document.<portlet:namespace />fm.<portlet:namespace />contentField.value = '<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>';
+			}
+			else {
+				document.<portlet:namespace />fm.<portlet:namespace />rendererTemplateId.value = '';
+				document.<portlet:namespace />fm.<portlet:namespace />contentField.value = value;
+			}
+		});
 </aui:script>

@@ -18,33 +18,10 @@
 
 <%@ page import="com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil" %><%@
 page import="com.liferay.portlet.journal.service.permission.JournalArticlePermission" %><%@
-page import="com.liferay.portlet.journal.service.permission.JournalPermission" %>
+page import="com.liferay.portlet.journalcontent.context.JournalContentDisplayContext" %>
 
 <%
-String portletResource = ParamUtil.getString(request, "portletResource");
-
-long articleGroupId = ParamUtil.getLong(renderRequest, "articleGroupId");
-
-if (articleGroupId <= 0) {
-	articleGroupId = GetterUtil.getLong(portletPreferences.getValue("groupId", String.valueOf(scopeGroupId)));
-}
-
-String articleId = PrefsParamUtil.getString(portletPreferences, renderRequest, "articleId");
-String ddmTemplateKey = PrefsParamUtil.getString(portletPreferences, renderRequest, "ddmTemplateKey");
-
-boolean showAvailableLocales = GetterUtil.getBoolean(portletPreferences.getValue("showAvailableLocales", StringPool.BLANK));
-String[] extensions = StringUtil.split(PrefsParamUtil.getString(portletPreferences, renderRequest, "extensions"));
-boolean enablePrint = GetterUtil.getBoolean(portletPreferences.getValue("enablePrint", null));
-boolean enableRelatedAssets = GetterUtil.getBoolean(portletPreferences.getValue("enableRelatedAssets", null), true);
-boolean enableRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableRatings", null));
-boolean enableComments = PropsValues.JOURNAL_ARTICLE_COMMENTS_ENABLED && GetterUtil.getBoolean(portletPreferences.getValue("enableComments", null));
-boolean enableCommentRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableCommentRatings", null));
-boolean enableViewCountIncrement = GetterUtil.getBoolean(portletPreferences.getValue("enableViewCountIncrement", null), PropsValues.ASSET_ENTRY_BUFFERED_INCREMENT_ENABLED);
-
-String[] conversions = DocumentConversionUtil.getConversions("html");
-
-boolean openOfficeServerEnabled = PrefsPropsUtil.getBoolean(PropsKeys.OPENOFFICE_SERVER_ENABLED, PropsValues.OPENOFFICE_SERVER_ENABLED);
-boolean enableConversions = openOfficeServerEnabled && (extensions != null) && (extensions.length > 0);
+JournalContentDisplayContext journalContentDisplayContext = new JournalContentDisplayContext(request, portletPreferences);
 %>
 
 <%@ include file="/html/portlet/journal_content/init-ext.jsp" %>

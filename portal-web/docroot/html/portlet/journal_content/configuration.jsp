@@ -19,22 +19,15 @@
 <%
 int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
 
-JournalArticle article = null;
+JournalArticle article = journalContentDisplayContext.getArticle();
 
 String type = ParamUtil.getString(request, "type");
 
-try {
-	if (Validator.isNotNull(articleId)) {
-		article = JournalArticleLocalServiceUtil.getLatestArticle(articleGroupId, articleId);
-
-		article = article.toEscapedModel();
-
-		articleGroupId = article.getGroupId();
-		type = article.getType();
-	}
+if (article != null) {
+	type = article.getType();
 }
-catch (NoSuchArticleException nsae) {
-}
+
+String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
@@ -53,23 +46,17 @@ catch (NoSuchArticleException nsae) {
 		</span>
 
 		<span class="displaying-article-id-holder <%= article == null ? "hide" : StringPool.BLANK %>">
-			<liferay-ui:message key="displaying-content" />: <span class="displaying-article-id"><%= article != null ? article.getTitle(locale) : StringPool.BLANK %></span>
+			<liferay-ui:message key="displaying-content" />: <span class="displaying-article-id"><%= article != null ? HtmlUtil.escape(article.getTitle(locale)) : StringPool.BLANK %></span>
 		</span>
 	</div>
 
 	<c:if test="<%= article != null %>">
 
 		<%
-		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(article.getGroupId(), PortalUtil.getClassNameId(JournalArticle.class), article.getDDMStructureKey(), true);
-
-		List<DDMTemplate> ddmTemplates = DDMTemplateLocalServiceUtil.getTemplates(article.getGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId(), true);
-
-		if (!ddmTemplates.isEmpty()) {
-			if (Validator.isNull(ddmTemplateKey)) {
-				ddmTemplateKey = article.getDDMTemplateKey();
-			}
+		List<DDMTemplate> ddmTemplates = journalContentDisplayContext.getDDMTemplates();
 		%>
 
+		<c:if test="<%= !ddmTemplates.isEmpty() %>">
 			<aui:fieldset>
 				<liferay-ui:message key="override-default-template" />
 
@@ -115,11 +102,7 @@ catch (NoSuchArticleException nsae) {
 
 				<br />
 			</aui:fieldset>
-
-		<%
-		}
-		%>
-
+		</c:if>
 	</c:if>
 
 	<%
@@ -221,70 +204,46 @@ catch (NoSuchArticleException nsae) {
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value='<%= configurationRenderURL + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur" + cur %>' />
-	<aui:input name="preferences--groupId--" type="hidden" value="<%= articleGroupId %>" />
-	<aui:input name="preferences--articleId--" type="hidden" value="<%= articleId %>" />
+	<aui:input name="preferences--groupId--" type="hidden" value="<%= journalContentDisplayContext.getArticleGroupId() %>" />
+	<aui:input name="preferences--articleId--" type="hidden" value="<%= journalContentDisplayContext.getArticleId() %>" />
 	<aui:input name="preferences--ddmTemplateKey--" type="hidden" value="<%= ddmTemplateKey %>" />
-	<aui:input name="preferences--extensions--" type="hidden" value="<%= extensions %>" />
+	<aui:input name="preferences--extensions--" type="hidden" value="<%= journalContentDisplayContext.getExtensions() %>" />
 
 	<aui:fieldset>
-		<aui:input name="portletId" type="resource" value="<%= portletResource %>" />
+		<aui:input name="portletId" type="resource" value="<%= journalContentDisplayContext.getPortletResource() %>" />
 	</aui:fieldset>
 
 	<aui:fieldset>
 		<aui:field-wrapper>
-			<aui:input name="preferences--showAvailableLocales--" type="checkbox" value="<%= showAvailableLocales %>" />
+			<aui:input name="preferences--showAvailableLocales--" type="checkbox" value="<%= journalContentDisplayContext.isShowAvailableLocales() %>" />
 		</aui:field-wrapper>
 
-		<%
-		List<KeyValuePair> currentExtensions = new ArrayList<KeyValuePair>();
-
-		if (extensions == null) {
-			extensions = new String[0];
-		}
-
-		for (String extension : extensions) {
-			currentExtensions.add(new KeyValuePair(extension, StringUtil.toUpperCase(extension)));
-		}
-
-		Arrays.sort(extensions);
-
-		List<KeyValuePair> availableExtensions = new ArrayList<KeyValuePair>();
-
-		for (String conversion : conversions) {
-			if (Arrays.binarySearch(extensions, conversion) < 0) {
-				availableExtensions.add(new KeyValuePair(conversion, StringUtil.toUpperCase(conversion)));
-			}
-		}
-
-		availableExtensions = ListUtil.sort(availableExtensions, new KeyValuePairComparator(false, true));
-		%>
-
-		<aui:field-wrapper helpMessage='<%= !openOfficeServerEnabled ? "enabling-openoffice-integration-provides-document-conversion-functionality" : StringPool.BLANK %>' label="enable-conversion-to">
+		<aui:field-wrapper helpMessage='<%= !journalContentDisplayContext.isOpenOfficeServerEnabled() ? "enabling-openoffice-integration-provides-document-conversion-functionality" : StringPool.BLANK %>' label="enable-conversion-to">
 			<liferay-ui:input-move-boxes
 				leftBoxName="currentExtensions"
-				leftList="<%= currentExtensions %>"
+				leftList="<%= journalContentDisplayContext.getCurrentExtensions() %>"
 				leftReorder="true"
 				leftTitle="current"
 				rightBoxName="availableExtensions"
-				rightList="<%= availableExtensions %>"
+				rightList="<%= journalContentDisplayContext.getAvailableExtensions() %>"
 				rightTitle="available"
 			/>
 		</aui:field-wrapper>
 
 		<aui:field-wrapper>
-			<aui:input name="preferences--enablePrint--" type="checkbox" value="<%= enablePrint %>" />
+			<aui:input name="preferences--enablePrint--" type="checkbox" value="<%= journalContentDisplayContext.isEnablePrint() %>" />
 
-			<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= enableRelatedAssets %>" />
+			<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= journalContentDisplayContext.isEnableRelatedAssets() %>" />
 
-			<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= enableRatings %>" />
+			<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= journalContentDisplayContext.isEnableRatings() %>" />
 
 			<c:if test="<%= PropsValues.JOURNAL_ARTICLE_COMMENTS_ENABLED %>">
-				<aui:input name="preferences--enableComments--" type="checkbox" value="<%= enableComments %>" />
+				<aui:input name="preferences--enableComments--" type="checkbox" value="<%= journalContentDisplayContext.isEnableComments() %>" />
 
-				<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= enableCommentRatings %>" />
+				<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= journalContentDisplayContext.isEnableCommentRatings() %>" />
 			</c:if>
 
-			<aui:input name="preferences--enableViewCountIncrement--" type="checkbox" value="<%= enableViewCountIncrement %>" />
+			<aui:input name="preferences--enableViewCountIncrement--" type="checkbox" value="<%= journalContentDisplayContext.isEnableViewCountIncrement() %>" />
 		</aui:field-wrapper>
 	</aui:fieldset>
 
@@ -309,7 +268,7 @@ catch (NoSuchArticleException nsae) {
 
 			var displayArticleId = A.one('.displaying-article-id');
 
-			displayArticleId.html(A.Lang.String.escapeHTML(articleTitle) + ' (<%= UnicodeLanguageUtil.get(request, "modified") %>)');
+			displayArticleId.html(A.Lang.String.escapeHTML(articleTitle) + ' (<liferay-ui:message key="modified" />)');
 
 			displayArticleId.addClass('modified');
 		},

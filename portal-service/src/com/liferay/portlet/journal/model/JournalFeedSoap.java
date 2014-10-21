@@ -45,9 +45,9 @@ public class JournalFeedSoap implements Serializable {
 		soapModel.setFeedId(model.getFeedId());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
-		soapModel.setStructureId(model.getStructureId());
-		soapModel.setTemplateId(model.getTemplateId());
-		soapModel.setRendererTemplateId(model.getRendererTemplateId());
+		soapModel.setDDMStructureKey(model.getDDMStructureKey());
+		soapModel.setDDMTemplateKey(model.getDDMTemplateKey());
+		soapModel.setDDMRendererTemplateKey(model.getDDMRendererTemplateKey());
 		soapModel.setDelta(model.getDelta());
 		soapModel.setOrderByCol(model.getOrderByCol());
 		soapModel.setOrderByType(model.getOrderByType());
@@ -196,28 +196,28 @@ public class JournalFeedSoap implements Serializable {
 		_description = description;
 	}
 
-	public String getStructureId() {
-		return _structureId;
+	public String getDDMStructureKey() {
+		return _DDMStructureKey;
 	}
 
-	public void setStructureId(String structureId) {
-		_structureId = structureId;
+	public void setDDMStructureKey(String DDMStructureKey) {
+		_DDMStructureKey = DDMStructureKey;
 	}
 
-	public String getTemplateId() {
-		return _templateId;
+	public String getDDMTemplateKey() {
+		return _DDMTemplateKey;
 	}
 
-	public void setTemplateId(String templateId) {
-		_templateId = templateId;
+	public void setDDMTemplateKey(String DDMTemplateKey) {
+		_DDMTemplateKey = DDMTemplateKey;
 	}
 
-	public String getRendererTemplateId() {
-		return _rendererTemplateId;
+	public String getDDMRendererTemplateKey() {
+		return _DDMRendererTemplateKey;
 	}
 
-	public void setRendererTemplateId(String rendererTemplateId) {
-		_rendererTemplateId = rendererTemplateId;
+	public void setDDMRendererTemplateKey(String DDMRendererTemplateKey) {
+		_DDMRendererTemplateKey = DDMRendererTemplateKey;
 	}
 
 	public int getDelta() {
@@ -295,9 +295,9 @@ public class JournalFeedSoap implements Serializable {
 	private String _feedId;
 	private String _name;
 	private String _description;
-	private String _structureId;
-	private String _templateId;
-	private String _rendererTemplateId;
+	private String _DDMStructureKey;
+	private String _DDMTemplateKey;
+	private String _DDMRendererTemplateKey;
 	private int _delta;
 	private String _orderByCol;
 	private String _orderByType;

@@ -2600,8 +2600,8 @@ public class JournalArticleLocalServiceWrapper
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #search(long, long, List,
-	long, String, String, String, String, int, String,
-	String, LinkedHashMap, boolean, int, int, Sort)}
+	long, String, String, String, String, int, String, String,
+	LinkedHashMap, boolean, int, int, Sort)}
 	*/
 	@Deprecated
 	@Override
@@ -2626,9 +2626,9 @@ public class JournalArticleLocalServiceWrapper
 	* article ID, title, description, and content, a DDM structure key
 	* parameter, a DDM template key parameter, and an AND operator switch. It
 	* is preferable to use the indexed version {@link #search(long, long, List,
-	* long, String, String, String, String, int, String, String,
-	* LinkedHashMap, boolean, int, int, Sort)} instead of this method wherever
-	* possible for performance reasons.
+	* long, String, String, String, String, int, String, String, LinkedHashMap,
+	* boolean, int, int, Sort)} instead of this method wherever possible for
+	* performance reasons.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end -
@@ -3892,16 +3892,18 @@ public class JournalArticleLocalServiceWrapper
 	* DDM template key, replacing the DDM template key with a new one.
 	*
 	* @param groupId the primary key of the web content article's group
-	* @param classNameId the primary key of the DDMStructure class if the web
-	content article is related to a DDM structure, the primary key of
-	the class name associated with the article, or {@link
-	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
-	* @param oldDDMTemplateKey the primary key of the web content article's old
-	DDM template
-	* @param newDDMTemplateKey the primary key of the web content article's new
-	DDM template
+	* @param classNameId the primary key of the DDMStructure class if the
+	web content article is related to a DDM structure, the
+	primary key of the class name associated with the article, or
+	{@link JournalArticleConstants#CLASSNAME_ID_DEFAULT}
+	otherwise
+	* @param oldDDMTemplateKey the primary key of the web content
+	article's old DDM template
+	* @param newDDMTemplateKey the primary key of the web content
+	article's new DDM template
 	* @deprecated As of 7.0.0, replaced by {@link #updateDDMTemplateKey}
 	*/
+	@Deprecated
 	@Override
 	public void updateTemplateId(long groupId, long classNameId,
 		java.lang.String oldDDMTemplateKey, java.lang.String newDDMTemplateKey) {

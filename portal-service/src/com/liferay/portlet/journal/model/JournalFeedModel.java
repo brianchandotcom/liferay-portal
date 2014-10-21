@@ -253,47 +253,49 @@ public interface JournalFeedModel extends BaseModel<JournalFeed>,
 	public void setDescription(String description);
 
 	/**
-	 * Returns the structure ID of this journal feed.
+	 * Returns the d d m structure key of this journal feed.
 	 *
-	 * @return the structure ID of this journal feed
-	 */
-	public String getStructureId();
-
-	/**
-	 * Sets the structure ID of this journal feed.
-	 *
-	 * @param structureId the structure ID of this journal feed
-	 */
-	public void setStructureId(String structureId);
-
-	/**
-	 * Returns the template ID of this journal feed.
-	 *
-	 * @return the template ID of this journal feed
-	 */
-	public String getTemplateId();
-
-	/**
-	 * Sets the template ID of this journal feed.
-	 *
-	 * @param templateId the template ID of this journal feed
-	 */
-	public void setTemplateId(String templateId);
-
-	/**
-	 * Returns the renderer template ID of this journal feed.
-	 *
-	 * @return the renderer template ID of this journal feed
+	 * @return the d d m structure key of this journal feed
 	 */
 	@AutoEscape
-	public String getRendererTemplateId();
+	public String getDDMStructureKey();
 
 	/**
-	 * Sets the renderer template ID of this journal feed.
+	 * Sets the d d m structure key of this journal feed.
 	 *
-	 * @param rendererTemplateId the renderer template ID of this journal feed
+	 * @param DDMStructureKey the d d m structure key of this journal feed
 	 */
-	public void setRendererTemplateId(String rendererTemplateId);
+	public void setDDMStructureKey(String DDMStructureKey);
+
+	/**
+	 * Returns the d d m template key of this journal feed.
+	 *
+	 * @return the d d m template key of this journal feed
+	 */
+	@AutoEscape
+	public String getDDMTemplateKey();
+
+	/**
+	 * Sets the d d m template key of this journal feed.
+	 *
+	 * @param DDMTemplateKey the d d m template key of this journal feed
+	 */
+	public void setDDMTemplateKey(String DDMTemplateKey);
+
+	/**
+	 * Returns the d d m renderer template key of this journal feed.
+	 *
+	 * @return the d d m renderer template key of this journal feed
+	 */
+	@AutoEscape
+	public String getDDMRendererTemplateKey();
+
+	/**
+	 * Sets the d d m renderer template key of this journal feed.
+	 *
+	 * @param DDMRendererTemplateKey the d d m renderer template key of this journal feed
+	 */
+	public void setDDMRendererTemplateKey(String DDMRendererTemplateKey);
 
 	/**
 	 * Returns the delta of this journal feed.

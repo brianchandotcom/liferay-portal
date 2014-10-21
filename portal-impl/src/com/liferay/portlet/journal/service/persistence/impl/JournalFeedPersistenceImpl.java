@@ -2930,9 +2930,9 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		journalFeedImpl.setFeedId(journalFeed.getFeedId());
 		journalFeedImpl.setName(journalFeed.getName());
 		journalFeedImpl.setDescription(journalFeed.getDescription());
-		journalFeedImpl.setStructureId(journalFeed.getStructureId());
-		journalFeedImpl.setTemplateId(journalFeed.getTemplateId());
-		journalFeedImpl.setRendererTemplateId(journalFeed.getRendererTemplateId());
+		journalFeedImpl.setDDMStructureKey(journalFeed.getDDMStructureKey());
+		journalFeedImpl.setDDMTemplateKey(journalFeed.getDDMTemplateKey());
+		journalFeedImpl.setDDMRendererTemplateKey(journalFeed.getDDMRendererTemplateKey());
 		journalFeedImpl.setDelta(journalFeed.getDelta());
 		journalFeedImpl.setOrderByCol(journalFeed.getOrderByCol());
 		journalFeedImpl.setOrderByType(journalFeed.getOrderByType());

@@ -107,12 +107,7 @@ public class EditEntryAction extends PortletAction {
 			String redirect = PortalUtil.escapeRedirect(
 				ParamUtil.getString(actionRequest, "redirect"));
 
-			if (Validator.isNotNull(redirect)) {
-				actionResponse.sendRedirect(redirect);
-			}
-			else {
-				sendRedirect(actionRequest, actionResponse);
-			}
+			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 		catch (Exception e) {
 			if (e instanceof RestoreEntryException) {

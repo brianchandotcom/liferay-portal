@@ -108,6 +108,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 							<liferay-security:permissionsURL
 								modelResource="<%= BlogsEntry.class.getName() %>"
 								modelResourceDescription="<%= entry.getTitle() %>"
+								resourceGroupId="<%= String.valueOf(entry.getGroupId()) %>"
 								resourcePrimKey="<%= String.valueOf(entry.getEntryId()) %>"
 								var="permissionsEntryURL"
 								windowState="<%= LiferayWindowState.POP_UP.toString() %>"

@@ -325,6 +325,7 @@ request.setAttribute("edit_article.jsp-defaultLanguageId", defaultLanguageId);
 					<liferay-security:permissionsURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 						modelResource="<%= JournalArticle.class.getName() %>"
 						modelResourceDescription="<%= HtmlUtil.escape(article.getTitle(locale)) %>"
+						resourceGroupId="<%= String.valueOf(article.getGroupId()) %>"
 						resourcePrimKey="<%= String.valueOf(article.getResourcePrimKey()) %>"
 						var="permissionsURL"
 					/>

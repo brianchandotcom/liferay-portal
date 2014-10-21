@@ -584,10 +584,21 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		String line = lines[javaField.getLineNumber() - 1];
 
-		String newLine = StringUtil.replace(
+		lines[javaField.getLineNumber() - 1] = StringUtil.replace(
 			line, "private final", "private static final");
 
-		return StringUtil.replace(content, line, newLine);
+		StringBundler sb = new StringBundler(2 * lines.length);
+
+		for (String contentLine : lines) {
+			sb.append(contentLine);
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		content = sb.toString();
+
+		return content;
 	}
 
 	protected void checkSystemEventAnnotations(String content, String fileName)

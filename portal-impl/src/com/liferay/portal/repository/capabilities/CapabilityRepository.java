@@ -123,8 +123,15 @@ public class CapabilityRepository
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		getRepository().checkInFileEntry(
+		Repository repository = getRepository();
+
+		repository.checkInFileEntry(
 			fileEntryId, major, changeLog, serviceContext);
+
+		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
 	}
 
 	@Deprecated
@@ -132,7 +139,14 @@ public class CapabilityRepository
 	public void checkInFileEntry(long fileEntryId, String lockUuid)
 		throws PortalException {
 
-		getRepository().checkInFileEntry(fileEntryId, lockUuid);
+		Repository repository = getRepository();
+
+		repository.checkInFileEntry(fileEntryId, lockUuid);
+
+		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
 	}
 
 	@Override
@@ -140,7 +154,14 @@ public class CapabilityRepository
 			long fileEntryId, String lockUuid, ServiceContext serviceContext)
 		throws PortalException {
 
-		getRepository().checkInFileEntry(fileEntryId, lockUuid, serviceContext);
+		Repository repository = getRepository();
+
+		repository.checkInFileEntry(fileEntryId, lockUuid, serviceContext);
+
+		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
 	}
 
 	@Override
@@ -148,7 +169,15 @@ public class CapabilityRepository
 			long fileEntryId, ServiceContext serviceContext)
 		throws PortalException {
 
-		return getRepository().checkOutFileEntry(fileEntryId, serviceContext);
+		Repository repository = getRepository();
+
+		FileEntry fileEntry = repository.checkOutFileEntry(
+			fileEntryId, serviceContext);
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
+
+		return fileEntry;
 	}
 
 	@Override
@@ -157,8 +186,15 @@ public class CapabilityRepository
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return getRepository().checkOutFileEntry(
+		Repository repository = getRepository();
+
+		FileEntry fileEntry = repository.checkOutFileEntry(
 			fileEntryId, owner, expirationTime, serviceContext);
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
+
+		return fileEntry;
 	}
 
 	@Override

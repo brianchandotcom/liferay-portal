@@ -1,0 +1,7 @@
+<definition>
+	<command name="assertTextEquals">
+		<case locator-key1="ARTICLE_TABLE_PRIORITY">
+			<execute function="AssertTextEquals#assertValue" />
+		</case>
+	</command>
+</definition>

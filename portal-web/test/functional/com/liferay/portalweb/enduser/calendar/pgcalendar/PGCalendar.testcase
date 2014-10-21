@@ -1183,6 +1183,113 @@
 		</execute>
 	</command>
 
+	<command name="DeleteCalendarEventRepeatingAllEventsInTheSeries" priority="5">
+		<var name="eventTitle" value="Calendar Event Repeating Title" />
+		<var name="eventType" value="Repeating" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+			<var name="frequency" value="Daily" />
+			<var name="numberOfOccurrences" value="2" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#deleteRepeatingEventViaAgendaViewPG">
+			<var name="deleteOptionSet" value="All Events in the Series" />
+			<var name="eventType" value="${eventType}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewDefaultPG">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+	</command>
+
+	<command name="DeleteCalendarEventRepeatingAllFollowing" priority="5">
+		<var name="eventTitle" value="Calendar Event Repeating Title" />
+		<var name="eventType" value="Repeating" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+			<var name="frequency" value="Daily" />
+			<var name="numberOfOccurrences" value="2" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#deleteRepeatingEventViaAgendaViewPG">
+			<var name="deleteOptionSet" value="All Following" />
+			<var name="eventType" value="${eventType}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewPG">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+	</command>
+
+	<command name="DeleteCalendarEventRepeatingOnlyThisInstance" priority="5">
+		<var name="eventTitle" value="Calendar Event Repeating Title" />
+		<var name="eventType" value="Repeating" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+			<var name="frequency" value="Daily" />
+			<var name="numberOfOccurrences" value="2" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#deleteRepeatingEventViaAgendaViewPG">
+			<var name="deleteOptionSet" value="Only This Instance" />
+			<var name="eventType" value="${eventType}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewDefaultDayPG">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Week" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewWeekPG">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewMonthPG">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewAgendaPG">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+	</command>
+
 	<command name="DeleteCalendarMyCalendars" priority="5">
 		<var name="calendarName" value="Calendar Name" />
 		<var name="calendarType" value="My Calendars" />
@@ -2036,7 +2143,7 @@
 			<var name="eventType" value="${eventType}" />
 			<var name="inviteResource" value="true" />
 			<var name="optionSet" value="true" />
-			<var name="resourceNameList" value="user1 user1,Test Test,Calendar Resource Name" />
+			<var name="resourceNameList" value="Test Test,Calendar Resource Name" />
 			<var name="resourcesAvailability" value="true" />
 		</execute>
 

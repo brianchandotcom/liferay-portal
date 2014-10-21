@@ -601,6 +601,22 @@ public class Creole10Parser]]></replacevalue>
 		<delete dir="${tstamp.value}" />
 	</target>
 
+	<target name="build-selenium">
+		<ant dir="../portal-web" target="build-selenium" />
+	</target>
+
+	<target name="build-selenium-action">
+		<ant dir="../portal-web" target="build-selenium-action" />
+	</target>
+
+	<target name="build-selenium-block">
+		<ant dir="../portal-web" target="build-selenium-block" />
+	</target>
+
+	<target name="build-selenium-function">
+		<ant dir="../portal-web" target="build-selenium-function" />
+	</target>
+
 	<target name="build-selenium-java-jar">
 		<get
 			dest="selenium-firefox-driver-2.42.2-sources.jar"
@@ -644,32 +660,12 @@ public class Creole10Parser]]></replacevalue>
 		<delete dir="${tstamp.value}" />
 	</target>
 
-	<target name="build-selenium">
-		<ant dir="../portal-web" target="build-selenium" />
-	</target>
-
-	<target name="build-selenium-action">
-		<ant dir="../portal-web" target="build-selenium-action" />
-	</target>
-
-	<target name="build-selenium-block">
-		<ant dir="../portal-web" target="build-selenium-block" />
-	</target>
-
-	<target name="build-selenium-function">
-		<ant dir="../portal-web" target="build-selenium-function" />
-	</target>
-
 	<target name="build-selenium-macro">
 		<ant dir="../portal-web" target="build-selenium-macro" />
 	</target>
 
 	<target name="build-selenium-path">
 		<ant dir="../portal-web" target="build-selenium-path" />
-	</target>
-
-	<target name="build-selenium-test-case">
-		<ant dir="../portal-web" target="build-selenium-test-case" />
 	</target>
 
 	<target name="build-selenium-server-jar">
@@ -830,6 +826,10 @@ public class Creole10Parser]]></replacevalue>
 		<zip basedir="${tstamp.value}" destfile="${project.dir}/lib/development/selenium-server.jar.new" />
 
 		<delete dir="${tstamp.value}" />
+	</target>
+
+	<target name="build-selenium-test-case">
+		<ant dir="../portal-web" target="build-selenium-test-case" />
 	</target>
 
 	<target name="build-service">

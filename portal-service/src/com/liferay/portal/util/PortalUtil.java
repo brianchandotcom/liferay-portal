@@ -895,6 +895,13 @@ public class PortalUtil {
 	}
 
 	public static Map<String, Serializable> getExpandoBridgeAttributes(
+			ExpandoBridge expandoBridge, HttpServletRequest request)
+		throws PortalException {
+
+		return getPortal().getExpandoBridgeAttributes(expandoBridge, request);
+	}
+
+	public static Map<String, Serializable> getExpandoBridgeAttributes(
 			ExpandoBridge expandoBridge, PortletRequest portletRequest)
 		throws PortalException {
 
@@ -909,6 +916,14 @@ public class PortalUtil {
 
 		return getPortal().getExpandoBridgeAttributes(
 			expandoBridge, uploadPortletRequest);
+	}
+
+	public static Serializable getExpandoValue(
+			HttpServletRequest request, String name, int type,
+			String displayType)
+		throws PortalException {
+
+		return getPortal().getExpandoValue(request, name, type, displayType);
 	}
 
 	public static Serializable getExpandoValue(

@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -615,32 +617,7 @@ public class HtmlImpl implements Html {
 
 	@Override
 	public String unescape(String text) {
-		if (text == null) {
-			return null;
-		}
-
-		if (text.length() == 0) {
-			return StringPool.BLANK;
-		}
-
-		// Optimize this
-
-		text = StringUtil.replace(text, "&lt;", "<");
-		text = StringUtil.replace(text, "&gt;", ">");
-		text = StringUtil.replace(text, "&amp;", "&");
-		text = StringUtil.replace(text, "&#034;", "\"");
-		text = StringUtil.replace(text, "&#039;", "'");
-		text = StringUtil.replace(text, "&#040;", "(");
-		text = StringUtil.replace(text, "&#041;", ")");
-		text = StringUtil.replace(text, "&#044;", ",");
-		text = StringUtil.replace(text, "&#035;", "#");
-		text = StringUtil.replace(text, "&#037;", "%");
-		text = StringUtil.replace(text, "&#059;", ";");
-		text = StringUtil.replace(text, "&#061;", "=");
-		text = StringUtil.replace(text, "&#043;", "+");
-		text = StringUtil.replace(text, "&#045;", "-");
-
-		return text;
+		return StringUtil.replace(text, "&", ";", _UNESCAPE_MAP);
 	}
 
 	@Override
@@ -800,11 +777,31 @@ public class HtmlImpl implements Html {
 
 	private static final char[] _TAG_STYLE = {'s', 't', 'y', 'l', 'e'};
 
+	private static final Map<String, String> _UNESCAPE_MAP =
+		new HashMap<String, String>();
+
 	// See http://www.w3.org/TR/xpath20/#lexical-structure
 
 	private static final char[] _XPATH_TOKENS = {
 		'(', ')', '[', ']', '.', '@', ',', ':', '/', '|', '+', '-', '=', '!',
 		'<', '>', '*', '$', '"', '"', ' ', 9, 10, 13, 133, 8232};
+
+	static {
+		_UNESCAPE_MAP.put("lt", "<");
+		_UNESCAPE_MAP.put("gt", ">");
+		_UNESCAPE_MAP.put("amp", "&");
+		_UNESCAPE_MAP.put("#034", "\"");
+		_UNESCAPE_MAP.put("#039", "'");
+		_UNESCAPE_MAP.put("#040", "(");
+		_UNESCAPE_MAP.put("#041", ")");
+		_UNESCAPE_MAP.put("#044", ",");
+		_UNESCAPE_MAP.put("#035", "#");
+		_UNESCAPE_MAP.put("#037", "%");
+		_UNESCAPE_MAP.put("#059", ";");
+		_UNESCAPE_MAP.put("#061", "=");
+		_UNESCAPE_MAP.put("#043", "+");
+		_UNESCAPE_MAP.put("#045", "-");
+	}
 
 	private Pattern _pattern = Pattern.compile("([\\s<&]|$)");
 

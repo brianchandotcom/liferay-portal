@@ -15,10 +15,14 @@
 package com.liferay.portlet.dynamicdatalists.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 import com.liferay.portlet.dynamicdatalists.service.base.DDLRecordVersionLocalServiceBaseImpl;
+import com.liferay.portlet.dynamicdatalists.util.comparator.DDLRecordVersionVersionComparator;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -26,6 +30,26 @@ import java.util.List;
  */
 public class DDLRecordVersionLocalServiceImpl
 	extends DDLRecordVersionLocalServiceBaseImpl {
+
+	@Override
+	public DDLRecordVersion getLatestRecordVersion(long recordId)
+		throws PortalException {
+
+		List<DDLRecordVersion> recordVersions =
+			ddlRecordVersionPersistence.findByRecordId(recordId);
+
+		if (recordVersions.isEmpty()) {
+			throw new NoSuchRecordVersionException(
+				"No record versions found for recordId " + recordId);
+		}
+
+		recordVersions = ListUtil.copy(recordVersions);
+
+		Collections.sort(
+			recordVersions, new DDLRecordVersionVersionComparator());
+
+		return recordVersions.get(0);
+	}
 
 	@Override
 	public DDLRecordVersion getRecordVersion(long recordVersionId)

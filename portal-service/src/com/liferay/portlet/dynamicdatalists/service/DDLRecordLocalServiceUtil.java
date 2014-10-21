@@ -357,6 +357,12 @@ public class DDLRecordLocalServiceUtil {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	DDLRecordVersionLocalServiceImpl#getLatestRecordVersion(
+	long)}
+	*/
+	@Deprecated
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getLatestRecordVersion(
 		long recordId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -391,8 +397,8 @@ public class DDLRecordLocalServiceUtil {
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordVersionLocalServiceImpl#getRecordVersion(
-	long, String)}
+	DDLRecordVersionLocalServiceImpl#getRecordVersion(long,
+	String)}
 	*/
 	@Deprecated
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getRecordVersion(
@@ -403,8 +409,7 @@ public class DDLRecordLocalServiceUtil {
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordVersionLocalServiceImpl#getRecordVersion(
-	long)}
+	DDLRecordVersionLocalServiceImpl#getRecordVersion(long)}
 	*/
 	@Deprecated
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getRecordVersion(
@@ -415,8 +420,8 @@ public class DDLRecordLocalServiceUtil {
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordVersionLocalServiceImpl#getRecordVersions(
-	long, int, int, OrderByComparator)}
+	DDLRecordVersionLocalServiceImpl#getRecordVersions(long, int,
+	int, OrderByComparator)}
 	*/
 	@Deprecated
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> getRecordVersions(
@@ -428,7 +433,7 @@ public class DDLRecordLocalServiceUtil {
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordVersionLocalServiceImpl#getRecordVersionsCount(
+	DDLRecordVersionLocalServiceImpl#getRecordVersionsCount(
 	long)}
 	*/
 	@Deprecated

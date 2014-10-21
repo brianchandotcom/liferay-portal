@@ -230,6 +230,12 @@ public class DDLRecordVersionLocalServiceUtil {
 		return getService().getDDLRecordVersionsCount();
 	}
 
+	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getLatestRecordVersion(
+		long recordId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLatestRecordVersion(recordId);
+	}
+
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -426,8 +426,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String checkJavaFieldTypes(
-		String fileName, String absolutePath, String packagePath,
-		String className, String content) {
+		String fileName, String absolutePath, String content) {
 
 		if (!portalSource) {
 			return content;
@@ -810,7 +809,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-49294
 
 		String newContent = checkJavaFieldTypes(
-			fileName, absolutePath, packagePath, className, content);
+			fileName, absolutePath, content);
 
 		if (newContent.contains("$\n */")) {
 			processErrorMessage(fileName, "*: " + fileName);

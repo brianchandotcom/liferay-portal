@@ -34,23 +34,14 @@ JSONArray fieldsJSONArray = _getFormTemplateFieldsJSONArray(structure, script);
 <%@ include file="/html/portlet/dynamic_data_mapping/form_builder.jspf" %>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />attachValueChange',
-		function(mode) {
-			var A = AUI();
-
-			A.one('#<portlet:namespace />mode').on(
-				'change',
-				function(event) {
-					var currentTarget = event.currentTarget;
-
-					<portlet:namespace />toggleMode(currentTarget.get('value'));
-				}
-			);
-		},
-		['aui-base']
-	);
+	function <portlet:namespace />attachValueChange() {
+		AUI.$('#<portlet:namespace />mode').on(
+			'change',
+			function(event) {
+				<portlet:namespace />toggleMode(AUI.$(event.currentTarget).val());
+			}
+		);
+	}
 
 	Liferay.on(
 		'<portlet:namespace />formBuilderLoaded',
@@ -61,50 +52,36 @@ JSONArray fieldsJSONArray = _getFormTemplateFieldsJSONArray(structure, script);
 		}
 	);
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />setFieldsHiddenAttributes',
-		function(item, index, collection, mode) {
-			var A = AUI();
+	function <portlet:namespace />setFieldsHiddenAttributes(mode, item, index) {
+		var hiddenAttributesMap = window.<portlet:namespace />formBuilder.MAP_HIDDEN_FIELD_ATTRS;
+		var hiddenAttributes = hiddenAttributesMap[item.get('type')] || hiddenAttributesMap.DEFAULT;
 
-			var hiddenAttributesMap = window.<portlet:namespace />formBuilder.MAP_HIDDEN_FIELD_ATTRS;
-			var hiddenAttributes = hiddenAttributesMap[item.get('type')] || hiddenAttributesMap.DEFAULT;
+		if (mode === '<%= DDMTemplateConstants.TEMPLATE_MODE_EDIT %>') {
+			hiddenAttributes = AUI._.remove(hiddenAttributes, 'readOnly');
+		}
 
-			hiddenAttributes = A.Array(hiddenAttributes);
+		item.set('hiddenAttributes', hiddenAttributes);
+	}
 
-			if (mode === '<%= DDMTemplateConstants.TEMPLATE_MODE_EDIT %>') {
-				A.Array.removeItem(hiddenAttributes, 'readOnly');
-			}
+	function <portlet:namespace />toggleMode(mode) {
+		var formBuilder = window.<portlet:namespace />formBuilder;
 
-			item.set('hiddenAttributes', hiddenAttributes);
-		},
-		['aui-base']
-	);
+		var modeEdit = (mode === '<%= DDMTemplateConstants.TEMPLATE_MODE_EDIT %>');
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />toggleMode',
-		function(mode) {
-			var A = AUI();
+		formBuilder.set('allowRemoveRequiredFields', modeEdit);
 
-			var formBuilder = window.<portlet:namespace />formBuilder;
+		var setFieldsHiddenAttributes = AUI._.bindKey(window, '<portlet:namespace />setFieldsHiddenAttributes', mode);
 
-			var modeEdit = (mode === '<%= DDMTemplateConstants.TEMPLATE_MODE_EDIT %>');
+		AUI._.forEach(formBuilder.get('fields')._items, setFieldsHiddenAttributes);
 
-			formBuilder.set('allowRemoveRequiredFields', modeEdit);
+		AUI._.forEach(formBuilder.get('availableFields'), setFieldsHiddenAttributes);
 
-			formBuilder.get('fields').each(A.rbind('<portlet:namespace />setFieldsHiddenAttributes', window, mode));
+		var editingField = formBuilder.editingField;
 
-			A.Array.each(formBuilder.get('availableFields'), A.rbind('<portlet:namespace />setFieldsHiddenAttributes', window, mode));
-
-			var editingField = formBuilder.editingField;
-
-			if (editingField) {
-				formBuilder.propertyList.set('data', formBuilder.getFieldProperties(editingField, true));
-			}
-		},
-		['aui-base']
-	);
+		if (editingField) {
+			formBuilder.propertyList.set('data', formBuilder.getFieldProperties(editingField, true));
+		}
+	}
 
 	window['<%= HtmlUtil.escapeJS(namespace) %>getAvailableFields'] = function(A, FormBuilder) {
 
@@ -114,7 +91,7 @@ JSONArray fieldsJSONArray = _getFormTemplateFieldsJSONArray(structure, script);
 
 		var availableFields = <%= structureJSONArray.toString() %>;
 
-		A.Array.each(
+		AUI._.forEach(
 			availableFields,
 			function(item, index) {
 				item.iconClass = FormBuilder.DEFAULT_ICON_CLASS;

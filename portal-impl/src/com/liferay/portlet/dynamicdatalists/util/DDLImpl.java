@@ -336,6 +336,10 @@ public class DDLImpl implements DDL {
 		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
 			ddmTemplateId);
 
+		contextObjects.put(
+			TemplateConstants.TEMPLATE_CLASS_NAME_ID,
+			ddmTemplate.getClassNameId());
+
 		return _transformer.transform(
 			themeDisplay, contextObjects, ddmTemplate.getScript(),
 			ddmTemplate.getLanguage());

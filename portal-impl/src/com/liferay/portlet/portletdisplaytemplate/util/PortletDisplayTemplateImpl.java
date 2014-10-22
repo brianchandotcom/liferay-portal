@@ -339,6 +339,10 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
 			ddmTemplateId);
 
+		contextObjects.put(
+			TemplateConstants.TEMPLATE_CLASS_NAME_ID,
+			ddmTemplate.getClassNameId());
+
 		String language = ddmTemplate.getLanguage();
 
 		TemplateHandler templateHandler =

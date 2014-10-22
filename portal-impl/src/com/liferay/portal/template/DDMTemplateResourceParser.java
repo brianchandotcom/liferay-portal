@@ -57,21 +57,23 @@ public class DDMTemplateResourceParser implements TemplateResourceParser {
 		}
 
 		try {
-			int x = templateId.indexOf(CharPool.SLASH, pos);
+			int w = templateId.indexOf(CharPool.SLASH, pos);
+			int x = templateId.indexOf(CharPool.SLASH, w + 1);
 			int y = templateId.indexOf(CharPool.SLASH, x + 1);
 			int z = templateId.indexOf(CharPool.SLASH, y + 1);
 
-			long companyId = GetterUtil.getLong(templateId.substring(x + 1, y));
-			long groupId = GetterUtil.getLong(templateId.substring(y + 1, z));
+			long companyId = GetterUtil.getLong(templateId.substring(w + 1, x));
+			long groupId = GetterUtil.getLong(templateId.substring(x + 1, y));
+			long classNameId = GetterUtil.getLong(
+				templateId.substring(y + 1, z));
 			String ddmTemplateKey = templateId.substring(z + 1);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Loading {companyId=" + companyId + ", groupId=" +
-						groupId + ", ddmTemplateKey=" + ddmTemplateKey + "}");
+						groupId + ", classNameId=" + classNameId +
+						", ddmTemplateKey=" + ddmTemplateKey + "}");
 			}
-
-			long classNameId = 0;
 
 			DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
 				groupId, classNameId, ddmTemplateKey);

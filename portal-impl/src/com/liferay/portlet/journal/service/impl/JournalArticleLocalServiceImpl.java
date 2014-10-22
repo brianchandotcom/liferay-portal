@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -6522,6 +6523,11 @@ public class JournalArticleLocalServiceImpl
 		tokens.put(
 			"article_resource_pk",
 			String.valueOf(article.getResourcePrimKey()));
+
+		tokens.put(
+			TemplateConstants.TEMPLATE_CLASS_NAME_ID,
+			String.valueOf(
+				classNameLocalService.getClassNameId(DDMStructure.class)));
 
 		String defaultDDMTemplateKey = article.getDDMTemplateKey();
 

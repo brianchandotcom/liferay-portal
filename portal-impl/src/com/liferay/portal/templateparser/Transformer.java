@@ -151,6 +151,7 @@ public class Transformer {
 			return null;
 		}
 
+		long classNameId = 0;
 		long companyId = 0;
 		long companyGroupId = 0;
 		long scopeGroupId = 0;
@@ -179,13 +180,18 @@ public class Transformer {
 				for (String key : contextObjects.keySet()) {
 					template.put(key, contextObjects.get(key));
 				}
+
+				classNameId = GetterUtil.getLong(
+					contextObjects.get(
+						TemplateConstants.TEMPLATE_CLASS_NAME_ID));
 			}
 
 			template.put("company", getCompany(themeDisplay, companyId));
 			template.put("companyId", companyId);
 			template.put("device", getDevice(themeDisplay));
 
-			String templatesPath = getTemplatesPath(companyId, scopeGroupId);
+			String templatesPath = getTemplatesPath(
+				companyId, scopeGroupId, classNameId);
 
 			template.put(
 				"permissionChecker",
@@ -397,14 +403,18 @@ public class Transformer {
 		return templateNodes;
 	}
 
-	protected String getTemplatesPath(long companyId, long groupId) {
-		StringBundler sb = new StringBundler(5);
+	protected String getTemplatesPath(
+		long companyId, long groupId, long classNameId) {
+
+		StringBundler sb = new StringBundler(6);
 
 		sb.append(TemplateConstants.TEMPLATE_SEPARATOR);
 		sb.append(StringPool.SLASH);
 		sb.append(companyId);
 		sb.append(StringPool.SLASH);
 		sb.append(groupId);
+		sb.append(StringPool.SLASH);
+		sb.append(classNameId);
 
 		return sb.toString();
 	}
@@ -559,16 +569,19 @@ public class Transformer {
 				document.asXML(), languageId);
 		}
 		else {
+			long articleGroupId = 0;
+			long classNameId = 0;
 			long companyId = 0;
 			long companyGroupId = 0;
-			long articleGroupId = 0;
 
 			if (tokens != null) {
+				articleGroupId = GetterUtil.getLong(
+					tokens.get("article_group_id"));
+				classNameId = GetterUtil.getLong(
+					tokens.get(TemplateConstants.TEMPLATE_CLASS_NAME_ID));
 				companyId = GetterUtil.getLong(tokens.get("company_id"));
 				companyGroupId = GetterUtil.getLong(
 					tokens.get("company_group_id"));
-				articleGroupId = GetterUtil.getLong(
-					tokens.get("article_group_id"));
 			}
 
 			long scopeGroupId = 0;
@@ -635,7 +648,7 @@ public class Transformer {
 				template.put("device", getDevice(themeDisplay));
 
 				String templatesPath = getTemplatesPath(
-					companyId, articleGroupId);
+					companyId, articleGroupId, classNameId);
 
 				Locale locale = LocaleUtil.fromLanguageId(languageId);
 

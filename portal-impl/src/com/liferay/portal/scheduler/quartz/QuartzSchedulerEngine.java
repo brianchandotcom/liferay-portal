@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.scheduler.TriggerType;
-import com.liferay.portal.kernel.scheduler.messaging.ReceiverKey;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.util.CharPool;
@@ -429,9 +428,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 				message = message.clone();
 			}
 
-			registerMessageListeners(
-				trigger.getJobName(), trigger.getGroupName(), destination,
-				message);
+			registerMessageListeners(destination, message);
 
 			schedule(
 				scheduler, storageType, quartzTrigger, description, destination,
@@ -926,8 +923,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 	}
 
 	protected void registerMessageListeners(
-			String jobName, String groupName, String destinationName,
-			Message message)
+			String destinationName, Message message)
 		throws SchedulerException {
 
 		String messageListenerClassName = message.getString(
@@ -968,8 +964,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		SchedulerEventMessageListenerWrapper schedulerEventListenerWrapper =
 			new SchedulerEventMessageListenerWrapper();
 
-		schedulerEventListenerWrapper.setGroupName(groupName);
-		schedulerEventListenerWrapper.setJobName(jobName);
 		schedulerEventListenerWrapper.setMessageListener(
 			schedulerEventListener);
 
@@ -981,8 +975,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		message.put(
 			MESSAGE_LISTENER_UUID,
 			schedulerEventListenerWrapper.getMessageListenerUUID());
-
-		message.put(RECEIVER_KEY, new ReceiverKey(jobName, groupName));
 	}
 
 	protected void schedule(

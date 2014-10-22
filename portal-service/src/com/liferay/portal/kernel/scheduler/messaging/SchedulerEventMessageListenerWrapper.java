@@ -36,18 +36,6 @@ import java.util.Date;
 public class SchedulerEventMessageListenerWrapper implements MessageListener {
 
 	public void afterPropertiesSet() {
-		if (_jobName.length() > SchedulerEngine.GROUP_NAME_MAX_LENGTH) {
-			_jobName = _jobName.substring(
-				0, SchedulerEngine.GROUP_NAME_MAX_LENGTH);
-		}
-
-		if (_groupName.length() > SchedulerEngine.JOB_NAME_MAX_LENGTH) {
-			_groupName = _groupName.substring(
-				0, SchedulerEngine.JOB_NAME_MAX_LENGTH);
-		}
-
-		_receiverKey = new ReceiverKey(_jobName, _groupName);
-
 		if (_messageListenerUUID == null) {
 			_messageListenerUUID = PortalUUIDUtil.generate();
 		}
@@ -122,10 +110,16 @@ public class SchedulerEventMessageListenerWrapper implements MessageListener {
 		_jobName = className;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	public void setGroupName(String groupName) {
 		_groupName = groupName;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	public void setJobName(String jobName) {
 		_jobName = jobName;
 	}
@@ -149,10 +143,17 @@ public class SchedulerEventMessageListenerWrapper implements MessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SchedulerEventMessageListenerWrapper.class);
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	private String _groupName;
+
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	private String _jobName;
+
 	private MessageListener _messageListener;
 	private String _messageListenerUUID;
-	private ReceiverKey _receiverKey;
 
 }

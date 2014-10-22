@@ -17,6 +17,8 @@ package com.liferay.portal.scheduler;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.proxy.BaseProxyBean;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
+import com.liferay.portal.kernel.scheduler.SchedulerException;
+import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 
@@ -29,17 +31,21 @@ public class SchedulerEngineProxyBean
 	extends BaseProxyBean implements SchedulerEngine {
 
 	@Override
-	public void delete(String groupName) {
+	public void delete(String groupName, StorageType storageType) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void delete(String jobName, String groupName) {
+	public void delete(
+		String jobName, String groupName, StorageType storageType) {
+
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public SchedulerResponse getScheduledJob(String jobName, String groupName) {
+	public SchedulerResponse getScheduledJob(
+		String jobName, String groupName, StorageType storageType) {
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -49,63 +55,80 @@ public class SchedulerEngineProxyBean
 	}
 
 	@Override
-	public List<SchedulerResponse> getScheduledJobs(String groupName) {
+	public List<SchedulerResponse> getScheduledJobs(StorageType storageType) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void pause(String groupName) {
+	public List<SchedulerResponse> getScheduledJobs(
+		String groupName, StorageType storageType) {
+
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void pause(String jobName, String groupName) {
+	public void pause(String groupName, StorageType storageType) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void resume(String groupName) {
+	public void pause(
+		String jobName, String groupName, StorageType storageType) {
+
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void resume(String jobName, String groupName) {
+	public void resume(String groupName, StorageType storageType) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void resume(
+		String jobName, String groupName, StorageType storageType) {
+
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void schedule(
 		Trigger trigger, String description, String destinationName,
-		Message message) {
+		Message message, StorageType storageType) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void shutdown() {
-	}
-
-	@Override
-	public void start() {
-	}
-
-	@Override
-	public void suppressError(String jobName, String groupName) {
+	public void shutdown() throws SchedulerException {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void unschedule(String groupName) {
+	public void start() throws SchedulerException {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void unschedule(String jobName, String groupName) {
+	public void suppressError(
+		String jobName, String groupName, StorageType storageType) {
+
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void update(Trigger trigger) {
+	public void unschedule(String groupName, StorageType storageType) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void unschedule(
+		String jobName, String groupName, StorageType storageType) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void update(Trigger trigger, StorageType storageType) {
 		throw new UnsupportedOperationException();
 	}
 

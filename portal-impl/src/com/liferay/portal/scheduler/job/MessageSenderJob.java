@@ -92,12 +92,12 @@ public class MessageSenderJob implements Job {
 				jobDataMap.getString(SchedulerEngine.STORAGE_TYPE));
 
 			if (PropsValues.CLUSTER_LINK_ENABLED &&
-				storageType.equals(StorageType.MEMORY_CLUSTERED)) {
+				(storageType == StorageType.MEMORY_CLUSTERED)) {
 
 				notifyClusterMember(jobKey, storageType);
 			}
 
-			if (storageType.equals(StorageType.PERSISTED)) {
+			if (storageType == StorageType.PERSISTED) {
 				Scheduler scheduler = jobExecutionContext.getScheduler();
 
 				scheduler.deleteJob(jobKey);

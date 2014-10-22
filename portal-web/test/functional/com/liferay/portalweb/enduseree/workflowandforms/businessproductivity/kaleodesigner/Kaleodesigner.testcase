@@ -622,7 +622,7 @@
 		</execute>
 
 		<execute macro="Workflow#viewDefinition">
-			<var name="workflowDefinitionTitle" value="Single Approver" />
+			<var name="workflowDefinitionName" value="Single Approver" />
 			<var name="workflowDefinitionTitle" value="Edited Workflow Definition" />
 			<var name="workflowDefinitionVersionNumber" value="2" />
 		</execute>
@@ -670,7 +670,7 @@
 			<var name="portletName" value="Workflow" />
 		</execute>
 
-		<var name="key_workflowDefinitionTitle" value="NAME EDIT" />
+		<var name="key_workflowDefinitionName" value="NAME EDIT" />
 
 		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_NAME" value1="NAME EDIT" />
 
@@ -718,6 +718,10 @@
 
 		<execute macro="KaleoDesigner#deleteConnector">
 			<var name="connectorLabel" value="Approve" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="End" />
 		</execute>
 
 		<execute macro="KaleoDesigner#addConnectorViaViewTab">
@@ -1393,7 +1397,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewAssignmentsForTaskNodeKaleoDesignerCP" priority="5">
+	<command name="ViewAssignmentsForTaskNodeKDCP" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Kaleo Designer" />
 		</execute>
@@ -1427,7 +1431,7 @@
 		</execute>
 
 		<execute macro="Workflow#viewDefinition">
-			<var name="workflowDefinitionTitle" value="Send Content For Posting" />
+			<var name="workflowDefinitionName" value="Send Content For Posting" />
 			<var name="workflowDefinitionTitle" value="Uploaded Definition" />
 			<var name="workflowDefinitionVersionNumber" value="1" />
 		</execute>
@@ -1465,7 +1469,7 @@
 
 		<execute macro="KaleoDesigner#viewSourceXMLLine">
 			<var name="kdSourceXML" value="INVALID" />
-			<var name="line" value="6" />
+			<var name="line" value="3" />
 		</execute>
 	</command>
 
@@ -1482,7 +1486,7 @@
 		</execute>
 
 		<execute macro="Workflow#viewDefinition">
-			<var name="workflowDefinitionTitle" value="Uploaded Definition" />
+			<var name="workflowDefinitionName" value="Uploaded Definition" />
 			<var name="workflowDefinitionTitle" value="Uploaded Definition" />
 			<var name="workflowDefinitionVersionNumber" value="1" />
 		</execute>
@@ -1511,7 +1515,7 @@
 		</execute>
 
 		<execute macro="Workflow#viewDefinition">
-			<var name="workflowDefinitionTitle" value="Send Content For Posting" />
+			<var name="workflowDefinitionName" value="Send Content For Posting" />
 			<var name="workflowDefinitionTitle" value="Uploaded Definition" />
 			<var name="workflowDefinitionVersionNumber" value="1" />
 		</execute>

@@ -103,12 +103,19 @@ public class RollingChecksum {
 
 		buffer.limit(buffer.position() + currentBlockLength());
 
-		_messageDigest.update(buffer);
+		try {
+			MessageDigest messageDigest = MessageDigest.getInstance("MD5");
 
-		buffer.limit(oldLimit);
-		buffer.position(oldPosition);
+			messageDigest.update(buffer);
 
-		return _messageDigest.digest();
+			buffer.limit(oldLimit);
+			buffer.position(oldPosition);
+
+			return messageDigest.digest();
+		}
+		catch (NoSuchAlgorithmException nsae) {
+			throw new ExceptionInInitializerError(nsae);
+		}
 	}
 
 	/**
@@ -127,17 +134,6 @@ public class RollingChecksum {
 		for (int i = 0; i < currentBlockLength(); i++) {
 			_a += _byteChannelReader.get(i);
 			_b += _a;
-		}
-	}
-
-	private static MessageDigest _messageDigest;
-
-	static {
-		try {
-			_messageDigest = MessageDigest.getInstance("MD5");
-		}
-		catch (NoSuchAlgorithmException nsae) {
-			throw new ExceptionInInitializerError(nsae);
 		}
 	}
 

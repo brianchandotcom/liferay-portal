@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.service;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.search.IndexerInterval;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -37,7 +38,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.impl.DLFileEntryLocalServiceImpl;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLTestUtil;
 
@@ -84,7 +84,7 @@ public class DLFileEntryLocalServiceTest {
 				TestPropsValues.getUserId(), fileEntry.getFileEntryId());
 		}
 
-		for (int i = 0; i < DLFileEntryLocalServiceImpl.DELETE_INTERVAL; i++) {
+		for (int i = 0; i < IndexerInterval.DEFAULT_INTERVAL; i++) {
 			DLAppTestUtil.addFileEntry(
 				_group.getGroupId(), _group.getGroupId(), folder.getFolderId());
 		}

@@ -19,8 +19,8 @@ import com.liferay.portal.fabric.netty.fileserver.FileHelperUtil;
 import com.liferay.portal.fabric.netty.fileserver.FileResponse;
 import com.liferay.portal.fabric.netty.fileserver.handlers.FileResponseChannelHandler;
 import com.liferay.portal.fabric.netty.fileserver.handlers.FileServerTestUtil;
+import com.liferay.portal.fabric.netty.util.NettyUtilAdvice;
 import com.liferay.portal.kernel.concurrent.AsyncBroker;
-import com.liferay.portal.kernel.concurrent.FutureListener;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
@@ -48,10 +48,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
@@ -662,52 +658,6 @@ public class NettyRepositoryTest {
 		}
 
 		private static Throwable _convertThrowable;
-
-	}
-
-	@Aspect
-	public static class NettyUtilAdvice {
-
-		public static void shutdown() {
-			_scheduledExecutorService.shutdown();
-		}
-
-		@Around(
-			"execution(public static void com.liferay.portal.fabric.netty." +
-				"util.NettyUtil.scheduleCancellation(io.netty.channel." +
-					"Channel, com.liferay.portal.kernel.concurrent." +
-						"NoticeableFuture, long)) && args(channel, " +
-							"noticeableFuture, timeout)")
-		public <T> void scheduleCancellation(
-			Channel channel, final NoticeableFuture<T> noticeableFuture,
-			long timeout) {
-
-			final Future<?> cancellationFuture =
-				_scheduledExecutorService.schedule(
-					new Runnable() {
-
-						@Override
-						public void run() {
-							noticeableFuture.cancel(true);
-						}
-
-					},
-					timeout, TimeUnit.MILLISECONDS);
-
-			noticeableFuture.addFutureListener(
-				new FutureListener<T>() {
-
-					@Override
-					public void complete(Future<T> future) {
-						cancellationFuture.cancel(true);
-					}
-
-				});
-		}
-
-		private static final ScheduledExecutorService
-			_scheduledExecutorService =
-				Executors.newSingleThreadScheduledExecutor();
 
 	}
 

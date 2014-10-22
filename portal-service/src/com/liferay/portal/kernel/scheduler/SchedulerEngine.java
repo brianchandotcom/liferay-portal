@@ -77,6 +77,9 @@ public interface SchedulerEngine {
 
 	public static final String PREVIOUS_FIRE_TIME = "PREVIOUS_FIRE_TIME";
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	public static final String RECEIVER_KEY = "RECEIVER_KEY";
 
 	public static final String SCHEDULER = "SCHEDULER";

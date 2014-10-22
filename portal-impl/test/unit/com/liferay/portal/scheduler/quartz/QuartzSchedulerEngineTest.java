@@ -231,9 +231,9 @@ public class QuartzSchedulerEngineTest {
 			"0/1 * * * * ?");
 
 		org.quartz.Trigger trigger1 =  _quartzSchedulerEngine.getQuartzTrigger(
-			cronTrigger1);
+			cronTrigger1, StorageType.MEMORY);
 		org.quartz.Trigger trigger2 = _quartzSchedulerEngine.getQuartzTrigger(
-			cronTrigger2);
+			cronTrigger2, StorageType.MEMORY);
 
 		Date nextFireDate1 = trigger1.getStartTime();
 		Date nextFireDate2 = trigger2.getStartTime();
@@ -251,7 +251,8 @@ public class QuartzSchedulerEngineTest {
 			wrongCronTriggerContent);
 
 		try {
-			_quartzSchedulerEngine.getQuartzTrigger(cronTrigger);
+			_quartzSchedulerEngine.getQuartzTrigger(
+				cronTrigger, StorageType.MEMORY);
 
 			Assert.fail();
 		}
@@ -272,7 +273,8 @@ public class QuartzSchedulerEngineTest {
 				_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, 0);
 
 			org.quartz.Trigger trigger =
-				_quartzSchedulerEngine.getQuartzTrigger(intervalTrigger);
+				_quartzSchedulerEngine.getQuartzTrigger(
+					intervalTrigger, StorageType.MEMORY);
 
 			Assert.assertNull(trigger);
 
@@ -300,12 +302,20 @@ public class QuartzSchedulerEngineTest {
 		}
 
 		Trigger intervalTrigger = new IntervalTrigger(
-			jobName, _MEMORY_TEST_GROUP_NAME, _DEFAULT_INTERVAL);
+			jobName, _PERSISTED_TEST_GROUP_NAME, _DEFAULT_INTERVAL);
 
 		org.quartz.Trigger trigger = _quartzSchedulerEngine.getQuartzTrigger(
-			intervalTrigger);
+			intervalTrigger, StorageType.PERSISTED);
 
 		Assert.assertFalse(jobName.equals(trigger.getJobKey().getName()));
+
+		intervalTrigger = new IntervalTrigger(
+			jobName, _MEMORY_TEST_GROUP_NAME, _DEFAULT_INTERVAL);
+
+		trigger = _quartzSchedulerEngine.getQuartzTrigger(
+			intervalTrigger, StorageType.MEMORY);
+
+		Assert.assertTrue(jobName.equals(trigger.getJobKey().getName()));
 	}
 
 	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})

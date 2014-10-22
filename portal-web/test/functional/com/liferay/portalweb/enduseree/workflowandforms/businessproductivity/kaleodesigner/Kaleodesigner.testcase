@@ -720,6 +720,10 @@
 			<var name="connectorLabel" value="Approve" />
 		</execute>
 
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="End" />
+		</execute>
+
 		<execute macro="KaleoDesigner#addConnectorViaViewTab">
 			<var name="connectorName" value="Reverse" />
 			<var name="nodeType" value="task" />

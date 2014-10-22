@@ -238,26 +238,32 @@ if (Validator.isNotNull(requestEditStructureURL)) {
 				title: '<%= HtmlUtil.escapeJS(scopeTitle) %>'
 			},
 			function(event) {
-				document.<portlet:namespace />fm.<portlet:namespace />parentStructureId.value = event.ddmstructureid;
+				var form = AUI.$('#<portlet:namespace />fm');
 
-				AUI.$('#<portlet:namespace />parentStructureName').val(_.unescape(event.name));
+				form.fm('parentStructureId').val(event.ddmstructureid);
 
-				AUI.$('#<portlet:namespace />removeParentStructureButton').attr('disabled', false).removeClass('disabled');
+				form.fm('parentStructureName').val(AUI._.unescape(event.name));
+
+				form.fm('removeParentStructureButton').attr('disabled', false).removeClass('disabled');
 			}
 		);
 	}
 
 	function <portlet:namespace />removeParentStructure() {
-		AUI.$('#<portlet:namespace />parentStructureId').val('');
+		var form = AUI.$('#<portlet:namespace />fm');
 
-		AUI.$('#<portlet:namespace />parentStructureName').val('');
+		form.fm('parentStructureId').val('');
 
-		AUI.$('#<portlet:namespace />removeParentStructureButton').attr('disabled', true).addClass('disabled');
+		form.fm('parentStructureName').val('');
+
+		form.fm('removeParentStructureButton').attr('disabled', true).addClass('disabled');
 	}
 
 	function <portlet:namespace />saveStructure() {
-		document.<portlet:namespace />fm.<portlet:namespace />definition.value = window.<portlet:namespace />formBuilder.getContentValue();
+		var form = AUI.$('#<portlet:namespace />fm')
 
-		submitForm(document.<portlet:namespace />fm);
+		form.fm('definition').val(window.<portlet:namespace />formBuilder.getContentValue());
+
+		submitForm(form[0]);
 	}
 </aui:script>

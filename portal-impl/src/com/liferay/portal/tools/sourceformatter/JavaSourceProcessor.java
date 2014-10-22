@@ -985,7 +985,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-33070
 
-		if (content.contains("implements ProcessCallable") &&
+		matcher = _processCallablePattern.matcher(content);
+
+		if (matcher.find() &&
 			!content.contains("private static final long serialVersionUID")) {
 
 			processErrorMessage(
@@ -2966,6 +2968,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _logPattern = Pattern.compile(
 		"\n\tprivate static final Log _log = LogFactoryUtil.getLog\\(\n*" +
 			"\t*(.+)\\.class\\)");
+	private Pattern _processCallablePattern = Pattern.compile(
+		"implements ProcessCallable\\b");
 	private List<String> _proxyExclusions;
 	private List<String> _secureRandomExclusions;
 	private Pattern _stagedModelTypesPattern = Pattern.compile(

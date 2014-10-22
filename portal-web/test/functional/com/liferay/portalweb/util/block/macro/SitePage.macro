@@ -109,6 +109,14 @@
 		<execute action="CPSitepages#assertTextEquals" locator-key1="PAGE_TREE_PAGE_LINK" value1="${sitePageName}" />
 	</command>
 
+	<command name="addJavaScript">
+		<execute action="CPSitepages#assertClick" locator-key1="JAVASCRIPT_NAVIGATION" value1="JavaScript" />
+		<execute action="CPSitepages#assertTextEquals" locator-key1="JAVASCRIPT_LABEL" value1="Paste JavaScript code that will be executed at the bottom of every page." />
+		<execute action="CPSitepages#type" locator-key1="JAVASCRIPT_TEXTAREA" value1="${javaScript}" />
+		<execute action="CPSitepages#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="addPageTranslations">
 		<if>
 			<isset var="childPageName" />

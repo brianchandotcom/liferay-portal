@@ -241,6 +241,10 @@
 		<execute action="CPSitepagesExport#downloadTempFile" />
 	</command>
 
+	<command name="exportSiteCP">
+		<execute macro="LAR#exportSiteCmd" />
+	</command>
+
 	<command name="exportUserGroups">
 		<execute macro="LAR#gotoExportImportCmd" />
 

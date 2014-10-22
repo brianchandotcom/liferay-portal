@@ -171,13 +171,9 @@ if (ddmStructureId > 0) {
 				title: '<%= UnicodeLanguageUtil.get(request, "data-definitions") %>'
 			},
 			function(event) {
-				var A = AUI();
+				AUI.$('#<portlet:namespace />ddmStructureId').val(event.ddmstructureid);
 
-				var name = A.Lang.String.unescapeEntities(event.name);
-
-				A.one('#<portlet:namespace />ddmStructureId').val(event.ddmstructureid);
-
-				A.one('#<portlet:namespace />ddmStructureNameDisplay').val(name);
+				AUI.$('#<portlet:namespace />ddmStructureNameDisplay').val(_.unescape(event.name));
 			}
 		);
 	}

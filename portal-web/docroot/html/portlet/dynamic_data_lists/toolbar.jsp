@@ -40,8 +40,10 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 </aui:nav-bar>
 
 <c:if test="<%= DDLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_RECORD_SET) %>">
-	<aui:script use="aui-base">
-			A.one('#<portlet:namespace />manageDDMStructuresLink').on('click', function() {
+	<aui:script>
+		AUI.$('#<portlet:namespace />manageDDMStructuresLink').on(
+			'click',
+			function() {
 				Liferay.Util.openDDMPortlet(
 					{
 						basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
@@ -58,6 +60,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 						title: '<%= UnicodeLanguageUtil.get(request, "data-definitions") %>'
 					}
 				);
-			});
+			}
+		);
 	</aui:script>
 </c:if>

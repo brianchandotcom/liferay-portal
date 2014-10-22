@@ -38,6 +38,7 @@ import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.protocol.HttpClientContext;
@@ -83,6 +84,12 @@ public class Session {
 			new UsernamePasswordCredentials(login, password));
 
 		httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
+
+		RequestConfig.Builder builder = RequestConfig.custom();
+
+		builder.setStaleConnectionCheckEnabled(false);
+
+		httpClientBuilder.setDefaultRequestConfig(builder.build());
 
 		httpClientBuilder.setMaxConnPerRoute(maxConnections);
 		httpClientBuilder.setMaxConnTotal(maxConnections);

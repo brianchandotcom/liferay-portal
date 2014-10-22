@@ -361,10 +361,10 @@ public class SyncFile extends StateAwareModel {
 	@DatabaseField(useGetSet = true, width = 16777216)
 	protected String extraSettings;
 
-	@DatabaseField(index = true, useGetSet = true)
+	@DatabaseField(uniqueIndex = true, useGetSet = true)
 	protected String fileKey;
 
-	@DatabaseField(index = true, useGetSet = true, width = 16777216)
+	@DatabaseField(uniqueIndex = true, useGetSet = true, width = 16777216)
 	protected String filePathName;
 
 	@DatabaseField(useGetSet = true)

@@ -21,6 +21,7 @@ import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.service.SyncWatchEventService;
 import com.liferay.sync.engine.util.FileUtil;
+import com.liferay.sync.engine.util.SyncEngineUtil;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -29,6 +30,8 @@ import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,6 +63,9 @@ public class SyncWatchEventProcessor implements Runnable {
 
 		if (delta <= 500) {
 			_inProgress = true;
+
+			SyncEngineUtil.fireSyncEngineStateChanged(
+				SyncEngineUtil.SYNC_ENGINE_STATE_PROCESSING);
 
 			return;
 		}
@@ -152,11 +158,14 @@ public class SyncWatchEventProcessor implements Runnable {
 
 		_inProgress = false;
 
+		SyncEngineUtil.fireSyncEngineStateChanged(
+			SyncEngineUtil.SYNC_ENGINE_STATE_PROCESSED);
+
 		_processedSyncWatchEventIds.clear();
 	}
 
 	protected boolean addFile(SyncWatchEvent syncWatchEvent) throws Exception {
-		Path targetFilePath = Paths.get(syncWatchEvent.getFilePathName());
+		final Path targetFilePath = Paths.get(syncWatchEvent.getFilePathName());
 
 		if (Files.notExists(targetFilePath)) {
 			return true;
@@ -164,7 +173,7 @@ public class SyncWatchEventProcessor implements Runnable {
 
 		Path parentTargetFilePath = targetFilePath.getParent();
 
-		SyncFile parentSyncFile = SyncFileService.fetchSyncFile(
+		final SyncFile parentSyncFile = SyncFileService.fetchSyncFile(
 			parentTargetFilePath.toString());
 
 		if ((parentSyncFile == null) ||
@@ -186,9 +195,23 @@ public class SyncWatchEventProcessor implements Runnable {
 		}
 
 		if (syncFile == null) {
-			SyncFileService.addFileSyncFile(
-				targetFilePath, parentSyncFile.getTypePK(),
-				parentSyncFile.getRepositoryId(), _syncAccountId);
+			Runnable runnable = new Runnable() {
+
+				@Override
+				public void run() {
+					try {
+						SyncFileService.addFileSyncFile(
+							targetFilePath, parentSyncFile.getTypePK(),
+							parentSyncFile.getRepositoryId(), _syncAccountId);
+					}
+					catch (Exception e) {
+						_logger.error(e.getMessage(), e);
+					}
+				}
+
+			};
+
+			_executorService.execute(runnable);
 
 			return true;
 		}
@@ -359,6 +382,9 @@ public class SyncWatchEventProcessor implements Runnable {
 
 	private static final Logger _logger = LoggerFactory.getLogger(
 		SyncWatchEventProcessor.class);
+
+	private static final ExecutorService _executorService =
+		Executors.newCachedThreadPool();
 
 	private boolean _inProgress;
 	private final Set<Long> _processedSyncWatchEventIds = new HashSet<Long>();

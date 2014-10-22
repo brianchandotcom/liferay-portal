@@ -93,13 +93,6 @@ public class BaseHandler implements Handler<Void> {
 		}
 		else {
 			_logger.error(e.getMessage(), e);
-
-			syncAccount.setState(SyncAccount.STATE_DISCONNECTED);
-			syncAccount.setUiEvent(SyncAccount.UI_EVENT_CONNECTION_EXCEPTION);
-
-			SyncAccountService.update(syncAccount);
-
-			retryServerConnection();
 		}
 	}
 

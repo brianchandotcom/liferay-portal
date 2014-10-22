@@ -82,6 +82,7 @@ public class SyncWatchEventPersistence
 
 		where.eq("syncAccountId", syncAccountId);
 
+		queryBuilder.orderBy("fileType", false);
 		queryBuilder.orderBy(orderByColumn, ascending);
 
 		return query(queryBuilder.prepare());

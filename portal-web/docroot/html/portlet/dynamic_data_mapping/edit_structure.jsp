@@ -238,53 +238,31 @@ if (Validator.isNotNull(requestEditStructureURL)) {
 				title: '<%= HtmlUtil.escapeJS(scopeTitle) %>'
 			},
 			function(event) {
-				var A = AUI();
+				var form = AUI.$('#<portlet:namespace />fm');
 
-				document.<portlet:namespace />fm.<portlet:namespace />parentStructureId.value = event.ddmstructureid;
+				form.fm('parentStructureId').val(event.ddmstructureid);
 
-				var nameEl = A.one('#<portlet:namespace />parentStructureName');
+				form.fm('parentStructureName').val(AUI._.unescape(event.name));
 
-				nameEl.attr('href', '<portlet:renderURL><portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" /><portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" /></portlet:renderURL>&<portlet:namespace />classPK=' + event.ddmstructureid);
-
-				nameEl.val(A.Lang.String.unescapeEntities(event.name));
-
-				var removeEl = A.one('#<portlet:namespace />removeParentStructureButton');
-
-				removeEl.attr('disabled', false);
-				removeEl.removeClass('disabled');
+				form.fm('removeParentStructureButton').attr('disabled', false).removeClass('disabled');
 			}
 		);
 	}
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />removeParentStructure',
-		function() {
-			var A = AUI();
+	function <portlet:namespace />removeParentStructure() {
+		var form = AUI.$('#<portlet:namespace />fm');
 
-			A.one('#<portlet:namespace />parentStructureId').val('');
+		form.fm('parentStructureId').val('');
+		form.fm('parentStructureName').val('');
 
-			var nameEl = A.one('#<portlet:namespace />parentStructureName');
+		form.fm('removeParentStructureButton').attr('disabled', true).addClass('disabled');
+	}
 
-			nameEl.attr('href', '#');
-			nameEl.val('');
+	function <portlet:namespace />saveStructure() {
+		var form = AUI.$('#<portlet:namespace />fm');
 
-			var removeEl = A.one('#<portlet:namespace />removeParentStructureButton');
+		form.fm('definition').val(<portlet:namespace />formBuilder.getContentValue());
 
-			removeEl.attr('disabled', true);
-			removeEl.addClass('disabled');
-		},
-		['aui-base']
-	);
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveStructure',
-		function() {
-			document.<portlet:namespace />fm.<portlet:namespace />definition.value = window.<portlet:namespace />formBuilder.getContentValue();
-
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['aui-base', 'liferay-portlet-dynamic-data-mapping']
-	);
+		submitForm(form);
+	}
 </aui:script>

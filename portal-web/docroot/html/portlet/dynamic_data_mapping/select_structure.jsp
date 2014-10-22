@@ -106,6 +106,6 @@ String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
 	Liferay.Util.focusFormField(document.<portlet:namespace />selectStructureFm.<portlet:namespace />keywords);
 </aui:script>
 
-<aui:script use="aui-base">
+<aui:script>
 	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectStructureFm', '<%= HtmlUtil.escapeJS(eventName) %>');
 </aui:script>

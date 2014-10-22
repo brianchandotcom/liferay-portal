@@ -121,6 +121,6 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, locale);
 	Liferay.Util.focusFormField(document.<portlet:namespace />selectTemplateFm.<portlet:namespace />keywords);
 </aui:script>
 
-<aui:script use="aui-base">
+<aui:script>
 	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectTemplateFm', '<%= HtmlUtil.escapeJS(eventName) %>');
 </aui:script>

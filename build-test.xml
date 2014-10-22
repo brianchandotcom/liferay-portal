@@ -2110,6 +2110,13 @@ tck.url=true</echo>
 		</if>
 
 		<if>
+			<isset property="test.set.default.portal.properties" />
+			<then>
+				<echo file="portal-impl/src/portal-ext.properties">liferay.home=${liferay.home}</echo>
+			</then>
+		</if>
+
+		<if>
 			<contains string="${app.server.portal.dir}" substring="liferay-portal.war" />
 			<then>
 				<property name="test.build.liferay.portal.zip.file.name" value="${app.server.portal.dir}" />

@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.polls.web.upgrade;
+package com.liferay.polls.upgrade;
 
-import com.liferay.polls.service.configuration.configurator.PollsServiceConfigurator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
@@ -26,17 +25,24 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+import org.springframework.context.ApplicationContext;
+
 /**
  * @author Miguel Pastor
  */
 @Component(
-	immediate = true, service = PollsUpgrade.class
+	immediate = true, service = PollsServiceUpgrade.class
 )
-public class PollsUpgrade {
+public class PollsServiceUpgrade {
 
-	@Reference(unbind = "-")
-	protected void setPollsServiceConfigurator(
-		PollsServiceConfigurator pollsServiceConfigurator) {
+	@Reference(
+		target =
+			"(org.springframework.context.service.name=" +
+				"com.liferay.polls.service)",
+		unbind = "-"
+	)
+	protected void setApplicationContext(
+		ApplicationContext applicationContext) {
 	}
 
 	@Reference(unbind = "-")
@@ -61,7 +67,7 @@ public class PollsUpgrade {
 		};
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.polls.web",
+			"com.liferay.polls.service",
 			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 0,
 			false);
 	}

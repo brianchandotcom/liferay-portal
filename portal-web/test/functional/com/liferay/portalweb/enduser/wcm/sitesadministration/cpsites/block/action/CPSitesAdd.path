@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ACTIVE_CHECKBOX</td>
+	<td>//input[@id='_134_active']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -62,6 +67,11 @@
 <tr>
 	<td>DETAILS_REQUIRED_INFO_MESSAGE</td>
 	<td>//div[contains(@class,'required') and contains(@role,'alert')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_DESCRIPTION_FIELD</td>
+	<td>//textarea[@id='_134_description']</td>
 	<td></td>
 </tr>
 <tr>

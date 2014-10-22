@@ -29,6 +29,12 @@ if (Validator.isNotNull(onChangeMethod)) {
 	onChangeMethod = namespace + onChangeMethod;
 }
 
+String onInitMethod = (String)request.getAttribute("liferay-ui:input-editor:onInitMethod");
+
+if (Validator.isNotNull(onInitMethod)) {
+	onInitMethod = namespace + onInitMethod;
+}
+
 boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:resizable"));
 boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:skipEditorLoading"));
 %>
@@ -56,17 +62,25 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 	window['<%= name %>'] = {
 		onChangeCallbackCounter: 0,
 
+		init: function(value) {
+			if (typeof value != 'string') {
+				value = '';
+			}
+
+			window['<%= name %>'].setHTML(value);
+		},
+
 		destroy: function() {
 			tinyMCE.editors['<%= name %>'].destroy();
 
 			window['<%= name %>'] = null;
 		},
 
-		focus: function() {
-			tinyMCE.editors['<%= name %>'].focus();
+		fileBrowserCallback: function(field_name, url, type) {
 		},
 
-		fileBrowserCallback: function(field_name, url, type) {
+		focus: function() {
+			tinyMCE.editors['<%= name %>'].focus();
 		},
 
 		getHTML: function() {
@@ -80,14 +94,6 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			}
 
 			return data;
-		},
-
-		init: function(value) {
-			if (typeof value != 'string') {
-				value = '';
-			}
-
-			window['<%= name %>'].setHTML(value);
 		},
 
 		initInstanceCallback: function() {
@@ -106,6 +112,10 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 					A.one(iframeDoc).addClass('aui');
 				}
 			}
+
+			<c:if test="<%= Validator.isNotNull(onInitMethod) %>">
+				window['<%= HtmlUtil.escapeJS(namespace + onInitMethod) %>']();
+			</c:if>
 
 			window['<%= name %>'].instanceReady = true;
 		},
@@ -174,9 +184,9 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			relative_urls: false,
 			remove_script_host: false,
 			theme: 'advanced',
-			theme_advanced_buttons1_add: 'code,preview,print',
 			theme_advanced_buttons2: '',
 			theme_advanced_buttons3: '',
+			theme_advanced_buttons1_add: 'code,preview,print',
 			theme_advanced_disable: 'formatselect,styleselect,help,strikethrough',
 			theme_advanced_resize_horizontal: '<%= resizable %>',
 			theme_advanced_toolbar_align: 'left',

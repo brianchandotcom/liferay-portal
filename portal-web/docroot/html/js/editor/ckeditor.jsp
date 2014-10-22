@@ -77,6 +77,12 @@ if (Validator.isNotNull(onFocusMethod)) {
 	onFocusMethod = namespace + onFocusMethod;
 }
 
+String onInitMethod = (String)request.getAttribute("liferay-ui:input-editor:onInitMethod");
+
+if (Validator.isNotNull(onInitMethod)) {
+	onInitMethod = namespace + onInitMethod;
+}
+
 boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:resizable"));
 boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:skipEditorLoading"));
 String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolbarSet");
@@ -339,6 +345,10 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 
 			window['<%= name %>']._setStyles();
 
+			<c:if test="<%= Validator.isNotNull(onInitMethod) %>">
+				window['<%= HtmlUtil.escapeJS(namespace + onInitMethod) %>']();
+			</c:if>
+
 			window['<%= name %>'].instanceReady = true;
 		}
 
@@ -512,65 +522,60 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 		if (toolbarSet.equals("creole")) {
 		%>
 
-			Liferay.provide(
-				window,
-				'<%= name %>creoleDialogHandlers',
-				function(event) {
-					var A = AUI();
+		window['<%= name %>creoleDialogHandlers'] = function(event) {
+			var A = AUI();
 
-					var MODIFIED = 'modified';
+			var MODIFIED = 'modified';
 
-					var SELECTOR_HBOX_FIRST = '.cke_dialog_ui_hbox_first';
+			var SELECTOR_HBOX_FIRST = '.cke_dialog_ui_hbox_first';
 
-					var dialog = event.data.definition.dialog;
+			var dialog = event.data.definition.dialog;
 
-					if (dialog.getName() == 'image') {
-						var lockButton = A.one('.cke_btn_locked');
+			if (dialog.getName() == 'image') {
+				var lockButton = A.one('.cke_btn_locked');
 
-						if (lockButton) {
-							var imageProperties = lockButton.ancestor(SELECTOR_HBOX_FIRST);
+				if (lockButton) {
+					var imageProperties = lockButton.ancestor(SELECTOR_HBOX_FIRST);
 
-							if (imageProperties) {
-								imageProperties.hide();
+					if (imageProperties) {
+						imageProperties.hide();
+					}
+				}
+
+				var imagePreviewBox = A.one('.ImagePreviewBox');
+
+				if (imagePreviewBox) {
+					imagePreviewBox.setStyle('width', 410);
+				}
+			}
+			else if (dialog.getName() == 'cellProperties') {
+				var containerNode = A.one('#' + dialog.getElement('cellType').$.id);
+
+				if (!containerNode.getData(MODIFIED)) {
+					containerNode.one(SELECTOR_HBOX_FIRST).hide();
+
+					containerNode.one('.cke_dialog_ui_hbox_child').hide();
+
+					var cellTypeWrapper = containerNode.one('.cke_dialog_ui_hbox_last');
+
+					cellTypeWrapper.replaceClass('cke_dialog_ui_hbox_last', 'cke_dialog_ui_hbox_first');
+
+					cellTypeWrapper.setStyle('width', '100%');
+
+					cellTypeWrapper.all('tr').each(
+						function(item, index, collection) {
+							if (index > 0) {
+								item.hide();
 							}
 						}
+					);
 
-						var imagePreviewBox = A.one('.ImagePreviewBox');
+					containerNode.setData(MODIFIED, true);
+				}
+			}
+		},
 
-						if (imagePreviewBox) {
-							imagePreviewBox.setStyle('width', 410);
-						}
-					}
-					else if (dialog.getName() == 'cellProperties') {
-						var containerNode = A.one('#' + dialog.getElement('cellType').$.id);
-
-						if (!containerNode.getData(MODIFIED)) {
-							containerNode.one(SELECTOR_HBOX_FIRST).hide();
-
-							containerNode.one('.cke_dialog_ui_hbox_child').hide();
-
-							var cellTypeWrapper = containerNode.one('.cke_dialog_ui_hbox_last');
-
-							cellTypeWrapper.replaceClass('cke_dialog_ui_hbox_last', 'cke_dialog_ui_hbox_first');
-
-							cellTypeWrapper.setStyle('width', '100%');
-
-							cellTypeWrapper.all('tr').each(
-								function(item, index, collection) {
-									if (index > 0) {
-										item.hide();
-									}
-								}
-							);
-
-							containerNode.setData(MODIFIED, true);
-						}
-					}
-				},
-				['aui-base']
-			);
-
-			ckEditor.on('dialogShow', window['<%= name %>creoleDialogHandlers']);
+		ckEditor.on('dialogShow', window['<%= name %>creoleDialogHandlers']);
 
 		<%
 		}
@@ -601,7 +606,6 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 			success();
 		}
 	};
-
 </aui:script>
 
 <%!

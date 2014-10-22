@@ -93,6 +93,10 @@ public class InputEditorTag extends IncludeTag {
 		_onFocusMethod = onFocusMethod;
 	}
 
+	public void setOnInitMethod(String onInitMethod) {
+		_onInitMethod = onInitMethod;
+	}
+
 	public void setPlaceholder(String placeholder) {
 		_placeholder = placeholder;
 	}
@@ -130,6 +134,7 @@ public class InputEditorTag extends IncludeTag {
 		_onChangeMethod = null;
 		_onBlurMethod = null;
 		_onFocusMethod = null;
+		_onInitMethod = null;
 		_page = null;
 		_placeholder = null;
 		_resizable = true;
@@ -191,6 +196,8 @@ public class InputEditorTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:input-editor:onFocusMethod", _onFocusMethod);
 		request.setAttribute(
+			"liferay-ui:input-editor:onInitMethod", _onInitMethod);
+		request.setAttribute(
 			"liferay-ui:input-editor:placeholder", _placeholder);
 		request.setAttribute(
 			"liferay-ui:input-editor:resizable", String.valueOf(_resizable));
@@ -216,6 +223,7 @@ public class InputEditorTag extends IncludeTag {
 	private String _onBlurMethod;
 	private String _onChangeMethod;
 	private String _onFocusMethod;
+	private String _onInitMethod;
 	private String _page;
 	private String _placeholder;
 	private boolean _resizable = true;

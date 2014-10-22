@@ -28,6 +28,12 @@ if (Validator.isNotNull(onChangeMethod)) {
 	onChangeMethod = namespace + onChangeMethod;
 }
 
+String onInitMethod = (String)request.getAttribute("liferay-ui:input-editor:onInitMethod");
+
+if (Validator.isNotNull(onInitMethod)) {
+	onInitMethod = namespace + onInitMethod;
+}
+
 boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:resizable"));
 %>
 
@@ -64,6 +70,10 @@ boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-
 						wrap: true
 					}
 				);
+			</c:if>
+
+			<c:if test="<%= Validator.isNotNull(onInitMethod) %>">
+				window['<%= HtmlUtil.escapeJS(namespace + onInitMethod) %>']();
 			</c:if>
 
 			window['<%= name %>'].instanceReady = true;

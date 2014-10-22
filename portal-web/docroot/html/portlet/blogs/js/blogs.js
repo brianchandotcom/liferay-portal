@@ -3,13 +3,24 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
+		var STR_BLANK = '';
+
 		var STR_CLICK = 'click';
+
+		var STR_CHANGE = 'change';
+
+		var STR_SUFFIX = '...';
 
 		var Blogs = A.Component.create(
 			{
 				ATTRS: {
 					constants: {
 						validator: Lang.isObject
+					},
+
+					descriptionLength: {
+						validator: Lang.isNumber,
+						value: 400
 					},
 
 					editEntryURL: {
@@ -58,6 +69,13 @@ AUI.add(
 						if (!entry || (userEntry && draftEntry)) {
 							instance._initDraftSaveInterval();
 						}
+
+						var customDescriptionEnabled = entry && entry.customDescription;
+
+						instance._customDescription = customDescriptionEnabled ? entry.description : STR_BLANK;
+						instance._shortenDescription = !customDescriptionEnabled;
+
+						instance.setDescription(window[instance.ns('contentEditor')].getHTML());
 					},
 
 					destructor: function() {
@@ -68,6 +86,18 @@ AUI.add(
 						}
 
 						(new A.EventHandle(instance._eventHandles)).detach();
+					},
+
+					setDescription: function(text) {
+						var instance = this;
+
+						var description = instance._customDescription;
+
+						if (instance._shortenDescription) {
+							description = instance._shorten(text);
+						}
+
+						window[instance.ns('descriptionEditor')].setHTML(description);
 					},
 
 					_bindUI: function() {
@@ -99,7 +129,35 @@ AUI.add(
 							);
 						}
 
+						var customAbstractOptions = instance.one('#entryAbstractOptions');
+
+						if (customAbstractOptions) {
+							eventHandles.push(
+								customAbstractOptions.delegate(STR_CHANGE, instance._configureAbstract, 'input[type="radio"]', instance)
+							);
+						}
+
 						instance._eventHandles = eventHandles;
+					},
+
+					_configureAbstract: function(event) {
+						var instance = this;
+
+						var target = event.target;
+
+						var description = instance._customDescription;
+
+						instance._shortenDescription = (target.val() === 'false');
+
+						if (instance._shortenDescription) {
+							instance._customDescription = window[instance.ns('descriptionEditor')].getHTML();
+
+							description = window[instance.ns('contentEditor')].getHTML();
+						}
+
+						instance._setDescriptionReadOnly(instance._shortenDescription);
+
+						instance.setDescription(description);
 					},
 
 					_getPrincipalForm: function(formName) {
@@ -121,9 +179,9 @@ AUI.add(
 
 						var entry = instance.get('entry');
 
-						instance._oldContent = entry ? entry.content : '';
-						instance._oldSubtitle = entry ? entry.subtitle : '';
-						instance._oldTitle = entry ? entry.title : '';
+						instance._oldContent = entry ? entry.content : STR_BLANK;
+						instance._oldSubtitle = entry ? entry.subtitle : STR_BLANK;
+						instance._oldTitle = entry ? entry.title : STR_BLANK;
 					},
 
 					_previewEntry: function() {
@@ -142,6 +200,12 @@ AUI.add(
 
 						if (contentEditor) {
 							instance.one('#content').val(contentEditor.getHTML());
+						}
+
+						var descriptionEditor = window[instance.ns('descriptionEditor')];
+
+						if (descriptionEditor) {
+							instance.one('#description').val(descriptionEditor.getHTML());
 						}
 
 						var subtitleEditor = window[instance.ns('subtitleEditor')];
@@ -168,11 +232,12 @@ AUI.add(
 						var title = window[instance.ns('titleEditor')].getHTML();
 						var subtitle = window[instance.ns('subtitleEditor')].getHTML();
 						var content = window[instance.ns('contentEditor')].getHTML();
+						var description = window[instance.ns('descriptionEditor')].getHTML();
 
 						var form = instance._getPrincipalForm();
 
 						if (draft && ajax) {
-							var hasData = (content !== '') && (title !== '');
+							var hasData = (content !== STR_BLANK) && (title !== STR_BLANK);
 
 							var hasChanged = (instance._oldContent !== content) || (instance._oldSubtitle !== subtitle) || (instance._oldTitle !== title);
 
@@ -272,11 +337,39 @@ AUI.add(
 							instance.one('#title').val(title);
 							instance.one('#subtitle').val(subtitle);
 							instance.one('#content').val(content);
+							instance.one('#description').val(description);
 
 							instance.one('#workflowAction').val(draft ? constants.ACTION_SAVE_DRAFT : constants.ACTION_PUBLISH);
 
 							submitForm(form);
 						}
+					},
+
+					_setDescriptionReadOnly: function(readOnly) {
+						var instance = this;
+
+						var descriptionEditorNode = instance.one('#descriptionEditor');
+
+						descriptionEditorNode.attr('contenteditable', !readOnly);
+						descriptionEditorNode.toggleClass('readonly', readOnly);
+					},
+
+					_shorten: function(text) {
+						var instance = this;
+
+						var descriptionLength = instance.get('descriptionLength');
+
+						if (text.length > descriptionLength) {
+							text = text.substring(0, descriptionLength);
+
+							if (STR_SUFFIX.length < descriptionLength) {
+								var spaceIndex = text.lastIndexOf(' ', (descriptionLength - STR_SUFFIX.length));
+
+								text = text.substring(0, spaceIndex).concat(STR_SUFFIX);
+							}
+						}
+
+						return text;
 					},
 
 					_updateStatus: function(text, className) {

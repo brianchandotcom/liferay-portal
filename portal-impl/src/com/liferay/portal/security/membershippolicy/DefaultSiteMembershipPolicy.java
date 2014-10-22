@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.IndexerInterval;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -40,8 +41,6 @@ import java.util.Map;
  * @author Sergio González
  */
 public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
-
-	public static final int DELETE_INTERVAL = 100;
 
 	@Override
 	public void checkMembership(
@@ -216,32 +215,39 @@ public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 
 		int count = UserLocalServiceUtil.getGroupUsersCount(group.getGroupId());
 
-		int pages = count / DELETE_INTERVAL;
+		final IndexerInterval indexerIntervalInstance = new IndexerInterval();
 
-		int start = 0;
+		indexerIntervalInstance.setPerformActionMethod(
+			new IndexerInterval.PerformIntervalActionMethod() {
 
-		for (int i = 0; i <= pages; i++) {
-			int end = start + DELETE_INTERVAL;
+				@Override
+				public void performIntervalAction(int start, int end)
+					throws PortalException {
 
-			List<User> users = UserLocalServiceUtil.getGroupUsers(
-				group.getGroupId(), start, end);
+					List<User> users = UserLocalServiceUtil.getGroupUsers(
+						group.getGroupId(), start, end);
 
-			for (User user : users) {
-				if (!UserLocalServiceUtil.hasGroupUser(
-						group.getParentGroupId(), user.getUserId())) {
+					for (User user : users) {
+						if (!UserLocalServiceUtil.hasGroupUser(
+								group.getParentGroupId(), user.getUserId())) {
 
-					UserLocalServiceUtil.unsetGroupUsers(
-						group.getGroupId(), new long[] {user.getUserId()},
-						null);
+							UserLocalServiceUtil.unsetGroupUsers(
+								group.getGroupId(),
+								new long[]{user.getUserId()}, null);
+						}
+						else {
+							indexerIntervalInstance.incrementStart();
+						}
+					}
 				}
-				else {
-					start++;
-				}
-			}
-		}
+
+			});
+
+		indexerIntervalInstance.setCount(count);
+		indexerIntervalInstance.performInterval();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultSiteMembershipPolicy.class);
 
 }

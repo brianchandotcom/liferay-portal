@@ -253,17 +253,16 @@ if (Validator.isNotNull(requestEditStructureURL)) {
 		var form = AUI.$('#<portlet:namespace />fm');
 
 		form.fm('parentStructureId').val('');
-
 		form.fm('parentStructureName').val('');
 
 		form.fm('removeParentStructureButton').attr('disabled', true).addClass('disabled');
 	}
 
 	function <portlet:namespace />saveStructure() {
-		var form = AUI.$('#<portlet:namespace />fm')
+		var form = AUI.$('#<portlet:namespace />fm');
 
-		form.fm('definition').val(window.<portlet:namespace />formBuilder.getContentValue());
+		form.fm('definition').val(<portlet:namespace />formBuilder.getContentValue());
 
-		submitForm(form[0]);
+		submitForm(form);
 	}
 </aui:script>

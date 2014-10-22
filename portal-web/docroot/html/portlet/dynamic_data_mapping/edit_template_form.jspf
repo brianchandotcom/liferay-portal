@@ -53,28 +53,32 @@ JSONArray fieldsJSONArray = _getFormTemplateFieldsJSONArray(structure, script);
 	);
 
 	function <portlet:namespace />setFieldsHiddenAttributes(mode, item, index) {
-		var hiddenAttributesMap = window.<portlet:namespace />formBuilder.MAP_HIDDEN_FIELD_ATTRS;
+		var hiddenAttributesMap = <portlet:namespace />formBuilder.MAP_HIDDEN_FIELD_ATTRS;
+
 		var hiddenAttributes = hiddenAttributesMap[item.get('type')] || hiddenAttributesMap.DEFAULT;
 
 		if (mode === '<%= DDMTemplateConstants.TEMPLATE_MODE_EDIT %>') {
-			hiddenAttributes = AUI._.remove(hiddenAttributes, 'readOnly');
+
+			hiddenAttributes = AUI._.without(hiddenAttributes, 'readOnly');
 		}
 
 		item.set('hiddenAttributes', hiddenAttributes);
 	}
 
 	function <portlet:namespace />toggleMode(mode) {
-		var formBuilder = window.<portlet:namespace />formBuilder;
+		var _ = AUI._;
+
+		var formBuilder = <portlet:namespace />formBuilder;
 
 		var modeEdit = (mode === '<%= DDMTemplateConstants.TEMPLATE_MODE_EDIT %>');
 
 		formBuilder.set('allowRemoveRequiredFields', modeEdit);
 
-		var setFieldsHiddenAttributes = AUI._.bindKey(window, '<portlet:namespace />setFieldsHiddenAttributes', mode);
+		var setFieldsHiddenAttributes = _.bindKey(window, '<portlet:namespace />setFieldsHiddenAttributes', mode);
 
-		AUI._.forEach(formBuilder.get('fields')._items, setFieldsHiddenAttributes);
+		_.forEach(formBuilder.get('fields')._items, setFieldsHiddenAttributes);
 
-		AUI._.forEach(formBuilder.get('availableFields'), setFieldsHiddenAttributes);
+		_.forEach(formBuilder.get('availableFields'), setFieldsHiddenAttributes);
 
 		var editingField = formBuilder.editingField;
 

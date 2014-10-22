@@ -198,8 +198,10 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 			long remoteGroupId = GetterUtil.getLong(
 				typeSettingsProperties.getProperty("remoteGroupId"));
+			boolean forceDisable = GetterUtil.getBoolean(
+				serviceContext.getAttribute("forceDisable"));
 
-			disableRemoteStaging(remoteURL, remoteGroupId);
+			disableRemoteStaging(remoteURL, remoteGroupId, forceDisable);
 		}
 
 		typeSettingsProperties.remove("branchingPrivate");
@@ -340,7 +342,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			if (!remoteURL.equals(oldRemoteURL) ||
 				(remoteGroupId != oldRemoteGroupId)) {
 
-				disableRemoteStaging(oldRemoteURL, oldRemoteGroupId);
+				disableRemoteStaging(oldRemoteURL, oldRemoteGroupId, false);
 
 				stagedRemotely = false;
 			}
@@ -601,7 +603,8 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			groupId, privateLayout, true);
 	}
 
-	protected void disableRemoteStaging(String remoteURL, long remoteGroupId)
+	protected void disableRemoteStaging(
+			String remoteURL, long remoteGroupId, boolean forceDisable)
 		throws PortalException {
 
 		PermissionChecker permissionChecker =
@@ -635,12 +638,18 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			throw rae;
 		}
 		catch (SystemException se) {
-			RemoteExportException ree = new RemoteExportException(
-				RemoteExportException.BAD_CONNECTION);
+			if (!forceDisable) {
+				RemoteExportException ree = new RemoteExportException(
+					RemoteExportException.BAD_CONNECTION);
 
-			ree.setURL(remoteURL);
+				ree.setURL(remoteURL);
 
-			throw ree;
+				throw ree;
+			}
+
+			if (_log.isWarnEnabled()) {
+				_log.warn("Forcibly disable remote staging");
+			}
 		}
 	}
 

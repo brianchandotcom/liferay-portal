@@ -134,15 +134,15 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 			</liferay-ui:search-container>
 		</aui:form>
 
-		<aui:script sandbox="<%= true %>">
+		<aui:script>
 			Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 			Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />expire', '#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 
-			$('body').on(
+			AUI.$('body').on(
 				'click',
 				'.compare-to-link a',
 				function(event) {
-					var currentTarget = $(event.currentTarget);
+					var currentTarget = AUI.$(event.currentTarget);
 
 					Liferay.Util.selectEntity(
 						{

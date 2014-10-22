@@ -387,9 +387,9 @@ if (feed != null) {
 		submitForm(document.<portlet:namespace />fm);
 	}
 
-	Liferay.Util.disableToggleBoxes('<portlet:namespace />autoFeedId','<portlet:namespace />newFeedId', true);
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />autoFeedId', '<portlet:namespace />newFeedId', true);
 
-	var feedItemContentSelector = AUI.$('select#<portlet:namespace />contentFieldSelector');
+	var feedItemContentSelector = AUI.$('#<portlet:namespace />contentFieldSelector');
 
 	feedItemContentSelector.on(
 		'change',
@@ -397,7 +397,7 @@ if (feed != null) {
 			var selectedFeedItemOption = feedItemContentSelector.find(':selected');
 
 			var data = selectedFeedItemOption.data('contentfield');
-			var value = selectedFeedItemOption.attr('value');
+			var value = selectedFeedItemOption.val();
 
 			if (data === '<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>') {
 				document.<portlet:namespace />fm.<portlet:namespace />rendererTemplateId.value = value;
@@ -407,5 +407,6 @@ if (feed != null) {
 				document.<portlet:namespace />fm.<portlet:namespace />rendererTemplateId.value = '';
 				document.<portlet:namespace />fm.<portlet:namespace />contentField.value = value;
 			}
-		});
+		}
+	);
 </aui:script>

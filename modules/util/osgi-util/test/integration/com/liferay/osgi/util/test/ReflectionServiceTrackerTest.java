@@ -100,7 +100,7 @@ public class ReflectionServiceTrackerTest {
 		}
 
 		@ArquillianResource
-		private Bundle _bundle;
+		private final Bundle _bundle;
 
 		private BundleContext _bundleContext;
 
@@ -389,7 +389,7 @@ public class ReflectionServiceTrackerTest {
 		}
 
 		@ArquillianResource
-		private Bundle _bundle;
+		private final Bundle _bundle;
 
 		private BundleContext _bundleContext;
 

@@ -2652,6 +2652,8 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 		userGroupRole.setNew(true);
 		userGroupRole.setPrimaryKey(userGroupRolePK);
 
+		clearCache(userGroupRole);
+
 		return userGroupRole;
 	}
 

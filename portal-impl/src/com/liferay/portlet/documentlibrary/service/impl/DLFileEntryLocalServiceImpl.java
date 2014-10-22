@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerInterval;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
@@ -145,8 +146,6 @@ import java.util.Map;
  */
 public class DLFileEntryLocalServiceImpl
 	extends DLFileEntryLocalServiceBaseImpl {
-
-	public static final int DELETE_INTERVAL = 100;
 
 	@Override
 	public DLFileEntry addFileEntry(
@@ -606,22 +605,32 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	@Override
-	public void convertExtraSettings(String[] keys) throws PortalException {
-		int count = dlFileEntryFinder.countByExtraSettings();
+	public void convertExtraSettings(final String[] keys)
+		throws PortalException {
 
-		int pages = count / Indexer.DEFAULT_INTERVAL;
+		final int count = dlFileEntryFinder.countByExtraSettings();
 
-		for (int i = 0; i <= pages; i++) {
-			int start = (i * Indexer.DEFAULT_INTERVAL);
-			int end = start + Indexer.DEFAULT_INTERVAL;
+		IndexerInterval indexerIntervalInstance = new IndexerInterval();
 
-			List<DLFileEntry> dlFileEntries =
-				dlFileEntryFinder.findByExtraSettings(start, end);
+		indexerIntervalInstance.setPerformActionMethod(
+			new IndexerInterval.PerformIntervalActionMethod() {
 
-			for (DLFileEntry dlFileEntry : dlFileEntries) {
-				convertExtraSettings(dlFileEntry, keys);
-			}
-		}
+				@Override
+				public void performIntervalAction(int start, int end)
+					throws PortalException {
+
+					List<DLFileEntry> dlFileEntries =
+						dlFileEntryFinder.findByExtraSettings(start, end);
+
+					for (DLFileEntry dlFileEntry : dlFileEntries) {
+						convertExtraSettings(dlFileEntry, keys);
+					}
+				}
+
+			});
+
+		indexerIntervalInstance.setCount(count);
+		indexerIntervalInstance.performInterval();
 	}
 
 	@Override
@@ -907,28 +916,43 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public void deleteRepositoryFileEntries(
-			long repositoryId, long folderId, boolean includeTrashedEntries)
+			final long repositoryId, final long folderId,
+			final boolean includeTrashedEntries)
 		throws PortalException {
 
-		int count = dlFileEntryPersistence.countByR_F(repositoryId, folderId);
+		final int count = dlFileEntryPersistence.countByR_F(
+			repositoryId, folderId);
 
-		int pages = count / DELETE_INTERVAL;
+		final IndexerInterval indexerIntervalInstance = new IndexerInterval();
 
-		for (int i = 0; i <= pages; i++) {
-			int start = (i * DELETE_INTERVAL);
-			int end = start + DELETE_INTERVAL;
+		indexerIntervalInstance.setPerformActionMethod(
+			new IndexerInterval.PerformIntervalActionMethod() {
 
-			List<DLFileEntry> dlFileEntries = dlFileEntryPersistence.findByR_F(
-				repositoryId, folderId, start, end);
+				@Override
+				public void performIntervalAction(int start, int end)
+					throws PortalException {
 
-			for (DLFileEntry dlFileEntry : dlFileEntries) {
-				if (includeTrashedEntries ||
-					!dlFileEntry.isInTrashExplicitly()) {
+					List<DLFileEntry> dlFileEntries =
+						dlFileEntryPersistence.findByR_F(
+							repositoryId, folderId, start, end);
 
-					dlFileEntryLocalService.deleteFileEntry(dlFileEntry);
+					for (DLFileEntry dlFileEntry : dlFileEntries) {
+						if (includeTrashedEntries ||
+							!dlFileEntry.isInTrashExplicitly()) {
+
+							dlFileEntryLocalService.deleteFileEntry(
+								dlFileEntry);
+						}
+						else {
+							indexerIntervalInstance.incrementStart();
+						}
+					}
 				}
-			}
-		}
+
+			});
+
+		indexerIntervalInstance.setCount(count);
+		indexerIntervalInstance.performInterval();
 	}
 
 	@Override

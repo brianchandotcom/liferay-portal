@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -42,6 +43,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -723,6 +725,20 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return StringUtil.replace(absolutePath, "/./", StringPool.SLASH);
 	}
 
+	protected Set<String> getAnnotationsExclusions() {
+		if (_annotationsExclusions != null) {
+			return _annotationsExclusions;
+		}
+
+		_annotationsExclusions = SetUtil.fromArray(
+			new String[] {
+				"com.liferay.portal.kernel.bean.BeanReference",
+				"org.mockito.Mock", "java.lang.SuppressWarnings"
+			});
+
+		return _annotationsExclusions;
+	}
+
 	protected Map<String, String> getCompatClassNamesMap() throws IOException {
 		if (_compatClassNamesMap != null) {
 			return _compatClassNamesMap;
@@ -852,6 +868,25 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected List<String> getFileNames(String[] excludes, String[] includes) {
 		return getFileNames(BASEDIR, excludes, includes);
+	}
+
+	protected Set<String> getImmutableFieldTypes() {
+		if (_immutableFieldTypes != null) {
+			return _immutableFieldTypes;
+		}
+
+		_immutableFieldTypes = SetUtil.fromArray(
+			new String[] {
+				"boolean", "byte", "char", "double", "float", "int", "long",
+				"short", "java.lang.Boolean", "java.lang.Byte",
+				"java.lang.Character", "java.lang.Class", "java.lang.Double",
+				"java.lang.Float", "java.lang.Int", "java.lang.Long",
+				"java.lang.Number", "java.lang.Short", "java.lang.String",
+			});
+
+		_immutableFieldTypes.addAll(getPropertyList("immutable.field.types"));
+
+		return _immutableFieldTypes;
 	}
 
 	protected String[] getLanguageKeys(Matcher matcher) {
@@ -1593,11 +1628,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		new HashMap<String, List<String>>();
 	private static boolean _printErrors;
 
+	private Set<String> _annotationsExclusions;
 	private boolean _autoFix;
 	private Map<String, String> _compatClassNamesMap;
 	private String _copyright;
 	private String[] _excludes;
 	private SourceMismatchException _firstSourceMismatchException;
+	private Set<String> _immutableFieldTypes;
 	private String _mainReleaseVersion;
 	private String _oldCopyright;
 	private Properties _portalLanguageProperties;

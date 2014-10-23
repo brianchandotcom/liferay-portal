@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -2007,20 +2006,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return newContent;
 	}
 
-	protected Set<String> getAnnotationsExclusions() {
-		if (_annotationsExclusions != null) {
-			return _annotationsExclusions;
-		}
-
-		_annotationsExclusions = SetUtil.fromArray(
-			new String[] {
-				"com.liferay.portal.kernel.bean.BeanReference",
-				"org.mockito.Mock", "java.lang.SuppressWarnings"
-			});
-
-		return _annotationsExclusions;
-	}
-
 	protected String getChangedFieldTypeContent(
 		String content, JavaField javaField, String oldFieldType,
 		String newFieldType) {
@@ -2450,25 +2435,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return null;
-	}
-
-	protected Set<String> getImmutableFieldTypes() {
-		if (_immutableFieldTypes != null) {
-			return _immutableFieldTypes;
-		}
-
-		_immutableFieldTypes = SetUtil.fromArray(
-			new String[] {
-				"boolean", "byte", "char", "double", "float", "int", "long",
-				"short", "java.lang.Boolean", "java.lang.Byte",
-				"java.lang.Character", "java.lang.Class", "java.lang.Double",
-				"java.lang.Float", "java.lang.Int", "java.lang.Long",
-				"java.lang.Number", "java.lang.Short", "java.lang.String",
-			});
-
-		_immutableFieldTypes.addAll(getPropertyList("immutable.field.types"));
-
-		return _immutableFieldTypes;
 	}
 
 	protected List<String> getImportedExceptionClassNames(
@@ -2938,7 +2904,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private boolean _allowUseServiceUtilInServiceImpl;
 	private Pattern _annotationPattern = Pattern.compile(
 		"\n(\t*)@(.+)\\(\n([\\s\\S]*?)\n(\t*)\\)");
-	private Set<String> _annotationsExclusions;
 	private final Pattern _camelCasePattern = Pattern.compile(
 		"([a-z])([A-Z0-9])");
 	private Pattern _catchExceptionPattern = Pattern.compile(
@@ -2954,7 +2919,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private List<String> _finalableFieldTypesExclusions;
 	private List<String> _fitOnSingleLineExclusions;
 	private List<String> _hibernateSQLQueryExclusions;
-	private Set<String> _immutableFieldTypes;
 	private Pattern _incorrectCloseCurlyBracePattern1 = Pattern.compile(
 		"\n(.+)\n\n(\t+)}\n");
 	private Pattern _incorrectCloseCurlyBracePattern2 = Pattern.compile(

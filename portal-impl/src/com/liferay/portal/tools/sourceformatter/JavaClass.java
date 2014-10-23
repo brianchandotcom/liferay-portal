@@ -36,7 +36,7 @@ public class JavaClass {
 
 	public JavaClass(
 			String fileName, String absolutePath, String content, int lineCount,
-			String indent)
+			String indent, List<String> javaTermAccessLevelModifierExclusions)
 		throws Exception {
 
 		_fileName = fileName;
@@ -44,34 +44,26 @@ public class JavaClass {
 		_content = content;
 		_lineCount = lineCount;
 		_indent = indent;
+		_javaTermAccessLevelModifierExclusions =
+			javaTermAccessLevelModifierExclusions;
 
-		_staticBlocks = new ArrayList<JavaTerm>();
+		_javaTerms = getJavaTerms();
 	}
 
 	public String formatJavaTerms(
-			List<String> javaTermAccessLevelModifierExclusions,
 			List<String> javaTermSortExclusions,
 			List<String> testAnnotationsExclusions)
 		throws Exception {
 
-		Set<JavaTerm> javaTerms = getJavaTerms(
-			javaTermAccessLevelModifierExclusions);
-
-		if (javaTerms == null) {
+		if (_javaTerms == null) {
 			return _content;
 		}
 
 		String originalContent = _content;
 
-		javaTerms = addStaticBlocks(javaTerms);
-
-		if (!originalContent.equals(_content)) {
-			return _content;
-		}
-
 		JavaTerm previousJavaTerm = null;
 
-		Iterator<JavaTerm> itr = javaTerms.iterator();
+		Iterator<JavaTerm> itr = _javaTerms.iterator();
 
 		while (itr.hasNext()) {
 			JavaTerm javaTerm = itr.next();
@@ -87,10 +79,10 @@ public class JavaClass {
 
 				JavaClass innerClass = new JavaClass(
 					_fileName, _absolutePath, javaTermContent,
-					javaTerm.getLineCount(), _indent + StringPool.TAB);
+					javaTerm.getLineCount(), _indent + StringPool.TAB,
+					_javaTermAccessLevelModifierExclusions);
 
 				String newJavaTermContent = innerClass.formatJavaTerms(
-					javaTermAccessLevelModifierExclusions,
 					javaTermSortExclusions, testAnnotationsExclusions);
 
 				if (!javaTermContent.equals(newJavaTermContent)) {
@@ -112,12 +104,14 @@ public class JavaClass {
 			previousJavaTerm = javaTerm;
 		}
 
-		fixJavaTermsDividers(javaTerms, javaTermSortExclusions);
+		fixJavaTermsDividers(_javaTerms, javaTermSortExclusions);
 
 		return _content;
 	}
 
-	protected Set<JavaTerm> addStaticBlocks(Set<JavaTerm> javaTerms) {
+	protected Set<JavaTerm> addStaticBlocks(
+		Set<JavaTerm> javaTerms, List<JavaTerm> staticBlocks) {
+
 		Set<JavaTerm> newJavaTerms = new TreeSet<JavaTerm>(
 			new JavaTermComparator());
 
@@ -132,7 +126,7 @@ public class JavaClass {
 				continue;
 			}
 
-			Iterator<JavaTerm> staticBlocksIterator = _staticBlocks.iterator();
+			Iterator<JavaTerm> staticBlocksIterator = staticBlocks.iterator();
 
 			while (staticBlocksIterator.hasNext()) {
 				JavaTerm staticBlock = staticBlocksIterator.next();
@@ -151,8 +145,8 @@ public class JavaClass {
 			newJavaTerms.add(javaTerm);
 		}
 
-		if (!_staticBlocks.isEmpty()) {
-			newJavaTerms.addAll(_staticBlocks);
+		if (!staticBlocks.isEmpty()) {
+			newJavaTerms.addAll(staticBlocks);
 		}
 
 		return newJavaTerms;
@@ -516,12 +510,14 @@ public class JavaClass {
 		return line.substring(x + 1);
 	}
 
-	protected Set<JavaTerm> getJavaTerms(
-			List<String> javaTermAccessLevelModifierExclusions)
-		throws Exception {
+	protected Set<JavaTerm> getJavaTerms() throws Exception {
+		if (_javaTerms != null) {
+			return _javaTerms;
+		}
 
 		Set<JavaTerm> javaTerms = new TreeSet<JavaTerm>(
 			new JavaTermComparator(false));
+		List<JavaTerm> staticBlocks = new ArrayList<JavaTerm>();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(_content));
@@ -590,7 +586,7 @@ public class JavaClass {
 							javaTermLineCount);
 
 						if (javaTermType == JavaTerm.TYPE_STATIC_BLOCK) {
-							_staticBlocks.add(javaTerm);
+							staticBlocks.add(javaTerm);
 						}
 						else {
 							javaTerms.add(javaTerm);
@@ -615,7 +611,7 @@ public class JavaClass {
 					 !line.startsWith(_indent + "extends") &&
 					 !line.startsWith(_indent + "implements") &&
 					 !BaseSourceProcessor.isExcluded(
-						 javaTermAccessLevelModifierExclusions, _absolutePath,
+						 _javaTermAccessLevelModifierExclusions, _absolutePath,
 						 lineCount)) {
 
 				Matcher matcher = _classPattern.matcher(_content);
@@ -651,14 +647,16 @@ public class JavaClass {
 				javaTermName, javaTermType, javaTermContent, javaTermLineCount);
 
 			if (javaTermType == JavaTerm.TYPE_STATIC_BLOCK) {
-				_staticBlocks.add(javaTerm);
+				staticBlocks.add(javaTerm);
 			}
 			else {
 				javaTerms.add(javaTerm);
 			}
 		}
 
-		return javaTerms;
+		_javaTerms = addStaticBlocks(javaTerms, staticBlocks);
+
+		return _javaTerms;
 	}
 
 	protected Tuple getJavaTermTuple(String line, String content, int index) {
@@ -974,7 +972,8 @@ public class JavaClass {
 	private String _content;
 	private String _fileName;
 	private String _indent;
+	private List<String> _javaTermAccessLevelModifierExclusions;
+	private Set<JavaTerm> _javaTerms;
 	private int _lineCount;
-	private List<JavaTerm> _staticBlocks;
 
 }

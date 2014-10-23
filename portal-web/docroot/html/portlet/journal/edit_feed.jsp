@@ -391,24 +391,27 @@ if (feed != null) {
 </aui:script>
 
 <aui:script sandbox="<%= true %>">
-	var feedItemContentSelector = $('#<portlet:namespace />contentFieldSelector');
+	var form = $(document.<portlet:namespace />fm);
 
-	feedItemContentSelector.on(
+	var contentFieldSelector = form.fm('contentFieldSelector');
+
+	contentFieldSelector.on(
 		'change',
 		function() {
-			var selectedFeedItemOption = feedItemContentSelector.find(':selected');
+			var selectedFeedItemOption = contentFieldSelector.find(':selected');
 
-			var data = selectedFeedItemOption.data('contentfield');
-			var value = selectedFeedItemOption.val();
+			var rendererTemplateIdValue = '';
+			var contentFieldValue = selectedFeedItemOption.val();
 
-			if (data === '<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>') {
-				document.<portlet:namespace />fm.<portlet:namespace />rendererTemplateId.value = value;
-				document.<portlet:namespace />fm.<portlet:namespace />contentField.value = '<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>';
+			var renderedWebContent = '<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>';
+
+			if (selectedFeedItemOption.data('contentfield') === renderedWebContent) {
+				rendererTemplateIdValue = contentFieldValue;
+				contentFieldValue = renderedWebContent;
 			}
-			else {
-				document.<portlet:namespace />fm.<portlet:namespace />rendererTemplateId.value = '';
-				document.<portlet:namespace />fm.<portlet:namespace />contentField.value = value;
-			}
+
+			form.fm('rendererTemplateId').val(rendererTemplateIdValue);
+			form.fm('contentField').val(contentFieldValue);
 		}
 	);
 </aui:script>

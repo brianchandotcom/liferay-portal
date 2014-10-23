@@ -1876,6 +1876,16 @@ ${custom.properties}</echo>
 		</if>
 
 		<if>
+			<equals arg1="${database.jndi}" arg2="true" />
+			<then>
+				<replace file="portal-impl/src/portal-ext.properties">
+					<replacetoken>jdbc.default.jndi.name=</replacetoken>
+					<replacevalue>jdbc.default.jndi.name=jdbc/LiferayPool</replacevalue>
+				</replace>
+			</then>
+		</if>
+
+		<if>
 			<and>
 				<equals arg1="${database.type}" arg2="mysql" />
 				<equals arg1="${database.sharding}" arg2="true" />

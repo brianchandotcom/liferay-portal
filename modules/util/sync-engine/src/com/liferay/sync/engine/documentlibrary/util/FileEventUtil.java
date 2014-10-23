@@ -328,7 +328,7 @@ public class FileEventUtil {
 			if (uploadingSyncFile.getTypePK() > 0) {
 				updateFile(
 					filePath, syncAccountId, uploadingSyncFile, null,
-					uploadingSyncFile.getName(), null, null, null, checksum);
+					uploadingSyncFile.getName(), "", null, null, checksum);
 			}
 			else {
 				addFile(

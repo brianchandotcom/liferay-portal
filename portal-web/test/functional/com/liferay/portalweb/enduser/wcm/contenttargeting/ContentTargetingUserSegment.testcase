@@ -32,6 +32,8 @@
 		<execute macro="Role#tearDownCP" />
 
 		<execute macro="Site#tearDownCP" />
+
+		<execute macro="Organization#tearDownCP" />
 	</tear-down>
 
 	<command name="AddGlobalUserSegmentToSiteViaUserSegmentContentDisplayPortlet" priority="5">
@@ -750,8 +752,6 @@
 			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Organization Member" />
 		</execute>
-
-		<execute macro="Organization#tearDownCP" />
 	</command>
 
 	<command name="AddUserSegmentUserAttributesOrganizationRoleCP" priority="5">
@@ -794,8 +794,6 @@
 			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Organization Role" />
 		</execute>
-
-		<execute macro="Organization#tearDownCP" />
 	</command>
 
 	<command name="AddUserSegmentUserAttributesRegularRoleCP" priority="5">

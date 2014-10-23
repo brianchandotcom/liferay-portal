@@ -347,13 +347,13 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		layoutSetLocalService.addLayoutSet(groupId, false);
 
+		// Resources
+
+		resourceLocalService.addResources(
+			group.getCompanyId(), 0, 0, Group.class.getName(),
+			group.getGroupId(), false, false, false);
+
 		if ((classNameId == groupClassNameId) && !user.isDefaultUser()) {
-
-			// Resources
-
-			resourceLocalService.addResources(
-				group.getCompanyId(), 0, 0, Group.class.getName(),
-				group.getGroupId(), false, false, false);
 
 			// Site roles
 
@@ -375,15 +375,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 					userId, group, serviceContext.getAssetCategoryIds(),
 					serviceContext.getAssetTagNames());
 			}
-		}
-		else if (className.equals(Organization.class.getName()) &&
-				 !user.isDefaultUser()) {
-
-			// Resources
-
-			resourceLocalService.addResources(
-				group.getCompanyId(), 0, 0, Group.class.getName(),
-				group.getGroupId(), false, false, false);
 		}
 
 		addPortletDefaultData(group);

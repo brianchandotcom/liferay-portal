@@ -69,6 +69,40 @@
 		</execute>
 	</command>
 
+	<command name="AddChildOrganization" priority="4">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="orgType" value="Regular Organization" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Suborganization#addCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="orgType" value="Regular Organization" />
+			<var name="suborgName" value="Sub Organization Name" />
+			<var name="suborgType" value="Regular Organization" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#viewSubOrganizationCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="orgType" value="Regular Organization" />
+			<var name="suborganization" value="1 Suborganization" />
+			<var name="suborgName" value="Sub Organization Name" />
+			<var name="suborgType" value="Regular Organization" />
+		</execute>
+	</command>
+
 	<command name="AddMember" priority="5">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />

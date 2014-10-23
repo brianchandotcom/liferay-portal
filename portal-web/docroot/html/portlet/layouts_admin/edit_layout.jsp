@@ -333,28 +333,21 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 </aui:form>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveLayout',
-		function(action) {
-			var A = AUI();
+	function <portlet:namespace />saveLayout(action) {
+		action = action || '<%= Constants.UPDATE %>';
 
-			action = action || '<%= Constants.UPDATE %>';
-
-			if (action == '<%= Constants.DELETE %>') {
-				if (!confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-page") %>')) {
-					return false;
-				}
-
-				document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= HttpUtil.setParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", selLayout.getParentPlid()) %>';
+		if (action == '<%= Constants.DELETE %>') {
+			if (!confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-page") %>')) {
+				return false;
 			}
 
-			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = action;
+			document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= HttpUtil.setParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", selLayout.getParentPlid()) %>';
+		}
 
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['aui-base']
-	);
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = action;
+
+		submitForm(document.<portlet:namespace />fm);
+	}
 </aui:script>
 
 <%!

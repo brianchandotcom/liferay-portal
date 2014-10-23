@@ -225,7 +225,7 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 		NavItem navItem = new NavItem(request, addedLayout, null);
 		%>
 
-		<aui:script use="aui-base">
+		<aui:script>
 			Liferay.fire('dockbaraddpage:addPage',
 				{
 					data: {

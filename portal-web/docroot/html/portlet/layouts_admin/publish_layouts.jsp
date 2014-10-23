@@ -401,28 +401,15 @@ else {
 </liferay-ui:tabs>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />publishPages',
-		function() {
-			if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-" + publishActionKey + "-these-pages") %>')) {
-				var A = AUI();
+	function <portlet:namespace />publishPages() {
+		var form = AUI.$(document.<portlet:namespace />exportPagesFm);
 
-				var allContentRadioChecked = A.one('#<portlet:namespace />allContent').attr('checked');
+		if (form.find('#<portlet:namespace />allContent').prop('checked')) {
+			form.find('#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>').val(true);
+		}
 
-				if (allContentRadioChecked) {
-					var selectedContents = A.one('#<portlet:namespace />selectContents');
-
-					var portletDataControlDefault = A.one('#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>');
-
-					portletDataControlDefault.val(true);
-				}
-
-				submitForm(document.<portlet:namespace />exportPagesFm);
-			}
-		},
-		['aui-base']
-	);
+		submitForm(form);
+	}
 
 	Liferay.Util.toggleRadio('<portlet:namespace />allApplications', '<portlet:namespace />showChangeGlobalConfiguration', ['<portlet:namespace />selectApplications']);
 	Liferay.Util.toggleRadio('<portlet:namespace />allContent', '<portlet:namespace />showChangeGlobalContent', ['<portlet:namespace />selectContents']);

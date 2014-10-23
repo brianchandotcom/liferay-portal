@@ -106,47 +106,35 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 		['aui-io']
 	);
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />closeDialog',
-		function(type, message) {
-			var namespace = window.parent.namespace;
+	function <portlet:namespace />closeDialog (type, message) {
+		var namespace = window.parent.namespace;
 
-			Liferay.fire(
-				'closeWindow',
-				{
-					id: namespace + 'signInDialog'
-				}
-			);
-		},
-		['aui-base']
-	);
+		Liferay.fire(
+			'closeWindow',
+			{
+				id: namespace + 'signInDialog'
+			}
+		);
+	}
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />showStatusMessage',
-		function(type, message) {
-			var A = AUI();
+	function <portlet:namespace />showStatusMessage (type, message) {
+		var messageContainer = AUI.$('#<portlet:namespace />login-status-messages');
 
-			var messageContainer = A.one('#<portlet:namespace />login-status-messages');
+		messageContainer.removeClass('alert-danger').removeClass('alert-success');
 
-			messageContainer.removeClass('alert-danger').removeClass('alert-success');
+		messageContainer.addClass('alert alert-' + type);
 
-			messageContainer.addClass('alert alert-' + type);
+		messageContainer.html(message);
 
-			messageContainer.html(message);
-
-			messageContainer.show();
-		},
-		['aui-base']
-	);
+		messageContainer.removeClass('hide');
+	}
 
 	<c:if test="<%= !company.isStrangers() %>">
 		<portlet:namespace />closeDialog();
 	</c:if>
 </aui:script>
 
-<aui:script use="aui-base">
+<aui:script sandbox="<%= true %>">
 	if (window.opener) {
 		var namespace = window.opener.parent.namespace;
 		var randomNamespace = window.opener.parent.randomNamespace;

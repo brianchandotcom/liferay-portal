@@ -336,17 +336,19 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 	function <portlet:namespace />saveLayout(action) {
 		action = action || '<%= Constants.UPDATE %>';
 
+		var form = AUI.$(document.<portlet:namespace />fm);
+
 		if (action == '<%= Constants.DELETE %>') {
 			if (!confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-page") %>')) {
 				return false;
 			}
 
-			document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= HttpUtil.setParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", selLayout.getParentPlid()) %>';
+			form.fm('redirect').val('<%= HttpUtil.setParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", selLayout.getParentPlid()) %>');
 		}
 
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = action;
+		form.fm('<%= Constants.CMD %>').val(action);
 
-		submitForm(document.<portlet:namespace />fm);
+		submitForm(form);
 	}
 </aui:script>
 

@@ -124,16 +124,13 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 
 <aui:script>
 	function <portlet:namespace />saveLayoutset(action) {
-		document.<portlet:namespace />fm.encoding = 'multipart/form-data';
+		var form = AUI.$(document.<portlet:namespace />fm);
 
-		if (action) {
-			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = action;
-		}
-		else {
-			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'update';
-		}
+		form.prop('encoding', 'multipart/form-data');
 
-		submitForm(document.<portlet:namespace />fm);
+		form.fm('<%= Constants.CMD %>').val(action ? action : 'update');
+
+		submitForm(form);
 	}
 
 	function <portlet:namespace />updateLogo() {

@@ -43,28 +43,24 @@
 		<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 	</portlet:renderURL>
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />schedulePublishEvent',
-		function() {
-			document.<portlet:namespace />exportPagesFm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= scheduleCMD %>';
-			document.<portlet:namespace />exportPagesFm.<portlet:namespace />redirect.value = '<%= scheduledEventsURL %>';
+	function <portlet:namespace />schedulePublishEvent() {
+		var form = AUI.$(document.<portlet:namespace />exportPagesFm);
 
-			submitForm(document.<portlet:namespace />exportPagesFm);
+		form.fm('<%= Constants.CMD %>').val('<%= scheduleCMD %>');
+		form.fm('redirect').val('<%= scheduledEventsURL %>');
+
+		submitForm(form);
+	}
+
+	function <portlet:namespace />unschedulePublishEvent(jobName) {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-scheduled-event") %>')) {
+			var form = AUI.$(document.<portlet:namespace />exportPagesFm);
+
+			form.fm('<%= Constants.CMD %>').val('<%= unscheduleCMD %>');
+			form.fm('redirect').val('<%= scheduledEventsURL %>');
+			form.fm('jobName').val(jobName);
+
+			submitForm(form);
 		}
-	);
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />unschedulePublishEvent',
-		function(jobName) {
-			if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-scheduled-event") %>')) {
-				document.<portlet:namespace />exportPagesFm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= unscheduleCMD %>';
-				document.<portlet:namespace />exportPagesFm.<portlet:namespace />redirect.value = '<%= scheduledEventsURL %>';
-				document.<portlet:namespace />exportPagesFm.<portlet:namespace />jobName.value = jobName;
-
-				submitForm(document.<portlet:namespace />exportPagesFm);
-			}
-		}
-	);
+	}
 </aui:script>

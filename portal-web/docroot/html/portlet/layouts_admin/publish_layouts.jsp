@@ -404,8 +404,8 @@ else {
 	function <portlet:namespace />publishPages() {
 		var form = AUI.$(document.<portlet:namespace />exportPagesFm);
 
-		if (form.find('#<portlet:namespace />allContent').prop('checked')) {
-			form.find('#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>').val(true);
+		if (form.fm('allContent').prop('checked')) {
+			form.fm('<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>').val(true);
 		}
 
 		submitForm(form);

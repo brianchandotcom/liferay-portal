@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>CPKnowledgebaseadminAddchildarticle</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPKnowledgebaseadminAddchildarticle</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPKnowledgebaseadminAddchildarticle</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>CPKnowledgebaseadminAddarticle</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

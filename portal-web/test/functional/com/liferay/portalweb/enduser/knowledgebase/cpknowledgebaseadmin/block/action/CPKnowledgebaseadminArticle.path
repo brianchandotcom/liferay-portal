@@ -38,6 +38,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--CHILD_ARTICLE-->
+<tr>
+	<td>CHILD_ARTICLE_TITLE</td>
+	<td>//div[@class='kb-article-child']//h2[@class='kb-element-header']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHILD_ARTICLE_CONTENT</td>
+	<td>//div[@class='kb-article-child']//div[@class='kb-element-body']/p</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--RELATED_ASSETS-->
 <tr>
 	<td>RELATED_ASSETS_HEADER</td>

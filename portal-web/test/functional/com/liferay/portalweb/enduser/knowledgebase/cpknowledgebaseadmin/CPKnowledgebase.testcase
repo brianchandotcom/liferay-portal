@@ -16,6 +16,40 @@
 		<execute macro="KBTemplate#tearDownCP" />
 	</tear-down>
 
+	<command name="AddChildArticleToKBArticleViaKBAdmin" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		</execute>
+
+		<execute macro="KBArticle#addChildPGViaKBAdmin">
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+			<var name="kbChildArticleContent" value="Knowledge Base Child Article Content" />
+			<var name="kbChildArticleTitle" value="Knowledge Base Child Article Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#gotoViaKBAdminCP">
+			<var name="hasChildArticle" value="true" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		</execute>
+
+		<execute macro="KBArticle#viewChildArticleCP">
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+			<var name="kbAuthor" value="Test Test" />
+			<var name="kbChildArticleContent" value="Knowledge Base Child Article Content" />
+			<var name="kbChildArticleTitle" value="Knowledge Base Child Article Title" />
+			<var name="kbPriority" value="1.0" />
+		</execute>
+	</command>
+
 	<command name="AddKBArticleViaKBAdmin" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
@@ -200,6 +234,36 @@
 		<execute macro="KBArticle#viewCP">
 			<var name="kbArticleTitle" value="Knowledge Base Article Title Edit" />
 			<var name="kbAuthor" value="Test Test" />
+			<var name="kbPriority" value="1.0" />
+		</execute>
+	</command>
+
+	<command name="ViewChildArticleInKBArticleViaKBAdmin" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		</execute>
+
+		<execute macro="KBArticle#addChildPGViaKBAdmin">
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+			<var name="kbChildArticleContent" value="Knowledge Base Child Article Content" />
+			<var name="kbChildArticleTitle" value="Knowledge Base Child Article Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#viewCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+			<var name="kbAuthor" value="Test Test" />
+			<var name="kbChildArticleContent" value="Knowledge Base Child Article Content" />
+			<var name="kbChildArticleTitle" value="Knowledge Base Child Article Title" />
 			<var name="kbPriority" value="1.0" />
 		</execute>
 	</command>

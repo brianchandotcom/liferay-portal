@@ -23,15 +23,15 @@ import java.util.Map;
 public class RetryUtil {
 
 	public static int getRetryCount(long syncAccountId) {
-		return _counts.get(syncAccountId);
+		if (_counts.containsKey(syncAccountId)) {
+			return _counts.get(syncAccountId);
+		}
+
+		return 0;
 	}
 
 	public static long incrementRetryDelay(long syncAccountId) {
-		int count = 0;
-
-		if (_counts.containsKey(syncAccountId)) {
-			count = _counts.get(syncAccountId);
-		}
+		int count = getRetryCount(syncAccountId);
 
 		count++;
 
@@ -61,6 +61,14 @@ public class RetryUtil {
 
 	public static void resetRetryDelay(long syncAccountId) {
 		_delays.remove(syncAccountId);
+	}
+
+	public static boolean retryInProgress(long syncAccountId) {
+		if (getRetryCount(syncAccountId) > 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final long _INITIAL_INTERVAL = 1000;

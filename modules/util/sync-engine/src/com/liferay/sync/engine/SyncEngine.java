@@ -15,7 +15,6 @@
 package com.liferay.sync.engine;
 
 import com.liferay.sync.engine.documentlibrary.event.GetSyncDLObjectUpdateEvent;
-import com.liferay.sync.engine.documentlibrary.util.FileEventUtil;
 import com.liferay.sync.engine.filesystem.SyncSiteWatchEventListener;
 import com.liferay.sync.engine.filesystem.SyncWatchEventProcessor;
 import com.liferay.sync.engine.filesystem.WatchEventListener;
@@ -162,7 +161,7 @@ public class SyncEngine {
 		WatchEventListener watchEventListener = new SyncSiteWatchEventListener(
 			syncAccountId);
 
-		synchronizeSyncFiles(filePath, syncAccountId, watchEventListener);
+		fireDeleteEvents(filePath, watchEventListener);
 
 		Watcher watcher = new Watcher(filePath, true, watchEventListener);
 
@@ -336,16 +335,6 @@ public class SyncEngine {
 		_syncAccountTasks.put(
 			syncAccount.getSyncAccountId(),
 			new Object[] {watcher, scheduledFuture});
-	}
-
-	protected static void synchronizeSyncFiles(
-			Path filePath, long syncAccountId,
-			WatchEventListener watchEventListener)
-		throws IOException {
-
-		fireDeleteEvents(filePath, watchEventListener);
-
-		FileEventUtil.retryFileTransfers(syncAccountId);
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

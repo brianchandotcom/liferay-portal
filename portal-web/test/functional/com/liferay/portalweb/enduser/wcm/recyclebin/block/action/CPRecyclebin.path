@@ -128,7 +128,7 @@
 <!--RECYCLE_BIN_WARNING-->
 <tr>
 	<td>RECYCLE_BIN_WARNING_MESSAGE</td>
-	<td>//div[contains(@class,'alert-block')]</td>
+	<td>//div[contains(@class,'alert-warning')]</td>
 	<td></td>
 </tr>
 <tr>

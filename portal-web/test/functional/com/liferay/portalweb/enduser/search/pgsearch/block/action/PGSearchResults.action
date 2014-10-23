@@ -12,4 +12,10 @@
 			<execute function="AssertClick#assertPartialTextClickAt" />
 		</case>
 	</command>
+
+	<command name="assertTextEquals">
+		<case locator-key1="ASSET_ENTRY_TABLE_TYPE">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
 </definition>

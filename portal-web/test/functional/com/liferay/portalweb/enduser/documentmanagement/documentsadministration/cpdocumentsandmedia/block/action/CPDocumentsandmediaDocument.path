@@ -216,7 +216,7 @@
 </tr>
 <tr>
 	<td>VERSION_HISTORY_TABLE_SIZE</td>
-	<td>//td[contains(.,'k')]</td>
+	<td>//td[contains(.,'KB')]</td>
 	<td></td>
 </tr>
 <tr>

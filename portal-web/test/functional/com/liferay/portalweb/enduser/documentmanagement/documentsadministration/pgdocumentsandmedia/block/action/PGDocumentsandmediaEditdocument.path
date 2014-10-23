@@ -46,6 +46,11 @@
 <tr>
 	<td>SAVE_BUTTON</td>
 	<td>//button[contains(.,'Save')]</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>PUBLISH_BUTTON</td>
+	<td>//button[contains(.,'Publish')]</td>
 	<td>Publish</td>
 </tr>
 <tr>
@@ -57,6 +62,11 @@
 	<td>CANCEL_CHECKOUT_BUTTON</td>
 	<td>//button[contains(.,'Cancel Checkout')]</td>
 	<td>Cancel Checkout</td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//a[contains(@class,'btn-cancel')]</td>
+	<td>Cancel</td>
 </tr>
 </tbody>
 </table>

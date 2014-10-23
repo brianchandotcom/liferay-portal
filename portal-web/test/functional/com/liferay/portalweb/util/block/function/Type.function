@@ -25,6 +25,32 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
+	<command name="clickAtType">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="mouseOver" />
+
+		<execute argument2="" selenium="type" />
+
+		<execute argument1="1000" selenium="pause" />
+
+		<execute selenium="clickAt" />
+
+		<execute argument1="1000" selenium="pause" />
+
+		<execute selenium="type" />
+
+		<execute argument1="1000" selenium="pause" />
+
+		<execute selenium="clickAt" />
+
+		<execute argument1="1000" selenium="pause" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
 	<command name="sendKeys">
 		<execute selenium="waitForVisible" />
 

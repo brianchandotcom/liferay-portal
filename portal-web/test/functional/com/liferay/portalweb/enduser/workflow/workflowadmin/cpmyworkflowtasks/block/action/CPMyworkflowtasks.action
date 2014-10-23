@@ -31,7 +31,7 @@
 
 	<command name="type">
 		<case locator-key1="DIALOG_BOX_COMMENT_FIELD">
-			<execute function="Type#clickAtSendKeys" />
+			<execute function="Type#clickAtType" />
 		</case>
 
 		<case locator-key1="DIALOG_BOX_DUE_DATE">

@@ -226,7 +226,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMDocument#editSavePG">
+		<execute macro="DMDocument#editPublishPG">
 			<var name="dmDocumentTagName" value="tag1" />
 			<var name="dmDocumentTitle" value="Document_1.doc" />
 			<var name="dmDocumentTitleEdit" value="Document1" />
@@ -236,7 +236,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMDocument#editSavePG">
+		<execute macro="DMDocument#editPublishPG">
 			<var name="dmDocumentTagName" value="tag2" />
 			<var name="dmDocumentTitle" value="Document1" />
 		</execute>

@@ -289,8 +289,9 @@
 						<equals arg1="${i}" arg2="${propertyNumber}" />
 					</not>
 					<then>
-						<var name="i" value="${i?increment()}" />
 						<var name="key_pathNumber" value="${i}" />
+
+						<var name="i" value="${i?increment()}" />
 
 						<execute action="CPCategories#assertTextEquals" locator-key1="CATEGORY_DETAILS_PROPERTY_KEY_2" value1="${propertiesKeyField} ${i}" />
 						<execute action="CPCategories#assertTextEquals" locator-key1="CATEGORY_DETAILS_PROPERTY_VALUE_2" value1="${propertiesValueField} ${i}" />

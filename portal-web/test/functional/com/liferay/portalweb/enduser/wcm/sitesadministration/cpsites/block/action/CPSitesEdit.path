@@ -114,7 +114,7 @@
 </tr>
 <tr>
 	<td>STAGING_CONTENT_CHECKBOX</td>
-	<td>//label[contains(.,'${key_contentName}')]/input[@type='checkbox']</td>
+	<td>//div[@class='checkbox']/label[contains(.,'${key_contentName}')]/input</td>
 	<td></td>
 </tr>
 <tr>

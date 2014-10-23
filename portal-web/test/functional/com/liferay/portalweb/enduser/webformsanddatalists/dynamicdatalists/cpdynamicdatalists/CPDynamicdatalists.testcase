@@ -2588,6 +2588,7 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabelEdit}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">

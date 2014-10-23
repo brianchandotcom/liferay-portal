@@ -23,19 +23,12 @@
 	</tear-down>
 
 	<command name="AddCategorywithLocalization" priority="4">
-		<var name="categoryName" value="Category Name" />
-		<var name="pageName" value="Category Page Name" />
-		<var name="siteName" value="Liferay" />
-		<var name="vocabularyName" value="Vocabulary Name" />
-		<var name="webContentContent" value="Web Content Content" />
-		<var name="webContentTitle" value="Web Content Title" />
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
 
 		<execute macro="Vocabulary#addCP">
-			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -43,10 +36,10 @@
 		</execute>
 
 		<execute macro="Category#addCategoryLocalizationCP">
-			<var name="categoryName" value="${categoryName}" />
+			<var name="categoryName" value="Category Name" />
 			<var name="localizationName" value="Kategorienamen" />
 			<var name="localizationNameKey" value="de_DE" />
-			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -80,7 +73,7 @@
 
 		<execute macro="Site#addMemberCP">
 			<var name="siteName" value="${siteName}" />
-			<var name="siteScopeName" value="${siteName}" />
+			<var name="siteScopeName" value="Liferay" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
 			<var name="userScreenName" value="usersn" />
@@ -105,11 +98,11 @@
 		</execute>
 
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Category Page Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Category Page Name" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -117,7 +110,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Category Page Name" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -129,18 +122,18 @@
 		</execute>
 
 		<execute macro="WebContent#addWithCategoryCP">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Category Page Name" />
 		</execute>
 
 		<execute macro="WebContentDisplayPortlet#selectWebContent">
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -149,7 +142,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Category Page Name" />
 		</execute>
 
 		<execute macro="Search#searchPG">
@@ -158,7 +151,7 @@
 		</execute>
 
 		<execute macro="Search#viewSearchPG">
-			<var name="searchAssetTitle" value="${webContentTitle}" />
+			<var name="searchAssetTitle" value="Web Content Title" />
 			<var name="searchAssetType" value="Webcontent" />
 		</execute>
 

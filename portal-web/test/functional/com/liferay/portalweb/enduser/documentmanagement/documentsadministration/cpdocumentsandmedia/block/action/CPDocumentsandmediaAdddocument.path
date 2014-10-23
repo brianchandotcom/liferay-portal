@@ -159,12 +159,12 @@
 </tr>
 <tr>
 	<td>CATEGORIZATION_CATEGORIES_CATEGORY_CHECKBOX</td>
-	<td>//li[contains(@id,'category') and contains(.,'${key_categoryName}')]//i[contains(@class,'tree-node-checkbox')]</td>
+	<td>//li[contains(@id,'category') and contains(.,'${key_categoryName}')]//span[contains(@class,'tree-node-checkbox')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CATEGORIZATION_CATEGORIES_CLOSE_BUTTON</td>
-	<td>//button[contains(@class,'btn close')]</td>
+	<td>//button[contains(@class,'btn-default close')]</td>
 	<td></td>
 </tr>
 <tr>

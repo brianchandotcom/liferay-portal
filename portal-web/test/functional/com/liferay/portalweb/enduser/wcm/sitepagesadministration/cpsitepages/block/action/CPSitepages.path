@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>BLOCK_MESSAGE</td>
-	<td>xpath=(//div[contains(@class,'alert') and (contains(@class,'alert-block'))])</td>
+	<td>xpath=(//div[contains(@class,'alert') and (contains(@class,'alert-warning'))])</td>
 	<td></td>
 </tr>
 <tr>

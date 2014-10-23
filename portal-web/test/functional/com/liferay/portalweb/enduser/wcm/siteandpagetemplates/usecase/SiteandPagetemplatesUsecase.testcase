@@ -327,7 +327,7 @@
 			<var name="siteName" value="Site Template Name" />
 		</execute>
 
-		<execute action="Home#selectWindow" locator1="title=home - Site Template Name- Liferay" />
+		<execute action="Home#selectWindow" locator1="title=home - Site Template Name - Liferay" />
 
 		<execute macro="Page#gotoPG">
 			<var name="defaultURL" value="false" />
@@ -888,7 +888,7 @@
 			<var name="pageTemplateName" value="Wiki" />
 		</execute>
 
-		<execute action="Home#selectWindow" locator1="title=Wiki - Wiki - Liferay" />
+		<execute action="Home#selectWindow" locator1="title=Wiki - Liferay" />
 
 		<execute macro="Dockbar#viewAddTabsWithNoAddPagePermission" />
 	</command>

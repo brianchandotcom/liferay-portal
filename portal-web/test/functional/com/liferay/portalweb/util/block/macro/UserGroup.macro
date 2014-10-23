@@ -346,7 +346,7 @@
 		<execute action="CPUsergroups#click" locator-key1="USER_GROUP_TABLE_ACTIONS" />
 		<execute action="CPUsergroups#assertClick" locator-key1="USER_GROUP_MENULIST_EDIT" value1="Edit" />
 		<execute action="CPUsergroupsEditusergroup#assertClick" locator-key1="PUBLIC_PAGES_OPEN_PAGES" value1="Open Pages" />
-		<execute action="CPUsergroupsEditusergroup#selectWindow" locator1="home - Liferay" />
+		<execute action="CPUsergroupsEditusergroup#selectWindow" locator1="home - ${userGroupName} - Liferay" />
 
 		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${siteName}" />
 		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${sitePageName}" />
@@ -354,7 +354,7 @@
 
 		<execute action="BasePortlet#assertTextEquals" locator-key1="TITLE" value1="Message Boards" />
 
-		<execute action="CPUsergroupsEditusergroup#close" locator1="home - Liferay" />
+		<execute action="CPUsergroupsEditusergroup#close" locator1="home - ${userGroupName} - Liferay" />
 	</command>
 
 	<command name="viewPortletCP">

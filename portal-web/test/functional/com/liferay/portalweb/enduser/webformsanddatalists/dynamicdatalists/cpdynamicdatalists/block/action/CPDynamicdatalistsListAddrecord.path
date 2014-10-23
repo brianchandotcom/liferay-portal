@@ -150,12 +150,12 @@
 </tr>
 <tr>
 	<td>RADIO_OPTION_LABEL</td>
-	<td>//div[@data-fieldname='${key_fieldName}']/label[contains(.,'${key_ddlRecordFieldData}')]</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/div/label[contains(.,'${key_ddlRecordFieldData}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RADIO_OPTION_RADIO</td>
-	<td>//div[@data-fieldname='${key_fieldName}']/label[contains(.,'${key_ddlRecordFieldData}')]/input</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/div/label[contains(.,'${key_ddlRecordFieldData}')]/input</td>
 	<td></td>
 </tr>
 <tr>

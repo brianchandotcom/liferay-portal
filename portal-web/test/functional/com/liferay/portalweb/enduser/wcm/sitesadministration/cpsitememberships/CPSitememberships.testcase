@@ -284,7 +284,7 @@
 		<execute action="CPSites#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to deactivate this?" />
 
 		<execute action="CPSites#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
-		<execute action="CPSites#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="You cannot delete this site because you are currently accessing this site." />
+		<execute action="CPSites#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="The site cannot be deleted or deactivated because you are accessing the site." />
 	</command>
 
 	<command name="DeleteSiteTeam" priority="5">

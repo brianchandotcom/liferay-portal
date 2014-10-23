@@ -51,7 +51,7 @@
 <!--ADD_PAGE_TYPE-->
 <tr>
 	<td>TYPE_RADIO</td>
-	<td>//label[@class='radio' and contains(.,'${key_pageType}')]/input</td>
+	<td>//div[@class='radio']/label[contains(.,'${key_pageType}')]/input</td>
 	<td></td>
 </tr>
 <tr>

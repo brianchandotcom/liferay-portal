@@ -83,13 +83,13 @@ public class MessageSenderJob implements Job {
 
 		JobState jobState = JobStateSerializeUtil.deserialize(jobStateMap);
 
+		StorageType storageType = StorageType.valueOf(
+			jobDataMap.getString(SchedulerEngine.STORAGE_TYPE));
+
 		JobKey jobKey = jobDetail.getKey();
 
 		if (jobExecutionContext.getNextFireTime() == null) {
 			message.put(SchedulerEngine.DISABLE, true);
-
-			StorageType storageType = StorageType.valueOf(
-				jobDataMap.getString(SchedulerEngine.STORAGE_TYPE));
 
 			if (PropsValues.CLUSTER_LINK_ENABLED &&
 				(storageType == StorageType.MEMORY_CLUSTERED)) {
@@ -107,6 +107,7 @@ public class MessageSenderJob implements Job {
 		message.put(SchedulerEngine.JOB_NAME, jobKey.getName());
 		message.put(SchedulerEngine.JOB_STATE, jobState);
 		message.put(SchedulerEngine.GROUP_NAME, jobKey.getGroup());
+		message.put(SchedulerEngine.STORAGE_TYPE, storageType);
 
 		MessageBusUtil.sendMessage(destinationName, message);
 	}

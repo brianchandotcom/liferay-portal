@@ -16,6 +16,8 @@ package com.liferay.portlet.dynamicdatalists.search;
 
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngine;
+import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
@@ -32,6 +34,7 @@ import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordTestHelper;
 
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -68,6 +71,8 @@ public class DDLRecordSearchTest {
 
 	@Test
 	public void testExactPhrase() throws Exception {
+		Assume.assumeTrue(isExactPhraseQueryImplementedForSearchEngine());
+
 		addRecord("Joe Bloggs", "Simple description");
 		addRecord("Bloggs", "Another description example");
 		addRecord(RandomTestUtil.randomString(), RandomTestUtil.randomString());
@@ -78,6 +83,8 @@ public class DDLRecordSearchTest {
 
 	@Test
 	public void testPunctuationInExactPhrase() throws Exception {
+		Assume.assumeTrue(isExactPhraseQueryImplementedForSearchEngine());
+
 		addRecord("Joe? Bloggs!");
 		addRecord("Joe! Bloggs?");
 		addRecord("Joe Bloggs");
@@ -89,6 +96,8 @@ public class DDLRecordSearchTest {
 
 	@Test
 	public void testQuestionMarksVersusStopwords1() throws Exception {
+		Assume.assumeTrue(isExactPhraseQueryImplementedForSearchEngine());
+
 		addRecord(RandomTestUtil.randomString());
 		addRecord("how ? create ? coupon");
 
@@ -99,6 +108,8 @@ public class DDLRecordSearchTest {
 
 	@Test
 	public void testQuestionMarksVersusStopwords2() throws Exception {
+		Assume.assumeTrue(isExactPhraseQueryImplementedForSearchEngine());
+
 		addRecord(RandomTestUtil.randomString());
 		addRecord("how with create the coupon");
 
@@ -109,6 +120,8 @@ public class DDLRecordSearchTest {
 
 	@Test
 	public void testQuestionMarksVersusStopwords3() throws Exception {
+		Assume.assumeTrue(isExactPhraseQueryImplementedForSearchEngine());
+
 		addRecord(RandomTestUtil.randomString());
 		addRecord("how to create a coupon");
 
@@ -119,6 +132,8 @@ public class DDLRecordSearchTest {
 
 	@Test
 	public void testQuestionMarksVersusStopwords4() throws Exception {
+		Assume.assumeTrue(isExactPhraseQueryImplementedForSearchEngine());
+
 		addRecord(RandomTestUtil.randomString());
 		addRecord("how ! create ! coupon");
 
@@ -137,6 +152,8 @@ public class DDLRecordSearchTest {
 
 	@Test
 	public void testStopwordsInExactPhrase() throws Exception {
+		Assume.assumeTrue(isExactPhraseQueryImplementedForSearchEngine());
+
 		addRecord("how to create a coupon");
 		addRecord("Joe Of Bloggs");
 		addRecord("Joe Bloggs");
@@ -181,6 +198,19 @@ public class DDLRecordSearchTest {
 		searchContext.setKeywords(keywords);
 
 		return searchContext;
+	}
+
+	protected boolean isExactPhraseQueryImplementedForSearchEngine() {
+		SearchEngine searchEngine = SearchEngineUtil.getSearchEngine(
+			SearchEngineUtil.getDefaultSearchEngineId());
+
+		String vendor = searchEngine.getVendor();
+
+		if ("SOLR".equals(vendor) || "Lucene".equals(vendor)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected DDLRecordTestHelper ddlRecordTestHelper;

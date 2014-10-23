@@ -87,8 +87,8 @@ if (workflowEnabled) {
 
 					<aui:button name="selecFolderButton" value="select" />
 
-					<aui:script use="aui-base">
-						A.one('#<portlet:namespace />selecFolderButton').on(
+					<aui:script>
+						AUI.$('#<portlet:namespace />selecFolderButton').on(
 							'click',
 							function(event) {
 								Liferay.Util.selectEntity(
@@ -354,8 +354,6 @@ if (workflowEnabled) {
 		window,
 		'<portlet:namespace />selectStructure',
 		function(ddmStructureId, ddmStructureName) {
-			var A = AUI();
-
 			var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />ddmStructuresSearchContainer');
 
 			var ddmStructureLink = '<a class="modify-link" data-rowId="' + ddmStructureId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeDDMStructureIcon) %></a>';
@@ -389,8 +387,6 @@ if (workflowEnabled) {
 	searchContainer.get('contentBox').delegate(
 		'click',
 		function(event) {
-			var A = AUI();
-
 			var link = event.currentTarget;
 
 			var tr = link.ancestor('tr');

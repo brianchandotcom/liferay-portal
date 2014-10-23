@@ -134,14 +134,15 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 			</liferay-ui:search-container>
 		</aui:form>
 
-		<aui:script use="aui-base">
+		<aui:script>
 			Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 			Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />expire', '#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 
-			A.getBody().delegate(
+			AUI.$('body').on(
 				'click',
+				'.compare-to-link a',
 				function(event) {
-					var currentTarget = event.currentTarget;
+					var currentTarget = AUI.$(event.currentTarget);
 
 					Liferay.Util.selectEntity(
 						{
@@ -153,7 +154,7 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 							eventName: '<portlet:namespace />selectVersionFm',
 							id: '<portlet:namespace />compareVersions' + currentTarget.attr('id'),
 							title: '<liferay-ui:message key="compare-versions" />',
-							uri: currentTarget.attr('data-uri')
+							uri: currentTarget.data('uri')
 						},
 						function(event) {
 							<portlet:renderURL var="compareVersionURL">
@@ -171,8 +172,7 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 							location.href = uri;
 						}
 					);
-				},
-				'.compare-to-link a'
+				}
 			);
 
 			<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) %>">

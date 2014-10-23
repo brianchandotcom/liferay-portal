@@ -22,7 +22,7 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), referringPortletResource);
 %>
 
-<aui:script use="aui-base">
+<aui:script>
 	Liferay.fire(
 		'closeWindow',
 		{

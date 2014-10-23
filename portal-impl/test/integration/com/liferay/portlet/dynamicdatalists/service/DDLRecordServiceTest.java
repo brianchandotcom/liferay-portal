@@ -17,6 +17,7 @@ package com.liferay.portlet.dynamicdatalists.service;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
@@ -74,7 +75,7 @@ public class DDLRecordServiceTest extends BaseDDLServiceTestCase {
 		Assert.assertTrue(recordVersion.isDraft());
 
 		record = updateRecord(
-			record.getRecordId(), record.getFields(),
+			record.getRecordId(), record.getDDMFormValues(),
 			WorkflowConstants.ACTION_PUBLISH);
 
 		Assert.assertEquals(
@@ -128,10 +129,14 @@ public class DDLRecordServiceTest extends BaseDDLServiceTestCase {
 		Field nameField = new Field(
 			recordSet.getDDMStructureId(), "name", name);
 
+		nameField.setDefaultLocale(LocaleUtil.ENGLISH);
+
 		fields.put(nameField);
 
 		Field descriptionField = new Field(
 			recordSet.getDDMStructureId(), "description", description);
+
+		descriptionField.setDefaultLocale(LocaleUtil.ENGLISH);
 
 		fields.put(descriptionField);
 

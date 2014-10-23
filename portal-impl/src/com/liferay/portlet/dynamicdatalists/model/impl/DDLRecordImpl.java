@@ -20,14 +20,14 @@ import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.storage.Field;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 
 import java.io.Serializable;
 
 import java.util.List;
-import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
@@ -36,10 +36,20 @@ import java.util.Locale;
 public class DDLRecordImpl extends DDLRecordBaseImpl {
 
 	@Override
-	public Field getField(String fieldName) throws PortalException {
-		Fields fields = getFields();
+	public List<DDMFormFieldValue> getDDMFormFieldValues(String fieldName)
+		throws PortalException {
 
-		return fields.get(fieldName);
+		DDMFormValues ddmFormValues = getDDMFormValues();
+
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+			ddmFormValues.getDDMFormFieldValuesMap();
+
+		return ddmFormFieldValuesMap.get(fieldName);
+	}
+
+	@Override
+	public DDMFormValues getDDMFormValues() throws PortalException {
+		return StorageEngineUtil.getDDMFormValues(getDDMStorageId());
 	}
 
 	@Override
@@ -54,54 +64,12 @@ public class DDLRecordImpl extends DDLRecordBaseImpl {
 	}
 
 	@Override
-	public Fields getFields() throws PortalException {
-		return StorageEngineUtil.getFields(getDDMStorageId());
-	}
-
-	@Override
 	public Serializable getFieldType(String fieldName) throws Exception {
 		DDLRecordSet recordSet = getRecordSet();
 
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 		return ddmStructure.getFieldType(fieldName);
-	}
-
-	@Override
-	public Serializable getFieldValue(String fieldName) throws PortalException {
-		Field field = getField(fieldName);
-
-		if (field == null) {
-			return null;
-		}
-
-		return field.getValue();
-	}
-
-	@Override
-	public Serializable getFieldValue(String fieldName, Locale locale)
-		throws PortalException {
-
-		Field field = getField(fieldName);
-
-		if (field == null) {
-			return null;
-		}
-
-		return field.getValue(locale);
-	}
-
-	@Override
-	public List<Serializable> getFieldValues(String fieldName, Locale locale)
-		throws PortalException {
-
-		Field field = getField(fieldName);
-
-		if (field == null) {
-			return null;
-		}
-
-		return field.getValues(locale);
 	}
 
 	@Override

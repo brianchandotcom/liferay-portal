@@ -17,7 +17,6 @@ package com.liferay.portlet.dynamicdatamapping.storage;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatamapping.StorageException;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMContent;
@@ -120,6 +119,24 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 	}
 
 	@Override
+	protected DDMFormValues doGetDDMFormValues(long classPK) throws Exception {
+		DDMContent ddmContent = DDMContentLocalServiceUtil.getContent(classPK);
+
+		DDMStorageLink ddmStorageLink =
+			DDMStorageLinkLocalServiceUtil.getClassStorageLink(
+				ddmContent.getPrimaryKey());
+
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
+			ddmStorageLink.getStructureId());
+
+		DDMFormValues ddmFormValues =
+			DDMFormValuesJSONDeserializerUtil.deserialize(
+				ddmStructure.getDDMForm(), ddmContent.getData());
+
+		return ddmFormValues;
+	}
+
+	@Override
 	protected List<Fields> doGetFieldsListByClasses(
 			long ddmStructureId, long[] classPKs, List<String> fieldNames,
 			OrderByComparator<Fields> orderByComparator)
@@ -184,33 +201,21 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 		doUpdate(classPK, ddmFormValues, serviceContext);
 	}
 
-	private Fields _getFields(long classPK) throws StorageException {
-		try {
-			DDMContent ddmContent = DDMContentLocalServiceUtil.getContent(
-				classPK);
+	private Fields _getFields(long classPK) throws Exception {
+		DDMStorageLink ddmStorageLink =
+			DDMStorageLinkLocalServiceUtil.getClassStorageLink(classPK);
 
-			DDMStorageLink ddmStorageLink =
-				DDMStorageLinkLocalServiceUtil.getClassStorageLink(
-					ddmContent.getPrimaryKey());
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
+			ddmStorageLink.getStructureId());
 
-			DDMStructure ddmStructure =
-				DDMStructureLocalServiceUtil.getStructure(
-					ddmStorageLink.getStructureId());
+		DDMFormValues ddmFormValues = getDDMFormValues(classPK);
 
-			DDMFormValues ddmFormValues =
-				DDMFormValuesJSONDeserializerUtil.deserialize(
-					ddmStructure.getDDMForm(), ddmContent.getData());
-
-			return DDMFormValuesToFieldsConverterUtil.convert(
-				ddmStructure, ddmFormValues);
-		}
-		catch (Exception e) {
-			throw new StorageException(e);
-		}
+		return DDMFormValuesToFieldsConverterUtil.convert(
+			ddmStructure, ddmFormValues);
 	}
 
 	private Fields _getFields(long classPK, List<String> fieldNames)
-		throws StorageException {
+		throws Exception {
 
 		Fields fields = _getFields(classPK);
 

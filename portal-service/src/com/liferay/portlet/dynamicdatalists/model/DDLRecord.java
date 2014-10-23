@@ -34,29 +34,18 @@ public interface DDLRecord extends DDLRecordModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portlet.dynamicdatamapping.storage.Field getField(
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue> getDDMFormFieldValues(
 		java.lang.String fieldName)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues getDDMFormValues()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.io.Serializable getFieldDataType(java.lang.String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.portlet.dynamicdatamapping.storage.Fields getFields()
-		throws com.liferay.portal.kernel.exception.PortalException;
-
 	public java.io.Serializable getFieldType(java.lang.String fieldName)
 		throws java.lang.Exception;
-
-	public java.io.Serializable getFieldValue(java.lang.String fieldName)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public java.io.Serializable getFieldValue(java.lang.String fieldName,
-		java.util.Locale locale)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public java.util.List<java.io.Serializable> getFieldValues(
-		java.lang.String fieldName, java.util.Locale locale)
-		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getLatestRecordVersion()
 		throws com.liferay.portal.kernel.exception.PortalException;

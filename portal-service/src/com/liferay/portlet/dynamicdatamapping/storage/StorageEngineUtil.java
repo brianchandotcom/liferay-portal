@@ -56,6 +56,12 @@ public class StorageEngineUtil {
 		getStorageEngine().deleteByDDMStructure(ddmStructureId);
 	}
 
+	public static DDMFormValues getDDMFormValues(long classPK)
+		throws StorageException {
+
+		return getStorageEngine().getDDMFormValues(classPK);
+	}
+
 	public static Fields getFields(long classPK) throws StorageException {
 		return getStorageEngine().getFields(classPK);
 	}

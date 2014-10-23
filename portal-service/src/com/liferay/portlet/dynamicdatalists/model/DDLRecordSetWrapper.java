@@ -453,12 +453,6 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 		return _ddlRecordSet.getRecords();
 	}
 
-	@Override
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.storage.Fields> getRecordsFieldsList()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordSet.getRecordsFieldsList();
-	}
-
 	/**
 	* Returns the scope of this d d l record set.
 	*

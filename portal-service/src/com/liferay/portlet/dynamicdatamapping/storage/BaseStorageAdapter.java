@@ -114,6 +114,21 @@ public abstract class BaseStorageAdapter implements StorageAdapter {
 	}
 
 	@Override
+	public DDMFormValues getDDMFormValues(long classPK) 
+		throws StorageException {
+
+		try {
+			return doGetDDMFormValues(classPK);
+		}
+		catch (StorageException se) {
+			throw se;
+		}
+		catch (Exception e) {
+			throw new StorageException(e);
+		}
+	}
+	
+	@Override
 	public Fields getFields(long classPK) throws StorageException {
 		return getFields(classPK, null);
 	}
@@ -365,6 +380,19 @@ public abstract class BaseStorageAdapter implements StorageAdapter {
 			ddmStructure, ddmFormValues);
 
 		doUpdate(classPK, fields, false, serviceContext);
+	}
+	
+	protected DDMFormValues doGetDDMFormValues(long classPK) 
+		throws Exception {
+
+		DDMStorageLink ddmStorageLink =
+			DDMStorageLinkLocalServiceUtil.getClassStorageLink(classPK);
+
+		DDMStructure ddmStructure = ddmStorageLink.getStructure();
+			
+		Fields fields = getFields(classPK);
+		
+		return FieldsToDDMFormValuesConverterUtil.convert(ddmStructure, fields);
 	}
 
 	protected abstract void doUpdate(

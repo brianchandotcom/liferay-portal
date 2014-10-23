@@ -44,6 +44,8 @@ public interface StorageAdapter {
 	public void deleteByDDMStructure(long ddmStructureId)
 		throws StorageException;
 
+	public DDMFormValues getDDMFormValues(long classPK) throws StorageException;
+
 	public Fields getFields(long classPK) throws StorageException;
 
 	public Fields getFields(long classPK, List<String> fieldNames)

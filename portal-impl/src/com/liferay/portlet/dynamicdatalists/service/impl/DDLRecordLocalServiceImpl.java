@@ -637,7 +637,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		DDLRecord record = ddlRecordPersistence.findByPrimaryKey(recordId);
 
-		Fields oldFields = record.getFields();
+		DDMFormValues oldDDMFormValues = record.getDDMFormValues();
 
 		DDLRecordSet recordSet = record.getRecordSet();
 
@@ -645,7 +645,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		Fields fields = toFields(
 			ddmStructure.getStructureId(), fieldsMap,
-			serviceContext.getLocale(), oldFields.getDefaultLocale(), false);
+			serviceContext.getLocale(), oldDDMFormValues.getDefaultLocale(),
+			false);
 
 		return ddlRecordLocalService.updateRecord(
 			userId, recordId, false, displayIndex, fields, mergeFields,

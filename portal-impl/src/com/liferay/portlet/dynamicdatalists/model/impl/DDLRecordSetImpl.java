@@ -22,18 +22,13 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class DDLRecordSetImpl extends DDLRecordSetBaseImpl {
-
-	public DDLRecordSetImpl() {
-	}
 
 	@Override
 	public DDMStructure getDDMStructure() throws PortalException {
@@ -67,17 +62,6 @@ public class DDLRecordSetImpl extends DDLRecordSetBaseImpl {
 	@Override
 	public List<DDLRecord> getRecords() {
 		return DDLRecordLocalServiceUtil.getRecords(getRecordSetId());
-	}
-
-	@Override
-	public List<Fields> getRecordsFieldsList() throws PortalException {
-		List<Fields> fieldsList = new ArrayList<Fields>();
-
-		for (DDLRecord record : getRecords()) {
-			fieldsList.add(record.getFields());
-		}
-
-		return fieldsList;
 	}
 
 }

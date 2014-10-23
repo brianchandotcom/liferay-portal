@@ -189,6 +189,19 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 		return _ddlRecord.getCreateDate();
 	}
 
+	@Override
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue> getDDMFormFieldValues(
+		java.lang.String fieldName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecord.getDDMFormFieldValues(fieldName);
+	}
+
+	@Override
+	public com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues getDDMFormValues()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecord.getDDMFormValues();
+	}
+
 	/**
 	* Returns the d d m storage ID of this d d l record.
 	*
@@ -215,13 +228,6 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.storage.Field getField(
-		java.lang.String fieldName)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecord.getField(fieldName);
-	}
-
-	@Override
 	public java.io.Serializable getFieldDataType(java.lang.String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecord.getFieldDataType(fieldName);
@@ -231,32 +237,6 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	public java.io.Serializable getFieldType(java.lang.String fieldName)
 		throws java.lang.Exception {
 		return _ddlRecord.getFieldType(fieldName);
-	}
-
-	@Override
-	public java.io.Serializable getFieldValue(java.lang.String fieldName)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecord.getFieldValue(fieldName);
-	}
-
-	@Override
-	public java.io.Serializable getFieldValue(java.lang.String fieldName,
-		java.util.Locale locale)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecord.getFieldValue(fieldName, locale);
-	}
-
-	@Override
-	public java.util.List<java.io.Serializable> getFieldValues(
-		java.lang.String fieldName, java.util.Locale locale)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecord.getFieldValues(fieldName, locale);
-	}
-
-	@Override
-	public com.liferay.portlet.dynamicdatamapping.storage.Fields getFields()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecord.getFields();
 	}
 
 	/**

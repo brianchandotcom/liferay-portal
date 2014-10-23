@@ -22,6 +22,7 @@ import com.liferay.portlet.dynamicdatalists.model.DDLRecordConstants;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSetConstants;
 import com.liferay.portlet.dynamicdatamapping.service.BaseDDMServiceTestCase;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.util.HashMap;
@@ -79,14 +80,14 @@ public class BaseDDLServiceTestCase  extends BaseDDMServiceTestCase {
 	}
 
 	protected DDLRecord updateRecord(
-			long recordId, Fields fields, int workflowAction)
+			long recordId, DDMFormValues ddmFormValues, int workflowAction)
 		throws Exception {
 
 		ServiceContext serviceContext = getServiceContext(workflowAction);
 
 		return DDLRecordLocalServiceUtil.updateRecord(
 			TestPropsValues.getUserId(), recordId, false,
-			DDLRecordConstants.DISPLAY_INDEX_DEFAULT, fields, false,
+			DDLRecordConstants.DISPLAY_INDEX_DEFAULT, ddmFormValues,
 			serviceContext);
 	}
 

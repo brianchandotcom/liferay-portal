@@ -75,6 +75,15 @@ public class StorageEngineImpl implements StorageEngine {
 	}
 
 	@Override
+	public DDMFormValues getDDMFormValues(long classPK)
+		throws StorageException {
+
+		StorageAdapter storageAdapter = getClassStorageAdapter(classPK);
+
+		return storageAdapter.getDDMFormValues(classPK);
+	}
+
+	@Override
 	public Fields getFields(long classPK) throws StorageException {
 		return getFields(classPK, null);
 	}

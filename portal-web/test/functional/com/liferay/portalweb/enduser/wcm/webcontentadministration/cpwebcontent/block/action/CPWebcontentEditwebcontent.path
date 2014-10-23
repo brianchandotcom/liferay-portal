@@ -55,7 +55,12 @@
 </tr>
 <tr>
 	<td>AVAILABLE_TRANSLATIONS_LINK</td>
-	<td>xpath=(//a[contains(@class,'journal-article-translation') and contains(.,'${key_localizedLanguage}')])[2]</td>
+	<td>//span[contains(@class,'translation-editing') and contains(.,'${key_localizedLanguage}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_LOCALIZATION</td>
+	<td>//img[contains(@class,'localized-flag') and contains(@alt,'${key_localizedLanguage}')]</td>
 	<td></td>
 </tr>
 <tr>

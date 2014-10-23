@@ -126,9 +126,10 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 						id: '<portlet:namespace />fm1'
 					},
 
-					<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="importPagesURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+					<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="importPagesURL">
 						<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
 						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+						<portlet:param name="p_p_isolated" value="true" />
 						<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 						<portlet:param name="validate" value="<%= String.valueOf(Boolean.FALSE) %>" />
 					</liferay-portlet:resourceURL>

@@ -4563,10 +4563,16 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			lastLoginDate = new Date();
 		}
 
+		String lastLoginIP = user.getLoginIP();
+
+		if (lastLoginIP == null) {
+			lastLoginIP = loginIP;
+		}
+
 		user.setLoginDate(new Date());
 		user.setLoginIP(loginIP);
 		user.setLastLoginDate(lastLoginDate);
-		user.setLastLoginIP(user.getLoginIP());
+		user.setLastLoginIP(lastLoginIP);
 		user.setFailedLoginAttempts(0);
 
 		userPersistence.update(user);

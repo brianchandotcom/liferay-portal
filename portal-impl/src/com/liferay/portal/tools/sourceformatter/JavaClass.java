@@ -70,31 +70,6 @@ public class JavaClass {
 		while (itr.hasNext()) {
 			JavaTerm javaTerm = itr.next();
 
-			if (javaTerm.isClass()) {
-				String javaTermContent = javaTerm.getContent();
-
-				int pos = javaTermContent.indexOf("\n" + _indent + "static {");
-
-				if (pos != -1) {
-					javaTermContent = javaTermContent.substring(0, pos);
-				}
-
-				JavaClass innerClass = new JavaClass(
-					_fileName, _absolutePath, javaTermContent,
-					javaTerm.getLineCount(), _indent + StringPool.TAB, this,
-					_javaTermAccessLevelModifierExclusions);
-
-				String newJavaTermContent = innerClass.formatJavaTerms(
-					javaTermSortExclusions, testAnnotationsExclusions);
-
-				if (!javaTermContent.equals(newJavaTermContent)) {
-					_content = StringUtil.replace(
-						_content, javaTermContent, newJavaTermContent);
-
-					return _content;
-				}
-			}
-
 			sortJavaTerms(previousJavaTerm, javaTerm, javaTermSortExclusions);
 			fixTabsAndIncorrectEmptyLines(javaTerm);
 			formatAnnotations(javaTerm, testAnnotationsExclusions);
@@ -106,8 +81,27 @@ public class JavaClass {
 			previousJavaTerm = javaTerm;
 		}
 
+		for (JavaClass innerClass : _innerClasses) {
+			String innerClassContent = innerClass.getContent();
+
+			String newInnerClassContent = innerClass.formatJavaTerms(
+				javaTermSortExclusions,
+				testAnnotationsExclusions);
+
+			if (!innerClassContent.equals(newInnerClassContent)) {
+				_content = StringUtil.replace(
+					_content, innerClassContent, newInnerClassContent);
+
+				return _content;
+			}
+		}
+
 		fixJavaTermsDividers(_javaTerms, javaTermSortExclusions);
 
+		return _content;
+	}
+
+	public String getContent() {
 		return _content;
 	}
 
@@ -592,6 +586,16 @@ public class JavaClass {
 						}
 						else {
 							javaTerms.add(javaTerm);
+
+							if (javaTerm.isClass()) {
+								JavaClass innerClass = new JavaClass(
+									_fileName, _absolutePath, javaTermContent,
+									javaTermLineCount, _indent + StringPool.TAB,
+									this,
+									_javaTermAccessLevelModifierExclusions);
+
+								_innerClasses.add(innerClass);
+							}
 						}
 					}
 				}
@@ -653,6 +657,15 @@ public class JavaClass {
 			}
 			else {
 				javaTerms.add(javaTerm);
+
+				if (javaTerm.isClass()) {
+					JavaClass innerClass = new JavaClass(
+						_fileName, _absolutePath, javaTermContent,
+						javaTermLineCount, _indent + StringPool.TAB, this,
+						_javaTermAccessLevelModifierExclusions);
+
+					_innerClasses.add(innerClass);
+				}
 			}
 		}
 
@@ -974,6 +987,7 @@ public class JavaClass {
 	private String _content;
 	private String _fileName;
 	private String _indent;
+	private List<JavaClass> _innerClasses = new ArrayList<JavaClass>();
 	private List<String> _javaTermAccessLevelModifierExclusions;
 	private Set<JavaTerm> _javaTerms;
 	private int _lineCount;

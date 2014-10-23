@@ -23,7 +23,7 @@ import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.session.Session;
 import com.liferay.sync.engine.session.SessionManager;
-import com.liferay.sync.engine.util.RetryUtil;
+import com.liferay.sync.engine.util.ConnectionRetryUtil;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -155,7 +155,7 @@ public class BaseJSONHandler extends BaseHandler {
 			return false;
 		}
 
-		if (!RetryUtil.retryInProgress(getSyncAccountId()) &&
+		if (!ConnectionRetryUtil.retryInProgress(getSyncAccountId()) &&
 			_logger.isDebugEnabled()) {
 
 			_logger.debug("Handling exception {}", exception);

@@ -24,8 +24,8 @@ import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncUser;
 import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncUserService;
+import com.liferay.sync.engine.util.ConnectionRetryUtil;
 import com.liferay.sync.engine.util.ReleaseInfo;
-import com.liferay.sync.engine.util.RetryUtil;
 
 import java.util.Map;
 
@@ -78,7 +78,7 @@ public class GetSyncContextHandler extends BaseJSONHandler {
 
 			FileEventUtil.retryFileTransfers(getSyncAccountId());
 
-			RetryUtil.resetRetryDelay(getSyncAccountId());
+			ConnectionRetryUtil.resetRetryDelay(getSyncAccountId());
 		}
 		else {
 			syncAccount.setState(SyncAccount.STATE_DISCONNECTED);

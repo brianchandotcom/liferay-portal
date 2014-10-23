@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * @author Shinn Lok
  */
-public class RetryUtil {
+public class ConnectionRetryUtil {
 
 	public static int getRetryCount(long syncAccountId) {
 		if (_counts.containsKey(syncAccountId)) {

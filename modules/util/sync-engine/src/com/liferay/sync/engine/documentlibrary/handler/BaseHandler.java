@@ -20,7 +20,7 @@ import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncFileService;
-import com.liferay.sync.engine.util.RetryUtil;
+import com.liferay.sync.engine.util.ConnectionRetryUtil;
 
 import java.io.FileNotFoundException;
 
@@ -53,7 +53,7 @@ public class BaseHandler implements Handler<Void> {
 		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
 			getSyncAccountId());
 
-		if (!RetryUtil.retryInProgress(getSyncAccountId()) &&
+		if (!ConnectionRetryUtil.retryInProgress(getSyncAccountId()) &&
 			_logger.isDebugEnabled()) {
 
 			_logger.debug("Handling exception {}", e.toString());
@@ -134,7 +134,7 @@ public class BaseHandler implements Handler<Void> {
 
 	protected void retryServerConnection(int uiEvent) {
 		if (!(_event instanceof GetSyncContextEvent) &&
-			RetryUtil.retryInProgress(getSyncAccountId())) {
+			ConnectionRetryUtil.retryInProgress(getSyncAccountId())) {
 
 			return;
 		}
@@ -149,13 +149,13 @@ public class BaseHandler implements Handler<Void> {
 
 		SyncAccountService.synchronizeSyncAccount(
 			getSyncAccountId(),
-			RetryUtil.incrementRetryDelay(getSyncAccountId()));
+			ConnectionRetryUtil.incrementRetryDelay(getSyncAccountId()));
 
 		if (_logger.isDebugEnabled()) {
 			_logger.debug(
 				"Attempting to reconnect to {}. Retry #{}.",
 				syncAccount.getUrl(),
-				RetryUtil.getRetryCount(getSyncAccountId()));
+				ConnectionRetryUtil.getRetryCount(getSyncAccountId()));
 		}
 	}
 

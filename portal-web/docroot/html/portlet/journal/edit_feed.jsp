@@ -388,8 +388,10 @@ if (feed != null) {
 	}
 
 	Liferay.Util.disableToggleBoxes('<portlet:namespace />autoFeedId', '<portlet:namespace />newFeedId', true);
+</aui:script>
 
-	var feedItemContentSelector = AUI.$('#<portlet:namespace />contentFieldSelector');
+<aui:script sandbox="<%= true %>">
+	var feedItemContentSelector = $('#<portlet:namespace />contentFieldSelector');
 
 	feedItemContentSelector.on(
 		'change',

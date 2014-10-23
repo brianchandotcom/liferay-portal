@@ -36,13 +36,15 @@ public class JavaClass {
 
 	public JavaClass(
 			String fileName, String absolutePath, String content, int lineCount,
-			String indent, List<String> javaTermAccessLevelModifierExclusions)
+			String indent, JavaClass outerClass,
+			List<String> javaTermAccessLevelModifierExclusions)
 		throws Exception {
 
 		_fileName = fileName;
 		_absolutePath = absolutePath;
 		_content = content;
 		_lineCount = lineCount;
+		_outerClass = outerClass;
 		_indent = indent;
 		_javaTermAccessLevelModifierExclusions =
 			javaTermAccessLevelModifierExclusions;
@@ -79,7 +81,7 @@ public class JavaClass {
 
 				JavaClass innerClass = new JavaClass(
 					_fileName, _absolutePath, javaTermContent,
-					javaTerm.getLineCount(), _indent + StringPool.TAB,
+					javaTerm.getLineCount(), _indent + StringPool.TAB, this,
 					_javaTermAccessLevelModifierExclusions);
 
 				String newJavaTermContent = innerClass.formatJavaTerms(
@@ -975,5 +977,6 @@ public class JavaClass {
 	private List<String> _javaTermAccessLevelModifierExclusions;
 	private Set<JavaTerm> _javaTerms;
 	private int _lineCount;
+	private JavaClass _outerClass;
 
 }

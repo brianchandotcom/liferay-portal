@@ -705,7 +705,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		JavaClass javaClass = new JavaClass(
 			fileName, absolutePath, javaClassContent, javaClassLineCount,
-			StringPool.TAB, javaTermAccessLevelModifierExclusions);
+			StringPool.TAB, null, javaTermAccessLevelModifierExclusions);
 
 		String newJavaClassContent = javaClass.formatJavaTerms(
 			javaTermSortExclusions, testAnnotationsExclusions);

@@ -15,15 +15,17 @@
 package com.liferay.sync.engine.documentlibrary.handler;
 
 import com.liferay.sync.engine.documentlibrary.event.Event;
+import com.liferay.sync.engine.documentlibrary.event.GetSyncContextEvent;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncFileService;
-import com.liferay.sync.engine.util.RetryUtil;
+import com.liferay.sync.engine.util.ConnectionRetryUtil;
 
 import java.io.FileNotFoundException;
 
 import java.net.SocketException;
+import java.net.UnknownHostException;
 
 import java.util.Map;
 
@@ -51,6 +53,12 @@ public class BaseHandler implements Handler<Void> {
 		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
 			getSyncAccountId());
 
+		if (!ConnectionRetryUtil.retryInProgress(getSyncAccountId()) &&
+			_logger.isDebugEnabled()) {
+
+			_logger.debug("Handling exception {}", e.toString());
+		}
+
 		if (e instanceof FileNotFoundException) {
 			SyncFile syncFile = (SyncFile)getParameterValue("syncFile");
 
@@ -60,35 +68,26 @@ public class BaseHandler implements Handler<Void> {
 		}
 		else if ((e instanceof HttpHostConnectException) ||
 				 (e instanceof NoHttpResponseException) ||
-				 (e instanceof SocketException)) {
+				 (e instanceof SocketException) ||
+				 (e instanceof UnknownHostException)) {
 
-			syncAccount.setState(SyncAccount.STATE_DISCONNECTED);
-			syncAccount.setUiEvent(SyncAccount.UI_EVENT_CONNECTION_EXCEPTION);
-
-			SyncAccountService.update(syncAccount);
-
-			retryServerConnection();
+			retryServerConnection(SyncAccount.UI_EVENT_CONNECTION_EXCEPTION);
 		}
 		else if (e instanceof HttpResponseException) {
-			syncAccount.setState(SyncAccount.STATE_DISCONNECTED);
-
 			HttpResponseException hre = (HttpResponseException)e;
 
 			int statusCode = hre.getStatusCode();
 
 			if (statusCode == HttpStatus.SC_UNAUTHORIZED) {
+				syncAccount.setState(SyncAccount.STATE_DISCONNECTED);
 				syncAccount.setUiEvent(
 					SyncAccount.UI_EVENT_AUTHENTICATION_EXCEPTION);
 
 				SyncAccountService.update(syncAccount);
 			}
 			else {
-				syncAccount.setUiEvent(
+				retryServerConnection(
 					SyncAccount.UI_EVENT_CONNECTION_EXCEPTION);
-
-				SyncAccountService.update(syncAccount);
-
-				retryServerConnection();
 			}
 		}
 		else {
@@ -133,19 +132,30 @@ public class BaseHandler implements Handler<Void> {
 		return _event.getSyncAccountId();
 	}
 
-	protected void retryServerConnection() {
+	protected void retryServerConnection(int uiEvent) {
+		if (!(_event instanceof GetSyncContextEvent) &&
+			ConnectionRetryUtil.retryInProgress(getSyncAccountId())) {
+
+			return;
+		}
+
 		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
 			getSyncAccountId());
 
+		syncAccount.setState(SyncAccount.STATE_DISCONNECTED);
+		syncAccount.setUiEvent(uiEvent);
+
+		SyncAccountService.update(syncAccount);
+
 		SyncAccountService.synchronizeSyncAccount(
 			getSyncAccountId(),
-			RetryUtil.incrementRetryDelay(getSyncAccountId()));
+			ConnectionRetryUtil.incrementRetryDelay(getSyncAccountId()));
 
 		if (_logger.isDebugEnabled()) {
 			_logger.debug(
 				"Attempting to reconnect to {}. Retry #{}.",
 				syncAccount.getUrl(),
-				RetryUtil.getRetryCount(getSyncAccountId()));
+				ConnectionRetryUtil.getRetryCount(getSyncAccountId()));
 		}
 	}
 

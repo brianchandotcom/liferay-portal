@@ -20,10 +20,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.sync.engine.documentlibrary.event.Event;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
-import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.session.Session;
 import com.liferay.sync.engine.session.SessionManager;
+import com.liferay.sync.engine.util.ConnectionRetryUtil;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -155,7 +155,9 @@ public class BaseJSONHandler extends BaseHandler {
 			return false;
 		}
 
-		if (_logger.isDebugEnabled()) {
+		if (!ConnectionRetryUtil.retryInProgress(getSyncAccountId()) &&
+			_logger.isDebugEnabled()) {
+
 			_logger.debug("Handling exception {}", exception);
 		}
 
@@ -216,31 +218,15 @@ public class BaseJSONHandler extends BaseHandler {
 		else if (exception.equals(
 					"com.liferay.sync.SyncServicesUnavailableException")) {
 
-			SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
-				getSyncAccountId());
-
-			syncAccount.setState(SyncAccount.STATE_DISCONNECTED);
-			syncAccount.setUiEvent(
+			retryServerConnection(
 				SyncAccount.UI_EVENT_SYNC_SERVICES_NOT_ACTIVE);
-
-			SyncAccountService.update(syncAccount);
-
-			retryServerConnection();
 		}
 		else if (exception.equals(
 					"com.liferay.portal.kernel.jsonwebservice." +
 						"NoSuchJSONWebServiceException") ||
 				 exception.equals("java.lang.RuntimeException")) {
 
-			SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
-				getSyncAccountId());
-
-			syncAccount.setState(SyncAccount.STATE_DISCONNECTED);
-			syncAccount.setUiEvent(SyncAccount.UI_EVENT_SYNC_WEB_MISSING);
-
-			SyncAccountService.update(syncAccount);
-
-			retryServerConnection();
+			retryServerConnection(SyncAccount.UI_EVENT_SYNC_WEB_MISSING);
 		}
 		else if (exception.equals("Authenticated access required") ||
 				 exception.equals("java.lang.SecurityException")) {

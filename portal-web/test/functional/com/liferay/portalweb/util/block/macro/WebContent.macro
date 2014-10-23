@@ -364,26 +364,25 @@
 		<execute action="CPWebcontentEditwebcontent#assertClick" locator-key1="ADD_TRANSLATION" value1="Add Translation" />
 		<execute action="CPWebcontentEditwebcontent#assertClick" locator-key1="ADD_TRANSLATION_MENULIST_LANGUAGE" value1="${localizedLanguage}" />
 
-		<execute action="CPWebcontentEditwebcontentAddtranslation#selectFrame" locator-key1="WEB_CONTENT_TRANSLATION_IFRAME" />
-
 		<if>
 			<isset var="localizedTitle" />
 			<then>
-				<execute action="CPWebcontentEditwebcontentAddtranslation#type" locator-key1="TITLE_FIELD" value1="${localizedTitle}" />
+				<execute action="CPWebcontentEditwebcontent#click" locator-key1="TITLE_LOCALIZATION" />
+				<execute action="CPWebcontentEditwebcontent#type" locator-key1="TITLE_FIELD" value1="${localizedTitle}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="localizedAbstractSummary" />
 			<then>
-				<execute action="CPWebcontentEditwebcontentAddtranslation#type" locator-key1="SUMMARY_FIELD" value1="${localizedAbstractSummary}" />
+				<execute action="CPWebcontentAbstract#type" locator-key1="SUMMARY_FIELD" value1="${localizedAbstractSummary}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="localizedContent" />
 			<then>
-				<execute action="CPWebcontentEditwebcontentAddtranslation#type" locator-key1="CONTENT_FIELD" value1="${localizedContent}" />
+				<execute action="CPWebcontentEditwebcontent#type" locator-key1="CONTENT_FIELD" value1="${localizedContent}" />
 			</then>
 		</if>
 
@@ -392,7 +391,7 @@
 			<then>
 				<var name="key_fieldName" value="Integer" />
 
-				<execute action="CPWebcontentEditwebcontentAddtranslation#type" locator-key1="INTEGER_FIELD" value1="${localizedInteger}" />
+				<execute action="CPWebcontentEditwebcontent#type" locator-key1="INTEGER_FIELD" value1="${localizedInteger}" />
 			</then>
 		</if>
 
@@ -401,7 +400,7 @@
 			<then>
 				<var name="key_fieldName" value="Number" />
 
-				<execute action="CPWebcontentEditwebcontentAddtranslation#type" locator-key1="NUMBER_FIELD" value1="${localizedNumber}" />
+				<execute action="CPWebcontentEditwebcontent#type" locator-key1="NUMBER_FIELD" value1="${localizedNumber}" />
 			</then>
 		</if>
 
@@ -410,7 +409,7 @@
 			<then>
 				<var name="key_fieldName" value="Text" />
 
-				<execute action="CPWebcontentEditwebcontentAddtranslation#type" locator-key1="TEXT_FIELD" value1="${localizedText}" />
+				<execute action="CPWebcontentEditwebcontent#type" locator-key1="TEXT_FIELD" value1="${localizedText}" />
 			</then>
 		</if>
 
@@ -419,7 +418,7 @@
 			<then>
 				<var name="key_fieldName" value="${unlocalizableHTML}" />
 
-				<execute action="CPWebcontentEditwebcontentAddtranslation#assertElementNotPresent" locator-key1="HTML_FIELD" />
+				<execute action="CPWebcontentEditwebcontent#assertElementNotPresent" locator-key1="HTML_FIELD" />
 			</then>
 		</if>
 
@@ -428,7 +427,7 @@
 			<then>
 				<var name="key_fieldName" value="${unlocalizableText}" />
 
-				<execute action="CPWebcontentEditwebcontentAddtranslation#assertElementNotPresent" locator-key1="TEXT_FIELD" />
+				<execute action="CPWebcontentEditwebcontent#assertElementNotPresent" locator-key1="TEXT_FIELD" />
 			</then>
 		</if>
 
@@ -437,7 +436,7 @@
 			<then>
 				<var name="key_fieldName" value="${unlocalizableTextBox}" />
 
-				<execute action="CPWebcontentEditwebcontentAddtranslation#assertElementNotPresent" locator-key1="TEXT_BOX_FIELD" />
+				<execute action="CPWebcontentEditwebcontent#assertElementNotPresent" locator-key1="TEXT_BOX_FIELD" />
 			</then>
 		</if>
 
@@ -446,13 +445,10 @@
 			<then>
 				<var name="key_fieldName" value="${unlocalizableField}" />
 
-				<execute action="CPWebcontentEditwebcontentAddtranslation#assertTextNotPresent" locator-key1="${unlocalizableFieldLocator}" value1="${unlocalizableField}" />
+				<execute action="CPWebcontentEditwebcontent#assertTextNotPresent" locator-key1="${unlocalizableFieldLocator}" value1="${unlocalizableField}" />
 			</then>
 		</if>
 
-		<execute action="CPWebcontentEditwebcontentAddtranslation#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-
-		<execute action="CPWebcontentEditwebcontent#selectFrame" value1="relative=top" />
 		<execute action="CPWebcontentEditwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 	</command>
 
@@ -465,9 +461,19 @@
 		<var name="key_webContentTranslationLanguage" value="${webContentTranslationLanguage}" />
 
 		<execute action="PGWebcontentdisplayEditwebcontent#assertClick" locator-key1="ADD_TRANSLATION_MENULIST_LANGUAGE" value1="${webContentTranslationLanguage}" />
-		<execute action="PGWebcontentdisplayEditwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTranslationTitle}" />
-		<execute action="PGWebcontentdisplayEditwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentTranslationContent}" />
+		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" value1="relative=top" />
 
+		<execute action="PGWebcontentdisplayEditwebcontentTranslation#selectFrame" locator-key1="WEB_CONTENT_TRANSLATION_IFRAME" />
+
+		<var name="key_lowercaseLanguageCode" value="${lowercaseLanguageCode}" />
+
+		<execute action="PGWebcontentdisplayEditwebcontentTranslation#type" locator-key1="TITLE_FIELD" value1="${webContentTranslationTitle}" />
+		<execute action="PGWebcontentdisplayEditwebcontentTranslation#type" locator-key1="CONTENT_FIELD" value1="${webContentTranslationContent}" />
+		<execute action="PGWebcontentdisplayEditwebcontentTranslation#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" value1="relative=top" />
+		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" locator-key1="WEB_CONTENT_EDIT_IFRAME" />
+		<execute action="PGWebcontentdisplayEditwebcontent#assertTextEquals" locator-key1="AVAILABLE_TRANSLATION" value1="${webContentTranslationLanguage}" />
 		<execute action="PGWebcontentdisplayAddwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="PGWebcontentdisplay#selectFrame" value1="relative=top" />
@@ -1571,12 +1577,9 @@
 
 		<execute action="CPWebcontentEditwebcontent#assertClick" locator-key1="AVAILABLE_TRANSLATIONS_LINK" value1="${localizedLanguage}" />
 
-		<execute action="CPWebcontentEditwebcontentAddtranslation#selectFrame" locator-key1="WEB_CONTENT_TRANSLATION_IFRAME" />
-		<execute action="CPWebcontentEditwebcontentAddtranslation#assertTextEquals" locator-key1="TITLE_FIELD" value1="${localizedTitle}" />
-		<execute action="CPWebcontentEditwebcontentAddtranslation#selectFrame" locator-key1="CONTENT_FIELD" />
-		<execute action="CPWebcontentEditwebcontentAddtranslation#assertTextEquals" locator-key1="BODY_FIELD" value1="${localizedContent}" />
-
-		<execute action="CPWebcontentEditwebcontent#selectFrame" value1="relative=top" />
+		<execute action="CPWebcontentEditwebcontent#assertTextEquals" locator-key1="TITLE_FIELD" value1="${localizedTitle}" />
+		<execute action="CPWebcontentEditwebcontent#selectFrame" locator-key1="CONTENT_FIELD" />
+		<execute action="CPWebcontentEditwebcontent#assertTextEquals" locator-key1="BODY_FIELD" value1="${localizedContent}" />
 	</command>
 
 	<command name="viewTranslationPGViaWCD">

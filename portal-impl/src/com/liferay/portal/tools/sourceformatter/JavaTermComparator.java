@@ -98,7 +98,7 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 		String name1 = javaTerm1.getName();
 		String name2 = javaTerm2.getName();
 
-		if (JavaClass.isInJavaTermTypeGroup(type1, JavaTerm.TYPE_VARIABLE)) {
+		if (javaTerm1.isVariable()) {
 			if (StringUtil.isUpperCase(name1) &&
 				!StringUtil.isLowerCase(name1) &&
 				!StringUtil.isUpperCase(name2)) {

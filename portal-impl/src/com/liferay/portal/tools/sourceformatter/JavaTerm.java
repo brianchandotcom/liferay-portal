@@ -28,12 +28,6 @@ import java.util.regex.Pattern;
  */
 public class JavaTerm {
 
-	public static final int[] TYPE_CLASS = {
-		JavaTerm.TYPE_CLASS_PRIVATE, JavaTerm.TYPE_CLASS_PRIVATE_STATIC,
-		JavaTerm.TYPE_CLASS_PROTECTED, JavaTerm.TYPE_CLASS_PROTECTED_STATIC,
-		JavaTerm.TYPE_CLASS_PUBLIC, JavaTerm.TYPE_CLASS_PUBLIC_STATIC
-	};
-
 	public static final int TYPE_CLASS_PRIVATE = 24;
 
 	public static final int TYPE_CLASS_PRIVATE_STATIC = 23;
@@ -46,22 +40,11 @@ public class JavaTerm {
 
 	public static final int TYPE_CLASS_PUBLIC_STATIC = 7;
 
-	public static final int[] TYPE_CONSTRUCTOR = {
-		JavaTerm.TYPE_CONSTRUCTOR_PRIVATE, JavaTerm.TYPE_CONSTRUCTOR_PROTECTED,
-		JavaTerm.TYPE_CONSTRUCTOR_PUBLIC
-	};
-
 	public static final int TYPE_CONSTRUCTOR_PRIVATE = 18;
 
 	public static final int TYPE_CONSTRUCTOR_PROTECTED = 10;
 
 	public static final int TYPE_CONSTRUCTOR_PUBLIC = 4;
-
-	public static final int[] TYPE_METHOD = {
-		JavaTerm.TYPE_METHOD_PRIVATE, JavaTerm.TYPE_METHOD_PRIVATE_STATIC,
-		JavaTerm.TYPE_METHOD_PROTECTED, JavaTerm.TYPE_METHOD_PROTECTED_STATIC,
-		JavaTerm.TYPE_METHOD_PUBLIC, JavaTerm.TYPE_METHOD_PUBLIC_STATIC
-	};
 
 	public static final int TYPE_METHOD_PRIVATE = 19;
 
@@ -77,13 +60,6 @@ public class JavaTerm {
 
 	public static final int TYPE_STATIC_BLOCK = 21;
 
-	public static final int[] TYPE_VARIABLE = {
-		JavaTerm.TYPE_VARIABLE_PRIVATE, JavaTerm.TYPE_VARIABLE_PRIVATE_STATIC,
-		JavaTerm.TYPE_VARIABLE_PROTECTED,
-		JavaTerm.TYPE_VARIABLE_PROTECTED_STATIC,
-		JavaTerm.TYPE_VARIABLE_PUBLIC, JavaTerm.TYPE_VARIABLE_PUBLIC_STATIC,
-	};
-
 	public static final int TYPE_VARIABLE_PRIVATE = 22;
 
 	public static final int TYPE_VARIABLE_PRIVATE_STATIC = 20;
@@ -95,12 +71,6 @@ public class JavaTerm {
 	public static final int TYPE_VARIABLE_PUBLIC = 6;
 
 	public static final int TYPE_VARIABLE_PUBLIC_STATIC = 1;
-
-	public static final int[] TYPE_VARIABLE_STATIC = {
-		JavaTerm.TYPE_VARIABLE_PRIVATE_STATIC,
-		JavaTerm.TYPE_VARIABLE_PROTECTED_STATIC,
-		JavaTerm.TYPE_VARIABLE_PUBLIC_STATIC
-	};
 
 	public JavaTerm(String name, int type, String content, int lineCount) {
 		_name = name;
@@ -128,9 +98,7 @@ public class JavaTerm {
 
 		_parameterTypes = new ArrayList<String>();
 
-		if (!JavaClass.isInJavaTermTypeGroup(_type, TYPE_CONSTRUCTOR) &&
-			!JavaClass.isInJavaTermTypeGroup(_type, TYPE_METHOD)) {
-
+		if (!isConstructor() && !isMethod()) {
 			return _parameterTypes;
 		}
 

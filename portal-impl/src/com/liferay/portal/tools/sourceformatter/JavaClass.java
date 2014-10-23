@@ -76,9 +76,7 @@ public class JavaClass {
 		while (itr.hasNext()) {
 			JavaTerm javaTerm = itr.next();
 
-			if (isInJavaTermTypeGroup(
-					javaTerm.getType(), JavaTerm.TYPE_CLASS)) {
-
+			if (javaTerm.isClass()) {
 				String javaTermContent = javaTerm.getContent();
 
 				int pos = javaTermContent.indexOf("\n" + _indent + "static {");
@@ -119,18 +117,6 @@ public class JavaClass {
 		return _content;
 	}
 
-	protected static boolean isInJavaTermTypeGroup(
-		int javaTermType, int[] javaTermTypeGroup) {
-
-		for (int type : javaTermTypeGroup) {
-			if (javaTermType == type) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	protected Set<JavaTerm> addStaticBlocks(Set<JavaTerm> javaTerms) {
 		Set<JavaTerm> newJavaTerms = new TreeSet<JavaTerm>(
 			new JavaTermComparator());
@@ -140,9 +126,7 @@ public class JavaClass {
 		while (javaTermsIterator.hasNext()) {
 			JavaTerm javaTerm = javaTermsIterator.next();
 
-			if (!isInJavaTermTypeGroup(
-					javaTerm.getType(), JavaTerm.TYPE_VARIABLE_STATIC)) {
-
+			if (!javaTerm.isStatic() || !javaTerm.isVariable()) {
 				newJavaTerms.add(javaTerm);
 
 				continue;
@@ -290,9 +274,7 @@ public class JavaClass {
 			if (previousJavaTerm.getType() != javaTerm.getType()) {
 				requiresEmptyLine = true;
 			}
-			else if (!isInJavaTermTypeGroup(
-						javaTerm.getType(), JavaTerm.TYPE_VARIABLE)) {
-
+			else if (!javaTerm.isVariable()) {
 				requiresEmptyLine = true;
 			}
 			else if ((StringUtil.isUpperCase(javaTermName) &&
@@ -366,10 +348,7 @@ public class JavaClass {
 	}
 
 	protected void fixTabsAndIncorrectEmptyLines(JavaTerm javaTerm) {
-		if (!isInJavaTermTypeGroup(
-				javaTerm.getType(), JavaTerm.TYPE_CONSTRUCTOR) &&
-			!isInJavaTermTypeGroup(javaTerm.getType(), JavaTerm.TYPE_METHOD)) {
-
+		if (!javaTerm.isConstructor() && !javaTerm.isMethod()) {
 			return;
 		}
 

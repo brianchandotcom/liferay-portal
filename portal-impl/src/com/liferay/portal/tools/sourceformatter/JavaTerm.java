@@ -187,6 +187,97 @@ public class JavaTerm {
 		return _type;
 	}
 
+	public boolean isClass() {
+		if ((_type == TYPE_CLASS_PRIVATE) ||
+			(_type == TYPE_CLASS_PRIVATE_STATIC) ||
+			(_type == TYPE_CLASS_PROTECTED) ||
+			(_type == TYPE_CLASS_PROTECTED_STATIC) ||
+			(_type == TYPE_CLASS_PUBLIC) ||
+			(_type == TYPE_CLASS_PUBLIC_STATIC)) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public boolean isConstructor() {
+		if ((_type == TYPE_CONSTRUCTOR_PRIVATE) ||
+			(_type == TYPE_CONSTRUCTOR_PROTECTED) ||
+			(_type == TYPE_CONSTRUCTOR_PUBLIC)) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public boolean isMethod() {
+		if ((_type == TYPE_METHOD_PRIVATE) ||
+			(_type == TYPE_METHOD_PRIVATE_STATIC) ||
+			(_type == TYPE_METHOD_PROTECTED) ||
+			(_type == TYPE_METHOD_PROTECTED_STATIC) ||
+			(_type == TYPE_METHOD_PUBLIC) ||
+			(_type == TYPE_METHOD_PUBLIC_STATIC)) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public boolean isPrivate() {
+		if ((_type == TYPE_CLASS_PRIVATE) ||
+			(_type == TYPE_CLASS_PRIVATE_STATIC) ||
+			(_type == TYPE_CONSTRUCTOR_PRIVATE) ||
+			(_type == TYPE_METHOD_PRIVATE) ||
+			(_type == TYPE_METHOD_PRIVATE_STATIC) ||
+			(_type == TYPE_VARIABLE_PRIVATE) ||
+			(_type == TYPE_VARIABLE_PRIVATE_STATIC)) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public boolean isStatic() {
+		if ((_type == TYPE_CLASS_PRIVATE_STATIC) ||
+			(_type == TYPE_CLASS_PROTECTED_STATIC) ||
+			(_type == TYPE_CLASS_PUBLIC_STATIC) ||
+			(_type == TYPE_METHOD_PRIVATE_STATIC) ||
+			(_type == TYPE_METHOD_PROTECTED_STATIC) ||
+			(_type == TYPE_METHOD_PUBLIC_STATIC) ||
+			(_type == TYPE_VARIABLE_PRIVATE_STATIC) ||
+			(_type == TYPE_VARIABLE_PROTECTED_STATIC) ||
+			(_type == TYPE_VARIABLE_PUBLIC_STATIC)) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public boolean isVariable() {
+		if ((_type == TYPE_VARIABLE_PRIVATE) ||
+			(_type == TYPE_VARIABLE_PRIVATE_STATIC) ||
+			(_type == TYPE_VARIABLE_PROTECTED) ||
+			(_type == TYPE_VARIABLE_PROTECTED_STATIC) ||
+			(_type == TYPE_VARIABLE_PUBLIC) ||
+			(_type == TYPE_VARIABLE_PUBLIC_STATIC)) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	public void setContent(String content) {
 		_content = content;
 	}

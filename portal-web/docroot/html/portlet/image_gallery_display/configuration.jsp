@@ -105,8 +105,8 @@ IGConfigurationDisplayContext igConfigurationDisplayContext = new IGConfiguratio
 	</aui:button-row>
 </aui:form>
 
-<aui:script use="aui-base">
-	A.one('#<portlet:namespace />openFolderSelectorButton').on(
+<aui:script>
+	AUI.$('#<portlet:namespace />openFolderSelectorButton').on(
 		'click',
 		function(event) {
 			Liferay.Util.selectEntity(

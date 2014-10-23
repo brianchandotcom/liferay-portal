@@ -698,6 +698,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected String formatJavaTerms(
 			String javaClassName, String fileName, String absolutePath,
 			String content, String javaClassContent, int javaClassLineCount,
+			List<String> finalableFieldTypesExclusions,
 			List<String> javaTermAccessLevelModifierExclusions,
 			List<String> javaTermSortExclusions,
 			List<String> testAnnotationsExclusions)
@@ -709,7 +710,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			javaTermAccessLevelModifierExclusions);
 
 		String newJavaClassContent = javaClass.formatJavaTerms(
-			javaTermSortExclusions, testAnnotationsExclusions);
+			getAnnotationsExclusions(), getImmutableFieldTypes(),
+			finalableFieldTypesExclusions, javaTermSortExclusions,
+			testAnnotationsExclusions);
 
 		if (!javaClassContent.equals(newJavaClassContent)) {
 			return StringUtil.replaceFirst(
@@ -731,10 +734,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		_annotationsExclusions = SetUtil.fromArray(
-			new String[] {
-				"com.liferay.portal.kernel.bean.BeanReference",
-				"org.mockito.Mock", "java.lang.SuppressWarnings"
-			});
+			new String[] {"BeanReference", "Mock", "SuppressWarnings"});
 
 		return _annotationsExclusions;
 	}
@@ -878,10 +878,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_immutableFieldTypes = SetUtil.fromArray(
 			new String[] {
 				"boolean", "byte", "char", "double", "float", "int", "long",
-				"short", "java.lang.Boolean", "java.lang.Byte",
-				"java.lang.Character", "java.lang.Class", "java.lang.Double",
-				"java.lang.Float", "java.lang.Int", "java.lang.Long",
-				"java.lang.Number", "java.lang.Short", "java.lang.String",
+				"short", "Boolean", "Byte", "Character", "Class", "Double",
+				"Float", "Int", "Long", "Number", "Short", "String",
 			});
 
 		_immutableFieldTypes.addAll(getPropertyList("immutable.field.types"));

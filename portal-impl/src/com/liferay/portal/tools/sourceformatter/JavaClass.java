@@ -16,6 +16,8 @@ package com.liferay.portal.tools.sourceformatter;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
@@ -54,6 +56,8 @@ public class JavaClass {
 	}
 
 	public String formatJavaTerms(
+			Set<String> annotationsExclusions, Set<String> immutableFieldTypes,
+			List<String> finalableFieldTypesExclusions,
 			List<String> javaTermSortExclusions,
 			List<String> testAnnotationsExclusions)
 		throws Exception {
@@ -71,6 +75,14 @@ public class JavaClass {
 		while (itr.hasNext()) {
 			JavaTerm javaTerm = itr.next();
 
+			checkJavaFieldType(
+				javaTerm, annotationsExclusions, immutableFieldTypes,
+				finalableFieldTypesExclusions);
+
+			if (!originalContent.equals(_content)) {
+				return _content;
+			}
+
 			sortJavaTerms(previousJavaTerm, javaTerm, javaTermSortExclusions);
 			fixTabsAndIncorrectEmptyLines(javaTerm);
 			formatAnnotations(javaTerm, testAnnotationsExclusions);
@@ -86,7 +98,8 @@ public class JavaClass {
 			String innerClassContent = innerClass.getContent();
 
 			String newInnerClassContent = innerClass.formatJavaTerms(
-				javaTermSortExclusions,
+				annotationsExclusions, immutableFieldTypes,
+				finalableFieldTypesExclusions, javaTermSortExclusions,
 				testAnnotationsExclusions);
 
 			if (!innerClassContent.equals(newInnerClassContent)) {
@@ -187,6 +200,127 @@ public class JavaClass {
 				"Annotation @" + annotation + " required for " + methodName +
 					" " + fileName);
 		}
+	}
+
+	protected void checkFinalableFieldType(
+			JavaTerm javaTerm, Set<String> annotationsExclusions,
+			boolean isStatic)
+		throws Exception {
+
+		String javaTermContent = javaTerm.getContent();
+
+		for (String annotation : annotationsExclusions) {
+			if (javaTermContent.contains(
+					_indent + StringPool.AT + annotation)) {
+
+				return;
+			}
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("(\\b|\\.)");
+		sb.append(javaTerm.getName());
+		sb.append(" (=)|(\\+\\+)|(--)|(\\+=)|(-=)|(\\*=)|(/=)|(%=)");
+		sb.append("|(\\|=)|(&=)|(^=) ");
+
+		Pattern pattern = Pattern.compile(sb.toString());
+
+		if (!isFinalableField(javaTerm, _name, pattern, true)) {
+			return;
+		}
+
+		String newJavaTermContent = null;
+
+		if (isStatic) {
+			newJavaTermContent = StringUtil.replaceFirst(
+				javaTermContent, "private static ", "private static final ");
+		}
+		else {
+			newJavaTermContent = StringUtil.replaceFirst(
+				javaTermContent, "private ", "private final ");
+		}
+
+		_content = StringUtil.replace(
+			_content, javaTermContent, newJavaTermContent);
+	}
+
+	protected void checkImmutableFieldType(
+		JavaTerm javaTerm, boolean isStatic) {
+
+		String oldName = javaTerm.getName();
+
+		if (!isStatic || oldName.equals("serialVersionUID")) {
+			return;
+		}
+
+		Matcher matcher = _camelCasePattern.matcher(oldName);
+
+		String newName = matcher.replaceAll("$1_$2");
+
+		newName = StringUtil.toUpperCase(newName);
+
+		if (newName.charAt(0) != CharPool.UNDERLINE) {
+			newName = StringPool.UNDERLINE.concat(newName);
+		}
+
+		_content = _content.replaceAll(
+			"(?<=[\\W&&[^.\"]])(" + oldName + ")\\b", newName);
+	}
+
+	protected void checkJavaFieldType(
+			JavaTerm javaTerm, Set<String> annotationsExclusions,
+			Set<String> immutableFieldTypes,
+			List<String> finalableFieldTypesExclusions)
+		throws Exception {
+
+		if (!BaseSourceProcessor.portalSource ||
+			!javaTerm.isPrivate() || !javaTerm.isVariable()) {
+
+			return;
+		}
+
+		Pattern pattern = Pattern.compile(
+			"\t(private |protected |public )(static )?(final)?([\\s\\S]*?)" +
+				javaTerm.getName());
+
+		Matcher matcher = pattern.matcher(javaTerm.getContent());
+
+		if (!matcher.find()) {
+			return;
+		}
+
+		boolean isFinal = Validator.isNotNull(matcher.group(3));
+		boolean isStatic = Validator.isNotNull(matcher.group(2));
+		String javaFieldType = StringUtil.trim(matcher.group(4));
+
+		if (isFinal) {
+			if (immutableFieldTypes.contains(javaFieldType)) {
+				checkImmutableFieldType(javaTerm, isStatic);
+				checkStaticableFieldType(javaTerm, isStatic);
+			}
+		}
+		else if (!BaseSourceProcessor.isExcluded(
+					finalableFieldTypesExclusions, _absolutePath)) {
+
+			checkFinalableFieldType(javaTerm, annotationsExclusions, isStatic);
+		}
+	}
+
+	protected void checkStaticableFieldType(
+		JavaTerm javaTerm, boolean isStatic) {
+
+		String javaTermContent = javaTerm.getContent();
+
+		if (isStatic || !javaTermContent.contains(StringPool.EQUAL)) {
+			return;
+		}
+
+		String newJavaTermContent = StringUtil.replaceFirst(
+			javaTermContent, "private final", "private static final");
+
+		_content = StringUtil.replace(
+			_content, javaTermContent, newJavaTermContent);
 	}
 
 	protected void checkTestAnnotations(JavaTerm javaTerm) {
@@ -897,6 +1031,41 @@ public class JavaClass {
 		}
 	}
 
+	protected boolean isFinalableField(
+		JavaTerm javaTerm, String javaTermClassName, Pattern pattern,
+		boolean checkOuterClass) {
+
+		if (checkOuterClass && (_outerClass != null)) {
+			return _outerClass.isFinalableField(
+				javaTerm, javaTermClassName, pattern, true);
+		}
+
+		for (JavaTerm curJavaTerm : _javaTerms) {
+			if (!curJavaTerm.isMethod() &&
+				(!curJavaTerm.isConstructor() ||
+				 javaTermClassName.equals(_name))) {
+
+				continue;
+			}
+
+			Matcher matcher = pattern.matcher(curJavaTerm.getContent());
+
+			if (matcher.find()) {
+				return false;
+			}
+		}
+
+		for (JavaClass innerClass : _innerClasses) {
+			if (!innerClass.isFinalableField(
+					javaTerm, javaTermClassName, pattern, false)) {
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	protected boolean isValidJavaTerm(String content) {
 		if (content.startsWith(_indent + "static {")) {
 			return true;
@@ -983,6 +1152,7 @@ public class JavaClass {
 	}
 
 	private String _absolutePath;
+	private Pattern _camelCasePattern = Pattern.compile("([a-z])([A-Z0-9])");
 	private Pattern _classPattern = Pattern.compile(
 		"(private |protected |public )(static )*class ([\\s\\S]*?) \\{\n");
 	private String _content;

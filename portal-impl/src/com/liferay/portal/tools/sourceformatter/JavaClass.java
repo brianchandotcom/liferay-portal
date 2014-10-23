@@ -35,11 +35,12 @@ import java.util.regex.Pattern;
 public class JavaClass {
 
 	public JavaClass(
-			String fileName, String absolutePath, String content, int lineCount,
-			String indent, JavaClass outerClass,
+			String name, String fileName, String absolutePath, String content,
+			int lineCount, String indent, JavaClass outerClass,
 			List<String> javaTermAccessLevelModifierExclusions)
 		throws Exception {
 
+		_name = name;
 		_fileName = fileName;
 		_absolutePath = absolutePath;
 		_content = content;
@@ -589,9 +590,9 @@ public class JavaClass {
 
 							if (javaTerm.isClass()) {
 								JavaClass innerClass = new JavaClass(
-									_fileName, _absolutePath, javaTermContent,
-									javaTermLineCount, _indent + StringPool.TAB,
-									this,
+									javaTermName, _fileName, _absolutePath,
+									javaTermContent, javaTermLineCount,
+									_indent + StringPool.TAB, this,
 									_javaTermAccessLevelModifierExclusions);
 
 								_innerClasses.add(innerClass);
@@ -660,7 +661,7 @@ public class JavaClass {
 
 				if (javaTerm.isClass()) {
 					JavaClass innerClass = new JavaClass(
-						_fileName, _absolutePath, javaTermContent,
+						javaTermName, _fileName, _absolutePath, javaTermContent,
 						javaTermLineCount, _indent + StringPool.TAB, this,
 						_javaTermAccessLevelModifierExclusions);
 
@@ -991,6 +992,7 @@ public class JavaClass {
 	private List<String> _javaTermAccessLevelModifierExclusions;
 	private Set<JavaTerm> _javaTerms;
 	private int _lineCount;
+	private String _name;
 	private JavaClass _outerClass;
 
 }

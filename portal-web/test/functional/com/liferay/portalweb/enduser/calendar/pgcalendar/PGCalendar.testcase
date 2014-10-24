@@ -1449,6 +1449,40 @@
 		</execute>
 	</command>
 
+	<command name="EditCalendarEventAllDayWithUserInvite" priority="5">
+		<var name="eventTitle" value="Calendar Event All Day Title" />
+		<var name="eventTitleEdit" value="Calendar Event All Day Title Edit" />
+		<var name="eventType" value="All Day" />
+		<var name="resourceNameList" value="Test Test" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+			<var name="inviteResource" value="true" />
+			<var name="optionSet" value="true" />
+			<var name="resourceNameList" value="${resourceNameList}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#editPG">
+			<var name="calendarName" value="Test Test" />
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventTitleEdit" value="${eventTitleEdit}" />
+			<var name="inviteResource" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewPG">
+			<var name="eventTitle" value="${eventTitleEdit}" />
+		</execute>
+	</command>
+
 	<command name="EditCalendarEventRegular" priority="5">
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventTitleEdit" value="Calendar Event Regular Title Edit" />
@@ -1518,6 +1552,40 @@
 
 		<execute macro="CalendarEvent#viewPG">
 			<var name="eventNumber" value="${eventNumber}" />
+			<var name="eventTitle" value="${eventTitleEdit}" />
+		</execute>
+	</command>
+
+	<command name="EditCalendarEventRegularWithUserInvite" priority="5">
+		<var name="eventTitle" value="Calendar Event Regular Title" />
+		<var name="eventTitleEdit" value="Calendar Event Regular Title Edit" />
+		<var name="eventType" value="Regular" />
+		<var name="resourceNameList" value="Test Test" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+			<var name="inviteResource" value="true" />
+			<var name="optionSet" value="true" />
+			<var name="resourceNameList" value="${resourceNameList}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#editPG">
+			<var name="calendarName" value="Test Test" />
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventTitleEdit" value="${eventTitleEdit}" />
+			<var name="inviteResource" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewPG">
 			<var name="eventTitle" value="${eventTitleEdit}" />
 		</execute>
 	</command>
@@ -1595,6 +1663,42 @@
 
 		<execute macro="CalendarEvent#viewPG">
 			<var name="eventNumber" value="${eventNumber}" />
+			<var name="eventTitle" value="${eventTitleEdit}" />
+		</execute>
+	</command>
+
+	<command name="EditCalendarEventRepeatingWithUserInvite" priority="5">
+		<var name="eventTitle" value="Calendar Event Repeating Title" />
+		<var name="eventTitleEdit" value="Calendar Event Repeating Title Edit" />
+		<var name="eventType" value="Repeating" />
+		<var name="resourceNameList" value="Test Test" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+			<var name="frequency" value="Daily" />
+			<var name="inviteResource" value="true" />
+			<var name="numberOfOccurrences" value="1" />
+			<var name="optionSet" value="true" />
+			<var name="resourceNameList" value="${resourceNameList}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#editPG">
+			<var name="calendarName" value="Test Test" />
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventTitleEdit" value="${eventTitleEdit}" />
+			<var name="inviteResource" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewPG">
 			<var name="eventTitle" value="${eventTitleEdit}" />
 		</execute>
 	</command>

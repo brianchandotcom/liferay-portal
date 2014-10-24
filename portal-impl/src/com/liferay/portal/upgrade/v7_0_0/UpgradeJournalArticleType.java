@@ -376,7 +376,8 @@ public class UpgradeJournalArticleType extends UpgradeBaseJournal {
 				String type = rs.getString("type_");
 
 				long assetEntryId = getAssetEntryId(resourcePrimKey);
-				long assetCategoryId = journalArticleTypesToAssetCategoryIds.get(type);
+				long assetCategoryId =
+					journalArticleTypesToAssetCategoryIds.get(type);
 
 				if (assetEntryId > 0) {
 					addAssetEntryToAssetCategory(assetEntryId, assetCategoryId);

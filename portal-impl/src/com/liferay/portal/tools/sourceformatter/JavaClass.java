@@ -245,12 +245,10 @@ public class JavaClass {
 			_content, javaTermContent, newJavaTermContent);
 	}
 
-	protected void checkImmutableFieldType(
-		JavaTerm javaTerm, boolean isStatic) {
-
+	protected void checkImmutableFieldType(JavaTerm javaTerm) {
 		String oldName = javaTerm.getName();
 
-		if (!isStatic || oldName.equals("serialVersionUID")) {
+		if (oldName.equals("serialVersionUID")) {
 			return;
 		}
 
@@ -274,9 +272,7 @@ public class JavaClass {
 			List<String> finalableFieldTypesExclusions)
 		throws Exception {
 
-		if (!BaseSourceProcessor.portalSource ||
-			!javaTerm.isPrivate() || !javaTerm.isVariable()) {
-
+		if (!BaseSourceProcessor.portalSource || !javaTerm.isVariable()) {
 			return;
 		}
 
@@ -294,10 +290,22 @@ public class JavaClass {
 		boolean isStatic = Validator.isNotNull(matcher.group(2));
 		String javaFieldType = StringUtil.trim(matcher.group(4));
 
+		if (isFinal && isStatic && javaFieldType.startsWith("Map<")) {
+			checkMutableFieldType(javaTerm);
+		}
+
+		if (!javaTerm.isPrivate()) {
+			return;
+		}
+
 		if (isFinal) {
 			if (immutableFieldTypes.contains(javaFieldType)) {
-				checkImmutableFieldType(javaTerm, isStatic);
-				checkStaticableFieldType(javaTerm, isStatic);
+				if (isStatic) {
+					checkImmutableFieldType(javaTerm);
+				}
+				else {
+					checkStaticableFieldType(javaTerm);
+				}
 			}
 		}
 		else if (!BaseSourceProcessor.isExcluded(
@@ -307,12 +315,50 @@ public class JavaClass {
 		}
 	}
 
-	protected void checkStaticableFieldType(
-		JavaTerm javaTerm, boolean isStatic) {
+	protected void checkMutableFieldType(JavaTerm javaTerm) {
+		String oldName = javaTerm.getName();
 
+		String newName = oldName;
+
+		if (newName.charAt(0) != CharPool.UNDERLINE) {
+			newName = StringPool.UNDERLINE.concat(newName);
+		}
+
+		if (StringUtil.isUpperCase(newName)) {
+			StringBundler sb = new StringBundler(newName.length());
+
+			for (int i = 0; i < newName.length(); i++) {
+				char c = newName.charAt(i);
+
+				if (i > 1) {
+					if (c == CharPool.UNDERLINE) {
+						continue;
+					}
+
+					if (newName.charAt(i - 1) == CharPool.UNDERLINE) {
+						sb.append(c);
+
+						continue;
+					}
+				}
+
+				sb.append(Character.toLowerCase(c));
+			}
+
+			newName = sb.toString();
+		}
+
+
+		if (!newName.equals(oldName)) {
+			_content = _content.replaceAll(
+				"(?<=[\\W&&[^.\"]])(" + oldName + ")\\b", newName);
+		}
+	}
+
+	protected void checkStaticableFieldType(JavaTerm javaTerm) {
 		String javaTermContent = javaTerm.getContent();
 
-		if (isStatic || !javaTermContent.contains(StringPool.EQUAL)) {
+		if (!javaTermContent.contains(StringPool.EQUAL)) {
 			return;
 		}
 

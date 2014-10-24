@@ -817,12 +817,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51046, LPS-51074" name="SitesDemoSiteManagement" priority="5">
-		<var name="childPageNameLists" value="Arena Baltika,Zenit Arena,Kazan Arena" />
-		<var name="privatePageNameLists" value="Accomodations,Maps" />
-		<var name="publicPageNameLists" value="Home,Arenas" />
-		<var name="tagNameLists" value="World Cup,Russia,2018" />
-
+	<command known-issues="LPS-51046,LPS-51074" name="SitesDemoSiteManagement" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -834,9 +829,9 @@
 			<var name="siteName" value="World Cup - Russia 2018" />
 		</execute>
 
-		<for list="${tagNameLists}" param="tagNameListsCount" >
+		<for list="World Cup,Russia,2018" param="tagName" >
 			<execute macro="Tag#addViaSiteCP">
-				<var name="tagName" value="${tagNameListsCount}" />
+				<var name="tagName" value="${tagName}" />
 			</execute>
 		</for>
 
@@ -856,9 +851,9 @@
 			<var name="siteScopeName" value="World Cup - Russia 2018" />
 		</execute>
 
-		<for list="${publicPageNameLists}" param="publicPageNameListsCount" >
+		<for list="Home,Arenas" param="publicPageName" >
 			<execute macro="SitePage#addCP">
-				<var name="sitePageName" value="${publicPageNameListsCount}" />
+				<var name="sitePageName" value="${publicPageName}" />
 				<var name="sitePagePrivacy" value="Public" />
 				<var name="siteScopeSelected" value="true" />
 			</execute>
@@ -869,10 +864,10 @@
 			<var name="siteScopeName" value="World Cup - Russia 2018" />
 		</execute>
 
-		<for list="${childPageNameLists}" param="childPageNameListsCount" >
+		<for list="Arena Baltika,Zenit Arena,Kazan Arena" param="childPageName" >
 			<execute macro="SitePage#addChildCP">
 				<var name="childSitepageName" value="true" />
-				<var name="siteChildPageName" value="${childPageNameListsCount}" />
+				<var name="siteChildPageName" value="${childPageName}" />
 				<var name="sitePagePrivacy" value="Public" />
 				<var name="siteScopeSelected" value="true" />
 			</execute>
@@ -883,9 +878,9 @@
 			<var name="siteScopeName" value="World Cup - Russia 2018" />
 		</execute>
 
-		<for list="${privatePageNameLists}" param="privatePageNameListsCount" >
+		<for list="Accomodations,Maps" param="privatePageName" >
 			<execute macro="SitePage#addCP">
-				<var name="sitePageName" value="${privatePageNameListsCount}" />
+				<var name="sitePageName" value="${privatePageName}" />
 				<var name="sitePagePrivacy" value="Private" />
 				<var name="siteScopeSelected" value="true" />
 			</execute>
@@ -921,12 +916,12 @@
 
 		<execute macro="Page#viewCustomLogoPG" />
 
-		<for list="${childPageNameLists}" param="childPageNameCount" >
+		<for list="Arena Baltika,Zenit Arena,Kazan Arena" param="childPageName" >
 			<execute macro="Page#viewChildPG">
-				<var name="childPageName" value="${childPageNameCount}" />
+				<var name="childPageName" value="${childPageName}" />
 				<var name="javaScriptPage" value="Welcome to Russia." />
 				<var name="pageName" value="Arenas" />
-				<var name="viewChildPageName" value="true" />
+				<var name="viewChildPageDropdown" value="PAGE_2" />
 			</execute>
 		</for>
 
@@ -995,7 +990,20 @@
 			<var name="siteName" value="World Cup - Russia 2018" />
 		</execute>
 
-		<execute macro="LAR#exportSiteCP" />
+		<execute action="CPSitepagesExport#assertClick" locator-key1="EXPORT_BUTTON" value1="Export" />
+
+		<execute action="CPSitepagesExport#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+
+		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
+
+		<echo message="value name ${valueName}" />
+
+		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
+
+		<echo message="import file name ${larFileName}" />
+
+		<execute action="CPSitepagesExport#click" locator-key1="CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute action="CPSitepagesExport#downloadTempFile" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -1016,12 +1024,12 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<for list="${childPageNameLists}" param="childPageNameCount" >
+		<for list="Arena Baltika,Zenit Arena,Kazan Arena" param="childPageName" >
 			<execute macro="Page#viewChildPG">
-				<var name="childPageName" value="${childPageNameCount}" />
+				<var name="childPageName" value="${childPageName}" />
 				<var name="javaScriptPage" value="Welcome to Russia." />
 				<var name="pageName" value="Arenas" />
-				<var name="viewChildPageName" value="true" />
+				<var name="viewChildPageDropdown" value="PAGE_2" />
 			</execute>
 		</for>
 	</command>

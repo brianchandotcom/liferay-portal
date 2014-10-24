@@ -565,9 +565,9 @@
 
 	<command name="viewChildPG">
 		<if>
-			<isset var="viewChildPageName" />
-			<then>	
-				<execute action="Home#click" locator-key1="PAGE_2" value1="${PageName}" />
+			<isset var="viewChildPageDropdown" />
+			<then>
+				<execute action="Home#click" locator-key1="${viewChildPageDropdown}" />
 
 				<if>
 					<isset var="javaScriptPage" />
@@ -576,7 +576,7 @@
 					</then>
 				</if>
 
-				<execute action="Home#mouseOver" locator-key1="PAGE_2" />
+				<execute action="Home#mouseOver" locator-key1="${viewChildPageDropdown}" />
 
 				<var name="key_childPageName" value="${childPageName}" />
 

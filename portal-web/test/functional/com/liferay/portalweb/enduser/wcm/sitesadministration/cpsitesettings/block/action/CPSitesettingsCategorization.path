@@ -50,7 +50,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TAGS_Suggestions_BUTTON</td>
+	<td>TAGS_SUGGESTIONS_BUTTON</td>
 	<td>//button[contains(.,'Suggestions')]</td>
 	<td></td>
 </tr>

@@ -389,6 +389,7 @@ public class UpgradeJournalArticleType extends UpgradeBaseJournal {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UpgradeJournalArticleType.class);
+	private static Log _log = LogFactoryUtil.getLog(
+		UpgradeJournalArticleType.class);
 
 }

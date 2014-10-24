@@ -17,6 +17,7 @@ package com.liferay.portal.struts;
 import com.liferay.portal.LayoutPermissionException;
 import com.liferay.portal.PortletActiveException;
 import com.liferay.portal.UserActiveException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.liveusers.LiveUsers;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletPreferencesIds;
 import com.liferay.portal.model.User;
@@ -753,7 +755,19 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 			// Authenticated users must have a current password
 
 			if ((user != null) && user.isPasswordReset()) {
-				return _PATH_PORTAL_UPDATE_PASSWORD;
+				PasswordPolicy passwordPolicy = null;
+
+				try {
+					passwordPolicy = user.getPasswordPolicy();
+				}
+				catch (Exception e) {
+					throw new SystemException(e);
+				}
+
+				if ((passwordPolicy != null) &&
+					passwordPolicy.isChangeRequired()) {
+					return _PATH_PORTAL_UPDATE_PASSWORD;
+				}
 			}
 			else if ((user != null) && !user.isPasswordReset() &&
 					 path.equals(_PATH_PORTAL_UPDATE_PASSWORD)) {

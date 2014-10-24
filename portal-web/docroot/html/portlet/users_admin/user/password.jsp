@@ -22,17 +22,18 @@ User selUser = (User)request.getAttribute("user.selUser");
 PasswordPolicy passwordPolicy = (PasswordPolicy)request.getAttribute("user.passwordPolicy");
 
 boolean passwordResetDisabled = false;
+boolean passwordReset = false;
 
 if (((selUser == null) || (selUser.getLastLoginDate() == null)) && ((passwordPolicy == null) || (passwordPolicy.isChangeable() && passwordPolicy.isChangeRequired()))) {
 	passwordResetDisabled = true;
-}
-
-boolean passwordReset = false;
-
-if (passwordResetDisabled) {
 	passwordReset = true;
 }
-else {
+
+if ((passwordPolicy != null) && !passwordPolicy.isChangeable()) {
+	passwordResetDisabled = true;
+}
+
+if (!passwordReset) {
 	passwordReset = BeanParamUtil.getBoolean(selUser, request, "passwordReset");
 }
 %>

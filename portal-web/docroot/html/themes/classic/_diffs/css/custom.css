@@ -118,6 +118,27 @@ html {
 		}
 	}
 
+	&.navbar-default {
+		.nav-account-controls {
+			background-color: transparent;
+
+			.navbar-nav > li > a {
+				&:focus, &:hover {
+					background-color: #2FA4F5;
+				}
+			}
+		}
+
+		.nav-add-controls .dropdown-menu > li > a {
+			&, &:focus, &:hover {
+				&, .nav-item-label {
+					background-color: transparent;
+					color: #FFF;
+				}
+			}
+		}
+	}
+
 	.container, .container-fluid {
 		> .nav.nav-add-controls ul.dropdown-menu > li > a {
 			&:focus, &:hover {
@@ -213,6 +234,22 @@ html {
 }
 
 .dockbar-split .dockbar {
+	&.navbar-default {
+		.nav-account-controls {
+			border-width: 0;
+		}
+
+		.nav-add-controls .dropdown-menu > li > a {
+			&, &:focus, &:hover {
+				&, .nav-item-label {
+					background-color: #333;
+					border-width: 0;
+					color: #FFF;
+				}
+			}
+		}
+	}
+
 	.info-button {
 		a {
 			margin-top: -4px;
@@ -290,6 +327,14 @@ html {
 	.page-customization-bar-container {
 		top: -1px;
 	}
+
+	.staging-controls .staging-bar {
+		margin: 6px 0 7px;
+
+		li.dropdown .dropdown-menu {
+			color: #FFF;
+		}
+	}
 }
 
 /* ---------- Main navigation ---------- */
@@ -361,6 +406,26 @@ html {
 				&:hover {
 					background: none;
 					text-decoration: underline;
+				}
+			}
+		}
+	}
+
+	.navbar-nav {
+		@include respond-to(phone, tablet) {
+			background-color: transparent;
+		}
+
+		> li a {
+			&, &:focus, &:hover {
+				color: #FFF;
+			}
+		}
+
+		.dropdown-menu > li > a {
+			&:focus, &:hover {
+				@include respond-to(phone, tablet) {
+					background-color: transparent;
 				}
 			}
 		}

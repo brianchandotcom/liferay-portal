@@ -86,6 +86,19 @@
 							</fileset>
 						</chmod>
 
+						<replaceregexp
+							file="${test.app.server.dir}/conf/server.xml"
+							flags="g"
+							match="=&quot;8(\d\d\d)&quot;"
+							replace="=&quot;${test.app.server.leading.port.number}\1&quot;"
+						/>
+
+						<replace
+							file="${test.app.server.classes.portal.dir}/portal-ext.properties"
+							token="liferay.home=${liferay.home}"
+							value="liferay.home=${test.app.server.parent.dir}"
+						/>
+
 						<math
 							datatype="int"
 							operand1="${app.server.bundle.index}"
@@ -213,23 +226,10 @@
 							app.server.bundle.index="${app.server.bundle.index}"
 						/>
 
-						<replaceregexp
-							file="${test.app.server.dir}/conf/server.xml"
-							flags="g"
-							match="=&quot;8(\d\d\d)&quot;"
-							replace="=&quot;${test.app.server.leading.port.number}\1&quot;"
-						/>
-
 						<replace
 							file="${test.app.server.dir}/conf/server.xml"
 							token="&lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot;&gt;"
 							value="&lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot; jvmRoute=&quot;${test.app.server.leading.port.number}&quot;&gt;"
-						/>
-
-						<replace
-							file="${test.app.server.classes.portal.dir}/portal-ext.properties"
-							token="liferay.home=${liferay.home}"
-							value="liferay.home=${test.app.server.parent.dir}"
 						/>
 
 						<math
@@ -3509,10 +3509,15 @@ if (ppstate.equals("normal")) {
 		</if>
 
 		<if>
-			<equals arg1="${cluster.enabled}" arg2="true" />
+			<isset property="app.server.bundles.size" />
 			<then>
 				<prepare-additional-bundles />
+			</then>
+		</if>
 
+		<if>
+			<equals arg1="${cluster.enabled}" arg2="true" />
+			<then>
 				<prepare-test-cluster-properties />
 			</then>
 		</if>
@@ -3671,7 +3676,7 @@ if (ppstate.equals("normal")) {
 		<start-app-server />
 
 		<if>
-			<equals arg1="${cluster.enabled}" arg2="true" />
+			<isset property="app.server.bundles.size" />
 			<then>
 				<var name="app.server.bundle.index" value="1" />
 
@@ -3769,7 +3774,7 @@ if (ppstate.equals("normal")) {
 		<stop-app-server />
 
 		<if>
-			<equals arg1="${cluster.enabled}" arg2="true" />
+			<isset property="app.server.bundles.size" />
 			<then>
 				<var name="app.server.bundle.index" value="1" />
 

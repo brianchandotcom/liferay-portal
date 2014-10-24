@@ -214,7 +214,7 @@ public class UpgradeJournalType extends UpgradeBaseJournal {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasSelectedTypes()) {
+		if (!hasSelectedArticleTypes()) {
 			return;
 		}
 
@@ -232,52 +232,51 @@ public class UpgradeJournalType extends UpgradeBaseJournal {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
+				long vocabularyId = increment();
+
 				long companyId = rs.getLong("companyId");
 
 				long groupId = getCompanyGroupId(companyId);
 				long userId = getDefaultUserId(companyId);
 
-				long vocabularyId = increment();
-
 				String defaultLanguageId =
 					UpgradeProcessUtil.getDefaultLanguageId(companyId);
 
-				String vocabularyTitle = localize(
-					groupId, "type", defaultLanguageId);
-
-				AssetVocabularySettingsHelper vocabularySettingsHelper =
+				AssetVocabularySettingsHelper assetVocabularySettingsHelper =
 					new AssetVocabularySettingsHelper();
 
-				vocabularySettingsHelper.setMultiValued(false);
+				assetVocabularySettingsHelper.setMultiValued(false);
 
-				long[] classNameIds = new long[] {
-					PortalUtil.getClassNameId(JournalArticle.class)};
+				long[] classNameIds =
+					{PortalUtil.getClassNameId(JournalArticle.class)};
 
-				vocabularySettingsHelper.setClassNameIdsAndClassTypePKs(
-					classNameIds, new long[]{-1}, new boolean[]{false});
+				assetVocabularySettingsHelper.setClassNameIdsAndClassTypePKs(
+					classNameIds, new long[] {-1}, new boolean[] {false});
 
 				addAssetVocabulary(
 					vocabularyId, groupId, companyId, userId, "type",
-					vocabularyTitle, vocabularySettingsHelper.toString());
+					localize(groupId, "type", defaultLanguageId),
+					assetVocabularySettingsHelper.toString());
 
-				Map<String, Long> categoryTypes = new HashMap<String, Long>();
+				Map<String, Long> journalArticleTypesToAssetCategoryIds =
+					new HashMap<String, Long>();
 
 				int i = 1;
 
 				for (String type : types) {
-					long categoryId = increment();
-
-					String categoryTitle = localize(
-						groupId, type, defaultLanguageId);
+					long assetCategoryId = increment();
 
 					addAssetCategory(
-						categoryId, groupId, companyId, userId, i++, i++, type,
-						categoryTitle, vocabularyId);
+						assetCategoryId, groupId, companyId, userId, i++, i++,
+						type, localize(groupId, type, defaultLanguageId),
+						vocabularyId);
 
-					categoryTypes.put(type, categoryId);
+					journalArticleTypesToAssetCategoryIds.put(
+						type, assetCategoryId);
 				}
 
-				updateJournalArticles(companyId, categoryTypes);
+				updateJournalArticles(
+					companyId, journalArticleTypesToAssetCategoryIds);
 			}
 		}
 		finally {
@@ -313,7 +312,7 @@ public class UpgradeJournalType extends UpgradeBaseJournal {
 		}
 	}
 
-	protected boolean hasSelectedTypes() throws Exception {
+	protected boolean hasSelectedArticleTypes() throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -372,14 +371,14 @@ public class UpgradeJournalType extends UpgradeBaseJournal {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				String type = rs.getString("type_");
 				long resourcePrimKey = rs.getLong("resourcePrimKey");
+				String type = rs.getString("type_");
 
-				long categoryId = categoryTypes.get(type);
-				long entryId = getAssetEntryId(resourcePrimKey);
+				long assetEntryId = getAssetEntryId(resourcePrimKey);
+				long assetCategoryId = categoryTypes.get(type);
 
-				if (entryId > 0) {
-					addAssetEntryToAssetCategory(entryId, categoryId);
+				if (assetEntryId > 0) {
+					addAssetEntryToAssetCategory(assetEntryId, assetCategoryId);
 				}
 			}
 		}

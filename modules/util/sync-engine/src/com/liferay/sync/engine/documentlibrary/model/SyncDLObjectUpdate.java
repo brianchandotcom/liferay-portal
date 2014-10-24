@@ -31,6 +31,14 @@ public class SyncDLObjectUpdate {
 		return syncDLObjects;
 	}
 
+	public void setLastAccessTime(long lastAccessTime) {
+		this.lastAccessTime = lastAccessTime;
+	}
+
+	public void setSyncDLObjects(List<SyncFile> syncDLObjects) {
+		this.syncDLObjects = syncDLObjects;
+	}
+
 	protected long lastAccessTime;
 	protected List<SyncFile> syncDLObjects;
 

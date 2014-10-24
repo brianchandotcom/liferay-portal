@@ -173,7 +173,7 @@ public class BasePersistenceImpl<TT extends BaseModel, TID>
 			return _connectionSource;
 		}
 
-		StringBuilder sb = new StringBuilder(5);
+		StringBuilder sb = new StringBuilder();
 
 		sb.append("jdbc:h2:");
 		sb.append(PropsValues.SYNC_CONFIGURATION_DIRECTORY);

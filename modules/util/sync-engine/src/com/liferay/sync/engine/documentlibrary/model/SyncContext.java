@@ -36,64 +36,64 @@ public class SyncContext {
 		"sync.client.poll.interval";
 
 	public String getPluginVersion() {
-		return _pluginVersion;
+		return pluginVersion;
 	}
 
 	public int getPortalBuildNumber() {
-		return _portalBuildNumber;
+		return portalBuildNumber;
 	}
 
 	public Map<String, String> getPortletPreferencesMap() {
-		return _portletPreferencesMap;
+		return portletPreferencesMap;
 	}
 
 	public List<SyncSite> getSyncSites() {
-		return _syncSites;
+		return syncSites;
 	}
 
 	public SyncUser getSyncUser() {
-		return _syncUser;
+		return syncUser;
 	}
 
 	public boolean isSocialOfficeInstalled() {
-		return _socialOfficeInstalled;
+		return socialOfficeInstalled;
 	}
 
 	public void setPluginVersion(String pluginVersion) {
-		_pluginVersion = pluginVersion;
+		this.pluginVersion = pluginVersion;
 	}
 
 	public void setPortalBuildNumber(int portalBuildNumber) {
-		_portalBuildNumber = portalBuildNumber;
+		this.portalBuildNumber = portalBuildNumber;
 	}
 
 	public void setPortletPreferencesMap(
 		Map<String, String> portletPreferencesMap) {
 
-		_portletPreferencesMap = portletPreferencesMap;
+		this.portletPreferencesMap = portletPreferencesMap;
 	}
 
 	public void setSocialOfficeInstalled(boolean socialOfficeInstalled) {
-		_socialOfficeInstalled = socialOfficeInstalled;
+		this.socialOfficeInstalled = socialOfficeInstalled;
 	}
 
 	public void setSyncSites(List<SyncSite> syncSites) {
-		_syncSites = syncSites;
+		this.syncSites = syncSites;
 	}
 
 	public void setSyncUser(SyncUser syncUser) {
-		_syncUser = syncUser;
+		this.syncUser = syncUser;
 	}
 
-	private String _pluginVersion;
-	private int _portalBuildNumber;
-	private Map<String, String> _portletPreferencesMap;
-	private boolean _socialOfficeInstalled;
+	protected String pluginVersion;
+	protected int portalBuildNumber;
+	protected Map<String, String> portletPreferencesMap;
+	protected boolean socialOfficeInstalled;
 
 	@JsonProperty("userSitesGroups")
-	private List<SyncSite> _syncSites;
+	protected List<SyncSite> syncSites;
 
 	@JsonProperty("user")
-	private SyncUser _syncUser;
+	protected SyncUser syncUser;
 
 }

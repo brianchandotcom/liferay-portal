@@ -48,7 +48,7 @@ public class DownloadFileEvent extends BaseEvent {
 
 		SyncFileService.update(syncFile);
 
-		StringBuilder sb = new StringBuilder(9);
+		StringBuilder sb = new StringBuilder();
 
 		sb.append(_URL_PATH);
 		sb.append("/");

@@ -62,7 +62,7 @@
 
 					<antelope:repeat count="${app.server.bundles.size}">
 						<set-app-server-properties
-							app.server.bundle.index="${app.server.bundle.index}"
+							index="${app.server.bundle.index}"
 						/>
 
 						<delete dir="${test.app.server.parent.dir}" />
@@ -119,7 +119,7 @@
 
 					<antelope:repeat count="${databases.size}">
 						<set-app-server-properties
-							app.server.bundle.index="${database.index}"
+							index="${database.index}"
 						/>
 
 						<replace
@@ -252,7 +252,7 @@
 
 					<antelope:repeat count="${app.server.bundles.size}">
 						<set-app-server-properties
-							app.server.bundle.index="${app.server.bundle.index}"
+							index="${app.server.bundle.index}"
 						/>
 
 						<replace
@@ -458,7 +458,7 @@
 
 	<macrodef name="set-app-server-properties">
 		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
-		<attribute default="0" name="app.server.bundle.index" />
+		<attribute default="0" name="index" />
 
 		<sequential>
 			<var name="test.app.server.bin.dir" unset="true" />
@@ -470,14 +470,14 @@
 
 			<math
 				datatype="int"
-				operand1="@{app.server.bundle.index}"
+				operand1="@{index}"
 				operand2="8"
 				operation="+"
 				result="test.app.server.leading.port.number"
 			/>
 
 			<if>
-				 <equals arg1="@{app.server.bundle.index}" arg2="0" />
+				 <equals arg1="@{index}" arg2="0" />
 				 <then>
 					<var name="test.app.server.bin.dir" value="@{app.server.bin.dir}" />
 					<var name="test.app.server.classes.portal.dir" value="${app.server.classes.portal.dir}" />
@@ -487,23 +487,23 @@
 				 </then>
 				 <else>
 					<antelope:stringutil property="test.app.server.bin.dir" string="@{app.server.bin.dir}">
-						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.index}$2" />
+						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{index}$2" />
 					</antelope:stringutil>
 
 					<antelope:stringutil property="test.app.server.classes.portal.dir" string="${app.server.classes.portal.dir}">
-						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.index}$2" />
+						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{index}$2" />
 					</antelope:stringutil>
 
 					<antelope:stringutil property="test.app.server.deploy.dir" string="${app.server.deploy.dir}">
-						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.index}$2" />
+						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{index}$2" />
 					</antelope:stringutil>
 
 					<antelope:stringutil property="test.app.server.dir" string="${app.server.dir}">
-						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.index}$2" />
+						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{index}$2" />
 					</antelope:stringutil>
 
 					<antelope:stringutil property="test.app.server.parent.dir" string="${app.server.parent.dir}">
-						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.index}$2" />
+						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{index}$2" />
 					</antelope:stringutil>
 				 </else>
 			</if>
@@ -543,7 +543,7 @@
 		<sequential>
 			<set-app-server-properties
 				app.server.bin.dir="@{app.server.bin.dir}"
-				app.server.bundle.index="@{app.server.bundle.index}"
+				index="@{app.server.bundle.index}"
 			/>
 
 			<if>
@@ -631,7 +631,7 @@
 		<sequential>
 			<set-app-server-properties
 				app.server.bin.dir="@{app.server.bin.dir}"
-				app.server.bundle.index="@{app.server.bundle.index}"
+				index="@{app.server.bundle.index}"
 			/>
 
 			<antcall target="clean-up-logs" />

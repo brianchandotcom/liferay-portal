@@ -28,6 +28,50 @@ import java.util.regex.Pattern;
  */
 public class JavaTerm {
 
+	public static final int TYPE_CLASS_PRIVATE = 24;
+
+	public static final int TYPE_CLASS_PRIVATE_STATIC = 23;
+
+	public static final int TYPE_CLASS_PROTECTED = 16;
+
+	public static final int TYPE_CLASS_PROTECTED_STATIC = 15;
+
+	public static final int TYPE_CLASS_PUBLIC = 8;
+
+	public static final int TYPE_CLASS_PUBLIC_STATIC = 7;
+
+	public static final int TYPE_CONSTRUCTOR_PRIVATE = 18;
+
+	public static final int TYPE_CONSTRUCTOR_PROTECTED = 10;
+
+	public static final int TYPE_CONSTRUCTOR_PUBLIC = 4;
+
+	public static final int TYPE_METHOD_PRIVATE = 19;
+
+	public static final int TYPE_METHOD_PRIVATE_STATIC = 17;
+
+	public static final int TYPE_METHOD_PROTECTED = 11;
+
+	public static final int TYPE_METHOD_PROTECTED_STATIC = 9;
+
+	public static final int TYPE_METHOD_PUBLIC = 5;
+
+	public static final int TYPE_METHOD_PUBLIC_STATIC = 3;
+
+	public static final int TYPE_STATIC_BLOCK = 21;
+
+	public static final int TYPE_VARIABLE_PRIVATE = 22;
+
+	public static final int TYPE_VARIABLE_PRIVATE_STATIC = 20;
+
+	public static final int TYPE_VARIABLE_PROTECTED = 14;
+
+	public static final int TYPE_VARIABLE_PROTECTED_STATIC = 12;
+
+	public static final int TYPE_VARIABLE_PUBLIC = 6;
+
+	public static final int TYPE_VARIABLE_PUBLIC_STATIC = 1;
+
 	public JavaTerm(String name, int type, String content, int lineCount) {
 		_name = name;
 		_type = type;
@@ -54,10 +98,7 @@ public class JavaTerm {
 
 		_parameterTypes = new ArrayList<String>();
 
-		if (!JavaClass.isInJavaTermTypeGroup(
-				_type, JavaClass.TYPE_CONSTRUCTOR) &&
-			!JavaClass.isInJavaTermTypeGroup(_type, JavaClass.TYPE_METHOD)) {
-
+		if (!isConstructor() && !isMethod()) {
 			return _parameterTypes;
 		}
 
@@ -112,6 +153,97 @@ public class JavaTerm {
 
 	public int getType() {
 		return _type;
+	}
+
+	public boolean isClass() {
+		if ((_type == TYPE_CLASS_PRIVATE) ||
+			(_type == TYPE_CLASS_PRIVATE_STATIC) ||
+			(_type == TYPE_CLASS_PROTECTED) ||
+			(_type == TYPE_CLASS_PROTECTED_STATIC) ||
+			(_type == TYPE_CLASS_PUBLIC) ||
+			(_type == TYPE_CLASS_PUBLIC_STATIC)) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public boolean isConstructor() {
+		if ((_type == TYPE_CONSTRUCTOR_PRIVATE) ||
+			(_type == TYPE_CONSTRUCTOR_PROTECTED) ||
+			(_type == TYPE_CONSTRUCTOR_PUBLIC)) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public boolean isMethod() {
+		if ((_type == TYPE_METHOD_PRIVATE) ||
+			(_type == TYPE_METHOD_PRIVATE_STATIC) ||
+			(_type == TYPE_METHOD_PROTECTED) ||
+			(_type == TYPE_METHOD_PROTECTED_STATIC) ||
+			(_type == TYPE_METHOD_PUBLIC) ||
+			(_type == TYPE_METHOD_PUBLIC_STATIC)) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public boolean isPrivate() {
+		if ((_type == TYPE_CLASS_PRIVATE) ||
+			(_type == TYPE_CLASS_PRIVATE_STATIC) ||
+			(_type == TYPE_CONSTRUCTOR_PRIVATE) ||
+			(_type == TYPE_METHOD_PRIVATE) ||
+			(_type == TYPE_METHOD_PRIVATE_STATIC) ||
+			(_type == TYPE_VARIABLE_PRIVATE) ||
+			(_type == TYPE_VARIABLE_PRIVATE_STATIC)) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public boolean isStatic() {
+		if ((_type == TYPE_CLASS_PRIVATE_STATIC) ||
+			(_type == TYPE_CLASS_PROTECTED_STATIC) ||
+			(_type == TYPE_CLASS_PUBLIC_STATIC) ||
+			(_type == TYPE_METHOD_PRIVATE_STATIC) ||
+			(_type == TYPE_METHOD_PROTECTED_STATIC) ||
+			(_type == TYPE_METHOD_PUBLIC_STATIC) ||
+			(_type == TYPE_VARIABLE_PRIVATE_STATIC) ||
+			(_type == TYPE_VARIABLE_PROTECTED_STATIC) ||
+			(_type == TYPE_VARIABLE_PUBLIC_STATIC)) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public boolean isVariable() {
+		if ((_type == TYPE_VARIABLE_PRIVATE) ||
+			(_type == TYPE_VARIABLE_PRIVATE_STATIC) ||
+			(_type == TYPE_VARIABLE_PROTECTED) ||
+			(_type == TYPE_VARIABLE_PROTECTED_STATIC) ||
+			(_type == TYPE_VARIABLE_PUBLIC) ||
+			(_type == TYPE_VARIABLE_PUBLIC_STATIC)) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public void setContent(String content) {

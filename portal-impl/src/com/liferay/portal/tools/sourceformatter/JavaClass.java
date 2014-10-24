@@ -16,6 +16,8 @@ package com.liferay.portal.tools.sourceformatter;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
@@ -34,145 +36,51 @@ import java.util.regex.Pattern;
  */
 public class JavaClass {
 
-	public static final int[] TYPE_CLASS = {
-		JavaClass.TYPE_CLASS_PRIVATE, JavaClass.TYPE_CLASS_PRIVATE_STATIC,
-		JavaClass.TYPE_CLASS_PROTECTED, JavaClass.TYPE_CLASS_PROTECTED_STATIC,
-		JavaClass.TYPE_CLASS_PUBLIC, JavaClass.TYPE_CLASS_PUBLIC_STATIC
-	};
-
-	public static final int TYPE_CLASS_PRIVATE = 24;
-
-	public static final int TYPE_CLASS_PRIVATE_STATIC = 23;
-
-	public static final int TYPE_CLASS_PROTECTED = 16;
-
-	public static final int TYPE_CLASS_PROTECTED_STATIC = 15;
-
-	public static final int TYPE_CLASS_PUBLIC = 8;
-
-	public static final int TYPE_CLASS_PUBLIC_STATIC = 7;
-
-	public static final int[] TYPE_CONSTRUCTOR = {
-		JavaClass.TYPE_CONSTRUCTOR_PRIVATE,
-		JavaClass.TYPE_CONSTRUCTOR_PROTECTED, JavaClass.TYPE_CONSTRUCTOR_PUBLIC
-	};
-
-	public static final int TYPE_CONSTRUCTOR_PRIVATE = 18;
-
-	public static final int TYPE_CONSTRUCTOR_PROTECTED = 10;
-
-	public static final int TYPE_CONSTRUCTOR_PUBLIC = 4;
-
-	public static final int[] TYPE_METHOD = {
-		JavaClass.TYPE_METHOD_PRIVATE, JavaClass.TYPE_METHOD_PRIVATE_STATIC,
-		JavaClass.TYPE_METHOD_PROTECTED, JavaClass.TYPE_METHOD_PROTECTED_STATIC,
-		JavaClass.TYPE_METHOD_PUBLIC, JavaClass.TYPE_METHOD_PUBLIC_STATIC
-	};
-
-	public static final int TYPE_METHOD_PRIVATE = 19;
-
-	public static final int TYPE_METHOD_PRIVATE_STATIC = 17;
-
-	public static final int TYPE_METHOD_PROTECTED = 11;
-
-	public static final int TYPE_METHOD_PROTECTED_STATIC = 9;
-
-	public static final int TYPE_METHOD_PUBLIC = 5;
-
-	public static final int TYPE_METHOD_PUBLIC_STATIC = 3;
-
-	public static final int TYPE_STATIC_BLOCK = 21;
-
-	public static final int[] TYPE_VARIABLE = {
-		JavaClass.TYPE_VARIABLE_PRIVATE, JavaClass.TYPE_VARIABLE_PRIVATE_STATIC,
-		JavaClass.TYPE_VARIABLE_PROTECTED,
-		JavaClass.TYPE_VARIABLE_PROTECTED_STATIC,
-		JavaClass.TYPE_VARIABLE_PUBLIC, JavaClass.TYPE_VARIABLE_PUBLIC_STATIC,
-	};
-
-	public static final int TYPE_VARIABLE_PRIVATE = 22;
-
-	public static final int TYPE_VARIABLE_PRIVATE_STATIC = 20;
-
-	public static final int TYPE_VARIABLE_PROTECTED = 14;
-
-	public static final int TYPE_VARIABLE_PROTECTED_STATIC = 12;
-
-	public static final int TYPE_VARIABLE_PUBLIC = 6;
-
-	public static final int TYPE_VARIABLE_PUBLIC_STATIC = 1;
-
-	public static final int[] TYPE_VARIABLE_STATIC = {
-		JavaClass.TYPE_VARIABLE_PRIVATE_STATIC,
-		JavaClass.TYPE_VARIABLE_PROTECTED_STATIC,
-		JavaClass.TYPE_VARIABLE_PUBLIC_STATIC
-	};
-
 	public JavaClass(
-			String fileName, String absolutePath, String content, int lineCount,
-			String indent)
+			String name, String fileName, String absolutePath, String content,
+			int lineCount, String indent, JavaClass outerClass,
+			List<String> javaTermAccessLevelModifierExclusions)
 		throws Exception {
 
+		_name = name;
 		_fileName = fileName;
 		_absolutePath = absolutePath;
 		_content = content;
 		_lineCount = lineCount;
+		_outerClass = outerClass;
 		_indent = indent;
+		_javaTermAccessLevelModifierExclusions =
+			javaTermAccessLevelModifierExclusions;
 
-		_staticBlocks = new ArrayList<JavaTerm>();
+		_javaTerms = getJavaTerms();
 	}
 
 	public String formatJavaTerms(
-			List<String> javaTermAccessLevelModifierExclusions,
+			Set<String> annotationsExclusions, Set<String> immutableFieldTypes,
+			List<String> finalableFieldTypesExclusions,
 			List<String> javaTermSortExclusions,
 			List<String> testAnnotationsExclusions)
 		throws Exception {
 
-		Set<JavaTerm> javaTerms = getJavaTerms(
-			javaTermAccessLevelModifierExclusions);
-
-		if (javaTerms == null) {
+		if (_javaTerms == null) {
 			return _content;
 		}
 
 		String originalContent = _content;
 
-		javaTerms = addStaticBlocks(javaTerms);
-
-		if (!originalContent.equals(_content)) {
-			return _content;
-		}
-
 		JavaTerm previousJavaTerm = null;
 
-		Iterator<JavaTerm> itr = javaTerms.iterator();
+		Iterator<JavaTerm> itr = _javaTerms.iterator();
 
 		while (itr.hasNext()) {
 			JavaTerm javaTerm = itr.next();
 
-			if (isInJavaTermTypeGroup(javaTerm.getType(), TYPE_CLASS)) {
-				String javaTermContent = javaTerm.getContent();
+			checkJavaFieldType(
+				javaTerm, annotationsExclusions, immutableFieldTypes,
+				finalableFieldTypesExclusions);
 
-				int pos = javaTermContent.indexOf("\n" + _indent + "static {");
-
-				if (pos != -1) {
-					javaTermContent = javaTermContent.substring(0, pos);
-				}
-
-				JavaClass innerClass = new JavaClass(
-					_fileName, _absolutePath, javaTermContent,
-					javaTerm.getLineCount(), _indent + StringPool.TAB);
-
-				String newJavaTermContent = innerClass.formatJavaTerms(
-					javaTermAccessLevelModifierExclusions,
-					javaTermSortExclusions, testAnnotationsExclusions);
-
-				if (!javaTermContent.equals(newJavaTermContent)) {
-					_content = StringUtil.replace(
-						_content, javaTermContent, newJavaTermContent);
-
-					return _content;
-				}
+			if (!originalContent.equals(_content)) {
+				return _content;
 			}
 
 			sortJavaTerms(previousJavaTerm, javaTerm, javaTermSortExclusions);
@@ -186,24 +94,34 @@ public class JavaClass {
 			previousJavaTerm = javaTerm;
 		}
 
-		fixJavaTermsDividers(javaTerms, javaTermSortExclusions);
+		for (JavaClass innerClass : _innerClasses) {
+			String innerClassContent = innerClass.getContent();
+
+			String newInnerClassContent = innerClass.formatJavaTerms(
+				annotationsExclusions, immutableFieldTypes,
+				finalableFieldTypesExclusions, javaTermSortExclusions,
+				testAnnotationsExclusions);
+
+			if (!innerClassContent.equals(newInnerClassContent)) {
+				_content = StringUtil.replace(
+					_content, innerClassContent, newInnerClassContent);
+
+				return _content;
+			}
+		}
+
+		fixJavaTermsDividers(_javaTerms, javaTermSortExclusions);
 
 		return _content;
 	}
 
-	protected static boolean isInJavaTermTypeGroup(
-		int javaTermType, int[] javaTermTypeGroup) {
-
-		for (int type : javaTermTypeGroup) {
-			if (javaTermType == type) {
-				return true;
-			}
-		}
-
-		return false;
+	public String getContent() {
+		return _content;
 	}
 
-	protected Set<JavaTerm> addStaticBlocks(Set<JavaTerm> javaTerms) {
+	protected Set<JavaTerm> addStaticBlocks(
+		Set<JavaTerm> javaTerms, List<JavaTerm> staticBlocks) {
+
 		Set<JavaTerm> newJavaTerms = new TreeSet<JavaTerm>(
 			new JavaTermComparator());
 
@@ -212,15 +130,13 @@ public class JavaClass {
 		while (javaTermsIterator.hasNext()) {
 			JavaTerm javaTerm = javaTermsIterator.next();
 
-			if (!isInJavaTermTypeGroup(
-					javaTerm.getType(), TYPE_VARIABLE_STATIC)) {
-
+			if (!javaTerm.isStatic() || !javaTerm.isVariable()) {
 				newJavaTerms.add(javaTerm);
 
 				continue;
 			}
 
-			Iterator<JavaTerm> staticBlocksIterator = _staticBlocks.iterator();
+			Iterator<JavaTerm> staticBlocksIterator = staticBlocks.iterator();
 
 			while (staticBlocksIterator.hasNext()) {
 				JavaTerm staticBlock = staticBlocksIterator.next();
@@ -239,8 +155,8 @@ public class JavaClass {
 			newJavaTerms.add(javaTerm);
 		}
 
-		if (!_staticBlocks.isEmpty()) {
-			newJavaTerms.addAll(_staticBlocks);
+		if (!staticBlocks.isEmpty()) {
+			newJavaTerms.addAll(staticBlocks);
 		}
 
 		return newJavaTerms;
@@ -286,27 +202,151 @@ public class JavaClass {
 		}
 	}
 
+	protected void checkFinalableFieldType(
+			JavaTerm javaTerm, Set<String> annotationsExclusions,
+			boolean isStatic)
+		throws Exception {
+
+		String javaTermContent = javaTerm.getContent();
+
+		for (String annotation : annotationsExclusions) {
+			if (javaTermContent.contains(
+					_indent + StringPool.AT + annotation)) {
+
+				return;
+			}
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("(\\b|\\.)");
+		sb.append(javaTerm.getName());
+		sb.append(" (=)|(\\+\\+)|(--)|(\\+=)|(-=)|(\\*=)|(/=)|(%=)");
+		sb.append("|(\\|=)|(&=)|(^=) ");
+
+		Pattern pattern = Pattern.compile(sb.toString());
+
+		if (!isFinalableField(javaTerm, _name, pattern, true)) {
+			return;
+		}
+
+		String newJavaTermContent = null;
+
+		if (isStatic) {
+			newJavaTermContent = StringUtil.replaceFirst(
+				javaTermContent, "private static ", "private static final ");
+		}
+		else {
+			newJavaTermContent = StringUtil.replaceFirst(
+				javaTermContent, "private ", "private final ");
+		}
+
+		_content = StringUtil.replace(
+			_content, javaTermContent, newJavaTermContent);
+	}
+
+	protected void checkImmutableFieldType(
+		JavaTerm javaTerm, boolean isStatic) {
+
+		String oldName = javaTerm.getName();
+
+		if (!isStatic || oldName.equals("serialVersionUID")) {
+			return;
+		}
+
+		Matcher matcher = _camelCasePattern.matcher(oldName);
+
+		String newName = matcher.replaceAll("$1_$2");
+
+		newName = StringUtil.toUpperCase(newName);
+
+		if (newName.charAt(0) != CharPool.UNDERLINE) {
+			newName = StringPool.UNDERLINE.concat(newName);
+		}
+
+		_content = _content.replaceAll(
+			"(?<=[\\W&&[^.\"]])(" + oldName + ")\\b", newName);
+	}
+
+	protected void checkJavaFieldType(
+			JavaTerm javaTerm, Set<String> annotationsExclusions,
+			Set<String> immutableFieldTypes,
+			List<String> finalableFieldTypesExclusions)
+		throws Exception {
+
+		if (!BaseSourceProcessor.portalSource ||
+			!javaTerm.isPrivate() || !javaTerm.isVariable()) {
+
+			return;
+		}
+
+		Pattern pattern = Pattern.compile(
+			"\t(private |protected |public )(static )?(final)?([\\s\\S]*?)" +
+				javaTerm.getName());
+
+		Matcher matcher = pattern.matcher(javaTerm.getContent());
+
+		if (!matcher.find()) {
+			return;
+		}
+
+		boolean isFinal = Validator.isNotNull(matcher.group(3));
+		boolean isStatic = Validator.isNotNull(matcher.group(2));
+		String javaFieldType = StringUtil.trim(matcher.group(4));
+
+		if (isFinal) {
+			if (immutableFieldTypes.contains(javaFieldType)) {
+				checkImmutableFieldType(javaTerm, isStatic);
+				checkStaticableFieldType(javaTerm, isStatic);
+			}
+		}
+		else if (!BaseSourceProcessor.isExcluded(
+					finalableFieldTypesExclusions, _absolutePath)) {
+
+			checkFinalableFieldType(javaTerm, annotationsExclusions, isStatic);
+		}
+	}
+
+	protected void checkStaticableFieldType(
+		JavaTerm javaTerm, boolean isStatic) {
+
+		String javaTermContent = javaTerm.getContent();
+
+		if (isStatic || !javaTermContent.contains(StringPool.EQUAL)) {
+			return;
+		}
+
+		String newJavaTermContent = StringUtil.replaceFirst(
+			javaTermContent, "private final", "private static final");
+
+		_content = StringUtil.replace(
+			_content, javaTermContent, newJavaTermContent);
+	}
+
 	protected void checkTestAnnotations(JavaTerm javaTerm) {
 		int methodType = javaTerm.getType();
 
-		if ((methodType != TYPE_METHOD_PUBLIC) &&
-			(methodType != TYPE_METHOD_PUBLIC_STATIC)) {
+		if ((methodType != JavaTerm.TYPE_METHOD_PUBLIC) &&
+			(methodType != JavaTerm.TYPE_METHOD_PUBLIC_STATIC)) {
 
 			return;
 		}
 
 		checkAnnotationForMethod(
-			javaTerm, "After", "^.*tearDown\\z", TYPE_METHOD_PUBLIC, _fileName);
+			javaTerm, "After", "^.*tearDown\\z", JavaTerm.TYPE_METHOD_PUBLIC,
+			_fileName);
 		checkAnnotationForMethod(
 			javaTerm, "AfterClass", "^.*tearDownClass\\z",
-			TYPE_METHOD_PUBLIC_STATIC, _fileName);
+			JavaTerm.TYPE_METHOD_PUBLIC_STATIC, _fileName);
 		checkAnnotationForMethod(
-			javaTerm, "Before", "^.*setUp\\z", TYPE_METHOD_PUBLIC, _fileName);
+			javaTerm, "Before", "^.*setUp\\z", JavaTerm.TYPE_METHOD_PUBLIC,
+			_fileName);
 		checkAnnotationForMethod(
 			javaTerm, "BeforeClass", "^.*setUpClass\\z",
-			TYPE_METHOD_PUBLIC_STATIC, _fileName);
+			JavaTerm.TYPE_METHOD_PUBLIC_STATIC, _fileName);
 		checkAnnotationForMethod(
-			javaTerm, "Test", "^.*test", TYPE_METHOD_PUBLIC, _fileName);
+			javaTerm, "Test", "^.*test", JavaTerm.TYPE_METHOD_PUBLIC,
+			_fileName);
 	}
 
 	protected void fixJavaTermsDividers(
@@ -359,9 +399,7 @@ public class JavaClass {
 			if (previousJavaTerm.getType() != javaTerm.getType()) {
 				requiresEmptyLine = true;
 			}
-			else if (!isInJavaTermTypeGroup(
-						javaTerm.getType(), TYPE_VARIABLE)) {
-
+			else if (!javaTerm.isVariable()) {
 				requiresEmptyLine = true;
 			}
 			else if ((StringUtil.isUpperCase(javaTermName) &&
@@ -377,7 +415,7 @@ public class JavaClass {
 				requiresEmptyLine = true;
 			}
 			else if ((previousJavaTerm.getType() ==
-						TYPE_VARIABLE_PRIVATE_STATIC) &&
+						JavaTerm.TYPE_VARIABLE_PRIVATE_STATIC) &&
 					 (previousJavaTermName.equals("_instance") ||
 					  previousJavaTermName.equals("_log") ||
 					  previousJavaTermName.equals("_logger"))) {
@@ -435,9 +473,7 @@ public class JavaClass {
 	}
 
 	protected void fixTabsAndIncorrectEmptyLines(JavaTerm javaTerm) {
-		if (!isInJavaTermTypeGroup(javaTerm.getType(), TYPE_CONSTRUCTOR) &&
-			!isInJavaTermTypeGroup(javaTerm.getType(), TYPE_METHOD)) {
-
+		if (!javaTerm.isConstructor() && !javaTerm.isMethod()) {
 			return;
 		}
 
@@ -605,12 +641,14 @@ public class JavaClass {
 		return line.substring(x + 1);
 	}
 
-	protected Set<JavaTerm> getJavaTerms(
-			List<String> javaTermAccessLevelModifierExclusions)
-		throws Exception {
+	protected Set<JavaTerm> getJavaTerms() throws Exception {
+		if (_javaTerms != null) {
+			return _javaTerms;
+		}
 
 		Set<JavaTerm> javaTerms = new TreeSet<JavaTerm>(
 			new JavaTermComparator(false));
+		List<JavaTerm> staticBlocks = new ArrayList<JavaTerm>();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(_content));
@@ -678,11 +716,21 @@ public class JavaClass {
 							javaTermName, javaTermType, javaTermContent,
 							javaTermLineCount);
 
-						if (javaTermType == JavaClass.TYPE_STATIC_BLOCK) {
-							_staticBlocks.add(javaTerm);
+						if (javaTermType == JavaTerm.TYPE_STATIC_BLOCK) {
+							staticBlocks.add(javaTerm);
 						}
 						else {
 							javaTerms.add(javaTerm);
+
+							if (javaTerm.isClass()) {
+								JavaClass innerClass = new JavaClass(
+									javaTermName, _fileName, _absolutePath,
+									javaTermContent, javaTermLineCount,
+									_indent + StringPool.TAB, this,
+									_javaTermAccessLevelModifierExclusions);
+
+								_innerClasses.add(innerClass);
+							}
 						}
 					}
 				}
@@ -704,7 +752,7 @@ public class JavaClass {
 					 !line.startsWith(_indent + "extends") &&
 					 !line.startsWith(_indent + "implements") &&
 					 !BaseSourceProcessor.isExcluded(
-						 javaTermAccessLevelModifierExclusions, _absolutePath,
+						 _javaTermAccessLevelModifierExclusions, _absolutePath,
 						 lineCount)) {
 
 				Matcher matcher = _classPattern.matcher(_content);
@@ -739,15 +787,26 @@ public class JavaClass {
 			javaTerm = new JavaTerm(
 				javaTermName, javaTermType, javaTermContent, javaTermLineCount);
 
-			if (javaTermType == JavaClass.TYPE_STATIC_BLOCK) {
-				_staticBlocks.add(javaTerm);
+			if (javaTermType == JavaTerm.TYPE_STATIC_BLOCK) {
+				staticBlocks.add(javaTerm);
 			}
 			else {
 				javaTerms.add(javaTerm);
+
+				if (javaTerm.isClass()) {
+					JavaClass innerClass = new JavaClass(
+						javaTermName, _fileName, _absolutePath, javaTermContent,
+						javaTermLineCount, _indent + StringPool.TAB, this,
+						_javaTermAccessLevelModifierExclusions);
+
+					_innerClasses.add(innerClass);
+				}
 			}
 		}
 
-		return javaTerms;
+		_javaTerms = addStaticBlocks(javaTerms, staticBlocks);
+
+		return _javaTerms;
 	}
 
 	protected Tuple getJavaTermTuple(String line, String content, int index) {
@@ -781,33 +840,37 @@ public class JavaClass {
 
 		if (line.startsWith(_indent + "public static ")) {
 			if (line.contains(" class ") || line.contains(" enum ")) {
-				return new Tuple(getClassName(line), TYPE_CLASS_PUBLIC_STATIC);
+				return new Tuple(
+					getClassName(line), JavaTerm.TYPE_CLASS_PUBLIC_STATIC);
 			}
 
 			if (line.contains(StringPool.EQUAL) ||
 				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
 
 				return new Tuple(
-					getVariableName(line), TYPE_VARIABLE_PUBLIC_STATIC);
+					getVariableName(line),
+					JavaTerm.TYPE_VARIABLE_PUBLIC_STATIC);
 			}
 
 			if (pos != -1) {
 				return new Tuple(
 					getConstructorOrMethodName(line, pos),
-					TYPE_METHOD_PUBLIC_STATIC);
+					JavaTerm.TYPE_METHOD_PUBLIC_STATIC);
 			}
 		}
 		else if (line.startsWith(_indent + "public ")) {
 			if (line.contains(" @interface ") || line.contains(" class ") ||
 				line.contains(" enum ") || line.contains(" interface ")) {
 
-				return new Tuple(getClassName(line), TYPE_CLASS_PUBLIC);
+				return new Tuple(
+					getClassName(line), JavaTerm.TYPE_CLASS_PUBLIC);
 			}
 
 			if (line.contains(StringPool.EQUAL) ||
 				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
 
-				return new Tuple(getVariableName(line), TYPE_VARIABLE_PUBLIC);
+				return new Tuple(
+					getVariableName(line), JavaTerm.TYPE_VARIABLE_PUBLIC);
 			}
 
 			if (pos != -1) {
@@ -817,40 +880,42 @@ public class JavaClass {
 				if (spaceCount == 1) {
 					return new Tuple(
 						getConstructorOrMethodName(line, pos),
-						TYPE_CONSTRUCTOR_PUBLIC);
+						JavaTerm.TYPE_CONSTRUCTOR_PUBLIC);
 				}
 
 				if (spaceCount > 1) {
 					return new Tuple(
 						getConstructorOrMethodName(line, pos),
-						TYPE_METHOD_PUBLIC);
+						JavaTerm.TYPE_METHOD_PUBLIC);
 				}
 			}
 		}
 		else if (line.startsWith(_indent + "protected static ")) {
 			if (line.contains(" class ") || line.contains(" enum ")) {
 				return new Tuple(
-					getClassName(line), TYPE_CLASS_PROTECTED_STATIC);
+					getClassName(line), JavaTerm.TYPE_CLASS_PROTECTED_STATIC);
 			}
 
 			if (line.contains(StringPool.EQUAL) ||
 				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
 
 				return new Tuple(
-					getVariableName(line), TYPE_VARIABLE_PROTECTED_STATIC);
+					getVariableName(line),
+					JavaTerm.TYPE_VARIABLE_PROTECTED_STATIC);
 			}
 
 			if (pos != -1) {
 				return new Tuple(
 					getConstructorOrMethodName(line, pos),
-					TYPE_METHOD_PROTECTED_STATIC);
+					JavaTerm.TYPE_METHOD_PROTECTED_STATIC);
 			}
 		}
 		else if (line.startsWith(_indent + "protected ")) {
 			if (line.contains(" @interface ") || line.contains(" class ") ||
 				line.contains(" enum ") || line.contains(" interface ")) {
 
-				return new Tuple(getClassName(line), TYPE_CLASS_PROTECTED);
+				return new Tuple(
+					getClassName(line), JavaTerm.TYPE_CLASS_PROTECTED);
 			}
 
 			if (pos != -1) {
@@ -861,48 +926,53 @@ public class JavaClass {
 					if (spaceCount == 1) {
 						return new Tuple(
 							getConstructorOrMethodName(line, pos),
-							TYPE_CONSTRUCTOR_PROTECTED);
+							JavaTerm.TYPE_CONSTRUCTOR_PROTECTED);
 					}
 
 					if (spaceCount > 1) {
 						return new Tuple(
 							getConstructorOrMethodName(line, pos),
-							TYPE_METHOD_PROTECTED);
+							JavaTerm.TYPE_METHOD_PROTECTED);
 					}
 				}
 			}
 
-			return new Tuple(getVariableName(line), TYPE_VARIABLE_PROTECTED);
+			return new Tuple(
+				getVariableName(line), JavaTerm.TYPE_VARIABLE_PROTECTED);
 		}
 		else if (line.startsWith(_indent + "private static ")) {
 			if (line.contains(" class ") || line.contains(" enum ")) {
-				return new Tuple(getClassName(line), TYPE_CLASS_PRIVATE_STATIC);
+				return new Tuple(
+					getClassName(line), JavaTerm.TYPE_CLASS_PRIVATE_STATIC);
 			}
 
 			if (line.contains(StringPool.EQUAL) ||
 				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
 
 				return new Tuple(
-					getVariableName(line), TYPE_VARIABLE_PRIVATE_STATIC);
+					getVariableName(line),
+					JavaTerm.TYPE_VARIABLE_PRIVATE_STATIC);
 			}
 
 			if (pos != -1) {
 				return new Tuple(
 					getConstructorOrMethodName(line, pos),
-					TYPE_METHOD_PRIVATE_STATIC);
+					JavaTerm.TYPE_METHOD_PRIVATE_STATIC);
 			}
 		}
 		else if (line.startsWith(_indent + "private ")) {
 			if (line.contains(" @interface ") || line.contains(" class ") ||
 				line.contains(" enum ") || line.contains(" interface ")) {
 
-				return new Tuple(getClassName(line), TYPE_CLASS_PRIVATE);
+				return new Tuple(
+					getClassName(line), JavaTerm.TYPE_CLASS_PRIVATE);
 			}
 
 			if (line.contains(StringPool.EQUAL) ||
 				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
 
-				return new Tuple(getVariableName(line), TYPE_VARIABLE_PRIVATE);
+				return new Tuple(
+					getVariableName(line), JavaTerm.TYPE_VARIABLE_PRIVATE);
 			}
 
 			if (pos != -1) {
@@ -912,18 +982,18 @@ public class JavaClass {
 				if (spaceCount == 1) {
 					return new Tuple(
 						getConstructorOrMethodName(line, pos),
-						TYPE_CONSTRUCTOR_PRIVATE);
+						JavaTerm.TYPE_CONSTRUCTOR_PRIVATE);
 				}
 
 				if (spaceCount > 1) {
 					return new Tuple(
 						getConstructorOrMethodName(line, pos),
-						TYPE_METHOD_PRIVATE);
+						JavaTerm.TYPE_METHOD_PRIVATE);
 				}
 			}
 		}
 		else if (line.startsWith(_indent + "static {")) {
-			return new Tuple("static", TYPE_STATIC_BLOCK);
+			return new Tuple("static", JavaTerm.TYPE_STATIC_BLOCK);
 		}
 
 		return null;
@@ -959,6 +1029,41 @@ public class JavaClass {
 		else {
 			return false;
 		}
+	}
+
+	protected boolean isFinalableField(
+		JavaTerm javaTerm, String javaTermClassName, Pattern pattern,
+		boolean checkOuterClass) {
+
+		if (checkOuterClass && (_outerClass != null)) {
+			return _outerClass.isFinalableField(
+				javaTerm, javaTermClassName, pattern, true);
+		}
+
+		for (JavaTerm curJavaTerm : _javaTerms) {
+			if (!curJavaTerm.isMethod() &&
+				(!curJavaTerm.isConstructor() ||
+				 javaTermClassName.equals(_name))) {
+
+				continue;
+			}
+
+			Matcher matcher = pattern.matcher(curJavaTerm.getContent());
+
+			if (matcher.find()) {
+				return false;
+			}
+		}
+
+		for (JavaClass innerClass : _innerClasses) {
+			if (!innerClass.isFinalableField(
+					javaTerm, javaTermClassName, pattern, false)) {
+
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	protected boolean isValidJavaTerm(String content) {
@@ -1047,12 +1152,17 @@ public class JavaClass {
 	}
 
 	private String _absolutePath;
+	private Pattern _camelCasePattern = Pattern.compile("([a-z])([A-Z0-9])");
 	private Pattern _classPattern = Pattern.compile(
 		"(private |protected |public )(static )*class ([\\s\\S]*?) \\{\n");
 	private String _content;
 	private String _fileName;
 	private String _indent;
+	private List<JavaClass> _innerClasses = new ArrayList<JavaClass>();
+	private List<String> _javaTermAccessLevelModifierExclusions;
+	private Set<JavaTerm> _javaTerms;
 	private int _lineCount;
-	private List<JavaTerm> _staticBlocks;
+	private String _name;
+	private JavaClass _outerClass;
 
 }

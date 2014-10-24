@@ -427,6 +427,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			javaClassContent = javaClassContent.substring(1);
 
+			String javaClassName = matcher.group(2);
+
 			String beforeJavaClass = newContent.substring(
 				0, matcher.start() + 1);
 
@@ -434,8 +436,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				StringUtil.count(beforeJavaClass, "\n") + 1;
 
 			newContent = formatJavaTerms(
-				fileName, absolutePath, newContent, javaClassContent,
-				javaClassLineCount, null, null, null);
+				javaClassName, fileName, absolutePath, newContent,
+				javaClassContent, javaClassLineCount, null, null, null, null);
 		}
 
 		if (!content.equals(newContent)) {
@@ -1294,7 +1296,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private Pattern _importsPattern = Pattern.compile("page import=\"(.+)\"");
 	private Set<String> _includeFileNames = new HashSet<String>();
 	private Pattern _javaClassPattern = Pattern.compile(
-		"\n(private|protected|public).* class ([\\s\\S]*?)\n\\}\n");
+		"\n(private|protected|public).* class ([A-Za-z0-9]+) " +
+			"([\\s\\S]*?)\n\\}\n");
 	private Map<String, String> _jspContents = new HashMap<String, String>();
 	private Pattern _jspImportPattern = Pattern.compile(
 		"(<.*\n*page.import=\".*>\n*)+", Pattern.MULTILINE);

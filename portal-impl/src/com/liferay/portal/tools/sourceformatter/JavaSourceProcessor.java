@@ -19,20 +19,13 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
-import com.thoughtworks.qdox.model.Annotation;
-import com.thoughtworks.qdox.model.ClassLibrary;
-import com.thoughtworks.qdox.model.JavaField;
-import com.thoughtworks.qdox.model.JavaMethod;
 import com.thoughtworks.qdox.model.JavaSource;
-import com.thoughtworks.qdox.model.Type;
-import com.thoughtworks.qdox.parser.ParseException;
 
 import java.io.File;
 import java.io.IOException;
@@ -208,63 +201,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	protected String checkFinalableFieldType(
-		com.thoughtworks.qdox.model.JavaClass javaClass,
-		com.thoughtworks.qdox.model.JavaClass[] javaClasses,
-		JavaField javaField, String content) {
-
-		Set<String> annotationsExclusions = getAnnotationsExclusions();
-
-		for (Annotation annotation : javaField.getAnnotations()) {
-			Type annotationType = annotation.getType();
-
-			String annotationTypeString = annotationType.toString();
-
-			if (annotationsExclusions.contains(annotationTypeString)) {
-				return content;
-			}
-		}
-
-		Type javaClassType = javaClass.asType();
-
-		if ((javaClass.isEnum() && javaClassType.equals(javaField.getType())) ||
-			javaField.isFinal()) {
-
-			return content;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("(\\b|\\.)");
-		sb.append(javaField.getName());
-		sb.append(" (=)|(\\+\\+)|(--)|(\\+=)|(-=)|(\\*=)|(/=)|(%=)");
-		sb.append("|(\\|=)|(&=)|(^=) ");
-
-		Pattern pattern = Pattern.compile(sb.toString());
-
-		for (com.thoughtworks.qdox.model.JavaClass javaSubClass : javaClasses) {
-			for (JavaMethod javaMethod : javaSubClass.getMethods()) {
-				if (javaMethod.isConstructor() && (javaSubClass == javaClass)) {
-					continue;
-				}
-
-				Matcher matcher = pattern.matcher(javaMethod.getCodeBlock());
-
-				if (matcher.find()) {
-					return content;
-				}
-			}
-		}
-
-		if (javaField.isStatic()) {
-			return getChangedFieldTypeContent(
-				content, javaField, "private static", "private static final");
-		}
-
-		return getChangedFieldTypeContent(
-			content, javaField, "private", "private final");
-	}
-
 	protected void checkFinderCacheInterfaceMethod(
 		String fileName, String content) {
 
@@ -400,90 +336,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return ifClause;
 	}
 
-	protected String checkImmutableFieldType(
-		JavaField javaField, Type javaFieldType, String content) {
-
-		String oldName = javaField.getName();
-
-		if (javaFieldType.isArray() || !javaField.isStatic() ||
-			oldName.equals("serialVersionUID")) {
-
-			return content;
-		}
-
-		Matcher matcher = _camelCasePattern.matcher(oldName);
-
-		String newName = matcher.replaceAll("$1_$2");
-
-		newName = StringUtil.toUpperCase(newName);
-
-		if (newName.charAt(0) != CharPool.UNDERLINE) {
-			newName = StringPool.UNDERLINE.concat(newName);
-		}
-
-		return content.replaceAll(
-			"(?<=[\\W&&[^.\"]])(" + oldName + ")\\b", newName);
-	}
-
-	protected String checkJavaFieldTypes(
-		String fileName, String absolutePath, String content) {
-
-		if (!portalSource) {
-			return content;
-		}
-
-		ClassLibrary classLibrary = new ClassLibrary();
-
-		classLibrary.addClassLoader(JavaSourceProcessor.class.getClassLoader());
-
-		JavaDocBuilder javaDocBuilder = new JavaDocBuilder(classLibrary);
-
-		try {
-			javaDocBuilder.addSource(
-				new UnsyncStringReader(sanitizeContent(content)));
-		}
-		catch (ParseException pe) {
-			System.err.println(
-				"Unable to parse " + fileName + StringPool.COMMA_AND_SPACE +
-					pe.getMessage());
-
-			return content;
-		}
-
-		com.thoughtworks.qdox.model.JavaClass[] javaClasses =
-			javaDocBuilder.getClasses();
-
-		for (com.thoughtworks.qdox.model.JavaClass javaClass : javaClasses) {
-			for (JavaField javaField : javaClass.getFields()) {
-				if (!javaField.isPrivate()) {
-					continue;
-				}
-
-				Type javaFieldType = javaField.getType();
-
-				String fieldTypeName = javaFieldType.getFullyQualifiedName();
-
-				Set<String> immutableFieldTypes = getImmutableFieldTypes();
-
-				if (javaField.isFinal() &&
-					immutableFieldTypes.contains(fieldTypeName)) {
-
-					content = checkImmutableFieldType(
-						javaField, javaFieldType, content);
-					content = checkStaticableFieldType(
-						javaField, javaFieldType, content);
-				}
-
-				if (!isExcluded(_finalableFieldTypesExclusions, absolutePath)) {
-					content = checkFinalableFieldType(
-						javaClass, javaClasses, javaField, content);
-				}
-			}
-		}
-
-		return content;
-	}
-
 	protected void checkLogLevel(
 		String content, String fileName, String logLevel) {
 
@@ -560,22 +412,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				fileName,
 				"create pattern as global var: " + fileName + " " + lineCount);
 		}
-	}
-
-	protected String checkStaticableFieldType(
-		JavaField javaField, Type javaFieldType, String content) {
-
-		String initializationExpression = StringUtil.trim(
-			javaField.getInitializationExpression());
-
-		if (javaField.isStatic() || initializationExpression.isEmpty() ||
-			javaFieldType.isArray()) {
-
-			return content;
-		}
-
-		return getChangedFieldTypeContent(
-			content, javaField, "private final", "private static final");
 	}
 
 	protected void checkSystemEventAnnotations(String content, String fileName)
@@ -806,10 +642,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		// LPS-49294
-
-		String newContent = checkJavaFieldTypes(
-			fileName, absolutePath, content);
+		String newContent = content;
 
 		if (newContent.contains("$\n */")) {
 			processErrorMessage(fileName, "*: " + fileName);
@@ -1096,9 +929,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				StringUtil.count(beforeJavaClass, "\n") + 1;
 
 			newContent = formatJavaTerms(
-				fileName, absolutePath, newContent, javaClassContent,
-				javaClassLineCount, _javaTermAccessLevelModifierExclusions,
-				_javaTermSortExclusions, _testAnnotationsExclusions);
+				className, fileName, absolutePath, newContent, javaClassContent,
+				javaClassLineCount, _finalableFieldTypesExclusions,
+				_javaTermAccessLevelModifierExclusions, _javaTermSortExclusions,
+				_testAnnotationsExclusions);
 		}
 
 		newContent = formatJava(fileName, absolutePath, newContent);
@@ -2007,54 +1841,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return newContent;
 	}
 
-	protected Set<String> getAnnotationsExclusions() {
-		if (_annotationsExclusions != null) {
-			return _annotationsExclusions;
-		}
-
-		_annotationsExclusions = SetUtil.fromArray(
-			new String[] {
-				"com.liferay.portal.kernel.bean.BeanReference",
-				"org.mockito.Mock", "java.lang.SuppressWarnings"
-			});
-
-		return _annotationsExclusions;
-	}
-
-	protected String getChangedFieldTypeContent(
-		String content, JavaField javaField, String oldFieldType,
-		String newFieldType) {
-
-		String[] lines = StringUtil.splitLines(content);
-
-		String line = null;
-		int lineNumber = javaField.getLineNumber() - 1;
-
-		while (true) {
-			line = lines[lineNumber];
-
-			if (line.contains(oldFieldType)) {
-				break;
-			}
-
-			lineNumber++;
-		}
-
-		lines[lineNumber] = StringUtil.replace(
-			line, oldFieldType, newFieldType);
-
-		StringBundler sb = new StringBundler(2 * lines.length);
-
-		for (String contentLine : lines) {
-			sb.append(contentLine);
-			sb.append(StringPool.NEW_LINE);
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		return sb.toString();
-	}
-
 	protected String getCombinedLinesContent(
 		String content, String fileName, String line, String trimmedLine,
 		int lineLength, int lineCount, String previousLine, String linePart,
@@ -2452,25 +2238,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return null;
 	}
 
-	protected Set<String> getImmutableFieldTypes() {
-		if (_immutableFieldTypes != null) {
-			return _immutableFieldTypes;
-		}
-
-		_immutableFieldTypes = SetUtil.fromArray(
-			new String[] {
-				"boolean", "byte", "char", "double", "float", "int", "long",
-				"short", "java.lang.Boolean", "java.lang.Byte",
-				"java.lang.Character", "java.lang.Class", "java.lang.Double",
-				"java.lang.Float", "java.lang.Int", "java.lang.Long",
-				"java.lang.Number", "java.lang.Short", "java.lang.String",
-			});
-
-		_immutableFieldTypes.addAll(getPropertyList("immutable.field.types"));
-
-		return _immutableFieldTypes;
-	}
-
 	protected List<String> getImportedExceptionClassNames(
 		JavaDocBuilder javaDocBuilder) {
 
@@ -2640,9 +2407,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						content, "\n" + line + "\n",
 						"\n" + firstLine + "\n" + secondLine + "\n");
 				}
-				else if (Validator.isNotNull(
-							getNextLine(content, lineCount))) {
-
+				else if (Validator.isNotNull(getNextLine(content, lineCount))) {
 					return StringUtil.replace(
 						content, "\n" + line + "\n",
 						"\n" + firstLine + "\n" + secondLine + "\n" +
@@ -2732,7 +2497,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			int x = line.indexOf(StringPool.OPEN_PARENTHESIS);
 
 			if ((x != -1) &&
-				line.charAt(x + 1) != CharPool.CLOSE_PARENTHESIS) {
+				(line.charAt(x + 1) != CharPool.CLOSE_PARENTHESIS)) {
 
 				String secondLineIndent = indent + StringPool.TAB;
 
@@ -2857,31 +2622,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return false;
 	}
 
-	protected String sanitizeContent(String content) {
-		Matcher matcher = _componentPropertyPattern.matcher(content);
-
-		if (!matcher.find()) {
-			return content;
-		}
-
-		String componentProperty = matcher.group(1);
-
-		int newLineCount = StringUtil.count(
-			componentProperty, StringPool.NEW_LINE);
-
-		StringBundler sb = new StringBundler(newLineCount + 2);
-
-		sb.append(content.substring(0, matcher.start(1)));
-
-		for (int i = 0; i< newLineCount; i++) {
-			sb.append(StringPool.NEW_LINE);;
-		}
-
-		sb.append(content.substring(matcher.end(1)));
-
-		return sb.toString();
-	}
-
 	protected String sortExceptions(String line) {
 		if (!line.endsWith(StringPool.OPEN_CURLY_BRACE) &&
 			!line.endsWith(StringPool.SEMICOLON)) {
@@ -2938,14 +2678,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private boolean _allowUseServiceUtilInServiceImpl;
 	private Pattern _annotationPattern = Pattern.compile(
 		"\n(\t*)@(.+)\\(\n([\\s\\S]*?)\n(\t*)\\)");
-	private Set<String> _annotationsExclusions;
-	private final Pattern _camelCasePattern = Pattern.compile(
-		"([a-z])([A-Z0-9])");
 	private Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private boolean _checkUnprocessedExceptions;
-	private final Pattern _componentPropertyPattern = Pattern.compile(
-		"(?s)@Component\\(.*?\\sproperty = \\{(.*?)\\}");
 	private Pattern _diamondOperatorPattern = Pattern.compile(
 		"(return|=)\n?(\t+| )new ([A-Za-z]+)(Map|Set|List)<(.+)>" +
 			"\\(\n*\t*(.*)\\);\n");
@@ -2954,7 +2689,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private List<String> _finalableFieldTypesExclusions;
 	private List<String> _fitOnSingleLineExclusions;
 	private List<String> _hibernateSQLQueryExclusions;
-	private Set<String> _immutableFieldTypes;
 	private Pattern _incorrectCloseCurlyBracePattern1 = Pattern.compile(
 		"\n(.+)\n\n(\t+)}\n");
 	private Pattern _incorrectCloseCurlyBracePattern2 = Pattern.compile(

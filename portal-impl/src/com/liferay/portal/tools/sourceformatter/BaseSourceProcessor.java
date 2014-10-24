@@ -875,14 +875,16 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return _immutableFieldTypes;
 		}
 
-		_immutableFieldTypes = SetUtil.fromArray(
+		Set<String> immutableFieldTypes = SetUtil.fromArray(
 			new String[] {
 				"boolean", "byte", "char", "double", "float", "int", "long",
 				"short", "Boolean", "Byte", "Character", "Class", "Double",
 				"Float", "Int", "Long", "Number", "Short", "String",
 			});
 
-		_immutableFieldTypes.addAll(getPropertyList("immutable.field.types"));
+		immutableFieldTypes.addAll(getPropertyList("immutable.field.types"));
+
+		_immutableFieldTypes = immutableFieldTypes;
 
 		return _immutableFieldTypes;
 	}

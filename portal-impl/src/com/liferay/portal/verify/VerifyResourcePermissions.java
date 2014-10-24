@@ -210,7 +210,8 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			for (int i = 0; rs.next(); i++) {
 				long primKey = rs.getLong(
 					verifiableResourcedModel.getPrimaryKeyColumnName());
-				long userId = rs.getLong("userId");
+				long userId = rs.getLong(
+					verifiableResourcedModel.getUserIdColumnName());
 
 				verifyResourcedModel(
 					role.getCompanyId(),

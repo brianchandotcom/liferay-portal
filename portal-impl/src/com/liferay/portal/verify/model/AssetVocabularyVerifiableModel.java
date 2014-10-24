@@ -37,4 +37,9 @@ public class AssetVocabularyVerifiableModel
 		return "AssetVocabulary";
 	}
 
+	@Override
+	public String getUserIdColumnName() {
+		return "userId";
+	}
+
 }

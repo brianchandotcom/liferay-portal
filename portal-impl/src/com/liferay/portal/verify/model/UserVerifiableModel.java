@@ -36,4 +36,9 @@ public class UserVerifiableModel implements VerifiableResourcedModel {
 		return "User_";
 	}
 
+	@Override
+	public String getUserIdColumnName() {
+		return "userId";
+	}
+
 }

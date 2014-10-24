@@ -36,4 +36,9 @@ public class MBMessageVerifiableModel implements VerifiableResourcedModel {
 		return "MBMessage";
 	}
 
+	@Override
+	public String getUserIdColumnName() {
+		return "userId";
+	}
+
 }

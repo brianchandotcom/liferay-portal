@@ -37,4 +37,9 @@ public class SCFrameworkVersionVerifiableModel
 		return "SCFrameworkVersion";
 	}
 
+	@Override
+	public String getUserIdColumnName() {
+		return "userId";
+	}
+
 }

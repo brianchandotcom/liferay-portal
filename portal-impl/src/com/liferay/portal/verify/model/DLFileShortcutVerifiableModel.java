@@ -36,4 +36,9 @@ public class DLFileShortcutVerifiableModel implements VerifiableResourcedModel {
 		return "DLFileShortcut";
 	}
 
+	@Override
+	public String getUserIdColumnName() {
+		return "userId";
+	}
+
 }

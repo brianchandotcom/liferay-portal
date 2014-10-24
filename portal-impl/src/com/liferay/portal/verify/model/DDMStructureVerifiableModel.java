@@ -36,4 +36,9 @@ public class DDMStructureVerifiableModel implements VerifiableResourcedModel {
 		return "DDMStructure";
 	}
 
+	@Override
+	public String getUserIdColumnName() {
+		return "userId";
+	}
+
 }

@@ -37,4 +37,9 @@ public class ShoppingCategoryVerifiableModel
 		return "ShoppingCategory";
 	}
 
+	@Override
+	public String getUserIdColumnName() {
+		return "userId";
+	}
+
 }

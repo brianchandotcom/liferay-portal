@@ -36,4 +36,9 @@ public class WikiPageVerifiableModel implements VerifiableResourcedModel {
 		return "WikiPage";
 	}
 
+	@Override
+	public String getUserIdColumnName() {
+		return "userId";
+	}
+
 }

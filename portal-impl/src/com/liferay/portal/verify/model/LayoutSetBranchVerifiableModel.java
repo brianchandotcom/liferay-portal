@@ -37,4 +37,9 @@ public class LayoutSetBranchVerifiableModel
 		return "LayoutSetBranch";
 	}
 
+	@Override
+	public String getUserIdColumnName() {
+		return "userId";
+	}
+
 }

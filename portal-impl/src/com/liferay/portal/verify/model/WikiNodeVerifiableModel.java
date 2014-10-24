@@ -36,4 +36,9 @@ public class WikiNodeVerifiableModel implements VerifiableResourcedModel {
 		return "WikiNode";
 	}
 
+	@Override
+	public String getUserIdColumnName() {
+		return "userId";
+	}
+
 }

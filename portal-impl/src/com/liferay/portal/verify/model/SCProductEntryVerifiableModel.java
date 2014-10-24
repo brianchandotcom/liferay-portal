@@ -36,4 +36,9 @@ public class SCProductEntryVerifiableModel implements VerifiableResourcedModel {
 		return "SCProductEntry";
 	}
 
+	@Override
+	public String getUserIdColumnName() {
+		return "userId";
+	}
+
 }

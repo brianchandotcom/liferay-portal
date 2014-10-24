@@ -36,4 +36,9 @@ public class JournalArticleVerifiableModel implements VerifiableResourcedModel {
 		return "JournalArticle";
 	}
 
+	@Override
+	public String getUserIdColumnName() {
+		return "userId";
+	}
+
 }

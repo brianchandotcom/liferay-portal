@@ -37,4 +37,9 @@ public class PollsQuestionVerifiableModel implements VerifiableResourcedModel {
 		return "PollsQuestion";
 	}
 
+	@Override
+	public String getUserIdColumnName() {
+		return "userId";
+	}
+
 }

@@ -344,7 +344,7 @@ else {
 							}
 						%>
 
-							<li class="message-attachment">
+							<li class="message-attachment" data-index="<%= i + 1 %>">
 								<span id="<portlet:namespace />existingFile<%= i + 1 %>">
 									<aui:input id='<%= "existingPath" + (i + 1) %>' name='<%= "existingPath" + (i + 1) %>' type="hidden" value="<%= fileEntry.getFileEntryId() %>" />
 
@@ -364,6 +364,7 @@ else {
 								<aui:input cssClass="hide" label="" name='<%= "msgFile" + (i + 1) %>' size="70" title="message-attachment" type="file" />
 
 								<liferay-ui:icon-delete
+									cssClass="lfr-message-board-attachment-delete"
 									id='<%= "removeExisting" + (i + 1) %>'
 									label="<%= true %>"
 									message='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "remove" : "delete" %>'
@@ -553,85 +554,57 @@ else {
 
 	<c:choose>
 		<c:when test="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>">
-			Liferay.provide(
-				window,
-				'<portlet:namespace />trashAttachment',
-				function(index, action) {
-					var A = AUI();
+			function <portlet:namespace />trashAttachment(index, action) {
+				var existingPath = AUI.$('#<portlet:namespace />existingPath' + index);
+				var removeExisting = AUI.$('#<portlet:namespace />removeExisting' + index);
+				var undoFile = AUI.$('#<portlet:namespace />undoFile' + index);
+				var undoPath = AUI.$('#<portlet:namespace />undoPath' + index);
 
-					var existingPath = A.one('#<portlet:namespace />existingPath' + index);
-					var removeExisting = A.one('#<portlet:namespace />removeExisting' + index);
-					var undoFile = A.one('#<portlet:namespace />undoFile' + index);
-					var undoPath = A.one('#<portlet:namespace />undoPath' + index);
+				var moveToTrashConstant = '<%= Constants.MOVE_TO_TRASH %>';
 
-					if (action == '<%= Constants.MOVE_TO_TRASH %>') {
-						removeExisting.hide();
-						undoFile.show();
+				if (action == moveToTrashConstant) {
+					removeExisting.addClass('hide');
+					undoFile.removeClass('hide');
 
-						existingPath.attr('value', '');
-					}
-					else {
-						removeExisting.show();
-						undoFile.hide();
+					existingPath.val('');
+				}
+				else {
+					removeExisting.removeClass('hide');
+					undoFile.addClass('hide');
 
-						existingPath.attr('value', undoPath.get('value'));
-					}
-				},
-				['aui-base']
-			);
+					existingPath.val(undoPath.val());
+				}
+			}
 		</c:when>
 		<c:otherwise>
-			Liferay.provide(
-				window,
-				'<portlet:namespace />deleteAttachment',
-				function(index) {
-					var A = AUI();
+			function <portlet:namespace />deleteAttachment(index) {
+				var button = AUI.$('#<portlet:namespace />removeExisting' + index);
+				var span = AUI.$('#<portlet:namespace />existingFile' + index);
+				var file = AUI.$('#<portlet:namespace />msgFile' + index);
 
-					var button = A.one('#<portlet:namespace />removeExisting' + index);
-					var span = A.one('#<portlet:namespace />existingFile' + index);
-					var file = A.one('#<portlet:namespace />msgFile' + index);
+				button.remove();
 
-					if (button) {
-						button.remove();
-					}
+				span.remove();
 
-					if (span) {
-						span.remove();
-					}
-
-					if (file) {
-						file.ancestor('.field').show();
-
-						file.ancestor('li').addClass('deleted-input');
-					}
-				},
-				['aui-base']
-			);
+				file.closest('.field').removeClass('hide');
+				file.closest('li').addClass('deleted-input');
+			}
 		</c:otherwise>
 	</c:choose>
 </aui:script>
 
 <c:if test="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>">
-	<aui:script use="aui-base">
+	<aui:script sandbox="<%= true %>">
+		$('.message-attachments').on(
+			'click',
+			'.lfr-message-board-attachment-delete',
+			function(event) {
+				var moveToTrashConstant = '<%= Constants.MOVE_TO_TRASH %>';
 
-		<%
-		for (int i = 1; i <= existingAttachmentsFileEntries.size(); i++) {
-		%>
+				var index = $(event.target).closest('.message-attachment').data('index');
 
-			var removeExisting = A.one('#<portlet:namespace />removeExisting' + <%= i %>);
-
-			if (removeExisting) {
-				removeExisting.on(
-					'click',
-					function(event) {
-						<portlet:namespace />trashAttachment(<%= i %>, '<%= Constants.MOVE_TO_TRASH %>');
-					}
-				);
+				<portlet:namespace />trashAttachment(index, moveToTrashConstant);
 			}
-
-		<%
-		}
-		%>
-
+		);
 	</aui:script>
 </c:if>

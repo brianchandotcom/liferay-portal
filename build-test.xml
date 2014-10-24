@@ -58,38 +58,44 @@
 			<if>
 				<isset property="app.server.bundles.size" />
 				<then>
-					<var name="bundles.size" value="1" />
+					<var name="app.server.bundle.index" value="1" />
 
 					<antelope:repeat count="${app.server.bundles.size}">
-						<delete dir="${app.server.parent.dir}-${bundles.size}" />
+						<set-app-server-properties
+							app.server.bundle.index="${app.server.bundle.index}"
+						/>
 
-						<copy todir="${app.server.parent.dir}-${bundles.size}/${app.server.type}-${app.server.version}">
+						<delete dir="${test.app.server.parent.dir}" />
+
+						<copy todir="${test.app.server.dir}">
 							<fileset dir="${app.server.dir}" />
 						</copy>
 
 						<if>
 	  					 	<available file="${liferay.home}/osgi" />
 							<then>
-								<copy todir="${app.server.parent.dir}-${bundles.size}/osgi">
+								<copy todir="${test.app.server.parent.dir}/osgi">
 									<fileset dir="${liferay.home}/osgi" />
 								</copy>
 							</then>
 						</if>
 
 						<chmod perm="a+x">
-							<fileset dir="${app.server.parent.dir}-${bundles.size}/${app.server.type}-${app.server.version}/bin">
+							<fileset dir="${test.app.server.bin.dir}">
 								<include name="*.sh" />
 							</fileset>
 						</chmod>
 
 						<math
 							datatype="int"
-							operand1="${bundles.size}"
+							operand1="${app.server.bundle.index}"
 							operand2="1"
 							operation="+"
-							result="bundles.size"
+							result="app.server.bundle.index"
 						/>
 					</antelope:repeat>
+
+					<var name="app.server.bundle.index" unset="true" />
 				</then>
 			</if>
 		</sequential>

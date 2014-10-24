@@ -353,8 +353,8 @@ public class UpgradeJournalType extends UpgradeBaseJournal {
 
 			StringBundler sb = new StringBundler(10);
 
-			sb.append("select JournalArticle.type_, ");
-			sb.append("JournalArticle.resourcePrimKey from JournalArticle ");
+			sb.append("select JournalArticle.resourcePrimKey, ");
+			sb.append("JournalArticle.type_ from JournalArticle ");
 			sb.append("left join JournalArticle tempJournalArticle on ");
 			sb.append("(JournalArticle.groupId = tempJournalArticle.groupId) ");
 			sb.append("and (JournalArticle.articleId = ");

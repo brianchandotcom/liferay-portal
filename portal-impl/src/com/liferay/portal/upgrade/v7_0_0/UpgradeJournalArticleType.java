@@ -45,7 +45,7 @@ import java.util.Map;
 /**
  * @author Eudaldo Alonso
  */
-public class UpgradeJournalType extends UpgradeBaseJournal {
+public class UpgradeJournalArticleType extends UpgradeBaseJournal {
 
 	protected void addAssetCategory(
 			long assetCategoryId, long groupId, long companyId, long userId,
@@ -387,6 +387,6 @@ public class UpgradeJournalType extends UpgradeBaseJournal {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UpgradeJournalType.class);
+	private static Log _log = LogFactoryUtil.getLog(UpgradeJournalArticleType.class);
 
 }

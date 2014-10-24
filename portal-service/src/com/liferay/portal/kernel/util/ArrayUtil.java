@@ -1162,7 +1162,7 @@ public class ArrayUtil {
 
 		for (int i = 0; i < array.length; i++) {
 			if (value != array[i]) {
-				list.add(new Boolean(array[i]));
+				list.add(Boolean.valueOf(array[i]));
 			}
 		}
 
@@ -1174,7 +1174,7 @@ public class ArrayUtil {
 
 		for (int i = 0; i < array.length; i++) {
 			if (value != array[i]) {
-				list.add(new Byte(array[i]));
+				list.add(Byte.valueOf(array[i]));
 			}
 		}
 
@@ -1186,7 +1186,7 @@ public class ArrayUtil {
 
 		for (int i = 0; i < array.length; i++) {
 			if (value != array[i]) {
-				list.add(new Character(array[i]));
+				list.add(Character.valueOf(array[i]));
 			}
 		}
 
@@ -1198,7 +1198,7 @@ public class ArrayUtil {
 
 		for (int i = 0; i < array.length; i++) {
 			if (value != array[i]) {
-				list.add(new Double(array[i]));
+				list.add(Double.valueOf(array[i]));
 			}
 		}
 
@@ -1210,7 +1210,7 @@ public class ArrayUtil {
 
 		for (int i = 0; i < array.length; i++) {
 			if (value != array[i]) {
-				list.add(new Float(array[i]));
+				list.add(Float.valueOf(array[i]));
 			}
 		}
 
@@ -1222,7 +1222,7 @@ public class ArrayUtil {
 
 		for (int i = 0; i < array.length; i++) {
 			if (value != array[i]) {
-				list.add(new Integer(array[i]));
+				list.add(Integer.valueOf(array[i]));
 			}
 		}
 
@@ -1234,7 +1234,7 @@ public class ArrayUtil {
 
 		for (int i = 0; i < array.length; i++) {
 			if (value != array[i]) {
-				list.add(new Long(array[i]));
+				list.add(Long.valueOf(array[i]));
 			}
 		}
 
@@ -1246,7 +1246,7 @@ public class ArrayUtil {
 
 		for (int i = 0; i < array.length; i++) {
 			if (value != array[i]) {
-				list.add(new Short(array[i]));
+				list.add(Short.valueOf(array[i]));
 			}
 		}
 
@@ -1539,7 +1539,7 @@ public class ArrayUtil {
 		Double[] newArray = new Double[array.length];
 
 		for (int i = 0; i < array.length; i++) {
-			newArray[i] = new Double(array[i]);
+			newArray[i] = Double.valueOf(array[i]);
 		}
 
 		return newArray;
@@ -1559,7 +1559,7 @@ public class ArrayUtil {
 		Float[] newArray = new Float[array.length];
 
 		for (int i = 0; i < array.length; i++) {
-			newArray[i] = new Float(array[i]);
+			newArray[i] = Float.valueOf(array[i]);
 		}
 
 		return newArray;
@@ -1579,7 +1579,7 @@ public class ArrayUtil {
 		Integer[] newArray = new Integer[array.length];
 
 		for (int i = 0; i < array.length; i++) {
-			newArray[i] = new Integer(array[i]);
+			newArray[i] = Integer.valueOf(array[i]);
 		}
 
 		return newArray;
@@ -1599,7 +1599,7 @@ public class ArrayUtil {
 		Long[] newArray = new Long[array.length];
 
 		for (int i = 0; i < array.length; i++) {
-			newArray[i] = new Long(array[i]);
+			newArray[i] = Long.valueOf(array[i]);
 		}
 
 		return newArray;
@@ -1619,7 +1619,7 @@ public class ArrayUtil {
 		Short[] newArray = new Short[array.length];
 
 		for (int i = 0; i < array.length; i++) {
-			newArray[i] = new Short(array[i]);
+			newArray[i] = Short.valueOf(array[i]);
 		}
 
 		return newArray;
@@ -1651,25 +1651,13 @@ public class ArrayUtil {
 
 		double[] newArray = new double[collection.size()];
 
-		if (collection instanceof List) {
-			List<Number> list = (List<Number>)collection;
+		int i = 0;
 
-			for (int i = 0; i < list.size(); i++) {
-				Number value = list.get(i);
-
+		for (Number value : collection) {
+			if (value != null) {
 				newArray[i] = value.doubleValue();
 			}
-		}
-		else {
-			int i = 0;
-
-			Iterator<? extends Number> iterator = collection.iterator();
-
-			while (iterator.hasNext()) {
-				Number value = iterator.next();
-
-				newArray[i++] = value.doubleValue();
-			}
+			i++;
 		}
 
 		return newArray;
@@ -1680,25 +1668,13 @@ public class ArrayUtil {
 
 		float[] newArray = new float[collection.size()];
 
-		if (collection instanceof List) {
-			List<Number> list = (List<Number>)collection;
+		int i = 0;
 
-			for (int i = 0; i < list.size(); i++) {
-				Number value = list.get(i);
-
+		for (Number value : collection) {
+			if (value != null) {
 				newArray[i] = value.floatValue();
 			}
-		}
-		else {
-			int i = 0;
-
-			Iterator<? extends Number> iterator = collection.iterator();
-
-			while (iterator.hasNext()) {
-				Number value = iterator.next();
-
-				newArray[i++] = value.floatValue();
-			}
+			i++;
 		}
 
 		return newArray;
@@ -1707,25 +1683,13 @@ public class ArrayUtil {
 	public static int[] toIntArray(Collection<? extends Number> collection) {
 		int[] newArray = new int[collection.size()];
 
-		if (collection instanceof List) {
-			List<Number> list = (List<Number>)collection;
+		int i = 0;
 
-			for (int i = 0; i < list.size(); i++) {
-				Number value = list.get(i);
-
+		for (Number value : collection) {
+			if (value != null) {
 				newArray[i] = value.intValue();
 			}
-		}
-		else {
-			int i = 0;
-
-			Iterator<? extends Number> iterator = collection.iterator();
-
-			while (iterator.hasNext()) {
-				Number value = iterator.next();
-
-				newArray[i++] = value.intValue();
-			}
+			i++;
 		}
 
 		return newArray;
@@ -1734,25 +1698,13 @@ public class ArrayUtil {
 	public static long[] toLongArray(Collection<? extends Number> collection) {
 		long[] newArray = new long[collection.size()];
 
-		if (collection instanceof List) {
-			List<Number> list = (List<Number>)collection;
+		int i = 0;
 
-			for (int i = 0; i < list.size(); i++) {
-				Number value = list.get(i);
-
+		for (Number value : collection) {
+			if (value != null) {
 				newArray[i] = value.longValue();
 			}
-		}
-		else {
-			int i = 0;
-
-			Iterator<? extends Number> iterator = collection.iterator();
-
-			while (iterator.hasNext()) {
-				Number value = iterator.next();
-
-				newArray[i++] = value.longValue();
-			}
+			i++;
 		}
 
 		return newArray;
@@ -1791,25 +1743,13 @@ public class ArrayUtil {
 	public static short[] toShortArray(Collection<Short> collection) {
 		short[] newArray = new short[collection.size()];
 
-		if (collection instanceof List) {
-			List<Short> list = (List<Short>)collection;
+		int i = 0;
 
-			for (int i = 0; i < list.size(); i++) {
-				Short value = list.get(i);
-
+		for (Number value : collection) {
+			if (value != null) {
 				newArray[i] = value.shortValue();
 			}
-		}
-		else {
-			int i = 0;
-
-			Iterator<Short> iterator = collection.iterator();
-
-			while (iterator.hasNext()) {
-				Short value = iterator.next();
-
-				newArray[i++] = value.shortValue();
-			}
+			i++;
 		}
 
 		return newArray;

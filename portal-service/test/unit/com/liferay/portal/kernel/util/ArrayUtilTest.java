@@ -529,6 +529,7 @@ public class ArrayUtilTest {
 		List<Double> list = new ArrayList<Double>();
 
 		list.add(1.0);
+		list.add(null);
 		list.add(2.0);
 
 		double[] array = ArrayUtil.toDoubleArray(list);
@@ -538,7 +539,12 @@ public class ArrayUtilTest {
 		for (int i = 0; i < list.size(); i++) {
 			Double value = list.get(i);
 
-			AssertUtils.assertEquals(value.doubleValue(), array[i]);
+			if (value == null) {
+				AssertUtils.assertEquals(0, array[i]);
+			}
+			else {
+				AssertUtils.assertEquals(value.doubleValue(), array[i]);
+			}
 		}
 	}
 
@@ -547,6 +553,7 @@ public class ArrayUtilTest {
 		List<Float> list = new ArrayList<Float>();
 
 		list.add(1.0F);
+		list.add(null);
 		list.add(2.0F);
 
 		float[] array = ArrayUtil.toFloatArray(list);
@@ -556,7 +563,11 @@ public class ArrayUtilTest {
 		for (int i = 0; i < list.size(); i++) {
 			Float value = list.get(i);
 
-			AssertUtils.assertEquals(value.floatValue(), array[i]);
+			if (value == null) {
+				AssertUtils.assertEquals(0, array[i]);
+			} else {
+				AssertUtils.assertEquals(value.floatValue(), array[i]);
+			}
 		}
 	}
 
@@ -565,6 +576,7 @@ public class ArrayUtilTest {
 		List<Integer> list = new ArrayList<Integer>();
 
 		list.add(1);
+		list.add(null);
 		list.add(2);
 
 		int[] array = ArrayUtil.toIntArray(list);
@@ -574,7 +586,12 @@ public class ArrayUtilTest {
 		for (int i = 0; i < list.size(); i++) {
 			Integer value = list.get(i);
 
-			Assert.assertEquals(value.intValue(), array[i]);
+			if (value == null) {
+				Assert.assertEquals(0, array[i]);
+			}
+			else {
+				Assert.assertEquals(value.intValue(), array[i]);
+			}
 		}
 	}
 
@@ -583,6 +600,7 @@ public class ArrayUtilTest {
 		List<Long> list = new ArrayList<Long>();
 
 		list.add(1L);
+		list.add(null);
 		list.add(2L);
 
 		long[] array = ArrayUtil.toLongArray(list);
@@ -592,7 +610,36 @@ public class ArrayUtilTest {
 		for (int i = 0; i < list.size(); i++) {
 			Long value = list.get(i);
 
-			Assert.assertEquals(value.longValue(), array[i]);
+			if (value == null) {
+				Assert.assertEquals(0, array[i]);
+			}
+			else {
+				Assert.assertEquals(value.longValue(), array[i]);
+			}
+		}
+	}
+
+	@Test
+	public void testToShortArray() throws Exception {
+		List<Short> list = new ArrayList<Short>();
+
+		list.add((short) 1);
+		list.add(null);
+		list.add((short) 2);
+
+		short[] array = ArrayUtil.toShortArray(list);
+
+		Assert.assertEquals(array.length, list.size());
+
+		for (int i = 0; i < list.size(); i++) {
+			Short value = list.get(i);
+
+			if (value == null) {
+				Assert.assertEquals(0, array[i]);
+			}
+			else {
+				Assert.assertEquals(value.shortValue(), array[i]);
+			}
 		}
 	}
 

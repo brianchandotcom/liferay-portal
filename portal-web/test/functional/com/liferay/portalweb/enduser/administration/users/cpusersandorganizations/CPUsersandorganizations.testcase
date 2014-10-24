@@ -97,7 +97,7 @@
 		<execute macro="Organization#viewSubOrganizationCP">
 			<var name="orgName" value="Organization Name" />
 			<var name="orgType" value="Regular Organization" />
-			<var name="suborganization" value="1 Suborganization" />
+			<var name="suborganizationCount" value="1 Suborganization" />
 			<var name="suborgName" value="Sub Organization Name" />
 			<var name="suborgType" value="Regular Organization" />
 		</execute>

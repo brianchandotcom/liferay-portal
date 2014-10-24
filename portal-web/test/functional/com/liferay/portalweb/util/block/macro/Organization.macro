@@ -626,7 +626,7 @@
 		<var name="key_orgName" value="${orgName}" />
 
 		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_TYPE" value1="${orgType}" />
-		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_SUBORGANIZATION" value1="${suborganization}" />
+		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_SUBORGANIZATION_COUNT" value1="${suborganizationCount}" />
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 
 		<var name="key_suborgName" value="${suborgName}" />

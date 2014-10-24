@@ -353,6 +353,24 @@ AUI.add(
 						);
 					},
 
+					_getGeneratedFieldName: function(label) {
+						var instance = this;
+
+						var normalizedLabel = LiferayFormBuilder.Util.normalizeKey(label);
+
+						var generatedName = normalizedLabel;
+
+						if (LiferayFormBuilder.Util.validateFieldName(generatedName)) {
+							var counter = 1;
+
+							while (LiferayFormBuilder.UNIQUE_FIELD_NAMES_MAP.has(generatedName)) {
+								generatedName = normalizedLabel + counter++;
+							}
+						}
+
+						return generatedName;
+					},
+
 					_getSerializedFields: function() {
 						var instance = this;
 
@@ -388,20 +406,10 @@ AUI.add(
 								var translationManager = instance.translationManager;
 
 								if (translationManager.get('editingLocale') === translationManager.get('defaultLocale')) {
-									var normalizedLabel = LiferayFormBuilder.Util.normalizeKey(changed.value.newVal);
-
-									var generatedName = normalizedLabel;
+									var generatedName = instance._getGeneratedFieldName(changed.value.newVal);
 
 									if (LiferayFormBuilder.Util.validateFieldName(generatedName)) {
-										var counter = 1;
-
-										while (LiferayFormBuilder.UNIQUE_FIELD_NAMES_MAP.has(generatedName)) {
-											generatedName = normalizedLabel + counter++;
-										}
-
-										var modelList = instance.propertyList.get('data');
-
-										var nameModel = modelList.filter(
+										var nameModel = instance.propertyList.get('data').filter(
 											function(item, index) {
 												return (item.get('attributeName') === 'name');
 											}

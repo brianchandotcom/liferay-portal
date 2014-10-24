@@ -341,7 +341,8 @@ public class UpgradeJournalArticleType extends UpgradeBaseJournal {
 	}
 
 	protected void updateArticles(
-			long companyId, Map<String, Long> categoryTypes)
+			long companyId,
+			Map<String, Long> journalArticleTypesToAssetCategoryIds)
 		throws Exception {
 
 		Connection con = null;
@@ -375,7 +376,7 @@ public class UpgradeJournalArticleType extends UpgradeBaseJournal {
 				String type = rs.getString("type_");
 
 				long assetEntryId = getAssetEntryId(resourcePrimKey);
-				long assetCategoryId = categoryTypes.get(type);
+				long assetCategoryId = journalArticleTypesToAssetCategoryIds.get(type);
 
 				if (assetEntryId > 0) {
 					addAssetEntryToAssetCategory(assetEntryId, assetCategoryId);

@@ -480,42 +480,47 @@
 <!--ENTRY_LIST_DOCUMENT-->
 <tr>
 	<td>ENTRY_LIST_DOCUMENT_CHECKBOX</td>
-	<td>//tr[@data-title='${key_dmDocumentTitle}']//input[@type='checkbox']</td>
+	<td>//div[@data-title='${key_dmDocumentTitle}']//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_LIST_DOCUMENT_ICON</td>
-	<td>//tr[@data-title='${key_dmDocumentTitle}']//img</td>
+	<td>//div[@data-title='${key_dmDocumentTitle}']//img</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_LIST_DOCUMENT_TITLE</td>
-	<td>//tr[@data-title='${key_dmDocumentTitle}']//span[@class='taglib-text ']</td>
+	<td>//div[@data-title='${key_dmDocumentTitle}']//span[@class='taglib-text ']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_LIST_DOCUMENT_WORKFLOW</td>
-	<td>//tr[@data-title='${key_dmDocumentTitle}']//span[contains(@class,'workflow-status')]</td>
+	<td>//div[@data-title='${key_dmDocumentTitle}']//span[contains(@class,'workflow-status')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_LIST_DOCUMENT_LOCKED</td>
-	<td>//tr[@data-title='${key_dmDocumentTitle}']//div[contains(@class,'locked')]</td>
+	<td>//div[@data-title='${key_dmDocumentTitle}']//div[contains(@class,'locked')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_LIST_DOCUMENT_SIZE</td>
-	<td>//tr[@data-title='${key_dmDocumentTitle}']//td[3]</td>
+	<td>//div[@data-title='${key_dmDocumentTitle}']//td[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_LIST_DOCUMENT_DOWNLOAD</td>
-	<td>//tr[@data-title='${key_dmDocumentTitle}']//td[5]</td>
+	<td>//div[@data-title='${key_dmDocumentTitle}']//td[5]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_LIST_DOCUMENT_ACTION</td>
-	<td>//tr[@data-title='${key_dmDocumentTitle}']//span[contains(@class,'entry-action')]/div/a/</td>
+	<td>//div[@data-title='${key_dmDocumentTitle}']//span[contains(@class,'entry-action')]/div/a/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_LIST_DOCUMENT_ACTION</td>
+	<td>//div[@data-title='apple']//span[contains(@class,'entry-action')]/div/a</td>
 	<td></td>
 </tr>
 <tr>

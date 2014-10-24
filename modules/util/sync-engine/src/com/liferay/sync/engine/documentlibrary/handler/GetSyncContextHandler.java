@@ -69,20 +69,23 @@ public class GetSyncContextHandler extends BaseJSONHandler {
 		syncAccount.setSocialOfficeInstalled(
 			syncContext.isSocialOfficeInstalled());
 
-		if (ReleaseInfo.isServerCompatible(syncContext)) {
-			if (_logger.isDebugEnabled()) {
-				_logger.debug("Connected to {}", syncAccount.getUrl());
+		if ((Boolean)getParameterValue("checkState")) {
+			if (ReleaseInfo.isServerCompatible(syncContext)) {
+				if (_logger.isDebugEnabled()) {
+					_logger.debug("Connected to {}", syncAccount.getUrl());
+				}
+
+				syncAccount.setState(SyncAccount.STATE_CONNECTED);
+
+				FileEventUtil.retryFileTransfers(getSyncAccountId());
+
+				ConnectionRetryUtil.resetRetryDelay(getSyncAccountId());
 			}
-
-			syncAccount.setState(SyncAccount.STATE_CONNECTED);
-
-			FileEventUtil.retryFileTransfers(getSyncAccountId());
-
-			ConnectionRetryUtil.resetRetryDelay(getSyncAccountId());
-		}
-		else {
-			syncAccount.setState(SyncAccount.STATE_DISCONNECTED);
-			syncAccount.setUiEvent(SyncAccount.UI_EVENT_SYNC_WEB_OUT_OF_DATE);
+			else {
+				syncAccount.setState(SyncAccount.STATE_DISCONNECTED);
+				syncAccount.setUiEvent(
+					SyncAccount.UI_EVENT_SYNC_WEB_OUT_OF_DATE);
+			}
 		}
 
 		SyncAccountService.update(syncAccount);

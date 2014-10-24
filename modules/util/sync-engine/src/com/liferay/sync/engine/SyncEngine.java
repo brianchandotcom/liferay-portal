@@ -144,7 +144,7 @@ public class SyncEngine {
 		SyncWatchEventService.deleteSyncWatchEvents(syncAccountId);
 
 		SyncAccount syncAccount = SyncAccountService.synchronizeSyncAccount(
-			syncAccountId, 0);
+			syncAccountId, true, 0);
 
 		if (syncAccount.getState() == SyncAccount.STATE_CONNECTED) {
 			SyncSiteService.synchronizeSyncSites(syncAccountId);

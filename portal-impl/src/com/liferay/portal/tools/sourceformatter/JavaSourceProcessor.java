@@ -2407,9 +2407,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						content, "\n" + line + "\n",
 						"\n" + firstLine + "\n" + secondLine + "\n");
 				}
-				else if (Validator.isNotNull(
-							getNextLine(content, lineCount))) {
-
+				else if (Validator.isNotNull(getNextLine(content, lineCount))) {
 					return StringUtil.replace(
 						content, "\n" + line + "\n",
 						"\n" + firstLine + "\n" + secondLine + "\n" +
@@ -2499,7 +2497,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			int x = line.indexOf(StringPool.OPEN_PARENTHESIS);
 
 			if ((x != -1) &&
-				line.charAt(x + 1) != CharPool.CLOSE_PARENTHESIS) {
+				(line.charAt(x + 1) != CharPool.CLOSE_PARENTHESIS)) {
 
 				String secondLineIndent = indent + StringPool.TAB;
 

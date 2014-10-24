@@ -138,7 +138,11 @@ AUI.add(
 					modal.after(
 						'destroy',
 						function(event) {
-							var openerInFrame = !!modal._opener.frameElement;
+							var openerInFrame;
+
+							if (modal._opener) {
+								openerInFrame = !!modal._opener.frameElement;
+							}
 
 							if (IE9 && openerInFrame) {
 								instance._syncWindowsUI();

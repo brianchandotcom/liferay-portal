@@ -892,12 +892,24 @@
 		</if>
 
 		<execute action="PGCalendarEditevent#click" locator-key1="SAVE_BUTTON" />
+
+		<if>
+			<equals arg1="${inviteResource}" arg2="true" />
+			<then>
+				<execute action="PGCalendarAreYouSureDialogBox#assertElementPresent" locator-key1="ARE_YOU_SURE_DIALOG_BOX_HEADER" value1="Are you sure?" />
+				<execute action="PGCalendarAreYouSureDialogBox#assertTextEquals" locator-key1="ARE_YOU_SURE_DIALOG_BOX_BODY" value1="You are about to make changes that will only affect your calendar (${calendarName})." />
+				<execute action="PGCalendarAreYouSureDialogBox#assertClick" locator-key1="SAVE_CHANGES_BUTTON" value1="Save changes." />
+			</then>
+		</if>
+
 		<execute action="PGCalendarEditevent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="PGCalendarEditevent#selectFrame" value1="relative=top" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
+
+		<var name="key_eventTitle" value="${eventTitleEdit}" />
 
 		<execute action="PGCalendar#assertTextEquals" locator-key1="SCHEDULER_EVENT_SPECIFIC" value1="${eventTitleEdit}" />
 	</command>

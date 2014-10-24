@@ -482,12 +482,12 @@
 </tr>
 <tr>
 	<td>METADATA_VOCABULARY</td>
-	<td>//span[@class='metadata-entry metadata-categories']/span[contains(.,'${key_vocabularyName}')]</td>
+	<td>//span[contains(@class,'metadata-entry')]/span[contains(.,'${key_vocabularyName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>METADATA_CATEGORY</td>
-	<td>//span[@class='metadata-entry metadata-categories']/span/a[contains(.,'${key_categoryName}')]</td>
+	<td>//span[contains(@class,'metadata-categories')]/span/a[contains(.,'${key_categoryName}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -247,11 +247,11 @@ public class UpgradeJournalArticleType extends UpgradeBaseJournal {
 
 				assetVocabularySettingsHelper.setMultiValued(false);
 
-				long[] classNameIds =
-					{PortalUtil.getClassNameId(JournalArticle.class)};
-
 				assetVocabularySettingsHelper.setClassNameIdsAndClassTypePKs(
-					classNameIds, new long[] {-1}, new boolean[] {false});
+					new long[] {
+						PortalUtil.getClassNameId(JournalArticle.class)
+					},
+					new long[] {-1}, new boolean[] {false});
 
 				addAssetVocabulary(
 					vocabularyId, groupId, companyId, userId, "type",
@@ -275,7 +275,7 @@ public class UpgradeJournalArticleType extends UpgradeBaseJournal {
 						type, assetCategoryId);
 				}
 
-				updateJournalArticles(
+				updateArticles(
 					companyId, journalArticleTypesToAssetCategoryIds);
 			}
 		}
@@ -340,7 +340,7 @@ public class UpgradeJournalArticleType extends UpgradeBaseJournal {
 		}
 	}
 
-	protected void updateJournalArticles(
+	protected void updateArticles(
 			long companyId, Map<String, Long> categoryTypes)
 		throws Exception {
 

@@ -12,22 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.model;
+package com.liferay.portlet.dynamicdatamapping.model.impl;
+
+import aQute.bnd.annotation.ProviderType;
 
 /**
- * @author Bruno Basto
- * @author Alexander Chow
+ * @author Brian Wing Shun Chan
  */
-public class DDMStructureConstants {
-
-	public static final long DEFAULT_PARENT_STRUCTURE_ID = 0;
-
-	public static final int TYPE_AUTO = 1;
-
-	public static final int TYPE_DEFAULT = 0;
-
-	public static final String VERSION_DEFAULT = "1.0";
-
-	public static final String XSD_NAME_RESERVED = "reserved";
-
+@ProviderType
+public class DDMStructureVersionImpl extends DDMStructureVersionBaseImpl {
 }

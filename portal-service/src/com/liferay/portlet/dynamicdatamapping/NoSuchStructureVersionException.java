@@ -12,22 +12,32 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.model;
+package com.liferay.portlet.dynamicdatamapping;
+
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.NoSuchModelException;
 
 /**
- * @author Bruno Basto
- * @author Alexander Chow
+ * @author Brian Wing Shun Chan
  */
-public class DDMStructureConstants {
+@ProviderType
+public class NoSuchStructureVersionException extends NoSuchModelException {
 
-	public static final long DEFAULT_PARENT_STRUCTURE_ID = 0;
+	public NoSuchStructureVersionException() {
+		super();
+	}
 
-	public static final int TYPE_AUTO = 1;
+	public NoSuchStructureVersionException(String msg) {
+		super(msg);
+	}
 
-	public static final int TYPE_DEFAULT = 0;
+	public NoSuchStructureVersionException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
 
-	public static final String VERSION_DEFAULT = "1.0";
-
-	public static final String XSD_NAME_RESERVED = "reserved";
+	public NoSuchStructureVersionException(Throwable cause) {
+		super(cause);
+	}
 
 }

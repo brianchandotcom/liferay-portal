@@ -23,28 +23,24 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.liferay.portlet.dynamicdatamapping.service.http.DDMStructureServiceSoap}.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.portlet.dynamicdatamapping.service.http.DDMStructureVersionServiceSoap}.
  *
  * @author Brian Wing Shun Chan
- * @see com.liferay.portlet.dynamicdatamapping.service.http.DDMStructureServiceSoap
+ * @see com.liferay.portlet.dynamicdatamapping.service.http.DDMStructureVersionServiceSoap
  * @generated
  */
 @ProviderType
-public class DDMStructureSoap implements Serializable {
-	public static DDMStructureSoap toSoapModel(DDMStructure model) {
-		DDMStructureSoap soapModel = new DDMStructureSoap();
+public class DDMStructureVersionSoap implements Serializable {
+	public static DDMStructureVersionSoap toSoapModel(DDMStructureVersion model) {
+		DDMStructureVersionSoap soapModel = new DDMStructureVersionSoap();
 
-		soapModel.setUuid(model.getUuid());
-		soapModel.setStructureId(model.getStructureId());
+		soapModel.setStructureVersionId(model.getStructureVersionId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
-		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setParentStructureId(model.getParentStructureId());
-		soapModel.setClassNameId(model.getClassNameId());
-		soapModel.setStructureKey(model.getStructureKey());
+		soapModel.setStructureId(model.getStructureId());
 		soapModel.setVersion(model.getVersion());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
@@ -55,8 +51,9 @@ public class DDMStructureSoap implements Serializable {
 		return soapModel;
 	}
 
-	public static DDMStructureSoap[] toSoapModels(DDMStructure[] models) {
-		DDMStructureSoap[] soapModels = new DDMStructureSoap[models.length];
+	public static DDMStructureVersionSoap[] toSoapModels(
+		DDMStructureVersion[] models) {
+		DDMStructureVersionSoap[] soapModels = new DDMStructureVersionSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -65,14 +62,15 @@ public class DDMStructureSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static DDMStructureSoap[][] toSoapModels(DDMStructure[][] models) {
-		DDMStructureSoap[][] soapModels = null;
+	public static DDMStructureVersionSoap[][] toSoapModels(
+		DDMStructureVersion[][] models) {
+		DDMStructureVersionSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new DDMStructureSoap[models.length][models[0].length];
+			soapModels = new DDMStructureVersionSoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new DDMStructureSoap[0][0];
+			soapModels = new DDMStructureVersionSoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -82,41 +80,34 @@ public class DDMStructureSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static DDMStructureSoap[] toSoapModels(List<DDMStructure> models) {
-		List<DDMStructureSoap> soapModels = new ArrayList<DDMStructureSoap>(models.size());
+	public static DDMStructureVersionSoap[] toSoapModels(
+		List<DDMStructureVersion> models) {
+		List<DDMStructureVersionSoap> soapModels = new ArrayList<DDMStructureVersionSoap>(models.size());
 
-		for (DDMStructure model : models) {
+		for (DDMStructureVersion model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new DDMStructureSoap[soapModels.size()]);
+		return soapModels.toArray(new DDMStructureVersionSoap[soapModels.size()]);
 	}
 
-	public DDMStructureSoap() {
+	public DDMStructureVersionSoap() {
 	}
 
 	public long getPrimaryKey() {
-		return _structureId;
+		return _structureVersionId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setStructureId(pk);
+		setStructureVersionId(pk);
 	}
 
-	public String getUuid() {
-		return _uuid;
+	public long getStructureVersionId() {
+		return _structureVersionId;
 	}
 
-	public void setUuid(String uuid) {
-		_uuid = uuid;
-	}
-
-	public long getStructureId() {
-		return _structureId;
-	}
-
-	public void setStructureId(long structureId) {
-		_structureId = structureId;
+	public void setStructureVersionId(long structureVersionId) {
+		_structureVersionId = structureVersionId;
 	}
 
 	public long getGroupId() {
@@ -159,36 +150,12 @@ public class DDMStructureSoap implements Serializable {
 		_createDate = createDate;
 	}
 
-	public Date getModifiedDate() {
-		return _modifiedDate;
+	public long getStructureId() {
+		return _structureId;
 	}
 
-	public void setModifiedDate(Date modifiedDate) {
-		_modifiedDate = modifiedDate;
-	}
-
-	public long getParentStructureId() {
-		return _parentStructureId;
-	}
-
-	public void setParentStructureId(long parentStructureId) {
-		_parentStructureId = parentStructureId;
-	}
-
-	public long getClassNameId() {
-		return _classNameId;
-	}
-
-	public void setClassNameId(long classNameId) {
-		_classNameId = classNameId;
-	}
-
-	public String getStructureKey() {
-		return _structureKey;
-	}
-
-	public void setStructureKey(String structureKey) {
-		_structureKey = structureKey;
+	public void setStructureId(long structureId) {
+		_structureId = structureId;
 	}
 
 	public String getVersion() {
@@ -239,17 +206,13 @@ public class DDMStructureSoap implements Serializable {
 		_type = type;
 	}
 
-	private String _uuid;
-	private long _structureId;
+	private long _structureVersionId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
-	private Date _modifiedDate;
-	private long _parentStructureId;
-	private long _classNameId;
-	private String _structureKey;
+	private long _structureId;
 	private String _version;
 	private String _name;
 	private String _description;

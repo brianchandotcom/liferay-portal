@@ -1,6 +1,26 @@
 alter table BlogsEntry add subtitle STRING null;
 alter table BlogsEntry add smallImageFileEntryId LONG;
 
+alter table DDMStructure add version VARCHAR(75) null;
+
+update DDMStructure set version = '1.0';
+
+create table DDMStructureVersion (
+	structureVersionId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	structureId LONG,
+	version VARCHAR(75) null,
+	name STRING null,
+	description STRING null,
+	definition TEXT null,
+	storageType VARCHAR(75) null,
+	type_ INTEGER
+);
+
 create table ExportImportConfiguration (
 	mvccVersion LONG default 0,
 	exportImportConfigurationId LONG not null primary key,

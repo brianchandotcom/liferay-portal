@@ -8952,6 +8952,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		ddmStructureImpl.setParentStructureId(ddmStructure.getParentStructureId());
 		ddmStructureImpl.setClassNameId(ddmStructure.getClassNameId());
 		ddmStructureImpl.setStructureKey(ddmStructure.getStructureKey());
+		ddmStructureImpl.setVersion(ddmStructure.getVersion());
 		ddmStructureImpl.setName(ddmStructure.getName());
 		ddmStructureImpl.setDescription(ddmStructure.getDescription());
 		ddmStructureImpl.setDefinition(ddmStructure.getDefinition());

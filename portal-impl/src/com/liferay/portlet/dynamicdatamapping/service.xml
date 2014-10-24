@@ -84,6 +84,7 @@
 		<column name="parentStructureId" type="long" />
 		<column name="classNameId" type="long" />
 		<column name="structureKey" type="String" />
+		<column name="version" type="String" />
 		<column name="name" type="String" localized="true" />
 		<column name="description" type="String" localized="true" />
 		<column name="definition" type="String" />
@@ -141,6 +142,7 @@
 		<reference package-path="com.liferay.portal" entity="User" />
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFileEntryType" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructureLink" />
+		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructureVersion" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMTemplate" />
 		<reference package-path="com.liferay.portlet.journal" entity="JournalFolder" />
 	</entity>
@@ -166,6 +168,43 @@
 		</finder>
 		<finder name="StructureId" return-type="Collection">
 			<finder-column name="structureId" />
+		</finder>
+	</entity>
+	<entity name="DDMStructureVersion" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="structureVersionId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="structureId" type="long" />
+		<column name="version" type="String" />
+		<column name="name" type="String" localized="true" />
+		<column name="description" type="String" localized="true" />
+		<column name="definition" type="String" />
+		<column name="storageType" type="String" />
+		<column name="type" type="int" />
+
+		<!-- Finder methods -->
+
+		<finder name="StructureId" return-type="Collection">
+			<finder-column name="structureId" />
+		</finder>
+		<finder name="S_V" return-type="DDMStructureVersion" unique="true">
+			<finder-column name="structureId" />
+			<finder-column name="version" />
 		</finder>
 	</entity>
 	<entity name="DDMTemplate" uuid="true" local-service="true" remote-service="true">

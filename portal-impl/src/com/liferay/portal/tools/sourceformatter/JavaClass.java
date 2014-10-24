@@ -245,12 +245,10 @@ public class JavaClass {
 			_content, javaTermContent, newJavaTermContent);
 	}
 
-	protected void checkImmutableFieldType(
-		JavaTerm javaTerm, boolean isStatic) {
-
+	protected void checkImmutableFieldType(JavaTerm javaTerm) {
 		String oldName = javaTerm.getName();
 
-		if (!isStatic || oldName.equals("serialVersionUID")) {
+		if (oldName.equals("serialVersionUID")) {
 			return;
 		}
 
@@ -302,8 +300,12 @@ public class JavaClass {
 
 		if (isFinal) {
 			if (immutableFieldTypes.contains(javaFieldType)) {
-				checkImmutableFieldType(javaTerm, isStatic);
-				checkStaticableFieldType(javaTerm, isStatic);
+				if (isStatic) {
+					checkImmutableFieldType(javaTerm);
+				}
+				else {
+					checkStaticableFieldType(javaTerm);
+				}
 			}
 		}
 		else if (!BaseSourceProcessor.isExcluded(
@@ -353,12 +355,10 @@ public class JavaClass {
 		}
 	}
 
-	protected void checkStaticableFieldType(
-		JavaTerm javaTerm, boolean isStatic) {
-
+	protected void checkStaticableFieldType(JavaTerm javaTerm) {
 		String javaTermContent = javaTerm.getContent();
 
-		if (isStatic || !javaTermContent.contains(StringPool.EQUAL)) {
+		if (!javaTermContent.contains(StringPool.EQUAL)) {
 			return;
 		}
 

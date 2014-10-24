@@ -48,21 +48,6 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDispl
 	<aui:fieldset>
 		<aui:input inlineField="<%= true %>" name="<%= displayTerms.CONTENT %>" size="20" type="text" value="<%= displayTerms.getContent() %>" />
 
-		<aui:select inlineField="<%= true %>" name="<%= displayTerms.TYPE %>">
-			<aui:option value=""></aui:option>
-
-			<%
-			for (int i = 0; i < JournalArticleConstants.TYPES.length; i++) {
-			%>
-
-				<aui:option label="<%= JournalArticleConstants.TYPES[i] %>" selected="<%= displayTerms.getType().equals(JournalArticleConstants.TYPES[i]) %>" />
-
-			<%
-			}
-			%>
-
-		</aui:select>
-
 		<c:if test="<%= !portletName.equals(PortletKeys.JOURNAL) || ((themeDisplay.getScopeGroupId() == themeDisplay.getCompanyGroupId()) && (Validator.isNotNull(displayTerms.getDDMStructureKey()) || Validator.isNotNull(displayTerms.getDDMTemplateKey()))) %>">
 
 			<%

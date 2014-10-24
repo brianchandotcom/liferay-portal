@@ -570,21 +570,6 @@ public interface JournalArticleModel extends AttachedModel,
 	public void setContent(String content);
 
 	/**
-	 * Returns the type of this journal article.
-	 *
-	 * @return the type of this journal article
-	 */
-	@AutoEscape
-	public String getType();
-
-	/**
-	 * Sets the type of this journal article.
-	 *
-	 * @param type the type of this journal article
-	 */
-	public void setType(String type);
-
-	/**
 	 * Returns the d d m structure key of this journal article.
 	 *
 	 * @return the d d m structure key of this journal article

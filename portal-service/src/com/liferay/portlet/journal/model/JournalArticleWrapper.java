@@ -73,7 +73,6 @@ public class JournalArticleWrapper implements JournalArticle,
 		attributes.put("urlTitle", getUrlTitle());
 		attributes.put("description", getDescription());
 		attributes.put("content", getContent());
-		attributes.put("type", getType());
 		attributes.put("DDMStructureKey", getDDMStructureKey());
 		attributes.put("DDMTemplateKey", getDDMTemplateKey());
 		attributes.put("layoutUuid", getLayoutUuid());
@@ -206,12 +205,6 @@ public class JournalArticleWrapper implements JournalArticle,
 
 		if (content != null) {
 			setContent(content);
-		}
-
-		String type = (String)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
 		}
 
 		String DDMStructureKey = (String)attributes.get("DDMStructureKey");
@@ -917,16 +910,6 @@ public class JournalArticleWrapper implements JournalArticle,
 	@Override
 	public java.lang.String getTreePath() {
 		return _journalArticle.getTreePath();
-	}
-
-	/**
-	* Returns the type of this journal article.
-	*
-	* @return the type of this journal article
-	*/
-	@Override
-	public java.lang.String getType() {
-		return _journalArticle.getType();
 	}
 
 	/**
@@ -1650,16 +1633,6 @@ public class JournalArticleWrapper implements JournalArticle,
 	@Override
 	public void setTreePath(java.lang.String treePath) {
 		_journalArticle.setTreePath(treePath);
-	}
-
-	/**
-	* Sets the type of this journal article.
-	*
-	* @param type the type of this journal article
-	*/
-	@Override
-	public void setType(java.lang.String type) {
-		_journalArticle.setType(type);
 	}
 
 	/**

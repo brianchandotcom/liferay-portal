@@ -161,20 +161,6 @@ if (feed != null) {
 	<liferay-ui:panel-container extended="<%= true %>" id="journalFeedSettingsPanelContainer" persistState="<%= true %>">
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="journalFeedConstraintsPanel" persistState="<%= true %>" title="web-content-contraints">
 			<aui:fieldset>
-				<aui:select label="web-content-type" name="type" showEmptyOption="<%= true %>">
-
-					<%
-					for (String curType : JournalArticleConstants.TYPES) {
-					%>
-
-						<aui:option label="<%= curType %>" />
-
-					<%
-					}
-					%>
-
-				</aui:select>
-
 				<div class="form-group">
 					<aui:input name="structureId" required="<%= true %>" type="hidden" value="<%= structureId %>" />
 

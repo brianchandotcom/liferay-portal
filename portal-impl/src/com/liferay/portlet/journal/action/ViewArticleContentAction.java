@@ -93,7 +93,6 @@ public class ViewArticleContentAction extends Action {
 					uploadServletRequest, "title");
 				String description = ParamUtil.getString(
 					uploadServletRequest, "description");
-				String type = ParamUtil.getString(uploadServletRequest, "type");
 				String ddmStructureKey = ParamUtil.getString(
 					uploadServletRequest, "ddmStructureKey");
 				String ddmTemplateKey = ParamUtil.getString(
@@ -138,7 +137,6 @@ public class ViewArticleContentAction extends Action {
 				article.setTitle(title);
 				article.setDescription(description);
 				article.setContent(xml);
-				article.setType(type);
 				article.setDDMStructureKey(ddmStructureKey);
 				article.setDDMTemplateKey(ddmTemplateKey);
 				article.setDisplayDate(displayDate);

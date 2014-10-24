@@ -408,7 +408,6 @@ public class JournalArticleIndexer extends BaseIndexer {
 		document.addKeyword(
 			Field.TREE_PATH,
 			StringUtil.split(article.getTreePath(), CharPool.SLASH));
-		document.addKeyword(Field.TYPE, article.getType());
 		document.addKeyword(Field.VERSION, article.getVersion());
 
 		document.addKeyword("ddmStructureKey", article.getDDMStructureKey());

@@ -1976,7 +1976,6 @@
 		<property name="urlTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="content" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" column="type_" />
 		<property name="DDMStructureKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="DDMTemplateKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="layoutUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -2041,7 +2040,6 @@
 		<property name="feedId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" column="type_" />
 		<property name="structureId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="templateId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="rendererTemplateId" type="com.liferay.portal.dao.orm.hibernate.StringType" />

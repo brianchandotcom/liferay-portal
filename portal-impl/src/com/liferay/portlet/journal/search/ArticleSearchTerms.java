@@ -39,7 +39,6 @@ public class ArticleSearchTerms extends ArticleDisplayTerms {
 		description = DAOParamUtil.getString(portletRequest, DESCRIPTION);
 		status = ParamUtil.getInteger(portletRequest, STATUS);
 		title = DAOParamUtil.getString(portletRequest, TITLE);
-		type = DAOParamUtil.getString(portletRequest, TYPE);
 		version = ParamUtil.getDouble(portletRequest, VERSION);
 
 		groupId = setGroupId(portletRequest);
@@ -78,10 +77,6 @@ public class ArticleSearchTerms extends ArticleDisplayTerms {
 	@Override
 	public void setStatus(int status) {
 		this.status = status;
-	}
-
-	public void setType(String type) {
-		this.type = type;
 	}
 
 	public void setVersion(double version) {

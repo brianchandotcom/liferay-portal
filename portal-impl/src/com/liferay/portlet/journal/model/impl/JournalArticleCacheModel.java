@@ -41,7 +41,7 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(69);
+		StringBundler sb = new StringBundler(67);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -81,8 +81,6 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 		sb.append(description);
 		sb.append(", content=");
 		sb.append(content);
-		sb.append(", type=");
-		sb.append(type);
 		sb.append(", DDMStructureKey=");
 		sb.append(DDMStructureKey);
 		sb.append(", DDMTemplateKey=");
@@ -202,13 +200,6 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 			journalArticleImpl.setContent(content);
 		}
 
-		if (type == null) {
-			journalArticleImpl.setType(StringPool.BLANK);
-		}
-		else {
-			journalArticleImpl.setType(type);
-		}
-
 		if (DDMStructureKey == null) {
 			journalArticleImpl.setDDMStructureKey(StringPool.BLANK);
 		}
@@ -310,7 +301,6 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 		urlTitle = objectInput.readUTF();
 		description = objectInput.readUTF();
 		content = objectInput.readUTF();
-		type = objectInput.readUTF();
 		DDMStructureKey = objectInput.readUTF();
 		DDMTemplateKey = objectInput.readUTF();
 		layoutUuid = objectInput.readUTF();
@@ -403,13 +393,6 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 			objectOutput.writeUTF(content);
 		}
 
-		if (type == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(type);
-		}
-
 		if (DDMStructureKey == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -480,7 +463,6 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 	public String urlTitle;
 	public String description;
 	public String content;
-	public String type;
 	public String DDMStructureKey;
 	public String DDMTemplateKey;
 	public String layoutUuid;

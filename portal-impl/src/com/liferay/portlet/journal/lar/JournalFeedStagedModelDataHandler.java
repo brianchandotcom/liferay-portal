@@ -276,10 +276,9 @@ public class JournalFeedStagedModelDataHandler
 					importedFeed = JournalFeedLocalServiceUtil.addFeed(
 						userId, portletDataContext.getScopeGroupId(), feedId,
 						autoFeedId, feed.getName(), feed.getDescription(),
-						feed.getType(), parentDDMStructureKey,
-						parentDDMTemplateKey, parentRendererDDMTemplateKey,
-						feed.getDelta(), feed.getOrderByCol(),
-						feed.getOrderByType(),
+						parentDDMStructureKey, parentDDMTemplateKey,
+						parentRendererDDMTemplateKey, feed.getDelta(),
+						feed.getOrderByCol(), feed.getOrderByType(),
 						feed.getTargetLayoutFriendlyUrl(),
 						feed.getTargetPortletId(), feed.getContentField(),
 						feed.getFeedFormat(), feed.getFeedVersion(),
@@ -288,7 +287,7 @@ public class JournalFeedStagedModelDataHandler
 				else {
 					importedFeed = JournalFeedLocalServiceUtil.updateFeed(
 						existingFeed.getGroupId(), existingFeed.getFeedId(),
-						feed.getName(), feed.getDescription(), feed.getType(),
+						feed.getName(), feed.getDescription(),
 						parentDDMStructureKey, parentDDMTemplateKey,
 						parentRendererDDMTemplateKey, feed.getDelta(),
 						feed.getOrderByCol(), feed.getOrderByType(),
@@ -302,7 +301,7 @@ public class JournalFeedStagedModelDataHandler
 				importedFeed = JournalFeedLocalServiceUtil.addFeed(
 					userId, portletDataContext.getScopeGroupId(), feedId,
 					autoFeedId, feed.getName(), feed.getDescription(),
-					feed.getType(), parentDDMStructureKey, parentDDMTemplateKey,
+					parentDDMStructureKey, parentDDMTemplateKey,
 					parentRendererDDMTemplateKey, feed.getDelta(),
 					feed.getOrderByCol(), feed.getOrderByType(),
 					feed.getTargetLayoutFriendlyUrl(),

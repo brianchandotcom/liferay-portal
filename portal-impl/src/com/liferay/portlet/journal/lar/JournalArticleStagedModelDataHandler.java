@@ -645,27 +645,7 @@ public class JournalArticleStagedModelDataHandler
 							folderId, article.getClassNameId(), ddmStructureId,
 							articleId, autoArticleId, article.getVersion(),
 							article.getTitleMap(), article.getDescriptionMap(),
-							article.getContent(), article.getType(),
-							parentDDMStructureKey, parentDDMTemplateKey,
-							article.getLayoutUuid(), displayDateMonth,
-							displayDateDay, displayDateYear, displayDateHour,
-							displayDateMinute, expirationDateMonth,
-							expirationDateDay, expirationDateYear,
-							expirationDateHour, expirationDateMinute,
-							neverExpire, reviewDateMonth, reviewDateDay,
-							reviewDateYear, reviewDateHour, reviewDateMinute,
-							neverReview, article.isIndexable(),
-							article.isSmallImage(), article.getSmallImageURL(),
-							smallFile, images, articleURL, serviceContext);
-				}
-				else {
-					importedArticle =
-						JournalArticleLocalServiceUtil.updateArticle(
-							userId, existingArticle.getGroupId(), folderId,
-							existingArticle.getArticleId(),
-							article.getVersion(), article.getTitleMap(),
-							article.getDescriptionMap(), article.getContent(),
-							article.getType(), parentDDMStructureKey,
+							article.getContent(), parentDDMStructureKey,
 							parentDDMTemplateKey, article.getLayoutUuid(),
 							displayDateMonth, displayDateDay, displayDateYear,
 							displayDateHour, displayDateMinute,
@@ -677,6 +657,25 @@ public class JournalArticleStagedModelDataHandler
 							article.isIndexable(), article.isSmallImage(),
 							article.getSmallImageURL(), smallFile, images,
 							articleURL, serviceContext);
+				}
+				else {
+					importedArticle =
+						JournalArticleLocalServiceUtil.updateArticle(
+							userId, existingArticle.getGroupId(), folderId,
+							existingArticle.getArticleId(),
+							article.getVersion(), article.getTitleMap(),
+							article.getDescriptionMap(), article.getContent(),
+							parentDDMStructureKey, parentDDMTemplateKey,
+							article.getLayoutUuid(), displayDateMonth,
+							displayDateDay, displayDateYear, displayDateHour,
+							displayDateMinute, expirationDateMonth,
+							expirationDateDay, expirationDateYear,
+							expirationDateHour, expirationDateMinute,
+							neverExpire, reviewDateMonth, reviewDateDay,
+							reviewDateYear, reviewDateHour, reviewDateMinute,
+							neverReview, article.isIndexable(),
+							article.isSmallImage(), article.getSmallImageURL(),
+							smallFile, images, articleURL, serviceContext);
 
 					String existingArticleUuid = existingArticle.getUuid();
 					String importedArticleUuid = importedArticle.getUuid();
@@ -695,16 +694,16 @@ public class JournalArticleStagedModelDataHandler
 					article.getClassNameId(), ddmStructureId, articleId,
 					autoArticleId, article.getVersion(), article.getTitleMap(),
 					article.getDescriptionMap(), article.getContent(),
-					article.getType(), parentDDMStructureKey,
-					parentDDMTemplateKey, article.getLayoutUuid(),
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, expirationDateMonth,
-					expirationDateDay, expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, reviewDateMonth,
-					reviewDateDay, reviewDateYear, reviewDateHour,
-					reviewDateMinute, neverReview, article.isIndexable(),
-					article.isSmallImage(), article.getSmallImageURL(),
-					smallFile, images, articleURL, serviceContext);
+					parentDDMStructureKey, parentDDMTemplateKey,
+					article.getLayoutUuid(), displayDateMonth, displayDateDay,
+					displayDateYear, displayDateHour, displayDateMinute,
+					expirationDateMonth, expirationDateDay, expirationDateYear,
+					expirationDateHour, expirationDateMinute, neverExpire,
+					reviewDateMonth, reviewDateDay, reviewDateYear,
+					reviewDateHour, reviewDateMinute, neverReview,
+					article.isIndexable(), article.isSmallImage(),
+					article.getSmallImageURL(), smallFile, images, articleURL,
+					serviceContext);
 			}
 
 			portletDataContext.importClassedModel(article, importedArticle);

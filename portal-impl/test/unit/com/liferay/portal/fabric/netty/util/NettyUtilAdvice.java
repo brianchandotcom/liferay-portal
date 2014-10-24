@@ -47,6 +47,12 @@ public class NettyUtilAdvice {
 		Channel channel, final NoticeableFuture<T> noticeableFuture,
 		long timeout) {
 
+		if (timeout == 0) {
+			noticeableFuture.cancel(true);
+
+			return;
+		}
+
 		final Future<?> cancellationFuture =
 			_scheduledExecutorService.schedule(
 				new Runnable() {

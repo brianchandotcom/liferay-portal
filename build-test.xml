@@ -111,6 +111,35 @@
 					<var name="app.server.bundle.index" unset="true" />
 				</then>
 			</if>
+
+			<if>
+				<isset property="databases.size" />
+				<then>
+					<var name="database.index" value="1" />
+
+					<antelope:repeat count="${databases.size}">
+						<set-app-server-properties
+							app.server.bundle.index="${database.index}"
+						/>
+
+						<replace
+							file="${test.app.server.classes.portal.dir}/portal-ext.properties"
+							token="lportal"
+							value="lportal${database.index}"
+						/>
+
+						<math
+							datatype="int"
+							operand1="${database.index}"
+							operand2="1"
+							operation="+"
+							result="database.index"
+						/>
+					</antelope:repeat>
+
+					<var name="database.index" unset="true" />
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -705,17 +734,31 @@
 			<then>
 				<if>
 					<and>
+						<isset property="databases.size" />
 						<equals arg1="${database.type}" arg2="mysql" />
-						<equals arg1="${database.sharding}" arg2="true" />
 					</and>
 					<then>
-						<echo file="create.sql">
-drop database if exists lportal;
-drop database if exists lportal1;
-drop database if exists lportal2;
-create database lportal character set utf8;
-create database lportal1 character set utf8;
-create database lportal2 character set utf8;</echo>
+						<var name="database.index" value="1" />
+
+						<echo file="create.sql">drop database if exists lportal;
+create database lportal character set utf8;</echo>
+
+						<antelope:repeat count="${databases.size}">
+							<echo append="true" file="create.sql">
+
+drop database if exists lportal${database.index};
+create database lportal${database.index} character set utf8;</echo>
+
+							<math
+								datatype="int"
+								operand1="${database.index}"
+								operand2="1"
+								operation="+"
+								result="database.index"
+							/>
+						</antelope:repeat>
+
+						<var name="database.index" unset="true" />
 					</then>
 					<else>
 						<if>

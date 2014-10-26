@@ -132,7 +132,7 @@ public class DynamicServletRequest extends HttpServletRequestWrapper {
 			DynamicServletRequest dynamicRequest =
 				(DynamicServletRequest)request;
 
-			setRequest(dynamicRequest.getRequest());
+			dynamicRequest.injectInto(this);
 
 			params = dynamicRequest.getDynamicParameterMap();
 
@@ -240,6 +240,10 @@ public class DynamicServletRequest extends HttpServletRequestWrapper {
 
 	public void setParameterValues(String name, String[] values) {
 		_params.put(name, values);
+	}
+
+	protected void injectInto(DynamicServletRequest dynamicServletRequest) {
+		dynamicServletRequest.setRequest(getRequest());
 	}
 
 	private final boolean _inherit;

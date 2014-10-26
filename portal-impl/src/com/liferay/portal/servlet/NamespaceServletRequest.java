@@ -150,6 +150,14 @@ public class NamespaceServletRequest extends DynamicServletRequest {
 		}
 	}
 
+	@Override
+	protected void injectInto(DynamicServletRequest dynamicServletRequest) {
+		dynamicServletRequest.setRequest(
+			new NamespaceServletRequest(
+				(HttpServletRequest)getRequest(), _attrNamespace,
+				_paramNamespace));
+	}
+
 	private boolean _isReservedParam(String name) {
 		if (reservedAttrs.contains(name)) {
 			return true;

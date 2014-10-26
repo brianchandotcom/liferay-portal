@@ -50,7 +50,7 @@ AUI.add(
 						function(item, index) {
 							var layoutConfig = layoutIds[index];
 
-							if (layoutConfig.sortable) {
+							if (layoutConfig && layoutConfig.sortable && layoutConfig.id == item.getData('layoutId')) {
 								item.append(TPL_DRAG_HANDLE);
 							}
 						}

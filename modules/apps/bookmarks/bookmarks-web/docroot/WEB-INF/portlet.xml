@@ -17,6 +17,7 @@
 		<supports>
 			<mime-type>text/html</mime-type>
 		</supports>
+		<resource-bundle>content.Language</resource-bundle>
 		<portlet-info>
 			<title>Bookmarks</title>
 			<short-title>Bookmarks</short-title>
@@ -52,6 +53,7 @@
 		<supports>
 			<mime-type>text/html</mime-type>
 		</supports>
+		<resource-bundle>content.Language</resource-bundle>
 		<portlet-info>
 			<title>Bookmarks Admin</title>
 			<short-title>Bookmarks Admin</short-title>

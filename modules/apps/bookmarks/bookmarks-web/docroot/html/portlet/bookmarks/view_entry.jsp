@@ -29,8 +29,6 @@ BookmarksFolder folder = entry.getFolder();
 
 AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(BookmarksEntry.class.getName(), entry.getEntryId());
 
-request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
-
 request.setAttribute("view_entry.jsp-entry", entry);
 
 BookmarksUtil.addPortletBreadcrumbEntries(entry, request, renderResponse);

@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>ENTRY_AUTHOR</td>
-	<td>//div[@class='entry-author']</td>
+	<td>//div[contains(@class,'entry-author')]</td>
 	<td></td>
 </tr>
 <tr>

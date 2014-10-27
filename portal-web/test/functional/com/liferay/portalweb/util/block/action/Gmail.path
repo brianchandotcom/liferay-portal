@@ -239,6 +239,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GMAIL_HTML_MODE_MESSAGE_BODY_LINK_BUTTON</td>
+	<td>//a[contains(text(),'CONTINUE READING')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GMAIL_HTML_MODE_MESSAGE_BODY_CLOSING</td>
 	<td>//tr[contains(.,'${key_gmailAssetType}')]//td/div[@class='msg']</td>
 	<td></td>

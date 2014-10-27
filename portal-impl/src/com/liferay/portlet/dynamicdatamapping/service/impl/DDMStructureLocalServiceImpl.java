@@ -205,13 +205,7 @@ public class DDMStructureLocalServiceImpl
 			String storageType, int type, ServiceContext serviceContext)
 		throws PortalException {
 
-		try {
-			definition = DDMXMLUtil.validateXML(definition);
-			definition = DDMXMLUtil.formatXML(definition);
-		}
-		catch (Exception e) {
-			throw new StructureDefinitionException();
-		}
+		validate(definition);
 
 		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
 
@@ -338,13 +332,7 @@ public class DDMStructureLocalServiceImpl
 			String storageType, int type, ServiceContext serviceContext)
 		throws PortalException {
 
-		try {
-			definition = DDMXMLUtil.validateXML(definition);
-			definition = DDMXMLUtil.formatXML(definition);
-		}
-		catch (Exception e) {
-			throw new StructureDefinitionException();
-		}
+		validate(definition);
 
 		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
 
@@ -1455,13 +1443,7 @@ public class DDMStructureLocalServiceImpl
 
 		// Structure
 
-		try {
-			definition = DDMXMLUtil.validateXML(definition);
-			definition = DDMXMLUtil.formatXML(definition);
-		}
-		catch (Exception e) {
-			throw new StructureDefinitionException();
-		}
+		validate(definition);
 
 		DDMForm parentDDMForm = getParentDDMForm(parentStructureId);
 
@@ -1707,6 +1689,16 @@ public class DDMStructureLocalServiceImpl
 			le.setTargetAvailableLocales(availableLocales);
 
 			throw le;
+		}
+	}
+
+	protected void validate(String definition) throws PortalException {
+		try {
+			DDMXMLUtil.validateXML(definition);
+			DDMXMLUtil.formatXML(definition);
+		}
+		catch (Exception e) {
+			throw new StructureDefinitionException();
 		}
 	}
 

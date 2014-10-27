@@ -72,13 +72,11 @@ public abstract class BaseStagingBackgroundTaskExecutor
 		throws PortalException {
 
 		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
+			ServiceContextThreadLocal.popServiceContext();
 
-		if (serviceContext != null) {
-			return;
+		if (serviceContext == null) {
+			serviceContext = new ServiceContext();
 		}
-
-		serviceContext = new ServiceContext();
 
 		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 			groupId, privateLayout);

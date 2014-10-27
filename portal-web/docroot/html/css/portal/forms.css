@@ -98,10 +98,6 @@
 }
 
 .lfr-ddm-container {
-	textarea {
-		max-width: 100%;
-	}
-
 	.form-group label {
 		margin-left: 0;
 	}

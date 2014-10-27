@@ -103,7 +103,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		Assert.assertTrue(result instanceof List);
 		Assert.assertEquals(
 			"[\"Welcome 173 to Jupiter\",\"Welcome 173 to Jupiter\"]",
-			toJSON(invokerResult));
+			toJSON(result));
 	}
 
 	@Test
@@ -126,7 +126,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		JSONWebServiceInvokerAction.InvokerResult invokerResult =
 			(JSONWebServiceInvokerAction.InvokerResult)result;
 
-		Assert.assertEquals("\"goodboy*badboy\"", toJSON(invokerResult));
+		Assert.assertEquals("\"goodboy*badboy\"", toJSON(result));
 	}
 
 	@Test
@@ -279,8 +279,8 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		Assert.assertTrue(result instanceof Map);
 		Assert.assertEquals(
-			"{\"id\":173,\"world\":\"Welcome 173 to Jupiter\"}",
-			toJSON(invokerResult));
+			"{\"world\":\"Welcome 173 to Jupiter\",\"id\":173}",
+			toJSON(result));
 	}
 
 	@Test
@@ -361,9 +361,9 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		Assert.assertTrue(result instanceof Map);
 		Assert.assertEquals(
-			"{\"height\":177,\"id\":173,\"name\":\"John Doe\",\"value\":" +
+			"{\"id\":173,\"height\":177,\"name\":\"John Doe\",\"value\":" +
 				"\"foo!\",\"world\":\"Welcome 173 to Jupiter\"}",
-			toJSON(invokerResult));
+			toJSON(result));
 	}
 
 	@Test
@@ -410,13 +410,14 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("{\"height\":177,\"id\":173,\"name\":\"John Doe\",");
-		sb.append("\"spy\":{\"height\":173,\"id\":7,\"name\":\"James Bond\",");
-		sb.append("\"thief\":{\"height\":59,\"id\":-13,\"name\":\"Dr. Evil\",");
-		sb.append("\"value\":\"fun\",\"world\":\"Welcome -13 to Jupiter\"},");
-		sb.append("\"value\":\"licensed\"},\"value\":\"foo!\"}");
+		sb.append("{\"id\":173,\"height\":177,");
+		sb.append("\"spy\":{\"id\":7,\"height\":173,\"name\":\"James Bond\",");
+		sb.append("\"value\":\"licensed\",");
+		sb.append("\"thief\":{\"id\":-13,\"height\":59,\"name\":\"Dr. Evil\",");
+		sb.append("\"value\":\"fun\",\"world\":\"Welcome -13 to Jupiter\"}},");
+		sb.append("\"name\":\"John Doe\",\"value\":\"foo!\"}");
 
-		Assert.assertEquals(sb.toString(), toJSON(invokerResult));
+		Assert.assertEquals(sb.toString(), toJSON(result));
 	}
 
 	@Test
@@ -440,7 +441,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		Assert.assertTrue(result instanceof List);
 		Assert.assertEquals(
-			"[{\"id\":1},{\"id\":2},{\"id\":3}]", toJSON(invokerResult));
+			"[{\"id\":1},{\"id\":2},{\"id\":3}]", toJSON(result));
 	}
 
 	@Test
@@ -470,10 +471,10 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		Assert.assertTrue(result instanceof List);
 		Assert.assertEquals(
-			"[{\"id\":1,\"resource\":{\"id\":1,\"value\":\"foo!\"}},{\"id\":" +
-				"2,\"resource\":{\"id\":2,\"value\":\"foo!\"}},{\"id\":3," +
-					"\"resource\":{\"id\":3,\"value\":\"foo!\"}}]",
-			toJSON(invokerResult));
+			"[{\"resource\":{\"value\":\"foo!\",\"id\":1},\"id\":1},{" +
+				"\"resource\":{\"value\":\"foo!\",\"id\":2},\"id\":2},{" +
+					"\"resource\":{\"value\":\"foo!\",\"id\":3},\"id\":3}]",
+			toJSON(result));
 	}
 
 	@Test
@@ -577,8 +578,10 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		JSONWebServiceInvokerAction.InvokerResult invokerResult =
 			(JSONWebServiceInvokerAction.InvokerResult)result;
 
+		result = invokerResult.getResult();
+
 		Assert.assertEquals(
-			"\"search target>active:false:boolean\"", toJSON(invokerResult));
+			"\"search target>active:false:boolean\"", toJSON(result));
 
 		params.put("params", new String[] {"active", "false", "boolean"});
 
@@ -590,8 +593,10 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		invokerResult = (JSONWebServiceInvokerAction.InvokerResult)result;
 
+		result = invokerResult.getResult();
+
 		Assert.assertEquals(
-			"\"search target>active,false,boolean\"", toJSON(invokerResult));
+			"\"search target>active,false,boolean\"", toJSON(result));
 	}
 
 	@Test
@@ -673,8 +678,10 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		JSONWebServiceInvokerAction.InvokerResult invokerResult =
 			(JSONWebServiceInvokerAction.InvokerResult)result;
 
+		result = invokerResult.getResult();
+
 		Assert.assertEquals(
-			"\"[1, 2, 3]|[8, 9]|*p1=[one, two]|\"", toJSON(invokerResult));
+			"\"[1, 2, 3]|[8, 9]|*p1=[one, two]|\"", toJSON(result));
 	}
 
 	@Test
@@ -694,8 +701,10 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		JSONWebServiceInvokerAction.InvokerResult invokerResult =
 			(JSONWebServiceInvokerAction.InvokerResult)result;
 
+		result = invokerResult.getResult();
+
 		Assert.assertEquals(
-			"{\"array\":[1,2,3],\"value\":\"value\"}", toJSON(invokerResult));
+			"{\"array\":[1,2,3],\"value\":\"value\"}", toJSON(result));
 
 		// Hack 1
 
@@ -733,8 +742,10 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		invokerResult = (JSONWebServiceInvokerAction.InvokerResult)result;
 
+		result = invokerResult.getResult();
+
 		Assert.assertEquals(
-			"{\"array\":[1,2,3],\"value\":\"value\"}", toJSON(invokerResult));
+			"{\"array\":[1,2,3],\"value\":\"value\"}", toJSON(result));
 	}
 
 	@Test
@@ -786,7 +797,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		Assert.assertEquals("Welcome 173 to Jupiter", result);
 		Assert.assertEquals(
-			"\"Welcome 173 to Jupiter\"", toJSON(invokerResult));
+			"\"Welcome 173 to Jupiter\"", toJSON(result));
 	}
 
 	@Test
@@ -814,7 +825,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		Assert.assertEquals("Welcome 173 to Jupiter", result);
 		Assert.assertEquals(
-			"\"Welcome 173 to Jupiter\"", toJSON(invokerResult));
+			"\"Welcome 173 to Jupiter\"", toJSON(result));
 	}
 
 	@Test
@@ -841,7 +852,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		Assert.assertEquals("Welcome 173 to Jupiter", result);
 		Assert.assertEquals(
-			"\"Welcome 173 to Jupiter\"", toJSON(invokerResult));
+			"\"Welcome 173 to Jupiter\"", toJSON(result));
 	}
 
 	@Test
@@ -867,7 +878,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		result = invokerResult.getResult();
 
 		Assert.assertEquals("Welcome 173 to null", result);
-		Assert.assertEquals("\"Welcome 173 to null\"", toJSON(invokerResult));
+		Assert.assertEquals("\"Welcome 173 to null\"", toJSON(result));
 	}
 
 	@Test

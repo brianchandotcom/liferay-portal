@@ -512,8 +512,9 @@ public class DLStoreImpl implements DLStore {
 		}
 
 		validate(
-			fileName, fileExtension, sourceFileName, validateFileExtension, is,
-			versionLabel);
+			fileName, fileExtension, sourceFileName, validateFileExtension);
+
+		DLValidatorUtil.validateVersionLabel(versionLabel);
 
 		if (!PropsValues.DL_STORE_ANTIVIRUS_ENABLED ||
 			!AntivirusScannerUtil.isActive()) {

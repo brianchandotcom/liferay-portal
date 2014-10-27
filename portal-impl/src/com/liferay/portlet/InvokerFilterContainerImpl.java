@@ -64,9 +64,9 @@ public class InvokerFilterContainerImpl
 
 		Filter filter = registry.getFilter(
 			"(&(javax.portlet.name=" + rootPortletId + ")(objectClass=" +
-				PortletFilter.class + "))");
+				PortletFilter.class.getName() + "))");
 
-		ServiceTracker<PortletFilter, PortletFilter> _serviceTracker =
+		_serviceTracker =
 			registry.trackServices(
 				filter,
 				new PortletFilterServiceTrackerCustomizer(portletContext));
@@ -146,6 +146,8 @@ public class InvokerFilterContainerImpl
 
 		_serviceRegistrations.clear();
 
+		_serviceTracker.close();
+
 		_actionFilters.clear();
 		_eventFilters.clear();
 		_renderFilters.clear();
@@ -185,6 +187,7 @@ public class InvokerFilterContainerImpl
 		new CopyOnWriteArrayList<>();
 	private final List<ServiceRegistration<PortletFilter>>
 		_serviceRegistrations = new CopyOnWriteArrayList<>();
+	private final ServiceTracker<PortletFilter, PortletFilter> _serviceTracker;
 
 	private class PortletFilterServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<PortletFilter, PortletFilter> {

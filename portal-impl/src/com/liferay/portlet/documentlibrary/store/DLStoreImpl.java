@@ -117,7 +117,7 @@ public class DLStoreImpl implements DLStore {
 			return;
 		}
 
-		validate(fileName, validateFileExtension, is);
+		validate(fileName, validateFileExtension);
 
 		if (!PropsValues.DL_STORE_ANTIVIRUS_ENABLED ||
 			!AntivirusScannerUtil.isActive()) {

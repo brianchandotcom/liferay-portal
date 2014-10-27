@@ -106,6 +106,25 @@
 		</if>
 	</command>
 
+	<command name="openMessageLinkButton">
+		<var name="key_gmailAssetType" value="${gmailAssetType}" />
+
+		<var name="pageNameURL" value="${pageName?replace(' ', '-')}" />
+		<var name="pageNameURL" value="/${pageNameURL?lowercase()}" />
+
+		<execute action="Gmail#assertClick" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_LINK_BUTTON" value1="CONTINUE READING" />
+
+		<if>
+			<isset var="contentTitle" />
+			<then>
+				<execute action="Home#selectWindow" locator1="title=${contentTitle} - ${pageName} - Liferay" />
+			</then>
+			<else>
+				<execute action="Home#selectWindow" locator1="title=${pageName} - Liferay" />
+			</else>
+		</if>
+	</command>
+
 	<command name="replyMail">
 		<execute action="Gmail#type" locator-key1="GMAIL_HTML_MODE_MESSAGE_QUICK_REPLY_FIELD" value1="${gmailReplyMessage}" />
 		<execute action="Gmail#assertClick" locator-key1="GMAIL_HTML_MODE_MESSAGE_QUICK_REPLY_SEND_BUTTON" value1="Send" />

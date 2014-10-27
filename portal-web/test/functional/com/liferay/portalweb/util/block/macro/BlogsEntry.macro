@@ -275,6 +275,7 @@
 		<if>
 			<equals arg1="${viewableBy}" arg2="true" />
 			<then>
+				<execute action="PGBlogsAdd#click" locator-key1="SETTINGS_TAB" />
 				<execute action="PGBlogsAdd#select" locator-key1="PERMISSIONS_VIEWABLE_BY_DROPDOWN" value1="${viewableBySelection}" />
 			</then>
 		</if>

@@ -64,7 +64,7 @@ if (ddmFields != null) {
 	<portlet:param name="struts_action" value="/journal/edit_article" />
 	<portlet:param name="articleId" value="<%= articleId %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	<portlet:param name="structureId" value="<%= ddmStructure.getStructureKey() %>" />
+	<portlet:param name="ddmStructureKey" value="<%= ddmStructure.getStructureKey() %>" />
 </portlet:renderURL>
 
 <div class="journal-article-body" id="<portlet:namespace />journalArticleBody">
@@ -119,7 +119,7 @@ if (ddmFields != null) {
 						<aui:fieldset cssClass="article-structure-toolbar">
 							<div class="journal-form-presentation-label">
 								<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
-								<aui:input name="structureId" type="hidden" value="<%= ddmStructure.getStructureKey() %>" />
+								<aui:input name="ddmStructureKey" type="hidden" value="<%= ddmStructure.getStructureKey() %>" />
 								<aui:input name="structureName" type="hidden" value="<%= ddmStructure.getName(locale) %>" />
 								<aui:input name="structureDescription" type="hidden" value="<%= ddmStructure.getDescription(locale) %>" />
 
@@ -153,7 +153,7 @@ if (ddmFields != null) {
 
 						<aui:fieldset cssClass="article-template-toolbar">
 							<div class="journal-form-presentation-label">
-								<aui:input name="templateId" type="hidden" value="<%= (ddmTemplate != null) ? ddmTemplate.getTemplateKey() : StringPool.BLANK %>" />
+								<aui:input name="ddmTemplateKey" type="hidden" value="<%= (ddmTemplate != null) ? ddmTemplate.getTemplateKey() : StringPool.BLANK %>" />
 
 								<span class="template-name-label" id="<portlet:namespace />templateNameLabel">
 									<c:if test="<%= (ddmTemplate != null) && ddmTemplate.isSmallImage() %>">
@@ -232,7 +232,7 @@ if (ddmFields != null) {
 	<portlet:param name="refererPortletName" value="<%= PortletKeys.JOURNAL %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-	<portlet:param name="templateId" value="<%= (ddmTemplate != null) ? String.valueOf(ddmTemplate.getTemplateId()) : StringPool.BLANK %>" />
+	<portlet:param name="ddmTemplateKey" value="<%= (ddmTemplate != null) ? String.valueOf(ddmTemplate.getTemplateId()) : StringPool.BLANK %>" />
 	<portlet:param name="showCacheableInput" value="<%= Boolean.TRUE.toString() %>" />
 </liferay-portlet:renderURL>
 
@@ -244,8 +244,8 @@ if (ddmFields != null) {
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 	<portlet:param name="classPK" value="<%= classPK %>" />
-	<portlet:param name="structureId" value="<%= ddmStructure.getStructureKey() %>" />
-	<portlet:param name="templateId" value="<%= (ddmTemplate != null) ? String.valueOf(ddmTemplate.getTemplateKey()) : StringPool.BLANK %>" />
+	<portlet:param name="ddmStructureKey" value="<%= ddmStructure.getStructureKey() %>" />
+	<portlet:param name="ddmTemplateKey" value="<%= (ddmTemplate != null) ? String.valueOf(ddmTemplate.getTemplateKey()) : StringPool.BLANK %>" />
 </portlet:renderURL>
 
 <aui:script use="liferay-journal-content">

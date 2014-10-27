@@ -21,7 +21,7 @@ String navigation = ParamUtil.getString(request, "navigation", "home");
 
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
-String structureId = ParamUtil.getString(request, "structureId");
+String ddmStructureKey = ParamUtil.getString(request, "ddmStructureKey");
 
 PortletURL displayStyleURL = renderResponse.createRenderURL();
 
@@ -29,8 +29,8 @@ displayStyleURL.setParameter("struts_action", "/journal/view");
 displayStyleURL.setParameter("navigation", HtmlUtil.escapeJS(navigation));
 displayStyleURL.setParameter("folderId", String.valueOf(folderId));
 
-if (!structureId.equals("0")) {
-	displayStyleURL.setParameter("structureId", structureId);
+if (!ddmStructureKey.equals("0")) {
+	displayStyleURL.setParameter("ddmStructureKey", ddmStructureKey);
 }
 %>
 

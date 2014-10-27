@@ -493,12 +493,12 @@ public class EditArticleAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			JournalArticle.class.getName(), uploadPortletRequest);
 
-		String structureId = ParamUtil.getString(
-			uploadPortletRequest, "structureId");
+		String ddmStructureKey = ParamUtil.getString(
+			uploadPortletRequest, "ddmStructureKey");
 
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
 			PortalUtil.getSiteGroupId(groupId),
-			PortalUtil.getClassNameId(JournalArticle.class), structureId, true);
+			PortalUtil.getClassNameId(JournalArticle.class), ddmStructureKey, true);
 
 		String languageId = defaultLanguageId;
 
@@ -520,8 +520,8 @@ public class EditArticleAction extends PortletAction {
 			throw new ArticleContentSizeException();
 		}
 
-		String templateId = ParamUtil.getString(
-			uploadPortletRequest, "templateId");
+		String ddmTemplateKey = ParamUtil.getString(
+			uploadPortletRequest, "ddmTemplateKey");
 		String layoutUuid = ParamUtil.getString(
 			uploadPortletRequest, "layoutUuid");
 
@@ -616,14 +616,15 @@ public class EditArticleAction extends PortletAction {
 
 			article = JournalArticleServiceUtil.addArticle(
 				groupId, folderId, classNameId, classPK, articleId,
-				autoArticleId, titleMap, descriptionMap, content, structureId,
-				templateId, layoutUuid, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, neverExpire,
-				reviewDateMonth, reviewDateDay, reviewDateYear, reviewDateHour,
-				reviewDateMinute, neverReview, indexable, smallImage,
-				smallImageURL, smallFile, images, articleURL, serviceContext);
+				autoArticleId, titleMap, descriptionMap, content,
+				ddmStructureKey, ddmTemplateKey, layoutUuid, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, reviewDateMonth, reviewDateDay, reviewDateYear,
+				reviewDateHour, reviewDateMinute, neverReview, indexable,
+				smallImage, smallImageURL, smallFile, images, articleURL,
+				serviceContext);
 
 			AssetPublisherUtil.addAndStoreSelection(
 				actionRequest, JournalArticle.class.getName(),
@@ -647,7 +648,7 @@ public class EditArticleAction extends PortletAction {
 
 				article = JournalArticleServiceUtil.updateArticle(
 					groupId, folderId, articleId, version, titleMap,
-					descriptionMap, content, structureId, templateId,
+					descriptionMap, content, ddmStructureKey, ddmTemplateKey,
 					layoutUuid, displayDateMonth, displayDateDay,
 					displayDateYear, displayDateHour, displayDateMinute,
 					expirationDateMonth, expirationDateDay, expirationDateYear,

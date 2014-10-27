@@ -262,7 +262,7 @@ public interface VelocityTaglib {
 	public void include(String page) throws Exception;
 
 	public void journalArticle(
-			String articleId, long groupId, String templateId)
+			String articleId, long groupId, String ddmTemplateKey)
 		throws Exception;
 
 	public void journalContentSearch() throws Exception;

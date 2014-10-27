@@ -5437,6 +5437,36 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Updates the web content articles matching the group, class name ID, and
+	 * DDM template key, replacing the DDM template key with a new one.
+	 *
+	 * @param groupId the primary key of the web content article's group
+	 * @param classNameId the primary key of the DDMStructure class if the web
+	 *        content article is related to a DDM structure, the primary key of
+	 *        the class name associated with the article, or {@link
+	 *        JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	 * @param oldDDMTemplateKey the primary key of the web content article's old
+	 *        DDM template
+	 * @param newDDMTemplateKey the primary key of the web content article's new
+	 *        DDM template
+	 */
+	@Override
+	public void updateDDMTemplateKey(
+		long groupId, long classNameId, String oldDDMTemplateKey,
+		String newDDMTemplateKey) {
+
+		List<JournalArticle> articles =
+			journalArticlePersistence.findByG_C_DDMTK(
+				groupId, classNameId, oldDDMTemplateKey);
+
+		for (JournalArticle article : articles) {
+			article.setDDMTemplateKey(newDDMTemplateKey);
+
+			journalArticlePersistence.update(article);
+		}
+	}
+
+	/**
 	 * Updates the workflow status of the web content article.
 	 *
 	 * @param  userId the primary key of the user updating the web content
@@ -5727,21 +5757,18 @@ public class JournalArticleLocalServiceImpl
 	 *        DDM template
 	 * @param newDDMTemplateKey the primary key of the web content article's new
 	 *        DDM template
+	 *
+	 *
+	 * @deprecated As of 7.0.0, replaced by {@link #updateDDMTemplateKey}
+	 *
 	 */
 	@Override
 	public void updateTemplateId(
 		long groupId, long classNameId, String oldDDMTemplateKey,
 		String newDDMTemplateKey) {
 
-		List<JournalArticle> articles =
-			journalArticlePersistence.findByG_C_DDMTK(
-				groupId, classNameId, oldDDMTemplateKey);
-
-		for (JournalArticle article : articles) {
-			article.setDDMTemplateKey(newDDMTemplateKey);
-
-			journalArticlePersistence.update(article);
-		}
+		updateDDMTemplateKey(
+			groupId, classNameId, oldDDMTemplateKey, newDDMTemplateKey);
 	}
 
 	protected String buildArticleURL(

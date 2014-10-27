@@ -411,7 +411,7 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 
 	@Override
 	public void journalArticle(
-			String articleId, long groupId, String templateId)
+			String articleId, long groupId, String ddmTemplateKey)
 		throws Exception {
 	}
 

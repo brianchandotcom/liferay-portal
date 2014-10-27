@@ -58,8 +58,8 @@ public class JournalArticleTag extends IncludeTag {
 		_showTitle = showTitle;
 	}
 
-	public void setTemplateId(String templateId) {
-		_templateId = templateId;
+	public void setDDMTemplateKey(String ddmTemplateKey) {
+		_ddmTemplateKey = ddmTemplateKey;
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class JournalArticleTag extends IncludeTag {
 		_portletRequestModel = null;
 		_showAvailableLocales = false;
 		_showTitle = false;
-		_templateId = null;
+		_ddmTemplateKey = null;
 	}
 
 	@Override
@@ -91,6 +91,8 @@ public class JournalArticleTag extends IncludeTag {
 			"liferay-ui:journal-article:articleResourcePrimKey",
 			String.valueOf(_articleResourcePrimKey));
 		request.setAttribute(
+			"liferay-ui:journal-article:ddmTemplateKey", _ddmTemplateKey);
+		request.setAttribute(
 			"liferay-ui:journal-article:groupId", String.valueOf(_groupId));
 		request.setAttribute(
 			"liferay-ui:journal-article:languageId", _languageId);
@@ -102,8 +104,6 @@ public class JournalArticleTag extends IncludeTag {
 			String.valueOf(_showAvailableLocales));
 		request.setAttribute(
 			"liferay-ui:journal-article:showTitle", String.valueOf(_showTitle));
-		request.setAttribute(
-			"liferay-ui:journal-article:templateId", _templateId);
 	}
 
 	private static final String _PAGE =
@@ -117,6 +117,6 @@ public class JournalArticleTag extends IncludeTag {
 	private PortletRequestModel _portletRequestModel;
 	private boolean _showAvailableLocales;
 	private boolean _showTitle;
-	private String _templateId;
+	private String _ddmTemplateKey;
 
 }

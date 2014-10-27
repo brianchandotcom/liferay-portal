@@ -37,7 +37,7 @@ if (folder != null) {
 	}
 }
 
-String structureId = ParamUtil.getString(request, "structureId");
+String ddmStructureKey = ParamUtil.getString(request, "ddmStructureKey");
 
 int total = 0;
 
@@ -106,7 +106,7 @@ else {
 						iconCssClass="icon-home"
 						label='<%= HtmlUtil.escape(LanguageUtil.get(request, "home")) %>'
 						localizeLabel="<%= false %>"
-						selected='<%= (navigation.equals("home") && (folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)) && Validator.isNull(structureId) %>'
+						selected='<%= (navigation.equals("home") && (folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)) && Validator.isNull(ddmStructureKey) %>'
 					>
 
 						<%
@@ -192,7 +192,7 @@ else {
 								<portlet:param name="struts_action" value="/journal/view" />
 								<portlet:param name="browseBy" value="structure" />
 								<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-								<portlet:param name="structureId" value="<%= ddmStructure.getStructureKey() %>" />
+								<portlet:param name="ddmStructureKey" value="<%= ddmStructure.getStructureKey() %>" />
 							</portlet:renderURL>
 
 							<aui:nav-item
@@ -201,7 +201,7 @@ else {
 								iconCssClass="<%= assetRendererFactory.getIconCssClass() %>"
 								label="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>"
 								localizeLabel="<%= false %>"
-								selected="<%= structureId.equals(ddmStructure.getStructureKey()) %>"
+								selected="<%= ddmStructureKey.equals(ddmStructure.getStructureKey()) %>"
 							/>
 
 						<%

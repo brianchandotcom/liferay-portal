@@ -55,7 +55,7 @@ String articleId = BeanParamUtil.getString(article, request, "articleId");
 
 double version = BeanParamUtil.getDouble(article, request, "version", JournalArticleConstants.VERSION_DEFAULT);
 
-String structureId = BeanParamUtil.getString(article, request, "structureId");
+String ddmStructureKey = BeanParamUtil.getString(article, request, "ddmStructureKey");
 
 DDMStructure ddmStructure = null;
 
@@ -64,11 +64,11 @@ long ddmStructureId = ParamUtil.getLong(request, "ddmStructureId");
 if (ddmStructureId > 0) {
 	ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(ddmStructureId);
 }
-else if (Validator.isNotNull(structureId)) {
-	ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(JournalArticle.class), structureId, true);
+else if (Validator.isNotNull(ddmStructureKey)) {
+	ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(JournalArticle.class), ddmStructureKey, true);
 }
 
-String templateId = BeanParamUtil.getString(article, request, "templateId");
+String ddmTemplateKey = BeanParamUtil.getString(article, request, "ddmTemplateKey");
 
 DDMTemplate ddmTemplate = null;
 
@@ -77,8 +77,8 @@ long ddmTemplateId = ParamUtil.getLong(request, "ddmTemplateId");
 if (ddmTemplateId > 0) {
 	ddmTemplate = DDMTemplateLocalServiceUtil.fetchDDMTemplate(ddmTemplateId);
 }
-else if (Validator.isNotNull(templateId)) {
-	ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(groupId, PortalUtil.getClassNameId(DDMStructure.class), templateId, true);
+else if (Validator.isNotNull(ddmTemplateKey)) {
+	ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(groupId, PortalUtil.getClassNameId(DDMStructure.class), ddmTemplateKey, true);
 }
 
 if (ddmTemplate == null) {

@@ -679,7 +679,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 	@Override
 	public void journalArticle(
-			String articleId, long groupId, String templateId)
+			String articleId, long groupId, String ddmTemplateKey)
 		throws Exception {
 
 		JournalArticleTag journalArticleTag = new JournalArticleTag();
@@ -689,7 +689,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		journalArticleTag.setArticleId(articleId);
 		journalArticleTag.setGroupId(groupId);
 		journalArticleTag.setLanguageId(LanguageUtil.getLanguageId(_request));
-		journalArticleTag.setTemplateId(templateId);
+		journalArticleTag.setDDMTemplateKey(ddmTemplateKey);
 
 		journalArticleTag.runTag();
 	}

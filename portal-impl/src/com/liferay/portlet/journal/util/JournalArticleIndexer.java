@@ -537,10 +537,10 @@ public class JournalArticleIndexer extends BaseIndexer {
 		String[] ddmStructureKeys = new String[ddmStructureIds.size()];
 
 		for (int i = 0; i < ddmStructureIds.size(); i++) {
-			long structureId = ddmStructureIds.get(i);
+			long ddmStructureId = ddmStructureIds.get(i);
 
 			DDMStructure ddmStructure =
-				DDMStructureLocalServiceUtil.getDDMStructure(structureId);
+				DDMStructureLocalServiceUtil.getDDMStructure(ddmStructureId);
 
 			ddmStructureKeys[i] = ddmStructure.getStructureKey();
 		}

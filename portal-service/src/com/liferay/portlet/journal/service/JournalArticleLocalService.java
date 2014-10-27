@@ -3285,6 +3285,23 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
+	* Updates the web content articles matching the group, class name ID, and
+	* DDM template key, replacing the DDM template key with a new one.
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param classNameId the primary key of the DDMStructure class if the web
+	content article is related to a DDM structure, the primary key of
+	the class name associated with the article, or {@link
+	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	* @param oldDDMTemplateKey the primary key of the web content article's old
+	DDM template
+	* @param newDDMTemplateKey the primary key of the web content article's new
+	DDM template
+	*/
+	public void updateDDMTemplateKey(long groupId, long classNameId,
+		java.lang.String oldDDMTemplateKey, java.lang.String newDDMTemplateKey);
+
+	/**
 	* Updates the journal article in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param journalArticle the journal article
@@ -3391,6 +3408,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	DDM template
 	* @param newDDMTemplateKey the primary key of the web content article's new
 	DDM template
+	* @deprecated As of 7.0.0, replaced by {@link #updateDDMTemplateKey}
 	*/
 	public void updateTemplateId(long groupId, long classNameId,
 		java.lang.String oldDDMTemplateKey, java.lang.String newDDMTemplateKey);

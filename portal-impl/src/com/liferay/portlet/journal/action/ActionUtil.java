@@ -186,7 +186,8 @@ public class ActionUtil {
 		long classNameId = ParamUtil.getLong(request, "classNameId");
 		long classPK = ParamUtil.getLong(request, "classPK");
 		String articleId = ParamUtil.getString(request, "articleId");
-		String structureId = ParamUtil.getString(request, "structureId");
+		String ddmStructureKey = ParamUtil.getString(
+			request, "ddmStructureKey");
 		int status = ParamUtil.getInteger(
 			request, "status", WorkflowConstants.STATUS_ANY);
 
@@ -214,7 +215,7 @@ public class ActionUtil {
 			try {
 				ddmStructure = DDMStructureServiceUtil.getStructure(
 					groupId, PortalUtil.getClassNameId(JournalArticle.class),
-					structureId, true);
+					ddmStructureKey, true);
 			}
 			catch (NoSuchStructureException nsse1) {
 				return;
@@ -386,10 +387,11 @@ public class ActionUtil {
 
 		long groupId = ParamUtil.getLong(request, "groupId");
 		long classNameId = ParamUtil.getLong(request, "classNameId");
-		String structureId = ParamUtil.getString(request, "structureId");
+		String ddmStructureKey = ParamUtil.getString(
+			request, "ddmStructureKey");
 
 		DDMStructure ddmStructure = DDMStructureServiceUtil.getStructure(
-			groupId, classNameId, structureId);
+			groupId, classNameId, ddmStructureKey);
 
 		request.setAttribute(WebKeys.JOURNAL_STRUCTURE, ddmStructure);
 	}
@@ -412,14 +414,14 @@ public class ActionUtil {
 		throws Exception {
 
 		long groupId = ParamUtil.getLong(request, "groupId");
-		String templateId = ParamUtil.getString(request, "templateId");
+		String ddmTemplateKey = ParamUtil.getString(request, "ddmTemplateKey");
 
 		DDMTemplate ddmTemplate = null;
 
-		if (Validator.isNotNull(templateId)) {
+		if (Validator.isNotNull(ddmTemplateKey)) {
 			ddmTemplate = DDMTemplateServiceUtil.getTemplate(
 				groupId, PortalUtil.getClassNameId(DDMStructure.class),
-				templateId, true);
+				ddmTemplateKey, true);
 		}
 
 		request.setAttribute(WebKeys.JOURNAL_TEMPLATE, ddmTemplate);

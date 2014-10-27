@@ -191,9 +191,9 @@ AUI.add(
 								if (confirm(strings.selectStructure) && (ddmStructureId.val() != event.ddmstructureid)) {
 									ddmStructureId.val(event.ddmstructureid);
 
-									instance.one('#structureId').val(event.ddmstructurekey);
+									instance.one('#ddmStructureKey').val(event.ddmstructurekey);
 
-									instance.one('#templateId').val('');
+									instance.one('#ddmTemplateKey').val('');
 
 									submitForm(form, null, false, false);
 								}

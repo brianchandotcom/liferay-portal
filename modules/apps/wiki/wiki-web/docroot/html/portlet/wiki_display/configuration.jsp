@@ -78,7 +78,7 @@ boolean nodeInGroup = false;
 							WikiPage wikiPage = (WikiPage)pages.get(i);
 						%>
 
-								<aui:option label="<%= wikiPage.getTitle() %>" selected="<%= wikiPage.getTitle().equals(title) || (Validator.isNull(title) && wikiPage.getTitle().equals(WikiPageConstants.FRONT_PAGE)) %>" />
+								<aui:option label="<%= wikiPage.getTitle() %>" selected="<%= wikiPage.getTitle().equals(title) || (Validator.isNull(title) && wikiPage.getTitle().equals(WikiPropsValues.FRONT_PAGE_NAME)) %>" />
 
 						<%
 						}
@@ -102,7 +102,7 @@ boolean nodeInGroup = false;
 				</aui:script>
 			</c:when>
 			<c:otherwise>
-				<aui:input name="preferences--title--" type="hidden" value="<%= WikiPageConstants.FRONT_PAGE %>" />
+				<aui:input name="preferences--title--" type="hidden" value="<%= WikiPropsValues.FRONT_PAGE_NAME %>" />
 			</c:otherwise>
 		</c:choose>
 	</aui:fieldset>

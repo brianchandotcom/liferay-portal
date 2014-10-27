@@ -83,11 +83,6 @@ public class JournalArticleAssetRenderer
 		_article = article;
 	}
 
-	@Override
-	public String getAddToPagePortletId() throws Exception {
-		return PortletKeys.JOURNAL_CONTENT;
-	}
-
 	public JournalArticle getArticle() {
 		return _article;
 	}
@@ -422,22 +417,6 @@ public class JournalArticleAssetRenderer
 		else {
 			return null;
 		}
-	}
-
-	@Override
-	public void setAddToPagePreferences(
-			PortletPreferences preferences, String portletId,
-			ThemeDisplay themeDisplay)
-		throws Exception {
-
-		preferences.setValue("articleId", _article.getArticleId());
-		preferences.setValue("groupId", String.valueOf(_article.getGroupId()));
-
-		Layout layout = themeDisplay.getLayout();
-
-		JournalContentSearchLocalServiceUtil.updateContentSearch(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			portletId, _article.getArticleId(), true);
 	}
 
 	@Override

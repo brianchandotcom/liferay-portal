@@ -354,7 +354,7 @@ contextObjects.put("wikiPortletInstanceSettings", wikiPortletInstanceSettings);
 			</div>
 		</c:if>
 
-		<c:if test="<%= wikiPortletInstanceSettings.isEnableComments() %>">
+		<c:if test="<%= wikiPortletInstanceSettings.isEnablePageComments() %>">
 			<liferay-ui:panel-container extended="<%= false %>" id="wikiCommentsPanelContainer" persistState="<%= true %>">
 				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="wikiCommentsPanel" persistState="<%= true %>" title="comments">
 					<portlet:actionURL var="discussionURL">
@@ -390,7 +390,7 @@ contextObjects.put("wikiPortletInstanceSettings", wikiPortletInstanceSettings);
 </aui:script>
 
 <%
-if ((wikiPage != null) && !wikiPage.getTitle().equals(WikiPageConstants.FRONT_PAGE)) {
+if ((wikiPage != null) && !wikiPage.getTitle().equals(WikiPropsValues.FRONT_PAGE_NAME)) {
 	if (!portletName.equals(WikiPortletKeys.WIKI_DISPLAY)) {
 		PortalUtil.setPageSubtitle(wikiPage.getTitle(), request);
 

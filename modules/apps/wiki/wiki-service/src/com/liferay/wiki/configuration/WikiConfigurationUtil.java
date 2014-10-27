@@ -12,21 +12,26 @@
  * details.
  */
 
-package com.liferay.wiki.model;
+package com.liferay.wiki.configuration;
+
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 
 /**
- * @author Alexander Chow
+ * @author Ivan Zaera
  */
-public class WikiPageConstants {
+public class WikiConfigurationUtil {
 
-	public static final String BASE_ATTACHMENTS_DIR = "wiki/";
+	public static final Configuration _configuration =
+		ConfigurationFactoryUtil.getConfiguration(
+			WikiConfigurationUtil.class.getClassLoader(), "portlet");
 
-	public static final String MOVED = "Moved";
+	public static String get(String key) {
+		return _configuration.get(key);
+	}
 
-	public static final String NEW = "New";
-
-	public static final String REVERTED = "Reverted";
-
-	public static final double VERSION_DEFAULT = 1.0;
+	public static String[] getArray(String key) {
+		return _configuration.getArray(key);
+	}
 
 }

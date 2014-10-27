@@ -23,14 +23,15 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.wiki.configuration.WikiPropsValues;
+import com.liferay.wiki.configuration.WikiSettings;
+import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiNodeServiceUtil;
 import com.liferay.wiki.service.WikiPageServiceUtil;
-import com.liferay.wiki.constants.WikiWebKeys;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
@@ -60,10 +61,13 @@ public class ViewAction extends PortletAction {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
+			WikiSettings wikiSettings = WikiSettings.getInstance(
+				themeDisplay.getScopeGroupId());
+
 			String title = ParamUtil.getString(
 				renderRequest, "title",
 				portletPreferences.getValue(
-					"title", WikiPageConstants.FRONT_PAGE));
+					"title", WikiPropsValues.FRONT_PAGE_NAME));
 			double version = ParamUtil.getDouble(renderRequest, "version");
 
 			WikiNode node = getNode(renderRequest);
@@ -78,7 +82,7 @@ public class ViewAction extends PortletAction {
 
 			if ((page == null) || page.isInTrash()) {
 				page = WikiPageServiceUtil.getPage(
-					node.getNodeId(), WikiPageConstants.FRONT_PAGE);
+					node.getNodeId(), WikiPropsValues.FRONT_PAGE_NAME);
 			}
 
 			renderRequest.setAttribute(WikiWebKeys.WIKI_NODE, node);

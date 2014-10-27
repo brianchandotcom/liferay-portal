@@ -106,7 +106,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 	</td>
 </tr>
 
-<c:if test="<%= PrefsPropsUtil.getBoolean(PropsKeys.OPENOFFICE_SERVER_ENABLED, PropsValues.OPENOFFICE_SERVER_ENABLED) && WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.VIEW) %>">
+<c:if test="<%= PrefsPropsUtil.getBoolean(PropsKeys.OPENOFFICE_SERVER_ENABLED, GetterUtil.getBoolean(PropsUtil.get(PropsKeys.OPENOFFICE_SERVER_ENABLED)) && WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.VIEW)) %>">
 
 	<%
 	String[] conversions = DocumentConversionUtil.getConversions("html");
@@ -345,7 +345,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 					<%
 					PortletURL frontPageURL = PortletURLUtil.clone(viewPageURL, renderResponse);
 
-					frontPageURL.setParameter("title", WikiPageConstants.FRONT_PAGE);
+					frontPageURL.setParameter("title", WikiPropsValues.FRONT_PAGE_NAME);
 
 					PortletURL deletePageURL = PortletURLUtil.clone(editPageURL, PortletRequest.ACTION_PHASE, renderResponse);
 

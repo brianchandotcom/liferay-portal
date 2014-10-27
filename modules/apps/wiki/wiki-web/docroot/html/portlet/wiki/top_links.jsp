@@ -82,7 +82,7 @@ if (categoryId > 0) {
 				<portlet:renderURL var="viewPageURL">
 					<portlet:param name="struts_action" value="/wiki/view" />
 					<portlet:param name="nodeName" value="<%= curNode.getName() %>" />
-					<portlet:param name="title" value="<%= WikiPageConstants.FRONT_PAGE %>" />
+					<portlet:param name="title" value="<%= WikiPropsValues.FRONT_PAGE_NAME %>" />
 				</portlet:renderURL>
 
 				<aui:nav-item cssClass="<%= cssClass %>" href="<%= viewPageURL %>" label="<%= HtmlUtil.escape(curNode.getName()) %>" />
@@ -100,11 +100,11 @@ if (categoryId > 0) {
 			<%
 			PortletURL frontPageURL = PortletURLUtil.clone(portletURL, renderResponse);
 
-			String label = WikiPageConstants.FRONT_PAGE;
+			String label = WikiPropsValues.FRONT_PAGE_NAME;
 			boolean selected = (Validator.isNull(strutsAction) || (wikiPage != null) && wikiPage.getTitle().equals(label));
 
 			frontPageURL.setParameter("struts_action", "/wiki/view");
-			frontPageURL.setParameter("title", WikiPageConstants.FRONT_PAGE);
+			frontPageURL.setParameter("title", WikiPropsValues.FRONT_PAGE_NAME);
 			frontPageURL.setParameter("tag", StringPool.BLANK);
 			%>
 

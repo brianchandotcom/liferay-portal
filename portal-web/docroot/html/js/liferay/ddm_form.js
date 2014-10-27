@@ -1265,6 +1265,12 @@ AUI.add(
 						return Field.prototype.getInputNode.apply(instance, arguments);
 					},
 
+					getValue: function() {
+						var instance = this;
+
+						return instance.getInputNode().all('option:selected').get('value');
+					},
+
 					setLabel: function() {
 						var instance = this;
 
@@ -1292,11 +1298,11 @@ AUI.add(
 							value = AJSON.parse(value);
 						}
 
-						if (value.length) {
-							value = value[0];
-						}
-
-						Field.prototype.setValue.call(instance, value);
+						instance.getInputNode().all('option').each(
+							function(item, index) {
+								item.set('selected', AArray.indexOf(value, item.val()) > -1);
+							}
+						);
 					}
 				}
 			}

@@ -15,6 +15,7 @@
 package com.liferay.journal.content.web.portlet.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -30,11 +31,20 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Douglas Wong
  * @author Raymond Augé
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=com_liferay_journal_content_web_portlet_JournalContentPortlet"
+	},
+	service = ConfigurationAction.class
+)
 public class JournalContentConfigurationAction
 	extends DefaultConfigurationAction {
 

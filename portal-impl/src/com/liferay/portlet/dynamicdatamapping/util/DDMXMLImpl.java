@@ -33,7 +33,9 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XMLSchema;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portlet.dynamicdatamapping.StructureDefinitionException;
+import com.liferay.portlet.dynamicdatamapping.StructureDuplicateElementException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
@@ -43,9 +45,11 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * @author Bruno Basto
@@ -277,6 +281,8 @@ public class DDMXMLImpl implements DDMXML {
 		try {
 			Document document = SAXReaderUtil.read(xml, _xmlSchema);
 
+			validate(document);
+
 			return document.asXML();
 		}
 		catch (Exception e) {
@@ -371,6 +377,31 @@ public class DDMXMLImpl implements DDMXML {
 		String valueString = String.valueOf(fieldValue);
 
 		dynamicContentElement.addCDATA(valueString.trim());
+	}
+
+	protected void validate(Document document) throws Exception {
+		XPath xPathSelector = SAXReaderUtil.createXPath("//dynamic-element");
+
+		List<Node> nodes = xPathSelector.selectNodes(document);
+
+		Set<String> elementNames = new HashSet<String>();
+
+		for (Node node : nodes) {
+			Element element = (Element)node;
+
+			String name = StringUtil.toLowerCase(
+				element.attributeValue("name"));
+
+			if (name.startsWith(DDMStructureConstants.XSD_NAME_RESERVED)) {
+				throw new StructureDefinitionException();
+			}
+
+			if (elementNames.contains(name)) {
+				throw new StructureDuplicateElementException();
+			}
+
+			elementNames.add(name);
+		}
 	}
 
 	private static final String _AVAILABLE_LOCALES = "available-locales";

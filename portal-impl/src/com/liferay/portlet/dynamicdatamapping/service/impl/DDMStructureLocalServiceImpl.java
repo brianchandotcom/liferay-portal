@@ -29,11 +29,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.Node;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
@@ -213,8 +208,6 @@ public class DDMStructureLocalServiceImpl
 		try {
 			definition = DDMXMLUtil.validateXML(definition);
 			definition = DDMXMLUtil.formatXML(definition);
-
-			validate(definition);
 		}
 		catch (Exception e) {
 			throw new StructureDefinitionException();
@@ -348,8 +341,6 @@ public class DDMStructureLocalServiceImpl
 		try {
 			definition = DDMXMLUtil.validateXML(definition);
 			definition = DDMXMLUtil.formatXML(definition);
-
-			validate(definition);
 		}
 		catch (Exception e) {
 			throw new StructureDefinitionException();
@@ -1467,8 +1458,6 @@ public class DDMStructureLocalServiceImpl
 		try {
 			definition = DDMXMLUtil.validateXML(definition);
 			definition = DDMXMLUtil.formatXML(definition);
-
-			validate(definition);
 		}
 		catch (Exception e) {
 			throw new StructureDefinitionException();
@@ -1718,33 +1707,6 @@ public class DDMStructureLocalServiceImpl
 			le.setTargetAvailableLocales(availableLocales);
 
 			throw le;
-		}
-	}
-
-	protected void validate(String definition) throws Exception {
-		Document document = SAXReaderUtil.read(definition);
-
-		XPath xPathSelector = SAXReaderUtil.createXPath("//dynamic-element");
-
-		List<Node> nodes = xPathSelector.selectNodes(document);
-
-		Set<String> elementNames = new HashSet<String>();
-
-		for (Node node : nodes) {
-			Element element = (Element)node;
-
-			String name = StringUtil.toLowerCase(
-				element.attributeValue("name"));
-
-			if (name.startsWith(DDMStructureConstants.XSD_NAME_RESERVED)) {
-				throw new StructureDefinitionException();
-			}
-
-			if (elementNames.contains(name)) {
-				throw new StructureDuplicateElementException();
-			}
-
-			elementNames.add(name);
 		}
 	}
 

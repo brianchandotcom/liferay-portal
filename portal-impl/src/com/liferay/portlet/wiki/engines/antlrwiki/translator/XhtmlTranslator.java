@@ -72,15 +72,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 
 		traverse(headingNode.getChildASTNodes());
 
-		append("<a class=\"hashlink\" href=\"");
-
-		if (_viewPageURL != null) {
-			append(_viewPageURL.toString());
-		}
-
-		append(StringPool.POUND);
-		append(markup);
-		append("\">#</a></h");
+		append("</h");
 		append(headingNode.getLevel());
 		append(">");
 	}

@@ -17,7 +17,7 @@ package com.liferay.portlet.dynamicdatamapping.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 /**
- * @author Brian Wing Shun Chan
+ * @generated
  */
 @ProviderType
 public interface DDMTemplateFinder {

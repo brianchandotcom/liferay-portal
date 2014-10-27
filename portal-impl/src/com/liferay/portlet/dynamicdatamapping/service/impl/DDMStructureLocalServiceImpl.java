@@ -1695,7 +1695,6 @@ public class DDMStructureLocalServiceImpl
 	protected void validate(String definition) throws PortalException {
 		try {
 			DDMXMLUtil.validateXML(definition);
-			DDMXMLUtil.formatXML(definition);
 		}
 		catch (Exception e) {
 			throw new StructureDefinitionException();

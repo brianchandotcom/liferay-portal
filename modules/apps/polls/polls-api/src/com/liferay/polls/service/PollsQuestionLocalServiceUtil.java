@@ -76,16 +76,6 @@ public class PollsQuestionLocalServiceUtil {
 	}
 
 	/**
-	* Creates a new polls question with the primary key. Does not add the polls question to the database.
-	*
-	* @return the new polls question
-	*/
-	public static com.liferay.polls.model.PollsQuestion createPollsQuestion() {
-		return getService().createPollsQuestion();
-	}
-
-
-	/**
 	* Deletes the polls question from the database. Also notifies the appropriate model listeners.
 	*
 	* @param pollsQuestion the polls question

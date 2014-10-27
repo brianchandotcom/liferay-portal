@@ -18,7 +18,6 @@ import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.model.PollsVote;
 import com.liferay.polls.model.impl.PollsChoiceImpl;
-import com.liferay.polls.model.impl.PollsQuestionImpl;
 import com.liferay.polls.model.impl.PollsVoteImpl;
 import com.liferay.polls.service.PollsChoiceLocalServiceUtil;
 import com.liferay.polls.service.PollsQuestionLocalServiceUtil;
@@ -65,7 +64,7 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 
 		XStreamAliasRegistryUtil.register(PollsChoiceImpl.class, "PollsChoice");
 		XStreamAliasRegistryUtil.register(
-			PollsQuestionImpl.class, "PollsQuestion");
+			PollsQuestion.class, "PollsQuestion");
 		XStreamAliasRegistryUtil.register(PollsVoteImpl.class, "PollsVote");
 	}
 

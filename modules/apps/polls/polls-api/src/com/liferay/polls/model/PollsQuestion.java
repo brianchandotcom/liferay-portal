@@ -46,16 +46,16 @@ public class PollsQuestion extends PollsQuestionModelImpl implements PollsQuesti
 	private String[] _guestPermissions;
 
 	public PollsQuestion() {
+		setNew(true);
 	}
 
 	public boolean addChoice(PollsChoice pollsChoice) {
-		_addedChoices.add(pollsChoice);
-
-		return true;
+		pollsChoice._pollsQuestion = this;
+		return _choices.add(pollsChoice);
 	}
 
 	public List<PollsChoice> getChoices() {
-		return PollsChoiceLocalServiceUtil.getChoices(getQuestionId());
+		return _choices;
 	}
 
 	public List<PollsVote> getVotes() {
@@ -135,7 +135,7 @@ public class PollsQuestion extends PollsQuestionModelImpl implements PollsQuesti
 		}
 
 		List<PollsChoice> choices = new ArrayList<>(getChoices());
-		choices.addAll(_addedChoices);
+		choices.addAll(_choices);
 
 		if ((choices.size() < 2)) {
 			throw new QuestionChoiceException();
@@ -150,5 +150,5 @@ public class PollsQuestion extends PollsQuestionModelImpl implements PollsQuesti
 		}
 	}
 
-	private List<PollsChoice> _addedChoices = new ArrayList<>();
+	private List<PollsChoice> _choices = new ArrayList<>();
 }

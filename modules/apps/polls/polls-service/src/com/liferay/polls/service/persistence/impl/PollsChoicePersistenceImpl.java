@@ -2313,10 +2313,9 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	}
 
 	protected void clearUniqueFindersCache(PollsChoice pollsChoice) {
-		PollsChoiceModelImpl pollsChoiceModelImpl = (PollsChoiceModelImpl)pollsChoice;
+		PollsChoiceModelImpl pollsChoiceModelImpl = pollsChoice;
 
-		StagedGroupedModel stagedGroupedModel =
-			(StagedGroupedModel) pollsChoice;
+		StagedGroupedModel stagedGroupedModel = pollsChoice;
 
 		Object[] args = new Object[] {
 				stagedGroupedModel.getUuid(), stagedGroupedModel.getGroupId()
@@ -2360,7 +2359,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 */
 	@Override
 	public PollsChoice create() {
-		PollsChoice pollsChoiceImpl = new PollsChoice();
+		PollsChoice pollsChoiceImpl = new PollsChoice();	// [[@]] we should not use this method any more
 
 		Company company = companyProvider.get();
 

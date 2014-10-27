@@ -15,7 +15,6 @@
 package com.liferay.polls.lar;
 
 import com.liferay.polls.model.PollsQuestion;
-import com.liferay.polls.model.impl.PollsQuestionImpl;
 import com.liferay.polls.repository.PollsQuestionRepository;
 import com.liferay.polls.service.PollsQuestionLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -131,8 +130,7 @@ public class PollsQuestionStagedModelDataHandler
 		}
 
 		if (importedQuestion == null) {
-			importedQuestion =
-				PollsQuestionLocalServiceUtil.createPollsQuestion();
+			importedQuestion = new PollsQuestion();
 
 			//TODO: This should be executed in a context
 			importedQuestion.setCompanyId(

@@ -98,7 +98,7 @@ public class PollsQuestionLocalServiceImpl
 		action = SystemEventConstants.ACTION_SKIP,
 		type = SystemEventConstants.TYPE_DELETE)
 	public void deleteQuestion(PollsQuestion question) throws PortalException {
-		GroupedModel pollsQuestionImpl = (GroupedModel)question;
+		GroupedModel pollsQuestion = (GroupedModel)question;
 
 		// Question
 
@@ -107,7 +107,7 @@ public class PollsQuestionLocalServiceImpl
 		// Resources
 
 		resourceLocalService.deleteResource(
-			pollsQuestionImpl.getCompanyId(), PollsQuestion.class.getName(),
+			pollsQuestion.getCompanyId(), PollsQuestion.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, question.getQuestionId());
 
 		// Choices

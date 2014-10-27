@@ -736,24 +736,24 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 
 	@Override
 	public Object clone() {
-		PollsQuestion pollsQuestionImpl = new PollsQuestion();
+		PollsQuestion pollsQuestion = new PollsQuestion();
 
-		pollsQuestionImpl.setUuid(getUuid());
-		pollsQuestionImpl.setQuestionId(getQuestionId());
-		pollsQuestionImpl.setGroupId(getGroupId());
-		pollsQuestionImpl.setCompanyId(getCompanyId());
-		pollsQuestionImpl.setUserId(getUserId());
-		pollsQuestionImpl.setUserName(getUserName());
-		pollsQuestionImpl.setCreateDate(getCreateDate());
-		pollsQuestionImpl.setModifiedDate(getModifiedDate());
-		pollsQuestionImpl.setTitle(getTitle());
-		pollsQuestionImpl.setDescription(getDescription());
-		pollsQuestionImpl.setExpirationDate(getExpirationDate());
-		pollsQuestionImpl.setLastVoteDate(getLastVoteDate());
+		pollsQuestion.setUuid(getUuid());
+		pollsQuestion.setQuestionId(getQuestionId());
+		pollsQuestion.setGroupId(getGroupId());
+		pollsQuestion.setCompanyId(getCompanyId());
+		pollsQuestion.setUserId(getUserId());
+		pollsQuestion.setUserName(getUserName());
+		pollsQuestion.setCreateDate(getCreateDate());
+		pollsQuestion.setModifiedDate(getModifiedDate());
+		pollsQuestion.setTitle(getTitle());
+		pollsQuestion.setDescription(getDescription());
+		pollsQuestion.setExpirationDate(getExpirationDate());
+		pollsQuestion.setLastVoteDate(getLastVoteDate());
 
-		pollsQuestionImpl.resetOriginalValues();
+		pollsQuestion.resetOriginalValues();
 
-		return pollsQuestionImpl;
+		return pollsQuestion;
 	}
 
 	@Override

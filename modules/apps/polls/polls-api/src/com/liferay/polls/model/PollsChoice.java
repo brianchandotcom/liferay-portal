@@ -33,11 +33,16 @@ import com.liferay.portal.kernel.util.Validator;
  */
 @ProviderType
 public class PollsChoice extends PollsChoiceModelImpl implements PollsChoiceModel {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.polls.model.impl.PollsChoiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
+
+	protected PollsQuestion _pollsQuestion;
+
+	public PollsChoice() {
+		setNew(true);
+	}
+
+	public PollsQuestion getPollsQuestion() {
+		return _pollsQuestion;
+	}
 
 	public static final Accessor<PollsChoice, String> CHOICE_NAME_ACCESSOR = new Accessor<PollsChoice, String>() {
 

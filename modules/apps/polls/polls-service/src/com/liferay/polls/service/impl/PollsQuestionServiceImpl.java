@@ -52,8 +52,7 @@ public class PollsQuestionServiceImpl extends PollsQuestionServiceBaseImpl {
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			ActionKeys.ADD_QUESTION);
 
-		PollsQuestion pollsQuestion =
-			pollsQuestionLocalService.createPollsQuestion();
+		PollsQuestion pollsQuestion = new PollsQuestion();
 
 		pollsQuestion.setTitleMap(titleMap);
 		pollsQuestion.setDescriptionMap(descriptionMap);
@@ -141,7 +140,6 @@ public class PollsQuestionServiceImpl extends PollsQuestionServiceBaseImpl {
 
 			if (index == -1) {
 				choice = new PollsChoice();
-
 				pollsQuestion.addChoice(choice);
 			}
 			else {

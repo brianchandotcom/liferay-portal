@@ -17,7 +17,6 @@ package com.liferay.polls.service.base;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.polls.model.PollsQuestion;
-import com.liferay.polls.model.impl.PollsQuestionImpl;
 import com.liferay.polls.service.PollsQuestionLocalService;
 import com.liferay.polls.service.persistence.PollsChoicePersistence;
 import com.liferay.polls.service.persistence.PollsQuestionPersistence;
@@ -77,16 +76,6 @@ public abstract class PollsQuestionLocalServiceBaseImpl
 	 *
 	 * Never modify or reference this class directly. Always use {@link com.liferay.polls.service.PollsQuestionLocalServiceUtil} to access the polls question local service.
 	 */
-
-	/**
-	 * Creates a new polls question with the primary key. Does not add the polls question to the database.
-	 *
-	 * @return the new polls question
-	 */
-	@Override
-	public PollsQuestion createPollsQuestion() {
-		return pollsQuestionPersistence.create();
-	}
 
 	/**
 	 * Deletes the polls question with the primary key from the database. Also notifies the appropriate model listeners.
@@ -293,7 +282,7 @@ public abstract class PollsQuestionLocalServiceBaseImpl
 				@Override
 				public void performAction(Object object)
 					throws PortalException {
-					PollsQuestionImpl stagedModel = (PollsQuestionImpl)object;
+					PollsQuestion stagedModel = (PollsQuestion)object;
 
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
 						stagedModel);

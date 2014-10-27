@@ -74,72 +74,72 @@ public class PollsQuestionCacheModel implements CacheModel<PollsQuestion>,
 
 	@Override
 	public PollsQuestion toEntityModel() {
-		PollsQuestion pollsQuestionImpl = new PollsQuestion();
+		PollsQuestion pollsQuestion = new PollsQuestion();
 
 		if (uuid == null) {
-			pollsQuestionImpl.setUuid(StringPool.BLANK);
+			pollsQuestion.setUuid(StringPool.BLANK);
 		}
 		else {
-			pollsQuestionImpl.setUuid(uuid);
+			pollsQuestion.setUuid(uuid);
 		}
 
-		pollsQuestionImpl.setQuestionId(questionId);
-		pollsQuestionImpl.setGroupId(groupId);
-		pollsQuestionImpl.setCompanyId(companyId);
-		pollsQuestionImpl.setUserId(userId);
+		pollsQuestion.setQuestionId(questionId);
+		pollsQuestion.setGroupId(groupId);
+		pollsQuestion.setCompanyId(companyId);
+		pollsQuestion.setUserId(userId);
 
 		if (userName == null) {
-			pollsQuestionImpl.setUserName(StringPool.BLANK);
+			pollsQuestion.setUserName(StringPool.BLANK);
 		}
 		else {
-			pollsQuestionImpl.setUserName(userName);
+			pollsQuestion.setUserName(userName);
 		}
 
 		if (createDate == Long.MIN_VALUE) {
-			pollsQuestionImpl.setCreateDate(null);
+			pollsQuestion.setCreateDate(null);
 		}
 		else {
-			pollsQuestionImpl.setCreateDate(new Date(createDate));
+			pollsQuestion.setCreateDate(new Date(createDate));
 		}
 
 		if (modifiedDate == Long.MIN_VALUE) {
-			pollsQuestionImpl.setModifiedDate(null);
+			pollsQuestion.setModifiedDate(null);
 		}
 		else {
-			pollsQuestionImpl.setModifiedDate(new Date(modifiedDate));
+			pollsQuestion.setModifiedDate(new Date(modifiedDate));
 		}
 
 		if (title == null) {
-			pollsQuestionImpl.setTitle(StringPool.BLANK);
+			pollsQuestion.setTitle(StringPool.BLANK);
 		}
 		else {
-			pollsQuestionImpl.setTitle(title);
+			pollsQuestion.setTitle(title);
 		}
 
 		if (description == null) {
-			pollsQuestionImpl.setDescription(StringPool.BLANK);
+			pollsQuestion.setDescription(StringPool.BLANK);
 		}
 		else {
-			pollsQuestionImpl.setDescription(description);
+			pollsQuestion.setDescription(description);
 		}
 
 		if (expirationDate == Long.MIN_VALUE) {
-			pollsQuestionImpl.setExpirationDate(null);
+			pollsQuestion.setExpirationDate(null);
 		}
 		else {
-			pollsQuestionImpl.setExpirationDate(new Date(expirationDate));
+			pollsQuestion.setExpirationDate(new Date(expirationDate));
 		}
 
 		if (lastVoteDate == Long.MIN_VALUE) {
-			pollsQuestionImpl.setLastVoteDate(null);
+			pollsQuestion.setLastVoteDate(null);
 		}
 		else {
-			pollsQuestionImpl.setLastVoteDate(new Date(lastVoteDate));
+			pollsQuestion.setLastVoteDate(new Date(lastVoteDate));
 		}
 
-		pollsQuestionImpl.resetOriginalValues();
+		pollsQuestion.resetOriginalValues();
 
-		return pollsQuestionImpl;
+		return pollsQuestion;
 	}
 
 	@Override

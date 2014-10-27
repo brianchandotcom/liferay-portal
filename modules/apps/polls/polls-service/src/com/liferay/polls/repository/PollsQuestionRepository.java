@@ -22,6 +22,8 @@ import com.liferay.polls.service.PollsQuestionLocalServiceUtil;
 import com.liferay.polls.service.persistence.PollsChoicePersistence;
 import com.liferay.polls.service.persistence.PollsChoiceUtil;
 import com.liferay.polls.service.persistence.PollsQuestionPersistence;
+import com.liferay.portal.kernel.CompanyProvider;
+import com.liferay.portal.kernel.GroupProvider;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -115,6 +117,9 @@ public class PollsQuestionRepository {
 							pq.setCreateDate(now);
 							pq.setPrimaryKey(CounterLocalServiceUtil.increment());
 
+							pq.setCompanyId(_companyProvider.get().getCompanyId());
+							pq.setGroupId(_groupProvider.get().getGroupId());
+
 							pollsQuestionPersistence.update(pq);
 
 							// Resources
@@ -191,6 +196,8 @@ public class PollsQuestionRepository {
 						if (pc.isNew()) {
 							pc.setCreateDate(now);
 							pc.setPrimaryKey(CounterLocalServiceUtil.increment());
+							pc.setCompanyId(pc.getPollsQuestion().getCompanyId());
+							pc.setGroupId(pc.getPollsQuestion().getGroupId());
 						}
 
 						pc.setModifiedDate(now);
@@ -214,4 +221,12 @@ public class PollsQuestionRepository {
 
 	@BeanReference(type = PollsChoicePersistence.class)
 	protected PollsChoicePersistence pollsChoicePersistence;
+
+	@BeanReference(type = GroupProvider.class)
+	protected GroupProvider _groupProvider;
+
+	@BeanReference(type = CompanyProvider.class)
+	protected CompanyProvider _companyProvider;
+
+
 }

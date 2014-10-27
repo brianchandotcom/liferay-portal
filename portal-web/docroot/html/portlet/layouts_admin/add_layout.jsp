@@ -226,7 +226,8 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 		%>
 
 		<aui:script>
-			Liferay.fire('dockbaraddpage:addPage',
+			Liferay.fire(
+				'dockbaraddpage:addPage',
 				{
 					data: {
 						layoutId: <%= addedLayout.getLayoutId() %>,

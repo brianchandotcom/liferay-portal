@@ -75,9 +75,9 @@
 		Liferay.Service(
 			'/mdrrulegroupinstance/add-rule-group-instance',
 			{
-				groupId: <%= groupId %>,
 				className: '<%= HtmlUtil.escapeJS(className) %>',
 				classPK: <%= classPK %>,
+				groupId: <%= groupId %>,
 				ruleGroupId: ruleGroupId,
 				serviceContext: JSON.stringify(
 					{

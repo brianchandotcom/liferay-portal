@@ -70,14 +70,14 @@ PortletURL portletURL = (PortletURL)request.getAttribute("mobile_device_rules_he
 			config,
 			{
 				dialog: {
-					width: 1024,
 					on: {
 						visibleChange: function(event) {
 							<portlet:namespace />updateRuleGroupInstances();
 						}
-					}
+					},
+					width: 1024
 				},
-				title: Liferay.Language.get('javax.portlet.title.178')
+				title: '<liferay-ui:message key="javax.portlet.title.178" />'
 			}
 		);
 

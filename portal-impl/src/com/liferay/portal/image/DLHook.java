@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Image;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
+import com.liferay.portlet.documentlibrary.util.DLValidatorUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -75,6 +76,8 @@ public class DLHook extends BaseHook {
 		throws PortalException {
 
 		String fileName = getFileName(image.getImageId(), image.getType());
+
+		DLValidatorUtil.validateFileSize(fileName, bytes);
 
 		if (DLStoreUtil.hasFile(_COMPANY_ID, _REPOSITORY_ID, fileName)) {
 			DLStoreUtil.deleteFile(_COMPANY_ID, _REPOSITORY_ID, fileName);

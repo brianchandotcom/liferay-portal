@@ -96,6 +96,10 @@
 			&.active {
 				display: block;
 			}
+
+			textarea {
+				max-width: 100%;
+			}
 		}
 
 		legend {

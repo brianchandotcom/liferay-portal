@@ -285,6 +285,23 @@
 		</execute>
 	</command>
 
+	<command name="AddDocumentWithSlashesInTitle" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="/D/M/Document Title" />
+		</execute>
+
+		<execute macro="DMDocument#viewAllPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentTitle" value="/D/M/Document Title" />
+		</execute>
+	</command>
+
 	<command name="AddFolder" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -796,6 +813,34 @@
 		</execute>
 	</command>
 
+	<command name="DeleteDocumentWithSlashesInTitle" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="/D/M/Document Title" />
+		</execute>
+
+		<execute macro="DMDocument#deletePG">
+			<var name="dmDocumentTitle" value="/D/M/Document Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Recycle Bin" />
+		</execute>
+
+		<execute macro="RecycleBin#emptyCP" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocument#viewDefaultCP" />
+	</command>
+
 	<command name="DeleteFolder" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -924,6 +969,22 @@
 
 		<execute macro="DMDocument#deleteViaActionsPG">
 			<var name="dmDocumentTitle" value="DM Image Title" />
+		</execute>
+	</command>
+
+	<command name="DownloadDocumentWithSlashesInTitleViaDocumentView" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="/D/M/Document Title" />
+		</execute>
+
+		<execute macro="DMDocument#downloadPG">
+			<var name="dmDocumentTitle" value="/D/M/Document Title" />
 		</execute>
 	</command>
 
@@ -1240,6 +1301,37 @@
 		</execute>
 	</command>
 
+	<command name="MoveDocumentWithSlashesInTitle" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="/D/M/Document Title" />
+		</execute>
+
+		<execute macro="DMFolder#addPG">
+			<var name="dmFolderDescription" value="DM Folder Description" />
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMDocument#moveToFolderPG">
+			<var name="dmDocumentTitle" value="/D/M/Document Title" />
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentTitle" value="/D/M/Document Title" />
+		</execute>
+	</command>
+
 	<command name="MoveFolderDocumentDuplicateToFolder" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -1279,17 +1371,15 @@
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
+		<execute macro="DMDocument#navigateBackViaDocumentViewPG" />
 
 		<execute macro="DMFolder#gotoPG">
 			<var name="dmFolderName" value="DM Folder1 Name" />
 		</execute>
 
 		<execute macro="DMDocument#moveToFolderPG">
-			<var name="dmDocument" value="Duplicate" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="dmDuplicateDocument" value="true" />
 			<var name="dmFolderName" value="DM Folder2 Name" />
 		</execute>
 	</command>

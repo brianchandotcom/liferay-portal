@@ -44,7 +44,17 @@ AUI.add(
 				_createDragHandles: function(items) {
 					var instance = this;
 
-					items.append(TPL_DRAG_HANDLE);
+					var layoutIds = instance.get('layoutIds');
+
+					items.each(
+						function(item, index) {
+							var layoutConfig = layoutIds[index];
+
+							if (layoutConfig && layoutConfig.sortable && layoutConfig.id == item.getData('layoutId')) {
+								item.append(TPL_DRAG_HANDLE);
+							}
+						}
+					);
 				},
 
 				_onWindowResize: function() {

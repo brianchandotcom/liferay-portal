@@ -79,6 +79,9 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 		long sourceGroupId = MapUtil.getLong(settingsMap, "sourceGroupId");
 		boolean privateLayout = MapUtil.getBoolean(
 			settingsMap, "privateLayout");
+
+		initThreadLocals(sourceGroupId, privateLayout);
+
 		Map<Long, Boolean> layoutIdMap = (Map<Long, Boolean>)settingsMap.get(
 			"layoutIdMap");
 		Map<String, String[]> parameterMap =

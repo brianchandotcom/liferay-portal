@@ -17,18 +17,8 @@ package com.liferay.portlet.wiki.engine.creole;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.parsers.creole.ast.WikiPageNode;
-import com.liferay.portal.parsers.creole.parser.Creole10Lexer;
-import com.liferay.portal.parsers.creole.parser.Creole10Parser;
 import com.liferay.portal.parsers.creole.visitor.impl.XhtmlTranslationVisitor;
 import com.liferay.portal.util.HtmlImpl;
-
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.antlr.runtime.ANTLRInputStream;
-import org.antlr.runtime.CommonTokenStream;
-import org.antlr.runtime.RecognitionException;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -38,7 +28,7 @@ import org.junit.Test;
  * @author Miguel Pastor
  * @author Manuel de la Peña
  */
-public class TranslationToXHTMLTest {
+public class XhtmlTranslationVisitorTest {
 
 	@Before
 	public void setUp() {
@@ -719,52 +709,18 @@ public class TranslationToXHTMLTest {
 			translate("nowikiblock-1.creole"));
 	}
 
-	protected Creole10Parser getCreole10Parser(String fileName)
-		throws IOException {
-
-		Class<?> clazz = getClass();
-
-		InputStream inputStream = clazz.getResourceAsStream(
-			"dependencies/" + fileName);
-
-		ANTLRInputStream antlrInputStream = new ANTLRInputStream(inputStream);
-
-		Creole10Lexer creole10Lexer = new Creole10Lexer(antlrInputStream);
-
-		CommonTokenStream commonTokenStream = new CommonTokenStream(
-			creole10Lexer);
-
-		return new Creole10Parser(commonTokenStream);
-	}
-
-	protected WikiPageNode getWikiPageNode(String fileName) {
-		try {
-			_creole10parser = getCreole10Parser(fileName);
-
-			_creole10parser.wikipage();
-		}
-		catch (IOException ioe) {
-			Assert.fail("File does not exist");
-		}
-		catch (RecognitionException re) {
-			Assert.fail("File could not be parsed");
-		}
-
-		return _creole10parser.getWikiPageNode();
-	}
-
 	protected String toUnix(String text) {
 		return StringUtil.replace(
 			text, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
 	}
 
 	protected String translate(String fileName) {
-		return _xhtmlTranslationVisitor.translate(getWikiPageNode(fileName));
+		return _xhtmlTranslationVisitor.translate(
+			CreoleTestUtil.getWikiPageNode(fileName, getClass()));
 	}
 
 	private static final String _NEW_LINE = StringPool.NEW_LINE;
 
-	private Creole10Parser _creole10parser;
 	private final XhtmlTranslationVisitor _xhtmlTranslationVisitor =
 		new XhtmlTranslationVisitor();
 

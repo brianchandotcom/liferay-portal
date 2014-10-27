@@ -60,7 +60,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.LayoutURLUtil;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -74,6 +73,9 @@ import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.wiki.configuration.WikiSettings;
+import com.liferay.wiki.configuration.WikiPropsValues;
+import com.liferay.wiki.configuration.WikiSettings;
+import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.DuplicatePageException;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.exception.NodeChangeException;
@@ -215,7 +217,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Message boards
 
-		if (PropsValues.WIKI_PAGE_COMMENTS_ENABLED) {
+		WikiSettings wikiSettings = WikiSettings.getInstance(node.getGroupId());
+
+		if (wikiSettings.isPageCommentsEnabled()) {
 			mbMessageLocalService.addDiscussionMessage(
 				userId, page.getUserName(), page.getGroupId(),
 				WikiPage.class.getName(), resourcePrimKey,
@@ -235,8 +239,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			String summary, boolean minorEdit, ServiceContext serviceContext)
 		throws PortalException {
 
+		WikiNode node = wikiNodePersistence.findByPrimaryKey(nodeId);
+
+		WikiSettings wikiSettings = WikiSettings.getInstance(node.getGroupId());
+
 		double version = WikiPageConstants.VERSION_DEFAULT;
-		String format = WikiPageConstants.DEFAULT_FORMAT;
+		String format = wikiSettings.getDefaultFormat();
 		boolean head = false;
 		String parentTitle = null;
 		String redirectTitle = null;
@@ -2077,10 +2085,13 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			// Social
 
+			WikiSettings wikiSettings = WikiSettings.getInstance(
+				page.getGroupId());
+
 			if ((oldStatus != WorkflowConstants.STATUS_IN_TRASH) &&
 				(page.getVersion() == WikiPageConstants.VERSION_DEFAULT) &&
 				(!page.isMinorEdit() ||
-				 PropsValues.WIKI_PAGE_MINOR_EDIT_ADD_SOCIAL_ACTIVITY)) {
+				 wikiSettings.isPageMinorEditAddSocialActivity())) {
 
 				JSONObject extraDataJSONObject =
 					JSONFactoryUtil.createJSONObject();
@@ -2098,7 +2109,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			if (NotificationThreadLocal.isEnabled() &&
 				(!page.isMinorEdit() ||
-				 PropsValues.WIKI_PAGE_MINOR_EDIT_SEND_EMAIL)) {
+				 wikiSettings.isPageMinorEditSendMail())) {
 
 				notifySubscribers(
 					page,
@@ -2163,9 +2174,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			throw new PageTitleException(title + " is reserved");
 		}
 
-		if (Validator.isNotNull(PropsValues.WIKI_PAGE_TITLES_REGEXP)) {
+		if (Validator.isNotNull(WikiPropsValues.PAGE_TITLES_REGEXP)) {
 			Pattern pattern = Pattern.compile(
-				PropsValues.WIKI_PAGE_TITLES_REGEXP);
+				WikiPropsValues.PAGE_TITLES_REGEXP);
 
 			Matcher matcher = pattern.matcher(title);
 
@@ -3261,8 +3272,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Social
 
+		WikiSettings wikiSettings = WikiSettings.getInstance(node.getGroupId());
+
 		if (!page.isMinorEdit() ||
-			PropsValues.WIKI_PAGE_MINOR_EDIT_ADD_SOCIAL_ACTIVITY) {
+			wikiSettings.isPageMinorEditAddSocialActivity()) {
 
 			if (oldPage.getVersion() == newVersion) {
 				SocialActivity lastSocialActivity =

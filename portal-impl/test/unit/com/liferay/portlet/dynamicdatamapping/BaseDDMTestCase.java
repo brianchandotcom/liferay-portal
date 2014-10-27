@@ -17,6 +17,7 @@ package com.liferay.portlet.dynamicdatamapping;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -67,6 +68,7 @@ import java.util.Set;
 import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
+import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
@@ -460,19 +462,24 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 	}
 
 	protected void setUpLanguageUtil() {
-		mockStatic(LanguageUtil.class);
+		whenLanguageGet(LocaleUtil.BRAZIL, "no", "Não");
+		whenLanguageGet(LocaleUtil.BRAZIL, "yes", "Sim");
+		whenLanguageGet(LocaleUtil.SPAIN, "latitude", "Latitud");
+		whenLanguageGet(LocaleUtil.SPAIN, "longitude", "Longitud");
+		whenLanguageGet(LocaleUtil.US, "latitude", "Latitude");
+		whenLanguageGet(LocaleUtil.US, "longitude", "Longitude");
+		whenLanguageGet(LocaleUtil.US, "no", "No");
+		whenLanguageGet(LocaleUtil.US, "yes", "Yes");
 
-		when(
-			LanguageUtil.isAvailableLocale("en_US")
-		).thenReturn(
-			true
-		);
+		whenLanguageGetLanguageId(LocaleUtil.US, "en_US");
+		whenLanguageGetLanguageId(LocaleUtil.BRAZIL, "pt_BR");
 
-		when(
-			LanguageUtil.isAvailableLocale("pt_BR")
-		).thenReturn(
-			true
-		);
+		whenLanguageIsAvailableLocale("en_US", true);
+		whenLanguageIsAvailableLocale("pt_BR", true);
+
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(_language);
 	}
 
 	protected void setUpLocaleUtil() {
@@ -588,6 +595,37 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 
 		saxReaderUtil.setSAXReader(new SAXReaderImpl());
 	}
+
+	protected void whenLanguageGet(
+		Locale locale, String key, String returnValue) {
+
+		when(
+			_language.get(Matchers.eq(locale), Matchers.eq(key))
+		).thenReturn(
+			returnValue
+		);
+	}
+
+	protected void whenLanguageGetLanguageId(Locale locale, String languageId) {
+		when(
+			_language.getLanguageId(Matchers.eq(locale))
+		).thenReturn(
+				languageId
+		);
+	}
+
+	protected void whenLanguageIsAvailableLocale(
+		String languageId, boolean returnValue) {
+
+		when(
+			_language.isAvailableLocale(Matchers.eq(languageId))
+		).thenReturn(
+			returnValue
+		);
+	}
+
+	@Mock
+	protected Language _language;
 
 	protected Map<Long, DDMStructure> structures =
 		new HashMap<Long, DDMStructure>();

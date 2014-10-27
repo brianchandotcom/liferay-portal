@@ -123,21 +123,19 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 			/>
 		</aui:field-wrapper>
 
-		<aui:field-wrapper>
-			<aui:input name="preferences--enablePrint--" type="checkbox" value="<%= journalContentDisplayContext.isEnablePrint() %>" />
+		<aui:input name="preferences--enablePrint--" type="checkbox" value="<%= journalContentDisplayContext.isEnablePrint() %>" />
 
-			<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= journalContentDisplayContext.isEnableRelatedAssets() %>" />
+		<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= journalContentDisplayContext.isEnableRelatedAssets() %>" />
 
-			<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= journalContentDisplayContext.isEnableRatings() %>" />
+		<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= journalContentDisplayContext.isEnableRatings() %>" />
 
-			<c:if test="<%= PropsValues.JOURNAL_ARTICLE_COMMENTS_ENABLED %>">
-				<aui:input name="preferences--enableComments--" type="checkbox" value="<%= journalContentDisplayContext.isEnableComments() %>" />
+		<c:if test="<%= PropsValues.JOURNAL_ARTICLE_COMMENTS_ENABLED %>">
+			<aui:input name="preferences--enableComments--" type="checkbox" value="<%= journalContentDisplayContext.isEnableComments() %>" />
 
-				<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= journalContentDisplayContext.isEnableCommentRatings() %>" />
-			</c:if>
+			<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= journalContentDisplayContext.isEnableCommentRatings() %>" />
+		</c:if>
 
-			<aui:input name="preferences--enableViewCountIncrement--" type="checkbox" value="<%= journalContentDisplayContext.isEnableViewCountIncrement() %>" />
-		</aui:field-wrapper>
+		<aui:input name="preferences--enableViewCountIncrement--" type="checkbox" value="<%= journalContentDisplayContext.isEnableViewCountIncrement() %>" />
 	</aui:fieldset>
 
 	<aui:button-row>

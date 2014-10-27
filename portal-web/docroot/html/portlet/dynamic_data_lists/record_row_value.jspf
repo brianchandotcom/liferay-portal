@@ -15,22 +15,14 @@
 --%>
 
 <%
-String dataType = ddmFormField.getDataType();
-String name = ddmFormField.getName();
-
 String value = StringPool.BLANK;
 
-if (fieldsModel.contains(name)) {
-	com.liferay.portlet.dynamicdatamapping.storage.Field field = fieldsModel.get(name);
+List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(ddmFormField.getName());
 
-	value = field.getRenderedValue(themeDisplay.getLocale());
+if (ddmFormFieldValues != null) {
+	DDMFormFieldValueRenderer ddmFormFieldValueRenderer = DDMFormFieldValueRendererRegistryUtil.getDDMFormFieldValueRenderer(ddmFormField.getType());
 
-	if (dataType.equals(FieldConstants.HTML)) {
-		value = "<a href=\"javascript:Liferay.DDLUtil.openPreviewDialog('" + HtmlUtil.escapeJS(value) + "');\">(" + LanguageUtil.get(request, "preview") + ")</a>";
-	}
-	else {
-		value = HtmlUtil.escape(value);
-	}
+	value = ddmFormFieldValueRenderer.render(ddmFormFieldValues, themeDisplay.getLocale());
 }
 
 if (editable) {

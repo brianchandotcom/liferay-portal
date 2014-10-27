@@ -1092,11 +1092,11 @@
 	<bean id="com.liferay.portlet.journal.service.permission.JournalArticlePermission" class="com.liferay.portlet.journal.service.permission.JournalArticlePermission" />
 	<bean id="com.liferay.portlet.journal.service.permission.JournalFeedPermission" class="com.liferay.portlet.journal.service.permission.JournalFeedPermission" />
 	<bean id="com.liferay.portlet.journal.service.permission.JournalPermission" class="com.liferay.portlet.journal.service.permission.JournalPermission" />
-	<bean id="com.liferay.portlet.journal.util.JournalContent" class="com.liferay.portlet.journal.util.JournalContentImpl" />
 	<bean id="com.liferay.portlet.journal.util.JournalConverter" class="com.liferay.portlet.journal.util.JournalConverterImpl" />
 	<bean id="com.liferay.portlet.journal.util.JournalConverterUtil" class="com.liferay.portlet.journal.util.JournalConverterUtil">
 		<property name="journalConverter" ref="com.liferay.portlet.journal.util.JournalConverter" />
 	</bean>
+	<bean id="com.liferay.portlet.journalcontent.util.JournalContent" class="com.liferay.portlet.journal.util.JournalContentImpl" />
 	<bean id="com.liferay.portlet.journalcontent.util.JournalContentUtil" class="com.liferay.portlet.journalcontent.util.JournalContentUtil">
 		<property name="journalContent" ref="com.liferay.portlet.journalcontent.util.JournalContent" />
 	</bean>

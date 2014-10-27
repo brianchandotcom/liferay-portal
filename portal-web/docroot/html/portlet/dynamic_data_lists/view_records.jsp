@@ -124,7 +124,9 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 				recordVersion = record.getLatestRecordVersion();
 			}
 
-			Fields fieldsModel = StorageEngineUtil.getFields(recordVersion.getDDMStorageId());
+			DDMFormValues ddmFormValues = StorageEngineUtil.getDDMFormValues(recordVersion.getDDMStorageId());
+
+			Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap = ddmFormValues.getDDMFormFieldValuesMap();
 
 			ResultRow row = new ResultRow(record, record.getRecordId(), i);
 

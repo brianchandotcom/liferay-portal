@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,23 +11,20 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%
-String value = StringPool.BLANK;
+package com.liferay.portlet.dynamicdatamapping.render;
 
-List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(ddmFormField.getName());
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldType;
 
-if (ddmFormFieldValues != null) {
-	DDMFormFieldValueRenderer ddmFormFieldValueRenderer = DDMFormFieldValueRendererRegistryUtil.getDDMFormFieldValueRenderer(ddmFormField.getType());
+/**
+ * @author Marcellus Tavares
+ */
+public class DecimalDDMFormFieldValueRenderer
+	extends BaseNumberDDMFormFieldValueRenderer {
 
-	value = ddmFormFieldValueRenderer.render(ddmFormFieldValues, themeDisplay.getLocale());
+	@Override
+	public String getSupportedDDMFormFieldType() {
+		return DDMFormFieldType.DECIMAL;
+	}
+
 }
-
-if (editable) {
-	row.addText(value, rowURL);
-}
-else {
-	row.addText(value);
-}
-%>

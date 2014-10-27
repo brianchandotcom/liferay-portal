@@ -127,6 +127,7 @@ import com.liferay.portlet.documentlibrary.store.StoreFactory;
 import com.liferay.portlet.documentlibrary.util.DLProcessor;
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 import com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldRenderer;
+import com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldValueRenderer;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
@@ -559,6 +560,9 @@ public class HookHotDeployListener
 			hotDeployEvent.getPluginPackage(), rootElement);
 
 		initDynamicDataMappingFormFieldRenderers(
+			servletContextName, portletClassLoader, rootElement);
+
+		initDynamicDataMappingFormFieldValueRenderers(
 			servletContextName, portletClassLoader, rootElement);
 
 		initIndexerPostProcessors(
@@ -1015,8 +1019,9 @@ public class HookHotDeployListener
 	}
 
 	protected void initDynamicDataMappingFormFieldRenderers(
-		String servletContextName, ClassLoader portletClassLoader,
-		Element parentElement) throws Exception {
+			String servletContextName, ClassLoader portletClassLoader,
+			Element parentElement)
+		throws Exception {
 
 		List<Element> ddmFormFieldRenderersElements = parentElement.elements(
 			"dynamic-data-mapping-form-field-renderer");
@@ -1039,6 +1044,36 @@ public class HookHotDeployListener
 			registerService(
 				servletContextName, ddmFormFieldRendererClassName,
 				DDMFormFieldRenderer.class, ddmFormFieldRenderer);
+		}
+	}
+
+	protected void initDynamicDataMappingFormFieldValueRenderers(
+			String servletContextName, ClassLoader portletClassLoader,
+			Element parentElement)
+		throws Exception {
+
+		List<Element> ddmFormFieldValueRenderersElements =
+			parentElement.elements(
+				"dynamic-data-mapping-form-field-value-renderer");
+
+		if (ddmFormFieldValueRenderersElements.isEmpty()) {
+			return;
+		}
+
+		for (Element ddmFormFieldValueRendererElement :
+				ddmFormFieldValueRenderersElements) {
+
+			String ddmFormFieldValueRendererClassName =
+				ddmFormFieldValueRendererElement.getText();
+
+			DDMFormFieldValueRenderer ddmFormFieldValueRenderer =
+				(DDMFormFieldValueRenderer)newInstance(
+					portletClassLoader, DDMFormFieldValueRenderer.class,
+					ddmFormFieldValueRendererClassName);
+
+			registerService(
+				servletContextName, ddmFormFieldValueRendererClassName,
+				DDMFormFieldValueRenderer.class, ddmFormFieldValueRenderer);
 		}
 	}
 

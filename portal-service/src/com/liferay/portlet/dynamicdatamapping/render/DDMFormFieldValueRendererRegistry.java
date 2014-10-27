@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,23 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%
-String value = StringPool.BLANK;
+package com.liferay.portlet.dynamicdatamapping.render;
 
-List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(ddmFormField.getName());
+/**
+ * @author Marcellus Tavares
+ */
+public interface DDMFormFieldValueRendererRegistry {
 
-if (ddmFormFieldValues != null) {
-	DDMFormFieldValueRenderer ddmFormFieldValueRenderer = DDMFormFieldValueRendererRegistryUtil.getDDMFormFieldValueRenderer(ddmFormField.getType());
+	public DDMFormFieldValueRenderer getDDMFormFieldValueRenderer(
+		String ddmFormFieldType);
 
-	value = ddmFormFieldValueRenderer.render(ddmFormFieldValues, themeDisplay.getLocale());
 }
-
-if (editable) {
-	row.addText(value, rowURL);
-}
-else {
-	row.addText(value);
-}
-%>

@@ -36,8 +36,11 @@ page import="com.liferay.portlet.dynamicdatalists.util.DDLUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMFormField" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.LocalizedValue" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldValueRenderer" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldValueRendererRegistryUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalServiceUtil" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.storage.FieldConstants" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil" %>
 

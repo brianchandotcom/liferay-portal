@@ -52,7 +52,19 @@ AUI.add(
 
 					uri: {},
 
-					yourScore: {}
+					yourScore: {
+						getter: function(value) {
+							var instance = this;
+
+							var yourScore = value;
+
+							if ((instance.get('type') == 'stars') && (yourScore == -1.0)) {
+								yourScore = 0;
+							}
+
+							return yourScore;
+						}
+					}
 				},
 
 				EXTENDS: A.Base,

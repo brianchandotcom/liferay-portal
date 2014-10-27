@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.journalcontent.util;
+package com.liferay.portlet.journal.util;
 
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
@@ -31,6 +31,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.journal.model.JournalArticleDisplay;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
+import com.liferay.portlet.journalcontent.util.JournalContent;
 
 import javax.portlet.RenderRequest;
 

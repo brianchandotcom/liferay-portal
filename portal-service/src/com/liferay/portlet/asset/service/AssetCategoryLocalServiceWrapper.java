@@ -182,6 +182,19 @@ public class AssetCategoryLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteCategories(
+		java.util.List<com.liferay.portlet.asset.model.AssetCategory> categories)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetCategoryLocalService.deleteCategories(categories);
+	}
+
+	@Override
+	public void deleteCategories(long[] categoryIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetCategoryLocalService.deleteCategories(categoryIds);
+	}
+
+	@Override
 	public com.liferay.portlet.asset.model.AssetCategory deleteCategory(
 		com.liferay.portlet.asset.model.AssetCategory category)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -191,9 +204,10 @@ public class AssetCategoryLocalServiceWrapper
 	@Override
 	public com.liferay.portlet.asset.model.AssetCategory deleteCategory(
 		com.liferay.portlet.asset.model.AssetCategory category,
-		boolean childCategory)
+		boolean skipRebuildTree)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetCategoryLocalService.deleteCategory(category, childCategory);
+		return _assetCategoryLocalService.deleteCategory(category,
+			skipRebuildTree);
 	}
 
 	@Override

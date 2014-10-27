@@ -122,9 +122,7 @@ public class EditCategoryAction extends PortletAction {
 				ParamUtil.getString(actionRequest, "deleteCategoryIds"), 0L);
 		}
 
-		for (long deleteCategoryId : deleteCategoryIds) {
-			AssetCategoryServiceUtil.deleteCategory(deleteCategoryId);
-		}
+		AssetCategoryServiceUtil.deleteCategories(deleteCategoryIds);
 	}
 
 	protected String[] getCategoryProperties(ActionRequest actionRequest) {

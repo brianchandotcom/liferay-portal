@@ -136,6 +136,13 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 
 	public void deleteAssetEntryAssetCategory(long entryId, long categoryId);
 
+	public void deleteCategories(
+		java.util.List<com.liferay.portlet.asset.model.AssetCategory> categories)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public void deleteCategories(long[] categoryIds)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	@com.liferay.portal.kernel.systemevent.SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public com.liferay.portlet.asset.model.AssetCategory deleteCategory(
 		com.liferay.portlet.asset.model.AssetCategory category)
@@ -144,7 +151,7 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.asset.model.AssetCategory deleteCategory(
 		com.liferay.portlet.asset.model.AssetCategory category,
-		boolean childCategory)
+		boolean skipRebuildTree)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portlet.asset.model.AssetCategory deleteCategory(

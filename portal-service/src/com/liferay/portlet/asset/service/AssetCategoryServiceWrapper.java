@@ -54,17 +54,16 @@ public class AssetCategoryServiceWrapper implements AssetCategoryService,
 			serviceContext);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, Replaced by {@link #deleteCategories(long[],
-	ServiceContext)}
-	*/
-	@Deprecated
 	@Override
 	public void deleteCategories(long[] categoryIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_assetCategoryService.deleteCategories(categoryIds);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, Replaced by {@link #deleteCategories(long[])}
+	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> deleteCategories(
 		long[] categoryIds,

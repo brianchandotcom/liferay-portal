@@ -59,16 +59,15 @@ public class AssetCategoryServiceUtil {
 		return getService().addCategory(title, vocabularyId, serviceContext);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, Replaced by {@link #deleteCategories(long[],
-	ServiceContext)}
-	*/
-	@Deprecated
 	public static void deleteCategories(long[] categoryIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteCategories(categoryIds);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, Replaced by {@link #deleteCategories(long[])}
+	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> deleteCategories(
 		long[] categoryIds,
 		com.liferay.portal.service.ServiceContext serviceContext)

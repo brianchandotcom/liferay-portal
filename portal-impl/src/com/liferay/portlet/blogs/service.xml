@@ -230,6 +230,7 @@
 	</entity>
 	<exceptions>
 		<exception>EntryContent</exception>
+		<exception>EntryDescription</exception>
 		<exception>EntryDisplayDate</exception>
 		<exception>EntrySmallImageName</exception>
 		<exception>EntrySmallImageSize</exception>

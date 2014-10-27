@@ -1,5 +1,6 @@
 <#include "copyright.txt" parse="false">
 
+
 <#if osgiModule>package ${packagePath}.exception;<#else>package ${packagePath};</#if>
 
 import aQute.bnd.annotation.ProviderType;

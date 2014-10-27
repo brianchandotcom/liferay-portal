@@ -58,7 +58,7 @@ if (!round) {
 	averageIndex = (int)Math.floor(averageScore * numberOfStars);
 }
 
-double yourScore = 0.0;
+double yourScore = -1.0;
 
 if (ratingsEntry != null) {
 	yourScore = ratingsEntry.getScore();
@@ -77,7 +77,7 @@ if (ratingsEntry != null) {
 							<liferay-util:whitespace-remover>
 
 								<%
-								double yourScoreStars = yourScore * numberOfStars;
+								double yourScoreStars = (yourScore != -1.0) ? yourScore * numberOfStars : 0.0;
 
 								for (int i = 1; i <= numberOfStars; i++) {
 									String ratingId = PortalUtil.generateRandomKey(request, "taglib_ui_ratings_page_rating");

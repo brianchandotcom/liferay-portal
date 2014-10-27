@@ -46,6 +46,7 @@ import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
+import com.liferay.wiki.configuration.WikiPropsValues;
 import com.liferay.wiki.exception.ImportFilesException;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.importers.WikiImporter;
@@ -59,7 +60,6 @@ import com.liferay.wiki.translators.MediaWikiToCreoleTranslator;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -255,7 +255,7 @@ public class MediaWikiImporter implements WikiImporter {
 
 					WikiPageLocalServiceUtil.renamePage(
 						userId, node.getNodeId(), frontPageTitle,
-						WikiPageConstants.FRONT_PAGE, false, serviceContext);
+						WikiPropsValues.FRONT_PAGE_NAME, false, serviceContext);
 				}
 			}
 			catch (Exception e) {
@@ -263,7 +263,7 @@ public class MediaWikiImporter implements WikiImporter {
 					StringBundler sb = new StringBundler(4);
 
 					sb.append("Could not move ");
-					sb.append(WikiPageConstants.FRONT_PAGE);
+					sb.append(WikiPropsValues.FRONT_PAGE_NAME);
 					sb.append(" to the title provided: ");
 					sb.append(frontPageTitle);
 

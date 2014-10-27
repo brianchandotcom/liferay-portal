@@ -15,10 +15,12 @@
 package com.liferay.portal.events;
 
 import com.liferay.portal.kernel.events.ActionException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessorUtil;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Document;
@@ -67,8 +69,9 @@ public class AddDefaultDocumentLibraryStructuresAction
 	}
 
 	protected void addDLFileEntryType(
-			long userId, long groupId, String dlFileEntryTypeKey,
-			List<String> ddmStructureNames, ServiceContext serviceContext)
+			long userId, long groupId, String languageKey,
+			String dlFileEntryTypeKey, List<String> ddmStructureNames,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		List<Long> ddmStructureIds = new ArrayList<Long>();
@@ -92,7 +95,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 		Locale locale = PortalUtil.getSiteDefaultLocale(groupId);
 
 		String definition = getDynamicDDMStructureDefinition(
-			"document-library-structures.xml", dlFileEntryTypeKey, locale);
+			"document-library-structures.xml", languageKey, locale);
 
 		serviceContext.setAttribute("definition", definition);
 
@@ -101,10 +104,12 @@ public class AddDefaultDocumentLibraryStructuresAction
 				groupId, dlFileEntryTypeKey);
 		}
 		catch (NoSuchFileEntryTypeException nsfete) {
+			Map<Locale, String> localizationMap = getLocalizationMap(
+				languageKey);
+
 			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
-				userId, groupId, dlFileEntryTypeKey,
-				getLocalizationMap(dlFileEntryTypeKey, locale),
-				getLocalizationMap(dlFileEntryTypeKey, locale),
+				userId, groupId, dlFileEntryTypeKey, localizationMap,
+				localizationMap,
 				ArrayUtil.toArray(
 					ddmStructureIds.toArray(new Long[ddmStructureIds.size()])),
 				serviceContext);
@@ -119,6 +124,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 
 		addDLFileEntryType(
 			userId, groupId, DLFileEntryTypeConstants.NAME_CONTRACT,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_KEY_CONTRACT,
 			ddmStructureNames, serviceContext);
 
 		ddmStructureNames.clear();
@@ -127,6 +133,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 
 		addDLFileEntryType(
 			userId, groupId, DLFileEntryTypeConstants.NAME_MARKETING_BANNER,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_KEY_MARKETING_BANNER,
 			ddmStructureNames, serviceContext);
 
 		ddmStructureNames.clear();
@@ -135,6 +142,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 
 		addDLFileEntryType(
 			userId, groupId, DLFileEntryTypeConstants.NAME_ONLINE_TRAINING,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_KEY_ONLINE_TRAINING,
 			ddmStructureNames, serviceContext);
 
 		ddmStructureNames.clear();
@@ -143,11 +151,13 @@ public class AddDefaultDocumentLibraryStructuresAction
 
 		addDLFileEntryType(
 			userId, groupId, DLFileEntryTypeConstants.NAME_SALES_PRESENTATION,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_KEY_SALES_PRESENTATION,
 			ddmStructureNames, serviceContext);
 
 		if (UpgradeProcessUtil.isCreateIGImageDocumentType()) {
 			addDLFileEntryType(
 				userId, groupId, DLFileEntryTypeConstants.NAME_IG_IMAGE,
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_KEY_IG_IMAGE,
 				ddmStructureNames, serviceContext);
 		}
 	}
@@ -299,12 +309,22 @@ public class AddDefaultDocumentLibraryStructuresAction
 			defaultUserId, group.getGroupId(), serviceContext);
 	}
 
-	protected Map<Locale, String> getLocalizationMap(
-		String content, Locale locale) {
-
+	protected Map<Locale, String> getLocalizationMap(String content) {
 		Map<Locale, String> localizationMap = new HashMap<Locale, String>();
 
-		localizationMap.put(locale, content);
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		String defaultValue = LanguageUtil.get(defaultLocale, content);
+
+		for (Locale locale : LanguageUtil.getSupportedLocales()) {
+			String value = LanguageUtil.get(locale, content);
+
+			if (!locale.equals(defaultLocale) && value.equals(defaultValue)) {
+				continue;
+			}
+
+			localizationMap.put(locale, value);
+		}
 
 		return localizationMap;
 	}

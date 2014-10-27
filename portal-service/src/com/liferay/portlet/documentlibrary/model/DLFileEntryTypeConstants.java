@@ -25,6 +25,20 @@ public class DLFileEntryTypeConstants {
 
 	public static final long FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT = 0;
 
+	public static final String FILE_ENTRY_TYPE_KEY_CONTRACT = "CONTRACT";
+
+	public static final String FILE_ENTRY_TYPE_KEY_IG_IMAGE =
+		"IMAGE GALLERY IMAGE";
+
+	public static final String FILE_ENTRY_TYPE_KEY_MARKETING_BANNER =
+		"MARKETING BANNER";
+
+	public static final String FILE_ENTRY_TYPE_KEY_ONLINE_TRAINING =
+		"ONLINE TRAINING";
+
+	public static final String FILE_ENTRY_TYPE_KEY_SALES_PRESENTATION =
+		"SALES PRESENTATION";
+
 	public static final String NAME_BASIC_DOCUMENT = "basic-document";
 
 	public static final String NAME_CONTRACT = "contract";

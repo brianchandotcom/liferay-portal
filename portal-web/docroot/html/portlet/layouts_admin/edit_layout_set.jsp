@@ -124,88 +124,14 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 
 <aui:script>
 	function <portlet:namespace />saveLayoutset(action) {
-		document.<portlet:namespace />fm.encoding = 'multipart/form-data';
+		var form = AUI.$(document.<portlet:namespace />fm);
 
-		if (action) {
-			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = action;
-		}
-		else {
-			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'update';
-		}
+		form.prop('encoding', 'multipart/form-data');
 
-		submitForm(document.<portlet:namespace />fm);
+		form.fm('<%= Constants.CMD %>').val(action ? action : 'update');
+
+		submitForm(form);
 	}
-
-	function <portlet:namespace />updateLogo() {
-		document.<portlet:namespace />fm.encoding = 'multipart/form-data';
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'logo';
-
-		submitForm(document.<portlet:namespace />fm);
-	}
-
-	function <portlet:namespace />updateRobots() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'robots';
-
-		submitForm(document.<portlet:namespace />fm);
-	}
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />removePage',
-		function(box) {
-			var A = AUI();
-
-			var selectEl = A.one(box);
-
-			var currentValue = selectEl.val() || null;
-
-			Liferay.Util.removeItem(box);
-		},
-		['aui-base']
-	);
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />updateDisplayOrder',
-		function() {
-			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'display_order';
-			document.<portlet:namespace />fm.<portlet:namespace />layoutIds.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />layoutIdsBox);
-
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['liferay-util-list-fields']
-	);
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />updateStaging',
-		function() {
-			var A = AUI();
-
-			var selectEl = A.one('#<portlet:namespace />stagingType');
-
-			var currentValue = selectEl.val() || null;
-
-			var ok = false;
-
-			if (currentValue == 0) {
-				ok = confirm('<%= UnicodeLanguageUtil.format(request, "are-you-sure-you-want-to-deactivate-staging-for-x", liveGroup.getDescriptiveName(locale), false) %>');
-			}
-			else if (currentValue == 1) {
-				ok = confirm('<%= UnicodeLanguageUtil.format(request, "are-you-sure-you-want-to-activate-local-staging-for-x", liveGroup.getDescriptiveName(locale), false) %>');
-			}
-			else if (currentValue == 2) {
-				ok = confirm('<%= UnicodeLanguageUtil.format(request, "are-you-sure-you-want-to-activate-remote-staging-for-x", liveGroup.getDescriptiveName(locale), false) %>');
-			}
-
-			if (ok) {
-				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'staging';
-
-				submitForm(document.<portlet:namespace />fm);
-			}
-		},
-		['aui-base']
-	);
 </aui:script>
 
 <aui:script use="liferay-util-window">

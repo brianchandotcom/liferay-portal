@@ -199,64 +199,52 @@ StringBuilder friendlyURLBase = new StringBuilder();
 </aui:fieldset>
 
 <aui:script>
-	Liferay.Util.toggleBoxes('<portlet:namespace />layoutPrototypeLinkEnabled','<portlet:namespace />layoutPrototypeMergeAlert');
-	Liferay.Util.toggleBoxes('<portlet:namespace />layoutPrototypeLinkEnabled','<portlet:namespace />typeOptions', true);
+	Liferay.Util.toggleBoxes('<portlet:namespace />layoutPrototypeLinkEnabled', '<portlet:namespace />layoutPrototypeMergeAlert');
+	Liferay.Util.toggleBoxes('<portlet:namespace />layoutPrototypeLinkEnabled', '<portlet:namespace />typeOptions', true);
 </aui:script>
 
-<aui:script use="aui-base">
-	var templateLink = A.one('#templateLink');
-
+<aui:script sandbox="<%= true %>">
 	function toggleLayoutTypeFields(type) {
 		var currentType = 'layout-type-form-' + type;
 
-		var typeFormContainer = A.one('#<portlet:namespace />layoutTypeForm');
+		$('#<portlet:namespace />layoutTypeForm').find('.layout-type-form').each(
+			function(index, item) {
+				item = $(item);
 
-		typeFormContainer.all('.layout-type-form').each(
-			function(item, index, collection) {
 				var visible = item.hasClass(currentType);
 
-				var disabled = !visible;
+				item.toggleClass('hide', !visible);
 
-				item.toggle(visible);
-
-				item.all('input, select, textarea').attr('disabled', disabled);
+				item.find('input, select, textarea').prop('disabled', !visible);
 			}
 		);
-
-		if (templateLink) {
-			templateLink.toggle(type == 'portlet');
-		}
 	}
 
 	toggleLayoutTypeFields('<%= HtmlUtil.escapeJS(selLayout.getType()) %>');
 
-	var typeSelector = A.one('#<portlet:namespace />type');
+	$('#<portlet:namespace />type').on(
+		'change',
+		function(event) {
+			var type = $(event.currentTarget).val();
 
-	if (typeSelector) {
-		typeSelector.on(
-			'change',
-			function(event) {
-				var type = event.currentTarget.val();
+			toggleLayoutTypeFields(type);
 
-				toggleLayoutTypeFields(type);
-
-				Liferay.fire(
-					'<portlet:namespace />toggleLayoutTypeFields',
-					{
-						type: type
-					}
-				);
-			}
-		);
-	}
+			Liferay.fire(
+				'<portlet:namespace />toggleLayoutTypeFields',
+				{
+					type: type
+				}
+			);
+		}
+	);
 
 	var friendlyURLBase = '<%= friendlyURLBase.toString() %>';
 
 	if (friendlyURLBase.length > 40) {
-		A.one('#<portlet:namespace />urlBase').on(
+		$('#<portlet:namespace />urlBase').on(
 			'mouseenter',
 			function(event) {
-				Liferay.Portal.ToolTip.show(event.currentTarget, '<%= friendlyURLBase.toString() %>');
+				Liferay.Portal.ToolTip.show(event.currentTarget, friendlyURLBase);
 			}
 		);
 	}

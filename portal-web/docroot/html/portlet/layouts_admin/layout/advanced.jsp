@@ -64,26 +64,17 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 </aui:fieldset>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />editLayoutLogo',
-		function(logoURL, deleteLogo) {
-			var A = AUI();
+	function <portlet:namespace />editLayoutLogo(logoURL, deleteLogo) {
+		var $ = AUI.$;
 
-			var layoutLogo = A.one('.layout-logo-<%= selLayout.getPlid() %>');
+		var layoutLogo = $('.layout-logo-<%= selLayout.getPlid() %>');
 
-			if (!layoutLogo) {
-				var layoutNavItem = A.one('#layout_<%= selLayout.getLayoutId() %> span');
+		if (!layoutLogo.length) {
+			layoutLogo = $('<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="logo" />" class="layout-logo-<%= selLayout.getPlid() %>" src="' + logoURL + '" />');
 
-				layoutLogo = A.Node.create('<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="logo" />" class="layout-logo-<%= selLayout.getPlid() %>" src="' + logoURL + '" />');
+			$('#layout_<%= selLayout.getLayoutId() %> span').prepend(layoutLogo);
+		}
 
-				if (layoutNavItem) {
-					layoutNavItem.prepend(layoutLogo);
-				}
-			}
-
-			layoutLogo.toggle(!deleteLogo);
-		},
-		['aui-base']
-	);
+		layoutLogo.toggleClass('hide', deleteLogo);
+	}
 </aui:script>

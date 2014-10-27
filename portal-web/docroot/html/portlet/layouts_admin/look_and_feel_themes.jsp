@@ -251,26 +251,22 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 </div>
 
 <c:if test="<%= editable %>">
-	<aui:script use="aui-base">
-		var availableThemes = A.one('#<%= device %>availableThemes');
-		var colorSchemePanel = A.one('#<%= device %>layoutsAdminLookAndFeelColorsPanel');
-		var lookAndFeelForm = A.one('#<%= device %>LookAndFeel');
+	<aui:script sandbox="<%= true %>">
+		var colorSchemePanel = $('#<%= device %>layoutsAdminLookAndFeelColorsPanel');
 
 		var toggleDisabled = function(disabled) {
-			colorSchemePanel.all('input[name=<portlet:namespace /><%= device %>ColorSchemeId]').attr('disabled', disabled);
+			colorSchemePanel.find('input[name=<portlet:namespace /><%= device %>ColorSchemeId]').prop('disabled', disabled);
 		};
 
-		if (colorSchemePanel) {
-			if (availableThemes) {
-				availableThemes.all('input[name=<portlet:namespace /><%= device %>ThemeId]').on(
-					'change',
-					function() {
-						toggleDisabled(true);
-					}
-				);
-			}
+		if (colorSchemePanel.length) {
+			$('#<%= device %>availableThemes').find('input[name=<portlet:namespace /><%= device %>ThemeId]').on(
+				'change',
+				function() {
+					toggleDisabled(true);
+				}
+			);
 
-			lookAndFeelForm.one('#<portlet:namespace /><%= device %>SelTheme').on(
+			$('#<%= device %>LookAndFeel').find('#<portlet:namespace /><%= device %>SelTheme').on(
 				'change',
 				function() {
 					toggleDisabled(false);
@@ -280,55 +276,20 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 	</aui:script>
 
 	<aui:script>
-		Liferay.provide(
-			window,
-			'<portlet:namespace /><%= device %>selectColorScheme',
-			function(id) {
-				var A = AUI();
+		function <portlet:namespace /><%= device %>selectColorScheme(id) {
+			var colorSchemeInput = AUI.$(id);
 
-				var colorSchemeInput = A.one(id);
-
-				if (!colorSchemeInput.get('disabled')) {
-					colorSchemeInput.attr('checked', true);
-				}
-			},
-			['aui-base']
-		);
-
-		Liferay.provide(
-			window,
-			'<portlet:namespace /><%= device %>selectTheme',
-			function(themeId, colorSchemesDisabled) {
-				var A = AUI();
-
-				A.one('#<portlet:namespace /><%= device %>' + themeId).attr('checked', true);
-
-				var colorSchemePanel = A.one('#<%= device %>layoutsAdminLookAndFeelColorsPanel');
-
-				if (colorSchemePanel) {
-					colorSchemePanel.all('input[name=<portlet:namespace /><%= device %>ColorSchemeId]').attr('disabled', colorSchemesDisabled);
-				}
-			},
-			['aui-base']
-		);
-	</aui:script>
-</c:if>
-
-<c:if test="<%= editable && permissionChecker.isOmniadmin() && PrefsPropsUtil.getBoolean(PropsKeys.AUTO_DEPLOY_ENABLED, PropsValues.AUTO_DEPLOY_ENABLED) %>">
-	<aui:script use="aui-base">
-		if (window.parent) {
-			var installMoreLink = A.one('#<portlet:namespace />installMore');
-
-			if (installMoreLink) {
-				installMoreLink.on(
-					'click',
-					function(event) {
-						event.preventDefault();
-
-						window.parent.location = installMoreLink.attr('href');
-					}
-				);
+			if (!colorSchemeInput.prop('disabled')) {
+				colorSchemeInput.prop('checked', true);
 			}
+		}
+
+		function <portlet:namespace /><%= device %>selectTheme(themeId, colorSchemesDisabled) {
+			var $ = AUI.$;
+
+			$('#<portlet:namespace /><%= device %>' + themeId).prop('checked', true);
+
+			$('#<%= device %>layoutsAdminLookAndFeelColorsPanel').find('input[name=<portlet:namespace /><%= device %>ColorSchemeId]').prop('disabled', colorSchemesDisabled);
 		}
 	</aui:script>
 </c:if>

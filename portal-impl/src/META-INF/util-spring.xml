@@ -979,6 +979,28 @@
 	<bean id="com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldRendererRegistryUtil" class="com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldRendererRegistryUtil">
 		<property name="DDMFormFieldRendererRegistry" ref="com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldRendererRegistryImpl" />
 	</bean>
+	<bean id="com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldValueRendererRegistryImpl" class="com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldValueRendererRegistryImpl">
+		<property name="defaultDDMFormFieldValueRenderers">
+			<list>
+				<bean class="com.liferay.portlet.dynamicdatamapping.render.CheckboxDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.portlet.dynamicdatamapping.render.DateDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.portlet.dynamicdatamapping.render.DecimalDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.portlet.dynamicdatamapping.render.DocumentLibraryDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.portlet.dynamicdatamapping.render.GeolocationDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.portlet.dynamicdatamapping.render.IntegerDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.portlet.dynamicdatamapping.render.LinkToPageDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.portlet.dynamicdatamapping.render.NumberDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.portlet.dynamicdatamapping.render.RadioDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.portlet.dynamicdatamapping.render.SelectDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.portlet.dynamicdatamapping.render.TextAreaDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.portlet.dynamicdatamapping.render.TextDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.portlet.dynamicdatamapping.render.TextHTMLDDMFormFieldValueRenderer" />
+			</list>
+		</property>
+	</bean>
+	<bean id="com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldValueRendererRegistryUtil" class="com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldValueRendererRegistryUtil">
+		<property name="DDMFormFieldValueRendererRegistry" ref="com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldValueRendererRegistryImpl" />
+	</bean>
 	<bean id="com.liferay.portlet.dynamicdatamapping.render.DDMFormRendererUtil" class="com.liferay.portlet.dynamicdatamapping.render.DDMFormRendererUtil">
 		<property name="DDMFormRenderer">
 			<bean class="com.liferay.portlet.dynamicdatamapping.render.DDMFormRendererImpl" />

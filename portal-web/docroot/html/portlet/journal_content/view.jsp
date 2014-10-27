@@ -93,7 +93,7 @@ journalContentDisplayContext.incrementViewCounter();
 											%>
 
 												<portlet:actionURL var="exportArticleURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-													<portlet:param name="struts_action" value="/journal_content/export_article" />
+													<portlet:param name="struts_action" value="/journal/export_article" />
 													<portlet:param name="groupId" value="<%= String.valueOf(articleDisplay.getGroupId()) %>" />
 													<portlet:param name="articleId" value="<%= articleDisplay.getArticleId() %>" />
 													<portlet:param name="targetExtension" value="<%= extension %>" />

@@ -293,22 +293,3 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 		}
 	</aui:script>
 </c:if>
-
-<c:if test="<%= editable && permissionChecker.isOmniadmin() && PrefsPropsUtil.getBoolean(PropsKeys.AUTO_DEPLOY_ENABLED, PropsValues.AUTO_DEPLOY_ENABLED) %>">
-	<aui:script use="aui-base">
-		if (window.parent) {
-			var installMoreLink = A.one('#<portlet:namespace />installMore');
-
-			if (installMoreLink) {
-				installMoreLink.on(
-					'click',
-					function(event) {
-						event.preventDefault();
-
-						window.parent.location = installMoreLink.attr('href');
-					}
-				);
-			}
-		}
-	</aui:script>
-</c:if>

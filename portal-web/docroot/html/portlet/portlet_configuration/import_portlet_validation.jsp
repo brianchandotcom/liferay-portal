@@ -121,11 +121,11 @@ Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDispla
 					},
 
 					<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="importPortletURL">
-						<portlet:param name="p_p_isolated" value="true" />
 						<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
 						<portlet:param name="redirect" value="<%= redirect %>" />
-						<portlet:param name="portletResource" value="<%= portletResource %>" />
 						<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+						<portlet:param name="p_p_isolated" value="true" />
+						<portlet:param name="portletResource" value="<%= portletResource %>" />
 						<portlet:param name="validate" value="<%= String.valueOf(Boolean.FALSE) %>" />
 					</liferay-portlet:resourceURL>
 

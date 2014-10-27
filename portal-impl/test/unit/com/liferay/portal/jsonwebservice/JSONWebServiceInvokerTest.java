@@ -130,10 +130,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 	}
 
 	@Test
-	public void testCreateArgumentInstances() throws Exception {
-
-		// Style 1
-
+	public void testCreateArgumentInstancesUsingStyle1() throws Exception {
 		Map<String, Object> map = new LinkedHashMap<String, Object>();
 
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
@@ -154,16 +151,21 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		Assert.assertEquals(
 			"using #1: h=177/id=-1/n=John Doe/v=foo!",
 			invokerResult.getResult());
+	}
 
-		// Style 2
+	@Test
+	public void testCreateArgumentInstancesUsingStyle2() throws Exception {
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
 
-		map.clear();
+		Map<String, Object> params = new LinkedHashMap<String, Object>();
+
+		params.put("+fooData", null);
 
 		map.put("/foo/use2", params);
 
-		json = toJSON(map);
+		String json = toJSON(map);
 
-		jsonWebServiceAction = prepareInvokerAction(json);
+		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(json);
 
 		try {
 			jsonWebServiceAction.invoke();
@@ -185,41 +187,45 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		jsonWebServiceAction = prepareInvokerAction(json);
 
-		result = jsonWebServiceAction.invoke();
+		Object result = jsonWebServiceAction.invoke();
 
-		invokerResult = (JSONWebServiceInvokerAction.InvokerResult)result;
+		JSONWebServiceInvokerAction.InvokerResult invokerResult =
+			(JSONWebServiceInvokerAction.InvokerResult)result;
 
 		Assert.assertEquals(
 			"using #2: h=177/id=-1/n=John Doe/v=foo!",
 			invokerResult.getResult());
+	}
 
-		// Style 3
+	@Test
+	public void testCreateArgumentInstancesUsingStyle3() throws Exception {
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
 
-		map.clear();
-
-		params.clear();
+		Map<String, Object> params = new LinkedHashMap<String, Object>();
 
 		params.put("+fooData", FooDataImpl.class.getName());
 
 		map.put("/foo/use2", params);
 
-		json = toJSON(map);
+		String json = toJSON(map);
 
-		jsonWebServiceAction = prepareInvokerAction(json);
+		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(json);
 
-		result = jsonWebServiceAction.invoke();
+		Object result = jsonWebServiceAction.invoke();
 
-		invokerResult = (JSONWebServiceInvokerAction.InvokerResult)result;
+		JSONWebServiceInvokerAction.InvokerResult invokerResult =
+			(JSONWebServiceInvokerAction.InvokerResult)result;
 
 		Assert.assertEquals(
 			"using #2: h=177/id=-1/n=John Doe/v=foo!",
 			invokerResult.getResult());
+	}
 
-		// Style 4
+	@Test
+	public void testCreateArgumentInstancesUsingStyle4() throws Exception {
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
 
-		map.clear();
-
-		params.clear();
+		Map<String, Object> params = new LinkedHashMap<String, Object>();
 
 		Map<String, Object> fooObj = new HashMap<String, Object>();
 
@@ -229,19 +235,19 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		map.put("/foo/use1", params);
 
-		json = toJSON(map);
+		String json = toJSON(map);
 
-		jsonWebServiceAction = prepareInvokerAction(json);
+		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(json);
 
-		result = jsonWebServiceAction.invoke();
+		Object result = jsonWebServiceAction.invoke();
 
-		invokerResult = (JSONWebServiceInvokerAction.InvokerResult)result;
+		JSONWebServiceInvokerAction.InvokerResult invokerResult =
+			(JSONWebServiceInvokerAction.InvokerResult)result;
 
 		Assert.assertEquals(
 			"using #1: h=177/id=-1/n=Jane Doe/v=foo!",
 			invokerResult.getResult());
 	}
-
 
 	@Test
 	public void testFiltering() throws Exception {

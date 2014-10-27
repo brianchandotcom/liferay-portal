@@ -93,8 +93,8 @@ if (category != null) {
 }
 %>
 
-<aui:script use="aui-base">
-	A.one('#<portlet:namespace />selectCategoryButton').on(
+<aui:script>
+	AUI.$('#<portlet:namespace />selectCategoryButton').on(
 		'click',
 		function(event) {
 			Liferay.Util.selectEntity(
@@ -111,7 +111,7 @@ if (category != null) {
 				function(event) {
 					document.<portlet:namespace />fm.<portlet:namespace />parentCategoryId.value = event.categoryid;
 
-					document.getElementById('<portlet:namespace />parentCategoryName').value = A.Lang.String.unescapeEntities(event.name);
+					document.getElementById('<portlet:namespace />parentCategoryName').value = AUI._.unescape(event.name);
 
 					Liferay.Util.toggleDisabled('#<portlet:namespace />removeCategoryButton', false);
 				}

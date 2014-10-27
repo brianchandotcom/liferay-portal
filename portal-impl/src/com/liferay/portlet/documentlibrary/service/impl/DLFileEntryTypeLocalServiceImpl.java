@@ -44,6 +44,8 @@ import com.liferay.portlet.documentlibrary.service.base.DLFileEntryTypeLocalServ
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
 import com.liferay.portlet.dynamicdatamapping.StructureDefinitionException;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 
@@ -623,12 +625,15 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		try {
 			if (ddmStructure == null) {
+				DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(
+					definition);
+
 				ddmStructure = ddmStructureLocalService.addStructure(
 					userId, groupId,
 					DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 					classNameLocalService.getClassNameId(
 						DLFileEntryMetadata.class),
-					ddmStructureKey, nameMap, descriptionMap, definition, "xml",
+					ddmStructureKey, nameMap, descriptionMap, ddmForm, "xml",
 					DDMStructureConstants.TYPE_AUTO, serviceContext);
 			}
 			else {

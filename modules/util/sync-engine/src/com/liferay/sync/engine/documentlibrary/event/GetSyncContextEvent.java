@@ -41,12 +41,14 @@ public class GetSyncContextEvent extends BaseEvent {
 
 	@Override
 	protected void processRequest() throws Exception {
-		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
-			getSyncAccountId());
+		if ((Boolean)getParameterValue("checkState")) {
+			SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
+				getSyncAccountId());
 
-		syncAccount.setState(SyncAccount.STATE_CONNECTING);
+			syncAccount.setState(SyncAccount.STATE_CONNECTING);
 
-		SyncAccountService.update(syncAccount);
+			SyncAccountService.update(syncAccount);
+		}
 
 		super.processRequest();
 	}

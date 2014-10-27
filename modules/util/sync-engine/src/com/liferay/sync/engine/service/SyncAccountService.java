@@ -303,10 +303,11 @@ public class SyncAccountService {
 	}
 
 	public static SyncAccount synchronizeSyncAccount(
-		long syncAccountId, long delay) {
+		long syncAccountId, boolean checkState, long delay) {
 
 		Map<String, Object> parameters = new HashMap<String, Object>();
 
+		parameters.put("checkState", checkState);
 		parameters.put("uuid", null);
 
 		GetSyncContextEvent getSyncContextEvent = new GetSyncContextEvent(

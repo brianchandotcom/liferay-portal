@@ -6,6 +6,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
 >
+	<description>Provides the Liferay UI component tags, prefixed with <![CDATA[<code>liferay-ui:</code>]]>.</description>
 	<tlib-version>1.0</tlib-version>
 	<short-name>liferay-ui</short-name>
 	<uri>http://liferay.com/tld/ui</uri>
@@ -645,18 +646,21 @@
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>java.util.Set</type>
 		</attribute>
 		<attribute>
 			<description>Sets the day of the month to highlight in the calendar.</description>
 			<name>day</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 		<attribute>
 			<description>Sets the format of the header.</description>
 			<name>headerFormat</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>java.text.Format</type>
 		</attribute>
 		<attribute>
 			<description>Sets the pattern for the calendar header. A possible value is <![CDATA[<code>MMM/dd/yyyy</code>]]>.</description>
@@ -669,18 +673,21 @@
 			<name>month</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 		<attribute>
 			<description>Sets whether to display up to six calendar weeks relative to the set day. If the set day of the month is in the latter part of the month, the current month's weeks will be displayed and up to two weeks of the next month will be displayed. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>showAllPotentialWeeks</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets the year to display at the top of the calendar.</description>
 			<name>year</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 	</tag>
 	<tag>
@@ -1338,18 +1345,21 @@
 			<name>escapeXml</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets whether to translate the header's <![CDATA[<code>title</code>]]> into the localized language. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>localizeTitle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets whether to display the back URL. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>showBackURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets the header's title and displays it as the header text.</description>
@@ -1382,10 +1392,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Stores miscellaneous data. This data is not shared with the browser.</description>
+			<description>Stores miscellaneous data. This data is not shared with the browser. The Map holds key value pairs of <![CDATA[<String, Object>]]>.</description>
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>java.util.Map</type>
 		</attribute>
 		<attribute>
 			<description>Sets the icon from a Bootstrap icon CSS Class. Note that any image for the <![CDATA[<code>image</code>]]> attribute takes precedence. Icon CSS classes to specify for this attribute can be found at <![CDATA[<a href="http://marcoceppi.github.io/bootstrap-glyphicons/" >http://marcoceppi.github.io/bootstrap-glyphicons/</a>]]>.</description>
@@ -1415,6 +1426,7 @@
 			<name>label</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets the language of the icon, to assist search engines and web browsers in finding and rendering the icon appropriately.</description>
@@ -1433,6 +1445,7 @@
 			<name>localizeMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets text to be displayed for the icon on mouse over.</description>
@@ -1474,6 +1487,7 @@
 			<name>toolTip</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets the URL navigated to when the icon is clicked.</description>
@@ -1486,6 +1500,7 @@
 			<name>useDialog</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 	</tag>
 	<tag>
@@ -1575,6 +1590,7 @@
 			<name>showWhenSingleIcon</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 	</tag>
 	<tag>
@@ -1599,12 +1615,14 @@
 			<name>disabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets whether to extend the icon menu trigger by wrapping it in a button. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>extended</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<name>icon</name>
@@ -1622,12 +1640,14 @@
 			<name>localizeMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets the number of items shown in the icon menu before scrolling. The default value is 15.</description>
 			<name>maxDisplayItems</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 		<attribute>
 			<description>Sets the text to be displayed next to the icon menu trigger. The default value is <![CDATA[<code>actions</code>]]>.</description>
@@ -1639,24 +1659,28 @@
 			<name>select</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets whether to extend the icon menu by default. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>showExpanded</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets whether to show an arrow, indicating a popup dialog, next to the icon menu's trigger icon. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>showArrow</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets whether to show the icon menu when there is only one icon. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>showWhenSingleIcon</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets a CSS class for styling the trigger for the icon menu. The default value is <![CDATA[<code>btn btn-default</code>]]>.</description>
@@ -1669,6 +1693,7 @@
 			<name>useIconCaret</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 	</tag>
 	<tag>
@@ -1727,12 +1752,14 @@
 			<name>defaultValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets whether the checkbox is disabled.</description>
 			<name>disabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets the name of the checkbox's form.</description>
@@ -1769,6 +1796,7 @@
 			<name>autoFocus</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets a CSS class for styling the component.</description>
@@ -1787,24 +1815,28 @@
 			<name>dayValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 		<attribute>
 			<description>Sets whether to disable the namespace for the component. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>disableNamespace</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets whether to disable the input field. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>disabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Marks the first day of the week. The default value is <![CDATA[<code>Calendar.SUNDAY - 1</code>]]>.</description>
 			<name>firstDayOfWeek</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 		<attribute>
 			<description>Sets the name of the date input's form.</description>
@@ -1829,6 +1861,7 @@
 			<name>monthValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 		<attribute>
 			<description>Sets the date input's name.</description>
@@ -1853,6 +1886,7 @@
 			<name>yearValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 	</tag>
 	<tag>
@@ -2174,6 +2208,7 @@
 			<name>leftList</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>java.util.List</type>
 		</attribute>
 		<attribute>
 			<description>Sets a function to be called on a change in selection in the left list.</description>
@@ -2186,6 +2221,7 @@
 			<name>leftReorder</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets the left box's title and displays it at the top of the box.</description>
@@ -2204,6 +2240,7 @@
 			<name>rightList</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>java.util.List</type>
 		</attribute>
 		<attribute>
 			<description>Sets a function to be called on a change in selection in the right list.</description>
@@ -2216,6 +2253,7 @@
 			<name>rightReorder</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets the right box's title and displays it at the top of the box.</description>
@@ -2304,6 +2342,7 @@
 			<name>autoFocus</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets the text value for the search button's label. The default value is <![CDATA[<code>Search</code>]]>.</description>
@@ -2340,6 +2379,7 @@
 			<name>showButton</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets the search box's title.</description>
@@ -2352,6 +2392,7 @@
 			<name>useNamespace</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 	</tag>
 	<tag>
@@ -2370,12 +2411,14 @@
 			<name>defaultValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets whether to disable input.</description>
 			<name>disabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets the name of the input select's form.</description>
@@ -2412,6 +2455,7 @@
 			<name>disabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets a variable name for this component.</description>
@@ -2436,6 +2480,7 @@
 			<name>amPmValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 		<attribute>
 			<description>Sets the CSS class for styling the time input.</description>
@@ -2454,12 +2499,14 @@
 			<name>dateValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>java.util.Date</type>
 		</attribute>
 		<attribute>
 			<description>Sets whether the input field is disabled.</description>
 			<name>disabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets the name of the hour parameter for the component. An acceptable value is <![CDATA[<code>hour</code>]]>.</description>
@@ -2472,12 +2519,14 @@
 			<name>hourValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 		<attribute>
 			<description>Sets the minute intervals displayed in the input. The default value is <![CDATA[<code>30</code>]]>.</description>
 			<name>minuteInterval</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 		<attribute>
 			<description>Sets the name of the minute parameter for the component. An acceptable value is <![CDATA[<code>minute</code>]]>.</description>
@@ -2490,6 +2539,7 @@
 			<name>minuteValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 		<attribute>
 			<description>Sets the time input's name.</description>
@@ -2508,6 +2558,7 @@
 			<name>autoFocus</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets the CSS styling for this component.</description>
@@ -2520,18 +2571,21 @@
 			<name>daylight</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets whether the field is disabled.</description>
 			<name>disabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Corresponds to the time zone's full name, e.g. "Pacific Standard Time." A value of <![CDATA[<code>0</code>]]> displays the time zone's abbreviated name and a value of <![CDATA[<code>1</code>]]> displays its full name. The default value is <![CDATA[<code>0</code>]]>.</description>
 			<name>displayStyle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 		<attribute>
 			<description>Sets the time zone input's name.</description>
@@ -2544,6 +2598,7 @@
 			<name>nullable</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets the time zone to that associated with the given ID. For example, setting the value to <![CDATA[<code>PST</code>]]> associates the component with the Pacific Standard Time zone.</description>
@@ -2987,6 +3042,7 @@
 			<name>collapsible</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets a CSS class for styling this component.</description>
@@ -3005,6 +3061,7 @@
 			<name>extended</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets text to be displayed as a help tool tip on mouse over of the panel's help icon.</description>
@@ -3033,6 +3090,7 @@
 			<name>persistState</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets the state of the panel. Possible values are <![CDATA[<code>open</code>]]> and any string other than open. Any string other than <![CDATA[<code>open</code>]]> collapses the panel.</description>
@@ -4280,6 +4338,7 @@
 			<name>refresh</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets the tab values. Values must follow the same order as the <![CDATA[<code>names</code>]]> attribute. Each value must be separated by a comma with no spaces.</description>
@@ -4381,6 +4440,7 @@
 			<name>defaultShowContent</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<name>hideImage</name>

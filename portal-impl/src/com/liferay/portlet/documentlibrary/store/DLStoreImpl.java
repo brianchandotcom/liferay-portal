@@ -90,7 +90,7 @@ public class DLStoreImpl implements DLStore {
 			boolean validateFileExtension, File file)
 		throws PortalException {
 
-		validate(fileName, validateFileExtension, file);
+		validate(fileName, validateFileExtension);
 
 		if (PropsValues.DL_STORE_ANTIVIRUS_ENABLED) {
 			AntivirusScannerUtil.scan(file);

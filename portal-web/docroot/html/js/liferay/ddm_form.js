@@ -1268,7 +1268,7 @@ AUI.add(
 					getValue: function() {
 						var instance = this;
 
-						return instance.getInputNode().all('option:selected').get('value');
+						return instance.getInputNode().all('option:selected').val();
 					},
 
 					setLabel: function() {

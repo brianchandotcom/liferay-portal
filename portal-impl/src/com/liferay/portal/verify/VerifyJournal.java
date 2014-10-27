@@ -86,13 +86,6 @@ public class VerifyJournal extends VerifyProcess {
 	}
 
 	protected void updateDocumentLibraryElements(Element element) {
-		List<Element> dynamicElementElements = element.elements(
-			"dynamic-element");
-
-		for (Element dynamicElementElement : dynamicElementElements) {
-			updateDocumentLibraryElements(dynamicElementElement);
-		}
-
 		Element dynamicContentElement = element.element("dynamic-content");
 
 		String path = dynamicContentElement.getStringValue();
@@ -117,6 +110,24 @@ public class VerifyJournal extends VerifyProcess {
 		Node node = dynamicContentElement.node(0);
 
 		node.setText(path + StringPool.SLASH + dlFileEntry.getUuid());
+	}
+
+	protected void updateElement(long groupId, Element element) {
+		List<Element> dynamicElementElements = element.elements(
+			"dynamic-element");
+
+		for (Element dynamicElementElement : dynamicElementElements) {
+			updateElement(groupId, dynamicElementElement);
+		}
+
+		String type = element.attributeValue("type");
+
+		if (type.equals("document_library")) {
+			updateDocumentLibraryElements(element);
+		}
+		else if (type.equals("link_to_layout")) {
+			updateLinkToLayoutElements(groupId, element);
+		}
 	}
 
 	protected void updateFolderAssets() throws Exception {
@@ -148,19 +159,17 @@ public class VerifyJournal extends VerifyProcess {
 	}
 
 	protected void updateLinkToLayoutElements(long groupId, Element element) {
-		List<Element> dynamicElementElements = element.elements(
-			"dynamic-element");
-
-		for (Element dynamicElementElement : dynamicElementElements) {
-			updateLinkToLayoutElements(groupId, dynamicElementElement);
-		}
-
 		Element dynamicContentElement = element.element("dynamic-content");
 
 		Node node = dynamicContentElement.node(0);
 
-		node.setText(
-			dynamicContentElement.getStringValue() + StringPool.AT + groupId);
+		String text = node.getText();
+
+		if (!text.isEmpty() && !text.endsWith(StringPool.AT + groupId)) {
+			node.setText(
+				dynamicContentElement.getStringValue() + StringPool.AT +
+					groupId);
+		}
 	}
 
 	protected void updateURLTitle(
@@ -222,15 +231,7 @@ public class VerifyJournal extends VerifyProcess {
 				Element rootElement = document.getRootElement();
 
 				for (Element element : rootElement.elements()) {
-					String type = element.attributeValue("type");
-
-					if (type.equals("document_library")) {
-						updateDocumentLibraryElements(element);
-					}
-					else if (type.equals("link_to_layout")) {
-						updateLinkToLayoutElements(
-							article.getGroupId(), element);
-					}
+					updateElement(article.getGroupId(), element);
 				}
 
 				article.setContent(document.asXML());

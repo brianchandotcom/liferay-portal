@@ -934,8 +934,8 @@ public class ClusterSchedulerEngine
 
 		@Override
 		public boolean accept(Map<String, Serializable> context) {
-			if (ClusterInvokeThreadLocal.isEnabled()) {
-				return true;
+			if (!ClusterInvokeThreadLocal.isEnabled()) {
+				return false;
 			}
 
 			StorageType storageType = (StorageType)context.get(STORAGE_TYPE);

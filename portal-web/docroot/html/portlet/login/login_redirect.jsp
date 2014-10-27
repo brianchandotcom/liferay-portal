@@ -45,66 +45,51 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 </c:if>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />activateAccount',
-		function() {
-			var A = AUI();
+	function <portlet:namespace />activateAccount() {
+		var $ = AUI.$;
 
-			var form = A.one(document.<portlet:namespace />fm);
+		var form = $(document.<portlet:namespace />fm);
 
-			var uri = form.getAttribute('action');
+		function onError() {
+			message = '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>';
 
-			A.io.request(
-				uri,
-				{
-					dataType: 'JSON',
-					form: {
-						id: form
-					},
-					on: {
-						failure: function(event, id, obj) {
-							message = '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>';
+			<portlet:namespace />showStatusMessage('danger', message);
 
-							<portlet:namespace />showStatusMessage('error', message);
+			$('.anonymous-account').addClass('hide');
+		}
 
-							A.one('.anonymous-account').hide();
-						},
-						success: function(event, id, obj) {
-							var response = this.get('responseData');
+		$.ajax(
+			form.attr('action'),
+			{
+				data: form.serialize(),
+				dataType: 'json',
+				error: onError,
+				success: function(responseData) {
+					var exception = responseData.exception;
 
-							var exception = response.exception;
+					var message;
 
-							var message;
+					if (!exception) {
+						var userStatus = responseData.userStatus;
 
-							if (!exception) {
-								var userStatus = response.userStatus;
-
-								if (userStatus == 'user_added') {
-									message = '<%= UnicodeLanguageUtil.format(request, "thank-you-for-creating-an-account-your-password-has-been-sent-to-x", HtmlUtil.escape(emailAddress), false) %>';
-								}
-								else if (userStatus == 'user_pending') {
-									message = '<%= UnicodeLanguageUtil.format(request, "thank-you-for-creating-an-account.-you-will-be-notified-via-email-at-x-when-your-account-has-been-approved", HtmlUtil.escape(emailAddress), false) %>';
-								}
-
-								<portlet:namespace />showStatusMessage('success', message);
-
-								A.one('.anonymous-account').hide();
-							}
-							else {
-								message = '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>';
-
-								<portlet:namespace />showStatusMessage('error', message);
-
-								A.one('.anonymous-account').hide();
-							}
+						if (userStatus == 'user_added') {
+							message = '<%= UnicodeLanguageUtil.format(request, "thank-you-for-creating-an-account-your-password-has-been-sent-to-x", HtmlUtil.escape(emailAddress), false) %>';
 						}
+						else if (userStatus == 'user_pending') {
+							message = '<%= UnicodeLanguageUtil.format(request, "thank-you-for-creating-an-account.-you-will-be-notified-via-email-at-x-when-your-account-has-been-approved", HtmlUtil.escape(emailAddress), false) %>';
+						}
+
+						<portlet:namespace />showStatusMessage('success', message);
+
+						$('.anonymous-account').addClass('hide');
+					}
+					else {
+						onError();
 					}
 				}
-			);
-		},
-		['aui-io']
-	);
+			}
+		);
+	}
 
 	function <portlet:namespace />closeDialog () {
 		var namespace = window.parent.namespace;

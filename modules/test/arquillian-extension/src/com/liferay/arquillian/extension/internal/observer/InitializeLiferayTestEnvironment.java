@@ -18,16 +18,15 @@ import com.liferay.arquillian.extension.internal.descriptor.SpringDescriptor;
 import com.liferay.arquillian.extension.internal.event.LiferayContextCreatedEvent;
 import com.liferay.portal.test.jdbc.ResetDatabaseUtilDataSource;
 import com.liferay.portal.util.InitUtil;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.jboss.arquillian.core.api.Event;
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.core.spi.ServiceLoader;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Cristina González
@@ -66,9 +65,9 @@ public class InitializeLiferayTestEnvironment {
 	}
 
 	@Inject
-	private final Event<LiferayContextCreatedEvent> _event;
+	private Event<LiferayContextCreatedEvent> _event;
 
 	@Inject
-	private final Instance<ServiceLoader> _instance;
+	private Instance<ServiceLoader> _instance;
 
 }

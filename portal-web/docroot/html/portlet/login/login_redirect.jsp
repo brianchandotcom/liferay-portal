@@ -106,7 +106,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 		['aui-io']
 	);
 
-	function <portlet:namespace />closeDialog (type, message) {
+	function <portlet:namespace />closeDialog () {
 		var namespace = window.parent.namespace;
 
 		Liferay.fire(
@@ -124,9 +124,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 
 		messageContainer.addClass('alert alert-' + type);
 
-		messageContainer.html(message);
-
-		messageContainer.removeClass('hide');
+		messageContainer.html(message).removeClass('hide');
 	}
 
 	<c:if test="<%= !company.isStrangers() %>">

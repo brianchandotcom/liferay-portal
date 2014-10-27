@@ -17,17 +17,11 @@
 <aui:fieldset>
 	<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= wikiPortletInstanceSettings.isEnableRelatedAssets() %>" />
 
-	<c:if test="<%= PropsValues.WIKI_PAGE_RATINGS_ENABLED || PropsValues.WIKI_PAGE_COMMENTS_ENABLED %>">
-		<c:if test="<%= PropsValues.WIKI_PAGE_RATINGS_ENABLED %>">
-			<aui:input name="preferences--enablePageRatings--" type="checkbox" value="<%= wikiPortletInstanceSettings.isEnablePageRatings() %>" />
-		</c:if>
+	<aui:input name="preferences--enablePageRatings--" type="checkbox" value="<%= wikiPortletInstanceSettings.isEnablePageRatings() %>" />
 
-		<c:if test="<%= PropsValues.WIKI_PAGE_COMMENTS_ENABLED %>">
-			<aui:input name="preferences--enableComments--" type="checkbox" value="<%= wikiPortletInstanceSettings.isEnableComments() %>" />
+	<aui:input name="preferences--enableComments--" type="checkbox" value="<%= wikiPortletInstanceSettings.isEnablePageComments() %>" />
 
-			<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= wikiPortletInstanceSettings.isEnableCommentRatings() %>" />
-		</c:if>
-	</c:if>
+	<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= wikiPortletInstanceSettings.isEnableCommentRatings() %>" />
 </aui:fieldset>
 
 <aui:fieldset>

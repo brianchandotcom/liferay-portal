@@ -35,10 +35,12 @@ import java.util.Map;
 public class WikiSettings {
 
 	public static String[] ALL_KEYS = {
-		"emailFromAddress", "emailFromName", "emailPageAddedBody",
-		"emailPageAddedSubject", "emailPageUpdatedBody",
+		"defaultFormat", "emailFromAddress", "emailFromName",
+		"emailPageAddedBody", "emailPageAddedSubject", "emailPageUpdatedBody",
 		"emailPageUpdatedSubject", "emailPageAddedEnabled",
-		"emailPageUpdatedEnabled"
+		"emailPageUpdatedEnabled", "pageCommentsEnabled",
+		"pageMinorEditAddSocialActivity", "pageMinorEditSendEmail",
+		"rssAbstractLength",
 	};
 
 	public static WikiSettings getInstance(long groupId)
@@ -63,6 +65,10 @@ public class WikiSettings {
 
 	public WikiSettings(Settings settings) {
 		_typedSettings = new TypedSettings(settings);
+	}
+
+	public String getDefaultFormat() {
+		return _typedSettings.getValue("defaultFormat");
 	}
 
 	public String getEmailFromAddress() {
@@ -115,6 +121,10 @@ public class WikiSettings {
 		return emailPageUpdatedSubjectMap.getLocalizationXml();
 	}
 
+	public int getRSSAbstractLength() {
+		return _typedSettings.getIntegerValue("rssAbstractLength");
+	}
+
 	public boolean isEmailPageAddedEnabled() {
 		return _typedSettings.getBooleanValue("emailPageAddedEnabled");
 	}
@@ -123,29 +133,43 @@ public class WikiSettings {
 		return _typedSettings.getBooleanValue("emailPageUpdatedEnabled");
 	}
 
+	public boolean isPageCommentsEnabled() {
+		return _typedSettings.getBooleanValue("pageCommentsEnabled");
+	}
+
+	public boolean isPageMinorEditAddSocialActivity() {
+		return _typedSettings.getBooleanValue("pageMinorEditAddSocialActivity");
+	}
+
+	public boolean isPageMinorEditSendMail() {
+		return _typedSettings.getBooleanValue("pageMinorEditSendEmail");
+	}
+
 	private static FallbackKeys _getFallbackKeys() {
 		FallbackKeys fallbackKeys = new FallbackKeys();
 
+		fallbackKeys.add("defaultFormat", "formats.default");
 		fallbackKeys.add(
-			"emailFromAddress", PropsKeys.WIKI_EMAIL_FROM_ADDRESS,
+			"emailFromAddress", "email.from.address",
 			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
 		fallbackKeys.add(
-			"emailFromName", PropsKeys.WIKI_EMAIL_FROM_NAME,
+			"emailFromName", "email.from.name",
 			PropsKeys.ADMIN_EMAIL_FROM_NAME);
+		fallbackKeys.add("emailPageAddedBody", "email.page.added.body");
+		fallbackKeys.add("emailPageAddedEnabled", "email.page.added.enabled");
+		fallbackKeys.add("emailPageAddedSubject", "email.page.added.subject");
+		fallbackKeys.add("emailPageUpdatedBody", "email.page.updated.body");
 		fallbackKeys.add(
-			"emailPageAddedBody", PropsKeys.WIKI_EMAIL_PAGE_ADDED_BODY);
+			"emailPageUpdatedEnabled","email.page.updated.enabled");
 		fallbackKeys.add(
-			"emailPageAddedEnabled", PropsKeys.WIKI_EMAIL_PAGE_ADDED_ENABLED);
+			"emailPageUpdatedSubject","email.page.updated.subject");
+		fallbackKeys.add("pageCommentsEnabled", "page.comments.enabled");
 		fallbackKeys.add(
-			"emailPageAddedSubject", PropsKeys.WIKI_EMAIL_PAGE_ADDED_SUBJECT);
+			"pageMinorEditAddSocialActivity",
+			"page.minor.edit.add.social.activity");
 		fallbackKeys.add(
-			"emailPageUpdatedBody", PropsKeys.WIKI_EMAIL_PAGE_UPDATED_BODY);
-		fallbackKeys.add(
-			"emailPageUpdatedEnabled",
-			PropsKeys.WIKI_EMAIL_PAGE_UPDATED_ENABLED);
-		fallbackKeys.add(
-			"emailPageUpdatedSubject",
-			PropsKeys.WIKI_EMAIL_PAGE_UPDATED_SUBJECT);
+			"pageMinorEditSendEmail", "page.minor.edit.send.email");
+		fallbackKeys.add("rssAbstractLength", "rss.abstract.length");
 
 		return fallbackKeys;
 	}

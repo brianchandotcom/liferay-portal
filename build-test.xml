@@ -95,6 +95,76 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-database-jndi">
+		<sequential>
+			<if>
+				<not>
+					<and>
+						<equals arg1="${app.server.type}" arg2="tomcat" />
+						<equals arg1="${database.type}" arg2="mysql" />
+					</and>
+				</not>
+				<then>
+					<fail>Tests utilizing JNDI are only available for Tomcat+MySQL.</fail>
+				</then>
+			</if>
+
+			<if>
+				<not>
+					<resourcecontains
+						resource="${app.server.dir}/conf/context.xml"
+						substring="jdbc/LiferayPool"
+					/>
+				</not>
+				<then>
+					<replace file="${app.server.dir}/conf/context.xml">
+						<replacetoken><![CDATA[<Context>]]></replacetoken>
+						<replacevalue>
+							<![CDATA[
+								<Context>
+
+								<ResourceLink name="jdbc/LiferayPool" global="jdbc/LiferayPool" type="javax.sql.DataSource" />
+							]]>
+						</replacevalue>
+					</replace>
+				</then>
+			</if>
+
+			<if>
+				<not>
+					<resourcecontains
+						resource="${app.server.dir}/conf/server.xml"
+						substring="jdbc/LiferayPool"
+					/>
+				</not>
+				<then>
+					<replace file="${app.server.dir}/conf/server.xml">
+						<replacetoken><![CDATA[<GlobalNamingResources>]]></replacetoken>
+						<replacevalue expandproperties="true">
+							<![CDATA[
+								<GlobalNamingResources>
+
+								<Resource
+									auth="Container"
+									description="Global Address Database"
+									driverClassName="com.mysql.jdbc.Driver"
+									maxActive="40"
+									maxIdle="20"
+									maxWait="1000"
+									name="jdbc/LiferayPool"
+									password="${database.password}"
+									type="javax.sql.DataSource"
+									url="jdbc:mysql://localhost:3306/lportal?useUnicode=true&amp;characterEncoding=UTF-8&amp;useFastDateParsing=false"
+									username="${database.username}"
+								/>
+							]]>
+						</replacevalue>
+					</replace>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-fix-pack-bundle" >
 		<sequential>
 			<if>
@@ -175,75 +245,6 @@
 					</antelope:stringutil>
 
 					<delete file="${basedir}/${patching.tool.zip.file.name}" />
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="prepare-jndi">
-		<sequential>
-			<if>
-				<not>
-					<and>
-						<equals arg1="${app.server.type}" arg2="tomcat" />
-						<equals arg1="${database.type}" arg2="mysql" />
-					</and>
-				</not>
-				<then>
-					<fail>Tests utilizing JNDI are only available for Tomcat-Mysql.</fail>
-				</then>
-			</if>
-
-			<if>
-				<not>
-					<resourcecontains
-						resource="${app.server.dir}/conf/context.xml"
-						substring="jdbc/LiferayPool"
-					/>
-				</not>
-				<then>
-					<replace file="${app.server.dir}/conf/context.xml">
-						<replacetoken><![CDATA[<Context>]]></replacetoken>
-						<replacevalue>
-							<![CDATA[
-								<Context>
-
-									<ResourceLink name="jdbc/LiferayPool" global="jdbc/LiferayPool" type="javax.sql.DataSource" />
-							]]>
-						</replacevalue>
-					</replace>
-				</then>
-			</if>
-
-			<if>
-				<not>
-					<resourcecontains
-						resource="${app.server.dir}/conf/server.xml"
-						substring="jdbc/LiferayPool"
-					/>
-				</not>
-				<then>
-					<replace file="${app.server.dir}/conf/server.xml">
-						<replacetoken><![CDATA[<GlobalNamingResources>]]></replacetoken>
-						<replacevalue expandproperties="true">
-							<![CDATA[
-								<GlobalNamingResources>
-
-									<Resource
-										auth="Container"
-										description="Global Address Database"
-										driverClassName="com.mysql.jdbc.Driver"
-										maxActive="40"
-										maxIdle="20"
-										maxWait="1000"
-										name="jdbc/LiferayPool"
-										password="${database.password}"
-										type="javax.sql.DataSource"
-										url="jdbc:mysql://localhost:3306/lportal?useUnicode=true&amp;characterEncoding=UTF-8&amp;useFastDateParsing=false"
-										username="${database.username}" />
-							]]>
-						</replacevalue>
-					</replace>
 				</then>
 			</if>
 		</sequential>
@@ -1876,7 +1877,7 @@ ${custom.properties}</echo>
 		</if>
 
 		<if>
-			<equals arg1="${database.jndi}" arg2="true" />
+			<equals arg1="${database.jndi.enabled}" arg2="true" />
 			<then>
 				<replace file="portal-impl/src/portal-ext.properties">
 					<replacetoken>jdbc.default.jndi.name=</replacetoken>
@@ -3591,9 +3592,9 @@ if (ppstate.equals("normal")) {
 		</if>
 
 		<if>
-			<equals arg1="${database.jndi}" arg2="true" />
+			<equals arg1="${database.jndi.enabled}" arg2="true" />
 			<then>
-				<prepare-jndi />
+				<prepare-database-jndi />
 			</then>
 		</if>
 

@@ -251,6 +251,17 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		return fieldsDisplayField;
 	}
 
+	protected Value createLocalizedValue(
+		String enValue, String ptValue, Locale defaultLocale) {
+
+		Value value = new LocalizedValue(defaultLocale);
+
+		value.addString(LocaleUtil.BRAZIL, ptValue);
+		value.addString(LocaleUtil.US, enValue);
+
+		return value;
+	}
+
 	protected Document createSampleDocument() {
 		Document document = createEmptyDocument();
 

@@ -21,7 +21,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
-import com.liferay.portlet.dynamicdatamapping.model.Value;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
@@ -307,17 +306,6 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 		Assert.assertEquals(
 			"Title_INSTANCE_rztm,Content_INSTANCE_ovho",
 			fieldsDisplayField.getValue());
-	}
-
-	protected Value createLocalizedValue(
-		String enValue, String ptValue, Locale defaultLocale) {
-
-		Value value = new LocalizedValue(defaultLocale);
-
-		value.addString(LocaleUtil.BRAZIL, ptValue);
-		value.addString(LocaleUtil.US, enValue);
-
-		return value;
 	}
 
 	@Override

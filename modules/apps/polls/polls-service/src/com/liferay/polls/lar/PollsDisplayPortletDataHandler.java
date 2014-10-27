@@ -100,7 +100,7 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 		portletDataContext.addPortletPermissions(PollsPermission.RESOURCE_NAME);
 
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
-			portletDataContext, portletId, (PollsQuestionImpl)question);
+			portletDataContext, portletId, question);
 
 		for (PollsChoice choice : question.getChoices()) {
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(

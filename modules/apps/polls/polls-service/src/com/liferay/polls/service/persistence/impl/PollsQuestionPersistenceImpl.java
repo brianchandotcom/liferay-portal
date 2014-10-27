@@ -16,11 +16,10 @@ package com.liferay.polls.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.google.common.base.Optional;
 import com.liferay.polls.exception.NoSuchQuestionException;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.model.impl.PollsQuestionImpl;
-import com.liferay.polls.model.impl.PollsQuestionModelImpl;
+import com.liferay.polls.model.PollsQuestionModelImpl;
 import com.liferay.polls.service.persistence.PollsQuestionPersistence;
 
 import com.liferay.portal.kernel.CompanyProvider;
@@ -70,7 +69,6 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see PollsQuestionPersistence
- * @see PollsQuestionUtil
  * @generated
  */
 @ProviderType
@@ -133,7 +131,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 * Returns a range of all the polls questions where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.polls.model.impl.PollsQuestionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.polls.model.PollsQuestionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -150,7 +148,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 * Returns an ordered range of all the polls questions where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.polls.model.impl.PollsQuestionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.polls.model.PollsQuestionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -182,8 +180,8 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 
 		if ((list != null) && !list.isEmpty()) {
 			for (PollsQuestion pollsQuestion : list) {
-				PollsQuestionImpl pollsQuestionImpl =
-					(PollsQuestionImpl)pollsQuestion;
+				PollsQuestion pollsQuestionImpl =
+					(PollsQuestion)pollsQuestion;
 
 				if (!Validator.equals(uuid, pollsQuestionImpl.getUuid())) {
 					list = null;
@@ -280,7 +278,6 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching polls question
-	 * @throws com.liferay.polls.NoSuchQuestionException if a matching polls question could not be found
 	 */
 	@Override
 	public PollsQuestion findByUuid_First(String uuid,
@@ -329,7 +326,6 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching polls question
-	 * @throws com.liferay.polls.NoSuchQuestionException if a matching polls question could not be found
 	 */
 	@Override
 	public PollsQuestion findByUuid_Last(String uuid,
@@ -386,7 +382,6 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next polls question
-	 * @throws com.liferay.polls.NoSuchQuestionException if a polls question with the primary key could not be found
 	 */
 	@Override
 	public PollsQuestion[] findByUuid_PrevAndNext(long questionId, String uuid,
@@ -399,7 +394,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 		try {
 			session = openSession();
 
-			PollsQuestion[] array = new PollsQuestionImpl[3];
+			PollsQuestion[] array = new PollsQuestion[3];
 
 			array[0] = getByUuid_PrevAndNext(session, pollsQuestion, uuid,
 					orderByComparator, true);
@@ -632,12 +627,10 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 			new String[] { String.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns the polls question where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.polls.NoSuchQuestionException} if it could not be found.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @return the matching polls question
-	 * @throws com.liferay.polls.NoSuchQuestionException if a matching polls question could not be found
 	 */
 	@Override
 	public PollsQuestion findByUUID_G(String uuid, long groupId)
@@ -753,8 +746,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 						finderArgs, list);
 				}
 				else {
-					PollsQuestionImpl pollsQuestion =
-						(PollsQuestionImpl)list.get(0);
+					PollsQuestion pollsQuestion = list.get(0);
 
 					result = pollsQuestion;
 
@@ -918,7 +910,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 * Returns a range of all the polls questions where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.polls.model.impl.PollsQuestionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.polls.model.PollsQuestionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -937,7 +929,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 * Returns an ordered range of all the polls questions where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.polls.model.impl.PollsQuestionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.polls.model.PollsQuestionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -975,8 +967,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 		if ((list != null) && !list.isEmpty()) {
 			for (PollsQuestion pollsQuestion : list) {
 
-				PollsQuestionImpl pollsQuestionImpl =
-					(PollsQuestionImpl)pollsQuestion;
+				PollsQuestion pollsQuestionImpl = (PollsQuestion)pollsQuestion;
 
 				if (!Validator.equals(uuid, pollsQuestionImpl.getUuid()) ||
 						(companyId != pollsQuestionImpl.getCompanyId())) {
@@ -1079,7 +1070,6 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching polls question
-	 * @throws com.liferay.polls.NoSuchQuestionException if a matching polls question could not be found
 	 */
 	@Override
 	public PollsQuestion findByUuid_C_First(String uuid, long companyId,
@@ -1135,7 +1125,6 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching polls question
-	 * @throws com.liferay.polls.NoSuchQuestionException if a matching polls question could not be found
 	 */
 	@Override
 	public PollsQuestion findByUuid_C_Last(String uuid, long companyId,
@@ -1198,7 +1187,6 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next polls question
-	 * @throws com.liferay.polls.NoSuchQuestionException if a polls question with the primary key could not be found
 	 */
 	@Override
 	public PollsQuestion[] findByUuid_C_PrevAndNext(long questionId,
@@ -1212,7 +1200,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 		try {
 			session = openSession();
 
-			PollsQuestion[] array = new PollsQuestionImpl[3];
+			PollsQuestion[] array = new PollsQuestion[3];
 
 			array[0] = getByUuid_C_PrevAndNext(session, pollsQuestion, uuid,
 					companyId, orderByComparator, true);
@@ -1481,7 +1469,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 * Returns a range of all the polls questions where groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.polls.model.impl.PollsQuestionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.polls.model.PollsQuestionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -1498,7 +1486,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 * Returns an ordered range of all the polls questions where groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.polls.model.impl.PollsQuestionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.polls.model.PollsQuestionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -1531,8 +1519,8 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 		if ((list != null) && !list.isEmpty()) {
 			for (PollsQuestion pollsQuestion : list) {
 
-				PollsQuestionImpl pollsQuestionImpl =
-					(PollsQuestionImpl)pollsQuestion;
+				PollsQuestion pollsQuestionImpl =
+					(PollsQuestion)pollsQuestion;
 
 				if ((groupId != pollsQuestionImpl.getGroupId())) {
 					list = null;
@@ -1615,7 +1603,6 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching polls question
-	 * @throws com.liferay.polls.NoSuchQuestionException if a matching polls question could not be found
 	 */
 	@Override
 	public PollsQuestion findByGroupId_First(long groupId,
@@ -1666,7 +1653,6 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching polls question
-	 * @throws com.liferay.polls.NoSuchQuestionException if a matching polls question could not be found
 	 */
 	@Override
 	public PollsQuestion findByGroupId_Last(long groupId,
@@ -1724,7 +1710,6 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next polls question
-	 * @throws com.liferay.polls.NoSuchQuestionException if a polls question with the primary key could not be found
 	 */
 	@Override
 	public PollsQuestion[] findByGroupId_PrevAndNext(long questionId,
@@ -1737,7 +1722,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 		try {
 			session = openSession();
 
-			PollsQuestion[] array = new PollsQuestionImpl[3];
+			PollsQuestion[] array = new PollsQuestion[3];
 
 			array[0] = getByGroupId_PrevAndNext(session, pollsQuestion,
 					groupId, orderByComparator, true);
@@ -1878,7 +1863,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 * Returns a range of all the polls questions that the user has permission to view where groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.polls.model.impl.PollsQuestionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.polls.model.PollsQuestionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -1896,7 +1881,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 * Returns an ordered range of all the polls questions that the user has permissions to view where groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.polls.model.impl.PollsQuestionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.polls.model.PollsQuestionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -1994,7 +1979,6 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next polls question
-	 * @throws com.liferay.polls.NoSuchQuestionException if a polls question with the primary key could not be found
 	 */
 	@Override
 	public PollsQuestion[] filterFindByGroupId_PrevAndNext(long questionId,
@@ -2012,7 +1996,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 		try {
 			session = openSession();
 
-			PollsQuestion[] array = new PollsQuestionImpl[3];
+			PollsQuestion[] array = new PollsQuestion[3];
 
 			array[0] = filterGetByGroupId_PrevAndNext(session, pollsQuestion,
 					groupId, orderByComparator, true);
@@ -2302,7 +2286,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 			PollsQuestionImpl.class, pollsQuestion.getPrimaryKey(),
 			pollsQuestion);
 
-		PollsQuestionImpl pollsQuestionImpl = (PollsQuestionImpl)pollsQuestion;
+		PollsQuestion pollsQuestionImpl = (PollsQuestion)pollsQuestion;
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
@@ -2384,7 +2368,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	}
 
 	protected void cacheUniqueFindersCache(PollsQuestion pollsQuestion) {
-		PollsQuestionImpl pollsQuestionImpl = (PollsQuestionImpl)pollsQuestion;
+		PollsQuestion pollsQuestionImpl = (PollsQuestion)pollsQuestion;
 
 		if (pollsQuestion.isNew()) {
 			Object[] args = new Object[] {
@@ -2442,12 +2426,11 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	/**
 	 * Creates a new polls question with the primary key. Does not add the polls question to the database.
 	 *
-	 * @param questionId the primary key for the new polls question
 	 * @return the new polls question
 	 */
 	@Override
 	public PollsQuestion create() {
-		PollsQuestionImpl pollsQuestionImpl = new PollsQuestionImpl();
+		PollsQuestion pollsQuestionImpl = new PollsQuestion();
 
 		Company company = companyProvider.get();
 
@@ -2472,7 +2455,6 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 *
 	 * @param questionId the primary key of the polls question
 	 * @return the polls question that was removed
-	 * @throws com.liferay.polls.NoSuchQuestionException if a polls question with the primary key could not be found
 	 */
 	@Override
 	public PollsQuestion remove(long questionId) throws NoSuchQuestionException {
@@ -2484,7 +2466,6 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 *
 	 * @param primaryKey the primary key of the polls question
 	 * @return the polls question that was removed
-	 * @throws com.liferay.polls.NoSuchQuestionException if a polls question with the primary key could not be found
 	 */
 	@Override
 	public PollsQuestion remove(Serializable primaryKey)
@@ -2664,13 +2645,13 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	}
 
 	protected PollsQuestion toUnwrappedModel(PollsQuestion pollsQuestion) {
-		if (pollsQuestion instanceof PollsQuestionImpl) {
+		if (pollsQuestion instanceof PollsQuestion) {
 			return pollsQuestion;
 		}
 
-		PollsQuestionImpl otherPollsQuestion = (PollsQuestionImpl)pollsQuestion;
+		PollsQuestion otherPollsQuestion = pollsQuestion;
 
-		PollsQuestionImpl pollsQuestionImpl = new PollsQuestionImpl();
+		PollsQuestion pollsQuestionImpl = new PollsQuestion();
 
 		pollsQuestionImpl.setNew(otherPollsQuestion.isNew());
 		pollsQuestionImpl.setPrimaryKey(otherPollsQuestion.getPrimaryKey());
@@ -2697,7 +2678,6 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 *
 	 * @param primaryKey the primary key of the polls question
 	 * @return the polls question
-	 * @throws com.liferay.polls.NoSuchQuestionException if a polls question with the primary key could not be found
 	 */
 	@Override
 	public PollsQuestion findByPrimaryKey(Serializable primaryKey)
@@ -2717,11 +2697,9 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	}
 
 	/**
-	 * Returns the polls question with the primary key or throws a {@link com.liferay.polls.NoSuchQuestionException} if it could not be found.
 	 *
 	 * @param questionId the primary key of the polls question
 	 * @return the polls question
-	 * @throws com.liferay.polls.NoSuchQuestionException if a polls question with the primary key could not be found
 	 */
 	@Override
 	public PollsQuestion findByPrimaryKey(long questionId)
@@ -2793,7 +2771,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 			return Collections.emptyMap();
 		}
 
-		Map<Serializable, PollsQuestion> map = new HashMap<Serializable, PollsQuestion>();
+		Map<Serializable, PollsQuestion> map = new HashMap<>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
@@ -2892,7 +2870,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 * Returns a range of all the polls questions.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.polls.model.impl.PollsQuestionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.polls.model.PollsQuestionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of polls questions
@@ -2908,7 +2886,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 * Returns an ordered range of all the polls questions.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.polls.model.impl.PollsQuestionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.polls.model.PollsQuestionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of polls questions
@@ -3086,7 +3064,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"
 			});
-	private static final PollsQuestion _nullPollsQuestion = new PollsQuestionImpl() {
+	private static final PollsQuestion _nullPollsQuestion = new PollsQuestion() {
 			@Override
 			public Object clone() {
 				return this;

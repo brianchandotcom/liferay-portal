@@ -16,8 +16,21 @@ package com.liferay.polls.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.polls.exception.QuestionChoiceException;
+import com.liferay.polls.exception.QuestionDescriptionException;
+import com.liferay.polls.exception.QuestionTitleException;
+import com.liferay.polls.service.PollsChoiceLocalServiceUtil;
+import com.liferay.polls.service.PollsVoteLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.service.ServiceContext;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * The extended model interface for the PollsQuestion service. Represents a row in the &quot;PollsQuestion&quot; database table, with each column mapped to a property of this class.
@@ -25,38 +38,117 @@ import com.liferay.portal.model.PersistedModel;
  * @author Brian Wing Shun Chan
  * @see PollsQuestionModel
  * @see com.liferay.polls.model.impl.PollsQuestionImpl
- * @see com.liferay.polls.model.impl.PollsQuestionModelImpl
- * @generated
+ * @see PollsQuestionModelImpl
  */
 @ProviderType
-public interface PollsQuestion extends PollsQuestionModel, PersistedModel {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.polls.model.impl.PollsQuestionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
-	public boolean addChoice(PollsChoice pollsChoice);
+public class PollsQuestion extends PollsQuestionModelImpl implements PollsQuestionModel {
+	private String[] _groupPermissions;
+	private String[] _guestPermissions;
 
-	public PollsChoice createChoice();
+	public PollsQuestion() {
+	}
 
-	public java.util.List<com.liferay.polls.model.PollsChoice> getChoices();
+	public boolean addChoice(PollsChoice pollsChoice) {
+		_addedChoices.add(pollsChoice);
 
-	public java.util.List<com.liferay.polls.model.PollsVote> getVotes();
+		return true;
+	}
 
-	public java.util.List<com.liferay.polls.model.PollsVote> getVotes(
-		int start, int end);
+	public List<PollsChoice> getChoices() {
+		return PollsChoiceLocalServiceUtil.getChoices(getQuestionId());
+	}
 
-	public int getVotesCount();
+	public List<PollsVote> getVotes() {
+		return PollsVoteLocalServiceUtil.getQuestionVotes(
+			getQuestionId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
 
-	public boolean isExpired();
+	public List<PollsVote> getVotes(int start, int end) {
+		return PollsVoteLocalServiceUtil.getQuestionVotes(
+			getQuestionId(), start, end);
+	}
+
+	public int getVotesCount() {
+		return PollsVoteLocalServiceUtil.getQuestionVotesCount(getQuestionId());
+	}
+
+	public boolean isExpired() {
+		Date expirationDate = getExpirationDate();
+
+		if ((expirationDate != null) && expirationDate.before(new Date())) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 
 	public boolean isExpired(
-		com.liferay.portal.service.ServiceContext serviceContext,
-		java.util.Date defaultCreateDate);
+		ServiceContext serviceContext, Date defaultCreateDate) {
 
-	public void setGroupPermissions(String ... permissions);
+		Date expirationDate = getExpirationDate();
 
-	public void setGuestPermissions(String ... permissions);
+		if (expirationDate == null) {
+			return false;
+		}
 
-	public void validate() throws PortalException;
+		Date createDate = serviceContext.getCreateDate(defaultCreateDate);
+
+		if (createDate.after(expirationDate)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public void setGroupPermissions(String... permissions) {
+		_groupPermissions = permissions;
+	}
+
+	public void setGuestPermissions(String... permissions) {
+		_guestPermissions = permissions;
+	}
+
+	public String[] getGroupPermissions() {
+		return _groupPermissions;
+	}
+
+	public String[] getGuestPermissions() {
+		return _guestPermissions;
+	}
+
+	public void validate() throws PortalException {
+
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		String title = getTitleMap().get(locale);
+
+		if (Validator.isNull(title)) {
+			throw new QuestionTitleException();
+		}
+
+		String description = getDescriptionMap().get(locale);
+
+		if (Validator.isNull(description)) {
+			throw new QuestionDescriptionException();
+		}
+
+		List<PollsChoice> choices = new ArrayList<>(getChoices());
+		choices.addAll(_addedChoices);
+
+		if ((choices.size() < 2)) {
+			throw new QuestionChoiceException();
+		}
+
+		for (PollsChoice choice : choices) {
+			String choiceDescription = choice.getDescription(locale);
+
+			if (Validator.isNull(choiceDescription)) {
+				throw new QuestionChoiceException();
+			}
+		}
+	}
+
+	private List<PollsChoice> _addedChoices = new ArrayList<>();
 }

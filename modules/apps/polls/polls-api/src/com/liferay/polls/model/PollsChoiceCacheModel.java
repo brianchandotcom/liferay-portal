@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.polls.model.impl;
+package com.liferay.polls.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.polls.model.PollsQuestion;
+import com.liferay.polls.model.PollsChoice;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -30,23 +30,23 @@ import java.io.ObjectOutput;
 import java.util.Date;
 
 /**
- * The cache model class for representing PollsQuestion in entity cache.
+ * The cache model class for representing PollsChoice in entity cache.
  *
  * @author Brian Wing Shun Chan
- * @see PollsQuestion
+ * @see PollsChoice
  * @generated
  */
 @ProviderType
-public class PollsQuestionCacheModel implements CacheModel<PollsQuestion>,
+public class PollsChoiceCacheModel implements CacheModel<PollsChoice>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
-		sb.append(", questionId=");
-		sb.append(questionId);
+		sb.append(", choiceId=");
+		sb.append(choiceId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -59,103 +59,88 @@ public class PollsQuestionCacheModel implements CacheModel<PollsQuestion>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", title=");
-		sb.append(title);
+		sb.append(", questionId=");
+		sb.append(questionId);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
-		sb.append(", expirationDate=");
-		sb.append(expirationDate);
-		sb.append(", lastVoteDate=");
-		sb.append(lastVoteDate);
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	@Override
-	public PollsQuestion toEntityModel() {
-		PollsQuestionImpl pollsQuestionImpl = new PollsQuestionImpl();
+	public PollsChoice toEntityModel() {
+		PollsChoice pollsChoiceImpl = new PollsChoice();
 
 		if (uuid == null) {
-			pollsQuestionImpl.setUuid(StringPool.BLANK);
+			pollsChoiceImpl.setUuid(StringPool.BLANK);
 		}
 		else {
-			pollsQuestionImpl.setUuid(uuid);
+			pollsChoiceImpl.setUuid(uuid);
 		}
 
-		pollsQuestionImpl.setQuestionId(questionId);
-		pollsQuestionImpl.setGroupId(groupId);
-		pollsQuestionImpl.setCompanyId(companyId);
-		pollsQuestionImpl.setUserId(userId);
+		pollsChoiceImpl.setChoiceId(choiceId);
+		pollsChoiceImpl.setGroupId(groupId);
+		pollsChoiceImpl.setCompanyId(companyId);
+		pollsChoiceImpl.setUserId(userId);
 
 		if (userName == null) {
-			pollsQuestionImpl.setUserName(StringPool.BLANK);
+			pollsChoiceImpl.setUserName(StringPool.BLANK);
 		}
 		else {
-			pollsQuestionImpl.setUserName(userName);
+			pollsChoiceImpl.setUserName(userName);
 		}
 
 		if (createDate == Long.MIN_VALUE) {
-			pollsQuestionImpl.setCreateDate(null);
+			pollsChoiceImpl.setCreateDate(null);
 		}
 		else {
-			pollsQuestionImpl.setCreateDate(new Date(createDate));
+			pollsChoiceImpl.setCreateDate(new Date(createDate));
 		}
 
 		if (modifiedDate == Long.MIN_VALUE) {
-			pollsQuestionImpl.setModifiedDate(null);
+			pollsChoiceImpl.setModifiedDate(null);
 		}
 		else {
-			pollsQuestionImpl.setModifiedDate(new Date(modifiedDate));
+			pollsChoiceImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		if (title == null) {
-			pollsQuestionImpl.setTitle(StringPool.BLANK);
+		pollsChoiceImpl.setQuestionId(questionId);
+
+		if (name == null) {
+			pollsChoiceImpl.setName(StringPool.BLANK);
 		}
 		else {
-			pollsQuestionImpl.setTitle(title);
+			pollsChoiceImpl.setName(name);
 		}
 
 		if (description == null) {
-			pollsQuestionImpl.setDescription(StringPool.BLANK);
+			pollsChoiceImpl.setDescription(StringPool.BLANK);
 		}
 		else {
-			pollsQuestionImpl.setDescription(description);
+			pollsChoiceImpl.setDescription(description);
 		}
 
-		if (expirationDate == Long.MIN_VALUE) {
-			pollsQuestionImpl.setExpirationDate(null);
-		}
-		else {
-			pollsQuestionImpl.setExpirationDate(new Date(expirationDate));
-		}
+		pollsChoiceImpl.resetOriginalValues();
 
-		if (lastVoteDate == Long.MIN_VALUE) {
-			pollsQuestionImpl.setLastVoteDate(null);
-		}
-		else {
-			pollsQuestionImpl.setLastVoteDate(new Date(lastVoteDate));
-		}
-
-		pollsQuestionImpl.resetOriginalValues();
-
-		return pollsQuestionImpl;
+		return pollsChoiceImpl;
 	}
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
-		questionId = objectInput.readLong();
+		choiceId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		title = objectInput.readUTF();
+		questionId = objectInput.readLong();
+		name = objectInput.readUTF();
 		description = objectInput.readUTF();
-		expirationDate = objectInput.readLong();
-		lastVoteDate = objectInput.readLong();
 	}
 
 	@Override
@@ -168,7 +153,7 @@ public class PollsQuestionCacheModel implements CacheModel<PollsQuestion>,
 			objectOutput.writeUTF(uuid);
 		}
 
-		objectOutput.writeLong(questionId);
+		objectOutput.writeLong(choiceId);
 		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
@@ -182,12 +167,13 @@ public class PollsQuestionCacheModel implements CacheModel<PollsQuestion>,
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+		objectOutput.writeLong(questionId);
 
-		if (title == null) {
+		if (name == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(title);
+			objectOutput.writeUTF(name);
 		}
 
 		if (description == null) {
@@ -196,21 +182,17 @@ public class PollsQuestionCacheModel implements CacheModel<PollsQuestion>,
 		else {
 			objectOutput.writeUTF(description);
 		}
-
-		objectOutput.writeLong(expirationDate);
-		objectOutput.writeLong(lastVoteDate);
 	}
 
 	public String uuid;
-	public long questionId;
+	public long choiceId;
 	public long groupId;
 	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public String title;
+	public long questionId;
+	public String name;
 	public String description;
-	public long expirationDate;
-	public long lastVoteDate;
 }

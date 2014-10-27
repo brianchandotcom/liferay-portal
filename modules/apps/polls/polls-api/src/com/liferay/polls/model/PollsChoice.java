@@ -16,8 +16,11 @@ package com.liferay.polls.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.polls.exception.QuestionChoiceException;
+import com.liferay.polls.service.PollsVoteLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Accessor;
-import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * The extended model interface for the PollsChoice service. Represents a row in the &quot;PollsChoice&quot; database table, with each column mapped to a property of this class.
@@ -25,11 +28,11 @@ import com.liferay.portal.model.PersistedModel;
  * @author Brian Wing Shun Chan
  * @see PollsChoiceModel
  * @see com.liferay.polls.model.impl.PollsChoiceImpl
- * @see com.liferay.polls.model.impl.PollsChoiceModelImpl
+ * @see PollsChoiceModelImpl
  * @generated
  */
 @ProviderType
-public interface PollsChoice extends PollsChoiceModel, PersistedModel {
+public class PollsChoice extends PollsChoiceModelImpl implements PollsChoiceModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -54,6 +57,17 @@ public interface PollsChoice extends PollsChoiceModel, PersistedModel {
 		}
 	};
 
-	public int getVotesCount();
+	public int getVotesCount() {
+		return PollsVoteLocalServiceUtil.getChoiceVotesCount(getChoiceId());
+	}
+
+
+	public void validate() throws PortalException {
+		if (Validator.isNull(getName()) || Validator.isNull(getDescription())) {
+			throw new QuestionChoiceException();
+		}
+	}
+
+
 
 }

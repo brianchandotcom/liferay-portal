@@ -55,4 +55,7 @@
 	</osgi:service>
 	<bean id="com.liferay.polls.service.persistence.PollsVotePersistence" class="com.liferay.polls.service.persistence.impl.PollsVotePersistenceImpl" parent="basePersistence" />
 	<osgi:service ref="com.liferay.polls.service.persistence.PollsVotePersistence" interface="com.liferay.polls.service.persistence.PollsVotePersistence" />
+
+	<bean id="com.liferay.polls.repository.PollsQuestionRepository" class="com.liferay.polls.repository.PollsQuestionRepository" />
+	<osgi:service ref="com.liferay.polls.repository.PollsQuestionRepository" interface="com.liferay.polls.repository.PollsQuestionRepository" />
 </beans>

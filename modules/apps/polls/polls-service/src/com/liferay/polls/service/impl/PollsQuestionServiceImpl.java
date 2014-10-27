@@ -16,22 +16,19 @@ package com.liferay.polls.service.impl;
 
 import com.liferay.polls.exception.QuestionExpirationDateException;
 import com.liferay.polls.model.PollsChoice;
-import com.liferay.polls.model.PollsChoiceModel;
 import com.liferay.polls.model.PollsQuestion;
+import com.liferay.polls.repository.PollsQuestionRepository;
 import com.liferay.polls.service.base.PollsQuestionServiceBaseImpl;
 import com.liferay.polls.service.permission.PollsPermission;
 import com.liferay.polls.service.permission.PollsQuestionPermission;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -71,14 +68,14 @@ public class PollsQuestionServiceImpl extends PollsQuestionServiceBaseImpl {
 		}
 
 		for (Map<String, Object> choiceMap : choices) {
-			PollsChoice choice = pollsQuestion.createChoice();
+			PollsChoice choice = new PollsChoice();
 
 			choice.setModelAttributes(choiceMap);
 
 			pollsQuestion.addChoice(choice);
 		}
 
-		pollsQuestion.persist();
+		_pollsQuestionRepository.persist(pollsQuestion);
 
 		return pollsQuestion;
 	}
@@ -143,7 +140,7 @@ public class PollsQuestionServiceImpl extends PollsQuestionServiceBaseImpl {
 			PollsChoice choice;
 
 			if (index == -1) {
-				choice = pollsQuestion.createChoice();
+				choice = new PollsChoice();
 
 				pollsQuestion.addChoice(choice);
 			}
@@ -153,15 +150,19 @@ public class PollsQuestionServiceImpl extends PollsQuestionServiceBaseImpl {
 
 			choice.setModelAttributes(choiceMap);
 
-			choice.persist();
+			//[[*]] maybe the persist(question) actually saves choices for us now.
+			_pollsQuestionRepository.persist(choice);
 		}
 
-		pollsQuestion.persist();
+		_pollsQuestionRepository.persist(pollsQuestion);
 
 		return pollsQuestion;
 	}
 	
 	@BeanReference(type = PollsQuestionPermission.class)
 	private PollsQuestionPermission _pollsQuestionPermission;
+
+	@BeanReference(type = PollsQuestionRepository.class)
+	private PollsQuestionRepository _pollsQuestionRepository;
 
 }

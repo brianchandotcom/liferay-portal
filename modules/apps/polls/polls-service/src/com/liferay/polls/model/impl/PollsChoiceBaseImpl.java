@@ -16,8 +16,7 @@ package com.liferay.polls.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.polls.model.PollsChoice;
-import com.liferay.polls.service.PollsChoiceLocalServiceUtil;
+import com.liferay.polls.model.PollsChoiceModelImpl;
 
 /**
  * The extended model base implementation for the PollsChoice service. Represents a row in the &quot;PollsChoice&quot; database table, with each column mapped to a property of this class.
@@ -32,8 +31,7 @@ import com.liferay.polls.service.PollsChoiceLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class PollsChoiceBaseImpl extends PollsChoiceModelImpl
-	implements PollsChoice {
+public abstract class PollsChoiceBaseImpl extends PollsChoiceModelImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

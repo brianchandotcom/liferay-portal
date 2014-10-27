@@ -36,49 +36,8 @@ public class PollsChoiceImpl extends PollsChoiceBaseImpl {
 	public PollsChoiceImpl() {
 	}
 
-	@Override
 	public int getVotesCount() {
 		return PollsVoteLocalServiceUtil.getChoiceVotesCount(getChoiceId());
-	}
-
-	public void persist() {
-		try {
-			validate();
-		} catch (PortalException pe) {
-			throw new IllegalStateException(pe);
-		}
-		try {
-			TransactionAttribute.Builder builder =
-				new TransactionAttribute.Builder();
-
-			TransactionAttribute transactionAttribute = builder.setPropagation(
-				Propagation.SUPPORTS).build();
-
-			TransactionInvokerUtil.invoke(
-				transactionAttribute, new Callable<Void>() {
-
-					@Override
-					public Void call() throws Exception {
-						Date now = new Date();
-
-						if (isNew()) {
-							setCreateDate(now);
-							setPrimaryKey(CounterLocalServiceUtil.increment());
-						}
-
-						setModifiedDate(now);
-
-						PollsChoiceUtil.update(PollsChoiceImpl.this);
-
-						return null;
-					}
-				}
-			);
-		}
-		catch (Throwable throwable) {
-			throw new RuntimeException(throwable);
-		}
-
 	}
 
 	public void validate() throws PortalException {

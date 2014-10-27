@@ -52,46 +52,30 @@ public class PollsQuestionImpl extends PollsQuestionBaseImpl {
 	public PollsQuestionImpl() {
 	}
 
-	@Override
 	public boolean addChoice(PollsChoice pollsChoice) {
 		_addedChoices.add(pollsChoice);
 
 		return true;
 	}
 
-	@Override
-	public PollsChoice createChoice() {
-		PollsChoiceImpl pollsChoiceImpl =
-			(PollsChoiceImpl) PollsChoiceUtil.create();
-
-		pollsChoiceImpl.setQuestionId(getQuestionId());
-
-		return pollsChoiceImpl;
-	}
-
-	@Override
 	public List<PollsChoice> getChoices() {
 		return PollsChoiceLocalServiceUtil.getChoices(getQuestionId());
 	}
 
-	@Override
 	public List<PollsVote> getVotes() {
 		return PollsVoteLocalServiceUtil.getQuestionVotes(
 			getQuestionId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
-	@Override
 	public List<PollsVote> getVotes(int start, int end) {
 		return PollsVoteLocalServiceUtil.getQuestionVotes(
 			getQuestionId(), start, end);
 	}
 
-	@Override
 	public int getVotesCount() {
 		return PollsVoteLocalServiceUtil.getQuestionVotesCount(getQuestionId());
 	}
 
-	@Override
 	public boolean isExpired() {
 		Date expirationDate = getExpirationDate();
 
@@ -103,7 +87,6 @@ public class PollsQuestionImpl extends PollsQuestionBaseImpl {
 		}
 	}
 
-	@Override
 	public boolean isExpired(
 		ServiceContext serviceContext, Date defaultCreateDate) {
 
@@ -123,91 +106,18 @@ public class PollsQuestionImpl extends PollsQuestionBaseImpl {
 		}
 	}
 
-	@Override
 	public void persist() {
-		try {
-			validate();
-		} catch (PortalException pe) {
-			throw new IllegalStateException(pe);
-		}
-
-		try {
-			TransactionAttribute.Builder builder =
-				new TransactionAttribute.Builder();
-
-			TransactionAttribute transactionAttribute = builder.setPropagation(
-				Propagation.SUPPORTS).build();
-
-			final Date now = new Date();
-
-			TransactionInvokerUtil.invoke(
-				transactionAttribute, new Callable<Void>() {
-
-				@Override
-				public Void call() throws Exception {
-					if (isNew()) {
-						setCreateDate(now);
-						setPrimaryKey(CounterLocalServiceUtil.increment());
-
-						PollsQuestionUtil.update(PollsQuestionImpl.this);
-
-						// Resources
-
-						boolean defaultGroupPermissions =
-							_groupPermissions == null;
-
-						boolean defaultGuestPermissions =
-							_guestPermissions == null;
-
-						if (defaultGroupPermissions ||
-							defaultGuestPermissions) {
-
-							PollsQuestionLocalServiceUtil.addQuestionResources(
-								PollsQuestionImpl.this, defaultGroupPermissions,
-								defaultGuestPermissions);
-						}
-						else {
-							PollsQuestionLocalServiceUtil.addQuestionResources(
-								PollsQuestionImpl.this, _groupPermissions,
-								_guestPermissions);
-						}
-					}
-
-					setModifiedDate(now);
-
-					if (!_addedChoices.isEmpty()) {
-						for (PollsChoice choice : _addedChoices) {
-							choice.setQuestionId(getQuestionId());
-
-							choice.persist();
-						}
-					}
-
-					PollsQuestionUtil.update(PollsQuestionImpl.this);
-
-					return null;
-				};
-			});
-		}
-		catch (Throwable throwable) {
-			throw new RuntimeException(throwable);
-		}
-
-		_addedChoices.clear();
-		setNew(false);
 	}
 
-	@Override
+
 	public void setGroupPermissions(String... permissions) {
 		_groupPermissions = permissions;
 	}
 
-	@Override
 	public void setGuestPermissions(String... permissions) {
 		_guestPermissions = permissions;
 	}
 
-	@Override
 	public void validate() throws PortalException {
 
 		Locale locale = LocaleUtil.getSiteDefault();

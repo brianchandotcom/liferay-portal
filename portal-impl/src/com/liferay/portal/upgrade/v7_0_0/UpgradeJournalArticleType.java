@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -218,7 +216,11 @@ public class UpgradeJournalArticleType extends UpgradeBaseJournal {
 			return;
 		}
 
-		String[] types = PropsUtil.getArray(PropsKeys.JOURNAL_ARTICLE_TYPES);
+		List<String> types = getArticleTypes();
+
+		if (types.size() <= 0) {
+			return;
+		}
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -278,6 +280,32 @@ public class UpgradeJournalArticleType extends UpgradeBaseJournal {
 				updateArticles(
 					companyId, journalArticleTypesToAssetCategoryIds);
 			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected List<String> getArticleTypes() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select distinct type_ from JournalArticle");
+
+			rs = ps.executeQuery();
+
+			List<String> types = new ArrayList<String>();
+
+			while (rs.next()) {
+				types.add(rs.getString("type_"));
+			}
+
+			return types;
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);

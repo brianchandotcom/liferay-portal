@@ -24,6 +24,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
+import com.liferay.wiki.configuration.WikiPropsValues;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
@@ -138,9 +139,8 @@ public class WikiTestUtil {
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 
 			WikiPage page = WikiPageLocalServiceUtil.addPage(
-				userId, nodeId, title, WikiPageConstants.VERSION_DEFAULT,
-				content, "Summary", true, WikiPageConstants.DEFAULT_FORMAT,
-				false, parentTitle, null, serviceContext);
+				userId, nodeId, title, content, "Summary", false,
+				serviceContext);
 
 			if (approved) {
 				page = updateStatus(page, serviceContext);

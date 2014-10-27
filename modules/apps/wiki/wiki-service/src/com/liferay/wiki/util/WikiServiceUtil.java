@@ -53,6 +53,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.wiki.configuration.WikiPropsKeys;
 import com.liferay.wiki.engines.WikiEngine;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.exception.WikiFormatException;
@@ -656,7 +657,7 @@ public class WikiServiceUtil {
 
 	private String _getEditPage(String format) {
 		return PropsUtil.get(
-			PropsKeys.WIKI_FORMATS_EDIT_PAGE, new Filter(format));
+			WikiPropsKeys.FORMATS_EDIT_PAGE, new Filter(format));
 	}
 
 	private WikiEngine _getEngine(String format) throws WikiFormatException {
@@ -675,7 +676,7 @@ public class WikiServiceUtil {
 
 			try {
 				String engineClassName = PropsUtil.get(
-					PropsKeys.WIKI_FORMATS_ENGINE, new Filter(format));
+					WikiPropsKeys.FORMATS_ENGINE, new Filter(format));
 
 				if (engineClassName == null) {
 					throw new WikiFormatException(format);
@@ -688,11 +689,11 @@ public class WikiServiceUtil {
 
 				engine.setInterWikiConfiguration(
 					_readConfigurationFile(
-						PropsKeys.WIKI_FORMATS_CONFIGURATION_INTERWIKI,
+						WikiPropsKeys.FORMATS_CONFIGURATION_INTERWIKI,
 						format));
 				engine.setMainConfiguration(
 					_readConfigurationFile(
-						PropsKeys.WIKI_FORMATS_CONFIGURATION_MAIN, format));
+						WikiPropsKeys.FORMATS_CONFIGURATION_MAIN, format));
 
 				_engines.put(format, engine);
 
@@ -706,12 +707,12 @@ public class WikiServiceUtil {
 
 	private String _getHelpPage(String format) {
 		return PropsUtil.get(
-			PropsKeys.WIKI_FORMATS_HELP_PAGE, new Filter(format));
+			WikiPropsKeys.FORMATS_HELP_PAGE, new Filter(format));
 	}
 
 	private String _getHelpURL(String format) {
 		return PropsUtil.get(
-			PropsKeys.WIKI_FORMATS_HELP_URL, new Filter(format));
+			WikiPropsKeys.FORMATS_HELP_URL, new Filter(format));
 	}
 
 	private Map<String, Boolean> _getLinks(WikiPage page)

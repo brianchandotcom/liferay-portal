@@ -16,7 +16,8 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.wiki.configuration.WikiSettings" %><%@
+<%@ page import="com.liferay.wiki.configuration.WikiPropsValues" %><%@
+page import="com.liferay.wiki.configuration.WikiSettings" %><%@
 page import="com.liferay.wiki.constants.WikiPortletKeys" %><%@
 page import="com.liferay.wiki.constants.WikiWebKeys" %><%@
 page import="com.liferay.wiki.exception.DuplicateNodeNameException" %><%@

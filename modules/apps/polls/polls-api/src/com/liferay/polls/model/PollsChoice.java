@@ -35,10 +35,19 @@ public class PollsChoice extends PollsChoiceModelImpl implements PollsChoiceMode
 
 	protected PollsQuestion _pollsQuestion;
 
+	// [[@]] PollsChoice is a value object and belongs to PollsQuestion
+	// PollsChoice constructor _may_ takes PollsQuestion as an argument,
+	// but that is not necessary. The key point is that choices can only
+	// be added to the questions and not the opposite.
 	public PollsChoice() {
 		setNew(true);
 	}
 
+	/**
+	 * [[@]] returns assotiated polls question.
+	 * not necessary needed, we are using it only for
+	 * haking purposes at the moment and this may be removed later
+	 */
 	public PollsQuestion getPollsQuestion() {
 		return _pollsQuestion;
 	}
@@ -64,7 +73,6 @@ public class PollsChoice extends PollsChoiceModelImpl implements PollsChoiceMode
 	public int getVotesCount() {
 		return PollsVoteLocalServiceUtil.getChoiceVotesCount(getChoiceId());
 	}
-
 
 	public void validate() throws PortalException {
 		if (Validator.isNull(getName()) || Validator.isNull(getDescription())) {

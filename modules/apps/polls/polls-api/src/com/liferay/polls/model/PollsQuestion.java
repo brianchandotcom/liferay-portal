@@ -48,11 +48,17 @@ public class PollsQuestion extends PollsQuestionModelImpl implements PollsQuesti
 		setNew(true);
 	}
 
+	// ---------------------------------------------------------------- choice-related
+
+	// [[@]] aggregate method for dealing with the choices
 	public boolean addChoice(PollsChoice pollsChoice) {
 		pollsChoice._pollsQuestion = this;
 		return _choices.add(pollsChoice);
 	}
 
+	// [[@]] again, method for dealing with the choices. However, returning the
+	// mutable list is wrong, as user may change the choices without actually accessing
+	// them through the question. In that sense, this may be just an Iterator<Choice>!
 	public List<PollsChoice> getChoices() {
 		return _choices;
 	}

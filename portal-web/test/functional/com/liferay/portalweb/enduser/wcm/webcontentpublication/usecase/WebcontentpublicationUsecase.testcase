@@ -9,15 +9,15 @@
 		<execute macro="User#firstLoginPG" />
 
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Asset Publisher" />
 		</execute>
 	</set-up>
 
@@ -32,7 +32,7 @@
 		<execute macro="WebContent#tearDownCP" />
 
 		<execute macro="WebContent#tearDownCP">
-			<var name="siteScopeName" value="${globalSiteName}" />
+			<var name="siteScopeName" value="Global" />
 		</execute>
 
 		<execute macro="DMDocumentType#tearDownCP" />
@@ -45,16 +45,13 @@
 	</tear-down>
 
 	<command known-issues="LPS-44575" name="AddAndEditAssetsViaVirtualHostOrganizations" priority="4">
-		<var name="orgName" value="Organization Name" />
-		<var name="orgType" value="Regular Organization" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="Organization#addCP">
-			<var name="orgName" value="${orgName}" />
-			<var name="orgType" value="${orgType}" />
+			<var name="orgName" value="Organization Name" />
+			<var name="orgType" value="Regular Organization" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -63,7 +60,7 @@
 
 		<execute macro="Organization#addSiteCP">
 			<var name="organizationSite" value="Community Site" />
-			<var name="orgName" value="${orgName}" />
+			<var name="orgName" value="Organization Name" />
 			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
@@ -73,7 +70,7 @@
 
 		<execute macro="Organization#addPrivatePageToSiteViaSiteTemplateCP">
 			<var name="organizationSite" value="Intranet Site" />
-			<var name="orgName" value="${orgName}" />
+			<var name="orgName" value="Organization Name" />
 			<var name="sitePagePrivacy" value="Private" />
 		</execute>
 
@@ -82,7 +79,7 @@
 		</execute>
 
 		<execute macro="Organization#addMemberCP">
-			<var name="orgName" value="${orgName}" />
+			<var name="orgName" value="Organization Name" />
 			<var name="userFirstName" value="Test" />
 			<var name="userLastName" value="Test" />
 			<var name="userScreenName" value="test" />
@@ -113,9 +110,9 @@
 		</execute>
 
 		<for list="Home,Documents and Media,News" param="pageName">
-			<var name="key_pageName" value="${pageName}" />
+			<var name="key_pageName" value="Asset Publisher Page" />
 
-			<execute action="Home#assertElementPresent" locator-key1="PAGE" value1="${pageName}" />
+			<execute action="Home#assertElementPresent" locator-key1="PAGE" value1="Asset Publisher Page" />
 		</for>
 
 		<execute macro="Page#openURL">
@@ -127,9 +124,9 @@
 		<execute action="Home#assertElementPresent" locator-key1="PAGE" value1="Home" />
 
 		<for list="Documents and Media,News" param="pageName">
-			<var name="key_pageName" value="${pageName}" />
+			<var name="key_pageName" value="Asset Publisher Page" />
 
-			<execute action="Home#assertElementNotPresent" locator-key1="PAGE" value1="${pageName}" />
+			<execute action="Home#assertElementNotPresent" locator-key1="PAGE" value1="Asset Publisher Page" />
 		</for>
 
 		<execute macro="Page#addPG">
@@ -220,22 +217,15 @@
 	</command>
 
 	<command name="AssertAssetListScopeViaAssetPublisher" priority="4">
-		<var name="globalDocumentTypeDescription" value="Global Document Type Description" />
-		<var name="globalDocumentTypeFieldNames" value="Text" />
-		<var name="globalDocumentTypeName" value="Global Document Type Name" />
-		<var name="localDocumentTypeDescription" value="Local Document Type Description" />
-		<var name="localDocumentTypeFieldNames" value="Text" />
-		<var name="localDocumentTypeName" value="Local Document Type Name" />
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
-			<var name="siteScopeName" value="${globalSiteName}" />
+			<var name="siteScopeName" value="Global" />
 		</execute>
 
 		<execute macro="DMDocumentType#addCP">
-			<var name="dmDocumentTypeDescription" value="${globalDocumentTypeDescription}" />
-			<var name="dmDocumentTypeFieldNames" value="${globalDocumentTypeFieldNames}" />
-			<var name="dmDocumentTypeName" value="${globalDocumentTypeName}" />
+			<var name="dmDocumentTypeDescription" value="Global Document Type Description" />
+			<var name="dmDocumentTypeFieldNames" value="Text" />
+			<var name="dmDocumentTypeName" value="Global Document Type Name" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -243,13 +233,13 @@
 		</execute>
 
 		<execute macro="DMDocumentType#addCP">
-			<var name="dmDocumentTypeDescription" value="${localDocumentTypeDescription}" />
-			<var name="dmDocumentTypeFieldNames" value="${localDocumentTypeFieldNames}" />
-			<var name="dmDocumentTypeName" value="${localDocumentTypeName}" />
+			<var name="dmDocumentTypeDescription" value="Local Document Type Description" />
+			<var name="dmDocumentTypeFieldNames" value="Text" />
+			<var name="dmDocumentTypeName" value="Local Document Type Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#goToConfigurationPG" />
@@ -258,37 +248,28 @@
 
 		<execute action="PGAssetpublisherConfigurationManual#assertClick" locator-key1="ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT" value1="Select" />
 
-		<var name="key_assetEntryType" value="${globalDocumentTypeName}" />
+		<var name="key_assetEntryType" value="Global Document Type Name" />
 
-		<execute action="PGAssetpublisherConfigurationManual#assertTextEquals" locator-key1="ASSET_SELECTION_MANUAL_ASSET_ENTRIES_MENULIST_ITEM" value1="${globalDocumentTypeName}" />
+		<execute action="PGAssetpublisherConfigurationManual#assertTextEquals" locator-key1="ASSET_SELECTION_MANUAL_ASSET_ENTRIES_MENULIST_ITEM" value1="Global Document Type Name" />
 
-		<var name="key_assetEntryType" value="${localDocumentTypeName}" />
+		<var name="key_assetEntryType" value="Local Document Type Name" />
 
-		<execute action="PGAssetpublisherConfigurationManual#assertTextEquals" locator-key1="ASSET_SELECTION_MANUAL_ASSET_ENTRIES_MENULIST_ITEM" value1="${localDocumentTypeName}" />
+		<execute action="PGAssetpublisherConfigurationManual#assertTextEquals" locator-key1="ASSET_SELECTION_MANUAL_ASSET_ENTRIES_MENULIST_ITEM" value1="Local Document Type Name" />
 	</command>
 
-	<command name="AssetPublisherCategoriesLocalization" priority="3">
-		<var name="categoryLocalization1" value="Kategorienamen" />
-		<var name="categoryLocalization2" value="Nom de la Catégorie" />
-		<var name="categoryName" value="Vocabulary1 Category" />
-		<var name="localization1NameKey" value="de_DE" />
-		<var name="localization2NameKey" value="fr_FR" />
-		<var name="pageName" value="Asset Publisher Page" />
+	<command known-issues="LPS-50647" name="AssetPublisherCategoriesLocalization" priority="3">
 		<var name="siteName" value="Liferay" />
-		<var name="vocabularyLocalization1" value="Vokabular Namen" />
-		<var name="vocabularyLocalization2" value="Nom Vocabulaire" />
-		<var name="vocabularyName" value="Vocabulary Name" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
 
 		<execute macro="Vocabulary#addCP">
-			<var name="localization2Name" value="${vocabularyLocalization2}" />
-			<var name="localization2NameKey" value="${localization2NameKey}" />
-			<var name="localizationName" value="${vocabularyLocalization1}" />
-			<var name="localizationNameKey" value="${localization1NameKey}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="localization2Name" value="Nom Vocabulaire" />
+			<var name="localization2NameKey" value="fr_FR" />
+			<var name="localizationName" value="Vokabular Namen" />
+			<var name="localizationNameKey" value="de_DE" />
+			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -296,12 +277,12 @@
 		</execute>
 
 		<execute macro="Category#addCategoryLocalizationCP">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="localization2Name" value="${categoryLocalization2}" />
-			<var name="localization2NameKey" value="${localization2NameKey}" />
-			<var name="localizationName" value="${categoryLocalization1}" />
-			<var name="localizationNameKey" value="${localization1NameKey}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="categoryName" value="Vocabulary1 Category" />
+			<var name="localization2Name" value="Nom de la Catégorie" />
+			<var name="localization2NameKey" value="fr_FR" />
+			<var name="localizationName" value="Kategorienamen" />
+			<var name="localizationNameKey" value="de_DE" />
+			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -309,12 +290,12 @@
 		</execute>
 
 		<execute macro="Category#viewCategoryToVocabularyCP">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="categoryName" value="Vocabulary1 Category" />
+			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -322,7 +303,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -330,18 +311,18 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="WebContent#addPGViaWCD">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 			<var name="webContentContent" value="Web Content1 Content" />
 			<var name="webContentTitle" value="Web Content1 Title" />
 		</execute>
 
 		<execute macro="WebContent#addCategoryPGViaWCD">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="categoryName" value="Vocabulary1 Category" />
+			<var name="vocabularyName" value="Vocabulary Name" />
 			<var name="webContentContent" value="Web Content1 Content" />
 			<var name="webContentTitle" value="Web Content1 Title" />
 		</execute>
@@ -351,7 +332,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaAP">
@@ -385,15 +366,15 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetPG">
 			<var name="addMetadata" value="true" />
 			<var name="assetContent" value="Web Content1 Content" />
 			<var name="assetTitle" value="Web Content1 Title" />
-			<var name="categoryName" value="${categoryName}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="categoryName" value="Vocabulary1 Category" />
+			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
@@ -401,15 +382,15 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetPG">
 			<var name="addMetadata" value="true" />
 			<var name="assetContent" value="Netz Content1 Inhalt" />
 			<var name="assetTitle" value="Netz Content1 Titel" />
-			<var name="categoryName" value="${categoryLocalization1}" />
-			<var name="vocabularyName" value="${vocabularyLocalization1}" />
+			<var name="categoryName" value="Kategorienamen" />
+			<var name="vocabularyName" value="Vokabular Namen" />
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
@@ -417,19 +398,19 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetPG">
 			<var name="addMetadata" value="true" />
 			<var name="assetContent" value="Contenu de Contenu Web1" />
 			<var name="assetTitle" value="Titre de Contenu Web1" />
-			<var name="categoryName" value="${categoryLocalization2}" />
-			<var name="vocabularyName" value="${vocabularyLocalization2}" />
+			<var name="categoryName" value="Nom de la Catégorie" />
+			<var name="vocabularyName" value="Nom Vocabulaire" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
@@ -438,20 +419,15 @@
 	</command>
 
 	<command name="AssetPublisherCategoriesNavigation" priority="3">
-		<var name="categoryDescription" value="This is the Vocabulary1 Category description" />
-		<var name="categoryName" value="Vocabulary1 Category" />
-		<var name="pageName" value="Asset Publisher Page" />
 		<var name="siteName" value="Liferay" />
-		<var name="vocabularyDescription" value="This is the Vocabulary1 description" />
-		<var name="vocabularyName" value="Vocabulary Name" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
 
 		<execute macro="Vocabulary#addCP">
-			<var name="vocabularyDescription" value="${vocabularyDescription}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="vocabularyDescription" value="This is the Vocabulary1 description" />
+			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -459,9 +435,9 @@
 		</execute>
 
 		<execute macro="Category#addCP">
-			<var name="categoryDescription" value="${categoryDescription}" />
-			<var name="categoryName" value="${categoryName}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="categoryDescription" value="This is the Vocabulary1 Category description" />
+			<var name="categoryName" value="Vocabulary1 Category" />
+			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -469,8 +445,8 @@
 		</execute>
 
 		<execute macro="Category#viewCP">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="categoryName" value="Vocabulary1 Category" />
+			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -478,8 +454,8 @@
 		</execute>
 
 		<execute macro="WebContent#addWithCategoryCP">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="categoryName" value="Vocabulary1 Category" />
+			<var name="vocabularyName" value="Vocabulary Name" />
 			<var name="webContentContent" value="WC WebContent1 Content" />
 			<var name="webContentTitle" value="WC WebContent1 Title" />
 		</execute>
@@ -489,8 +465,8 @@
 		</execute>
 
 		<execute macro="WebContent#addWithCategoryCP">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="categoryName" value="Vocabulary1 Category" />
+			<var name="vocabularyName" value="Vocabulary Name" />
 			<var name="webContentContent" value="WC WebContent2 Content" />
 			<var name="webContentTitle" value="WC WebContent2 Title" />
 		</execute>
@@ -500,8 +476,8 @@
 		</execute>
 
 		<execute macro="WebContent#addWithCategoryCP">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="categoryName" value="Vocabulary1 Category" />
+			<var name="vocabularyName" value="Vocabulary Name" />
 			<var name="webContentContent" value="WC WebContent3 Content" />
 			<var name="webContentTitle" value="WC WebContent3 Title" />
 		</execute>
@@ -511,8 +487,8 @@
 		</execute>
 
 		<execute macro="WebContent#addWithCategoryCP">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="categoryName" value="Vocabulary1 Category" />
+			<var name="vocabularyName" value="Vocabulary Name" />
 			<var name="webContentContent" value="WC WebContent4 Content" />
 			<var name="webContentTitle" value="WC WebContent4 Title" />
 		</execute>
@@ -522,14 +498,14 @@
 		</execute>
 
 		<execute macro="WebContent#addWithCategoryCP">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="categoryName" value="Vocabulary1 Category" />
+			<var name="vocabularyName" value="Vocabulary Name" />
 			<var name="webContentContent" value="WC WebContent5 Content" />
 			<var name="webContentTitle" value="WC WebContent5 Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -543,7 +519,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewPaginatedAssetsPG">
@@ -562,7 +538,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureAssetDisplayOrderPG">
@@ -571,12 +547,12 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="Category#viewFilterViaCategoriesNavigationPG">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="categoryName" value="Vocabulary1 Category" />
+			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
@@ -590,8 +566,8 @@
 		</execute>
 
 		<execute macro="Category#viewRemoveFilterViaCategoriesNavigationPG">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="categoryName" value="Vocabulary1 Category" />
+			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewPaginatedAssetsPG">
@@ -611,27 +587,14 @@
 	</command>
 
 	<command name="AssetPublisherFilterAndOrderByFieldType" priority="5">
-		<var name="localizedLanguage" value="German (Germany)" />
-		<var name="structureDescription" value="WC Structure Description" />
-		<var name="structureFieldNames" value="Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Text,Text Box" />
-		<var name="structureName" value="WC Structure Name" />
-		<var name="templateDescription" value="WC Template Description" />
-		<var name="templateFieldNames" value="Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Text,Text Box" />
-		<var name="templateFile" value="simple_all_fields_template.txt" />
-		<var name="templateName" value="WC Template Name" />
-		<var name="webContent1Title" value="Web Content1 Title" />
-		<var name="webContent2Title" value="Web Content2 Title" />
-		<var name="webContent3Title" value="Web Content3 Title" />
-		<var name="webContent4Title" value="Web Content4 Title" />
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
 
 		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="${structureDescription}" />
-			<var name="structureFieldNames" value="${structureFieldNames}" />
-			<var name="structureName" value="${structureName}" />
+			<var name="structureDescription" value="WC Structure Description" />
+			<var name="structureFieldNames" value="Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Text,Text Box" />
+			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -639,11 +602,11 @@
 		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="${structureName}" />
-			<var name="templateDescription" value="${templateDescription}" />
-			<var name="templateFieldNames" value="${templateFieldNames}" />
-			<var name="templateFile" value="${templateFile}" />
-			<var name="templateName" value="${templateName}" />
+			<var name="structureName" value="WC Structure Name" />
+			<var name="templateDescription" value="WC Template Description" />
+			<var name="templateFieldNames" value="Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Text,Text Box" />
+			<var name="templateFile" value="simple_all_fields_template.txt" />
+			<var name="templateName" value="WC Template Name" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -651,11 +614,11 @@
 		</execute>
 
 		<execute macro="WebContent#addWithStructureCP">
-			<var name="structureName" value="${structureName}" />
-			<var name="templateName" value="${templateName}" />
+			<var name="structureName" value="WC Structure Name" />
+			<var name="templateName" value="WC Template Name" />
 			<var name="webContentInteger" value="4" />
 			<var name="webContentNumber" value="123" />
-			<var name="webContentTitle" value="${webContent1Title}" />
+			<var name="webContentTitle" value="Web Content1 Title" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -664,8 +627,8 @@
 
 		<execute macro="WebContent#addTranslationCP">
 			<var name="localizedInteger" value="3" />
-			<var name="localizedLanguage" value="${localizedLanguage}" />
-			<var name="webContentTitle" value="${webContent1Title}" />
+			<var name="localizedLanguage" value="German (Germany)" />
+			<var name="webContentTitle" value="Web Content1 Title" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -673,11 +636,11 @@
 		</execute>
 
 		<execute macro="WebContent#addWithStructureCP">
-			<var name="structureName" value="${structureName}" />
-			<var name="templateName" value="${templateName}" />
+			<var name="structureName" value="WC Structure Name" />
+			<var name="templateName" value="WC Template Name" />
 			<var name="webContentInteger" value="5" />
 			<var name="webContentNumber" value="345" />
-			<var name="webContentTitle" value="${webContent2Title}" />
+			<var name="webContentTitle" value="Web Content2 Title" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -686,8 +649,8 @@
 
 		<execute macro="WebContent#addTranslationCP">
 			<var name="localizedInteger" value="2" />
-			<var name="localizedLanguage" value="${localizedLanguage}" />
-			<var name="webContentTitle" value="${webContent2Title}" />
+			<var name="localizedLanguage" value="German (Germany)" />
+			<var name="webContentTitle" value="Web Content2 Title" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -695,11 +658,11 @@
 		</execute>
 
 		<execute macro="WebContent#addWithStructureCP">
-			<var name="structureName" value="${structureName}" />
-			<var name="templateName" value="${templateName}" />
+			<var name="structureName" value="WC Structure Name" />
+			<var name="templateName" value="WC Template Name" />
 			<var name="webContentInteger" value="1" />
 			<var name="webContentNumber" value="567" />
-			<var name="webContentTitle" value="${webContent3Title}" />
+			<var name="webContentTitle" value="Web Content3 Title" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -708,8 +671,8 @@
 
 		<execute macro="WebContent#addTranslationCP">
 			<var name="localizedInteger" value="8" />
-			<var name="localizedLanguage" value="${localizedLanguage}" />
-			<var name="webContentTitle" value="${webContent3Title}" />
+			<var name="localizedLanguage" value="German (Germany)" />
+			<var name="webContentTitle" value="Web Content3 Title" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -718,21 +681,21 @@
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content4 Content" />
-			<var name="webContentTitle" value="${webContent4Title}" />
+			<var name="webContentTitle" value="Web Content4 Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureFilterByFieldPG">
-			<var name="assetSubtype" value="${structureName}" />
+			<var name="assetSubtype" value="WC Structure Name" />
 			<var name="fieldFilter" value="Integer" />
 			<var name="selectedAsset" value="Web Content Article" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureAssetDisplayOrderPG">
@@ -741,13 +704,13 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewOrderedFieldPG">
-			<var name="firstAsset" value="${webContent3Title}" />
-			<var name="secondAsset" value="${webContent1Title}" />
-			<var name="thirdAsset" value="${webContent2Title}" />
+			<var name="firstAsset" value="Web Content3 Title" />
+			<var name="secondAsset" value="Web Content1 Title" />
+			<var name="thirdAsset" value="Web Content2 Title" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -759,13 +722,13 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewOrderedFieldPG">
-			<var name="firstAsset" value="${webContent2Title}" />
-			<var name="secondAsset" value="${webContent1Title}" />
-			<var name="thirdAsset" value="${webContent3Title}" />
+			<var name="firstAsset" value="Web Content2 Title" />
+			<var name="secondAsset" value="Web Content1 Title" />
+			<var name="thirdAsset" value="Web Content3 Title" />
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
@@ -773,7 +736,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewFilterAndFieldsPG">
@@ -783,7 +746,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewFilterAndFieldsPG">
@@ -793,7 +756,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewFilterAndFieldsPG">
@@ -803,7 +766,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewFilterAndFieldsPG">
@@ -818,16 +781,16 @@
 
 		<execute macro="WebContentStructures#editFieldSettingCP">
 			<var name="indexable" value="false" />
-			<var name="structureFieldNames" value="${structureFieldNames}" />
-			<var name="structureName" value="${structureName}" />
+			<var name="structureFieldNames" value="Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Text,Text Box" />
+			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewFilterAndFieldsPG">
-			<var name="assetSubtype" value="${structureName}" />
+			<var name="assetSubtype" value="WC Structure Name" />
 			<var name="assetSubtypeFields" value="Date,Meeting Name,Time,Location,Product,Version,Areas of Interest,Competitors,Prospect Name" />
 			<var name="noneIndexable" value="true" />
 			<var name="selectedAsset" value="Web Content Article" />
@@ -835,9 +798,6 @@
 	</command>
 
 	<command name="AssetPublisherHasOpenOfficeFileTypeLinks" priority="3">
-		<var name="webContentContent" value="WC WebContent Content" />
-		<var name="webContentTitle" value="WC WebContent Title" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Server Administration" />
 		</execute>
@@ -847,12 +807,12 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="WebContent#addPGViaAP">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureDisplayConversionsPG">
@@ -861,16 +821,16 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="WebContent#viewConversionLinksPGViaAP">
 			<var name="documentTypes" value="doc,odt,pdf,rtf,sxw,txt" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureDisplayConversionsPG">
@@ -879,7 +839,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureDisplayConversionsPG">
@@ -888,25 +848,25 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="WebContent#viewConversionLinksPGViaAP">
 			<var name="documentTypes" value="doc,pdf,txt" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="WebContent#viewNoConversionLinksPGViaAP">
 			<var name="documentTypes" value="odt,rtf,sxw" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureDisplayConversionsPG">
@@ -915,32 +875,23 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="WebContent#viewNoConversionLinksPGViaAP">
 			<var name="documentTypes" value="doc,odt,pdf,rtf,sxw,txt" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 	</command>
 
 	<command name="AssetPublisherSiteAndGlobalScopeAccessibility" priority="5">
-		<var name="siteName" value="Site Name" />
-		<var name="sitePageName" value="Site Page" />
-		<var name="webContent1Content" value="WC WebContent1 Content" />
-		<var name="webContent1Title" value="WC WebContent1 Title" />
-		<var name="webContentGlobalContent" value="WC WebContent Global Content" />
-		<var name="webContentGlobalTitle" value="WC WebContent Global Title" />
-		<var name="webContentSiteContent" value="WC WebContent Site Content" />
-		<var name="webContentSiteTitle" value="WC WebContent Site Title" />
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="${webContent1Content}" />
-			<var name="webContentTitle" value="${webContent1Title}" />
+			<var name="webContentContent" value="WC WebContent1 Content" />
+			<var name="webContentTitle" value="WC WebContent1 Title" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -949,8 +900,8 @@
 		</execute>
 
 		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="${webContentGlobalContent}" />
-			<var name="webContentTitle" value="${webContentGlobalTitle}" />
+			<var name="webContentContent" value="WC WebContent Global Content" />
+			<var name="webContentTitle" value="WC WebContent Global Title" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -958,17 +909,17 @@
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
-			<var name="siteScopeName" value="${siteName}" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="${webContentSiteContent}" />
-			<var name="webContentTitle" value="${webContentSiteTitle}" />
+			<var name="webContentContent" value="WC WebContent Site Content" />
+			<var name="webContentTitle" value="WC WebContent Site Title" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -976,14 +927,14 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${sitePageName}" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
 			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -996,49 +947,40 @@
 			<var name="addOtherSite" value="true" />
 			<var name="globalSite" value="Global" />
 			<var name="otherSiteName" value="Liferay" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteNameHidden" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteNameHidden" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="${webContent1Content}" />
-			<var name="assetTitle" value="${webContent1Title}" />
+			<var name="assetContent" value="WC WebContent1 Content" />
+			<var name="assetTitle" value="WC WebContent1 Title" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="${webContentGlobalContent}" />
-			<var name="assetTitle" value="${webContentGlobalTitle}" />
+			<var name="assetContent" value="WC WebContent Global Content" />
+			<var name="assetTitle" value="WC WebContent Global Title" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="${webContentSiteContent}" />
-			<var name="assetTitle" value="${webContentSiteTitle}" />
+			<var name="assetContent" value="WC WebContent Site Content" />
+			<var name="assetTitle" value="WC WebContent Site Title" />
 		</execute>
 	</command>
 
 	<command name="AssetPublisherTogglingBetweenSites" priority="5">
-		<var name="siteName" value="Site Name" />
-		<var name="sitePageName" value="Site Page" />
-		<var name="webContent1Content" value="WC WebContent1 Content" />
-		<var name="webContent1Title" value="WC WebContent1 Title" />
-		<var name="webContentGlobalContent" value="WC WebContent Global Content" />
-		<var name="webContentGlobalTitle" value="WC WebContent Global Title" />
-		<var name="webContentSiteContent" value="WC WebContent Site Content" />
-		<var name="webContentSiteTitle" value="WC WebContent Site Title" />
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="${webContent1Content}" />
-			<var name="webContentTitle" value="${webContent1Title}" />
+			<var name="webContentContent" value="WC WebContent1 Content" />
+			<var name="webContentTitle" value="WC WebContent1 Title" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -1047,8 +989,8 @@
 		</execute>
 
 		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="${webContentGlobalContent}" />
-			<var name="webContentTitle" value="${webContentGlobalTitle}" />
+			<var name="webContentContent" value="WC WebContent Global Content" />
+			<var name="webContentTitle" value="WC WebContent Global Title" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -1056,17 +998,17 @@
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
-			<var name="siteScopeName" value="${siteName}" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="${webContentSiteContent}" />
-			<var name="webContentTitle" value="${webContentSiteTitle}" />
+			<var name="webContentContent" value="WC WebContent Site Content" />
+			<var name="webContentTitle" value="WC WebContent Site Title" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -1074,19 +1016,19 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${sitePageName}" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
 			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureAddSiteScopes">
@@ -1095,30 +1037,30 @@
 			<var name="addSite" value="false" />
 			<var name="globalSite" value="Global" />
 			<var name="otherSiteName" value="Liferay" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteNameHidden" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteNameHidden" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureToggleSiteScope">
 			<var name="removeSite1Scope" value="Liferay" />
-			<var name="removeSite2Scope" value="${siteName}" />
+			<var name="removeSite2Scope" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="${webContentGlobalContent}" />
-			<var name="assetTitle" value="${webContentGlobalTitle}" />
+			<var name="assetContent" value="WC WebContent Global Content" />
+			<var name="assetTitle" value="WC WebContent Global Title" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureAddSiteScopes">
@@ -1127,29 +1069,29 @@
 			<var name="addSite" value="true" />
 			<var name="globalSite" value="Global" />
 			<var name="otherSiteName" value="Liferay" />
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureToggleSiteScope">
 			<var name="removeSite1Scope" value="Global" />
-			<var name="removeSite2Scope" value="${siteName}" />
+			<var name="removeSite2Scope" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="${webContent1Content}" />
-			<var name="assetTitle" value="${webContent1Title}" />
+			<var name="assetContent" value="WC WebContent1 Content" />
+			<var name="assetTitle" value="WC WebContent1 Title" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureAddSiteScopes">
@@ -1158,12 +1100,12 @@
 			<var name="addSite" value="true" />
 			<var name="globalSite" value="Global" />
 			<var name="otherSiteName" value="Liferay" />
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -1173,14 +1115,14 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="${webContentSiteContent}" />
-			<var name="assetTitle" value="${webContentSiteTitle}" />
+			<var name="assetContent" value="WC WebContent Site Content" />
+			<var name="assetTitle" value="WC WebContent Site Title" />
 		</execute>
 	</command>
 
@@ -1388,17 +1330,12 @@
 	</command>
 
 	<command name="ViewAPPortletAsNewUserSiteAdministratorViaUserSite" priority="4">
-		<var name="pageName" value="Asset Publisher Page" />
-		<var name="portletName" value="Asset Publisher" />
-		<var name="siteName" value="Site Name" />
-		<var name="sitePagePrivacy" value="Public" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -1406,9 +1343,9 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${pageName}" />
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Asset Publisher Page" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -1436,7 +1373,7 @@
 		</execute>
 
 		<execute macro="User#editUserSiteCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
@@ -1457,29 +1394,29 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Asset Publisher Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ADD_NEW_DROPDOWN" value1="Add New" />
 
 		<execute macro="AssetPublisherPortlet#viewDynamicAssetSelectionConfigurationPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Asset Publisher Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewManualAssetSelectionConfigurationPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -1491,8 +1428,6 @@
 	</command>
 
 	<command name="ViewAuthorChangeViaAP" priority="3">
-		<var name="roleName" value="WC Author" />
-
 		<execute macro="AssetPublisherPortlet#configureShowMetadataFieldsPG">
 			<var name="addMetadata" value="true" />
 			<var name="metadataField" value="Author" />
@@ -1503,7 +1438,7 @@
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleName" value="${roleName}" />
+			<var name="roleName" value="WC Author" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -1512,7 +1447,7 @@
 
 		<execute macro="Role#definePermissionsCP">
 			<var name="permissionDefinitionKeys" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACTION_CHECKBOX,SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ACTION_CHECKBOX,SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ARTICLE_ACTION_CHECKBOX" />
-			<var name="roleName" value="${roleName}" />
+			<var name="roleName" value="WC Author" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -1702,7 +1637,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="Page#addPG">
@@ -1764,7 +1699,7 @@
 
 	<command name="ViewRelatedAssetsViaRelatedAssetsPortlet" priority="3">
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -1817,7 +1752,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="RelatedAssets#viewDefaultPG" />
@@ -1833,7 +1768,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="RelatedAssets#viewDefaultPG" />
@@ -1861,7 +1796,7 @@
 		<execute macro="User#logoutPG" />
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewPG">
@@ -1983,7 +1918,7 @@
 
 	<command name="ViewWebContentWithConfiguredDisplayPageViaAP" priority="5">
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="Page#addPG">
@@ -1995,11 +1930,11 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureAssetLinkBehaviorPG">
@@ -2015,7 +1950,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="WebContent#addPGViaAP">
@@ -2024,7 +1959,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="WebContent#editDisplayPagePGViaAP">
@@ -2033,7 +1968,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="WebContent#viewLinkedAssetPGViaAP">

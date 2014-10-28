@@ -414,44 +414,6 @@ public class SeleniumBuilder {
 			}
 		}
 
-		sb.append("\n");
-
-		String[] productNames = {"marketplace", "portal", "social-office"};
-
-		for (String productName : productNames) {
-			Set<String> productTestCaseMethodNames = new TreeSet<String>();
-
-			String productKey = productName;
-
-			productName = StringUtil.replace(productName, "-", "_");
-			productName = StringUtil.upperCase(productName);
-
-			sb.append(productName);
-			sb.append("_TEST_CASE_METHOD_NAMES=");
-
-			for (String componentName : componentNames) {
-				if (componentName.startsWith(productKey) &&
-					testCaseMethodNameMap.containsKey(componentName)) {
-
-					productTestCaseMethodNames.addAll(
-						testCaseMethodNameMap.get(componentName));
-				}
-			}
-
-			if (!productTestCaseMethodNames.isEmpty()) {
-				String testCaseMethodNamesString = StringUtil.merge(
-					productTestCaseMethodNames.toArray(
-						new String[productTestCaseMethodNames.size()]),
-						StringPool.SPACE);
-
-				sb.append(testCaseMethodNamesString);
-				sb.append("\n");
-			}
-			else {
-				sb.append("PortalSmokeTestCase#testSmoke\n");
-			}
-		}
-
 		_seleniumBuilderFileUtil.writeFile(
 			"../../../test.case.method.names.properties", sb.toString(), false);
 	}

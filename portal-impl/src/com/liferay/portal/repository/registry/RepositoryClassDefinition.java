@@ -118,7 +118,7 @@ public class RepositoryClassDefinition
 
 	@Override
 	public <S extends RepositoryEventType, T> void trigger(
-			Class<S> repositoryEventTypeClass, Class<T> modelClass, T payload)
+			Class<S> repositoryEventTypeClass, Class<T> modelClass, T model)
 		throws PortalException {
 
 		Tuple key = new Tuple(repositoryEventTypeClass, modelClass);
@@ -131,7 +131,7 @@ public class RepositoryClassDefinition
 			for (RepositoryEventListener<S, T> repositoryEventListener :
 					repositoryEventListeners) {
 
-				repositoryEventListener.execute(payload);
+				repositoryEventListener.execute(model);
 			}
 		}
 	}

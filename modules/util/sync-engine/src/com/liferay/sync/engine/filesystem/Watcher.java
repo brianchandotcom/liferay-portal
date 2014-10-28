@@ -109,103 +109,11 @@ public class Watcher implements Runnable {
 
 	@Override
 	public void run() {
-		while (true) {
-			try {
-				if (_watchService == null) {
-					break;
-				}
-
-				WatchKey watchKey = null;
-
-				try {
-					watchKey = _watchService.take();
-				}
-				catch (ConcurrentModificationException cme) {
-					continue;
-				}
-				catch (Exception e) {
-					break;
-				}
-
-				Path parentFilePath = _filePaths.get(watchKey);
-
-				if (parentFilePath == null) {
-					continue;
-				}
-
-				List<WatchEvent<?>> watchEvents = watchKey.pollEvents();
-
-				for (int i = 0; i < watchEvents.size(); i++) {
-					WatchEvent<Path> watchEvent =
-						(WatchEvent<Path>)watchEvents.get(i);
-
-					PathImpl pathImpl = (PathImpl)watchEvent.context();
-
-					if (pathImpl == null) {
-						continue;
-					}
-
-					WatchEvent.Kind<?> kind = watchEvent.kind();
-
-					Path childFilePath = parentFilePath.resolve(
-						pathImpl.toString());
-
-					if (kind == StandardWatchEventKind.ENTRY_CREATE) {
-						if (isIgnoredFilePath(childFilePath)) {
-							continue;
-						}
-
-						_createdFilePathNames.add(childFilePath.toString());
-
-						if (_downloadedFilePathNames.remove(
-								childFilePath.toString())) {
-
-							continue;
-						}
-
-						fireWatchEventListener(childFilePath, watchEvent);
-
-						if (_recursive &&
-							Files.isDirectory(
-								childFilePath, LinkOption.NOFOLLOW_LINKS)) {
-
-							registerFilePath(childFilePath, true);
-						}
-					}
-					else if (kind == StandardWatchEventKind.ENTRY_DELETE) {
-						processMissingFilePath(childFilePath);
-
-						fireWatchEventListener(childFilePath, watchEvent);
-					}
-					else if (kind == StandardWatchEventKind.ENTRY_MODIFY) {
-						if (_createdFilePathNames.remove(
-								childFilePath.toString()) ||
-							Files.isDirectory(childFilePath)) {
-
-							continue;
-						}
-
-						fireWatchEventListener(childFilePath, watchEvent);
-					}
-				}
-
-				if (!watchKey.reset()) {
-					Path filePath = _filePaths.remove(watchKey);
-
-					if (_logger.isTraceEnabled()) {
-						_logger.trace("Unregistered file path {}", filePath);
-					}
-
-					processMissingFilePath(filePath);
-
-					if (_filePaths.isEmpty()) {
-						break;
-					}
-				}
-			}
-			catch (Exception e) {
-				_logger.error(e.getMessage(), e);
-			}
+		try {
+			doRun();
+		}
+		catch (Exception e) {
+			_logger.error(e.getMessage(), e);
 		}
 	}
 
@@ -323,6 +231,102 @@ public class Watcher implements Runnable {
 		}
 	}
 
+	protected void doRun() throws Exception {
+		while (true) {
+			if (_watchService == null) {
+				break;
+			}
+
+			WatchKey watchKey = null;
+
+			try {
+				watchKey = _watchService.take();
+			}
+			catch (ConcurrentModificationException cme) {
+				continue;
+			}
+			catch (Exception e) {
+				break;
+			}
+
+			Path parentFilePath = _filePaths.get(watchKey);
+
+			if (parentFilePath == null) {
+				continue;
+			}
+
+			List<WatchEvent<?>> watchEvents = watchKey.pollEvents();
+
+			for (int i = 0; i < watchEvents.size(); i++) {
+				WatchEvent<Path> watchEvent =
+					(WatchEvent<Path>)watchEvents.get(i);
+
+				PathImpl pathImpl = (PathImpl)watchEvent.context();
+
+				if (pathImpl == null) {
+					continue;
+				}
+
+				WatchEvent.Kind<?> kind = watchEvent.kind();
+
+				Path childFilePath = parentFilePath.resolve(
+					pathImpl.toString());
+
+				if (kind == StandardWatchEventKind.ENTRY_CREATE) {
+					if (isIgnoredFilePath(childFilePath)) {
+						continue;
+					}
+
+					_createdFilePathNames.add(childFilePath.toString());
+
+					if (_downloadedFilePathNames.remove(
+							childFilePath.toString())) {
+
+						continue;
+					}
+
+					fireWatchEventListener(childFilePath, watchEvent);
+
+					if (_recursive &&
+						Files.isDirectory(
+							childFilePath, LinkOption.NOFOLLOW_LINKS)) {
+
+						registerFilePath(childFilePath, true);
+					}
+				}
+				else if (kind == StandardWatchEventKind.ENTRY_DELETE) {
+					processMissingFilePath(childFilePath);
+
+					fireWatchEventListener(childFilePath, watchEvent);
+				}
+				else if (kind == StandardWatchEventKind.ENTRY_MODIFY) {
+					if (_createdFilePathNames.remove(
+							childFilePath.toString()) ||
+						Files.isDirectory(childFilePath)) {
+
+						continue;
+					}
+
+					fireWatchEventListener(childFilePath, watchEvent);
+				}
+			}
+
+			if (!watchKey.reset()) {
+				Path filePath = _filePaths.remove(watchKey);
+
+				if (_logger.isTraceEnabled()) {
+					_logger.trace("Unregistered file path {}", filePath);
+				}
+
+				processMissingFilePath(filePath);
+
+				if (_filePaths.isEmpty()) {
+					break;
+				}
+			}
+		}
+	}
+	
 	protected void fireWatchEventListener(
 		Path filePath, WatchEvent<Path> watchEvent) {
 

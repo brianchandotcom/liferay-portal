@@ -584,15 +584,16 @@ Portal by means of an OSGi container.
 #### What changed?
 
 The field *type* from the Journal Article entity has been removed. The Journal
-API no longer supports this parameter. A new vocabulary is created when
-migrating from previous versions of Liferay called *Web Content Types*, and the
+API no longer supports this parameter. A new vocabulary called *Web Content
+Types* is created when migrating from previous versions of Liferay, and the
 types from the existing articles are kept as categories of this vocabulary.
 
 #### Who is affected?
 
-This affects any caller of the `JournalArticle.getType()`,
-`JournalFeed.getType()`, and `ArticleTypeException`, which use the `type`
-parameter of the `JournalArticle` or `JournalFeed` service.
+This affects any caller of the removed methods `JournalArticle.getType()` and
+`JournalFeed.getType()`, and callers of `ArticleTypeException`'s methods, that
+attempt to use the former `type` parameter of the `JournalArticle` or
+`JournalFeed` service.
 
 #### How should I update my code?
 
@@ -603,9 +604,9 @@ articles.
 
 #### Why was this change made?
 
-Web Content Types had to be updated in a properties file and could not be 
-translated easily. Categories provide a much more flexible behavior and a
-better UI. In addition, all the features developed for categories can be used
-now, such as filters in asset publisher or faceted search.
+Web Content Types had to be updated in a properties file and could not be
+translated easily. Categories provide a much more flexible behavior and a better
+UI. In addition, all the features, such as filters, developed for categories can
+be used now in asset publishers and faceted search.
 
 ---------------------------------------

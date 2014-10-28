@@ -68,37 +68,27 @@ request.setAttribute("websites.classPK", company.getAccountId());
 
 <aui:script>
 	function <portlet:namespace />saveCompany() {
-		document.<portlet:namespace />fm.method = 'post';
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.UPDATE %>';
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		form.fm('<%= Constants.CMD %>').val('<%= Constants.UPDATE %>');
 
 		<portlet:namespace />saveLdap();
 		<portlet:namespace />saveLocales();
 
-		submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/portal_settings/edit_company" /></portlet:actionURL>');
+		submitForm(form);
 	}
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveLdap',
-		function() {
-			var A = AUI();
+	function <portlet:namespace />saveLdap() {
+		var $ = AUI.$;
 
-			var ldapServerIds = [];
-
-			A.all('.ldap-servers .table-data tr').each(
-				function(item, index, collection) {
-					ldapServerIds.push(item.getAttribute('data-ldapServerId'));
-				}
-			);
-
-			var ldapServerId = document.<portlet:namespace />fm['<portlet:namespace />settings--ldap.server.ids--'];
-
-			if (ldapServerId) {
-				ldapServerId.value = ldapServerIds.join(',');
+		var ldapServerIds = $('.ldap-servers .table-data tr').map(
+			function(index, item) {
+				return $(item).data('ldapserverid');
 			}
-		},
-		['aui-base']
-	);
+		).get();
+
+		$(document.<portlet:namespace />fm).fm('settings--ldap.server.ids--').val(ldapServerIds.join(','));
+	}
 
 	Liferay.provide(
 		window,

@@ -308,40 +308,233 @@ for (int i = 0 ; i < groupMappingArray.length ; i++) {
 </aui:form>
 
 <aui:script>
+	function <portlet:namespace />mapValues(fields, fieldValues) {
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		return AUI._.reduce(
+			fields,
+			function(prev, item, index) {
+				var mappingValue = form.fm(fieldValues[index]).val();
+
+				if (mappingValue) {
+					prev += item + '=' + mappingValue + '\n';
+				}
+
+				return prev;
+			},
+			''
+		);
+	}
+
 	function <portlet:namespace />saveLdap() {
 		var userMappingFields = ['emailAddress', 'firstName', 'fullName', 'group', 'jobTitle', 'lastName', 'middleName', 'password', 'portrait', 'screenName', 'status', 'uuid'];
 		var userMappingFieldValues = ['userMappingEmailAddress', 'userMappingFirstName', 'userMappingFullName', 'userMappingGroup', 'userMappingJobTitle', 'userMappingLastName', 'userMappingMiddleName', 'userMappingPassword', 'userMappingPortrait', 'userMappingScreenName', 'userMappingStatus', 'userMappingUuid'];
-		var userMappingInput = document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.LDAP_USER_MAPPINGS + postfix %>--'];
 
-		userMappingInput.value = '';
+		var form = AUI.$(document.<portlet:namespace />fm);
 
-		for (var i = 0; i < userMappingFields.length; i++) {
-			var userMappingField = userMappingFields[i];
-			var userMappingValue = document.<portlet:namespace />fm['<portlet:namespace />' + userMappingFieldValues[i]].value;
+		var userMapping = <portlet:namespace />mapValues(userMappingFields, userMappingFieldValues);
 
-			if (userMappingValue) {
-				userMappingInput.value += userMappingFields[i] + '=' + userMappingValue + '\n';
-			}
-		}
+		form.fm('settings--<%= PropsKeys.LDAP_USER_MAPPINGS + postfix %>--').val(userMapping);
 
 		var groupMappingFields = ['description', 'groupName', 'user'];
 		var groupMappingFieldValues = ['groupMappingDescription', 'groupMappingGroupName', 'groupMappingUser'];
-		var groupMappingInput = document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.LDAP_GROUP_MAPPINGS + postfix %>--'];
 
-		groupMappingInput.value = '';
+		var groupMapping = <portlet:namespace />mapValues(groupMappingFields, groupMappingFieldValues);
 
-		for (var i = 0; i < groupMappingFields.length; i++) {
-			var groupMappingField = groupMappingFields[i];
-			var groupMappingValue = document.<portlet:namespace />fm['<portlet:namespace />' + groupMappingFieldValues[i]].value;
+		form.fm('settings--<%= PropsKeys.LDAP_GROUP_MAPPINGS + postfix %>--').val(groupMapping);
 
-			if (groupMappingValue) {
-				groupMappingInput.value += groupMappingFields[i] + '=' + groupMappingValue + '\n';
-			}
+		form.fm('<%= Constants.CMD %>').val('<%= ldapServerId <= 0 ? Constants.ADD : Constants.UPDATE %>');
+
+		submitForm(form);
+	}
+
+	function <portlet:namespace />updateDefaultLdap() {
+		var baseProviderURL = '';
+		var baseDN = '';
+		var principal = '';
+		var credentials = '';
+		var searchFilter = '';
+		var importUserSearchFilter = '';
+		var userMappingEmailAddress = '';
+		var userMappingFirstName = '';
+		var userMappingFullName = '';
+		var userMappingGroup = '';
+		var userMappingJobTitle = '';
+		var userMappingLastName = '';
+		var userMappingMiddleName = '';
+		var userMappingPassword = '';
+		var userMappingPortrait = '';
+		var userMappingScreenName = '';
+		var userMappingStatus = '';
+		var userMappingUuid = '';
+		var importGroupSearchFilter = '';
+		var groupMappingDescription = '';
+		var groupMappingGroupName = '';
+		var groupMappingUser = '';
+		var exportMappingUserDefaultObjectClass = '';
+		var exportMappingGroupDefaultObjectClass = '';
+
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		var ldapType = form.fm('defaultLdap').prop('value');
+
+		if (ldapType == 'apache') {
+			baseProviderURL = 'ldap://localhost:10389';
+			baseDN = 'dc=example,dc=com';
+			principal = 'uid=admin,ou=system';
+			credentials = 'secret';
+			searchFilter = '(mail=@email_address@)';
+			importUserSearchFilter = '(objectClass=person)';
+			userMappingEmailAddress = 'mail';
+			userMappingFirstName = 'givenName';
+			userMappingFullName = '';
+			userMappingGroup = '';
+			userMappingJobTitle = 'title';
+			userMappingLastName = 'sn';
+			userMappingMiddleName = '';
+			userMappingPassword = 'userPassword';
+			userMappingPortrait = '';
+			userMappingScreenName = 'cn';
+			userMappingStatus = '';
+			userMappingUuid = '';
+			importGroupSearchFilter = '(objectClass=groupOfUniqueNames)';
+			groupMappingDescription = 'description';
+			groupMappingGroupName = 'cn';
+			groupMappingUser = 'uniqueMember';
+			exportMappingUserDefaultObjectClass = 'top,person,inetOrgPerson,organizationalPerson';
+			exportMappingGroupDefaultObjectClass = 'top,groupOfUniqueNames';
+		}
+		else if (ldapType == 'fedora') {
+			baseProviderURL = 'ldap://localhost:19389';
+			baseDN = 'dc=localdomain';
+			principal = 'cn=Directory Manager';
+			credentials = '';
+			searchFilter = '(mail=@email_address@)';
+			importUserSearchFilter = '(objectClass=inetOrgPerson)';
+			userMappingEmailAddress = 'mail';
+			userMappingFirstName = 'givenName';
+			userMappingFullName = 'cn';
+			userMappingGroup = '';
+			userMappingJobTitle = 'title';
+			userMappingLastName = 'sn';
+			userMappingMiddleName = '';
+			userMappingPassword = 'userPassword';
+			userMappingPortrait = '';
+			userMappingScreenName = 'uid';
+			userMappingStatus = '';
+			userMappingUuid = '';
+			importGroupSearchFilter = '';
+			groupMappingDescription = '';
+			groupMappingGroupName = '';
+			groupMappingUser = '';
+			exportMappingUserDefaultObjectClass = '';
+			exportMappingGroupDefaultObjectClass = '';
+		}
+		else if (ldapType == 'microsoft') {
+			baseProviderURL = 'ldap://localhost:389';
+			baseDN = 'dc=example,dc=com';
+			principal = 'admin';
+			credentials = 'secret';
+			searchFilter = '(&(objectCategory=person)(sAMAccountName=@user_id@))';
+			importUserSearchFilter = '(objectClass=person)';
+			userMappingEmailAddress = 'userprincipalname';
+			userMappingFirstName = 'givenName';
+			userMappingFullName = 'cn';
+			userMappingGroup = 'memberOf';
+			userMappingJobTitle = '';
+			userMappingLastName = 'sn';
+			userMappingMiddleName = 'middleName';
+			userMappingPassword = 'unicodePwd';
+			userMappingPortrait = '';
+			userMappingScreenName = 'sAMAccountName';
+			userMappingStatus = '';
+			userMappingUuid = '';
+			importGroupSearchFilter = '(objectClass=group)';
+			groupMappingDescription = 'sAMAccountName';
+			groupMappingGroupName = 'cn';
+			groupMappingUser = 'member';
+			exportMappingUserDefaultObjectClass = '';
+			exportMappingGroupDefaultObjectClass = '';
+		}
+		else if (ldapType == 'novell') {
+			url = 'ldap://localhost:389';
+			baseDN = '';
+			principal = 'cn=admin,ou=test';
+			credentials = 'secret';
+			searchFilter = '(mail=@email_address@)';
+			importUserSearchFilter = '';
+			userMappingEmailAddress = 'mail';
+			userMappingFirstName = 'givenName';
+			userMappingFullName = '';
+			userMappingGroup = '';
+			userMappingJobTitle = 'title';
+			userMappingLastName = 'sn';
+			userMappingMiddleName = '';
+			userMappingPassword = 'userPassword';
+			userMappingPortrait = '';
+			userMappingScreenName = 'cn';
+			userMappingStatus = '';
+			userMappingUuid = '';
+			importGroupSearchFilter = '';
+			groupMappingDescription = '';
+			groupMappingGroupName = '';
+			groupMappingUser = '';
+			exportMappingUserDefaultObjectClass = '';
+			exportMappingGroupDefaultObjectClass = '';
+		}
+		else if (ldapType == 'open') {
+			url = 'ldap://localhost:389';
+			baseDN = 'dc=example,dc=com';
+			principal = 'cn=admin,ou=test';
+			credentials = 'secret';
+			searchFilter = '(mail=@email_address@)';
+			importUserSearchFilter = '(objectClass=inetOrgPerson)';
+			userMappingEmailAddress = 'mail';
+			userMappingFirstName = 'givenName';
+			userMappingFullName = '';
+			userMappingGroup = '';
+			userMappingJobTitle = 'title';
+			userMappingLastName = 'sn';
+			userMappingMiddleName = '';
+			userMappingPassword = 'userPassword';
+			userMappingPortrait = '';
+			userMappingScreenName = 'cn';
+			userMappingStatus = '';
+			userMappingUuid = '';
+			importGroupSearchFilter = '(objectClass=groupOfUniqueNames)';
+			groupMappingGroupName = 'cn';
+			groupMappingDescription = 'description';
+			groupMappingUser = 'uniqueMember';
+			exportMappingUserDefaultObjectClass = '';
+			exportMappingGroupDefaultObjectClass = '';
 		}
 
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= ldapServerId <= 0 ? Constants.ADD : Constants.UPDATE %>';
-
-		submitForm(document.<portlet:namespace />fm);
+		form.fm('settings--<%= PropsKeys.LDAP_BASE_PROVIDER_URL + postfix %>--').val(baseProviderURL);
+		form.fm('settings--<%= PropsKeys.LDAP_BASE_DN + postfix %>--').val(baseDN);
+		form.fm('settings--<%= PropsKeys.LDAP_SECURITY_PRINCIPAL + postfix %>--').val(principal);
+		form.fm('settings--<%= PropsKeys.LDAP_SECURITY_CREDENTIALS + postfix %>--').val(credentials);
+		form.fm('settings--<%= PropsKeys.LDAP_AUTH_SEARCH_FILTER + postfix %>--').val(searchFilter);
+		form.fm('settings--<%= PropsKeys.LDAP_IMPORT_USER_SEARCH_FILTER + postfix %>--').val(importUserSearchFilter);
+		form.fm('userMappingEmailAddress').val(userMappingEmailAddress);
+		form.fm('userMappingFirstName').val(userMappingFirstName);
+		form.fm('userMappingFullName').val(userMappingFullName);
+		form.fm('userMappingGroup').val(userMappingGroup);
+		form.fm('userMappingJobTitle').val(userMappingJobTitle);
+		form.fm('userMappingLastName').val(userMappingLastName);
+		form.fm('userMappingMiddleName').val(userMappingMiddleName);
+		form.fm('userMappingPassword').val(userMappingPassword);
+		form.fm('userMappingPortrait').val(userMappingPortrait);
+		form.fm('userMappingScreenName').val(userMappingScreenName);
+		form.fm('userMappingStatus').val(userMappingStatus);
+		form.fm('userMappingUuid').val(userMappingUuid);
+		form.fm('settings--<%= PropsKeys.LDAP_IMPORT_GROUP_SEARCH_FILTER + postfix %>--').val(importGroupSearchFilter);
+		form.fm('groupMappingDescription').val(groupMappingDescription);
+		form.fm('groupMappingGroupName').val(groupMappingGroupName);
+		form.fm('groupMappingUser').val(groupMappingUser);
+		form.fm('settings--<%= PropsKeys.LDAP_USERS_DN + postfix %>--').val(baseDN);
+		form.fm('settings--<%= PropsKeys.LDAP_USER_DEFAULT_OBJECT_CLASSES + postfix %>--').val(exportMappingUserDefaultObjectClass);
+		form.fm('settings--<%= PropsKeys.LDAP_GROUPS_DN + postfix %>--').val(baseDN);
+		form.fm('settings--<%= PropsKeys.LDAP_GROUP_DEFAULT_OBJECT_CLASSES + postfix %>--').val(exportMappingGroupDefaultObjectClass);
 	}
 
 	Liferay.provide(
@@ -410,213 +603,6 @@ for (int i = 0 ; i < groupMappingArray.length ; i++) {
 		},
 		['aui-io-plugin-deprecated', 'aui-io', 'liferay-util-window']
 	);
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />updateDefaultLdap',
-		function(ldapType) {
-			var A = AUI();
-
-			var baseProviderURL = '';
-			var baseDN = '';
-			var principal = '';
-			var credentials = '';
-			var searchFilter = '';
-			var importUserSearchFilter = '';
-			var userMappingEmailAddress = '';
-			var userMappingFirstName = '';
-			var userMappingFullName = '';
-			var userMappingGroup = '';
-			var userMappingJobTitle = '';
-			var userMappingLastName = '';
-			var userMappingMiddleName = '';
-			var userMappingPassword = '';
-			var userMappingPortrait = '';
-			var userMappingScreenName = '';
-			var userMappingStatus = '';
-			var userMappingUuid = '';
-			var importGroupSearchFilter = '';
-			var groupMappingDescription = '';
-			var groupMappingGroupName = '';
-			var groupMappingUser = '';
-			var exportMappingUserDefaultObjectClass = '';
-			var exportMappingGroupDefaultObjectClass = '';
-
-			if (!ldapType) {
-				A.all(document.<portlet:namespace />fm.<portlet:namespace />defaultLdap).some(
-					function(item, index, collection) {
-						var checked = item.get('checked');
-
-						if (checked) {
-							ldapType = item.val();
-						}
-
-						return checked;
-					}
-				);
-			}
-
-			if (ldapType == 'apache') {
-				baseProviderURL = 'ldap://localhost:10389';
-				baseDN = 'dc=example,dc=com';
-				principal = 'uid=admin,ou=system';
-				credentials = 'secret';
-				searchFilter = '(mail=@email_address@)';
-				importUserSearchFilter = '(objectClass=person)';
-				userMappingEmailAddress = 'mail';
-				userMappingFirstName = 'givenName';
-				userMappingFullName = '';
-				userMappingGroup = '';
-				userMappingJobTitle = 'title';
-				userMappingLastName = 'sn';
-				userMappingMiddleName = '';
-				userMappingPassword = 'userPassword';
-				userMappingPortrait = '';
-				userMappingScreenName = 'cn';
-				userMappingStatus = '';
-				userMappingUuid = '';
-				importGroupSearchFilter = '(objectClass=groupOfUniqueNames)';
-				groupMappingDescription = 'description';
-				groupMappingGroupName = 'cn';
-				groupMappingUser = 'uniqueMember';
-				exportMappingUserDefaultObjectClass = 'top,person,inetOrgPerson,organizationalPerson';
-				exportMappingGroupDefaultObjectClass = 'top,groupOfUniqueNames';
-			}
-			else if (ldapType == 'fedora') {
-				baseProviderURL = 'ldap://localhost:19389';
-				baseDN = 'dc=localdomain';
-				principal = 'cn=Directory Manager';
-				credentials = '';
-				searchFilter = '(mail=@email_address@)';
-				importUserSearchFilter = '(objectClass=inetOrgPerson)';
-				userMappingEmailAddress = 'mail';
-				userMappingFirstName = 'givenName';
-				userMappingFullName = 'cn';
-				userMappingGroup = '';
-				userMappingJobTitle = 'title';
-				userMappingLastName = 'sn';
-				userMappingMiddleName = '';
-				userMappingPassword = 'userPassword';
-				userMappingPortrait = '';
-				userMappingScreenName = 'uid';
-				userMappingStatus = '';
-				userMappingUuid = '';
-				importGroupSearchFilter = '';
-				groupMappingDescription = '';
-				groupMappingGroupName = '';
-				groupMappingUser = '';
-				exportMappingUserDefaultObjectClass = '';
-				exportMappingGroupDefaultObjectClass = '';
-			}
-			else if (ldapType == 'microsoft') {
-				baseProviderURL = 'ldap://localhost:389';
-				baseDN = 'dc=example,dc=com';
-				principal = 'admin';
-				credentials = 'secret';
-				searchFilter = '(&(objectCategory=person)(sAMAccountName=@user_id@))';
-				importUserSearchFilter = '(objectClass=person)';
-				userMappingEmailAddress = 'userprincipalname';
-				userMappingFirstName = 'givenName';
-				userMappingFullName = 'cn';
-				userMappingGroup = 'memberOf';
-				userMappingJobTitle = '';
-				userMappingLastName = 'sn';
-				userMappingMiddleName = 'middleName';
-				userMappingPassword = 'unicodePwd';
-				userMappingPortrait = '';
-				userMappingScreenName = 'sAMAccountName';
-				userMappingStatus = '';
-				userMappingUuid = '';
-				importGroupSearchFilter = '(objectClass=group)';
-				groupMappingDescription = 'sAMAccountName';
-				groupMappingGroupName = 'cn';
-				groupMappingUser = 'member';
-				exportMappingUserDefaultObjectClass = '';
-				exportMappingGroupDefaultObjectClass = '';
-			}
-			else if (ldapType == 'novell') {
-				url = 'ldap://localhost:389';
-				baseDN = '';
-				principal = 'cn=admin,ou=test';
-				credentials = 'secret';
-				searchFilter = '(mail=@email_address@)';
-				importUserSearchFilter = '';
-				userMappingEmailAddress = 'mail';
-				userMappingFirstName = 'givenName';
-				userMappingFullName = '';
-				userMappingGroup = '';
-				userMappingJobTitle = 'title';
-				userMappingLastName = 'sn';
-				userMappingMiddleName = '';
-				userMappingPassword = 'userPassword';
-				userMappingPortrait = '';
-				userMappingScreenName = 'cn';
-				userMappingStatus = '';
-				userMappingUuid = '';
-				importGroupSearchFilter = '';
-				groupMappingDescription = '';
-				groupMappingGroupName = '';
-				groupMappingUser = '';
-				exportMappingUserDefaultObjectClass = '';
-				exportMappingGroupDefaultObjectClass = '';
-			}
-			else if (ldapType == 'open') {
-				url = 'ldap://localhost:389';
-				baseDN = 'dc=example,dc=com';
-				principal = 'cn=admin,ou=test';
-				credentials = 'secret';
-				searchFilter = '(mail=@email_address@)';
-				importUserSearchFilter = '(objectClass=inetOrgPerson)';
-				userMappingEmailAddress = 'mail';
-				userMappingFirstName = 'givenName';
-				userMappingFullName = '';
-				userMappingGroup = '';
-				userMappingJobTitle = 'title';
-				userMappingLastName = 'sn';
-				userMappingMiddleName = '';
-				userMappingPassword = 'userPassword';
-				userMappingPortrait = '';
-				userMappingScreenName = 'cn';
-				userMappingStatus = '';
-				userMappingUuid = '';
-				importGroupSearchFilter = '(objectClass=groupOfUniqueNames)';
-				groupMappingGroupName = 'cn';
-				groupMappingDescription = 'description';
-				groupMappingUser = 'uniqueMember';
-				exportMappingUserDefaultObjectClass = '';
-				exportMappingGroupDefaultObjectClass = '';
-			}
-
-			document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.LDAP_BASE_PROVIDER_URL + postfix %>--'].value = baseProviderURL;
-			document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.LDAP_BASE_DN + postfix %>--'].value = baseDN;
-			document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.LDAP_SECURITY_PRINCIPAL + postfix %>--'].value = principal;
-			document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.LDAP_SECURITY_CREDENTIALS + postfix %>--'].value = credentials;
-			document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.LDAP_AUTH_SEARCH_FILTER + postfix %>--'].value = searchFilter;
-			document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.LDAP_IMPORT_USER_SEARCH_FILTER + postfix %>--'].value = importUserSearchFilter;
-			document.<portlet:namespace />fm['<portlet:namespace />userMappingEmailAddress'].value = userMappingEmailAddress;
-			document.<portlet:namespace />fm['<portlet:namespace />userMappingFirstName'].value = userMappingFirstName;
-			document.<portlet:namespace />fm['<portlet:namespace />userMappingFullName'].value = userMappingFullName;
-			document.<portlet:namespace />fm['<portlet:namespace />userMappingGroup'].value = userMappingGroup;
-			document.<portlet:namespace />fm['<portlet:namespace />userMappingJobTitle'].value = userMappingJobTitle;
-			document.<portlet:namespace />fm['<portlet:namespace />userMappingLastName'].value = userMappingLastName;
-			document.<portlet:namespace />fm['<portlet:namespace />userMappingMiddleName'].value = userMappingMiddleName;
-			document.<portlet:namespace />fm['<portlet:namespace />userMappingPassword'].value = userMappingPassword;
-			document.<portlet:namespace />fm['<portlet:namespace />userMappingPortrait'].value = userMappingPortrait;
-			document.<portlet:namespace />fm['<portlet:namespace />userMappingScreenName'].value = userMappingScreenName;
-			document.<portlet:namespace />fm['<portlet:namespace />userMappingStatus'].value = userMappingStatus;
-			document.<portlet:namespace />fm['<portlet:namespace />userMappingUuid'].value = userMappingUuid;
-			document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.LDAP_IMPORT_GROUP_SEARCH_FILTER + postfix %>--'].value = importGroupSearchFilter;
-			document.<portlet:namespace />fm['<portlet:namespace />groupMappingDescription'].value = groupMappingDescription;
-			document.<portlet:namespace />fm['<portlet:namespace />groupMappingGroupName'].value = groupMappingGroupName;
-			document.<portlet:namespace />fm['<portlet:namespace />groupMappingUser'].value = groupMappingUser;
-			document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.LDAP_USERS_DN + postfix %>--'].value = baseDN;
-			document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.LDAP_USER_DEFAULT_OBJECT_CLASSES + postfix %>--'].value = exportMappingUserDefaultObjectClass;
-			document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.LDAP_GROUPS_DN + postfix %>--'].value = baseDN;
-			document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.LDAP_GROUP_DEFAULT_OBJECT_CLASSES + postfix %>--'].value = exportMappingGroupDefaultObjectClass;
-		},
-		['aui-base']
-	);
-
 </aui:script>
 
 <%

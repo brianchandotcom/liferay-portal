@@ -36,19 +36,21 @@ import java.util.Date;
 import java.util.concurrent.Callable;
 
 /**
- * [[@]] Trying a Repo.
+ * [[@]] Simple Repository example. The goals:
+ *
+ * + created for each type of aggregate that needs global access
+ * + provide the illusion of an in-memory collection of all objects of aggregate’s root type.
+ * + provide methods to add and remove objects, which will encapsulate the actual insertion
+ * or removal of data in the data store.
+ * + provide methods that select objects based on criteria meaningful to domain. ATTN: this
+ * responsibility may be given to eg Finders, too!
+ * + provide repositories only for aggregate roots.
+ * + keep app focused on the model, delegating all object storage and access to the repositories.
+ *
  */
 public class PollsQuestionRepository {
 
 	public static final String ID_PREFIX = "PollsQuestion:";
-
-	public PollsQuestion create(String title) {
-		PollsQuestion pollsQuestion = pollsQuestionPersistence.create();
-
-		pollsQuestion.setTitle(title);
-
-		return pollsQuestion;
-	}
 
 	public Optional<PollsQuestion> findById(String id) {
 		if (!id.startsWith(ID_PREFIX)) {
@@ -84,6 +86,8 @@ public class PollsQuestionRepository {
 		return ID_PREFIX + Long.toString(pq.getPrimaryKey());
 	}
 
+	// ---------------------------------------------------------------- persist
+
 	public String persist(final PollsQuestion pq) {
 		try {
 			/* [[@]] should repo validate? should not - we should validate
@@ -117,7 +121,18 @@ public class PollsQuestionRepository {
 							pq.setCreateDate(now);
 							pq.setPrimaryKey(CounterLocalServiceUtil.increment());
 
-							// [[@]] REMOVE THIS
+							// [[@]] REMOVE company Id and groupId. Three things to note here:
+							// 1) companyId is NOT needed, as groupId identifies the company
+							// 2) only entity should have these fields, not value objects!
+							// 3) groupId may be removed. Here is why.
+							//
+							// We can assume that groupId (group entity belongs to)
+							// is actually not a behavior of a model, but of the
+							// persistence and 'outside' boundaries. For example, when
+							// dealing with the questions, developer does not need to
+							// deal with the group, as the questions are going to be
+							// stored to the users group. Only few outside modules
+							// do actually need a groupId (like staging).
 
 							pq.setCompanyId(_companyProvider.get().getCompanyId());
 							pq.setGroupId(_groupProvider.get().getGroupId());
@@ -174,7 +189,9 @@ public class PollsQuestionRepository {
 		return doToId(pq);
 	}
 
-
+	// [[@]] this method should be PROTECTED!
+	// repository deals only with the aggregation roots.
+	// PollsChoice is a value object.
 	public void persist(final PollsChoice pc) {
 		try {
 			pc.validate();

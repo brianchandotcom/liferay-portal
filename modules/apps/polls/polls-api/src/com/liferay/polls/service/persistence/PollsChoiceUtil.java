@@ -698,16 +698,6 @@ public class PollsChoiceUtil {
 	}
 
 	/**
-	* Creates a new polls choice with the primary key. Does not add the polls choice to the database.
-	*
-	* @param choiceId the primary key for the new polls choice
-	* @return the new polls choice
-	*/
-	public static com.liferay.polls.model.PollsChoice create() {
-		return getPersistence().create();
-	}
-
-	/**
 	* Removes the polls choice with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param choiceId the primary key of the polls choice

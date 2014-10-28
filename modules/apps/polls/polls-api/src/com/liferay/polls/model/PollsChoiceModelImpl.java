@@ -625,7 +625,10 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 
 	@Override
 	public PollsChoice toEscapedModel() {
-		// [[@]] do this in a better way
+		// [[@]] Make escaped models in a better way, not from here.
+		// This should be done _before_ the model is rendered, and **not**
+		// from the model itself. This is not part of the business behaviour
+		// but it's related to tech capabilities of presentation layer.
 		return (PollsChoice) this;
 	}
 

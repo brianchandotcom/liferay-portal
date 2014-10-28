@@ -162,7 +162,7 @@ public class LuceneHelperImplTest {
 		}
 	)
 	@Test
-	public void testLoadIndexClusterEventListener1() throws Exception {
+	public void testLoadIndexClusterEventListener() throws Exception {
 
 		// Test 1, 2 nodes in cluster
 
@@ -220,7 +220,7 @@ public class LuceneHelperImplTest {
 		}
 	)
 	@Test
-	public void testLoadIndexClusterEventListener2() {
+	public void testLoadIndexClusterEventListenerWithException() {
 		Exception exception = new Exception();
 
 		LuceneClusterUtilAdvice.setException(exception);

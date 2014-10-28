@@ -35,6 +35,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -103,6 +104,7 @@ public class DDLRecordServiceTest extends BaseDDLServiceTestCase {
 		Assert.assertEquals(2, hits.getLength());
 	}
 
+	@Ignore
 	@Test
 	public void testSearchByTextField() throws Exception {
 		addSampleRecords();

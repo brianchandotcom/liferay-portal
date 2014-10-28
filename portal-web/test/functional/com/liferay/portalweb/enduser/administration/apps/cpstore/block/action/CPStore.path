@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>APP_TITLE</td>
-	<td>//div[contains(@class,'app-entry')]/ul/li/a[@title='${key_appName}']</td>
+	<td>//div[contains(@class,'app-entry')]/ul/li/a[contains(@title,'${key_appName}')]</td>
 	<td></td>
 </tr>
 <tr>

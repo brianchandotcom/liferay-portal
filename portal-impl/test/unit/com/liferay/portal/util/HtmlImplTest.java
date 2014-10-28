@@ -72,11 +72,6 @@ public class HtmlImplTest {
 	}
 
 	@Test
-	public void testEscapeHtmlEncodingRightSingleQuote() {
-		Assert.assertEquals("&rsquo;", _htmlImpl.escape("\u2019"));
-	}
-
-	@Test
 	public void testEscapeHtmlEncodingScriptTag() {
 		Assert.assertEquals("&lt;script&gt;", _htmlImpl.escape("<script>"));
 	}

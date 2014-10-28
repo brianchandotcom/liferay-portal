@@ -75,7 +75,7 @@ public class DLStoreImpl implements DLStore {
 			boolean validateFileExtension, byte[] bytes)
 		throws PortalException {
 
-		validate(fileName, validateFileExtension, bytes);
+		validate(fileName, validateFileExtension);
 
 		if (PropsValues.DL_STORE_ANTIVIRUS_ENABLED) {
 			AntivirusScannerUtil.scan(bytes);
@@ -90,7 +90,7 @@ public class DLStoreImpl implements DLStore {
 			boolean validateFileExtension, File file)
 		throws PortalException {
 
-		validate(fileName, validateFileExtension, file);
+		validate(fileName, validateFileExtension);
 
 		if (PropsValues.DL_STORE_ANTIVIRUS_ENABLED) {
 			AntivirusScannerUtil.scan(file);
@@ -117,7 +117,7 @@ public class DLStoreImpl implements DLStore {
 			return;
 		}
 
-		validate(fileName, validateFileExtension, is);
+		validate(fileName, validateFileExtension);
 
 		if (!PropsValues.DL_STORE_ANTIVIRUS_ENABLED ||
 			!AntivirusScannerUtil.isActive()) {
@@ -480,8 +480,9 @@ public class DLStoreImpl implements DLStore {
 		throws PortalException {
 
 		validate(
-			fileName, fileExtension, sourceFileName, validateFileExtension,
-			file, versionLabel);
+			fileName, fileExtension, sourceFileName, validateFileExtension);
+
+		DLValidatorUtil.validateVersionLabel(versionLabel);
 
 		if (PropsValues.DL_STORE_ANTIVIRUS_ENABLED) {
 			AntivirusScannerUtil.scan(file);
@@ -511,8 +512,9 @@ public class DLStoreImpl implements DLStore {
 		}
 
 		validate(
-			fileName, fileExtension, sourceFileName, validateFileExtension, is,
-			versionLabel);
+			fileName, fileExtension, sourceFileName, validateFileExtension);
+
+		DLValidatorUtil.validateVersionLabel(versionLabel);
 
 		if (!PropsValues.DL_STORE_ANTIVIRUS_ENABLED ||
 			!AntivirusScannerUtil.isActive()) {

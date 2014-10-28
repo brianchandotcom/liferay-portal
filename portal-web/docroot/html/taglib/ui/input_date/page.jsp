@@ -104,17 +104,18 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 							container.one('#<%= yearParamId %>').attr('disabled', newVal);
 						},
 						selectionChange: function(event) {
-							var instance = this;
-
-							var container = instance.get('container');
-
 							var date = event.newSelection[0];
 
-							if (date) {
-								container.one('#<%= dayParamId %>').val(date.getDate());
-								container.one('#<%= monthParamId %>').val(date.getMonth());
-								container.one('#<%= yearParamId %>').val(date.getFullYear());
-							}
+							datePicker.updateValue(date);
+						},
+						enterKey: function(event) {
+							var instance = this;
+
+							var input = instance.get('activeInput');
+
+							var date = instance.getParsedDatesFromInputValue(input._node.value)[0];
+
+							datePicker.updateValue(date);
 						}
 					},
 					popover: {
@@ -130,6 +131,18 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 				var container = instance.get('container');
 
 				return new Date(container.one('#<%= yearParamId %>').val(), container.one('#<%= monthParamId %>').val(), container.one('#<%= dayParamId %>').val());
+			};
+
+			datePicker.updateValue = function(date) {
+				var instance = this;
+
+				var container = instance.get('container');
+
+				if (date) {
+					container.one('#<%= dayParamId %>').val(date.getDate());
+					container.one('#<%= monthParamId %>').val(date.getMonth());
+					container.one('#<%= yearParamId %>').val(date.getFullYear());
+				}
 			};
 
 			return datePicker;

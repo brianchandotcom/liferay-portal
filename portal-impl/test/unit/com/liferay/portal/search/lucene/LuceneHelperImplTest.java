@@ -28,14 +28,17 @@ import com.liferay.portal.kernel.cluster.ClusterResponseCallback;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.SocketUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.security.auth.TransientTokenUtil;
 import com.liferay.portal.test.AdviseWith;
@@ -57,11 +60,13 @@ import java.io.OutputStream;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.URL;
 
 import java.nio.channels.ServerSocketChannel;
 
@@ -158,6 +163,71 @@ public class LuceneHelperImplTest {
 		adviceClasses = {
 			DisableIndexOnStartUpAdvice.class, EnableClusterLinkAdvice.class,
 			EnableLuceneReplicateWriteAdvice.class,
+		}
+	)
+	@Test
+	public void testGetBootupClusterNodeObjectValuePair() throws Exception {
+		_mockClusterExecutor.setNodeNumber(1);
+		_mockClusterExecutor.setPort(1);
+		_mockClusterExecutor.setPortalInetAddress(_localhostInetAddress);
+
+		Method method = LuceneHelperImpl.class.getDeclaredMethod(
+			"_getBootupClusterNodeObjectValuePair", Address.class);
+
+		method.setAccessible(true);
+
+		Object object = method.invoke(
+			_luceneHelperImpl,
+			_mockClusterExecutor.getLocalClusterNodeAddress());
+
+		Assert.assertNotNull(object);
+
+		ObjectValuePair<String, URL> result =
+			(ObjectValuePair<String, URL>)object;
+
+		URL url = result.getValue();
+
+		Assert.assertEquals(
+			_localhostInetAddress.getHostAddress(), url.getHost());
+		Assert.assertEquals(1, url.getPort());
+	}
+
+	@AdviseWith(
+		adviceClasses = {
+			DisableIndexOnStartUpAdvice.class, EnableClusterLinkAdvice.class,
+			EnableLuceneReplicateWriteAdvice.class,
+			SkipGetBootupClusterNodeObjectValuePairAdvice.class
+		}
+	)
+	@Test
+	public void testGetLoadIndexesInputStreamFromCluster() throws Exception {
+		MockServer mockServer = new MockServer();
+
+		mockServer.start();
+
+		SkipGetBootupClusterNodeObjectValuePairAdvice.setURL(
+			new URL(
+				"http", mockServer.getInetAddress().getHostAddress(),
+				mockServer.getPort(), "/lucene/dump"));
+
+		InputStream inputStream =
+			_luceneHelperImpl.getLoadIndexesInputStreamFromCluster(
+				_COMPANY_ID, new AddressImpl(new MockAddress()));
+
+		Assert.assertNotNull(inputStream);
+
+		_mockIndexAccessor.loadIndex(inputStream);
+
+		Assert.assertArrayEquals(
+			_RESPONSE_MESSAGE, _mockIndexAccessor.getResponseMessage());
+
+		mockServer.join();
+	}
+
+	@AdviseWith(
+		adviceClasses = {
+			DisableIndexOnStartUpAdvice.class, EnableClusterLinkAdvice.class,
+			EnableLuceneReplicateWriteAdvice.class,
 			LuceneClusterUtilAdvice.class
 		}
 	)
@@ -248,24 +318,29 @@ public class LuceneHelperImplTest {
 	@AdviseWith(
 		adviceClasses = {
 			DisableIndexOnStartUpAdvice.class, EnableClusterLinkAdvice.class,
-			EnableLuceneReplicateWriteAdvice.class
+			EnableLuceneReplicateWriteAdvice.class,
+			SkipGetLoadIndexesInputStreamFromClusterAdvice.class
 		}
 	)
 	@Test
 	public void testLoadIndexFromCluster() throws Exception {
-		MockServer mockServer = new MockServer();
-
-		mockServer.start();
-
-		_mockClusterExecutor.reset();
-
 		_mockClusterExecutor.setNodeNumber(2);
-		_mockClusterExecutor.setPort(mockServer.getPort());
-		_mockClusterExecutor.setPortalInetAddress(mockServer.getInetAddress());
+		_mockClusterExecutor.setPort(1);
+		_mockClusterExecutor.setPortalInetAddress(_localhostInetAddress);
 
 		List<LogRecord> logRecords = _captureHandler.resetLogLevel(Level.INFO);
 
 		_luceneHelperImpl.loadIndexesFromCluster(_COMPANY_ID);
+
+		Assert.assertEquals(
+			_COMPANY_ID,
+			SkipGetLoadIndexesInputStreamFromClusterAdvice._companyId);
+
+		List<Address> address = _mockClusterExecutor.getClusterNodeAddresses();
+
+		Assert.assertTrue(
+			address.contains(
+				SkipGetLoadIndexesInputStreamFromClusterAdvice._bootupAddress));
 
 		Assert.assertEquals(2, logRecords.size());
 
@@ -277,8 +352,6 @@ public class LuceneHelperImplTest {
 
 		Assert.assertArrayEquals(
 			_RESPONSE_MESSAGE, _mockIndexAccessor.getResponseMessage());
-
-		mockServer.join();
 	}
 
 	@AdviseWith(
@@ -533,6 +606,50 @@ public class LuceneHelperImplTest {
 
 		private static long _companyId;
 		private static Exception _exception;
+
+	}
+
+	@Aspect
+	public static class SkipGetBootupClusterNodeObjectValuePairAdvice {
+
+		public static void setURL(URL url) {
+			_url = url;
+		}
+
+		@Around(
+			"execution(* com.liferay.portal.search.lucene.LuceneHelperImpl." +
+				"_getBootupClusterNodeObjectValuePair(..))")
+		public Object skipGetLoadIndexesInputStreamFromCluster(
+				ProceedingJoinPoint proceedingJoinPoint)
+			throws Throwable {
+
+			return new ObjectValuePair<String, URL>(StringPool.BLANK, _url);
+		}
+
+		private static URL _url;
+
+	}
+
+	@Aspect
+	public static class SkipGetLoadIndexesInputStreamFromClusterAdvice {
+
+		@Around(
+			"execution(* com.liferay.portal.search.lucene.LuceneHelperImpl." +
+				"getLoadIndexesInputStreamFromCluster(..))")
+		public Object skipGetLoadIndexesInputStreamFromCluster(
+				ProceedingJoinPoint proceedingJoinPoint)
+			throws Throwable {
+
+			Object[] arguments = proceedingJoinPoint.getArgs();
+
+			_companyId = (long)arguments[0];
+			_bootupAddress = (Address)arguments[1];
+
+			return new UnsyncByteArrayInputStream(_RESPONSE_MESSAGE);
+		}
+
+		private static Address _bootupAddress;
+		private static long _companyId;
 
 	}
 

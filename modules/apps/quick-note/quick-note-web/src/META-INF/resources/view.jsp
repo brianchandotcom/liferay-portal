@@ -65,7 +65,8 @@
 						'<%= saveURL %>',
 						{
 							data: {
-								<portlet:namespace />color: bgColor
+								<portlet:namespace />color: bgColor,
+								<portlet:namespace />p_auth: Liferay.authToken
 							}
 						}
 					);
@@ -90,7 +91,8 @@
 								'<%= saveURL %>',
 								{
 									data: {
-										<portlet:namespace />data: newValue
+										<portlet:namespace />data: newValue,
+										<portlet:namespace />p_auth: '<%= AuthTokenUtil.getToken(request) %>'
 									}
 								}
 							);

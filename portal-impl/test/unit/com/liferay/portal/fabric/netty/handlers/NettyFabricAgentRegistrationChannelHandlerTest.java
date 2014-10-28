@@ -311,7 +311,8 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 				NettyChannelAttributes.getNettyFabricAgentStub(
 					embeddedChannel));
 
-			fabricAgentRegistry.unregisterFabricAgent(fabricAgents.get(0));
+			fabricAgentRegistry.unregisterFabricAgent(
+				fabricAgents.get(0), null);
 
 			embeddedChannel.close();
 
@@ -347,7 +348,8 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 				NettyChannelAttributes.getNettyFabricAgentStub(
 					embeddedChannel));
 
-			fabricAgentRegistry.unregisterFabricAgent(fabricAgents.get(0));
+			fabricAgentRegistry.unregisterFabricAgent(
+				fabricAgents.get(0), null);
 
 			embeddedChannel.close();
 

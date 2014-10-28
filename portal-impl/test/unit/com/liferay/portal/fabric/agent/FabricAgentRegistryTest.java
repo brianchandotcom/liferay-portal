@@ -18,6 +18,7 @@ import com.liferay.portal.fabric.local.agent.EmbeddedProcessExecutor;
 import com.liferay.portal.fabric.local.agent.LocalFabricAgent;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -60,28 +61,22 @@ public class FabricAgentRegistryTest {
 		FabricAgentRegistry fabricAgentRegistry = new FabricAgentRegistry(
 			new LocalFabricAgent(new EmbeddedProcessExecutor()));
 
-		RecordFabricAgentListener recordFabricAgentListener =
-			new RecordFabricAgentListener();
+		Recorder recorder = new Recorder();
 
-		fabricAgentRegistry.registerFabricAgentListener(
-			recordFabricAgentListener);
+		fabricAgentRegistry.registerFabricAgentListener(recorder);
 
 		FabricAgent fabricAgent1 = new LocalFabricAgent(
 			new EmbeddedProcessExecutor());
 
 		Assert.assertTrue(
-			fabricAgentRegistry.registerFabricAgent(fabricAgent1));
-		Assert.assertSame(
-			fabricAgent1,
-			recordFabricAgentListener.takeRegisteredFabricAgent());
-		Assert.assertNull(
-			recordFabricAgentListener.takeUnregisteredFabricAgent());
+			fabricAgentRegistry.registerFabricAgent(fabricAgent1, recorder));
+
+		recorder.validate(2, fabricAgent1, 0);
+
 		Assert.assertFalse(
-			fabricAgentRegistry.registerFabricAgent(fabricAgent1));
-		Assert.assertNull(
-			recordFabricAgentListener.takeRegisteredFabricAgent());
-		Assert.assertNull(
-			recordFabricAgentListener.takeUnregisteredFabricAgent());
+			fabricAgentRegistry.registerFabricAgent(fabricAgent1, recorder));
+
+		recorder.validate();
 
 		List<FabricAgent> fabricAgents = fabricAgentRegistry.getFabricAgents();
 
@@ -92,18 +87,14 @@ public class FabricAgentRegistryTest {
 			new EmbeddedProcessExecutor());
 
 		Assert.assertTrue(
-			fabricAgentRegistry.registerFabricAgent(fabricAgent2));
-		Assert.assertSame(
-			fabricAgent2,
-			recordFabricAgentListener.takeRegisteredFabricAgent());
-		Assert.assertNull(
-			recordFabricAgentListener.takeUnregisteredFabricAgent());
+			fabricAgentRegistry.registerFabricAgent(fabricAgent2, null));
+
+		recorder.validate(fabricAgent2, 0);
+
 		Assert.assertFalse(
-			fabricAgentRegistry.registerFabricAgent(fabricAgent2));
-		Assert.assertNull(
-			recordFabricAgentListener.takeRegisteredFabricAgent());
-		Assert.assertNull(
-			recordFabricAgentListener.takeUnregisteredFabricAgent());
+			fabricAgentRegistry.registerFabricAgent(fabricAgent2, null));
+
+		recorder.validate();
 
 		fabricAgents = fabricAgentRegistry.getFabricAgents();
 
@@ -111,36 +102,28 @@ public class FabricAgentRegistryTest {
 		Assert.assertTrue(fabricAgents.contains(fabricAgent1));
 		Assert.assertTrue(fabricAgents.contains(fabricAgent2));
 		Assert.assertTrue(
-			fabricAgentRegistry.unregisterFabricAgent(fabricAgent1));
-		Assert.assertNull(
-			recordFabricAgentListener.takeRegisteredFabricAgent());
-		Assert.assertSame(
-			fabricAgent1,
-			recordFabricAgentListener.takeUnregisteredFabricAgent());
+			fabricAgentRegistry.unregisterFabricAgent(fabricAgent1, recorder));
+
+		recorder.validate(2, fabricAgent1, 1);
+
 		Assert.assertFalse(
-			fabricAgentRegistry.unregisterFabricAgent(fabricAgent1));
-		Assert.assertNull(
-			recordFabricAgentListener.takeRegisteredFabricAgent());
-		Assert.assertNull(
-			recordFabricAgentListener.takeUnregisteredFabricAgent());
+			fabricAgentRegistry.unregisterFabricAgent(fabricAgent1, recorder));
+
+		recorder.validate();
 
 		fabricAgents = fabricAgentRegistry.getFabricAgents();
 
 		Assert.assertEquals(1, fabricAgents.size());
 		Assert.assertTrue(fabricAgents.contains(fabricAgent2));
 		Assert.assertTrue(
-			fabricAgentRegistry.unregisterFabricAgent(fabricAgent2));
-		Assert.assertNull(
-			recordFabricAgentListener.takeRegisteredFabricAgent());
-		Assert.assertSame(
-			fabricAgent2,
-			recordFabricAgentListener.takeUnregisteredFabricAgent());
+			fabricAgentRegistry.unregisterFabricAgent(fabricAgent2, null));
+
+		recorder.validate(fabricAgent2, 1);
+
 		Assert.assertFalse(
-			fabricAgentRegistry.unregisterFabricAgent(fabricAgent2));
-		Assert.assertNull(
-			recordFabricAgentListener.takeRegisteredFabricAgent());
-		Assert.assertNull(
-			recordFabricAgentListener.takeUnregisteredFabricAgent());
+			fabricAgentRegistry.unregisterFabricAgent(fabricAgent2, null));
+
+		recorder.validate();
 
 		fabricAgents = fabricAgentRegistry.getFabricAgents();
 
@@ -152,95 +135,77 @@ public class FabricAgentRegistryTest {
 		FabricAgentRegistry fabricAgentRegistry = new FabricAgentRegistry(
 			new LocalFabricAgent(new EmbeddedProcessExecutor()));
 
-		RecordFabricAgentListener recordFabricAgentListener1 =
-			new RecordFabricAgentListener();
+		Recorder recorder1 = new Recorder();
 
 		Assert.assertTrue(
-			fabricAgentRegistry.registerFabricAgentListener(
-				recordFabricAgentListener1));
+			fabricAgentRegistry.registerFabricAgentListener(recorder1));
 		Assert.assertFalse(
-			fabricAgentRegistry.registerFabricAgentListener(
-				recordFabricAgentListener1));
+			fabricAgentRegistry.registerFabricAgentListener(recorder1));
 
 		List<FabricAgentListener> fabricAgentListeners =
 			fabricAgentRegistry.getFabricAgentListeners();
 
 		Assert.assertEquals(1, fabricAgentListeners.size());
-		Assert.assertTrue(
-			fabricAgentListeners.contains(recordFabricAgentListener1));
+		Assert.assertTrue(fabricAgentListeners.contains(recorder1));
 
-		RecordFabricAgentListener recordFabricAgentListener2 =
-			new RecordFabricAgentListener();
+		Recorder recorder2 = new Recorder();
 
 		Assert.assertTrue(
-			fabricAgentRegistry.registerFabricAgentListener(
-				recordFabricAgentListener2));
+			fabricAgentRegistry.registerFabricAgentListener(recorder2));
 		Assert.assertFalse(
-			fabricAgentRegistry.registerFabricAgentListener(
-				recordFabricAgentListener2));
+			fabricAgentRegistry.registerFabricAgentListener(recorder2));
 
 		fabricAgentListeners = fabricAgentRegistry.getFabricAgentListeners();
 
 		Assert.assertEquals(2, fabricAgentListeners.size());
+		Assert.assertTrue(fabricAgentListeners.contains(recorder1));
+		Assert.assertTrue(fabricAgentListeners.contains(recorder2));
 		Assert.assertTrue(
-			fabricAgentListeners.contains(recordFabricAgentListener1));
-		Assert.assertTrue(
-			fabricAgentListeners.contains(recordFabricAgentListener2));
-		Assert.assertTrue(
-			fabricAgentRegistry.unregisterFabricAgentListener(
-				recordFabricAgentListener1));
+			fabricAgentRegistry.unregisterFabricAgentListener(recorder1));
 		Assert.assertFalse(
-			fabricAgentRegistry.unregisterFabricAgentListener(
-				recordFabricAgentListener1));
+			fabricAgentRegistry.unregisterFabricAgentListener(recorder1));
 
 		fabricAgentListeners = fabricAgentRegistry.getFabricAgentListeners();
 
 		Assert.assertEquals(1, fabricAgentListeners.size());
+		Assert.assertTrue(fabricAgentListeners.contains(recorder2));
 		Assert.assertTrue(
-			fabricAgentListeners.contains(recordFabricAgentListener2));
-		Assert.assertTrue(
-			fabricAgentRegistry.unregisterFabricAgentListener(
-				recordFabricAgentListener2));
+			fabricAgentRegistry.unregisterFabricAgentListener(recorder2));
 		Assert.assertFalse(
-			fabricAgentRegistry.unregisterFabricAgentListener(
-				recordFabricAgentListener2));
+			fabricAgentRegistry.unregisterFabricAgentListener(recorder2));
 
 		fabricAgentListeners = fabricAgentRegistry.getFabricAgentListeners();
 
 		Assert.assertTrue(fabricAgentListeners.isEmpty());
 	}
 
-	private static class RecordFabricAgentListener
-		implements FabricAgentListener {
+	private static class Recorder implements FabricAgentListener, Runnable {
 
 		@Override
 		public void registered(FabricAgent fabricAgent) {
-			_registeredFabricAgent = fabricAgent;
+			_recorders.add(fabricAgent);
+			_recorders.add(0);
 		}
 
-		public FabricAgent takeRegisteredFabricAgent() {
-			FabricAgent fabricAgent = _registeredFabricAgent;
-
-			_registeredFabricAgent = null;
-
-			return fabricAgent;
-		}
-
-		public FabricAgent takeUnregisteredFabricAgent() {
-			FabricAgent fabricAgent = _unregisteredFabricAgent;
-
-			_unregisteredFabricAgent = null;
-
-			return fabricAgent;
+		@Override
+		public void run() {
+			_recorders.add(2);
 		}
 
 		@Override
 		public void unregistered(FabricAgent fabricAgent) {
-			_unregisteredFabricAgent = fabricAgent;
+			_recorders.add(fabricAgent);
+			_recorders.add(1);
 		}
 
-		private FabricAgent _registeredFabricAgent;
-		private FabricAgent _unregisteredFabricAgent;
+		public void validate(Object... expects) {
+			Assert.assertArrayEquals(
+				expects, _recorders.toArray(new Object[_recorders.size()]));
+
+			_recorders.clear();
+		}
+
+		private final List<Object> _recorders = new ArrayList<Object>();
 
 	}
 

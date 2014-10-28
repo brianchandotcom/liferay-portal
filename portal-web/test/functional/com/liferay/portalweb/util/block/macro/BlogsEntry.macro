@@ -456,6 +456,7 @@
 		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_MENULIST_EDIT" value1="Edit" />
 
 		<execute action="CPBlogsEdit#assertElementPresent" locator-key1="CONTENT_FIELD" />
+		<execute action="CPBlogsEdit#assertClick" locator-key1="SETTINGS_TAB" value1="Settings" />
 
 		<if>
 			<condition action="CPBlogsEdit#isElementNotPresent" locator-key1="CATEGORIZATION_TAGS_ADD_BUTTON" />

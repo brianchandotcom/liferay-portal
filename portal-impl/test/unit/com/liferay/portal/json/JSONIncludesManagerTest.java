@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -43,6 +44,7 @@ public class JSONIncludesManagerTest {
 		Assert.assertEquals("{\"ftwo\":173}", json);
 	}
 
+	@Ignore
 	@Test
 	public void testExtendsTwo() {
 		ExtendsTwo extendsTwo = new ExtendsTwo();
@@ -62,6 +64,7 @@ public class JSONIncludesManagerTest {
 		Assert.assertTrue(json.contains("value"));
 	}
 
+	@Ignore
 	@Test
 	public void testOne() {
 		One one = new One();
@@ -80,6 +83,7 @@ public class JSONIncludesManagerTest {
 		Assert.assertEquals("{\"flag\":true}", json);
 	}
 
+	@Ignore
 	@Test
 	public void testTwo() {
 		Two two = new Two();

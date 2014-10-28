@@ -82,7 +82,81 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 		url="javascript:;"
 	/>
 
-	<aui:script use="aui-base,escape">
+	<aui:script use="liferay-search-container,escape">
+		var <portlet:namespace />addUserGroupIds = [];
+		var <portlet:namespace />deleteUserGroupIds = [];
+
+		function <portlet:namespace />addUserGroup(userGroupId) {
+			for (var i = 0; i < <portlet:namespace />deleteUserGroupIds.length; i++) {
+				if (<portlet:namespace />deleteUserGroupIds[i] == userGroupId) {
+					<portlet:namespace />deleteUserGroupIds.splice(i, 1);
+
+					break;
+				}
+			}
+
+			<portlet:namespace />addUserGroupIds.push(userGroupId);
+
+			document.<portlet:namespace />fm.<portlet:namespace />addUserGroupIds.value = <portlet:namespace />addUserGroupIds.join(',');
+			document.<portlet:namespace />fm.<portlet:namespace />deleteUserGroupIds.value = <portlet:namespace />deleteUserGroupIds.join(',');
+		}
+
+		var Util = Liferay.Util;
+
+		var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />userGroupsSearchContainer');
+
+		var searchContainerContentBox = searchContainer.get('contentBox');
+
+		searchContainerContentBox.delegate(
+			'click',
+			function(event) {
+				var link = event.currentTarget;
+
+				var rowId = link.attr('data-rowId');
+
+				var tr = link.ancestor('tr');
+
+				var selectUserGroup = Util.getWindow('<portlet:namespace />selectUserGroup');
+
+				if (selectUserGroup) {
+					var selectButton = selectUserGroup.iframe.node.get('contentWindow.document').one('.selector-button[data-usergroupid="' + rowId + '"]');
+
+					Util.toggleDisabled(selectButton, false);
+				}
+
+				searchContainer.deleteRow(tr, rowId);
+
+				for (var i = 0; i < <portlet:namespace />addUserGroupIds.length; i++) {
+					if (<portlet:namespace />addUserGroupIds[i] == rowId) {
+						<portlet:namespace />addUserGroupIds.splice(i, 1);
+
+						break;
+					}
+				}
+
+				<portlet:namespace />deleteUserGroupIds.push(rowId);
+
+				document.<portlet:namespace />fm.<portlet:namespace />addUserGroupIds.value = <portlet:namespace />addUserGroupIds.join(',');
+				document.<portlet:namespace />fm.<portlet:namespace />deleteUserGroupIds.value = <portlet:namespace />deleteUserGroupIds.join(',');
+			},
+			'.modify-link'
+		);
+
+		Liferay.on(
+			'<portlet:namespace />enableRemovedUserGroups',
+			function(event) {
+				event.selectors.each(
+					function(item, index, collection) {
+						var modifyLink = searchContainerContentBox.one('.modify-link[data-rowid="' + item.attr('data-usergroupid') + '"]');
+
+						if (!modifyLink) {
+							Util.toggleDisabled(item, false);
+						}
+					}
+				);
+			}
+		);
+
 		A.one('#<portlet:namespace />openUserGroupsLink').on(
 			'click',
 			function(event) {
@@ -116,86 +190,21 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 						searchContainer.addRow(rowColumns, event.usergroupid);
 						searchContainer.updateDataStore();
 
-						<portlet:namespace />addUserGroup(event.usergroupid);
+						for (var i = 0; i < <portlet:namespace />deleteUserGroupIds.length; i++) {
+							if (<portlet:namespace />deleteUserGroupIds[i] == event.usergroupid) {
+								<portlet:namespace />deleteUserGroupIds.splice(i, 1);
+
+								break;
+							}
+						}
+
+						<portlet:namespace />addUserGroupIds.push(event.usergroupid);
+
+						document.<portlet:namespace />fm.<portlet:namespace />addUserGroupIds.value = <portlet:namespace />addUserGroupIds.join(',');
+						document.<portlet:namespace />fm.<portlet:namespace />deleteUserGroupIds.value = <portlet:namespace />deleteUserGroupIds.join(',');
 					}
 				);
 			}
 		);
 	</aui:script>
 </c:if>
-
-<aui:script use="liferay-search-container">
-	var <portlet:namespace />addUserGroupIds = [];
-	var <portlet:namespace />deleteUserGroupIds = [];
-
-	function <portlet:namespace />addUserGroup(userGroupId) {
-		for (var i = 0; i < <portlet:namespace />deleteUserGroupIds.length; i++) {
-			if (<portlet:namespace />deleteUserGroupIds[i] == userGroupId) {
-				<portlet:namespace />deleteUserGroupIds.splice(i, 1);
-
-				break;
-			}
-		}
-
-		<portlet:namespace />addUserGroupIds.push(userGroupId);
-
-		document.<portlet:namespace />fm.<portlet:namespace />addUserGroupIds.value = <portlet:namespace />addUserGroupIds.join(',');
-		document.<portlet:namespace />fm.<portlet:namespace />deleteUserGroupIds.value = <portlet:namespace />deleteUserGroupIds.join(',');
-	}
-
-	var Util = Liferay.Util;
-
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />userGroupsSearchContainer');
-
-	var searchContainerContentBox = searchContainer.get('contentBox');
-
-	searchContainerContentBox.delegate(
-		'click',
-		function(event) {
-			var link = event.currentTarget;
-
-			var rowId = link.attr('data-rowId');
-
-			var tr = link.ancestor('tr');
-
-			var selectUserGroup = Util.getWindow('<portlet:namespace />selectUserGroup');
-
-			if (selectUserGroup) {
-				var selectButton = selectUserGroup.iframe.node.get('contentWindow.document').one('.selector-button[data-usergroupid="' + rowId + '"]');
-
-				Util.toggleDisabled(selectButton, false);
-			}
-
-			searchContainer.deleteRow(tr, rowId);
-
-			for (var i = 0; i < <portlet:namespace />addUserGroupIds.length; i++) {
-				if (<portlet:namespace />addUserGroupIds[i] == rowId) {
-					<portlet:namespace />addUserGroupIds.splice(i, 1);
-
-					break;
-				}
-			}
-
-			<portlet:namespace />deleteUserGroupIds.push(rowId);
-
-			document.<portlet:namespace />fm.<portlet:namespace />addUserGroupIds.value = <portlet:namespace />addUserGroupIds.join(',');
-			document.<portlet:namespace />fm.<portlet:namespace />deleteUserGroupIds.value = <portlet:namespace />deleteUserGroupIds.join(',');
-		},
-		'.modify-link'
-	);
-
-	Liferay.on(
-		'<portlet:namespace />enableRemovedUserGroups',
-		function(event) {
-			event.selectors.each(
-				function(item, index, collection) {
-					var modifyLink = searchContainerContentBox.one('.modify-link[data-rowid="' + item.attr('data-usergroupid') + '"]');
-
-					if (!modifyLink) {
-						Util.toggleDisabled(item, false);
-					}
-				}
-			);
-		}
-	);
-</aui:script>

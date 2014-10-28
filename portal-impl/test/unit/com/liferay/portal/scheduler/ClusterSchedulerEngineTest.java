@@ -625,7 +625,7 @@ public class ClusterSchedulerEngineTest {
 
 		Map<String, Serializable> context = _collectThreadLocalContext();
 
-		Assert.assertTrue(_clusterInvokeAcceptor.accept(context));
+		Assert.assertFalse(_clusterInvokeAcceptor.accept(context));
 
 		_clusterSchedulerEngine.delete(
 			_MEMORY_CLUSTER_TEST_GROUP_NAME, StorageType.MEMORY_CLUSTERED);
@@ -634,7 +634,7 @@ public class ClusterSchedulerEngineTest {
 
 		ClusterInvokeThreadLocal.setEnabled(false);
 
-		Assert.assertTrue(_clusterInvokeAcceptor.accept(context));
+		Assert.assertFalse(_clusterInvokeAcceptor.accept(context));
 
 		ClusterInvokeThreadLocal.setEnabled(true);
 	}

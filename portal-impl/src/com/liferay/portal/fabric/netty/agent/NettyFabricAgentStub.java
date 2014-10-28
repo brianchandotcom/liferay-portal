@@ -15,6 +15,7 @@
 package com.liferay.portal.fabric.netty.agent;
 
 import com.liferay.portal.fabric.FabricResourceMappingVisitor;
+import com.liferay.portal.fabric.InputResource;
 import com.liferay.portal.fabric.OutputResource;
 import com.liferay.portal.fabric.agent.FabricAgent;
 import com.liferay.portal.fabric.netty.worker.NettyFabricWorkerConfig;
@@ -126,8 +127,16 @@ public class NettyFabricAgentStub implements FabricAgent {
 
 			});
 
+		fabricResourceMappingVisitor = new FabricResourceMappingVisitor(
+			InputResource.class, _remoteRepositoryPath);
+
+		ObjectGraphUtil.walkObjectGraph(
+			processCallable, fabricResourceMappingVisitor);
+
 		ChannelFuture channelFuture = _channel.writeAndFlush(
-			new NettyFabricWorkerConfig<T>(id, processConfig, processCallable));
+			new NettyFabricWorkerConfig<T>(
+				id, processConfig, processCallable,
+				fabricResourceMappingVisitor.getResourceMap()));
 
 		channelFuture.addListener(
 			new ChannelFutureListener() {

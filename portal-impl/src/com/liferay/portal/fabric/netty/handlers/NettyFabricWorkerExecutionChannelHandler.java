@@ -14,8 +14,6 @@
 
 package com.liferay.portal.fabric.netty.handlers;
 
-import com.liferay.portal.fabric.FabricResourceMappingVisitor;
-import com.liferay.portal.fabric.InputResource;
 import com.liferay.portal.fabric.agent.FabricAgent;
 import com.liferay.portal.fabric.local.agent.LocalFabricAgent;
 import com.liferay.portal.fabric.netty.agent.NettyFabricAgentStub;
@@ -39,7 +37,6 @@ import com.liferay.portal.kernel.process.ProcessConfig;
 import com.liferay.portal.kernel.process.ProcessConfig.Builder;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutor;
-import com.liferay.portal.kernel.util.ObjectGraphUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -134,16 +131,8 @@ public class NettyFabricWorkerExecutionChannelHandler
 
 		mergedResources.putAll(runtimeResources);
 
-		FabricResourceMappingVisitor fabricResourceMappingVisitor =
-			new FabricResourceMappingVisitor(
-				InputResource.class, _repository.getRepositoryPath());
-
-		ObjectGraphUtil.walkObjectGraph(
-			nettyFabricWorkerConfig.getProcessCallable(),
-			fabricResourceMappingVisitor);
-
 		final Map<Path, Path> inputResources =
-			fabricResourceMappingVisitor.getResourceMap();
+			nettyFabricWorkerConfig.getInputResourceMap();
 
 		mergedResources.putAll(inputResources);
 

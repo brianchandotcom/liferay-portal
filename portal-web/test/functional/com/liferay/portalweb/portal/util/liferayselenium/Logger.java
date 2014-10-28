@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 
 import java.io.File;
@@ -124,8 +125,9 @@ public class Logger {
 		log("descriptionLog", sb.toString(), "descriptionLog");
 	}
 
-	public void logError(Method method, Object[] arguments, Throwable throwable,
-			boolean sendFailure)
+	public void logError(
+			Method method, Object[] arguments, Throwable throwable,
+			boolean failTest)
 		throws Exception {
 
 		send("", "fail");
@@ -236,7 +238,7 @@ public class Logger {
 			Thread.sleep(1000);
 		}
 
-		if (sendFailure) {
+		if (failTest) {
 			sb = new StringBundler();
 
 			sb.append("Command failure \"");
@@ -253,11 +255,10 @@ public class Logger {
 
 				for (Object argument : arguments) {
 					sb.append("\"");
-					sb.append(String.valueOf(argument));
+					sb.append(HtmlUtil.escape(String.valueOf(argument)));
 					sb.append("\" ");
 				}
 			}
-		}
 
 			sb.append(": ");
 			sb.append(throwableMessage);
@@ -396,7 +397,7 @@ public class Logger {
 
 		List<WebElement> webElements = _webDriver.findElements(By.xpath(xPath));
 
-		if (status.equals("pass") || status.equals("error")) {
+		if (status.equals("pass")) {
 			_xPathIdStack.pop();
 		}
 

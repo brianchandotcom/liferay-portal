@@ -129,12 +129,12 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
-	public String assertLiferayErrors() throws Exception {
+	public void assertLiferayErrors() throws Exception {
 		if (!TestPropsValues.TEST_ASSERT_LIFERAY_ERRORS) {
-			return null;
+			return;
 		}
 
-		return LiferaySeleniumHelper.assertLiferayErrors();
+		LiferaySeleniumHelper.assertLiferayErrors();
 	}
 
 	@Override

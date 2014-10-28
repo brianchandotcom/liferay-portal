@@ -36,6 +36,7 @@ import com.liferay.portal.model.Theme;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.CustomJspRegistryUtil;
 import com.liferay.taglib.FileAvailabilityUtil;
+import com.liferay.taglib.servlet.JspWriterHttpServletResponse;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import javax.servlet.RequestDispatcher;
@@ -204,9 +205,22 @@ public class IncludeTag extends AttributesTagSupport {
 			HttpServletResponse response =
 				(HttpServletResponse)pageContext.getResponse();
 
-			DynamicIncludeUtil.include(
-				request, response, dynamicIncludeKey,
-				dynamicIncludeAscendingPriority);
+			String tagClassName = this.getClass().getName();
+
+			TagKeyResolver tagIdResolver = TagResolverRegistry.getTagIdResolver(
+				tagClassName);
+
+			if (tagIdResolver != null) {
+				JspWriterHttpServletResponse wrappedResponse =
+					new JspWriterHttpServletResponse(pageContext);
+
+				String tagKey = tagIdResolver.getKey(
+					request, wrappedResponse, this);
+
+				DynamicIncludeUtil.include(
+					request, response, dynamicIncludeKey + ":" + tagKey,
+					dynamicIncludeAscendingPriority);
+			}
 
 			include(page);
 		}

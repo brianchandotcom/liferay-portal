@@ -31,7 +31,7 @@
 
 				cd /home/trunks/git/liferay-portal
 
-				git fetch git@github.com:liferay/liferay-portal.git ${performance.branch.temp}:temp
+				git fetch git@github.com:brianchandotcom/liferay-portal.git ${performance.branch.temp}:temp
 
 				git checkout temp
 

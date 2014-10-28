@@ -619,10 +619,7 @@ public class LuceneHelperImplTest {
 		@Around(
 			"execution(* com.liferay.portal.search.lucene.LuceneHelperImpl." +
 				"_getBootupClusterNodeObjectValuePair(..))")
-		public Object skipGetLoadIndexesInputStreamFromCluster(
-				ProceedingJoinPoint proceedingJoinPoint)
-			throws Throwable {
-
+		public Object _getBootupClusterNodeObjectValuePair() {
 			return new ObjectValuePair<String, URL>(StringPool.BLANK, _url);
 		}
 
@@ -635,15 +632,14 @@ public class LuceneHelperImplTest {
 
 		@Around(
 			"execution(* com.liferay.portal.search.lucene.LuceneHelperImpl." +
-				"getLoadIndexesInputStreamFromCluster(..))")
-		public Object skipGetLoadIndexesInputStreamFromCluster(
-				ProceedingJoinPoint proceedingJoinPoint)
-			throws Throwable {
+				"getLoadIndexesInputStreamFromCluster(" +
+					"long, com.liferay.portal.kernel.cluster.Address)) && " +
+						"args(companyId, bootupAddress)")
+		public Object getLoadIndexesInputStreamFromCluster(
+			long companyId, Address bootupAddress) {
 
-			Object[] arguments = proceedingJoinPoint.getArgs();
-
-			_companyId = (long)arguments[0];
-			_bootupAddress = (Address)arguments[1];
+			_companyId = companyId;
+			_bootupAddress = bootupAddress;
 
 			return new UnsyncByteArrayInputStream(_RESPONSE_MESSAGE);
 		}

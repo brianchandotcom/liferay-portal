@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SETTINGS_TAB</td>
+	<td>//li[contains(@class,'tab')]/a[contains(.,'Settings')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

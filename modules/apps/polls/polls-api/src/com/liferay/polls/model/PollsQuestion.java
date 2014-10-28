@@ -37,7 +37,6 @@ import java.util.Locale;
  *
  * @author Brian Wing Shun Chan
  * @see PollsQuestionModel
- * @see com.liferay.polls.model.impl.PollsQuestionImpl
  * @see PollsQuestionModelImpl
  */
 @ProviderType

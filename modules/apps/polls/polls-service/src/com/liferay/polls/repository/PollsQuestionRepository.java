@@ -117,7 +117,7 @@ public class PollsQuestionRepository {
 							pq.setCreateDate(now);
 							pq.setPrimaryKey(CounterLocalServiceUtil.increment());
 
-							// [[*]] REMOVE THIS
+							// [[@]] REMOVE THIS
 
 							pq.setCompanyId(_companyProvider.get().getCompanyId());
 							pq.setGroupId(_groupProvider.get().getGroupId());

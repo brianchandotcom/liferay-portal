@@ -148,7 +148,7 @@ public class PollsQuestionServiceImpl extends PollsQuestionServiceBaseImpl {
 
 			choice.setModelAttributes(choiceMap);
 
-			//[[*]] maybe the persist(question) actually saves choices for us now.
+			//[[@]] maybe the persist(question) actually saves choices for us now.
 			_pollsQuestionRepository.persist(choice);
 		}
 

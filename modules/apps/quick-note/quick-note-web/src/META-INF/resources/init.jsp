@@ -24,7 +24,8 @@
 
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.StringUtil" %>
+page import="com.liferay.portal.kernel.util.StringUtil" %><%@
+page import="com.liferay.portal.security.auth.AuthTokenUtil" %>
 
 <%@ page import="javax.portlet.ActionRequest" %>
 

@@ -17,6 +17,8 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
+String protocol = HttpUtil.getProtocol(request);
+
 String points = GetterUtil.getString(request.getAttribute("liferay-ui:map:points"));
 boolean geolocation = GetterUtil.getBoolean(request.getAttribute("liferay-ui:map:geolocation"));
 double latitude = (Double)request.getAttribute("liferay-ui:map:latitude");
@@ -43,14 +45,14 @@ String modules = "liferay-map-" + mapsAPIProvider.toLowerCase();
 
 <c:if test='<%= mapsAPIProvider.equals("Google") %>'>
 	<liferay-util:html-top outputKey="js_maps_google_skip_map_loading">
-		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places" type="text/javascript"></script>
+		<script src="<%= protocol %>://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places" type="text/javascript"></script>
 	</liferay-util:html-top>
 </c:if>
 
 <c:if test='<%= mapsAPIProvider.equals("Openstreet") %>'>
 	<liferay-util:html-top outputKey="js_maps_openstreet_skip_loading">
-		<link href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" rel="stylesheet" />
-		<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+		<link href="<%= protocol %>://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" rel="stylesheet" />
+		<script src="<%= protocol %>://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 	</liferay-util:html-top>
 </c:if>
 

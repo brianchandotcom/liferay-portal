@@ -71,9 +71,9 @@ AUI.add(
 				NAME: 'lfr-map-geocoder-openstreet',
 
 				prototype: {
-					TPL_FORWARD_GEOCODING_URL: 'http://nominatim.openstreetmap.org/search?format=json&json_callback={callback}&q={query}',
+					TPL_FORWARD_GEOCODING_URL: '//nominatim.openstreetmap.org/search?format=json&json_callback={callback}&q={query}',
 
-					TPL_REVERSE_GEOCODING_URL: 'http://nominatim.openstreetmap.org/reverse?format=json&json_callback={callback}&lat={lat}&lon={lng}',
+					TPL_REVERSE_GEOCODING_URL: '//nominatim.openstreetmap.org/reverse?format=json&json_callback={callback}&lat={lat}&lon={lng}',
 
 					forward: function(query, callback) {
 						var instance = this;
@@ -278,7 +278,7 @@ AUI.add(
 				ATTRS : {
 					tileURI: {
 						validator: Lang.isString,
-						value: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+						value: '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 					}
 				},
 

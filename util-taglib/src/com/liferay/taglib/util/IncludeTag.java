@@ -210,19 +210,30 @@ public class IncludeTag extends AttributesTagSupport {
 			TagKeyResolver tagIdResolver = TagResolverRegistry.getTagIdResolver(
 				tagClassName);
 
-			if (tagIdResolver != null) {
-				JspWriterHttpServletResponse wrappedResponse =
-					new JspWriterHttpServletResponse(pageContext);
+			JspWriterHttpServletResponse wrappedResponse =
+				new JspWriterHttpServletResponse(pageContext);
 
+			if (tagIdResolver != null) {
 				String tagKey = tagIdResolver.getKey(
 					request, wrappedResponse, this);
 
 				DynamicIncludeUtil.include(
-					request, response, dynamicIncludeKey + ":" + tagKey,
+					request, wrappedResponse,
+					dynamicIncludeKey + ".before:" + tagKey,
 					dynamicIncludeAscendingPriority);
 			}
 
 			include(page);
+
+			if (tagIdResolver != null) {
+				String tagKey = tagIdResolver.getKey(
+					request, wrappedResponse, this);
+
+				DynamicIncludeUtil.include(
+					request, wrappedResponse,
+					dynamicIncludeKey + ".after:" + tagKey,
+					dynamicIncludeAscendingPriority);
+			}
 		}
 		catch (Exception e) {
 			String currentURL = (String)request.getAttribute(

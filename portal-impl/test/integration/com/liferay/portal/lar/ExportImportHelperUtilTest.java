@@ -84,6 +84,7 @@ import java.util.regex.Pattern;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -98,6 +99,7 @@ import org.powermock.api.mockito.PowerMockito;
 		MainServletExecutionTestListener.class,
 		SynchronousDestinationExecutionTestListener.class
 	})
+@Ignore
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class ExportImportHelperUtilTest extends PowerMockito {

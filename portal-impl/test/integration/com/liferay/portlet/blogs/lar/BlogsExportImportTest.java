@@ -35,6 +35,7 @@ import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 import java.util.Date;
 import java.util.Map;
 
+import org.junit.Ignore;
 import org.junit.runner.RunWith;
 
 /**
@@ -45,6 +46,7 @@ import org.junit.runner.RunWith;
 		MainServletExecutionTestListener.class,
 		SynchronousDestinationExecutionTestListener.class
 	})
+@Ignore
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class BlogsExportImportTest extends BasePortletExportImportTestCase {

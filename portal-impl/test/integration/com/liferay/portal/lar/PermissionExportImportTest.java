@@ -49,6 +49,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -62,6 +63,7 @@ import org.powermock.api.mockito.PowerMockito;
 		MainServletExecutionTestListener.class,
 		ResetDatabaseExecutionTestListener.class
 	})
+@Ignore
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class PermissionExportImportTest extends PowerMockito {
 

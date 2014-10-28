@@ -43,8 +43,14 @@ public class FabricAgentRegistry {
 		return new ArrayList<FabricAgent>(_fabricAgents);
 	}
 
-	public boolean registerFabricAgent(FabricAgent fabricAgent) {
+	public boolean registerFabricAgent(
+		FabricAgent fabricAgent, Runnable onRegistration) {
+
 		if (_fabricAgents.addIfAbsent(fabricAgent)) {
+			if (onRegistration != null) {
+				onRegistration.run();
+			}
+
 			for (FabricAgentListener fabricAgentListener :
 					_fabricAgentListeners) {
 
@@ -63,8 +69,14 @@ public class FabricAgentRegistry {
 		return _fabricAgentListeners.addIfAbsent(fabricAgentListener);
 	}
 
-	public boolean unregisterFabricAgent(FabricAgent fabricAgent) {
+	public boolean unregisterFabricAgent(
+		FabricAgent fabricAgent, Runnable onUnregistration) {
+
 		if (_fabricAgents.remove(fabricAgent)) {
+			if (onUnregistration != null) {
+				onUnregistration.run();
+			}
+
 			for (FabricAgentListener fabricAgentListener :
 					_fabricAgentListeners) {
 

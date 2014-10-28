@@ -140,8 +140,9 @@
 
 	var curPortletBoundaryId = '#p_p_id_<%= HtmlUtil.escapeJS(portletResource) %>_';
 
-	form.find('select').on(
+	form.on(
 		'change',
+		'select',
 		function() {
 			var data = {};
 

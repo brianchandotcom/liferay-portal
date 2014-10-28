@@ -29,6 +29,7 @@ import java.sql.Statement;
 
 import java.util.Properties;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -36,6 +37,7 @@ import org.junit.Test;
  */
 public class SampleSQLBuilderTest {
 
+	@Ignore
 	@Test
 	public void testGenerateAndInsertSampleSQL() throws Exception {
 		ToolDependencies.wireBasic();

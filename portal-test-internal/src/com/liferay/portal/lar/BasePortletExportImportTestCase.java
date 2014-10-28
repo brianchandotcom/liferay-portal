@@ -57,11 +57,13 @@ import java.util.Map;
 import javax.portlet.PortletPreferences;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  * @author Juan Fernández
  */
+@Ignore
 public abstract class BasePortletExportImportTestCase
 	extends BaseExportImportTestCase {
 

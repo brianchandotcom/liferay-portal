@@ -40,6 +40,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -52,6 +53,7 @@ import org.junit.runner.RunWith;
 		ResetDatabaseExecutionTestListener.class,
 		SynchronousDestinationExecutionTestListener.class
 	})
+@Ignore
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class LayoutExportImportTest extends BaseExportImportTestCase {

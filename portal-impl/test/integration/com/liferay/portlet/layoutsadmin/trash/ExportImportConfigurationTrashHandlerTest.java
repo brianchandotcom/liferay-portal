@@ -41,6 +41,7 @@ import org.junit.runner.RunWith;
 		MainServletExecutionTestListener.class,
 		SynchronousDestinationExecutionTestListener.class
 	})
+@Ignore
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class ExportImportConfigurationTrashHandlerTest

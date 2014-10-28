@@ -33,6 +33,7 @@ import com.liferay.portal.util.test.ServiceContextTestUtil;
 import java.util.Date;
 import java.util.Map;
 
+import org.junit.Ignore;
 import org.junit.runner.RunWith;
 
 /**
@@ -43,6 +44,7 @@ import org.junit.runner.RunWith;
 		MainServletExecutionTestListener.class,
 		SynchronousDestinationExecutionTestListener.class
 	})
+@Ignore
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class BookmarksExportImportTest extends BasePortletExportImportTestCase {

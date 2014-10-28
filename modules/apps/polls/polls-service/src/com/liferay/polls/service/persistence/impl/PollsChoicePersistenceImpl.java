@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.polls.exception.NoSuchChoiceException;
 import com.liferay.polls.model.PollsChoice;
-import com.liferay.polls.model.impl.PollsChoiceImpl;
 import com.liferay.polls.model.PollsChoiceModelImpl;
 import com.liferay.polls.service.persistence.PollsChoicePersistence;
 
@@ -79,22 +78,22 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 *
 	 * Never modify or reference this class directly. Always use {@link PollsChoiceUtil} to access the polls choice persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static final String FINDER_CLASS_NAME_ENTITY = PollsChoiceImpl.class.getName();
+	public static final String FINDER_CLASS_NAME_ENTITY = PollsChoice.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
-			PollsChoiceModelImpl.FINDER_CACHE_ENABLED, PollsChoiceImpl.class,
+			PollsChoiceModelImpl.FINDER_CACHE_ENABLED, PollsChoice.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
-			PollsChoiceModelImpl.FINDER_CACHE_ENABLED, PollsChoiceImpl.class,
+			PollsChoiceModelImpl.FINDER_CACHE_ENABLED, PollsChoice.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
 			PollsChoiceModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID = new FinderPath(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
-			PollsChoiceModelImpl.FINDER_CACHE_ENABLED, PollsChoiceImpl.class,
+			PollsChoiceModelImpl.FINDER_CACHE_ENABLED, PollsChoice.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
 				String.class.getName(),
@@ -103,7 +102,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 				OrderByComparator.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID = new FinderPath(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
-			PollsChoiceModelImpl.FINDER_CACHE_ENABLED, PollsChoiceImpl.class,
+			PollsChoiceModelImpl.FINDER_CACHE_ENABLED, PollsChoice.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] { String.class.getName() },
 			PollsChoiceModelImpl.UUID_COLUMN_BITMASK |
@@ -615,7 +614,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "pollsChoice.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(pollsChoice.uuid IS NULL OR pollsChoice.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
-			PollsChoiceModelImpl.FINDER_CACHE_ENABLED, PollsChoiceImpl.class,
+			PollsChoiceModelImpl.FINDER_CACHE_ENABLED, PollsChoice.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] { String.class.getName(), Long.class.getName() },
 			PollsChoiceModelImpl.UUID_COLUMN_BITMASK |
@@ -869,7 +868,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(pollsChoice.uuid IS NULL OR pollsChoice.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "pollsChoice.groupId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
-			PollsChoiceModelImpl.FINDER_CACHE_ENABLED, PollsChoiceImpl.class,
+			PollsChoiceModelImpl.FINDER_CACHE_ENABLED, PollsChoice.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
@@ -879,7 +878,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 			});
 	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C =
 		new FinderPath(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
-			PollsChoiceModelImpl.FINDER_CACHE_ENABLED, PollsChoiceImpl.class,
+			PollsChoiceModelImpl.FINDER_CACHE_ENABLED, PollsChoice.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] { String.class.getName(), Long.class.getName() },
 			PollsChoiceModelImpl.UUID_COLUMN_BITMASK |
@@ -1430,7 +1429,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "pollsChoice.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_QUESTIONID =
 		new FinderPath(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
-			PollsChoiceModelImpl.FINDER_CACHE_ENABLED, PollsChoiceImpl.class,
+			PollsChoiceModelImpl.FINDER_CACHE_ENABLED, PollsChoice.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByQuestionId",
 			new String[] {
 				Long.class.getName(),
@@ -1440,7 +1439,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 			});
 	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_QUESTIONID =
 		new FinderPath(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
-			PollsChoiceModelImpl.FINDER_CACHE_ENABLED, PollsChoiceImpl.class,
+			PollsChoiceModelImpl.FINDER_CACHE_ENABLED, PollsChoice.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByQuestionId",
 			new String[] { Long.class.getName() },
 			PollsChoiceModelImpl.QUESTIONID_COLUMN_BITMASK |
@@ -1908,7 +1907,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 
 	private static final String _FINDER_COLUMN_QUESTIONID_QUESTIONID_2 = "pollsChoice.questionId = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_Q_N = new FinderPath(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
-			PollsChoiceModelImpl.FINDER_CACHE_ENABLED, PollsChoiceImpl.class,
+			PollsChoiceModelImpl.FINDER_CACHE_ENABLED, PollsChoice.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByQ_N",
 			new String[] { Long.class.getName(), String.class.getName() },
 			PollsChoiceModelImpl.QUESTIONID_COLUMN_BITMASK |
@@ -2173,7 +2172,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	@Override
 	public void cacheResult(PollsChoice pollsChoice) {
 		EntityCacheUtil.putResult(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
-			PollsChoiceImpl.class, pollsChoice.getPrimaryKey(), pollsChoice);
+			PollsChoice.class, pollsChoice.getPrimaryKey(), pollsChoice);
 
 		StagedGroupedModel stagedModel = (StagedGroupedModel)pollsChoice;
 
@@ -2198,7 +2197,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 		for (PollsChoice pollsChoice : pollsChoices) {
 			if (EntityCacheUtil.getResult(
 						PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
-						PollsChoiceImpl.class, pollsChoice.getPrimaryKey()) == null) {
+						PollsChoice.class, pollsChoice.getPrimaryKey()) == null) {
 				cacheResult(pollsChoice);
 			}
 			else {
@@ -2217,10 +2216,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	@Override
 	public void clearCache() {
 		if (_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			CacheRegistryUtil.clear(PollsChoiceImpl.class.getName());
+			CacheRegistryUtil.clear(PollsChoice.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(PollsChoiceImpl.class);
+		EntityCacheUtil.clearCache(PollsChoice.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -2237,7 +2236,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	@Override
 	public void clearCache(PollsChoice pollsChoice) {
 		EntityCacheUtil.removeResult(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
-			PollsChoiceImpl.class, pollsChoice.getPrimaryKey());
+			PollsChoice.class, pollsChoice.getPrimaryKey());
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -2252,7 +2251,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 
 		for (PollsChoice pollsChoice : pollsChoices) {
 			EntityCacheUtil.removeResult(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
-				PollsChoiceImpl.class, pollsChoice.getPrimaryKey());
+				PollsChoice.class, pollsChoice.getPrimaryKey());
 
 			clearUniqueFindersCache(pollsChoice);
 		}
@@ -2404,7 +2403,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 		try {
 			session = openSession();
 
-			PollsChoice pollsChoice = (PollsChoice)session.get(PollsChoiceImpl.class,
+			PollsChoice pollsChoice = (PollsChoice)session.get(PollsChoice.class,
 					primaryKey);
 
 			if (pollsChoice == null) {
@@ -2439,7 +2438,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 			session = openSession();
 
 			if (!session.contains(pollsChoice)) {
-				pollsChoice = (PollsChoice)session.get(PollsChoiceImpl.class,
+				pollsChoice = (PollsChoice)session.get(PollsChoice.class,
 						pollsChoice.getPrimaryKeyObj());
 			}
 
@@ -2566,7 +2565,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 		}
 
 		EntityCacheUtil.putResult(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
-			PollsChoiceImpl.class, pollsChoice.getPrimaryKey(), pollsChoice,
+			PollsChoice.class, pollsChoice.getPrimaryKey(), pollsChoice,
 			false);
 
 		clearUniqueFindersCache(pollsChoice);
@@ -2647,7 +2646,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	@Override
 	public PollsChoice fetchByPrimaryKey(Serializable primaryKey) {
 		PollsChoice pollsChoice = (PollsChoice)EntityCacheUtil.getResult(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
-				PollsChoiceImpl.class, primaryKey);
+				PollsChoice.class, primaryKey);
 
 		if (pollsChoice == _nullPollsChoice) {
 			return null;
@@ -2659,7 +2658,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 			try {
 				session = openSession();
 
-				pollsChoice = (PollsChoice)session.get(PollsChoiceImpl.class,
+				pollsChoice = (PollsChoice)session.get(PollsChoice.class,
 						primaryKey);
 
 				if (pollsChoice != null) {
@@ -2667,12 +2666,12 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 				}
 				else {
 					EntityCacheUtil.putResult(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
-						PollsChoiceImpl.class, primaryKey, _nullPollsChoice);
+						PollsChoice.class, primaryKey, _nullPollsChoice);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
-					PollsChoiceImpl.class, primaryKey);
+					PollsChoice.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -2722,7 +2721,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 
 		for (Serializable primaryKey : primaryKeys) {
 			PollsChoice pollsChoice = (PollsChoice)EntityCacheUtil.getResult(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
-					PollsChoiceImpl.class, primaryKey);
+					PollsChoice.class, primaryKey);
 
 			if (pollsChoice == null) {
 				if (uncachedPrimaryKeys == null) {
@@ -2774,7 +2773,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				EntityCacheUtil.putResult(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
-					PollsChoiceImpl.class, primaryKey, _nullPollsChoice);
+					PollsChoice.class, primaryKey, _nullPollsChoice);
 			}
 		}
 		catch (Exception e) {
@@ -2966,7 +2965,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(PollsChoiceImpl.class.getName());
+		EntityCacheUtil.removeCache(PollsChoice.class.getName());
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);

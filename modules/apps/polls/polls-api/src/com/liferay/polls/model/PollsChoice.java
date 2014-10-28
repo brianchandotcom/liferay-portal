@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.Validator;
  *
  * @author Brian Wing Shun Chan
  * @see PollsChoiceModel
- * @see com.liferay.polls.model.impl.PollsChoiceImpl
  * @see PollsChoiceModelImpl
  * @generated
  */

@@ -17,7 +17,6 @@ package com.liferay.polls.lar;
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.model.PollsVote;
-import com.liferay.polls.model.impl.PollsChoiceImpl;
 import com.liferay.polls.model.impl.PollsVoteImpl;
 import com.liferay.polls.service.PollsChoiceLocalServiceUtil;
 import com.liferay.polls.service.PollsQuestionLocalServiceUtil;
@@ -32,7 +31,6 @@ import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.lar.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.StagedModel;
 
 import java.util.List;
 
@@ -62,7 +60,7 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 				PollsQuestion.class.getName()));
 		setImportControls(getExportControls());
 
-		XStreamAliasRegistryUtil.register(PollsChoiceImpl.class, "PollsChoice");
+		XStreamAliasRegistryUtil.register(PollsChoice.class, "PollsChoice");
 		XStreamAliasRegistryUtil.register(
 			PollsQuestion.class, "PollsQuestion");
 		XStreamAliasRegistryUtil.register(PollsVoteImpl.class, "PollsVote");

@@ -104,7 +104,7 @@
 
 	<command name="RestoreBlogsEntry" priority="5">
 		<var name="assetRestoreLocation" value="Blogs" />
-		
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>

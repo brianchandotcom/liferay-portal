@@ -145,7 +145,7 @@ public class BookmarksServiceVerifyProcessTest
 
 	@Override
 	protected VerifyProcess getVerifyProcess() {
-		return new VerifyBookmarks();
+		return new BookmarksServiceVerifyProcess();
 	}
 
 	@DeleteAfterTestRun

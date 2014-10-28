@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 public interface RepositoryEventTrigger {
 
 	public <S extends RepositoryEventType, T> void trigger(
-			Class<S> repositoryEventTypeClass, Class<T> modelClass, T target)
+			Class<S> repositoryEventTypeClass, Class<T> modelClass, T model)
 		throws PortalException;
 
 }

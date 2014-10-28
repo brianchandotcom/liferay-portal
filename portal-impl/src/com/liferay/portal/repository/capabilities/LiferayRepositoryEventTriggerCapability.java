@@ -33,10 +33,10 @@ public class LiferayRepositoryEventTriggerCapability
 
 	@Override
 	public <S extends RepositoryEventType, T> void trigger(
-			Class<S> eventTypeClass, Class<T> modelClass, T target)
+			Class<S> eventTypeClass, Class<T> modelClass, T model)
 		throws PortalException {
 
-		_repositoryEventTrigger.trigger(eventTypeClass, modelClass, target);
+		_repositoryEventTrigger.trigger(eventTypeClass, modelClass, model);
 	}
 
 	private final RepositoryEventTrigger _repositoryEventTrigger;

@@ -83,7 +83,7 @@ public class NettyFabricClient implements FabricClient {
 
 		Runtime runtime = Runtime.getRuntime();
 
-		runtime.addShutdownHook(_shutdownHook);
+		runtime.addShutdownHook(_shutdownThread);
 
 		_bootstrap = new Bootstrap();
 
@@ -213,7 +213,7 @@ public class NettyFabricClient implements FabricClient {
 
 					Runtime runtime = Runtime.getRuntime();
 
-					runtime.removeShutdownHook(_shutdownHook);
+					runtime.removeShutdownHook(_shutdownThread);
 				}
 			}
 		}
@@ -420,7 +420,7 @@ public class NettyFabricClient implements FabricClient {
 	private final ProcessExecutor _processExecutor;
 	private final AtomicInteger _reconnectCounter = new AtomicInteger();
 
-	private final Thread _shutdownHook = new Thread() {
+	private final Thread _shutdownThread = new Thread() {
 
 		@Override
 		public void run() {

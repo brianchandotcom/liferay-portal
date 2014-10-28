@@ -127,18 +127,20 @@
 </aui:row>
 
 <aui:script sandbox="<%= true %>">
-	var customDisplayOptions = $('#<portlet:namespace />customDisplayOptions');
-	var selectBulletStyle = $('#<portlet:namespace />bulletStyle');
-	var selectDisplayStyle = $('#<portlet:namespace />displayStyle');
-	var selectHeaderType = $('#<portlet:namespace />headerType');
-	var selectIncludedLayouts = $('#<portlet:namespace />includedLayouts');
-	var selectNestedChildren = $('#<portlet:namespace />nestedChildren');
-	var selectRootLayoutLevel = $('#<portlet:namespace />rootLayoutLevel');
-	var selectRootLayoutType = $('#<portlet:namespace />rootLayoutType');
+	var form = $('#<portlet:namespace />fm');
+
+	var customDisplayOptions = form.fm('customDisplayOptions');
+	var selectBulletStyle = form.fm('bulletStyle');
+	var selectDisplayStyle = form.fm('displayStyle');
+	var selectHeaderType = form.fm('headerType');
+	var selectIncludedLayouts = form.fm('includedLayouts');
+	var selectNestedChildren = form.fm('nestedChildren');
+	var selectRootLayoutLevel = form.fm('rootLayoutLevel');
+	var selectRootLayoutType = form.fm('rootLayoutType');
 
 	var curPortletBoundaryId = '#p_p_id_<%= HtmlUtil.escapeJS(portletResource) %>_';
 
-	$('#<portlet:namespace />fm select').on(
+	form.find('select').on(
 		'change',
 		function() {
 			var data = {};

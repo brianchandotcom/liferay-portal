@@ -109,6 +109,6 @@ portletURL.setParameter("eventName", eventName);
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script use="aui-base">
+<aui:script>
 	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectRuleGroupFm', '<%= HtmlUtil.escapeJS(eventName) %>');
 </aui:script>

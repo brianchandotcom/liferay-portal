@@ -89,37 +89,22 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 </aui:form>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveRuleGroupInstancesPriorities',
-		function() {
-			var A = AUI();
+	function <portlet:namespace />saveRuleGroupInstancesPriorities() {
+		var $ = AUI.$;
 
-			var nodes = A.all('#<portlet:namespace />ruleGroupInstancesPriorities .rule-group-instance');
-
-			var ruleGroupInstances = [];
-
-			nodes.each(
-				function(item, index, collection) {
-					ruleGroupInstances.push(
-						{
-							priority: index,
-							ruleGroupInstanceId: item.getAttribute('data-rule-group-instance-id')
-						}
-					);
-				}
-			);
-
-			var ruleGroupsInstancesJSON = A.one('#<portlet:namespace />ruleGroupsInstancesJSON');
-
-			if (ruleGroupsInstancesJSON) {
-				ruleGroupsInstancesJSON.val(A.JSON.stringify(ruleGroupInstances));
+		var ruleGroupInstances = $('#<portlet:namespace />ruleGroupInstancesPriorities .rule-group-instance').map(
+			function(index, item) {
+				return {
+					priority: index,
+					ruleGroupInstanceId: $(item).data('rule-group-instance-id')
+				};
 			}
+		).get();
 
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['json']
-	);
+		$('#<portlet:namespace />ruleGroupsInstancesJSON').val(JSON.stringify(ruleGroupInstances));
+
+		submitForm(document.<portlet:namespace />fm);
+	}
 </aui:script>
 
 <aui:script use="aui-base,dd-constrain,sortable">

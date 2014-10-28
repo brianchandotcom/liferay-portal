@@ -110,70 +110,50 @@ else {
 </aui:form>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />changeDisplay',
-		function() {
-			var A = AUI();
+	function <portlet:namespace />changeDisplay() {
+		var $ = AUI.$;
 
-			A.io.request(
-				<portlet:resourceURL var="siteURLLayoutsURL">
-					<portlet:param name="struts_action" value="/mobile_device_rules/site_url_layouts" />
-				</portlet:resourceURL>
+		var form = $(document.<portlet:namespace />fm);
 
-				'<%= siteURLLayoutsURL.toString() %>',
-				{
-					data: {
-						<portlet:namespace />actionGroupId: document.<portlet:namespace />fm.<portlet:namespace />groupId.value,
-						<portlet:namespace />actionPlid: document.<portlet:namespace />fm.<portlet:namespace />actionPlid.value
-					},
-					on: {
-						success: function(id, obj) {
-							var layouts = A.one('#<portlet:namespace />layouts');
+		<portlet:resourceURL var="siteURLLayoutsURL">
+			<portlet:param name="struts_action" value="/mobile_device_rules/site_url_layouts" />
+		</portlet:resourceURL>
 
-							if (layouts) {
-								layouts.html(this.get('responseData'));
-							}
-						}
-					}
+		$.ajax(
+			'<%= siteURLLayoutsURL.toString() %>',
+			{
+				data: {
+					<portlet:namespace />actionGroupId: form.fm('groupId').val(),
+					<portlet:namespace />actionPlid: form.fm('actionPlid').val()
+				},
+				success: function(responseData) {
+					$('#<portlet:namespace />layouts').html(responseData);
 				}
-			);
-		},
-		['aui-io']
-	);
+			}
+		);
+	}
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />changeType',
-		function() {
-			var A = AUI();
+	function <portlet:namespace />changeType() {
+		var $ = AUI.$;
 
-			A.io.request(
-				<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="editorURL">
-					<portlet:param name="struts_action" value="/mobile_device_rules/edit_action_editor" />
-					<portlet:param name="ajax" value="true" />
-				</liferay-portlet:resourceURL>
+		var form = $(document.<portlet:namespace />fm);
 
-				'<%= editorURL.toString() %>',
-				{
-					data: {
-						<portlet:namespace />type: document.<portlet:namespace />fm.<portlet:namespace />type.value,
-						<portlet:namespace /><%= "actionId" %>: <%= actionId %>
-					},
-					on: {
-						success: function(id, obj) {
-							var typeSettings = A.one('#<portlet:namespace />typeSettings');
+		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="editorURL">
+			<portlet:param name="struts_action" value="/mobile_device_rules/edit_action_editor" />
+			<portlet:param name="ajax" value="true" />
+		</liferay-portlet:resourceURL>
 
-							if (typeSettings) {
-								typeSettings.plug(A.Plugin.ParseContent);
-
-								typeSettings.setContent(this.get('responseData'));
-							}
-						}
-					}
+		$.ajax(
+			'<%= editorURL.toString() %>',
+			{
+				data: {
+					<portlet:namespace />type: form.fm('type').val(),
+					<portlet:namespace /><%= "actionId" %>: <%= actionId %>
+				},
+				success: function(responseData) {
+					$('#<portlet:namespace />typeSettings').html(responseData);
 				}
-			);
-		},
-		['aui-io', 'aui-parse-content']
-	);
+			}
+		);
+	}
 </aui:script>

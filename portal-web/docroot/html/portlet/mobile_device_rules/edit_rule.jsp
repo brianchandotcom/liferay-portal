@@ -123,34 +123,28 @@ Collection<String> ruleHandlerTypes = RuleGroupProcessorUtil.getRuleHandlerTypes
 	</aui:button-row>
 </aui:form>
 
-<aui:script use="aui-io">
-	var typeNode = A.one('#<portlet:namespace />type');
-	var typeSettings = A.one('#<portlet:namespace />typeSettings');
+<aui:script sandbox="<%= true %>">
+	var typeNode = $('#<portlet:namespace />type');
+	var typeSettings = $('#<portlet:namespace />typeSettings');
 
 	var loadTypeFields = function() {
-		A.io.request(
-			<portlet:resourceURL var="editorURL">
-				<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_editor" />
-			</portlet:resourceURL>
+		<portlet:resourceURL var="editorURL">
+			<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_editor" />
+		</portlet:resourceURL>
 
+		$.ajax(
 			'<%= editorURL.toString() %>',
 			{
 				data: {
 					<portlet:namespace />ruleId: <%= ruleId %>,
 					<portlet:namespace />type: typeNode.val()
 				},
-				on: {
-					success: function(event, id, obj) {
-						var response = this.get('responseData');
-
-						if (typeSettings) {
-							typeSettings.html(response);
-						}
-					}
+				success: function(responseData) {
+					typeSettings.html(responseData);
 				}
 			}
 		);
-	}
+	};
 
 	<c:choose>
 		<c:when test="<%= ruleHandlerTypes.size() == 1 %>">

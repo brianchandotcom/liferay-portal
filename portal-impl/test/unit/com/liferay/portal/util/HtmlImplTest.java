@@ -285,6 +285,11 @@ public class HtmlImplTest {
 		Assert.assertEquals("You & Me", _htmlImpl.unescape("You &amp; Me"));
 	}
 
+	@Test
+	public void testUnescapeHtmlEncodingRightSingleQuote() {
+		Assert.assertEquals("\u2019", _htmlImpl.unescape("&rsquo;"));
+	}
+
 	protected void assertUnchangedEscape(String input) {
 		Assert.assertEquals(input, _htmlImpl.escape(input));
 	}

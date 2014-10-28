@@ -58,38 +58,86 @@
 			<if>
 				<isset property="app.server.bundles.size" />
 				<then>
-					<var name="bundles.size" value="1" />
+					<var name="app.server.bundle.index" value="1" />
 
 					<antelope:repeat count="${app.server.bundles.size}">
-						<delete dir="${app.server.parent.dir}-${bundles.size}" />
+						<set-app-server-properties
+							index="${app.server.bundle.index}"
+						/>
 
-						<copy todir="${app.server.parent.dir}-${bundles.size}/${app.server.type}-${app.server.version}">
+						<delete dir="${test.app.server.parent.dir}" />
+
+						<copy todir="${test.app.server.dir}">
 							<fileset dir="${app.server.dir}" />
 						</copy>
 
 						<if>
 	  					 	<available file="${liferay.home}/osgi" />
 							<then>
-								<copy todir="${app.server.parent.dir}-${bundles.size}/osgi">
+								<copy todir="${test.app.server.parent.dir}/osgi">
 									<fileset dir="${liferay.home}/osgi" />
 								</copy>
 							</then>
 						</if>
 
 						<chmod perm="a+x">
-							<fileset dir="${app.server.parent.dir}-${bundles.size}/${app.server.type}-${app.server.version}/bin">
+							<fileset dir="${test.app.server.bin.dir}">
 								<include name="*.sh" />
 							</fileset>
 						</chmod>
 
+						<replaceregexp
+							file="${test.app.server.dir}/conf/server.xml"
+							flags="g"
+							match="=&quot;8(\d\d\d)&quot;"
+							replace="=&quot;${test.app.server.leading.port.number}\1&quot;"
+						/>
+
+						<replace
+							file="${test.app.server.classes.portal.dir}/portal-ext.properties"
+							token="liferay.home=${liferay.home}"
+							value="liferay.home=${test.app.server.parent.dir}"
+						/>
+
 						<math
 							datatype="int"
-							operand1="${bundles.size}"
+							operand1="${app.server.bundle.index}"
 							operand2="1"
 							operation="+"
-							result="bundles.size"
+							result="app.server.bundle.index"
 						/>
 					</antelope:repeat>
+
+					<var name="app.server.bundle.index" unset="true" />
+				</then>
+			</if>
+
+			<if>
+				<isset property="databases.size" />
+				<then>
+					<var name="database.index" value="1" />
+
+					<antelope:repeat count="${databases.size}">
+						<set-app-server-properties
+							index="${database.index}"
+						/>
+
+						<replace
+							file="${test.app.server.classes.portal.dir}/portal-ext.properties"
+							token="lportal"
+							value="lportal${database.index}"
+						/>
+
+						<math
+							datatype="int"
+							operand1="${database.index}"
+							operand2="1"
+							operation="+"
+							result="database.index"
+						/>
+					</antelope:repeat>
+
+					<var name="database.index" unset="true" />
 				</then>
 			</if>
 		</sequential>
@@ -272,26 +320,13 @@
 
 					<antelope:repeat count="${app.server.bundles.size}">
 						<set-app-server-properties
-							app.server.bundle.index="${app.server.bundle.index}"
-						/>
-
-						<replaceregexp
-							file="${test.app.server.dir}/conf/server.xml"
-							flags="g"
-							match="=&quot;8(\d\d\d)&quot;"
-							replace="=&quot;${test.app.server.leading.port.number}\1&quot;"
+							index="${app.server.bundle.index}"
 						/>
 
 						<replace
 							file="${test.app.server.dir}/conf/server.xml"
 							token="&lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot;&gt;"
 							value="&lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot; jvmRoute=&quot;${test.app.server.leading.port.number}&quot;&gt;"
-						/>
-
-						<replace
-							file="${test.app.server.classes.portal.dir}/portal-ext.properties"
-							token="liferay.home=${liferay.home}"
-							value="liferay.home=${test.app.server.parent.dir}"
 						/>
 
 						<math
@@ -491,7 +526,7 @@
 
 	<macrodef name="set-app-server-properties">
 		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
-		<attribute default="0" name="app.server.bundle.index" />
+		<attribute default="0" name="index" />
 
 		<sequential>
 			<var name="test.app.server.bin.dir" unset="true" />
@@ -503,14 +538,14 @@
 
 			<math
 				datatype="int"
-				operand1="@{app.server.bundle.index}"
+				operand1="@{index}"
 				operand2="8"
 				operation="+"
 				result="test.app.server.leading.port.number"
 			/>
 
 			<if>
-				 <equals arg1="@{app.server.bundle.index}" arg2="0" />
+				 <equals arg1="@{index}" arg2="0" />
 				 <then>
 					<var name="test.app.server.bin.dir" value="@{app.server.bin.dir}" />
 					<var name="test.app.server.classes.portal.dir" value="${app.server.classes.portal.dir}" />
@@ -520,23 +555,23 @@
 				 </then>
 				 <else>
 					<antelope:stringutil property="test.app.server.bin.dir" string="@{app.server.bin.dir}">
-						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.index}$2" />
+						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{index}$2" />
 					</antelope:stringutil>
 
 					<antelope:stringutil property="test.app.server.classes.portal.dir" string="${app.server.classes.portal.dir}">
-						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.index}$2" />
+						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{index}$2" />
 					</antelope:stringutil>
 
 					<antelope:stringutil property="test.app.server.deploy.dir" string="${app.server.deploy.dir}">
-						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.index}$2" />
+						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{index}$2" />
 					</antelope:stringutil>
 
 					<antelope:stringutil property="test.app.server.dir" string="${app.server.dir}">
-						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.index}$2" />
+						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{index}$2" />
 					</antelope:stringutil>
 
 					<antelope:stringutil property="test.app.server.parent.dir" string="${app.server.parent.dir}">
-						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.index}$2" />
+						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{index}$2" />
 					</antelope:stringutil>
 				 </else>
 			</if>
@@ -576,7 +611,7 @@
 		<sequential>
 			<set-app-server-properties
 				app.server.bin.dir="@{app.server.bin.dir}"
-				app.server.bundle.index="@{app.server.bundle.index}"
+				index="@{app.server.bundle.index}"
 			/>
 
 			<if>
@@ -664,7 +699,7 @@
 		<sequential>
 			<set-app-server-properties
 				app.server.bin.dir="@{app.server.bin.dir}"
-				app.server.bundle.index="@{app.server.bundle.index}"
+				index="@{app.server.bundle.index}"
 			/>
 
 			<antcall target="clean-up-logs" />
@@ -767,17 +802,31 @@
 			<then>
 				<if>
 					<and>
+						<isset property="databases.size" />
 						<equals arg1="${database.type}" arg2="mysql" />
-						<equals arg1="${database.sharding}" arg2="true" />
 					</and>
 					<then>
-						<echo file="create.sql">
-drop database if exists lportal;
-drop database if exists lportal1;
-drop database if exists lportal2;
-create database lportal character set utf8;
-create database lportal1 character set utf8;
-create database lportal2 character set utf8;</echo>
+						<var name="database.index" value="1" />
+
+						<echo file="create.sql">drop database if exists lportal;
+create database lportal character set utf8;</echo>
+
+						<antelope:repeat count="${databases.size}">
+							<echo append="true" file="create.sql">
+
+drop database if exists lportal${database.index};
+create database lportal${database.index} character set utf8;</echo>
+
+							<math
+								datatype="int"
+								operand1="${database.index}"
+								operand2="1"
+								operation="+"
+								result="database.index"
+							/>
+						</antelope:repeat>
+
+						<var name="database.index" unset="true" />
 					</then>
 					<else>
 						<if>
@@ -3581,10 +3630,15 @@ if (ppstate.equals("normal")) {
 		</if>
 
 		<if>
-			<equals arg1="${cluster.enabled}" arg2="true" />
+			<isset property="app.server.bundles.size" />
 			<then>
 				<prepare-additional-bundles />
+			</then>
+		</if>
 
+		<if>
+			<equals arg1="${cluster.enabled}" arg2="true" />
+			<then>
 				<prepare-test-cluster-properties />
 			</then>
 		</if>
@@ -3750,7 +3804,7 @@ if (ppstate.equals("normal")) {
 		<start-app-server />
 
 		<if>
-			<equals arg1="${cluster.enabled}" arg2="true" />
+			<isset property="app.server.bundles.size" />
 			<then>
 				<var name="app.server.bundle.index" value="1" />
 
@@ -3848,7 +3902,7 @@ if (ppstate.equals("normal")) {
 		<stop-app-server />
 
 		<if>
-			<equals arg1="${cluster.enabled}" arg2="true" />
+			<isset property="app.server.bundles.size" />
 			<then>
 				<var name="app.server.bundle.index" value="1" />
 

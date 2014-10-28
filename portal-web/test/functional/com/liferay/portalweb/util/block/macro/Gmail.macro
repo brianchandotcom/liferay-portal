@@ -87,13 +87,13 @@
 		<execute action="Gmail#pause" locator1="5000" />
 	</command>
 
-	<command name="openMessageLink">
+	<command name="openMessageContinueReadingButton">
 		<var name="key_gmailAssetType" value="${gmailAssetType}" />
 
 		<var name="pageNameURL" value="${pageName?replace(' ', '-')}" />
 		<var name="pageNameURL" value="/${pageNameURL?lowercase()}" />
 
-		<execute action="Gmail#assertClick" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_LINK" value1="${pageNameURL}" />
+		<execute action="Gmail#assertClick" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_CONTINUE_READING_BUTTON" value1="CONTINUE READING" />
 
 		<if>
 			<isset var="contentTitle" />
@@ -106,13 +106,13 @@
 		</if>
 	</command>
 
-	<command name="openMessageLinkButton">
+	<command name="openMessageLink">
 		<var name="key_gmailAssetType" value="${gmailAssetType}" />
 
 		<var name="pageNameURL" value="${pageName?replace(' ', '-')}" />
 		<var name="pageNameURL" value="/${pageNameURL?lowercase()}" />
 
-		<execute action="Gmail#assertClick" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_LINK_BUTTON" value1="CONTINUE READING" />
+		<execute action="Gmail#assertClick" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_LINK" value1="${pageNameURL}" />
 
 		<if>
 			<isset var="contentTitle" />

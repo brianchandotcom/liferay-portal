@@ -239,8 +239,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>GMAIL_HTML_MODE_MESSAGE_BODY_LINK_BUTTON</td>
-	<td>//a[contains(text(),'CONTINUE READING')]</td>
+	<td>GMAIL_HTML_MODE_MESSAGE_BODY_CONTINUE_READING_BUTTON</td>
+	<td>//a[contains(.,'CONTINUE READING')]</td>
 	<td></td>
 </tr>
 <tr>

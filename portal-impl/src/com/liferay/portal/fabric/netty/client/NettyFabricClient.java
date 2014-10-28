@@ -77,7 +77,7 @@ public class NettyFabricClient implements FabricClient {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Starting netty fabric client using : " +
+				"Starting netty fabric client using " +
 					_nettyFabricClientConfig);
 		}
 

@@ -81,7 +81,11 @@ public class IncludeTag extends AttributesTagSupport {
 				return processEndTag();
 			}
 
+			invokeExtensionAt(UIItemKeys.BEFORE_END, false);
+
 			doInclude(page);
+
+			invokeExtensionAt(UIItemKeys.AFTER_END, false);
 
 			return EVAL_PAGE;
 		}
@@ -121,7 +125,11 @@ public class IncludeTag extends AttributesTagSupport {
 				return processStartTag();
 			}
 
+			invokeExtensionAt(UIItemKeys.BEFORE_START, true);
+
 			doInclude(page);
+
+			invokeExtensionAt(UIItemKeys.AFTER_START, true);
 
 			return EVAL_BODY_INCLUDE;
 		}
@@ -155,6 +163,12 @@ public class IncludeTag extends AttributesTagSupport {
 
 	public void setUseCustomPage(boolean useCustomPage) {
 		_useCustomPage = useCustomPage;
+	}
+
+	public static enum UIItemKeys {
+
+		AFTER_END, AFTER_START, BEFORE_END, BEFORE_START
+
 	}
 
 	protected void callSetAttributes() {
@@ -312,6 +326,11 @@ public class IncludeTag extends AttributesTagSupport {
 		requestDispatcher.include(request, response);
 
 		request.removeAttribute(WebKeys.SERVLET_CONTEXT_INCLUDE_FILTER_STRICT);
+	}
+
+	protected void invokeExtensionAt(UIItemKeys UIItemKeys, boolean ascending) {
+		TagExtensionUtil.invokeExtensionAt(
+			this, pageContext, UIItemKeys.toString(), ascending);
 	}
 
 	protected boolean isCleanUpSetAttributes() {

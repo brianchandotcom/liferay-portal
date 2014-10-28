@@ -109,25 +109,22 @@ else {
 	</aui:button-row>
 </aui:form>
 
-<portlet:resourceURL var="siteURLLayoutsURL">
-	<portlet:param name="struts_action" value="/mobile_device_rules/site_url_layouts" />
-</portlet:resourceURL>
-
-<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="editorURL">
-	<portlet:param name="struts_action" value="/mobile_device_rules/edit_action_editor" />
-	<portlet:param name="ajax" value="true" />
-</liferay-portlet:resourceURL>
-
 <aui:script>
 	function <portlet:namespace />changeDisplay() {
 		var $ = AUI.$;
+
+		var form = $(document.<portlet:namespace />fm);
+
+		<portlet:resourceURL var="siteURLLayoutsURL">
+			<portlet:param name="struts_action" value="/mobile_device_rules/site_url_layouts" />
+		</portlet:resourceURL>
 
 		$.ajax(
 			'<%= siteURLLayoutsURL.toString() %>',
 			{
 				data: {
-					<portlet:namespace />actionGroupId: document.<portlet:namespace />fm.<portlet:namespace />groupId.value,
-					<portlet:namespace />actionPlid: document.<portlet:namespace />fm.<portlet:namespace />actionPlid.value
+					<portlet:namespace />actionGroupId: form.fm('groupId').val(),
+					<portlet:namespace />actionPlid: form.fm('actionPlid').val()
 				},
 				success: function(responseData) {
 					$('#<portlet:namespace />layouts').html(responseData);
@@ -139,11 +136,18 @@ else {
 	function <portlet:namespace />changeType() {
 		var $ = AUI.$;
 
+		var form = $(document.<portlet:namespace />fm);
+
+		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="editorURL">
+			<portlet:param name="struts_action" value="/mobile_device_rules/edit_action_editor" />
+			<portlet:param name="ajax" value="true" />
+		</liferay-portlet:resourceURL>
+
 		$.ajax(
 			'<%= editorURL.toString() %>',
 			{
 				data: {
-					<portlet:namespace />type: document.<portlet:namespace />fm.<portlet:namespace />type.value,
+					<portlet:namespace />type: form.fm('type').val(),
 					<portlet:namespace /><%= "actionId" %>: <%= actionId %>
 				},
 				success: function(responseData) {

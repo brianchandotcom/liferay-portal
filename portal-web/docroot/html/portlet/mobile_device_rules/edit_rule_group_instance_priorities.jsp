@@ -92,18 +92,14 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 	function <portlet:namespace />saveRuleGroupInstancesPriorities() {
 		var $ = AUI.$;
 
-		var ruleGroupInstances = [];
-
-		$('#<portlet:namespace />ruleGroupInstancesPriorities .rule-group-instance').each(
+		var ruleGroupInstances = $('#<portlet:namespace />ruleGroupInstancesPriorities .rule-group-instance').map(
 			function(index, item) {
-				ruleGroupInstances.push(
-					{
-						priority: index,
-						ruleGroupInstanceId: $(item).data('rule-group-instance-id')
-					}
-				);
+				return {
+					priority: index,
+					ruleGroupInstanceId: $(item).data('rule-group-instance-id')
+				};
 			}
-		);
+		).get();
 
 		$('#<portlet:namespace />ruleGroupsInstancesJSON').val(JSON.stringify(ruleGroupInstances));
 

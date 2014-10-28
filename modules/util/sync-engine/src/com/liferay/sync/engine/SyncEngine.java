@@ -293,6 +293,15 @@ public class SyncEngine {
 
 			@Override
 			public void run() {
+				try {
+					doRun();
+				}
+				catch (Exception e) {
+					_logger.error(e.getMessage(), e);
+				}
+			}
+
+			protected void doRun() {
 				SyncAccount updatedSyncAccount =
 					SyncAccountService.fetchSyncAccount(
 						syncAccount.getSyncAccountId());

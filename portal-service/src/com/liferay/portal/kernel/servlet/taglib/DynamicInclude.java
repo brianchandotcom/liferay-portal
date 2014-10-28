@@ -26,7 +26,7 @@ public interface DynamicInclude {
 
 	public void include(
 			HttpServletRequest request, HttpServletResponse response,
-			String key, boolean ascendingPriority)
+			String key)
 		throws IOException;
 
 }

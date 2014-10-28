@@ -30,7 +30,7 @@ AUI.add(
 		CONTROLS_POSITION_MAP[MapBase.POSITION.TOP_LEFT] = 'topleft';
 		CONTROLS_POSITION_MAP[MapBase.POSITION.TOP_RIGHT] = 'topright';
 
-		var OpenstreetMapDialog = A.Component.create(
+		var OpenStreetMapDialog = A.Component.create(
 			{
 				ATTRS: {
 					map: {
@@ -64,7 +64,7 @@ AUI.add(
 			}
 		);
 
-		var OpenstreetMapGeocoder = A.Component.create(
+		var OpenStreetMapGeocoder = A.Component.create(
 			{
 				EXTENDS: A.Base,
 
@@ -141,7 +141,7 @@ AUI.add(
 			}
 		);
 
-		var OpenstreetMapGeojson = A.Component.create(
+		var OpenStreetMapGeojson = A.Component.create(
 			{
 				AUGMENTS: [Liferay.MapGeojsonBase],
 
@@ -219,7 +219,7 @@ AUI.add(
 			}
 		);
 
-		var OpenstreetMapMarker = A.Component.create(
+		var OpenStreetMapMarker = A.Component.create(
 			{
 				AUGMENTS: [Liferay.MapMarkerBase],
 
@@ -273,7 +273,7 @@ AUI.add(
 			}
 		);
 
-		var OpenstreetMap = A.Component.create(
+		var OpenStreetMap = A.Component.create(
 			{
 				ATTRS : {
 					tileURI: {
@@ -289,13 +289,13 @@ AUI.add(
 				NAME: 'lfr-map-openstreet',
 
 				prototype: {
-					DialogImpl: OpenstreetMapDialog,
+					DialogImpl: OpenStreetMapDialog,
 
-					GeocoderImpl: OpenstreetMapGeocoder,
+					GeocoderImpl: OpenStreetMapGeocoder,
 
-					GeojsonImpl: OpenstreetMapGeojson,
+					GeojsonImpl: OpenStreetMapGeojson,
 
-					MarkerImpl: OpenstreetMapMarker,
+					MarkerImpl: OpenStreetMapMarker,
 
 					addControl: function(control, position) {
 						var instance = this;
@@ -352,7 +352,7 @@ AUI.add(
 			}
 		);
 
-		Liferay.OpenstreetMap = OpenstreetMap;
+		Liferay.OpenStreetMap = OpenStreetMap;
 	},
 	'',
 	{

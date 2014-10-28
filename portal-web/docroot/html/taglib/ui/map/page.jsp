@@ -49,7 +49,7 @@ String modules = "liferay-map-" + mapsAPIProvider.toLowerCase();
 	</liferay-util:html-top>
 </c:if>
 
-<c:if test='<%= mapsAPIProvider.equals("Openstreet") %>'>
+<c:if test='<%= mapsAPIProvider.equals("OpenStreet") %>'>
 	<liferay-util:html-top outputKey="js_maps_openstreet_skip_loading">
 		<link href="<%= protocol %>://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" rel="stylesheet" />
 		<script src="<%= protocol %>://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>

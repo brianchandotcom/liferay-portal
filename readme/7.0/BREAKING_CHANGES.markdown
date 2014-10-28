@@ -577,34 +577,34 @@ Portal by means of an OSGi container.
 
 ---------------------------------------
 
-### Replacement of the field type from the Journal Article API into a Vocabulary
+### Migration of the Field *Type* from the Journal Article API into a Vocabulary
 - **Date:** 2014-Oct-13
 - **JIRA Ticket:** LPS-50764
 
 #### What changed?
 
-The field "type" from the entity Journal Article has been removed. The Journal 
-API doesn't support this parameter anymore. A new vocabulary is created when
-migrating from previous versions of Liferay called "Web Content Types" and the
-types from the existing articles are kept as a categories of this vocabulary.
+The field *type* from the Journal Article entity has been removed. The Journal
+API no longer supports this parameter. A new vocabulary is created when
+migrating from previous versions of Liferay called *Web Content Types*, and the
+types from the existing articles are kept as categories of this vocabulary.
 
 #### Who is affected?
 
-Any call the the API JournalArticle.getType(), JournalFeed.getType(), 
-ArticleTypeException, to the JournalArticleService or the JournalFeedService
-using the type parameter.
+This affects any caller of the `JournalArticle.getType()`,
+`JournalFeed.getType()`, and `ArticleTypeException`, which use the `type`
+parameter of the `JournalArticle` or `JournalFeed` service.
 
 #### How should I update my code?
 
-If your logic was not affected by the type, you can simply remove this parameter
-from the call the Journal API. If your logic was affected by this type, you 
-should now use the AssetCategoryService to obtain the category of the journal
+If your logic was not affected by the type, you can simply remove the `type`
+parameter from the Journal API call. If your logic was affected by the type, you
+should now use the `AssetCategoryService` to obtain the category of the journal
 articles.
 
 #### Why was this change made?
 
 Web Content Types had to be updated in a properties file and could not be 
-translated easily. Categories provide a much more flexible behaviour and a
+translated easily. Categories provide a much more flexible behavior and a
 better UI. In addition, all the features developed for categories can be used
 now, such as filters in asset publisher or faceted search.
 

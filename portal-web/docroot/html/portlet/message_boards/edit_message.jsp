@@ -547,17 +547,6 @@ else {
 		submitForm(form);
 	}
 
-	function <portlet:namespace />selectCategory(categoryId, categoryName) {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.fm('mbCategoryId').val(categoryId);
-
-		var nameEl = document.getElementById('<portlet:namespace />categoryName');
-
-		nameEl.href = '<portlet:renderURL><portlet:param name="struts_action" value="/message_boards/view" /></portlet:renderURL>&<portlet:namespace />mbCategoryId=' + categoryId;
-		nameEl.innerHTML = categoryName + '&nbsp;';
-	}
-
 	<c:choose>
 		<c:when test="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>">
 			function <portlet:namespace />trashAttachment(index, action) {

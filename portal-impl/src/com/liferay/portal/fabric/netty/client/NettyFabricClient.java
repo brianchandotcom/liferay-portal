@@ -87,15 +87,6 @@ public class NettyFabricClient implements FabricClient {
 
 		_bootstrap = new Bootstrap();
 
-		_bootstrap.group(
-			new NioEventLoopGroup(
-				_nettyFabricClientConfig.getEventLoopGroupThreadCount(),
-				new NamedThreadFactory(
-					"Netty Fabric Client/NIO Event Loop Group",
-					Thread.NORM_PRIORITY, null)));
-		_bootstrap.channel(NioSocketChannel.class);
-		_bootstrap.handler(new NettyFabricClientChannelInitializer());
-
 		_bootstrap.attr(
 			_executionEventExecutorGroupAttributeKey,
 			new DefaultEventExecutorGroup(
@@ -117,6 +108,14 @@ public class NettyFabricClient implements FabricClient {
 				new NamedThreadFactory(
 					"Netty Fabric Client/RPC Event Executor Group",
 					Thread.NORM_PRIORITY, null)));
+		_bootstrap.channel(NioSocketChannel.class);
+		_bootstrap.group(
+			new NioEventLoopGroup(
+				_nettyFabricClientConfig.getEventLoopGroupThreadCount(),
+				new NamedThreadFactory(
+					"Netty Fabric Client/NIO Event Loop Group",
+					Thread.NORM_PRIORITY, null)));
+		_bootstrap.handler(new NettyFabricClientChannelInitializer());
 
 		_reconnectCounter.set(_nettyFabricClientConfig.getReconnectCount());
 

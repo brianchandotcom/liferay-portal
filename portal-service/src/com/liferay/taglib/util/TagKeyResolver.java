@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.servlet.taglib;
-
-import java.io.IOException;
+package com.liferay.taglib.util;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,11 +20,10 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Carlos Sierra Andrés
  */
-public interface DynamicInclude {
+public interface TagKeyResolver {
 
-	public void include(
-			HttpServletRequest request, HttpServletResponse response,
-			String key)
-		throws IOException;
+	public String getKey(
+		HttpServletRequest request, HttpServletResponse response,
+		Object jspTag);
 
 }

@@ -36,8 +36,7 @@ public class DoIncludeJSPDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void include(
-		HttpServletRequest request, HttpServletResponse response, String key,
-		boolean ascendingPriority) {
+		HttpServletRequest request, HttpServletResponse response, String key) {
 
 		ComponentContext componentContext =
 			(ComponentContext)request.getAttribute(

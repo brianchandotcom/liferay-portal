@@ -12,21 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.kernel.servlet.taglib;
+package com.liferay.taglib.util;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerMap;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public interface DynamicInclude {
+public class TagResolverRegistry {
 
-	public void include(
-			HttpServletRequest request, HttpServletResponse response,
-			String key)
-		throws IOException;
+	public static TagKeyResolver getTagIdResolver(String target) {
+		return _instance._tagResolvers.getService(target);
+	}
+
+	private TagResolverRegistry() {
+		_tagResolvers.open();
+	}
+
+	private static final TagResolverRegistry _instance =
+		new TagResolverRegistry();
+
+	private final ServiceTrackerMap<String, TagKeyResolver>
+		_tagResolvers = ServiceTrackerCollections.singleValueMap(
+			TagKeyResolver.class, "target");
 
 }

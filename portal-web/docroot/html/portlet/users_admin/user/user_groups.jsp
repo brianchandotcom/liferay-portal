@@ -35,6 +35,9 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 	/>
 </liferay-util:buffer>
 
+<aui:input name="addUserGroupIds" type="hidden" />
+<aui:input name="deleteUserGroupIds" type="hidden" />
+
 <h3><liferay-ui:message key="user-groups" /></h3>
 
 <liferay-ui:search-container
@@ -112,6 +115,8 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 
 						searchContainer.addRow(rowColumns, event.usergroupid);
 						searchContainer.updateDataStore();
+
+						<portlet:namespace />addUserGroup(event.usergroupid);
 					}
 				);
 			}
@@ -120,6 +125,24 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 </c:if>
 
 <aui:script use="liferay-search-container">
+	var <portlet:namespace />addUserGroupIds = [];
+	var <portlet:namespace />deleteUserGroupIds = [];
+
+	function <portlet:namespace />addUserGroup(userGroupId) {
+		for (var i = 0; i < <portlet:namespace />deleteUserGroupIds.length; i++) {
+			if (<portlet:namespace />deleteUserGroupIds[i] == userGroupId) {
+				<portlet:namespace />deleteUserGroupIds.splice(i, 1);
+
+				break;
+			}
+		}
+
+		<portlet:namespace />addUserGroupIds.push(userGroupId);
+
+		document.<portlet:namespace />fm.<portlet:namespace />addUserGroupIds.value = <portlet:namespace />addUserGroupIds.join(',');
+		document.<portlet:namespace />fm.<portlet:namespace />deleteUserGroupIds.value = <portlet:namespace />deleteUserGroupIds.join(',');
+	}
+
 	var Util = Liferay.Util;
 
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />userGroupsSearchContainer');
@@ -144,6 +167,19 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 			}
 
 			searchContainer.deleteRow(tr, rowId);
+
+			for (var i = 0; i < <portlet:namespace />addUserGroupIds.length; i++) {
+				if (<portlet:namespace />addUserGroupIds[i] == rowId) {
+					<portlet:namespace />addUserGroupIds.splice(i, 1);
+
+					break;
+				}
+			}
+
+			<portlet:namespace />deleteUserGroupIds.push(rowId);
+
+			document.<portlet:namespace />fm.<portlet:namespace />addUserGroupIds.value = <portlet:namespace />addUserGroupIds.join(',');
+			document.<portlet:namespace />fm.<portlet:namespace />deleteUserGroupIds.value = <portlet:namespace />deleteUserGroupIds.join(',');
 		},
 		'.modify-link'
 	);

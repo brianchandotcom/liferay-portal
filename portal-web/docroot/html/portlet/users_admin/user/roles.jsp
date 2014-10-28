@@ -42,6 +42,9 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 	/>
 </liferay-util:buffer>
 
+<aui:input name="addRoleIds" type="hidden" />
+<aui:input name="deleteRoleIds" type="hidden" />
+
 <aui:input name="addGroupRolesGroupIds" type="hidden" />
 <aui:input name="addGroupRolesRoleIds" type="hidden" />
 <aui:input name="deleteGroupRolesGroupIds" type="hidden" />
@@ -511,10 +514,28 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 </c:if>
 
 <aui:script>
+	var <portlet:namespace />addRoleIds = [];
+	var <portlet:namespace />deleteRoleIds = [];
+
 	var <portlet:namespace />addGroupRolesGroupIds = [];
 	var <portlet:namespace />addGroupRolesRoleIds = [];
 	var <portlet:namespace />deleteGroupRolesGroupIds = [];
 	var <portlet:namespace />deleteGroupRolesRoleIds = [];
+
+	function <portlet:namespace />deleteRegularRole(roleId) {
+		for (var i = 0; i < <portlet:namespace />addRoleIds.length; i++) {
+			if (<portlet:namespace />addRoleIds[i] == roleId) {
+				<portlet:namespace />addRoleIds.splice(i, 1);
+
+				break;
+			}
+		}
+
+		<portlet:namespace />deleteRoleIds.push(roleId);
+
+		document.<portlet:namespace />fm.<portlet:namespace />addRoleIds.value = <portlet:namespace />addRoleIds.join(',');
+		document.<portlet:namespace />fm.<portlet:namespace />deleteRoleIds.value = <portlet:namespace />deleteRoleIds.join(',');
+	}
 
 	function <portlet:namespace />deleteGroupRole(roleId, groupId) {
 		for (var i = 0; i < <portlet:namespace />addGroupRolesRoleIds.length; i++) {
@@ -575,6 +596,19 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 			}
 			else {
 				rowColumns.push('<a class="modify-link" data-rowId="' + roleId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>');
+
+				<portlet:namespace />addRoleIds.push(roleId);
+
+				for (var i = 0; i < <portlet:namespace />deleteRoleIds.length; i++) {
+					if (<portlet:namespace />deleteRoleIds[i] == roleId) {
+						<portlet:namespace />deleteRoleIds.splice(i, 1);
+
+						break;
+					}
+				}
+
+				document.<portlet:namespace />fm.<portlet:namespace />addRoleIds.value = <portlet:namespace />addRoleIds.join(',');
+				document.<portlet:namespace />fm.<portlet:namespace />deleteRoleIds.value = <portlet:namespace />deleteRoleIds.join(',');
 			}
 
 			searchContainer.addRow(rowColumns, roleId);
@@ -609,6 +643,8 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 			}
 
 			searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
+
+			<portlet:namespace />deleteRegularRole(rowId);
 		},
 		'.modify-link'
 	);

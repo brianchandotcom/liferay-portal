@@ -156,4 +156,13 @@ public class PollsQuestion extends PollsQuestionModelImpl implements PollsQuesti
 	}
 
 	private List<PollsChoice> _choices = new ArrayList<>();
+
+	// ---------------------------------------------------------------- business method
+
+	// [[@]] If we want to add behavior to the classes, this would be the place :)
+	// But I think that is too advance for us at the moment.
+	public void voteForChoice() {
+
+	}
+
 }

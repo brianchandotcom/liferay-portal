@@ -1475,7 +1475,12 @@ public class LiferaySeleniumHelper {
 			line = value.substring(x, y);
 		}
 
-		liferaySelenium.typeKeys(locator, line.trim());
+		if (line.contains("(")) {
+			typeParenthesis(liferaySelenium, locator, line);
+		}
+		else {
+			liferaySelenium.typeKeys(locator, line.trim());
+		}
 
 		liferaySelenium.keyPress(locator, "\\RETURN");
 
@@ -1485,16 +1490,42 @@ public class LiferaySeleniumHelper {
 
 			if (y != -1) {
 				line = value.substring(x, y);
+
+				if (line.contains("(")) {
+					typeParenthesis(liferaySelenium, locator, line);
+				}
+				else {
+					liferaySelenium.typeKeys(locator, line.trim());
+				}
 			}
 			else {
 				line = value.substring(x, value.length());
-			}
 
-			liferaySelenium.typeKeys(locator, line.trim());
+				liferaySelenium.typeKeys(locator, line.trim());
+			}
 
 			liferaySelenium.keyPress(locator, "\\RETURN");
 		}
 	}
+
+	protected static void typeParenthesis(
+		LiferaySelenium liferaySelenium, String locator, String line) {
+
+		int x = 0;
+
+		while (line.contains("(")) {
+			_screen.type(line.substring(x, line.indexOf("(")));
+
+			_screen.type("9", Key.SHIFT);
+
+			x = line.indexOf("(");
+
+			line = StringUtil.replaceFirst(line, "(", "");
+		}
+
+		_screen.type(line.substring(x).trim());
+	}
+
 
 	public static void typeFrame(
 		LiferaySelenium liferaySelenium, String locator, String value) {

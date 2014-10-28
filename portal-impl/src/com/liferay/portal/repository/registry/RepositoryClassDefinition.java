@@ -87,14 +87,18 @@ public class RepositoryClassDefinition
 			Class<S> repositoryEventTypeClass, Class<T> modelClass,
 			RepositoryEventListener<S, T> repositoryEventListener) {
 
+		if (repositoryEventListener == null) {
+			throw new NullPointerException(
+				"it's not legal to register a null repository event listener");
+		}
+
 		Tuple key = new Tuple(repositoryEventTypeClass, modelClass);
 
 		Collection<RepositoryEventListener<?, ?>> repositoryEventListeners =
 			_repositoryEventListeners.get(key);
 
 		if (repositoryEventListeners == null) {
-			repositoryEventListeners =
-				new ArrayList<RepositoryEventListener<?, ?>>();
+			repositoryEventListeners = new ArrayList<>();
 
 			_repositoryEventListeners.put(key, repositoryEventListeners);
 		}

@@ -30,7 +30,7 @@
 
 </c:if>
 
-<c:if test="<%= PropsValues.WEB_SERVER_DISPLAY_NODE %>">
+<c:if test="<%= PropsValues.WEB_SERVER_DISPLAY_NODE && !themeDisplay.isStatePopUp() %>">
 	<div class="alert alert-info">
 		<liferay-ui:message key="node" />: <%= StringUtil.toLowerCase(PortalUtil.getComputerName()) + StringPool.COLON + PortalUtil.getPortalLocalPort(false) %>
 	</div>

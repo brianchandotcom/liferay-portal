@@ -132,9 +132,11 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "move-th
 					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/message_boards/select_category" /><portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getParentCategoryId()) %>" /></portlet:renderURL>'
 				},
 				function(event) {
-					document.<portlet:namespace />fm.<portlet:namespace />mbCategoryId.value = event.categoryid;
+					var form = AUI.$(document.<portlet:namespace />fm);
 
-					document.getElementById('<portlet:namespace />categoryName').value = AUI._.unescape(event.name);
+					form.fm('mbCategoryId').val(event.categoryid);
+
+					form.fm('categoryName').val(AUI._.unescape(event.name));
 				}
 			);
 		}

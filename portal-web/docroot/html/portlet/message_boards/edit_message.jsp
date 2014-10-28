@@ -515,36 +515,42 @@ else {
 
 <aui:script>
 	function <portlet:namespace />getSuggestionsContent() {
-		return document.<portlet:namespace />fm.<portlet:namespace />subject.value + ' ' + <portlet:namespace />getHTML();
+		return AUI.$(document.<portlet:namespace />fm).fm('subject').val() + ' ' + <portlet:namespace />getHTML();
 	}
 
 	function <portlet:namespace />previewMessage() {
+		var form = AUI.$(document.<portlet:namespace />fm);
+
 		<c:if test="<%= ((message != null) && !message.isDraft()) %>">
 			if (!confirm('<liferay-ui:message key="in-order-to-preview-your-changes,-the-message-will-be-saved-as-a-draft-and-other-users-may-not-be-able-to-see-it" />')) {
 				return false;
 			}
 		</c:if>
 
-		document.<portlet:namespace />fm.<portlet:namespace />body.value = <portlet:namespace />getHTML();
-		document.<portlet:namespace />fm.<portlet:namespace />preview.value = 'true';
+		form.fm('body').val(<portlet:namespace />getHTML());
+		form.fm('preview').val('true');
 
 		<portlet:namespace />saveMessage(true);
 	}
 
 	function <portlet:namespace />saveMessage(draft) {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (message == null) ? Constants.ADD : Constants.UPDATE %>';
-		document.<portlet:namespace />fm.<portlet:namespace />body.value = <portlet:namespace />getHTML();
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		form.fm('<%= Constants.CMD %>').val('<%= (message == null) ? Constants.ADD : Constants.UPDATE %>');
+		form.fm('body').val(<portlet:namespace />getHTML());
 
 		if (!draft) {
-			document.<portlet:namespace />fm.<portlet:namespace />preview.value = <%= preview %>;
-			document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = <%= WorkflowConstants.ACTION_PUBLISH %>;
+			form.fm('preview').val(<%= preview %>);
+			form.fm('workflowAction').val(<%= WorkflowConstants.ACTION_PUBLISH %>);
 		}
 
-		submitForm(document.<portlet:namespace />fm);
+		submitForm(form);
 	}
 
 	function <portlet:namespace />selectCategory(categoryId, categoryName) {
-		document.<portlet:namespace />fm.<portlet:namespace />mbCategoryId.value = categoryId;
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		form.fm('mbCategoryId').val(categoryId);
 
 		var nameEl = document.getElementById('<portlet:namespace />categoryName');
 

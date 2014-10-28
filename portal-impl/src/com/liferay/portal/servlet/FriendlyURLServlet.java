@@ -182,13 +182,19 @@ public class FriendlyURLServlet extends HttpServlet {
 	protected String getPathInfo(HttpServletRequest request) {
 		String requestURI = request.getRequestURI();
 
+		String contextPath = request.getContextPath();
+		String pathContext = PortalUtil.getPathContext(request);
+
 		int pos = requestURI.indexOf(Portal.JSESSIONID);
 
 		if (pos != -1) {
 			requestURI = requestURI.substring(0, pos);
 		}
 
-		return requestURI.substring(_friendlyURLPathPrefix.length());
+		requestURI = pathContext.concat(requestURI);
+
+		return requestURI.substring(
+			contextPath.length() + _friendlyURLPathPrefix.length());
 	}
 
 	protected Object[] getRedirect(

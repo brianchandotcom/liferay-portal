@@ -18,8 +18,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.util.test.RandomTestUtil;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
@@ -49,6 +54,129 @@ public class RepositoryEventTest {
 
 		private final RepositoryClassDefinition _repositoryClassDefinition =
 			new RepositoryClassDefinition(null);
+
+	}
+
+	@RunWith(LiferayIntegrationJUnitTestRunner.class)
+	public static final class WhenTriggeringEvents {
+
+		@Test
+		public void shouldExecuteAllMatchingListeners() throws Exception {
+			AtomicInteger count = new AtomicInteger();
+
+			registerCounterRepositoryEventListener(
+				_repositoryClassDefinition, RepositoryEventType.Add.class,
+				FileEntry.class, count);
+
+			registerCounterRepositoryEventListener(
+				_repositoryClassDefinition, RepositoryEventType.Add.class,
+				FileEntry.class, count);
+
+			registerCounterRepositoryEventListener(
+				_repositoryClassDefinition, RepositoryEventType.Add.class,
+				FileEntry.class, count);
+
+			_repositoryClassDefinition.trigger(
+				RepositoryEventType.Add.class, FileEntry.class, null);
+
+			Assert.assertEquals(3, count.get());
+		}
+
+		@Test
+		public void shouldExecuteListenerExactlyOncePerEvent()
+			throws Exception {
+
+			AtomicInteger count = registerCounterRepositoryEventListener(
+				_repositoryClassDefinition, RepositoryEventType.Add.class,
+				FileEntry.class);
+
+			int n = Math.abs(RandomTestUtil.nextInt());
+
+			for (int i = 0; i < n; i++) {
+				_repositoryClassDefinition.trigger(
+					RepositoryEventType.Add.class, FileEntry.class, null);
+			}
+
+			Assert.assertEquals(n, count.get());
+		}
+
+		@Test
+		public void shouldExecuteOnlyMatchingListeners() throws Exception {
+			AtomicInteger count = registerCounterRepositoryEventListener(
+				_repositoryClassDefinition, RepositoryEventType.Add.class,
+				FileEntry.class);
+
+			_repositoryClassDefinition.registerRepositoryEventListener(
+				RepositoryEventType.Update.class, FileEntry.class,
+				new AlwaysFailingRepositoryEventListener
+					<RepositoryEventType.Update, FileEntry>());
+
+			_repositoryClassDefinition.trigger(
+				RepositoryEventType.Add.class, FileEntry.class, null);
+
+			Assert.assertEquals(1, count.get());
+		}
+
+		private final RepositoryClassDefinition _repositoryClassDefinition =
+			new RepositoryClassDefinition(null);
+
+	}
+
+	protected static <S extends RepositoryEventType, T>
+		AtomicInteger registerCounterRepositoryEventListener(
+			RepositoryEventRegistry repositoryEventRegistry,
+			Class<S> eventClass, Class<T> modelClass) {
+
+		AtomicInteger count = new AtomicInteger();
+
+		CounterRepositoryEventListener<S, T> counterRepositoryEventListener =
+			new CounterRepositoryEventListener<>(count);
+
+		repositoryEventRegistry.registerRepositoryEventListener(
+			eventClass, modelClass, counterRepositoryEventListener);
+
+		return count;
+	}
+
+	protected static <S extends RepositoryEventType, T>
+		AtomicInteger registerCounterRepositoryEventListener(
+			RepositoryEventRegistry repositoryEventRegistry,
+			Class<S> eventClass, Class<T> modelClass, AtomicInteger count) {
+
+		CounterRepositoryEventListener<S, T> counterRepositoryEventListener =
+			new CounterRepositoryEventListener<>(count);
+
+		repositoryEventRegistry.registerRepositoryEventListener(
+			eventClass, modelClass, counterRepositoryEventListener);
+
+		return count;
+	}
+
+	private static class AlwaysFailingRepositoryEventListener
+			<S extends RepositoryEventType, T>
+		implements RepositoryEventListener<S, T> {
+
+		@Override
+		public void execute(T target) throws PortalException {
+			throw new IllegalStateException();
+		}
+
+	}
+
+	private static class CounterRepositoryEventListener
+			<S extends RepositoryEventType, T>
+		implements RepositoryEventListener<S, T> {
+
+		public CounterRepositoryEventListener(AtomicInteger count) {
+			_count = count;
+		}
+
+		@Override
+		public void execute(T target) throws PortalException {
+			_count.incrementAndGet();
+		}
+
+		private final AtomicInteger _count;
 
 	}
 

@@ -138,31 +138,12 @@ public class NettyFabricAgentStubTest {
 
 		ProcessConfig processConfig = builder.build();
 
-		final File testFile1 = new File("TestFile1");
-		final File testFile2 = new File("TestFile2");
-		final File testFile3 = new File("TestFile3");
+		File testFile1 = new File("TestFile1");
+		File testFile2 = new File("TestFile2");
+		File testFile3 = new File("TestFile3");
 
-		ProcessCallable<String> processCallable =
-			new ProcessCallable<String>() {
-
-				@Override
-				public String call() {
-					return "Test Result";
-				}
-
-				@OutputResource
-				private final File _testOutput1 = testFile1;
-
-				@SuppressWarnings("unused")
-				private final File _testOutput2 = testFile2;
-
-				@OutputResource
-				private final File _testOutput3 = testFile3;
-
-				@OutputResource
-				private final String _notAFile = "Not a File";
-
-			};
+		ProcessCallable<String> processCallable = new TestProcessCallable(
+			testFile1, testFile2, testFile3);
 
 		ChannelPipeline channelPipeline = _embeddedChannel.pipeline();
 
@@ -205,8 +186,16 @@ public class NettyFabricAgentStubTest {
 		Assert.assertEquals(id, nettyFabricWorkerConfig.getId());
 		Assert.assertSame(
 			processConfig, nettyFabricWorkerConfig.getProcessConfig());
-		Assert.assertSame(
-			processCallable, nettyFabricWorkerConfig.getProcessCallable());
+
+		ProcessCallable<String> nettyFabricWorkerProcessCallable =
+			nettyFabricWorkerConfig.getProcessCallable();
+
+		Assert.assertNotSame(processCallable, nettyFabricWorkerProcessCallable);
+		Assert.assertEquals(
+			processCallable.toString(),
+			nettyFabricWorkerProcessCallable.toString());
+		Assert.assertEquals(
+			processCallable.call(), nettyFabricWorkerProcessCallable.call());
 
 		Collection<? extends FabricWorker<?>> fabricWorkers =
 			nettyFabricAgentStub.getFabricWorkers();
@@ -413,5 +402,37 @@ public class NettyFabricAgentStubTest {
 
 	private final EmbeddedChannel _embeddedChannel =
 		NettyTestUtil.createEmptyEmbeddedChannel();
+
+	private static class TestProcessCallable
+		implements ProcessCallable<String> {
+
+		public TestProcessCallable(
+			File testOutput1, File testOutput2, File testOutput3) {
+
+			_testOutput1 = testOutput1;
+			_testOutput2 = testOutput2;
+			_testOutput3 = testOutput3;
+		}
+
+		@Override
+		public String call() {
+			return "Test Result";
+		}
+
+		@OutputResource
+		private static final String _NOT_AFILE = "Not a File";
+
+		private static final long serialVersionUID = 1L;
+
+		@OutputResource
+		private final File _testOutput1;
+
+		@SuppressWarnings("unused")
+		private final File _testOutput2;
+
+		@OutputResource
+		private final File _testOutput3;
+
+	}
 
 }

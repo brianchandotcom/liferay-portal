@@ -14,6 +14,7 @@
 
 package com.liferay.portal.fabric.netty.handlers;
 
+import com.liferay.portal.fabric.FabricResourceMappingVisitor;
 import com.liferay.portal.fabric.InputResource;
 import com.liferay.portal.fabric.agent.FabricAgent;
 import com.liferay.portal.fabric.local.agent.EmbeddedProcessExecutor;
@@ -42,10 +43,12 @@ import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessConfig;
 import com.liferay.portal.kernel.process.ProcessConfig.Builder;
 import com.liferay.portal.kernel.process.ProcessException;
+import com.liferay.portal.kernel.process.local.ReturnProcessCallable;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.ObjectGraphUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.AdviseWith;
 import com.liferay.portal.test.runners.AspectJMockingNewClassLoaderJUnitTestRunner;
@@ -296,9 +299,9 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 	public void testLoadResources() throws Exception {
 		final Map<Path, Path> mergedResources = new HashMap<Path, Path>();
 
-		final Path inputResource1 = getAbsolutePath("inputResources1");
+		Path inputResource1 = getAbsolutePath("inputResources1");
 		Path mappedInputResource1 = getAbsolutePath("mappedInputResource1");
-		final Path inputResource2 = getAbsolutePath("inputResources2");
+		Path inputResource2 = getAbsolutePath("inputResources2");
 
 		mergedResources.put(inputResource1, mappedInputResource1);
 
@@ -361,24 +364,21 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		ProcessConfig processConfig = builder.build();
 
 		ProcessCallable<Serializable> processCallable =
-			new ProcessCallable<Serializable>() {
+			new LoadResourceProcessCallable(
+				inputResource1.toFile(), inputResource2.toFile());
 
-				@Override
-				public Serializable call() {
-					return null;
-				}
+		FabricResourceMappingVisitor fabricResourceMappingVisitor =
+			new FabricResourceMappingVisitor(
+				InputResource.class, getAbsolutePath("repository"));
 
-				@InputResource
-				private final File _inputFile1 = inputResource1.toFile();
-				@InputResource
-				private final File _inputFile2 = inputResource2.toFile();
-
-			};
+		ObjectGraphUtil.walkObjectGraph(
+			processCallable, fabricResourceMappingVisitor);
 
 		NoticeableFuture<LoadedResources> noticeableFuture =
 			nettyFabricWorkerExecutionChannelHandler.loadResources(
 				new NettyFabricWorkerConfig<Serializable>(
-					0, processConfig, processCallable));
+					0, processConfig, processCallable,
+					fabricResourceMappingVisitor.getResourceMap()));
 
 		LoadedResources loadedResources = noticeableFuture.get();
 
@@ -815,15 +815,8 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		builder.setRuntimeClassPath(StringPool.BLANK);
 
 		return new NettyFabricWorkerConfig<Serializable>(
-			0, builder.build(),
-			new ProcessCallable<Serializable>() {
-
-				@Override
-				public Serializable call() {
-					return null;
-				}
-
-			});
+			0, builder.build(), new ReturnProcessCallable<Serializable>(null),
+			Collections.<Path, Path>emptyMap());
 	}
 
 	protected NettyFabricAgentStub installNettyFabricAgentStub() {
@@ -870,5 +863,28 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 	private final EmbeddedChannel _embeddedChannel =
 		NettyTestUtil.createEmptyEmbeddedChannel();
+
+	private static class LoadResourceProcessCallable
+		implements ProcessCallable<Serializable> {
+
+		public LoadResourceProcessCallable(File inputFile1, File inputFile2) {
+			_inputFile1 = inputFile1;
+			_inputFile2 = inputFile2;
+		}
+
+		@Override
+		public Serializable call() throws ProcessException {
+			return null;
+		}
+
+		private static final long serialVersionUID = 1L;
+
+		@InputResource
+		private final File _inputFile1;
+
+		@InputResource
+		private final File _inputFile2;
+
+	}
 
 }

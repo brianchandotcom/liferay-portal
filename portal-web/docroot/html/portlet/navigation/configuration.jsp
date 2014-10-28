@@ -144,25 +144,27 @@
 		'change',
 		'select',
 		function() {
-			var data = {};
+			var data = {
+				bulletStyle: selectBulletStyle.val(),
+				displayStyle: selectDisplayStyle.val(),
+				preview: true
+			};
 
 			var hide = true;
 
 			if (selectDisplayStyle.val() == '[custom]') {
 				hide = false;
 
-				data['_<%= HtmlUtil.escapeJS(portletResource) %>_headerType'] = selectHeaderType.val();
-				data['_<%= HtmlUtil.escapeJS(portletResource) %>_includedLayouts'] = selectIncludedLayouts.val();
-				data['_<%= HtmlUtil.escapeJS(portletResource) %>_nestedChildren'] = selectNestedChildren.val();
-				data['_<%= HtmlUtil.escapeJS(portletResource) %>_rootLayoutLevel'] = selectRootLayoutLevel.val();
-				data['_<%= HtmlUtil.escapeJS(portletResource) %>_rootLayoutType'] = selectRootLayoutType.val();
+				data.headerType = selectHeaderType.val();
+				data.includedLayouts = selectIncludedLayouts.val();
+				data.nestedChildren = selectNestedChildren.val();
+				data.rootLayoutLevel = selectRootLayoutLevel.val();
+				data.rootLayoutType = selectRootLayoutType.val();
 			}
 
 			customDisplayOptions.toggleClass('hide', hide);
 
-			data['_<%= HtmlUtil.escapeJS(portletResource) %>_bulletStyle'] = selectBulletStyle.val();
-			data['_<%= HtmlUtil.escapeJS(portletResource) %>_displayStyle'] = selectDisplayStyle.val();
-			data['_<%= HtmlUtil.escapeJS(portletResource) %>_preview'] = true;
+			data = Liferay.Util.ns('_<%= HtmlUtil.escapeJS(portletResource) %>_', data);
 
 			Liferay.Portlet.refresh(curPortletBoundaryId, data);
 		}

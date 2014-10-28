@@ -1,0 +1,132 @@
+<html>
+<head>
+<title>CPStore</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPStore</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPStore</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>MARKETPLACE_IFRAME</td>
+	<td>//iframe[contains(@id,'marketplaceportlet_frame')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_ADDRESS_FIELD</td>
+	<td>//input[contains(@id,'login')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PASSWORD_FIELD</td>
+	<td>//input[@type='password']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIGN_IN_BUTTON</td>
+	<td>//input[@value='Sign In']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UPDATE_BUTTON</td>
+	<td>//a[@data-action='updateApp']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[contains(@id,'keywords')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//input[@value='Search']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APP_TITLE</td>
+	<td>//div[contains(@class,'app-entry')]/ul/li/a[contains(@title,'${key_appName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_PURCHASE_BUTTON</td>
+	<td>//div[@class='purchase']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PURCHASE-->
+<tr>
+	<td>PURCHASE_SELECT_BUTTON</td>
+	<td>//div[@class='card-action']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PURCHASE_AGREE_CHECKBOX</td>
+	<td>//input[contains(@id,'acceptContractCheckbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PURCHASE_BUTTON</td>
+	<td>//input[@value='Purchase']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RECEIPT-->
+<tr>
+	<td>RECEIPT_TITLE</td>
+	<td>//h2[@class='receipt-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECEIPT_COMPLETED_THANK_YOU_MESSAGE</td>
+	<td>//div[@class='container']/h3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECEIPT_SEE_PURCHASED_BUTTON</td>
+	<td>//a[contains(.,'See Purchased')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PURCHASED-->
+<tr>
+	<td>PURCHASED_SEARCH_TITLE_FIELD</td>
+	<td>//input[contains(@id,'assetEntryTitle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PURCHASED_SEARCH_BUTTON</td>
+	<td>//input[@value='Search']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PURCHASED_INSTALL_BUTTON</td>
+	<td>//a[@data-action='installApp']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

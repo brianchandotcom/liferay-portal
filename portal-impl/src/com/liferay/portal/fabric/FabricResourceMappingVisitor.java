@@ -38,12 +38,20 @@ public class FabricResourceMappingVisitor extends AnnotatedFieldMappingVisitor {
 		Class<? extends Annotation> annotationClass,
 		Path remoteRepositoryPath) {
 
+		this(annotationClass, remoteRepositoryPath, false);
+	}
+
+	public FabricResourceMappingVisitor(
+		Class<? extends Annotation> annotationClass, Path remoteRepositoryPath,
+		boolean reverseMapping) {
+
 		super(
 			Collections.<Class<?>>singleton(ProcessCallable.class),
 			Collections.<Class<? extends Annotation>>singleton(annotationClass),
 			Collections.<Class<?>>singleton(File.class));
 
 		_remoteRepositoryPath = remoteRepositoryPath;
+		_reverseMapping = reverseMapping;
 	}
 
 	public Map<Path, Path> getResourceMap() {
@@ -61,12 +69,18 @@ public class FabricResourceMappingVisitor extends AnnotatedFieldMappingVisitor {
 
 		mappedPath = mappedPath.toAbsolutePath();
 
-		_resourceMap.put(path.toAbsolutePath(), mappedPath);
+		if (_reverseMapping) {
+			_resourceMap.put(mappedPath, path.toAbsolutePath());
+		}
+		else {
+			_resourceMap.put(path.toAbsolutePath(), mappedPath);
+		}
 
 		return mappedPath.toFile();
 	}
 
 	private final Path _remoteRepositoryPath;
 	private final Map<Path, Path> _resourceMap = new HashMap<Path, Path>();
+	private final boolean _reverseMapping;
 
 }

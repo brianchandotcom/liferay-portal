@@ -100,7 +100,7 @@ public class NettyFabricAgentStub implements FabricAgent {
 
 		FabricResourceMappingVisitor fabricResourceMappingVisitor =
 			new FabricResourceMappingVisitor(
-				OutputResource.class, _remoteRepositoryPath);
+				OutputResource.class, _remoteRepositoryPath, true);
 
 		ObjectGraphUtil.walkObjectGraph(
 			processCallable, fabricResourceMappingVisitor);

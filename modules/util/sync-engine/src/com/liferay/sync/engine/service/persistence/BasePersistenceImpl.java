@@ -183,7 +183,7 @@ public class BasePersistenceImpl<TT extends BaseModel, TID>
 		sb.append(fileSystem.getSeparator());
 
 		sb.append(PropsValues.SYNC_DATABASE_NAME);
-		sb.append(";AUTO_SERVER=TRUE");
+		sb.append(";AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE");
 
 		_connectionSource = new JdbcPooledConnectionSource(sb.toString());
 

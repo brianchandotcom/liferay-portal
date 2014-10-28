@@ -110,101 +110,101 @@ public class Watcher implements Runnable {
 	@Override
 	public void run() {
 		while (true) {
-			if (_watchService == null) {
-				break;
-			}
-
-			WatchKey watchKey = null;
-
 			try {
-				watchKey = _watchService.take();
-			}
-			catch (ConcurrentModificationException cme) {
-				continue;
-			}
-			catch (Exception e) {
-				break;
-			}
+				if (_watchService == null) {
+					break;
+				}
 
-			Path parentFilePath = _filePaths.get(watchKey);
+				WatchKey watchKey = null;
 
-			if (parentFilePath == null) {
-				continue;
-			}
+				try {
+					watchKey = _watchService.take();
+				}
+				catch (ConcurrentModificationException cme) {
+					continue;
+				}
+				catch (Exception e) {
+					break;
+				}
 
-			List<WatchEvent<?>> watchEvents = watchKey.pollEvents();
+				Path parentFilePath = _filePaths.get(watchKey);
 
-			for (int i = 0; i < watchEvents.size(); i++) {
-				WatchEvent<Path> watchEvent = (WatchEvent<Path>)watchEvents.get(
-					i);
-
-				PathImpl pathImpl = (PathImpl)watchEvent.context();
-
-				if (pathImpl == null) {
+				if (parentFilePath == null) {
 					continue;
 				}
 
-				WatchEvent.Kind<?> kind = watchEvent.kind();
+				List<WatchEvent<?>> watchEvents = watchKey.pollEvents();
 
-				Path childFilePath = parentFilePath.resolve(
-					pathImpl.toString());
+				for (int i = 0; i < watchEvents.size(); i++) {
+					WatchEvent<Path> watchEvent =
+						(WatchEvent<Path>)watchEvents.get(i);
 
-				if (kind == StandardWatchEventKind.ENTRY_CREATE) {
-					if (isIgnoredFilePath(childFilePath)) {
+					PathImpl pathImpl = (PathImpl)watchEvent.context();
+
+					if (pathImpl == null) {
 						continue;
 					}
 
-					_createdFilePathNames.add(childFilePath.toString());
+					WatchEvent.Kind<?> kind = watchEvent.kind();
 
-					if (_downloadedFilePathNames.remove(
-							childFilePath.toString())) {
+					Path childFilePath = parentFilePath.resolve(
+						pathImpl.toString());
 
-						continue;
+					if (kind == StandardWatchEventKind.ENTRY_CREATE) {
+						if (isIgnoredFilePath(childFilePath)) {
+							continue;
+						}
+
+						_createdFilePathNames.add(childFilePath.toString());
+
+						if (_downloadedFilePathNames.remove(
+								childFilePath.toString())) {
+
+							continue;
+						}
+
+						fireWatchEventListener(childFilePath, watchEvent);
+
+						if (_recursive &&
+							Files.isDirectory(
+								childFilePath, LinkOption.NOFOLLOW_LINKS)) {
+
+							registerFilePath(childFilePath, true);
+						}
 					}
+					else if (kind == StandardWatchEventKind.ENTRY_DELETE) {
+						processMissingFilePath(childFilePath);
 
-					fireWatchEventListener(childFilePath, watchEvent);
+						fireWatchEventListener(childFilePath, watchEvent);
+					}
+					else if (kind == StandardWatchEventKind.ENTRY_MODIFY) {
+						if (_createdFilePathNames.remove(
+								childFilePath.toString()) ||
+							Files.isDirectory(childFilePath)) {
 
-					if (_recursive) {
-						try {
-							if (Files.isDirectory(
-									childFilePath, LinkOption.NOFOLLOW_LINKS)) {
-
-								registerFilePath(childFilePath, true);
-							}
+							continue;
 						}
-						catch (IOException ioe) {
-						}
+
+						fireWatchEventListener(childFilePath, watchEvent);
 					}
 				}
-				else if (kind == StandardWatchEventKind.ENTRY_DELETE) {
-					processMissingFilePath(childFilePath);
 
-					fireWatchEventListener(childFilePath, watchEvent);
-				}
-				else if (kind == StandardWatchEventKind.ENTRY_MODIFY) {
-					if (_createdFilePathNames.remove(
-							childFilePath.toString()) ||
-						Files.isDirectory(childFilePath)) {
+				if (!watchKey.reset()) {
+					Path filePath = _filePaths.remove(watchKey);
 
-						continue;
+					if (_logger.isTraceEnabled()) {
+						_logger.trace("Unregistered file path {}", filePath);
 					}
 
-					fireWatchEventListener(childFilePath, watchEvent);
+					processMissingFilePath(filePath);
+
+					if (_filePaths.isEmpty()) {
+						break;
+					}
 				}
 			}
-
-			if (!watchKey.reset()) {
-				Path filePath = _filePaths.remove(watchKey);
-
-				if (_logger.isTraceEnabled()) {
-					_logger.trace("Unregistered file path {}", filePath);
-				}
-
-				processMissingFilePath(filePath);
-
-				if (_filePaths.isEmpty()) {
-					break;
-				}
+			catch (Exception e) {
+				_logger.error(e.getMessage(), e);
 			}
 		}
 	}

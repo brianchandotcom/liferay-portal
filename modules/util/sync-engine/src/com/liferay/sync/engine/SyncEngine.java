@@ -14,6 +14,8 @@
 
 package com.liferay.sync.engine;
 
+import com.j256.ormlite.support.ConnectionSource;
+
 import com.liferay.sync.engine.documentlibrary.event.GetSyncDLObjectUpdateEvent;
 import com.liferay.sync.engine.filesystem.SyncSiteWatchEventListener;
 import com.liferay.sync.engine.filesystem.SyncWatchEventProcessor;
@@ -28,6 +30,7 @@ import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.service.SyncPropService;
 import com.liferay.sync.engine.service.SyncSiteService;
 import com.liferay.sync.engine.service.SyncWatchEventService;
+import com.liferay.sync.engine.service.persistence.SyncAccountPersistence;
 import com.liferay.sync.engine.upgrade.util.UpgradeUtil;
 import com.liferay.sync.engine.util.LoggerUtil;
 import com.liferay.sync.engine.util.PropsValues;
@@ -82,6 +85,10 @@ public class SyncEngine {
 			(ScheduledFuture<?>)syncAccountTasks[1];
 
 		scheduledFuture.cancel(false);
+	}
+
+	public static ExecutorService getExecutorService() {
+		return _executorService;
 	}
 
 	public static synchronized boolean isRunning() {
@@ -213,9 +220,19 @@ public class SyncEngine {
 			cancelSyncAccountTasks(syncAccountId);
 		}
 
-		_syncWatchEventProcessorExecutorService.shutdown();
+		_eventScheduledExecutorService.shutdownNow();
+		_executorService.shutdownNow();
+		_syncWatchEventProcessorExecutorService.shutdownNow();
 
 		SyncClientUpdater.cancelAutoUpdateChecker();
+
+		SyncAccountPersistence syncAccountPersistence =
+			SyncAccountService.getSyncAccountPersistence();
+
+		ConnectionSource connectionSource =
+			syncAccountPersistence.getConnectionSource();
+
+		connectionSource.closeQuietly();
 
 		SyncEngineUtil.fireSyncEngineStateChanged(
 			SyncEngineUtil.SYNC_ENGINE_STATE_STOPPED);
@@ -293,6 +310,15 @@ public class SyncEngine {
 
 			@Override
 			public void run() {
+				try {
+					doRun();
+				}
+				catch (Exception e) {
+					_logger.error(e.getMessage(), e);
+				}
+			}
+
+			protected void doRun() {
 				SyncAccount updatedSyncAccount =
 					SyncAccountService.fetchSyncAccount(
 						syncAccount.getSyncAccountId());

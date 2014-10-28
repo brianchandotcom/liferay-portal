@@ -14,6 +14,7 @@
 
 package com.liferay.sync.engine.filesystem;
 
+import com.liferay.sync.engine.SyncEngine;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.model.SyncWatchEvent;
@@ -31,7 +32,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,117 +51,12 @@ public class SyncWatchEventProcessor implements Runnable {
 
 	@Override
 	public void run() {
-		SyncWatchEvent lastSyncWatchEvent =
-			SyncWatchEventService.fetchLastSyncWatchEvent(_syncAccountId);
-
-		if (lastSyncWatchEvent == null) {
-			return;
+		try {
+			doRun();
 		}
-
-		long delta =
-			System.currentTimeMillis() - lastSyncWatchEvent.getTimestamp();
-
-		if (delta <= 500) {
-			_inProgress = true;
-
-			SyncEngineUtil.fireSyncEngineStateChanged(
-				SyncEngineUtil.SYNC_ENGINE_STATE_PROCESSING);
-
-			return;
+		catch (Exception e) {
+			_logger.error(e.getMessage(), e);
 		}
-
-		Watcher watcher = WatcherRegistry.getWatcher(_syncAccountId);
-
-		if (watcher != null) {
-			List<String> createdFilePathNames =
-				watcher.getCreatedFilePathNames();
-
-			createdFilePathNames.clear();
-		}
-
-		if (_logger.isTraceEnabled()) {
-			_logger.trace("Processing sync watch events");
-		}
-
-		List<SyncWatchEvent> syncWatchEvents =
-			SyncWatchEventService.findBySyncAccountId(
-				_syncAccountId, "eventType", true);
-
-		for (SyncWatchEvent syncWatchEvent : syncWatchEvents) {
-			SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
-				_syncAccountId);
-
-			if (syncAccount.getState() != SyncAccount.STATE_CONNECTED) {
-				continue;
-			}
-
-			if (_processedSyncWatchEventIds.contains(
-					syncWatchEvent.getSyncWatchEventId())) {
-
-				SyncWatchEventService.deleteSyncWatchEvent(
-					syncWatchEvent.getSyncWatchEventId());
-
-				continue;
-			}
-
-			if (_logger.isDebugEnabled()) {
-				_logger.debug(
-					"Event type {} file path {} file type {} timestamp {}",
-					syncWatchEvent.getEventType(),
-					syncWatchEvent.getFilePathName(),
-					syncWatchEvent.getFileType(),
-					syncWatchEvent.getTimestamp());
-			}
-
-			boolean syncWatchEventProcessed = true;
-
-			String fileType = syncWatchEvent.getFileType();
-
-			String eventType = syncWatchEvent.getEventType();
-
-			try {
-				if (eventType.equals(SyncWatchEvent.EVENT_TYPE_CREATE)) {
-					if (fileType.equals(SyncFile.TYPE_FILE)) {
-						syncWatchEventProcessed = addFile(syncWatchEvent);
-					}
-					else {
-						syncWatchEventProcessed = addFolder(syncWatchEvent);
-					}
-				}
-				else if (eventType.equals(SyncWatchEvent.EVENT_TYPE_DELETE)) {
-					if (fileType.equals(SyncFile.TYPE_FILE)) {
-						deleteFile(syncWatchEvent);
-					}
-					else {
-						deleteFolder(syncWatchEvent);
-					}
-				}
-				else if (eventType.equals(SyncWatchEvent.EVENT_TYPE_MODIFY)) {
-					if (fileType.equals(SyncFile.TYPE_FILE)) {
-						modifyFile(syncWatchEvent);
-					}
-				}
-			}
-			catch (Exception e) {
-				_logger.error(e.getMessage(), e);
-			}
-
-			syncAccount = SyncAccountService.fetchSyncAccount(_syncAccountId);
-
-			if (syncWatchEventProcessed &&
-				(syncAccount.getState() == SyncAccount.STATE_CONNECTED)) {
-
-				SyncWatchEventService.deleteSyncWatchEvent(
-					syncWatchEvent.getSyncWatchEventId());
-			}
-		}
-
-		_inProgress = false;
-
-		SyncEngineUtil.fireSyncEngineStateChanged(
-			SyncEngineUtil.SYNC_ENGINE_STATE_PROCESSED);
-
-		_processedSyncWatchEventIds.clear();
 	}
 
 	protected boolean addFile(SyncWatchEvent syncWatchEvent) throws Exception {
@@ -205,7 +100,9 @@ public class SyncWatchEventProcessor implements Runnable {
 							parentSyncFile.getRepositoryId(), _syncAccountId);
 					}
 					catch (Exception e) {
-						_logger.error(e.getMessage(), e);
+						if (_logger.isTraceEnabled()) {
+							_logger.trace(e.getMessage(), e);
+						}
 					}
 				}
 
@@ -368,6 +265,115 @@ public class SyncWatchEventProcessor implements Runnable {
 		SyncFileService.deleteFolderSyncFile(_syncAccountId, syncFile);
 	}
 
+	protected void doRun() throws Exception {
+		SyncWatchEvent lastSyncWatchEvent =
+			SyncWatchEventService.fetchLastSyncWatchEvent(_syncAccountId);
+
+		if (lastSyncWatchEvent == null) {
+			return;
+		}
+
+		long delta =
+			System.currentTimeMillis() - lastSyncWatchEvent.getTimestamp();
+
+		if (delta <= 500) {
+			_inProgress = true;
+
+			SyncEngineUtil.fireSyncEngineStateChanged(
+				SyncEngineUtil.SYNC_ENGINE_STATE_PROCESSING);
+
+			return;
+		}
+
+		Watcher watcher = WatcherRegistry.getWatcher(_syncAccountId);
+
+		if (watcher != null) {
+			List<String> createdFilePathNames =
+				watcher.getCreatedFilePathNames();
+
+			createdFilePathNames.clear();
+		}
+
+		if (_logger.isTraceEnabled()) {
+			_logger.trace("Processing sync watch events");
+		}
+
+		List<SyncWatchEvent> syncWatchEvents =
+			SyncWatchEventService.findBySyncAccountId(
+				_syncAccountId, "eventType", true);
+
+		for (SyncWatchEvent syncWatchEvent : syncWatchEvents) {
+			SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
+				_syncAccountId);
+
+			if (syncAccount.getState() != SyncAccount.STATE_CONNECTED) {
+				continue;
+			}
+
+			if (_processedSyncWatchEventIds.contains(
+					syncWatchEvent.getSyncWatchEventId())) {
+
+				SyncWatchEventService.deleteSyncWatchEvent(
+					syncWatchEvent.getSyncWatchEventId());
+
+				continue;
+			}
+
+			if (_logger.isDebugEnabled()) {
+				_logger.debug(
+					"Event type {} file path {} file type {} timestamp {}",
+					syncWatchEvent.getEventType(),
+					syncWatchEvent.getFilePathName(),
+					syncWatchEvent.getFileType(),
+					syncWatchEvent.getTimestamp());
+			}
+
+			boolean syncWatchEventProcessed = true;
+
+			String fileType = syncWatchEvent.getFileType();
+
+			String eventType = syncWatchEvent.getEventType();
+
+			if (eventType.equals(SyncWatchEvent.EVENT_TYPE_CREATE)) {
+				if (fileType.equals(SyncFile.TYPE_FILE)) {
+					syncWatchEventProcessed = addFile(syncWatchEvent);
+				}
+				else {
+					syncWatchEventProcessed = addFolder(syncWatchEvent);
+				}
+			}
+			else if (eventType.equals(SyncWatchEvent.EVENT_TYPE_DELETE)) {
+				if (fileType.equals(SyncFile.TYPE_FILE)) {
+					deleteFile(syncWatchEvent);
+				}
+				else {
+					deleteFolder(syncWatchEvent);
+				}
+			}
+			else if (eventType.equals(SyncWatchEvent.EVENT_TYPE_MODIFY)) {
+				if (fileType.equals(SyncFile.TYPE_FILE)) {
+					modifyFile(syncWatchEvent);
+				}
+			}
+
+			syncAccount = SyncAccountService.fetchSyncAccount(_syncAccountId);
+
+			if (syncWatchEventProcessed &&
+				(syncAccount.getState() == SyncAccount.STATE_CONNECTED)) {
+
+				SyncWatchEventService.deleteSyncWatchEvent(
+					syncWatchEvent.getSyncWatchEventId());
+			}
+		}
+
+		_inProgress = false;
+
+		SyncEngineUtil.fireSyncEngineStateChanged(
+			SyncEngineUtil.SYNC_ENGINE_STATE_PROCESSED);
+
+		_processedSyncWatchEventIds.clear();
+	}
+
 	protected void modifyFile(SyncWatchEvent syncWatchEvent) throws Exception {
 		Path filePath = Paths.get(syncWatchEvent.getFilePathName());
 
@@ -384,7 +390,7 @@ public class SyncWatchEventProcessor implements Runnable {
 		SyncWatchEventProcessor.class);
 
 	private static final ExecutorService _executorService =
-		Executors.newCachedThreadPool();
+		SyncEngine.getExecutorService();
 
 	private boolean _inProgress;
 	private final Set<Long> _processedSyncWatchEventIds = new HashSet<Long>();

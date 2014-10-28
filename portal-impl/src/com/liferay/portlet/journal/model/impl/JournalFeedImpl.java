@@ -22,7 +22,6 @@ public class JournalFeedImpl extends JournalFeedBaseImpl {
 	public JournalFeedImpl() {
 	}
 
-
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #getDDMRendererTemplateKey()}
 	 */

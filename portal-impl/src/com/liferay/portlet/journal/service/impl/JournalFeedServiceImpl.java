@@ -32,12 +32,11 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 	@Override
 	public JournalFeed addFeed(
 			long groupId, String feedId, boolean autoFeedId, String name,
-			String description, String ddmStructureKey,
-			String ddmTemplateKey, String ddmRendererTemplateKey, int delta,
-			String orderByCol, String orderByType,
-			String targetLayoutFriendlyUrl, String targetPortletId,
-			String contentField, String feedType, double feedVersion,
-			ServiceContext serviceContext)
+			String description, String ddmStructureKey, String ddmTemplateKey,
+			String ddmRendererTemplateKey, int delta, String orderByCol,
+			String orderByType, String targetLayoutFriendlyUrl,
+			String targetPortletId, String contentField, String feedType,
+			double feedVersion, ServiceContext serviceContext)
 		throws PortalException {
 
 		JournalPermission.check(
@@ -45,9 +44,9 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 
 		return journalFeedLocalService.addFeed(
 			getUserId(), groupId, feedId, autoFeedId, name, description,
-			ddmStructureKey, ddmTemplateKey, ddmRendererTemplateKey, delta, orderByCol,
-			orderByType, targetLayoutFriendlyUrl, targetPortletId, contentField,
-			feedType, feedVersion, serviceContext);
+			ddmStructureKey, ddmTemplateKey, ddmRendererTemplateKey, delta,
+			orderByCol, orderByType, targetLayoutFriendlyUrl, targetPortletId,
+			contentField, feedType, feedVersion, serviceContext);
 	}
 
 	@Override

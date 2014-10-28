@@ -238,14 +238,16 @@ public class JournalFeedStagedModelDataHandler
 				DDMStructure.class + ".ddmStructureKey");
 
 		String parentDDMStructureKey = MapUtil.getString(
-			ddmStructureKeys, feed.getDDMStructureKey(), feed.getDDMStructureKey());
+			ddmStructureKeys, feed.getDDMStructureKey(),
+			feed.getDDMStructureKey());
 
 		Map<String, String> ddmTemplateKeys =
 			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
 				DDMTemplate.class + ".ddmTemplateKey");
 
 		String parentDDMTemplateKey = MapUtil.getString(
-			ddmTemplateKeys, feed.getDDMTemplateKey(), feed.getDDMTemplateKey());
+			ddmTemplateKeys, feed.getDDMTemplateKey(),
+			feed.getDDMTemplateKey());
 		String parentRendererDDMTemplateKey = MapUtil.getString(
 			ddmTemplateKeys, feed.getDDMRendererTemplateKey(),
 			feed.getDDMRendererTemplateKey());

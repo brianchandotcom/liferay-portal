@@ -70,8 +70,8 @@ public class JournalFeedLocalServiceImpl
 		Date now = new Date();
 
 		validate(
-			user.getCompanyId(), groupId, feedId, autoFeedId, name, ddmStructureKey,
-			targetLayoutFriendlyUrl, contentField);
+			user.getCompanyId(), groupId, feedId, autoFeedId, name,
+			ddmStructureKey, targetLayoutFriendlyUrl, contentField);
 
 		if (autoFeedId) {
 			feedId = String.valueOf(counterLocalService.increment());

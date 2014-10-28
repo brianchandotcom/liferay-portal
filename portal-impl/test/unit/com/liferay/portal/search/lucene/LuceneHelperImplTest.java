@@ -253,9 +253,6 @@ public class LuceneHelperImplTest {
 	)
 	@Test
 	public void testLoadIndexFromCluster() throws Exception {
-
-		// Test 1, load index without exception
-
 		MockServer mockServer = new MockServer();
 
 		mockServer.start();
@@ -282,15 +279,43 @@ public class LuceneHelperImplTest {
 			_RESPONSE_MESSAGE, _mockIndexAccessor.getResponseMessage());
 
 		mockServer.join();
+	}
 
-		// Test 2, unable to get response from cluster with debug enabled
+	@AdviseWith(
+		adviceClasses = {
+			DisableIndexOnStartUpAdvice.class, DisableClusterLinkAdvice.class,
+			EnableLuceneReplicateWriteAdvice.class
+		}
+	)
+	@Test
+	public void testLoadIndexFromClusterWithClusterLinkDisabled() {
+		List<LogRecord> logRecords = _captureHandler.resetLogLevel(Level.FINE);
+
+		_luceneHelperImpl.loadIndexesFromCluster(0);
+
+		Assert.assertEquals(1, logRecords.size());
+
+		_assertLogger(
+			logRecords.get(0), "Load index from cluster is not enabled", null);
+	}
+
+	@AdviseWith(
+		adviceClasses = {
+			DisableIndexOnStartUpAdvice.class, EnableClusterLinkAdvice.class,
+			EnableLuceneReplicateWriteAdvice.class
+		}
+	)
+	@Test
+	public void testLoadIndexFromClusterWithException() throws Exception {
+
+		// Test 1, unable to get response from cluster with debug enabled
 
 		_mockClusterExecutor.reset();
 
 		_mockClusterExecutor.setNodeNumber(3);
 		_mockClusterExecutor.setAutoResponse(false);
 
-		logRecords = _captureHandler.resetLogLevel(Level.FINE);
+		List<LogRecord> logRecords = _captureHandler.resetLogLevel(Level.FINE);
 
 		_luceneHelperImpl.loadIndexesFromCluster(_COMPANY_ID);
 
@@ -308,7 +333,7 @@ public class LuceneHelperImplTest {
 				TimeUnit.MILLISECONDS,
 			null);
 
-		// Test 3, unable to get response from cluster with debug disabled
+		// Test 2, unable to get response from cluster with debug disabled
 
 		_mockClusterExecutor.reset();
 
@@ -321,7 +346,7 @@ public class LuceneHelperImplTest {
 
 		Assert.assertTrue(logRecords.isEmpty());
 
-		// Test 4, unable to get address with debug enabled
+		// Test 3, unable to get address with debug enabled
 
 		_mockClusterExecutor.reset();
 
@@ -335,7 +360,7 @@ public class LuceneHelperImplTest {
 
 		_assertLogger(logRecords.get(0), "invalid InetSocketAddress", null);
 
-		// Test 5, unable to get address with debug disabled
+		// Test 4, unable to get address with debug disabled
 
 		_mockClusterExecutor.reset();
 
@@ -347,7 +372,7 @@ public class LuceneHelperImplTest {
 
 		Assert.assertTrue(logRecords.isEmpty());
 
-		// Test 6, unable to load index
+		// Test 5, unable to load index
 
 		_mockClusterExecutor.reset();
 
@@ -368,7 +393,7 @@ public class LuceneHelperImplTest {
 			"Unable to load index for company " + _COMPANY_ID,
 			SystemException.class);
 
-		// Test 7, unable to invoke method on other nodes with debug enabled
+		// Test 6, unable to invoke method on other nodes with debug enabled
 
 		_mockClusterExecutor.reset();
 
@@ -387,7 +412,7 @@ public class LuceneHelperImplTest {
 			"Suppress exception caused by remote method invocation",
 			Exception.class);
 
-		// Test 8, unable to invoke method on other nodes with debug disabled
+		// Test 7, unable to invoke method on other nodes with debug disabled
 
 		_mockClusterExecutor.reset();
 
@@ -401,7 +426,7 @@ public class LuceneHelperImplTest {
 
 		Assert.assertTrue(logRecords.isEmpty());
 
-		// Test 9, no need to load from cluster
+		// Test 8, no need to load from cluster
 
 		_mockClusterExecutor.reset();
 
@@ -418,24 +443,6 @@ public class LuceneHelperImplTest {
 			"Do not load indexes because there is either one portal " +
 				"instance or no portal instances in the cluster",
 			null);
-	}
-
-	@AdviseWith(
-		adviceClasses = {
-			DisableIndexOnStartUpAdvice.class, DisableClusterLinkAdvice.class,
-			EnableLuceneReplicateWriteAdvice.class
-		}
-	)
-	@Test
-	public void testLoadIndexFromClusterWithClusterLinkDisabled() {
-		List<LogRecord> logRecords = _captureHandler.resetLogLevel(Level.FINE);
-
-		_luceneHelperImpl.loadIndexesFromCluster(0);
-
-		Assert.assertEquals(1, logRecords.size());
-
-		_assertLogger(
-			logRecords.get(0), "Load index from cluster is not enabled", null);
 	}
 
 	@Aspect

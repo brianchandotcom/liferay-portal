@@ -189,7 +189,6 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 							rowColumns.push('<a class="modify-link" data-rowId="' + event.organizationid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeOrganizationIcon) %></a>');
 
 							searchContainer.addRow(rowColumns, event.organizationid);
-
 							searchContainer.updateDataStore();
 
 							<portlet:namespace />addOrganizationIds.push(event.organizationid);

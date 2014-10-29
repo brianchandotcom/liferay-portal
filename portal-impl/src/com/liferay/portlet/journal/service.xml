@@ -391,9 +391,9 @@
 		<column name="feedId" type="String" />
 		<column name="name" type="String" />
 		<column name="description" type="String" />
-		<column name="structureId" type="String" />
-		<column name="templateId" type="String" />
-		<column name="rendererTemplateId" type="String" />
+		<column name="DDMStructureKey" type="String" />
+		<column name="DDMTemplateKey" type="String" />
+		<column name="DDMRendererTemplateKey" type="String" />
 		<column name="delta" type="int" />
 		<column name="orderByCol" type="String" />
 		<column name="orderByType" type="String" />

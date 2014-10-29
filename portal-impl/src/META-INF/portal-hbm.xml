@@ -2011,9 +2011,9 @@
 		<property name="feedId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="structureId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="templateId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="rendererTemplateId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="DDMStructureKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="DDMTemplateKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="DDMRendererTemplateKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="delta" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="orderByCol" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="orderByType" type="com.liferay.portal.dao.orm.hibernate.StringType" />

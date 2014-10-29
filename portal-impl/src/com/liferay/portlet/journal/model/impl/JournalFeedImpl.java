@@ -22,4 +22,52 @@ public class JournalFeedImpl extends JournalFeedBaseImpl {
 	public JournalFeedImpl() {
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getDDMRendererTemplateKey()}
+	 */
+	@Override
+	public String getRendererTemplateId() {
+		return getDDMRendererTemplateKey();
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getDDMStructureKey()}
+	 */
+	@Override
+	public String getStructureId() {
+		return getDDMStructureKey();
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getDDMTemplateKey()}
+	 */
+	@Override
+	public String getTemplateId() {
+		return getDDMTemplateKey();
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #setRendererTemplateKey()}
+	 */
+	@Override
+	public void setRendererTemplateId(String rendererTemplateKey) {
+		setDDMRendererTemplateKey(rendererTemplateKey);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #setDDMStructureKey()}
+	 */
+	@Override
+	public void setStructureId(String structureKey) {
+		setDDMStructureKey(structureKey);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #setDDMTemplateKey()}
+	 */
+	@Override
+	public void setTemplateId(String templateKey) {
+		setDDMTemplateKey(templateKey);
+	}
+
 }

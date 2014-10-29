@@ -64,16 +64,16 @@ public class JournalRSSUtil {
 		String description = null;
 		String content = null;
 
-		String structureId = feed.getStructureId();
+		String ddmStructureKey = feed.getDDMStructureKey();
 
-		if (Validator.isNull(structureId)) {
-			structureId = null;
+		if (Validator.isNull(ddmStructureKey)) {
+			ddmStructureKey = null;
 		}
 
-		String templateId = feed.getTemplateId();
+		String ddmTemplateKey = feed.getDDMTemplateKey();
 
-		if (Validator.isNull(templateId)) {
-			templateId = null;
+		if (Validator.isNull(ddmTemplateKey)) {
+			ddmTemplateKey = null;
 		}
 
 		Date displayDateGT = null;
@@ -98,8 +98,9 @@ public class JournalRSSUtil {
 		return JournalArticleLocalServiceUtil.search(
 			companyId, groupId, folderIds,
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, articleId, version,
-			title, description, content, structureId, templateId, displayDateGT,
-			displayDateLT, status, reviewDate, andOperator, start, end, obc);
+			title, description, content, ddmStructureKey, ddmTemplateKey,
+			displayDateGT, displayDateLT, status, reviewDate, andOperator,
+			start, end, obc);
 	}
 
 	public static List<SyndEnclosure> getDLEnclosures(

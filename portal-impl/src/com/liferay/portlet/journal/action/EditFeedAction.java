@@ -151,10 +151,12 @@ public class EditFeedAction extends PortletAction {
 
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
-		String structureId = ParamUtil.getString(actionRequest, "structureId");
-		String templateId = ParamUtil.getString(actionRequest, "templateId");
-		String rendererTemplateId = ParamUtil.getString(
-			actionRequest, "rendererTemplateId");
+		String ddmStructureKey = ParamUtil.getString(
+			actionRequest, "ddmStructureKey");
+		String ddmTemplateKey = ParamUtil.getString(
+			actionRequest, "ddmTemplateKey");
+		String ddmRendererTemplateKey = ParamUtil.getString(
+			actionRequest, "ddmRendererTemplateKey");
 		int delta = ParamUtil.getInteger(actionRequest, "delta");
 		String orderByCol = ParamUtil.getString(actionRequest, "orderByCol");
 		String orderByType = ParamUtil.getString(actionRequest, "orderByType");
@@ -178,20 +180,20 @@ public class EditFeedAction extends PortletAction {
 			// Add feed
 
 			JournalFeedServiceUtil.addFeed(
-				groupId, feedId, autoFeedId, name, description, structureId,
-				templateId, rendererTemplateId, delta, orderByCol, orderByType,
-				targetLayoutFriendlyUrl, targetPortletId, contentField,
-				feedFormat, feedVersion, serviceContext);
+				groupId, feedId, autoFeedId, name, description, ddmStructureKey,
+				ddmTemplateKey, ddmRendererTemplateKey, delta, orderByCol,
+				orderByType, targetLayoutFriendlyUrl, targetPortletId,
+				contentField, feedFormat, feedVersion, serviceContext);
 		}
 		else {
 
 			// Update feed
 
 			JournalFeedServiceUtil.updateFeed(
-				groupId, feedId, name, description, structureId, templateId,
-				rendererTemplateId, delta, orderByCol, orderByType,
-				targetLayoutFriendlyUrl, targetPortletId, contentField,
-				feedFormat, feedVersion, serviceContext);
+				groupId, feedId, name, description, ddmStructureKey,
+				ddmTemplateKey, ddmRendererTemplateKey, delta, orderByCol,
+				orderByType, targetLayoutFriendlyUrl, targetPortletId,
+				contentField, feedFormat, feedVersion, serviceContext);
 		}
 	}
 

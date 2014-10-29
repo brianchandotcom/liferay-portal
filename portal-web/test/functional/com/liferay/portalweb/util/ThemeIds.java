@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.util;
+package com.liferay.portalweb.util;
 
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.security.auth.HttpPrincipal;

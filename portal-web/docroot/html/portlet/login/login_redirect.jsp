@@ -58,10 +58,8 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 			$('.anonymous-account').addClass('hide');
 		}
 
-		$.ajax(
-			form.attr('action'),
+		form.ajaxSubmit(
 			{
-				data: form.serialize(),
 				dataType: 'json',
 				error: onError,
 				success: function(responseData) {

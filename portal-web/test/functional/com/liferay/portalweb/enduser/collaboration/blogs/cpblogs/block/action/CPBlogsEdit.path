@@ -40,12 +40,12 @@
 </tr>
 <tr>
 	<td>TITLE_FIELD</td>
-	<td>//input[@id='_161_title']</td>
+	<td>//div[@id='_161_titleEditor']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_FIELD</td>
-	<td>//div[@id='cke_1_contents']/iframe</td>
+	<td>//div[@id='_161_contentEditor']</td>
 	<td></td>
 </tr>
 <tr>

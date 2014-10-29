@@ -29,6 +29,11 @@
 			</then>
 		</while>
 
+		<execute action="MobiledockbarAddpanelapplications#assertTextEquals" locator-key1="PORTLET_ADDED_SUCCESS_MESSAGE" value1="${portletName} Added Skip to Content" />
+		<execute action="MobiledockbarAddpanelapplications#pause" locator1="4000" />
+		<execute action="MobiledockbarAddpanelapplications#assertNotVisible" locator-key1="PORTLET_ADDED_SUCCESS_MESSAGE" />
+		<execute action="MobiledockbarAddpanelapplications#click" locator-key1="CLOSE_BUTTON" />
+
 		<execute action="Home#assertElementPresent" locator-key1="${portletTypeKey}" />
 	</command>
 

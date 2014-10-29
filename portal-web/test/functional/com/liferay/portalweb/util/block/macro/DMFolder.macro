@@ -226,9 +226,6 @@
 
 		<execute action="CPDocumentsandmediaMovefolder#assertClick" locator-key1="FOLDER_WINDOW_FOLDER_CHOOSE_BUTTON" value1="Choose" />
 		<execute action="CPDocumentsandmediaMovefolder#selectFrame" locator1="relative=top" />
-
-		<var name="key_dmFolderName" value="${dmFolderName1}" />
-
 		<execute action="CPDocumentsandmediaMovefolder#assertTextEquals" locator-key1="NEW_FOLDER" value1="${dmFolderName1}" />
 		<execute action="CPDocumentsandmediaMovefolder#assertClick" locator-key1="MOVE_BUTTON" value1="Move" />
 
@@ -248,30 +245,31 @@
 
 	<command name="moveToFolderPG">
 		<var name="key_dmFolderName" value="${dmFolderName}" />
+
+		<execute action="PGDocumentsandmediaFolder#check" locator-key1="ENTRY_ICON_FOLDER_CHECKBOX" />
+		<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="TOOLBAR_ACTIONS" value1="Actions" />
+		<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="ACTIONS_MENULIST_MOVE" value1="Move" />
+
+		<execute action="PGDocumentsandmediaMovefiles#assertClick" locator-key1="SELECT_BUTTON" value1="Select" />
+		<execute action="PGDocumentsandmediaMovefiles#selectFrame" locator-key1="SELECT_POP_UP_IFRAME" />
+
 		<var name="key_dmFolderName2" value="${dmFolderName2}" />
 
-		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_FOLDER" />
-		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_FOLDER" />
+		<execute action="PGDocumentsandmediaMovefiles#assertTextEquals" locator-key1="SELECT_FOLDER_TABLE_FOLDER" value1="${dmFolderName2}" />
+		<execute action="PGDocumentsandmediaMovefiles#assertClick" locator-key1="SELECT_FOLDER_TABLE_CHOOSE" value1="Choose" />
+		<execute action="PGDocumentsandmediaMovefiles#selectFrameTop" />
+		<execute action="PGDocumentsandmediaMovefiles#assertClick" locator-key1="MOVE_BUTTON" value1="Move" />
 
-		<execute action="CPDocumentsandmedia#click" locator-key1="DOCUMENT_CONTAINER_FOLDER_DROPDOWN" />
-		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="FOLDER_MENULIST_MOVE" />
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="FOLDER_MENULIST_MOVE" value1="Move" />
-
-		<execute action="CPDocumentsandmediaMovefolder#assertClick" locator-key1="SELECT_BUTTON" value1="Select" />
-		<execute action="CPDocumentsandmediaMovefolder#selectWindow" locator-key1="FOLDER_WINDOW_ID" />
-		<execute action="CPDocumentsandmediaMovefolder#assertClick" locator-key1="FOLDER_WINDOW_FOLDER_CHOOSE_BUTTON" value1="Choose" />
-		<execute action="CPDocumentsandmediaMovefolder#selectWindow" locator1="null" />
-
-		<execute action="CPDocumentsandmediaMovefolder#assertTextEquals" locator-key1="NEW_FOLDER" value1="${dmFolderName2}" />
-		<execute action="CPDocumentsandmediaMovefolder#assertClick" locator-key1="MOVE_BUTTON" value1="Move" />
-
-		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPDocumentsandmedia#assertElementNotPresent" locator-key1="DOCUMENT_CONTAINER_FOLDER" />
-		<execute action="CPDocumentsandmedia#click" locator-key1="DOCUMENT_CONTAINER_FOLDER" />
-
-		<var name="key_dmFolderName" value="${dmFolderName2}" />
-
-		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="FOLDER_VIEW_FOLDER" />
+		<if>
+			<isset var="dmDuplicateFolder" />
+			<then>
+				<execute action="PGDocumentsandmediaMovefiles#assertTextEquals" locator-key1="ALERT_MESSAGE" value1="Your request failed to complete." />
+				<execute action="PGDocumentsandmediaMovefiles#assertTextEquals" locator-key1="ALERT_MESSAGE_2" value1="The folder you selected already has an entry with this name. Please select a different folder." />
+			</then>
+			<else>
+				<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+			</else>
+		</if>
 	</command>
 
 	<command name="moveToRecycleBinCP">

@@ -12,18 +12,13 @@
 	</tear-down>
 
 	<command name="DeleteBlogsEntry" priority="5">
-		<var name="assetName" value="${entryTitle}" />
-		<var name="assetType" value="Blogs Entry" />
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>
 
 		<execute macro="BlogsEntry#addCP">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -31,9 +26,9 @@
 		</execute>
 
 		<execute macro="BlogsEntry#moveToRecycleBinCP">
-			<var name="assetType" value="${assetType}" />
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="assetType" value="Blogs Entry" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -41,8 +36,8 @@
 		</execute>
 
 		<execute macro="RecycleBin#deleteCP">
-			<var name="assetName" value="${entryTitle}" />
-			<var name="assetType" value="${assetType}" />
+			<var name="assetName" value="Blogs Entry Title" />
+			<var name="assetType" value="Blogs Entry" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -50,7 +45,7 @@
 		</execute>
 
 		<execute macro="RecycleBin#viewDefaultCP">
-			<var name="assetName" value="${entryTitle}" />
+			<var name="assetName" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -58,23 +53,18 @@
 		</execute>
 
 		<execute macro="BlogsEntry#viewDefaultCP">
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 	</command>
 
 	<command name="DeleteDraftBlogsEntry" priority="5">
-		<var name="assetName" value="${entryTitle}" />
-		<var name="assetType" value="Blogs Entry" />
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>
 
 		<execute macro="BlogsEntry#addDraftCP">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -83,7 +73,7 @@
 
 		<execute macro="BlogsEntry#moveToRecycleBinDraftCP">
 			<var name="assetType" value="Blogs Entry" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -91,8 +81,8 @@
 		</execute>
 
 		<execute macro="RecycleBin#deleteCP">
-			<var name="assetName" value="${entryTitle}" />
-			<var name="assetType" value="${assetType}" />
+			<var name="assetName" value="Blogs Entry Title" />
+			<var name="assetType" value="Blogs Entry" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -100,7 +90,7 @@
 		</execute>
 
 		<execute macro="RecycleBin#viewDefaultCP">
-			<var name="assetName" value="${entryTitle}" />
+			<var name="assetName" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -108,24 +98,20 @@
 		</execute>
 
 		<execute macro="BlogsEntry#viewDefaultCP">
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 	</command>
 
 	<command name="RestoreBlogsEntry" priority="5">
-		<var name="assetName" value="${entryTitle}" />
 		<var name="assetRestoreLocation" value="Blogs" />
-		<var name="assetType" value="Blogs Entry" />
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>
 
 		<execute macro="BlogsEntry#addCP">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -133,8 +119,8 @@
 		</execute>
 
 		<execute macro="BlogsEntry#moveToRecycleBinCP">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -142,10 +128,10 @@
 		</execute>
 
 		<execute macro="RecycleBin#restoreCP">
-			<var name="assetName" value="${entryTitle}" />
+			<var name="assetName" value="Blogs Entry Title" />
 			<var name="assetRestoreLocation" value="${assetRestoreLocation}" />
 			<var name="assetRestoreType" value="${assetRestoreType}" />
-			<var name="assetType" value="${assetType}" />
+			<var name="assetType" value="Blogs Entry" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -153,7 +139,7 @@
 		</execute>
 
 		<execute macro="RecycleBin#viewDefaultCP">
-			<var name="assetName" value="${entryTitle}" />
+			<var name="assetName" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -161,7 +147,7 @@
 		</execute>
 
 		<execute macro="BlogsEntry#viewCP">
-			<var name="assetName" value="${entryTitle}" />
+			<var name="assetName" value="Blogs Entry Title" />
 		</execute>
 	</command>
 </definition>

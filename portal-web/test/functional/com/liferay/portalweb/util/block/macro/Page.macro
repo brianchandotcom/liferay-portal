@@ -564,12 +564,51 @@
 	</command>
 
 	<command name="viewChildPG">
-		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_3" value1="${childPageName}" />
+		<if>
+			<isset var="viewChildPageDropdown" />
+			<then>
+				<execute action="Home#click" locator-key1="${viewChildPageDropdown}" />
+
+				<if>
+					<isset var="javaScriptPage" />
+					<then>
+						<execute action="Home#confirm" locator-key1="PAGE_CONFIRM" value1="${javaScriptPage}" />
+					</then>
+				</if>
+
+				<execute action="Home#mouseOver" locator-key1="${viewChildPageDropdown}" />
+
+				<var name="key_childPageName" value="${childPageName}" />
+
+				<execute action="Home#assertTextEquals" locator-key1="PAGE_CHILD_PAGE" value1="${childPageName}" />
+			</then>
+			<else>
+				<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_3" value1="${childPageName}" />
+			</else>
+		</if>
 	</command>
 
 	<command name="viewCustomLogoPG">
 		<execute action="Home#assertElementPresent" locator-key1="CUSTOM_LOGO" />
 		<execute action="Home#assertElementNotPresent" locator-key1="DEFAULT_LOGO" />
+	</command>
+
+	<command name="viewCustomThemePG">
+		<if>
+			<equals arg1="${customTheme}" arg2="Dark" />
+			<then>
+				<execute action="Home#assertElementPresent" locator-key1="DARK_THEME" />
+			</then>
+			<elseif>
+				<equals arg1="${customTheme}" arg2="Light" />
+				<then>
+					<execute action="Home#assertElementPresent" locator-key1="LIGHT_THEME" />
+				</then>
+			</elseif>
+			<else>
+				<execute action="Home#assertElementPresent" locator-key1="DEFAULT_THEME" />
+			</else>
+		</if>
 	</command>
 
 	<command name="viewDefaultLogoPG">

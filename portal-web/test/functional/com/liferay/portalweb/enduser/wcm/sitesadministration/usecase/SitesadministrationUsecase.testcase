@@ -817,6 +817,223 @@
 		</execute>
 	</command>
 
+	<command known-issues="LPS-51046,LPS-51074" name="SitesDemoSiteManagement" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="membershipTypeOption" value="Open" />
+			<var name="siteDescription" value="This is the site description test" />
+			<var name="siteDetails" value="true" />
+			<var name="siteName" value="World Cup - Russia 2018" />
+		</execute>
+
+		<for list="World Cup,Russia,2018" param="tagName" >
+			<execute macro="Tag#addViaSiteCP">
+				<var name="tagName" value="${tagName}" />
+			</execute>
+		</for>
+
+		<execute macro="Site#addVirtualHostsURLCP">
+			<var name="privatePageVirtualHostURL" value="www.baker.com" />
+			<var name="privateVirtualHosts" value="true" />
+			<var name="publicPageVirtualHostURL" value="www.able.com" />
+			<var name="publicVirtualHosts" value="true" />
+		</execute>
+
+		<execute macro="Site#editFriendlyURLCP">
+			<var name="siteFriendlyURLEdit" value="/russia2018" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="World Cup - Russia 2018" />
+		</execute>
+
+		<for list="Home,Arenas" param="publicPageName" >
+			<execute macro="SitePage#addCP">
+				<var name="sitePageName" value="${publicPageName}" />
+				<var name="sitePagePrivacy" value="Public" />
+				<var name="siteScopeSelected" value="true" />
+			</execute>
+		</for>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="World Cup - Russia 2018" />
+		</execute>
+
+		<for list="Arena Baltika,Zenit Arena,Kazan Arena" param="childPageName" >
+			<execute macro="SitePage#addChildCP">
+				<var name="childSitepageName" value="true" />
+				<var name="siteChildPageName" value="${childPageName}" />
+				<var name="sitePagePrivacy" value="Public" />
+				<var name="siteScopeSelected" value="true" />
+			</execute>
+		</for>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="World Cup - Russia 2018" />
+		</execute>
+
+		<for list="Accomodations,Maps" param="privatePageName" >
+			<execute macro="SitePage#addCP">
+				<var name="sitePageName" value="${privatePageName}" />
+				<var name="sitePagePrivacy" value="Private" />
+				<var name="siteScopeSelected" value="true" />
+			</execute>
+		</for>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="World Cup - Russia 2018" />
+		</execute>
+
+		<execute macro="SitePage#changeColorSchemesCP">
+			<var name="colorScheme" value="Dark" />
+		</execute>
+
+		<execute macro="Page#changeLogoViaPageCP">
+			<var name="logoFile" value="Document_3.png" />
+		</execute>
+
+		<execute macro="SitePage#addJavaScript">
+			<var name="javaScript" value="alert('Welcome to Russia.');" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteURL" value="true" />
+			<var name="virtualHostsURL" value="http://www.able.com:8080/" />
+		</execute>
+
+		<execute action="Home#confirm" locator-key1="PAGE_CONFIRM" value1="Welcome to Russia." />
+
+		<execute macro="Page#viewCustomThemePG">
+			<var name="customTheme" value="Dark" />
+		</execute>
+
+		<execute macro="Page#viewCustomLogoPG" />
+
+		<for list="Arena Baltika,Zenit Arena,Kazan Arena" param="childPageName" >
+			<execute macro="Page#viewChildPG">
+				<var name="childPageName" value="${childPageName}" />
+				<var name="javaScriptPage" value="Welcome to Russia." />
+				<var name="pageName" value="Arenas" />
+				<var name="viewChildPageDropdown" value="PAGE_2" />
+			</execute>
+		</for>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="World Cup - Russia 2018" />
+		</execute>
+
+		<execute macro="SitePage#addJavaScript">
+			<var name="javaScript" value=" " />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Site#assignUserSitesCP">
+			<var name="siteName" value="World Cup - Russia 2018" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#assignSiteRoleCP">
+			<var name="siteRoleName" value="Site Administrator" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="User#firstLoginPG">
+			<var name="password" value="test" />
+			<var name="siteURL" value="true" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="virtualHostsURL" value="http://www.baker.com:8080/" />
+		</execute>
+
+		<execute macro="Page#viewCustomThemePG" />
+
+		<execute macro="Page#viewSpecificPG">
+			<var name="pageNameList" value="Accomodations,Maps" />
+		</execute>
+
+		<execute macro="LAR#configureExportSiteCP" >
+			<var name="portletName" value="Site Pages" />
+			<var name="siteName" value="World Cup - Russia 2018" />
+		</execute>
+
+		<execute action="CPSitepagesExport#assertClick" locator-key1="EXPORT_BUTTON" value1="Export" />
+
+		<execute action="CPSitepagesExport#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+
+		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
+
+		<echo message="value name ${valueName}" />
+
+		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
+
+		<echo message="import file name ${larFileName}" />
+
+		<execute action="CPSitepagesExport#click" locator-key1="CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute action="CPSitepagesExport#downloadTempFile" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="LAR#importSiteCP">
+			<var name="larFileName" value="${larFileName}" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Home" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<for list="Arena Baltika,Zenit Arena,Kazan Arena" param="childPageName" >
+			<execute macro="Page#viewChildPG">
+				<var name="childPageName" value="${childPageName}" />
+				<var name="javaScriptPage" value="Welcome to Russia." />
+				<var name="pageName" value="Arenas" />
+				<var name="viewChildPageDropdown" value="PAGE_2" />
+			</execute>
+		</for>
+	</command>
+
 	<command name="SiteTeams" priority="4">
 		<var name="siteName" value="Site Name" />
 		<var name="siteScopeName" value="Site Name" />

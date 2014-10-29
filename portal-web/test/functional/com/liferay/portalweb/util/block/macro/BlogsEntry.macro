@@ -195,9 +195,7 @@
 		<execute action="CPBlogsAdd#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute action="CPBlogsEdit#assertTextEquals" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
-		<execute action="CPBlogsEdit#selectFrame" locator-key1="CONTENT_FIELD" />
 		<execute action="CPBlogsEdit#assertTextPresent" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
-		<execute action="CPBlogsEdit#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addDraftPG">

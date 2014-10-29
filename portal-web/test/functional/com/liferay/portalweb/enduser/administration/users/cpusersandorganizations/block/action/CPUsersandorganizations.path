@@ -112,6 +112,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ORGANIZATION_TABLE_SUBORGANIZATION_COUNT</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[2]/em</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

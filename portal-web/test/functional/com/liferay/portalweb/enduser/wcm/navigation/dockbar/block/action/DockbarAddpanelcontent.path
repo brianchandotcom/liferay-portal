@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CLOSE_BUTTON</td>
+	<td>//button[@id='_145_closePanelAdd']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

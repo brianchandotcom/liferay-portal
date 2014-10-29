@@ -101,16 +101,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SELECT_FOLDER_TABLE_#_OF_FOLDERS</td>
-	<td>//tr[contains(.,'${key_dmFolderName}')]/td[2]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_FOLDER_TABLE_#_OF_DOCUMENTS</td>
-	<td>//tr[contains(.,'${key_dmFolderName}')]/td[3]/a</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SELECT_FOLDER_TABLE_CHOOSE</td>
 	<td>//tr[contains(.,'${key_dmFolderName}')]/td[4]/button</td>
 	<td></td>

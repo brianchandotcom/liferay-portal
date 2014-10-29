@@ -965,11 +965,10 @@
 	</command>
 
 	<command name="moveToFolderPG">
-		<var name="key_dmFolderName" value="${dmFolderName}" />
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmediaFolder#check" locator-key1="ENTRY_ICON_FOLDER_CHECKBOX" />
-		<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="TOOLBAR_ACTIONS" value1="Actions" />
-		<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="ACTIONS_MENULIST_MOVE" value1="Move" />
+		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_ACTIONS" />
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="DOCUMENT_MENULIST_MOVE" value1="Move" />
 
 		<execute action="PGDocumentsandmediaMovefiles#assertClick" locator-key1="SELECT_BUTTON" value1="Select" />
 		<execute action="PGDocumentsandmediaMovefiles#selectFrame" locator-key1="SELECT_POP_UP_IFRAME" />
@@ -982,7 +981,7 @@
 		<execute action="PGDocumentsandmediaMovefiles#assertClick" locator-key1="MOVE_BUTTON" value1="Move" />
 
 		<if>
-			<equals arg1="${dmDocument}" arg2="Duplicate" />
+			<isset var="dmDuplicateDocument" />
 			<then>
 				<execute action="PGDocumentsandmediaMovefiles#assertTextEquals" locator-key1="ALERT_MESSAGE" value1="Your request failed to complete." />
 				<execute action="PGDocumentsandmediaMovefiles#assertTextEquals" locator-key1="ALERT_MESSAGE_2" value1="The folder you selected already has an entry with this name. Please select a different folder." />
@@ -1037,6 +1036,10 @@
 				<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
 			</then>
 		</if>
+	</command>
+
+	<command name="navigateBackViaDocumentViewPG">
+		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="BACK_BUTTON" value1="Back" />
 	</command>
 
 	<command name="populateField">
@@ -1461,6 +1464,11 @@
 	<command name="viewDefaultCP">
 		<execute action="CPDocumentsandmedia#assertElementNotPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_GENERIC" />
 		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+	</command>
+
+	<command name="viewDefaultPG">
+		<execute action="PGDocumentsandmedia#assertElementNotPresent" locator-key1="ENTRY_ICON_DOCUMENT_THUMBNAIL_GENERIC" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
 	</command>
 
 	<command name="viewDMMarketingBannerPG">

@@ -1,0 +1,51 @@
+<html>
+<head>
+<title>CPUsersandorganizationsSuborganization</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPUsersandorganizationsSuborganization</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPUsersandorganizationsSuborganization</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SUBORGANIZATION_TABLE-->
+<tr>
+	<td>SUBORGANIZATION_TABLE_ALL_CHECKBOX</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBORGANIZATION_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_suborgName}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBORGANIZATION_TABLE_TYPE</td>
+	<td>//tr[contains(.,'${key_suborgName}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBORGANIZATION_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_suborgName}')]/td[4]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBORGANIZATION_TABLE_SUBORGANIZATION</td>
+	<td>//tr[contains(.,'${key_suborgName}')]/td[2]/em</td>
+	<td></td>
+</tr>
+
+</tbody>
+</table>
+</body>
+</html>

@@ -13,6 +13,7 @@
 		<execute action="MobiledockbarAddpanelpage#pause" locator1="2000" />
 		<execute action="MobiledockbarAddpanelpage#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
 		<execute action="MobiledockbarAddpanelpage#pause" locator1="2000" />
+		<execute action="MobiledockbarAddpanelpage#click" locator-key1="CLOSE_BUTTON" />
 	</command>
 
 	<command name="gotoCmdCP">

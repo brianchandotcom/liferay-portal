@@ -447,9 +447,29 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--JAVASCRIPT-->
+<tr>
+	<td>JAVASCRIPT_NAVIGATION</td>
+	<td>//a[@id='_156_javascriptLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>JAVASCRIPT_TEXTAREA</td>
+	<td>//textarea[@id='_156_javascript']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>JAVASCRIPT_LABEL</td>
+	<td>//label[@for='_156_javascript']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SEO-->
 <!--LAYOUT-->
-<!--JAVASCRIPT-->
 <!--CUSTOM_FIELDS-->
 <!--ADVANCED-->
 <!--MOBILE_RULE_GROUPS-->

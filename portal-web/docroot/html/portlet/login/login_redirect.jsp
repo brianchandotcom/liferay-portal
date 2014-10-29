@@ -89,7 +89,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 		);
 	}
 
-	function <portlet:namespace />closeDialog () {
+	function <portlet:namespace />closeDialog() {
 		var namespace = window.parent.namespace;
 
 		Liferay.fire(
@@ -100,7 +100,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 		);
 	}
 
-	function <portlet:namespace />showStatusMessage (type, message) {
+	function <portlet:namespace />showStatusMessage(type, message) {
 		var messageContainer = AUI.$('#<portlet:namespace />login-status-messages');
 
 		messageContainer.removeClass('alert-danger').removeClass('alert-success');

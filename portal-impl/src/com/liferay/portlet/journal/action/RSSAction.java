@@ -34,7 +34,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -190,19 +189,18 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 			return PortalUtil.getLayoutFriendlyURL(hitLayout, themeDisplay);
 		}
 
+		String portletId = feed.getTargetPortletId();
+
+		if (Validator.isNull(portletId)) {
+			return StringPool.BLANK;
+		}
+
 		long plid = PortalUtil.getPlidFromFriendlyURL(
 			feed.getCompanyId(), feed.getTargetLayoutFriendlyUrl());
-
-		String portletId = PortletKeys.JOURNAL_CONTENT;
-
-		if (Validator.isNotNull(feed.getTargetPortletId())) {
-			portletId = feed.getTargetPortletId();
-		}
 
 		PortletURL entryURL = new PortletURLImpl(
 			resourceRequest, portletId, plid, PortletRequest.RENDER_PHASE);
 
-		entryURL.setParameter("struts_action", "/journal_content/view");
 		entryURL.setParameter("groupId", String.valueOf(article.getGroupId()));
 		entryURL.setParameter("articleId", article.getArticleId());
 

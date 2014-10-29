@@ -26,9 +26,6 @@ import com.liferay.sync.engine.util.Encryptor;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.OSDetector;
 
-import java.io.File;
-import java.io.IOException;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -341,17 +338,8 @@ public class SyncAccountService {
 	}
 
 	public static void updateSyncAccountSyncFile(
-		Path filePath, long syncAccountId, boolean moveFile) {
-
-		if (moveFile && Files.exists(filePath)) {
-			File file = filePath.toFile();
-
-			String[] files = file.list();
-
-			if (files.length > 0) {
-				return;
-			}
-		}
+			Path filePath, long syncAccountId, boolean moveFile)
+		throws Exception {
 
 		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
 			syncAccountId);
@@ -360,26 +348,19 @@ public class SyncAccountService {
 
 		SyncAccountService.update(syncAccount);
 
-		try {
-			if (moveFile) {
-				Files.createDirectories(filePath);
+		if (moveFile) {
+			Files.createDirectories(filePath);
 
-				Files.move(
-					Paths.get(syncAccount.getFilePathName()), filePath,
-					StandardCopyOption.REPLACE_EXISTING);
-			}
-
-			syncAccount = setFilePathName(syncAccountId, filePath.toString());
-
-			syncAccount.setActive(true);
-
-			SyncAccountService.update(syncAccount);
+			Files.move(
+				Paths.get(syncAccount.getFilePathName()), filePath,
+				StandardCopyOption.REPLACE_EXISTING);
 		}
-		catch (IOException ioe) {
-			if (_logger.isDebugEnabled()) {
-				_logger.debug(ioe.getMessage(), ioe);
-			}
-		}
+
+		syncAccount = setFilePathName(syncAccountId, filePath.toString());
+
+		syncAccount.setActive(true);
+
+		SyncAccountService.update(syncAccount);
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

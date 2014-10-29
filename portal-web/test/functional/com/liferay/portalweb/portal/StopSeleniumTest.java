@@ -15,7 +15,7 @@
 package com.liferay.portalweb.portal;
 
 import com.liferay.portalweb.portal.BaseTestCase;
-import com.liferay.portalweb.portal.util.SeleniumUtil;
+import com.liferay.portalweb.util.SeleniumUtil;
 
 /**
  * @author Brian Wing Shun Chan

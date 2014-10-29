@@ -15,7 +15,7 @@
 package com.liferay.portalweb.portal.util;
 
 import com.liferay.portalweb.portal.BaseTestCase;
-import com.liferay.portalweb.portal.util.RuntimeVariables;
+import com.liferay.portalweb.util.RuntimeVariables;
 
 /**
  * @author Brian Wing Shun Chan

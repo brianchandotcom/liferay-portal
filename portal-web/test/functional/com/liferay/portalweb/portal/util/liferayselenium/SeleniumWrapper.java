@@ -14,7 +14,7 @@
 
 package com.liferay.portalweb.portal.util.liferayselenium;
 
-import com.liferay.portalweb.portal.util.RuntimeVariables;
+import com.liferay.portalweb.util.RuntimeVariables;
 
 import com.thoughtworks.selenium.Selenium;
 

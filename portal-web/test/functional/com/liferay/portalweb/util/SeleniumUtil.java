@@ -25,6 +25,7 @@ import com.liferay.portalweb.portal.util.liferayselenium.InternetExplorerWebDriv
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 import com.liferay.portalweb.portal.util.liferayselenium.LoggerHandler;
 import com.liferay.portalweb.portal.util.liferayselenium.SafariWebDriverImpl;
+import com.liferay.portalweb.util.logger.LoggerHandler;
 
 import com.thoughtworks.selenium.Selenium;
 

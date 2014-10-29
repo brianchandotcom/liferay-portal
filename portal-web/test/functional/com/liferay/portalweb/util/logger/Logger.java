@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.util.liferayselenium;
+package com.liferay.portalweb.util.logger;
 
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -20,7 +20,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portalweb.portal.BaseTestCase;
-import com.liferay.portalweb.portal.util.TestPropsValues;
+import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
+import com.liferay.portalweb.util.TestPropsValues;
 
 import java.io.File;
 
@@ -431,7 +432,7 @@ public class Logger {
 		else {
 			_webDriver.get(
 				"file:///" + _TEST_BASE_DIR_NAME + "/test/functional/com/" +
-					"liferay/portalweb/portal/util/liferayselenium/" +
+					"liferay/portalweb/util/liferayselenium/" +
 						"dependencies/Logger.html");
 		}
 

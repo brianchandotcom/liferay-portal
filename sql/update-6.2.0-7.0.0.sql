@@ -1,4 +1,6 @@
 alter table BlogsEntry add subtitle STRING null;
+alter table BlogsEntry add coverImageFileEntryId LONG;
+alter table BlogsEntry add coverImageURL STRING null;
 alter table BlogsEntry add smallImageFileEntryId LONG;
 
 alter table DDMStructure add version VARCHAR(75) null;

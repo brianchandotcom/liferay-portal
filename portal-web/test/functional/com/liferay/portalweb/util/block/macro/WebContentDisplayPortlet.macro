@@ -280,7 +280,7 @@
 		<execute action="PGWebcontentdisplayConfiguration#assertClick" locator-key1="SELECT_WEB_CONTENT_BUTTON" value1="Select Web Content" />
 		<execute action="PGWebcontentdisplayConfiguration#selectFrame" value1="relative=top" />
 		<execute action="PGWebcontentdisplayConfiguration#selectFrame" locator-key1="SELECT_WEB_CONTENT_IFRAME" />
-		<execute action="PGWebcontentdisplayConfiguration#assertClick" locator-key1="WEB_CONTENT_CHOOSE" value1="Choose" />
+		<execute action="PGWebcontentdisplayConfiguration#assertClick" locator-key1="WEB_CONTENT_CHOOSE_BUTTON" value1="Choose" />
 		<execute action="PGWebcontentdisplayConfiguration#selectFrame" value1="relative=top" />
 		<execute action="PGWebcontentdisplayConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 		<execute action="PGWebcontentdisplayConfiguration#assertTextEquals" locator-key1="INFO_MESSAGE_ARTICLE" value1="${webContentTitle} (Modified)" />

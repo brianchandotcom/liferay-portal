@@ -8,15 +8,15 @@
 		<execute macro="User#firstLoginPG" />
 
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Web Content Display" />
 		</execute>
 	</set-up>
 
@@ -28,27 +28,22 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddNewWebContentViaAddContentPanel" priority="5">
-		<var name="assetType" value="Basic Web Content" />
-		<var name="pageName" value="Web Content Page" />
-		<var name="webContentContent" value="WC WebContent Content" />
-		<var name="webContentTitle" value="WC WebContent Title" />
-
+	<command known-issues="LIFERAYQA-6795" name="AddNewWebContentViaAddContentPanel" priority="5">
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Page" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Page" />
 		</execute>
 
 		<execute macro="Content#addNewPG">
-			<var name="assetType" value="${assetType}" />
+			<var name="assetType" value="Basic Web Content" />
 		</execute>
 
 		<execute macro="WebContent#addPGViaPanel">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -57,20 +52,17 @@
 		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 	</command>
 
 	<command name="AddPortletWCDSite" priority="5">
-		<var name="siteName" value="Site Name" />
-		<var name="sitePageName" value="Site Page" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -78,94 +70,85 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${sitePageName}" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
 			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Web Content Display" />
 		</execute>
 	</command>
 
 	<command name="AddWebContent" priority="5">
-		<var name="webContentContent" value="WC WebContent Content" />
-		<var name="webContentTitle" value="WC WebContent Title" />
-
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="WebContent#addPGViaWCD">
-			<var name="pageName" value="${pageName}" />
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="pageName" value="Web Content Display Page" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 	</command>
 
 	<command known-issues="LPS-41756" name="AddWebContentPortalScopeCurrentPage" priority="5">
-		<var name="pageName1" value="Web Content Display Page1" />
-		<var name="pageName2" value="Web Content Display Page2" />
-		<var name="pageName3" value="Web Content Display Page3" />
-		<var name="webContentContent" value="WC WebContent Content" />
-		<var name="webContentTitle" value="WC WebContent Title" />
-
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName1}" />
+			<var name="pageName" value="Web Content Display Page1" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Web Content Display" />
 		</execute>
 
 		<execute macro="WebContentDisplayPortlet#configureScopePG">
-			<var name="scopeSelection" value="${pageName1}" />
+			<var name="scopeSelection" value="Web Content Display Page1" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName1}" />
+			<var name="pageName" value="Web Content Display Page1" />
 		</execute>
 
 		<execute macro="WebContentDisplayPortlet#viewConfigureScopePG">
-			<var name="scopeSelection" value="${pageName1}" />
+			<var name="scopeSelection" value="Web Content Display Page1" />
 		</execute>
 
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName2}" />
+			<var name="pageName" value="Web Content Display Page2" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Web Content Display" />
 		</execute>
 
 		<execute macro="WebContentDisplayPortlet#configureScopePG">
-			<var name="scopeSelection" value="${pageName1}" />
+			<var name="scopeSelection" value="Web Content Display Page1" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName2}" />
+			<var name="pageName" value="Web Content Display Page2" />
 		</execute>
 
 		<execute macro="WebContentDisplayPortlet#viewConfigureScopePG">
-			<var name="scopeSelection" value="${pageName1}" />
+			<var name="scopeSelection" value="Web Content Display Page1" />
 		</execute>
 
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName3}" />
+			<var name="pageName" value="Web Content Display Page3" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Web Content Display" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName3}" />
+			<var name="pageName" value="Web Content Display Page3" />
 		</execute>
 
 		<execute macro="WebContentDisplayPortlet#viewConfigureScopePG">
@@ -174,129 +157,115 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName1}" />
+			<var name="pageName" value="Web Content Display Page1" />
 		</execute>
 
 		<execute macro="WebContent#addPGViaWCD">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName2}" />
+			<var name="pageName" value="Web Content Display Page2" />
 		</execute>
 
 		<execute macro="WebContent#viewDefaultPGViaWCD" />
 
 		<execute macro="WebContentDisplayPortlet#selectWebContent">
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName2}" />
+			<var name="pageName" value="Web Content Display Page2" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName3}" />
+			<var name="pageName" value="Web Content Display Page3" />
 		</execute>
 
 		<execute macro="WebContent#viewDefaultPGViaWCD" />
 
 		<execute macro="WebContent#viewSelectNoPGViaWCD">
-			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName1}" />
+			<var name="pageName" value="Web Content Display Page1" />
 		</execute>
 
 		<execute macro="WebContentDisplayPortlet#tearDownScopePG" />
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName2}" />
+			<var name="pageName" value="Web Content Display Page2" />
 		</execute>
 
 		<execute macro="WebContentDisplayPortlet#tearDownScopePG" />
 
 		<execute macro="WebContent#tearDownCP">
-			<var name="contentScopeName" value="${pageName1}" />
+			<var name="contentScopeName" value="Web Content Display Page1" />
 		</execute>
 	</command>
 
 	<command name="AddWebContentViaAddContentPanel" priority="5">
-		<var name="pageName" value="Web Content Page" />
-		<var name="webContentContent" value="WC WebContent Content" />
-		<var name="webContentTitle" value="WC WebContent Title" />
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="Content#addPG">
-			<var name="assetTitle" value="${webContentTitle}" />
-			<var name="pageName" value="${pageName}" />
-			<var name="webContentContent" value="${webContentContent}" />
+			<var name="assetTitle" value="WC WebContent Title" />
+			<var name="pageName" value="Web Content Display Page" />
+			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 	</command>
 
 	<command name="EditWebContent" priority="5">
-		<var name="webContentContent" value="WC WebContent Content" />
-		<var name="webContentContentEdit" value="WC WebContent Content Edit" />
-		<var name="webContentTitle" value="WC WebContent Title" />
-		<var name="webContentTitleEdit" value="WC WebContent Title Edit" />
-
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="WebContent#addPGViaWCD">
-			<var name="pageName" value="${pageName}" />
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="pageName" value="Web Content Display Page" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContent#editPGViaWCD">
-			<var name="pageName" value="${pageName}" />
-			<var name="webContentContentEdit" value="${webContentContentEdit}" />
-			<var name="webContentTitleEdit" value="${webContentTitleEdit}" />
+			<var name="pageName" value="Web Content Display Page" />
+			<var name="webContentContentEdit" value="WC WebContent Content Edit" />
+			<var name="webContentTitleEdit" value="WC WebContent Title Edit" />
 		</execute>
 	</command>
 
 	<command name="LocalizeWebContent" priority="5">
 		<var name="languageKey" value="zh_CN" />
-		<var name="webContentContent" value="WC WebContent Content" />
-		<var name="webContentTitle" value="WC WebContent Title" />
-		<var name="webContentTranslationContent" value="世界您好 Content" />
-		<var name="webContentTranslationLanguage" value="Chinese (China)" />
-		<var name="webContentTranslationTitle" value="世界您好 Title" />
-
+		
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -304,128 +273,118 @@
 		</execute>
 
 		<execute macro="WebContent#addPGViaWCD">
-			<var name="pageName" value="${pageName}" />
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="pageName" value="Web Content Display Page" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContent#addTranslationPGViaWCD">
 			<var name="lowercaseLanguageCode" value="zh" />
-			<var name="webContentTranslationContent" value="${webContentTranslationContent}" />
-			<var name="webContentTranslationLanguage" value="${webContentTranslationLanguage}" />
-			<var name="webContentTranslationTitle" value="${webContentTranslationTitle}" />
+			<var name="webContentTranslationContent" value="世界您好 Content" />
+			<var name="webContentTranslationLanguage" value="Chinese (China)" />
+			<var name="webContentTranslationTitle" value="世界您好 Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="language" value="${webContentTranslationLanguage}" />
+			<var name="language" value="Chinese (China)" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="${webContentTranslationContent}" />
+			<var name="webContentContent" value="世界您好 Content" />
 		</execute>
 
 		<execute macro="LanguagePortlet#tearDownLanguagePG" />
 
 		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 	</command>
 
 	<command name="SearchWebContent" priority="5">
-		<var name="webContentContent" value="WC WebContent Content" />
-		<var name="webContentTitle" value="WC WebContent Title" />
-		<var name="webContentTitle2" value="WC2 WebContent2 Title2" />
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="WebContentDisplayPortlet#searchWebContent">
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="WebContentDisplayPortlet#searchWebContentNo">
-			<var name="webContentTitle" value="${webContentTitle2}" />
+			<var name="webContentTitle" value="WC2 WebContent2 Title2" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="WebContentDisplayPortlet#searchWebContent">
-			<var name="webContentSearchValue" value="\&quot;${webContentTitle}\&quot;" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentSearchValue" value="\&quot;WC WebContent Title\&quot;" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="WebContentDisplayPortlet#searchWebContentNo">
-			<var name="webContentSearchValue" value="\&quot;${webContentTitle2}\&quot;" />
-			<var name="webContentTitle" value="${webContentTitle2}" />
+			<var name="webContentSearchValue" value="\&quot;WC2 WebContent2 Title2\&quot;" />
+			<var name="webContentTitle" value="WC2 WebContent2 Title2" />
 		</execute>
 	</command>
 
 	<command name="SelectWebContent" priority="5">
-		<var name="webContentContent" value="WC WebContent Content" />
-		<var name="webContentTitle" value="WC WebContent Title" />
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="WebContentDisplayPortlet#selectWebContent">
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 	</command>
 
 	<command name="SelectWebContentScopeGlobal" priority="5">
-		<var name="webContentContent" value="WC WebContent Content" />
-		<var name="webContentTitle" value="WC WebContent Title" />
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Global" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="WebContentDisplayPortlet#configureScopePG">
@@ -433,7 +392,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="WebContentDisplayPortlet#viewConfigureScopePG">
@@ -441,15 +400,15 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="WebContentDisplayPortlet#selectWebContent">
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 
 		<execute macro="WebContent#tearDownCP">
@@ -459,8 +418,6 @@
 
 	<command name="ViewPortletWCDShowAvailableLocales" priority="5">
 		<var name="languageKey" value="zh_CN" />
-		<var name="webContentContent" value="WC WebContent Content" />
-		<var name="webContentTitle" value="WC WebContent Title" />
 		<var name="webContentTranslationContent" value="世界您好 Content" />
 		<var name="webContentTranslationLanguage" value="Chinese (China)" />
 		<var name="webContentTranslationTitle" value="世界您好 Title" />
@@ -470,36 +427,36 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="WebContent#addPGViaWCD">
-			<var name="pageName" value="${pageName}" />
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="pageName" value="Web Content Display Page" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContent#addTranslationPGViaWCD">
 			<var name="lowercaseLanguageCode" value="zh" />
-			<var name="webContentTranslationContent" value="${webContentTranslationContent}" />
-			<var name="webContentTranslationLanguage" value="${webContentTranslationLanguage}" />
-			<var name="webContentTranslationTitle" value="${webContentTranslationTitle}" />
+			<var name="webContentTranslationContent" value="世界您好 Content" />
+			<var name="webContentTranslationLanguage" value="Chinese (China)" />
+			<var name="webContentTranslationTitle" value="世界您好 Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute action="PGWebcontentdisplay#click" locator-key1="LANGUAGE_MENU_CHINESE" />
 
 		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="${webContentTranslationContent}" />
+			<var name="webContentContent" value="世界您好 Content" />
 		</execute>
 
 		<execute action="PGWebcontentdisplay#click" locator-key1="LANGUAGE_MENU_ENGLISH" />
 
 		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 	</command>
 </definition>

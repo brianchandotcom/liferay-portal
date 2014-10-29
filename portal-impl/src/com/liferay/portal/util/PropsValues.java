@@ -1520,9 +1520,7 @@ public class PropsValues {
 
 	public static final int RATINGS_DEFAULT_NUMBER_OF_STARS = GetterUtil.getInteger(PropsUtil.get(PropsKeys.RATINGS_DEFAULT_NUMBER_OF_STARS));
 
-	public static final int RATINGS_MAX_SCORE = GetterUtil.getInteger(PropsUtil.get(PropsKeys.RATINGS_MAX_SCORE));
-
-	public static final int RATINGS_MIN_SCORE = GetterUtil.getInteger(PropsUtil.get(PropsKeys.RATINGS_MIN_SCORE));
+	public static final String[] RATINGS_UPGRADE_THUMBS_CLASS_NAMES = PropsUtil.getArray(PropsKeys.RATINGS_UPGRADE_THUMBS_CLASS_NAMES);
 
 	public static final int RECENT_CONTENT_MAX_DISPLAY_ITEMS = GetterUtil.getInteger(PropsUtil.get(PropsKeys.RECENT_CONTENT_MAX_DISPLAY_ITEMS));
 

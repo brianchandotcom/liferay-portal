@@ -2111,9 +2111,9 @@ public interface PropsKeys {
 
 	public static final String RATINGS_DEFAULT_NUMBER_OF_STARS = "ratings.default.number.of.stars";
 
-	public static final String RATINGS_MAX_SCORE = "ratings.max.score";
+	public static final String RATINGS_UPGRADE_STARS_NORMALIZATION_FACTOR = "ratings.upgrade.stars.normalization.factor";
 
-	public static final String RATINGS_MIN_SCORE = "ratings.min.score";
+	public static final String RATINGS_UPGRADE_THUMBS_CLASS_NAMES = "ratings.upgrade.thumbs.class.names";
 
 	public static final String RECENT_CONTENT_MAX_DISPLAY_ITEMS = "recent.content.max.display.items";
 

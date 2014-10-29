@@ -137,7 +137,7 @@ public class MobileDriverToSeleniumBridge
 		}
 		catch (Exception e) {
 			if (!webElement.isDisplayed()) {
-				scrollWebElementIntoView(webDriver, webElement);
+				scrollWebElementIntoView(webElement);
 			}
 
 			webElement.click();
@@ -152,7 +152,7 @@ public class MobileDriverToSeleniumBridge
 	public void clickAt(
 		String locator, String coordString, boolean scrollIntoView) {
 
-		WebDriverHelper.click(this, locator);
+		click(locator);
 	}
 
 	@Override
@@ -450,10 +450,10 @@ public class MobileDriverToSeleniumBridge
 	}
 
 	public String getText(String locator, String timeout) {
-		WebElement webElement = getWebElement(webDriver, locator, timeout);
+		WebElement webElement = getWebElement(locator, timeout);
 
 		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webDriver, webElement);
+			scrollWebElementIntoView(webElement);
 		}
 
 		String text = webElement.getText();
@@ -563,10 +563,10 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public boolean isVisible(String locator) {
-		WebElement webElement = getWebElement(webDriver, locator, "1");
+		WebElement webElement = getWebElement(locator, "1");
 
 		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webDriver, webElement);
+			scrollWebElementIntoView(webElement);
 		}
 
 		return webElement.isDisplayed();

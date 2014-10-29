@@ -18,6 +18,12 @@
 		float: left;
 	}
 
+	.article-content-description, .article-content-title {
+		.input-localized-content {
+			display: none;
+		}
+	}
+
 	.article-separator {
 		clear: both;
 	}

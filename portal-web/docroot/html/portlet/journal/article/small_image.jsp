@@ -24,11 +24,11 @@ boolean smallImage = BeanParamUtil.getBoolean(article, request, "smallImage");
 String defaultLanguageId = (String)request.getAttribute("edit_article.jsp-defaultLanguageId");
 %>
 
-<liferay-ui:error-marker key="errorSection" value="abstract" />
+<liferay-ui:error-marker key="errorSection" value="small_image" />
 
 <aui:model-context bean="<%= article %>" defaultLanguageId="<%= defaultLanguageId %>" model="<%= JournalArticle.class %>" />
 
-<h3><liferay-ui:message key="abstract" /></h3>
+<h3><liferay-ui:message key="small-image" /></h3>
 
 <liferay-ui:error exception="<%= ArticleSmallImageNameException.class %>">
 
@@ -49,8 +49,6 @@ String defaultLanguageId = (String)request.getAttribute("edit_article.jsp-defaul
 </liferay-ui:error>
 
 <aui:fieldset>
-	<aui:input label="summary" name="description" />
-
 	<div id="<portlet:namespace />smallImageContainer">
 		<div class="lfr-journal-small-image-header">
 			<aui:input label="use-small-image" name="smallImage" />

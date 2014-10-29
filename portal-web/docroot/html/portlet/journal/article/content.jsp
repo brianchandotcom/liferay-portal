@@ -179,11 +179,13 @@ if (ddmFields != null) {
 		</div>
 
 		<div class="journal-article-general-fields">
-			<aui:input autoFocus="<%= (((article != null) && !article.isNew()) && !PropsValues.JOURNAL_ARTICLE_FORCE_AUTOGENERATE_ID && windowState.equals(WindowState.MAXIMIZED)) || windowState.equals(LiferayWindowState.POP_UP) %>" name="title">
+			<aui:input autoFocus="<%= (((article != null) && !article.isNew()) && !PropsValues.JOURNAL_ARTICLE_FORCE_AUTOGENERATE_ID && windowState.equals(WindowState.MAXIMIZED)) || windowState.equals(LiferayWindowState.POP_UP) %>" name="title" wrapperCssClass="article-content-title">
 				<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
 					<aui:validator name="required" />
 				</c:if>
 			</aui:input>
+
+			<aui:input label="summary" name="description" wrapperCssClass="article-content-description" />
 		</div>
 
 		<div class="journal-article-container" id="<portlet:namespace />journalArticleContainer">
@@ -232,11 +234,14 @@ if (ddmFields != null) {
 			'ddm.groupId': <%= groupId %>,
 			'ddm.refererPortletName': '<%= PortletKeys.JOURNAL_CONTENT %>',
 			'ddm.templateId': <%= (ddmTemplate != null) ? ddmTemplate.getTemplateId() : 0 %>,
+			descriptionInputLocalized: Liferay.component('<portlet:namespace />description'),
 			editStructure: '#<portlet:namespace />editDDMStructure',
 			editTemplate: '#<portlet:namespace />editDDMTemplate',
 			namespace: '<portlet:namespace />',
 			selectStructure: '#<portlet:namespace />selectStructure',
 			selectTemplate: '#<portlet:namespace />selectTemplate',
+			titleInputLocalized: Liferay.component('<portlet:namespace />title'),
+			translationManager: Liferay.component('<portlet:namespace />translationManager'),
 			'urls.editStructure': '<%= editStructureURL %>',
 			'urls.editTemplate': '<%= editTemplateURL %>'
 		}

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -485,10 +486,10 @@ public class EditArticleAction extends PortletAction {
 
 		Locale defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);
 
-		String title = ParamUtil.getString(
-			uploadPortletRequest, "title_" + defaultLanguageId);
-		String description = ParamUtil.getString(
-			uploadPortletRequest, "description_" + defaultLanguageId);
+		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "title");
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			JournalArticle.class.getName(), uploadPortletRequest);
@@ -605,13 +606,6 @@ public class EditArticleAction extends PortletAction {
 		String oldUrlTitle = StringPool.BLANK;
 
 		if (cmd.equals(Constants.ADD)) {
-			Map<Locale, String> titleMap = new HashMap<Locale, String>();
-
-			titleMap.put(defaultLocale, title);
-
-			Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
-
-			descriptionMap.put(defaultLocale, description);
 
 			// Add article
 
@@ -637,9 +631,6 @@ public class EditArticleAction extends PortletAction {
 
 			article = JournalArticleServiceUtil.getArticle(
 				groupId, articleId, version);
-
-			Map<Locale, String> titleMap = article.getTitleMap();
-			Map<Locale, String> descriptionMap = article.getDescriptionMap();
 
 			String tempOldUrlTitle = article.getUrlTitle();
 

@@ -55,7 +55,11 @@ String articleId = BeanParamUtil.getString(article, request, "articleId");
 
 double version = BeanParamUtil.getDouble(article, request, "version", JournalArticleConstants.VERSION_DEFAULT);
 
-String ddmStructureKey = BeanParamUtil.getString(article, request, "ddmStructureKey");
+String ddmStructureKey = ParamUtil.getString(request, "ddmStructureKey");
+
+if (Validator.isNull(ddmStructureKey) && (article != null)) {
+	ddmStructureKey = article.getDDMStructureKey();
+}
 
 DDMStructure ddmStructure = null;
 
@@ -68,7 +72,11 @@ else if (Validator.isNotNull(ddmStructureKey)) {
 	ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(JournalArticle.class), ddmStructureKey, true);
 }
 
-String ddmTemplateKey = BeanParamUtil.getString(article, request, "ddmTemplateKey");
+String ddmTemplateKey = ParamUtil.getString(request, "ddmTemplateKey");
+
+if (Validator.isNull(ddmTemplateKey) && (article != null)) {
+	ddmTemplateKey = article.getDDMTemplateKey();
+}
 
 DDMTemplate ddmTemplate = null;
 

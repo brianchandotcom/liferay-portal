@@ -26,7 +26,11 @@ long groupId = BeanParamUtil.getLong(feed, request, "groupId", scopeGroupId);
 String feedId = BeanParamUtil.getString(feed, request, "feedId");
 String newFeedId = ParamUtil.getString(request, "newFeedId");
 
-String ddmStructureKey = BeanParamUtil.getString(feed, request, "ddmStructureKey");
+String ddmStructureKey = ParamUtil.getString(request, "ddmStructureKey");
+
+if (Validator.isNull(ddmStructureKey) && (feed != null)) {
+	ddmStructureKey = feed.getDDMStructureKey();
+}
 
 DDMStructure ddmStructure = null;
 
@@ -46,7 +50,11 @@ if (ddmStructure != null) {
 	ddmTemplates = DDMTemplateLocalServiceUtil.getTemplates(themeDisplay.getScopeGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId(), true);
 }
 
-String ddmTemplateKey = BeanParamUtil.getString(feed, request, "DDMTemplateKey");
+String ddmTemplateKey = ParamUtil.getString(request, "ddmTemplateKey");
+
+if (Validator.isNull(ddmTemplateKey) && (feed != null)) {
+	ddmTemplateKey = feed.getDDMTemplateKey();
+}
 
 if ((ddmStructure == null) && Validator.isNotNull(ddmTemplateKey)) {
 	DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmTemplateKey, true);
@@ -63,7 +71,11 @@ if ((ddmStructure == null) && Validator.isNotNull(ddmTemplateKey)) {
 	}
 }
 
-String ddmRendererTemplateKey = BeanParamUtil.getString(feed, request, "DDMRendererTemplateKey");
+String ddmRendererTemplateKey = ParamUtil.getString(request, "ddmRendererTemplateKey");
+
+if (Validator.isNull(ddmRendererTemplateKey) && (feed != null)) {
+	ddmRendererTemplateKey = feed.getDDMTemplateKey();
+}
 
 String contentField = BeanParamUtil.getString(feed, request, "contentField");
 

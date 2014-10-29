@@ -17,18 +17,12 @@
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
 <%
-String redirect = (String)request.getAttribute("edit_article.jsp-redirect");
-
-String portletResource = ParamUtil.getString(request, "portletResource");
-
 JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
 
 long groupId = BeanParamUtil.getLong(article, request, "groupId", scopeGroupId);
 
 long classNameId = ParamUtil.getLong(request, "classNameId");
-String classPK = ParamUtil.getString(request, "classPK");
 
-String articleId = BeanParamUtil.getString(article, request, "articleId");
 String newArticleId = ParamUtil.getString(request, "newArticleId");
 
 DDMStructure ddmStructure = (DDMStructure)request.getAttribute("edit_article.jsp-structure");
@@ -59,13 +53,6 @@ if (ddmFields != null) {
 <liferay-ui:error-marker key="errorSection" value="content" />
 
 <aui:model-context bean="<%= article %>" defaultLanguageId="<%= defaultLanguageId %>" model="<%= JournalArticle.class %>" />
-
-<portlet:renderURL var="editArticleRenderPopUpURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="struts_action" value="/journal/edit_article" />
-	<portlet:param name="articleId" value="<%= articleId %>" />
-	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	<portlet:param name="ddmStructureKey" value="<%= ddmStructure.getStructureKey() %>" />
-</portlet:renderURL>
 
 <div class="journal-article-body" id="<portlet:namespace />journalArticleBody">
 	<div class="journal-article-body-content">
@@ -232,21 +219,9 @@ if (ddmFields != null) {
 	<portlet:param name="refererPortletName" value="<%= PortletKeys.JOURNAL %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-	<portlet:param name="ddmTemplateKey" value="<%= (ddmTemplate != null) ? String.valueOf(ddmTemplate.getTemplateId()) : StringPool.BLANK %>" />
+	<portlet:param name="templateId" value="<%= (ddmTemplate != null) ? String.valueOf(ddmTemplate.getTemplateId()) : StringPool.BLANK %>" />
 	<portlet:param name="showCacheableInput" value="<%= Boolean.TRUE.toString() %>" />
 </liferay-portlet:renderURL>
-
-<portlet:renderURL var="updateDefaultLanguageURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-	<portlet:param name="struts_action" value="/journal/edit_article" />
-	<portlet:param name="redirect" value="<%= redirect %>" />
-	<portlet:param name="portletResource" value="<%= portletResource %>" />
-	<portlet:param name="articleId" value="<%= articleId %>" />
-	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-	<portlet:param name="classPK" value="<%= classPK %>" />
-	<portlet:param name="ddmStructureKey" value="<%= ddmStructure.getStructureKey() %>" />
-	<portlet:param name="ddmTemplateKey" value="<%= (ddmTemplate != null) ? String.valueOf(ddmTemplate.getTemplateKey()) : StringPool.BLANK %>" />
-</portlet:renderURL>
 
 <aui:script use="liferay-journal-content">
 	var journalContent = new Liferay.Portlet.JournalContent(
@@ -263,9 +238,7 @@ if (ddmFields != null) {
 			selectStructure: '#<portlet:namespace />selectStructure',
 			selectTemplate: '#<portlet:namespace />selectTemplate',
 			'urls.editStructure': '<%= editStructureURL %>',
-			'urls.editTemplate': '<%= editTemplateURL %>',
-			'urls.editTranslation': '<%= editArticleRenderPopUpURL %>',
-			'urls.updateDefaultLanguage': '<%= updateDefaultLanguageURL %>'
+			'urls.editTemplate': '<%= editTemplateURL %>'
 		}
 	);
 

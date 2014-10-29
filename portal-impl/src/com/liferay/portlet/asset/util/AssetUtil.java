@@ -407,7 +407,7 @@ public class AssetUtil {
 					DDMStructureLocalServiceUtil.getStructure(classTypeId);
 
 				addPortletURL.setParameter(
-					"structureId", ddmStructure.getStructureKey());
+					"ddmStructureKey", ddmStructure.getStructureKey());
 			}
 		}
 

@@ -34,7 +34,7 @@
 		min-height: 1.8em;
 	}
 
-	.article-structure-template-toolbar, .article-translation-toolbar {
+	.article-structure-template-toolbar {
 		color: #34404F;
 		display: block;
 		margin: 0 auto;
@@ -53,14 +53,6 @@
 			max-width: 50px;
 			vertical-align: middle;
 		}
-	}
-
-	.article-translation-toolbar .contains-translations  {
-		margin-top: 1em;
-	}
-
-	.article-translation-toolbar {
-		padding: 1em 0 0 0;
 	}
 
 	.journal-article-header-edit {

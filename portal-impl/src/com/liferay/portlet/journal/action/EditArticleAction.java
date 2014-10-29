@@ -484,8 +484,6 @@ public class EditArticleAction extends PortletAction {
 		String defaultLanguageId = ParamUtil.getString(
 			uploadPortletRequest, "defaultLanguageId");
 
-		Locale defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);
-
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "title");
 		Map<Locale, String> descriptionMap =

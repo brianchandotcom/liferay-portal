@@ -24,6 +24,8 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -89,10 +91,12 @@ public class BaseDDMServiceTestCase {
 			String name, String definition, String storageType, int type)
 		throws Exception {
 
+		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
+		
 		return DDMStructureLocalServiceUtil.addStructure(
 			TestPropsValues.getUserId(), group.getGroupId(), parentStructureId,
 			classNameId, structureKey, getDefaultLocaleMap(name), null,
-			definition, storageType, type,
+			ddmForm, storageType, type, 
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 

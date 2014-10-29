@@ -95,6 +95,18 @@ public class DDMStructureLocalServiceUtil {
 		getService().addJournalFolderDDMStructures(folderId, structureIds);
 	}
 
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure addStructure(
+		long userId, long groupId, long classNameId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addStructure(userId, groupId, classNameId, nameMap,
+			descriptionMap, ddmForm, serviceContext);
+	}
+
 	/**
 	* Adds a structure referencing a default parent structure, using the portal
 	* property <code>dynamic.data.lists.storage.type</code> storage type and
@@ -102,19 +114,23 @@ public class DDMStructureLocalServiceUtil {
 	*
 	* @param userId the primary key of the structure's creator/owner
 	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the class name for the structure's
-	related model
+	* @param classNameId the primary key of the class name for the
+	structure's related model
 	* @param nameMap the structure's locales and localized names
-	* @param descriptionMap the structure's locales and localized descriptions
+	* @param descriptionMap the structure's locales and localized
+	descriptions
 	* @param definition the structure's XML schema definition
 	* @param serviceContext the service context to be applied. Can set the
-	UUID, creation date, modification date, guest permissions, and
-	group permissions for the structure.
+	UUID, creation date, modification date, guest permissions,
+	and group permissions for the structure.
 	* @return the structure
 	* @throws PortalException if a user with the primary key could not be
-	found, if the XSD was not well-formed, or if a portal exception
-	occurred
+	found, if the XSD was not well-formed, or if a portal
+	exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #addStructure(long, long,
+	long, Map, Map, DDMForm, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure addStructure(
 		long userId, long groupId, long classNameId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -127,6 +143,21 @@ public class DDMStructureLocalServiceUtil {
 			descriptionMap, definition, serviceContext);
 	}
 
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure addStructure(
+		long userId, long groupId, long parentStructureId, long classNameId,
+		java.lang.String structureKey,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm,
+		java.lang.String storageType, int type,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addStructure(userId, groupId, parentStructureId,
+			classNameId, structureKey, nameMap, descriptionMap, ddmForm,
+			storageType, type, serviceContext);
+	}
+
 	/**
 	* Adds a structure referencing its parent structure.
 	*
@@ -135,12 +166,13 @@ public class DDMStructureLocalServiceUtil {
 	* @param parentStructureId the primary key of the parent structure
 	(optionally {@link
 	com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants#DEFAULT_PARENT_STRUCTURE_ID})
-	* @param classNameId the primary key of the class name for the structure's
-	related model
+	* @param classNameId the primary key of the class name for the
+	structure's related model
 	* @param structureKey the unique string identifying the structure
 	(optionally <code>null</code>)
 	* @param nameMap the structure's locales and localized names
-	* @param descriptionMap the structure's locales and localized descriptions
+	* @param descriptionMap the structure's locales and localized
+	descriptions
 	* @param definition the structure's XML schema definition
 	* @param storageType the structure's storage type. It can be "xml" or
 	"expando". For more information, see {@link
@@ -148,13 +180,17 @@ public class DDMStructureLocalServiceUtil {
 	* @param type the structure's type. For more information, see {@link
 	com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
 	* @param serviceContext the service context to be applied. Can set the
-	UUID, creation date, modification date, guest permissions, and
-	group permissions for the structure.
+	UUID, creation date, modification date, guest permissions,
+	and group permissions for the structure.
 	* @return the structure
 	* @throws PortalException if a user with the primary key could not be
-	found, if the XSD was not well-formed, or if a portal exception
-	occurred
+	found, if the XSD was not well-formed, or if a portal
+	exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #addStructure(long, long,
+	long, long, String, Map, Map, DDMForm, String, int,
+	ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure addStructure(
 		long userId, long groupId, long parentStructureId, long classNameId,
 		java.lang.String structureKey,
@@ -169,6 +205,21 @@ public class DDMStructureLocalServiceUtil {
 			storageType, type, serviceContext);
 	}
 
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure addStructure(
+		long userId, long groupId, java.lang.String parentStructureKey,
+		long classNameId, java.lang.String structureKey,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm,
+		java.lang.String storageType, int type,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addStructure(userId, groupId, parentStructureKey,
+			classNameId, structureKey, nameMap, descriptionMap, ddmForm,
+			storageType, type, serviceContext);
+	}
+
 	/**
 	* Adds a structure referencing a default parent structure if the parent
 	* structure is not found.
@@ -177,12 +228,13 @@ public class DDMStructureLocalServiceUtil {
 	* @param groupId the primary key of the group
 	* @param parentStructureKey the unique string identifying the parent
 	structure (optionally <code>null</code>)
-	* @param classNameId the primary key of the class name for the structure's
-	related model
+	* @param classNameId the primary key of the class name for the
+	structure's related model
 	* @param structureKey the unique string identifying the structure
 	(optionally <code>null</code>)
 	* @param nameMap the structure's locales and localized names
-	* @param descriptionMap the structure's locales and localized descriptions
+	* @param descriptionMap the structure's locales and localized
+	descriptions
 	* @param definition the structure's XML schema definition
 	* @param storageType the structure's storage type. It can be "xml" or
 	"expando". For more information, see {@link
@@ -194,9 +246,13 @@ public class DDMStructureLocalServiceUtil {
 	group permissions for the structure.
 	* @return the structure
 	* @throws PortalException if a user with the primary key could not be
-	found, if the XSD was not well-formed, or if a portal exception
-	occurred
+	found, if the XSD was not well-formed, or if a portal
+	exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #addStructure(long, long,
+	String, long, String, Map, Map, DDMForm, String, int,
+	ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure addStructure(
 		long userId, long groupId, java.lang.String parentStructureKey,
 		long classNameId, java.lang.String structureKey,

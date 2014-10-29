@@ -37,6 +37,8 @@ import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
 import com.liferay.portlet.dynamicdatamapping.StructureDefinitionException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateElementException;
 import com.liferay.portlet.dynamicdatamapping.StructureNameException;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
@@ -281,9 +283,12 @@ public class EditStructureAction extends PortletAction {
 		DDMStructure structure = null;
 
 		if (cmd.equals(Constants.ADD)) {
+			DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(
+				definition);
+
 			structure = DDMStructureServiceUtil.addStructure(
 				groupId, parentStructureId, scopeClassNameId, structureKey,
-				nameMap, descriptionMap, definition, storageType,
+				nameMap, descriptionMap, ddmForm, storageType,
 				DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {

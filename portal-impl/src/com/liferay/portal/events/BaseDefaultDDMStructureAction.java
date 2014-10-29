@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
@@ -110,10 +112,13 @@ public abstract class BaseDefaultDDMStructureAction extends SimpleAction {
 				continue;
 			}
 
+			DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(
+				definition);
+
 			ddmStructure = DDMStructureLocalServiceUtil.addStructure(
 				userId, groupId,
 				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, classNameId,
-				ddmStructureKey, nameMap, descriptionMap, definition, "xml",
+				ddmStructureKey, nameMap, descriptionMap, ddmForm, "xml",
 				DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 
 			Element templateElement = structureElement.element("template");

@@ -32,6 +32,8 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
@@ -84,6 +86,8 @@ public class DDMStructureTestUtil {
 
 		nameMap.put(defaultLocale, "Test Structure");
 
+		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
+
 		String ddlStorageType = GetterUtil.getString(
 			PropsUtil.get(PropsKeys.DYNAMIC_DATA_LISTS_STORAGE_TYPE));
 
@@ -92,9 +96,8 @@ public class DDMStructureTestUtil {
 
 		return DDMStructureLocalServiceUtil.addStructure(
 			TestPropsValues.getUserId(), groupId, parentStructureId,
-			PortalUtil.getClassNameId(className), null, nameMap, null,
-			definition, ddlStorageType, DDMStructureConstants.TYPE_DEFAULT,
-			serviceContext);
+			PortalUtil.getClassNameId(className), null, nameMap, null, ddmForm,
+			ddlStorageType, DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 	}
 
 	public static DDMStructure addStructure(

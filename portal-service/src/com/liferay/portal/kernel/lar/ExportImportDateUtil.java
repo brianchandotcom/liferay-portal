@@ -201,12 +201,8 @@ public class ExportImportDateUtil {
 	}
 
 	public static Date getLastPublishDate(LayoutSet layoutSet) {
-		UnicodeProperties settingsProperties =
-			layoutSet.getSettingsProperties();
-
 		long lastPublishDate = GetterUtil.getLong(
-			settingsProperties.getProperty(
-				_LAST_PUBLISH_DATE, StringPool.BLANK));
+			layoutSet.getSettingsProperty(_LAST_PUBLISH_DATE));
 
 		if (lastPublishDate == 0) {
 			return null;

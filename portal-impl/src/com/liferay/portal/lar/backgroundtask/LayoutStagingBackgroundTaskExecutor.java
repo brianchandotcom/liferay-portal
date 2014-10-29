@@ -179,6 +179,9 @@ public class LayoutStagingBackgroundTaskExecutor
 
 				boolean privateLayout = MapUtil.getBoolean(
 					settingsMap, "privateLayout");
+
+				initThreadLocals(_sourceGroupId, privateLayout);
+
 				long[] layoutIds = GetterUtil.getLongValues(
 					settingsMap.get("layoutIds"));
 				Map<String, String[]> parameterMap =

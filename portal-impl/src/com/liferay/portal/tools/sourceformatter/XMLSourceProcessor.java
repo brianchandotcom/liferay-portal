@@ -73,6 +73,30 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return newContent;
 	}
 
+	protected void checkPoshiCharactersAfterDefinition(
+		String fileName, String content) {
+
+		Matcher matcher = _poshiCharactersAfterDefinitionTag.matcher(content);
+
+		if (matcher.find()) {
+			processErrorMessage(
+				fileName,
+				"Character(s) found after definition element: " + fileName);
+		}
+	}
+
+	protected void checkPoshiCharactersBeforeDefinition(
+		String fileName, String content) {
+
+		Matcher matcher = _poshiCharactersBeforeDefinitionTag.matcher(content);
+
+		if (matcher.find()) {
+			processErrorMessage(
+				fileName,
+				"Character(s) found before definition element: " + fileName);
+		}
+	}
+
 	protected void checkServiceXMLExceptions(
 		String fileName, Element rootElement) {
 
@@ -725,6 +749,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	protected String formatPoshiXML(String fileName, String content)
 		throws Exception {
 
+		checkPoshiCharactersAfterDefinition(fileName, content);
+		checkPoshiCharactersBeforeDefinition(fileName, content);
+
 		content = sortPoshiAttributes(fileName, content);
 
 		content = sortPoshiCommands(content);
@@ -1153,6 +1180,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private List<String> _columnNames;
 	private List<String> _friendlyUrlRoutesSortExclusions;
 	private List<String> _numericalPortletNameElementExclusions;
+	private Pattern _poshiCharactersAfterDefinitionTag = Pattern.compile(
+		"</definition>([\\w\\s\\t\\n\\<\\>]+)");
+	private Pattern _poshiCharactersBeforeDefinitionTag = Pattern.compile(
+		"([\\w\\s\\t\\n\\<\\>]+)<definition");
 	private Pattern _poshiClosingTagPattern = Pattern.compile("</[^>/]*>");
 	private Pattern _poshiCommandsPattern = Pattern.compile(
 		"\\<command.*name=\\\"([^\\\"]*)\\\".*\\>[\\s\\S]*?\\</command\\>" +

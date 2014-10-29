@@ -1,0 +1,22 @@
+<definition component-name="portal-calendar">
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<execute macro="User#tearDownCP" />
+	</tear-down>
+</definition><tear-down>
+	<if>
+		<condition action="PGCalendar#isElementPresent" locator-key1="SCHEDULER_EVENT_GENERIC" />
+		<then>
+			<execute macro="CalendarEvent#tearDownPG" />
+		</then>
+	</if>
+
+	<execute macro="User#tearDownCP" />
+</tear-down>

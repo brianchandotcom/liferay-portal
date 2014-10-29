@@ -1,0 +1,15 @@
+
+
+		  <definition component-name="portal-calendar">
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<execute macro="User#tearDownCP" />
+	</tear-down>
+</definition>

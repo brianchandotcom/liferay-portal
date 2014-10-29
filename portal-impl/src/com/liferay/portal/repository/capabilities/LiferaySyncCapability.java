@@ -290,11 +290,11 @@ public class LiferaySyncCapability implements SyncCapability {
 		}
 
 		@Override
-		public void execute(T target) {
+		public void execute(T model) {
 			try {
 				Method method = _methodKey.getMethod();
 
-				method.invoke(LiferaySyncCapability.this, target);
+				method.invoke(LiferaySyncCapability.this, model);
 			}
 			catch (IllegalAccessException iae) {
 				throw new SystemException(iae);

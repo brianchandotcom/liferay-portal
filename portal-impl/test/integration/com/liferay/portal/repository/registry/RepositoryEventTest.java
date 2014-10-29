@@ -150,7 +150,7 @@ public class RepositoryEventTest {
 		implements RepositoryEventListener<S, T> {
 
 		@Override
-		public void execute(T target) {
+		public void execute(T model) {
 			throw new IllegalStateException();
 		}
 
@@ -165,7 +165,7 @@ public class RepositoryEventTest {
 		}
 
 		@Override
-		public void execute(T target) {
+		public void execute(T model) {
 			_count.incrementAndGet();
 		}
 
@@ -178,7 +178,7 @@ public class RepositoryEventTest {
 		implements RepositoryEventListener<S, T> {
 
 		@Override
-		public void execute(T target) {
+		public void execute(T model) {
 		}
 
 	}

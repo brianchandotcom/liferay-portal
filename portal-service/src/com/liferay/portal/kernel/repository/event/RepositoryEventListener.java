@@ -21,6 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public interface RepositoryEventListener <S extends RepositoryEventType, T> {
 
-	public void execute(T target) throws PortalException;
+	public void execute(T model) throws PortalException;
 
 }

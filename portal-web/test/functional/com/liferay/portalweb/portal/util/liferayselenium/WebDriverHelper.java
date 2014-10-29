@@ -125,21 +125,6 @@ public class WebDriverHelper {
 		}
 	}
 
-	public static void click(WebDriver webDriver, String locator) {
-		WebElement webElement = getWebElement(webDriver, locator);
-
-		try {
-			webElement.click();
-		}
-		catch (Exception e) {
-			if (!webElement.isDisplayed()) {
-				scrollWebElementIntoView(webDriver, webElement);
-			}
-
-			webElement.click();
-		}
-	}
-
 	public static String getAttribute(
 		WebDriver webDriver, String attributeLocator) {
 
@@ -313,22 +298,6 @@ public class WebDriverHelper {
 		return GetterUtil.getInteger(pageYOffset);
 	}
 
-	public static String getText(
-		WebDriver webDriver, String locator, String timeout) {
-
-		WebElement webElement = getWebElement(webDriver, locator, timeout);
-
-		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webDriver, webElement);
-		}
-
-		String text = webElement.getText();
-
-		text = text.trim();
-
-		return text.replace("\n", " ");
-	}
-
 	public static Point getWindowPoint(WebDriver webDriver) {
 		WebElement bodyWebElement = getWebElement(webDriver, "//body");
 
@@ -361,16 +330,6 @@ public class WebDriverHelper {
 		List<WebElement> webElements = getWebElements(webDriver, locator, "1");
 
 		return !webElements.isEmpty();
-	}
-
-	public static boolean isVisible(WebDriver webDriver, String locator) {
-		WebElement webElement = getWebElement(webDriver, locator, "1");
-
-		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webDriver, webElement);
-		}
-
-		return webElement.isDisplayed();
 	}
 
 	public static void makeVisible(WebDriver webDriver, String locator) {

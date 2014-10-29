@@ -63,7 +63,7 @@ public class RatingsEntryLocalServiceTest {
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomLong(), 0, serviceContext);
 
-		Assert.assertTrue(0 == ratingsEntry.getScore());
+		Assert.assertEquals(0, ratingsEntry.getScore(), 0.001);
 	}
 
 	@Test
@@ -75,7 +75,7 @@ public class RatingsEntryLocalServiceTest {
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomLong(), 1, serviceContext);
 
-		Assert.assertTrue(1 == ratingsEntry.getScore());
+		Assert.assertEquals(1, ratingsEntry.getScore(), 0.001);
 	}
 
 	@Test(expected = EntryScoreException.class)

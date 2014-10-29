@@ -1504,12 +1504,12 @@ public class UsersAdminImpl implements UsersAdmin {
 		long[] deletePrimaryKeys = StringUtil.split(
 			ParamUtil.getString(portletRequest, deleteParam), 0L);
 
-		for (long pk : addPrimaryKeys) {
-			primaryKeys.add(pk);
+		for (long addPrimaryKey : addPrimaryKeys) {
+			primaryKeys.add(addPrimaryKey);
 		}
 
-		for (long pk : deletePrimaryKeys) {
-			primaryKeys.remove(pk);
+		for (long deletePrimaryKey : deletePrimaryKeys) {
+			primaryKeys.remove(deletePrimaryKey);
 		}
 
 		return ArrayUtil.toLongArray(primaryKeys);

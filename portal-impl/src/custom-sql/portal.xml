@@ -1397,9 +1397,8 @@
 			FROM
 				User_
 			LEFT JOIN
-				Contact_
-			ON
-				Contact_.contactId = User_.contactId
+				Contact_ ON
+					(Contact_.contactId = User_.contactId)
 			WHERE
 				Contact_.contactId IS NULL
 		]]>
@@ -1411,11 +1410,10 @@
 			FROM
 				User_
 			LEFT JOIN
-				Group_
-			ON
-				(Group_.companyId = User_.companyId) AND
-				(Group_.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.USER$]) AND
-				(Group_.classPK = User_.userId)
+				Group_ ON
+					(Group_.companyId = User_.companyId) AND
+					(Group_.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.USER$]) AND
+					(Group_.classPK = User_.userId)
 			WHERE
 				(Group_.classPK IS NULL) AND
 				(defaultUser = [$FALSE$])

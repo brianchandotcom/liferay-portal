@@ -11,7 +11,7 @@
 app.server.type=${app.server.type}
 app.server.jboss.dir=${app.server.dir}
 
-auto.deploy.dir=${liferay.home}/deploy
+auto.deploy.dir=${auto.deploy.dir}
 
 plugins.includes=${plugins.includes}</echo>
 			</then>
@@ -19,7 +19,7 @@ plugins.includes=${plugins.includes}</echo>
 				<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.parent.dir=${app.server.parent.dir}
 app.server.type=${app.server.type}
 
-auto.deploy.dir=${liferay.home}/deploy
+auto.deploy.dir=${auto.deploy.dir}
 
 plugins.includes=${plugins.includes}</echo>
 			</else>

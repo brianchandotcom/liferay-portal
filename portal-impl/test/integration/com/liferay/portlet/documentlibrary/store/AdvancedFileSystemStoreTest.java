@@ -22,6 +22,7 @@ import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -31,6 +32,11 @@ import org.junit.runner.RunWith;
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class AdvancedFileSystemStoreTest {
+
+	@Before
+	public void setUp() {
+		_store = new AdvancedFileSystemStore();
+	}
 
 	@Test
 	public void testUpdateFileWithMoveFiles() throws Exception {
@@ -93,12 +99,12 @@ public class AdvancedFileSystemStoreTest {
 
 	private static final String _FILE_NAME_EXTENSION = ".txt";
 
-	private static Store _store = new AdvancedFileSystemStore();
-
 	static {
 		for (int i = 0; i < _DATA_SIZE; i++) {
 			_FILE_DATA[i] = (byte)i;
 		}
 	}
+
+	private Store _store;
 
 }

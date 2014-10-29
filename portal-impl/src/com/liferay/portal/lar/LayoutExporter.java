@@ -215,18 +215,18 @@ public class LayoutExporter {
 		long companyId = layoutSet.getCompanyId();
 		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(companyId);
 
+		// Service Context
+
 		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
+			ServiceContextThreadLocal.popServiceContext();
 
 		if (serviceContext == null) {
 			serviceContext = new ServiceContext();
-
-			serviceContext.setCompanyId(companyId);
-			serviceContext.setSignedIn(false);
-			serviceContext.setUserId(defaultUserId);
-
-			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 		}
+
+		serviceContext.setCompanyId(companyId);
+		serviceContext.setSignedIn(false);
+		serviceContext.setUserId(defaultUserId);
 
 		serviceContext.setAttribute("exporting", Boolean.TRUE);
 
@@ -234,6 +234,8 @@ public class LayoutExporter {
 			parameterMap, "layoutSetBranchId");
 
 		serviceContext.setAttribute("layoutSetBranchId", layoutSetBranchId);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		if (exportIgnoreLastPublishDate) {
 			endDate = null;

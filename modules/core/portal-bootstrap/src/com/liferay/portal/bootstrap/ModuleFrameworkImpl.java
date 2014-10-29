@@ -650,26 +650,13 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		Jar jar = null;
 
 		try {
-			URLConnection urlConnection = url.openConnection();
-
-			String fileName = url.getFile();
-
-			if (urlConnection instanceof JarURLConnection) {
-				JarURLConnection jarURLConnection =
-					(JarURLConnection)urlConnection;
-
-				URL jarFileURL = jarURLConnection.getJarFileURL();
-
-				fileName = jarFileURL.getFile();
-			}
-
-			File file = new File(fileName);
+			File file = _getJarFile(url);
 
 			if (!file.exists() || !file.canRead()) {
 				return manifest;
 			}
 
-			fileName = file.getName();
+			String fileName = file.getName();
 
 			analyzer.setJar(new Jar(fileName, file));
 
@@ -789,6 +776,34 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 
 		return interfaces;
+	}
+
+	private File _getJarFile(URL url) throws IOException {
+		URLConnection urlConnection = url.openConnection();
+
+		String fileName = url.getFile();
+
+		if (urlConnection instanceof JarURLConnection) {
+			JarURLConnection jarURLConnection = (JarURLConnection)urlConnection;
+
+			URL jarFileURL = jarURLConnection.getJarFileURL();
+
+			fileName = jarFileURL.getFile();
+		}
+		else if ("zip".equals(url.getProtocol())) {
+
+			// WEBLOGIC use a custom zip protocol to represent the Jar files
+
+			fileName = url.getFile();
+
+			int index = fileName.indexOf('!');
+
+			if (index > 0) {
+				fileName = fileName.substring(0, index);
+			}
+		}
+
+		return new File(fileName);
 	}
 
 	private String _getSystemPackagesExtra() {

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.test.WorkflowHandlerInvocationCounter;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.DoAsUserThread;
 import com.liferay.portal.service.ServiceContext;
@@ -54,6 +55,7 @@ import com.liferay.portal.util.test.UserTestUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
@@ -63,6 +65,7 @@ import java.io.File;
 import java.io.InputStream;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.hibernate.util.JDBCExceptionReporter;
@@ -110,6 +113,21 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 			AssertUtils.assertEqualsSorted(
 				assetTagNames, assetEntry.getTagNames());
+		}
+
+		@Test
+		public void shouldCallWorkflowHandler() throws Exception {
+			try (WorkflowHandlerInvocationCounter<DLFileEntry>
+					invocationCounter = new WorkflowHandlerInvocationCounter<>(
+						DLFileEntryConstants.getClassName())) {
+
+				addFileEntry(group.getGroupId(), parentFolder.getFolderId());
+
+				Assert.assertEquals(
+					1,
+					invocationCounter.getCount(
+						"updateStatus", int.class, Map.class));
+			}
 		}
 
 		@Test(expected = DuplicateFileException.class)

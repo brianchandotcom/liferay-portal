@@ -339,7 +339,7 @@ if (workflowEnabled) {
 				},
 				eventName: '<portlet:namespace />selectStructure',
 				groupId: <%= scopeGroupId %>,
-				refererPortletName: '<%= PortletKeys.JOURNAL_CONTENT %>',
+				refererPortletName: '<%= PortletKeys.JOURNAL %>',
 				showAncestorScopes: true,
 				struts_action: '/dynamic_data_mapping/select_structure',
 				title: '<%= UnicodeLanguageUtil.get(request, "structures") %>'

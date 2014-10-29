@@ -103,35 +103,24 @@ Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDispla
 	</aui:script>
 </aui:form>
 
-<aui:script use="aui-base,aui-io-plugin-deprecated,aui-loading-mask-deprecated">
-	var form = A.one('#<portlet:namespace />fm1');
-
-	form.on(
+<aui:script sandbox="<%= true %>">
+	$('#<portlet:namespace />fm1').on(
 		'submit',
 		function(event) {
-			event.halt();
+			event.stopImmediatePropagation();
 
-			var exportImportOptions = A.one('#<portlet:namespace />exportImportOptions');
+			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="importPortletURL">
+				<portlet:param name="p_p_isolated" value="true" />
+				<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
+				<portlet:param name="redirect" value="<%= redirect %>" />
+				<portlet:param name="portletResource" value="<%= portletResource %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+				<portlet:param name="validate" value="<%= String.valueOf(Boolean.FALSE) %>" />
+			</liferay-portlet:resourceURL>
 
-			exportImportOptions.plug(
-				A.Plugin.IO,
-				{
-					form: {
-						id: '<portlet:namespace />fm1'
-					},
+			$('#<portlet:namespace />exportImportOptions').load('<%= importPortletURL %>', $(this).serialize());
 
-					<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="importPortletURL">
-						<portlet:param name="p_p_isolated" value="true" />
-						<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
-						<portlet:param name="redirect" value="<%= redirect %>" />
-						<portlet:param name="portletResource" value="<%= portletResource %>" />
-						<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-						<portlet:param name="validate" value="<%= String.valueOf(Boolean.FALSE) %>" />
-					</liferay-portlet:resourceURL>
-
-					uri: '<%= importPortletURL %>'
-				}
-			);
+			return false;
 		}
 	);
 </aui:script>

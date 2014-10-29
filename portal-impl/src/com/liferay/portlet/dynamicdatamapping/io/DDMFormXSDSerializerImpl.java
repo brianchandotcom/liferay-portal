@@ -80,12 +80,21 @@ public class DDMFormXSDSerializerImpl implements DDMFormXSDSerializer {
 	protected void addDynamicElementElement(
 		DDMFormField ddmFormField, Element element) {
 
+		List<DDMFormField> nestedDDMFormFields =
+			ddmFormField.getNestedDDMFormFields();
+
+		Map<Locale, Map<String, String>> metadataMap =
+			getDDMFormFieldMetadataMap(ddmFormField);
+
+		if (nestedDDMFormFields.isEmpty() && metadataMap.isEmpty()) {
+			return;
+		}
+
 		Element dynamicElementElement = element.addElement("dynamic-element");
 
 		addDynamicElementAttributes(ddmFormField, dynamicElementElement);
 
-		addDynamicElementElements(
-			ddmFormField.getNestedDDMFormFields(), dynamicElementElement);
+		addDynamicElementElements(nestedDDMFormFields, dynamicElementElement);
 
 		String ddmFormFieldType = ddmFormField.getType();
 
@@ -95,9 +104,6 @@ public class DDMFormXSDSerializerImpl implements DDMFormXSDSerializer {
 			addOptionsDynamicElements(
 				ddmFormField.getDDMFormFieldOptions(), dynamicElementElement);
 		}
-
-		Map<Locale, Map<String, String>> metadataMap =
-			getDDMFormFieldMetadataMap(ddmFormField);
 
 		addMetadataElements(metadataMap, dynamicElementElement);
 	}

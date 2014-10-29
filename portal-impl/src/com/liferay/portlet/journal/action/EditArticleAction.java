@@ -500,10 +500,8 @@ public class EditArticleAction extends PortletAction {
 		String defaultLanguageId = ParamUtil.getString(
 			uploadPortletRequest, "defaultLanguageId");
 
-		String languageId = defaultLanguageId;
-
 		Object[] contentAndImages = ActionUtil.getContentAndImages(
-			ddmStructure, LocaleUtil.fromLanguageId(languageId),
+			ddmStructure, LocaleUtil.fromLanguageId(defaultLanguageId),
 			serviceContext);
 
 		String content = (String)contentAndImages[0];

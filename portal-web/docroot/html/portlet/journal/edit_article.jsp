@@ -21,21 +21,6 @@ String tabs2 = ParamUtil.getString(request, "tabs2");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-// Make sure the redirect is correct. This is a workaround for a layout that
-// has both the Journal and Journal Content portlets and the user edits an
-// article through the Journal Content portlet and then hits cancel.
-
-/*if (redirect.indexOf("p_p_id=" + PortletKeys.JOURNAL_CONTENT) != -1) {
-	if (layoutTypePortlet.hasPortletId(PortletKeys.JOURNAL)) {
-		PortletURL portletURL = renderResponse.createRenderURL();
-
-		portletURL.setPortletMode(PortletMode.VIEW);
-		portletURL.setWindowState(WindowState.NORMAL);
-
-		redirect = portletURL.toString();
-	}
-}*/
-
 String backURL = ParamUtil.getString(request, "backURL");
 
 String portletResource = ParamUtil.getString(request, "portletResource");

@@ -290,7 +290,7 @@ AUI.add(
 						instance._ratingScoreNode = A.one('#' + namespace + 'ratingScoreContent');
 
 						if (themeDisplay.isSignedIn()) {
-							var yourScore = instance.get(STR_YOUR_SCORE);
+							var yourScore = instance.get(STR_YOUR_SCORE) * instance.get(STR_SIZE);
 
 							instance.ratings = new A.StarRating(
 								{

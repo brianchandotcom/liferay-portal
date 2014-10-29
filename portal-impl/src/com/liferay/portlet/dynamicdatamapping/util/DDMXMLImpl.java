@@ -285,6 +285,12 @@ public class DDMXMLImpl implements DDMXML {
 
 			return document.asXML();
 		}
+		catch (StructureDefinitionException sde) {
+			throw sde;
+		}
+		catch (StructureDuplicateElementException sdee) {
+			throw sdee;
+		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Invalid XML content " + e.getMessage(), e);

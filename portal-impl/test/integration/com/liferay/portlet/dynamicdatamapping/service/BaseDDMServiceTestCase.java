@@ -31,6 +31,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
+import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
 import java.io.File;
 import java.io.InputStream;
@@ -91,6 +92,8 @@ public class BaseDDMServiceTestCase {
 			String name, String definition, String storageType, int type)
 		throws Exception {
 
+		DDMXMLUtil.validateXML(definition);
+		
 		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
 		
 		return DDMStructureLocalServiceUtil.addStructure(

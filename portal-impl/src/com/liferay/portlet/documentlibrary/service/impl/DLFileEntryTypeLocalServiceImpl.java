@@ -48,6 +48,7 @@ import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
+import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -574,6 +575,12 @@ public class DLFileEntryTypeLocalServiceImpl
 		}
 	}
 
+	protected DDMForm getDDMForm(String definition) throws PortalException {
+		DDMXMLUtil.validateXML(definition);
+
+		return DDMFormXSDDeserializerUtil.deserialize(definition);
+	}
+
 	protected List<Long> getFileEntryTypeIds(
 		List<DLFileEntryType> dlFileEntryTypes) {
 
@@ -625,15 +632,13 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		try {
 			if (ddmStructure == null) {
-				DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(
-					definition);
-
 				ddmStructure = ddmStructureLocalService.addStructure(
 					userId, groupId,
 					DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 					classNameLocalService.getClassNameId(
 						DLFileEntryMetadata.class),
-					ddmStructureKey, nameMap, descriptionMap, ddmForm, "xml",
+					ddmStructureKey, nameMap, descriptionMap,
+					getDDMForm(definition), "xml",
 					DDMStructureConstants.TYPE_AUTO, serviceContext);
 			}
 			else {

@@ -36,6 +36,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -45,6 +46,11 @@ import org.junit.runner.RunWith;
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
+
+	@BeforeClass
+	public static void setUpClass() {
+		_CLASS_NAME_ID = PortalUtil.getClassNameId(DDLRecord.class);
+	}
 
 	@Test
 	public void testAddStructureMissingRequiredElementAttribute()
@@ -326,7 +332,6 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
-	private static final long _CLASS_NAME_ID = PortalUtil.getClassNameId(
-		DDLRecord.class);
+	private static long _CLASS_NAME_ID;
 
 }

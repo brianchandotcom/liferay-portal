@@ -24,7 +24,6 @@ import com.liferay.bookmarks.util.comparator.EntryNameComparator;
 import com.liferay.bookmarks.util.comparator.EntryPriorityComparator;
 import com.liferay.bookmarks.util.comparator.EntryURLComparator;
 import com.liferay.bookmarks.util.comparator.EntryVisitsComparator;
-
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -43,8 +42,8 @@ import java.util.Map;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
-import javax.servlet.http.HttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
@@ -59,7 +58,7 @@ public class BookmarksUtil {
 		BookmarksFolder folder = entry.getFolder();
 
 		if (folder.getFolderId() !=
-			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 			addPortletBreadcrumbEntries(folder, request, renderResponse);
 		}
@@ -115,7 +114,7 @@ public class BookmarksUtil {
 			"folderId", String.valueOf(folder.getFolderId()));
 
 		if (folder.getFolderId() !=
-			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 			BookmarksFolder unescapedFolder = folder.toUnescapedModel();
 

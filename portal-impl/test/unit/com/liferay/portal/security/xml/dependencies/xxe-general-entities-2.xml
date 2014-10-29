@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<!DOCTYPE root [
+		<!ELEMENT root ANY >
+		<!ENTITY xxe PUBLIC "SOME//PUBLIC//ID" "http://0.0.0.0:0">
+]>
+<root>&xxe;</root>

@@ -2805,6 +2805,8 @@ public interface PropsKeys {
 
 	public static final String WIKI_RSS_ENABLED = "wiki.rss.enabled";
 
+	public static final String XML_SECURITY_ENABLED = "xml.security.enabled";
+
 	public static final String XML_VALIDATION_ENABLED = "xml.validation.enabled";
 
 	public static final String XSL_TEMPLATE_SECURE_PROCESSING_ENABLED = "xsl.template.secure.processing.enabled";

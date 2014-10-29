@@ -511,6 +511,35 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	public static class WhenCopyingAFolder extends BaseDLAppTestCase {
 
 		@Test
+		public void shouldCallWorkflowHandler() throws Exception {
+			try (WorkflowHandlerInvocationCounter<DLFileEntry>
+					invocationCounter = new WorkflowHandlerInvocationCounter<>(
+						DLFileEntryConstants.getClassName())) {
+
+				ServiceContext serviceContext =
+					ServiceContextTestUtil.getServiceContext(
+						group.getGroupId());
+
+				Folder folder = DLAppServiceUtil.addFolder(
+					group.getGroupId(), parentFolder.getFolderId(),
+					RandomTestUtil.randomString(), StringPool.BLANK,
+					serviceContext);
+
+				addFileEntry(group.getGroupId(), folder.getFolderId());
+
+				DLAppServiceUtil.copyFolder(
+					folder.getRepositoryId(), folder.getFolderId(),
+					parentFolder.getParentFolderId(), folder.getName(),
+					folder.getDescription(), serviceContext);
+
+				Assert.assertEquals(
+					2,
+					invocationCounter.getCount(
+						"updateStatus", int.class, Map.class));
+			}
+		}
+
+		@Test
 		public void shouldFireSyncEvent() throws Exception {
 			AtomicInteger counter = registerDLSyncEventProcessorMessageListener(
 				DLSyncConstants.EVENT_ADD);

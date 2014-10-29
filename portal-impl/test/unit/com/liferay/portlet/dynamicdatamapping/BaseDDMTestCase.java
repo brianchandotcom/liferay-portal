@@ -333,6 +333,19 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		return ddmFormField;
 	}
 
+	protected DDMFormField createSeparatorDDMFormField(String name) {
+		
+		DDMFormField ddmFormField = new DDMFormField(name, "separator");
+		
+		ddmFormField.setDataType("");
+		
+		LocalizedValue localizedValue = ddmFormField.getLabel();
+		
+		localizedValue.addString(LocaleUtil.US, name);
+		
+		return ddmFormField;
+	}
+
 	protected List<Serializable> createValuesList(String... valuesString) {
 		List<Serializable> values = new ArrayList<Serializable>();
 

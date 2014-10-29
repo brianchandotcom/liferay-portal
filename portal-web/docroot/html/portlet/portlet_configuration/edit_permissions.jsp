@@ -400,16 +400,12 @@ definePermissionsURL.setRefererPlid(plid);
 	</aui:form>
 </div>
 
-<aui:script>
-	AUI.$('#<portlet:namespace />fm').on(
+<aui:script sandbox="<%= true %>">
+	$('#<portlet:namespace />fm').on(
 		'mouseover',
 		'.lfr-checkbox-preselected',
 		function(event) {
-			var currentTarget = AUI.$(event.currentTarget);
-
-			Liferay.Portal.ToolTip.show(this, currentTarget.data('message'));
-
-			return false;
+			Liferay.Portal.ToolTip.show(event.currentTarget, $(event.currentTarget).data('message'));
 		}
 	);
 </aui:script>

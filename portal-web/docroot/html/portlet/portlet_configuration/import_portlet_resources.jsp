@@ -354,21 +354,24 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 </aui:script>
 
 <aui:script sandbox="<%= true %>">
+	var importConfiguration = $('#<portlet:namespace />importConfiguration');
+	var importStrategy = $('#<portlet:namespace />importStrategy');
+
 	$('#<portlet:namespace />continue').on(
 		'click',
 		function() {
-			$('#<portlet:namespace />importConfiguration').addClass('hide');
+			importConfiguration.addClass('hide');
 
-			$('#<portlet:namespace />importStrategy').removeClass('hide');
+			importStrategy.removeClass('hide');
 		}
 	);
 
 	$('#<portlet:namespace />back').on(
 		'click',
 		function() {
-			$('#<portlet:namespace />importStrategy').addClass('hide');
+			importStrategy.addClass('hide');
 
-			$('#<portlet:namespace />importConfiguration').removeClass('hide');
+			importConfiguration.removeClass('hide');
 		}
 	);
 </aui:script>

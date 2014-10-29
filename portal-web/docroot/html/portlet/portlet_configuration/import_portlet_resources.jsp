@@ -353,22 +353,22 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 	Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PERMISSIONS %>', '<portlet:namespace />permissionsUl');
 </aui:script>
 
-<aui:script use="aui-base">
-	A.one('#<portlet:namespace />continue').on(
+<aui:script sandbox="<%= true %>">
+	$('#<portlet:namespace />continue').on(
 		'click',
 		function() {
-			A.one('#<portlet:namespace />importConfiguration').hide();
+			$('#<portlet:namespace />importConfiguration').addClass('hide');
 
-			A.one('#<portlet:namespace />importStrategy').show();
+			$('#<portlet:namespace />importStrategy').removeClass('hide');
 		}
 	);
 
-	A.one('#<portlet:namespace />back').on(
+	$('#<portlet:namespace />back').on(
 		'click',
 		function() {
-			A.one('#<portlet:namespace />importStrategy').hide();
+			$('#<portlet:namespace />importStrategy').addClass('hide');
 
-			A.one('#<portlet:namespace />importConfiguration').show();
+			$('#<portlet:namespace />importConfiguration').removeClass('hide');
 		}
 	);
 </aui:script>

@@ -135,24 +135,25 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 		if (isNull(value)) {
 			if (Validator.isNotNull(ddmFormField.getDataType())) {
 				throw new StorageFieldValueException(
-						"No value defined for field " + ddmFormField.getName());
+					"No value defined for field " + ddmFormField.getName());
 			}
 		}
 		else {
 			if (Validator.isNull(ddmFormField.getDataType())) {
 				throw new StorageFieldValueException(
-						"Value should not be set for field " + ddmFormField.getName());
+					"Value should not be set for field " +
+						ddmFormField.getName());
 			}
-			
+
 			if ((ddmFormField.isLocalizable() && !value.isLocalized()) ||
-					(!ddmFormField.isLocalizable() && value.isLocalized())) {
-				
+				(!ddmFormField.isLocalizable() && value.isLocalized())) {
+
 				throw new StorageFieldValueException(
-						"Invalid value set for field " + ddmFormField.getName());
+					"Invalid value set for field " + ddmFormField.getName());
 			}
-			
+
 			validateDDMFormFieldValueLocales(
-					ddmFormField, availableLocales, defaultLocale, value);
+				ddmFormField, availableLocales, defaultLocale, value);
 		}
 	}
 

@@ -1,0 +1,47 @@
+<definition component-name="marketplace-plugins-marketplace-portlet">
+	<property name="testray.main.component.name" value="Plugin Installer" />
+	<property name="portlet.properties.marketplace-portlet" value="marketplace.url=https://www-uat.liferay.com$${line.separator}marketplace.url.logout=https://www-uat.liferay.com/c/portal/logout" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<command name="MarketplacePortletContentTargetingSmoke" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Store" />
+		</execute>
+
+		<execute macro="Marketplace#signIn">
+			<var name="userEmailAddress" property-value="email.address.5" />
+			<var name="userEmailPassword" property-value="email.password.5" />
+		</execute>
+
+		<execute macro="Portlet#shutdownServer" />
+
+		<execute macro="Portlet#startServer" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Store" />
+		</execute>
+
+		<execute macro="Marketplace#downloadApp">
+			<var name="appName" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Purchased" />
+		</execute>
+
+		<execute macro="Marketplace#installApp">
+			<var name="appName" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="Portlet#shutdownServer" />
+
+		<execute macro="Portlet#startServer" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+		</execute>
+	</command>
+</definition>

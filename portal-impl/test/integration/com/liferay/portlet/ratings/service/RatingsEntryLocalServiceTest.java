@@ -28,6 +28,8 @@ import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.ratings.EntryScoreException;
 
+import com.liferay.portlet.ratings.model.RatingsEntry;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -64,9 +66,11 @@ public class RatingsEntryLocalServiceTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		RatingsEntryLocalServiceUtil.updateEntry(
+		RatingsEntry ratingsEntry = RatingsEntryLocalServiceUtil.updateEntry(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomLong(), 0, serviceContext);
+
+		Assert.assertTrue(0 == ratingsEntry.getScore());
 	}
 
 	@Test
@@ -74,9 +78,11 @@ public class RatingsEntryLocalServiceTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		RatingsEntryLocalServiceUtil.updateEntry(
+		RatingsEntry ratingsEntry = RatingsEntryLocalServiceUtil.updateEntry(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomLong(), 1, serviceContext);
+
+		Assert.assertTrue(1 == ratingsEntry.getScore());
 	}
 
 	@Test(expected = EntryScoreException.class)

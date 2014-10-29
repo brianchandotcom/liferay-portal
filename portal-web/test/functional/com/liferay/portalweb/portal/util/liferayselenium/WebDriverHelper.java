@@ -298,6 +298,26 @@ public class WebDriverHelper {
 		return GetterUtil.getInteger(pageYOffset);
 	}
 
+	public static int getViewportHeight(WebDriver webDriver) {
+		WebElement bodyWebElement = getWebElement(webDriver, "//body");
+
+		WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
+
+		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+
+		JavascriptExecutor javascriptExecutor =
+			(JavascriptExecutor)wrappedWebDriver;
+
+		Object innerHeight = javascriptExecutor.executeScript(
+			"return window.innerHeight;");
+
+		return GetterUtil.getInteger(innerHeight);
+	}
+
+	public static int getViewportPositionBottom(WebDriver webDriver) {
+		return getScrollOffsetY(webDriver) + getViewportHeight(webDriver);
+	}
+
 	public static Point getWindowPoint(WebDriver webDriver) {
 		WebElement bodyWebElement = getWebElement(webDriver, "//body");
 

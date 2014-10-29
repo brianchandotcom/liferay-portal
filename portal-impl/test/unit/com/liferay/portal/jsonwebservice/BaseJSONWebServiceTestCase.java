@@ -191,6 +191,9 @@ public abstract class BaseJSONWebServiceTestCase extends PowerMockito {
 
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
+		jsonSerializer.transform(
+			new SortedHashMapJSONTransformer(), HashMap.class);
+
 		jsonSerializer.exclude("*.class");
 
 		return jsonSerializer.serialize(object);

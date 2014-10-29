@@ -17,6 +17,7 @@ package com.liferay.portal.jsonwebservice;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -241,6 +242,8 @@ public class JSONWebServiceActionParameters {
 
 		@Override
 		public Object put(String key, Object value) {
+			int pos = key.indexOf(CharPool.COLON);
+
 			if (key.startsWith(StringPool.DASH)) {
 				key = key.substring(1);
 
@@ -249,26 +252,50 @@ public class JSONWebServiceActionParameters {
 			else if (key.startsWith(StringPool.PLUS)) {
 				key = key.substring(1);
 
-				int pos = key.indexOf(CharPool.COLON);
+				String typeName = null;
 
 				if (pos != -1) {
-					value = key.substring(pos + 1);
+					typeName = key.substring(pos);
 
-					key = key.substring(0, pos);
+					key = key.substring(0, pos - 1);
+				}
+				else {
+					if (value != null) {
+						typeName = value.toString();
+
+						value = Void.TYPE;
+					}
 				}
 
-				if (Validator.isNotNull(value)) {
+				if (typeName != null) {
 					if (_parameterTypes == null) {
 						_parameterTypes = new HashMap<String, String>();
 					}
 
-					_parameterTypes.put(key, value.toString());
+					_parameterTypes.put(key, typeName);
 				}
 
-				value = Void.TYPE;
+				if (Validator.isNull(GetterUtil.getString(value))) {
+					value = Void.TYPE;
+				}
+			}
+			else if (pos != -1) {
+				String typeName = key.substring(pos + 1);
+
+				key = key.substring(0, pos);
+
+				if (_parameterTypes == null) {
+					_parameterTypes = new HashMap<String, String>();
+				}
+
+				_parameterTypes.put(key, typeName);
+
+				if (Validator.isNull(GetterUtil.getString(value))) {
+					value = Void.TYPE;
+				}
 			}
 
-			int pos = key.indexOf(CharPool.PERIOD);
+			pos = key.indexOf(CharPool.PERIOD);
 
 			if (pos != -1) {
 				String baseName = key.substring(0, pos);

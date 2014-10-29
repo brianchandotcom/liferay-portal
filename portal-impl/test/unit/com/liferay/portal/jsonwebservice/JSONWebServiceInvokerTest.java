@@ -158,8 +158,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		Object result = runAction(map);
 
-		Assert.assertEquals(
-			"using #2: h=177/id=-1/n=John Doe/v=foo!", result);
+		Assert.assertEquals("using #2: h=177/id=-1/n=John Doe/v=foo!", result);
 	}
 
 	@Test
@@ -612,8 +611,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		Object result = runAction(map);
 
 		Assert.assertEquals("Welcome 173 to Jupiter", result);
-		Assert.assertEquals(
-			"\"Welcome 173 to Jupiter\"", toJSON(result));
+		Assert.assertEquals("\"Welcome 173 to Jupiter\"", toJSON(result));
 	}
 
 	@Test
@@ -630,8 +628,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		Object result = runAction(map);
 
 		Assert.assertEquals("Welcome 173 to Jupiter", result);
-		Assert.assertEquals(
-			"\"Welcome 173 to Jupiter\"", toJSON(result));
+		Assert.assertEquals("\"Welcome 173 to Jupiter\"", toJSON(result));
 	}
 
 	@Test
@@ -648,8 +645,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		Object result = runAction(map);
 
 		Assert.assertEquals("Welcome 173 to Jupiter", result);
-		Assert.assertEquals(
-			"\"Welcome 173 to Jupiter\"", toJSON(result));
+		Assert.assertEquals("\"Welcome 173 to Jupiter\"", toJSON(result));
 	}
 
 	@Test

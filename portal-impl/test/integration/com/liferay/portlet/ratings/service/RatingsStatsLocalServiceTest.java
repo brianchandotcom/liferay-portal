@@ -20,8 +20,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.DeleteAfterTestRun;
-import com.liferay.portal.test.Sync;
-import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.GroupTestUtil;
@@ -38,13 +36,8 @@ import org.junit.runner.RunWith;
 /**
  * @author Sergio González
  */
-@ExecutionTestListeners(
-	listeners = {
-		MainServletExecutionTestListener.class,
-		SynchronousDestinationExecutionTestListener.class
-	})
+@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-@Sync
 public class RatingsStatsLocalServiceTest {
 
 	@Before

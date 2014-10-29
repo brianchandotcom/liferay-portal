@@ -6640,16 +6640,9 @@ public class JournalArticleLocalServiceImpl
 			String langType = ddmTemplate.getLanguage();
 			cacheable = ddmTemplate.isCacheable();
 
-			if (propagateException) {
-				content = JournalUtil.doTransform(
-					themeDisplay, tokens, viewMode, languageId, document,
-					portletRequestModel, script, langType);
-			}
-			else {
-				content = JournalUtil.transform(
-					themeDisplay, tokens, viewMode, languageId, document,
-					portletRequestModel, script, langType);
-			}
+			content = JournalUtil.transform(
+				themeDisplay, tokens, viewMode, languageId, document,
+				portletRequestModel, script, langType, propagateException);
 
 			if (!pageFlow) {
 				String[] pieces = StringUtil.split(

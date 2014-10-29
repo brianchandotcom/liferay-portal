@@ -14,6 +14,7 @@
 
 package com.liferay.portal.servlet;
 
+import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.security.ac.AccessControlThreadLocal;
 import com.liferay.portal.util.ClassLoaderUtil;
 
@@ -34,9 +35,10 @@ public class AxisServlet extends com.liferay.util.axis.AxisServlet {
 	public void init(ServletConfig servletConfig) throws ServletException {
 		ServletContext servletContext = servletConfig.getServletContext();
 
-		_pluginClassLoader = servletContext.getClassLoader();
+		_pluginClassLoader = (ClassLoader)servletContext.getAttribute(
+			PluginContextListener.PLUGIN_CLASS_LOADER);
 
-		if (_pluginClassLoader == ClassLoaderUtil.getPortalClassLoader()) {
+		if (_pluginClassLoader == null) {
 			super.init(servletConfig);
 		}
 		else {

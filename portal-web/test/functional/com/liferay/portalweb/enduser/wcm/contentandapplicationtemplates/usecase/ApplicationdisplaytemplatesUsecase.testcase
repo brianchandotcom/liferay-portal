@@ -228,7 +228,7 @@
 		</execute>
 	</command>
 
-	<command name="ADTDMMediaGallery" priority="3">
+	<command known-issues="LPS-51070" name="ADTDMMediaGallery" priority="3">
 		<var name="siteName" value="${siteName}" />
 
 		<execute macro="Page#gotoConfigurationCP">

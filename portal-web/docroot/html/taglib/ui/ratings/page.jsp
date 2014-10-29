@@ -180,7 +180,7 @@ if (ratingsEntry != null) {
 		<aui:script use="liferay-ratings">
 			Liferay.Ratings.register(
 				{
-					averageScore: <%= averageScore %>,
+					averageScore: <%= MathUtil.format(averageScore, 1, 1) %>,
 					className: '<%= HtmlUtil.escapeJS(className) %>',
 					classPK: '<%= classPK %>',
 					containerId: '<%= randomNamespace %>ratingContainer',

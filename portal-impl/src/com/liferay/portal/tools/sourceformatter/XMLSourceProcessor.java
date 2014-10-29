@@ -76,9 +76,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	protected void checkPoshiCharactersAfterDefinition(
 		String fileName, String content) {
 
-		Matcher matcher2 = _poshiCharactersAfterDefinitionTag.matcher(content);
+		Matcher matcher = _poshiCharactersAfterDefinitionTag.matcher(content);
 
-		if (matcher2.find()) {
+		if (matcher.find()) {
 			processErrorMessage(
 				fileName,
 				"Character(s) found after definition element: " + fileName);
@@ -750,7 +750,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		throws Exception {
 
 		checkPoshiCharactersAfterDefinition(fileName, content);
-
 		checkPoshiCharactersBeforeDefinition(fileName, content);
 
 		content = sortPoshiAttributes(fileName, content);

@@ -22,13 +22,6 @@ import org.junit.Test;
 public class XMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
-	public void testIncorrectTabs() throws Exception {
-		test("IncorrectTabs1.testxml");
-		test("IncorrectTabs2.testxml");
-		test("IncorrectTabs3.testxml");
-	}
-
-	@Test
 	public void testCharactersAfterDefinitionTag() throws Exception {
 		test(
 			"CharactersAfterDefinitionTag1.testxml",
@@ -59,4 +52,12 @@ public class XMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 			"CharactersBeforeDefinitionTag4.testxml",
 			"Character(s) found before definition element:");
 	}
+
+	@Test
+	public void testIncorrectTabs() throws Exception {
+		test("IncorrectTabs1.testxml");
+		test("IncorrectTabs2.testxml");
+		test("IncorrectTabs3.testxml");
+	}
+
 }

@@ -30,7 +30,7 @@ page import="com.liferay.bookmarks.service.BookmarksFolderServiceUtil" %><%@
 page import="com.liferay.bookmarks.service.permission.BookmarksEntryPermission" %><%@
 page import="com.liferay.bookmarks.service.permission.BookmarksFolderPermission" %><%@
 page import="com.liferay.bookmarks.settings.BookmarksSettings" %><%@
-page import="com.liferay.bookmarks.util.BookmarksUtil" %>
+page import="com.liferay.bookmarks.web.portlet.util.BookmarksUtil" %>
 
 <%
 BookmarksSettings bookmarksSettings = BookmarksSettings.getInstance(scopeGroupId);

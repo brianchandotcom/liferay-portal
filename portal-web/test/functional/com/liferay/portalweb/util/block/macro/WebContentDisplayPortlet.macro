@@ -219,9 +219,15 @@
 		<if>
 			<isset var="webContentSearchValue" />
 			<then>
+				<execute action="PGWebcontentdisplayConfiguration#assertClick" locator-key1="SELECT_WEB_CONTENT_BUTTON" value1="Select Web Content" />
+				<execute action="PGWebcontentdisplayConfiguration#selectFrame" value1="relative=top" />
+				<execute action="PGWebcontentdisplayConfiguration#selectFrame" locator-key1="SELECT_WEB_CONTENT_IFRAME" />
 				<execute action="PGWebcontentdisplayConfiguration#type" locator-key1="SEARCH_FIELD" value1="${webContentSearchValue}" />
 			</then>
 			<else>
+				<execute action="PGWebcontentdisplayConfiguration#assertClick" locator-key1="SELECT_WEB_CONTENT_BUTTON" value1="Select Web Content" />
+				<execute action="PGWebcontentdisplayConfiguration#selectFrame" value1="relative=top" />
+				<execute action="PGWebcontentdisplayConfiguration#selectFrame" locator-key1="SELECT_WEB_CONTENT_IFRAME" />
 				<execute action="PGWebcontentdisplayConfiguration#type" locator-key1="SEARCH_FIELD" value1="${webContentTitle}" />
 			</else>
 		</if>
@@ -251,6 +257,9 @@
 		</execute>
 
 		<execute action="PGWebcontentdisplayConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="PGWebcontentdisplayConfiguration#assertClick" locator-key1="SELECT_WEB_CONTENT_BUTTON" value1="Select Web Content" />
+		<execute action="PGWebcontentdisplayConfiguration#selectFrame" value1="relative=top" />
+		<execute action="PGWebcontentdisplayConfiguration#selectFrame" locator-key1="SELECT_WEB_CONTENT_IFRAME" />
 
 		<execute action="PGWebcontentdisplayConfiguration#type" locator-key1="SEARCH_FIELD" value1="${webContentTitle}" />
 		<execute action="PGWebcontentdisplayConfiguration#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
@@ -268,9 +277,12 @@
 
 		<execute action="PGWebcontentdisplayConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 
-		<var name="key_webContentTitle" value="${webContentTitle}" />
-
-		<execute action="PGWebcontentdisplayConfiguration#assertClick" locator-key1="WEB_CONTENT_TABLE_TITLE" value1="${webContentTitle}" />
+		<execute action="PGWebcontentdisplayConfiguration#assertClick" locator-key1="SELECT_WEB_CONTENT_BUTTON" value1="Select Web Content" />
+		<execute action="PGWebcontentdisplayConfiguration#selectFrame" value1="relative=top" />
+		<execute action="PGWebcontentdisplayConfiguration#selectFrame" locator-key1="SELECT_WEB_CONTENT_IFRAME" />
+		<execute action="PGWebcontentdisplayConfiguration#assertClick" locator-key1="WEB_CONTENT_CHOOSE" value1="Choose" />
+		<execute action="PGWebcontentdisplayConfiguration#selectFrame" value1="relative=top" />
+		<execute action="PGWebcontentdisplayConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 		<execute action="PGWebcontentdisplayConfiguration#assertTextEquals" locator-key1="INFO_MESSAGE_ARTICLE" value1="${webContentTitle} (Modified)" />
 		<execute action="PGWebcontentdisplayConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="PGWebcontentdisplayConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />

@@ -64,9 +64,15 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(UpgradeExpando.class);
 		upgrade(UpgradeLanguagePreferences.class);
 		upgrade(UpgradeJournal.class);
-		upgrade(UpgradeJournalArticles.class);
 		upgrade(UpgradeJournalDisplayPreferences.class);
 		upgrade(UpgradeJournalArticleType.class);
+
+		// UpgradeJournalArticles must be executed after
+		// UpgradeJournalArticleType because web content types should have
+		// been converted into vocabularies and categories.
+
+		upgrade(UpgradeJournalArticles.class);
+
 		upgrade(UpgradeLock.class);
 		upgrade(UpgradeMessageBoards.class);
 		upgrade(UpgradeRepositoryEntry.class);

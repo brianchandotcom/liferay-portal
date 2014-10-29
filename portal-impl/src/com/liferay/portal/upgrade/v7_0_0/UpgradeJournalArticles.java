@@ -332,7 +332,7 @@ public class UpgradeJournalArticles extends UpgradeBaseJournal {
 
 			ps = con.prepareStatement(
 				"select plid, typeSettings from Layout where typeSettings " +
-					"like '%" + PortletKeys.JOURNAL_CONTENT_LIST + "%'");
+					"like '%" + _JOURNAL_CONTENT_LIST + "%'");
 
 			rs = ps.executeQuery();
 
@@ -341,7 +341,7 @@ public class UpgradeJournalArticles extends UpgradeBaseJournal {
 				String typeSettings = rs.getString("typeSettings");
 
 				String newTypeSettings = getNewTypeSettings(
-					typeSettings, PortletKeys.JOURNAL_CONTENT_LIST,
+					typeSettings, _JOURNAL_CONTENT_LIST,
 					PortletKeys.ASSET_PUBLISHER);
 
 				updateLayout(plid, newTypeSettings);
@@ -395,7 +395,7 @@ public class UpgradeJournalArticles extends UpgradeBaseJournal {
 			ps = con.prepareStatement(
 				"select portletPreferencesId, plid, portletId, preferences " +
 					"from PortletPreferences where portletId like '%" +
-						PortletKeys.JOURNAL_CONTENT_LIST + "%'");
+					_JOURNAL_CONTENT_LIST + "%'");
 
 			rs = ps.executeQuery();
 
@@ -427,7 +427,7 @@ public class UpgradeJournalArticles extends UpgradeBaseJournal {
 			ps = con.prepareStatement(
 				"select resourcePermissionId, name, scope, primKey from " +
 					"ResourcePermission where name = '" +
-						PortletKeys.JOURNAL_CONTENT_LIST + "'");
+					_JOURNAL_CONTENT_LIST + "'");
 
 			rs = ps.executeQuery();
 
@@ -497,6 +497,8 @@ public class UpgradeJournalArticles extends UpgradeBaseJournal {
 			DataAccess.cleanUp(con, ps);
 		}
 	}
+
+	private static final String _JOURNAL_CONTENT_LIST = "62";
 
 	private static Log _log = LogFactoryUtil.getLog(
 		UpgradeJournalArticles.class);

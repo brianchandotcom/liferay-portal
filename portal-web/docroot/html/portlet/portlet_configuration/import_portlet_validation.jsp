@@ -22,7 +22,16 @@ String redirect = ParamUtil.getString(request, "redirect");
 Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDisplay);
 %>
 
-<aui:form cssClass="lfr-export-dialog" method="post" name="fm1">
+<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="importPortletURL">
+	<portlet:param name="p_p_isolated" value="true" />
+	<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
+	<portlet:param name="redirect" value="<%= redirect %>" />
+	<portlet:param name="portletResource" value="<%= portletResource %>" />
+	<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+	<portlet:param name="validate" value="<%= String.valueOf(Boolean.FALSE) %>" />
+</liferay-portlet:resourceURL>
+
+<aui:form action="<%= importPortletURL %>" cssClass="lfr-export-dialog" method="post" name="fm1">
 	<div class="lfr-dynamic-uploader">
 		<div class="lfr-upload-container" id="<portlet:namespace />fileUpload"></div>
 	</div>
@@ -104,23 +113,18 @@ Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDispla
 </aui:form>
 
 <aui:script sandbox="<%= true %>">
-	$('#<portlet:namespace />fm1').on(
-		'submit',
+	$('#<portlet:namespace />continueButton').on(
+		'click',
 		function(event) {
-			event.stopImmediatePropagation();
+			event.preventDefault();
 
-			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="importPortletURL">
-				<portlet:param name="p_p_isolated" value="true" />
-				<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
-				<portlet:param name="redirect" value="<%= redirect %>" />
-				<portlet:param name="portletResource" value="<%= portletResource %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-				<portlet:param name="validate" value="<%= String.valueOf(Boolean.FALSE) %>" />
-			</liferay-portlet:resourceURL>
-
-			$('#<portlet:namespace />exportImportOptions').load('<%= importPortletURL %>', $(this).serialize());
-
-			return false;
+			$('#<portlet:namespace />fm1').ajaxSubmit(
+				{
+					success: function(responseData) {
+						$('#<portlet:namespace />exportImportOptions').html(responseData);
+					}
+				}
+			);
 		}
 	);
 </aui:script>

@@ -82,8 +82,8 @@ if (organizationId > 0) {
 	</aui:button-row>
 </aui:form>
 
-<aui:script use="aui-base">
-	A.one('#<portlet:namespace />selectOrganizationButton').on(
+<aui:script>
+	AUI.$('#<portlet:namespace />selectOrganizationButton').on(
 		'click',
 		function(event) {
 			Liferay.Util.selectEntity(
@@ -97,22 +97,24 @@ if (organizationId > 0) {
 					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/portlet_configuration/select_organization" /><portlet:param name="tabs1" value="organizations" /></portlet:renderURL>'
 				},
 				function(event) {
-					document.<portlet:namespace />fm.<portlet:namespace />organizationId.value = event.organizationid;
+					var form = AUI.$(document.<portlet:namespace />fm);
 
-					document.getElementById('<portlet:namespace />organizationName').value = event.name;
+					form.fm('organizationId').val(event.organizationid);
+
+					form.fm('organizationName').val(event.name);
 
 					Liferay.Util.toggleDisabled('#<portlet:namespace />removeOrganizationButton', false);
 				}
 			);
 		}
 	);
-</aui:script>
 
-<aui:script>
 	function <portlet:namespace />removeOrganization() {
-		document.<portlet:namespace />fm.<portlet:namespace />organizationId.value = '';
+		var form = AUI.$(document.<portlet:namespace />fm);
 
-		document.getElementById('<portlet:namespace />organizationName').value = '';
+		form.fm('organizationId').val('');
+
+		form.fm('organizationName').val('');
 
 		Liferay.Util.toggleDisabled('#<portlet:namespace />removeOrganizationButton', true);
 	}

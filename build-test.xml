@@ -3443,12 +3443,32 @@ if (ppstate.equals("normal")) {
 
 				StringBuilder sb = new StringBuilder();
 
-				Set packageNames = getPackageNames();
-				int packageGroupsSize = Integer.parseInt(project.getProperty("test.package.groups.size"));
+				Set allPackageNames = getPackageNames();
+				int allPackageGroupsSize = Integer.parseInt(project.getProperty("test.package.groups.size"));
 
-				Map packageGroups = getPackageGroups(packageNames, packageGroupsSize);
+				String isolatedPackageNamesString = project.getProperty("test.package.names.isolated");
 
-				for (int i = 0; i < packageGroupsSize; i++) {
+				String[] isolatedPackageNames = isolatedPackageNamesString.split(",");
+
+				int isolatedPackageGroupsSize = isolatedPackageNames.length;
+
+				if (isolatedPackageNamesString.equals("")) {
+					isolatedPackageGroupsSize = 0;
+				}
+
+				int connectedPackageGroupsSize = allPackageGroupsSize - isolatedPackageGroupsSize;
+
+				Set connectedPackageNames = new TreeSet();
+
+				connectedPackageNames.addAll(allPackageNames);
+
+				for (String isolatedPackageName : isolatedPackageNames) {
+					connectedPackageNames.remove(isolatedPackageName);
+				}
+
+				Map packageGroups = getPackageGroups(connectedPackageNames, connectedPackageGroupsSize);
+
+				for (int i = 0; i < connectedPackageGroupsSize; i++) {
 					Set packageGroup = packageGroups.get(i);
 
 					sb.append("TEST_PACKAGE_GROUP_");
@@ -3470,12 +3490,22 @@ if (ppstate.equals("normal")) {
 					sb.append("\n\n");
 				}
 
+				for (int i = 0; i < isolatedPackageGroupsSize; i++) {
+					int j = connectedPackageGroupsSize + i;
+
+					sb.append("TEST_PACKAGE_GROUP_");
+					sb.append(j);
+					sb.append("=");
+					sb.append(isolatedPackageNames[i]);
+					sb.append("\n\n");
+				}
+
 				sb.append("TEST_PACKAGE_GROUPS=");
 
-				for (int i = 0; i < packageGroupsSize; i++) {
+				for (int i = 0; i < allPackageGroupsSize; i++) {
 					sb.append(i);
 
-					if (i < packageGroupsSize - 1) {
+					if (i < allPackageGroupsSize - 1) {
 						sb.append(" ");
 					}
 				}
@@ -3483,7 +3513,7 @@ if (ppstate.equals("normal")) {
 				sb.append("\n\n");
 				sb.append("TEST_PACKAGE_NAMES=");
 
-				Iterator iterator = packageNames.iterator();
+				Iterator iterator = allPackageNames.iterator();
 
 				while (iterator.hasNext()) {
 					String packageName = iterator.next();

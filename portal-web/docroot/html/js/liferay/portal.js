@@ -128,6 +128,10 @@
 				instance._cached = cached;
 			}
 
+			if (obj.jquery) {
+				obj = obj[0];
+			}
+
 			obj = A.one(obj);
 
 			if (text == null) {

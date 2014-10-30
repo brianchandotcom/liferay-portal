@@ -405,7 +405,9 @@ definePermissionsURL.setRefererPlid(plid);
 		'mouseover',
 		'.lfr-checkbox-preselected',
 		function(event) {
-			Liferay.Portal.ToolTip.show(event.currentTarget, $(event.currentTarget).data('message'));
+			var currentTarget = $(event.currentTarget);
+
+			Liferay.Portal.ToolTip.show(currentTarget, currentTarget.data('message'));
 		}
 	);
 </aui:script>

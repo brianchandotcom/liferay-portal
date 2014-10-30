@@ -131,47 +131,49 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 			<aui:input name="content" type="hidden" />
 
-			<liferay-ui:error exception="<%= EntrySmallImageNameException.class %>">
+			<div class="entry-abstract-wrapper">
+				<liferay-ui:error exception="<%= EntrySmallImageNameException.class %>">
 
-				<%
-				String[] imageExtensions = PrefsPropsUtil.getStringArray(PropsKeys.BLOGS_IMAGE_EXTENSIONS, StringPool.COMMA);
-				%>
+					<%
+					String[] imageExtensions = PrefsPropsUtil.getStringArray(PropsKeys.BLOGS_IMAGE_EXTENSIONS, StringPool.COMMA);
+					%>
 
-				<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= StringUtil.merge(imageExtensions, ", ") %>.
-			</liferay-ui:error>
+					<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= StringUtil.merge(imageExtensions, ", ") %>.
+				</liferay-ui:error>
 
-			<liferay-ui:error exception="<%= EntrySmallImageSizeException.class %>">
+				<liferay-ui:error exception="<%= EntrySmallImageSizeException.class %>">
 
 				<%
 				long imageMaxSize = PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_SMALL_MAX_SIZE);
 				%>
 
-				<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(imageMaxSize, locale) %>" key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
-			</liferay-ui:error>
+					<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(imageMaxSize, locale) %>" key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
+				</liferay-ui:error>
 
-			<h3><liferay-ui:message key="abstract" /></h3>
+				<h3><liferay-ui:message key="abstract" /></h3>
 
-			<p>
-				<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_SMALL_MAX_SIZE), locale) %>" key="an-abstract-is-a-brief-summary-of-a-blog-entry" />
-			</p>
+				<p class="abstract-explanation">
+					<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_SMALL_MAX_SIZE), locale) %>" key="an-abstract-is-a-brief-summary-of-a-blog-entry" />
+				</p>
 
-			<div id="<portlet:namespace />entryAbstractOptions">
-				<aui:input checked="<%= !customAbstract %>" label='<%= LanguageUtil.format(request, "use-first-x-characters-of-the-content-entry", pageAbstractLength, false) %>' name="customAbstract" type="radio" value="<%= false %>" />
+				<div class="entry-abstract-options" id="<portlet:namespace />entryAbstractOptions">
+					<aui:input checked="<%= !customAbstract %>" label='<%= LanguageUtil.format(request, "use-first-x-characters-of-the-content-entry", pageAbstractLength, false) %>' name="customAbstract" type="radio" value="<%= false %>" />
 
-				<aui:input checked="<%= customAbstract %>" label="custom-abstract" name="customAbstract" type="radio" value="<%= true %>" />
+					<aui:input checked="<%= customAbstract %>" label="custom-abstract" name="customAbstract" type="radio" value="<%= true %>" />
+				</div>
+
+				<aui:fieldset cssClass="entry-abstract">
+					<div class="lfr-blogs-small-image-selector">
+						<liferay-ui:image-selector fileEntryId="<%= smallImageFileEntryId %>" paramName="smallImageFileEntryId"  />
+					</div>
+
+					<div class="entry-description">
+						<liferay-ui:input-editor contents="<%= description %>" cssClass='<%= customAbstract ? StringPool.BLANK : "readonly" %>' editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="description" onInitMethod="OnDescriptionEditorInit" placeholder="description" />
+					</div>
+
+					<aui:input name="description" type="hidden" />
+				</aui:fieldset>
 			</div>
-
-			<aui:fieldset cssClass="entry-abstract">
-				<div class="lfr-blogs-small-image-selector">
-					<liferay-ui:image-selector fileEntryId="<%= smallImageFileEntryId %>" paramName="smallImageFileEntry" />
-				</div>
-
-				<div class="entry-description">
-					<liferay-ui:input-editor contents="<%= description %>" cssClass='<%= customAbstract ? StringPool.BLANK : "readonly" %>' editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="description" onInitMethod="OnDescriptionEditorInit" placeholder="description" />
-				</div>
-
-				<aui:input name="description" type="hidden" />
-			</aui:fieldset>
 		</liferay-ui:section>
 
 		<liferay-ui:section>

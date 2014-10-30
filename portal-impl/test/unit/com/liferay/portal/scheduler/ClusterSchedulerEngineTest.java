@@ -1675,7 +1675,7 @@ public class ClusterSchedulerEngineTest {
 		}
 
 		@Around(
-			"execution(* com.liferay.portal.cluster." +
+			"execution(void com.liferay.portal.cluster." +
 				"ClusterableContextThreadLocal.putThreadLocalContext(" +
 					"java.lang.String, java.io.Serializable)) && " +
 						"args(key, value)")

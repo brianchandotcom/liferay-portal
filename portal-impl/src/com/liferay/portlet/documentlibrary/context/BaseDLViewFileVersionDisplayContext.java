@@ -298,9 +298,7 @@ public abstract class BaseDLViewFileVersionDisplayContext
 	protected void addCancelCheckoutMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
-		if (!_fileEntryDisplayContextHelper.
-				isCancelCheckoutDocumentButtonVisible()) {
-
+		if (!isCancelCheckoutDocumentButtonVisible()) {
 			return;
 		}
 
@@ -315,7 +313,7 @@ public abstract class BaseDLViewFileVersionDisplayContext
 	protected void addCheckinMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
-		if (!_fileEntryDisplayContextHelper.isCheckinButtonVisible()) {
+		if (!isCheckinButtonVisible()) {
 			return;
 		}
 
@@ -329,7 +327,7 @@ public abstract class BaseDLViewFileVersionDisplayContext
 	protected void addCheckoutMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
-		if (!_fileEntryDisplayContextHelper.isCheckoutDocumentButtonVisible()) {
+		if (!isCheckoutDocumentButtonVisible()) {
 			return;
 		}
 

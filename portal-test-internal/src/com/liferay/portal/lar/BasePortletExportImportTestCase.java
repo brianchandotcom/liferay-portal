@@ -296,14 +296,14 @@ public abstract class BasePortletExportImportTestCase
 			Date endDate)
 		throws Exception {
 
+		importedLayout = LayoutTestUtil.addLayout(
+			importedGroup.getGroupId(), RandomTestUtil.randomString());
+
 		MapUtil.merge(getExportParameterMap(), exportParameterMap);
 
 		larFile = LayoutLocalServiceUtil.exportPortletInfoAsFile(
 			layout.getPlid(), layout.getGroupId(), portletId,
 			exportParameterMap, startDate, endDate);
-
-		importedLayout = LayoutTestUtil.addLayout(
-			importedGroup.getGroupId(), RandomTestUtil.randomString());
 
 		MapUtil.merge(getImportParameterMap(), importParameterMap);
 

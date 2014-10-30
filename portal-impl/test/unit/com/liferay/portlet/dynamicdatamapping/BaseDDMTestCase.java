@@ -273,6 +273,20 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		return document;
 	}
 
+	protected DDMFormField createSeparatorDDMFormField(
+		String name, boolean repeatable) {
+
+		DDMFormField ddmFormField = new DDMFormField(name, "separator");
+
+		ddmFormField.setRepeatable(repeatable);
+
+		LocalizedValue localizedValue = ddmFormField.getLabel();
+
+		localizedValue.addString(LocaleUtil.US, name);
+
+		return ddmFormField;
+	}
+
 	protected DDMStructure createStructure(String name, DDMForm ddmForm) {
 		return createStructure(
 			name, DDMFormXSDSerializerUtil.serialize(ddmForm));

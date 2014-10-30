@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineClusterManager;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
@@ -40,7 +39,6 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Lock;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
@@ -59,8 +57,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * @author Tina Tian
  */
 public class ClusterSchedulerEngine
-	implements IdentifiableBean, SchedulerEngine,
-			   SchedulerEngineClusterManager {
+	implements IdentifiableBean, SchedulerEngine {
 
 	public static SchedulerEngine createClusterSchedulerEngine(
 		SchedulerEngine schedulerEngine) {
@@ -74,6 +71,11 @@ public class ClusterSchedulerEngine
 
 	public ClusterSchedulerEngine(SchedulerEngine schedulerEngine) {
 		_schedulerEngine = schedulerEngine;
+
+		ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+
+		_readLock = readWriteLock.readLock();
+		_writeLock = readWriteLock.writeLock();
 	}
 
 	@Clusterable(acceptor = SchedulerClusterInvokeAcceptor.class)
@@ -192,30 +194,6 @@ public class ClusterSchedulerEngine
 		}
 		finally {
 			_readLock.unlock();
-		}
-	}
-
-	@Override
-	public void initialize() throws SchedulerException {
-		try {
-			ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
-
-			_readLock = readWriteLock.readLock();
-			_writeLock = readWriteLock.writeLock();
-
-			if (!ClusterMasterExecutorUtil.isMaster()) {
-				initMemoryClusteredJobs();
-			}
-
-			_schedulerClusterMasterTokenTransitionListener =
-				new SchedulerClusterMasterTokenTransitionListener();
-
-			ClusterMasterExecutorUtil.
-				registerClusterMasterTokenTransitionListener(
-					_schedulerClusterMasterTokenTransitionListener);
-		}
-		catch (Exception e) {
-			throw new SchedulerException("Unable to initialize scheduler", e);
 		}
 	}
 
@@ -385,6 +363,22 @@ public class ClusterSchedulerEngine
 
 	@Override
 	public void start() throws SchedulerException {
+		try {
+			if (!ClusterMasterExecutorUtil.isMaster()) {
+				initMemoryClusteredJobs();
+			}
+
+			_schedulerClusterMasterTokenTransitionListener =
+				new SchedulerClusterMasterTokenTransitionListener();
+
+			ClusterMasterExecutorUtil.
+				registerClusterMasterTokenTransitionListener(
+					_schedulerClusterMasterTokenTransitionListener);
+		}
+		catch (Exception e) {
+			throw new SchedulerException("Unable to initialize scheduler", e);
+		}
+
 		_schedulerEngine.start();
 
 		_portalReady = true;
@@ -512,11 +506,6 @@ public class ClusterSchedulerEngine
 		}
 
 		setClusterableThreadLocal(storageType);
-	}
-
-	@Override
-	public Lock updateMemorySchedulerClusterMaster() throws SchedulerException {
-		throw new UnsupportedOperationException();
 	}
 
 	protected String getFullName(String jobName, String groupName) {
@@ -651,11 +640,11 @@ public class ClusterSchedulerEngine
 		_memoryClusteredJobs = new ConcurrentHashMap
 			<String, ObjectValuePair<SchedulerResponse, TriggerState>>();
 	private boolean _portalReady;
-	private java.util.concurrent.locks.Lock _readLock;
+	private final java.util.concurrent.locks.Lock _readLock;
 	private ClusterMasterTokenTransitionListener
 		_schedulerClusterMasterTokenTransitionListener;
 	private final SchedulerEngine _schedulerEngine;
-	private java.util.concurrent.locks.Lock _writeLock;
+	private final java.util.concurrent.locks.Lock _writeLock;
 
 	private static class SchedulerClusterInvokeAcceptor
 		implements ClusterInvokeAcceptor {

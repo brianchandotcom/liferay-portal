@@ -18,6 +18,7 @@ import com.liferay.portal.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.RepositoryException;
@@ -1159,7 +1160,8 @@ public class CMISRepository extends BaseCmisRepository {
 			}
 
 			String mimeType = oldVersion.getContentStreamMimeType();
-			String changeLog = "Reverted to " + version;
+			String changeLog = LanguageUtil.format(
+				serviceContext.getLocale(), "reverted-to-x", version, false);
 			String title = oldVersion.getName();
 			ContentStream contentStream = oldVersion.getContentStream();
 

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.increment.BufferedIncrement;
 import com.liferay.portal.kernel.increment.NumberIncrement;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -1482,7 +1483,8 @@ public class DLFileEntryLocalServiceImpl
 		String mimeType = dlFileVersion.getMimeType();
 		String title = dlFileVersion.getTitle();
 		String description = dlFileVersion.getDescription();
-		String changeLog = "Reverted to " + version;
+		String changeLog = LanguageUtil.format(
+			serviceContext.getLocale(), "reverted-to-x", version, false);
 		boolean majorVersion = true;
 		String extraSettings = dlFileVersion.getExtraSettings();
 		long fileEntryTypeId = dlFileVersion.getFileEntryTypeId();

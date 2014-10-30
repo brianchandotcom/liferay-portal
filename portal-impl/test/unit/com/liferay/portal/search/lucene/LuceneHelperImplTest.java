@@ -27,17 +27,15 @@ import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.ClusterResponseCallback;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.kernel.util.SocketUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.security.auth.TransientTokenUtil;
@@ -53,7 +51,6 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.OutputStream;
@@ -64,11 +61,9 @@ import java.lang.reflect.Method;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.net.URL;
-
-import java.nio.channels.ServerSocketChannel;
+import java.net.URLConnection;
+import java.net.URLStreamHandler;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -201,14 +196,22 @@ public class LuceneHelperImplTest {
 	)
 	@Test
 	public void testGetLoadIndexesInputStreamFromCluster() throws Exception {
-		MockServer mockServer = new MockServer();
+		URL url = new URL("http://127.0.0.1:80/lucene/dump");
 
-		mockServer.start();
+		final MockURLConnection mockURLConnection = new MockURLConnection(url);
 
-		SkipGetBootupClusterNodeObjectValuePairAdvice.setURL(
-			new URL(
-				"http", mockServer.getInetAddress().getHostAddress(),
-				mockServer.getPort(), "/lucene/dump"));
+		ReflectionTestUtil.setFieldValue(
+			url, "handler",
+			new URLStreamHandler() {
+
+				@Override
+				protected URLConnection openConnection(URL url) {
+					return mockURLConnection;
+				}
+
+			});
+
+		SkipGetBootupClusterNodeObjectValuePairAdvice.setURL(url);
 
 		InputStream inputStream =
 			_luceneHelperImpl.getLoadIndexesInputStreamFromCluster(
@@ -218,10 +221,11 @@ public class LuceneHelperImplTest {
 
 		_mockIndexAccessor.loadIndex(inputStream);
 
+		mockURLConnection.assertOutputContent(
+			"transientToken=&companyId=" + _COMPANY_ID);
+
 		Assert.assertArrayEquals(
 			_RESPONSE_MESSAGE, _mockIndexAccessor.getResponseMessage());
-
-		mockServer.join();
 	}
 
 	@AdviseWith(
@@ -694,6 +698,36 @@ public class LuceneHelperImplTest {
 	private MockClusterExecutor _mockClusterExecutor;
 	private MockIndexAccessor _mockIndexAccessor;
 
+	private static class MockURLConnection extends URLConnection {
+
+		public MockURLConnection(URL url) {
+			super(url);
+		}
+
+		public void assertOutputContent(String outputContent) {
+			Assert.assertEquals(
+				outputContent, _unsyncByteArrayOutputStream.toString());
+		}
+
+		@Override
+		public void connect() {
+		}
+
+		@Override
+		public InputStream getInputStream() {
+			return new UnsyncByteArrayInputStream(_RESPONSE_MESSAGE);
+		}
+
+		@Override
+		public OutputStream getOutputStream() {
+			return _unsyncByteArrayOutputStream;
+		}
+
+		private final UnsyncByteArrayOutputStream _unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
+
+	}
+
 	private class MockAddress implements org.jgroups.Address {
 
 		@Override
@@ -1034,71 +1068,6 @@ public class LuceneHelperImplTest {
 		}
 
 		private byte[] _bytes;
-
-	}
-
-	private class MockServer extends Thread {
-
-		public MockServer() throws IOException {
-			ServerSocketChannel serverSocketChannel =
-				SocketUtil.createServerSocketChannel(
-					_localhostInetAddress, 1024, null);
-
-			_serverSocket = serverSocketChannel.socket();
-		}
-
-		public InetAddress getInetAddress() {
-			return _serverSocket.getInetAddress();
-		}
-
-		public int getPort() {
-			return _serverSocket.getLocalPort();
-		}
-
-		@Override
-		public void run() {
-			Socket socket = null;
-
-			try {
-				socket = _serverSocket.accept();
-
-				_serverSocket.close();
-
-				UnsyncBufferedReader reader = new UnsyncBufferedReader(
-					new InputStreamReader(socket.getInputStream()));
-
-				String request = reader.readLine();
-
-				if (!request.contains("/lucene/dump")) {
-					return;
-				}
-
-				StringBundler sb = new StringBundler(3);
-
-				sb.append("HTTP/1.0 200 OK\r\nServer: \r\nContent-length: ");
-				sb.append(_RESPONSE_MESSAGE.length);
-				sb.append("\r\nContent-type: text/plain\r\n\r\n");
-
-				OutputStream outputStream = socket.getOutputStream();
-
-				outputStream.write(sb.toString().getBytes());
-				outputStream.write(_RESPONSE_MESSAGE);
-			}
-			catch (IOException ioe) {
-				throw new RuntimeException(ioe);
-			}
-			finally {
-				if (socket != null) {
-					try {
-						socket.close();
-					}
-					catch (IOException ioe) {
-					}
-				}
-			}
-		}
-
-		private ServerSocket _serverSocket;
 
 	}
 

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.process;
 
+import java.io.File;
 import java.io.Serializable;
 
 import java.util.Collections;
@@ -29,7 +30,7 @@ public class ProcessConfig implements Serializable {
 	}
 
 	public String getBootstrapClassPath() {
-		return _bootstrapClassPath;
+		return sanitizePathSeparatorChar(_bootstrapClassPath);
 	}
 
 	public String getJavaExecutable() {
@@ -41,7 +42,7 @@ public class ProcessConfig implements Serializable {
 	}
 
 	public String getRuntimeClassPath() {
-		return _runtimeClassPath;
+		return sanitizePathSeparatorChar(_runtimeClassPath);
 	}
 
 	public static class Builder {
@@ -90,6 +91,14 @@ public class ProcessConfig implements Serializable {
 
 	}
 
+	protected String sanitizePathSeparatorChar(String path) {
+		if ((path != null) && (_pathSeparatorChar != File.pathSeparatorChar)) {
+			return path.replace(_pathSeparatorChar, File.pathSeparatorChar);
+		}
+
+		return path;
+	}
+
 	private ProcessConfig(Builder builder) {
 		_arguments = builder._arguments;
 		_bootstrapClassPath = builder._bootstrapClassPath;
@@ -103,6 +112,7 @@ public class ProcessConfig implements Serializable {
 	private final List<String> _arguments;
 	private final String _bootstrapClassPath;
 	private final String _javaExecutable;
+	private final char _pathSeparatorChar = File.pathSeparatorChar;
 	private final transient ClassLoader _reactClassLoader;
 	private final String _runtimeClassPath;
 

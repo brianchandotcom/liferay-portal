@@ -1549,7 +1549,8 @@ public class DLFileEntryFinderTest {
 	}
 
 	protected FileEntry addFileEntry(
-			long repositoryId, Folder folder, String titleSuffix) throws Exception {
+			long repositoryId, Folder folder, String titleSuffix)
+		throws Exception {
 
 		User user = UserTestUtil.addUser();
 

@@ -45,108 +45,77 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 </c:if>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />activateAccount',
-		function() {
-			var A = AUI();
+	function <portlet:namespace />activateAccount() {
+		var $ = AUI.$;
 
-			var form = A.one(document.<portlet:namespace />fm);
+		var form = $(document.<portlet:namespace />fm);
 
-			var uri = form.getAttribute('action');
+		function onError() {
+			message = '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>';
 
-			A.io.request(
-				uri,
-				{
-					dataType: 'JSON',
-					form: {
-						id: form
-					},
-					on: {
-						failure: function(event, id, obj) {
-							message = '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>';
+			<portlet:namespace />showStatusMessage('danger', message);
 
-							<portlet:namespace />showStatusMessage('error', message);
+			$('.anonymous-account').addClass('hide');
+		}
 
-							A.one('.anonymous-account').hide();
-						},
-						success: function(event, id, obj) {
-							var response = this.get('responseData');
+		form.ajaxSubmit(
+			{
+				dataType: 'json',
+				error: onError,
+				success: function(responseData) {
+					var exception = responseData.exception;
 
-							var exception = response.exception;
+					var message;
 
-							var message;
+					if (!exception) {
+						var userStatus = responseData.userStatus;
 
-							if (!exception) {
-								var userStatus = response.userStatus;
-
-								if (userStatus == 'user_added') {
-									message = '<%= UnicodeLanguageUtil.format(request, "thank-you-for-creating-an-account-your-password-has-been-sent-to-x", HtmlUtil.escape(emailAddress), false) %>';
-								}
-								else if (userStatus == 'user_pending') {
-									message = '<%= UnicodeLanguageUtil.format(request, "thank-you-for-creating-an-account.-you-will-be-notified-via-email-at-x-when-your-account-has-been-approved", HtmlUtil.escape(emailAddress), false) %>';
-								}
-
-								<portlet:namespace />showStatusMessage('success', message);
-
-								A.one('.anonymous-account').hide();
-							}
-							else {
-								message = '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>';
-
-								<portlet:namespace />showStatusMessage('error', message);
-
-								A.one('.anonymous-account').hide();
-							}
+						if (userStatus == 'user_added') {
+							message = '<%= UnicodeLanguageUtil.format(request, "thank-you-for-creating-an-account-your-password-has-been-sent-to-x", HtmlUtil.escape(emailAddress), false) %>';
 						}
+						else if (userStatus == 'user_pending') {
+							message = '<%= UnicodeLanguageUtil.format(request, "thank-you-for-creating-an-account.-you-will-be-notified-via-email-at-x-when-your-account-has-been-approved", HtmlUtil.escape(emailAddress), false) %>';
+						}
+
+						<portlet:namespace />showStatusMessage('success', message);
+
+						$('.anonymous-account').addClass('hide');
+					}
+					else {
+						onError();
 					}
 				}
-			);
-		},
-		['aui-io']
-	);
+			}
+		);
+	}
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />closeDialog',
-		function(type, message) {
-			var namespace = window.parent.namespace;
+	function <portlet:namespace />closeDialog() {
+		var namespace = window.parent.namespace;
 
-			Liferay.fire(
-				'closeWindow',
-				{
-					id: namespace + 'signInDialog'
-				}
-			);
-		},
-		['aui-base']
-	);
+		Liferay.fire(
+			'closeWindow',
+			{
+				id: namespace + 'signInDialog'
+			}
+		);
+	}
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />showStatusMessage',
-		function(type, message) {
-			var A = AUI();
+	function <portlet:namespace />showStatusMessage(type, message) {
+		var messageContainer = AUI.$('#<portlet:namespace />login-status-messages');
 
-			var messageContainer = A.one('#<portlet:namespace />login-status-messages');
+		messageContainer.removeClass('alert-danger').removeClass('alert-success');
 
-			messageContainer.removeClass('alert-danger').removeClass('alert-success');
+		messageContainer.addClass('alert alert-' + type);
 
-			messageContainer.addClass('alert alert-' + type);
-
-			messageContainer.html(message);
-
-			messageContainer.show();
-		},
-		['aui-base']
-	);
+		messageContainer.html(message).removeClass('hide');
+	}
 
 	<c:if test="<%= !company.isStrangers() %>">
 		<portlet:namespace />closeDialog();
 	</c:if>
 </aui:script>
 
-<aui:script use="aui-base">
+<aui:script sandbox="<%= true %>">
 	if (window.opener) {
 		var namespace = window.opener.parent.namespace;
 		var randomNamespace = window.opener.parent.randomNamespace;

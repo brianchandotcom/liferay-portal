@@ -113,7 +113,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 
 <div class="alloy-editor alloy-editor-placeholder <%= cssClass %>" contenteditable="false" data-placeholder="<%= LanguageUtil.get(request, placeholder) %>" id="<%= name %>" name="<%= name %>"><%= contents %></div>
 
-<aui:script use="aui-base,alloy-editor">
+<aui:script use="aui-base,alloy-editor,uploader">
 	document.getElementById('<%= name %>').setAttribute('contenteditable', true);
 
 	<%
@@ -218,6 +218,72 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			window['<%= name %>'].editor = alloyEditor;
 
 			window['<%= name %>'].instanceReady = true;
+
+			var uploadingImageClass = 'uploading-image';
+
+			var uploader = new A.Uploader(
+				{
+					fileFieldName: 'imageSelectorFileName',
+
+					on: {
+						uploadcomplete: function(event) {
+							var data = event.data;
+
+							try {
+								data = A.JSON.parse(data);
+							}
+							catch (err) {
+							}
+
+							if (data.success) {
+								var image = A.one(nativeEditor.element.$).one('[data-random-id="'+data.image.randomId+'"]');
+
+								if (image) {
+									image.removeAttribute('data-random-id');
+									image.removeClass(uploadingImageClass);
+									image.setAttribute(data.image.dataImageIdAttribute, data.image.fileEntryId);
+									image.setAttribute('src', data.image.url);
+								}
+
+							}
+						},
+						uploaderror: function(event) {
+							event.target.cancelUpload();
+
+							var image = A.one(nativeEditor.element.$).one('[data-random-id="'+event.data.image.randomId+'"]');
+
+							image.remove();
+
+							//TODO mostrar mensaje
+						}
+					},
+					uploadURL: '<%= themeDisplay.getPathMain() + "/portal/image_selector?p_auth=" + AuthTokenUtil.getToken(request) %>'
+				}
+			);
+
+			nativeEditor.on(
+				'imagedrop',
+				function(event) {
+					var randomId = new Date().getTime() + '_' + Liferay.Util.randomInt();
+
+					var image = event.data.el,
+						file = event.data.file;
+
+					image.setAttribute('data-random-id', randomId);
+					image.addClass(uploadingImageClass);
+
+					var parsedFiles = [];
+					parsedFiles.push(new A.FileHTML5(file));
+
+			        uploader.uploadThese(
+			        	parsedFiles,
+			        	null,
+			        	{
+			        		'randomId': randomId
+			        	}
+			        )
+				}
+			);
 		}
 	);
 

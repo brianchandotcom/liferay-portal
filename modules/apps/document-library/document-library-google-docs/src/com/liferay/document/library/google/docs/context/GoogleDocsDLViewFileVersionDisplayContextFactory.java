@@ -80,6 +80,19 @@ public class GoogleDocsDLViewFileVersionDisplayContextFactory
 		return parentDLFileEntryActionsDisplayContext;
 	}
 
+	@Override
+	public DLViewFileVersionDisplayContext
+		getMGFileVersionActionsDisplayContext(
+			DLViewFileVersionDisplayContext
+				parentDLViewFileVersionDisplayContext,
+			HttpServletRequest request, HttpServletResponse response,
+			FileVersion fileVersion) {
+
+		return getDLFileVersionActionsDisplayContext(
+			parentDLViewFileVersionDisplayContext, request, response,
+			fileVersion);
+	}
+
 	@Reference
 	public void setClassNameLocalService(
 		ClassNameLocalService classNameLocalService) {

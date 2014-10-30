@@ -31,4 +31,11 @@ public interface DLViewFileVersionDisplayContextFactory {
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion);
 
+	public DLViewFileVersionDisplayContext
+		getMGFileVersionActionsDisplayContext(
+			DLViewFileVersionDisplayContext
+				parentDLViewFileVersionDisplayContext,
+			HttpServletRequest request, HttpServletResponse response,
+			FileVersion fileVersion);
+
 }

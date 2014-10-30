@@ -50,6 +50,16 @@ public class DLViewFileVersionDisplayContextUtil {
 		return dlViewFileVersionDisplayContext;
 	}
 
+	public static DLViewFileVersionDisplayContext
+		getIGFileVersionActionsDisplayContext(
+			HttpServletRequest request, HttpServletResponse response,
+			FileVersion fileVersion)
+		throws PortalException {
+
+		return getDLFileVersionActionsDisplayContext(
+			request, response, fileVersion);
+	}
+
 	private static DLViewFileVersionDisplayContext
 		_chainDLFileVersionActionsDisplayContexts(
 			HttpServletRequest request, HttpServletResponse response,

@@ -1853,10 +1853,6 @@ public class ClusterSchedulerEngineTest {
 	private static class MockClusterMasterExecutor
 		implements ClusterMasterExecutor {
 
-		public MockClusterMasterExecutor() {
-			_mockSchedulerEngine = new MockSchedulerEngine();
-		}
-
 		@Override
 		public <T> NoticeableFuture<T> executeOnMaster(
 			MethodHandler methodHandler) {
@@ -1865,29 +1861,23 @@ public class ClusterSchedulerEngineTest {
 				throw new SystemException();
 			}
 
-			try {
-				T result = null;
+			T result = null;
 
-				MethodKey methodKey = methodHandler.getMethodKey();
+			MethodKey methodKey = methodHandler.getMethodKey();
 
-				if (methodKey.equals(_getScheduledJobsMethodKey)) {
-					StorageType storageType =
-						(StorageType)methodHandler.getArguments()[0];
+			if (methodKey.equals(_getScheduledJobsMethodKey)) {
+				StorageType storageType =
+					(StorageType)methodHandler.getArguments()[0];
 
-					result = (T)_mockSchedulerEngine.getScheduledJobs(
-						storageType);
-				}
-
-				DefaultNoticeableFuture<T> defaultNoticeableFuture =
-					new DefaultNoticeableFuture<T>();
-
-				defaultNoticeableFuture.set(result);
-
-				return defaultNoticeableFuture;
+				result = (T)_mockSchedulerEngine.getScheduledJobs(storageType);
 			}
-			catch (Exception e) {
-				throw new SystemException(e);
-			}
+
+			DefaultNoticeableFuture<T> defaultNoticeableFuture =
+				new DefaultNoticeableFuture<T>();
+
+			defaultNoticeableFuture.set(result);
+
+			return defaultNoticeableFuture;
 		}
 
 		public ClusterMasterTokenTransitionListener
@@ -1951,30 +1941,21 @@ public class ClusterSchedulerEngineTest {
 			_clusterMasterTokenTransitionListener;
 		private boolean _exception;
 		private boolean _master;
-		private MockSchedulerEngine _mockSchedulerEngine;
+		private final MockSchedulerEngine _mockSchedulerEngine =
+			new MockSchedulerEngine();
 
 	}
 
 	private static class MockSchedulerEngine implements SchedulerEngine {
 
-		public MockSchedulerEngine() {
-			_defaultJobs = new HashMap<String, SchedulerResponse>();
-		}
-
 		@Override
-		public void delete(String groupName, StorageType storageType)
-			throws SchedulerException {
+		public void delete(String groupName, StorageType storageType) {
+			Set<String> keySet = _defaultJobs.keySet();
 
-			Set<Map.Entry<String, SchedulerResponse>> set =
-				_defaultJobs.entrySet();
-
-			Iterator<Map.Entry<String, SchedulerResponse>> iterator =
-				set.iterator();
+			Iterator<String> iterator = keySet.iterator();
 
 			while (iterator.hasNext()) {
-				Map.Entry<String, SchedulerResponse> entry = iterator.next();
-
-				String key = entry.getKey();
+				String key = iterator.next();
 
 				if (key.contains(groupName) &&
 					key.contains(storageType.toString())) {
@@ -1986,37 +1967,33 @@ public class ClusterSchedulerEngineTest {
 
 		@Override
 		public void delete(
-				String jobName, String groupName, StorageType storageType)
-			throws SchedulerException {
+			String jobName, String groupName, StorageType storageType) {
 
 			_defaultJobs.remove(_getFullName(jobName, groupName, storageType));
 		}
 
 		@Override
 		public SchedulerResponse getScheduledJob(
-				String jobName, String groupName, StorageType storageType)
-			throws SchedulerException {
+			String jobName, String groupName, StorageType storageType) {
 
 			return _defaultJobs.get(
 				_getFullName(jobName, groupName, storageType));
 		}
 
 		@Override
-		public List<SchedulerResponse> getScheduledJobs()
-			throws SchedulerException {
-
+		public List<SchedulerResponse> getScheduledJobs() {
 			return new ArrayList<SchedulerResponse>(_defaultJobs.values());
 		}
 
 		@Override
-		public List<SchedulerResponse> getScheduledJobs(StorageType storageType)
-			throws SchedulerException {
+		public List<SchedulerResponse> getScheduledJobs(
+			StorageType storageType) {
 
 			List<SchedulerResponse> schedulerResponses =
 				new ArrayList<SchedulerResponse>();
 
 			for (SchedulerResponse schedulerResponse : _defaultJobs.values()) {
-				if (storageType.equals(schedulerResponse.getStorageType())) {
+				if (storageType == schedulerResponse.getStorageType()) {
 					schedulerResponses.add(schedulerResponse);
 				}
 			}
@@ -2026,17 +2003,20 @@ public class ClusterSchedulerEngineTest {
 
 		@Override
 		public List<SchedulerResponse> getScheduledJobs(
-				String groupName, StorageType storageType)
-			throws SchedulerException {
+			String groupName, StorageType storageType) {
 
 			List<SchedulerResponse> schedulerResponses =
 				new ArrayList<SchedulerResponse>();
 
-			for (String key : _defaultJobs.keySet()) {
+			for (Map.Entry<String, SchedulerResponse> entry :
+					_defaultJobs.entrySet()) {
+
+				String key = entry.getKey();
+
 				if (key.contains(groupName) &&
 					key.contains(storageType.toString())) {
 
-					schedulerResponses.add(_defaultJobs.get(key));
+					schedulerResponses.add(entry.getValue());
 				}
 			}
 
@@ -2044,13 +2024,10 @@ public class ClusterSchedulerEngineTest {
 		}
 
 		@Override
-		public void pause(String groupName, StorageType storageType)
-			throws SchedulerException {
+		public void pause(String groupName, StorageType storageType) {
+			for (SchedulerResponse schedulerResponse :
+					getScheduledJobs(groupName, storageType)) {
 
-			List<SchedulerResponse> schedulerResponses = getScheduledJobs(
-				groupName, storageType);
-
-			for (SchedulerResponse schedulerResponse : schedulerResponses) {
 				Message message = schedulerResponse.getMessage();
 
 				message.put(
@@ -2061,8 +2038,7 @@ public class ClusterSchedulerEngineTest {
 
 		@Override
 		public void pause(
-				String jobName, String groupName, StorageType storageType)
-			throws SchedulerException {
+			String jobName, String groupName, StorageType storageType) {
 
 			SchedulerResponse schedulerResponse = getScheduledJob(
 				jobName, groupName, storageType);
@@ -2092,13 +2068,10 @@ public class ClusterSchedulerEngineTest {
 		}
 
 		@Override
-		public void resume(String groupName, StorageType storageType)
-			throws SchedulerException {
+		public void resume(String groupName, StorageType storageType) {
+			for (SchedulerResponse schedulerResponse :
+					getScheduledJobs(groupName, storageType)) {
 
-			List<SchedulerResponse> schedulerResponses = getScheduledJobs(
-				groupName, storageType);
-
-			for (SchedulerResponse schedulerResponse : schedulerResponses) {
 				Message message = schedulerResponse.getMessage();
 
 				message.put(
@@ -2109,8 +2082,7 @@ public class ClusterSchedulerEngineTest {
 
 		@Override
 		public void resume(
-				String jobName, String groupName, StorageType storageType)
-			throws SchedulerException {
+			String jobName, String groupName, StorageType storageType) {
 
 			SchedulerResponse schedulerResponse = getScheduledJob(
 				jobName, groupName, storageType);
@@ -2149,8 +2121,7 @@ public class ClusterSchedulerEngineTest {
 
 		@Override
 		public void suppressError(
-				String jobName, String groupName, StorageType storageType)
-			throws SchedulerException {
+			String jobName, String groupName, StorageType storageType) {
 
 			SchedulerResponse schedulerResponse = getScheduledJob(
 				jobName, groupName, storageType);
@@ -2161,13 +2132,10 @@ public class ClusterSchedulerEngineTest {
 		}
 
 		@Override
-		public void unschedule(String groupName, StorageType storageType)
-			throws SchedulerException {
+		public void unschedule(String groupName, StorageType storageType) {
+			for (SchedulerResponse schedulerResponse :
+					getScheduledJobs(groupName, storageType)) {
 
-			List<SchedulerResponse> schedulerResponses = getScheduledJobs(
-				groupName, storageType);
-
-			for (SchedulerResponse schedulerResponse : schedulerResponses) {
 				Message message = schedulerResponse.getMessage();
 
 				message.put(
@@ -2178,8 +2146,7 @@ public class ClusterSchedulerEngineTest {
 
 		@Override
 		public void unschedule(
-				String jobName, String groupName, StorageType storageType)
-			throws SchedulerException {
+			String jobName, String groupName, StorageType storageType) {
 
 			SchedulerResponse schedulerResponse = getScheduledJob(
 				jobName, groupName, storageType);
@@ -2192,9 +2159,7 @@ public class ClusterSchedulerEngineTest {
 		}
 
 		@Override
-		public void update(Trigger trigger, StorageType storageType)
-			throws SchedulerException {
-
+		public void update(Trigger trigger, StorageType storageType) {
 			SchedulerResponse schedulerResponse = getScheduledJob(
 				trigger.getJobName(), trigger.getGroupName(), storageType);
 
@@ -2220,17 +2185,12 @@ public class ClusterSchedulerEngineTest {
 				SchedulerEngine.JOB_STATE, new JobState(TriggerState.NORMAL));
 
 			schedulerResponse.setMessage(message);
-
 			schedulerResponse.setStorageType(storageType);
 
 			if (trigger == null) {
-				try {
-					trigger = TriggerFactoryUtil.buildTrigger(
-						TriggerType.SIMPLE, jobName, groupName, null, null,
-						_DEFAULT_INTERVAL);
-				}
-				catch (Exception e) {
-				}
+				trigger = TriggerFactoryUtil.buildTrigger(
+					TriggerType.SIMPLE, jobName, groupName, null, null,
+					_DEFAULT_INTERVAL);
 			}
 
 			schedulerResponse.setTrigger(trigger);
@@ -2245,11 +2205,11 @@ public class ClusterSchedulerEngineTest {
 		private String _getFullName(
 			String jobName, String groupName, StorageType storageType) {
 
-			return groupName + StringPool.PERIOD + jobName +
-				storageType.toString();
+			return groupName + StringPool.PERIOD + jobName + storageType;
 		}
 
-		private final Map<String, SchedulerResponse> _defaultJobs;
+		private final Map<String, SchedulerResponse> _defaultJobs =
+			new HashMap<String, SchedulerResponse>();
 
 	}
 

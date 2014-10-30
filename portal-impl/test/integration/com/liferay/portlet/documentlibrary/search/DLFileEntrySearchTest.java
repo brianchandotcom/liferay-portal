@@ -160,7 +160,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 			Fields.class.getName() + _ddmStructure.getStructureId(), fields);
 
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			serviceContext.getScopeGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Text.txt",
 			ContentTypes.TEXT_PLAIN, "Title", content.getBytes(),
 			WorkflowConstants.ACTION_PUBLISH, serviceContext);

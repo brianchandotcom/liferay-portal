@@ -145,24 +145,6 @@ public abstract class DLAppTestUtil {
 	}
 
 	public static FileEntry addFileEntry(
-			long userId, long groupId, long repositoryId, long folderId,
-			String sourceFileName, String mimeType, String title, byte[] bytes,
-			long fileEntryTypeId, int workflowAction)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		serviceContext.setAttribute("fileEntryTypeId", fileEntryTypeId);
-		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setLayoutFullURL("http://localhost");
-
-		return addFileEntry(
-			userId, repositoryId, folderId, sourceFileName, mimeType, title,
-			bytes, workflowAction, serviceContext);
-	}
-
-	public static FileEntry addFileEntry(
 			long groupId, long repositoryId, long folderId,
 			String sourceFileName, long fileEntryTypeId,
 			boolean workflowEnabled, boolean approved)
@@ -189,9 +171,9 @@ public abstract class DLAppTestUtil {
 		}
 
 		FileEntry fileEntry = addFileEntry(
-			TestPropsValues.getUserId(), repositoryId, folderId, sourceFileName,
-			ContentTypes.TEXT_PLAIN, sourceFileName, null,
-			serviceContext.getWorkflowAction(), serviceContext);
+			repositoryId, folderId, sourceFileName, ContentTypes.TEXT_PLAIN,
+			sourceFileName, null, serviceContext.getWorkflowAction(),
+			serviceContext);
 
 		if (workflowEnabled && approved) {
 			updateStatus(fileEntry, serviceContext);
@@ -210,39 +192,26 @@ public abstract class DLAppTestUtil {
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT;
 
 		return addFileEntry(
-			TestPropsValues.getUserId(), groupId, repositoryId, folderId,
-			sourceFileName, mimeType, title, bytes, fileEntryTypeId,
-			workflowAction);
+			groupId, repositoryId, folderId, sourceFileName, mimeType, title,
+			bytes, fileEntryTypeId, workflowAction);
 	}
 
 	public static FileEntry addFileEntry(
-			long userId, long repositoryId, long folderId,
+			long groupId, long repositoryId, long folderId,
 			String sourceFileName, String mimeType, String title, byte[] bytes,
-			int workflowAction, ServiceContext serviceContext)
+			long fileEntryTypeId, int workflowAction)
 		throws Exception {
 
-		if ((bytes == null) && Validator.isNotNull(sourceFileName)) {
-			bytes = _CONTENT.getBytes();
-		}
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
 
-		serviceContext = (ServiceContext)serviceContext.clone();
-
-		serviceContext.setWorkflowAction(workflowAction);
-
-		return DLAppLocalServiceUtil.addFileEntry(
-			userId, repositoryId, folderId, sourceFileName, mimeType, title,
-			StringPool.BLANK, StringPool.BLANK, bytes, serviceContext);
-	}
-
-	public static FileEntry addFileEntry(
-			long userId, long groupId, long folderId, String sourceFileName,
-			String mimeType, String title, byte[] bytes, long fileEntryTypeId,
-			int workflowAction)
-		throws Exception {
+		serviceContext.setAttribute("fileEntryTypeId", fileEntryTypeId);
+		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setLayoutFullURL("http://localhost");
 
 		return addFileEntry(
-			userId, groupId, groupId, folderId, sourceFileName, mimeType, title,
-			bytes, fileEntryTypeId, workflowAction);
+			repositoryId, folderId, sourceFileName, mimeType, title, bytes,
+			workflowAction, serviceContext);
 	}
 
 	public static FileEntry addFileEntry(
@@ -325,8 +294,38 @@ public abstract class DLAppTestUtil {
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT;
 
 		return addFileEntry(
-			TestPropsValues.getUserId(), groupId, folderId, sourceFileName,
-			mimeType, title, bytes, fileEntryTypeId, workflowAction);
+			groupId, folderId, sourceFileName, mimeType, title, bytes,
+			fileEntryTypeId, workflowAction);
+	}
+
+	public static FileEntry addFileEntry(
+			long repositoryId, long folderId, String sourceFileName,
+			String mimeType, String title, byte[] bytes, int workflowAction,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		if ((bytes == null) && Validator.isNotNull(sourceFileName)) {
+			bytes = _CONTENT.getBytes();
+		}
+
+		serviceContext = (ServiceContext)serviceContext.clone();
+
+		serviceContext.setWorkflowAction(workflowAction);
+
+		return DLAppServiceUtil.addFileEntry(
+			repositoryId, folderId, sourceFileName, mimeType, title,
+			StringPool.BLANK, StringPool.BLANK, bytes, serviceContext);
+	}
+
+	public static FileEntry addFileEntry(
+			long groupId, long folderId, String sourceFileName, String mimeType,
+			String title, byte[] bytes, long fileEntryTypeId,
+			int workflowAction)
+		throws Exception {
+
+		return addFileEntry(
+			groupId, groupId, folderId, sourceFileName, mimeType, title, bytes,
+			fileEntryTypeId, workflowAction);
 	}
 
 	public static FileEntry addFileEntry(
@@ -341,9 +340,9 @@ public abstract class DLAppTestUtil {
 		}
 
 		return addFileEntry(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			folderId, sourceFileName, ContentTypes.TEXT_PLAIN, title, null,
-			workflowAction, serviceContext);
+			serviceContext.getScopeGroupId(), folderId, sourceFileName,
+			ContentTypes.TEXT_PLAIN, title, null, workflowAction,
+			serviceContext);
 	}
 
 	public static FileEntry addFileEntryWithWorkflow(
@@ -407,9 +406,8 @@ public abstract class DLAppTestUtil {
 			}
 		}
 
-		return DLAppLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), repositoryId, parentFolderId, name,
-			description, serviceContext);
+		return DLAppServiceUtil.addFolder(
+			repositoryId, parentFolderId, name, description, serviceContext);
 	}
 
 	public static Folder addFolder(

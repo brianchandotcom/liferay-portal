@@ -231,46 +231,31 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 			_fileEntryIds = new long[_users.length];
 
-			for (int i = 0; i < 2; i++) {
-				for (int j = 0; j < doAsUserThreads.length; j++) {
-					if (i == 0) {
-						doAsUserThreads[j] = new AddFileEntryThread(
-							_users[j].getUserId(), j);
-					}
-					else {
-						doAsUserThreads[j] = new GetFileEntryThread(
-							_users[j].getUserId(), j);
-					}
-				}
+			int successCount = 0;
 
-				for (DoAsUserThread doAsUserThread : doAsUserThreads) {
-					doAsUserThread.start();
-				}
-
-				for (DoAsUserThread doAsUserThread : doAsUserThreads) {
-					doAsUserThread.join();
-				}
-
-				int successCount = 0;
-
-				for (DoAsUserThread doAsUserThread : doAsUserThreads) {
-					if (doAsUserThread.isSuccess()) {
-						successCount++;
-					}
-				}
-
-				String message =
-					"Only " + successCount + " out of " + _users.length;
-
-				if (i == 0) {
-					message += " threads added file entries successfully";
-				}
-				else {
-					message += " threads retrieved file entries successfully";
-				}
-
-				Assert.assertTrue(message, successCount == _users.length);
+			for (int i = 0; i < doAsUserThreads.length; i++) {
+				doAsUserThreads[i] = new AddFileEntryThread(
+					_users[i].getUserId(), i);
 			}
+
+			successCount = runUserThreads(doAsUserThreads);
+
+			Assert.assertEquals(
+				"Only " + successCount + " out of " + _users.length +
+					" threads added successfully",
+				_users.length, successCount);
+
+			for (int i = 0; i < doAsUserThreads.length; i++) {
+				doAsUserThreads[i] = new GetFileEntryThread(
+					_users[i].getUserId(), i);
+			}
+
+			successCount = runUserThreads(doAsUserThreads);
+
+			Assert.assertEquals(
+				"Only " + successCount + " out of " + _users.length +
+					" threads retrieved successfully",
+				_users.length, successCount);
 		}
 
 		@Test
@@ -387,7 +372,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 					}
 				}
 				catch (Exception e) {
-					_log.error("Unable to add file " + _index, e);
+					_log.error("Unable to get file " + _index, e);
 				}
 			}
 
@@ -810,12 +795,14 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			search(fileEntry, false, "liferay", true);
 		}
 
+		@Ignore
 		@Test
 		public void shouldFindFileEntryInRootFolder() throws Exception {
 			searchFile(
 				group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 		}
 
+		@Ignore
 		@Test
 		public void shouldFindFileEntryInSubfolder() throws Exception {
 			searchFile(group.getGroupId(), parentFolder.getFolderId());
@@ -1079,6 +1066,28 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			});
 
 		return counter;
+	}
+
+	protected static int runUserThreads(DoAsUserThread[] doAsUserThreads)
+		throws Exception {
+
+		for (DoAsUserThread doAsUserThread : doAsUserThreads) {
+			doAsUserThread.start();
+		}
+
+		for (DoAsUserThread doAsUserThread : doAsUserThreads) {
+			doAsUserThread.join();
+		}
+
+		int successCount = 0;
+
+		for (DoAsUserThread doAsUserThread : doAsUserThreads) {
+			if (doAsUserThread.isSuccess()) {
+				successCount++;
+			}
+		}
+
+		return successCount;
 	}
 
 	protected static void search(

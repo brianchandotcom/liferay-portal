@@ -151,7 +151,11 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 
 	@Override
 	public boolean isMaster() {
-		return _master;
+		if (isEnabled()) {
+			return _master;
+		}
+
+		return true;
 	}
 
 	@Override

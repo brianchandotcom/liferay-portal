@@ -39,7 +39,7 @@ public class AsyncBroker<K, V> {
 	}
 
 	public NoticeableFuture<V> post(final K key) {
-		DefaultNoticeableFuture<V> defaultNoticeableFuture =
+		final DefaultNoticeableFuture<V> defaultNoticeableFuture =
 			new DefaultNoticeableFuture<V>();
 
 		DefaultNoticeableFuture<V> previousDefaultNoticeableFuture =
@@ -54,7 +54,8 @@ public class AsyncBroker<K, V> {
 
 				@Override
 				public void complete(Future<V> future) {
-					_defaultNoticeableFutures.remove(key);
+					_defaultNoticeableFutures.remove(
+						key, defaultNoticeableFuture);
 				}
 
 			});

@@ -27,7 +27,6 @@ page import="com.liferay.portlet.ratings.model.RatingsEntry" %><%@
 page import="com.liferay.portlet.ratings.model.RatingsStats" %><%@
 page import="com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil" %><%@
 page import="com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil" %><%@
-page import="com.liferay.portlet.ratings.service.persistence.RatingsEntryUtil" %><%@
 page import="com.liferay.portlet.ratings.service.persistence.RatingsStatsUtil" %>
 
 <portlet:defineObjects />

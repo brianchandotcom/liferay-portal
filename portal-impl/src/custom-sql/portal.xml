@@ -1396,16 +1396,11 @@
 				{User_.*}
 			FROM
 				User_
+			LEFT JOIN
+				Contact_ ON
+					(Contact_.contactId = User_.contactId)
 			WHERE
-				(userId NOT IN (
-					SELECT
-						User_.userId
-					FROM
-						User_
-					INNER JOIN
-						Contact_ ON
-							(Contact_.contactId = User_.contactId)
-				))
+				Contact_.contactId IS NULL
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.UserFinder.findByNoGroups">
@@ -1414,18 +1409,13 @@
 				{User_.*}
 			FROM
 				User_
+			LEFT JOIN
+				Group_ ON
+					(Group_.companyId = User_.companyId) AND
+					(Group_.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.USER$]) AND
+					(Group_.classPK = User_.userId)
 			WHERE
-				(userId NOT IN (
-					SELECT
-						User_.userId
-					FROM
-						User_
-					INNER JOIN
-						Group_ ON
-							(Group_.companyId = User_.companyId) AND
-							(Group_.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.USER$]) AND
-							(Group_.classPK = User_.userId)
-				)) AND
+				(Group_.classPK IS NULL) AND
 				(defaultUser = [$FALSE$])
 		]]>
 	</sql>

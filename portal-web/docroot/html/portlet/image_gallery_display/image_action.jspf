@@ -14,14 +14,26 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_library/action/download.jspf" %>
+<c:choose>
+	<c:when test="<%= (fileShortcut == null) %>">
 
-<%@ include file="/html/portlet/document_library/action/view.jspf" %>
+		<%
+		for (MenuItem menuItem : dlViewFileVersionDisplayContext.getMenuItems()) {
+		%>
 
-<%@ include file="/html/portlet/document_library/action/view_original.jspf" %>
+			<liferay-ui:menu-item menuItem="<%= menuItem %>" />
 
-<%@ include file="/html/portlet/document_library/action/edit.jspf" %>
+		<%
+		}
+		%>
 
-<%@ include file="/html/portlet/document_library/action/permissions.jspf" %>
-
-<%@ include file="/html/portlet/document_library/action/delete.jspf" %>
+	</c:when>
+	<c:otherwise>
+		<%@ include file="/html/portlet/document_library/action/download.jspf" %>
+		<%@ include file="/html/portlet/document_library/action/view.jspf" %>
+		<%@ include file="/html/portlet/document_library/action/view_original.jspf" %>
+		<%@ include file="/html/portlet/document_library/action/edit.jspf" %>
+		<%@ include file="/html/portlet/document_library/action/permissions.jspf" %>
+		<%@ include file="/html/portlet/document_library/action/delete.jspf" %>
+	</c:otherwise>
+</c:choose>

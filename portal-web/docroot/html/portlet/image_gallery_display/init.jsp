@@ -17,6 +17,7 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%@ page import="com.liferay.portal.kernel.search.Document" %><%@
+page import="com.liferay.portal.kernel.servlet.taglib.ui.MenuItem" %><%@
 page import="com.liferay.portlet.documentlibrary.DLPortletInstanceSettings" %><%@
 page import="com.liferay.portlet.documentlibrary.DLSettings" %><%@
 page import="com.liferay.portlet.documentlibrary.NoSuchFolderException" %><%@

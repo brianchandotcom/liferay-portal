@@ -80,6 +80,8 @@ MBThread thread = messageDisplay.getThread();
 
 <aui:script>
 	function <portlet:namespace />addAnswerFlag(messageId) {
+		var $ = AUI.$;
+
 		Liferay.Service(
 			'/mbmessage/update-answer',
 			{
@@ -89,21 +91,17 @@ MBThread thread = messageDisplay.getThread();
 			}
 		);
 
-		var addAnswerFlagDiv = AUI.$('#<portlet:namespace />addAnswerFlagDiv').clone();
-
-		var html = addAnswerFlagDiv.html();
+		var html = $('#<portlet:namespace />addAnswerFlagDiv').html();
 
 		html = '<div class="answer" id="<portlet:namespace />deleteAnswerFlag_' + messageId + '">' + html + '</div>';
 		html = html.replace(/@MESSAGE_ID@/g, messageId);
 
-		var tags = AUI.$('#<portlet:namespace />message_' + messageId).find('div.tags');
+		var tags = $('#<portlet:namespace />message_' + messageId).find('div.tags');
 
-		if (tags) {
-			tags.html(html);
-		}
+		tags.html(html);
 
-		AUI.$('#<portlet:namespace />addAnswerFlag_' + messageId).addClass('hide');
-		AUI.$('#<portlet:namespace />deleteAnswerFlag_' + messageId).removeClass('hide');
+		$('#<portlet:namespace />addAnswerFlag_' + messageId).addClass('hide');
+		$('#<portlet:namespace />deleteAnswerFlag_' + messageId).removeClass('hide');
 	}
 
 	function <portlet:namespace />addQuickReply(cmd, messageId) {
@@ -111,7 +109,9 @@ MBThread thread = messageDisplay.getThread();
 
 		if (cmd == 'reply') {
 			addQuickReplyDiv.removeClass('hide');
+
 			addQuickReplyDiv.find('#<portlet:namespace />parentMessageId').val(messageId);
+
 			addQuickReplyDiv.find('textarea').focus();
 		}
 		else {
@@ -120,6 +120,8 @@ MBThread thread = messageDisplay.getThread();
 	}
 
 	function <portlet:namespace />deleteAnswerFlag(messageId) {
+		var $ = AUI.$;
+
 		Liferay.Service(
 			'/mbmessage/update-answer',
 			{
@@ -129,22 +131,18 @@ MBThread thread = messageDisplay.getThread();
 			}
 		);
 
-		var deleteAnswerFlagDiv = AUI.$('#<portlet:namespace />deleteAnswerFlagDiv').clone();
-
-		var html = deleteAnswerFlagDiv.html();
+		var html = $('#<portlet:namespace />deleteAnswerFlagDiv').html();
 
 		html = '<li id="<portlet:namespace />addAnswerFlag_' + messageId + '">' + html + '</li>';
 		html = html.replace(/@MESSAGE_ID@/g, messageId);
 
-		var editControls = AUI.$('#<portlet:namespace />message_' + messageId).find('ul.edit-controls');
+		var editControls = $('#<portlet:namespace />message_' + messageId).find('ul.edit-controls');
 
-		if (editControls.length) {
-			editControls.prepend(html);
-		}
+		editControls.prepend(html);
 
-		AUI.$('#<portlet:namespace />deleteAnswerFlag_' + messageId).addClass('hide');
+		$('#<portlet:namespace />deleteAnswerFlag_' + messageId).addClass('hide');
 
-		AUI.$('#<portlet:namespace />addAnswerFlag_' + messageId).removeClass('hide');
+		$('#<portlet:namespace />addAnswerFlag_' + messageId).removeClass('hide');
 	}
 
 	<c:if test="<%= thread.getRootMessageId() != message.getMessageId() %>">

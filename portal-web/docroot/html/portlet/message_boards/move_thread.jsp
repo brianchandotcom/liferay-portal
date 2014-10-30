@@ -116,8 +116,8 @@ MBUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "move-thread"), currentURL);
 %>
 
-<aui:script>
-	AUI.$('#<portlet:namespace />selectCategoryButton').on(
+<aui:script sandbox="<%= true %>">
+	$('#<portlet:namespace />selectCategoryButton').on(
 		'click',
 		function(event) {
 			Liferay.Util.selectEntity(
@@ -132,11 +132,11 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "move-th
 					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/message_boards/select_category" /><portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getParentCategoryId()) %>" /></portlet:renderURL>'
 				},
 				function(event) {
-					var form = AUI.$(document.<portlet:namespace />fm);
+					var form = $(document.<portlet:namespace />fm);
 
 					form.fm('mbCategoryId').val(event.categoryid);
 
-					form.fm('categoryName').val(AUI._.unescape(event.name));
+					form.fm('categoryName').val(_.unescape(event.name));
 				}
 			);
 		}

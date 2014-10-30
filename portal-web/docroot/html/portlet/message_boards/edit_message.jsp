@@ -337,14 +337,14 @@ else {
 						for (int i = 0; i < existingAttachmentsFileEntries.size(); i++) {
 							FileEntry fileEntry = existingAttachmentsFileEntries.get(i);
 
-							String taglibDeleteAttachment = "javascript:;";
+							String taglibDeleteAttachment = "javascript:" + renderResponse.getNamespace() + "trashAttachment(" + (i + 1) + ", '" + Constants.MOVE_TO_TRASH + "');";
 
 							if (!TrashUtil.isTrashEnabled(scopeGroupId)) {
 								taglibDeleteAttachment = "javascript:" + renderResponse.getNamespace() + "deleteAttachment(" + (i + 1) + ");";
 							}
 						%>
 
-							<li class="message-attachment" data-index="<%= i + 1 %>">
+							<li class="message-attachment">
 								<span id="<portlet:namespace />existingFile<%= i + 1 %>">
 									<aui:input id='<%= "existingPath" + (i + 1) %>' name='<%= "existingPath" + (i + 1) %>' type="hidden" value="<%= fileEntry.getFileEntryId() %>" />
 
@@ -364,7 +364,6 @@ else {
 								<aui:input cssClass="hide" label="" name='<%= "msgFile" + (i + 1) %>' size="70" title="message-attachment" type="file" />
 
 								<liferay-ui:icon-delete
-									cssClass="lfr-message-board-attachment-delete"
 									id='<%= "removeExisting" + (i + 1) %>'
 									label="<%= true %>"
 									message='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "remove" : "delete" %>'
@@ -519,13 +518,13 @@ else {
 	}
 
 	function <portlet:namespace />previewMessage() {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
 		<c:if test="<%= ((message != null) && !message.isDraft()) %>">
 			if (!confirm('<liferay-ui:message key="in-order-to-preview-your-changes,-the-message-will-be-saved-as-a-draft-and-other-users-may-not-be-able-to-see-it" />')) {
 				return false;
 			}
 		</c:if>
+
+		var form = AUI.$(document.<portlet:namespace />fm);
 
 		form.fm('body').val(<portlet:namespace />getHTML());
 		form.fm('preview').val('true');
@@ -550,14 +549,13 @@ else {
 	<c:choose>
 		<c:when test="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>">
 			function <portlet:namespace />trashAttachment(index, action) {
-				var existingPath = AUI.$('#<portlet:namespace />existingPath' + index);
-				var removeExisting = AUI.$('#<portlet:namespace />removeExisting' + index);
-				var undoFile = AUI.$('#<portlet:namespace />undoFile' + index);
-				var undoPath = AUI.$('#<portlet:namespace />undoPath' + index);
+				var $ = AUI.$;
 
-				var moveToTrashConstant = '<%= Constants.MOVE_TO_TRASH %>';
+				var existingPath = $('#<portlet:namespace />existingPath' + index);
+				var removeExisting = $('#<portlet:namespace />removeExisting' + index);
+				var undoFile = $('#<portlet:namespace />undoFile' + index);
 
-				if (action == moveToTrashConstant) {
+				if (action == '<%= Constants.MOVE_TO_TRASH %>') {
 					removeExisting.addClass('hide');
 					undoFile.removeClass('hide');
 
@@ -567,39 +565,24 @@ else {
 					removeExisting.removeClass('hide');
 					undoFile.addClass('hide');
 
+					var undoPath = $('#<portlet:namespace />undoPath' + index);
+
 					existingPath.val(undoPath.val());
 				}
 			}
 		</c:when>
 		<c:otherwise>
 			function <portlet:namespace />deleteAttachment(index) {
-				var button = AUI.$('#<portlet:namespace />removeExisting' + index);
-				var span = AUI.$('#<portlet:namespace />existingFile' + index);
-				var file = AUI.$('#<portlet:namespace />msgFile' + index);
+				var $ = AUI.$;
 
-				button.remove();
+				$('#<portlet:namespace />removeExisting' + index).remove();
+				$('#<portlet:namespace />existingFile' + index).remove();
 
-				span.remove();
+				var file = $('#<portlet:namespace />msgFile' + index);
 
-				file.closest('.field').removeClass('hide');
+				file.removeClass('hide');
 				file.closest('li').addClass('deleted-input');
 			}
 		</c:otherwise>
 	</c:choose>
 </aui:script>
-
-<c:if test="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>">
-	<aui:script sandbox="<%= true %>">
-		$('.message-attachments').on(
-			'click',
-			'.lfr-message-board-attachment-delete',
-			function(event) {
-				var moveToTrashConstant = '<%= Constants.MOVE_TO_TRASH %>';
-
-				var index = $(event.target).closest('.message-attachment').data('index');
-
-				<portlet:namespace />trashAttachment(index, moveToTrashConstant);
-			}
-		);
-	</aui:script>
-</c:if>

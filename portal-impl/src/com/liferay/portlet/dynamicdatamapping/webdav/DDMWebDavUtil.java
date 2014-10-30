@@ -65,10 +65,10 @@ public class DDMWebDavUtil {
 		if (type.equals(TYPE_STRUCTURES)) {
 			HttpServletRequest request = webDavRequest.getHttpServletRequest();
 
-			String xsd = StringUtil.read(request.getInputStream());
+			String definition = StringUtil.read(request.getInputStream());
 
 			String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(
-				xsd);
+				definition);
 
 			Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
@@ -81,7 +81,7 @@ public class DDMWebDavUtil {
 
 			DDMStructureLocalServiceUtil.addStructure(
 				webDavRequest.getUserId(), webDavRequest.getGroupId(),
-				classNameId, nameMap, null, xsd, serviceContext);
+				classNameId, nameMap, null, definition, serviceContext);
 
 			return HttpServletResponse.SC_CREATED;
 		}
@@ -234,13 +234,13 @@ public class DDMWebDavUtil {
 				HttpServletRequest request =
 					webDAVRequest.getHttpServletRequest();
 
-				String xsd = StringUtil.read(request.getInputStream());
+				String definition = StringUtil.read(request.getInputStream());
 
 				DDMStructureServiceUtil.updateStructure(
 					structure.getGroupId(), structure.getParentStructureId(),
 					structure.getClassNameId(), structure.getStructureKey(),
-					structure.getNameMap(), structure.getDescriptionMap(), xsd,
-					new ServiceContext());
+					structure.getNameMap(), structure.getDescriptionMap(),
+					definition, new ServiceContext());
 
 				return HttpServletResponse.SC_CREATED;
 			}

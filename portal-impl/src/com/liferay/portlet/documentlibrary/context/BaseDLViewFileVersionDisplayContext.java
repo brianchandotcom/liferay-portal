@@ -140,23 +140,7 @@ public abstract class BaseDLViewFileVersionDisplayContext
 		List<MenuItem> menuItems = new ArrayList<>();
 
 		if (_isShowActions()) {
-			addDownloadMenuItem(menuItems);
-
-			addOpenInMsOfficeMenuItem(menuItems);
-
-			addEditMenuItem(menuItems);
-
-			addMoveMenuItem(menuItems);
-
-			addCheckoutMenuItem(menuItems);
-
-			addCheckinMenuItem(menuItems);
-
-			addCancelCheckoutMenuItem(menuItems);
-
-			addPermissionsMenuItem(menuItems);
-
-			addDeleteMenuItem(menuItems);
+			buildMenuItems(menuItems);
 		}
 
 		return menuItems;
@@ -516,6 +500,9 @@ public abstract class BaseDLViewFileVersionDisplayContext
 		urlMenuItem.setMethod("get");
 		urlMenuItem.setUseDialog(true);
 	}
+
+	protected abstract void buildMenuItems(List<MenuItem> menuItems)
+		throws PortalException;
 
 	protected String getNamespace() {
 		LiferayPortletResponse liferayPortletResponse =

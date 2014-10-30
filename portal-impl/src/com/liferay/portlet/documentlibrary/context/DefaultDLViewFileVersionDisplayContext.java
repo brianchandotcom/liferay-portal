@@ -16,6 +16,9 @@ package com.liferay.portlet.documentlibrary.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
+
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,6 +35,29 @@ public class DefaultDLViewFileVersionDisplayContext
 		throws PortalException {
 
 		super(request, response, fileVersion);
+	}
+
+	@Override
+	protected void buildMenuItems(List<MenuItem> menuItems)
+		throws PortalException {
+
+		addDownloadMenuItem(menuItems);
+
+		addOpenInMsOfficeMenuItem(menuItems);
+
+		addEditMenuItem(menuItems);
+
+		addMoveMenuItem(menuItems);
+
+		addCheckoutMenuItem(menuItems);
+
+		addCheckinMenuItem(menuItems);
+
+		addCancelCheckoutMenuItem(menuItems);
+
+		addPermissionsMenuItem(menuItems);
+
+		addDeleteMenuItem(menuItems);
 	}
 
 }

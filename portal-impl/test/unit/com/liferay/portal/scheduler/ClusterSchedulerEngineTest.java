@@ -120,25 +120,17 @@ public class ClusterSchedulerEngineTest {
 		schedulerEngineHelperUtil.setSchedulerEngineHelper(
 			schedulerEngineHelperImpl);
 
-		for (Class<?> clazz :
-				ClusterSchedulerEngine.class.getDeclaredClasses()) {
+		Class<? extends ClusterInvokeAcceptor> clusterInvokeAcceptorClass =
+			(Class<? extends ClusterInvokeAcceptor>)Class.forName(
+				ClusterSchedulerEngine.class.getName() +
+					"$SchedulerClusterInvokeAcceptor");
 
-			if (!clazz.getName().contains("SchedulerClusterInvokeAcceptor")) {
-				continue;
-			}
+		Constructor<? extends ClusterInvokeAcceptor> constructor =
+			clusterInvokeAcceptorClass.getDeclaredConstructor();
 
-			Class<? extends ClusterInvokeAcceptor> clusterInvokeAcceptorClass =
-				(Class<? extends ClusterInvokeAcceptor>)clazz;
+		constructor.setAccessible(true);
 
-			Constructor<? extends ClusterInvokeAcceptor> constructor =
-				clusterInvokeAcceptorClass.getDeclaredConstructor();
-
-			constructor.setAccessible(true);
-
-			_clusterInvokeAcceptor = constructor.newInstance();
-
-			break;
-		}
+		_clusterInvokeAcceptor = constructor.newInstance();
 	}
 
 	@AdviseWith(

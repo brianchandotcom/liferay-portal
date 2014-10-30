@@ -535,18 +535,17 @@ public class LocalizationImpl implements Localization {
 		for (Locale locale : locales) {
 			String languageId = LocaleUtil.toLanguageId(locale);
 
-			String localizedParameter = getLocalizedName(parameter, languageId);
+			String localizedKey = getPreferencesKey(parameter, languageId);
 
-			String prefixedLocalizedParameter = localizedParameter;
+			String prefixedLocalizedKey = localizedKey;
 
 			if (Validator.isNotNull(prefix)) {
-				prefixedLocalizedParameter =
-					prefix + "--" + localizedParameter + "--";
+				prefixedLocalizedKey = prefix + "--" + localizedKey + "--";
 			}
 
 			String value = ParamUtil.getString(
-				portletRequest, prefixedLocalizedParameter,
-				preferences.getValue(localizedParameter, null));
+				portletRequest, prefixedLocalizedKey,
+				preferences.getValue(localizedKey, null));
 
 			if (value != null) {
 				xml = updateLocalization(xml, parameter, value, languageId);

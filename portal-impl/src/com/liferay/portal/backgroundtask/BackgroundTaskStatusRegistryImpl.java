@@ -37,20 +37,20 @@ public class BackgroundTaskStatusRegistryImpl
 
 	@Override
 	public BackgroundTaskStatus getBackgroundTaskStatus(long backgroundTaskId) {
-		if (ClusterMasterExecutorUtil.isMaster()) {
-			Lock lock = _readWriteLock.readLock();
-
-			lock.lock();
-
-			try {
-				return _backgroundTaskStatuses.get(backgroundTaskId);
-			}
-			finally {
-				lock.unlock();
-			}
+		if (!ClusterMasterExecutorUtil.isMaster()) {
+			return getBackgroundTaskStatusOnMaster(backgroundTaskId);
 		}
 
-		return executeGetBackgroundTaskStatusOnMaster(backgroundTaskId);
+		Lock lock = _readWriteLock.readLock();
+
+		lock.lock();
+
+		try {
+			return _backgroundTaskStatuses.get(backgroundTaskId);
+		}
+		finally {
+			lock.unlock();
+		}
 	}
 
 	@Override
@@ -98,7 +98,7 @@ public class BackgroundTaskStatusRegistryImpl
 		}
 	}
 
-	protected BackgroundTaskStatus executeGetBackgroundTaskStatusOnMaster(
+	protected BackgroundTaskStatus getBackgroundTaskStatusOnMaster(
 		long backgroundTaskId) {
 
 		try {
@@ -114,7 +114,7 @@ public class BackgroundTaskStatusRegistryImpl
 		}
 		catch (Exception e) {
 			if (_log.isErrorEnabled()) {
-				_log.error(e);
+				_log.error("Error retrieving status from master node", e);
 			}
 		}
 

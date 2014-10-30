@@ -39,16 +39,6 @@ public class DDMStructureTestHelper {
 		_group = group;
 	}
 
-	public DDMStructure addStructure(Class<?> testClass) throws Exception {
-		String definition = DDLRecordTestUtil.readText(
-			testClass, "test-structure.xsd");
-
-		return addStructure(
-			PortalUtil.getClassNameId(DDLRecordSet.class), null,
-			"Test Structure", definition, StorageType.XML.getValue(),
-			DDMStructureConstants.TYPE_DEFAULT);
-	}
-
 	public DDMStructure addStructure(
 			long parentStructureId, long classNameId, String structureKey,
 			String name, String definition, String storageType, int type)
@@ -73,6 +63,30 @@ public class DDMStructureTestHelper {
 		return addStructure(
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, classNameId,
 			structureKey, name, definition, storageType, type);
+	}
+
+	public DDMStructure addStructure(String definition, String storageType)
+		throws Exception {
+
+		return addStructure(
+			PortalUtil.getClassNameId(DDLRecordSet.class), null,
+			"Test Structure", definition, storageType,
+			DDMStructureConstants.TYPE_DEFAULT);
+	}
+
+	public DDMStructure addStructureJson(String definition) throws Exception {
+		return addStructure(definition, StorageType.JSON.getValue());
+	}
+
+	public DDMStructure addStructureXml(String definition) throws Exception {
+		return addStructure(definition, StorageType.XML.getValue());
+	}
+
+	public DDMStructure addStructureXsd(Class<?> testClass) throws Exception {
+		String definition = DDLRecordTestUtil.readText(
+			testClass, "test-structure.xsd");
+
+		return addStructureXml(definition);
 	}
 
 	private final Group _group;

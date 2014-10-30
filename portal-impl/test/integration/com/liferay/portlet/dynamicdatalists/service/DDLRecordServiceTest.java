@@ -14,7 +14,11 @@
 
 package com.liferay.portlet.dynamicdatalists.service;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.Sync;
@@ -29,11 +33,26 @@ import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordSetTestHelper;
 import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordTestHelper;
 import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordTestUtil;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONSerializerUtil;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDSerializerUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
+import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
+import com.liferay.portlet.dynamicdatamapping.model.Value;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
+
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Marcellus Tavares
@@ -51,17 +70,136 @@ public class DDLRecordServiceTest extends BaseDDLServiceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		DDLRecordSetTestHelper ddlRecordSetTestHelper =
-			new DDLRecordSetTestHelper(group);
-		DDLRecordSet ddlRecordSet = ddlRecordSetTestHelper.addRecordSet(
-			ddmStructureTestHelper.addStructure(this.getClass()));
+		_ddlRecordSetTestHelper = new DDLRecordSetTestHelper(group);
+	}
 
-		_ddlRecordTestHelper = new DDLRecordTestHelper(ddlRecordSet, group);
+	@Test
+	public void testAddRecordWithLocalizedTextField() throws Exception {
+		DDMForm ddmForm = createDDMForm();
+
+		ddmForm.addDDMFormField(createTextDDMFormField("Name", true, false));
+
+		DDMFormValues expectedDDMFormValues = createDDMFormValues(ddmForm);
+
+		expectedDDMFormValues.addDDMFormFieldValue(
+			createLocalizedTextDDMFormFieldValue("Name", "Joe Bloggs"));
+
+		assertDDMFormValues(ddmForm, expectedDDMFormValues);
+	}
+
+	@Test
+	public void testAddRecordWithNestedFieldAndSeparatorAsParentField()
+		throws Exception {
+
+		DDMForm ddmForm = createDDMForm();
+
+		DDMFormField separatorDDMFormField = createSeparatorDDMFormField(
+			"Separator");
+
+		separatorDDMFormField.addNestedDDMFormField(
+			createTextDDMFormField("Name", true, false));
+
+		ddmForm.addDDMFormField(separatorDDMFormField);
+
+		DDMFormValues expectedDDMFormValues = createDDMFormValues(ddmForm);
+
+		DDMFormFieldValue separatorDDMFormFieldValue =
+			createSeparatorDDMFormFieldValue("Separator");
+
+		separatorDDMFormFieldValue.addNestedDDMFormFieldValue(
+			createLocalizedTextDDMFormFieldValue("Name", "Joe Bloggs"));
+
+		expectedDDMFormValues.addDDMFormFieldValue(separatorDDMFormFieldValue);
+
+		assertDDMFormValues(ddmForm, expectedDDMFormValues);
+	}
+
+	@Test
+	public void testAddRecordWithNestedFieldsAndTextAsParentField()
+		throws Exception {
+
+		DDMForm ddmForm = createDDMForm();
+
+		DDMFormField parentDDMFormField = createTextDDMFormField(
+			"Name", true, true);
+
+		parentDDMFormField.addNestedDDMFormField(
+			createTextDDMFormField("Phone", false, true));
+
+		ddmForm.addDDMFormField(parentDDMFormField);
+
+		DDMFormValues expectedDDMFormValues = createDDMFormValues(ddmForm);
+
+		DDMFormFieldValue scottDDMFormFieldValue =
+			createLocalizedTextDDMFormFieldValue("Name", "Scott Joplin");
+
+		scottDDMFormFieldValue.addNestedDDMFormFieldValue(
+			createUnlocalizedTextDDMFormFieldValue("Phone", "12"));
+
+		scottDDMFormFieldValue.addNestedDDMFormFieldValue(
+			createUnlocalizedTextDDMFormFieldValue("Phone", "34"));
+
+		expectedDDMFormValues.addDDMFormFieldValue(scottDDMFormFieldValue);
+
+		DDMFormFieldValue louisDDMFormFieldValue =
+			createLocalizedTextDDMFormFieldValue("Name", "Louis Armstrong");
+
+		louisDDMFormFieldValue.addNestedDDMFormFieldValue(
+			createUnlocalizedTextDDMFormFieldValue("Phone", "56"));
+
+		louisDDMFormFieldValue.addNestedDDMFormFieldValue(
+			createUnlocalizedTextDDMFormFieldValue("Phone", "78"));
+
+		expectedDDMFormValues.addDDMFormFieldValue(louisDDMFormFieldValue);
+
+		assertDDMFormValues(ddmForm, expectedDDMFormValues);
+	}
+
+	@Test
+	public void testAddRecordWithRepeatableTextField() throws Exception {
+		DDMForm ddmForm = createDDMForm();
+
+		ddmForm.addDDMFormField(createTextDDMFormField("Name", true, true));
+
+		DDMFormValues expectedDDMFormValues = createDDMFormValues(ddmForm);
+
+		expectedDDMFormValues.addDDMFormFieldValue(
+			createLocalizedTextDDMFormFieldValue("Name", "Joe Bloggs I"));
+
+		expectedDDMFormValues.addDDMFormFieldValue(
+			createLocalizedTextDDMFormFieldValue("Name", "Joe Bloggs II"));
+
+		expectedDDMFormValues.addDDMFormFieldValue(
+			createLocalizedTextDDMFormFieldValue("Name", "Joe Bloggs III"));
+
+		assertDDMFormValues(ddmForm, expectedDDMFormValues);
+	}
+
+	@Test
+	public void testAddRecordWithUnlocalizedAndUnrepeatableTextField()
+		throws Exception {
+
+		DDMForm ddmForm = createDDMForm();
+
+		ddmForm.addDDMFormField(createTextDDMFormField("Name", false, false));
+
+		DDMFormValues expectedDDMFormValues = createDDMFormValues(ddmForm);
+
+		expectedDDMFormValues.addDDMFormFieldValue(
+			createUnlocalizedTextDDMFormFieldValue("Name", "Joe Bloggs"));
+
+		assertDDMFormValues(ddmForm, expectedDDMFormValues);
 	}
 
 	@Test
 	public void testPublishRecordDraftWithoutChanges() throws Exception {
-		DDLRecord record = _ddlRecordTestHelper.addRecord(
+		DDLRecordSet ddlRecordSet = _ddlRecordSetTestHelper.addRecordSet(
+			ddmStructureTestHelper.addStructureXsd(this.getClass()));
+
+		DDLRecordTestHelper ddlRecordTestHelper = new DDLRecordTestHelper(
+			ddlRecordSet, group);
+
+		DDLRecord record = ddlRecordTestHelper.addRecord(
 			"Joe Bloggs", "Simple description",
 			WorkflowConstants.ACTION_SAVE_DRAFT);
 
@@ -83,6 +221,124 @@ public class DDLRecordServiceTest extends BaseDDLServiceTestCase {
 		Assert.assertTrue(recordVersion.isApproved());
 	}
 
+	protected DDLRecordSet addRecordSet(DDMForm ddmForm) throws Exception {
+		String definition = DDMFormXSDSerializerUtil.serialize(ddmForm);
+
+		DDMStructure ddmStructure = ddmStructureTestHelper.addStructureJson(
+			definition);
+
+		return _ddlRecordSetTestHelper.addRecordSet(ddmStructure);
+	}
+
+	protected void assertDDMFormValues(
+			DDMForm ddmForm, DDMFormValues expectedDDMFormValues)
+		throws Exception, PortalException {
+
+		DDLRecordSet ddlRecordSet = addRecordSet(ddmForm);
+
+		DDLRecordTestHelper ddlRecordTestHelper = new DDLRecordTestHelper(
+			ddlRecordSet, group);
+
+		DDLRecord record = ddlRecordTestHelper.addRecord(
+			expectedDDMFormValues, WorkflowConstants.ACTION_PUBLISH);
+
+		DDLRecord actualRecord = DDLRecordLocalServiceUtil.getRecord(
+			record.getRecordId());
+
+		DDMFormValues actualDDMFormValues = actualRecord.getDDMFormValues();
+
+		assertEquals(expectedDDMFormValues, actualDDMFormValues);
+	}
+
+	protected void assertEquals(
+			DDMFormValues expectedDDMFormValues,
+			DDMFormValues actualDDMFormValues)
+		throws Exception {
+
+		String expectedSerializedDDMFormValues =
+			DDMFormValuesJSONSerializerUtil.serialize(expectedDDMFormValues);
+
+		String actualSerializedDDMFormValues =
+			DDMFormValuesJSONSerializerUtil.serialize(actualDDMFormValues);
+
+		JSONAssert.assertEquals(
+			expectedSerializedDDMFormValues, actualSerializedDDMFormValues,
+			false);
+	}
+
+	protected DDMForm createDDMForm() {
+		DDMForm ddmForm = new DDMForm();
+
+		Set<Locale> availableLocales = new HashSet<Locale>();
+
+		availableLocales.add(LocaleUtil.US);
+
+		ddmForm.setAvailableLocales(availableLocales);
+		ddmForm.setDefaultLocale(LocaleUtil.US);
+
+		return ddmForm;
+	}
+
+	protected DDMFormValues createDDMFormValues(DDMForm ddmForm) {
+		return DDLRecordTestHelper.createDDMFormValues(ddmForm);
+	}
+
+	protected DDMFormFieldValue createLocalizedTextDDMFormFieldValue(
+		String name, String enValue) {
+
+		return DDLRecordTestHelper.createLocalizedTextDDMFormFieldValue(
+			name, enValue);
+	}
+
+	protected DDMFormField createSeparatorDDMFormField(String name) {
+		DDMFormField ddmFormField = new DDMFormField(name, "separator");
+
+		ddmFormField.setDataType(StringPool.BLANK);
+
+		LocalizedValue label = ddmFormField.getLabel();
+
+		label.addString(LocaleUtil.US, name);
+
+		return ddmFormField;
+	}
+
+	protected DDMFormFieldValue createSeparatorDDMFormFieldValue(String name) {
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+		ddmFormFieldValue.setName(name);
+		ddmFormFieldValue.setInstanceId(StringUtil.randomString());
+
+		return ddmFormFieldValue;
+	}
+
+	protected DDMFormField createTextDDMFormField(
+		String name, boolean localizable, boolean repeatable) {
+
+		DDMFormField ddmFormField = new DDMFormField(name, "text");
+
+		ddmFormField.setDataType("string");
+		ddmFormField.setLocalizable(localizable);
+		ddmFormField.setRepeatable(repeatable);
+
+		LocalizedValue label = ddmFormField.getLabel();
+
+		label.addString(LocaleUtil.US, name);
+
+		return ddmFormField;
+	}
+
+	protected DDMFormFieldValue createTextDDMFormFieldValue(
+		String name, Value value) {
+
+		return DDLRecordTestHelper.createTextDDMFormFieldValue(name, value);
+	}
+
+	protected DDMFormFieldValue createUnlocalizedTextDDMFormFieldValue(
+		String name, String value) {
+
+		return createTextDDMFormFieldValue(name, new UnlocalizedValue(value));
+	}
+
 	protected DDLRecord updateRecord(
 			long recordId, DDMFormValues ddmFormValues, int workflowAction)
 		throws Exception {
@@ -96,6 +352,6 @@ public class DDLRecordServiceTest extends BaseDDLServiceTestCase {
 			serviceContext);
 	}
 
-	private DDLRecordTestHelper _ddlRecordTestHelper;
+	private DDLRecordSetTestHelper _ddlRecordSetTestHelper;
 
 }

@@ -63,7 +63,7 @@ public class DDLRecordSearchTest {
 		DDMStructureTestHelper ddmStructureTestHelper =
 			new DDMStructureTestHelper(group);
 		DDLRecordSet ddlRecordSet = ddlRecordSetTestHelper.addRecordSet(
-			ddmStructureTestHelper.addStructure(this.getClass()));
+			ddmStructureTestHelper.addStructureXsd(this.getClass()));
 
 		_ddlRecordTestHelper = new DDLRecordTestHelper(ddlRecordSet, group);
 		_group = group;

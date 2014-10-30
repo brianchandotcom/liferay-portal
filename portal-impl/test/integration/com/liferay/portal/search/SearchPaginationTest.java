@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.model.User;
@@ -212,6 +213,7 @@ public class SearchPaginationTest {
 
 		searchContext.setQueryConfig(queryConfig);
 
+		searchContext.setSorts(new Sort(Field.USER_ID, true));
 		searchContext.setStart(start);
 
 		return indexer.search(searchContext);

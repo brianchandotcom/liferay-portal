@@ -6262,9 +6262,14 @@ public class JournalArticleLocalServiceImpl
 
 		for (Element dynamicContentElement :
 				dynamicElementElement.elements("dynamic-content")) {
+			
+			String value = dynamicContentElement.getText();
+			
+			if (Validator.isNull(value)) {
+				continue;
+			}
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				dynamicContentElement.getText());
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
 
 			String uuid = jsonObject.getString("uuid");
 			long groupId = jsonObject.getLong("groupId");

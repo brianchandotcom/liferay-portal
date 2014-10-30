@@ -103,7 +103,7 @@ public abstract class BasePrototypePropagationTestCase {
 		doTestPortletPreferencesPropagation(true);
 	}
 
-	protected String addJournalContentPortletToLayout(
+	protected String addPortletToLayout(
 			long userId, Layout layout, JournalArticle journalArticle,
 			String columnId)
 		throws Exception {
@@ -119,8 +119,7 @@ public abstract class BasePrototypePropagationTestCase {
 			"showAvailableLocales", new String[] {Boolean.TRUE.toString()});
 
 		return LayoutTestUtil.addPortletToLayout(
-			userId, layout, PortletKeys.JOURNAL_CONTENT, columnId,
-			parameterMap);
+			userId, layout, PortletKeys.TEST, columnId, parameterMap);
 	}
 
 	protected abstract void doSetUp() throws Exception;
@@ -138,7 +137,7 @@ public abstract class BasePrototypePropagationTestCase {
 		LayoutTestUtil.updateLayoutColumnCustomizable(
 			prototypeLayout, "column-1", true);
 
-		addJournalContentPortletToLayout(
+		addPortletToLayout(
 			TestPropsValues.getUserId(), prototypeLayout, globalJournalArticle,
 			"column-1");
 
@@ -211,13 +210,12 @@ public abstract class BasePrototypePropagationTestCase {
 		}
 
 		LayoutTestUtil.updateLayoutPortletPreferences(
-			prototypeLayout, journalContentPortletId, portletPreferencesMap);
+			prototypeLayout, portletId, portletPreferencesMap);
 
 		layout = propagateChanges(layout);
 
 		PortletPreferences portletPreferences =
-			LayoutTestUtil.getPortletPreferences(
-				layout, journalContentPortletId);
+			LayoutTestUtil.getPortletPreferences(layout, portletId);
 
 		if (linkEnabled) {
 			if (globalScope) {
@@ -270,7 +268,7 @@ public abstract class BasePrototypePropagationTestCase {
 	protected Group group;
 	protected String initialLayoutTemplateId = "2_2_columns";
 	protected JournalArticle journalArticle;
-	protected String journalContentPortletId;
+	protected String portletId;
 	protected Layout layout;
 	protected LayoutPrototype layoutPrototype;
 	protected Layout layoutPrototypeLayout;

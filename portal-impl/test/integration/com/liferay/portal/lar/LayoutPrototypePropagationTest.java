@@ -42,10 +42,9 @@ public class LayoutPrototypePropagationTest
 
 		journalArticle = globalJournalArticle;
 
-		journalContentPortletId =
-			addJournalContentPortletToLayout(
-				TestPropsValues.getUserId(), layoutPrototypeLayout,
-				journalArticle, "column-1");
+		portletId = addPortletToLayout(
+			TestPropsValues.getUserId(), layoutPrototypeLayout, journalArticle,
+			"column-1");
 
 		layout = LayoutTestUtil.addLayout(group, true, layoutPrototype, true);
 

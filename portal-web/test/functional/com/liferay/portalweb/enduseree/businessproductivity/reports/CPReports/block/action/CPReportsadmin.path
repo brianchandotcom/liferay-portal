@@ -1,0 +1,166 @@
+<html>
+<head>
+<title>CPReportsadmin</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPReportsadmin</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPReportsadmin</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORT_PDF_PNG</td>
+	<td>portal/screenshots/reports/report_pdf.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS_WRENCH_ICON</td>
+	<td>//a[@title='Options']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_REPORTS</td>
+	<td>//li[contains(@id,'reportsportlet_tabs')]/a[contains(text(),'Reports')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_DEFINITIONS</td>
+	<td>//li[contains(@id,'reportsportlet_tabs')]/a[contains(text(),'Definitions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SOURCES</td>
+	<td>//li[contains(@id,'reportsportlet_tabs')]/a[contains(text(),'Sources')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--INFO_MESSAGE-->
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--REPORTS_ENTRY_TABLE-->
+<tr>
+	<td>REPORTS_ENTRY_TABLE_DEFINITION_NAME</td>
+	<td>//tr[contains(.,'${key_reportsDefinitionName}')]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORTS_ENTRY_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_reportsDefinitionName}')]/td[4]/div/a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORTS_ENTRY_TABLE_ACTIONS_1</td>
+	<td>xpath=(//tr/td[4]/div/a[@title='Actions'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--REPORTS_ENTRY_MENULIST-->
+<tr>
+	<td>REPORTS_ENTRY_MENULIST_DELETE</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DEFINITIONS-->
+<tr>
+	<td>DEFINITIONS_ADD_REPORT_DEFINITION_BUTTON</td>
+	<td>//button[@class='btn' and contains(.,'Add Report Definition')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DEFINITIONS_DEFINITION_TABLE-->
+<tr>
+	<td>DEFINITIONS_DEFINITION_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_reportsDefinitionName}')]/td[4]/div/a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITIONS_DEFINITION_TABLE_ACTIONS_1</td>
+	<td>xpath=(//tr/td[4]/div/a[@title='Actions'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DEFINITIONS_DEFINITION_MENULIST-->
+<tr>
+	<td>DEFINITIONS_DEFINITION_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITIONS_DEFINITION_MENULIST_ADD_REPORT</td>
+	<td>//a[@role='menuitem' and contains(.,'Add Report')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITIONS_DEFINITION_MENULIST_ADD_SCHEDULE</td>
+	<td>//a[@role='menuitem' and contains(.,'Add Schedule')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITIONS_DEFINITION_MENULIST_DELETE</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

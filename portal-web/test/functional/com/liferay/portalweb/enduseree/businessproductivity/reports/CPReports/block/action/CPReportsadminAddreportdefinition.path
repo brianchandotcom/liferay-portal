@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>CPReportsadminAddreportdefinition</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPReportsadminAddreportdefinition</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPReportsadminAddreportdefinition</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITION_NAME_FIELD</td>
+	<td>//input[contains(@id,'reportsportlet_name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITION_DESCRIPTION_FIELD</td>
+	<td>//textarea[contains(@id,'reportsportlet_description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATA_SOURCE_NAME_SELECT</td>
+	<td>//select[contains(@id,'reportsportlet_sourceId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_FILE_UPLOAD</td>
+	<td>//input[contains(@id,'reportsportlet_templateReport')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[@class='btn btn-primary' and contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//button[@class='btn btn-cancel' and contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

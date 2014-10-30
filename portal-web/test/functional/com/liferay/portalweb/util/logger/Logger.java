@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portalweb.portal.BaseTestCase;
-import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 import com.liferay.portalweb.util.TestPropsValues;
+import com.liferay.portalweb.util.liferayselenium.LiferaySelenium;
 
 import java.io.File;
 

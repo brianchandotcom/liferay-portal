@@ -14,7 +14,7 @@
 
 package com.liferay.portalweb.util.logger;
 
-import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
+import com.liferay.portalweb.util.liferayselenium.LiferaySelenium;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;

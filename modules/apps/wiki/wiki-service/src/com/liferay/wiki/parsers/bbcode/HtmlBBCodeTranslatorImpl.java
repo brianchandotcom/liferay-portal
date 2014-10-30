@@ -39,9 +39,14 @@ import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Iliyan Peychev
  */
+@Component(
+	service = BBCodeTranslator.class
+)
 @DoPrivileged
 public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 

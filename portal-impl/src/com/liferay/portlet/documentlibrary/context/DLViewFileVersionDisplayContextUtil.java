@@ -56,8 +56,18 @@ public class DLViewFileVersionDisplayContextUtil {
 			FileVersion fileVersion)
 		throws PortalException {
 
-		return getDLFileVersionActionsDisplayContext(
-			request, response, fileVersion);
+		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
+			new DefaultIGViewFileVersionDisplayContext(
+				request, response, fileVersion);
+
+		if (fileVersion != null) {
+			dlViewFileVersionDisplayContext =
+				_chainDLFileVersionActionsDisplayContexts(
+					request, response, fileVersion,
+					dlViewFileVersionDisplayContext);
+		}
+
+		return dlViewFileVersionDisplayContext;
 	}
 
 	private static DLViewFileVersionDisplayContext

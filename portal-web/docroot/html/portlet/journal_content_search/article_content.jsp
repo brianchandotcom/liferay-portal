@@ -64,25 +64,22 @@ List hitLayoutIds = JournalContentSearchLocalServiceUtil.getLayoutIds(layout.get
 
 		</span>
 	</c:when>
-	<c:otherwise>
+	<c:when test="<%= Validator.isNotNull(targetPortletId) %>">
 		<span style="font-size: xx-small;">
 
-		<%
-		if (Validator.isNull(targetPortletId)) {
-			targetPortletId = PortletKeys.JOURNAL_CONTENT;
-		}
+		<br />
 
-		PortletURL webContentPortletURL = PortletURLFactoryUtil.create(request, targetPortletId, plid, PortletRequest.RENDER_PHASE);
+			<%
+			PortletURL webContentPortletURL = PortletURLFactoryUtil.create(request, targetPortletId, plid, PortletRequest.RENDER_PHASE);
 
-		webContentPortletURL.setParameter("struts_action", "/journal_content/view");
-		webContentPortletURL.setParameter("groupId", String.valueOf(articleGroupId));
-		webContentPortletURL.setParameter("articleId", articleId);
-		%>
+			webContentPortletURL.setParameter("struts_action", "/journal_content/view");
+			webContentPortletURL.setParameter("groupId", String.valueOf(articleGroupId));
+			webContentPortletURL.setParameter("articleId", articleId);
+			%>
 
-		<br /><a href="<%= webContentPortletURL.toString() %>"><%= StringUtil.shorten(webContentPortletURL.toString(), 100) %></a>
-
+			<a href="<%= webContentPortletURL.toString() %>"><%= StringUtil.shorten(webContentPortletURL.toString(), 100) %></a>
 		</span>
-	</c:otherwise>
+	</c:when>
 </c:choose>
 
 <%!

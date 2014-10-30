@@ -1841,14 +1841,15 @@ public class ClusterSchedulerEngineTest {
 
 	private static final String _TEST_JOB_NAME_PREFIX = "test.job.";
 
-	private static ClusterInvokeAcceptor _clusterInvokeAcceptor;
-	private static ClusterSchedulerEngine _clusterSchedulerEngine;
 	private static MethodKey _getScheduledJobsMethodKey = new MethodKey(
 		SchedulerEngineHelperUtil.class, "getScheduledJobs", StorageType.class);
-	private static Map<String, ObjectValuePair<SchedulerResponse, TriggerState>>
+
+	private ClusterInvokeAcceptor _clusterInvokeAcceptor;
+	private ClusterSchedulerEngine _clusterSchedulerEngine;
+	private Map<String, ObjectValuePair<SchedulerResponse, TriggerState>>
 		_memoryClusteredJobs;
-	private static MockClusterMasterExecutor _mockClusterMasterExecutor;
-	private static MockSchedulerEngine _mockSchedulerEngine;
+	private MockClusterMasterExecutor _mockClusterMasterExecutor;
+	private MockSchedulerEngine _mockSchedulerEngine;
 
 	private static class MockClusterMasterExecutor
 		implements ClusterMasterExecutor {

@@ -36,7 +36,6 @@ public class One {
 	}
 
 	private final String _fone = "string";
-
 	private final int _ftwo = 173;
 
 	@JSON(include = false)

@@ -15,6 +15,7 @@
 package com.liferay.polls.repository;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.java8.util.Optional;
 import com.liferay.polls.exception.NoSuchQuestionException;
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.model.PollsQuestion;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import java8.util.Optional;
 
 import java.util.Date;
 import java.util.concurrent.Callable;

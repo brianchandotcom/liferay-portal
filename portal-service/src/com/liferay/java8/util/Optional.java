@@ -2,7 +2,7 @@
  * Copyright (c) 2012, 2013, Oracle and/or its affiliates. All rights reserved.
  * ORACLE PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
-package java8.util;
+package com.liferay.java8.util;
 
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -88,6 +88,31 @@ public final class Optional<T> {
 		return Objects.equals(value, other.value);
 	}
 
+	/**
+	 * If a value is present, apply the provided {@code Optional}-bearing
+	 * mapping function to it, return that result, otherwise return an empty
+	 * {@code Optional}.  This method is similar to {@link #map(Function)},
+	 * but the provided mapper is one whose result is already an {@code Optional},
+	 * and if invoked, {@code flatMap} does not wrap it with an additional
+	 * {@code Optional}.
+	 *
+	 * @param <U> The type parameter to the {@code Optional} returned by
+	 * @param mapper a mapping function to apply to the value, if present
+	 *           the mapping function
+	 * @return the result of applying an {@code Optional}-bearing mapping
+	 * function to the value of this {@code Optional}, if a value is present,
+	 * otherwise an empty {@code Optional}
+	 * @throws NullPointerException if the mapping function is null or returns
+	 * a null result
+	 */
+	public<U> Optional<U> flatMap(Function<? super T, Optional<U>> mapper) {
+		Objects.requireNonNull(mapper);
+		if (!isPresent())
+			return empty();
+		else {
+			return Objects.requireNonNull(mapper.apply(value));
+		}
+	}
 
 	/**
 	 * If a value is present in this {@code Optional}, returns the value,
@@ -117,6 +142,21 @@ public final class Optional<T> {
 	}
 
 	/**
+	 * If a value is present, invoke the specified consumer with the value,
+	 * otherwise do nothing.
+	 *
+	 * Parameters:
+	 * consumer block to be executed if a value is present
+	 *
+	 * Throws:
+	 * java.lang.NullPointerException if value is present and consumer is null
+	 */
+	public void ifPresent(Consumer<? super T> consumer) {
+		if (value != null)
+			consumer.accept(value);
+	}
+
+	/**
 	 * Return {@code true} if there is a value present, otherwise {@code false}.
 	 *
 	 * @return {@code true} if there is a value present, otherwise {@code false}
@@ -136,6 +176,57 @@ public final class Optional<T> {
 		return value != null ? value : other;
 	}
 
+	/**
+	 * Return the value if present, otherwise invoke {@code other} and return
+	 * the result of that invocation.
+	 *
+	 * @param other a {@code Supplier} whose result is returned if no value
+	 * is present
+	 * @return the value if present otherwise the result of {@code other.get()}
+	 * @throws NullPointerException if value is not present and {@code other} is
+	 * null
+	 */
+	public T orElseGet(Supplier<? extends T> other) {
+		return value != null ? value : other.get();
+	}
+
+	/**
+	 * If a value is present, apply the provided mapping function to it,
+	 * and if the result is non-null, return an {@code Optional} describing the
+	 * result.  Otherwise return an empty {@code Optional}.
+	 *
+	 * @apiNote This method supports post-processing on optional values, without
+	 * the need to explicitly check for a return status.  For example, the
+	 * following code traverses a stream of file names, selects one that has
+	 * not yet been processed, and then opens that file, returning an
+	 * {@code Optional<FileInputStream>}:
+	 *
+	 * <pre>{@code
+	 *     Optional<FileInputStream> fis =
+	 *         names.stream().filter(name -> !isProcessedYet(name))
+	 *                       .findFirst()
+	 *                       .map(name -> new FileInputStream(name));
+	 * }</pre>
+	 *
+	 * Here, {@code findFirst} returns an {@code Optional<String>}, and then
+	 * {@code map} returns an {@code Optional<FileInputStream>} for the desired
+	 * file if one exists.
+	 *
+	 * @param <U> The type of the result of the mapping function
+	 * @param mapper a mapping function to apply to the value, if present
+	 * @return an {@code Optional} describing the result of applying a mapping
+	 * function to the value of this {@code Optional}, if a value is present,
+	 * otherwise an empty {@code Optional}
+	 * @throws NullPointerException if the mapping function is null
+	 */
+	public<U> Optional<U> map(Function<? super T, ? extends U> mapper) {
+		Objects.requireNonNull(mapper);
+		if (!isPresent())
+			return empty();
+		else {
+			return Optional.ofNullable(mapper.apply(value));
+		}
+	}
 
 	/**
 	 * Returns a non-empty string representation of this Optional suitable for

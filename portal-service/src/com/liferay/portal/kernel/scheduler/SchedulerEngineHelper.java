@@ -181,6 +181,4 @@ public interface SchedulerEngineHelper {
 	public void update(Trigger trigger, StorageType storageType)
 		throws SchedulerException;
 
-	public void updateMemorySchedulerClusterMaster() throws SchedulerException;
-
 }

@@ -22,24 +22,24 @@ import java.util.Date;
 public class TriggerFactoryUtil {
 
 	public static Trigger buildTrigger(
-			TriggerType triggerType, String jobName, String groupName,
-			Date startDate, Date endDate, Object triggerContent)
-		throws SchedulerException {
+		TriggerType triggerType, String jobName, String groupName,
+		Date startDate, Date endDate, Object triggerContent) {
 
-		if (triggerType.equals(TriggerType.CRON)) {
+		if (triggerType == TriggerType.CRON) {
 			return new CronTrigger(
 				jobName, groupName, startDate, endDate,
 				String.valueOf(triggerContent));
 		}
-		else if (triggerType.equals(TriggerType.SIMPLE)) {
+
+		if (triggerType == TriggerType.SIMPLE) {
 			Number number = (Number)triggerContent;
 
 			return new IntervalTrigger(
 				jobName, groupName, startDate, endDate, number.longValue());
 		}
-		else {
-			throw new SchedulerException("Unknown trigger type " + triggerType);
-		}
+
+		throw new IllegalArgumentException(
+			"Unknown trigger type " + triggerType);
 	}
 
 }

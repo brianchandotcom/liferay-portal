@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineClusterManager;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
@@ -556,10 +555,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 	@Override
 	public void initialize() throws SchedulerException {
-		if (_schedulerEngineClusterManager != null) {
-			_schedulerEngineClusterManager.initialize();
-		}
-
 		SchedulerLifecycle schedulerLifecycle = new SchedulerLifecycle();
 
 		schedulerLifecycle.registerPortalLifecycle(PortalLifecycle.METHOD_INIT);
@@ -646,11 +641,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 	public void setSchedulerEngine(SchedulerEngine schedulerEngine) {
 		_schedulerEngine = schedulerEngine;
-
-		if (schedulerEngine instanceof SchedulerEngineClusterManager) {
-			_schedulerEngineClusterManager =
-				(SchedulerEngineClusterManager)schedulerEngine;
-		}
 	}
 
 	@Override
@@ -734,19 +724,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		_schedulerEngine.update(trigger, storageType);
 	}
 
-	@Override
-	public void updateMemorySchedulerClusterMaster() throws SchedulerException {
-		if (_schedulerEngineClusterManager == null) {
-			_log.error(
-				"Unable to update memory scheduler cluster master because " +
-					"the portal is not using a clustered scheduler engine");
-
-			return;
-		}
-
-		_schedulerEngineClusterManager.updateMemorySchedulerClusterMaster();
-	}
-
 	protected void addWeeklyDayPos(
 		PortletRequest portletRequest, List<DayAndPosition> list, int day) {
 
@@ -759,6 +736,5 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		SchedulerEngineHelperImpl.class);
 
 	private SchedulerEngine _schedulerEngine;
-	private SchedulerEngineClusterManager _schedulerEngineClusterManager;
 
 }

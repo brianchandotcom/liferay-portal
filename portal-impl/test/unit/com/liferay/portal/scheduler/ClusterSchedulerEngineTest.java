@@ -1747,9 +1747,7 @@ public class ClusterSchedulerEngineTest {
 
 		Message message = schedulerResponse.getMessage();
 
-		Object object = message.get(_SUPPRESS_ERROR);
-
-		Assert.assertEquals(expectedValue, object);
+		Assert.assertEquals(expectedValue, message.get(_SUPPRESS_ERROR));
 	}
 
 	private void _assertTriggerContent(
@@ -1757,9 +1755,7 @@ public class ClusterSchedulerEngineTest {
 
 		Trigger trigger = schedulerResponse.getTrigger();
 
-		long interval = (Long)trigger.getTriggerContent();
-
-		Assert.assertEquals(expectedInterval, interval);
+		Assert.assertEquals(expectedInterval, trigger.getTriggerContent());
 	}
 
 	private void _assertTriggerState(
@@ -1770,9 +1766,7 @@ public class ClusterSchedulerEngineTest {
 
 		JobState jobState = (JobState)message.get(SchedulerEngine.JOB_STATE);
 
-		TriggerState triggerState = jobState.getTriggerState();
-
-		Assert.assertEquals(expectedTriggerState, triggerState);
+		Assert.assertEquals(expectedTriggerState, jobState.getTriggerState());
 	}
 
 	private SchedulerResponse _getMemoryClusteredJob(
@@ -1790,9 +1784,9 @@ public class ClusterSchedulerEngineTest {
 
 		Message message = schedulerResponse.getMessage();
 
-		TriggerState triggerState = objectValuePair.getValue();
-
-		message.put(SchedulerEngine.JOB_STATE, new JobState(triggerState));
+		message.put(
+			SchedulerEngine.JOB_STATE,
+			new JobState(objectValuePair.getValue()));
 
 		return schedulerResponse;
 	}

@@ -148,17 +148,13 @@
 
 		<liferay-util:include page="/html/portlet/login/navigation.jsp" />
 
-		<aui:script use="aui-base">
-			var password = A.one('#<portlet:namespace />password');
-
-			if (password) {
-				password.on(
-					'keypress',
-					function(event) {
-						Liferay.Util.showCapsLock(event, '<portlet:namespace />passwordCapsLockSpan');
-					}
-				);
-			}
+		<aui:script>
+			AUI.$('#<portlet:namespace />password').on(
+				'keypress',
+				function(event) {
+					Liferay.Util.showCapsLock(event, '<portlet:namespace />passwordCapsLockSpan');
+				}
+			);
 		</aui:script>
 	</c:otherwise>
 </c:choose>

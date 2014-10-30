@@ -16,8 +16,8 @@ package com.liferay.portal.util.test;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.util.PwdGenerator;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -97,18 +97,18 @@ public class RandomTestUtil {
 	}
 
 	public static String randomString() {
-		return StringUtil.randomString();
+		return PwdGenerator.getPassword();
 	}
 
 	public static String randomString(int length) {
-		return StringUtil.randomString(length);
+		return PwdGenerator.getPassword(length);
 	}
 
 	public static String[] randomStrings(int count) {
 		String[] strings = new String[count];
 
 		for (int i = 0; i < count; i++) {
-			strings[i] = StringUtil.randomString();
+			strings[i] = PwdGenerator.getPassword();
 		}
 
 		return strings;

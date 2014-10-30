@@ -16,8 +16,6 @@ package com.liferay.portlet.dynamicdatamapping.webdav;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.webdav.BaseResourceImpl;
@@ -27,12 +25,15 @@ import com.liferay.portal.kernel.webdav.WebDAVRequest;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -67,12 +68,13 @@ public class DDMWebDavUtil {
 
 			String definition = StringUtil.read(request.getInputStream());
 
-			String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(
-				definition);
+			DDMForm ddmForm = getDDMForm(definition);
+
+			Locale defaultLocale = ddmForm.getDefaultLocale();
 
 			Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
-			nameMap.put(LocaleUtil.fromLanguageId(defaultLanguageId), typeId);
+			nameMap.put(defaultLocale, typeId);
 
 			ServiceContext serviceContext = new ServiceContext();
 
@@ -81,7 +83,7 @@ public class DDMWebDavUtil {
 
 			DDMStructureLocalServiceUtil.addStructure(
 				webDavRequest.getUserId(), webDavRequest.getGroupId(),
-				classNameId, nameMap, null, definition, serviceContext);
+				classNameId, nameMap, null, ddmForm, serviceContext);
 
 			return HttpServletResponse.SC_CREATED;
 		}
@@ -321,6 +323,14 @@ public class DDMWebDavUtil {
 		resource.setModel(type);
 
 		return resource;
+	}
+
+	protected static DDMForm getDDMForm(String definition)
+		throws PortalException {
+
+		DDMXMLUtil.validateXML(definition);
+
+		return DDMFormXSDDeserializerUtil.deserialize(definition);
 	}
 
 }

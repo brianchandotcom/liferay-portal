@@ -14,10 +14,6 @@
  */
 --%>
 
-<%
-boolean hasLock = fileEntry.hasLock();
-%>
-
 <%@ include file="/html/portlet/document_library/action/download.jspf" %>
 
 <%@ include file="/html/portlet/document_library/action/view.jspf" %>

@@ -892,16 +892,6 @@
 
 		<action path="/journal/view_feeds" forward="portlet.journal.view_feeds" />
 
-		<!-- Journal Articles -->
-
-		<action path="/journal_articles/view" type="com.liferay.portlet.journalarticles.action.ViewAction">
-			<forward name="portlet.journal_articles.view" path="portlet.journal_articles.view" />
-		</action>
-
-		<action path="/journal_articles/view_article_content" type="com.liferay.portlet.journal.action.ViewArticleContentAction">
-			<forward name="portlet.journal.preview_article_content" path="portlet.journal.preview_article_content" />
-		</action>
-
 		<!-- Journal Content -->
 
 		<action path="/journal_content/add_asset_redirect" forward="portlet.journal.asset.add_asset_redirect" />

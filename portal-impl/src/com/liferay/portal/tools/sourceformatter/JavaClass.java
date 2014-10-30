@@ -57,7 +57,7 @@ public class JavaClass {
 
 	public String formatJavaTerms(
 			Set<String> annotationsExclusions, Set<String> immutableFieldTypes,
-			List<String> finalableFieldTypesExclusions,
+			List<String> checkJavaFieldTypesExclusions,
 			List<String> javaTermSortExclusions,
 			List<String> testAnnotationsExclusions)
 		throws Exception {
@@ -75,12 +75,15 @@ public class JavaClass {
 		while (itr.hasNext()) {
 			JavaTerm javaTerm = itr.next();
 
-			checkJavaFieldType(
-				javaTerm, annotationsExclusions, immutableFieldTypes,
-				finalableFieldTypesExclusions);
+			if (!BaseSourceProcessor.isExcluded(
+					checkJavaFieldTypesExclusions, _absolutePath)) {
 
-			if (!originalContent.equals(_content)) {
-				return _content;
+				checkJavaFieldType(
+					javaTerm, annotationsExclusions, immutableFieldTypes);
+
+				if (!originalContent.equals(_content)) {
+					return _content;
+				}
 			}
 
 			sortJavaTerms(previousJavaTerm, javaTerm, javaTermSortExclusions);
@@ -99,7 +102,7 @@ public class JavaClass {
 
 			String newInnerClassContent = innerClass.formatJavaTerms(
 				annotationsExclusions, immutableFieldTypes,
-				finalableFieldTypesExclusions, javaTermSortExclusions,
+				checkJavaFieldTypesExclusions, javaTermSortExclusions,
 				testAnnotationsExclusions);
 
 			if (!innerClassContent.equals(newInnerClassContent)) {
@@ -268,8 +271,7 @@ public class JavaClass {
 
 	protected void checkJavaFieldType(
 			JavaTerm javaTerm, Set<String> annotationsExclusions,
-			Set<String> immutableFieldTypes,
-			List<String> finalableFieldTypesExclusions)
+			Set<String> immutableFieldTypes)
 		throws Exception {
 
 		if (!BaseSourceProcessor.portalSource || !javaTerm.isVariable()) {
@@ -308,9 +310,7 @@ public class JavaClass {
 				}
 			}
 		}
-		else if (!BaseSourceProcessor.isExcluded(
-					finalableFieldTypesExclusions, _absolutePath)) {
-
+		else {
 			checkFinalableFieldType(javaTerm, annotationsExclusions, isStatic);
 		}
 	}

@@ -89,7 +89,8 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			ActionKeys.ADD_ENTRY);
 
-		ImageSelector imageSelector = null;
+		ImageSelector coverImageSelector = null;
+		ImageSelector smallImageSelector = null;
 
 		if (smallImage && Validator.isNotNull(smallImageFileName) &&
 			(smallImageInputStream != null)) {
@@ -100,15 +101,15 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 				smallImageInputStream,
 				MimeTypesUtil.getContentType(smallImageFileName));
 
-			imageSelector = new ImageSelector(
-				fileEntry.getFileEntryId(), smallImageURL);
+			smallImageSelector = new ImageSelector(
+				fileEntry.getFileEntryId(), smallImageURL, null);
 		}
 
 		return addEntry(
 			title, StringPool.BLANK, description, content, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			allowPingbacks, allowTrackbacks, trackbacks, imageSelector,
-			serviceContext);
+			allowPingbacks, allowTrackbacks, trackbacks, coverImageSelector,
+			smallImageSelector, serviceContext);
 	}
 
 	@Override
@@ -117,7 +118,8 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, boolean allowPingbacks,
 			boolean allowTrackbacks, String[] trackbacks,
-			ImageSelector imageSelector, ServiceContext serviceContext)
+			ImageSelector coverImageSelector, ImageSelector smallImageSelector,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		BlogsPermission.check(
@@ -128,7 +130,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			getUserId(), title, subtitle, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-			imageSelector, serviceContext);
+			coverImageSelector, smallImageSelector, serviceContext);
 	}
 
 	@Override
@@ -463,7 +465,8 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			ActionKeys.UPDATE);
 
-		ImageSelector imageSelector = null;
+		ImageSelector coverImageSelector = null;
+		ImageSelector smallImageSelector = null;
 
 		if (smallImage) {
 			if (Validator.isNotNull(smallImageFileName) &&
@@ -475,19 +478,19 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 					smallImageInputStream,
 					MimeTypesUtil.getContentType(smallImageFileName));
 
-				imageSelector = new ImageSelector(
-					fileEntry.getFileEntryId(), smallImageURL);
+				smallImageSelector = new ImageSelector(
+					fileEntry.getFileEntryId(), smallImageURL, null);
 			}
 		}
 		else {
-			imageSelector = new ImageSelector(0);
+			smallImageSelector = new ImageSelector(0);
 		}
 
 		return updateEntry(
 			entryId, title, StringPool.BLANK, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-			imageSelector, serviceContext);
+			coverImageSelector, smallImageSelector, serviceContext);
 	}
 
 	@Override
@@ -496,8 +499,8 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			String content, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
 			boolean allowPingbacks, boolean allowTrackbacks,
-			String[] trackbacks, ImageSelector imageSelector,
-			ServiceContext serviceContext)
+			String[] trackbacks, ImageSelector coverImageSelector,
+			ImageSelector smallImageSelector, ServiceContext serviceContext)
 		throws PortalException {
 
 		BlogsEntryPermission.check(
@@ -507,7 +510,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			getUserId(), entryId, title, subtitle, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-			imageSelector, serviceContext);
+			coverImageSelector, smallImageSelector, serviceContext);
 	}
 
 	protected String exportToRSS(

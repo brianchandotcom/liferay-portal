@@ -23,6 +23,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ImageSelectorTag extends IncludeTag {
 
+	public void setDraggableImage(String draggableImage) {
+		_draggableImage = draggableImage;
+	}
+
 	public void setFileEntryId(long fileEntryId) {
 		_fileEntryId = fileEntryId;
 	}
@@ -37,6 +41,7 @@ public class ImageSelectorTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_draggableImage = "none";
 		_fileEntryId = 0;
 		_paramName = "imageSelectorFileEntryId";
 		_validExtensions = null;
@@ -50,6 +55,8 @@ public class ImageSelectorTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
+			"liferay-ui:image-selector:draggableImage", _draggableImage);
+		request.setAttribute(
 			"liferay-ui:image-selector:fileEntryId", _fileEntryId);
 		request.setAttribute("liferay-ui:image-selector:paramName", _paramName);
 		request.setAttribute(
@@ -59,8 +66,9 @@ public class ImageSelectorTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/image_selector/page.jsp";
 
+	private String _draggableImage = "none";
 	private long _fileEntryId;
-	private String _paramName = "imageSelectorFileEntryId";
+	private String _paramName = "imageSelectorFileEntry";
 	private String _validExtensions;
 
 }

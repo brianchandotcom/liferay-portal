@@ -262,14 +262,17 @@ public class BlogsEntryStagedModelDataHandler
 			}
 		}
 
-		ImageSelector imageSelector = null;
+		ImageSelector coverImageSelector = new ImageSelector(
+			smallImageFileEntryId, entry.getCoverImageURL(), null);
+
+		ImageSelector smallImageSelector = null;
 
 		if (!entry.isSmallImage()) {
-			imageSelector = new ImageSelector(0);
+			smallImageSelector = new ImageSelector(0);
 		}
 		else {
-			imageSelector = new ImageSelector(
-				smallImageFileEntryId, entry.getSmallImageURL());
+			smallImageSelector = new ImageSelector(
+				smallImageFileEntryId, entry.getSmallImageURL(), null);
 		}
 
 		BlogsEntry importedEntry = null;
@@ -288,7 +291,8 @@ public class BlogsEntryStagedModelDataHandler
 					entry.getDescription(), entry.getContent(),
 					displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, allowPingbacks,
-					allowTrackbacks, trackbacks, imageSelector, serviceContext);
+					allowTrackbacks, trackbacks, coverImageSelector,
+					smallImageSelector, serviceContext);
 			}
 			else {
 				importedEntry = BlogsEntryLocalServiceUtil.updateEntry(
@@ -296,8 +300,8 @@ public class BlogsEntryStagedModelDataHandler
 					entry.getSubtitle(), entry.getDescription(),
 					entry.getContent(), displayDateMonth, displayDateDay,
 					displayDateYear, displayDateHour, displayDateMinute,
-					allowPingbacks, allowTrackbacks, trackbacks, imageSelector,
-					serviceContext);
+					allowPingbacks, allowTrackbacks, trackbacks,
+					coverImageSelector, smallImageSelector, serviceContext);
 			}
 		}
 		else {
@@ -306,7 +310,7 @@ public class BlogsEntryStagedModelDataHandler
 				entry.getDescription(), entry.getContent(), displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-				imageSelector, serviceContext);
+				coverImageSelector, smallImageSelector, serviceContext);
 		}
 
 		portletDataContext.importClassedModel(entry, importedEntry);

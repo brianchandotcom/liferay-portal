@@ -69,7 +69,7 @@ AUI.add(
 					_defImageDataFn: function(event) {
 						var instance = this;
 
-						var fileEntryIdNode = instance.rootNode.one('#' + instance.get('paramName'));
+						var fileEntryIdNode = instance.rootNode.one('#' + instance.get('paramName') + 'Id');
 
 						var fileEntryImage = instance.one('#image');
 
@@ -167,7 +167,7 @@ AUI.add(
 							STR_IMAGE_DATA,
 							{
 								imageData: {
-									id: event.fileentryid || 0,
+									fileEntryId: event.fileentryid || 0,
 									url: event.url || ''
 								}
 							}

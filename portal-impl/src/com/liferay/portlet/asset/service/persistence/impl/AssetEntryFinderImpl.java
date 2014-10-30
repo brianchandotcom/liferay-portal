@@ -434,16 +434,22 @@ public class AssetEntryFinderImpl
 		}
 
 		if (Validator.isNotNull(entryQuery.getKeywords())) {
-			qPos.add(entryQuery.getKeywords() + CharPool.PERCENT);
-			qPos.add(entryQuery.getKeywords() + CharPool.PERCENT);
+			qPos.add(
+				CharPool.PERCENT + entryQuery.getKeywords() + CharPool.PERCENT);
+			qPos.add(
+				CharPool.PERCENT + entryQuery.getKeywords() + CharPool.PERCENT);
 		}
 		else {
 			if (Validator.isNotNull(entryQuery.getTitle())) {
-				qPos.add(entryQuery.getTitle() + CharPool.PERCENT);
+				qPos.add(
+					CharPool.PERCENT + entryQuery.getTitle() +
+						CharPool.PERCENT);
 			}
 
 			if (Validator.isNotNull(entryQuery.getDescription())) {
-				qPos.add(entryQuery.getDescription() + CharPool.PERCENT);
+				qPos.add(
+					CharPool.PERCENT + entryQuery.getDescription() +
+						CharPool.PERCENT);
 			}
 		}
 

@@ -16,9 +16,15 @@ package com.liferay.portal.backgroundtask;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistryUtil;
+import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Future;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -31,6 +37,10 @@ public class BackgroundTaskStatusRegistryImpl
 
 	@Override
 	public BackgroundTaskStatus getBackgroundTaskStatus(long backgroundTaskId) {
+		if (!ClusterMasterExecutorUtil.isMaster()) {
+			return getBackgroundTaskStatusOnMaster(backgroundTaskId);
+		}
+
 		Lock lock = _readWriteLock.readLock();
 
 		lock.lock();
@@ -87,6 +97,32 @@ public class BackgroundTaskStatusRegistryImpl
 			lock.unlock();
 		}
 	}
+
+	protected BackgroundTaskStatus getBackgroundTaskStatusOnMaster(
+		long backgroundTaskId) {
+
+		try {
+			MethodHandler methodHandler = new MethodHandler(
+				BackgroundTaskStatusRegistryUtil.class.getDeclaredMethod(
+					"getBackgroundTaskStatus", long.class),
+				backgroundTaskId);
+
+			Future<BackgroundTaskStatus> backgroundTaskStatusFuture =
+				ClusterMasterExecutorUtil.executeOnMaster(methodHandler);
+
+			return backgroundTaskStatusFuture.get();
+		}
+		catch (Exception e) {
+			if (_log.isErrorEnabled()) {
+				_log.error("Error retrieving status from master node", e);
+			}
+		}
+
+		return null;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BackgroundTaskStatusRegistryImpl.class);
 
 	private final Map<Long, BackgroundTaskStatus> _backgroundTaskStatuses =
 		new HashMap<Long, BackgroundTaskStatus>();

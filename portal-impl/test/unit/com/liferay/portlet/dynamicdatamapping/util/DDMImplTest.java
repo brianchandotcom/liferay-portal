@@ -19,7 +19,6 @@ import com.liferay.portlet.dynamicdatamapping.BaseDDMTestCase;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
@@ -323,7 +322,7 @@ public class DDMImplTest extends BaseDDMTestCase {
 		DDMForm ddmForm = createDDMForm();
 
 		DDMFormField separatorDDMFormField = createSeparatorDDMFormField(
-			"Separator", "", true);
+			"Separator", true);
 
 		addNestedTextDDMFormFields(separatorDDMFormField, "Content");
 
@@ -408,21 +407,6 @@ public class DDMImplTest extends BaseDDMTestCase {
 		}
 		catch (NullPointerException npe) {
 		}
-	}
-
-	protected DDMFormField createSeparatorDDMFormField(
-		String name, String label, boolean repeatable) {
-
-		DDMFormField ddmFormField = new DDMFormField(name, "separator");
-
-		ddmFormField.setDataType("");
-		ddmFormField.setRepeatable(repeatable);
-
-		LocalizedValue localizedValue = ddmFormField.getLabel();
-
-		localizedValue.addString(LocaleUtil.US, label);
-
-		return ddmFormField;
 	}
 
 	protected void testValues(

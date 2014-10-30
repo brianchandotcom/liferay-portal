@@ -1981,7 +1981,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-6795" name="ViewWebContentWithConfiguredDisplayPageViaAP" priority="5">
+	<command name="ViewWebContentWithConfiguredDisplayPageViaAP" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

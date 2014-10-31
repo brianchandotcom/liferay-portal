@@ -47,6 +47,7 @@
 		<column name="smallImage" type="boolean" />
 		<column name="smallImageId" type="long" />
 		<column name="smallImageURL" type="String" />
+		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
@@ -405,6 +406,7 @@
 		<column name="contentField" type="String" />
 		<column name="feedFormat" type="String" />
 		<column name="feedVersion" type="double" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 
@@ -456,6 +458,7 @@
 		<column name="name" type="String" />
 		<column name="description" type="String" />
 		<column name="restrictionType" type="int" />
+		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />

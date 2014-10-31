@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -46,18 +47,42 @@ import com.liferay.portlet.social.service.SocialRelationLocalServiceUtil;
 import com.liferay.portlet.social.service.SocialRequestLocalServiceUtil;
 import com.liferay.socialnetworking.friends.social.FriendsRequestKeys;
 import com.liferay.socialnetworking.members.social.MembersRequestKeys;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	property = {
+		"com.liferay.portlet.header-portlet-css=/summary/css/main.css",
+		"com.liferay.portlet.css-class-wrapper=" +
+			"social-networking-portlet-summary",
+		"javax.portlet.display-name=Summary",
+		"javax.portlet.init-param.clear-request-parameters=true",
+		"javax.portlet.init-param.config-template=/summary/configuration.jsp",
+		"javax.portlet.init-param.view-template=/summary/view.jsp",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.supports.mime-type=text/html",
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.info.title=Summary",
+		"javax.portlet.info.short-title=Summary",
+		"javax.portlet.info.keywords=Summary",
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user"
+	},
+	service = Portlet.class
+)
 public class SummaryPortlet extends MVCPortlet {
+
+	public static final String JAVAX_PORTLET_NAME =
+		"com_liferay_socialnetworking_summary_portlet_SummaryPortlet";
 
 	public void addFriend(
 			ActionRequest actionRequest, ActionResponse actionResponse)

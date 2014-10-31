@@ -32,19 +32,19 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.service.OrganizationLocalService;
+import com.liferay.portal.service.RoleLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil;
+import com.liferay.portlet.expando.service.ExpandoValueLocalService;
 import com.liferay.portlet.social.model.SocialRelationConstants;
-import com.liferay.portlet.social.service.SocialRelationLocalServiceUtil;
-import com.liferay.portlet.social.service.SocialRequestLocalServiceUtil;
+import com.liferay.portlet.social.service.SocialRelationLocalService;
+import com.liferay.portlet.social.service.SocialRequestLocalService;
 import com.liferay.socialnetworking.friends.social.FriendsRequestKeys;
 import com.liferay.socialnetworking.members.social.MembersRequestKeys;
 
@@ -56,6 +56,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -91,10 +92,10 @@ public class SummaryPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Group group = GroupLocalServiceUtil.getGroup(
+		Group group = _groupLocalService.getGroup(
 			themeDisplay.getScopeGroupId());
 
-		User user = UserLocalServiceUtil.getUserById(group.getClassPK());
+		User user = _userLocalService.getUserById(group.getClassPK());
 
 		JSONObject extraDataJSONObject = getExtraDataJSONObject(actionRequest);
 
@@ -103,7 +104,7 @@ public class SummaryPortlet extends MVCPortlet {
 
 		extraDataJSONObject.put("addFriendMessage", addFriendMessage);
 
-		SocialRequestLocalServiceUtil.addRequest(
+		_socialRequestLocalService.addRequest(
 			themeDisplay.getUserId(), 0, User.class.getName(),
 			themeDisplay.getUserId(), FriendsRequestKeys.ADD_FRIEND,
 			extraDataJSONObject.toString(), user.getUserId());
@@ -116,12 +117,12 @@ public class SummaryPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Group group = GroupLocalServiceUtil.getGroup(
+		Group group = _groupLocalService.getGroup(
 			themeDisplay.getScopeGroupId());
 
-		User user = UserLocalServiceUtil.getUserById(group.getClassPK());
+		User user = _userLocalService.getUserById(group.getClassPK());
 
-		SocialRelationLocalServiceUtil.deleteRelation(
+		_socialRelationLocalService.deleteRelation(
 			themeDisplay.getUserId(), user.getUserId(),
 			SocialRelationConstants.TYPE_BI_FRIEND);
 	}
@@ -133,17 +134,17 @@ public class SummaryPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Group group = GroupLocalServiceUtil.getGroup(
+		Group group = _groupLocalService.getGroup(
 			themeDisplay.getScopeGroupId());
 
 		if (group.getType() == GroupConstants.TYPE_SITE_OPEN) {
-			UserLocalServiceUtil.addGroupUsers(
+			_userLocalService.addGroupUsers(
 				group.getGroupId(), new long[] {themeDisplay.getUserId()});
 
 			return;
 		}
 
-		Role siteAdminRole = RoleLocalServiceUtil.getRole(
+		Role siteAdminRole = _roleLocalService.getRole(
 			themeDisplay.getCompanyId(), RoleConstants.SITE_ADMINISTRATOR);
 
 		LinkedHashMap<String, Object> userParams =
@@ -153,20 +154,20 @@ public class SummaryPortlet extends MVCPortlet {
 			"userGroupRole",
 			new Long[] {group.getGroupId(), siteAdminRole.getRoleId()});
 
-		List<User> users = UserLocalServiceUtil.search(
+		List<User> users = _userLocalService.search(
 			themeDisplay.getCompanyId(), null,
 			WorkflowConstants.STATUS_APPROVED, userParams, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, (OrderByComparator)null);
 
 		if (users.isEmpty()) {
-			Role adminRole = RoleLocalServiceUtil.getRole(
+			Role adminRole = _roleLocalService.getRole(
 				themeDisplay.getCompanyId(), RoleConstants.ADMINISTRATOR);
 
 			userParams.clear();
 
 			userParams.put("usersRoles", adminRole.getRoleId());
 
-			users = UserLocalServiceUtil.search(
+			users = _userLocalService.search(
 				themeDisplay.getCompanyId(), null,
 				WorkflowConstants.STATUS_APPROVED, userParams,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, (OrderByComparator)null);
@@ -175,7 +176,7 @@ public class SummaryPortlet extends MVCPortlet {
 		JSONObject extraDataJSONObject = getExtraDataJSONObject(actionRequest);
 
 		for (User user : users) {
-			SocialRequestLocalServiceUtil.addRequest(
+			_socialRequestLocalService.addRequest(
 				themeDisplay.getUserId(), 0, Group.class.getName(),
 				group.getGroupId(), MembersRequestKeys.ADD_MEMBER,
 				extraDataJSONObject.toString(), user.getUserId());
@@ -189,13 +190,13 @@ public class SummaryPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Group group = GroupLocalServiceUtil.getGroup(
+		Group group = _groupLocalService.getGroup(
 			themeDisplay.getScopeGroupId());
 
-		Organization organization =
-			OrganizationLocalServiceUtil.getOrganization(group.getClassPK());
+		Organization organization = _organizationLocalService.getOrganization(
+			group.getClassPK());
 
-		Role role = RoleLocalServiceUtil.getRole(
+		Role role = _roleLocalService.getRole(
 			themeDisplay.getCompanyId(), "Organization Administrator");
 
 		LinkedHashMap<String, Object> userParams =
@@ -204,20 +205,20 @@ public class SummaryPortlet extends MVCPortlet {
 		userParams.put(
 			"userGroupRole", new Long[] {group.getGroupId(), role.getRoleId()});
 
-		List<User> users = UserLocalServiceUtil.search(
+		List<User> users = _userLocalService.search(
 			themeDisplay.getCompanyId(), null,
 			WorkflowConstants.STATUS_APPROVED, userParams, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, (OrderByComparator)null);
 
 		if (users.isEmpty()) {
-			Role adminRole = RoleLocalServiceUtil.getRole(
+			Role adminRole = _roleLocalService.getRole(
 				themeDisplay.getCompanyId(), RoleConstants.ADMINISTRATOR);
 
 			userParams.clear();
 
 			userParams.put("usersRoles", adminRole.getRoleId());
 
-			users = UserLocalServiceUtil.search(
+			users = _userLocalService.search(
 				themeDisplay.getCompanyId(), null,
 				WorkflowConstants.STATUS_APPROVED, userParams,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, (OrderByComparator)null);
@@ -226,7 +227,7 @@ public class SummaryPortlet extends MVCPortlet {
 		JSONObject extraDataJSONObject = getExtraDataJSONObject(actionRequest);
 
 		for (User user : users) {
-			SocialRequestLocalServiceUtil.addRequest(
+			_socialRequestLocalService.addRequest(
 				themeDisplay.getUserId(), 0, Organization.class.getName(),
 				organization.getOrganizationId(), MembersRequestKeys.ADD_MEMBER,
 				extraDataJSONObject.toString(), user.getUserId());
@@ -243,9 +244,9 @@ public class SummaryPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		UserLocalServiceUtil.unsetGroupUsers(
+		_userLocalService.unsetGroupUsers(
 			themeDisplay.getScopeGroupId(),
-			new long[] {themeDisplay.getUserId()}, serviceContext);
+			new long[]{themeDisplay.getUserId()}, serviceContext);
 	}
 
 	public void leaveOrganization(
@@ -255,11 +256,11 @@ public class SummaryPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Group group = GroupLocalServiceUtil.getGroup(
+		Group group = _groupLocalService.getGroup(
 			themeDisplay.getScopeGroupId());
 
-		UserLocalServiceUtil.unsetOrganizationUsers(
-			group.getClassPK(), new long[] {themeDisplay.getUserId()});
+		_userLocalService.unsetOrganizationUsers(
+			group.getClassPK(), new long[]{themeDisplay.getUserId()});
 	}
 
 	public void updateSummary(
@@ -273,13 +274,13 @@ public class SummaryPortlet extends MVCPortlet {
 			return;
 		}
 
-		Group group = GroupLocalServiceUtil.getGroup(
+		Group group = _groupLocalService.getGroup(
 			themeDisplay.getScopeGroupId());
 
 		User user = null;
 
 		if (group.isUser()) {
-			user = UserLocalServiceUtil.getUserById(group.getClassPK());
+			user = _userLocalService.getUserById(group.getClassPK());
 		}
 		else {
 			return;
@@ -294,11 +295,11 @@ public class SummaryPortlet extends MVCPortlet {
 
 		String jobTitle = ParamUtil.getString(actionRequest, "jobTitle");
 
-		UserLocalServiceUtil.updateJobTitle(user.getUserId(), jobTitle);
+		_userLocalService.updateJobTitle(user.getUserId(), jobTitle);
 
 		String aboutMe = ParamUtil.getString(actionRequest, "aboutMe");
 
-		ExpandoValueLocalServiceUtil.addValue(
+		_expandoValueLocalService.addValue(
 			themeDisplay.getCompanyId(), User.class.getName(), "SN", "aboutMe",
 			user.getUserId(), aboutMe);
 	}
@@ -314,6 +315,57 @@ public class SummaryPortlet extends MVCPortlet {
 		return extraDataJSONObject;
 	}
 
+	@Reference(unbind = "-")
+	protected void setExpandoValueLocalService(
+		ExpandoValueLocalService expandoValueLocalService) {
+
+		_expandoValueLocalService = expandoValueLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setOrganizationLocalService(
+		OrganizationLocalService organizationLocalService) {
+
+		_organizationLocalService = organizationLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRoleLocalService(RoleLocalService roleLocalService) {
+		_roleLocalService = roleLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSocialRelationLocalService(
+		SocialRelationLocalService socialRelationLocalService) {
+
+		_socialRelationLocalService = socialRelationLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSocialRequestLocalService(
+		SocialRequestLocalService socialRequestLocalService) {
+
+		_socialRequestLocalService = socialRequestLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(SummaryPortlet.class);
+
+	private ExpandoValueLocalService _expandoValueLocalService;
+	private GroupLocalService _groupLocalService;
+	private OrganizationLocalService _organizationLocalService;
+	private RoleLocalService _roleLocalService;
+	private SocialRelationLocalService _socialRelationLocalService;
+	private SocialRequestLocalService _socialRequestLocalService;
+	private UserLocalService _userLocalService;
 
 }

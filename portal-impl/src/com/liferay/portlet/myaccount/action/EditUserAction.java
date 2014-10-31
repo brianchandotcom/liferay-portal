@@ -90,7 +90,7 @@ public class EditUserAction
 
 		if (Validator.isNotNull(currentPassword)) {
 			if (Validator.isNull(newPassword)) {
-				throw new UserPasswordException.MustBeLonger(user.getUserId());
+				throw new UserPasswordException.MustNotBeNull(user.getUserId());
 			}
 
 			Company company = PortalUtil.getCompany(actionRequest);
@@ -117,7 +117,7 @@ public class EditUserAction
 			}
 		}
 		else if (Validator.isNotNull(newPassword)) {
-			throw new UserPasswordException.MustBeValid(user.getUserId());
+			throw new UserPasswordException.MustNotBeNull(user.getUserId());
 		}
 
 		return super.updateUser(actionRequest, actionResponse);

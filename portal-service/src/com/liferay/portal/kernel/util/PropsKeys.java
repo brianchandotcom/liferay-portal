@@ -2035,6 +2035,52 @@ public interface PropsKeys {
 
 	public static final String POP_SERVER_SUBDOMAIN = "pop.server.subdomain";
 
+	public static final String PORTAL_FABRIC_AGENT_SELECTOR_CLASS = "portal.fabric.agent.selector.class";
+
+	public static final String PORTAL_FABRIC_CLIENT_EVENT_LOOP_GROUP_THREAD_COUNT = "portal.fabric.client.event.loop.group.thread.count";
+
+	public static final String PORTAL_FABRIC_CLIENT_EXECUTION_GROUP_THREAD_COUNT = "portal.fabric.client.execution.group.thread.count";
+
+	public static final String PORTAL_FABRIC_CLIENT_EXECUTION_TIMEOUT = "portal.fabric.client.execution.timeout";
+
+	public static final String PORTAL_FABRIC_CLIENT_FILE_SERVER_FOLDER_COMPRESSION_LEVEL = "portal.fabric.client.file.server.folder.compression.level";
+
+	public static final String PORTAL_FABRIC_CLIENT_FILE_SERVER_GROUP_THREAD_COUNT = "portal.fabric.client.file.server.group.thread.count";
+
+	public static final String PORTAL_FABRIC_CLIENT_RECONNECT_COUNT = "portal.fabric.client.reconnect.count";
+
+	public static final String PORTAL_FABRIC_CLIENT_RECONNECT_INTERVAL = "portal.fabric.client.reconnect.interval";
+
+	public static final String PORTAL_FABRIC_CLIENT_REPOSITORY_GET_FILE_TIMEOUT = "portal.fabric.client.repository.get.file.timeout";
+
+	public static final String PORTAL_FABRIC_CLIENT_RPC_GROUP_THREAD_COUNT = "portal.fabric.client.rpc.group.thread.count";
+
+	public static final String PORTAL_FABRIC_ENABLED = "portal.fabric.enabled";
+
+	public static final String PORTAL_FABRIC_SERVER_BOSS_GROUP_THREAD_COUNT = "portal.fabric.server.boss.group.thread.count";
+
+	public static final String PORTAL_FABRIC_SERVER_FILE_SERVER_FOLDER_COMPRESSION_LEVEL = "portal.fabric.server.file.server.folder.compression.level";
+
+	public static final String PORTAL_FABRIC_SERVER_FILE_SERVER_GROUP_THREAD_COUNT = "portal.fabric.server.file.server.group.thread.count";
+
+	public static final String PORTAL_FABRIC_SERVER_HOST = "portal.fabric.server.host";
+
+	public static final String PORTAL_FABRIC_SERVER_PORT = "portal.fabric.server.port";
+
+	public static final String PORTAL_FABRIC_SERVER_REGISTRATION_GROUP_THREAD_COUNT = "portal.fabric.server.registeration.group.thread.count";
+
+	public static final String PORTAL_FABRIC_SERVER_REPOSITORY_GET_FILE_TIMEOUT = "portal.fabric.server.repository.get.file.timeout";
+
+	public static final String PORTAL_FABRIC_SERVER_REPOSITORY_PARENT_FOLDER = "portal.fabric.server.repository.parent.folder";
+
+	public static final String PORTAL_FABRIC_SERVER_RPC_GROUP_THREAD_COUNT = "portal.fabric.server.rpc.group.thread.count";
+
+	public static final String PORTAL_FABRIC_SERVER_RPC_RELAY_TIMEOUT = "portal.fabric.server.rpc.relay.timeout";
+
+	public static final String PORTAL_FABRIC_SERVER_WARMUP_AGENT_ON_REGISTER = "portal.fanric.server.warmup.agent.on.register";
+
+	public static final String PORTAL_FABRIC_SERVER_WORKER_GROUP_THREAD_COUNT = "portal.fabric.server.worker.group.thread.count";
+
 	public static final String PORTAL_IMPERSONATION_ENABLE = "portal.impersonation.enable";
 
 	public static final String PORTAL_INSTANCE_HTTP_INET_SOCKET_ADDRESS = "portal.instance.http.inet.socket.address";

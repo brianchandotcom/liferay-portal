@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+	<property name="import.shared" value="social-networking-service" />
+
+	<property name="osgi.auto.update.xml" value="true" />
+	<property name="osgi.ide.dependencies" value="struts.jar" />
+
+	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
+
+	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
+</project>

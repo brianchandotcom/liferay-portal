@@ -15,15 +15,22 @@
 package com.liferay.socialnetworking.friends.social;
 
 import com.liferay.portal.service.UserLocalService;
+import com.liferay.portlet.social.model.SocialRequestInterpreter;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
 import com.liferay.portlet.social.service.SocialRelationLocalService;
+import com.liferay.socialnetworking.friends.portlet.FriendsPortlet;
 import com.liferay.socialnetworking.social.BaseSocialNetworkingRequestInterpreter;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	property = { "javax.portlet.name=" + FriendsPortlet.JAVAX_PORTLET_NAME },
+	service = SocialRequestInterpreter.class
+)
 public class FriendsRequestInterpreter
 	extends BaseSocialNetworkingRequestInterpreter {
 
@@ -42,21 +49,21 @@ public class FriendsRequestInterpreter
 		return _userLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setSocialActivityLocalService(
 		SocialActivityLocalService socialActivityLocalService) {
 
 		_socialActivityLocalService = socialActivityLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setSocialRelationLocalService(
 		SocialRelationLocalService socialRelationLocalService) {
 
 		_socialRelationLocalService = socialRelationLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}

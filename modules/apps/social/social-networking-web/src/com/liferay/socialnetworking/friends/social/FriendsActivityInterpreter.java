@@ -14,12 +14,20 @@
 
 package com.liferay.socialnetworking.friends.social;
 
+import com.liferay.portlet.social.model.SocialActivityInterpreter;
+import com.liferay.socialnetworking.friends.portlet.FriendsPortlet;
 import com.liferay.socialnetworking.social.BaseSocialNetworkingActivityInterpreter;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Zsolt Berentey
  */
+@Component(
+	property = { "javax.portlet.name=" + FriendsPortlet.JAVAX_PORTLET_NAME },
+	service = SocialActivityInterpreter.class
+)
 public class FriendsActivityInterpreter
 	extends BaseSocialNetworkingActivityInterpreter {
 }

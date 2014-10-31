@@ -104,6 +104,7 @@ public class AssetEntryQuery {
 		setKeywords(assetEntryQuery.getKeywords());
 		setLayout(assetEntryQuery.getLayout());
 		setLinkedAssetEntryId(assetEntryQuery.getLinkedAssetEntryId());
+		setListable(assetEntryQuery.isListable());
 		setNotAllCategoryIds(assetEntryQuery.getNotAllCategoryIds());
 		setNotAllTagIdsArray(assetEntryQuery.getNotAllTagIdsArray());
 		setNotAnyCategoryIds(assetEntryQuery.getNotAnyCategoryIds());
@@ -334,6 +335,10 @@ public class AssetEntryQuery {
 		return _excludeZeroViewCount;
 	}
 
+	public Boolean isListable() {
+		return _listable;
+	}
+
 	public Boolean isVisible() {
 		return _visible;
 	}
@@ -455,6 +460,10 @@ public class AssetEntryQuery {
 		_linkedAssetEntryId = linkedAssetEntryId;
 
 		_toString = null;
+	}
+
+	public void setListable(boolean listable) {
+		_listable = listable;
 	}
 
 	public void setNotAllCategoryIds(long[] notAllCategoryIds) {
@@ -589,6 +598,8 @@ public class AssetEntryQuery {
 		sb.append(_keywords);
 		sb.append(", linkedAssetEntryId=");
 		sb.append(_linkedAssetEntryId);
+		sb.append(", listable=");
+		sb.append(_listable);
 		sb.append(", notAllCategoryIds=");
 		sb.append(StringUtil.merge(_notAllCategoryIds));
 		sb.append(", notAllTagIds=");
@@ -696,6 +707,7 @@ public class AssetEntryQuery {
 	private String _keywords;
 	private Layout _layout;
 	private long _linkedAssetEntryId = 0;
+	private boolean _listable;
 	private long[] _notAllCategoryIds = new long[0];
 	private long[] _notAllTagIds = new long[0];
 	private long[][] _notAllTagIdsArray = new long[0][];

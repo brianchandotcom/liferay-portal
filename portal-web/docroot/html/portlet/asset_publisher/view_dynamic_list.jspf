@@ -54,6 +54,8 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 				results = baseModelSearchResult.getBaseModels();
 			}
 			else {
+				assetEntryQuery.setListable(true);
+
 				groupTotal = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
 
 				total += groupTotal;
@@ -115,6 +117,8 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 			results = baseModelSearchResult.getBaseModels();
 		}
 		else {
+			assetEntryQuery.setListable(true);
+
 			total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
 
 			searchContainer.setTotal(total);
@@ -156,6 +160,8 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 				results = baseModelSearchResult.getBaseModels();
 			}
 			else {
+				assetEntryQuery.setListable(true);
+
 				groupTotal = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
 
 				total += groupTotal;

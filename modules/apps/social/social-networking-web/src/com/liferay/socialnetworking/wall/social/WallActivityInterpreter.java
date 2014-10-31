@@ -18,19 +18,30 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
+import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialRelationConstants;
-import com.liferay.portlet.social.service.SocialRelationLocalServiceUtil;
+import com.liferay.portlet.social.service.SocialRelationLocalService;
 import com.liferay.socialnetworking.model.WallEntry;
-import com.liferay.socialnetworking.service.WallEntryLocalServiceUtil;
+import com.liferay.socialnetworking.service.WallEntryLocalService;
 import com.liferay.socialnetworking.util.WallUtil;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Zsolt Berentey
  */
+@Component(
+	property = {
+		"javax.portlet.name=" +
+			"com_liferay_social_networking_web_portlet_WallPortlet"
+	},
+	service = SocialActivityInterpreter.class
+)
 public class WallActivityInterpreter extends BaseSocialActivityInterpreter {
 
 	@Override
@@ -43,7 +54,7 @@ public class WallActivityInterpreter extends BaseSocialActivityInterpreter {
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
 
-		WallEntry wallEntry = WallEntryLocalServiceUtil.getWallEntry(
+		WallEntry wallEntry = _wallEntryLocalService.getWallEntry(
 			activity.getClassPK());
 
 		String comments = getJSONValue(
@@ -59,7 +70,7 @@ public class WallActivityInterpreter extends BaseSocialActivityInterpreter {
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
 
-		User receiverUser = UserLocalServiceUtil.getUserById(
+		User receiverUser = _userLocalService.getUserById(
 			activity.getReceiverUserId());
 
 		String wallLayoutFriendlyURL = WallUtil.getWallLayoutFriendlyURL(
@@ -110,7 +121,7 @@ public class WallActivityInterpreter extends BaseSocialActivityInterpreter {
 			String actionId, ServiceContext serviceContext)
 		throws Exception {
 
-		if (!SocialRelationLocalServiceUtil.hasRelation(
+		if (!_socialRelationLocalService.hasRelation(
 				serviceContext.getUserId(), activity.getReceiverUserId(),
 				SocialRelationConstants.TYPE_BI_FRIEND) &&
 			(serviceContext.getUserId() != activity.getReceiverUserId())) {
@@ -121,6 +132,29 @@ public class WallActivityInterpreter extends BaseSocialActivityInterpreter {
 		return true;
 	}
 
+	@Reference(unbind = "-")
+	protected void setSocialRelationLocalService(
+		SocialRelationLocalService socialRelationLocalService) {
+
+		_socialRelationLocalService = socialRelationLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWallEntryLocalService(
+		WallEntryLocalService wallEntryLocalService) {
+
+		_wallEntryLocalService = wallEntryLocalService;
+	}
+
 	private static final String[] _CLASS_NAMES = {WallEntry.class.getName()};
+
+	private SocialRelationLocalService _socialRelationLocalService;
+	private UserLocalService _userLocalService;
+	private WallEntryLocalService _wallEntryLocalService;
 
 }

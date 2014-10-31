@@ -14,10 +14,9 @@
 
 package com.liferay.portal.kernel.concurrent;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.util.concurrent.atomic.AtomicMarkableReference;
 
 /**
  * @author Shuyang Zhou
@@ -25,11 +24,9 @@ import java.util.concurrent.atomic.AtomicMarkableReference;
 public abstract class IncreasableEntry<K, V> {
 
 	public IncreasableEntry(K key, V value) {
-		_key = key;
-		_markedValue = new AtomicMarkableReference<V>(value, false);
+		this.key = key;
+		this.value = value;
 	}
-
-	public abstract V doIncrease(V originalValue, V deltaValue);
 
 	@Override
 	public boolean equals(Object obj) {
@@ -43,10 +40,8 @@ public abstract class IncreasableEntry<K, V> {
 
 		IncreasableEntry<K, V> increasableEntry = (IncreasableEntry<K, V>)obj;
 
-		if (Validator.equals(_key, increasableEntry._key) &&
-			Validator.equals(
-				_markedValue.getReference(),
-				increasableEntry._markedValue.getReference())) {
+		if (Validator.equals(key, increasableEntry.key) &&
+			Validator.equals(value, increasableEntry.value)) {
 
 			return true;
 		}
@@ -54,73 +49,37 @@ public abstract class IncreasableEntry<K, V> {
 		return false;
 	}
 
-	public final K getKey() {
-		return _key;
+	public K getKey() {
+		return key;
 	}
 
-	public final V getValue() {
-		while (true) {
-			V value = _markedValue.getReference();
-
-			if (_markedValue.attemptMark(value, true)) {
-				return value;
-			}
-		}
+	public V getValue() {
+		return value;
 	}
 
 	@Override
 	public int hashCode() {
-		int hash = 77;
+		int hash = HashUtil.hash(0, key);
 
-		if (_key != null) {
-			hash += _key.hashCode();
-		}
-
-		hash = 11 * hash;
-
-		V value = _markedValue.getReference();
-
-		if (value != null) {
-			hash += value.hashCode();
-		}
-
-		return hash;
+		return HashUtil.hash(hash, value);
 	}
 
-	public final boolean increase(V deltaValue) {
-		boolean[] marked = {false};
-
-		while (true) {
-			V originalValue = _markedValue.get(marked);
-
-			if (marked[0]) {
-				return false;
-			}
-
-			V newValue = doIncrease(originalValue, deltaValue);
-
-			if (_markedValue.compareAndSet(
-					originalValue, newValue, false, false)) {
-
-				return true;
-			}
-		}
-	}
+	public abstract IncreasableEntry<K, V> increase(V deltaValue);
 
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("{key=");
-		sb.append(String.valueOf(_key.toString()));
+		sb.append(key);
 		sb.append(", value=");
-		sb.append(String.valueOf(_markedValue.getReference()));
+		sb.append(value);
 		sb.append("}");
 
 		return sb.toString();
 	}
 
-	private final K _key;
-	private final AtomicMarkableReference<V> _markedValue;
+	protected final K key;
+	protected final V value;
 
 }

@@ -34,10 +34,10 @@ public class BufferedIncreasableEntry<K, T>
 	}
 
 	@Override
-	public Increment<T> doIncrease(
-		Increment<T> originalValue, Increment<T> deltaValue) {
-
-		return originalValue.increaseForNew(deltaValue.getValue());
+	public BufferedIncreasableEntry<K, T> increase(Increment<T> deltaValue) {
+		return new BufferedIncreasableEntry<K, T>(
+			_methodInvocation, key,
+			value.increaseForNew(deltaValue.getValue()));
 	}
 
 	public void proceed() throws Throwable {

@@ -14,11 +14,14 @@
 
 package com.liferay.portal.kernel.concurrent;
 
+import com.liferay.portal.kernel.concurrent.BatchablePipe.IncreasableEntryWrapper;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -42,15 +45,22 @@ public class BatchablePipeTest {
 		BatchablePipe<String, Integer> batchablePipe =
 			new BatchablePipe<String, Integer>();
 
-		// Batch same entry should fail
+		// Batch same entry
 
 		IncreasableEntry<String, Integer> increasbleEntry1 =
 			new IntegerIncreasableEntry("1st", 1);
 
 		Assert.assertTrue(batchablePipe.put(increasbleEntry1));
-		Assert.assertTrue(batchablePipe.put(increasbleEntry1));
-		Assert.assertEquals(increasbleEntry1, batchablePipe.take());
-		Assert.assertEquals(increasbleEntry1, batchablePipe.take());
+		Assert.assertFalse(batchablePipe.put(increasbleEntry1));
+
+		IncreasableEntry<String, Integer> batchedIncreasableEntry =
+			batchablePipe.take();
+
+		Assert.assertNotSame(increasbleEntry1, batchedIncreasableEntry);
+		Assert.assertEquals(
+			increasbleEntry1.getKey(), batchedIncreasableEntry.getKey());
+		Assert.assertEquals( 2, (int)batchedIncreasableEntry.getValue());
+		Assert.assertNull(batchablePipe.take());
 
 		// Batch 2 entries
 
@@ -62,12 +72,12 @@ public class BatchablePipeTest {
 		Assert.assertTrue(batchablePipe.put(increasbleEntry2));
 		Assert.assertFalse(batchablePipe.put(increasbleEntry3));
 
-		IncreasableEntry<String, Integer> resultIncreasbleEntry =
-			batchablePipe.take();
+		batchedIncreasableEntry = batchablePipe.take();
 
-		Assert.assertNotNull(resultIncreasbleEntry);
-		Assert.assertEquals("2nd", resultIncreasbleEntry.getKey());
-		Assert.assertEquals(3, (int)resultIncreasbleEntry.getValue());
+		Assert.assertNotSame(increasbleEntry2, batchedIncreasableEntry);
+		Assert.assertNotSame(increasbleEntry3, batchedIncreasableEntry);
+		Assert.assertEquals("2nd", batchedIncreasableEntry.getKey());
+		Assert.assertEquals(3, (int)batchedIncreasableEntry.getValue());
 		Assert.assertNull(batchablePipe.take());
 
 		// Mix batch
@@ -79,7 +89,7 @@ public class BatchablePipeTest {
 		IncreasableEntry<String, Integer> increasbleEntry6 =
 			new IntegerIncreasableEntry("4th", 2);
 		IncreasableEntry<String, Integer> increasbleEntry7 =
-			new IntegerIncreasableEntry("3rd", 2);
+			new IntegerIncreasableEntry("3rd", 3);
 		IncreasableEntry<String, Integer> increasbleEntry8 =
 			new IntegerIncreasableEntry("5th", 1);
 
@@ -89,28 +99,38 @@ public class BatchablePipeTest {
 		Assert.assertFalse(batchablePipe.put(increasbleEntry7));
 		Assert.assertTrue(batchablePipe.put(increasbleEntry8));
 
-		resultIncreasbleEntry = batchablePipe.take();
+		batchedIncreasableEntry = batchablePipe.take();
 
-		Assert.assertNotNull(resultIncreasbleEntry);
-		Assert.assertEquals("3rd", resultIncreasbleEntry.getKey());
-		Assert.assertEquals(3, (int)resultIncreasbleEntry.getValue());
+		Assert.assertNotSame(increasbleEntry4, batchedIncreasableEntry);
+		Assert.assertNotSame(increasbleEntry5, batchedIncreasableEntry);
+		Assert.assertNotSame(increasbleEntry6, batchedIncreasableEntry);
+		Assert.assertNotSame(increasbleEntry7, batchedIncreasableEntry);
+		Assert.assertNotSame(increasbleEntry8, batchedIncreasableEntry);
+		Assert.assertEquals("4th", batchedIncreasableEntry.getKey());
+		Assert.assertEquals(3, (int)batchedIncreasableEntry.getValue());
 
-		resultIncreasbleEntry = batchablePipe.take();
+		batchedIncreasableEntry = batchablePipe.take();
 
-		Assert.assertNotNull(resultIncreasbleEntry);
-		Assert.assertEquals("4th", resultIncreasbleEntry.getKey());
-		Assert.assertEquals(3, (int)resultIncreasbleEntry.getValue());
+		Assert.assertNotSame(increasbleEntry4, batchedIncreasableEntry);
+		Assert.assertNotSame(increasbleEntry5, batchedIncreasableEntry);
+		Assert.assertNotSame(increasbleEntry6, batchedIncreasableEntry);
+		Assert.assertNotSame(increasbleEntry7, batchedIncreasableEntry);
+		Assert.assertNotSame(increasbleEntry8, batchedIncreasableEntry);
+		Assert.assertEquals("3rd", batchedIncreasableEntry.getKey());
+		Assert.assertEquals(4, (int)batchedIncreasableEntry.getValue());
 
-		resultIncreasbleEntry = batchablePipe.take();
+		batchedIncreasableEntry = batchablePipe.take();
 
-		Assert.assertNotNull(resultIncreasbleEntry);
-		Assert.assertEquals("5th", resultIncreasbleEntry.getKey());
-		Assert.assertEquals(1, (int)resultIncreasbleEntry.getValue());
+		Assert.assertNotSame(increasbleEntry4, batchedIncreasableEntry);
+		Assert.assertNotSame(increasbleEntry5, batchedIncreasableEntry);
+		Assert.assertNotSame(increasbleEntry6, batchedIncreasableEntry);
+		Assert.assertNotSame(increasbleEntry7, batchedIncreasableEntry);
+		Assert.assertSame(increasbleEntry8, batchedIncreasableEntry);
 		Assert.assertNull(batchablePipe.take());
 	}
 
 	@Test
-	public void testConcurrent() throws Exception {
+	public void testConcurrent() throws InterruptedException {
 		final BatchablePipe<String, Integer> batchablePipe =
 			new BatchablePipe<String, Integer>();
 
@@ -143,7 +163,18 @@ public class BatchablePipeTest {
 							batchablePipe.take();
 
 						if (increasableEntry != null) {
-							if (increasableEntry.getKey().equals("exit")) {
+							String key = increasableEntry.getKey();
+
+							if (key.equals("exit")) {
+								int value = increasableEntry.getValue();
+
+								if (value > 1) {
+									Assert.assertTrue(
+										batchablePipe.put(
+											new IntegerIncreasableEntry(
+												"exit", value - 1)));
+								}
+
 								return;
 							}
 
@@ -172,11 +203,9 @@ public class BatchablePipeTest {
 		// Poison take thread pool
 
 		IncreasableEntry<String, Integer> poisonIncreasableEntry =
-			new IntegerIncreasableEntry("exit", -1);
+			new IntegerIncreasableEntry("exit", 10);
 
-		for (int i = 0; i < 10; i++) {
-			batchablePipe.put(poisonIncreasableEntry);
-		}
+		Assert.assertTrue(batchablePipe.put(poisonIncreasableEntry));
 
 		takeThreadPool.shutdown();
 		takeThreadPool.awaitTermination(240, TimeUnit.SECONDS);
@@ -208,10 +237,52 @@ public class BatchablePipeTest {
 
 			Assert.assertEquals(100, (int)sum);
 		}
+	}
 
-		// Verify batch rate
+	@Test
+	public void testConcurrentPut() {
+		BatchablePipe<String, Integer> batchablePipe =
+			new BatchablePipe<String, Integer>();
 
-		Assert.assertTrue(1000 > resultBlockingQueue.size());
+		final IncreasableEntry<String, Integer> increasbleEntry1 =
+			new IntegerIncreasableEntry("test", 1);
+
+		final IncreasableEntry<String, Integer> increasbleEntry2 =
+			new IntegerIncreasableEntry("test", 2);
+
+		IncreasableEntry<String, Integer> increasbleEntry3 =
+			new IntegerIncreasableEntry("test", 3);
+
+		ReflectionTestUtil.setFieldValue(
+			batchablePipe, "concurrentMap", new ConcurrentHashMap
+				<String, IncreasableEntryWrapper<String, Integer>>() {
+
+					@Override
+					public boolean replace(
+						String key,
+						IncreasableEntryWrapper<String, Integer> oldValue,
+						IncreasableEntryWrapper<String, Integer> newValue) {
+
+						if (oldValue.increasableEntry == increasbleEntry1) {
+							put(
+								key,
+								new IncreasableEntryWrapper<String, Integer>(
+									increasbleEntry2));
+						}
+
+						return super.replace(key, oldValue, newValue);
+					}
+
+				});
+
+		Assert.assertTrue(batchablePipe.put(increasbleEntry1));
+		Assert.assertFalse(batchablePipe.put(increasbleEntry3));
+
+		IncreasableEntry<String, Integer> batchedIncreasableEntry =
+			batchablePipe.take();
+
+		Assert.assertEquals(5, (int)batchedIncreasableEntry.getValue());
+		Assert.assertNull(batchablePipe.take());
 	}
 
 	@Test
@@ -222,6 +293,29 @@ public class BatchablePipeTest {
 		Assert.assertNull(batchablePipe.take());
 		Assert.assertNull(batchablePipe.take());
 		Assert.assertNull(batchablePipe.take());
+	}
+
+	@Test
+	public void testIncreasableEntryWrapper() {
+		IncreasableEntry<String, Integer> increasbleEntry1 =
+			new IntegerIncreasableEntry("test", 1);
+		IncreasableEntry<String, Integer> increasbleEntry2 =
+			new IntegerIncreasableEntry("test", 1);
+
+		Assert.assertEquals(
+			new IncreasableEntryWrapper<String, Integer>(increasbleEntry1),
+			new IncreasableEntryWrapper<String, Integer>(increasbleEntry1));
+		Assert.assertNotEquals(
+			new IncreasableEntryWrapper<String, Integer>(increasbleEntry1),
+			new IncreasableEntryWrapper<String, Integer>(increasbleEntry2));
+
+		IncreasableEntryWrapper<String, Integer> increasableEntryWrapper =
+			new IncreasableEntryWrapper<String, Integer>(increasbleEntry1);
+
+		Assert.assertEquals(
+			increasbleEntry1.hashCode(), increasableEntryWrapper.hashCode());
+		Assert.assertEquals(
+			increasbleEntry1.toString(), increasableEntryWrapper.toString());
 	}
 
 	@Test
@@ -238,23 +332,7 @@ public class BatchablePipeTest {
 
 		// Get 1st
 
-		Assert.assertEquals(increasableEntry1, batchablePipe.take());
-
-		// Assure still increasable
-
-		Assert.assertTrue(increasableEntry1.increase(1));
-
-		// Assure get the correct increaed value
-
-		Assert.assertEquals(2, (int)increasableEntry1.getValue());
-
-		// Assure can't increase anymore
-
-		Assert.assertFalse(increasableEntry1.increase(1));
-
-		// Assure value has not changed
-
-		Assert.assertEquals(2, (int)increasableEntry1.getValue());
+		Assert.assertSame(increasableEntry1, batchablePipe.take());
 
 		// Sequence put
 
@@ -277,16 +355,15 @@ public class BatchablePipeTest {
 
 		// Get 2nd
 
-		Assert.assertEquals(increasableEntry2, batchablePipe.take());
+		Assert.assertSame(increasableEntry2, batchablePipe.take());
 
 		// Get 3rd
 
-		Assert.assertEquals(increasableEntry3, batchablePipe.take());
+		Assert.assertSame(increasableEntry3, batchablePipe.take());
 
 		// Get 4th
 
-		Assert.assertEquals(increasableEntry4, batchablePipe.take());
-
+		Assert.assertSame(increasableEntry4, batchablePipe.take());
 		Assert.assertNull(batchablePipe.take());
 	}
 
@@ -298,8 +375,8 @@ public class BatchablePipeTest {
 		}
 
 		@Override
-		public Integer doIncrease(Integer originalValue, Integer deltaValue) {
-			return originalValue + deltaValue;
+		public IntegerIncreasableEntry increase(Integer deltaValue) {
+			return new IntegerIncreasableEntry(key, value + deltaValue);
 		}
 
 	}

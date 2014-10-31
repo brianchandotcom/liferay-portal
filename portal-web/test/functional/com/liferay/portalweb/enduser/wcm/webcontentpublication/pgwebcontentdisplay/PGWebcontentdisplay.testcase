@@ -263,7 +263,7 @@
 
 	<command name="LocalizeWebContent" priority="5">
 		<var name="languageKey" value="zh_CN" />
-		
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>

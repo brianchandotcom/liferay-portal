@@ -14,11 +14,15 @@
 
 package com.liferay.socialnetworking.summary.social;
 
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portlet.social.model.SocialRequestInterpreter;
+import com.liferay.portlet.social.service.SocialActivityLocalService;
+import com.liferay.portlet.social.service.SocialRelationLocalService;
 import com.liferay.socialnetworking.social.BaseSocialNetworkingRequestInterpreter;
 import com.liferay.socialnetworking.summary.portlet.SummaryPortlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -29,4 +33,43 @@ import org.osgi.service.component.annotations.Component;
 )
 public class SummaryRequestInterpreter
 	extends BaseSocialNetworkingRequestInterpreter {
+
+	@Override
+	protected SocialActivityLocalService getSocialActivityLocalService() {
+		return _socialActivityLocalService;
+	}
+
+	@Override
+	protected SocialRelationLocalService getSocialRelationLocalService() {
+		return _socialRelationLocalService;
+	}
+
+	@Override
+	protected UserLocalService getUserLocalService() {
+		return _userLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSocialActivityLocalService(
+		SocialActivityLocalService socialActivityLocalService) {
+
+		_socialActivityLocalService = socialActivityLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSocialRelationLocalService(
+		SocialRelationLocalService socialRelationLocalService) {
+
+		_socialRelationLocalService = socialRelationLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private SocialActivityLocalService _socialActivityLocalService;
+	private SocialRelationLocalService _socialRelationLocalService;
+	private UserLocalService _userLocalService;
+
 }

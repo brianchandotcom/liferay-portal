@@ -14,11 +14,55 @@
 
 package com.liferay.socialnetworking.friends.social;
 
+import com.liferay.portal.service.UserLocalService;
+import com.liferay.portlet.social.service.SocialActivityLocalService;
+import com.liferay.portlet.social.service.SocialRelationLocalService;
 import com.liferay.socialnetworking.social.BaseSocialNetworkingRequestInterpreter;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class FriendsRequestInterpreter
 	extends BaseSocialNetworkingRequestInterpreter {
+
+	@Override
+	protected SocialActivityLocalService getSocialActivityLocalService() {
+		return _socialActivityLocalService;
+	}
+
+	@Override
+	protected SocialRelationLocalService getSocialRelationLocalService() {
+		return _socialRelationLocalService;
+	}
+
+	@Override
+	protected UserLocalService getUserLocalService() {
+		return _userLocalService;
+	}
+
+	@Reference
+	protected void setSocialActivityLocalService(
+		SocialActivityLocalService socialActivityLocalService) {
+
+		_socialActivityLocalService = socialActivityLocalService;
+	}
+
+	@Reference
+	protected void setSocialRelationLocalService(
+		SocialRelationLocalService socialRelationLocalService) {
+
+		_socialRelationLocalService = socialRelationLocalService;
+	}
+
+	@Reference
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private SocialActivityLocalService _socialActivityLocalService;
+	private SocialRelationLocalService _socialRelationLocalService;
+	private UserLocalService _userLocalService;
+
 }

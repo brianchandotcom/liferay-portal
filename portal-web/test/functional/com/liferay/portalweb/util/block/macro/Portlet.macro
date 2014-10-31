@@ -306,6 +306,15 @@
 
 	<command name="viewPG">
 		<execute action="BasePortlet#assertTextEquals" locator-key1="TITLE" value1="${portletName}" />
+
+		<if>
+			<isset var="portletBody" />
+			<then>
+				<var name="key_portletName" value="${portletName}" />
+
+				<execute action="BasePortlet#assertTextEquals" locator-key1="PORTLET_BODY" value1="${portletBody}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="viewSpecificPG">

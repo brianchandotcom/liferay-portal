@@ -1,0 +1,13 @@
+<definition>
+	<command name="calculatePG">
+		<execute action="Loancalculator#type" locator-key1="LOAN_AMOUNT" value1="${loanAmount}" />
+		<execute action="Loancalculator#type" locator-key1="LOAN_INTEREST_RATE" value1="${loanInterestRate}" />
+		<execute action="Loancalculator#type" locator-key1="LOAN_YEARS" value1="${loanYears}" />
+
+		<execute action="Loancalculator#assertClick" locator-key1="CALCULATE_BUTTON" value1="Calculate" />
+
+		<execute action="Loancalculator#assertTextEquals" locator-key1="LOAN_MONTHLY_PAYMENT" value1="${loanMonthlyPayment}" />
+		<execute action="Loancalculator#assertTextEquals" locator-key1="LOAN_INTEREST_PAID" value1="${loanInterestPaid}" />
+		<execute action="Loancalculator#assertTextEquals" locator-key1="LOAN_TOTAL_PAID" value1="${loanTotalPaid}" />
+	</command>
+</definition>

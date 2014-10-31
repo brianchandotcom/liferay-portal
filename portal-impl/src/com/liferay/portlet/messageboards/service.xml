@@ -24,6 +24,7 @@
 		<!-- Other fields -->
 
 		<column name="banUserId" type="long" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 
@@ -77,6 +78,7 @@
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
 		<column name="statusDate" type="Date" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 
@@ -161,6 +163,7 @@
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
 		<column name="threadId" type="long" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 
@@ -274,6 +277,7 @@
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
 		<column name="statusDate" type="Date" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 
@@ -493,6 +497,7 @@
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
 		<column name="statusDate" type="Date" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 
@@ -592,6 +597,7 @@
 		<!-- Other fields -->
 
 		<column name="threadId" type="long" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 

@@ -28,4 +28,7 @@ public interface PortletLayoutListener {
 	public void onRemoveFromLayout(String portletId, long plid)
 		throws PortletLayoutListenerException;
 
+	public void onSetup(String portletId, long plid)
+		throws PortletLayoutListenerException;
+
 }

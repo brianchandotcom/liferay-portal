@@ -101,6 +101,14 @@ public class JournalContentSearchLocalServiceImpl
 
 	@Override
 	public void deleteArticleContentSearch(
+		long groupId, boolean privateLayout, long layoutId, String portletId) {
+
+		journalContentSearchPersistence.removeByG_P_L_P(
+			groupId, privateLayout, layoutId, portletId);
+	}
+
+	@Override
+	public void deleteArticleContentSearch(
 		long groupId, boolean privateLayout, long layoutId, String portletId,
 		String articleId) {
 

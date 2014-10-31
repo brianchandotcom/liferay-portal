@@ -71,6 +71,9 @@ public interface JournalContentSearchLocalService extends BaseLocalService,
 		long contentSearchId);
 
 	public void deleteArticleContentSearch(long groupId, boolean privateLayout,
+		long layoutId, java.lang.String portletId);
+
+	public void deleteArticleContentSearch(long groupId, boolean privateLayout,
 		long layoutId, java.lang.String portletId, java.lang.String articleId);
 
 	public void deleteArticleContentSearches(long groupId,

@@ -129,6 +129,40 @@ public class JournalContentPortletLayoutListener
 		}
 	}
 
+	@Override
+	public void onSetup(String portletId, long plid)
+		throws PortletLayoutListenerException {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Setup " + portletId + " from layout " + plid);
+		}
+
+		try {
+			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+			PortletPreferences preferences =
+				PortletPreferencesFactoryUtil.getPortletSetup(
+					layout, portletId, StringPool.BLANK);
+
+			String articleId = preferences.getValue("articleId", null);
+
+			if (Validator.isNull(articleId)) {
+				JournalContentSearchLocalServiceUtil.deleteArticleContentSearch(
+					layout.getGroupId(), layout.isPrivateLayout(),
+					layout.getLayoutId(), portletId);
+
+				return;
+			}
+
+			JournalContentSearchLocalServiceUtil.updateContentSearch(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId(), portletId, articleId, true);
+		}
+		catch (Exception e) {
+			throw new PortletLayoutListenerException(e);
+		}
+	}
+
 	protected String getRuntimePortletId(String xml) throws Exception {
 		Document document = SAXReaderUtil.read(xml);
 

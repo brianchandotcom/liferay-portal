@@ -69,6 +69,13 @@ public class JournalContentSearchLocalServiceUtil {
 	}
 
 	public static void deleteArticleContentSearch(long groupId,
+		boolean privateLayout, long layoutId, java.lang.String portletId) {
+		getService()
+			.deleteArticleContentSearch(groupId, privateLayout, layoutId,
+			portletId);
+	}
+
+	public static void deleteArticleContentSearch(long groupId,
 		boolean privateLayout, long layoutId, java.lang.String portletId,
 		java.lang.String articleId) {
 		getService()

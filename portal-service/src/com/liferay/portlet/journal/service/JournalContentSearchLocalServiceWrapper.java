@@ -66,6 +66,13 @@ public class JournalContentSearchLocalServiceWrapper
 
 	@Override
 	public void deleteArticleContentSearch(long groupId, boolean privateLayout,
+		long layoutId, java.lang.String portletId) {
+		_journalContentSearchLocalService.deleteArticleContentSearch(groupId,
+			privateLayout, layoutId, portletId);
+	}
+
+	@Override
+	public void deleteArticleContentSearch(long groupId, boolean privateLayout,
 		long layoutId, java.lang.String portletId, java.lang.String articleId) {
 		_journalContentSearchLocalService.deleteArticleContentSearch(groupId,
 			privateLayout, layoutId, portletId, articleId);

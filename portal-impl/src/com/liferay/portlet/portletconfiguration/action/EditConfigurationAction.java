@@ -17,12 +17,15 @@ package com.liferay.portlet.portletconfiguration.action;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
+import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.ResourceServingConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 
 import javax.portlet.ActionRequest;
@@ -75,6 +78,19 @@ public class EditConfigurationAction extends PortletAction {
 
 		configurationAction.processAction(
 			portletConfig, actionRequest, actionResponse);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		PortletLayoutListener portletLayoutListener =
+			portlet.getPortletLayoutListenerInstance();
+
+		if (portletLayoutListener != null) {
+			portletLayoutListener.onSetup(
+				portlet.getPortletId(), layout.getPlid());
+		}
 	}
 
 	@Override

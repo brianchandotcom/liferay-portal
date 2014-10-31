@@ -56,4 +56,8 @@ public class AssetPublisherPortletLayoutListener
 		}
 	}
 
+	@Override
+	public void onSetup(String portletId, long plid) {
+	}
+
 }

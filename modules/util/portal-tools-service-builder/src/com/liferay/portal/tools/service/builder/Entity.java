@@ -802,6 +802,7 @@ public class Entity {
 	public boolean isStagedModel() {
 		if (hasUuid() && hasColumn("companyId") &&
 			hasColumn("createDate", "Date") &&
+			hasColumn("lastPublishDate", "Date") &&
 			hasColumn("modifiedDate", "Date")) {
 
 			return true;

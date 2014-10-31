@@ -44,11 +44,6 @@
 	<td>Document Type</td>
 </tr>
 <tr>
-	<td>SAVE_BUTTON</td>
-	<td>//button[contains(.,'Save')]</td>
-	<td>Save</td>
-</tr>
-<tr>
 	<td>PUBLISH_BUTTON</td>
 	<td>//button[contains(.,'Publish')]</td>
 	<td>Publish</td>

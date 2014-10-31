@@ -257,9 +257,7 @@
 		<execute action="PGAssetpublisherConfigurationManual#assertTextEquals" locator-key1="ASSET_SELECTION_MANUAL_ASSET_ENTRIES_MENULIST_ITEM" value1="Local Document Type Name" />
 	</command>
 
-	<command known-issues="LPS-50647" name="AssetPublisherCategoriesLocalization" priority="3">
-		<var name="siteName" value="Liferay" />
-
+	<command name="AssetPublisherCategoriesLocalization" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>

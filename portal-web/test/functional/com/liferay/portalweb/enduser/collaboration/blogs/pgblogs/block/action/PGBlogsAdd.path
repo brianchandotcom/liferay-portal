@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>SETTINGS_TAB</td>
-	<td>//a[contains(text(),'Settings')]</td>
+	<td>//a[contains(.,'Settings')]</td>
 	<td></td>
 </tr>
 <tr>

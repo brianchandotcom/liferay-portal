@@ -36,7 +36,7 @@ import java.util.Date;
 import java.util.concurrent.Callable;
 
 /**
- * [[@]] Simple Repository example. The goals:
+ * [[@]] Simple Repository example. Repository goals:
  *
  * + created for each type of aggregate that needs global access
  * + provide the illusion of an in-memory collection of all objects of aggregate’s root type.

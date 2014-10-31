@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.polls.exception.QuestionChoiceException;
 import com.liferay.polls.exception.QuestionDescriptionException;
 import com.liferay.polls.exception.QuestionTitleException;
-import com.liferay.polls.service.PollsChoiceLocalServiceUtil;
 import com.liferay.polls.service.PollsVoteLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -63,16 +62,20 @@ public class PollsQuestion extends PollsQuestionModelImpl implements PollsQuesti
 		return _choices;
 	}
 
+	// [[@]] Remove this! It's not Question responsibility to return the list of all votes.
 	public List<PollsVote> getVotes() {
 		return PollsVoteLocalServiceUtil.getQuestionVotes(
 			getQuestionId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
+	// [[@]] Remove this! It's not Question responsibility to return the list of all votes.
 	public List<PollsVote> getVotes(int start, int end) {
 		return PollsVoteLocalServiceUtil.getQuestionVotes(
 			getQuestionId(), start, end);
 	}
 
+	// [[@]] Remove this! When business is spread across several entities, it should be
+	// stored in domain service.
 	public int getVotesCount() {
 		return PollsVoteLocalServiceUtil.getQuestionVotesCount(getQuestionId());
 	}
@@ -88,6 +91,7 @@ public class PollsQuestion extends PollsQuestionModelImpl implements PollsQuesti
 		}
 	}
 
+	// [[@]] WTF ServiceContext ???
 	public boolean isExpired(
 		ServiceContext serviceContext, Date defaultCreateDate) {
 
@@ -123,6 +127,7 @@ public class PollsQuestion extends PollsQuestionModelImpl implements PollsQuesti
 		return _guestPermissions;
 	}
 
+	// [[@]] Move validation out from Model.
 	public void validate() throws PortalException {
 
 		Locale locale = LocaleUtil.getSiteDefault();
@@ -156,13 +161,4 @@ public class PollsQuestion extends PollsQuestionModelImpl implements PollsQuesti
 	}
 
 	private List<PollsChoice> _choices = new ArrayList<>();
-
-	// ---------------------------------------------------------------- business method
-
-	// [[@]] If we want to add behavior to the classes, this would be the place :)
-	// But I think that is too advance for us at the moment.
-	public void voteForChoice() {
-
-	}
-
 }

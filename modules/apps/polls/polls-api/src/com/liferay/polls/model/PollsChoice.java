@@ -39,14 +39,20 @@ public class PollsChoice extends PollsChoiceModelImpl implements PollsChoiceMode
 	// PollsChoice constructor _may_ takes PollsQuestion as an argument,
 	// but that is not necessary. The key point is that choices can only
 	// be added to the questions and not the opposite.
+
+	// [[@]] PollsChoice is NOT an value object any more. We need to know it's
+	// identity since it's votes are associated to exact, identified, choice.
+	// Therefore, one choice is no longer equal by value equality, since it
+	// depends on choices, too.
+
 	public PollsChoice() {
 		setNew(true);
 	}
 
 	/**
-	 * [[@]] returns assotiated polls question.
+	 * [[@]] returns associated polls question.
 	 * not necessary needed, we are using it only for
-	 * haking purposes at the moment and this may be removed later
+	 * hacking purposes at the moment and this may be removed later.
 	 */
 	public PollsQuestion getPollsQuestion() {
 		return _pollsQuestion;

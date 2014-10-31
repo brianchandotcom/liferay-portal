@@ -18,6 +18,10 @@ package com.liferay.java8.util;
  * [[@]] Stripped down version of java 8 Function type
  *
  * Represents a function that accepts one argument and produces a result.
+ * In functional code, the output value of a function depends only on the arguments
+ * that are input to the function, so calling a function twice with the same value
+ * for an argument x will produce the same result f(x) each time. Function
+ * state is not changed.
  *
  * Parameters:
  * <T> the type of the input to the function

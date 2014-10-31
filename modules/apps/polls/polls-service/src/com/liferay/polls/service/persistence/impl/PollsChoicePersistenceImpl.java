@@ -2356,9 +2356,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 *
 	 * @return the new polls choice
 	 */
+	// [[@]] we should not use this method any more
 	@Override
 	public PollsChoice create() {
-		PollsChoice pollsChoiceImpl = new PollsChoice();	// [[@]] we should not use this method any more
+		PollsChoice pollsChoiceImpl = new PollsChoice();
 
 		Company company = companyProvider.get();
 

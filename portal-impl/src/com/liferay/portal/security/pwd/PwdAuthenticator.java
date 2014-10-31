@@ -16,14 +16,16 @@ package com.liferay.portal.security.pwd;
 
 import com.liferay.portal.PwdEncryptorException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsUtil;
 
 import java.io.UnsupportedEncodingException;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -54,6 +56,16 @@ public class PwdAuthenticator {
 
 				String shardKey = PropsUtil.get(PropsKeys.AUTH_MAC_SHARED_KEY);
 
+				if (Validator.isNull(shardKey)) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Please set " + PropsKeys.AUTH_MAC_SHARED_KEY +
+								" in portal-ext.properties");
+					}
+
+					return false;
+				}
+
 				encryptedPassword = Base64.encode(
 					digester.digest(shardKey.getBytes(StringPool.UTF8)));
 
@@ -74,5 +86,8 @@ public class PwdAuthenticator {
 
 		return false;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		PwdAuthenticator.class.getName());
 
 }

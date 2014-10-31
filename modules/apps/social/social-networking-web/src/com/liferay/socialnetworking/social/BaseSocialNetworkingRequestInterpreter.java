@@ -24,21 +24,21 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.social.model.BaseSocialRequestInterpreter;
 import com.liferay.portlet.social.model.SocialRelationConstants;
 import com.liferay.portlet.social.model.SocialRequest;
 import com.liferay.portlet.social.model.SocialRequestFeedEntry;
-import com.liferay.portlet.social.service.SocialActivityLocalServiceUtil;
-import com.liferay.portlet.social.service.SocialRelationLocalServiceUtil;
+import com.liferay.portlet.social.service.SocialActivityLocalService;
+import com.liferay.portlet.social.service.SocialRelationLocalService;
 import com.liferay.socialnetworking.friends.social.FriendsActivityKeys;
 import com.liferay.socialnetworking.friends.social.FriendsRequestKeys;
 
 /**
  * @author Adolfo Pérez
  */
-public class BaseSocialNetworkingRequestInterpreter
+public abstract class BaseSocialNetworkingRequestInterpreter
 	extends BaseSocialRequestInterpreter {
 
 	@Override
@@ -53,8 +53,9 @@ public class BaseSocialNetworkingRequestInterpreter
 
 		String creatorUserName = getUserName(request.getUserId(), themeDisplay);
 
-		User creatorUser = UserLocalServiceUtil.getUserById(
-			request.getUserId());
+		UserLocalService userLocalService = getUserLocalService();
+
+		User creatorUser = userLocalService.getUserById(request.getUserId());
 
 		int requestType = request.getType();
 
@@ -110,11 +111,17 @@ public class BaseSocialNetworkingRequestInterpreter
 		SocialRequest request, ThemeDisplay themeDisplay) {
 
 		try {
-			SocialRelationLocalServiceUtil.addRelation(
+			SocialRelationLocalService socialRelationLocalService =
+				getSocialRelationLocalService();
+
+			socialRelationLocalService.addRelation(
 				request.getUserId(), request.getReceiverUserId(),
 				SocialRelationConstants.TYPE_BI_FRIEND);
 
-			SocialActivityLocalServiceUtil.addActivity(
+			SocialActivityLocalService socialActivityLocalService =
+				getSocialActivityLocalService();
+
+			socialActivityLocalService.addActivity(
 				request.getUserId(), 0, User.class.getName(),
 				request.getUserId(), FriendsActivityKeys.ADD_FRIEND,
 				StringPool.BLANK, request.getReceiverUserId());
@@ -125,6 +132,14 @@ public class BaseSocialNetworkingRequestInterpreter
 
 		return true;
 	}
+
+	protected abstract SocialActivityLocalService
+		getSocialActivityLocalService();
+
+	protected abstract SocialRelationLocalService
+		getSocialRelationLocalService();
+
+	protected abstract UserLocalService getUserLocalService();
 
 	private static final String[] _CLASS_NAMES = new String[] {
 		User.class.getName()

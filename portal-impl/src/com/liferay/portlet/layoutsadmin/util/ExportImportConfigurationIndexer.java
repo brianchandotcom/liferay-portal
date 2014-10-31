@@ -16,6 +16,7 @@ package com.liferay.portlet.layoutsadmin.util;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -175,15 +176,27 @@ public class ExportImportConfigurationIndexer extends BaseIndexer {
 	protected void populateLayoutIds(
 		Document document, Map<String, Serializable> settingsMap) {
 
-		if (!settingsMap.containsKey("layoutIdMap")) {
+		if (!settingsMap.containsKey("layoutIdMap") &&
+			!settingsMap.containsKey("layoutIds")) {
+
 			return;
 		}
 
-		Map<Number, Boolean> layoutIdMap =
-			(Map<Number, Boolean>)settingsMap.get("layoutIdMap");
+		long[] layoutIds = GetterUtil.getLongValues(
+			settingsMap.get("layoutIds"));
 
-		document.addKeyword(
-			"layoutIds", ArrayUtil.toLongArray(layoutIdMap.keySet()));
+		if (ArrayUtil.isEmpty(layoutIds)) {
+			Map<Long, Boolean> layoutIdMap =
+				(Map<Long, Boolean>)settingsMap.get("layoutIdMap");
+
+			try {
+				layoutIds = ExportImportHelperUtil.getLayoutIds(layoutIdMap);
+			}
+			catch (PortalException pe) {
+			}
+		}
+
+		document.addKeyword("layoutIds", layoutIds);
 	}
 
 	protected void populateLocale(

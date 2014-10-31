@@ -17,6 +17,7 @@ package com.liferay.portal;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.Date;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -69,18 +70,26 @@ public class UserPasswordException extends PortalException {
 
 	public static class MustBeLonger extends UserPasswordException {
 
-		public MustBeLonger(long userId) {
+		public MustBeLonger(long userId, int minLength) {
 			super(
-				String.format("Password for user %s must be longer", userId),
+				String.format(
+					"Password for user %s must be longer than %s", userId,
+					minLength),
 				PASSWORD_LENGTH);
 
+			_minLength = minLength;
 			_userId = userId;
+		}
+
+		public int getMinLength() {
+			return _minLength;
 		}
 
 		public long getUserId() {
 			return _userId;
 		}
 
+		private final int _minLength;
 		private long _userId;
 
 	}
@@ -244,20 +253,27 @@ public class UserPasswordException extends PortalException {
 
 	public static class MustNotHaveTrivialWords extends UserPasswordException {
 
-		public MustNotHaveTrivialWords(long userId) {
+		public MustNotHaveTrivialWords(long userId, Set<String> trivialWords) {
 			super(
 				String.format(
-					"Password for user %s must not contain trivial words",
-					userId),
+					"Password for user %s must not any trivial words " +
+						"including: %s",
+					userId, trivialWords),
 				PASSWORD_CONTAINS_TRIVIAL_WORDS);
 
 			_userId = userId;
+			_trivialWords = trivialWords;
+		}
+
+		public Set<String> getTrivialWords() {
+			return _trivialWords;
 		}
 
 		public long getUserId() {
 			return _userId;
 		}
 
+		private final Set<String> _trivialWords;
 		private long _userId;
 
 	}

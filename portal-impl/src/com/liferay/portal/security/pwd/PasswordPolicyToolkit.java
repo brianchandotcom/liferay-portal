@@ -89,11 +89,13 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 			if (!passwordPolicy.isAllowDictionaryWords() &&
 				WordsUtil.isDictionaryWord(password1)) {
 
-				throw new UserPasswordException.MustNotHaveTrivialWords(userId);
+				throw new UserPasswordException.MustNotHaveTrivialWords(
+					userId, WordsUtil.getDictionarySet());
 			}
 
 			if (password1.length() < passwordPolicy.getMinLength()) {
-				throw new UserPasswordException.MustBeLonger(userId);
+				throw new UserPasswordException.MustBeLonger(
+					userId, passwordPolicy.getMinLength());
 			}
 
 			if ((getUsageCount(password1, _alphanumericCharsetArray) <

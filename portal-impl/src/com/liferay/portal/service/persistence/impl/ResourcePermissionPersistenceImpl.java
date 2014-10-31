@@ -4734,7 +4734,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		MVCCModel {
 		@Override
 		public long getMvccVersion() {
-			return 0;
+			return -1;
 		}
 
 		@Override

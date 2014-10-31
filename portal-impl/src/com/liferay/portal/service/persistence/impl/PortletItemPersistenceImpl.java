@@ -2305,7 +2305,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		MVCCModel {
 		@Override
 		public long getMvccVersion() {
-			return 0;
+			return -1;
 		}
 
 		@Override

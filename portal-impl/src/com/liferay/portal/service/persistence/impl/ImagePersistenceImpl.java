@@ -1181,7 +1181,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	private static class NullCacheModel implements CacheModel<Image>, MVCCModel {
 		@Override
 		public long getMvccVersion() {
-			return 0;
+			return -1;
 		}
 
 		@Override

@@ -1003,7 +1003,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 		MVCCModel {
 		@Override
 		public long getMvccVersion() {
-			return 0;
+			return -1;
 		}
 
 		@Override

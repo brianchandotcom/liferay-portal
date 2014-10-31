@@ -82,7 +82,7 @@ public class GoogleDocsDLViewFileVersionDisplayContextFactory
 
 	@Override
 	public DLViewFileVersionDisplayContext
-		getMGFileVersionActionsDisplayContext(
+		getIGFileVersionActionsDisplayContext(
 			DLViewFileVersionDisplayContext
 				parentDLViewFileVersionDisplayContext,
 			HttpServletRequest request, HttpServletResponse response,

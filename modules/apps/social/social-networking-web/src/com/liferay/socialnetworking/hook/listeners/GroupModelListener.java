@@ -17,23 +17,37 @@ package com.liferay.socialnetworking.hook.listeners;
 import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.Group;
-import com.liferay.socialnetworking.service.WallEntryLocalServiceUtil;
+import com.liferay.portal.model.ModelListener;
+import com.liferay.socialnetworking.service.WallEntryLocalService;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(service = ModelListener.class)
 public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Override
 	public void onBeforeRemove(Group group) throws ModelListenerException {
 		try {
 			if (group.isUser()) {
-				WallEntryLocalServiceUtil.deleteWallEntries(group.getGroupId());
+				_wallEntryLocalService.deleteWallEntries(group.getGroupId());
 			}
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setWallEntryLocalService(
+		WallEntryLocalService wallEntryLocalService) {
+
+		_wallEntryLocalService = wallEntryLocalService;
+	}
+
+	private WallEntryLocalService _wallEntryLocalService;
 
 }

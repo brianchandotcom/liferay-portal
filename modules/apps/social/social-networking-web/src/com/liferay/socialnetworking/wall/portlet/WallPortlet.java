@@ -20,20 +20,21 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.social.model.SocialRelationConstants;
-import com.liferay.portlet.social.service.SocialRelationLocalServiceUtil;
+import com.liferay.portlet.social.service.SocialRelationLocalService;
 import com.liferay.socialnetworking.model.WallEntry;
-import com.liferay.socialnetworking.service.WallEntryLocalServiceUtil;
+import com.liferay.socialnetworking.service.WallEntryLocalService;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -73,20 +74,20 @@ public class WallPortlet extends MVCPortlet {
 			return;
 		}
 
-		Group group = GroupLocalServiceUtil.getGroup(
+		Group group = _groupLocalService.getGroup(
 			themeDisplay.getScopeGroupId());
 
 		User user = null;
 
 		if (group.isUser()) {
-			user = UserLocalServiceUtil.getUserById(group.getClassPK());
+			user = _userLocalService.getUserById(group.getClassPK());
 		}
 		else {
 			return;
 		}
 
 		if ((themeDisplay.getUserId() != user.getUserId()) &&
-			!SocialRelationLocalServiceUtil.hasRelation(
+			!_socialRelationLocalService.hasRelation(
 				themeDisplay.getUserId(), user.getUserId(),
 				SocialRelationConstants.TYPE_BI_FRIEND)) {
 
@@ -95,7 +96,7 @@ public class WallPortlet extends MVCPortlet {
 
 		String comments = ParamUtil.getString(actionRequest, "comments");
 
-		WallEntryLocalServiceUtil.addWallEntry(
+		_wallEntryLocalService.addWallEntry(
 			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(), comments,
 			themeDisplay);
 	}
@@ -116,7 +117,7 @@ public class WallPortlet extends MVCPortlet {
 		WallEntry wallEntry = null;
 
 		try {
-			wallEntry = WallEntryLocalServiceUtil.getWallEntry(wallEntryId);
+			wallEntry = _wallEntryLocalService.getWallEntry(wallEntryId);
 		}
 		catch (Exception e) {
 			return;
@@ -126,13 +127,13 @@ public class WallPortlet extends MVCPortlet {
 			return;
 		}
 
-		Group group = GroupLocalServiceUtil.getGroup(
+		Group group = _groupLocalService.getGroup(
 			themeDisplay.getScopeGroupId());
 
 		User user = null;
 
 		if (group.isUser()) {
-			user = UserLocalServiceUtil.getUserById(group.getClassPK());
+			user = _userLocalService.getUserById(group.getClassPK());
 		}
 		else {
 			return;
@@ -146,10 +147,39 @@ public class WallPortlet extends MVCPortlet {
 		}
 
 		try {
-			WallEntryLocalServiceUtil.deleteWallEntry(wallEntryId);
+			_wallEntryLocalService.deleteWallEntry(wallEntryId);
 		}
 		catch (Exception e) {
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSocialRelationLocalService(
+		SocialRelationLocalService socialRelationLocalService) {
+
+		_socialRelationLocalService = socialRelationLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWallEntryLocalService(
+		WallEntryLocalService wallEntryLocalService) {
+
+		_wallEntryLocalService = wallEntryLocalService;
+	}
+
+	private GroupLocalService _groupLocalService;
+	private SocialRelationLocalService _socialRelationLocalService;
+	private UserLocalService _userLocalService;
+	private WallEntryLocalService _wallEntryLocalService;
 
 }

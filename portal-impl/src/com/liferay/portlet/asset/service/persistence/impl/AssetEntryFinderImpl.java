@@ -304,39 +304,38 @@ public class AssetEntryFinderImpl
 			sb.append(" AND ((AssetEntry.title LIKE ?) OR");
 			sb.append(" (AssetEntry.description LIKE ?))");
 		}
-		else {
+		else if (!titleIsNull || !descriptionIsNull || !userNameIsNull) {
+			sb.append("AND (");
+
 			if (!titleIsNull) {
-				if ((descriptionIsNull && userNameIsNull) || isAndOperator) {
-					sb.append(" AND (AssetEntry.title LIKE ?)");
-				}
-				else {
-					sb.append(" AND ((AssetEntry.title LIKE ?)");
-				}
+				sb.append("(AssetEntry.title LIKE ?)");
 			}
 
 			if (!descriptionIsNull) {
-				if ((titleIsNull && userNameIsNull) || isAndOperator) {
+				if (titleIsNull) {
+					sb.append("(AssetEntry.description LIKE ?)");
+				}
+				else if (isAndOperator) {
 					sb.append(" AND (AssetEntry.description LIKE ?)");
 				}
-				else if (titleIsNull) {
-					sb.append(" AND ((AssetEntry.description LIKE ?)");
-				}
-				else if (!userNameIsNull) {
-					sb.append(" OR (AssetEntry.description LIKE ?)");
-				}
 				else {
-					sb.append(" OR (AssetEntry.description LIKE ?))");
+					sb.append(" OR (AssetEntry.description LIKE ?)");
 				}
 			}
 
 			if (!userNameIsNull) {
-				if ((titleIsNull && descriptionIsNull) || isAndOperator) {
+				if (titleIsNull && descriptionIsNull) {
+					sb.append("(AssetEntry.userName LIKE ?)");
+				}
+				else if (isAndOperator) {
 					sb.append(" AND (AssetEntry.userName LIKE ?)");
 				}
 				else {
-					sb.append(" OR (AssetEntry.userName LIKE ?))");
+					sb.append(" OR (AssetEntry.userName LIKE ?)");
 				}
 			}
+
+			sb.append(")");
 		}
 
 		// Layout

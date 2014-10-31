@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_WEB_CONTENT_IFRAME</td>
+	<td>//iframe[contains(@id,'selectContent')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
@@ -39,23 +44,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td></td>
-	<td></td>
+	<td>SELECT_WEB_CONTENT_BUTTON</td>
+	<td>//button[contains(.,'Select Web Content')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SEARCH_FIELD</td>
-	<td>//input[@id='_86_keywords']</td>
+	<td>//div[contains(@class,'advanced-search')]/input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SEARCH_BUTTON</td>
 	<td>//button[contains(.,'Search')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <tr>
@@ -91,11 +91,6 @@
 <tr>
 	<td>ENABLE_VIEW_COUNT_INCREMENT_CHECKBOX</td>
 	<td>//input[@id='_86_enableViewCountIncrement']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <tr>
@@ -141,28 +136,33 @@
 </tr>
 <!--WEB_CONTENT_TABLE-->
 <tr>
-	<td>WEB_CONTENT_TABLE_ID</td>
-	<td>//tr[contains(.,'${key_webContentTitle}')]/td[1]/a</td>
+	<td>WEB_CONTENT_TABLE_TITLE</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>WEB_CONTENT_TABLE_TITLE</td>
-	<td>//tr[contains(.,'${key_webContentTitle}')]/td[2]/a</td>
+	<td>WEB_CONTENT_TABLE_DESCRIPTION</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_TABLE_USER_NAME</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>WEB_CONTENT_TABLE_MODIFIED_DATE</td>
-	<td>//tr[contains(.,'${key_webContentTitle}')]/td[3]/span</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td[4]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>WEB_CONTENT_TABLE_DISPLAY_DATE</td>
-	<td>//tr[contains(.,'${key_webContentTitle}')]/td[4]/span</td>
+	<td>WEB_CONTENT_TABLE_SITE</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td[5]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>WEB_CONTENT_TABLE_AUTHOR</td>
-	<td>//tr[contains(.,'${key_webContentTitle}')]/td[5]/a</td>
+	<td>WEB_CONTENT_CHOOSE_BUTTON</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td/button</td>
 	<td></td>
 </tr>
 </tbody>

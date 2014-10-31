@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SETTINGS_TAB</td>
+	<td>//a[contains(.,'Settings')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TITLE_FIELD</td>
 	<td>//div[@class='entry-title']/h2/div</td>
 	<td></td>

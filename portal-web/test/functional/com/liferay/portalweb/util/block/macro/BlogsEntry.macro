@@ -263,6 +263,8 @@
 		<if>
 			<equals arg1="${entryAddRelatedAsset}" arg2="true" />
 			<then>
+				<execute action="PGBlogsAdd#assertClick" locator-key1="SETTINGS_TAB" value1="Settings" />
+
 				<execute macro="BlogsEntry#addRelatedAssetPG">
 					<var name="assetTitle" value="${assetTitle}" />
 					<var name="assetType" value="${assetType}" />
@@ -273,6 +275,7 @@
 		<if>
 			<equals arg1="${viewableBy}" arg2="true" />
 			<then>
+				<execute action="PGBlogsAdd#click" locator-key1="SETTINGS_TAB" />
 				<execute action="PGBlogsAdd#select" locator-key1="PERMISSIONS_VIEWABLE_BY_DROPDOWN" value1="${viewableBySelection}" />
 			</then>
 		</if>
@@ -453,6 +456,7 @@
 		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_MENULIST_EDIT" value1="Edit" />
 
 		<execute action="CPBlogsEdit#assertElementPresent" locator-key1="CONTENT_FIELD" />
+		<execute action="CPBlogsEdit#assertClick" locator-key1="SETTINGS_TAB" value1="Settings" />
 
 		<if>
 			<condition action="CPBlogsEdit#isElementNotPresent" locator-key1="CATEGORIZATION_TAGS_ADD_BUTTON" />

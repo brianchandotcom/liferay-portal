@@ -66,7 +66,7 @@ public abstract class BaseWebDriverImpl
 
 			WebDriver.Window window = options.window();
 
-			int x = 1065;
+			int x = 1280;
 			int y = 1040;
 
 			window.setSize(new Dimension(x, y));

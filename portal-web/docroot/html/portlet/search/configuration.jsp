@@ -107,7 +107,7 @@
 	</aui:button-row>
 </aui:form>
 
-<aui:script use="aui-base">
+<aui:script>
 	Liferay.Util.toggleRadio('<portlet:namespace />advanced', '<portlet:namespace />advancedConfiguration', '<portlet:namespace />basicConfiguration');
 	Liferay.Util.toggleRadio('<portlet:namespace />basic', '<portlet:namespace />basicConfiguration', '<portlet:namespace />advancedConfiguration');
 	Liferay.Util.toggleBoxes('<portlet:namespace />collatedSpellCheckResultEnabled', '<portlet:namespace />collatedSpellCheckResultOptionsContainer');

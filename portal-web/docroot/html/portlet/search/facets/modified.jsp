@@ -160,56 +160,50 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 </c:if>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>clearFacet',
-		function(selection) {
-			document.<portlet:namespace />fm['<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>'].value = '';
-			document.<portlet:namespace />fm['<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>selection'].value = selection;
+	function <portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>clearFacet(selection) {
+		var form = AUI.$(document.<portlet:namespace />fm);
 
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['aui-base']
-	);
+		form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>').val('');
+		form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>selection').val(selection);
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>searchCustomRange',
-		function(selection) {
-			var fromDate = document.<portlet:namespace />fm['<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>from'].value;
-			var toDate = document.<portlet:namespace />fm['<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>to'].value;
+		submitForm(form);
+	}
 
-			if (fromDate && toDate) {
-				if (fromDate > toDate) {
-					fromDate = document.<portlet:namespace />fm['<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>to'].value;
-					toDate = document.<portlet:namespace />fm['<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>from'].value;
+	function <portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>searchCustomRange(selection) {
+		var form = AUI.$(document.<portlet:namespace />fm);
 
-					document.<portlet:namespace />fm['<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>to'].value = toDate;
-					document.<portlet:namespace />fm['<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>from'].value = fromDate;
-				}
+		var fromDate = form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>from');
+		var toDate = form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>to');
 
-				var range = '[' + fromDate.replace(/-/g, '') + '000000 TO ' + toDate.replace(/-/g, '') + '235959]';
+		var fromDateVal = fromDate.val();
+		var toDateVal = toDate.val();
 
-				document.<portlet:namespace />fm['<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>'].value = range;
-				document.<portlet:namespace />fm['<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>selection'].value = selection;
+		if (fromDateVal && toDateVal) {
+			if (fromDateVal > toDateVal) {
+				fromDateVal = toDate.val();
+				toDateVal = fromDate.val();
 
-				submitForm(document.<portlet:namespace />fm);
+				fromDate.val(fromDateVal);
+				toDate.val(toDateVal);
 			}
-		},
-		['aui-base']
-	);
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>setRange',
-		function(selection, range) {
-			document.<portlet:namespace />fm['<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>'].value = range;
-			document.<portlet:namespace />fm['<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>selection'].value = selection;
+			var range = '[' + fromDateVal.replace(/-/g, '') + '000000 TO ' + toDateVal.replace(/-/g, '') + '235959]';
 
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['aui-base']
-	);
+			form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>').val(range);
+			form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>selection').val(selection);
+
+			submitForm(form);
+		}
+	}
+
+	function <portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>setRange(selection, range) {
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>').val(range);
+		form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>selection').val(selection);
+
+		submitForm(form);
+	}
 </aui:script>
 
 <aui:script use="aui-datepicker-deprecated,aui-form-validator">

@@ -93,14 +93,11 @@
 </div>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />searchKeywords',
-		function(newKeywords) {
-			document.<portlet:namespace />fm.<portlet:namespace />keywords.value = newKeywords;
+	function <portlet:namespace />searchKeywords(newKeywords) {
+		var form = AUI.$(document.<portlet:namespace />fm);
 
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['aui-base']
-	);
+		form.fm('keywords').val(newKeywords);
+
+		submitForm(form);
+	}
 </aui:script>

@@ -1214,6 +1214,142 @@
 		</execute>
 	</command>
 
+	<command known-issues="SOS-2512" name="EditAndDeleteSOAnnouncementBySOUserWithAddedPermissions" priority="5">
+		<var name="entryContent" value="Announcements Entry Content" />
+		<var name="entryContentEdit" value="Announcements Entry Content Edit" />
+		<var name="entryTitle" value="Announcements Entry Title" />
+		<var name="entryTitleEdit" value="Announcements Entry Title Edit" />
+		<var name="entryURL" value="http://www.google.com" />
+		<var name="roleName" value="Social Office Announcements Role Name" />
+		<var name="roleType" value="Regular" />
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="${roleName}" />
+			<var name="roleType" value="${roleType}" />
+		</execute>
+
+		<execute macro="Role#assignRegRoleCP">
+			<var name="roleName" value="${roleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_MANAGE_ANNOUNCEMENTS_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Manage Announcements" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_PAGES_SITE_PAGES" />
+			<var name="permissionNavigationValue" value="Site Pages" />
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_SOCIAL_OFFICE_ANNOUNCEMENTS_APPLICATIONS_PERMISSIONS_ADD_TO_PAGE_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add to Page" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_SOCIAL_OFFICE_ANNOUNCEMENTS" />
+			<var name="permissionNavigationValue" value="Social Office Announcements" />
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_SOCIAL_OFFICE_ANNOUNCEMENTS_APPLICATIONS_PERMISSIONS_VIEW_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="View" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_SOCIAL_OFFICE_ANNOUNCEMENTS" />
+			<var name="permissionNavigationValue" value="Social Office Announcements" />
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOUserBar#joinSOSite">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOAnnouncementsEntry#addPG">
+			<var name="distributionScope" value="${siteName}" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOAnnouncementsEntry#editPG">
+			<var name="distributionScope" value="${siteName}" />
+			<var name="entryContentEdit" value="${entryContentEdit}" />
+			<var name="entryTitleEdit" value="${entryTitleEdit}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${siteName}" />
+			<var name="entryAuthor" value="${userName}" />
+			<var name="entryContent" value="${entryContentEdit}" />
+			<var name="entryTitle" value="${entryTitleEdit}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOAnnouncementsEntry#deletePG" />
+	</command>
+
 	<command name="EditSOAnnouncementsEntry" priority="5">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryContentEdit" value="Announcements Entry Content Edit" />
@@ -2000,6 +2136,295 @@
 		</execute>
 
 		<execute action="Home#open" locator1="http://localhost:8080" />
+	</command>
+
+	<command name="ViewAnnouncementTeamScopes" priority="5">
+		<var name="roleName" value="Site Publisher Role Name" />
+		<var name="roleType" value="Site" />
+		<var name="siteDescription1" value="Open Site1 Description" />
+		<var name="siteDescription2" value="Open Site2 Description" />
+		<var name="siteName1" value="Open Site1 Name" />
+		<var name="siteName2" value="Open Site2 Name" />
+		<var name="siteType" value="Open" />
+		<var name="teamDescription1" value="Team1 Description" />
+		<var name="teamDescription2" value="Team2 Description" />
+		<var name="teamDescription3" value="Team3 Description" />
+		<var name="teamDescription4" value="Team4 Description" />
+		<var name="teamName1" value="Team1 Name" />
+		<var name="teamName2" value="Team2 Name" />
+		<var name="teamName3" value="Team3 Name" />
+		<var name="teamName4" value="Team4 Name" />
+		<var name="userEmailAddress1" value="socialoffice01@liferay.com" />
+		<var name="userEmailAddress2" value="socialoffice02@liferay.com" />
+		<var name="userFirstName1" value="Social01" />
+		<var name="userFirstName2" value="Social02" />
+		<var name="userLastName1" value="User01" />
+		<var name="userLastName2" value="User02" />
+		<var name="userMiddleName1" value="Office01" />
+		<var name="userMiddleName2" value="Office02" />
+		<var name="userName1" value="Social01 Office01 User01" />
+		<var name="userName2" value="Social02 Office02 User02" />
+		<var name="userScreenName1" value="socialoffice01" />
+		<var name="userScreenName2" value="socialoffice02" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress1}" />
+			<var name="userFirstName" value="${userFirstName1}" />
+			<var name="userLastName" value="${userLastName1}" />
+			<var name="userMiddleName" value="${userMiddleName1}" />
+			<var name="userScreenName" value="${userScreenName1}" />
+		</execute>
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress2}" />
+			<var name="userFirstName" value="${userFirstName2}" />
+			<var name="userLastName" value="${userLastName2}" />
+			<var name="userMiddleName" value="${userMiddleName2}" />
+			<var name="userScreenName" value="${userScreenName2}" />
+		</execute>
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription1}" />
+			<var name="siteName" value="${siteName1}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription2}" />
+			<var name="siteName" value="${siteName2}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Teams" />
+			<var name="siteScopeName" value="${siteName1}" />
+		</execute>
+
+		<execute macro="Team#addCP">
+			<var name="siteName" value="${siteName1}" />
+			<var name="teamDescription" value="${teamDescription1}" />
+			<var name="teamName" value="${teamName1}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Teams" />
+			<var name="siteScopeName" value="${siteName1}" />
+		</execute>
+
+		<execute macro="Team#addCP">
+			<var name="siteName" value="${siteName1}" />
+			<var name="teamDescription" value="${teamDescription2}" />
+			<var name="teamName" value="${teamName2}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Teams" />
+			<var name="siteScopeName" value="${siteName2}" />
+		</execute>
+
+		<execute macro="Team#addCP">
+			<var name="siteName" value="${siteName2}" />
+			<var name="teamDescription" value="${teamDescription3}" />
+			<var name="teamName" value="${teamName3}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Teams" />
+			<var name="siteScopeName" value="${siteName2}" />
+		</execute>
+
+		<execute macro="Team#addCP">
+			<var name="siteName" value="${siteName2}" />
+			<var name="teamDescription" value="${teamDescription4}" />
+			<var name="teamName" value="${teamName4}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="${roleName}" />
+			<var name="roleType" value="${roleType}" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_MANAGE_ANNOUNCEMENTS_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Manage Announcements" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_PAGES_SITE_PAGES" />
+			<var name="permissionNavigationValue" value="Site Pages" />
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_SOCIAL_OFFICE_ANNOUNCEMENTS_APPLICATIONS_PERMISSIONS_ADD_TO_PAGE_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add to Page" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_SOCIAL_OFFICE_ANNOUNCEMENTS" />
+			<var name="permissionNavigationValue" value="Social Office Announcements" />
+			<var name="roleName" value="Site Member" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_SOCIAL_OFFICE_ANNOUNCEMENTS_APPLICATIONS_PERMISSIONS_VIEW_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="View" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_SOCIAL_OFFICE_ANNOUNCEMENTS" />
+			<var name="permissionNavigationValue" value="Social Office Announcements" />
+			<var name="roleName" value="Site Member" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_MANAGE_ANNOUNCEMENTS_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Manage Announcements" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_PAGES_SITE_PAGES" />
+			<var name="permissionNavigationValue" value="Site Pages" />
+			<var name="roleName" value="Site Member" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteName1}" />
+		</execute>
+
+		<execute macro="Site#addMemberCP">
+			<var name="siteName" value="${siteName1}" />
+			<var name="siteScopeName" value="${siteName1}" />
+			<var name="userFirstName" value="${userFirstName1}" />
+			<var name="userLastName" value="${userLastName1}" />
+			<var name="userMiddleName" value="${userMiddleName1}" />
+			<var name="userScreenName" value="${userScreenName1}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteName2}" />
+		</execute>
+
+		<execute macro="Site#addMemberCP">
+			<var name="siteName" value="${siteName2}" />
+			<var name="siteScopeName" value="${siteName2}" />
+			<var name="userFirstName" value="${userFirstName2}" />
+			<var name="userLastName" value="${userLastName2}" />
+			<var name="userMiddleName" value="${userMiddleName2}" />
+			<var name="userScreenName" value="${userScreenName2}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Teams" />
+			<var name="siteScopeName" value="${siteName1}" />
+		</execute>
+
+		<execute macro="Team#assignMembersCP">
+			<var name="teamName" value="${teamName1}" />
+			<var name="userScreenName" value="${userScreenName1}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Teams" />
+			<var name="siteScopeName" value="${siteName1}" />
+		</execute>
+
+		<execute macro="Team#assignMembersCP">
+			<var name="teamName" value="${teamName2}" />
+			<var name="userScreenName" value="${userScreenName1}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Teams" />
+			<var name="siteScopeName" value="${siteName2}" />
+		</execute>
+
+		<execute macro="Team#assignMembersCP">
+			<var name="teamName" value="${teamName3}" />
+			<var name="userScreenName" value="${userScreenName2}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Teams" />
+			<var name="siteScopeName" value="${siteName2}" />
+		</execute>
+
+		<execute macro="Team#assignMembersCP">
+			<var name="teamName" value="${teamName4}" />
+			<var name="userScreenName" value="${userScreenName2}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteName1}" />
+		</execute>
+
+		<execute macro="Site#assignRoleCP">
+			<var name="roleName" value="${roleName}" />
+			<var name="userEmailAddress" value="${userEmailAddress1}" />
+			<var name="userFirstName" value="${userFirstName1}" />
+			<var name="userLastName" value="${userLastName1}" />
+			<var name="userMiddleName" value="${userMiddleName1}" />
+			<var name="userScreenName" value="${userScreenName1}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteName2}" />
+		</execute>
+
+		<execute macro="Site#assignRoleCP">
+			<var name="roleName" value="${roleName}" />
+			<var name="userEmailAddress" value="${userEmailAddress2}" />
+			<var name="userFirstName" value="${userFirstName2}" />
+			<var name="userLastName" value="${userLastName2}" />
+			<var name="userMiddleName" value="${userMiddleName2}" />
+			<var name="userScreenName" value="${userScreenName2}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress1}" />
+			<var name="userLoginFullName" value="${userName1}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName1}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="SOAnnouncements#assertClick" locator-key1="ANNOUNCEMENTS_ADD_ENTRY_BUTTON" value1="Add Entry" />
+
+		<execute action="SOAnnouncementsAdd#selectFrame" locator-key1="ADD_ENTRY_IFRAME" />
+		<execute action="SOAnnouncementsAdd#assertTextEquals" locator-key1="DISTRIBUTION_SCOPE_SELECT" value1="${teamName1}" />
+		<execute action="SOAnnouncementsAdd#assertTextEquals" locator-key1="DISTRIBUTION_SCOPE_SELECT" value1="${teamName2}" />
+		<execute action="SOAnnouncementsAdd#assertTextNotEquals" locator-key1="DISTRIBUTION_SCOPE_SELECT" value1="${teamName3}" />
+		<execute action="SOAnnouncementsAdd#assertTextNotEquals" locator-key1="DISTRIBUTION_SCOPE_SELECT" value1="${teamName4}" />
+		<execute action="SOAnnouncementsAdd#selectFrameTop" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
+			<var name="userLoginFullName" value="${userName2}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName2}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="SOAnnouncements#assertClick" locator-key1="ANNOUNCEMENTS_ADD_ENTRY_BUTTON" value1="Add Entry" />
+
+		<execute action="SOAnnouncementsAdd#selectFrame" locator-key1="ADD_ENTRY_IFRAME" />
+		<execute action="SOAnnouncementsAdd#assertTextEquals" locator-key1="DISTRIBUTION_SCOPE_SELECT" value1="${teamName3}" />
+		<execute action="SOAnnouncementsAdd#assertTextEquals" locator-key1="DISTRIBUTION_SCOPE_SELECT" value1="${teamName4}" />
+		<execute action="SOAnnouncementsAdd#assertTextNotEquals" locator-key1="DISTRIBUTION_SCOPE_SELECT" value1="${teamName1}" />
+		<execute action="SOAnnouncementsAdd#assertTextNotEquals" locator-key1="DISTRIBUTION_SCOPE_SELECT" value1="${teamName2}" />
+		<execute action="SOAnnouncementsAdd#selectFrameTop" />
 	</command>
 
 	<command name="ViewSOAnnouncementEntries" priority="4">
@@ -3059,5 +3484,543 @@
 
 		<execute action="SOAnnouncements#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle12}" />
 		<execute action="SOAnnouncements#assertTextEquals" locator-key1="ANNOUNCEMENTS_NAVIGATION_RESULTS" value1="Showing 1 - 10 of 21 results." />
+	</command>
+
+	<command name="ViewSOAnnouncementsEntryScopedToRolesViaDashboard" priority="5">
+		<var name="entryContent1" value="Announcements Entry1 Content" />
+		<var name="entryContent2" value="Announcements Entry2 Content" />
+		<var name="entryContent3" value="Announcements Entry3 Content" />
+		<var name="entryTitle1" value="Announcements Entry1 Title" />
+		<var name="entryTitle2" value="Announcements Entry2 Title" />
+		<var name="entryTitle3" value="Announcements Entry3 Title" />
+		<var name="entryURL" value="http://www.google.com" />
+		<var name="roleName1" value="Administrator" />
+		<var name="roleName2" value="User" />
+		<var name="roleName3" value="Social Office User" />
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#addPG">
+			<var name="distributionScope" value="${roleName1}" />
+			<var name="entryContent" value="${entryContent1}" />
+			<var name="entryTitle" value="${entryTitle1}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#addPG">
+			<var name="distributionScope" value="${roleName2}" />
+			<var name="entryContent" value="${entryContent2}" />
+			<var name="entryTitle" value="${entryTitle2}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#addPG">
+			<var name="distributionScope" value="${roleName3}" />
+			<var name="entryContent" value="${entryContent3}" />
+			<var name="entryTitle" value="${entryTitle3}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay" />
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="SOAnnouncements#assertTextEquals" locator-key1="ANNOUNCEMENTS_NO_ANNOUNCEMENTS" value1="There are no new announcements." />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle1}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent1}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle2}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent2}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent3}" />
+
+		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
+			<var name="displayingRoles" value="${roleName1}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${roleName1}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent1}" />
+			<var name="entryTitle" value="${entryTitle1}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle2}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent2}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent3}" />
+
+		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
+			<var name="displayingRoles" value="${roleName2}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${roleName1}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent1}" />
+			<var name="entryTitle" value="${entryTitle1}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${roleName2}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent2}" />
+			<var name="entryTitle" value="${entryTitle2}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent3}" />
+
+		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
+			<var name="displayingRoles" value="${roleName3}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${roleName1}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent1}" />
+			<var name="entryTitle" value="${entryTitle1}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${roleName2}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent2}" />
+			<var name="entryTitle" value="${entryTitle2}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${roleName3}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent3}" />
+			<var name="entryTitle" value="${entryTitle3}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
+			<var name="nonDisplayingRoles" value="${roleName3}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${roleName1}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent1}" />
+			<var name="entryTitle" value="${entryTitle1}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${roleName2}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent2}" />
+			<var name="entryTitle" value="${entryTitle2}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent3}" />
+
+		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
+			<var name="nonDisplayingRoles" value="${roleName2}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${roleName1}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent1}" />
+			<var name="entryTitle" value="${entryTitle1}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle2}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent2}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent3}" />
+
+		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
+			<var name="nonDisplayingRoles" value="${roleName1}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="SOAnnouncements#assertTextEquals" locator-key1="ANNOUNCEMENTS_NO_ANNOUNCEMENTS" value1="There are no new announcements." />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle1}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent1}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle2}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent2}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent3}" />
+
+		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
+			<var name="displayingRoles" value="${roleName1},${roleName2},${roleName3}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${roleName1}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent1}" />
+			<var name="entryTitle" value="${entryTitle1}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${roleName2}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent2}" />
+			<var name="entryTitle" value="${entryTitle2}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${roleName3}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent3}" />
+			<var name="entryTitle" value="${entryTitle3}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
+			<var name="nonDisplayingRoles" value="${roleName1},${roleName2},${roleName3}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="SOAnnouncements#assertTextEquals" locator-key1="ANNOUNCEMENTS_NO_ANNOUNCEMENTS" value1="There are no new announcements." />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle1}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent1}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle2}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent2}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent3}" />
+	</command>
+
+	<command name="ViewSOAnnouncementsEntryScopedToSitesViaDashboard" priority="5">
+		<var name="entryContent1" value="Announcements Entry1 Content" />
+		<var name="entryContent2" value="Announcements Entry2 Content" />
+		<var name="entryContent3" value="Announcements Entry3 Content" />
+		<var name="entryTitle1" value="Announcements Entry1 Title" />
+		<var name="entryTitle2" value="Announcements Entry2 Title" />
+		<var name="entryTitle3" value="Announcements Entry3 Title" />
+		<var name="entryURL" value="http://www.google.com" />
+		<var name="siteDescription1" value="Open Site1 Description" />
+		<var name="siteDescription2" value="Open Site2 Description" />
+		<var name="siteDescription3" value="Open Site3 Description" />
+		<var name="siteName1" value="Open Site1 Name" />
+		<var name="siteName2" value="Open Site2 Name" />
+		<var name="siteName3" value="Open Site3 Name" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription1}" />
+			<var name="siteName" value="${siteName1}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription2}" />
+			<var name="siteName" value="${siteName2}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription3}" />
+			<var name="siteName" value="${siteName3}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName1}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOAnnouncementsEntry#addPG">
+			<var name="distributionScope" value="${siteName1}" />
+			<var name="entryContent" value="${entryContent1}" />
+			<var name="entryTitle" value="${entryTitle1}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName2}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOAnnouncementsEntry#addPG">
+			<var name="distributionScope" value="${siteName2}" />
+			<var name="entryContent" value="${entryContent2}" />
+			<var name="entryTitle" value="${entryTitle2}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName3}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOAnnouncementsEntry#addPG">
+			<var name="distributionScope" value="${siteName3}" />
+			<var name="entryContent" value="${entryContent3}" />
+			<var name="entryTitle" value="${entryTitle3}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay" />
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="SOAnnouncements#assertTextEquals" locator-key1="ANNOUNCEMENTS_NO_ANNOUNCEMENTS" value1="There are no new announcements." />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle1}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent1}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle2}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent2}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent3}" />
+
+		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
+			<var name="displayingSites" value="${siteName1}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${siteName1}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent1}" />
+			<var name="entryTitle" value="${entryTitle1}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle2}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent2}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent3}" />
+
+		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
+			<var name="displayingSites" value="${siteName2}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${siteName1}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent1}" />
+			<var name="entryTitle" value="${entryTitle1}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${siteName2}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent2}" />
+			<var name="entryTitle" value="${entryTitle2}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent3}" />
+
+		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
+			<var name="displayingSites" value="${siteName3}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${siteName1}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent1}" />
+			<var name="entryTitle" value="${entryTitle1}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${siteName2}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent2}" />
+			<var name="entryTitle" value="${entryTitle2}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${siteName3}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent3}" />
+			<var name="entryTitle" value="${entryTitle3}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
+			<var name="nonDisplayingSites" value="${siteName3}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${siteName1}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent1}" />
+			<var name="entryTitle" value="${entryTitle1}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${siteName2}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent2}" />
+			<var name="entryTitle" value="${entryTitle2}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent3}" />
+
+		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
+			<var name="nonDisplayingSites" value="${siteName2}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${siteName1}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent1}" />
+			<var name="entryTitle" value="${entryTitle1}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle2}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent2}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent3}" />
+
+		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
+			<var name="nonDisplayingSites" value="${siteName1}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="SOAnnouncements#assertTextEquals" locator-key1="ANNOUNCEMENTS_NO_ANNOUNCEMENTS" value1="There are no new announcements." />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle1}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent1}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle2}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent2}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent3}" />
+
+		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
+			<var name="displayingSites" value="${siteName1},${siteName2},${siteName3}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${siteName1}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent1}" />
+			<var name="entryTitle" value="${entryTitle1}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${siteName2}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent2}" />
+			<var name="entryTitle" value="${entryTitle2}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${siteName3}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent3}" />
+			<var name="entryTitle" value="${entryTitle3}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
+			<var name="nonDisplayingSites" value="${siteName1},${siteName2},${siteName3}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="SOAnnouncements#assertTextEquals" locator-key1="ANNOUNCEMENTS_NO_ANNOUNCEMENTS" value1="There are no new announcements." />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle1}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent1}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle2}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent2}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent3}" />
 	</command>
 </definition>

@@ -19,6 +19,7 @@
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
+		<column name="lastPublishDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
 		<!-- Permission fields -->
@@ -123,6 +124,7 @@
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
+		<column name="lastPublishDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
 		<!-- Permission fields -->

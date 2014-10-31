@@ -1,0 +1,36 @@
+<definition component-name="portal-util-misc">
+	<property name="testray.main.component.name" value="Util" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="XSL Content Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="XSL Content Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="XSL Content" />
+		</execute>
+	</set-up>
+
+	<command name="ViewXSLDefaultContent" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="XSL Content Page" />
+		</execute>
+
+		<execute macro="Portlet#viewPG">
+			<var name="portletBody" value="Belgian Waffles" />
+			<var name="portletName" value="XSL Content" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="XSL Content Page" />
+		</execute>
+
+		<execute macro="XSLContent#viewConfigurationXSLContent" />
+	</command>
+</definition>

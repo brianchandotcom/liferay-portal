@@ -1,0 +1,39 @@
+<definition component-name="portal-util-misc">
+	<property name="testray.main.component.name" value="Util" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Dictionary Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Dictionary Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Dictionary" />
+		</execute>
+	</set-up>
+
+	<command name="FindDictionaryWord" priority="5">
+		<var name="dictionaryTerm" value="dog" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Dictionary Page" />
+		</execute>
+
+		<execute macro="Dictionary#findPG">
+			<var name="dictionaryWord" value="dog" />
+		</execute>
+
+		<var name="key_dictionaryTerm" value="${dictionaryTerm}" />
+
+		<execute action="Dictionary#selectWindow" locator1="title=Dog | Define Dog at Dictionary.com" />
+		<execute action="Dictionary#assertTextEquals" locator-key1="DICTIONARY_WORD" value1="${dictionaryTerm}" />
+
+		<execute action="Dictionary#close" locator1="title=Dog | Define Dog at Dictionary.com" />
+		<execute action="Dictionary#selectWindow" locator1="title=Dictionary Page - Liferay" />
+	</command>
+</definition>

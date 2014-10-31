@@ -1,0 +1,34 @@
+<definition component-name="portal-util-misc">
+	<property name="testray.main.component.name" value="Util" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Loan Calculator Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Loan Calculator Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Loan Calculator" />
+		</execute>
+	</set-up>
+
+	<command name="CalculateLoanAmounts" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Loan Calculator Page" />
+		</execute>
+
+		<execute macro="LoanCalculator#calculatePG">
+			<var name="loanAmount" value="400,000" />
+			<var name="loanInterestPaid" value="526,421" />
+			<var name="loanInterestRate" value="10.00" />
+			<var name="loanMonthlyPayment" value="3,860" />
+			<var name="loanTotalPaid" value="926,421" />
+			<var name="loanYears" value="20" />
+		</execute>
+	</command>
+</definition>

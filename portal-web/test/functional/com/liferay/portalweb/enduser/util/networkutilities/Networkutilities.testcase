@@ -1,0 +1,30 @@
+<definition component-name="portal-util-misc">
+	<property name="testray.main.component.name" value="Util" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Network Utilities Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Network Utilities Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Network Utilities" />
+		</execute>
+	</set-up>
+
+	<command name="SearchDNSDomain" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Network Utilities Page" />
+		</execute>
+
+		<execute macro="NetworkUtilities#searchPG">
+			<var name="dnsDomain" value="" />
+			<var name="networkDomain" value="localhost" />
+		</execute>
+	</command>
+</definition>

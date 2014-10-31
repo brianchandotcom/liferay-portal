@@ -1,0 +1,36 @@
+<definition component-name="portal-util-misc">
+	<property name="testray.main.component.name" value="Util" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Quick Note Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Quick Note Page" />
+		</execute>
+	</set-up>
+
+	<command name="AddQuickNote" priority="5">
+		<var name="portletName" value="Quick Note" />
+
+		<execute action="Dockbar#click" locator-key1="ADD" value1="Add" />
+
+		<execute action="DockbarAddpanelapplications#assertClick" locator-key1="NAVIGATION_APPLICATIONS" value1="Applications" />
+		<execute action="DockbarAddpanelapplications#type" locator-key1="SEARCH_FIELD" value1="${portletName}" />
+
+		<var name="portletLocator" value="//span[@data-title=&quot;${portletName}&quot; and contains(@class,'add-content-item')]" />
+
+		<execute action="Dockbar#assertClick" locator1="${portletLocator}" value1="Add" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Quick Note Page" />
+		</execute>
+
+		<execute macro="QuickNote#addPG">
+			<var name="noteContent" value="Test Note Content" />
+		</execute>
+	</command>
+</definition>

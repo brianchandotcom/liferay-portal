@@ -1200,12 +1200,32 @@
 		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
 		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="MENU_MISCELLANEOUS_DISPLAY_SETTINGS" value1="Display Settings" />
-		<execute action="CPUsersandorganizationsUser#select" locator-key1="DISPLAY_SETTINGS_TIME_ZONE_SELECT" value1="(UTC -07:00) Pacific Daylight Time" />
+
+		<if>
+			<condition action="CPUsersandorganizationsUser#isTextNotEqual" locator-key1="DISPLAY_SETTINGS_AMERICA_TIME_ZONE_SELECT" value1="(UTC -07:00) Pacific Daylight Time"  />
+			<then>
+				<execute action="CPUsersandorganizationsUser#select" locator-key1="DISPLAY_SETTINGS_TIME_ZONE_SELECT" value1="(UTC -08:00) Pacific Standard Time" />
+			</then>
+			<else>
+				<execute action="CPUsersandorganizationsUser#select" locator-key1="DISPLAY_SETTINGS_TIME_ZONE_SELECT" value1="(UTC -07:00) Pacific Daylight Time" />
+			</else>
+		</if>
+
 		<execute action="CPUsersandorganizationsUser#type" locator-key1="DISPLAY_SETTINGS_GREETING_FIELD" value1="${displaySettingsGreeting}" />
 
 		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPUsersandorganizationsUser#assertSelectedLabel" locator-key1="DISPLAY_SETTINGS_TIME_ZONE_SELECT" value1="(UTC -07:00) Pacific Daylight Time" />
+
+		<if>
+			<condition action="CPUsersandorganizationsUser#isTextNotEqual" locator-key1="DISPLAY_SETTINGS_AMERICA_TIME_ZONE_SELECT" value1="(UTC -07:00) Pacific Daylight Time"  />
+			<then>
+				<execute action="CPUsersandorganizationsUser#assertSelectedLabel" locator-key1="DISPLAY_SETTINGS_TIME_ZONE_SELECT" value1="(UTC -08:00) Pacific Standard Time" />
+			</then>
+			<else>
+				<execute action="CPUsersandorganizationsUser#assertSelectedLabel" locator-key1="DISPLAY_SETTINGS_TIME_ZONE_SELECT" value1="(UTC -07:00) Pacific Daylight Time" />
+			</else>
+		</if>
+
 		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="DISPLAY_SETTINGS_GREETING_FIELD" value1="${displaySettingsGreeting}" />
 	</command>
 

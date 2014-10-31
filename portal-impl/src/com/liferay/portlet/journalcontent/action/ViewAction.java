@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -41,7 +42,7 @@ import org.apache.struts.action.ActionMapping;
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  */
-public class ViewAction extends WebContentAction {
+public class ViewAction extends PortletAction {
 
 	@Override
 	public ActionForward render(

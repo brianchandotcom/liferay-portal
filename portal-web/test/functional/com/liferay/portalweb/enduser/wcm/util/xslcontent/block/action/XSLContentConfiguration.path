@@ -1,0 +1,91 @@
+<html>
+<head>
+<title>XSLContentConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">XSLContentConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>XSLContentConfiguration</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>BasePortlet</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_IFRAME</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_SETUP</td>
+	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Setup')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_PERMISSIONS</td>
+	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_COMMUNICATIONS</td>
+	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Communication')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SHARING</td>
+	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Sharing')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SETUP-->
+<tr>
+	<td>SETUP_XML_URL_FIELD</td>
+	<td>//input[@id='_86_xmlUrl']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_XSL_URL_FIELD</td>
+	<td>//input[@id='_86_xslUrl']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

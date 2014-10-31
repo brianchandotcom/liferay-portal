@@ -10,6 +10,10 @@
 	</command>
 
 	<command name="assertTextEquals">
+		<case locator-key1="PORTLET_BODY">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
 		<case locator-key1="PORTLET_CONTENT">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>

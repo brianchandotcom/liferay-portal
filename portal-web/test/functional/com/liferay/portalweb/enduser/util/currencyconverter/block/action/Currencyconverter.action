@@ -1,0 +1,15 @@
+<definition>
+	<command name="assertTextEquals">
+		<case locator-key1="CURRENCY_DATA_TABLE_FROM">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
+		<case locator-key1="CURRENCY_DATA_TABLE_TO">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
+		<case locator-key1="CURRENCY_DATA_TABLE_HISTORICAL_CHARTS">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+</definition>

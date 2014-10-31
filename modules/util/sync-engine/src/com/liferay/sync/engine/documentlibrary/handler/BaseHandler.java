@@ -16,6 +16,7 @@ package com.liferay.sync.engine.documentlibrary.handler;
 
 import com.liferay.sync.engine.documentlibrary.event.Event;
 import com.liferay.sync.engine.documentlibrary.event.GetSyncContextEvent;
+import com.liferay.sync.engine.documentlibrary.util.FileEventUtil;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.service.SyncAccountService;
@@ -147,7 +148,7 @@ public class BaseHandler implements Handler<Void> {
 
 		SyncAccountService.update(syncAccount);
 
-		SyncAccountService.synchronizeSyncAccount(
+		syncAccount = SyncAccountService.synchronizeSyncAccount(
 			getSyncAccountId(), true,
 			ConnectionRetryUtil.incrementRetryDelay(getSyncAccountId()));
 
@@ -156,6 +157,17 @@ public class BaseHandler implements Handler<Void> {
 				"Attempting to reconnect to {}. Retry #{}.",
 				syncAccount.getUrl(),
 				ConnectionRetryUtil.getRetryCount(getSyncAccountId()));
+		}
+
+		if (syncAccount.getState() == SyncAccount.STATE_CONNECTED) {
+			try {
+				FileEventUtil.retryFileTransfers(getSyncAccountId());
+			}
+			catch (Exception e) {
+				_logger.error(e.getMessage(), e);
+			}
+
+			ConnectionRetryUtil.resetRetryDelay(getSyncAccountId());
 		}
 	}
 

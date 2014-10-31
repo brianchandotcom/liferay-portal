@@ -19,12 +19,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.sync.engine.documentlibrary.event.Event;
 import com.liferay.sync.engine.documentlibrary.model.SyncContext;
-import com.liferay.sync.engine.documentlibrary.util.FileEventUtil;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncUser;
 import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncUserService;
-import com.liferay.sync.engine.util.ConnectionRetryUtil;
 import com.liferay.sync.engine.util.ReleaseInfo;
 
 import java.util.Map;
@@ -94,10 +92,6 @@ public class GetSyncContextHandler extends BaseJSONHandler {
 				}
 
 				syncAccount.setState(SyncAccount.STATE_CONNECTED);
-
-				FileEventUtil.retryFileTransfers(getSyncAccountId());
-
-				ConnectionRetryUtil.resetRetryDelay(getSyncAccountId());
 			}
 			else {
 				syncAccount.setState(SyncAccount.STATE_DISCONNECTED);

@@ -159,6 +159,24 @@ public class UserPasswordException extends PortalException {
 
 	}
 
+	public static class MustNotBeNull extends UserPasswordException {
+
+		public MustNotBeNull(long userId) {
+			super(
+				String.format("Password for user %s must not be null", userId),
+				PASSWORD_INVALID);
+
+			_userId = userId;
+		}
+
+		public long getUserId() {
+			return _userId;
+		}
+
+		private long _userId;
+
+	}
+
 	public static class MustNotBeRecent extends UserPasswordException {
 
 		public MustNotBeRecent(long userId) {

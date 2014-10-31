@@ -685,12 +685,12 @@ public class PortalImpl implements Portal {
 
 		if (doAsUser) {
 			if (Validator.isNotNull(themeDisplay.getDoAsUserId())) {
-				url = HttpUtil.addParameter(
+				url = HttpUtil.setParameter(
 					url, "doAsUserId", themeDisplay.getDoAsUserId());
 			}
 
 			if (Validator.isNotNull(themeDisplay.getDoAsUserLanguageId())) {
-				url = HttpUtil.addParameter(
+				url = HttpUtil.setParameter(
 					url, "doAsUserLanguageId",
 					themeDisplay.getDoAsUserLanguageId());
 			}
@@ -698,17 +698,17 @@ public class PortalImpl implements Portal {
 
 		if (layout.isTypeControlPanel()) {
 			if (themeDisplay.getDoAsGroupId() > 0) {
-				url = HttpUtil.addParameter(
+				url = HttpUtil.setParameter(
 					url, "doAsGroupId", themeDisplay.getDoAsGroupId());
 			}
 
 			if (themeDisplay.getRefererPlid() != LayoutConstants.DEFAULT_PLID) {
-				url = HttpUtil.addParameter(
+				url = HttpUtil.setParameter(
 					url, "refererPlid", themeDisplay.getRefererPlid());
 			}
 
 			if (Validator.isNotNull(themeDisplay.getControlPanelCategory())) {
-				url = HttpUtil.addParameter(
+				url = HttpUtil.setParameter(
 					url, "controlPanelCategory",
 					themeDisplay.getControlPanelCategory());
 			}

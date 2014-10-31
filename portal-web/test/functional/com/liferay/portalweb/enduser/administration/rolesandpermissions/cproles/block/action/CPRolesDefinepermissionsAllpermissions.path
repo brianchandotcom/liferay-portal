@@ -240,6 +240,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_MANAGE_ANNOUNCEMENTS_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portal.model.GroupMANAGE_ANNOUNCEMENTS']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_MANAGE_PAGES_CHECKBOX</td>
 	<td>//input[@value='com.liferay.portal.model.GroupMANAGE_LAYOUTS']</td>
 	<td></td>
@@ -882,6 +887,27 @@
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX</td>
 	<td>//input[@value='com.liferay.portlet.documentlibrary.model.DLFileEntryVIEW']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_ADMIN_APPLICATIONS_SOCIAL_OFFICE_ANNOUNCEMENTS_APPLICATIONS_PERMISSIONS-->
+<tr>
+	<td>SITE_ADMIN_APPLICATIONS_SOCIAL_OFFICE_ANNOUNCEMENTS_APPLICATIONS_PERMISSIONS_ACTION_CHECKBOX</td>
+	<td>//input[@name='_128_allRowIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_APPLICATIONS_SOCIAL_OFFICE_ANNOUNCEMENTS_APPLICATIONS_PERMISSIONS_ADD_TO_PAGE_CHECKBOX</td>
+	<td>//input[@value='1_WAR_soannouncementsportletADD_TO_PAGE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_APPLICATIONS_SOCIAL_OFFICE_ANNOUNCEMENTS_APPLICATIONS_PERMISSIONS_VIEW_CHECKBOX</td>
+	<td>//input[@value='1_WAR_soannouncementsportletVIEW']</td>
 	<td></td>
 </tr>
 <tr>

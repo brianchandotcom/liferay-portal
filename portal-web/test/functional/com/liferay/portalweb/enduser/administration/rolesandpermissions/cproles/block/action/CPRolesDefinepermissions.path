@@ -249,6 +249,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_ADMIN_APPLICATIONS_SOCIAL_OFFICE_ANNOUNCEMENTS</td>
+	<td>//div[contains(.,'Applications') and contains(@class,'permission-navigation-item-header')]/following-sibling::div//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Social Office Announcements')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY</td>
 	<td>//div[contains(.,'Applications') and contains(@class,'permission-navigation-item-header')]/following-sibling::ul//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Web Content Display')]</td>
 	<td></td>

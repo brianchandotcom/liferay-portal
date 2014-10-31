@@ -1,4 +1,16 @@
 <definition>
+	<command name="assertTextEquals">
+		<case locator-key1="DISTRIBUTION_SCOPE_SELECT">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+
+	<command name="assertTextNotEquals">
+		<case locator-key1="DISTRIBUTION_SCOPE_SELECT">
+			<execute function="AssertTextNotEquals#assertNotPartialText" />
+		</case>
+	</command>
+
 	<command name="type">
 		<case locator-key1="CONTENT_FIELD">
 			<execute function="Type#typeFrame" />

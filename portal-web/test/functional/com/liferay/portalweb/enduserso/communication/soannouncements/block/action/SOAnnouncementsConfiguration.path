@@ -49,6 +49,77 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--ANNOUNCEMENTS_DISPLAYED-->
+<tr>
+	<td>ANNOUNCEMENTS_DISPLAYED_CUSTOMIZE_ANNOUNCEMENTS_DISPLAYED_CHECKBOX</td>
+	<td>//input[@id='_86_customizeAnnouncementsDisplayedCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_DISPLAYED_SITES_TAB</td>
+	<td>//a[contains(.,'Sites')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_DISPLAYED_ROLES_TAB</td>
+	<td>//a[contains(.,'Roles')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_DISPLAYED_DISPLAYING_SITES_SELECT</td>
+	<td>//select[@id='_86_currentScopeGroupIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_DISPLAYED_DISPLAYING_SITES_SELECT_OPTION</td>
+	<td>//select[@id='_86_currentScopeGroupIds']/option</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_DISPLAYED_AVAILABLE_SITES_SELECT</td>
+	<td>//select[@id='_86_availableScopeGroupIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_DISPLAYED_DISPLAYING_ROLES_SELECT</td>
+	<td>//select[@id='_86_currentScopeRoleIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_DISPLAYED_DISPLAYING_ROLES_SELECT_OPTION</td>
+	<td>//select[@id='_86_currentScopeRoleIds']/option</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_DISPLAYED_AVAILABLE_ROLES_SELECT</td>
+	<td>//select[@id='_86_availableScopeRoleIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_DISPLAYED_MOVE_SITES_FROM_DISPLAYING_TO_AVAILABLE_BUTTON</td>
+	<td>//div[@id='_86_scopeGroupIdsBoxes']//button[@title='Move selected items from Displaying to Available.']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_DISPLAYED_MOVE_SITES_FROM_AVAILABLE_TO_DISPLAYING_BUTTON</td>
+	<td>//div[@id='_86_scopeGroupIdsBoxes']//button[@title='Move selected items from Available to Displaying.']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_DISPLAYED_MOVE_ROLES_FROM_DISPLAYING_TO_AVAILABLE_BUTTON</td>
+	<td>//div[@id='_86_scopeRoleIdsBoxes']//button[@title='Move selected items from Displaying to Available.']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_DISPLAYED_MOVE_ROLES_FROM_AVAILABLE_TO_DISPLAYING_BUTTON</td>
+	<td>//div[@id='_86_scopeRoleIdsBoxes']//button[@title='Move selected items from Available to Displaying.']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

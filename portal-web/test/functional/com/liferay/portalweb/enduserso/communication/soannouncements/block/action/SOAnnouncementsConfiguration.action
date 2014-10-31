@@ -1,0 +1,19 @@
+<definition>
+	<command name="assertTextEquals">
+		<case locator-key1="ANNOUNCEMENTS_DISPLAYED_DISPLAYING_SITES_SELECT">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
+		<case locator-key1="ANNOUNCEMENTS_DISPLAYED_AVAILABLE_SITES_SELECT">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
+		<case locator-key1="ANNOUNCEMENTS_DISPLAYED_DISPLAYING_ROLES_SELECT">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
+		<case locator-key1="ANNOUNCEMENTS_DISPLAYED_AVAILABLE_ROLES_SELECT">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+</definition>

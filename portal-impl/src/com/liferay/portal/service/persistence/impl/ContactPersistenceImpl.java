@@ -2277,7 +2277,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 		MVCCModel {
 		@Override
 		public long getMvccVersion() {
-			return 0;
+			return -1;
 		}
 
 		@Override

@@ -2024,7 +2024,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		MVCCModel {
 		@Override
 		public long getMvccVersion() {
-			return 0;
+			return -1;
 		}
 
 		@Override

@@ -9346,7 +9346,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	private static class NullCacheModel implements CacheModel<User>, MVCCModel {
 		@Override
 		public long getMvccVersion() {
-			return 0;
+			return -1;
 		}
 
 		@Override

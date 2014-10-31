@@ -4606,7 +4606,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 		MVCCModel {
 		@Override
 		public long getMvccVersion() {
-			return 0;
+			return -1;
 		}
 
 		@Override

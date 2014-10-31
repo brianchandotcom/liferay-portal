@@ -9693,7 +9693,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	private static class NullCacheModel implements CacheModel<Role>, MVCCModel {
 		@Override
 		public long getMvccVersion() {
-			return 0;
+			return -1;
 		}
 
 		@Override

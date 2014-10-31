@@ -2691,7 +2691,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	private static class NullCacheModel implements CacheModel<Lock>, MVCCModel {
 		@Override
 		public long getMvccVersion() {
-			return 0;
+			return -1;
 		}
 
 		@Override

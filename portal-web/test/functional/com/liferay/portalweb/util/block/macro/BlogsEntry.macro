@@ -263,7 +263,8 @@
 		<if>
 			<equals arg1="${entryAddRelatedAsset}" arg2="true" />
 			<then>
-				<execute action="PGBlogsAdd#click" locator-key1="SETTINGS_TAB" />
+				<execute action="PGBlogsAdd#assertClick" locator-key1="SETTINGS_TAB" value1="Settings" />
+
 				<execute macro="BlogsEntry#addRelatedAssetPG">
 					<var name="assetTitle" value="${assetTitle}" />
 					<var name="assetType" value="${assetType}" />

@@ -16,7 +16,9 @@ package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.ModelHintsConstants;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.Locale;
@@ -134,7 +136,12 @@ public class InputLocalizedTag extends IncludeTag {
 		Locale[] availableLocales = _availableLocales;
 
 		if (availableLocales == null) {
-			availableLocales = LanguageUtil.getAvailableLocales();
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			long groupId = themeDisplay.getScopeGroupId();
+
+			availableLocales = LanguageUtil.getAvailableLocales(groupId);
 		}
 
 		String formName = _formName;

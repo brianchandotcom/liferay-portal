@@ -18,8 +18,11 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.util.Normalizer;
 
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -215,5 +218,16 @@ public class AUIUtil {
 
 		return null;
 	}
+
+	public static String normalizeId(String name) {
+		name = Normalizer.normalizeToAscii(name);
+
+		Matcher matcher = _friendlyURLPattern.matcher(name);
+
+		return matcher.replaceAll(StringPool.DASH);
+	}
+
+	private static final Pattern _friendlyURLPattern = Pattern.compile(
+		"[^A-Za-z0-9/_-]");
 
 }

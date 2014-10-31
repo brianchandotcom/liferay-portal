@@ -38,6 +38,7 @@
 		<column name="remindBy" type="int" />
 		<column name="firstReminder" type="int" />
 		<column name="secondReminder" type="int" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 

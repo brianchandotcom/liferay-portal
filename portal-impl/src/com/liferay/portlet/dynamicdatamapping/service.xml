@@ -26,6 +26,7 @@
 		<column name="name" type="String" localized="true" />
 		<column name="description" type="String" />
 		<column name="data" type="String" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 
@@ -92,6 +93,7 @@
 		<column name="definition" type="String" />
 		<column name="storageType" type="String" />
 		<column name="type" type="int" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 
@@ -288,6 +290,7 @@
 		<column name="smallImage" type="boolean" />
 		<column name="smallImageId" type="long" />
 		<column name="smallImageURL" type="String" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 

@@ -364,6 +364,21 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	@Override
+	public java.lang.String getDisplayURL(
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _group.getDisplayURL(themeDisplay);
+	}
+
+	@Override
+	public java.lang.String getDisplayURL(
+		com.liferay.portal.theme.ThemeDisplay themeDisplay,
+		boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _group.getDisplayURL(themeDisplay, privateLayout);
+	}
+
+	@Override
 	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
 		return _group.getExpandoBridge();
 	}

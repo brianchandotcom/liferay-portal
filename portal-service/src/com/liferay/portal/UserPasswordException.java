@@ -73,8 +73,8 @@ public class UserPasswordException extends PortalException {
 		public MustBeLonger(long userId, int minLength) {
 			super(
 				String.format(
-					"Password for user %s must be longer than %s", userId,
-					minLength),
+					"Password for user %s must be at least %s characters",
+					userId, minLength),
 				PASSWORD_LENGTH);
 
 			_minLength = minLength;
@@ -153,7 +153,7 @@ public class UserPasswordException extends PortalException {
 		public MustNotBeCurrent(long userId) {
 			super(
 				String.format(
-					"Password for user %s must not their current password",
+					"Password for user %s must not be their current password",
 					userId),
 				PASSWORD_SAME_AS_CURRENT);
 
@@ -191,7 +191,7 @@ public class UserPasswordException extends PortalException {
 		public MustNotBeRecent(long userId) {
 			super(
 				String.format(
-					"Password for user %s has already been used recently",
+					"Password for user %s has been used too recently",
 						userId),
 				PASSWORD_ALREADY_USED);
 
@@ -256,7 +256,7 @@ public class UserPasswordException extends PortalException {
 		public MustNotHaveTrivialWords(long userId, Set<String> trivialWords) {
 			super(
 				String.format(
-					"Password for user %s must not any trivial words " +
+					"Password for user %s must not contain any trivial words " +
 						"including: %s",
 					userId, trivialWords),
 				PASSWORD_CONTAINS_TRIVIAL_WORDS);

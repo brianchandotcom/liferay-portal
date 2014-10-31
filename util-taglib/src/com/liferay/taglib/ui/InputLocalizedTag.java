@@ -139,7 +139,7 @@ public class InputLocalizedTag extends IncludeTag {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-			long groupId = themeDisplay.getScopeGroupId();
+			long groupId = themeDisplay.getSiteGroupId();
 
 			availableLocales = LanguageUtil.getAvailableLocales(groupId);
 		}

@@ -34,6 +34,7 @@
 		<column name="description" type="String" />
 		<column name="visits" type="int" />
 		<column name="priority" type="int" />
+		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
@@ -135,6 +136,7 @@
 		<column name="treePath" type="String" />
 		<column name="name" type="String" />
 		<column name="description" type="String" />
+		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />

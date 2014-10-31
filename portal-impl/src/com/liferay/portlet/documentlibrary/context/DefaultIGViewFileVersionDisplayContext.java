@@ -24,12 +24,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Iván Zaera
+ * @author Adolfo Pérez
  */
-public class DefaultDLViewFileVersionDisplayContext
+public class DefaultIGViewFileVersionDisplayContext
 	extends BaseDLViewFileVersionDisplayContext {
 
-	public DefaultDLViewFileVersionDisplayContext(
+	public DefaultIGViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion)
 		throws PortalException {
@@ -43,17 +43,7 @@ public class DefaultDLViewFileVersionDisplayContext
 
 		addDownloadMenuItem(menuItems);
 
-		addOpenInMsOfficeMenuItem(menuItems);
-
 		addEditMenuItem(menuItems);
-
-		addMoveMenuItem(menuItems);
-
-		addCheckoutMenuItem(menuItems);
-
-		addCheckinMenuItem(menuItems);
-
-		addCancelCheckoutMenuItem(menuItems);
 
 		addPermissionsMenuItem(menuItems);
 

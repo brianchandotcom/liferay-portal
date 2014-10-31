@@ -356,7 +356,7 @@
 
 		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="DISPLAY_SETTINGS_LINK" value1="Display Settings" />
 
-		<execute action="PGAssetpublisherConfigurationDisplaysettings#select" locator-key1="NUMBER_OF_ITEMS_TO_DISPLAY_SELECT" value1="${paginationNumber}" />
+		<execute action="PGAssetpublisherConfigurationDisplaysettings#type" locator-key1="NUMBER_OF_ITEMS_TO_DISPLAY_FIELD" value1="${paginationNumber}" />
 		<execute action="PGAssetpublisherConfigurationDisplaysettings#select" locator-key1="PAGINATION_TYPE_SELECT" value1="${paginationType}" />
 
 		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />

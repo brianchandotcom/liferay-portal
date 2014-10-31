@@ -117,7 +117,7 @@
 </tr>
 <tr>
 	<td>CAMPAIGN_TRACKING_ACTIONS_PAGE_TRACKING_ACTION</td>
-	<td>//div[contains(@class,'pagetrackingaction')]//input[contains(@value,'view')]</td>
+	<td>//div[contains(@class,'pagetrackingaction')]//input[@value='View']</td>
 	<td></td>
 </tr>
 <tr>

@@ -1,6 +1,5 @@
 <definition component-name="marketplace-plugins-marketplace-portlet">
 	<property name="testray.main.component.name" value="Plugin Installer" />
-	<property name="portlet.properties.marketplace-portlet" value="marketplace.url=https://www-uat.liferay.com$${line.separator}marketplace.url.logout=https://www-uat.liferay.com/c/portal/logout" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />

@@ -294,7 +294,7 @@
 <!--VOCABULARY_CATEGORY-->
 <tr>
 	<td>VOCABULARY_CATEGORY</td>
-	<td>//div[contains(@id,'assetCategories')]//tr[contains(.,'${key_categoryName}')]</td>
+	<td>//div[contains(@id,'assetCategories')]//td[contains(.,'${key_categoryName}')]</td>
 	<td></td>
 </tr>
 <tr>

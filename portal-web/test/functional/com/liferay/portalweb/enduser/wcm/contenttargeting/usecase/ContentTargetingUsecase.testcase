@@ -1,6 +1,5 @@
 <definition component-name="extra-apps-content-targeting">
 	<property name="testray.main.component.name" value="WCM" />
-	<property name="portlet.properties.marketplace-portlet" value="marketplace.url=https://www-uat.liferay.com$${line.separator}marketplace.url.logout=https://www-uat.liferay.com/c/portal/logout" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />

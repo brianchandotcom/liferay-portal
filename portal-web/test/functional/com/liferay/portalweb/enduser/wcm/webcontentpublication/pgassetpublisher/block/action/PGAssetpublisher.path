@@ -558,7 +558,7 @@
 </tr>
 <tr>
 	<td>PAGINATION_NEXT</td>
-	<td>//ul[@class='pager lfr-pagination-buttons']/li/a[contains(.,'Next')]</td>
+	<td>//ul[contains(@class,'pager')]/li/a[contains(.,'Next')]</td>
 	<td></td>
 </tr>
 <tr>

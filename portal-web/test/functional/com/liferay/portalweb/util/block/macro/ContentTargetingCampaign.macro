@@ -330,7 +330,7 @@
 				<then>
 					<execute action="CPContenttargetingEditcampaign#assertTextEquals" locator-key1="CAMPAIGN_TRACKING_ACTIONS_PAGE_ALIAS_FIELD" value1="${pageAlias}" />
 					<execute action="CPContenttargetingEditcampaign#assertTextEquals" locator-key1="CAMPAIGN_TRACKING_ACTIONS_PAGE_FRIENDLY_URL_FIELD" value1="${pageFriendlyURL}" />
-					<execute action="CPContenttargetingEditcampaign#assertTextEquals" locator-key1="CAMPAIGN_TRACKING_ACTIONS_PAGE_TRACKING_ACTION" value1="view" />
+					<execute action="CPContenttargetingEditcampaign#assertTextEquals" locator-key1="CAMPAIGN_TRACKING_ACTIONS_PAGE_TRACKING_ACTION" value1="View" />
 				</then>
 				<elseif>
 					<equals arg1="${trackingAction}" arg2="Form" />

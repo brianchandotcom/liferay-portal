@@ -64,7 +64,7 @@
 
 		<execute action="PGNavigationConfiguration#selectFrame" locator-key1="NAVIGATION_CONFIGURATION_IFRAME" />
 		<execute action="PGNavigationConfiguration#assertTextEquals" locator-key1="PREVIEW_BREADCRUMB_HEADER2_ENTRY" value1="${pageName}" />
-		<execute action="PGNavigationConfiguration#assertSelectedLabel" locator-key1="SETUP_DISPLAY_STYLE_SELECT" value1="Custom" />
+		<execute action="PGNavigationConfiguration#select" locator-key1="SETUP_DISPLAY_STYLE_SELECT" value1="Custom" />
 		<execute action="PGNavigationConfiguration#assertSelectedLabel" locator-key1="CUSTOM_HEADER_SELECT" value1="Root Page" />
 		<execute action="PGNavigationConfiguration#assertSelectedLabel" locator-key1="CUSTOM_ROOT_PAGE_SELECT" value1="Parent at Level" />
 		<execute action="PGNavigationConfiguration#assertSelectedLabel" locator-key1="CUSTOM_ROOT_PAGE_LEVEL_SELECT" value1="1" />

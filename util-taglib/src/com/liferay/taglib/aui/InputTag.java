@@ -19,13 +19,13 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.taglib.aui.base.BaseInputTag;
 
 import java.util.HashMap;
@@ -207,15 +207,16 @@ public class InputTag extends BaseInputTag {
 			if ((model != null) && Validator.isNull(type) &&
 				Validator.isNotNull(fieldParam)) {
 
-				id = fieldParam;
+				id = AUIUtil.normalizeId(fieldParam);
 			}
 			else if (!Validator.equals(type, "assetTags") &&
 					 !Validator.equals(type, "radio")) {
 
-				id = name;
+				id = AUIUtil.normalizeId(name);
 			}
 			else {
-				id = StringUtil.randomId();
+				id = PortalUtil.getUniqueElementId(
+					request, StringPool.BLANK, AUIUtil.normalizeId(name));
 			}
 		}
 

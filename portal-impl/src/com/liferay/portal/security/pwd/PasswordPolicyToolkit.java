@@ -89,13 +89,11 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 			if (!passwordPolicy.isAllowDictionaryWords() &&
 				WordsUtil.isDictionaryWord(password1)) {
 
-				throw new UserPasswordException(
-					UserPasswordException.PASSWORD_CONTAINS_TRIVIAL_WORDS);
+				throw new UserPasswordException.MustNotHaveTrivialWords(userId);
 			}
 
 			if (password1.length() < passwordPolicy.getMinLength()) {
-				throw new UserPasswordException(
-					UserPasswordException.PASSWORD_LENGTH);
+				throw new UserPasswordException.MustBeLonger(userId);
 			}
 
 			if ((getUsageCount(password1, _alphanumericCharsetArray) <
@@ -109,21 +107,18 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 				(getUsageCount(password1, _upperCaseCharsetArray) <
 					passwordPolicy.getMinUpperCase())) {
 
-				throw new UserPasswordException(
-					UserPasswordException.PASSWORD_TOO_TRIVIAL);
+				throw new UserPasswordException.MustNotBeTrivial(userId);
 			}
 
 			if (Validator.isNotNull(passwordPolicy.getRegex()) &&
 				!password1.matches(passwordPolicy.getRegex())) {
 
-				throw new UserPasswordException(
-					UserPasswordException.PASSWORD_INVALID);
+				throw new UserPasswordException.MustBeValid(userId);
 			}
 		}
 
 		if (!passwordPolicy.isChangeable() && (userId != 0)) {
-			throw new UserPasswordException(
-				UserPasswordException.PASSWORD_NOT_CHANGEABLE);
+			throw new UserPasswordException.MustNotBeChanged(userId);
 		}
 
 		if (userId == 0) {
@@ -145,22 +140,20 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 			if ((passwordModificationElapsedTime < minAge) &&
 				!user.getPasswordReset()) {
 
-				throw new UserPasswordException(
-					UserPasswordException.PASSWORD_TOO_YOUNG);
+				throw new UserPasswordException.MustNotBeTooYoung(
+					userId, new Date(passwordModfiedDate.getTime() + minAge));
 			}
 		}
 
 		if (PasswordTrackerLocalServiceUtil.isSameAsCurrentPassword(
 				userId, password1)) {
 
-			throw new UserPasswordException(
-				UserPasswordException.PASSWORD_SAME_AS_CURRENT);
+			throw new UserPasswordException.MustNotBeCurrent(userId);
 		}
 		else if (!PasswordTrackerLocalServiceUtil.isValidPassword(
 					userId, password1)) {
 
-			throw new UserPasswordException(
-				UserPasswordException.PASSWORD_ALREADY_USED);
+			throw new UserPasswordException.MustNotBeRecent(userId);
 		}
 	}
 

@@ -43,8 +43,7 @@ public class PwdToolkitUtil {
 		throws PortalException {
 
 		if (!password1.equals(password2)) {
-			throw new UserPasswordException(
-				UserPasswordException.PASSWORDS_DO_NOT_MATCH);
+			throw new UserPasswordException.MustMatch(userId);
 		}
 
 		if (!LDAPSettingsUtil.isPasswordPolicyEnabled(companyId) &&

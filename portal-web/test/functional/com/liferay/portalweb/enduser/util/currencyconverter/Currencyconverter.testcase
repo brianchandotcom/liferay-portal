@@ -1,0 +1,33 @@
+<definition component-name="portal-util-misc">
+	<property name="testray.main.component.name" value="Util" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Currency Converter Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Currency Converter Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Currency Converter" />
+		</execute>
+	</set-up>
+
+	<command name="ConvertCurrencyUSDToEUR" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Currency Converter Page" />
+		</execute>
+
+		<execute macro="CurrencyConverter#convertPG">
+			<var name="currencyDataFrom" value="USD" />
+			<var name="currencyDataTo" value="EUR" />
+			<var name="currencyFrom" value="USD" />
+			<var name="currencyTo" value="EUR" />
+			<var name="currencyValue" value="4" />
+		</execute>
+	</command>
+</definition>

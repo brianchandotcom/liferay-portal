@@ -1,0 +1,30 @@
+<html>
+<head>
+<title>PGWebProxy</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGWebProxy</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGWebProxy</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SCREENSHOTS-->
+<tr>
+	<td>SCREENSHOTS_GOOGLE_IMAGES_PNG</td>
+	<td>portal/screenshots/webproxy/google_images.png</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

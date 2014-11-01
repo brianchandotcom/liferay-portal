@@ -1,0 +1,28 @@
+<definition>
+	<command name="dragAndDropPortletToPortletColumnPG">
+		<var name="key_portletTitleName" value="${portletName}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_TITLE" value1="${portletName}" />
+		<execute action="Home#dragAndDrop" locator-key1="PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_TITLE" locator-key2="PORTLET_COLUMN_${columnNumberTo}" value1="${portletName}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_COLUMN_${portletColumnNumberTo}_NESTED_PORTLET_TITLE" value1="${portletName}" />
+	</command>
+
+	<command name="viewConfigurationDefaultLayoutTemplate">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute action="NestedportletsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+
+		<execute action="NestedportletsConfiguration#assertChecked" locator-key1="LAYOUT_2_COLUMNS" />
+
+		<execute action="NestedportletsConfiguration#selectFrameTop" value1="relative=top" />
+	</command>
+
+	<command name="viewPG">
+		<var name="key_portletTitleName" value="${portletName}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_COLUMN_${portletColumnNumberTo}_NESTED_PORTLET_TITLE" value1="${portletName}" />
+	</command>
+</definition>

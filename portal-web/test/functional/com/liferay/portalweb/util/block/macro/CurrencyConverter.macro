@@ -1,0 +1,13 @@
+<definition>
+	<command name="convertPG">
+		<execute action="Currencyconverter#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Please select a currency." />
+		<execute action="Currencyconverter#type" locator-key1="CURRENCY_CONVERTER_NUMBER_FIELD" value1="${currencyValue}" />
+		<execute action="Currencyconverter#select" locator-key1="CURRENCY_CONVERTER_FROM_SELECT" value1="${currencyFrom}" />
+		<execute action="Currencyconverter#select" locator-key1="CURRENCY_CONVERTER_TO_SELECT" value1="${currencyTo}" />
+		<execute action="Currencyconverter#assertClick" locator-key1="CONVERT_BUTTON" value1="Convert" />
+
+		<execute action="Currencyconverter#assertTextEquals" locator-key1="CURRENCY_DATA_TABLE_FROM" value1="${currencyDataFrom}" />
+		<execute action="Currencyconverter#assertTextEquals" locator-key1="CURRENCY_DATA_TABLE_TO" value1="${currencyDataTo}" />
+		<execute action="Currencyconverter#assertElementPresent" locator-key1="CURRENCY_DATA_GRAPH" />
+	</command>
+</definition>

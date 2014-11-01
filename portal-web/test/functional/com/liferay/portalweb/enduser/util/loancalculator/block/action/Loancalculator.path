@@ -1,0 +1,75 @@
+<html>
+<head>
+<title>Loancalculator</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Loancalculator</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Loancalculator</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>BasePortlet</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>CALCULATE_BUTTON</td>
+	<td>//button[contains(.,'Calculate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--LOAN-->
+<tr>
+	<td>LOAN_AMOUNT</td>
+	<td>//input[@id='_com_liferay_loan_calculator_web_portlet_LoanCalculatorPortlet_loanAmount']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOAN_INTEREST_RATE</td>
+	<td>//input[@id='_com_liferay_loan_calculator_web_portlet_LoanCalculatorPortlet_interestRate']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOAN_YEARS</td>
+	<td>//input[@id='_com_liferay_loan_calculator_web_portlet_LoanCalculatorPortlet_years']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOAN_MONTHLY_PAYMENT</td>
+	<td>//input[@id='_com_liferay_loan_calculator_web_portlet_LoanCalculatorPortlet_monthlyPayment']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOAN_INTEREST_PAID</td>
+	<td>//input[@id='_com_liferay_loan_calculator_web_portlet_LoanCalculatorPortlet_interestPaid']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOAN_TOTAL_PAID</td>
+	<td>//input[@id='_com_liferay_loan_calculator_web_portlet_LoanCalculatorPortlet_totalPaid']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

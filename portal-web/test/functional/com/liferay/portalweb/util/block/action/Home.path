@@ -435,6 +435,32 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--PORTLET_COLUMN-->
+<tr>
+	<td>PORTLET_COLUMN_1</td>
+	<td>//div[contains(@class,'col-md-6 portlet-column portlet-column-first')]//div[contains(@id,'NestedPortletsPortlet') and contains(@class,'portlet-dropzone portlet-column-content portlet-column-content-first empty')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_COLUMN_2</td>
+	<td>//div[contains(@class,'col-md-6 portlet-column portlet-column-last')]//div[contains(@id,'NestedPortletsPortlet') and contains(@class,'portlet-dropzone empty portlet-column-content portlet-column-content-last')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_COLUMN_1_NESTED_PORTLET_TITLE</td>
+	<td>//div[contains(@id,'column-1')]//h1[@class='portlet-title' and contains(.,'${key_portletTitleName}')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_COLUMN_2_NESTED_PORTLET_TITLE</td>
+	<td>//div[contains(@id,'column-2')]//h1[@class='portlet-title' and contains(.,'${key_portletTitleName}')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--NEW_PAGE-->
 <tr>
 	<td>NEW_PAGE_FIELD</td>

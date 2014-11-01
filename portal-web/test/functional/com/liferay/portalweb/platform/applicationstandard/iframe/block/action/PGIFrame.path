@@ -1,0 +1,40 @@
+<html>
+<head>
+<title>PGIFrame</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGIFrame</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGIFrame</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SCREENSHOTS-->
+<tr>
+	<td>SCREENSHOTS_LIFERAY_PRODUCTS_ARTICLE_PNG</td>
+	<td>portal/screenshots/iframe/liferay_products_article.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCREENSHOTS_LIFERAY_PRODUCTS_BANNER_PNG</td>
+	<td>portal/screenshots/iframe/liferay_products_banner.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCREENSHOTS_LIFERAY_PRODUCTS_LOGO_PNG</td>
+	<td>portal/screenshots/iframe/liferay_products_logo.png</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

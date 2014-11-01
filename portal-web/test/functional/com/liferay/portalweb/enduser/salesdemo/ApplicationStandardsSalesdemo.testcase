@@ -1,0 +1,69 @@
+<definition component-name="portal-application-standards">
+	<property name="testray.main.component.name" value="Application Standards" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command known-issues="sales-demo" name="IFrameDemo" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="IFrame Page" />
+			<var name="pageType" value="1 Column" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="IFrame" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="IFrame#addCP">
+			<var name="sourceURL" value="http://www.liferay.com/products/liferay-portal/overview" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="IFrame Page" />
+		</execute>
+
+		<execute action="PGIFrame#pause" locator1="2000" />
+
+		<take-screenshot />
+
+		<execute action="PGIFrame#sikuliAssertElementPresent" locator-key1="SCREENSHOTS_LIFERAY_PRODUCTS_LOGO_PNG" />
+	</command>
+
+	<command known-issues="sales-demo" name="WebProxyDemo" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Web Proxy Page" />
+			<var name="pageType" value="1 Column" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Proxy" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="WebProxy#addCP">
+			<var name="initialURL" value="http://images.google.com/" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Proxy Page" />
+		</execute>
+
+		<execute action="PGWebProxy#assertElementPresent" locator1="//div[@title='Google Images']" />
+
+		<take-screenshot />
+
+		<execute action="PGWebProxy#sikuliAssertElementPresent" locator-key1="SCREENSHOTS_GOOGLE_IMAGES_PNG" />
+	</command>
+</definition>

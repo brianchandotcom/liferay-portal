@@ -1,0 +1,30 @@
+<definition component-name="portal-util-misc">
+	<property name="testray.main.component.name" value="Util" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Amazon Rankings Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Amazon Rankings Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Amazon Rankings" />
+		</execute>
+	</set-up>
+
+	<command name="ViewAmazonRankingsPortlet" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Amazon Rankings Page" />
+		</execute>
+
+		<execute macro="Portlet#viewPG">
+			<var name="portletBody" value="Please contact the administrator to configure an Amazon license." />
+			<var name="portletName" value="Amazon Rankings" />
+		</execute>
+	</command>
+</definition>

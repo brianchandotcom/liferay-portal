@@ -1,0 +1,75 @@
+<html>
+<head>
+<title>Quicknote</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Quicknote</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Quicknote</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLOSE_ICON</td>
+	<td>//i[@class='icon-remove']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTE_CONTENT</td>
+	<td>//div[@class='note-content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTE_CONTENT_TEXTAREA</td>
+	<td>//textarea[contains(@class,'field-input')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMOVE_BUTTON</td>
+	<td>//button[contains(@class,'btn-default-content')]/span[@class='icon-remove']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OK_BUTTON</td>
+	<td>//button[contains(@class,'btn-default-content')]/span[@class='icon-ok']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NOTE_COLOR-->
+<tr>
+	<td>NOTE_COLOR_YELLOW</td>
+	<td>//span[contains(@class,'note-color') and contains(@class,'yellow')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTE_COLOR_GREEN</td>
+	<td>//span[contains(@class,'note-color') and contains(@class,'green')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTE_COLOR_BLUE</td>
+	<td>//span[contains(@class,'note-color') and contains(@class,'blue')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTE_COLOR_RED</td>
+	<td>//span[contains(@class,'note-color') and contains(@class,'red')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

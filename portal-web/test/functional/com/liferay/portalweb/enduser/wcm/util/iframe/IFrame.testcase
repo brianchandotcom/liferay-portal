@@ -1,0 +1,30 @@
+<definition component-name="portal-util-misc">
+	<property name="testray.main.component.name" value="Util" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="IFrame Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="IFrame Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="IFrame" />
+		</execute>
+	</set-up>
+
+	<command name="ViewIFramePortlet" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="IFrame Page" />
+		</execute>
+
+		<execute macro="Portlet#viewPG">
+			<var name="portletBody" value="Please configure this portlet to make it visible to all users." />
+			<var name="portletName" value="IFrame" />
+		</execute>
+	</command>
+</definition>

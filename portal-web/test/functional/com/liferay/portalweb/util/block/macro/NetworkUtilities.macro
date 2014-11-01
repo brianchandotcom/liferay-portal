@@ -1,0 +1,10 @@
+<definition>
+	<command name="searchPG">
+		<var name="key_networkDomain" value="${networkDomain}" />
+
+		<execute action="Networkutilities#type" locator-key1="DNS_LOOKUP_FIELD" value1="${dnsDomain}" />
+		<execute action="Networkutilities#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+
+		<execute action="Networkutilities#assertTextEquals" locator-key1="NETWORK_DOMAIN" value1="${networkDomain}" />
+	</command>
+</definition>

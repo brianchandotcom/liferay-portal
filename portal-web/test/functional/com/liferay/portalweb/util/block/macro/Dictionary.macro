@@ -1,0 +1,6 @@
+<definition>
+	<command name="findPG">
+		<execute action="Dictionary#type" locator-key1="DICTIONARY_WORD_FIELD" value1="${dictionaryWord}" />
+		<execute action="Dictionary#assertClick" locator-key1="FIND_BUTTON" value1="Find" />
+	</command>
+</definition>

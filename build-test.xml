@@ -333,7 +333,11 @@
 					<if>
 						<equals arg1="@{test.build.uat.bundle}" arg2="true" />
 						<then>
-							<loadfile property="fix.pack.requirements.templates" srcfile="/opt/dev/projects/github/lfrsite-team-able/www/_templates/portal/artifacts/liferay/fix-packs.txt" />
+							<loadfile
+								failonerror="false"
+								property="fix.pack.requirements.templates"
+								srcfile="/opt/dev/projects/github/lfrsite-team-able/www/_templates/portal/artifacts/liferay/fix-packs.txt"
+							/>
 
 							<get-fix-pack-files fix.pack.requirements="${fix.pack.requirements.templates}" />
 

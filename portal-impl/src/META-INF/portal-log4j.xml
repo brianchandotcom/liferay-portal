@@ -260,6 +260,10 @@
 		<priority value="INFO" />
 	</category>
 
+	<category name="com.liferay.portal.fabric">
+		<priority value="INFO" />
+	</category>
+
 	<category name="com.liferay.portal.image.HookFactory">
 		<priority value="ERROR" />
 	</category>

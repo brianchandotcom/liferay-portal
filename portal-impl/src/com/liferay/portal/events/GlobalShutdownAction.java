@@ -15,6 +15,7 @@
 package com.liferay.portal.events;
 
 import com.liferay.portal.deploy.RequiredPluginsUtil;
+import com.liferay.portal.fabric.server.FabricServerUtil;
 import com.liferay.portal.im.AIMConnector;
 import com.liferay.portal.im.ICQConnector;
 import com.liferay.portal.im.MSNConnector;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.lucene.LuceneHelperUtil;
 import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
 import com.liferay.util.ThirdPartyThreadLocalRegistry;
 
@@ -229,6 +231,17 @@ public class GlobalShutdownAction extends SimpleAction {
 		// Messaging
 
 		MessageBusUtil.shutdown(true);
+
+		// Fabric
+
+		if (PropsValues.PORTAL_FABRIC_ENABLED) {
+			try {
+				FabricServerUtil.stop();
+			}
+			catch (Exception e) {
+				_log.error("Unable to stop fabric server", e);
+			}
+		}
 	}
 
 	protected void shutdownLevel4() {

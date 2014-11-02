@@ -14,137 +14,101 @@
 
 package com.liferay.portal.kernel.concurrent;
 
-import java.util.concurrent.atomic.AtomicMarkableReference;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author Shuyang Zhou
  */
 public class BatchablePipe<K, V> {
 
-	public BatchablePipe() {
-		_headEntry = new Entry<K, V>(null);
-		_lastEntryReference = new AtomicReference<Entry<K, V>>(_headEntry);
-	}
-
 	public boolean put(IncreasableEntry<K, V> increasableEntry) {
-		Entry<K, V> newEntry = new Entry<K, V>(increasableEntry);
+		K key = increasableEntry.getKey();
 
 		while (true) {
-			if (_doIncrease(increasableEntry)) {
+			IncreasableEntryWrapper<K, V> previousIncreasableEntryWrapper =
+				concurrentMap.putIfAbsent(
+					key, new IncreasableEntryWrapper<K, V>(increasableEntry));
+
+			if (previousIncreasableEntryWrapper == null) {
+				queue.offer(increasableEntry);
+
+				return true;
+			}
+
+			IncreasableEntry<K, V> previousIncreasableEntry =
+				previousIncreasableEntryWrapper.increasableEntry;
+
+			IncreasableEntry<K, V> newIncreasableEntry =
+				increasableEntry.increase(previousIncreasableEntry.getValue());
+
+			if (concurrentMap.replace(
+					key, previousIncreasableEntryWrapper,
+				new IncreasableEntryWrapper<K, V>(newIncreasableEntry))) {
+
+				queue.offer(newIncreasableEntry);
+
 				return false;
-			}
-
-			Entry<K, V> lastEntryLink = _lastEntryReference.get();
-			Entry<K, V> nextEntryLink = lastEntryLink._nextEntry.getReference();
-
-			if (nextEntryLink == null) {
-				if (lastEntryLink._nextEntry.compareAndSet(
-						null, newEntry, false, false)) {
-
-					_lastEntryReference.set(newEntry);
-
-					return true;
-				}
-			}
-			else {
-				_lastEntryReference.compareAndSet(lastEntryLink, nextEntryLink);
 			}
 		}
 	}
 
 	public IncreasableEntry<K, V> take() {
-		boolean[] marked = {false};
-
-		take:
 		while (true) {
-			Entry<K, V> predecessorEntry = _headEntry;
-			Entry<K, V> currentEntry =
-				predecessorEntry._nextEntry.getReference();
+			IncreasableEntry<K, V> increasableEntry = queue.poll();
 
-			while (currentEntry != null) {
-				Entry<K, V> successorEntry = currentEntry._nextEntry.get(
-					marked);
-
-				if (marked[0]) {
-					if (!predecessorEntry._nextEntry.compareAndSet(
-							currentEntry, successorEntry, false, false)) {
-
-						continue take;
-					}
-
-					currentEntry = predecessorEntry._nextEntry.getReference();
-
-					continue;
-				}
-
-				if (currentEntry._nextEntry.compareAndSet(
-						successorEntry, successorEntry, false, true)) {
-
-					return currentEntry._increasableEntry;
-				}
-
-				continue take;
+			if (increasableEntry == null) {
+				return null;
 			}
 
-			return null;
+			if (concurrentMap.remove(
+					increasableEntry.getKey(),
+				new IncreasableEntryWrapper<K, V>(increasableEntry))) {
+
+				return increasableEntry;
+			}
 		}
 	}
 
-	private boolean _doIncrease(IncreasableEntry<K, V> increasableEntry) {
-		boolean[] marked = {false};
+	protected final ConcurrentMap<K, IncreasableEntryWrapper<K, V>>
+		concurrentMap =
+			new ConcurrentHashMap<K, IncreasableEntryWrapper<K, V>>();
+	protected final Queue<IncreasableEntry<K, V>> queue =
+		new ConcurrentLinkedQueue<IncreasableEntry<K, V>>();
 
-		retry:
-		while (true) {
-			Entry<K, V> predecessorEntry = _headEntry;
-			Entry<K, V> currentEntry =
-				predecessorEntry._nextEntry.getReference();
+	protected static class IncreasableEntryWrapper<K, V> {
 
-			while (currentEntry != null) {
-				Entry<K, V> successorEntry = currentEntry._nextEntry.get(
-					marked);
+		public IncreasableEntryWrapper(
+			IncreasableEntry<K, V> increasableEntry) {
 
-				if (marked[0]) {
-					if (!predecessorEntry._nextEntry.compareAndSet(
-							currentEntry, successorEntry, false, false)) {
+			this.increasableEntry = increasableEntry;
+		}
 
-						continue retry;
-					}
+		@Override
+		public boolean equals(Object obj) {
+			IncreasableEntryWrapper<K, V> increasableEntryWrapper =
+				(IncreasableEntryWrapper<K, V>)obj;
 
-					currentEntry = predecessorEntry._nextEntry.getReference();
-
-					continue;
-				}
-
-				if (currentEntry._increasableEntry.getKey().equals(
-						increasableEntry.getKey())) {
-
-					return currentEntry._increasableEntry.increase(
-						increasableEntry.getValue());
-				}
-
-				predecessorEntry = currentEntry;
-				currentEntry = successorEntry;
+			if (increasableEntry == increasableEntryWrapper.increasableEntry) {
+				return true;
 			}
-
-			_lastEntryReference.set(predecessorEntry);
 
 			return false;
 		}
-	}
 
-	private final Entry<K, V> _headEntry;
-	private final AtomicReference<Entry<K, V>> _lastEntryReference;
-
-	private static class Entry<K, V> {
-
-		private Entry(IncreasableEntry<K, V> increasableEntry) {
-			_increasableEntry = increasableEntry;
-			_nextEntry = new AtomicMarkableReference<Entry<K, V>>(null, false);
+		@Override
+		public int hashCode() {
+			return increasableEntry.hashCode();
 		}
 
-		private final IncreasableEntry<K, V> _increasableEntry;
-		private final AtomicMarkableReference<Entry<K, V>> _nextEntry;
+		@Override
+		public String toString() {
+			return increasableEntry.toString();
+		}
+
+		protected final IncreasableEntry<K, V> increasableEntry;
 
 	}
 

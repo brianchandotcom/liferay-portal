@@ -2043,6 +2043,81 @@
 		</execute>
 	</command>
 
+	<command name="SendMessageViaProfile" priority="4">
+		<var name="messageBody" value="Message Body" />
+		<var name="messageSubject" value="Message Subject" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOProfile#sendMessage">
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userListName" value="${userListName}" />
+			<var name="userName" value="${userName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Messages" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessage">
+			<var name="connectionName" value="${userName}" />
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute action="SOMessagesMessage#click" locator-key1="BACK_BUTTON" />
+
+		<execute macro="SOMessages#viewMessageList">
+			<var name="connectionName" value="${userName}" />
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Messages" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessage">
+			<var name="connectionName" value="${adminName}" />
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute action="SOMessagesMessage#click" locator-key1="BACK_BUTTON" />
+
+		<execute macro="SOMessages#viewMessageList">
+			<var name="connectionName" value="${adminName}" />
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
+		</execute>
+	</command>
+
 	<command name="SendReplyMessage" priority="5">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageReplyBody" value="Message Reply Body" />
@@ -2826,6 +2901,170 @@
 		<var name="key_recipientName" value="Social02" />
 
 		<execute action="SOMessagesAdd#assertTextEquals" locator-key1="TO_FIELD_DROPDOWN_LIST" value1="${userName2} &lt;${userScreenName2}&gt;" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName3}" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName3}" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName4}" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName4}" />
+	</command>
+
+	<command name="ViewAutocompleteMenuSearch" priority="5">
+		<var name="pageName" value="Messages" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress1" value="socialoffice01@liferay.com" />
+		<var name="userEmailAddress2" value="socialoffice02@liferay.com" />
+		<var name="userEmailAddress3" value="socialoffice03@liferay.com" />
+		<var name="userEmailAddress4" value="socialoffice04@liferay.com" />
+		<var name="userFirstName1" value="Social01" />
+		<var name="userFirstName2" value="Social02" />
+		<var name="userFirstName3" value="Social03" />
+		<var name="userFirstName4" value="Social04" />
+		<var name="userLastName1" value="User01" />
+		<var name="userLastName2" value="User02" />
+		<var name="userLastName3" value="User03" />
+		<var name="userLastName4" value="User04" />
+		<var name="userListName1" value="User01, Social01" />
+		<var name="userListName2" value="User02, Social02" />
+		<var name="userListName3" value="User03, Social03" />
+		<var name="userListName4" value="User04, Social04" />
+		<var name="userMiddleName1" value="Office01" />
+		<var name="userMiddleName2" value="Office02" />
+		<var name="userMiddleName3" value="Office03" />
+		<var name="userMiddleName4" value="Office04" />
+		<var name="userName1" value="Social01 Office01 User01" />
+		<var name="userName2" value="Social02 Office02 User02" />
+		<var name="userName3" value="Social03 Office03 User03" />
+		<var name="userName4" value="Social04 Office04 User04" />
+		<var name="userScreenName1" value="socialoffice01" />
+		<var name="userScreenName2" value="socialoffice02" />
+		<var name="userScreenName3" value="socialoffice03" />
+		<var name="userScreenName4" value="socialoffice04" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress1}" />
+			<var name="userFirstName" value="${userFirstName1}" />
+			<var name="userLastName" value="${userLastName1}" />
+			<var name="userMiddleName" value="${userMiddleName1}" />
+			<var name="userScreenName" value="${userScreenName1}" />
+		</execute>
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress2}" />
+			<var name="userFirstName" value="${userFirstName2}" />
+			<var name="userLastName" value="${userLastName2}" />
+			<var name="userMiddleName" value="${userMiddleName2}" />
+			<var name="userScreenName" value="${userScreenName2}" />
+		</execute>
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress3}" />
+			<var name="userFirstName" value="${userFirstName3}" />
+			<var name="userLastName" value="${userLastName3}" />
+			<var name="userMiddleName" value="${userMiddleName3}" />
+			<var name="userScreenName" value="${userScreenName3}" />
+		</execute>
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress4}" />
+			<var name="userFirstName" value="${userFirstName4}" />
+			<var name="userLastName" value="${userLastName4}" />
+			<var name="userMiddleName" value="${userMiddleName4}" />
+			<var name="userScreenName" value="${userScreenName4}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute action="SOMessages#assertClick" locator-key1="NEW_MESSAGE_BUTTON" value1="New Message" />
+
+		<execute action="SOMessagesAdd#selectFrame" locator-key1="NEW_MESSAGE_IFRAME" />
+		<execute action="SOMessagesAdd#type" locator-key1="TO_FIELD" value1="${userFirstName1}" />
+
+		<var name="key_recipientName" value="${userFirstName1}" />
+
+		<execute action="SOMessagesAdd#assertTextEquals" locator-key1="TO_FIELD_DROPDOWN_LIST" value1="${userName1} &lt;${userScreenName1}&gt;" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName2}" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName2}" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName3}" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName3}" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName4}" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName4}" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute action="SOMessages#assertClick" locator-key1="NEW_MESSAGE_BUTTON" value1="New Message" />
+
+		<execute action="SOMessagesAdd#selectFrame" locator-key1="NEW_MESSAGE_IFRAME" />
+		<execute action="SOMessagesAdd#type" locator-key1="TO_FIELD" value1="${userFirstName2}" />
+
+		<var name="key_recipientName" value="${userFirstName2}" />
+
+		<execute action="SOMessagesAdd#assertTextEquals" locator-key1="TO_FIELD_DROPDOWN_LIST" value1="${userName2} &lt;${userScreenName2}&gt;" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName1}" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName1}" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName3}" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName3}" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName4}" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName4}" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute action="SOMessages#assertClick" locator-key1="NEW_MESSAGE_BUTTON" value1="New Message" />
+
+		<execute action="SOMessagesAdd#selectFrame" locator-key1="NEW_MESSAGE_IFRAME" />
+		<execute action="SOMessagesAdd#type" locator-key1="TO_FIELD" value1="${userFirstName3}" />
+
+		<var name="key_recipientName" value="${userFirstName3}" />
+
+		<execute action="SOMessagesAdd#assertTextEquals" locator-key1="TO_FIELD_DROPDOWN_LIST" value1="${userName3} &lt;${userScreenName3}&gt;" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName1}" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName1}" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName2}" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName2}" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName4}" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName4}" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute action="SOMessages#assertClick" locator-key1="NEW_MESSAGE_BUTTON" value1="New Message" />
+
+		<execute action="SOMessagesAdd#selectFrame" locator-key1="NEW_MESSAGE_IFRAME" />
+		<execute action="SOMessagesAdd#type" locator-key1="TO_FIELD" value1="${userFirstName4}" />
+
+		<var name="key_recipientName" value="${userFirstName4}" />
+
+		<execute action="SOMessagesAdd#assertTextEquals" locator-key1="TO_FIELD_DROPDOWN_LIST" value1="${userName4} &lt;${userScreenName4}&gt;" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName1}" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName1}" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName2}" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName2}" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName3}" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName3}" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute action="SOMessages#assertClick" locator-key1="NEW_MESSAGE_BUTTON" value1="New Message" />
+
+		<execute action="SOMessagesAdd#selectFrame" locator-key1="NEW_MESSAGE_IFRAME" />
+		<execute action="SOMessagesAdd#type" locator-key1="TO_FIELD" value1="Social05" />
+		<execute action="SOMessagesAdd#assertElementNotPresent" locator-key1="TO_FIELD_DROPDOWN_LIST" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName1}" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName1}" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName2}" />
+		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName2}" />
 		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName3}" />
 		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName3}" />
 		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName4}" />

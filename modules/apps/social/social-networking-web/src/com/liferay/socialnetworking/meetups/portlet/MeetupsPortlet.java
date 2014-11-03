@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.socialnetworking.service.MeetupsEntryLocalServiceUtil;
-import com.liferay.socialnetworking.service.MeetupsRegistrationLocalServiceUtil;
+import com.liferay.socialnetworking.service.MeetupsEntryLocalService;
+import com.liferay.socialnetworking.service.MeetupsRegistrationLocalService;
 
 import java.io.File;
 
@@ -34,6 +34,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -83,7 +84,7 @@ public class MeetupsPortlet extends MVCPortlet {
 		long meetupsEntryId = ParamUtil.getLong(
 			actionRequest, "meetupsEntryId");
 
-		MeetupsEntryLocalServiceUtil.deleteMeetupsEntry(meetupsEntryId);
+		_meetupsEntryLocalService.deleteMeetupsEntry(meetupsEntryId);
 	}
 
 	public void updateMeetupsEntry(
@@ -154,14 +155,14 @@ public class MeetupsPortlet extends MVCPortlet {
 		byte[] bytes = FileUtil.getBytes(file);
 
 		if (meetupsEntryId <= 0) {
-			MeetupsEntryLocalServiceUtil.addMeetupsEntry(
+			_meetupsEntryLocalService.addMeetupsEntry(
 				themeDisplay.getUserId(), title, description, startDateMonth,
 				startDateDay, startDateYear, startDateHour, startDateMinute,
 				endDateMonth, endDateDay, endDateYear, endDateHour,
 				endDateMinute, totalAttendees, maxAttendees, price, bytes);
 		}
 		else {
-			MeetupsEntryLocalServiceUtil.updateMeetupsEntry(
+			_meetupsEntryLocalService.updateMeetupsEntry(
 				themeDisplay.getUserId(), meetupsEntryId, title, description,
 				startDateMonth, startDateDay, startDateYear, startDateHour,
 				startDateMinute, endDateMonth, endDateDay, endDateYear,
@@ -182,8 +183,25 @@ public class MeetupsPortlet extends MVCPortlet {
 		int status = ParamUtil.getInteger(actionRequest, "status");
 		String comments = ParamUtil.getString(actionRequest, "comments");
 
-		MeetupsRegistrationLocalServiceUtil.updateMeetupsRegistration(
+		_meetupsRegistrationLocalService.updateMeetupsRegistration(
 			themeDisplay.getUserId(), meetupsEntryId, status, comments);
 	}
+
+	@Reference(unbind = "-")
+	protected void setMeetupsRegistrationLocalService(
+		MeetupsRegistrationLocalService meetupsRegistrationLocalService) {
+
+		_meetupsRegistrationLocalService = meetupsRegistrationLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMeetupsEntryLocalService(
+		MeetupsEntryLocalService meetupsEntryLocalService) {
+
+		_meetupsEntryLocalService = meetupsEntryLocalService;
+	}
+
+	private MeetupsEntryLocalService _meetupsEntryLocalService;
+	private MeetupsRegistrationLocalService _meetupsRegistrationLocalService;
 
 }

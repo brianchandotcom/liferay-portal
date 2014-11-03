@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.service.OrganizationLocalService;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.social.model.BaseSocialRequestInterpreter;
@@ -29,10 +29,11 @@ import com.liferay.portlet.social.model.SocialRequest;
 import com.liferay.portlet.social.model.SocialRequestConstants;
 import com.liferay.portlet.social.model.SocialRequestFeedEntry;
 import com.liferay.portlet.social.model.SocialRequestInterpreter;
-import com.liferay.portlet.social.service.SocialActivityLocalServiceUtil;
+import com.liferay.portlet.social.service.SocialActivityLocalService;
 import com.liferay.socialnetworking.members.portlet.MembersPortlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -66,12 +67,11 @@ public class MembersRequestInterpreter extends BaseSocialRequestInterpreter {
 		String className = request.getClassName();
 
 		if (className.equals(Group.class.getName())) {
-			group = GroupLocalServiceUtil.getGroup(request.getClassPK());
+			group = _groupLocalService.getGroup(request.getClassPK());
 		}
 		else {
 			Organization organization =
-				OrganizationLocalServiceUtil.getOrganization(
-					request.getClassPK());
+				_organizationLocalService.getOrganization(request.getClassPK());
 
 			group = organization.getGroup();
 		}
@@ -134,7 +134,7 @@ public class MembersRequestInterpreter extends BaseSocialRequestInterpreter {
 					request.getClassPK(), new long[] {request.getUserId()});
 			}
 
-			SocialActivityLocalServiceUtil.addActivity(
+			_socialActivityLocalService.addActivity(
 				request.getUserId(), 0, className, request.getClassPK(),
 				MembersActivityKeys.ADD_MEMBER, StringPool.BLANK, 0);
 
@@ -148,11 +148,34 @@ public class MembersRequestInterpreter extends BaseSocialRequestInterpreter {
 		return true;
 	}
 
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setOrganizationLocalService(
+		OrganizationLocalService organizationLocalService) {
+
+		_organizationLocalService = organizationLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSocialActivityLocalService(
+		SocialActivityLocalService socialActivityLocalService) {
+
+		_socialActivityLocalService = socialActivityLocalService;
+	}
+
 	private static final String[] _CLASS_NAMES = new String[] {
 		Group.class.getName(), Organization.class.getName()
 	};
 
 	private static Log _log = LogFactoryUtil.getLog(
 		MembersRequestInterpreter.class);
+
+	private GroupLocalService _groupLocalService;
+	private OrganizationLocalService _organizationLocalService;
+	private SocialActivityLocalService _socialActivityLocalService;
 
 }

@@ -50,6 +50,8 @@ public abstract class VerifyProcess extends BaseDBProcess {
 	public static final int ONCE = 1;
 
 	public void verify() throws VerifyException {
+		long start = System.currentTimeMillis();
+
 		try {
 			if (_log.isInfoEnabled()) {
 				_log.info("Verifying " + getClass().getName());
@@ -59,6 +61,13 @@ public abstract class VerifyProcess extends BaseDBProcess {
 		}
 		catch (Exception e) {
 			throw new VerifyException(e);
+		}
+		finally {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Completed verification: " + getClass().getName() + " in " +
+						(System.currentTimeMillis() - start) + "ms");
+			}
 		}
 	}
 

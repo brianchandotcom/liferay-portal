@@ -158,6 +158,8 @@ public abstract class UpgradeProcess extends BaseDBProcess {
 	}
 
 	public void upgrade() throws UpgradeException {
+		long start = System.currentTimeMillis();
+
 		try {
 			if (_log.isInfoEnabled()) {
 				_log.info("Upgrading " + getClass().getName());
@@ -167,6 +169,13 @@ public abstract class UpgradeProcess extends BaseDBProcess {
 		}
 		catch (Exception e) {
 			throw new UpgradeException(e);
+		}
+		finally {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Completed upgrade process: " + getClass().getName() +
+						" in " + (System.currentTimeMillis() - start) + "ms");
+			}
 		}
 	}
 

@@ -105,7 +105,7 @@ public class EditFolderAction extends PortletAction {
 			else if (cmd.equals(Constants.UNSUBSCRIBE)) {
 				unsubscribeFolder(actionRequest);
 			}
-			else if (cmd.equals("deleteExpiredTemporaryFiles")) {
+			else if (cmd.equals("deleteExpiredTemporaryFileEntries")) {
 				deleteExpiredTemporaryFileEntries(actionRequest);
 			}
 			else if (cmd.equals("updateWorkflowDefinitions")) {

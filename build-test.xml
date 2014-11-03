@@ -362,7 +362,7 @@
 								replace=""
 							/>
 
-							<check-fix.pack.requirements
+							<check-fix-pack-requirements
 								fix.pack.dir="${app.server.dir}/patching-tool/patches"
 								fix.pack.file.name="${test.build.fix.pack.zip.file.name}"
 							/>

@@ -28,12 +28,20 @@ import com.liferay.portlet.social.model.BaseSocialRequestInterpreter;
 import com.liferay.portlet.social.model.SocialRequest;
 import com.liferay.portlet.social.model.SocialRequestConstants;
 import com.liferay.portlet.social.model.SocialRequestFeedEntry;
+import com.liferay.portlet.social.model.SocialRequestInterpreter;
 import com.liferay.portlet.social.service.SocialActivityLocalServiceUtil;
+import com.liferay.socialnetworking.members.portlet.MembersPortlet;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
  * @author M Murali Krishna Reddy
  */
+@Component(
+	property = { "javax.portlet.name=" + MembersPortlet.JAVAX_PORTLET_NAME },
+	service = SocialRequestInterpreter.class
+)
 public class MembersRequestInterpreter extends BaseSocialRequestInterpreter {
 
 	@Override

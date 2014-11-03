@@ -856,6 +856,46 @@
 		<execute action="SOProfile#assertElementNotPresent" locator-key1="CONNECT_BUTTON" />
 	</command>
 
+	<command name="sendMessage">
+		<var name="connectionName" value="${userName}" />
+		<var name="key_recipientName" value="${userName}" />
+		<var name="recipientName" value="${userName}" />
+		<var name="recipientScreenName" value="${userScreenName}" />
+
+		<execute macro="SOContactsCenter#gotoProfile">
+			<var name="userListName" value="${userListName}" />
+			<var name="userName" value="${userName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute action="SOContactscenter#assertClick" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
+
+		<execute action="SOProfile#assertClick" locator-key1="MESSAGE_BUTTON" value1="Message" />
+
+		<execute action="SOMessagesAdd#selectFrame" locator-key1="NEW_MESSAGE_IFRAME" />
+		<execute action="SOMessagesAdd#assertTextEquals" locator-key1="TO_FIELD" value1="${recipientName} &lt;${recipientScreenName}&gt;," />
+		<execute action="SOMessagesAdd#type" locator-key1="SUBJECT_FIELD" value1="${messageSubject}" />
+		<execute action="SOMessagesAdd#type" locator-key1="BODY_FIELD" value1="${messageBody}" />
+
+		<if>
+			<isset var="messageAttachmentFile" />
+			<then>
+				<execute action="SOMessagesAdd#uploadCommonFile" locator-key1="ATTACHMENTS_FIELD" value1="${messageAttachmentFile}" />
+			</then>
+		</if>
+
+		<execute action="SOMessagesAdd#click" locator-key1="SEND_BUTTON" />
+		<execute action="SOMessagesAdd#pause" value1="1000" />
+		<execute action="SOMessages#selectFrame" value1="relative=top" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Messages" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageList" />
+	</command>
+
 	<command name="unblockCCUser">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 

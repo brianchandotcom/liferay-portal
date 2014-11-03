@@ -14,6 +14,28 @@
 		outline-color: #118ADE;
 	}
 
+	&.draggable-image {
+		&.vertical .current-image {
+			max-height: inherit;
+		}
+
+		&.horizontal .current-image {
+			max-width: inherit;
+		}
+
+		&.both .current-image {
+			max-height: inherit;
+			max-width: inherit;
+		}
+
+		.image-wrapper {
+			height : 400px;
+			overflow: hidden;
+			position: relative;
+			width: 100%;
+		}
+	}
+
 	.browse-image-controls, .current-image {
 		margin: auto;
 		max-height: 100%;
@@ -22,9 +44,9 @@
 
 	.browse-image-controls {
 		left: 0;
+		padding: 10px;
 		position: absolute;
 		right: 0;
-		padding: 10px;
 		top: 50%;
 
 		@include transform(translate(0, -50%));

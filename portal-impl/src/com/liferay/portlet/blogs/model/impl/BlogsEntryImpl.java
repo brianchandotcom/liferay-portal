@@ -55,9 +55,9 @@ public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 	}
 
 	@Override
-	public long getSmallImageFolderId() {
-		if (_smallImageFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			return _smallImageFolderId;
+	public long getImagesFolderId() {
+		if (_imagesFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return _imagesFolderId;
 		}
 
 		Repository repository =
@@ -79,12 +79,12 @@ public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				String.valueOf(getEntryId()), serviceContext);
 
-			_smallImageFolderId = folder.getFolderId();
+			_imagesFolderId = folder.getFolderId();
 		}
 		catch (Exception e) {
 		}
 
-		return _smallImageFolderId;
+		return _imagesFolderId;
 	}
 
 	@Override
@@ -116,7 +116,7 @@ public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 		_smallImageType = smallImageType;
 	}
 
-	private long _smallImageFolderId;
+	private long _imagesFolderId;
 	private String _smallImageType;
 
 }

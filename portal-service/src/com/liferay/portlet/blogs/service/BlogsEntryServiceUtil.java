@@ -72,14 +72,15 @@ public class BlogsEntryServiceUtil {
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
 		boolean allowTrackbacks, java.lang.String[] trackbacks,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector imageSelector,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageSelector,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageSelector,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addEntry(title, subtitle, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-			imageSelector, serviceContext);
+			coverImageSelector, smallImageSelector, serviceContext);
 	}
 
 	public static void deleteEntry(long entryId)
@@ -255,14 +256,15 @@ public class BlogsEntryServiceUtil {
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
 		boolean allowTrackbacks, java.lang.String[] trackbacks,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector imageSelector,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageSelector,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageSelector,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateEntry(entryId, title, subtitle, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-			imageSelector, serviceContext);
+			coverImageSelector, smallImageSelector, serviceContext);
 	}
 
 	public static BlogsEntryService getService() {

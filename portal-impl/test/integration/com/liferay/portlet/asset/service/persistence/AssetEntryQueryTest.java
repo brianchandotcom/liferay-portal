@@ -473,7 +473,7 @@ public class AssetEntryQueryTest {
 		BlogsEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), title1, StringPool.BLANK,
 			StringPool.BLANK, "This is a blog entry for testing purposes", 1, 1,
-			1965, 0, 0, true, true, null, null, serviceContext);
+			1965, 0, 0, true, true, null, null, null, serviceContext);
 
 		if (assetCategoryIds2 != null) {
 			serviceContext.setAssetCategoryIds(assetCategoryIds2);
@@ -486,7 +486,7 @@ public class AssetEntryQueryTest {
 		BlogsEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), title2, StringPool.BLANK,
 			StringPool.BLANK, "This is a blog entry for testing purposes", 1, 1,
-			1965, 0, 0, true, true, null, null, serviceContext);
+			1965, 0, 0, true, true, null, null, null, serviceContext);
 
 		// Clear the thread local cache which is populated in AssetPublisherUtil
 

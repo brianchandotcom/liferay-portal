@@ -37,7 +37,7 @@ public interface BlogsEntry extends BlogsEntryModel, PersistedModel {
 	public java.lang.String getEntryImageURL(
 		com.liferay.portal.theme.ThemeDisplay themeDisplay);
 
-	public long getSmallImageFolderId();
+	public long getImagesFolderId();
 
 	public java.lang.String getSmallImageType()
 		throws com.liferay.portal.kernel.exception.PortalException;

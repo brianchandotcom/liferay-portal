@@ -71,7 +71,8 @@ public class BlogsEntryServiceSoap {
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
 		boolean allowTrackbacks, java.lang.String[] trackbacks,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector imageSelector,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageSelector,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageSelector,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -79,7 +80,8 @@ public class BlogsEntryServiceSoap {
 					subtitle, description, content, displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, allowPingbacks, allowTrackbacks,
-					trackbacks, imageSelector, serviceContext);
+					trackbacks, coverImageSelector, smallImageSelector,
+					serviceContext);
 
 			return com.liferay.portlet.blogs.model.BlogsEntrySoap.toSoapModel(returnValue);
 		}
@@ -330,7 +332,8 @@ public class BlogsEntryServiceSoap {
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
 		boolean allowTrackbacks, java.lang.String[] trackbacks,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector imageSelector,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageSelector,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageSelector,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -338,7 +341,8 @@ public class BlogsEntryServiceSoap {
 					title, subtitle, description, content, displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, allowPingbacks, allowTrackbacks,
-					trackbacks, imageSelector, serviceContext);
+					trackbacks, coverImageSelector, smallImageSelector,
+					serviceContext);
 
 			return com.liferay.portlet.blogs.model.BlogsEntrySoap.toSoapModel(returnValue);
 		}

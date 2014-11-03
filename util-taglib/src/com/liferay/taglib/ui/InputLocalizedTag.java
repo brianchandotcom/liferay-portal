@@ -139,9 +139,8 @@ public class InputLocalizedTag extends IncludeTag {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-			long groupId = themeDisplay.getSiteGroupId();
-
-			availableLocales = LanguageUtil.getAvailableLocales(groupId);
+			availableLocales = LanguageUtil.getAvailableLocales(
+				themeDisplay.getSiteGroupId());
 		}
 
 		String formName = _formName;

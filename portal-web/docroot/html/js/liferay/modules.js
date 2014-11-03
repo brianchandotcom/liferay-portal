@@ -877,12 +877,6 @@
 							'uploader'
 						]
 					},
-					'liferay-util-list-fields': {
-						path: 'util_list_fields.js',
-						requires: [
-							'aui-base'
-						]
-					},
 					'liferay-util-window': {
 						path: 'util_window.js',
 						requires: [

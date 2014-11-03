@@ -14,22 +14,24 @@
 
 package com.liferay.sync.engine.documentlibrary.event;
 
-import com.liferay.sync.engine.documentlibrary.handler.GetSyncContextHandler;
 import com.liferay.sync.engine.documentlibrary.handler.Handler;
+import com.liferay.sync.engine.documentlibrary.handler.RetryServerConnectionHandler;
+import com.liferay.sync.engine.model.SyncAccount;
+import com.liferay.sync.engine.service.SyncAccountService;
 
 import java.util.Map;
 
 /**
  * @author Shinn Lok
  */
-public class GetSyncContextEvent extends BaseEvent {
+public class RetryServerConnectionEvent extends GetSyncContextEvent {
 
-	public GetSyncContextEvent(
+	public RetryServerConnectionEvent(
 		long syncAccountId, Map<String, Object> parameters) {
 
-		super(syncAccountId, _URL_PATH, parameters);
+		super(syncAccountId, parameters);
 
-		_handler = new GetSyncContextHandler(this);
+		_handler = new RetryServerConnectionHandler(this);
 	}
 
 	@Override
@@ -37,8 +39,17 @@ public class GetSyncContextEvent extends BaseEvent {
 		return _handler;
 	}
 
-	private static final String _URL_PATH =
-		"/sync-web.syncdlobject/get-sync-context";
+	@Override
+	protected void processRequest() throws Exception {
+		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
+			getSyncAccountId());
+
+		syncAccount.setState(SyncAccount.STATE_CONNECTING);
+
+		SyncAccountService.update(syncAccount);
+
+		super.processRequest();
+	}
 
 	private final Handler<Void> _handler;
 

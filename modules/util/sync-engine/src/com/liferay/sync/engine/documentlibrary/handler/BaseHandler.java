@@ -16,6 +16,7 @@ package com.liferay.sync.engine.documentlibrary.handler;
 
 import com.liferay.sync.engine.documentlibrary.event.Event;
 import com.liferay.sync.engine.documentlibrary.event.GetSyncContextEvent;
+import com.liferay.sync.engine.documentlibrary.util.ServerEventUtil;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.service.SyncAccountService;
@@ -147,8 +148,8 @@ public class BaseHandler implements Handler<Void> {
 
 		SyncAccountService.update(syncAccount);
 
-		SyncAccountService.synchronizeSyncAccount(
-			getSyncAccountId(), true,
+		ServerEventUtil.retryServerConnection(
+			getSyncAccountId(),
 			ConnectionRetryUtil.incrementRetryDelay(getSyncAccountId()));
 
 		if (_logger.isDebugEnabled()) {

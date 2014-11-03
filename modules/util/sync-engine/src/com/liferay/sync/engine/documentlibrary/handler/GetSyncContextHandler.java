@@ -19,21 +19,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.sync.engine.documentlibrary.event.Event;
 import com.liferay.sync.engine.documentlibrary.model.SyncContext;
-import com.liferay.sync.engine.documentlibrary.util.FileEventUtil;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncUser;
 import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncUserService;
-import com.liferay.sync.engine.util.ConnectionRetryUtil;
-import com.liferay.sync.engine.util.ReleaseInfo;
 
 import java.util.Map;
 
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpResponseException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Shinn Lok
@@ -45,7 +39,11 @@ public class GetSyncContextHandler extends BaseJSONHandler {
 	}
 
 	@Override
-	protected void processResponse(String response) throws Exception {
+	public void processResponse(String response) throws Exception {
+		doProcessResponse(response);
+	}
+
+	protected SyncContext doProcessResponse(String response) throws Exception {
 		ObjectMapper objectMapper = new ObjectMapper();
 
 		SyncContext syncContext = objectMapper.readValue(
@@ -87,29 +85,9 @@ public class GetSyncContextHandler extends BaseJSONHandler {
 		syncAccount.setSocialOfficeInstalled(
 			syncContext.isSocialOfficeInstalled());
 
-		if ((Boolean)getParameterValue("checkState")) {
-			if (ReleaseInfo.isServerCompatible(syncContext)) {
-				if (_logger.isDebugEnabled()) {
-					_logger.debug("Connected to {}", syncAccount.getUrl());
-				}
-
-				syncAccount.setState(SyncAccount.STATE_CONNECTED);
-
-				FileEventUtil.retryFileTransfers(getSyncAccountId());
-
-				ConnectionRetryUtil.resetRetryDelay(getSyncAccountId());
-			}
-			else {
-				syncAccount.setState(SyncAccount.STATE_DISCONNECTED);
-				syncAccount.setUiEvent(
-					SyncAccount.UI_EVENT_SYNC_WEB_OUT_OF_DATE);
-			}
-		}
-
 		SyncAccountService.update(syncAccount);
-	}
 
-	private static final Logger _logger = LoggerFactory.getLogger(
-		GetSyncContextHandler.class);
+		return syncContext;
+	}
 
 }

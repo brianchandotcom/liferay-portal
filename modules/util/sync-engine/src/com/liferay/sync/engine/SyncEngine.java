@@ -17,6 +17,8 @@ package com.liferay.sync.engine;
 import com.j256.ormlite.support.ConnectionSource;
 
 import com.liferay.sync.engine.documentlibrary.event.GetSyncDLObjectUpdateEvent;
+import com.liferay.sync.engine.documentlibrary.util.FileEventUtil;
+import com.liferay.sync.engine.documentlibrary.util.ServerEventUtil;
 import com.liferay.sync.engine.filesystem.SyncSiteWatchEventListener;
 import com.liferay.sync.engine.filesystem.SyncWatchEventProcessor;
 import com.liferay.sync.engine.filesystem.WatchEventListener;
@@ -32,6 +34,7 @@ import com.liferay.sync.engine.service.SyncSiteService;
 import com.liferay.sync.engine.service.SyncWatchEventService;
 import com.liferay.sync.engine.service.persistence.SyncAccountPersistence;
 import com.liferay.sync.engine.upgrade.util.UpgradeUtil;
+import com.liferay.sync.engine.util.ConnectionRetryUtil;
 import com.liferay.sync.engine.util.LoggerUtil;
 import com.liferay.sync.engine.util.PropsValues;
 import com.liferay.sync.engine.util.SyncClientUpdater;
@@ -150,11 +153,15 @@ public class SyncEngine {
 
 		SyncWatchEventService.deleteSyncWatchEvents(syncAccountId);
 
-		SyncAccount syncAccount = SyncAccountService.synchronizeSyncAccount(
-			syncAccountId, true, 0);
+		SyncAccount syncAccount = ServerEventUtil.synchronizeSyncAccount(
+			syncAccountId);
 
-		if (syncAccount.getState() == SyncAccount.STATE_CONNECTED) {
-			SyncSiteService.synchronizeSyncSites(syncAccountId);
+		if (!ConnectionRetryUtil.retryInProgress(syncAccountId)) {
+			syncAccount.setState(SyncAccount.STATE_CONNECTED);
+
+			SyncAccountService.update(syncAccount);
+
+			ServerEventUtil.synchronizeSyncSites(syncAccountId);
 		}
 
 		Path filePath = Paths.get(syncAccount.getFilePathName());
@@ -168,11 +175,11 @@ public class SyncEngine {
 		WatchEventListener watchEventListener = new SyncSiteWatchEventListener(
 			syncAccountId);
 
-		fireDeleteEvents(filePath, watchEventListener);
-
 		Watcher watcher = new Watcher(filePath, true, watchEventListener);
 
 		_executorService.execute(watcher);
+
+		synchronizeSyncFiles(filePath, syncAccountId, watchEventListener);
 
 		scheduleGetSyncDLObjectUpdateEvent(
 			syncAccount, syncWatchEventProcessor, watcher);
@@ -361,6 +368,16 @@ public class SyncEngine {
 		_syncAccountTasks.put(
 			syncAccount.getSyncAccountId(),
 			new Object[] {watcher, scheduledFuture});
+	}
+
+	protected static void synchronizeSyncFiles(
+			Path filePath, long syncAccountId,
+			WatchEventListener watchEventListener)
+		throws IOException {
+
+		fireDeleteEvents(filePath, watchEventListener);
+
+		FileEventUtil.retryFileTransfers(syncAccountId);
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

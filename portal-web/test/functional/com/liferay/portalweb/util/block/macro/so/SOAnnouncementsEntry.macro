@@ -129,6 +129,87 @@
 		<execute action="SOAnnouncementsConfiguration#selectFrameTop" />
 	</command>
 
+	<command name="configureAnnouncementEntriesScopeDisplay">
+		<if>
+			<condition action="SOUserBar#isElementNotPresent" locator-key1="VISIBLE_PAGE_CONTROLS" />
+			<then>
+				<execute action="SOUserBar#click" locator-key1="TOGGLE_DOCKBAR" />
+			</then>
+		</if>
+
+		<if>
+			<condition action="SOUserBar#isElementPresent" locator-key1="EDIT_CONTROLS_NOT_FLAGGED" />
+			<then>
+				<execute action="Dockbar#mouseOver" locator-key1="EDIT_CONTROLS" />
+				<execute action="Dockbar#click" locator-key1="EDIT_CONTROLS" />
+			</then>
+		</if>
+
+		<execute action="SOAnnouncements#click" locator-key1="ANNOUNCEMENTS_OPTIONS" />
+
+		<execute action="BasePortlet#click" locator-key1="OPTIONS_MENULIST_CONFIGURATION" />
+
+		<execute action="SOAnnouncementsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="SOAnnouncementsConfiguration#check" locator-key1="ANNOUNCEMENTS_DISPLAYED_CUSTOMIZE_ANNOUNCEMENTS_DISPLAYED_CHECKBOX" />
+		<execute action="SOAnnouncementsConfiguration#assertClick" locator-key1="ANNOUNCEMENTS_DISPLAYED_SITES_TAB" value1="Sites" />
+
+		<if>
+			<isset var="displayingSites" />
+			<then>
+				<for list="${displayingSites}" param="displayingSite">
+					<var name="displayingSite" value="${displayingSite}" />
+
+					<execute action="SOAnnouncementsConfiguration#select" locator-key1="ANNOUNCEMENTS_DISPLAYED_AVAILABLE_SITES_SELECT" value1="${displayingSite}" />
+					<execute action="SOAnnouncementsConfiguration#click" locator-key1="ANNOUNCEMENTS_DISPLAYED_MOVE_SITES_FROM_AVAILABLE_TO_DISPLAYING_BUTTON" />
+					<execute action="SOAnnouncementsConfiguration#assertTextEquals" locator-key1="ANNOUNCEMENTS_DISPLAYED_DISPLAYING_SITES_SELECT" value1="${displayingSite}" />
+				</for>
+			</then>
+			<elseif>
+				<isset var="nonDisplayingSites" />
+				<then>
+					<for list="${nonDisplayingSites}" param="nonDisplayingSite">
+						<var name="nonDisplayingSite" value="${nonDisplayingSite}" />
+
+						<execute action="SOAnnouncementsConfiguration#select" locator-key1="ANNOUNCEMENTS_DISPLAYED_DISPLAYING_SITES_SELECT" value1="${nonDisplayingSite}" />
+						<execute action="SOAnnouncementsConfiguration#click" locator-key1="ANNOUNCEMENTS_DISPLAYED_MOVE_SITES_FROM_DISPLAYING_TO_AVAILABLE_BUTTON" />
+						<execute action="SOAnnouncementsConfiguration#assertTextEquals" locator-key1="ANNOUNCEMENTS_DISPLAYED_AVAILABLE_SITES_SELECT" value1="${nonDisplayingSite}" />
+					</for>
+				</then>
+			</elseif>
+		</if>
+
+		<execute action="SOAnnouncementsConfiguration#assertClick" locator-key1="ANNOUNCEMENTS_DISPLAYED_ROLES_TAB" value1="Roles" />
+
+		<if>
+			<isset var="displayingRoles" />
+			<then>
+				<for list="${displayingRoles}" param="displayingRole">
+					<var name="displayingRole" value="${displayingRole}" />
+
+					<execute action="SOAnnouncementsConfiguration#select" locator-key1="ANNOUNCEMENTS_DISPLAYED_AVAILABLE_ROLES_SELECT" value1="${displayingRole}" />
+					<execute action="SOAnnouncementsConfiguration#click" locator-key1="ANNOUNCEMENTS_DISPLAYED_MOVE_ROLES_FROM_AVAILABLE_TO_DISPLAYING_BUTTON" />
+					<execute action="SOAnnouncementsConfiguration#assertTextEquals" locator-key1="ANNOUNCEMENTS_DISPLAYED_DISPLAYING_ROLES_SELECT" value1="${displayingRole}" />
+				</for>
+			</then>
+			<elseif>
+				<isset var="nonDisplayingRoles" />
+				<then>
+					<for list="${nonDisplayingRoles}" param="nonDisplayingRole">
+						<var name="nonDisplayingRole" value="${nonDisplayingRole}" />
+
+						<execute action="SOAnnouncementsConfiguration#select" locator-key1="ANNOUNCEMENTS_DISPLAYED_DISPLAYING_ROLES_SELECT" value1="${nonDisplayingRole}" />
+						<execute action="SOAnnouncementsConfiguration#click" locator-key1="ANNOUNCEMENTS_DISPLAYED_MOVE_ROLES_FROM_DISPLAYING_TO_AVAILABLE_BUTTON" />
+						<execute action="SOAnnouncementsConfiguration#assertTextEquals" locator-key1="ANNOUNCEMENTS_DISPLAYED_AVAILABLE_ROLES_SELECT" value1="${nonDisplayingRole}" />
+					</for>
+				</then>
+			</elseif>
+		</if>
+
+		<execute action="SOAnnouncementsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="SOAnnouncementsConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="SOAnnouncementsConfiguration#selectFrameTop" />
+	</command>
+
 	<command name="deletePG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
@@ -347,6 +428,56 @@
 
 	<command name="tearDownPG">
 		<execute macro="SOUser#firstLoginPG" />
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<if>
+			<condition action="SOUserBar#isElementNotPresent" locator-key1="VISIBLE_PAGE_CONTROLS" />
+			<then>
+				<execute action="SOUserBar#click" locator-key1="TOGGLE_DOCKBAR" />
+			</then>
+		</if>
+
+		<if>
+			<condition action="SOUserBar#isElementPresent" locator-key1="EDIT_CONTROLS_NOT_FLAGGED" />
+			<then>
+				<execute action="Dockbar#mouseOver" locator-key1="EDIT_CONTROLS" />
+				<execute action="Dockbar#click" locator-key1="EDIT_CONTROLS" />
+			</then>
+		</if>
+
+		<execute action="SOAnnouncements#click" locator-key1="ANNOUNCEMENTS_OPTIONS" />
+
+		<execute action="BasePortlet#click" locator-key1="OPTIONS_MENULIST_CONFIGURATION" />
+
+		<execute action="SOAnnouncementsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="SOAnnouncementsConfiguration#check" locator-key1="ANNOUNCEMENTS_DISPLAYED_CUSTOMIZE_ANNOUNCEMENTS_DISPLAYED_CHECKBOX" />
+		<execute action="SOAnnouncementsConfiguration#assertClick" locator-key1="ANNOUNCEMENTS_DISPLAYED_SITES_TAB" value1="Sites" />
+
+		<while>
+			<condition action="SOAnnouncementsConfiguration#isElementPresent" locator-key1="ANNOUNCEMENTS_DISPLAYED_DISPLAYING_SITES_SELECT_OPTION" />
+			<then>
+				<execute action="SOAnnouncementsConfiguration#click" locator-key1="ANNOUNCEMENTS_DISPLAYED_DISPLAYING_SITES_SELECT_OPTION" />
+				<execute action="SOAnnouncementsConfiguration#click" locator-key1="ANNOUNCEMENTS_DISPLAYED_MOVE_SITES_FROM_DISPLAYING_TO_AVAILABLE_BUTTON" />
+				<execute action="SOAnnouncementsConfiguration#pause" locator1="1000" />
+			</then>
+		</while>
+
+		<execute action="SOAnnouncementsConfiguration#assertClick" locator-key1="ANNOUNCEMENTS_DISPLAYED_ROLES_TAB" value1="Roles" />
+
+		<while>
+			<condition action="SOAnnouncementsConfiguration#isElementPresent" locator-key1="ANNOUNCEMENTS_DISPLAYED_DISPLAYING_ROLES_SELECT_OPTION" />
+			<then>
+				<execute action="SOAnnouncementsConfiguration#click" locator-key1="ANNOUNCEMENTS_DISPLAYED_DISPLAYING_ROLES_SELECT_OPTION" />
+				<execute action="SOAnnouncementsConfiguration#click" locator-key1="ANNOUNCEMENTS_DISPLAYED_MOVE_ROLES_FROM_DISPLAYING_TO_AVAILABLE_BUTTON" />
+				<execute action="SOAnnouncementsConfiguration#pause" locator1="1000" />
+			</then>
+		</while>
+
+		<execute action="SOAnnouncementsConfiguration#uncheck" locator-key1="ANNOUNCEMENTS_DISPLAYED_CUSTOMIZE_ANNOUNCEMENTS_DISPLAYED_CHECKBOX" />
+		<execute action="SOAnnouncementsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="SOAnnouncementsConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="SOAnnouncementsConfiguration#selectFrameTop" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 

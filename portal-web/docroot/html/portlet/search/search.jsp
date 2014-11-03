@@ -150,46 +150,6 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 		}
 	);
 
-	var searchContainer = A.one('.portlet-search .result .lfr-search-container');
-
-	if (searchContainer) {
-		searchContainer.delegate(
-			'click',
-			function(event) {
-				document.<portlet:namespace />fm.<portlet:namespace /><%= SearchContainer.DEFAULT_CUR_PARAM %>.value = 1;
-
-				submitForm(document.<portlet:namespace />fm);
-
-				event.preventDefault();
-			},
-			'.page-links a.first'
-		);
-
-		searchContainer.delegate(
-			'click',
-			function(event) {
-				document.<portlet:namespace />fm.<portlet:namespace /><%= SearchContainer.DEFAULT_CUR_PARAM %>.value = parseInt(document.<portlet:namespace />fm.<portlet:namespace /><%= SearchContainer.DEFAULT_CUR_PARAM %>.value) - 1;
-
-				submitForm(document.<portlet:namespace />fm);
-
-				event.preventDefault();
-			},
-			'.page-links a.previous'
-		);
-
-		searchContainer.delegate(
-			'click',
-			function(event) {
-				document.<portlet:namespace />fm.<portlet:namespace /><%= SearchContainer.DEFAULT_CUR_PARAM %>.value = parseInt(document.<portlet:namespace />fm.<portlet:namespace /><%= SearchContainer.DEFAULT_CUR_PARAM %>.value) + 1;
-
-				submitForm(document.<portlet:namespace />fm);
-
-				event.preventDefault();
-			},
-			'.page-links a.next'
-		);
-	}
-
 	$('.portlet-search .result .lfr-search-container').on(
 		'click',
 		'.table-cell .asset-entry .toggle-details',

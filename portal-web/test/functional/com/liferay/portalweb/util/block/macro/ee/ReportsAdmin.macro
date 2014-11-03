@@ -43,7 +43,7 @@
 		<execute action="CPReportsadminViewreportentry#assertClick" locator-key1="ENTRY_FILE_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPReportsadminViewreportentry#assertClick" locator-key1="ENTRY_FILE_MENULIST_DOWNLOAD" value1="Download" />
 		<execute action="CPReportsadminViewreportentry#pause" locator1="2000" />
-		
+
 		<take-screenshot />
 
 		<if>
@@ -125,7 +125,7 @@
 				<execute action="CPReportsadminViewreportentry#assertTextEquals" locator-key1="REPORT_PARAMETERS_FIELD" value1="Report Parameters [${reportParameterse}]" />
 			</then>
 			<else>
-				<execute action="CPReportsadminViewreportentry#assertTextEquals" locator-key1="REPORT_PARAMETERS_DEFAULT_FIELD" value1="Report Parameters []" />
+				<execute action="CPReportsadminViewreportentry#assertTextEquals" locator-key1="REPORT_PARAMETERS_DEFAULT_FIELD" value1="Report Parameters" />
 			</else>
 		</if>
 

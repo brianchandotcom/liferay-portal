@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>REPORT_PARAMETERS_DEFAULT_FIELD</td>
-	<td>//span[contains(.,'Report Parameters')]/../../div[contains(.,'Report Parameters') and contains(.,'[]')]</td>
+	<td>//span[contains(.,'Report Parameters')]/../../div[contains(.,'Report Parameters')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -14,7 +14,7 @@
 
 	<command name="DeleteReportFile" priority="5">
 		<var name="reportsDefinitionName" value="Reports Definition Name" />
-		<var name="reportsFileName" value="portalDataSourceSample.csv" />
+		<var name="reportsFileName" value="reportsAdminTemplateSourceSample.csv" />
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Reports Admin" />
@@ -26,7 +26,7 @@
 			<var name="dataSource" value="Portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="${reportsDefinitionName}" />
-			<var name="templateFile" value="portalDataSourceSample.jrxml" />
+			<var name="templateFile" value="reportsAdminTemplateSourceSample.jrxml" />
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
@@ -72,7 +72,7 @@
 			<var name="dataSource" value="Portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="portalDataSourceSample.jrxml" />
+			<var name="templateFile" value="reportsAdminTemplateSourceSample.jrxml" />
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
@@ -86,12 +86,12 @@
 			<var name="dataSource" value="portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="portalDataSourceSample.csv" />
+			<var name="reportsFileName" value="reportsAdminTemplateSourceSample.csv" />
 			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="ReportsAdmin#downloadReportEntryFile">
-			<var name="reportsFileName" value="portalDataSourceSample.csv" />
+			<var name="reportsFileName" value="reportsAdminTemplateSourceSample.csv" />
 		</execute>
 	</command>
 
@@ -106,7 +106,7 @@
 			<var name="dataSource" value="Portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="portalDataSourceSample.jrxml" />
+			<var name="templateFile" value="reportsAdminTemplateSourceSample.jrxml" />
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
@@ -120,12 +120,12 @@
 			<var name="dataSource" value="portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="portalDataSourceSample.html" />
+			<var name="reportsFileName" value="reportsAdminTemplateSourceSample.html" />
 			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="ReportsAdmin#downloadReportEntryFile">
-			<var name="reportsFileName" value="portalDataSourceSample.html" />
+			<var name="reportsFileName" value="reportsAdminTemplateSourceSample.html" />
 		</execute>
 	</command>
 
@@ -140,7 +140,7 @@
 			<var name="dataSource" value="Portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="portalDataSourceSample.jrxml" />
+			<var name="templateFile" value="reportsAdminTemplateSourceSample.jrxml" />
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
@@ -154,13 +154,13 @@
 			<var name="dataSource" value="portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="portalDataSourceSample.pdf" />
+			<var name="reportsFileName" value="reportsAdminTemplateSourceSample.pdf" />
 			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="ReportsAdmin#downloadReportEntryFile">
 			<var name="reportFormat" value="pdf" />
-			<var name="reportsFileName" value="portalDataSourceSample.pdf" />
+			<var name="reportsFileName" value="reportsAdminTemplateSourceSample.pdf" />
 		</execute>
 	</command>
 
@@ -175,7 +175,7 @@
 			<var name="dataSource" value="Portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="portalDataSourceSample.jrxml" />
+			<var name="templateFile" value="reportsAdminTemplateSourceSample.jrxml" />
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
@@ -189,12 +189,12 @@
 			<var name="dataSource" value="portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="portalDataSourceSample.rtf" />
+			<var name="reportsFileName" value="reportsAdminTemplateSourceSample.rtf" />
 			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="ReportsAdmin#downloadReportEntryFile">
-			<var name="reportsFileName" value="portalDataSourceSample.rtf" />
+			<var name="reportsFileName" value="reportsAdminTemplateSourceSample.rtf" />
 		</execute>
 	</command>
 
@@ -209,7 +209,7 @@
 			<var name="dataSource" value="Portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="portalDataSourceSample.jrxml" />
+			<var name="templateFile" value="reportsAdminTemplateSourceSample.jrxml" />
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
@@ -223,12 +223,12 @@
 			<var name="dataSource" value="portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="portalDataSourceSample.txt" />
+			<var name="reportsFileName" value="reportsAdminTemplateSourceSample.txt" />
 			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="ReportsAdmin#downloadReportEntryFile">
-			<var name="reportsFileName" value="portalDataSourceSample.txt" />
+			<var name="reportsFileName" value="reportsAdminTemplateSourceSample.txt" />
 		</execute>
 	</command>
 
@@ -243,7 +243,7 @@
 			<var name="dataSource" value="Portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="portalDataSourceSample.jrxml" />
+			<var name="templateFile" value="reportsAdminTemplateSourceSample.jrxml" />
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
@@ -257,12 +257,12 @@
 			<var name="dataSource" value="portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="portalDataSourceSample.xls" />
+			<var name="reportsFileName" value="reportsAdminTemplateSourceSample.xls" />
 			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="ReportsAdmin#downloadReportEntryFile">
-			<var name="reportsFileName" value="portalDataSourceSample.xls" />
+			<var name="reportsFileName" value="reportsAdminTemplateSourceSample.xls" />
 		</execute>
 	</command>
 
@@ -277,7 +277,7 @@
 			<var name="dataSource" value="Portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="portalDataSourceSample.jrxml" />
+			<var name="templateFile" value="reportsAdminTemplateSourceSample.jrxml" />
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
@@ -291,12 +291,12 @@
 			<var name="dataSource" value="portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="portalDataSourceSample.xml" />
+			<var name="reportsFileName" value="reportsAdminTemplateSourceSample.xml" />
 			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="ReportsAdmin#downloadReportEntryFile">
-			<var name="reportsFileName" value="portalDataSourceSample.xml" />
+			<var name="reportsFileName" value="reportsAdminTemplateSourceSample.xml" />
 		</execute>
 	</command>
 </definition>

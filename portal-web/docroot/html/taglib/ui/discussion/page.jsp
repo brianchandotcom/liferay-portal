@@ -842,7 +842,7 @@ private RatingsEntry getRatingsEntry(List<RatingsEntry> ratingEntries, long clas
 		}
 	}
 
-	return RatingsEntryUtil.create(0);
+	return null;
 }
 
 private RatingsStats getRatingsStats(List<RatingsStats> ratingsStatsList, long classPK) {

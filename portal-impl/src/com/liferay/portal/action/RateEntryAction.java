@@ -44,7 +44,7 @@ public class RateEntryAction extends JSONAction {
 		long classPK = getClassPK(request);
 		double score = ParamUtil.getDouble(request, "score");
 
-		if (score == 0) {
+		if (score == -1) {
 			RatingsEntryServiceUtil.deleteEntry(className, classPK);
 		}
 		else {

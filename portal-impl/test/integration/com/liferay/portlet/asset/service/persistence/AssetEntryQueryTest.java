@@ -310,16 +310,16 @@ public class AssetEntryQueryTest {
 
 	@Test
 	public void testOrderByRatingsAsc() throws Exception {
-		double[] scores = {2.2, 1.0, 3.0, 1.1, 4.3};
-		double[] orderedScores = {1.0, 1.1, 2.2, 3.0, 4.3};
+		double[] scores = {0.44, 0.2, 0.6, 0.22, 0.86};
+		double[] orderedScores = {0.2, 0.22, 0.44, 0.6, 0.86};
 
 		testOrderByRatings(scores, orderedScores, "ASC");
 	}
 
 	@Test
 	public void testOrderByRatingsDesc() throws Exception {
-		double[] scores = {2.2, 1.0, 3.0, 1.1, 4.3};
-		double[] orderedScores = {4.3, 3.0, 2.2, 1.1, 1.0};
+		double[] scores = {0.44, 0.2, 0.6, 0.22, 0.86};
+		double[] orderedScores = {0.86, 0.6, 0.44, 0.22, 0.2};
 
 		testOrderByRatings(scores, orderedScores, "DESC");
 	}

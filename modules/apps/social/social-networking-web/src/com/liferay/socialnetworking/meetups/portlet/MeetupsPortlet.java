@@ -14,6 +14,7 @@
 
 package com.liferay.socialnetworking.meetups.portlet;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -23,7 +24,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.socialnetworking.service.MeetupsEntryLocalServiceUtil;
 import com.liferay.socialnetworking.service.MeetupsRegistrationLocalServiceUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import java.io.File;
 
@@ -31,11 +31,40 @@ import java.util.Calendar;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	property = {
+		"com.liferay.portlet.friendly-url-mapping=meetups",
+		"com.liferay.portlet.friendly-url-routes=" +
+			"com/liferay/socialnetworking/meetups/portlet/" +
+				"meetups-friendly-url-routes.xml",
+		"com.liferay.portlet.header-portlet-css=/meetups/css/main.css",
+		"com.liferay.portlet.css-class-wrapper=" +
+			"social-networking-portlet-meetups",
+		"com.liferay.portlet.add-default-resource=true",
+		"javax.portlet.display-name=Meetups",
+		"javax.portlet.init-param.clear-request-parameters=true",
+		"javax.portlet.init-param.view-template=/meetups/view.jsp",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.supports.mime-type=text/html",
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.info.title=Meetups",
+		"javax.portlet.info.short-title=Meetups",
+		"javax.portlet.info.keywords=Meetups",
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user"
+	},
+	service = Portlet.class
+)
 public class MeetupsPortlet extends MVCPortlet {
+
+	public static final String JAVAX_PORTLET_NAME =
+		"com_liferay_socialnetworking_meetups_portlet_MeetupsPortlet";
 
 	public void deleteMeetupsEntry(
 			ActionRequest actionRequest, ActionResponse actionResponse)

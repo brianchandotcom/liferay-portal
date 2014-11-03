@@ -21,15 +21,16 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.service.OrganizationLocalService;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.socialnetworking.members.portlet.MembersPortlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -62,8 +63,7 @@ public class MembersActivityInterpreter extends BaseSocialActivityInterpreter {
 		sb.append(serviceContext.getPathFriendlyURLPublic());
 		sb.append(StringPool.SLASH);
 
-		User creatorUser = UserLocalServiceUtil.getUserById(
-			activity.getUserId());
+		User creatorUser = _userLocalService.getUserById(activity.getUserId());
 
 		sb.append(HtmlUtil.escapeURL(creatorUser.getScreenName()));
 
@@ -95,8 +95,8 @@ public class MembersActivityInterpreter extends BaseSocialActivityInterpreter {
 		sb.append(serviceContext.getPortalURL());
 		sb.append(serviceContext.getPathFriendlyURLPublic());
 
-		Organization organization =
-			OrganizationLocalServiceUtil.getOrganization(activity.getClassPK());
+		Organization organization = _organizationLocalService.getOrganization(
+			activity.getClassPK());
 
 		Group group = organization.getGroup();
 
@@ -131,6 +131,21 @@ public class MembersActivityInterpreter extends BaseSocialActivityInterpreter {
 		return true;
 	}
 
+	@Reference(unbind = "-")
+	protected void setOrganizationLocalService(
+		OrganizationLocalService organizationLocalService) {
+
+		_organizationLocalService = organizationLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	private static final String[] _CLASS_NAMES = {Organization.class.getName()};
+
+	private OrganizationLocalService _organizationLocalService;
+	private UserLocalService _userLocalService;
 
 }

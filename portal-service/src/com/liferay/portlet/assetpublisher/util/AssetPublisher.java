@@ -135,6 +135,11 @@ public interface AssetPublisher {
 			boolean checkPermission)
 		throws Exception;
 
+	public int getAssetEntriesCount(
+		long[] classNameIds, long[] groupIds, String keywords,
+		String description, String title, String userName,
+		boolean isAdvancedSearch, boolean isAndOperator, int start, int end);
+
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             AssetPublisher#getAssetEntryQuery(PortletPreferences, long[],

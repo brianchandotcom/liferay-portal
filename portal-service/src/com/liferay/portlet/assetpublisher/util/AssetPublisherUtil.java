@@ -184,6 +184,16 @@ public class AssetPublisherUtil {
 			assetEntryXmls, deleteMissingAssetEntries, checkPermission);
 	}
 
+	public static int getAssetEntriesCount(
+		long[] classNameIds, long[] groupIds, String keywords,
+		String description, String title, String userName,
+		boolean isAdvancedSearch, boolean isAndOperator, int start, int end) {
+
+		return getAssetPublisher().getAssetEntriesCount(
+			classNameIds, groupIds, keywords, description, title, userName,
+			isAdvancedSearch, isAndOperator, start, end);
+	}
+
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             AssetPublisherUtil#getAssetEntryQuery(PortletPreferences,

@@ -375,26 +375,9 @@ public class AssetPublisherImpl implements AssetPublisher {
 		String description, String title, String userName,
 		boolean isAdvancedSearch, boolean isAndOperator, int start, int end) {
 
-		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
-
-		if (isAdvancedSearch) {
-			assetEntryQuery.setAndOperator(isAndOperator);
-			assetEntryQuery.setDescription(description);
-			assetEntryQuery.setTitle(title);
-			assetEntryQuery.setUserName(userName);
-		}
-		else {
-			assetEntryQuery.setKeywords(keywords);
-		}
-
-		assetEntryQuery.setClassNameIds(classNameIds);
-		assetEntryQuery.setEnd(end);
-		assetEntryQuery.setGroupIds(groupIds);
-		assetEntryQuery.setOrderByCol1("modifiedDate");
-		assetEntryQuery.setOrderByCol2("title");
-		assetEntryQuery.setOrderByType1("DESC");
-		assetEntryQuery.setOrderByType2("ASC");
-		assetEntryQuery.setStart(start);
+		AssetEntryQuery assetEntryQuery = buildAssetEntryQuery(
+			classNameIds, groupIds, keywords, description, title, userName,
+			isAdvancedSearch, isAndOperator, start, end);
 
 		return AssetEntryLocalServiceUtil.getEntries(assetEntryQuery);
 	}
@@ -642,6 +625,19 @@ public class AssetPublisherImpl implements AssetPublisher {
 		return getAssetEntries(
 			portletRequest, portletPreferences, permissionChecker, groupIds,
 			deleteMissingAssetEntries, checkPermission);
+	}
+
+	@Override
+	public int getAssetEntriesCount(
+		long[] classNameIds, long[] groupIds, String keywords,
+		String description, String title, String userName,
+		boolean isAdvancedSearch, boolean isAndOperator, int start, int end) {
+
+		AssetEntryQuery assetEntryQuery = buildAssetEntryQuery(
+			classNameIds, groupIds, keywords, description, title, userName,
+			isAdvancedSearch, isAndOperator, start, end);
+
+		return AssetEntryLocalServiceUtil.getEntriesCount(assetEntryQuery);
 	}
 
 	/**
@@ -1423,6 +1419,35 @@ public class AssetPublisherImpl implements AssetPublisher {
 			permissionChecker.getUserId(),
 			com.liferay.portal.model.PortletPreferences.class.getName(),
 			getSubscriptionClassPK(plid, portletId));
+	}
+
+	protected AssetEntryQuery buildAssetEntryQuery(
+		long[] classNameIds, long[] groupIds, String keywords,
+		String description, String title, String userName,
+		boolean isAdvancedSearch, boolean isAndOperator, int start, int end) {
+
+		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+
+		if (isAdvancedSearch) {
+			assetEntryQuery.setAndOperator(isAndOperator);
+			assetEntryQuery.setDescription(description);
+			assetEntryQuery.setTitle(title);
+			assetEntryQuery.setUserName(userName);
+		}
+		else {
+			assetEntryQuery.setKeywords(keywords);
+		}
+
+		assetEntryQuery.setClassNameIds(classNameIds);
+		assetEntryQuery.setEnd(end);
+		assetEntryQuery.setGroupIds(groupIds);
+		assetEntryQuery.setOrderByCol1("modifiedDate");
+		assetEntryQuery.setOrderByCol2("title");
+		assetEntryQuery.setOrderByType1("DESC");
+		assetEntryQuery.setOrderByType2("ASC");
+		assetEntryQuery.setStart(start);
+
+		return assetEntryQuery;
 	}
 
 	protected long[] getSiteGroupIds(long[] groupIds) throws PortalException {

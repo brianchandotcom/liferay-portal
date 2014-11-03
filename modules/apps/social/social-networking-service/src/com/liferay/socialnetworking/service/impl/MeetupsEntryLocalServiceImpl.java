@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.socialnetworking.MeetupsEntryEndDateException;
-import com.liferay.socialnetworking.MeetupsEntryStartDateException;
+import com.liferay.socialnetworking.exception.MeetupsEntryEndDateException;
+import com.liferay.socialnetworking.exception.MeetupsEntryStartDateException;
 import com.liferay.socialnetworking.model.MeetupsEntry;
 import com.liferay.socialnetworking.service.base.MeetupsEntryLocalServiceBaseImpl;
 

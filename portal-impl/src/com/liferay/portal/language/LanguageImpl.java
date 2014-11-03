@@ -720,11 +720,12 @@ public class LanguageImpl implements Language, Serializable {
 			liveGroup = group.getLiveGroup();
 		}
 
-		UnicodeProperties groupTypeSettings =
-			liveGroup.getTypeSettingsProperties();
+		if (!group.isSite() || group.isCompany()) {
+			return true;
+		}
 
 		return GetterUtil.getBoolean(
-			groupTypeSettings.getProperty("inheritLocales"), true);
+			liveGroup.getTypeSettingsProperty("inheritLocales"), true);
 	}
 
 	@Override

@@ -192,7 +192,7 @@
 			<c:when test='<%= localized && (type.equals("editor") || type.equals("text") || type.equals("textarea")) %>'>
 				<liferay-ui:input-localized
 					autoFocus="<%= autoFocus %>"
-					availableLocales="<%= LanguageUtil.getAvailableLocales() %>"
+					availableLocales="<%= LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId()) %>"
 					cssClass="<%= fieldCssClass %>"
 					defaultLanguageId="<%= defaultLanguageId %>"
 					disabled="<%= disabled %>"

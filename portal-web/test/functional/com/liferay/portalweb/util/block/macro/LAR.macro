@@ -71,9 +71,6 @@
 					<execute action="BasePortletExport#check" locator-key1="CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
 				</for>
 			</then>
-			<else>
-				<echo message="This else block is needed until LIFERAYQA-10632 is resolved." />
-			</else>
 		</if>
 
 		<if>
@@ -87,9 +84,6 @@
 					<execute action="BasePortletExport#uncheck" locator-key1="CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
 				</for>
 			</then>
-			<else>
-				<echo message="This else block is needed until LIFERAYQA-10632 is resolved." />
-			</else>
 		</if>
 
 		<if>

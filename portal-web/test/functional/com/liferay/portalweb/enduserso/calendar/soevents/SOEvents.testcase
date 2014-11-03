@@ -479,7 +479,7 @@
 		<execute action="SOSite#assertElementNotPresent" locator-key1="SITE_NAME" />
 	</command>
 
-	<command known-issues="SOS-2339" name="ViewDashboardEventsPagination" priority="4">
+	<command name="ViewDashboardEventsPagination" priority="4">
 		<var name="eventTitle1" value="Calendar Event1 Title" />
 		<var name="eventTitle10" value="Calendar Event10 Title" />
 		<var name="eventTitle11" value="Calendar Event11 Title" />

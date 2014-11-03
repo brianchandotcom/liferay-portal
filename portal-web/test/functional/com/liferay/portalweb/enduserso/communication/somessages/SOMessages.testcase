@@ -2480,7 +2480,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2492" name="ViewAutocompleteMenuConnectionProperty" priority="4">
+	<command name="ViewAutocompleteMenuConnectionProperty" priority="4">
 		<property name="portlet.properties.private-messaging-portlet" value="autocomplete.recipient.type=connection" />
 
 		<var name="messageBody1" value="Message1 Body" />
@@ -2641,7 +2641,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2492" name="ViewAutocompleteMenuExcludedSiteProperty" priority="4">
+	<command name="ViewAutocompleteMenuExcludedSiteProperty" priority="4">
 		<property name="portlet.properties.private-messaging-portlet" value="autocomplete.recipient.type=site$${line.separator}autocomplete.recipient.site.excludes=Guest" />
 
 		<var name="orgName" value="Organization Name" />
@@ -3071,7 +3071,7 @@
 		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName4}" />
 	</command>
 
-	<command known-issues="SOS-2492" name="ViewAutocompleteMenuSiteProperty" priority="4">
+	<command name="ViewAutocompleteMenuSiteProperty" priority="4">
 		<property name="portlet.properties.private-messaging-portlet" value="autocomplete.recipient.type=site" />
 
 		<var name="messageBody1" value="Message1 Body" />

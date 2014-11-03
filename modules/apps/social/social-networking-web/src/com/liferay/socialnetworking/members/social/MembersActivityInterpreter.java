@@ -26,10 +26,18 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
+import com.liferay.portlet.social.model.SocialActivityInterpreter;
+import com.liferay.socialnetworking.members.portlet.MembersPortlet;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	property = { "javax.portlet.name=" + MembersPortlet.JAVAX_PORTLET_NAME },
+	service = SocialActivityInterpreter.class
+)
 public class MembersActivityInterpreter extends BaseSocialActivityInterpreter {
 
 	@Override

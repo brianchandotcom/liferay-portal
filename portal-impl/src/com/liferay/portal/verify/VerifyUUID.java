@@ -15,6 +15,7 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.concurrent.ThrowableAwareRunnable;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -26,7 +27,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,12 +40,41 @@ public class VerifyUUID extends VerifyProcess {
 	public static void verify(VerifiableUUIDModel ... verifiableUUIDModels)
 		throws Exception {
 
-		for (VerifiableUUIDModel verifiableUUIDModel : verifiableUUIDModels) {
-			verifyUUID(verifiableUUIDModel);
-		}
+		VerifyUUID verifyUUID = new VerifyUUID();
+
+		verifyUUID.doVerify(verifiableUUIDModels);
 	}
 
-	protected static void updateUUID(
+	@Override
+	protected void doVerify() throws Exception {
+		Map<String, VerifiableUUIDModel> verifiableUUIDModelsMap =
+			PortalBeanLocatorUtil.locate(VerifiableUUIDModel.class);
+
+		Collection<VerifiableUUIDModel> verifiableUUIDModels =
+			verifiableUUIDModelsMap.values();
+
+		doVerify(
+			verifiableUUIDModels.toArray(
+				new VerifiableUUIDModel[verifiableUUIDModels.size()]));
+	}
+
+	protected void doVerify(VerifiableUUIDModel... verifiableUUIDModels)
+		throws Exception {
+
+		List<VerifyUUIDRunnable> verifyUUIDRunnables =
+			new ArrayList<VerifyUUIDRunnable>(verifiableUUIDModels.length);
+
+		for (VerifiableUUIDModel verifiableUUIDModel : verifiableUUIDModels) {
+			VerifyUUIDRunnable verifyUUIDRunnable = new VerifyUUIDRunnable(
+				verifiableUUIDModel);
+
+			verifyUUIDRunnables.add(verifyUUIDRunnable);
+		}
+
+		doVerify(verifyUUIDRunnables);
+	}
+
+	protected void updateUUID(
 			VerifiableUUIDModel verifiableUUIDModel, long primKey)
 		throws Exception {
 
@@ -62,7 +94,7 @@ public class VerifyUUID extends VerifyProcess {
 		db.runSQL(sb.toString());
 	}
 
-	protected static void verifyUUID(VerifiableUUIDModel verifiableUUIDModel)
+	protected void verifyUUID(VerifiableUUIDModel verifiableUUIDModel)
 		throws Exception {
 
 		Connection con = null;
@@ -91,17 +123,19 @@ public class VerifyUUID extends VerifyProcess {
 		}
 	}
 
-	@Override
-	protected void doVerify() throws Exception {
-		Map<String, VerifiableUUIDModel> verifiableUUIDModelsMap =
-			PortalBeanLocatorUtil.locate(VerifiableUUIDModel.class);
+	private class VerifyUUIDRunnable extends ThrowableAwareRunnable {
 
-		Collection<VerifiableUUIDModel> verifiableUUIDModels =
-			verifiableUUIDModelsMap.values();
+		public VerifyUUIDRunnable(VerifiableUUIDModel verifiableUUIDModel) {
+			_verifiableUUIDModel = verifiableUUIDModel;
+		}
 
-		verify(
-			verifiableUUIDModels.toArray(
-				new VerifiableUUIDModel[verifiableUUIDModels.size()]));
+		@Override
+		protected void doRun() throws Exception {
+			verifyUUID(_verifiableUUIDModel);
+		}
+
+		private final VerifiableUUIDModel _verifiableUUIDModel;
+
 	}
 
 }

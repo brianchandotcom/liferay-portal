@@ -303,7 +303,7 @@ else {
 							<portlet:renderURL var="viewFileEntryTypeURL">
 								<portlet:param name="struts_action" value="/document_library/view" />
 								<portlet:param name="browseBy" value="file-entry-type" />
-								<portlet:param name="folderId" value="<%= String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+								<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
 								<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryType.getFileEntryTypeId()) %>" />
 							</portlet:renderURL>
 

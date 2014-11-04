@@ -19,6 +19,6 @@ package com.liferay.sync.engine.listener;
  */
 public interface SyncEngineListener {
 
-	public void syncEngineStateChanged(int syncEngineState);
+	public void syncEngineStateChanged(long syncAccountId, int syncEngineState);
 
 }

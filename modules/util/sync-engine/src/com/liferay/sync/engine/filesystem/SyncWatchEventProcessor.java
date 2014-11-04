@@ -280,7 +280,7 @@ public class SyncWatchEventProcessor implements Runnable {
 			_inProgress = true;
 
 			SyncEngineUtil.fireSyncEngineStateChanged(
-				SyncEngineUtil.SYNC_ENGINE_STATE_PROCESSING);
+				_syncAccountId, SyncEngineUtil.SYNC_ENGINE_STATE_PROCESSING);
 
 			return;
 		}
@@ -369,7 +369,7 @@ public class SyncWatchEventProcessor implements Runnable {
 		_inProgress = false;
 
 		SyncEngineUtil.fireSyncEngineStateChanged(
-			SyncEngineUtil.SYNC_ENGINE_STATE_PROCESSED);
+			_syncAccountId, SyncEngineUtil.SYNC_ENGINE_STATE_PROCESSED);
 
 		_processedSyncWatchEventIds.clear();
 	}

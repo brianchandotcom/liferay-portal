@@ -41,7 +41,7 @@
 </tr>
 <tr>
 	<td>RESOURCE_TABLE_PAGE_REVISION_SELECT</td>
-	<td>//select[@id='_152_workflowDefinitionName@com.liferay.portal.model.LayoutRevision']</td>
+	<td>//select[contains(@id,'LayoutRevision')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -51,7 +51,7 @@
 </tr>
 <tr>
 	<td>RESOURCE_TABLE_BLOGS_ENTRY_SELECT</td>
-	<td>//select[@id='_152_workflowDefinitionName@com.liferay.portlet.blogs.model.BlogsEntry']</td>
+	<td>//select[contains(@id,'BlogsEntry')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,7 +61,7 @@
 </tr>
 <tr>
 	<td>RESOURCE_TABLE_COMMENTS_SELECT</td>
-	<td>//select[@id='_152_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBDiscussion']</td>
+	<td>//select[contains(@id,'MBDiscussion')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -71,7 +71,7 @@
 </tr>
 <tr>
 	<td>RESOURCE_TABLE_MESSAGE_BOARDS_MESSAGE_SELECT</td>
-	<td>//select[@id='_152_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBMessage']</td>
+	<td>//select[contains(@id,'MBMessage')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -81,7 +81,7 @@
 </tr>
 <tr>
 	<td>RESOURCE_TABLE_WIKI_PAGE_SELECT</td>
-	<td>//select[@id='_152_workflowDefinitionName@com.liferay.portlet.wiki.model.WikiPage']</td>
+	<td>//select[contains(@id,'WikiPage')]</td>
 	<td></td>
 </tr>
 </tbody>

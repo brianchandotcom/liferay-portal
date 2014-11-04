@@ -651,7 +651,7 @@
 	<command name="ViewBooleanFieldPredefinedValue" priority="4">
 		<var name="ddlDataDefinitionName" value="Boolean Predefined Value Data Definition Name" />
 		<var name="ddlListName" value="List Name" />
-		<var name="ddlRecordFieldData" value="false" />
+		<var name="ddlRecordFieldData" value="No" />
 		<var name="field" value="Boolean" />
 		<var name="fieldFieldLabel" value="Boolean" />
 		<var name="fieldName" value="Boolean" />
@@ -714,7 +714,7 @@
 
 		<execute macro="DDLRecord#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
-			<var name="ddlRecordFieldData" value="true" />
+			<var name="ddlRecordFieldData" value="Yes" />
 			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>

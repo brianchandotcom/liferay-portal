@@ -76,9 +76,8 @@ public class VerifyJournal extends VerifyProcess {
 	@Override
 	protected void doVerify() throws Exception {
 		verifyContent();
-		verifyCreateDate();
+		verifyCreateAndModifiedDates();
 		updateFolderAssets();
-		verifyModifiedDate();
 		verifyOracleNewLine();
 		verifyPermissionsAndAssets();
 		verifySearch();
@@ -295,7 +294,7 @@ public class VerifyJournal extends VerifyProcess {
 		}
 	}
 
-	protected void verifyCreateDate() throws Exception {
+	protected void verifyCreateAndModifiedDates() throws Exception {
 		ActionableDynamicQuery actionableDynamicQuery =
 			JournalArticleResourceLocalServiceUtil.getActionableDynamicQuery();
 
@@ -308,6 +307,7 @@ public class VerifyJournal extends VerifyProcess {
 						(JournalArticleResource)object;
 
 					verifyCreateDate(articleResource);
+					verifyModifiedDate(articleResource);
 				}
 
 			});
@@ -315,7 +315,7 @@ public class VerifyJournal extends VerifyProcess {
 		actionableDynamicQuery.performActions();
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Create dates verified for articles");
+			_log.debug("Create and modified dates verified for articles");
 		}
 	}
 
@@ -340,30 +340,6 @@ public class VerifyJournal extends VerifyProcess {
 
 				JournalArticleLocalServiceUtil.updateJournalArticle(article);
 			}
-		}
-	}
-
-	protected void verifyModifiedDate() throws Exception {
-		ActionableDynamicQuery actionableDynamicQuery =
-			JournalArticleResourceLocalServiceUtil.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
-
-				@Override
-				public void performAction(Object object) {
-					JournalArticleResource articleResource =
-						(JournalArticleResource)object;
-
-					verifyModifiedDate(articleResource);
-				}
-
-			});
-
-		actionableDynamicQuery.performActions();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Modified dates verified for articles");
 		}
 	}
 

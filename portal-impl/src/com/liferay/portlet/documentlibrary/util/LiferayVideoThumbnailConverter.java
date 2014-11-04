@@ -51,7 +51,7 @@ public class LiferayVideoThumbnailConverter extends LiferayConverter {
 			doConvert();
 		}
 		finally {
-			if (_inputIContainer.isOpened()) {
+			if ((_inputIContainer != null) && _inputIContainer.isOpened()) {
 				_inputIContainer.close();
 			}
 		}

@@ -54,11 +54,11 @@ public class LiferayAudioConverter extends LiferayConverter {
 			doConvert();
 		}
 		finally {
-			if (_inputIContainer.isOpened()) {
+			if ((_inputIContainer != null) && _inputIContainer.isOpened()) {
 				_inputIContainer.close();
 			}
 
-			if (_outputIContainer.isOpened()) {
+			if ((_outputIContainer != null) && _outputIContainer.isOpened()) {
 				_outputIContainer.close();
 			}
 		}

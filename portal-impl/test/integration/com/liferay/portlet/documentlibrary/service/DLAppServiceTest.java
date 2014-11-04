@@ -449,13 +449,44 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	public static class WhenCheckingInAFileEntry extends BaseDLAppTestCase {
 
 		@Test
+		public void shouldCallWorkflowHandler() throws Exception {
+			try (WorkflowHandlerInvocationCounter<FileEntry>
+					invocationCounter = new WorkflowHandlerInvocationCounter<>(
+						DLFileEntryConstants.getClassName())) {
+
+				FileEntry fileEntry = addFileEntry(
+					group.getGroupId(), parentFolder.getFolderId());
+
+				ServiceContext serviceContext =
+					ServiceContextTestUtil.getServiceContext(
+						group.getGroupId());
+
+				DLAppServiceUtil.checkOutFileEntry(
+					fileEntry.getFileEntryId(), serviceContext);
+
+				updateFileEntry(
+					group.getGroupId(), fileEntry.getFileEntryId(),
+					RandomTestUtil.randomString(), true);
+
+				DLAppServiceUtil.checkInFileEntry(
+					fileEntry.getFileEntryId(), false,
+					RandomTestUtil.randomString(), serviceContext);
+
+				Assert.assertEquals(
+					2,
+					invocationCounter.getCount(
+						"updateStatus", int.class, Map.class)
+				);
+			}
+		}
+
+		@Test
 		public void shouldFireSyncEvent() throws Exception {
 			AtomicInteger counter = registerDLSyncEventProcessorMessageListener(
 				DLSyncConstants.EVENT_UPDATE);
 
-			FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-				group.getGroupId(), parentFolder.getRepositoryId(),
-				parentFolder.getFolderId());
+			FileEntry fileEntry = addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId());
 
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(group.getGroupId());

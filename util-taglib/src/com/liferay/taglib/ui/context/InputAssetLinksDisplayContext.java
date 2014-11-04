@@ -46,6 +46,7 @@ import com.liferay.portlet.asset.service.AssetLinkLocalServiceUtil;
 import com.liferay.portlet.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -353,7 +354,7 @@ public class InputAssetLinksDisplayContext {
 				_themeDisplay.getLocale());
 
 		if (classTypes.isEmpty()) {
-			return null;
+			return Collections.emptyList();
 		}
 
 		List<Map<String, Object>> selectorEntries =

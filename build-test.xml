@@ -53,58 +53,59 @@
 		</else>
 	</if>
 
-	<macrodef name="get-fix-pack-files">
-		<attribute default="${app.server.dir}/patching-tool/patches" name="fix.pack.dir" />
-		<attribute name="fix.pack.requirements" />
+	<macrodef name="get-test-fix-packs">
+		<attribute name="test.fix.pack.list" />
 
 		<sequential>
-			<for param="fix.pack.requirement" list="@{fix.pack.requirements}" delimiter="${line.separator}">
+			<var name="test.fix.pack.dir" value="${app.server.dir}/patching-tool/patches" />
+
+			<propertyregex
+				input="${test.fix.pack.portal.version}"
+				property="test.fix.pack.portal.version.build"
+				override="true"
+				regexp="\."
+				replace=""
+			/>
+
+			<for param="test.fix.pack" list="@{test.fix.pack.list}" delimiter="${line.separator}">
 				<sequential>
 					<propertyregex
-						input="${test.fix.pack.portal.version}"
-						property="fix.pack.build.version"
-						override="true"
-						regexp="\."
-						replace=""
-					/>
-
-					<propertyregex
-						input="@{fix.pack.requirement}"
-						property="fix.pack.requirement.file"
+						input="@{test.fix.pack}"
+						property="test.fix.pack.file.suffix"
 						override="true"
 						regexp="[^/]+/(.+)"
 						replace="\1"
 					/>
 
 					<propertyregex
-						input="@{fix.pack.requirement}"
-						property="fix.pack.requirement.type"
+						input="@{test.fix.pack}"
+						property="test.fix.pack.type"
 						override="true"
-						regexp="([^/]+)/.*"
+						regexp="([^/]+)/.+"
 						replace="\1"
 					/>
 
 					<var
-						name="fix.pack.requirement.file.name"
-						value="${fix.pack.requirement.file}-${fix.pack.build.version}.zip"
+						name="test.fix.pack.file.name"
+						value="${test.fix.pack.file.suffix}-${test.fix.pack.portal.version.build}.zip"
 					/>
 
 					<if>
 						<not>
-							<available file="@{fix.pack.dir}/${fix.pack.requirement.file.name}" />
+							<available file="${test.fix.pack.dir}/${test.fix.pack.file.name}" />
 						</not>
 						<then>
 							<trycatch>
 								<try>
 									<get
-										dest="@{fix.pack.dir}"
-										src="${test.fix.pack.base.url}/${test.fix.pack.portal.version}/${fix.pack.requirement.type}/${fix.pack.requirement.file.name}"
+										dest="${test.fix.pack.dir}"
+										src="${test.fix.pack.base.url}/${test.fix.pack.portal.version}/${test.fix.pack.type}/${test.fix.pack.file.name}"
 									/>
 								</try>
 								<catch>
 									<get
-										dest="@{fix.pack.dir}"
-										src="${test.fix.pack.base.url}/incubation/${fix.pack.requirement.file.name}"
+										dest="${test.fix.pack.dir}"
+										src="${test.fix.pack.base.url}/incubation/${test.fix.pack.file.name}"
 									/>
 								</catch>
 							</trycatch>
@@ -288,13 +289,13 @@
 			</if>
 
 			<if>
-				<or>
-					<equals arg1="@{test.build.uat.bundle}" arg2="true" />
-					<and>
-						<equals arg1="${app.server.type}" arg2="tomcat" />
+				<and>
+					<equals arg1="${app.server.type}" arg2="tomcat" />
+					<or>
 						<matches pattern="http" string="${test.build.fix.pack.zip.url}" />
-					</and>
-				</or>
+						<equals arg1="@{test.build.uat.bundle}" arg2="true" />
+					</or>
+				</and>
 				<then>
 					<path id="app.server.dir">
 						<dirset dir="${app.server.parent.dir}">
@@ -331,25 +332,8 @@
 					</chmod>
 
 					<if>
-						<equals arg1="@{test.build.uat.bundle}" arg2="true" />
+						<matches pattern="http" string="${test.build.fix.pack.zip.url}" />
 						<then>
-							<loadfile
-								failonerror="false"
-								property="fix.pack.requirements.templates"
-								srcfile="${lfrsite.team.able.dir}/www/_templates/portal/artifacts/liferay/fix-packs.txt"
-							/>
-
-							<get-fix-pack-files fix.pack.requirements="${fix.pack.requirements.templates}" />
-
-							<loadfile
-								failonerror="false"
-								property="fix.pack.requirements.uat"
-								srcfile="${lfrsite.team.able.dir}/www/uat/portal/artifacts/liferay/fix-packs.txt"
-							/>
-
-							<get-fix-pack-files fix.pack.requirements="${fix.pack.requirements.uat}" />
-						</then>
-						<else>
 							<get
 								dest="${app.server.dir}/patching-tool/patches"
 								src="${test.build.fix.pack.zip.url}"
@@ -366,7 +350,31 @@
 								fix.pack.dir="${app.server.dir}/patching-tool/patches"
 								fix.pack.file.name="${test.build.fix.pack.zip.file.name}"
 							/>
-						</else>
+						</then>
+						<elseif>
+							<equals arg1="@{test.build.uat.bundle}" arg2="true" />
+							<then>
+								<loadfile
+									failonerror="false"
+									property="test.fix.pack.list"
+									srcfile="${lfrsite.team.able.dir}/www/_templates/portal/artifacts/liferay/fix-packs.txt"
+								/>
+
+								<get-test-fix-packs test.fix.pack.list="${test.fix.pack.list}" />
+
+								<var name="test.fix.pack.list" unset="true" />
+
+								<loadfile
+									failonerror="false"
+									property="test.fix.pack.list"
+									srcfile="${lfrsite.team.able.dir}/www/uat/portal/artifacts/liferay/fix-packs.txt"
+								/>
+
+								<get-test-fix-packs test.fix.pack.list="${test.fix.pack.list}" />
+
+								<var name="test.fix.pack.list" unset="true" />
+							</then>
+						</elseif>
 					</if>
 
 					<execute dir="${app.server.dir}/patching-tool">

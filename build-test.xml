@@ -336,7 +336,7 @@
 							<loadfile
 								failonerror="false"
 								property="fix.pack.requirements.templates"
-								srcfile="/opt/dev/projects/github/lfrsite-team-able/www/_templates/portal/artifacts/liferay/fix-packs.txt"
+								srcfile="${lfrsite.team.able.dir}/www/_templates/portal/artifacts/liferay/fix-packs.txt"
 							/>
 
 							<get-fix-pack-files fix.pack.requirements="${fix.pack.requirements.templates}" />
@@ -344,7 +344,7 @@
 							<loadfile
 								failonerror="false"
 								property="fix.pack.requirements.uat"
-								srcfile="/opt/dev/projects/github/lfrsite-team-able/www/uat/portal/artifacts/liferay/fix-packs.txt"
+								srcfile="${lfrsite.team.able.dir}/www/uat/portal/artifacts/liferay/fix-packs.txt"
 							/>
 
 							<get-fix-pack-files fix.pack.requirements="${fix.pack.requirements.uat}" />

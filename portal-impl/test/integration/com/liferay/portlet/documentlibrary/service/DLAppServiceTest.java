@@ -817,6 +817,46 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	@Sync
+	public static class WhenRevertingAFileEntry extends BaseDLAppTestCase {
+
+		@Test
+		public void shouldCallWorkflowHandler() throws Exception {
+			try (WorkflowHandlerInvocationCounter<FileEntry>
+					invocationCounter = new WorkflowHandlerInvocationCounter<>(
+						DLFileEntryConstants.getClassName())) {
+
+				FileEntry fileEntry = addFileEntry(
+					group.getGroupId(), parentFolder.getFolderId());
+
+				String version = fileEntry.getVersion();
+
+				updateFileEntry(
+					group.getGroupId(), fileEntry.getFileEntryId(),
+					RandomTestUtil.randomString(), true);
+
+				ServiceContext serviceContext =
+					ServiceContextTestUtil.getServiceContext(
+						group.getGroupId());
+
+				DLAppServiceUtil.revertFileEntry(
+					fileEntry.getFileEntryId(), version, serviceContext);
+
+				Assert.assertEquals(
+					3,
+					invocationCounter.getCount(
+						"updateStatus", int.class, Map.class));
+			}
+		}
+
+	}
+
+	@ExecutionTestListeners(
+		listeners = {
+			MainServletExecutionTestListener.class,
+			SynchronousDestinationExecutionTestListener.class
+		})
+	@RunWith(LiferayIntegrationJUnitTestRunner.class)
+	@Sync
 	public static class WhenSearchingFileEntries extends BaseDLAppTestCase {
 
 		@Test

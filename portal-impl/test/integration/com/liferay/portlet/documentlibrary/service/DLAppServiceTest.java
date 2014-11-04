@@ -974,6 +974,27 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		}
 
 		@Test
+		public void shouldCallWorkflowHandler() throws Exception {
+			try (WorkflowHandlerInvocationCounter<DLFileEntry>
+					invocationCounter =
+						new WorkflowHandlerInvocationCounter<>(
+							DLFileEntryConstants.getClassName())) {
+
+				FileEntry fileEntry = addFileEntry(
+					group.getGroupId(), parentFolder.getFolderId());
+
+				updateFileEntry(
+					group.getGroupId(), fileEntry.getFileEntryId(),
+					RandomTestUtil.randomString(), true);
+
+				Assert.assertEquals(
+					2,
+					invocationCounter.getCount(
+						"updateStatus", int.class, Map.class));
+			}
+		}
+
+		@Test
 		public void shouldFireSyncEvent() throws Exception {
 			AtomicInteger counter = registerDLSyncEventProcessorMessageListener(
 				DLSyncConstants.EVENT_UPDATE);

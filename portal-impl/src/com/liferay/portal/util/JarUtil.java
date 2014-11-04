@@ -111,14 +111,23 @@ public class JarUtil {
 		Class<?> clazz = URLClassLoader.class;
 
 		Method method = clazz.getDeclaredMethod(
-			"addURL", new Class[] {URL.class});
+			"addURL", new Class<?>[] {URL.class});
 
 		method.setAccessible(true);
 
 		URI uri = file.toURI();
 
-		method.invoke(
-			ClassLoader.getSystemClassLoader(), new Object[] {uri.toURL()});
+		Object[] arguments = new Object[] {uri.toURL()};
+
+		method.invoke(ClassLoader.getSystemClassLoader(), arguments);
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		if (contextClassLoader instanceof URLClassLoader) {
+			method.invoke(contextClassLoader, arguments);
+		}
 	}
 
 	protected static void installJar(

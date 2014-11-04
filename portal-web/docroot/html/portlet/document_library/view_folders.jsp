@@ -138,55 +138,53 @@ else {
 						<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
 					</aui:nav-item>
 
-					<c:if test="<%= rootFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
-						<portlet:renderURL var="viewRecentDocumentsURL">
+					<portlet:renderURL var="viewRecentDocumentsURL">
+						<portlet:param name="struts_action" value="/document_library/view" />
+						<portlet:param name="navigation" value="recent" />
+						<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
+					</portlet:renderURL>
+
+					<aui:nav-item
+						cssClass="folder list-group-item navigation-entry"
+						href="<%= viewRecentDocumentsURL %>"
+						iconCssClass="icon-time"
+						label='<%= HtmlUtil.escape(LanguageUtil.get(request, "recent")) %>'
+						localizeLabel="<%= false %>"
+						selected='<%= navigation.equals("recent") %>'
+					/>
+
+					<c:if test="<%= themeDisplay.isSignedIn() %>">
+						<portlet:renderURL var="viewMyDocumentsURL">
 							<portlet:param name="struts_action" value="/document_library/view" />
-							<portlet:param name="navigation" value="recent" />
-							<portlet:param name="folderId" value="<%= String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+							<portlet:param name="navigation" value="mine" />
+							<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
 						</portlet:renderURL>
 
 						<aui:nav-item
 							cssClass="folder list-group-item navigation-entry"
-							href="<%= viewRecentDocumentsURL %>"
-							iconCssClass="icon-time"
-							label='<%= HtmlUtil.escape(LanguageUtil.get(request, "recent")) %>'
+							href="<%= viewMyDocumentsURL %>"
+							iconCssClass="icon-user"
+							label='<%= HtmlUtil.escape(LanguageUtil.get(request, "mine")) %>'
 							localizeLabel="<%= false %>"
-							selected='<%= navigation.equals("recent") %>'
+							selected='<%= navigation.equals("mine") %>'
 						/>
+					</c:if>
 
-						<c:if test="<%= themeDisplay.isSignedIn() %>">
-							<portlet:renderURL var="viewMyDocumentsURL">
-								<portlet:param name="struts_action" value="/document_library/view" />
-								<portlet:param name="navigation" value="mine" />
-								<portlet:param name="folderId" value="<%= String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-							</portlet:renderURL>
+					<c:if test="<%= DLFileEntryTypeServiceUtil.getFileEntryTypesCount(groupIds) > 0 %>">
+						<portlet:renderURL var="viewBasicFileEntryTypeURL">
+							<portlet:param name="struts_action" value="/document_library/view" />
+							<portlet:param name="browseBy" value="file-entry-type" />
+							<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
+						</portlet:renderURL>
 
-							<aui:nav-item
-								cssClass="folder list-group-item navigation-entry"
-								href="<%= viewMyDocumentsURL %>"
-								iconCssClass="icon-user"
-								label='<%= HtmlUtil.escape(LanguageUtil.get(request, "mine")) %>'
-								localizeLabel="<%= false %>"
-								selected='<%= navigation.equals("mine") %>'
-							/>
-						</c:if>
-
-						<c:if test="<%= DLFileEntryTypeServiceUtil.getFileEntryTypesCount(groupIds) > 0 %>">
-							<portlet:renderURL var="viewBasicFileEntryTypeURL">
-								<portlet:param name="struts_action" value="/document_library/view" />
-								<portlet:param name="browseBy" value="file-entry-type" />
-								<portlet:param name="folderId" value="<%= String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-							</portlet:renderURL>
-
-							<aui:nav-item
-								cssClass="folder list-group-item navigation-entry"
-								href="<%= viewBasicFileEntryTypeURL %>"
-								iconCssClass="icon-file"
-								label='<%= HtmlUtil.escape(LanguageUtil.get(request, "browse-by-type")) %>'
-								localizeLabel="<%= false %>"
-								selected='<%= browseBy.equals("file-entry-type") %>'
-							/>
-						</c:if>
+						<aui:nav-item
+							cssClass="folder list-group-item navigation-entry"
+							href="<%= viewBasicFileEntryTypeURL %>"
+							iconCssClass="icon-file"
+							label='<%= HtmlUtil.escape(LanguageUtil.get(request, "browse-by-type")) %>'
+							localizeLabel="<%= false %>"
+							selected='<%= browseBy.equals("file-entry-type") %>'
+						/>
 					</c:if>
 
 					<%
@@ -279,7 +277,7 @@ else {
 							<portlet:renderURL var="viewBasicFileEntryTypeURL">
 								<portlet:param name="struts_action" value="/document_library/view" />
 								<portlet:param name="browseBy" value="file-entry-type" />
-								<portlet:param name="folderId" value="<%= String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+								<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
 								<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(0) %>" />
 							</portlet:renderURL>
 
@@ -305,7 +303,7 @@ else {
 							<portlet:renderURL var="viewFileEntryTypeURL">
 								<portlet:param name="struts_action" value="/document_library/view" />
 								<portlet:param name="browseBy" value="file-entry-type" />
-								<portlet:param name="folderId" value="<%= String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+								<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
 								<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryType.getFileEntryTypeId()) %>" />
 							</portlet:renderURL>
 

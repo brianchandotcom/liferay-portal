@@ -291,6 +291,50 @@ public class NettyFabricAgentStubTest {
 	}
 
 	@Test
+	public void testExecuteWithClosedChannel() {
+		ChannelPipeline channelPipeline = _embeddedChannel.pipeline();
+
+		channelPipeline.addFirst(
+			new ChannelOutboundHandlerAdapter() {
+
+				@Override
+				public void write(
+					ChannelHandlerContext channelHandlerContext, Object object,
+					ChannelPromise channelPromise) {
+
+					_embeddedChannel.close();
+				}
+
+			});
+
+		try {
+			NettyFabricAgentStub nettyFabricAgentStub =
+				new NettyFabricAgentStub(
+					_embeddedChannel, new MockRepository(),
+					Paths.get("RepositoryPath"), 0);
+
+			Builder builder = new Builder();
+
+			FabricWorker<String> fabricWorker =  nettyFabricAgentStub.execute(
+				builder.build(),
+				new ReturnProcessCallable<String>("Test result"));
+
+			NoticeableFuture<String> noticeableFuture =
+				fabricWorker.getProcessNoticeableFuture();
+
+			Assert.assertTrue(noticeableFuture.isCancelled());
+
+			Collection<? extends FabricWorker<?>> fabricWorkers =
+				nettyFabricAgentStub.getFabricWorkers();
+
+			Assert.assertTrue(fabricWorkers.isEmpty());
+		}
+		finally {
+			channelPipeline.removeFirst();
+		}
+	}
+
+	@Test
 	public void testExecuteWithFailure() throws Exception {
 		final Throwable throwable = new Throwable();
 

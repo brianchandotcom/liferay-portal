@@ -107,18 +107,18 @@
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<if>
-			<equals arg1="${ddlRecordFieldData}" arg2="false" />
+			<equals arg1="${ddlRecordFieldData}" arg2="No" />
 			<then>
 				<execute action="CPDynamicdatalistsListAddrecord#uncheck" locator-key1="BOOLEAN_CHECKBOX" />
 			</then>
 			<elseif>
-				<equals arg1="${ddlRecordFieldData}" arg2="true" />
+				<equals arg1="${ddlRecordFieldData}" arg2="Yes" />
 				<then>
 					<execute action="CPDynamicdatalistsListAddrecord#check" locator-key1="BOOLEAN_CHECKBOX" />
 				</then>
 			</elseif>
 			<else>
-				<fail message="Invalid var recordFieldData. Must be (true|false)." />
+				<fail message="Invalid var recordFieldData. Must be (Yes|No)." />
 			</else>
 		</if>
 	</command>

@@ -484,6 +484,8 @@ public class AudioProcessorImpl
 
 		@Override
 		public String call() throws ProcessException {
+			XugglerAutoInstallHelper.installNativeLibraries();
+
 			Properties systemProperties = System.getProperties();
 
 			SystemEnv.setProperties(systemProperties);

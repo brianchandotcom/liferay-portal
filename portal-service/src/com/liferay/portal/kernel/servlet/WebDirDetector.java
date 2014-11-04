@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ClassUtil;
 
 /**
@@ -26,13 +27,20 @@ public class WebDirDetector {
 			classLoader, "com.liferay.util.bean.PortletBeanLocatorUtil");
 
 		if (libDir.endsWith("/WEB-INF/classes/")) {
-			libDir = libDir.substring(0, libDir.length() - 8) + "lib/";
+			return libDir.substring(0, libDir.length() - 8) + "lib/";
 		}
-		else {
-			int pos = libDir.indexOf("/WEB-INF/lib/");
+
+		int pos = libDir.indexOf("/WEB-INF/lib/");
+
+		if (pos != -1) {
+			return libDir.substring(0, pos) + "/WEB-INF/lib/";
+		}
+
+		if (libDir.endsWith(".jar!/")) {
+			pos = libDir.lastIndexOf(CharPool.SLASH, libDir.length() - 7);
 
 			if (pos != -1) {
-				libDir = libDir.substring(0, pos) + "/WEB-INF/lib/";
+				return libDir.substring(0, pos + 1);
 			}
 		}
 

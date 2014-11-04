@@ -158,6 +158,30 @@ public class NettyFabricAgentStub implements FabricAgent {
 
 			});
 
+		final ChannelFutureListener channelFutureListener =
+			new ChannelFutureListener() {
+
+			@Override
+			public void operationComplete(ChannelFuture channelFuture) {
+				startupNoticeableFuture.cancel(true);
+			}
+
+		};
+
+		final ChannelFuture closeChannelFuture = _channel.closeFuture();
+
+		closeChannelFuture.addListener(channelFutureListener);
+
+		startupNoticeableFuture.addFutureListener(
+			new FutureListener<Object>() {
+
+				@Override
+				public void complete(Future<Object> future) {
+					closeChannelFuture.removeListener(channelFutureListener);
+				}
+
+			});
+
 		try {
 			startupNoticeableFuture.get();
 

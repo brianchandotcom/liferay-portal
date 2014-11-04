@@ -12,6 +12,10 @@
 		<priority value="INFO" />
 	</category>
 
+	<category name="com.liferay.portal.dao.shard.ShardDataSourceTargetSource">
+		<priority value="INFO" />
+	</category>
+
 	<root>
 		<priority value="ERROR" />
 		<appender-ref ref="CONSOLE" />

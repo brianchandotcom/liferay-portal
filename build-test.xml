@@ -53,6 +53,69 @@
 		</else>
 	</if>
 
+	<macrodef name="get-test-fix-packs">
+		<attribute name="test.fix.pack.list" />
+
+		<sequential>
+			<var name="test.fix.pack.dir" value="${app.server.dir}/patching-tool/patches" />
+
+			<propertyregex
+				input="${test.fix.pack.portal.version}"
+				property="test.fix.pack.portal.version.build"
+				override="true"
+				regexp="\."
+				replace=""
+			/>
+
+			<for param="test.fix.pack" list="@{test.fix.pack.list}" delimiter="${line.separator}">
+				<sequential>
+					<propertyregex
+						input="@{test.fix.pack}"
+						property="test.fix.pack.file.suffix"
+						override="true"
+						regexp="[^/]+/(.+)"
+						replace="\1"
+					/>
+
+					<propertyregex
+						input="@{test.fix.pack}"
+						property="test.fix.pack.type"
+						override="true"
+						regexp="([^/]+)/.+"
+						replace="\1"
+					/>
+
+					<var
+						name="test.fix.pack.file.name"
+						value="${test.fix.pack.file.suffix}-${test.fix.pack.portal.version.build}.zip"
+					/>
+
+					<if>
+						<not>
+							<available file="${test.fix.pack.dir}/${test.fix.pack.file.name}" />
+						</not>
+						<then>
+							<trycatch>
+								<try>
+									<get
+										dest="${test.fix.pack.dir}"
+										src="${test.fix.pack.base.url}/${test.fix.pack.portal.version}/${test.fix.pack.type}/${test.fix.pack.file.name}"
+									/>
+								</try>
+								<catch>
+									<get
+										dest="${test.fix.pack.dir}"
+										src="${test.fix.pack.base.url}/incubation/${test.fix.pack.file.name}"
+									/>
+								</catch>
+							</trycatch>
+						</then>
+					</if>
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-additional-bundles">
 		<sequential>
 			<if>
@@ -212,6 +275,8 @@
 	</macrodef>
 
 	<macrodef name="prepare-fix-pack-bundle" >
+		<attribute default="false" name="test.build.uat.bundle" />
+
 		<sequential>
 			<if>
 				<and>
@@ -226,7 +291,10 @@
 			<if>
 				<and>
 					<equals arg1="${app.server.type}" arg2="tomcat" />
-					<matches pattern="http" string="${test.build.fix.pack.zip.url}" />
+					<or>
+						<matches pattern="http" string="${test.build.fix.pack.zip.url}" />
+						<equals arg1="@{test.build.uat.bundle}" arg2="true" />
+					</or>
 				</and>
 				<then>
 					<path id="app.server.dir">
@@ -263,22 +331,51 @@
 						</fileset>
 					</chmod>
 
-					<get
-						dest="${app.server.dir}/patching-tool/patches"
-						src="${test.build.fix.pack.zip.url}"
-					/>
+					<if>
+						<matches pattern="http" string="${test.build.fix.pack.zip.url}" />
+						<then>
+							<get
+								dest="${app.server.dir}/patching-tool/patches"
+								src="${test.build.fix.pack.zip.url}"
+							/>
 
-					<propertyregex
-						input="${test.build.fix.pack.zip.url}"
-						property="test.build.fix.pack.zip.file.name"
-						regexp=".+/"
-						replace=""
-					/>
+							<propertyregex
+								input="${test.build.fix.pack.zip.url}"
+								property="test.build.fix.pack.zip.file.name"
+								regexp=".+/"
+								replace=""
+							/>
 
-					<check-fix-pack-requirements
-						fix.pack.dir="${app.server.dir}/patching-tool/patches"
-						fix.pack.file.name="${test.build.fix.pack.zip.file.name}"
-					/>
+							<check-fix-pack-requirements
+								fix.pack.dir="${app.server.dir}/patching-tool/patches"
+								fix.pack.file.name="${test.build.fix.pack.zip.file.name}"
+							/>
+						</then>
+						<elseif>
+							<equals arg1="@{test.build.uat.bundle}" arg2="true" />
+							<then>
+								<loadfile
+									failonerror="false"
+									property="test.fix.pack.list"
+									srcfile="${lfrsite.team.able.dir}/www/_templates/portal/artifacts/liferay/fix-packs.txt"
+								/>
+
+								<get-test-fix-packs test.fix.pack.list="${test.fix.pack.list}" />
+
+								<var name="test.fix.pack.list" unset="true" />
+
+								<loadfile
+									failonerror="false"
+									property="test.fix.pack.list"
+									srcfile="${lfrsite.team.able.dir}/www/uat/portal/artifacts/liferay/fix-packs.txt"
+								/>
+
+								<get-test-fix-packs test.fix.pack.list="${test.fix.pack.list}" />
+
+								<var name="test.fix.pack.list" unset="true" />
+							</then>
+						</elseif>
+					</if>
 
 					<execute dir="${app.server.dir}/patching-tool">
 						patching-tool${file.suffix.bat} auto-discovery
@@ -3141,6 +3238,10 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 				</echo>
 			</then>
 		</if>
+	</target>
+
+	<target name="prepare-uat-bundle">
+		<prepare-fix-pack-bundle test.build.uat.bundle="true" />
 	</target>
 
 	<target name="prepare-virtual-network-interface">

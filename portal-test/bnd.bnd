@@ -1,4 +1,5 @@
 Bundle-Version: 6.2.0
+Bundle-Name: Liferay Portal Test
 Export-Package:\
 	*
 Include-Resource:\

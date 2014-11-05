@@ -406,7 +406,7 @@ public class JavaClass {
 			if (StringUtil.count(javaTerm.getContent(), parameterName) == 1) {
 				BaseSourceProcessor.processErrorMessage(
 					_fileName,
-					"Unused parameter " + parameterName + " " + _fileName +
+					"Unused parameter " + parameterName + ": " + _fileName +
 						" " + javaTerm.getLineCount());
 			}
 		}

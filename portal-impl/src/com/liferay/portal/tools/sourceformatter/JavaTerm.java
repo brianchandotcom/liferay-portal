@@ -107,72 +107,6 @@ public class JavaTerm {
 		return _parameterTypes;
 	}
 
-	protected void readParameterNamesAndTypes() {
-		_parameterNames = new ArrayList<String>();
-		_parameterTypes = new ArrayList<String>();
-
-		if (!isConstructor() && !isMethod()) {
-			return;
-		}
-
-		Matcher matcher = _parameterTypesPattern.matcher(_content);
-
-		if (!matcher.find()) {
-			return;
-		}
-
-		String parameters = matcher.group(3);
-
-		if (Validator.isNull(parameters)) {
-			return;
-		}
-
-		parameters = StringUtil.replace(
-			parameters, new String[] {StringPool.TAB, StringPool.NEW_LINE},
-			new String[] {StringPool.BLANK, StringPool.SPACE});
-
-		for (int x = 0;;) {
-			parameters = StringUtil.trim(parameters);
-
-			if (parameters.startsWith("final ")) {
-				parameters = parameters.substring(6);
-			}
-
-			x = parameters.indexOf(StringPool.SPACE, x + 1);
-
-			if (x == -1) {
-				return;
-			}
-
-			String parameterType = parameters.substring(0, x);
-
-			int greaterThanCount = StringUtil.count(
-				parameterType, StringPool.GREATER_THAN);
-			int lessThanCount = StringUtil.count(
-				parameterType, StringPool.LESS_THAN);
-
-			if (greaterThanCount != lessThanCount) {
-				continue;
-			}
-
-			_parameterTypes.add(parameterType);
-
-			int y = parameters.indexOf(StringPool.COMMA, x);
-
-			if (y == -1) {
-				_parameterNames.add(parameters.substring(x + 1));
-
-				return;
-			}
-
-			_parameterNames.add(parameters.substring(x + 1, y));
-
-			parameters = parameters.substring(y + 1);
-
-			x = 0;
-		}
-	}
-
 	public int getType() {
 		return _type;
 	}
@@ -286,6 +220,72 @@ public class JavaTerm {
 
 	public void setType(int type) {
 		_type = type;
+	}
+
+	protected void readParameterNamesAndTypes() {
+		_parameterNames = new ArrayList<String>();
+		_parameterTypes = new ArrayList<String>();
+
+		if (!isConstructor() && !isMethod()) {
+			return;
+		}
+
+		Matcher matcher = _parameterTypesPattern.matcher(_content);
+
+		if (!matcher.find()) {
+			return;
+		}
+
+		String parameters = matcher.group(3);
+
+		if (Validator.isNull(parameters)) {
+			return;
+		}
+
+		parameters = StringUtil.replace(
+			parameters, new String[] {StringPool.TAB, StringPool.NEW_LINE},
+			new String[] {StringPool.BLANK, StringPool.SPACE});
+
+		for (int x = 0;;) {
+			parameters = StringUtil.trim(parameters);
+
+			if (parameters.startsWith("final ")) {
+				parameters = parameters.substring(6);
+			}
+
+			x = parameters.indexOf(StringPool.SPACE, x + 1);
+
+			if (x == -1) {
+				return;
+			}
+
+			String parameterType = parameters.substring(0, x);
+
+			int greaterThanCount = StringUtil.count(
+				parameterType, StringPool.GREATER_THAN);
+			int lessThanCount = StringUtil.count(
+				parameterType, StringPool.LESS_THAN);
+
+			if (greaterThanCount != lessThanCount) {
+				continue;
+			}
+
+			_parameterTypes.add(parameterType);
+
+			int y = parameters.indexOf(StringPool.COMMA, x);
+
+			if (y == -1) {
+				_parameterNames.add(parameters.substring(x + 1));
+
+				return;
+			}
+
+			_parameterNames.add(parameters.substring(x + 1, y));
+
+			parameters = parameters.substring(y + 1);
+
+			x = 0;
+		}
 	}
 
 	private String _content;

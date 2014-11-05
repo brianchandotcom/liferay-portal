@@ -366,9 +366,7 @@ public class JavadocBuilder {
 		return builder.getClassByName(className);
 	}
 
-	private String _getJavaClassComment(
-		Element rootElement, JavaClass javaClass) {
-
+	private String _getJavaClassComment(Element rootElement) {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("/**\n");
@@ -784,8 +782,7 @@ public class JavadocBuilder {
 		Map<Integer, String> commentsMap = new TreeMap<Integer, String>();
 
 		commentsMap.put(
-			javaClass.getLineNumber(),
-			_getJavaClassComment(rootElement, javaClass));
+			javaClass.getLineNumber(), _getJavaClassComment(rootElement));
 
 		Map<String, Element> methodElementsMap = new HashMap<String, Element>();
 

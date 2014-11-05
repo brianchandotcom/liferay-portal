@@ -39,7 +39,7 @@ public class WebServerServletTokenImpl implements WebServerServletToken {
 		String token = _portalCache.get(key);
 
 		if (token == null) {
-			token = _createToken(imageId);
+			token = _createToken();
 
 			_portalCache.put(key, token);
 		}
@@ -64,7 +64,7 @@ public class WebServerServletTokenImpl implements WebServerServletToken {
 		_multiVMPool = multiVMPool;
 	}
 
-	private String _createToken(long imageId) {
+	private String _createToken() {
 		return String.valueOf(System.currentTimeMillis());
 	}
 

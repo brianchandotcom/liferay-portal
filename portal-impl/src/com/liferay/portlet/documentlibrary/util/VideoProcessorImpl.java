@@ -457,9 +457,7 @@ public class VideoProcessorImpl
 
 				try {
 					_generateVideoXuggler(
-						destinationFileVersion, file, previewTempFiles,
-						PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_HEIGHT,
-						PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH);
+						destinationFileVersion, file, previewTempFiles);
 				}
 				catch (Exception e) {
 					_log.error(e, e);
@@ -553,8 +551,7 @@ public class VideoProcessorImpl
 	}
 
 	private void _generateVideoXuggler(
-		FileVersion fileVersion, File sourceFile, File[] destinationFiles,
-		int height, int width) {
+		FileVersion fileVersion, File sourceFile, File[] destinationFiles) {
 
 		try {
 			for (int i = 0; i < destinationFiles.length; i++) {
@@ -631,8 +628,6 @@ public class VideoProcessorImpl
 
 		@Override
 		public String call() throws ProcessException {
-			XugglerAutoInstallHelper.installNativeLibraries();
-
 			Properties systemProperties = System.getProperties();
 
 			SystemEnv.setProperties(systemProperties);
@@ -701,8 +696,6 @@ public class VideoProcessorImpl
 
 		@Override
 		public String call() throws ProcessException {
-			XugglerAutoInstallHelper.installNativeLibraries();
-
 			Class<?> clazz = getClass();
 
 			ClassLoader classLoader = clazz.getClassLoader();

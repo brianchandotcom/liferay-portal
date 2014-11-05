@@ -61,8 +61,7 @@ public class PortalClientBuilder {
 				if (serviceName.startsWith("Plugin_") &&
 					!FileUtil.exists(mappingFile)) {
 
-					_writePluginMappingFile(
-						mappingFile, serviceElement, serviceName);
+					_writePluginMappingFile(mappingFile, serviceElement);
 				}
 
 				if (serviceName.startsWith("Plugin_") ||
@@ -89,7 +88,7 @@ public class PortalClientBuilder {
 	}
 
 	private void _writePluginMappingFile(
-			String mappingFile, Element serviceElement, String serviceName)
+			String mappingFile, Element serviceElement)
 		throws Exception {
 
 		String wsdlTargetNamespace = null;

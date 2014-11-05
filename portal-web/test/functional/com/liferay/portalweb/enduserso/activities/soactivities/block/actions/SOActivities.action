@@ -1,4 +1,14 @@
 <definition>
+	<command name="assertElementNotPresent">
+		<case locator-key1="ACTIVITIES_COMMENT_EDIT">
+			<execute function="AssertElementNotPresent#assertNotVisible" />
+		</case>
+
+		<case locator-key1="ACTIVITIES_COMMENT_DELETE">
+			<execute function="AssertElementNotPresent#assertNotVisible" />
+		</case>
+	</command>
+
 	<command name="assertTextEquals">
 		<case locator-key1="ACTIVITIES_CONTENT">
 			<execute function="AssertTextEquals#assertPartialText" />

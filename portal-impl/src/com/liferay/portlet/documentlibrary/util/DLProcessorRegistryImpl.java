@@ -29,7 +29,6 @@ import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -161,9 +160,7 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 
 	@Override
 	public void register(DLProcessor dlProcessor) {
-		String type = _getType(dlProcessor);
-
-		_dlProcessors.put(type, dlProcessor);
+		_dlProcessors.put(dlProcessor.getType(), dlProcessor);
 	}
 
 	@Override
@@ -199,9 +196,7 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 
 	@Override
 	public void unregister(DLProcessor dlProcessor) {
-		String type = _getType(dlProcessor);
-
-		_dlProcessors.remove(type);
+		_dlProcessors.remove(dlProcessor.getType());
 	}
 
 	private FileVersion _getLatestFileVersion(
@@ -227,26 +222,6 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 
 			return null;
 		}
-	}
-
-	private String _getType(DLProcessor dlProcessor) {
-		if (dlProcessor instanceof AudioProcessor) {
-			return DLProcessorConstants.AUDIO_PROCESSOR;
-		}
-		else if (dlProcessor instanceof ImageProcessor) {
-			return DLProcessorConstants.IMAGE_PROCESSOR;
-		}
-		else if (dlProcessor instanceof PDFProcessor) {
-			return DLProcessorConstants.PDF_PROCESSOR;
-		}
-		else if (dlProcessor instanceof RawMetadataProcessor) {
-			return DLProcessorConstants.RAW_METADATA_PROCESSOR;
-		}
-		else if (dlProcessor instanceof VideoProcessor) {
-			return DLProcessorConstants.VIDEO_PROCESSOR;
-		}
-
-		return null;
 	}
 
 	private static final String[] _DL_FILE_ENTRY_PROCESSORS =

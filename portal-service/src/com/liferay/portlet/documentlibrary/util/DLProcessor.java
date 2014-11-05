@@ -48,6 +48,8 @@ public interface DLProcessor {
 			Element fileEntryElement)
 		throws Exception;
 
+	public String getType();
+
 	public void importGeneratedFiles(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			FileEntry importedFileEntry, Element fileEntryElement)

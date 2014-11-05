@@ -90,6 +90,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WEB_CONTENT_AUDIO</td>
+	<td>//div[@class='audio-content']/audio[@class='audio-node']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

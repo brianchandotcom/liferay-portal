@@ -416,12 +416,12 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		imageLocalService.deleteImage(entry.getSmallImageId());
 
-		// Portlet file repository
+		// Attachments
 
-		long attachmentsFolderId = entry.getAttachmentsFolderId();
+		long folderId = entry.getAttachmentsFolderId();
 
-		if (attachmentsFolderId != 0) {
-			PortletFileRepositoryUtil.deletePortletFolder(attachmentsFolderId);
+		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			PortletFileRepositoryUtil.deletePortletFolder(folderId);
 		}
 
 		// Subscriptions

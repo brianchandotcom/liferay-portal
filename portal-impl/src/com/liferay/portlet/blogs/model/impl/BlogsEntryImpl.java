@@ -32,29 +32,43 @@ import java.util.Date;
 /**
  * @author Brian Wing Shun Chan
  * @author Juan Fernández
+ * @author Roberto Díaz
  */
 public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 
 	@Override
-	public String getEntryImageURL(ThemeDisplay themeDisplay) {
-		if (!isSmallImage()) {
-			return null;
+	public Folder addAttachmentsFolder() throws PortalException {
+		if (_attachmentsFolderId !=
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+			return PortletFileRepositoryUtil.getPortletFolder(
+				_attachmentsFolderId);
 		}
 
-		if (Validator.isNotNull(getSmallImageURL())) {
-			return getSmallImageURL();
-		}
+		ServiceContext serviceContext = new ServiceContext();
 
-		return
-			themeDisplay.getPathImage() + "/blogs/entry?img_id=" +
-				getSmallImageId() + "&t=" +
-					WebServerServletTokenUtil.getToken(getSmallImageId());
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
+			getGroupId(), PortletKeys.BLOGS, serviceContext);
+
+		Folder folder = PortletFileRepositoryUtil.addPortletFolder(
+			getUserId(), repository.getRepositoryId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			String.valueOf(getEntryId()), serviceContext);
+
+		_attachmentsFolderId = folder.getFolderId();
+
+		return folder;
 	}
 
 	@Override
-	public long getImagesFolderId() {
-		if (_imagesFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			return _imagesFolderId;
+	public long getAttachmentsFolderId() {
+		if (_attachmentsFolderId !=
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+			return _attachmentsFolderId;
 		}
 
 		Repository repository =
@@ -76,12 +90,28 @@ public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				String.valueOf(getEntryId()), serviceContext);
 
-			_imagesFolderId = folder.getFolderId();
+			_attachmentsFolderId = folder.getFolderId();
 		}
 		catch (Exception e) {
 		}
 
-		return _imagesFolderId;
+		return _attachmentsFolderId;
+	}
+
+	@Override
+	public String getEntryImageURL(ThemeDisplay themeDisplay) {
+		if (!isSmallImage()) {
+			return null;
+		}
+
+		if (Validator.isNotNull(getSmallImageURL())) {
+			return getSmallImageURL();
+		}
+
+		return
+			themeDisplay.getPathImage() + "/blogs/entry?img_id=" +
+				getSmallImageId() + "&t=" +
+					WebServerServletTokenUtil.getToken(getSmallImageId());
 	}
 
 	@Override
@@ -113,7 +143,7 @@ public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 		_smallImageType = smallImageType;
 	}
 
-	private long _imagesFolderId;
+	private long _attachmentsFolderId;
 	private String _smallImageType;
 
 }

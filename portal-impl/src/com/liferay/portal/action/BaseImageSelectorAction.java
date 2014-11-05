@@ -46,18 +46,16 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Sergio González
+ * @author Roberto Díaz
  */
 public abstract class BaseImageSelectorAction extends PortletAction {
 
 	@Override
 	public void processAction(
-		ActionMapping actionMapping, ActionForm actionForm,
-		PortletConfig portletConfig, ActionRequest actionRequest,
-		ActionResponse actionResponse)
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			ActionResponse actionResponse)
 		throws Exception {
-
-		UploadPortletRequest uploadPortletRequest =
-			PortalUtil.getUploadPortletRequest(actionRequest);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -83,19 +81,47 @@ public abstract class BaseImageSelectorAction extends PortletAction {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+		try {
+			jsonObject.put("image", getImageJSONObject(actionRequest));
+
+			jsonObject.put("success", Boolean.TRUE);
+		}
+		catch (Exception e) {
+			handleUploadException(actionRequest, actionResponse, e, jsonObject);
+		}
+
+		writeJSON(actionRequest, actionResponse, jsonObject);
+	}
+
+
+	protected JSONObject getImageJSONObject(ActionRequest actionRequest)
+		throws Exception {
+
+		JSONObject imageJSONObject = JSONFactoryUtil.createJSONObject();
+
 		InputStream inputStream = null;
 
 		try {
-			JSONObject imageJSONObject = JSONFactoryUtil.createJSONObject();
+			UploadPortletRequest uploadPortletRequest =
+				PortalUtil.getUploadPortletRequest(actionRequest);
+
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			imageJSONObject.put(
 				"dataImageIdAttribute",
 				EditorConstants.DATA_IMAGE_ID_ATTRIBUTE);
 
-			String fileName = uploadPortletRequest.getFileName(
+			inputStream = uploadPortletRequest.getFileAsStream(
 				"imageSelectorFileName");
+
 			String contentType = uploadPortletRequest.getContentType(
 				"imageSelectorFileName");
+
+			String fileName = uploadPortletRequest.getFileName(
+				"imageSelectorFileName");
+
 			long size = uploadPortletRequest.getSize("imageSelectorFileName");
 
 			validateFile(fileName, contentType, size);
@@ -120,20 +146,17 @@ public abstract class BaseImageSelectorAction extends PortletAction {
 			imageJSONObject.put(
 				"url",
 				PortletFileRepositoryUtil.getPortletFileEntryURL(
-					themeDisplay, fileEntry, StringPool.BLANK));
+					themeDisplay, fileEntry, StringPool.BLANK)
+			);
 
-			jsonObject.put("image", imageJSONObject);
-
-			jsonObject.put("success", Boolean.TRUE);
+			return imageJSONObject;
 		}
 		catch (Exception e) {
-			handleUploadException(actionRequest, actionResponse, e, jsonObject);
+			throw e;
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);
 		}
-
-		writeJSON(actionRequest, actionResponse, jsonObject);
 	}
 
 	protected abstract void checkPermission(

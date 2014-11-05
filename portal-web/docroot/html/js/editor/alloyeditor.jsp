@@ -244,7 +244,6 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 									image.setAttribute(data.image.dataImageIdAttribute, data.image.fileEntryId);
 									image.setAttribute('src', data.image.url);
 								}
-
 							}
 						},
 						uploaderror: function(event) {

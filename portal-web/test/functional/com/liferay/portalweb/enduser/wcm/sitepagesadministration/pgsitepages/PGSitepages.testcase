@@ -111,6 +111,34 @@
 		<execute macro="EmbeddedPortlets#viewDisabledPG" />
 	</command>
 
+	<command name="AddPageFromExistingPage" priority="4">
+		<execute macro="Page#openURL" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Site Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="defaultURL" value="false" />
+			<var name="pageName" value="Site Page Name" />
+			<var name="pageType" value="Content Display Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page Name" />
+		</execute>
+
+		<for list="Tags Navigation,Search,Categories Navigation,Asset Publisher" param="portletName">
+			<execute macro="Portlet#viewSpecificPG">
+				<var name="portletName" value="${portletName}" />
+			</execute>
+		</for>
+	</command>
+
 	<command name="EditSitePage" priority="4">
 		<execute macro="Page#openURL" />
 

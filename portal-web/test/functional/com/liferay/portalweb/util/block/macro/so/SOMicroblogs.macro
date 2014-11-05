@@ -910,7 +910,9 @@
 
 		<execute macro="SOMicroblogs#viewMicroblogsEntryCommentLink" />
 
-		<execute action="SOMicroblogs#assertElementNotPresent" locator-key1="MICROBLOGS_ENTRY_REPOST_LINK" value1="Repost" />
+		<execute action="SOMicroblogs#assertElementNotPresent" locator-key1="MICROBLOGS_ENTRY_REPOST_LINK" />
+		<execute action="SOMicroblogs#assertElementNotPresent" locator-key1="MICROBLOGS_ENTRY_EDIT_LINK" />
+		<execute action="SOMicroblogs#assertElementNotPresent" locator-key1="MICROBLOGS_ENTRY_DELETE_LINK" />
 	</command>
 
 	<command name="viewMicroblogsEntryNotViewableByEveryoneTag">

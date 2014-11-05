@@ -35,7 +35,21 @@
 		</if>
 
 		<execute action="CPWebcontentAddwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
-		<execute action="CPWebcontentAddwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContent}" />
+
+		<if>
+			<isset var="uploadAudio" />
+			<then>
+				<execute action="CPWebcontentAddwebcontent#click" locator-key1="AUDIO_BUTTON" />
+				<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="AUDIO_BROWSE_SERVER_BUTTON" value1="Browse Server" />
+				<execute action="CPWebcontentAddwebcontent#selectFrame" locator-key1="BROWSE_IFRAME" />
+				<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="CHOOSE_BUTTON" value1="Choose" />
+				<execute action="CPWebcontentAddwebcontent#selectFrame" value1="relative=top" />
+				<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="AUDIO_OK_BUTTON" value1="OK" />
+			</then>
+			<else>
+				<execute action="CPWebcontentAddwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContent}" />
+			</else>
+		</if>
 
 		<if>
 			<isset var="abstractSummary" />
@@ -1192,6 +1206,10 @@
 		</execute>
 
 		<execute macro="RecycleBin#emptyCP" />
+	</command>
+
+	<command name="viewAudioViaWCD">
+		<execute action="PGWebcontentdisplay#assertElementPresent" locator-key1="WEB_CONTENT_AUDIO" />
 	</command>
 
 	<command name="viewCategorizationCategoryCP">

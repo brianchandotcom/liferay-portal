@@ -432,7 +432,7 @@
 		</execute>
 
 		<execute macro="SOUserBar#markNotificationsAsRead">
-			<var name="numberOfNonActionableNotifications" value="6" />
+			<var name="numberOfNonactionableNotifications" value="6" />
 			<var name="numberOfNotifications" value="10" />
 		</execute>
 
@@ -444,7 +444,7 @@
 		</execute>
 
 		<execute macro="SOUserBar#markNotificationsAsRead">
-			<var name="numberOfNonActionableNotifications" value="3" />
+			<var name="numberOfNonactionableNotifications" value="3" />
 			<var name="numberOfNotifications" value="6" />
 		</execute>
 

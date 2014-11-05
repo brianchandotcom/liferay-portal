@@ -136,42 +136,42 @@
 </tr>
 <tr>
 	<td>NOTIFICATION_MENU_NOTIFICATION_NONE_MESSAGE</td>
-	<td>//div[@class='non-actionable']//div[contains(@class,'user-notification')]//div[@class='message']</td>
+	<td>//div[@class='nonactionable']//div[contains(@class,'user-notification')]//div[@class='message']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NOTIFICATION_MENU_NOTIFICATION_ENTRY</td>
-	<td>//div[@class='non-actionable']//li[contains(@class,'user-notification')]</td>
+	<td>//div[@class='nonactionable']//li[contains(@class,'user-notification')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT</td>
-	<td>//div[@class='non-actionable']//li[contains(@class,'user-notification')]//div[@class='title']</td>
+	<td>//div[@class='nonactionable']//li[contains(@class,'user-notification')]//div[@class='title']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT</td>
-	<td>//div[@class='non-actionable']//li[contains(@class,'user-notification')]//div[@class='body']</td>
+	<td>//div[@class='nonactionable']//li[contains(@class,'user-notification')]//div[@class='body']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT_MICROBLOGS_COMMENT_TAG_LINK</td>
-	<td>//div[@class='non-actionable']//li[contains(@class,'user-notification')]//div[@class='body' and contains(.,'${key_microblogsEntryCommentContent}')]//a[contains(.,'${key_microblogsEntryCommentTagValue}')]</td>
+	<td>//div[@class='nonactionable']//li[contains(@class,'user-notification')]//div[@class='body' and contains(.,'${key_microblogsEntryCommentContent}')]//a[contains(.,'${key_microblogsEntryCommentTagValue}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT_MICROBLOGS_COMMENT_MENTION_LINK</td>
-	<td>//div[@class='non-actionable']//li[contains(@class,'user-notification')]//div[@class='body' and contains(.,'${key_microblogsEntryCommentContent}')]//a[contains(.,'${key_mentionUserName}')]</td>
+	<td>//div[@class='nonactionable']//li[contains(@class,'user-notification')]//div[@class='body' and contains(.,'${key_microblogsEntryCommentContent}')]//a[contains(.,'${key_mentionUserName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NOTIFICATION_MENU_MARK_AS_READ_NOTIFICATIONS_LINK</td>
-	<td>//div[@class='non-actionable']//a[contains(.,'Mark as Read')]</td>
+	<td>//div[@class='nonactionable']//a[contains(.,'Mark as Read')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NOTIFICATION_MENU_VIEW_NOTIFICATIONS_LINK</td>
-	<td>//div[@class='non-actionable']//a[contains(.,'Notifications')]</td>
+	<td>//div[@class='nonactionable']//a[contains(.,'Notifications')]</td>
 	<td></td>
 </tr>
 <tr>

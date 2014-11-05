@@ -14,10 +14,13 @@
 
 package com.liferay.portlet.blogs.action;
 
+import com.liferay.portal.kernel.editor.util.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
@@ -25,13 +28,17 @@ import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.TrashedModel;
+import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -56,11 +63,18 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
 import com.liferay.portlet.documentlibrary.FileSizeException;
+import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -83,6 +97,7 @@ import org.apache.struts.action.ActionMapping;
  * @author Juan Fernández
  * @author Zsolt Berentey
  * @author Levente Hudák
+ * @author Roberto Díaz
  */
 public class EditEntryAction extends PortletAction {
 
@@ -343,6 +358,23 @@ public class EditEntryAction extends PortletAction {
 		}
 	}
 
+	protected String getAttachmentLink(
+			FileEntry attachment, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("<img src=\"");
+
+		sb.append(
+			PortletFileRepositoryUtil.getPortletFileEntryURL(
+				themeDisplay, attachment, StringPool.BLANK));
+
+		sb.append("\" />");
+
+		return sb.toString();
+	}
+
 	protected String getSaveAndContinueRedirect(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			BlogsEntry entry, String redirect)
@@ -379,6 +411,50 @@ public class EditEntryAction extends PortletAction {
 		portletURL.setWindowState(actionRequest.getWindowState());
 
 		return portletURL.toString();
+	}
+
+	protected String getTempAttachmentLink(
+			FileEntry tempAttachment, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append("<img ");
+		sb.append(EditorConstants.DATA_IMAGE_ID_ATTRIBUTE);
+		sb.append("=\"");
+		sb.append(tempAttachment.getFileEntryId());
+		sb.append("\" ");
+		sb.append("src=\"");
+
+		sb.append(
+			PortletFileRepositoryUtil.getPortletFileEntryURL(
+				themeDisplay, tempAttachment, StringPool.BLANK));
+
+		sb.append("\" />");
+
+		return sb.toString();
+	}
+
+	protected List<FileEntry> getTempAttachments(String content)
+		throws PortalException {
+
+		List<FileEntry> attachments = new ArrayList<>();
+
+		Pattern pattern = Pattern.compile(
+			EditorConstants.DATA_IMAGE_ID_ATTRIBUTE + "=.(\\d+)");
+
+		Matcher matcher = pattern.matcher(content);
+
+		while (matcher.find()) {
+			String fileEntryId = matcher.group(1);
+
+			FileEntry attachment = DLAppServiceUtil.getFileEntry(
+				Long.valueOf(fileEntryId));
+
+			attachments.add(attachment);
+		}
+
+		return attachments;
 	}
 
 	protected void subscribe(ActionRequest actionRequest) throws Exception {
@@ -453,6 +529,54 @@ public class EditEntryAction extends PortletAction {
 		}
 	}
 
+	protected String updateContentAttachmentLinks(
+			long groupId, BlogsEntry entry, List<FileEntry> tempAttachments,
+			ActionRequest actionRequest)
+		throws PortalException {
+
+		List<FileEntry> entryAttachments = new ArrayList<>(
+			tempAttachments.size());
+
+		String content = entry.getContent();
+
+		for (FileEntry tempAttachment : tempAttachments) {
+			String fileName = ParamUtil.getString(
+				actionRequest, "fileName", StringUtil.randomString());
+			InputStream inputStream = tempAttachment.getContentStream();
+
+			File file = null;
+
+			try {
+				file = FileUtil.createTempFile(inputStream);
+
+				String mimeType = MimeTypesUtil.getContentType(file, fileName);
+
+				FileEntry attachment = BlogsEntryServiceUtil.addEntryAttachment(
+					groupId, entry.getEntryId(), fileName, file, mimeType);
+
+				entryAttachments.add(attachment);
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				content = StringUtil.replace(
+					content,
+					getTempAttachmentLink(tempAttachment, themeDisplay),
+					getAttachmentLink(attachment, themeDisplay));
+			}
+			catch (IOException ioe) {
+				throw new SystemException(
+					"Unable to write temporary file", ioe);
+			}
+			finally {
+				FileUtil.delete(file);
+			}
+		}
+
+		return content;
+	}
+
 	protected Object[] updateEntry(ActionRequest actionRequest)
 		throws Exception {
 
@@ -525,6 +649,8 @@ public class EditEntryAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			BlogsEntry.class.getName(), actionRequest);
 
+		List<FileEntry> tempAttachments = getTempAttachments(content);
+
 		if (entryId <= 0) {
 
 			// Add entry
@@ -539,10 +665,29 @@ public class EditEntryAction extends PortletAction {
 			AssetPublisherUtil.addAndStoreSelection(
 				actionRequest, BlogsEntry.class.getName(), entry.getEntryId(),
 				-1);
+
+			if (entry != null && !tempAttachments.isEmpty()) {
+				content = updateContentAttachmentLinks(
+					entry.getGroupId(), entry, tempAttachments, actionRequest);
+
+				entry = BlogsEntryServiceUtil.updateEntry(
+					entry.getEntryId(), title, subtitle, description, content,
+					displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, allowPingbacks,
+					allowTrackbacks, trackbacks, coverImageImageSelector,
+					smallImageImageSelector, serviceContext);
+			}
 		}
 		else {
 
 			// Update entry
+
+			entry = BlogsEntryLocalServiceUtil.getEntry(entryId);
+
+			if (!tempAttachments.isEmpty()) {
+				content = updateContentAttachmentLinks(
+					entry.getGroupId(), entry, tempAttachments, actionRequest);
+			}
 
 			boolean sendEmailEntryUpdated = ParamUtil.getBoolean(
 				actionRequest, "sendEmailEntryUpdated");
@@ -555,8 +700,6 @@ public class EditEntryAction extends PortletAction {
 
 			serviceContext.setAttribute(
 				"emailEntryUpdatedComment", emailEntryUpdatedComment);
-
-			entry = BlogsEntryLocalServiceUtil.getEntry(entryId);
 
 			String tempOldUrlTitle = entry.getUrlTitle();
 

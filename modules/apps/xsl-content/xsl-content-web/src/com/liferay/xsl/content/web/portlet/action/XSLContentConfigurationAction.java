@@ -17,7 +17,6 @@ package com.liferay.xsl.content.web.portlet.action;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -25,9 +24,6 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.xsl.content.web.constants.XSLContentPortletKeys;
-
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import java.util.Map;
 
@@ -82,23 +78,6 @@ public class XSLContentConfigurationAction extends DefaultConfigurationAction {
 		return StringUtil.split(validUrlPrefixes);
 	}
 
-	protected boolean hasAllowedProtocol(String xmlURL) {
-		try {
-			URL url = new URL(xmlURL);
-
-			String protocol = url.getProtocol();
-
-			if (ArrayUtil.contains(_PROTOCOLS, protocol)) {
-				return true;
-			}
-		}
-		catch (MalformedURLException murle) {
-			return false;
-		}
-
-		return false;
-	}
-
 	protected boolean hasValidUrlPrefix(String[] validUrlPrefixes, String url) {
 		if (validUrlPrefixes.length == 0) {
 			return true;
@@ -124,9 +103,7 @@ public class XSLContentConfigurationAction extends DefaultConfigurationAction {
 		xmlUrl = StringUtil.replace(
 			xmlUrl, "@portal_url@", themeDisplay.getPortalURL());
 
-		if (!hasAllowedProtocol(xmlUrl) ||
-			!hasValidUrlPrefix(validUrlPrefixes, xmlUrl)) {
-
+		if (!hasValidUrlPrefix(validUrlPrefixes, xmlUrl)) {
 			SessionErrors.add(actionRequest, "xmlUrl");
 		}
 
@@ -135,13 +112,9 @@ public class XSLContentConfigurationAction extends DefaultConfigurationAction {
 		xslUrl = StringUtil.replace(
 			xslUrl, "@portal_url@", themeDisplay.getPortalURL());
 
-		if (!hasAllowedProtocol(xslUrl) ||
-			!hasValidUrlPrefix(validUrlPrefixes, xslUrl)) {
-
+		if (!hasValidUrlPrefix(validUrlPrefixes, xslUrl)) {
 			SessionErrors.add(actionRequest, "xslUrl");
 		}
 	}
-
-	private static final String[] _PROTOCOLS = {"http", "https"};
 
 }

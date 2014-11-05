@@ -89,15 +89,11 @@
 				{BlogsEntry.*}
 			FROM
 				BlogsEntry
+			LEFT JOIN
+				AssetEntry ON
+					(AssetEntry.classPK = BlogsEntry.entryId)
 			WHERE
-				(entryId NOT IN (
-					SELECT
-						classPK
-					FROM
-						AssetEntry
-					WHERE
-						classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.BLOGS.MODEL.BLOGSENTRY$]
-				))
+				(AssetEntry.classPK IS NULL)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.blogs.service.persistence.BlogsStatsUserFinder.countByOrganizationIds">

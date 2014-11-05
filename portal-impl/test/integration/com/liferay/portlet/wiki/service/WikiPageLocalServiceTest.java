@@ -528,6 +528,30 @@ public class WikiPageLocalServiceTest {
 	}
 
 	@Test
+	public void testGetNoAssetPages() throws Exception {
+		WikiPage wikiPage1 = WikiTestUtil.addPage(
+			_group.getGroupId(), _node.getNodeId(), true);
+
+		WikiPage wikiPage2 = WikiTestUtil.addPage(
+			_group.getGroupId(), _node.getNodeId(), true);
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			WikiPage.class.getName(), wikiPage2.getResourcePrimKey());
+
+		Assert.assertNotNull(assetEntry);
+
+		AssetEntryLocalServiceUtil.deleteAssetEntry(assetEntry);
+
+		List<WikiPage> wikiPages = WikiPageLocalServiceUtil.getNoAssetPages();
+
+		Assert.assertEquals(1, wikiPages.size());
+
+		Assert.assertEquals(
+			wikiPage2.getResourcePrimKey(),
+			wikiPages.get(0).getResourcePrimKey());
+	}
+
+	@Test
 	public void testGetPage() throws Exception {
 		WikiPage page = WikiTestUtil.addPage(
 			_group.getGroupId(), _node.getNodeId(), true);

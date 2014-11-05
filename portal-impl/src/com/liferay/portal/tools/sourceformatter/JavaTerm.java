@@ -91,15 +91,24 @@ public class JavaTerm {
 		return _name;
 	}
 
+	public List<String> getParameterNames() {
+		if (_parameterNames == null) {
+			readParameterNamesAndTypes();
+		}
+
+		return _parameterNames;
+	}
+
 	public List<String> getParameterTypes() {
 		if (_parameterTypes == null) {
-			readParameterTypes();
+			readParameterNamesAndTypes();
 		}
 
 		return _parameterTypes;
 	}
 
-	protected void readParameterTypes() {
+	protected void readParameterNamesAndTypes() {
+		_parameterNames = new ArrayList<String>();
 		_parameterTypes = new ArrayList<String>();
 
 		if (!isConstructor() && !isMethod()) {
@@ -151,8 +160,12 @@ public class JavaTerm {
 			int y = parameters.indexOf(StringPool.COMMA, x);
 
 			if (y == -1) {
+				_parameterNames.add(parameters.substring(x + 1));
+
 				return;
 			}
+
+			_parameterNames.add(parameters.substring(x + 1, y));
 
 			parameters = parameters.substring(y + 1);
 
@@ -278,6 +291,7 @@ public class JavaTerm {
 	private String _content;
 	private int _lineCount;
 	private String _name;
+	private List<String> _parameterNames;
 	private List<String> _parameterTypes;
 	private final Pattern _parameterTypesPattern = Pattern.compile(
 		"\t(private |protected |public )([\\s\\S]*?)\\(([\\s\\S]*?)\\)");

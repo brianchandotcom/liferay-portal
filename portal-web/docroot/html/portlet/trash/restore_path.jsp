@@ -79,42 +79,31 @@
 	<aui:input name="containerModelId" type="hidden" value="" />
 </aui:form>
 
-<aui:script use="aui-dialog-iframe-deprecated,liferay-util-window">
-	A.getBody().delegate(
-		'click',
-		function(event) {
-			<portlet:namespace />restoreDialog(event.currentTarget.attr('data-uri'));
-		},
-		'.trash-restore-link a, button.trash-restore-link'
-	);
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />restoreDialog',
-		function(uri) {
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						destroyOnHide: true,
-						modal: true,
-						width: 1024
-					},
-					eventName: '<portlet:namespace />selectContainer',
-					id: '<portlet:namespace />selectContainer',
-					title: '<liferay-ui:message key="warning" />',
-					uri: uri
+<aui:script>
+	function <portlet:namespace />restoreDialog(uri) {
+		Liferay.Util.selectEntity(
+			{
+				dialog: {
+					constrain: true,
+					destroyOnHide: true,
+					modal: true,
+					width: 1024
 				},
-				function(event) {
-					document.<portlet:namespace />selectContainerForm.<portlet:namespace />className.value = event.classname;
-					document.<portlet:namespace />selectContainerForm.<portlet:namespace />classPK.value = event.classpk;
-					document.<portlet:namespace />selectContainerForm.<portlet:namespace />containerModelId.value = event.containermodelid;
-					document.<portlet:namespace />selectContainerForm.<portlet:namespace />redirect.value = event.redirect;
+				eventName: '<portlet:namespace />selectContainer',
+				id: '<portlet:namespace />selectContainer',
+				title: '<liferay-ui:message key="warning" />',
+				uri: uri
+			},
+			function(event) {
+				var form = AUI.$(document.<portlet:namespace />selectContainerForm);
 
-					submitForm(document.<portlet:namespace />selectContainerForm);
-				}
-			);
-		},
-		['aui-base']
-	);
+				form.fm('className').val(event.classname);
+				form.fm('classPK').val(event.classpk);
+				form.fm('containerModelId').val(event.containermodelid);
+				form.fm('redirect').val(event.redirect);
+
+				submitForm(form);
+			}
+		);
+	}
 </aui:script>

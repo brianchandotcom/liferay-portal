@@ -37,6 +37,8 @@ import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portal.util.test.UserTestUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.junit.Assert;
@@ -77,6 +79,20 @@ public class SearchPaginationTest {
 
 			_users.add(user);
 		}
+
+		Collections.sort(
+			_users,
+			new Comparator<User>() {
+
+				@Override
+				public int compare(User user1, User user2) {
+					String screenName1 = user1.getScreenName();
+					String screenName2 = user2.getScreenName();
+
+					return screenName1.compareTo(screenName2);
+				}
+
+			});
 	}
 
 	@Test
@@ -213,7 +229,7 @@ public class SearchPaginationTest {
 
 		searchContext.setQueryConfig(queryConfig);
 
-		searchContext.setSorts(new Sort(Field.USER_ID, true));
+		searchContext.setSorts(new Sort("screenName", false));
 		searchContext.setStart(start);
 
 		return indexer.search(searchContext);
@@ -240,16 +256,25 @@ public class SearchPaginationTest {
 
 		Assert.assertEquals(expectedTotal, hits.getDocs().length);
 
+		List<User> returnedUsers = new ArrayList<User>();
+
 		for (int i = 0; i < hits.getDocs().length; i++) {
 			Document doc = hits.doc(i);
 
 			long userId = GetterUtil.getLong(doc.get(Field.USER_ID));
 
-			User returnedUser = UserLocalServiceUtil.getUser(userId);
-
-			Assert.assertEquals(
-				_users.get(expectedRecalculatedStart + i), returnedUser);
+			returnedUsers.add(UserLocalServiceUtil.getUser(userId));
 		}
+
+		Assert.assertEquals(
+			"Start :" + start + ", end :" + end + ", expectedTotal :" +
+				expectedTotal + ", expectedRecalculatedStart :" +
+					expectedRecalculatedStart + ", setup users :" + _users +
+						", returned users :" + returnedUsers,
+			_users.subList(
+				expectedRecalculatedStart,
+				expectedRecalculatedStart + hits.getDocs().length),
+			returnedUsers);
 	}
 
 	private static final int _USERS_COUNT = 5;

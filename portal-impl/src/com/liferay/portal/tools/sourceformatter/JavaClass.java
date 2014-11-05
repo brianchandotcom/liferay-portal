@@ -75,6 +75,8 @@ public class JavaClass {
 		while (itr.hasNext()) {
 			JavaTerm javaTerm = itr.next();
 
+			checkUnusedParameters(javaTerm);
+
 			if (!BaseSourceProcessor.isExcluded(
 					checkJavaFieldTypesExclusions, _absolutePath)) {
 
@@ -393,6 +395,21 @@ public class JavaClass {
 		checkAnnotationForMethod(
 			javaTerm, "Test", "^.*test", JavaTerm.TYPE_METHOD_PUBLIC,
 			_fileName);
+	}
+
+	protected void checkUnusedParameters(JavaTerm javaTerm) {
+		if (!javaTerm.isPrivate() || !javaTerm.isMethod()) {
+			return;
+		}
+
+		for (String parameterName : javaTerm.getParameterNames()) {
+			if (StringUtil.count(javaTerm.getContent(), parameterName) == 1) {
+				BaseSourceProcessor.processErrorMessage(
+					_fileName,
+					"Unused parameter " + parameterName + " " + _fileName +
+						" " + javaTerm.getLineCount());
+			}
+		}
 	}
 
 	protected void fixJavaTermsDividers(

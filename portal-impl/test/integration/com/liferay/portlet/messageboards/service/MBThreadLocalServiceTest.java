@@ -15,20 +15,16 @@
 package com.liferay.portlet.messageboards.service;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
-
-import java.text.DateFormat;
 
 import java.util.List;
 
@@ -38,11 +34,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Jonathan McCann
+ * @author Michael C. Han
  */
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class MBMessageLocalServiceTest {
+public class MBThreadLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
@@ -50,59 +46,26 @@ public class MBMessageLocalServiceTest {
 	}
 
 	@Test
-	public void testGetNoAssetMessages() throws Exception {
+	public void testGetNoAssetThreads() throws Exception {
 		MBMessage mbMessage1 = MBTestUtil.addMessage(_group.getGroupId());
 		MBMessage mbMessage2 = MBTestUtil.addMessage(_group.getGroupId());
 
+		MBThread mbThread1 = mbMessage1.getThread();
+		MBThread mbThread2 = mbMessage2.getThread();
+
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			MBMessage.class.getName(), mbMessage2.getMessageId());
+			MBThread.class.getName(), mbThread2.getThreadId());
 
 		Assert.assertNotNull(assetEntry);
 
 		AssetEntryLocalServiceUtil.deleteAssetEntry(assetEntry);
 
-		List<MBMessage> messages =
-			MBMessageLocalServiceUtil.getNoAssetMessages();
+		List<MBThread> threads = MBThreadLocalServiceUtil.getNoAssetThreads();
 
-		Assert.assertEquals(1, messages.size());
-
-		Assert.assertEquals(
-			mbMessage2.getMessageId(), messages.get(0).getMessageId());
-	}
-
-	@Test
-	public void testThreadLastPostDate() throws Exception {
-		MBMessage parentMessage = MBTestUtil.addMessage(_group.getGroupId());
-
-		Thread.sleep(2000);
-
-		MBMessage firstReplyMessage = MBTestUtil.addMessage(
-			_group.getGroupId(), parentMessage.getCategoryId(),
-			parentMessage.getThreadId(), parentMessage.getMessageId());
-
-		Thread.sleep(2000);
-
-		MBMessage secondReplyMessage = MBTestUtil.addMessage(
-			_group.getGroupId(), parentMessage.getCategoryId(),
-			parentMessage.getThreadId(), parentMessage.getMessageId());
-
-		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-			PropsValues.INDEX_DATE_FORMAT_PATTERN);
-
-		MBThread mbThread = parentMessage.getThread();
+		Assert.assertEquals(1, threads.size());
 
 		Assert.assertEquals(
-			dateFormat.format(mbThread.getLastPostDate()),
-			dateFormat.format(secondReplyMessage.getModifiedDate()));
-
-		MBMessageLocalServiceUtil.deleteMessage(
-			secondReplyMessage.getMessageId());
-
-		mbThread = parentMessage.getThread();
-
-		Assert.assertEquals(
-			dateFormat.format(mbThread.getLastPostDate()),
-			dateFormat.format(firstReplyMessage.getModifiedDate()));
+			mbThread2.getThreadId(), threads.get(0).getThreadId());
 	}
 
 	@DeleteAfterTestRun

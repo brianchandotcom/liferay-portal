@@ -875,7 +875,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 	protected NettyFabricAgentStub installNettyFabricAgentStub() {
 		NettyFabricAgentStub nettyFabricAgentStub = new NettyFabricAgentStub(
 			_embeddedChannel, new MockRepository(),
-			Paths.get("remoteRepositoryPath"), 0);
+			Paths.get("remoteRepositoryPath"), 0, Long.MAX_VALUE);
 
 		NettyChannelAttributes.setNettyFabricAgentStub(
 			_embeddedChannel, nettyFabricAgentStub);

@@ -177,7 +177,7 @@ public class NettyChannelAttributesTest {
 
 		NettyFabricAgentStub nettyFabricAgentStub = new NettyFabricAgentStub(
 			_embeddedChannel, new MockRepository(),
-			Paths.get("remoteRepositoryPath"), 0);
+			Paths.get("remoteRepositoryPath"), 0, 0);
 
 		NettyChannelAttributes.setNettyFabricAgentStub(
 			_embeddedChannel, nettyFabricAgentStub);

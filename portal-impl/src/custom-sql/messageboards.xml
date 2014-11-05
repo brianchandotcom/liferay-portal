@@ -92,16 +92,12 @@
 				{MBMessage.*}
 			FROM
 				MBMessage
+			LEFT JOIN
+				AssetEntry ON
+					(AssetEntry.classPK = MBMessage.messageId)
 			WHERE
-				(messageId NOT IN (
-					SELECT
-						classPK
-					FROM
-						AssetEntry
-					WHERE
-						classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.MESSAGEBOARDS.MODEL.MBMESSAGE$]
-				)) AND
-				(categoryId != -1)
+				(AssetEntry.classPK IS NULL) AND
+				(MBMessage.categoryId != -1)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.messageboards.service.persistence.MBMessageFinder.findByG_U_C_S">
@@ -284,16 +280,12 @@
 				{MBThread.*}
 			FROM
 				MBThread
+			LEFT JOIN
+				AssetEntry ON
+					(AssetEntry.classPK = MBThread.threadId)
 			WHERE
-				(threadId NOT IN (
-					SELECT
-						classPK
-					FROM
-						AssetEntry
-					WHERE
-						classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.MESSAGEBOARDS.MODEL.MBTHREAD$]
-				)) AND
-				(categoryId != -1)
+				(AssetEntry.classPK IS NULL) AND
+				(MBThread.categoryId != -1)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.messageboards.service.persistence.MBThreadFinder.findByG_U">

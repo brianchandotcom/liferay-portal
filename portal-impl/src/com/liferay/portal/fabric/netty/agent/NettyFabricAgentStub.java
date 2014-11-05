@@ -45,6 +45,7 @@ import java.util.concurrent.CancellationException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -54,7 +55,7 @@ public class NettyFabricAgentStub implements FabricAgent {
 
 	public NettyFabricAgentStub(
 		Channel channel, Repository repository, Path remoteRepositoryPath,
-		long rpcRelayTimeout) {
+		long rpcRelayTimeout, long startupTimeout) {
 
 		if (channel == null) {
 			throw new NullPointerException("Channel is null");
@@ -72,6 +73,7 @@ public class NettyFabricAgentStub implements FabricAgent {
 		_repository = repository;
 		_remoteRepositoryPath = remoteRepositoryPath;
 		_rpcRelayTimeout = rpcRelayTimeout;
+		_startupTimeout = startupTimeout;
 	}
 
 	@Override
@@ -183,7 +185,7 @@ public class NettyFabricAgentStub implements FabricAgent {
 			});
 
 		try {
-			startupNoticeableFuture.get();
+			startupNoticeableFuture.get(_startupTimeout, TimeUnit.MILLISECONDS);
 
 			_nettyFabricWorkerStubs.put(id, nettyFabricWorkerStub);
 		}
@@ -242,5 +244,6 @@ public class NettyFabricAgentStub implements FabricAgent {
 	private final Map<Long, DefaultNoticeableFuture<?>>
 		_startupNoticeableFutures =
 			new ConcurrentHashMap<Long, DefaultNoticeableFuture<?>>();
+	private final long _startupTimeout;
 
 }

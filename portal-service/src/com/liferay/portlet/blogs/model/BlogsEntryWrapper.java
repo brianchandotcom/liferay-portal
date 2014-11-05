@@ -391,11 +391,6 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 		return _blogsEntry.getGroupId();
 	}
 
-	@Override
-	public long getImagesFolderId() {
-		return _blogsEntry.getImagesFolderId();
-	}
-
 	/**
 	* Returns the modified date of this blogs entry.
 	*

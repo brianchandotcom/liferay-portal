@@ -26,11 +26,17 @@
 <%@ page import="com.liferay.portal.kernel.log.Log" %><%@
 page import="com.liferay.portal.kernel.log.LogFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.portal.model.Portlet" %><%@
+page import="com.liferay.portal.service.PortletLocalServiceUtil" %><%@
 page import="com.liferay.xsl.content.web.configuration.XSLContentConfiguration" %><%@
 page import="com.liferay.xsl.content.web.util.XSLContentUtil" %>
 
 <%@ page import="java.net.URL" %>
+
+<%@ page import="java.util.Map" %>
 
 <liferay-theme:defineObjects />
 <portlet:defineObjects />

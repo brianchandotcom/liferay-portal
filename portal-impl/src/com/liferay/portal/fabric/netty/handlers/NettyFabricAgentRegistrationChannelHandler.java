@@ -68,6 +68,29 @@ public class NettyFabricAgentRegistrationChannelHandler
 	}
 
 	@Override
+	public void exceptionCaught(
+		ChannelHandlerContext channelHandlerContext, Throwable throwable) {
+
+		final Channel channel = channelHandlerContext.channel();
+
+		_log.error("Closing " + channel + " due to:", throwable);
+
+		ChannelFuture channelFuture = channel.close();
+
+		channelFuture.addListener(
+			new ChannelFutureListener() {
+
+				@Override
+				public void operationComplete(ChannelFuture channelFuture) {
+					if (_log.isInfoEnabled()) {
+						_log.info(channel + " is closed");
+					}
+				}
+
+			});
+	}
+
+	@Override
 	protected void channelRead0(
 			ChannelHandlerContext channelHandlerContext,
 			NettyFabricAgentConfig nettyFabricAgentConfig)

@@ -41,6 +41,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.concurrent.EventExecutor;
@@ -82,6 +84,29 @@ public class NettyFabricWorkerExecutionChannelHandler
 		_repository = repository;
 		_fabricAgent = new LocalFabricAgent(processExecutor);
 		_executionTimeout = executionTimeout;
+	}
+
+	@Override
+	public void exceptionCaught(
+		ChannelHandlerContext channelHandlerContext, Throwable throwable) {
+
+		final Channel channel = channelHandlerContext.channel();
+
+		_log.error("Closing " + channel + " due to:", throwable);
+
+		ChannelFuture channelFuture = channel.close();
+
+		channelFuture.addListener(
+			new ChannelFutureListener() {
+
+				@Override
+				public void operationComplete(ChannelFuture channelFuture) {
+					if (_log.isInfoEnabled()) {
+						_log.info(channel + " is closed");
+					}
+				}
+
+			});
 	}
 
 	@Override

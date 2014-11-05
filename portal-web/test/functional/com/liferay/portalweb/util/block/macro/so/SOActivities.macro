@@ -398,6 +398,42 @@
 		</execute>
 	</command>
 
+	<command name="repostMicroblogsEntry">
+		<if>
+			<isset var="row" />
+			<then>
+				<var name="key_row" value="${row}" />
+			</then>
+			<else>
+				<var name="key_row" value="01" />
+			</else>
+		</if>
+
+		<if>
+			<isset var="profileScreenName" />
+			<then>
+				<execute action="SOProfile#open" locator-key1="PROFILE_URL" />
+			</then>
+			<else>
+				<execute action="Dockbar#click" locator-key1="USER_NAME" />
+				<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+			</else>
+		</if>
+
+		<var name="key_userName" value="${microblogsEntryAuthorName}" />
+
+		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${microblogsEntryAuthorName}" />
+		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_ACTION" value1="${microblogsEntryContent}" />
+		<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_REPOST" value1="Repost" />
+
+		<execute action="SOActivitiesRepost#selectFrame" locator-key1="REPOST_IFRAME" />
+		<execute action="SOActivitiesRepost#assertTextEquals" locator-key1="HEADER" value1="Do you want to repost this entry?" />
+		<execute action="SOActivitiesRepost#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_AUTHOR_NAME" value1="${microblogsEntryAuthorName}" />
+		<execute action="SOActivitiesRepost#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
+		<execute action="SOActivitiesRepost#assertClick" locator-key1="REPOST_BUTTON" value1="Repost" />
+		<execute action="SOActivitiesRepost#selectFrame" value1="relative=top" />
+	</command>
+
 	<command name="viewActivityEntryComment">
 		<if>
 			<isset var="row" />
@@ -409,6 +445,7 @@
 			</else>
 		</if>
 
+		<var locator-key="USER_NAME" name="currentUser" path="Dockbar" />
 		<var name="key_commentContent" value="${commentContent}" />
 		<var name="key_row" value="${row}" />
 		<var name="key_userFirstName" value="${userFirstName}" />
@@ -457,6 +494,19 @@
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_COMMENT_USER_PICTURE" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT_USER_NAME" value1="${userName}" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT_CONTENT" value1="${commentContent}" />
+
+		<if>
+			<equals arg1="${userName}" arg2="${currentUser}" />
+			<then>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT_EDIT" value1="Edit" />
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT_DELETE" value1="Delete" />
+			</then>
+			<else>
+				<execute action="SOActivities#assertElementNotPresent" locator-key1="ACTIVITIES_COMMENT_EDIT" />
+				<execute action="SOActivities#assertElementNotPresent" locator-key1="ACTIVITIES_COMMENT_DELETE" />
+			</else>
+		</if>
+
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_COMMENT_FIELD" />
 	</command>
 
@@ -863,17 +913,48 @@
 		<var locator-key="USER_NAME" name="currentUser" path="Dockbar" />
 
 		<var name="key_commentContent" value="${microblogsEntryCommentContent}" />
-		<var name="key_userName" value="${microblogsEntryCommentAuthorName}" />
+
+		<if>
+			<isset var="mostRecentMicroblogsEntryCommentAuthorName" />
+			<then>
+				<var name="key_userName" value="${mostRecentMicroblogsEntryCommentAuthorName}" />
+			</then>
+			<else>
+				<var name="key_userName" value="${microblogsEntryCommentAuthorName}" />
+			</else>
+		</if>
 
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_USER_PICTURE" />
 
 		<if>
 			<equals arg1="${microblogsEntryCommentAuthorName}" arg2="${currentUser}" />
 			<then>
-				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${microblogsEntryCommentAuthorFirstName}" />
+				<if>
+					<and>
+						<isset var="numberOfOtherCommenters" />
+						<isset var="mostRecentMicroblogsEntryCommentAuthorFirstName" />
+					</and>
+					<then>
+						<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${mostRecentMicroblogsEntryCommentAuthorFirstName} and ${numberOfOtherCommenters} others." />
+					</then>
+					<else>
+						<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${microblogsEntryCommentAuthorFirstName}" />
+					</else>
+				</if>
 			</then>
 			<else>
-				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${microblogsEntryCommentAuthorName}" />
+				<if>
+					<and>
+						<isset var="numberOfOtherCommenters" />
+						<isset var="mostRecentMicroblogsEntryCommentAuthorName" />
+					</and>
+					<then>
+						<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${mostRecentMicroblogsEntryCommentAuthorName} and ${numberOfOtherCommenters} others." />
+					</then>
+					<else>
+						<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${microblogsEntryCommentAuthorName}" />
+					</else>
+				</if>
 			</else>
 		</if>
 
@@ -912,6 +993,115 @@
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT_CONTENT" value1="${microblogsEntryCommentContent}" />
 
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_COMMENT_FIELD" />
+	</command>
+
+	<command name="viewMicroblogsEntry">
+		<if>
+			<isset var="row" />
+			<then>
+				<var name="key_row" value="${row}" />
+			</then>
+			<else>
+				<var name="key_row" value="01" />
+			</else>
+		</if>
+
+		<var locator-key="USER_NAME" name="currentUser" path="Dockbar" />
+		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
+		<var name="key_userName" value="${microblogsEntryAuthorName}" />
+
+		<if>
+			<equals arg1="${currentUser}" arg2="${microblogsEntryAuthorName}" />
+			<then>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${microblogsEntryAuthorFirstName}" />
+			</then>
+			<else>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${microblogsEntryAuthorName}" />
+			</else>
+		</if>
+
+		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_ACTION" value1="${microblogsEntryContent}" />
+		<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_VIEW_MICROBLOGS" value1="View Microblogs" />
+
+		<execute macro="SOMicroblogs#viewMicroblogsEntryAuthor" />
+
+		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
+
+		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
+	</command>
+
+	<command name="viewMicroblogsEntryMention">
+		<if>
+			<isset var="row" />
+			<then>
+				<var name="key_row" value="${row}" />
+			</then>
+			<else>
+				<var name="key_row" value="01" />
+			</else>
+		</if>
+
+		<var locator-key="USER_NAME" name="currentUser" path="Dockbar" />
+		<var name="key_userName" value="${microblogsEntryAuthorName}" />
+
+		<if>
+			<equals arg1="${currentUser}" arg2="${microblogsEntryAuthorName}" />
+			<then>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${microblogsEntryAuthorFirstName}" />
+			</then>
+			<else>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${microblogsEntryAuthorName}" />
+			</else>
+		</if>
+
+		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_ACTION" value1="${microblogsEntryContent}" />
+		<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_ACTION_LINK" value1="${mentionUserName}" />
+
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_NAME" value1="${mentionUserName}" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_EMAIL" value1="${mentionUserEmailAddress}" />
+	</command>
+
+	<command name="viewMicroblogsEntryTag">
+		<if>
+			<isset var="row" />
+			<then>
+				<var name="key_row" value="${row}" />
+			</then>
+			<else>
+				<var name="key_row" value="01" />
+			</else>
+		</if>
+
+		<var locator-key="USER_NAME" name="currentUser" path="Dockbar" />
+		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
+		<var name="key_microblogsEntryTagValue" value="${microblogsEntryTagValue}" />
+		<var name="key_userName" value="${microblogsEntryAuthorName}" />
+
+		<if>
+			<equals arg1="${currentUser}" arg2="${microblogsEntryAuthorName}" />
+			<then>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${microblogsEntryAuthorFirstName}" />
+			</then>
+			<else>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${microblogsEntryAuthorName}" />
+			</else>
+		</if>
+
+		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_ACTION" value1="${microblogsEntryContent}" />
+		<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_ACTION_LINK" value1="${microblogsEntryTagValue}" />
+
+		<execute macro="SOMicroblogs#viewMicroblogsEntryAuthor" />
+
+		<execute action="SOMicroblogs#assertTextEquals" locator-key1="TAB_TAG_VALUE" value1="${microblogsEntryTagValue}" />
+		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
+		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT_TAG" value1="${microblogsEntryTagValue}" />
+		<execute action="SOMicroblogs#assertClick" locator-key1="TAB_TAG_VALUE" value1="${microblogsEntryTagValue}" />
+
+		<execute macro="SOMicroblogs#viewMicroblogsEntryAuthor" />
+
+		<execute action="SOMicroblogs#assertTextEquals" locator-key1="TAB_TAG_VALUE" value1="${microblogsEntryTagValue}" />
+		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
+		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT_TAG" value1="${microblogsEntryTagValue}" />
 	</command>
 
 	<command name="viewMicroblogsNotViewableByEveryoneActivityEntry">

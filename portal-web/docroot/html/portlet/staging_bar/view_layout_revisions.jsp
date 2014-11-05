@@ -161,27 +161,24 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 	</div>
 </c:if>
 
-<aui:script use="aui-base">
-	var variationsSelector = A.one('#<portlet:namespace/>variationsSelector');
-	var layoutRevisionsContainer = A.one('#<portlet:namespace/>layoutRevisionsContainer');
+<aui:script sandbox="<%= true %>">
+	var variationsSelector = $('#<portlet:namespace/>variationsSelector');
 
-	var layoutBranchesContainer = A.all('.layout-variation-container');
+	var layoutBranchesContainer = $('.layout-variation-container');
 
-	if (variationsSelector) {
-		variationsSelector.on(
-			'change',
-			function() {
-				if (variationsSelector.val() == 'all') {
-					layoutBranchesContainer.show();
-				}
-				else {
-					layoutBranchesContainer.hide();
+	variationsSelector.on(
+		'change',
+		function() {
+			var variation = variationsSelector.val();
 
-					var layoutBranch = A.one('#<portlet:namespace/>' + variationsSelector.val());
-
-					layoutBranch.show();
-				}
+			if (variation == 'all') {
+				layoutBranchesContainer.removeClass('hide');
 			}
-		);
-	}
+			else {
+				layoutBranchesContainer.addClass('hide');
+
+				$('#<portlet:namespace/>' + variation).removeClass('hide');
+			}
+		}
+	);
 </aui:script>

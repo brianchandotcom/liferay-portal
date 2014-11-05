@@ -89,36 +89,28 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 	</div>
 </div>
 
-<aui:script use="aui-base,event-mouseenter">
-	var layoutBranchSelector = A.one('.layout-branch-selector');
+<aui:script sandbox="<%= true %>">
+	$('.layout-branch-selector').on(
+		'mouseenter',
+		function(event) {
+			Liferay.Portal.ToolTip.show(event.currentTarget, '<liferay-ui:message key="page-variation" />')
+		}
+	);
 
-	if (layoutBranchSelector) {
-		layoutBranchSelector.on(
-			'mouseenter',
-			function(event) {
-				Liferay.Portal.ToolTip.show(layoutBranchSelector, '<liferay-ui:message key="page-variation" />')
-			}
-		);
-	}
+	var layoutRevisionsLink = $('#<portlet:namespace />manageLayoutRevisions');
 
-	var layoutRevisionsLink = A.one('#<portlet:namespace />manageLayoutRevisions');
+	layoutRevisionsLink.on(
+		'click',
+		function(event) {
+			event.preventDefault();
 
-	if (layoutRevisionsLink) {
-		layoutRevisionsLink.detach('click');
-
-		layoutRevisionsLink.on(
-			'click',
-			function(event) {
-				event.preventDefault();
-
-				Liferay.Util.openWindow(
-					{
-						id: '<portlet:namespace />layoutRevisions',
-						title: '<%= UnicodeLanguageUtil.get(request, "manage-page-variations") %>',
-						uri: event.currentTarget.attr('href')
-					}
-				);
-			}
-		);
-	}
+			Liferay.Util.openWindow(
+				{
+					id: '<portlet:namespace />layoutRevisions',
+					title: '<%= UnicodeLanguageUtil.get(request, "manage-page-variations") %>',
+					uri: layoutRevisionsLink.attr('href')
+				}
+			);
+		}
+	);
 </aui:script>

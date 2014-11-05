@@ -118,17 +118,13 @@ else {
 
 		<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= layoutRevision.getStatus() %>" statusMessage='<%= layoutRevision.isHead() ? "ready-for-publication" : null %>' />
 
-		<aui:script use="aui-base">
-			var taglibWorflowStatus = A.one('.layout-revision-info').one('.taglib-workflow-status');
-
-			if (taglibWorflowStatus) {
-				taglibWorflowStatus.on(
-					'mouseenter',
-					function(event) {
-						Liferay.Portal.ToolTip.show(taglibWorflowStatus, '<liferay-ui:message key="<%= taglibHelpMessage %>" />');
-					}
-				);
-			}
+		<aui:script>
+			AUI.$('.layout-revision-info .taglib-workflow-status').on(
+				'mouseenter',
+				function(event) {
+					Liferay.Portal.ToolTip.show(event.currentTarget, '<liferay-ui:message key="<%= taglibHelpMessage %>" />');
+				}
+			);
 		</aui:script>
 
 		<c:if test="<%= hasWorkflowTask %>">
@@ -231,17 +227,13 @@ else {
 				}
 				%>
 
-				<aui:script use="aui-base">
-					var submitLink = A.one('.submit-link');
-
-					if (submitLink) {
-						submitLink.on(
-							'mouseenter',
-							function(event) {
-								Liferay.Portal.ToolTip.show(submitLink, '<liferay-ui:message key="<%= submitMessage %>" />');
-							}
-						);
-					}
+				<aui:script>
+					AUI.$('.submit-link').on(
+						'mouseenter',
+						function(event) {
+							Liferay.Portal.ToolTip.show(event.currentTarget, '<liferay-ui:message key="<%= submitMessage %>" />');
+						}
+					);
 				</aui:script>
 			</c:if>
 		</c:if>

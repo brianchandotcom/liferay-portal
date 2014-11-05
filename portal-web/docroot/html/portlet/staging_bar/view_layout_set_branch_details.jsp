@@ -82,37 +82,29 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 		</div>
 	</div>
 
-	<aui:script use="aui-base">
-		var layoutSetBranchSelector = A.one('.layout-set-branch-selector');
+	<aui:script sandbox="<%= true %>">
+		$('.layout-set-branch-selector').on(
+			'mouseenter',
+			function(event) {
+				Liferay.Portal.ToolTip.show(event.currentTarget, '<liferay-ui:message key="site-pages-variation" />')
+			}
+		);
 
-		if (layoutSetBranchSelector) {
-			layoutSetBranchSelector.on(
-				'mouseenter',
-				function(event) {
-					Liferay.Portal.ToolTip.show(layoutSetBranchSelector, '<liferay-ui:message key="site-pages-variation" />')
-				}
-			);
-		}
+		var layoutSetBranchesLink = $('#<portlet:namespace />manageLayoutSetBranches');
 
-		var layoutSetBranchesLink = A.one('#<portlet:namespace />manageLayoutSetBranches');
+		layoutSetBranchesLink.on(
+			'click',
+			function(event) {
+				event.preventDefault();
 
-		if (layoutSetBranchesLink) {
-			layoutSetBranchesLink.detach('click');
-
-			layoutSetBranchesLink.on(
-				'click',
-				function(event) {
-					event.preventDefault();
-
-					Liferay.Util.openWindow(
-						{
-							id: '<portlet:namespace />layoutSetBranches',
-							title: '<%= UnicodeLanguageUtil.get(request, "manage-site-pages-variations") %>',
-							uri: event.currentTarget.attr('href')
-						}
-					);
-				}
-			);
-		}
+				Liferay.Util.openWindow(
+					{
+						id: '<portlet:namespace />layoutSetBranches',
+						title: '<%= UnicodeLanguageUtil.get(request, "manage-site-pages-variations") %>',
+						uri: layoutSetBranchesLink.attr('href')
+					}
+				);
+			}
+		);
 	</aui:script>
 </c:if>

@@ -2300,6 +2300,32 @@ module.framework.properties.osgi.console=11312</echo>
 		</if>
 	</target>
 
+	<target name="prepare-extraapps-plugins">
+		<fail message="Please set jenkins.shared.user.content.dir and test.build.extraapps.zip.url">
+			<condition>
+				<not>
+					<and>
+						<isset property="jenkins.shared.user.content.dir" />
+						<isset property="test.build.extraapps.zip.url" />
+						<isset property="top.level.build.number" />
+						<isset property="top.level.job.name" />
+					</and>
+				</not>
+			</condition>
+		</fail>
+
+		<trycatch>
+			<try>
+				<get
+					dest="extraapps.war.zip"
+					src="${test.build.extraapps.zip.url}"
+				/>
+
+				<copy file="extraapps.war.zip" todir="${jenkins.shared.user.content.dir}/jobs/${top.level.job.name}/builds/${top.level.build.number}/downloads" />
+			</try>
+		</trycatch>
+	</target>
+
 	<target name="prepare-portal-properties">
 		<execute>
 			<![CDATA[git checkout -- portal-impl/src/portal.properties]]>

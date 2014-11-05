@@ -23,6 +23,39 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
+	<command known-issues="LPS-51174" name="AddContentWithTitleAndAllFieldsNull" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentStructures#addCP">
+			<var name="structureDescription" value="WC Structure Description" />
+			<var name="structureFieldNames" value="Boolean,Date,Decimal,Documents and Media,Geolocation,HTML,Image,Integer,Link to Page,Number,Radio,Select,Separator,Text,Text Box" />
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="WC Structure Name" />
+			<var name="templateDescription" value="WC Template Description" />
+			<var name="templateFieldNames" value="Boolean,Date,Decimal,Documents and Media,Geolocation,HTML,Image,Integer,Link to Page,Number,Radio,Select,Separator,Text,Text Box" />
+			<var name="templateName" value="WC Template Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addWithStructureCP">
+			<var name="structureName" value="WC Structure Name" />
+			<var name="templateName" value="WC Template Name" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+	</command>
+
 	<command name="AddExistingPageAsDisplayPageInSiteCP" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -455,6 +488,48 @@
 			<var name="templateName" value="WC Template2 Name" />
 			<var name="webContentContentEdit" value="WC WebContent Text Edit" />
 			<var name="webContentText" value="WC WebContent Text Edit" />
+			<var name="webContentTitleEdit" value="WC WebContent Title Edit" />
+		</execute>
+	</command>
+
+	<command known-issues="LPS-51261, LPS-51174" name="EditContentWithTitleAndAllFieldsNull" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentStructures#addCP">
+			<var name="structureDescription" value="WC Structure Description" />
+			<var name="structureFieldNames" value="Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Text,Text Box" />
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="WC Structure Name" />
+			<var name="templateDescription" value="WC Template Description" />
+			<var name="templateFieldNames" value="Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Text,Text Box" />
+			<var name="templateName" value="WC Template Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addWithStructureCP">
+			<var name="structureName" value="WC Structure Name" />
+			<var name="templateName" value="WC Template Name" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#editCP">
+			<var name="webContentTitle" value="WC WebContent Title" />
 			<var name="webContentTitleEdit" value="WC WebContent Title Edit" />
 		</execute>
 	</command>

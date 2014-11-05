@@ -839,7 +839,13 @@
 		</execute>
 
 		<execute action="CPWebcontentEditwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitleEdit}" />
-		<execute action="CPWebcontentEditwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContentEdit}" />
+
+		<if>
+			<isset var="webContentContentEdit" />
+			<then>
+				<execute action="CPWebcontentEditwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContentEdit}" />
+			</then>
+		</if>
 
 		<if>
 			<equals arg1="${saveAsDraft}" arg2="true" />

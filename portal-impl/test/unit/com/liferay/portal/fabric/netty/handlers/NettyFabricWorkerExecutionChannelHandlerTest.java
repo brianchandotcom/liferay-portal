@@ -133,6 +133,59 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 	}
 
 	@Test
+	public void testExceptionCaught() {
+		NettyFabricWorkerExecutionChannelHandler
+			nettyFabricWorkerExecutionChannelHandler =
+				new NettyFabricWorkerExecutionChannelHandler(
+					new MockRepository(), new EmbeddedProcessExecutor(),
+					Long.MAX_VALUE);
+
+		ChannelPipeline channelPipeline = _embeddedChannel.pipeline();
+
+		channelPipeline.addFirst(nettyFabricWorkerExecutionChannelHandler);
+
+		NettyFabricWorkerConfig<Serializable> nettyFabricWorkerConfig =
+			createNettyFabricWorkerConfig();
+
+		ReflectionTestUtil.setFieldValue(
+			nettyFabricWorkerConfig, "_processConfig", null);
+
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			NettyFabricWorkerExecutionChannelHandler.class.getName(),
+			Level.INFO);
+
+		try {
+			String embeddedChannelToString = _embeddedChannel.toString();
+
+			_embeddedChannel.writeInbound(nettyFabricWorkerConfig);
+
+			Assert.assertFalse(_embeddedChannel.isOpen());
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertEquals(2, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Closing " + embeddedChannelToString + " due to:",
+				logRecord.getMessage());
+
+			Throwable throwable = logRecord.getThrown();
+
+			Assert.assertSame(NullPointerException.class, throwable.getClass());
+
+			logRecord = logRecords.get(1);
+
+			Assert.assertEquals(
+				_embeddedChannel + " is closed", logRecord.getMessage());
+		}
+		finally {
+			captureHandler.close();
+		}
+	}
+
+	@Test
 	public void testFabricAgentFinishStartupProcessCallable()
 		throws ProcessException {
 

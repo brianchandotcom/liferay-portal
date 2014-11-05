@@ -219,7 +219,8 @@ public class NettyFabricServer implements FabricServer {
 						_serverChannel,
 						_fileServerEventExecutorGroupAttributeKey),
 					_nettyFabricServerConfig.getRepositoryGetFileTimeout(),
-					_nettyFabricServerConfig.getRPCRelayTimeout()));
+					_nettyFabricServerConfig.getRPCRelayTimeout(),
+					_nettyFabricServerConfig.getWorkerStartupTimeout()));
 		}
 
 	}

@@ -77,9 +77,13 @@ public class NettyFabricServerConfig implements Serializable {
 		return PropsValues.PORTAL_FABRIC_SERVER_WORKER_GROUP_THREAD_COUNT;
 	}
 
+	public long getWorkerStartupTimeout() {
+		return PropsValues.PORTAL_FABRIC_SERVER_WORKER_STARTUP_TIMEOUT;
+	}
+
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{bossGroupThreadCount=");
 		sb.append(getBossGroupThreadCount());
@@ -103,6 +107,8 @@ public class NettyFabricServerConfig implements Serializable {
 		sb.append(getRPCRelayTimeout());
 		sb.append(", workerGroupThreadCount=");
 		sb.append(getWorkerGroupThreadCount());
+		sb.append(", workerStartupTimeout=");
+		sb.append(getWorkerStartupTimeout());
 		sb.append("}");
 
 		return sb.toString();

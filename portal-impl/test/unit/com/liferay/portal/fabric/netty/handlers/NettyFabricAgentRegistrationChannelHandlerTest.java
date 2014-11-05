@@ -61,7 +61,7 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 	public void testConstructor() {
 		try {
 			new NettyFabricAgentRegistrationChannelHandler(
-				null, null, null, 0, 0);
+				null, null, null, 0, 0, 0);
 
 			Assert.fail();
 		}
@@ -74,7 +74,7 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 			new NettyFabricAgentRegistrationChannelHandler(
 				new FabricAgentRegistry(
 					new LocalFabricAgent(new EmbeddedProcessExecutor())),
-				null, null, 0, 0);
+				null, null, 0, 0, 0);
 
 			Assert.fail();
 		}
@@ -87,7 +87,7 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 			new NettyFabricAgentRegistrationChannelHandler(
 				new FabricAgentRegistry(
 					new LocalFabricAgent(new EmbeddedProcessExecutor())),
-				Paths.get("RepositoryParentPath"), null, 0, 0);
+				Paths.get("RepositoryParentPath"), null, 0, 0, 0);
 
 			Assert.fail();
 		}
@@ -100,7 +100,7 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 			new FabricAgentRegistry(
 				new LocalFabricAgent(new EmbeddedProcessExecutor())),
 			Paths.get("RepositoryParentPath"), new DefaultEventExecutorGroup(1),
-			0, 0);
+			0, 0, 0);
 	}
 
 	@Test
@@ -114,7 +114,7 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 		EmbeddedChannel embeddedChannel = new EmbeddedChannel(
 			new NettyFabricAgentRegistrationChannelHandler(
 				fabricAgentRegistry, repositoryParentPath,
-				new DefaultEventExecutorGroup(1), 0, 0));
+				new DefaultEventExecutorGroup(1), 0, 0, 0));
 
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			NettyFabricAgentRegistrationChannelHandler.class.getName(),
@@ -166,7 +166,7 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 		EmbeddedChannel embeddedChannel = new EmbeddedChannel(
 			new NettyFabricAgentRegistrationChannelHandler(
 				fabricAgentRegistry, repositoryParentPath,
-				new DefaultEventExecutorGroup(1), 0, 0));
+				new DefaultEventExecutorGroup(1), 0, 0, 0));
 
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			NettyFabricAgentRegistrationChannelHandler.class.getName(),
@@ -200,7 +200,7 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 		embeddedChannel = new EmbeddedChannel(
 			new NettyFabricAgentRegistrationChannelHandler(
 				fabricAgentRegistry, repositoryParentPath,
-				new DefaultEventExecutorGroup(1), 0, 0));
+				new DefaultEventExecutorGroup(1), 0, 0, 0));
 
 		captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			NettyFabricAgentRegistrationChannelHandler.class.getName(),
@@ -262,7 +262,7 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 		EmbeddedChannel embeddedChannel = new EmbeddedChannel(
 			new NettyFabricAgentRegistrationChannelHandler(
 				fabricAgentRegistry, repositoryParentPath,
-				new DefaultEventExecutorGroup(1), 0, 0));
+				new DefaultEventExecutorGroup(1), 0, 0, 0));
 
 		embeddedChannel.writeInbound(
 			new NettyFabricAgentConfig(new File("RepositoryFolder")));
@@ -341,7 +341,7 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 		EmbeddedChannel embeddedChannel = new EmbeddedChannel(
 			new NettyFabricAgentRegistrationChannelHandler(
 				fabricAgentRegistry, repositoryParentPath,
-				new DefaultEventExecutorGroup(1), 0, 0));
+				new DefaultEventExecutorGroup(1), 0, 0, 0));
 
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			NettyFabricAgentRegistrationChannelHandler.class.getName(),
@@ -378,7 +378,7 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 		embeddedChannel = new EmbeddedChannel(
 			new NettyFabricAgentRegistrationChannelHandler(
 				fabricAgentRegistry, repositoryParentPath,
-				new DefaultEventExecutorGroup(1), 0, 0));
+				new DefaultEventExecutorGroup(1), 0, 0, 0));
 
 		captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			NettyFabricAgentRegistrationChannelHandler.class.getName(),

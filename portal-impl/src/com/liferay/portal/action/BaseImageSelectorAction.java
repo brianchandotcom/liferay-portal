@@ -14,6 +14,7 @@
 
 package com.liferay.portal.action;
 
+import com.liferay.portal.kernel.editor.util.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -100,6 +101,8 @@ public abstract class BaseImageSelectorAction extends PortletAction {
 				inputStream, MimeTypesUtil.getContentType(fileName));
 
 			imageJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
+			jsonObject.put(
+				"dataImageIdAttribute", EditorConstants.DATA_IMAGE_ID_ATTRIBUTE);
 
 			imageJSONObject.put(
 				"url",

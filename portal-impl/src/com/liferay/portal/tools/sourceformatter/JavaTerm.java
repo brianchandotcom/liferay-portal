@@ -92,26 +92,30 @@ public class JavaTerm {
 	}
 
 	public List<String> getParameterTypes() {
-		if (_parameterTypes != null) {
-			return _parameterTypes;
+		if (_parameterTypes == null) {
+			readParameterTypes();
 		}
 
+		return _parameterTypes;
+	}
+
+	protected void readParameterTypes() {
 		_parameterTypes = new ArrayList<String>();
 
 		if (!isConstructor() && !isMethod()) {
-			return _parameterTypes;
+			return;
 		}
 
 		Matcher matcher = _parameterTypesPattern.matcher(_content);
 
 		if (!matcher.find()) {
-			return _parameterTypes;
+			return;
 		}
 
 		String parameters = matcher.group(3);
 
 		if (Validator.isNull(parameters)) {
-			return _parameterTypes;
+			return;
 		}
 
 		parameters = StringUtil.replace(
@@ -124,7 +128,7 @@ public class JavaTerm {
 			x = parameters.indexOf(StringPool.SPACE);
 
 			if (x == -1) {
-				return _parameterTypes;
+				return;
 			}
 
 			String parameterType = parameters.substring(0, x);
@@ -133,7 +137,7 @@ public class JavaTerm {
 				int y = parameters.indexOf(StringPool.SPACE, x + 1);
 
 				if (y == -1) {
-					return _parameterTypes;
+					return;
 				}
 
 				parameterType = parameters.substring(x + 1, y);
@@ -144,7 +148,7 @@ public class JavaTerm {
 			int y = parameters.indexOf(StringPool.COMMA);
 
 			if (y == -1) {
-				return _parameterTypes;
+				return;
 			}
 
 			parameters = parameters.substring(y + 1);

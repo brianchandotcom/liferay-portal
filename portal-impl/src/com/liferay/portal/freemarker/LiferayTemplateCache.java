@@ -77,7 +77,7 @@ public class LiferayTemplateCache extends TemplateCache {
 				try {
 					return AccessController.doPrivileged(
 						new TemplatePrivilegedExceptionAction(
-							macroTemplateId, locale, encoding, parse));
+							macroTemplateId, locale, encoding));
 				}
 				catch (PrivilegedActionException pae) {
 					throw (IOException)pae.getException();
@@ -85,11 +85,11 @@ public class LiferayTemplateCache extends TemplateCache {
 			}
 		}
 
-		return doGetTemplate(templateId, locale, encoding, parse);
+		return doGetTemplate(templateId, locale, encoding);
 	}
 
 	private Template doGetTemplate(
-			String templateId, Locale locale, String encoding, boolean parse)
+			String templateId, Locale locale, String encoding)
 		throws IOException {
 
 		if (templateId == null) {
@@ -154,22 +154,20 @@ public class LiferayTemplateCache extends TemplateCache {
 		implements PrivilegedExceptionAction<Template> {
 
 		public TemplatePrivilegedExceptionAction(
-			String templateId, Locale locale, String encoding, boolean parse) {
+			String templateId, Locale locale, String encoding) {
 
 			_templateId = templateId;
 			_locale = locale;
 			_encoding = encoding;
-			_parse = parse;
 		}
 
 		@Override
 		public Template run() throws Exception {
-			return doGetTemplate(_templateId, _locale, _encoding, _parse);
+			return doGetTemplate(_templateId, _locale, _encoding);
 		}
 
 		private final String _encoding;
 		private final Locale _locale;
-		private final boolean _parse;
 		private final String _templateId;
 
 	}

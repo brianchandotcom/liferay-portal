@@ -499,7 +499,7 @@ public class LanguageImpl implements Language, Serializable {
 
 	@Override
 	public String getCharset(Locale locale) {
-		return _getInstance()._getCharset(locale);
+		return _getInstance()._getCharset();
 	}
 
 	@Override
@@ -896,7 +896,7 @@ public class LanguageImpl implements Language, Serializable {
 		return null;
 	}
 
-	private String _getCharset(Locale locale) {
+	private String _getCharset() {
 		return StringPool.UTF8;
 	}
 

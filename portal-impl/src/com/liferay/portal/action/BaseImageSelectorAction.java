@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -50,9 +51,9 @@ public abstract class BaseImageSelectorAction extends PortletAction {
 
 	@Override
 	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+		ActionMapping actionMapping, ActionForm actionForm,
+		PortletConfig portletConfig, ActionRequest actionRequest,
+		ActionResponse actionResponse)
 		throws Exception {
 
 		UploadPortletRequest uploadPortletRequest =
@@ -82,8 +83,14 @@ public abstract class BaseImageSelectorAction extends PortletAction {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+		InputStream inputStream = null;
+
 		try {
 			JSONObject imageJSONObject = JSONFactoryUtil.createJSONObject();
+
+			imageJSONObject.put(
+				"dataImageIdAttribute",
+				EditorConstants.DATA_IMAGE_ID_ATTRIBUTE);
 
 			String fileName = uploadPortletRequest.getFileName(
 				"imageSelectorFileName");
@@ -93,21 +100,22 @@ public abstract class BaseImageSelectorAction extends PortletAction {
 
 			validateFile(fileName, contentType, size);
 
-			Class<?> clazz = getClass();
-
-			String tempFolderName = clazz.getName();
-
-			InputStream inputStream = uploadPortletRequest.getFileAsStream(
+			inputStream = uploadPortletRequest.getFileAsStream(
 				"imageSelectorFileName");
+
+			String mimeType = MimeTypesUtil.getContentType(
+				inputStream, fileName);
 
 			FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
 				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				tempFolderName, StringUtil.randomString() + fileName,
-				inputStream, MimeTypesUtil.getContentType(fileName));
+				_TEMP_FOLDER_NAME, StringUtil.randomString() + fileName,
+				inputStream, mimeType);
+
+			imageJSONObject.put(
+				"dataImageIdAttribute",
+				EditorConstants.DATA_IMAGE_ID_ATTRIBUTE);
 
 			imageJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
-			jsonObject.put(
-				"dataImageIdAttribute", EditorConstants.DATA_IMAGE_ID_ATTRIBUTE);
 
 			imageJSONObject.put(
 				"url",
@@ -121,21 +129,27 @@ public abstract class BaseImageSelectorAction extends PortletAction {
 		catch (Exception e) {
 			handleUploadException(actionRequest, actionResponse, e, jsonObject);
 		}
+		finally {
+			StreamUtil.cleanUp(inputStream);
+		}
 
 		writeJSON(actionRequest, actionResponse, jsonObject);
 	}
 
 	protected abstract void checkPermission(
-			long groupId, PermissionChecker permissionChecker)
+		long groupId, PermissionChecker permissionChecker)
 		throws PortalException;
 
 	protected abstract void handleUploadException(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			Exception e, JSONObject jsonObject)
+		ActionRequest actionRequest, ActionResponse actionResponse,
+		Exception e, JSONObject jsonObject)
 		throws Exception;
 
 	protected abstract void validateFile(
-			String fileName, String contentType, long size)
+		String fileName, String contentType, long size)
 		throws PortalException;
+
+	private static final String _TEMP_FOLDER_NAME =
+		BaseImageSelectorAction.class.getName();
 
 }

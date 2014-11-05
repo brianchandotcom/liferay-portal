@@ -125,7 +125,11 @@ public class JavaTerm {
 		for (int x = 0;;) {
 			parameters = StringUtil.trim(parameters);
 
-			x = parameters.indexOf(StringPool.SPACE);
+			if (parameters.startsWith("final ")) {
+				parameters = parameters.substring(6);
+			}
+
+			x = parameters.indexOf(StringPool.SPACE, x + 1);
 
 			if (x == -1) {
 				return;
@@ -133,25 +137,26 @@ public class JavaTerm {
 
 			String parameterType = parameters.substring(0, x);
 
-			if (parameterType.equals("final")) {
-				int y = parameters.indexOf(StringPool.SPACE, x + 1);
+			int greaterThanCount = StringUtil.count(
+				parameterType, StringPool.GREATER_THAN);
+			int lessThanCount = StringUtil.count(
+				parameterType, StringPool.LESS_THAN);
 
-				if (y == -1) {
-					return;
-				}
-
-				parameterType = parameters.substring(x + 1, y);
+			if (greaterThanCount != lessThanCount) {
+				continue;
 			}
 
 			_parameterTypes.add(parameterType);
 
-			int y = parameters.indexOf(StringPool.COMMA);
+			int y = parameters.indexOf(StringPool.COMMA, x);
 
 			if (y == -1) {
 				return;
 			}
 
 			parameters = parameters.substring(y + 1);
+
+			x = 0;
 		}
 	}
 

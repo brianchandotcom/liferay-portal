@@ -52,6 +52,7 @@ import com.sun.syndication.feed.synd.SyndLink;
 import com.sun.syndication.feed.synd.SyndLinkImpl;
 import com.sun.syndication.io.FeedException;
 
+import java.io.File;
 import java.io.InputStream;
 
 import java.util.ArrayList;
@@ -132,6 +133,19 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
 			coverImageImageSelector, smallImageImageSelector, serviceContext);
+	}
+
+	@Override
+	public FileEntry addEntryAttachment(
+			long groupId, long entryId, String fileName, File file,
+			String mimeType)
+		throws PortalException {
+
+		BlogsPermission.check(
+			getPermissionChecker(), groupId, ActionKeys.ADD_ATTACHMENT);
+
+		return blogsEntryLocalService.addEntryAttachment(
+			groupId, getUserId(), entryId, fileName, file, mimeType);
 	}
 
 	@Override

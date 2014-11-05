@@ -28,6 +28,24 @@
 	<liferay-ui:error key="xslUrl" message="please-enter-a-valid-xsl-url" />
 	<liferay-ui:error key="transformation" message="an-error-occurred-while-processing-your-xml-and-xsl" />
 
+	<%
+	String portletResource = ParamUtil.getString(request, "portletResource");
+
+	Portlet xslPortlet = PortletLocalServiceUtil.getPortletById(portletResource);
+
+	Map initParams = xslPortlet.getInitParams();
+
+	String validUrlPrefixes = (String)initParams.get("valid.url.prefixes");
+
+	validUrlPrefixes = StringUtil.replace(validUrlPrefixes, new String[] {"@portal_url@", "@portlet_context_url@"}, new String[] {themeDisplay.getPortalURL(), themeDisplay.getPortalURL() + request.getContextPath()});
+	%>
+
+	<c:if test="<%= Validator.isNotNull(validUrlPrefixes) %>">
+		<div class="alert alert-info">
+			<liferay-ui:message arguments="<%= validUrlPrefixes %>" key="urls-must-begin-with-one-of-the-following" />
+		</div>
+	</c:if>
+
 	<aui:fieldset>
 		<aui:input cssClass="lfr-input-text-container" name="preferences--xmlUrl--" type="text" value="<%= xmlUrl %>" />
 

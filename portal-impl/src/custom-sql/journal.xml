@@ -309,15 +309,11 @@
 				{JournalFolder.*}
 			FROM
 				JournalFolder
+			LEFT JOIN
+				AssetEntry ON
+					(AssetEntry.classPK = JournalFolder.folderId)
 			WHERE
-				(folderId NOT IN (
-					SELECT
-						classPK
-					FROM
-						AssetEntry
-					WHERE
-						classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.JOURNAL.MODEL.JOURNALFOLDER$]
-				))
+				(AssetEntry.classPK IS NULL)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.findF_ByG_F">

@@ -40,6 +40,11 @@ public class BlogsEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.blogs.service.impl.BlogsEntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder(
+		long userId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addAttachmentsFolder(userId, groupId);
+	}
 
 	/**
 	* Adds the blogs entry to the database. Also notifies the appropriate model listeners.

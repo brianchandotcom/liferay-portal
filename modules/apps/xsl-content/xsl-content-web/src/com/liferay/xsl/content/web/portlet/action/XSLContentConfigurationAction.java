@@ -18,12 +18,14 @@ import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.xsl.content.web.constants.XSLContentPortletKeys;
+import com.liferay.xsl.content.web.util.XSLContentUtil;
 
 import java.util.Map;
 
@@ -31,6 +33,8 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -58,6 +62,18 @@ public class XSLContentConfigurationAction extends DefaultConfigurationAction {
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
 
+	protected String getPortletContextUrl(ThemeDisplay themeDisplay) {
+		Bundle bundle = FrameworkUtil.getBundle(XSLContentUtil.class);
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(themeDisplay.getPortalURL());
+		sb.append("/o/");
+		sb.append(bundle.getBundleId());
+
+		return sb.toString();
+	}
+
 	protected String[] getValidUrlPrefixes(ActionRequest actionRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -72,8 +88,7 @@ public class XSLContentConfigurationAction extends DefaultConfigurationAction {
 
 		String validUrlPrefixes = (String)initParams.get("valid.url.prefixes");
 
-		validUrlPrefixes = StringUtil.replace(
-			validUrlPrefixes, "@portal_url@", themeDisplay.getPortalURL());
+		validUrlPrefixes = replaceTokens(themeDisplay, validUrlPrefixes);
 
 		return StringUtil.split(validUrlPrefixes);
 	}
@@ -92,6 +107,14 @@ public class XSLContentConfigurationAction extends DefaultConfigurationAction {
 		return false;
 	}
 
+	protected String replaceTokens(ThemeDisplay themeDisplay, String url) {
+		return StringUtil.replace(
+			url, new String[] {"@portal_url@", "@portlet_context_url@"},
+			new String[] {
+				themeDisplay.getPortalURL(), getPortletContextUrl(themeDisplay)
+			});
+	}
+
 	protected void validateUrls(ActionRequest actionRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -100,8 +123,7 @@ public class XSLContentConfigurationAction extends DefaultConfigurationAction {
 
 		String xmlUrl = getParameter(actionRequest, "xmlUrl");
 
-		xmlUrl = StringUtil.replace(
-			xmlUrl, "@portal_url@", themeDisplay.getPortalURL());
+		xmlUrl = replaceTokens(themeDisplay, xmlUrl);
 
 		if (!hasValidUrlPrefix(validUrlPrefixes, xmlUrl)) {
 			SessionErrors.add(actionRequest, "xmlUrl");
@@ -109,8 +131,7 @@ public class XSLContentConfigurationAction extends DefaultConfigurationAction {
 
 		String xslUrl = getParameter(actionRequest, "xslUrl");
 
-		xslUrl = StringUtil.replace(
-			xslUrl, "@portal_url@", themeDisplay.getPortalURL());
+		xslUrl = replaceTokens(themeDisplay, xslUrl);
 
 		if (!hasValidUrlPrefix(validUrlPrefixes, xslUrl)) {
 			SessionErrors.add(actionRequest, "xslUrl");

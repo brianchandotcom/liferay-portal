@@ -341,18 +341,18 @@
 			<isset var="numberOfNotifications" />
 			<then>
 				<if>
-					<isset var="numberOfNonActionableNotifications" />
+					<isset var="numberOfNonactionableNotifications" />
 					<then>
 						<if>
 							<or>
-								<equals arg1="${numberOfNonActionableNotifications}" arg2="1" />
-								<equals arg1="${numberOfNonActionableNotifications}" arg2="2" />
-								<equals arg1="${numberOfNonActionableNotifications}" arg2="3" />
+								<equals arg1="${numberOfNonactionableNotifications}" arg2="1" />
+								<equals arg1="${numberOfNonactionableNotifications}" arg2="2" />
+								<equals arg1="${numberOfNonactionableNotifications}" arg2="3" />
 							</or>
 							<then>
 								<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="${numberOfNotifications}" />
 								<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
-								<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_VIEW_NOTIFICATIONS_LINK" value1="Notifications (${numberOfNonActionableNotifications})" />
+								<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_VIEW_NOTIFICATIONS_LINK" value1="Notifications (${numberOfNonactionableNotifications})" />
 								<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_MARK_AS_READ_NOTIFICATIONS_LINK" value1="Mark as Read" />
 								<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_NOTIFICATION_NONE_MESSAGE" value1="You do not have any notifications." />
 								<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_VIEW_NOTIFICATIONS_LINK" value1="Notifications (0)" />
@@ -361,7 +361,7 @@
 							<else>
 								<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="${numberOfNotifications}" />
 								<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
-								<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_VIEW_NOTIFICATIONS_LINK" value1="Notifications (${numberOfNonActionableNotifications})" />
+								<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_VIEW_NOTIFICATIONS_LINK" value1="Notifications (${numberOfNonactionableNotifications})" />
 								<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_MARK_AS_READ_NOTIFICATIONS_LINK" value1="Mark as Read" />
 							</else>
 						</if>

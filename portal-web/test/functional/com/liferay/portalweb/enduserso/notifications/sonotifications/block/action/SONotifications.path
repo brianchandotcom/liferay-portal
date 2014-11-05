@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>NOTIFICATIONS_LIST_LINK</td>
-	<td>//a[contains(@class,'non-actionable') and contains(.,'Notifications')]</td>
+	<td>//a[contains(@class,'nonactionable') and contains(.,'Notifications')]</td>
 	<td></td>
 </tr>
 <tr>

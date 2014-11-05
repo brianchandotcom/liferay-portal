@@ -46,7 +46,7 @@
 </tr>
 <tr>
 	<td>PREVIEW_BREADCRUMB_HEADER2_ENTRY</td>
-	<td>//div[contains(@class,'nav-menu')]/h2/a[contains(.,'${key_pageName}')]</td>
+	<td>//div[contains(@class,'nav-menu')]//a[contains(.,'${key_pageName}')]</td>
 	<td></td>
 </tr>
 <tr>

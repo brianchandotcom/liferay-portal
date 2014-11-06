@@ -51,6 +51,7 @@ public class UserLocalServiceTest {
 			"general");
 
 		boolean success = false;
+
 		for (User user : users) {
 			if (user.getUserId() == user2.getUserId()) {
 				success = true;

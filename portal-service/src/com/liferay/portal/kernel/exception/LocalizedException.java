@@ -23,6 +23,21 @@ import java.util.Map;
  */
 public class LocalizedException extends PortalException {
 
+	public LocalizedException() {
+	}
+
+	public LocalizedException(String msg) {
+		super(msg);
+	}
+
+	public LocalizedException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public LocalizedException(Throwable cause) {
+		super(cause);
+	}
+
 	public void addLocalizedException(Locale locale, Exception exception) {
 		_localizedExceptionsMap.put(locale, exception);
 	}

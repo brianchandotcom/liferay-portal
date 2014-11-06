@@ -427,7 +427,8 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 	public void testSendMulticastMessage3() {
 		TransportationConfigurationAdvice.setChannelCount(1);
 
-		CaptureHandler captureHandler = null;
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			ClusterLinkImpl.class.getName(), Level.WARNING);
 
 		ClusterLinkImpl clusterLinkImpl = null;
 
@@ -442,9 +443,6 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 			jChannel.close();
 
-			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-				ClusterLinkImpl.class.getName(), Level.WARNING);
-
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			clusterLinkImpl.sendMulticastMessage(message, Priority.LEVEL1);
@@ -454,9 +452,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 				IllegalStateException.class);
 		}
 		finally {
-			if (captureHandler != null) {
-				captureHandler.close();
-			}
+			captureHandler.close();
 
 			if (clusterLinkImpl != null) {
 				clusterLinkImpl.destroy();
@@ -476,7 +472,8 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 	public void testSendMulticastMessage4() {
 		TransportationConfigurationAdvice.setChannelCount(1);
 
-		CaptureHandler captureHandler = null;
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			ClusterLinkImpl.class.getName(), Level.WARNING);
 
 		ClusterLinkImpl clusterLinkImpl = null;
 
@@ -491,9 +488,6 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 			jChannel.disconnect();
 
-			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-				ClusterLinkImpl.class.getName(), Level.WARNING);
-
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			clusterLinkImpl.sendMulticastMessage(message, Priority.LEVEL1);
@@ -503,9 +497,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 				IllegalStateException.class);
 		}
 		finally {
-			if (captureHandler != null) {
-				captureHandler.close();
-			}
+			captureHandler.close();
 
 			if (clusterLinkImpl != null) {
 				clusterLinkImpl.destroy();
@@ -592,7 +584,8 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 	public void testSendUnicastMessage3() {
 		TransportationConfigurationAdvice.setChannelCount(1);
 
-		CaptureHandler captureHandler = null;
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			ClusterLinkImpl.class.getName(), Level.WARNING);
 
 		ClusterLinkImpl clusterLinkImpl = null;
 
@@ -607,9 +600,6 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 			jChannel.close();
 
-			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-				ClusterLinkImpl.class.getName(), Level.WARNING);
-
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			clusterLinkImpl.sendUnicastMessage(
@@ -620,9 +610,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 				IllegalStateException.class);
 		}
 		finally {
-			if (captureHandler != null) {
-				captureHandler.close();
-			}
+			captureHandler.close();
 
 			if (clusterLinkImpl != null) {
 				clusterLinkImpl.destroy();
@@ -642,7 +630,8 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 	public void testSendUnicastMessage4() {
 		TransportationConfigurationAdvice.setChannelCount(1);
 
-		CaptureHandler captureHandler = null;
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			ClusterLinkImpl.class.getName(), Level.WARNING);
 
 		ClusterLinkImpl clusterLinkImpl = null;
 
@@ -657,9 +646,6 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 			jChannel.disconnect();
 
-			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-				ClusterLinkImpl.class.getName(), Level.WARNING);
-
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			clusterLinkImpl.sendUnicastMessage(
@@ -670,9 +656,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 				IllegalStateException.class);
 		}
 		finally {
-			if (captureHandler != null) {
-				captureHandler.close();
-			}
+			captureHandler.close();
 
 			if (clusterLinkImpl != null) {
 				clusterLinkImpl.destroy();

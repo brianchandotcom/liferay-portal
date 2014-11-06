@@ -104,10 +104,16 @@ public class MPIHelperUtilTest {
 
 	@After
 	public void tearDown() {
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			MPIHelperUtil.class.getName(), Level.OFF);
+
 		try {
 			MPIHelperUtil.shutdown();
 		}
 		catch (Throwable t) {
+		}
+		finally {
+			captureHandler.close();
 		}
 	}
 

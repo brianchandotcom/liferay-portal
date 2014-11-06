@@ -142,14 +142,12 @@ public class SPIRegistryImplTest {
 
 		mockSPI.spiConfiguration = spiConfiguration;
 
-		CaptureHandler captureHandler = null;
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			SPIRegistryImpl.class.getName(), Level.WARNING);
 
 		try {
 
 			// With log
-
-			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-				SPIRegistryImpl.class.getName(), Level.WARNING);
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
@@ -218,32 +216,60 @@ public class SPIRegistryImplTest {
 			Assert.assertTrue(portletIds.contains("portlet4"));
 
 			Assert.assertTrue(logRecords.isEmpty());
-		}
-		finally {
-			if (captureHandler != null) {
-				captureHandler.close();
+
+			// Hash failure
+
+			logRecords = captureHandler.resetLogLevel(Level.WARNING);
+
+			throwException.set(true);
+
+			try {
+				_spiRegistryImpl.registerSPI(mockSPI);
+
+				Assert.fail();
 			}
-		}
+			catch (RuntimeException re) {
+			}
 
-		// Hash failure
+			Assert.assertEquals(2, logRecords.size());
 
-		throwException.set(true);
+			logRecord1 = logRecords.get(0);
 
-		try {
+			Assert.assertEquals(
+				"Skip unknown portlet id portlet2", logRecord1.getMessage());
+
+			logRecord2 = logRecords.get(1);
+
+			Assert.assertEquals(
+				"Skip unknown servlet context name portletApp2",
+				logRecord2.getMessage());
+
+			_portletSPIs.clear();
+
+			// Unregister, normal
+
+			logRecords = captureHandler.resetLogLevel(Level.WARNING);
+
+			throwException.set(false);
+
 			_spiRegistryImpl.registerSPI(mockSPI);
 
-			Assert.fail();
+			Assert.assertEquals(2, logRecords.size());
+
+			logRecord1 = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Skip unknown portlet id portlet2", logRecord1.getMessage());
+
+			logRecord2 = logRecords.get(1);
+
+			Assert.assertEquals(
+				"Skip unknown servlet context name portletApp2",
+				logRecord2.getMessage());
 		}
-		catch (RuntimeException re) {
+		finally {
+			captureHandler.close();
 		}
-
-		_portletSPIs.clear();
-
-		// Unregister, normal
-
-		throwException.set(false);
-
-		_spiRegistryImpl.registerSPI(mockSPI);
 
 		_spiRegistryImpl.unregisterSPI(mockSPI);
 

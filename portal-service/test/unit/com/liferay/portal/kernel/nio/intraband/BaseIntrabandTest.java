@@ -272,14 +272,12 @@ public class BaseIntrabandTest {
 
 	@Test
 	public void testHandleReading() throws Exception {
-		CaptureHandler captureHandler = null;
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			BaseIntraband.class.getName(), Level.FINE);
 
 		try {
 
 			// IOException, new receive datagram, debug log
-
-			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-				BaseIntraband.class.getName(), Level.FINE);
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
@@ -829,15 +827,14 @@ public class BaseIntrabandTest {
 			}
 		}
 		finally {
-			if (captureHandler != null) {
-				captureHandler.close();
-			}
+			captureHandler.close();
 		}
 	}
 
 	@Test
 	public void testHandleWriting() throws Exception {
-		CaptureHandler captureHandler = null;
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			BaseIntraband.class.getName(), Level.FINE);
 
 		ChannelContext channelContext = null;
 		Datagram requestDatagram = null;
@@ -846,9 +843,6 @@ public class BaseIntrabandTest {
 		try {
 
 			// IOException, new send datagram, debug log
-
-			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-				BaseIntraband.class.getName(), Level.FINE);
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
@@ -933,9 +927,7 @@ public class BaseIntrabandTest {
 			Assert.assertTrue(logRecords.isEmpty());
 		}
 		finally {
-			if (captureHandler != null) {
-				captureHandler.close();
-			}
+			captureHandler.close();
 		}
 
 		// Huge datagram write
@@ -1076,14 +1068,12 @@ public class BaseIntrabandTest {
 		Assert.assertTrue(responseWaitingMap.isEmpty());
 		Assert.assertTrue(timeoutSequenceIds.isEmpty());
 
-		CaptureHandler captureHandler = null;
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			BaseIntraband.class.getName(), Level.WARNING);
 
 		try {
 
 			// Clean up timeout, hit, with log
-
-			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-				BaseIntraband.class.getName(), Level.WARNING);
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
@@ -1195,9 +1185,7 @@ public class BaseIntrabandTest {
 			_mockIntraband.cleanUpTimeoutResponseWaitingDatagrams();
 		}
 		finally {
-			if (captureHandler != null) {
-				captureHandler.close();
-			}
+			captureHandler.close();
 		}
 	}
 

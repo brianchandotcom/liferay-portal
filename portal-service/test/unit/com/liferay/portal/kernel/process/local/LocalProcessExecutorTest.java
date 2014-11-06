@@ -873,14 +873,12 @@ public class LocalProcessExecutorTest {
 
 	@Test
 	public void testLeadingLog() throws Exception {
-		CaptureHandler captureHandler = null;
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			LocalProcessExecutor.class.getName(), Level.WARNING);
 
 		try {
 
 			// Warn level
-
-			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-				LocalProcessExecutor.class.getName(), Level.WARNING);
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
@@ -965,9 +963,7 @@ public class LocalProcessExecutorTest {
 			Assert.assertEquals(0, logRecords.size());
 		}
 		finally {
-			if (captureHandler != null) {
-				captureHandler.close();
-			}
+			captureHandler.close();
 		}
 	}
 

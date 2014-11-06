@@ -20,4 +20,20 @@ import com.liferay.portal.kernel.exception.LocalizedException;
  * @author Sergio González
  */
 public class LayoutFriendlyURLsException extends LocalizedException {
+
+	public LayoutFriendlyURLsException() {
+	}
+
+	public LayoutFriendlyURLsException(String msg) {
+		super(msg);
+	}
+
+	public LayoutFriendlyURLsException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public LayoutFriendlyURLsException(Throwable cause) {
+		super(cause);
+	}
+
 }

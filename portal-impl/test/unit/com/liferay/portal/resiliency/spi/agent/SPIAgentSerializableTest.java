@@ -126,14 +126,12 @@ public class SPIAgentSerializableTest {
 
 		mockHttpServletRequest.setAttribute(nondistributed, nondistributed);
 
-		CaptureHandler captureHandler = null;
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			SPIAgentSerializable.class.getName(), Level.OFF);
 
 		try {
 
 			// Without log
-
-			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-				SPIAgentSerializable.class.getName(), Level.OFF);
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
@@ -199,9 +197,7 @@ public class SPIAgentSerializableTest {
 				distributedRequestAttributes.get(distributedSerializable));
 		}
 		finally {
-			if (captureHandler != null) {
-				captureHandler.close();
-			}
+			captureHandler.close();
 		}
 	}
 
@@ -263,14 +259,12 @@ public class SPIAgentSerializableTest {
 
 	@Test
 	public void testExtractSessionAttributes() {
-		CaptureHandler captureHandler = null;
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			SPIAgentSerializable.class.getName(), Level.OFF);
 
 		try {
 
 			// Without log, no portlet session
-
-			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-				SPIAgentSerializable.class.getName(), Level.OFF);
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
@@ -473,9 +467,7 @@ public class SPIAgentSerializableTest {
 				portletSessionAttributes.get(serializeableAttribute));
 		}
 		finally {
-			if (captureHandler != null) {
-				captureHandler.close();
-			}
+			captureHandler.close();
 		}
 	}
 

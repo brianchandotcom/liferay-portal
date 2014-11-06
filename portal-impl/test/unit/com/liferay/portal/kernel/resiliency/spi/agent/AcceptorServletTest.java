@@ -177,16 +177,14 @@ public class AcceptorServletTest {
 		Assert.assertNull(_recordSPIAgent._exception);
 		Assert.assertTrue(_mockHttpSession.isInvalid());
 
-		CaptureHandler captureHandler = null;
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			AcceptorServlet.class.getName(), Level.SEVERE);
 
 		try {
 
 			// IOException on prepare request
 
 			_recordSPIAgent.setIOExceptionOnPrepareRequest(true);
-
-			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-				AcceptorServlet.class.getName(), Level.SEVERE);
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
@@ -240,9 +238,7 @@ public class AcceptorServletTest {
 				"RuntimeException on prepare request", throwable.getMessage());
 		}
 		finally {
-			if (captureHandler != null) {
-				captureHandler.close();
-			}
+			captureHandler.close();
 		}
 
 		// Unable to forward

@@ -192,14 +192,12 @@ public class SPIClassPathContextListenerTest {
 
 	@Test
 	public void testClassPathGeneration() {
-		CaptureHandler captureHandler = null;
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			SPIClassPathContextListener.class.getName(), Level.FINE);
 
 		try {
 
 			// With log
-
-			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-				SPIClassPathContextListener.class.getName(), Level.FINE);
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
@@ -266,9 +264,7 @@ public class SPIClassPathContextListenerTest {
 			Assert.assertTrue(logRecords.isEmpty());
 		}
 		finally {
-			if (captureHandler != null) {
-				captureHandler.close();
-			}
+			captureHandler.close();
 		}
 	}
 

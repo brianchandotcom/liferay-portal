@@ -17,7 +17,7 @@
 <%@ include file="/html/taglib/aui/translation_manager/init.jsp" %>
 
 <div class="lfr-translation-manager" id="<%= namespace + id %>">
-	<div class="lfr-translation-manager-content nobr">
+	<div class="lfr-translation-manager-content">
 		<label class="lfr-translation-manager-default-locale-label" for="<portlet:namespace />defaultLanguageId"><liferay-ui:message key="web-content-default-language" />:</label>
 
 		<span class="lfr-translation-manager-default-locale-text lfr-translation-manager-translation lfr-translation-manager-translation-editing">

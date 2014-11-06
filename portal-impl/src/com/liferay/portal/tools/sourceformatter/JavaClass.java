@@ -75,6 +75,7 @@ public class JavaClass {
 		while (itr.hasNext()) {
 			JavaTerm javaTerm = itr.next();
 
+			checkConstructorParameterOrder(javaTerm);
 			checkUnusedParameters(javaTerm);
 
 			if (!BaseSourceProcessor.isExcluded(
@@ -204,6 +205,45 @@ public class JavaClass {
 				fileName,
 				"Annotation @" + annotation + " required for " + methodName +
 					" " + fileName);
+		}
+	}
+
+	protected void checkConstructorParameterOrder(JavaTerm javaTerm) {
+		if (!javaTerm.isConstructor()) {
+			return;
+		}
+
+		int previousPos = -1;
+
+		for (String parameterName : javaTerm.getParameterNames()) {
+			Pattern pattern = Pattern.compile(
+				"\\{\n([\\s\\S]*?)(_" + parameterName + " =[ \t\n]+" +
+					parameterName + ";)");
+
+			Matcher matcher = pattern.matcher(javaTerm.getContent());
+
+			if (!matcher.find()) {
+				continue;
+			}
+
+			String beforeParameter = matcher.group(1);
+
+			if (beforeParameter.contains(parameterName + " =")) {
+				continue;
+			}
+
+			int pos = matcher.start(2);
+
+			if (previousPos > pos) {
+				BaseSourceProcessor.processErrorMessage(
+					_fileName,
+					"Constructor parameter order " + parameterName + ": " +
+						_fileName);
+
+				return;
+			}
+
+			previousPos = pos;
 		}
 	}
 

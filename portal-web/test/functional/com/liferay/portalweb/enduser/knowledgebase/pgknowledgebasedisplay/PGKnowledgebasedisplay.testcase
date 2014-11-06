@@ -309,6 +309,57 @@
 		</execute>
 	</command>
 
+	<command name="ViewKBArticleWithKBChildArticleHierarchyNavigation" priority="5">
+		<var name="kbArticleCounterList" value="1,2,3" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<for list="${kbArticleCounterList}" param="articleCount" >
+			<execute macro="KBArticle#addCP">
+				<var name="kbArticleContent" value="Knowledge Base Article${articleCount} Content" />
+				<var name="kbArticleTitle" value="Knowledge Base Article${articleCount} Title" />
+			</execute>
+		</for>
+
+		<for list="${kbArticleCounterList}" param="articleCount" >
+			<execute macro="KBArticle#addChildPGViaKBAdmin">
+				<var name="kbArticleTitle" value="Knowledge Base Article1 Title" />
+				<var name="kbChildArticleContent" value="Knowledge Base Child Article${articleCount} Content" />
+				<var name="kbChildArticleTitle" value="Knowledge Base Child Article${articleCount} Title" />
+			</execute>
+		</for>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="KBArticle#viewViaKBDisplayPG">
+			<var name="kbArticleContent" value="Knowledge Base Article1 Content" />
+			<var name="kbArticleTitle" value="Knowledge Base Article1 Title" />
+		</execute>
+
+		<execute macro="KBArticle#viewHierarchyViaKBDisplayPG">
+			<var name="kbArticle1ChildArticleTitle1" value="Knowledge Base Child Article1 Title" />
+			<var name="kbArticle1ChildArticleTitle2" value="Knowledge Base Child Article2 Title" />
+			<var name="kbArticle1ChildArticleTitle3" value="Knowledge Base Child Article3 Title" />
+			<var name="kbArticleTitle1" value="Knowledge Base Article1 Title" />
+			<var name="kbArticleTitle2" value="Knowledge Base Article2 Title" />
+			<var name="kbArticleTitle3" value="Knowledge Base Article3 Title" />
+		</execute>
+
+		<execute macro="KBArticle#gotoViaKBDisplayHierarchyNavigationPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article1 Title" />
+			<var name="kbChildArticleTitle" value="Knowledge Base Child Article2 Title" />
+		</execute>
+
+		<execute macro="KBArticle#viewViaKBDisplayPG">
+			<var name="kbArticleContent" value="Knowledge Base Child Article2 Content" />
+			<var name="kbArticleTitle" value="Knowledge Base Child Article2 Title" />
+		</execute>
+	</command>
+
 	<command name="ViewKBArticleWithoutConfiguration" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Knowledge Base Display Page" />

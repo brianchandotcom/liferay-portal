@@ -20,7 +20,6 @@ package com.liferay.portal.kernel.security.jaas;
 public class PortalRole extends PortalPrincipal {
 
 	public PortalRole() {
-		super();
 	}
 
 	public PortalRole(String name) {

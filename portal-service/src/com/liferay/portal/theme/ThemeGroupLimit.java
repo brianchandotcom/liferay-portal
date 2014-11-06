@@ -18,9 +18,4 @@ package com.liferay.portal.theme;
  * @author Brian Wing Shun Chan
  */
 public class ThemeGroupLimit extends ThemeCompanyLimit {
-
-	public ThemeGroupLimit() {
-		super();
-	}
-
 }

@@ -32,7 +32,6 @@ public class Randomizer extends Random {
 	}
 
 	public Randomizer() {
-		super();
 	}
 
 	public Randomizer(long seed) {

@@ -21,10 +21,6 @@ import java.util.Properties;
  */
 public class SafeProperties extends Properties {
 
-	public SafeProperties() {
-		super();
-	}
-
 	@Override
 	public synchronized Object get(Object key) {
 		Object value = super.get(key);

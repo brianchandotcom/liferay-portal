@@ -26,7 +26,6 @@ import java.util.Collection;
 public class UniqueList<E> extends ArrayList<E> {
 
 	public UniqueList() {
-		super();
 	}
 
 	public UniqueList(Collection<E> c) {

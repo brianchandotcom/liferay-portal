@@ -26,7 +26,6 @@ public class ConcurrentHashSet<E>
 	extends com.liferay.portal.kernel.concurrent.ConcurrentHashSet<E> {
 
 	public ConcurrentHashSet() {
-		super();
 	}
 
 	public ConcurrentHashSet(int capacity) {

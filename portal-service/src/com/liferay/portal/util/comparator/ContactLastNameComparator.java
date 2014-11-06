@@ -22,7 +22,6 @@ package com.liferay.portal.util.comparator;
 public class ContactLastNameComparator extends UserLastNameComparator {
 
 	public ContactLastNameComparator() {
-		super();
 	}
 
 	public ContactLastNameComparator(boolean ascending) {

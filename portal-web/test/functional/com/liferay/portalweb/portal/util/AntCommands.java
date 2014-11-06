@@ -67,21 +67,27 @@ public class AntCommands extends Thread {
 
 			Process process = runtime.exec(sb.toString());
 
+			InputStreamReader errorStreamReader = new InputStreamReader(
+				process.getErrorStream());
+
+			BufferedReader errorBufferedReader = new BufferedReader(
+				errorStreamReader);
+
 			InputStreamReader inputStreamReader = new InputStreamReader(
 				process.getInputStream());
 
-			BufferedReader bufferedReader = new BufferedReader(
+			BufferedReader inputBufferedReader = new BufferedReader(
 				inputStreamReader);
 
 			String line = null;
 
-			while ((line = bufferedReader.readLine()) != null) {
+			while ((line = inputBufferedReader.readLine()) != null) {
 				System.out.println(line);
+			}
 
-				if (line.contains("BUILD FAILED") ||
-					line.contains("BUILD SUCCESSFUL")) {
-
-					break;
+			if (errorBufferedReader.ready()) {
+				while ((line = errorBufferedReader.readLine()) != null) {
+					System.out.println(line);
 				}
 			}
 		}

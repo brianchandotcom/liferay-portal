@@ -14,33 +14,33 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.test.CaptureHandler;
+import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.Locale;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 
-import org.junit.After;
+import java.util.List;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Manuel de la Peña
  */
-@PrepareForTest({LanguageUtil.class, LocaleUtil.class, LocalizationUtil.class})
-@RunWith(PowerMockRunner.class)
 public class LocalizationImplUnitTest extends PowerMockito {
-
-	@After
-	public void tearDown() {
-		verifyStatic();
-	}
 
 	@Test
 	public void testGetDefaultImportLocaleUseCase1() {
@@ -59,7 +59,26 @@ public class LocalizationImplUnitTest extends PowerMockito {
 
 	@Test
 	public void testGetDefaultImportLocaleUseCase4() {
-		verifyDefaultImportLocale("bg_BG", "bg_BG,fr_FR", "bg_BG", true);
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			LocalizationImpl.class.getName(), Level.WARNING);
+
+		try {
+			verifyDefaultImportLocale("bg_BG", "bg_BG,fr_FR", "bg_BG", true);
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertEquals(1, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Language es_ES is missing for com.liferay.portal.className " +
+					"with primary key 0. Setting default language to bg_BG.",
+				logRecord.getMessage());
+		}
+		finally {
+			captureHandler.close();
+		}
 	}
 
 	@Test
@@ -80,35 +99,50 @@ public class LocalizationImplUnitTest extends PowerMockito {
 	}
 
 	protected void verifyDefaultImportLocale(
-		String defaultContentLocale, String portalAvailableLocales,
+		String defaultContentLocale, final String portalAvailableLocales,
 		String expectedLocale, boolean expectedResult) {
 
-		spy(LocaleUtil.class);
+		LanguageUtil languageUtil = new LanguageUtil();
 
-		when(
-			LocaleUtil.getDefault()
-		).thenReturn(
-			new Locale(defaultContentLocale)
-		);
+		languageUtil.setLanguage(
+			(Language)ProxyUtil.newProxyInstance(
+				Language.class.getClassLoader(),
+				new Class<?>[] {Language.class},
+				new InvocationHandler() {
 
-		mockStatic(LanguageUtil.class);
+					@Override
+					public Object invoke(
+						Object proxy, Method method, Object[] args) {
 
-		Locale[] portalLocales = getContentAvailableLocales(
-			portalAvailableLocales);
+						String methodName = method.getName();
 
-		when(
-			LanguageUtil.getAvailableLocales()
-		).thenReturn(
-			portalLocales
-		);
+						if (methodName.equals("getAvailableLocales")) {
+							return getContentAvailableLocales(
+								portalAvailableLocales);
+						}
 
-		spy(LocalizationUtil.class);
+						if (methodName.equals("isAvailableLocale")) {
+							Locale locale = (Locale)args[0];
 
-		when(
-			LocalizationUtil.getLocalization()
-		).thenReturn(
-			_localization
-		);
+							Locale[] portalLocales = getContentAvailableLocales(
+								portalAvailableLocales);
+
+							return ArrayUtil.contains(portalLocales, locale);
+						}
+
+						throw new UnsupportedOperationException();
+					}
+
+				}));
+
+		Locale locale = LocaleUtil.fromLanguageId(defaultContentLocale);
+
+		LocaleUtil.setDefault(
+			locale.getLanguage(), locale.getCountry(), locale.getVariant());
+
+		LocalizationUtil localizationUtil = new LocalizationUtil();
+
+		localizationUtil.setLocalization(new LocalizationImpl());
 
 		Locale contentDefaultLocale = LocaleUtil.fromLanguageId("es_ES");
 
@@ -132,7 +166,5 @@ public class LocalizationImplUnitTest extends PowerMockito {
 					defaultImportLocale));
 		}
 	}
-
-	private LocalizationImpl _localization = new LocalizationImpl();
 
 }

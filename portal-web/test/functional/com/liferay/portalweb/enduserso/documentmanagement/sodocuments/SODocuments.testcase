@@ -5288,6 +5288,10 @@
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
+		<var name="key_dmDocumentTitle" value="Document_1.jpg" />
+
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="Document_1.jpg" />
+
 		<execute action="SODocuments#sikuliAssertElementPresent" locator-key1="SCREENSHOTS_DOCUMENTS_MULTIPLE_THUMBNAILS_PNG" />
 	</command>
 </definition>

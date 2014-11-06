@@ -22,7 +22,6 @@ import com.liferay.portal.NoSuchModelException;
 public class NoSuchFileShortcutException extends NoSuchModelException {
 
 	public NoSuchFileShortcutException() {
-		super();
 	}
 
 	public NoSuchFileShortcutException(String msg) {

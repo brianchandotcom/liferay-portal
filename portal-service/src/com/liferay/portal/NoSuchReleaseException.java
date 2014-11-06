@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchReleaseException extends NoSuchModelException {
 
 	public NoSuchReleaseException() {
-		super();
 	}
 
 	public NoSuchReleaseException(String msg) {

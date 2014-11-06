@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchWorkflowInstanceLinkException extends NoSuchModelException {
 
 	public NoSuchWorkflowInstanceLinkException() {
-		super();
 	}
 
 	public NoSuchWorkflowInstanceLinkException(String msg) {

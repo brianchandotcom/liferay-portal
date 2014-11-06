@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class RepositoryNameException extends PortalException {
 
 	public RepositoryNameException() {
-		super();
 	}
 
 	public RepositoryNameException(String msg) {

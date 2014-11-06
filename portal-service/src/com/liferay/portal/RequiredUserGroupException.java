@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class RequiredUserGroupException extends PortalException {
 
 	public RequiredUserGroupException() {
-		super();
 	}
 
 	public RequiredUserGroupException(String msg) {

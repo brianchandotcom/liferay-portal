@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ScriptingException extends PortalException {
 
 	public ScriptingException() {
-		super();
 	}
 
 	public ScriptingException(String msg) {

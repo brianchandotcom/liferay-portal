@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class CouponStartDateException extends PortalException {
 
 	public CouponStartDateException() {
-		super();
 	}
 
 	public CouponStartDateException(String msg) {

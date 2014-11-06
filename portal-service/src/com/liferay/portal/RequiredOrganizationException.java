@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class RequiredOrganizationException extends PortalException {
 
 	public RequiredOrganizationException() {
-		super();
 	}
 
 	public RequiredOrganizationException(String msg) {

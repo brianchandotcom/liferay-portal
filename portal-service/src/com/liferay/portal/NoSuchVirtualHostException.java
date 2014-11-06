@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchVirtualHostException extends NoSuchModelException {
 
 	public NoSuchVirtualHostException() {
-		super();
 	}
 
 	public NoSuchVirtualHostException(String msg) {

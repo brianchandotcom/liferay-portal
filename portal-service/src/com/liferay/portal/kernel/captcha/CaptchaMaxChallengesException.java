@@ -20,7 +20,6 @@ package com.liferay.portal.kernel.captcha;
 public class CaptchaMaxChallengesException extends CaptchaException {
 
 	public CaptchaMaxChallengesException() {
-		super();
 	}
 
 	public CaptchaMaxChallengesException(String msg) {

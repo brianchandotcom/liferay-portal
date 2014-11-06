@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class DuplicatePageException extends PortalException {
 
 	public DuplicatePageException() {
-		super();
 	}
 
 	public DuplicatePageException(String msg) {

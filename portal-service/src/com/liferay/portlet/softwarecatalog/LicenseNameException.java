@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class LicenseNameException extends PortalException {
 
 	public LicenseNameException() {
-		super();
 	}
 
 	public LicenseNameException(String msg) {

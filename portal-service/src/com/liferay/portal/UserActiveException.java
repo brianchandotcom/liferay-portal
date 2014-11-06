@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class UserActiveException extends PortalException {
 
 	public UserActiveException() {
-		super();
 	}
 
 	public UserActiveException(String msg) {

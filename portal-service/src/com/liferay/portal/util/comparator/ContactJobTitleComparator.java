@@ -22,7 +22,6 @@ package com.liferay.portal.util.comparator;
 public class ContactJobTitleComparator extends UserJobTitleComparator {
 
 	public ContactJobTitleComparator() {
-		super();
 	}
 
 	public ContactJobTitleComparator(boolean ascending) {

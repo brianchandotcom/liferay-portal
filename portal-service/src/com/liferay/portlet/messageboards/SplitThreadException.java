@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class SplitThreadException extends PortalException {
 
 	public SplitThreadException() {
-		super();
 	}
 
 	public SplitThreadException(String msg) {

@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchBackgroundTaskException extends NoSuchModelException {
 
 	public NoSuchBackgroundTaskException() {
-		super();
 	}
 
 	public NoSuchBackgroundTaskException(String msg) {

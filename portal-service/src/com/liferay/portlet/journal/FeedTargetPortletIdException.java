@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class FeedTargetPortletIdException extends PortalException {
 
 	public FeedTargetPortletIdException() {
-		super();
 	}
 
 	public FeedTargetPortletIdException(String msg) {

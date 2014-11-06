@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class LiferayPackageHotDeployException extends PortalException {
 
 	public LiferayPackageHotDeployException() {
-		super();
 	}
 
 	public LiferayPackageHotDeployException(String msg) {

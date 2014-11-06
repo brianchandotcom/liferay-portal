@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class PortletIdException extends PortalException {
 
 	public PortletIdException() {
-		super();
 	}
 
 	public PortletIdException(String msg) {

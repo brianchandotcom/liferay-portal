@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class EntryDisplayDateException extends PortalException {
 
 	public EntryDisplayDateException() {
-		super();
 	}
 
 	public EntryDisplayDateException(String msg) {

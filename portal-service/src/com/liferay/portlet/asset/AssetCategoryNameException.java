@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class AssetCategoryNameException extends PortalException {
 
 	public AssetCategoryNameException() {
-		super();
 	}
 
 	public AssetCategoryNameException(String msg) {

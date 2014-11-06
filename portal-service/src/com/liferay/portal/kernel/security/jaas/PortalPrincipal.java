@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.servlet.ProtectedPrincipal;
 public class PortalPrincipal extends ProtectedPrincipal {
 
 	public PortalPrincipal() {
-		super();
 	}
 
 	public PortalPrincipal(String name) {

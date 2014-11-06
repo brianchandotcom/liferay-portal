@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchUserGroupGroupRoleException extends NoSuchModelException {
 
 	public NoSuchUserGroupGroupRoleException() {
-		super();
 	}
 
 	public NoSuchUserGroupGroupRoleException(String msg) {

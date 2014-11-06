@@ -20,7 +20,6 @@ package com.liferay.util;
 public class EncryptorException extends Exception {
 
 	public EncryptorException() {
-		super();
 	}
 
 	public EncryptorException(String msg) {

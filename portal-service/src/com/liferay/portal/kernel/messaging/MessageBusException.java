@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class MessageBusException extends PortalException {
 
 	public MessageBusException() {
-		super();
 	}
 
 	public MessageBusException(String msg) {

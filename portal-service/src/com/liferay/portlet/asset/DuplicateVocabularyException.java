@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class DuplicateVocabularyException extends PortalException {
 
 	public DuplicateVocabularyException() {
-		super();
 	}
 
 	public DuplicateVocabularyException(String msg) {

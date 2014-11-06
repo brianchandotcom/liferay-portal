@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ArticleContentSizeException extends PortalException {
 
 	public ArticleContentSizeException() {
-		super();
 	}
 
 	public ArticleContentSizeException(String msg) {

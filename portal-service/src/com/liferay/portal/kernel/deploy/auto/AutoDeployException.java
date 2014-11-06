@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class AutoDeployException extends PortalException {
 
 	public AutoDeployException() {
-		super();
 	}
 
 	public AutoDeployException(String msg) {

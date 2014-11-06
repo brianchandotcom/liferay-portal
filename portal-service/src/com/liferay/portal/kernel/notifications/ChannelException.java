@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ChannelException extends PortalException {
 
 	public ChannelException() {
-		super();
 	}
 
 	public ChannelException(String msg) {

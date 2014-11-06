@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class TemplateDuplicateTemplateKeyException extends PortalException {
 
 	public TemplateDuplicateTemplateKeyException() {
-		super();
 	}
 
 	public TemplateDuplicateTemplateKeyException(String msg) {

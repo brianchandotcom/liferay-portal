@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class PasswordExpiredException extends PortalException {
 
 	public PasswordExpiredException() {
-		super();
 	}
 
 	public PasswordExpiredException(String msg) {

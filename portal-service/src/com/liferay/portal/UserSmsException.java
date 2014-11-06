@@ -26,7 +26,6 @@ public class UserSmsException extends PortalException {
 	 */
 	@Deprecated
 	public UserSmsException() {
-		super();
 	}
 
 	/**

@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchListTypeException extends NoSuchModelException {
 
 	public NoSuchListTypeException() {
-		super();
 	}
 
 	public NoSuchListTypeException(String msg) {

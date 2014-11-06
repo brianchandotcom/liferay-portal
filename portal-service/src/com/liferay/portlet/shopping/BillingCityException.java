@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class BillingCityException extends PortalException {
 
 	public BillingCityException() {
-		super();
 	}
 
 	public BillingCityException(String msg) {

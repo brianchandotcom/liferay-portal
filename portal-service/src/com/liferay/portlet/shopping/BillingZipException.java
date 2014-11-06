@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class BillingZipException extends PortalException {
 
 	public BillingZipException() {
-		super();
 	}
 
 	public BillingZipException(String msg) {

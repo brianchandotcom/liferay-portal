@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 public class NtlmLogonException extends SystemException {
 
 	public NtlmLogonException() {
-		super();
 	}
 
 	public NtlmLogonException(String msg) {

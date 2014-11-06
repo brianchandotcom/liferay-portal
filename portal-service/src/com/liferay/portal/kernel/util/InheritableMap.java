@@ -25,7 +25,6 @@ import java.util.Map;
 public class InheritableMap<K, V> extends HashMap<K, V> {
 
 	public InheritableMap() {
-		super();
 	}
 
 	public InheritableMap(Map<? extends K, ? extends V> map) {

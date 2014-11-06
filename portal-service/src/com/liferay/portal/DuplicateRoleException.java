@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class DuplicateRoleException extends PortalException {
 
 	public DuplicateRoleException() {
-		super();
 	}
 
 	public DuplicateRoleException(String msg) {

@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class FolderNameException extends PortalException {
 
 	public FolderNameException() {
-		super();
 	}
 
 	public FolderNameException(String msg) {

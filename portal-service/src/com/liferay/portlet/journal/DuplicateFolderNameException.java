@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class DuplicateFolderNameException extends PortalException {
 
 	public DuplicateFolderNameException() {
-		super();
 	}
 
 	public DuplicateFolderNameException(String msg) {

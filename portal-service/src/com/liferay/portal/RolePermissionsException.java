@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class RolePermissionsException extends PortalException {
 
 	public RolePermissionsException() {
-		super();
 	}
 
 	public RolePermissionsException(String msg) {

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class AccountNameException extends PortalException {
 
 	public AccountNameException() {
-		super();
 	}
 
 	public AccountNameException(String msg) {

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class OrganizationNameException extends PortalException {
 
 	public OrganizationNameException() {
-		super();
 	}
 
 	public OrganizationNameException(String msg) {

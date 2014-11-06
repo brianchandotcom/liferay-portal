@@ -24,8 +24,6 @@ import java.util.Vector;
 public class OrderedProperties extends Properties {
 
 	public OrderedProperties() {
-		super();
-
 		_names = new Vector<String>();
 	}
 

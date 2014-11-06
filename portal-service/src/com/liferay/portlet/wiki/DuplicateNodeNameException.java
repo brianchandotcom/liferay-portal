@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class DuplicateNodeNameException extends PortalException {
 
 	public DuplicateNodeNameException() {
-		super();
 	}
 
 	public DuplicateNodeNameException(String msg) {

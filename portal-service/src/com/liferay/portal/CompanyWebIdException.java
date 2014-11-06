@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class CompanyWebIdException extends PortalException {
 
 	public CompanyWebIdException() {
-		super();
 	}
 
 	public CompanyWebIdException(String msg) {

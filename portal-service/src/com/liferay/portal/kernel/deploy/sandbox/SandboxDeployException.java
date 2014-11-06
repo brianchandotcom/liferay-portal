@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class SandboxDeployException extends PortalException {
 
 	public SandboxDeployException() {
-		super();
 	}
 
 	public SandboxDeployException(String msg) {

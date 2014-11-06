@@ -22,7 +22,6 @@ import com.liferay.portal.NoSuchModelException;
 public class NoSuchOrderException extends NoSuchModelException {
 
 	public NoSuchOrderException() {
-		super();
 	}
 
 	public NoSuchOrderException(String msg) {

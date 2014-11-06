@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class BannedUserException extends PortalException {
 
 	public BannedUserException() {
-		super();
 	}
 
 	public BannedUserException(String msg) {

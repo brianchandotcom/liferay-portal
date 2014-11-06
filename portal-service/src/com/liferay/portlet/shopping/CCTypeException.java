@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class CCTypeException extends PortalException {
 
 	public CCTypeException() {
-		super();
 	}
 
 	public CCTypeException(String msg) {

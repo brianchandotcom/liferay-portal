@@ -22,7 +22,6 @@ import com.liferay.portal.NoSuchModelException;
 public class NoSuchFileEntryException extends NoSuchModelException {
 
 	public NoSuchFileEntryException() {
-		super();
 	}
 
 	public NoSuchFileEntryException(String msg) {

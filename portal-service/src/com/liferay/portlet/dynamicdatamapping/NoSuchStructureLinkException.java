@@ -22,7 +22,6 @@ import com.liferay.portal.NoSuchModelException;
 public class NoSuchStructureLinkException extends NoSuchModelException {
 
 	public NoSuchStructureLinkException() {
-		super();
 	}
 
 	public NoSuchStructureLinkException(String msg) {

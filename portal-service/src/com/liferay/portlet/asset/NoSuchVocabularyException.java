@@ -22,7 +22,6 @@ import com.liferay.portal.NoSuchModelException;
 public class NoSuchVocabularyException extends NoSuchModelException {
 
 	public NoSuchVocabularyException() {
-		super();
 	}
 
 	public NoSuchVocabularyException(String msg) {

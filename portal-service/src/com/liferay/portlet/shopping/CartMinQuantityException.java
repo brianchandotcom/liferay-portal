@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class CartMinQuantityException extends PortalException {
 
 	public CartMinQuantityException() {
-		super();
 	}
 
 	public CartMinQuantityException(String msg) {

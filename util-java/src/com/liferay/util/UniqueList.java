@@ -27,7 +27,6 @@ public class UniqueList<E>
 	extends com.liferay.portal.kernel.util.UniqueList<E> {
 
 	public UniqueList() {
-		super();
 	}
 
 	public UniqueList(Collection<E> c) {

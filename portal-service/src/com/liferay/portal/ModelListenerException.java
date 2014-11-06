@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 public class ModelListenerException extends SystemException {
 
 	public ModelListenerException() {
-		super();
 	}
 
 	public ModelListenerException(String msg) {

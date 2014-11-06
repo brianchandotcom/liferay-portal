@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 public class PluginPackageException extends SystemException {
 
 	public PluginPackageException() {
-		super();
 	}
 
 	public PluginPackageException(String msg) {

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class EventStartDateException extends PortalException {
 
 	public EventStartDateException() {
-		super();
 	}
 
 	public EventStartDateException(String msg) {

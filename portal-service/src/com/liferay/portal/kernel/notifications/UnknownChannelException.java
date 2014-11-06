@@ -21,7 +21,6 @@ package com.liferay.portal.kernel.notifications;
 public class UnknownChannelException extends ChannelException {
 
 	public UnknownChannelException() {
-		super();
 	}
 
 	public UnknownChannelException(String msg) {

@@ -22,7 +22,6 @@ import com.liferay.portal.NoSuchModelException;
 public class NoSuchProductVersionException extends NoSuchModelException {
 
 	public NoSuchProductVersionException() {
-		super();
 	}
 
 	public NoSuchProductVersionException(String msg) {

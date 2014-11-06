@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class CompareVersionsException extends PortalException {
 
 	public CompareVersionsException(double version) {
-		super();
-
 		_version = version;
 	}
 

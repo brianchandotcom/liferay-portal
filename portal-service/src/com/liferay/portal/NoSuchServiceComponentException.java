@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchServiceComponentException extends NoSuchModelException {
 
 	public NoSuchServiceComponentException() {
-		super();
 	}
 
 	public NoSuchServiceComponentException(String msg) {

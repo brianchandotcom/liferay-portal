@@ -21,7 +21,6 @@ public class NoSuchResourceBlockPermissionException
 	extends NoSuchModelException {
 
 	public NoSuchResourceBlockPermissionException() {
-		super();
 	}
 
 	public NoSuchResourceBlockPermissionException(String msg) {

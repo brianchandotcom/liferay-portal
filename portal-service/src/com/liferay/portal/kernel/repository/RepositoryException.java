@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 public class RepositoryException extends SystemException {
 
 	public RepositoryException() {
-		super();
 	}
 
 	public RepositoryException(String msg) {

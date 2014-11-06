@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchSystemEventException extends NoSuchModelException {
 
 	public NoSuchSystemEventException() {
-		super();
 	}
 
 	public NoSuchSystemEventException(String msg) {

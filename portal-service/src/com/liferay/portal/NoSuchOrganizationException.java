@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchOrganizationException extends NoSuchModelException {
 
 	public NoSuchOrganizationException() {
-		super();
 	}
 
 	public NoSuchOrganizationException(String msg) {

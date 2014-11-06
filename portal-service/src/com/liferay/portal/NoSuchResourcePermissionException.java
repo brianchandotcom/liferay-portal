@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchResourcePermissionException extends NoSuchModelException {
 
 	public NoSuchResourcePermissionException() {
-		super();
 	}
 
 	public NoSuchResourcePermissionException(String msg) {

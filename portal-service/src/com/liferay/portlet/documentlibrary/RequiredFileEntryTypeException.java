@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class RequiredFileEntryTypeException extends PortalException {
 
 	public RequiredFileEntryTypeException() {
-		super();
 	}
 
 	public RequiredFileEntryTypeException(String msg) {

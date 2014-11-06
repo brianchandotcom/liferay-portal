@@ -22,7 +22,6 @@ public class RemoteAuthException extends AuthException {
 	public static final int WRONG_SHARED_SECRET = 101;
 
 	public RemoteAuthException() {
-		super();
 	}
 
 	public RemoteAuthException(String msg) {

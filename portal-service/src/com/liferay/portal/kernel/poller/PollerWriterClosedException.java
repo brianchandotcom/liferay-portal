@@ -20,7 +20,6 @@ package com.liferay.portal.kernel.poller;
 public class PollerWriterClosedException extends PollerException {
 
 	public PollerWriterClosedException() {
-		super();
 	}
 
 	public PollerWriterClosedException(String msg) {

@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchCountryException extends NoSuchModelException {
 
 	public NoSuchCountryException() {
-		super();
 	}
 
 	public NoSuchCountryException(String msg) {

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ColumnTypeException extends PortalException {
 
 	public ColumnTypeException() {
-		super();
 	}
 
 	public ColumnTypeException(String msg) {

@@ -32,8 +32,6 @@ public class LocaleException extends PortalException {
 	public static final int TYPE_EXPORT_IMPORT = 2;
 
 	public LocaleException() {
-		super();
-
 		_type = 0;
 	}
 

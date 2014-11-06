@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class RequiredLayoutSetPrototypeException extends PortalException {
 
 	public RequiredLayoutSetPrototypeException() {
-		super();
 	}
 
 	public RequiredLayoutSetPrototypeException(String msg) {

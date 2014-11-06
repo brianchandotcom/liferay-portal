@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchResourceBlockException extends NoSuchModelException {
 
 	public NoSuchResourceBlockException() {
-		super();
 	}
 
 	public NoSuchResourceBlockException(String msg) {

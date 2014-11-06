@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ArticleReviewDateException extends PortalException {
 
 	public ArticleReviewDateException() {
-		super();
 	}
 
 	public ArticleReviewDateException(String msg) {

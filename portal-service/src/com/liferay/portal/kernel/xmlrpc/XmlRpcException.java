@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class XmlRpcException extends PortalException {
 
 	public XmlRpcException() {
-		super();
 	}
 
 	public XmlRpcException(String msg) {

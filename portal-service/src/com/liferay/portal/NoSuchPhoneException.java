@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchPhoneException extends NoSuchModelException {
 
 	public NoSuchPhoneException() {
-		super();
 	}
 
 	public NoSuchPhoneException(String msg) {

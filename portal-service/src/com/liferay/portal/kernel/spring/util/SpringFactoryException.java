@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class SpringFactoryException extends PortalException {
 
 	public SpringFactoryException() {
-		super();
 	}
 
 	public SpringFactoryException(String msg) {

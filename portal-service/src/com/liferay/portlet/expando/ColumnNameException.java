@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ColumnNameException extends PortalException {
 
 	public ColumnNameException() {
-		super();
 	}
 
 	public ColumnNameException(String msg) {

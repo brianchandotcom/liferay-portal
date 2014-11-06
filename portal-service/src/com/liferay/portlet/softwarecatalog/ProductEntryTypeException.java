@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ProductEntryTypeException extends PortalException {
 
 	public ProductEntryTypeException() {
-		super();
 	}
 
 	public ProductEntryTypeException(String msg) {

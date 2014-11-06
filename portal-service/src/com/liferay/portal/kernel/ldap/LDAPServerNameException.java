@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class LDAPServerNameException extends PortalException {
 
 	public LDAPServerNameException() {
-		super();
 	}
 
 	public LDAPServerNameException(String msg) {

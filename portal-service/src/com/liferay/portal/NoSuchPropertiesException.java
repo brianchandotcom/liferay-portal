@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class NoSuchPropertiesException extends PortalException {
 
 	public NoSuchPropertiesException() {
-		super();
 	}
 
 	public NoSuchPropertiesException(String msg) {

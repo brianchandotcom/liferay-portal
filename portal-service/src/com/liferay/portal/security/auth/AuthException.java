@@ -29,7 +29,6 @@ public class AuthException extends PortalException {
 	public static final int NO_SHARED_SECRET = 3;
 
 	public AuthException() {
-		super();
 	}
 
 	public AuthException(String msg) {

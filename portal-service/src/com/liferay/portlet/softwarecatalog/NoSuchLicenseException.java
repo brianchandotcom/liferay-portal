@@ -22,7 +22,6 @@ import com.liferay.portal.NoSuchModelException;
 public class NoSuchLicenseException extends NoSuchModelException {
 
 	public NoSuchLicenseException() {
-		super();
 	}
 
 	public NoSuchLicenseException(String msg) {

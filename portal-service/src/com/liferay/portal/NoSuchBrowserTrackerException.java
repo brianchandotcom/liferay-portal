@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchBrowserTrackerException extends NoSuchModelException {
 
 	public NoSuchBrowserTrackerException() {
-		super();
 	}
 
 	public NoSuchBrowserTrackerException(String msg) {

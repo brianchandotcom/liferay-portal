@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchPluginSettingException extends NoSuchModelException {
 
 	public NoSuchPluginSettingException() {
-		super();
 	}
 
 	public NoSuchPluginSettingException(String msg) {

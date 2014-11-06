@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class DuplicateCouponCodeException extends PortalException {
 
 	public DuplicateCouponCodeException() {
-		super();
 	}
 
 	public DuplicateCouponCodeException(String msg) {

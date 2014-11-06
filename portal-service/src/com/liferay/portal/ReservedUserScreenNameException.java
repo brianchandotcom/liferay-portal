@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ReservedUserScreenNameException extends PortalException {
 
 	public ReservedUserScreenNameException() {
-		super();
 	}
 
 	public ReservedUserScreenNameException(String msg) {

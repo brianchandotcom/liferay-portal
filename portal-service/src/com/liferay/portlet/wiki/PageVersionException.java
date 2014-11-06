@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class PageVersionException extends PortalException {
 
 	public PageVersionException() {
-		super();
 	}
 
 	public PageVersionException(String msg) {

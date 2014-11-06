@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ImageTypeException extends PortalException {
 
 	public ImageTypeException() {
-		super();
 	}
 
 	public ImageTypeException(String msg) {

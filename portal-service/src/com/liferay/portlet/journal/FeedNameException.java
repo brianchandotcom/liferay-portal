@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class FeedNameException extends PortalException {
 
 	public FeedNameException() {
-		super();
 	}
 
 	public FeedNameException(String msg) {

@@ -21,7 +21,6 @@ package com.liferay.portal.kernel.scripting;
 public class ExecutionException extends ScriptingException {
 
 	public ExecutionException() {
-		super();
 	}
 
 	public ExecutionException(String msg) {

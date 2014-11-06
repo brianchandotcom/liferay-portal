@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class WorkflowException extends PortalException {
 
 	public WorkflowException() {
-		super();
 	}
 
 	public WorkflowException(String msg) {

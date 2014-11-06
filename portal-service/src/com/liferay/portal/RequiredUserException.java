@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class RequiredUserException extends PortalException {
 
 	public RequiredUserException() {
-		super();
 	}
 
 	public RequiredUserException(String msg) {

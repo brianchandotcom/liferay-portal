@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class SanitizerException extends PortalException {
 
 	public SanitizerException() {
-		super();
 	}
 
 	public SanitizerException(String msg) {

@@ -24,7 +24,6 @@ public class ProtectedPrincipal
 	extends com.liferay.portal.kernel.servlet.ProtectedPrincipal {
 
 	public ProtectedPrincipal() {
-		super();
 	}
 
 	public ProtectedPrincipal(String name) {

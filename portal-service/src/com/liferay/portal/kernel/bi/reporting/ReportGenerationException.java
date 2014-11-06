@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ReportGenerationException extends PortalException {
 
 	public ReportGenerationException() {
-		super();
 	}
 
 	public ReportGenerationException(String msg) {

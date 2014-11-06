@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ItemSmallImageNameException extends PortalException {
 
 	public ItemSmallImageNameException() {
-		super();
 	}
 
 	public ItemSmallImageNameException(String msg) {

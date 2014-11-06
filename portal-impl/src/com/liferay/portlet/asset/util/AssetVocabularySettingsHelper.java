@@ -39,8 +39,6 @@ public class AssetVocabularySettingsHelper {
 		{AssetCategoryConstants.ALL_CLASS_TYPE_PK};
 
 	public AssetVocabularySettingsHelper() {
-		super();
-
 		_properties = new UnicodeProperties(true);
 	}
 

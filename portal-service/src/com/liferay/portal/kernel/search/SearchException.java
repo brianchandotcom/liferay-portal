@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class SearchException extends PortalException {
 
 	public SearchException() {
-		super();
 	}
 
 	public SearchException(String msg) {

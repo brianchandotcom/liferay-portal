@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class DuplicateUserScreenNameException extends PortalException {
 
 	public DuplicateUserScreenNameException() {
-		super();
 	}
 
 	public DuplicateUserScreenNameException(String msg) {

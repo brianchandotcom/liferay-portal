@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ParseException extends PortalException {
 
 	public ParseException() {
-		super();
 	}
 
 	public ParseException(String msg) {

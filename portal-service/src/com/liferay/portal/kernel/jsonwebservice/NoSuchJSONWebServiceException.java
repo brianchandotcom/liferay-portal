@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class NoSuchJSONWebServiceException extends PortalException {
 
 	public NoSuchJSONWebServiceException() {
-		super();
 	}
 
 	public NoSuchJSONWebServiceException(String msg) {

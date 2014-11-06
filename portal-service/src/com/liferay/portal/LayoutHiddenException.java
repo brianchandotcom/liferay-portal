@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class LayoutHiddenException extends PortalException {
 
 	public LayoutHiddenException() {
-		super();
 	}
 
 	public LayoutHiddenException(String msg) {

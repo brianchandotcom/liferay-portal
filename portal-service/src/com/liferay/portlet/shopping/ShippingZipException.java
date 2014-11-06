@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ShippingZipException extends PortalException {
 
 	public ShippingZipException() {
-		super();
 	}
 
 	public ShippingZipException(String msg) {

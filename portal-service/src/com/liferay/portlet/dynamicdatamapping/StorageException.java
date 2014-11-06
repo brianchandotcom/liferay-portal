@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class StorageException extends PortalException {
 
 	public StorageException() {
-		super();
 	}
 
 	public StorageException(String msg) {

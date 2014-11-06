@@ -25,12 +25,9 @@ import java.util.List;
 public class LayoutPrototypeException extends PortalException {
 
 	public LayoutPrototypeException() {
-		super();
 	}
 
 	public LayoutPrototypeException(List<Tuple> missingLayoutPrototypes) {
-		super();
-
 		_missingLayoutPrototypes = missingLayoutPrototypes;
 	}
 

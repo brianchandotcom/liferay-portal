@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class AddressCityException extends PortalException {
 
 	public AddressCityException() {
-		super();
 	}
 
 	public AddressCityException(String msg) {

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class DuplicateColumnNameException extends PortalException {
 
 	public DuplicateColumnNameException() {
-		super();
 	}
 
 	public DuplicateColumnNameException(String msg) {

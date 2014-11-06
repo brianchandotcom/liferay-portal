@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class RequiredLicenseException extends PortalException {
 
 	public RequiredLicenseException() {
-		super();
 	}
 
 	public RequiredLicenseException(String msg) {

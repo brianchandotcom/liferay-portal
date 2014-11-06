@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class FeedContentFieldException extends PortalException {
 
 	public FeedContentFieldException() {
-		super();
 	}
 
 	public FeedContentFieldException(String msg) {

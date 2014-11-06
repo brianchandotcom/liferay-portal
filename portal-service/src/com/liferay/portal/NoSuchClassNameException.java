@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchClassNameException extends NoSuchModelException {
 
 	public NoSuchClassNameException() {
-		super();
 	}
 
 	public NoSuchClassNameException(String msg) {

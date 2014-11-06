@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class DuplicateOrganizationException extends PortalException {
 
 	public DuplicateOrganizationException() {
-		super();
 	}
 
 	public DuplicateOrganizationException(String msg) {

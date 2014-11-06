@@ -20,7 +20,6 @@ package com.liferay.portal.kernel.cache;
 public class PortalCacheException extends RuntimeException {
 
 	public PortalCacheException() {
-		super();
 	}
 
 	public PortalCacheException(String msg) {

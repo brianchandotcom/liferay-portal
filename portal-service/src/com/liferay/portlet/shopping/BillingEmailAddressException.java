@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class BillingEmailAddressException extends PortalException {
 
 	public BillingEmailAddressException() {
-		super();
 	}
 
 	public BillingEmailAddressException(String msg) {

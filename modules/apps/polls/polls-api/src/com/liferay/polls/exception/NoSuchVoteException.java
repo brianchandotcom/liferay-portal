@@ -22,7 +22,6 @@ import com.liferay.portal.NoSuchModelException;
 public class NoSuchVoteException extends NoSuchModelException {
 
 	public NoSuchVoteException() {
-		super();
 	}
 
 	public NoSuchVoteException(String msg) {

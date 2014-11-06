@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchRoleException extends NoSuchModelException {
 
 	public NoSuchRoleException() {
-		super();
 	}
 
 	public NoSuchRoleException(String msg) {

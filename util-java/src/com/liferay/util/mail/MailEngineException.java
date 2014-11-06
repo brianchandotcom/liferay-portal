@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.NestableException;
 public class MailEngineException extends NestableException {
 
 	public MailEngineException() {
-		super();
 	}
 
 	public MailEngineException(String msg) {

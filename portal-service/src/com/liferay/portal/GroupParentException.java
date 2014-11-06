@@ -28,8 +28,6 @@ public class GroupParentException extends PortalException {
 	public static final int STAGING_DESCENDANT = 2;
 
 	public GroupParentException() {
-		super();
-
 		_type = 0;
 	}
 

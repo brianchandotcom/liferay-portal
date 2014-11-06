@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class PageContentException extends PortalException {
 
 	public PageContentException() {
-		super();
 	}
 
 	public PageContentException(String msg) {

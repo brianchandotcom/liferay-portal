@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class DuplicateTagException extends PortalException {
 
 	public DuplicateTagException() {
-		super();
 	}
 
 	public DuplicateTagException(String msg) {

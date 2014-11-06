@@ -21,7 +21,6 @@ public class NoSuchWorkflowDefinitionLinkException
 	extends NoSuchModelException {
 
 	public NoSuchWorkflowDefinitionLinkException() {
-		super();
 	}
 
 	public NoSuchWorkflowDefinitionLinkException(String msg) {

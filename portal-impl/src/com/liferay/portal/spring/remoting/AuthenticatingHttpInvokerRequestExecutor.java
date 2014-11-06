@@ -38,10 +38,6 @@ import org.springframework.remoting.httpinvoker.SimpleHttpInvokerRequestExecutor
 public class AuthenticatingHttpInvokerRequestExecutor
 	extends SimpleHttpInvokerRequestExecutor {
 
-	public AuthenticatingHttpInvokerRequestExecutor() {
-		super();
-	}
-
 	public String getPassword() {
 		return _password;
 	}

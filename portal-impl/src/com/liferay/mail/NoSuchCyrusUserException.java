@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class NoSuchCyrusUserException extends PortalException {
 
 	public NoSuchCyrusUserException() {
-		super();
 	}
 
 	public NoSuchCyrusUserException(String msg) {

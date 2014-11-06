@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class DuplicateVoteException extends PortalException {
 
 	public DuplicateVoteException() {
-		super();
 	}
 
 	public DuplicateVoteException(String msg) {

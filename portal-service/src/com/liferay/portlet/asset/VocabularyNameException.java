@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class VocabularyNameException extends PortalException {
 
 	public VocabularyNameException() {
-		super();
 	}
 
 	public VocabularyNameException(String msg) {

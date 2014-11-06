@@ -22,7 +22,6 @@ import com.liferay.portal.NoSuchModelException;
 public class NoSuchFileEntryMetadataException extends NoSuchModelException {
 
 	public NoSuchFileEntryMetadataException() {
-		super();
 	}
 
 	public NoSuchFileEntryMetadataException(String msg) {

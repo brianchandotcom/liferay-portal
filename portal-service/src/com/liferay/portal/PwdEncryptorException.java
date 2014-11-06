@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class PwdEncryptorException extends PortalException {
 
 	public PwdEncryptorException() {
-		super();
 	}
 
 	public PwdEncryptorException(String msg) {

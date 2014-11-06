@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchPortletPreferencesException extends NoSuchModelException {
 
 	public NoSuchPortletPreferencesException() {
-		super();
 	}
 
 	public NoSuchPortletPreferencesException(String msg) {

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class CompanyMxException extends PortalException {
 
 	public CompanyMxException() {
-		super();
 	}
 
 	public CompanyMxException(String msg) {

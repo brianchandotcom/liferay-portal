@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class RequiredCompanyException extends PortalException {
 
 	public RequiredCompanyException() {
-		super();
 	}
 
 	public RequiredCompanyException(String msg) {

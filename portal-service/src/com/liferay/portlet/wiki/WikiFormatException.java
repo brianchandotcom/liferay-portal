@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class WikiFormatException extends PortalException {
 
 	public WikiFormatException() {
-		super();
 	}
 
 	public WikiFormatException(String msg) {

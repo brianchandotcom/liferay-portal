@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class TagPropertyValueException extends PortalException {
 
 	public TagPropertyValueException() {
-		super();
 	}
 
 	public TagPropertyValueException(String msg) {

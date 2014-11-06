@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class DuplicateArticleImageIdException extends PortalException {
 
 	public DuplicateArticleImageIdException() {
-		super();
 	}
 
 	public DuplicateArticleImageIdException(String msg) {

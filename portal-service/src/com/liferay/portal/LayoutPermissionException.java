@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class LayoutPermissionException extends PortalException {
 
 	public LayoutPermissionException() {
-		super();
 	}
 
 	public LayoutPermissionException(String msg) {

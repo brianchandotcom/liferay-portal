@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ShippingStreetException extends PortalException {
 
 	public ShippingStreetException() {
-		super();
 	}
 
 	public ShippingStreetException(String msg) {

@@ -38,7 +38,6 @@ public class LiferaySeleneseTestCase extends SeleneseTestCase {
 	}
 
 	public LiferaySeleneseTestCase() {
-		super();
 	}
 
 	public LiferaySeleneseTestCase(String name) {

@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchShardException extends NoSuchModelException {
 
 	public NoSuchShardException() {
-		super();
 	}
 
 	public NoSuchShardException(String msg) {

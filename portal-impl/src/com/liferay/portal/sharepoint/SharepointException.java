@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class SharepointException extends PortalException {
 
 	public SharepointException() {
-		super();
 	}
 
 	public SharepointException(String msg) {

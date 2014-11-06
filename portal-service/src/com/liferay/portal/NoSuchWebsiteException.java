@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchWebsiteException extends NoSuchModelException {
 
 	public NoSuchWebsiteException() {
-		super();
 	}
 
 	public NoSuchWebsiteException(String msg) {

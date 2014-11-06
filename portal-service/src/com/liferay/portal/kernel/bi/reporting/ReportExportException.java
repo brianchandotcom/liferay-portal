@@ -20,7 +20,6 @@ package com.liferay.portal.kernel.bi.reporting;
 public class ReportExportException extends ReportGenerationException {
 
 	public ReportExportException() {
-		super();
 	}
 
 	public ReportExportException(String msg) {

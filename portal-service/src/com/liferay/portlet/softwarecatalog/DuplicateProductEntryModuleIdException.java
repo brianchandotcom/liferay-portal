@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class DuplicateProductEntryModuleIdException extends PortalException {
 
 	public DuplicateProductEntryModuleIdException() {
-		super();
 	}
 
 	public DuplicateProductEntryModuleIdException(String msg) {

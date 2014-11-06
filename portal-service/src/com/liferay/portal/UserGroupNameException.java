@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class UserGroupNameException extends PortalException {
 
 	public UserGroupNameException() {
-		super();
 	}
 
 	public UserGroupNameException(String msg) {

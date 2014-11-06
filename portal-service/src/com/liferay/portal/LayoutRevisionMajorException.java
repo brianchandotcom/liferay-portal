@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class LayoutRevisionMajorException extends PortalException {
 
 	public LayoutRevisionMajorException() {
-		super();
 	}
 
 	public LayoutRevisionMajorException(String msg) {

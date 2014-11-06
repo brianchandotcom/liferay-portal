@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchWebDAVPropsException extends NoSuchModelException {
 
 	public NoSuchWebDAVPropsException() {
-		super();
 	}
 
 	public NoSuchWebDAVPropsException(String msg) {

@@ -20,7 +20,6 @@ package com.liferay.portal.kernel.portlet;
 public class PortletLayoutListenerException extends RuntimeException {
 
 	public PortletLayoutListenerException() {
-		super();
 	}
 
 	public PortletLayoutListenerException(String msg) {

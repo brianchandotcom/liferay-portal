@@ -22,7 +22,6 @@ import com.liferay.portal.NoSuchModelException;
 public class NoSuchActivityLimitException extends NoSuchModelException {
 
 	public NoSuchActivityLimitException() {
-		super();
 	}
 
 	public NoSuchActivityLimitException(String msg) {

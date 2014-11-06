@@ -27,7 +27,6 @@ public class PHPPortletExplodedTomcatDeployer
 	extends PHPPortletAutoDeployer implements ExplodedTomcatDeployer {
 
 	public PHPPortletExplodedTomcatDeployer() throws AutoDeployException {
-		super();
 	}
 
 	@Override

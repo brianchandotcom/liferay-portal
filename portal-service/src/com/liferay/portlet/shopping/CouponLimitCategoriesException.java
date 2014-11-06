@@ -24,7 +24,6 @@ import java.util.List;
 public class CouponLimitCategoriesException extends PortalException {
 
 	public CouponLimitCategoriesException() {
-		super();
 	}
 
 	public CouponLimitCategoriesException(String msg) {

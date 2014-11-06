@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class CCExpirationException extends PortalException {
 
 	public CCExpirationException() {
-		super();
 	}
 
 	public CCExpirationException(String msg) {

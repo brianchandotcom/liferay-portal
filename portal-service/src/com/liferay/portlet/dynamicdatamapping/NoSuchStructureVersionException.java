@@ -25,7 +25,6 @@ import com.liferay.portal.NoSuchModelException;
 public class NoSuchStructureVersionException extends NoSuchModelException {
 
 	public NoSuchStructureVersionException() {
-		super();
 	}
 
 	public NoSuchStructureVersionException(String msg) {

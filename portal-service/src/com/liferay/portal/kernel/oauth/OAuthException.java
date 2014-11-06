@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class OAuthException extends PortalException {
 
 	public OAuthException() {
-		super();
 	}
 
 	public OAuthException(String msg) {

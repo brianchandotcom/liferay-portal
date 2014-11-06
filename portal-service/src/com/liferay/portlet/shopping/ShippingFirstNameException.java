@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ShippingFirstNameException extends PortalException {
 
 	public ShippingFirstNameException() {
-		super();
 	}
 
 	public ShippingFirstNameException(String msg) {

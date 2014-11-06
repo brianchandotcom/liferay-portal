@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class FrameworkVersionNameException extends PortalException {
 
 	public FrameworkVersionNameException() {
-		super();
 	}
 
 	public FrameworkVersionNameException(String msg) {

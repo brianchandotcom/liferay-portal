@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class InvalidSourceURIException extends PortalException {
 
 	public InvalidSourceURIException() {
-		super();
 	}
 
 	public InvalidSourceURIException(String msg) {

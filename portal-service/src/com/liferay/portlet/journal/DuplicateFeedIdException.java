@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class DuplicateFeedIdException extends PortalException {
 
 	public DuplicateFeedIdException() {
-		super();
 	}
 
 	public DuplicateFeedIdException(String msg) {

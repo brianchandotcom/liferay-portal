@@ -30,7 +30,6 @@ public class UserEmailAddressException extends PortalException {
 	 */
 	@Deprecated
 	public UserEmailAddressException() {
-		super();
 	}
 
 	/**

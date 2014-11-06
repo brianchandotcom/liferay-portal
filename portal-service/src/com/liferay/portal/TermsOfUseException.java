@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class TermsOfUseException extends PortalException {
 
 	public TermsOfUseException() {
-		super();
 	}
 
 	public TermsOfUseException(String msg) {

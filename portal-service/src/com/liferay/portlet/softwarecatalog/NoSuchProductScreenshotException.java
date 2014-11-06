@@ -22,7 +22,6 @@ import com.liferay.portal.NoSuchModelException;
 public class NoSuchProductScreenshotException extends NoSuchModelException {
 
 	public NoSuchProductScreenshotException() {
-		super();
 	}
 
 	public NoSuchProductScreenshotException(String msg) {

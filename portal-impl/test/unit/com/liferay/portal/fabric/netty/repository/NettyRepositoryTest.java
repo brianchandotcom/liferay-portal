@@ -497,11 +497,30 @@ public class NettyRepositoryTest {
 
 		Assert.assertTrue(
 			_asyncBroker.takeWithResult(remoteFilePath1, fileResponse1));
-		Assert.assertTrue(
-			_asyncBroker.takeWithResult(
-				remoteFilePath2,
-				new FileResponse(
-					remoteFilePath2, FileResponse.FILE_NOT_FOUND, -1, false)));
+
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			NettyRepository.class.getName(), Level.WARNING);
+
+		try {
+			Assert.assertTrue(
+				_asyncBroker.takeWithResult(
+					remoteFilePath2,
+					new FileResponse(
+						remoteFilePath2, FileResponse.FILE_NOT_FOUND, -1,
+						false)));
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertEquals(1, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Remote file remoteFile2 is not found", logRecord.getMessage());
+		}
+		finally {
+			captureHandler.close();
+		}
 
 		Map<Path, Path> resultPathMap = noticeableFuture.get();
 
@@ -554,11 +573,29 @@ public class NettyRepositoryTest {
 
 		DefaultNoticeableFutureAdvice.setConvertThrowable(exception);
 
-		Assert.assertTrue(
-			_asyncBroker.takeWithResult(
-				remoteFilePath,
-				new FileResponse(
-					_repositoryPath, FileResponse.FILE_NOT_FOUND, -1, false)));
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			NettyRepository.class.getName(), Level.WARNING);
+
+		try {
+			Assert.assertTrue(
+				_asyncBroker.takeWithResult(
+					remoteFilePath,
+					new FileResponse(
+						_repositoryPath, FileResponse.FILE_NOT_FOUND, -1,
+						false)));
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertEquals(1, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Remote file remoteFile is not found", logRecord.getMessage());
+		}
+		finally {
+			captureHandler.close();
+		}
 
 		try {
 			noticeableFuture.get();

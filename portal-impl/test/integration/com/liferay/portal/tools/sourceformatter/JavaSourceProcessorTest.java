@@ -27,6 +27,13 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testConstructorParameterOrder() throws Exception {
+		test(
+			"ConstructorParameterOrder.testjava",
+			"Constructor parameter order attribute:");
+	}
+
+	@Test
 	public void testExceedMaxLineLength() throws Exception {
 		test("ExceedMaxLineLength.testjava", "> 80:", 35);
 	}

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class DisabledPingbackException extends PortalException {
 
 	public DisabledPingbackException() {
-		super();
 	}
 
 	public DisabledPingbackException(String msg) {

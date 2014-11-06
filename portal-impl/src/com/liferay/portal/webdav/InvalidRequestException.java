@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class InvalidRequestException extends PortalException {
 
 	public InvalidRequestException() {
-		super();
 	}
 
 	public InvalidRequestException(String msg) {

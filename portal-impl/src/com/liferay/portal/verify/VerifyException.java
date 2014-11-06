@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class VerifyException extends PortalException {
 
 	public VerifyException() {
-		super();
 	}
 
 	public VerifyException(String msg) {

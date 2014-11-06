@@ -24,7 +24,6 @@ public class ActionException
 	extends com.liferay.portal.kernel.events.ActionException {
 
 	public ActionException() {
-		super();
 	}
 
 	public ActionException(String msg) {

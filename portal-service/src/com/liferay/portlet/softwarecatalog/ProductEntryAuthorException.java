@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ProductEntryAuthorException extends PortalException {
 
 	public ProductEntryAuthorException() {
-		super();
 	}
 
 	public ProductEntryAuthorException(String msg) {

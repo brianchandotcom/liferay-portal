@@ -32,7 +32,6 @@ public class AntivirusScannerException extends PortalException {
 	 */
 	@Deprecated
 	public AntivirusScannerException() {
-		super();
 	}
 
 	public AntivirusScannerException(int type) {

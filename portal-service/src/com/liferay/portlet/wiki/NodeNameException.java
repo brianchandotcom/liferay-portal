@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class NodeNameException extends PortalException {
 
 	public NodeNameException() {
-		super();
 	}
 
 	public NodeNameException(String msg) {

@@ -20,7 +20,6 @@ package com.liferay.portlet.dynamicdatamapping;
 public class StorageFieldNameException extends StorageException {
 
 	public StorageFieldNameException() {
-		super();
 	}
 
 	public StorageFieldNameException(String msg) {

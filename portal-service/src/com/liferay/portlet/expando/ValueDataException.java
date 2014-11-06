@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ValueDataException extends PortalException {
 
 	public ValueDataException() {
-		super();
 	}
 
 	public ValueDataException(String msg) {

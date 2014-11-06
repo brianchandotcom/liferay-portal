@@ -23,7 +23,6 @@ public class UnavailableProductVersionDirectDownloadURLException
 	extends PortalException {
 
 	public UnavailableProductVersionDirectDownloadURLException() {
-		super();
 	}
 
 	public UnavailableProductVersionDirectDownloadURLException(String msg) {

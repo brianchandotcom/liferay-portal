@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class TableNameException extends PortalException {
 
 	public TableNameException() {
-		super();
 	}
 
 	public TableNameException(String msg) {

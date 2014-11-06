@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class LockedThreadException extends PortalException {
 
 	public LockedThreadException() {
-		super();
 	}
 
 	public LockedThreadException(String msg) {

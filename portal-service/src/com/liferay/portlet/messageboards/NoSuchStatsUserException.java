@@ -22,7 +22,6 @@ import com.liferay.portal.NoSuchModelException;
 public class NoSuchStatsUserException extends NoSuchModelException {
 
 	public NoSuchStatsUserException() {
-		super();
 	}
 
 	public NoSuchStatsUserException(String msg) {

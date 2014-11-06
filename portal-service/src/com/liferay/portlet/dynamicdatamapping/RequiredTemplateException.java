@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class RequiredTemplateException extends PortalException {
 
 	public RequiredTemplateException() {
-		super();
 	}
 
 	public RequiredTemplateException(String msg) {

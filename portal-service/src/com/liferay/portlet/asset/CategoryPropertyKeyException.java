@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class CategoryPropertyKeyException extends PortalException {
 
 	public CategoryPropertyKeyException() {
-		super();
 	}
 
 	public CategoryPropertyKeyException(String msg) {

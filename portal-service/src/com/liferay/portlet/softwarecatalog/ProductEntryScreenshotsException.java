@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ProductEntryScreenshotsException extends PortalException {
 
 	public ProductEntryScreenshotsException() {
-		super();
 	}
 
 	public ProductEntryScreenshotsException(String msg) {

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class EntryScoreException extends PortalException {
 
 	public EntryScoreException() {
-		super();
 	}
 
 	public EntryScoreException(String msg) {

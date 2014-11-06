@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class DuplicateCategoryException extends PortalException {
 
 	public DuplicateCategoryException() {
-		super();
 	}
 
 	public DuplicateCategoryException(String msg) {

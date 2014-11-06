@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class RequestUserIdException extends PortalException {
 
 	public RequestUserIdException() {
-		super();
 	}
 
 	public RequestUserIdException(String msg) {

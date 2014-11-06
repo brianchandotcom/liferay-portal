@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class DuplicateRuleGroupInstanceException extends PortalException {
 
 	public DuplicateRuleGroupInstanceException() {
-		super();
 	}
 
 	public DuplicateRuleGroupInstanceException(String msg) {

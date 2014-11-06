@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class MessageBodyException extends PortalException {
 
 	public MessageBodyException() {
-		super();
 	}
 
 	public MessageBodyException(String msg) {

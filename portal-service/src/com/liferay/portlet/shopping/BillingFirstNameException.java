@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class BillingFirstNameException extends PortalException {
 
 	public BillingFirstNameException() {
-		super();
 	}
 
 	public BillingFirstNameException(String msg) {

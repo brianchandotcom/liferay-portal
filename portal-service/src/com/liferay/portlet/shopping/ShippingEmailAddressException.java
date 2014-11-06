@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ShippingEmailAddressException extends PortalException {
 
 	public ShippingEmailAddressException() {
-		super();
 	}
 
 	public ShippingEmailAddressException(String msg) {

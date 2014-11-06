@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class RecordSetDuplicateRecordSetKeyException extends PortalException {
 
 	public RecordSetDuplicateRecordSetKeyException() {
-		super();
 	}
 
 	public RecordSetDuplicateRecordSetKeyException(String msg) {

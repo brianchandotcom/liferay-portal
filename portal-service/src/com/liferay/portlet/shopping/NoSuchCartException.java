@@ -22,7 +22,6 @@ import com.liferay.portal.NoSuchModelException;
 public class NoSuchCartException extends NoSuchModelException {
 
 	public NoSuchCartException() {
-		super();
 	}
 
 	public NoSuchCartException(String msg) {

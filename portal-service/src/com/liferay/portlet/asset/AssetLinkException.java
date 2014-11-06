@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class AssetLinkException extends PortalException {
 
 	public AssetLinkException() {
-		super();
 	}
 
 	public AssetLinkException(String msg) {

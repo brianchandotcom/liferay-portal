@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ImportEventsException extends PortalException {
 
 	public ImportEventsException() {
-		super();
 	}
 
 	public ImportEventsException(String msg) {

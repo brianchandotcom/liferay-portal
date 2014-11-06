@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class FeedTargetLayoutFriendlyUrlException extends PortalException {
 
 	public FeedTargetLayoutFriendlyUrlException() {
-		super();
 	}
 
 	public FeedTargetLayoutFriendlyUrlException(String msg) {

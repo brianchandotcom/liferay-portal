@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class InvalidDDMStructureException extends PortalException {
 
 	public InvalidDDMStructureException() {
-		super();
 	}
 
 	public InvalidDDMStructureException(String msg) {

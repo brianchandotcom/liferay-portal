@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class EntryExpirationDateException extends PortalException {
 
 	public EntryExpirationDateException() {
-		super();
 	}
 
 	public EntryExpirationDateException(String msg) {

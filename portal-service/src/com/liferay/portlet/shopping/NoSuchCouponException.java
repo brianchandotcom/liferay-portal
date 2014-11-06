@@ -22,7 +22,6 @@ import com.liferay.portal.NoSuchModelException;
 public class NoSuchCouponException extends NoSuchModelException {
 
 	public NoSuchCouponException() {
-		super();
 	}
 
 	public NoSuchCouponException(String msg) {

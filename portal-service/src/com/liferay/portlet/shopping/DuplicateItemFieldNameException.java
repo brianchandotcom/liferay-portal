@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class DuplicateItemFieldNameException extends PortalException {
 
 	public DuplicateItemFieldNameException() {
-		super();
 	}
 
 	public DuplicateItemFieldNameException(String msg) {

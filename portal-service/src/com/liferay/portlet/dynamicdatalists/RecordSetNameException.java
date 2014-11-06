@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class RecordSetNameException extends PortalException {
 
 	public RecordSetNameException() {
-		super();
 	}
 
 	public RecordSetNameException(String msg) {

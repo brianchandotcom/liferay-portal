@@ -22,7 +22,6 @@ import com.liferay.portal.NoSuchModelException;
 public class NoSuchThreadFlagException extends NoSuchModelException {
 
 	public NoSuchThreadFlagException() {
-		super();
 	}
 
 	public NoSuchThreadFlagException(String msg) {

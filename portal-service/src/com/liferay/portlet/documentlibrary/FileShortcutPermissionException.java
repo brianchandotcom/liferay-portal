@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class FileShortcutPermissionException extends PortalException {
 
 	public FileShortcutPermissionException() {
-		super();
 	}
 
 	public FileShortcutPermissionException(String msg) {

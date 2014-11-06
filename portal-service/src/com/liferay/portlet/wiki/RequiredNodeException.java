@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class RequiredNodeException extends PortalException {
 
 	public RequiredNodeException() {
-		super();
 	}
 
 	public RequiredNodeException(String msg) {

@@ -26,12 +26,9 @@ public class RestoreEntryException extends PortalException {
 	public static final int INVALID_CONTAINER = 2;
 
 	public RestoreEntryException() {
-		super();
 	}
 
 	public RestoreEntryException(int type) {
-		super();
-
 		_type = type;
 	}
 

@@ -23,7 +23,6 @@ public class DuplicateProductVersionDirectDownloadURLException
 	extends PortalException {
 
 	public DuplicateProductVersionDirectDownloadURLException() {
-		super();
 	}
 
 	public DuplicateProductVersionDirectDownloadURLException(String msg) {

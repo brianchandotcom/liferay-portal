@@ -22,7 +22,6 @@ import com.liferay.portal.NoSuchModelException;
 public class NoSuchItemPriceException extends NoSuchModelException {
 
 	public NoSuchItemPriceException() {
-		super();
 	}
 
 	public NoSuchItemPriceException(String msg) {

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class TrackbackValidationException extends PortalException {
 
 	public TrackbackValidationException() {
-		super();
 	}
 
 	public TrackbackValidationException(String msg) {

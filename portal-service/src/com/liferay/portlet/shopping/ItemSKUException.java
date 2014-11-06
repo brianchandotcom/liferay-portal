@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ItemSKUException extends PortalException {
 
 	public ItemSKUException() {
-		super();
 	}
 
 	public ItemSKUException(String msg) {

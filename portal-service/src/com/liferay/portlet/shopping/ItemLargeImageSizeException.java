@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ItemLargeImageSizeException extends PortalException {
 
 	public ItemLargeImageSizeException() {
-		super();
 	}
 
 	public ItemLargeImageSizeException(String msg) {

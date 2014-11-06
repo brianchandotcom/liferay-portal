@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class RequiredCouponException extends PortalException {
 
 	public RequiredCouponException() {
-		super();
 	}
 
 	public RequiredCouponException(String msg) {

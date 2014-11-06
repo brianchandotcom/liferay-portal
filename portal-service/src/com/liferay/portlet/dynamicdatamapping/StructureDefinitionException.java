@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class StructureDefinitionException extends PortalException {
 
 	public StructureDefinitionException() {
-		super();
 	}
 
 	public StructureDefinitionException(String msg) {

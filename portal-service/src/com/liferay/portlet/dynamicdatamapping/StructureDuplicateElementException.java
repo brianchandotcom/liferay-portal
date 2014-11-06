@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class StructureDuplicateElementException extends PortalException {
 
 	public StructureDuplicateElementException() {
-		super();
 	}
 
 	public StructureDuplicateElementException(String msg) {

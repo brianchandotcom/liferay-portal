@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ProductVersionChangeLogException extends PortalException {
 
 	public ProductVersionChangeLogException() {
-		super();
 	}
 
 	public ProductVersionChangeLogException(String msg) {

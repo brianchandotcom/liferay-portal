@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class CouponMinimumOrderException extends PortalException {
 
 	public CouponMinimumOrderException() {
-		super();
 	}
 
 	public CouponMinimumOrderException(String msg) {

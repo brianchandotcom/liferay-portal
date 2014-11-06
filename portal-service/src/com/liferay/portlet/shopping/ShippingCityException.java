@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ShippingCityException extends PortalException {
 
 	public ShippingCityException() {
-		super();
 	}
 
 	public ShippingCityException(String msg) {

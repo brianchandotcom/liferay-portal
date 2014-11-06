@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class MailingListInUserNameException extends PortalException {
 
 	public MailingListInUserNameException() {
-		super();
 	}
 
 	public MailingListInUserNameException(String msg) {

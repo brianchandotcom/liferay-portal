@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ActionTypeException extends PortalException {
 
 	public ActionTypeException() {
-		super();
 	}
 
 	public ActionTypeException(String msg) {

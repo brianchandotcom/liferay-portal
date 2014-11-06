@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ItemMediumImageNameException extends PortalException {
 
 	public ItemMediumImageNameException() {
-		super();
 	}
 
 	public ItemMediumImageNameException(String msg) {

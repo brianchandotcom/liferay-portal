@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class EventDurationException extends PortalException {
 
 	public EventDurationException() {
-		super();
 	}
 
 	public EventDurationException(String msg) {

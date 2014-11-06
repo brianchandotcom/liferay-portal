@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class InvalidFolderException extends PortalException {
 
 	public InvalidFolderException() {
-		super();
 	}
 
 	public InvalidFolderException(String msg) {

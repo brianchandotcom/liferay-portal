@@ -22,7 +22,6 @@ import com.liferay.portal.NoSuchModelException;
 public class NoSuchStorageLinkException extends NoSuchModelException {
 
 	public NoSuchStorageLinkException() {
-		super();
 	}
 
 	public NoSuchStorageLinkException(String msg) {

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class SourceFileNameException extends PortalException {
 
 	public SourceFileNameException() {
-		super();
 	}
 
 	public SourceFileNameException(String msg) {

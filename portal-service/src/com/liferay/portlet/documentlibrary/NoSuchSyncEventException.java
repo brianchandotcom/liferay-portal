@@ -22,7 +22,6 @@ import com.liferay.portal.NoSuchModelException;
 public class NoSuchSyncEventException extends NoSuchModelException {
 
 	public NoSuchSyncEventException() {
-		super();
 	}
 
 	public NoSuchSyncEventException(String msg) {

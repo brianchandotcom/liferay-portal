@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class StructureFieldException extends PortalException {
 
 	public StructureFieldException() {
-		super();
 	}
 
 	public StructureFieldException(String msg) {

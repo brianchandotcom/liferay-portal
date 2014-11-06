@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class InvalidFileVersionException extends PortalException {
 
 	public InvalidFileVersionException() {
-		super();
 	}
 
 	public InvalidFileVersionException(String msg) {

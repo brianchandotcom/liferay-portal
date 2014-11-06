@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ItemNameException extends PortalException {
 
 	public ItemNameException() {
-		super();
 	}
 
 	public ItemNameException(String msg) {

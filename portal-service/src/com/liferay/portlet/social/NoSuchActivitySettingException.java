@@ -22,7 +22,6 @@ import com.liferay.portal.NoSuchModelException;
 public class NoSuchActivitySettingException extends NoSuchModelException {
 
 	public NoSuchActivitySettingException() {
-		super();
 	}
 
 	public NoSuchActivitySettingException(String msg) {

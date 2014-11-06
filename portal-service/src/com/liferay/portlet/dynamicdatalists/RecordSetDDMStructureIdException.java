@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class RecordSetDDMStructureIdException extends PortalException {
 
 	public RecordSetDDMStructureIdException() {
-		super();
 	}
 
 	public RecordSetDDMStructureIdException(String msg) {

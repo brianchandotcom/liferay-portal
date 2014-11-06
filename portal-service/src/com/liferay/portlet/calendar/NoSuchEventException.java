@@ -22,7 +22,6 @@ import com.liferay.portal.NoSuchModelException;
 public class NoSuchEventException extends NoSuchModelException {
 
 	public NoSuchEventException() {
-		super();
 	}
 
 	public NoSuchEventException(String msg) {

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ImageSizeException extends PortalException {
 
 	public ImageSizeException() {
-		super();
 	}
 
 	public ImageSizeException(String msg) {

@@ -22,7 +22,6 @@ import com.liferay.portal.NoSuchModelException;
 public class NoSuchMetadataSetException extends NoSuchModelException {
 
 	public NoSuchMetadataSetException() {
-		super();
 	}
 
 	public NoSuchMetadataSetException(String msg) {

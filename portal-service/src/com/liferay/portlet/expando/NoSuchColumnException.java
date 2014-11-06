@@ -22,7 +22,6 @@ import com.liferay.portal.NoSuchModelException;
 public class NoSuchColumnException extends NoSuchModelException {
 
 	public NoSuchColumnException() {
-		super();
 	}
 
 	public NoSuchColumnException(String msg) {

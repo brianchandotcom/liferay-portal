@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class DuplicateDirectoryException extends PortalException {
 
 	public DuplicateDirectoryException() {
-		super();
 	}
 
 	public DuplicateDirectoryException(String msg) {

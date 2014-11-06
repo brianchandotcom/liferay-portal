@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class DuplicateRepositoryNameException extends PortalException {
 
 	public DuplicateRepositoryNameException() {
-		super();
 	}
 
 	public DuplicateRepositoryNameException(String msg) {

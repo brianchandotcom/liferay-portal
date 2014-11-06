@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ProductEntryPageURLException extends PortalException {
 
 	public ProductEntryPageURLException() {
-		super();
 	}
 
 	public ProductEntryPageURLException(String msg) {

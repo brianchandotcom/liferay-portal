@@ -50,18 +50,18 @@ public class UserLocalServiceTest {
 		List<User> users = UserLocalServiceUtil.getNoAnnouncementsDeliveries(
 			"general");
 
-		Assert.assertEquals(2, users.size());
-
+		boolean success = false;
 		for (User user : users) {
 			if (user.getUserId() == user2.getUserId()) {
-				return;
+				success = true;
 			}
 			else if (user.getUserId() == user1.getUserId()) {
 				Assert.fail("User should not have announcement deliveries");
 			}
 		}
 
-		Assert.fail("No user returned matching userId: " + user2.getUserId());
+		Assert.assertTrue(
+			"No user returned matching userId: " + user2.getUserId(), success);
 	}
 
 	@Test

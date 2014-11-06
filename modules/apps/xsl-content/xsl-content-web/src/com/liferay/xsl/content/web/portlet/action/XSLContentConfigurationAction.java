@@ -14,6 +14,8 @@
 
 package com.liferay.xsl.content.web.portlet.action;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -24,6 +26,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.xsl.content.web.configuration.XSLContentConfiguration;
 import com.liferay.xsl.content.web.constants.XSLContentPortletKeys;
 import com.liferay.xsl.content.web.util.XSLContentUtil;
 
@@ -32,10 +35,14 @@ import java.util.Map;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Brian Wing Shun Chan
@@ -43,7 +50,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Samuel Kong
  */
 @Component(
-	immediate = true,
+	configurationPid = "com.liferay.xsl.content.web", immediate = true,
 	property = {
 		"javax.portlet.name=" + XSLContentPortletKeys.XSL_CONTENT
 	},
@@ -60,6 +67,25 @@ public class XSLContentConfigurationAction extends DefaultConfigurationAction {
 		validateUrls(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
+	}
+
+	@Override
+	public String render(
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
+		throws Exception {
+
+		renderRequest.setAttribute(
+			XSLContentConfiguration.class.getName(), _xslContentConfiguration);
+
+		return super.render(portletConfig, renderRequest, renderResponse);
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_xslContentConfiguration = Configurable.createConfigurable(
+			XSLContentConfiguration.class, properties);
 	}
 
 	protected String getPortletContextUrl(ThemeDisplay themeDisplay) {
@@ -137,5 +163,7 @@ public class XSLContentConfigurationAction extends DefaultConfigurationAction {
 			SessionErrors.add(actionRequest, "xslUrl");
 		}
 	}
+
+	private volatile XSLContentConfiguration _xslContentConfiguration;
 
 }

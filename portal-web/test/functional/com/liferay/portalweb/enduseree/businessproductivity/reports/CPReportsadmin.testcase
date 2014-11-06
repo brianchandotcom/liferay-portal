@@ -10,7 +10,44 @@
 	<tear-down>
 		<execute macro="ReportsAdmin#tearDownReports" />
 		<execute macro="ReportsAdmin#tearDownDefinitions" />
+		<execute macro="ServerAdministration#tearDownMailServerSettings" />
 	</tear-down>
+
+	<command name="AddReportInvalidEmail" priority="5">
+		<var name="reportsDefinitionName" value="Reports Definition Name" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Reports Admin" />
+		</execute>
+
+		<execute macro="ReportsAdmin#gotoDefinitions" />
+
+		<execute macro="ReportsAdmin#addReportDefinition">
+			<var name="dataSource" value="Portal" />
+			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
+			<var name="reportsDefinitionName" value="${reportsDefinitionName}" />
+			<var name="templateFile" value="reports_admin_template_source_sample.jrxml" />
+		</execute>
+
+		<var name="key_reportsDefinitionName" value="${reportsDefinitionName}" />
+
+		<execute action="CPReportsadmin#assertClick" locator-key1="DEFINITIONS_DEFINITION_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPReportsadmin#assertClick" locator-key1="DEFINITIONS_DEFINITION_MENULIST_ADD_REPORT" value1="Add Report" />
+
+		<execute action="CPReportsadminAddreportentry#select" locator-key1="REPORT_FORMAT_SELECT" value1="csv" />
+		<execute action="CPReportsadminAddreportentry#type" locator-key1="EMAIL_NOTIFICATIONS_FIELD" value1="InvalidEmail" />
+		<execute action="CPReportsadminAddreportentry#assertClick" locator-key1="GENERATE_BUTTON" value1="Generate" />
+
+		<execute action="CPReportsadmin#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+		<execute action="CPReportsadmin#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter a valid email address." />
+
+		<execute action="CPReportsadminAddreportentry#type" locator-key1="EMAIL_NOTIFICATIONS_FIELD" value1="liferay.qa1@gmail.com" />
+		<execute action="CPReportsadminAddreportentry#type" locator-key1="EMAIL_RECIPIENT_FIELD" value1="InvalidEmail" />
+		<execute action="CPReportsadminAddreportentry#assertClick" locator-key1="GENERATE_BUTTON" value1="Generate" />
+
+		<execute action="CPReportsadmin#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+		<execute action="CPReportsadmin#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter a valid email address." />
+	</command>
 
 	<command name="DeleteReportFile" priority="5">
 		<var name="reportsDefinitionName" value="Reports Definition Name" />
@@ -37,6 +74,10 @@
 		</execute>
 
 		<execute macro="ReportsAdmin#viewReportEntry">
+			<var name="reportsDefinitionName" value="Reports Definition Name" />
+		</execute>
+
+		<execute macro="ReportsAdmin#viewReportEntryFields">
 			<var name="dataSource" value="portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="${reportsDefinitionName}" />
@@ -61,6 +102,86 @@
 		<execute action="CPReportsadminViewreportentry#assertElementNotPresent" locator-key1="ENTRY_FILE_TABLE_FILE" />
 	</command>
 
+	<command name="DeliverReportToEmail" priority="5">
+		<var name="emailAddress1" property-value="email.address.1" />
+		<var name="emailAddress2" property-value="email.address.2" />
+		<var name="emailAddress3" property-value="email.address.3" />
+		<var name="emailPassword3" property-value="email.password.3" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#configureMailServerSettings">
+			<var name="userName" value="liferay.qa@gmail.com" />
+			<var name="userPassword" value="loveispatient1" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Reports Admin" />
+		</execute>
+
+		<execute macro="ReportsAdmin#gotoDefinitions" />
+
+		<execute macro="ReportsAdmin#addReportDefinition">
+			<var name="dataSource" value="Portal" />
+			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
+			<var name="reportsDefinitionName" value="Reports Definition Name" />
+			<var name="templateFile" value="reports_admin_template_source_sample.jrxml" />
+		</execute>
+
+		<execute macro="ReportsAdmin#addReportEntry">
+			<var name="emailNotificationsAddress" value="${emailAddress1}" />
+			<var name="emailRecipientAddress" value="${emailAddress2}" />
+			<var name="reportFormat" value="pdf" />
+			<var name="reportsDefinitionName" value="Reports Definition Name" />
+		</execute>
+
+		<execute macro="ReportsAdmin#viewReportEntry">
+			<var name="reportsDefinitionName" value="Reports Definition Name" />
+		</execute>
+
+		<execute macro="ReportsAdmin#viewReportEntryFields">
+			<var name="dataSource" value="portal" />
+			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
+			<var name="reportsDefinitionName" value="Reports Definition Name" />
+			<var name="reportsFileName" value="reports_admin_template_source_sample.pdf" />
+			<var name="userName" value="Test Test" />
+		</execute>
+
+		<execute macro="ReportsAdmin#deliverReportEntryFile">
+			<var name="emailRecipientAddress" value="${emailAddress3}" />
+			<var name="reportsFileName" value="reports_admin_template_source_sample.pdf" />
+		</execute>
+
+		<execute action="BaseLiferay#pause" locator1="30000" />
+
+		<execute macro="Gmail#login">
+			<var name="userEmailAddress" value="${emailAddress3}" />
+			<var name="userPassword" value="${emailPassword3}" />
+		</execute>
+
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<execute macro="Gmail#viewMail">
+			<var name="emailFromUserName" value="Joe Bloggs" />
+			<var name="gmailAssetType" value="New Report: reports_admin_template_source_sample.pdf" />
+			<var name="gmailMailTableMessageTitle" value="New Report: reports_admin_template_source_sample.pdf" />
+			<var name="gmailMessageBody" value="Please review the attached report." />
+			<var name="gmailMessageBodyClosing" value="Sincerly, test@liferay.com" />
+			<var name="gmailMessageBodyGreeting" value="Dear ${emailAddress3}," />
+			<var name="gmailMessageTitle" value="New Report: reports_admin_template_source_sample.pdf" />
+			<var name="gmailMesssageAttachment" value="reports_admin_template_source_sample.pdf" />
+		</execute>
+
+		<execute macro="Gmail#tearDown">
+			<var name="userEmailAddress" value="${emailAddress3}" />
+			<var name="userPassword" value="${emailPassword3}" />
+		</execute>
+
+		<execute action="Home#open" locator1="http://localhost:8080" />
+	</command>
+
 	<command name="DownloadReportCSV" priority="5">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Reports Admin" />
@@ -83,6 +204,10 @@
 		</execute>
 
 		<execute macro="ReportsAdmin#viewReportEntry">
+			<var name="reportsDefinitionName" value="Reports Definition Name" />
+		</execute>
+
+		<execute macro="ReportsAdmin#viewReportEntryFields">
 			<var name="dataSource" value="portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
@@ -117,6 +242,10 @@
 		</execute>
 
 		<execute macro="ReportsAdmin#viewReportEntry">
+			<var name="reportsDefinitionName" value="Reports Definition Name" />
+		</execute>
+
+		<execute macro="ReportsAdmin#viewReportEntryFields">
 			<var name="dataSource" value="portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
@@ -151,6 +280,10 @@
 		</execute>
 
 		<execute macro="ReportsAdmin#viewReportEntry">
+			<var name="reportsDefinitionName" value="Reports Definition Name" />
+		</execute>
+
+		<execute macro="ReportsAdmin#viewReportEntryFields">
 			<var name="dataSource" value="portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
@@ -186,6 +319,10 @@
 		</execute>
 
 		<execute macro="ReportsAdmin#viewReportEntry">
+			<var name="reportsDefinitionName" value="Reports Definition Name" />
+		</execute>
+
+		<execute macro="ReportsAdmin#viewReportEntryFields">
 			<var name="dataSource" value="portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
@@ -220,6 +357,10 @@
 		</execute>
 
 		<execute macro="ReportsAdmin#viewReportEntry">
+			<var name="reportsDefinitionName" value="Reports Definition Name" />
+		</execute>
+
+		<execute macro="ReportsAdmin#viewReportEntryFields">
 			<var name="dataSource" value="portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
@@ -254,6 +395,10 @@
 		</execute>
 
 		<execute macro="ReportsAdmin#viewReportEntry">
+			<var name="reportsDefinitionName" value="Reports Definition Name" />
+		</execute>
+
+		<execute macro="ReportsAdmin#viewReportEntryFields">
 			<var name="dataSource" value="portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
@@ -288,6 +433,10 @@
 		</execute>
 
 		<execute macro="ReportsAdmin#viewReportEntry">
+			<var name="reportsDefinitionName" value="Reports Definition Name" />
+		</execute>
+
+		<execute macro="ReportsAdmin#viewReportEntryFields">
 			<var name="dataSource" value="portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
@@ -298,5 +447,143 @@
 		<execute macro="ReportsAdmin#downloadReportEntryFile">
 			<var name="reportsFileName" value="reports_admin_template_source_sample.xml" />
 		</execute>
+	</command>
+
+	<command name="ViewEmailNotificationDelivery" priority="5">
+		<var name="emailAddress1" property-value="email.address.1" />
+		<var name="emailAddress2" property-value="email.address.2" />
+		<var name="emailPassword1" property-value="email.password.1" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#configureMailServerSettings">
+			<var name="userName" value="liferay.qa@gmail.com" />
+			<var name="userPassword" value="loveispatient1" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Reports Admin" />
+		</execute>
+
+		<execute macro="ReportsAdmin#gotoDefinitions" />
+
+		<execute macro="ReportsAdmin#addReportDefinition">
+			<var name="dataSource" value="Portal" />
+			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
+			<var name="reportsDefinitionName" value="Reports Definition Name" />
+			<var name="templateFile" value="reports_admin_template_source_sample.jrxml" />
+		</execute>
+
+		<execute macro="ReportsAdmin#addReportEntry">
+			<var name="emailNotificationsAddress" value="${emailAddress1}" />
+			<var name="emailRecipientAddress" value="${emailAddress2}" />
+			<var name="reportFormat" value="pdf" />
+			<var name="reportsDefinitionName" value="Reports Definition Name" />
+		</execute>
+
+		<execute action="BaseLiferay#pause" locator1="30000" />
+
+		<execute macro="Gmail#login">
+			<var name="userEmailAddress" value="${emailAddress1}" />
+			<var name="userPassword" value="${emailPassword1}" />
+		</execute>
+
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<execute macro="Gmail#viewMail">
+			<var name="emailFromUserName" value="Joe Bloggs" />
+			<var name="gmailAssetType" value="New Report: reports_admin_template_source_sample.pdf" />
+			<var name="gmailMailTableMessageTitle" value="New Report: reports_admin_template_source_sample.pdf" />
+			<var name="gmailMessageBody" value="You have a new report." />
+			<var name="gmailMessageBodyClosing" value="Sincerly, Joe Bloggs test@liferay.com" />
+			<var name="gmailMessageBodyGreeting" value="Dear ${emailAddress1}," />
+			<var name="gmailMessageTitle" value="New Report: reports_admin_template_source_sample.pdf" />
+		</execute>
+
+		<var name="key_gmailAssetType" value="New Report: reports_admin_template_source_sample.pdf" />
+		<var name="key_gmailLinkName" value="report" />
+
+		<execute action="Gmail#assertClick" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_LINK" value1="report" />
+
+		<execute action="Home#selectWindow" locator1="title=Reports Admin - Liferay" />
+
+		<execute macro="ReportsAdmin#viewReportEntryFields">
+			<var name="dataSource" value="portal" />
+			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
+			<var name="reportsDefinitionName" value="Reports Definition Name" />
+			<var name="reportsFileName" value="reports_admin_template_source_sample.pdf" />
+			<var name="userName" value="Test Test" />
+		</execute>
+
+		<execute macro="Gmail#tearDown">
+			<var name="userEmailAddress" value="${emailAddress1}" />
+			<var name="userPassword" value="${emailPassword1}" />
+		</execute>
+
+		<execute action="Home#open" locator1="http://localhost:8080" />
+	</command>
+
+	<command name="ViewEmailRecipientDelivery" priority="5">
+		<var name="emailAddress1" property-value="email.address.1" />
+		<var name="emailAddress2" property-value="email.address.2" />
+		<var name="emailPassword2" property-value="email.password.1" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#configureMailServerSettings">
+			<var name="userName" value="liferay.qa@gmail.com" />
+			<var name="userPassword" value="loveispatient1" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Reports Admin" />
+		</execute>
+
+		<execute macro="ReportsAdmin#gotoDefinitions" />
+
+		<execute macro="ReportsAdmin#addReportDefinition">
+			<var name="dataSource" value="Portal" />
+			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
+			<var name="reportsDefinitionName" value="Reports Definition Name" />
+			<var name="templateFile" value="reports_admin_template_source_sample.jrxml" />
+		</execute>
+
+		<execute macro="ReportsAdmin#addReportEntry">
+			<var name="emailNotificationsAddress" value="${emailAddress1}" />
+			<var name="emailRecipientAddress" value="${emailAddress2}" />
+			<var name="reportFormat" value="pdf" />
+			<var name="reportsDefinitionName" value="Reports Definition Name" />
+		</execute>
+
+		<execute action="BaseLiferay#pause" locator1="30000" />
+
+		<execute macro="Gmail#login">
+			<var name="userEmailAddress" value="${emailAddress2}" />
+			<var name="userPassword" value="${emailPassword2}" />
+		</execute>
+
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<execute macro="Gmail#viewMail">
+			<var name="emailFromUserName" value="Joe Bloggs" />
+			<var name="gmailAssetType" value="New Report: reports_admin_template_source_sample.pdf" />
+			<var name="gmailMailTableMessageTitle" value="New Report: reports_admin_template_source_sample.pdf" />
+			<var name="gmailMessageBody" value="Please review the attached report." />
+			<var name="gmailMessageBodyClosing" value="Sincerly, test@liferay.com" />
+			<var name="gmailMessageBodyGreeting" value="Dear ${emailAddress2}," />
+			<var name="gmailMessageTitle" value="New Report: reports_admin_template_source_sample.pdf" />
+			<var name="gmailMesssageAttachment" value="reports_admin_template_source_sample.pdf" />
+		</execute>
+
+		<execute macro="Gmail#tearDown">
+			<var name="userEmailAddress" value="${emailAddress2}" />
+			<var name="userPassword" value="${emailPassword2}" />
+		</execute>
+
+		<execute action="Home#open" locator1="http://localhost:8080" />
 	</command>
 </definition>

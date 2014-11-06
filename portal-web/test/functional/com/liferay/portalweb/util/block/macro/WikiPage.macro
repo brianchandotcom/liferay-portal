@@ -5,6 +5,8 @@
 		<var name="key_attachmentFileName" value="${attachmentFileName}" />
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
+		<execute action="PGWiki#assertClick" locator-key1="VIEW_PAGE" value1="${wikiPageTitle}" />
+
 		<execute action="PGWiki#assertClick" locator-key1="DETAILS_BUTTON" value1="Details" />
 
 		<execute action="PGWikiWikipageDetails#assertClick" locator-key1="NAVIGATION_ATTACHMENTS" value1="Attachments" />

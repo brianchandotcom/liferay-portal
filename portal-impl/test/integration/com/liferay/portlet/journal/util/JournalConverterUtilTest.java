@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -648,19 +649,31 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		layouts.put(
 			_PRIVATE_LAYOUT,
 			LayoutTestUtil.addLayout(
-				group.getGroupId(), RandomTestUtil.randomString(), true));
+				group.getGroupId(),
+				RandomTestUtil.randomString(
+					FriendlyURLRandomizerBumper.INSTANCE),
+				true));
 		layouts.put(
 			_PRIVATE_USER_LAYOUT,
 			LayoutTestUtil.addLayout(
-				user.getGroupId(), RandomTestUtil.randomString(), true));
+				user.getGroupId(),
+				RandomTestUtil.randomString(
+					FriendlyURLRandomizerBumper.INSTANCE),
+				true));
 		layouts.put(
 			_PUBLIC_LAYOUT,
 			LayoutTestUtil.addLayout(
-				group.getGroupId(), RandomTestUtil.randomString(), false));
+				group.getGroupId(),
+				RandomTestUtil.randomString(
+					FriendlyURLRandomizerBumper.INSTANCE),
+				false));
 		layouts.put(
 			_PUBLIC_USER_LAYOUT,
 			LayoutTestUtil.addLayout(
-				user.getGroupId(), RandomTestUtil.randomString(), false));
+				user.getGroupId(),
+				RandomTestUtil.randomString(
+					FriendlyURLRandomizerBumper.INSTANCE),
+				false));
 
 		return layouts;
 	}

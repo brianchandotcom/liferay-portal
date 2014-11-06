@@ -23,6 +23,7 @@ import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -96,13 +97,16 @@ public class LayoutSetPrototypeExportImportTest
 
 			LayoutTestUtil.addLayout(
 				exportedLayoutSetPrototypeGroup.getGroupId(),
-				RandomTestUtil.randomString(), true, exportedLayoutPrototype,
-				true);
+				RandomTestUtil.randomString(
+					FriendlyURLRandomizerBumper.INSTANCE),
+				true, exportedLayoutPrototype, true);
 		}
 		else {
 			LayoutTestUtil.addLayout(
 				exportedLayoutSetPrototypeGroup.getGroupId(),
-				RandomTestUtil.randomString(), true);
+				RandomTestUtil.randomString(
+					FriendlyURLRandomizerBumper.INSTANCE),
+				true);
 		}
 
 		exportImportPortlet(PortletKeys.LAYOUT_SET_PROTOTYPE);

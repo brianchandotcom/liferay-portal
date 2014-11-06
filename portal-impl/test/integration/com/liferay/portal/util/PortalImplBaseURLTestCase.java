@@ -21,6 +21,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.test.DeleteAfterTestRun;
+import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -48,9 +49,12 @@ public class PortalImplBaseURLTestCase {
 		group = GroupTestUtil.addGroup();
 
 		privateLayout = LayoutTestUtil.addLayout(
-			group.getGroupId(), RandomTestUtil.randomString(), true);
+			group.getGroupId(),
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
+			true);
 		publicLayout = LayoutTestUtil.addLayout(
-			group.getGroupId(), RandomTestUtil.randomString());
+			group.getGroupId(),
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
 	}
 
 	protected ThemeDisplay initThemeDisplay(

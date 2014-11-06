@@ -33,6 +33,7 @@ import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import java.util.HashMap;
@@ -49,8 +50,10 @@ import javax.portlet.PortletPreferences;
 public class LayoutTestUtil {
 
 	public static Layout addLayout(Group group) throws Exception {
-		return LayoutTestUtil.addLayout(
-			group.getGroupId(), RandomTestUtil.randomString(), false);
+		return addLayout(
+			group.getGroupId(),
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
+			false);
 	}
 
 	public static Layout addLayout(

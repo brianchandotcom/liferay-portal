@@ -23,6 +23,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -72,7 +73,8 @@ public class MDRRuleGroupLocalServiceTest {
 		throws Exception {
 
 		Layout layout = LayoutTestUtil.addLayout(
-			_group.getGroupId(), RandomTestUtil.randomString());
+			_group.getGroupId(),
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
 
 		LinkedHashMap<String, Object> params =
 			new LinkedHashMap<String, Object>();

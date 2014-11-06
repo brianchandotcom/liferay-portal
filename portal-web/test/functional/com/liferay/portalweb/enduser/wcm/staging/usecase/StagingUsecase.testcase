@@ -60,6 +60,10 @@
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
+		<execute macro="WikiPage#gotoPG">
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+
 		<execute macro="WikiPage#addAttachmentViaPageDetailsPG">
 			<var name="attachmentFileName" value="Document_1.jpg" />
 			<var name="wikiPageTitle" value="Wiki Page Title" />
@@ -82,7 +86,7 @@
 		</execute>
 
 		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
 		<execute macro="WikiPage#viewAttachmentPG">
@@ -98,7 +102,7 @@
 		</execute>
 
 		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
 		<execute macro="WikiPage#viewAttachmentPG">

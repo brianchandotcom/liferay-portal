@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
-import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.util.ClassLoaderUtil;
@@ -32,8 +30,6 @@ import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
-
-import java.lang.reflect.InvocationHandler;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -167,9 +163,7 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 	public void register(DLProcessor dlProcessor) {
 		String type = _getType(dlProcessor);
 
-		if (type != null) {
-			_dlProcessors.put(type, dlProcessor);
-		}
+		_dlProcessors.put(type, dlProcessor);
 	}
 
 	@Override
@@ -236,22 +230,6 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 	}
 
 	private String _getType(DLProcessor dlProcessor) {
-		if (ProxyUtil.isProxyClass(dlProcessor.getClass())) {
-			InvocationHandler invocationHandler =
-				ProxyUtil.getInvocationHandler(dlProcessor);
-
-			if (invocationHandler instanceof ClassLoaderBeanHandler) {
-				ClassLoaderBeanHandler classLoaderBeanHandler =
-					(ClassLoaderBeanHandler)invocationHandler;
-
-				Object bean = classLoaderBeanHandler.getBean();
-
-				if (bean instanceof DLProcessor) {
-					dlProcessor = (DLProcessor)bean;
-				}
-			}
-		}
-
 		if (dlProcessor instanceof AudioProcessor) {
 			return DLProcessorConstants.AUDIO_PROCESSOR;
 		}

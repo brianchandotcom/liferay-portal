@@ -51,10 +51,6 @@ import org.apache.catalina.startup.HostConfig;
  */
 public class PortalHostConfig extends HostConfig {
 
-	public PortalHostConfig() {
-		super();
-	}
-
 	@Override
 	protected void deployDescriptors(File configBase, String[] files) {
 		super.deployDescriptors(configBase, sortFiles(files));

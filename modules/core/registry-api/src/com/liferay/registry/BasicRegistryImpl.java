@@ -856,10 +856,6 @@ public class BasicRegistryImpl implements Registry {
 
 	private class LowerCaseKeyTreeMap extends TreeMap<String, Object> {
 
-		public LowerCaseKeyTreeMap() {
-			super();
-		}
-
 		@Override
 		public Object put(String key, Object value) {
 			return super.put(key.toLowerCase(), value);

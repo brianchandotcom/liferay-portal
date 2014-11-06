@@ -136,6 +136,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ARTICLE_NAVIGATION_CHILD</td>
+	<td>//div[@class='kbarticle-navigation']/ul/li[contains(.,'${key_kbArticleTitle}')]/ul/li/a[contains(.,'${key_kbChildArticleTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_NAVIGATION_CHILD_GENERIC</td>
+	<td>//div[@class='kbarticle-navigation']/ul/li/ul/li/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

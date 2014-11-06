@@ -576,6 +576,8 @@
 
 	<command name="viewConfigureAPDisplayTemplateTitleListBookmarksPG">
 		<var name="key_assetTitle" value="${assetTitle}" />
+		<var name="key_bookmarkName" value="${bookmarkName}" />
+
 		<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="ASSET_ABSTRACT_READ_MORE" />
 		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${bookmarkDescription}" />
 		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="ASSET_ABSTRACT_BOOKMARK_TITLE_LIST_DISPLAY_TEMPLATE_BOOKMARK_ICON" />

@@ -103,22 +103,22 @@
 <!--FOLDERS_TABLE-->
 <tr>
 	<td>FOLDERS_TABLE_FOLDER_NAME</td>
-	<td>//div[@id='_28_bookmarksFoldersSearchContainer']//tr[contains(.,'${key_folderName}')]/td[1]/a/strong</td>
+	<td>//div[contains(@id,'bookmarksFolder')]//tr[contains(.,'${key_folderName}')]/td[1]/a/strong</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDERS_TABLE_FOLDER_DESCRIPTION</td>
-	<td>//div[@id='_28_bookmarksFoldersSearchContainer']//tr[contains(.,'${key_folderName}')]/td[1]/a</td>
+	<td>//div[contains(@id,'bookmarksFolder')]//tr[contains(.,'${key_folderName}')]/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDERS_TABLE_FOLDER_ACTIONS_BUTTON</td>
-	<td>//div[@id='_28_bookmarksFoldersSearchContainer']//tr[contains(.,'${key_folderName}')]/td[4]/div/a[contains(@class,'dropdown-toggle')]</td>
+	<td>//div[contains(@id,'bookmarksFolder')]//tr[contains(.,'${key_folderName}')]/td[4]/div/a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDERS_TABLE_FOLDER_ACTIONS_BUTTON_GENERIC</td>
-	<td>//div[@id='_28_bookmarksFoldersSearchContainer']//tr/td[4]/div/a[contains(@class,'dropdown-toggle')]</td>
+	<td>//div[contains(@id,'bookmarksFolder')]//tr/td[4]/div/a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>

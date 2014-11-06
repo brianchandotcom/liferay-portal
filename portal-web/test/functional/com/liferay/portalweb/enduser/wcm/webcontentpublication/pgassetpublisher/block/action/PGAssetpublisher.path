@@ -287,12 +287,12 @@
 <!--ASSET_ABSTRACT_BOOKMARK-->
 <tr>
 	<td>ASSET_ABSTRACT_BOOKMARK_TABLE_DISPLAY_TEMPLATE_BOOKMARK_ICON</td>
-	<td>//h3/a[contains(.,'${bookmarkName}')]/i[@class='icon-bookmark-empty']</td>
+	<td>//h3/a[contains(.,'${key_bookmarkName}')]/i[@class='icon-bookmark-empty']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_ABSTRACT_BOOKMARK_TITLE_LIST_DISPLAY_TEMPLATE_BOOKMARK_ICON</td>
-	<td>//a[contains(.,'${bookmarkName}')]/i[@class='icon-bookmark-empty']</td>
+	<td>//a[contains(.,'${key_bookmarkName}')]/i[@class='icon-bookmark-empty']</td>
 	<td></td>
 </tr>
 <tr>
@@ -303,7 +303,7 @@
 <!--ASSET_ABSTRACT_BOOKMARK_DETAIL-->
 <tr>
 	<td>ASSET_ABSTRACT_BOOKMARK_DETAIL_NAME</td>
-	<td>//h3[contains(.,'${bookmarkName}')]</td>
+	<td>//h3[contains(.,'${key_bookmarkName}')]</td>
 	<td></td>
 </tr>
 <tr>

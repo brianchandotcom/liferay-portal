@@ -896,6 +896,7 @@
 		<execute macro="AssetPublisherPortlet#viewConfigureAPDisplayTemplateTitleListBookmarksPG">
 			<var name="assetTitle" value="Test Bookmark Name" />
 			<var name="bookmarkDescription" value="Test Bookmark Description" />
+			<var name="bookmarkName" value="Test Bookmark Name" />
 		</execute>
 	</command>
 
@@ -991,6 +992,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewSelectedPG">
+			<var name="selectedAsset" value="Blogs Entry" />
 			<var name="selectedAssetConfiguration" value="Blogs Entry" />
 		</execute>
 	</command>
@@ -1004,7 +1006,8 @@
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#viewSelectedPG">
+		<execute macro="AssetPublisherPortlet#viewSelectedPG">.
+			<var name="selectedAsset" value="Bookmarks Entry" />
 			<var name="selectedAssetConfiguration" value="Bookmarks Entry" />
 		</execute>
 	</command>

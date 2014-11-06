@@ -56,7 +56,7 @@
 </tr>
 <tr>
 	<td>ARCHIVED_SETUPS_TABLE_DROPDOWN</td>
-	<td>//tr[contains(.,'${key_archiveName}')]//a[contains(@class,'dropdown-toggle')]</td>
+	<td>//tr/td[4]/div/a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>

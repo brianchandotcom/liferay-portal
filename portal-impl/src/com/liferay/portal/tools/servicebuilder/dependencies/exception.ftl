@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ${exception}Exception extends PortalException {
 
 	public ${exception}Exception() {
-		super();
 	}
 
 	public ${exception}Exception(String msg) {

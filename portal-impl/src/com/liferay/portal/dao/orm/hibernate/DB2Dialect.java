@@ -26,8 +26,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class DB2Dialect extends org.hibernate.dialect.DB2Dialect {
 
 	public DB2Dialect() {
-		super();
-
 		registerKeyword("for");
 		registerKeyword("optimize");
 	}

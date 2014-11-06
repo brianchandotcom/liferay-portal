@@ -10,6 +10,7 @@
 	<tear-down>
 		<execute macro="ReportsAdmin#tearDownReports" />
 		<execute macro="ReportsAdmin#tearDownDefinitions" />
+
 		<execute macro="ServerAdministration#tearDownMailServerSettings" />
 	</tear-down>
 

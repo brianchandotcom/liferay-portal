@@ -162,6 +162,15 @@
 		<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_GREETING" value1="${gmailMessageBody}" />
 		<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY" value1="${gmailMessageBody}" />
 		<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_CLOSING" value1="${gmailMessageBody}" />
+
+		<if>
+			<isset var="gmailMesssageAttachment" />
+			<then>
+				<var name="key_gmailMesssageAttachment" value="${gmailMesssageAttachment}" />
+
+				<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_ATTACHMENT" value1="${gmailMesssageAttachment}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="viewSocialOfficeMessageMail">

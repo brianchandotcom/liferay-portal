@@ -618,39 +618,6 @@ select:focus {
 
 /* ---------- Form navigator ---------- */
 
-.taglib-form-navigator > .form-steps > ul.form-navigator.well .tab {
-	&.active {
-		.tab-label {
-			.message {
-				color: #000;
-			}
-
-			.number {
-				background: #60BFEF;
-			}
-
-			.tab-icon {
-				color: #60BFEF;
-			}
-		}
-	}
-
-	&.section-error .tab-label .message {
-		color: #B50303;
-	}
-
-	.tab-label {
-		.message {
-			color: #000;
-		}
-
-		.number {
-			background: #CCC;
-			color: #FFF;
-		}
-	}
-}
-
 @include respond-to(phone, tablet) {
 	.taglib-form-navigator {
 		position: relative;
@@ -659,35 +626,6 @@ select:focus {
 			clear: both;
 			float: none;
 			width: 100%;
-		}
-
-		.form-navigator.nav.well {
-			border-width: 1px 0 0;
-
-			@include box-shadow(none);
-
-			clear: both;
-			float: none;
-			margin: 1em 0 0;
-			padding: 1em 0.5em;
-			position: static;
-			width: 100%;
-
-			> li {
-				display: inline-block;
-
-				> a {
-					margin: 0;
-					padding: 0.1em 1em;
-				}
-			}
-
-			.button-holder {
-				padding-bottom: 20px;
-				padding-left: 0;
-				position: absolute;
-				top: 100%;
-			}
 		}
 
 		.nobr {

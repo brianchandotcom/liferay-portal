@@ -19,12 +19,9 @@ import aQute.bnd.annotation.metatype.Configurable;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.xsl.content.web.configuration.XSLContentConfiguration;
 import com.liferay.xsl.content.web.constants.XSLContentPortletKeys;
@@ -52,7 +49,8 @@ import org.osgi.service.component.annotations.Modified;
 @Component(
 	configurationPid = "com.liferay.xsl.content.web", immediate = true,
 	property = {
-		"javax.portlet.name=" + XSLContentPortletKeys.XSL_CONTENT
+		"javax.portlet.name=" + XSLContentPortletKeys.XSL_CONTENT,
+		"valid.url.prefixes=@portlet_context_url@"
 	},
 	service = ConfigurationAction.class
 )
@@ -100,19 +98,9 @@ public class XSLContentConfigurationAction extends DefaultConfigurationAction {
 		return sb.toString();
 	}
 
-	protected String[] getValidUrlPrefixes(ActionRequest actionRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String portletResource = ParamUtil.getString(
-			actionRequest, "portletResource");
-
-		Portlet xslPortlet = PortletLocalServiceUtil.getPortletById(
-			portletResource);
-
-		Map initParams = xslPortlet.getInitParams();
-
-		String validUrlPrefixes = (String)initParams.get("valid.url.prefixes");
+	protected String[] getValidUrlPrefixes(ThemeDisplay themeDisplay) {
+		String validUrlPrefixes =
+			_xslContentConfiguration.getValidUrlPrefixes();
 
 		validUrlPrefixes = replaceTokens(themeDisplay, validUrlPrefixes);
 
@@ -145,7 +133,7 @@ public class XSLContentConfigurationAction extends DefaultConfigurationAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String[] validUrlPrefixes = getValidUrlPrefixes(actionRequest);
+		String[] validUrlPrefixes = getValidUrlPrefixes(themeDisplay);
 
 		String xmlUrl = getParameter(actionRequest, "xmlUrl");
 

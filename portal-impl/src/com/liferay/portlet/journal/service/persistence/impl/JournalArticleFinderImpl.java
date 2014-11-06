@@ -70,6 +70,9 @@ public class JournalArticleFinderImpl
 	public static final String FIND_BY_EXPIRATION_DATE =
 		JournalArticleFinder.class.getName() + ".findByExpirationDate";
 
+	public static final String FIND_BY_NO_ASSETS =
+		JournalArticleFinder.class.getName() + ".findByNoAssets";
+
 	public static final String FIND_BY_REVIEW_DATE =
 		JournalArticleFinder.class.getName() + ".findByReviewDate";
 
@@ -522,6 +525,29 @@ public class JournalArticleFinderImpl
 			titles, descriptions, contents, ddmStructureKeys, ddmTemplateKeys,
 			displayDateGT, displayDateLT, reviewDate, andOperator,
 			queryDefinition);
+	}
+
+	@Override
+	public List<JournalArticle> findByNoAssets() {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_NO_ASSETS);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("JournalArticle", JournalArticleImpl.class);
+
+			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	@Override

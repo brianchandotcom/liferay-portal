@@ -2878,6 +2878,11 @@ public class JournalArticleLocalServiceImpl
 		return article.getVersion();
 	}
 
+	@Override
+	public List<JournalArticle> getNoAssetArticles() {
+		return journalArticleFinder.findByNoAssets();
+	}
+
 	/**
 	 * Returns the number of web content articles that are not recycled.
 	 *

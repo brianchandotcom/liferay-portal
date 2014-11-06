@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class RoleAssignmentException extends PortalException {
 
 	public RoleAssignmentException() {
-		super();
 	}
 
 	public RoleAssignmentException(String msg) {

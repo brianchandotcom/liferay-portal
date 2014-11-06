@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class DuplicateTeamException extends PortalException {
 
 	public DuplicateTeamException() {
-		super();
 	}
 
 	public DuplicateTeamException(String msg) {

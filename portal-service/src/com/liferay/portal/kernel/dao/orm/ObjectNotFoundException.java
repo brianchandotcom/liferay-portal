@@ -20,7 +20,6 @@ package com.liferay.portal.kernel.dao.orm;
 public class ObjectNotFoundException extends ORMException {
 
 	public ObjectNotFoundException() {
-		super();
 	}
 
 	public ObjectNotFoundException(String msg) {

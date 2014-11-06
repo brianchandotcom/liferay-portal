@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class AutoLoginException extends PortalException {
 
 	public AutoLoginException() {
-		super();
 	}
 
 	public AutoLoginException(String msg) {

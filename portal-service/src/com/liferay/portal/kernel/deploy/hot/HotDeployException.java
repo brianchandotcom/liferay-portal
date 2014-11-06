@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class HotDeployException extends PortalException {
 
 	public HotDeployException() {
-		super();
 	}
 
 	public HotDeployException(String msg) {

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class LARTypeException extends PortalException {
 
 	public LARTypeException() {
-		super();
 	}
 
 	public LARTypeException(String msg) {

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class AddressZipException extends PortalException {
 
 	public AddressZipException() {
-		super();
 	}
 
 	public AddressZipException(String msg) {

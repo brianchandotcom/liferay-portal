@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class CaptchaException extends PortalException {
 
 	public CaptchaException() {
-		super();
 	}
 
 	public CaptchaException(String msg) {

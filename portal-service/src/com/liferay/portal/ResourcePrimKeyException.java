@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ResourcePrimKeyException extends PortalException {
 
 	public ResourcePrimKeyException() {
-		super();
 	}
 
 	public ResourcePrimKeyException(String msg) {

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class MicrosoftTranslatorException extends PortalException {
 
 	public MicrosoftTranslatorException() {
-		super();
 	}
 
 	public MicrosoftTranslatorException(String msg) {

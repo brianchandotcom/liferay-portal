@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class CookieNotSupportedException extends PortalException {
 
 	public CookieNotSupportedException() {
-		super();
 	}
 
 	public CookieNotSupportedException(String msg) {

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class RequiredPluginPackageException extends PortalException {
 
 	public RequiredPluginPackageException() {
-		super();
 	}
 
 	public RequiredPluginPackageException(String msg) {

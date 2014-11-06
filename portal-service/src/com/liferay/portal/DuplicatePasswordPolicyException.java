@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class DuplicatePasswordPolicyException extends PortalException {
 
 	public DuplicatePasswordPolicyException() {
-		super();
 	}
 
 	public DuplicatePasswordPolicyException(String msg) {

@@ -21,7 +21,6 @@ public class NoSuchExportImportConfigurationException
 	extends NoSuchModelException {
 
 	public NoSuchExportImportConfigurationException() {
-		super();
 	}
 
 	public NoSuchExportImportConfigurationException(String msg) {

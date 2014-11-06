@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class LayoutSetVirtualHostException extends PortalException {
 
 	public LayoutSetVirtualHostException() {
-		super();
 	}
 
 	public LayoutSetVirtualHostException(String msg) {

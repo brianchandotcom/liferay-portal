@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchOrgLaborException extends NoSuchModelException {
 
 	public NoSuchOrgLaborException() {
-		super();
 	}
 
 	public NoSuchOrgLaborException(String msg) {

@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchPasswordPolicyException extends NoSuchModelException {
 
 	public NoSuchPasswordPolicyException() {
-		super();
 	}
 
 	public NoSuchPasswordPolicyException(String msg) {

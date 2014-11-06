@@ -43,7 +43,6 @@ public class PortletDataException extends PortalException {
 	public static final int STATUS_UNAVAILABLE = 9;
 
 	public PortletDataException() {
-		super();
 	}
 
 	public PortletDataException(int type) {

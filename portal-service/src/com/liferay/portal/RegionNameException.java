@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class RegionNameException extends PortalException {
 
 	public RegionNameException() {
-		super();
 	}
 
 	public RegionNameException(String msg) {

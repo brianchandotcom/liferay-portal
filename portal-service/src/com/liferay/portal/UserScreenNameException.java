@@ -31,7 +31,6 @@ public class UserScreenNameException extends PortalException {
 	 */
 	@Deprecated
 	public UserScreenNameException() {
-		super();
 	}
 
 	/**

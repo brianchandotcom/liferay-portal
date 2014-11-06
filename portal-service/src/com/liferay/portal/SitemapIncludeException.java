@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class SitemapIncludeException extends PortalException {
 
 	public SitemapIncludeException() {
-		super();
 	}
 
 	public SitemapIncludeException(String msg) {

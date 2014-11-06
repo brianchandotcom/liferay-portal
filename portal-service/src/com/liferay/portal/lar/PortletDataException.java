@@ -24,7 +24,6 @@ public class PortletDataException
 	extends com.liferay.portal.kernel.lar.PortletDataException {
 
 	public PortletDataException() {
-		super();
 	}
 
 	public PortletDataException(String msg) {

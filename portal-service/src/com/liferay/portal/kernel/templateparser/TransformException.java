@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class TransformException extends PortalException {
 
 	public TransformException() {
-		super();
 	}
 
 	public TransformException(String msg) {

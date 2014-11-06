@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class NoSuchResourceNameException extends PortalException {
 
 	public NoSuchResourceNameException() {
-		super();
 	}
 
 	public NoSuchResourceNameException(String msg) {

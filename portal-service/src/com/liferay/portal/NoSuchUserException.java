@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchUserException extends NoSuchModelException {
 
 	public NoSuchUserException() {
-		super();
 	}
 
 	public NoSuchUserException(String msg) {

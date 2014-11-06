@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class NoSuchModelException extends PortalException {
 
 	public NoSuchModelException() {
-		super();
 	}
 
 	public NoSuchModelException(String msg) {

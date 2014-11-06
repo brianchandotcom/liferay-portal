@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class DuplicateCommentException extends PortalException {
 
 	public DuplicateCommentException() {
-		super();
 	}
 
 	public DuplicateCommentException(String msg) {

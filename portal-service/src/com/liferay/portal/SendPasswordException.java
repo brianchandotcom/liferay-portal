@@ -28,7 +28,6 @@ public class SendPasswordException extends PortalException {
 	 */
 	@Deprecated
 	public SendPasswordException() {
-		super();
 	}
 
 	/**

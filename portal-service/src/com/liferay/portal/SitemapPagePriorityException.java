@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class SitemapPagePriorityException extends PortalException {
 
 	public SitemapPagePriorityException() {
-		super();
 	}
 
 	public SitemapPagePriorityException(String msg) {

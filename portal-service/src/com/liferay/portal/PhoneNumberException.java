@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class PhoneNumberException extends PortalException {
 
 	public PhoneNumberException() {
-		super();
 	}
 
 	public PhoneNumberException(String msg) {

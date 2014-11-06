@@ -20,7 +20,6 @@ package com.liferay.portal.kernel.captcha;
 public class CaptchaTextException extends CaptchaException {
 
 	public CaptchaTextException() {
-		super();
 	}
 
 	public CaptchaTextException(String msg) {

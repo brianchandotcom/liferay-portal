@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class PasswordPolicyNameException extends PortalException {
 
 	public PasswordPolicyNameException() {
-		super();
 	}
 
 	public PasswordPolicyNameException(String msg) {

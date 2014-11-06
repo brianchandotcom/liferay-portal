@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class LARFileNameException extends PortalException {
 
 	public LARFileNameException() {
-		super();
 	}
 
 	public LARFileNameException(String msg) {

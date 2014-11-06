@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class OldServiceComponentException extends PortalException {
 
 	public OldServiceComponentException() {
-		super();
 	}
 
 	public OldServiceComponentException(String msg) {

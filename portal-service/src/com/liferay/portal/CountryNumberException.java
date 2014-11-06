@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class CountryNumberException extends PortalException {
 
 	public CountryNumberException() {
-		super();
 	}
 
 	public CountryNumberException(String msg) {

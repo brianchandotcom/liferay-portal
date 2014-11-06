@@ -20,7 +20,6 @@ package com.liferay.portal.kernel.xml;
 public class DocumentException extends Exception {
 
 	public DocumentException() {
-		super();
 	}
 
 	public DocumentException(String msg) {

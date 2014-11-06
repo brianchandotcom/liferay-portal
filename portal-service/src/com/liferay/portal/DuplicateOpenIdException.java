@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class DuplicateOpenIdException extends PortalException {
 
 	public DuplicateOpenIdException() {
-		super();
 	}
 
 	public DuplicateOpenIdException(String msg) {

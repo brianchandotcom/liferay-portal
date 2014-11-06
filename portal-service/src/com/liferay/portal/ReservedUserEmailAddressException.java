@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ReservedUserEmailAddressException extends PortalException {
 
 	public ReservedUserEmailAddressException() {
-		super();
 	}
 
 	public ReservedUserEmailAddressException(String msg) {

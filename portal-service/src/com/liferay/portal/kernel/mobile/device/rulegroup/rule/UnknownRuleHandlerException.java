@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class UnknownRuleHandlerException extends PortalException {
 
 	public UnknownRuleHandlerException() {
-		super();
 	}
 
 	public UnknownRuleHandlerException(String msg) {

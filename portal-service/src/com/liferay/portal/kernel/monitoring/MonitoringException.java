@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class MonitoringException extends PortalException {
 
 	public MonitoringException() {
-		super();
 	}
 
 	public MonitoringException(String msg) {

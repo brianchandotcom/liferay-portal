@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class PrincipalException extends PortalException {
 
 	public PrincipalException() {
-		super();
 	}
 
 	public PrincipalException(String msg) {

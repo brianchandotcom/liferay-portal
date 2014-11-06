@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ExpressionEvaluationException extends PortalException {
 
 	public ExpressionEvaluationException() {
-		super();
 	}
 
 	public ExpressionEvaluationException(String msg) {

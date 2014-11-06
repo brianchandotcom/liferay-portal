@@ -21,7 +21,6 @@ public class NoSuchUserNotificationDeliveryException
 	extends NoSuchModelException {
 
 	public NoSuchUserNotificationDeliveryException() {
-		super();
 	}
 
 	public NoSuchUserNotificationDeliveryException(String msg) {

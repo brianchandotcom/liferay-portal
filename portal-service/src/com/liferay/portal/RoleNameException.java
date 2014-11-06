@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class RoleNameException extends PortalException {
 
 	public RoleNameException() {
-		super();
 	}
 
 	public RoleNameException(String msg) {

@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchPreferencesException extends NoSuchModelException {
 
 	public NoSuchPreferencesException() {
-		super();
 	}
 
 	public NoSuchPreferencesException(String msg) {

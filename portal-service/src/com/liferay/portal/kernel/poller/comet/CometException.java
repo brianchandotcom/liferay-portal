@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class CometException extends PortalException {
 
 	public CometException() {
-		super();
 	}
 
 	public CometException(String msg) {

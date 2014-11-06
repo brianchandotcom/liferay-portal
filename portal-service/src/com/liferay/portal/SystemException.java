@@ -24,7 +24,6 @@ public class SystemException
 	extends com.liferay.portal.kernel.exception.SystemException {
 
 	public SystemException() {
-		super();
 	}
 
 	public SystemException(String msg) {

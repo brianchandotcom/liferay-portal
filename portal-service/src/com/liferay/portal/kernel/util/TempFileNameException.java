@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class TempFileNameException extends PortalException {
 
 	public TempFileNameException() {
-		super();
 	}
 
 	public TempFileNameException(String msg) {

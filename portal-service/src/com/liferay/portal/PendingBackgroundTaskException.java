@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class PendingBackgroundTaskException extends PortalException {
 
 	public PendingBackgroundTaskException() {
-		super();
 	}
 
 	public PendingBackgroundTaskException(String msg) {

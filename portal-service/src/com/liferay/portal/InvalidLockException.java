@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class InvalidLockException extends PortalException {
 
 	public InvalidLockException() {
-		super();
 	}
 
 	public InvalidLockException(String msg) {

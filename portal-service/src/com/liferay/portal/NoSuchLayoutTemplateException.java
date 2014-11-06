@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class NoSuchLayoutTemplateException extends PortalException {
 
 	public NoSuchLayoutTemplateException() {
-		super();
 	}
 
 	public NoSuchLayoutTemplateException(String msg) {

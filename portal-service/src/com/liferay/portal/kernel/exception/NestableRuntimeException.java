@@ -20,7 +20,6 @@ package com.liferay.portal.kernel.exception;
 public class NestableRuntimeException extends RuntimeException {
 
 	public NestableRuntimeException() {
-		super();
 	}
 
 	public NestableRuntimeException(String msg) {

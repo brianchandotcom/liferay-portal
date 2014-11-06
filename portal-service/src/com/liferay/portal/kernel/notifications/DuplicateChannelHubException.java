@@ -21,7 +21,6 @@ package com.liferay.portal.kernel.notifications;
 public class DuplicateChannelHubException extends ChannelException {
 
 	public DuplicateChannelHubException() {
-		super();
 	}
 
 	public DuplicateChannelHubException(String msg) {

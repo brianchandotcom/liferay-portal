@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchLayoutException extends NoSuchModelException {
 
 	public NoSuchLayoutException() {
-		super();
 	}
 
 	public NoSuchLayoutException(String msg) {

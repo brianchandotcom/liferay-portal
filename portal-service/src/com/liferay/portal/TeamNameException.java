@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class TeamNameException extends PortalException {
 
 	public TeamNameException() {
-		super();
 	}
 
 	public TeamNameException(String msg) {

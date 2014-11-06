@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchSubscriptionException extends NoSuchModelException {
 
 	public NoSuchSubscriptionException() {
-		super();
 	}
 
 	public NoSuchSubscriptionException(String msg) {

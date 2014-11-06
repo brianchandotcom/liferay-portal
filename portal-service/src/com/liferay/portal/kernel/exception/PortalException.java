@@ -30,7 +30,6 @@ package com.liferay.portal.kernel.exception;
 public class PortalException extends NestableException {
 
 	public PortalException() {
-		super();
 	}
 
 	public PortalException(String msg) {

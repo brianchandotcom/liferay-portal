@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ContactBirthdayException extends PortalException {
 
 	public ContactBirthdayException() {
-		super();
 	}
 
 	public ContactBirthdayException(String msg) {

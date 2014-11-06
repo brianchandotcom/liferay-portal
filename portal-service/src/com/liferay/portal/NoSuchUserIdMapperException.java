@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchUserIdMapperException extends NoSuchModelException {
 
 	public NoSuchUserIdMapperException() {
-		super();
 	}
 
 	public NoSuchUserIdMapperException(String msg) {

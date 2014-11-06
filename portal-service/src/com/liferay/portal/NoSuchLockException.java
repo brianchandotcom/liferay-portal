@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchLockException extends NoSuchModelException {
 
 	public NoSuchLockException() {
-		super();
 	}
 
 	public NoSuchLockException(String msg) {

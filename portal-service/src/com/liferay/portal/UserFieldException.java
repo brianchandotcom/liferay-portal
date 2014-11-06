@@ -25,7 +25,6 @@ import java.util.List;
 public class UserFieldException extends PortalException {
 
 	public UserFieldException() {
-		super();
 	}
 
 	public UserFieldException(String msg) {

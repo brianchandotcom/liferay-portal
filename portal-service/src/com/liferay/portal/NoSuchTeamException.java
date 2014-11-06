@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchTeamException extends NoSuchModelException {
 
 	public NoSuchTeamException() {
-		super();
 	}
 
 	public NoSuchTeamException(String msg) {

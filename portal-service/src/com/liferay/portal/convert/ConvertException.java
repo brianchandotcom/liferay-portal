@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ConvertException extends PortalException {
 
 	public ConvertException() {
-		super();
 	}
 
 	public ConvertException(String msg) {

@@ -21,7 +21,6 @@ package com.liferay.portal.kernel.notifications;
 public class DuplicateChannelListenerException extends ChannelException {
 
 	public DuplicateChannelListenerException() {
-		super();
 	}
 
 	public DuplicateChannelListenerException(String msg) {

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class SchedulerException extends PortalException {
 
 	public SchedulerException() {
-		super();
 	}
 
 	public SchedulerException(String msg) {

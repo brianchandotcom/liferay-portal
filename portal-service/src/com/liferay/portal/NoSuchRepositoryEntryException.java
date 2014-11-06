@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchRepositoryEntryException extends NoSuchModelException {
 
 	public NoSuchRepositoryEntryException() {
-		super();
 	}
 
 	public NoSuchRepositoryEntryException(String msg) {

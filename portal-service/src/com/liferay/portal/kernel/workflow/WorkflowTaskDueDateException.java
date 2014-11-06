@@ -20,7 +20,6 @@ package com.liferay.portal.kernel.workflow;
 public class WorkflowTaskDueDateException extends WorkflowException {
 
 	public WorkflowTaskDueDateException() {
-		super();
 	}
 
 	public WorkflowTaskDueDateException(String msg) {

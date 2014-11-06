@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class LDAPFilterException extends PortalException {
 
 	public LDAPFilterException() {
-		super();
 	}
 
 	public LDAPFilterException(String msg) {

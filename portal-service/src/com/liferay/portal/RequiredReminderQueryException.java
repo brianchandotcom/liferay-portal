@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class RequiredReminderQueryException extends PortalException {
 
 	public RequiredReminderQueryException() {
-		super();
 	}
 
 	public RequiredReminderQueryException(String msg) {

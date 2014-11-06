@@ -20,7 +20,6 @@ package com.liferay.portal.kernel.repository;
 public class InvalidRepositoryIdException extends RepositoryException {
 
 	public InvalidRepositoryIdException() {
-		super();
 	}
 
 	public InvalidRepositoryIdException(String msg) {

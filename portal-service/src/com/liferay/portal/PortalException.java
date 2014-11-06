@@ -24,7 +24,6 @@ public class PortalException
 	extends com.liferay.portal.kernel.exception.PortalException {
 
 	public PortalException() {
-		super();
 	}
 
 	public PortalException(String msg) {

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class MembershipRequestCommentsException extends PortalException {
 
 	public MembershipRequestCommentsException() {
-		super();
 	}
 
 	public MembershipRequestCommentsException(String msg) {

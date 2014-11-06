@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchImageException extends NoSuchModelException {
 
 	public NoSuchImageException() {
-		super();
 	}
 
 	public NoSuchImageException(String msg) {

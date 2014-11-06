@@ -29,7 +29,6 @@ public class UserLockoutException extends PortalException {
 	 */
 	@Deprecated
 	public UserLockoutException() {
-		super();
 	}
 
 	/**

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class UpgradeException extends PortalException {
 
 	public UpgradeException() {
-		super();
 	}
 
 	public UpgradeException(String msg) {

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class PollerException extends PortalException {
 
 	public PollerException() {
-		super();
 	}
 
 	public PollerException(String msg) {

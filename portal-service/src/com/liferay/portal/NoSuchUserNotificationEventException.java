@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchUserNotificationEventException extends NoSuchModelException {
 
 	public NoSuchUserNotificationEventException() {
-		super();
 	}
 
 	public NoSuchUserNotificationEventException(String msg) {

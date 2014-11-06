@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchEmailAddressException extends NoSuchModelException {
 
 	public NoSuchEmailAddressException() {
-		super();
 	}
 
 	public NoSuchEmailAddressException(String msg) {

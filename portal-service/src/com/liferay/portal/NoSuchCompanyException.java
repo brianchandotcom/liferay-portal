@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchCompanyException extends NoSuchModelException {
 
 	public NoSuchCompanyException() {
-		super();
 	}
 
 	public NoSuchCompanyException(String msg) {

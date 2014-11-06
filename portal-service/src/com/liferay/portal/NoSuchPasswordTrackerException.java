@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchPasswordTrackerException extends NoSuchModelException {
 
 	public NoSuchPasswordTrackerException() {
-		super();
 	}
 
 	public NoSuchPasswordTrackerException(String msg) {

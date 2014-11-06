@@ -21,7 +21,6 @@ package com.liferay.portal.kernel.scripting;
 public class UnsupportedLanguageException extends ScriptingException {
 
 	public UnsupportedLanguageException() {
-		super();
 	}
 
 	public UnsupportedLanguageException(String msg) {

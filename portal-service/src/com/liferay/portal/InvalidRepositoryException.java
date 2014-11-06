@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class InvalidRepositoryException extends PortalException {
 
 	public InvalidRepositoryException() {
-		super();
 	}
 
 	public InvalidRepositoryException(String msg) {

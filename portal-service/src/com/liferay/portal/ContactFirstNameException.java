@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ContactFirstNameException extends PortalException {
 
 	public ContactFirstNameException() {
-		super();
 	}
 
 	public ContactFirstNameException(String msg) {

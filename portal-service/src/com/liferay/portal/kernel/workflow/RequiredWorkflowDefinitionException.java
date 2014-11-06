@@ -20,7 +20,6 @@ package com.liferay.portal.kernel.workflow;
 public class RequiredWorkflowDefinitionException extends WorkflowException {
 
 	public RequiredWorkflowDefinitionException() {
-		super();
 	}
 
 	public RequiredWorkflowDefinitionException(String msg) {

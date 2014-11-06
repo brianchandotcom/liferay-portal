@@ -20,7 +20,6 @@ package com.liferay.portal.kernel.bean;
 public class BeanLocatorException extends RuntimeException {
 
 	public BeanLocatorException() {
-		super();
 	}
 
 	public BeanLocatorException(String msg) {

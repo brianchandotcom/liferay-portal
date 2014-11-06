@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchUserTrackerPathException extends NoSuchModelException {
 
 	public NoSuchUserTrackerPathException() {
-		super();
 	}
 
 	public NoSuchUserTrackerPathException(String msg) {

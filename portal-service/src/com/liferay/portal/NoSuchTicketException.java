@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchTicketException extends NoSuchModelException {
 
 	public NoSuchTicketException() {
-		super();
 	}
 
 	public NoSuchTicketException(String msg) {

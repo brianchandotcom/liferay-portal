@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class WebDAVException extends PortalException {
 
 	public WebDAVException() {
-		super();
 	}
 
 	public WebDAVException(String msg) {

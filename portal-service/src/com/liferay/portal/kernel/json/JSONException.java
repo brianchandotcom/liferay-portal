@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class JSONException extends PortalException {
 
 	public JSONException() {
-		super();
 	}
 
 	public JSONException(String msg) {

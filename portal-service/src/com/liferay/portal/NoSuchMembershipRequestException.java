@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchMembershipRequestException extends NoSuchModelException {
 
 	public NoSuchMembershipRequestException() {
-		super();
 	}
 
 	public NoSuchMembershipRequestException(String msg) {

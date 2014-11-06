@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class CompanyMaxUsersException extends PortalException {
 
 	public CompanyMaxUsersException() {
-		super();
 	}
 
 	public CompanyMaxUsersException(String msg) {

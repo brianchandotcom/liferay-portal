@@ -20,7 +20,6 @@ package com.liferay.portal;
 public class NoSuchOrgGroupRoleException extends NoSuchModelException {
 
 	public NoSuchOrgGroupRoleException() {
-		super();
 	}
 
 	public NoSuchOrgGroupRoleException(String msg) {

@@ -20,7 +20,6 @@ package com.liferay.portal.kernel.dao.orm;
 public class ORMException extends RuntimeException {
 
 	public ORMException() {
-		super();
 	}
 
 	public ORMException(String msg) {

@@ -16,6 +16,9 @@ package com.liferay.xsl.content.web.util;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.xsl.content.web.configuration.XSLContentConfiguration;
 
 import java.io.ByteArrayInputStream;
@@ -31,6 +34,9 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
 import org.w3c.dom.Document;
 
 /**
@@ -42,6 +48,24 @@ public class XSLContentUtil {
 	public static final String DEFAULT_XML_URL = "/example.xml";
 
 	public static final String DEFAULT_XSL_URL = "/example.xsl";
+
+	public static String replaceUrlTokens(
+		ThemeDisplay themeDisplay, String url) {
+
+		Bundle bundle = FrameworkUtil.getBundle(XSLContentUtil.class);
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(themeDisplay.getPortalURL());
+		sb.append("/o/");
+		sb.append(bundle.getBundleId());
+
+		String portletContextUrl = sb.toString();
+
+		return StringUtil.replace(
+			url, new String[] {"@portal_url@", "@portlet_context_url@"},
+			new String[] {themeDisplay.getPortalURL(), portletContextUrl});
+	}
 
 	public static String transform(
 			XSLContentConfiguration xslContentConfiguration, URL xmlUrl,

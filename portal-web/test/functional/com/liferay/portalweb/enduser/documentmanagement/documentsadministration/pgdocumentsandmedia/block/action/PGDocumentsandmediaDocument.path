@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>BACK_BUTTON</td>
-	<td>//a[contains(@id,'TabsBack')]/span[contains(.,'Back')]</td>
+	<td>//a[@title='Up']</td>
 	<td></td>
 </tr>
 <tr>

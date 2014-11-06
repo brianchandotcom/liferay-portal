@@ -137,15 +137,11 @@
 				{DLFileEntry.*}
 			FROM
 				DLFileEntry
+			LEFT JOIN
+				AssetEntry ON
+					(AssetEntry.classPK = DLFileEntry.fileEntryId)
 			WHERE
-				(fileEntryId NOT IN (
-					SELECT
-						classPK
-					FROM
-						AssetEntry
-					WHERE
-						classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.DOCUMENTLIBRARY.MODEL.DLFILEENTRY$]
-				))
+				(AssetEntry.classPK IS NULL)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByExtraSettings">

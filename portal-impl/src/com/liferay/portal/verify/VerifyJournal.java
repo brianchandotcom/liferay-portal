@@ -76,8 +76,9 @@ public class VerifyJournal extends VerifyProcess {
 	@Override
 	protected void doVerify() throws Exception {
 		verifyContent();
-		verifyCreateDate();
+		verifyCreateAndModifiedDates();
 		updateFolderAssets();
+		verifyModifiedDate();
 		verifyOracleNewLine();
 		verifyPermissionsAndAssets();
 		verifySearch();
@@ -294,7 +295,7 @@ public class VerifyJournal extends VerifyProcess {
 		}
 	}
 
-	protected void verifyCreateDate() throws Exception {
+	protected void verifyCreateAndModifiedDates() throws Exception {
 		ActionableDynamicQuery actionableDynamicQuery =
 			JournalArticleResourceLocalServiceUtil.getActionableDynamicQuery();
 
@@ -307,6 +308,7 @@ public class VerifyJournal extends VerifyProcess {
 						(JournalArticleResource)object;
 
 					verifyCreateDate(articleResource);
+					verifyModifiedDate(articleResource);
 				}
 
 			});
@@ -314,7 +316,7 @@ public class VerifyJournal extends VerifyProcess {
 		actionableDynamicQuery.performActions();
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Create dates verified for articles");
+			_log.debug("Create and modified dates verified for articles");
 		}
 	}
 
@@ -340,6 +342,34 @@ public class VerifyJournal extends VerifyProcess {
 				JournalArticleLocalServiceUtil.updateJournalArticle(article);
 			}
 		}
+	}
+
+	protected void verifyModifiedDate(JournalArticleResource articleResource) {
+		JournalArticle article =
+			JournalArticleLocalServiceUtil.fetchLatestArticle(
+				articleResource.getResourcePrimKey(),
+				WorkflowConstants.STATUS_APPROVED, true);
+
+		if (article == null) {
+			return;
+		}
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			articleResource.getGroupId(), articleResource.getUuid());
+
+		if (assetEntry == null) {
+			return;
+		}
+
+		Date articleModifiedDate = article.getModifiedDate();
+
+		if (articleModifiedDate.equals(assetEntry.getModifiedDate())) {
+			return;
+		}
+
+		article.setModifiedDate(assetEntry.getModifiedDate());
+
+		JournalArticleLocalServiceUtil.updateJournalArticle(article);
 	}
 
 	protected void verifyOracleNewLine() throws Exception {

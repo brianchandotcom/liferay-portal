@@ -29,13 +29,7 @@
 	<liferay-ui:error key="transformation" message="an-error-occurred-while-processing-your-xml-and-xsl" />
 
 	<%
-	String portletResource = ParamUtil.getString(request, "portletResource");
-
-	Portlet xslPortlet = PortletLocalServiceUtil.getPortletById(portletResource);
-
-	Map initParams = xslPortlet.getInitParams();
-
-	String validUrlPrefixes = (String)initParams.get("valid.url.prefixes");
+	String validUrlPrefixes = xslContentConfiguration.getValidUrlPrefixes();
 
 	validUrlPrefixes = StringUtil.replace(validUrlPrefixes, new String[] {"@portal_url@", "@portlet_context_url@"}, new String[] {themeDisplay.getPortalURL(), themeDisplay.getPortalURL() + request.getContextPath()});
 	%>

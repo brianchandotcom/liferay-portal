@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -87,7 +88,7 @@ public class ConvertDocumentLibrary extends BaseConvertProcess {
 			}
 		}
 
-		return new String[] {sb.toString()};
+		return new String[] {sb.toString(), "delete-from-old-store=checkbox"};
 	}
 
 	@Override
@@ -154,6 +155,8 @@ public class ConvertDocumentLibrary extends BaseConvertProcess {
 
 	@Override
 	protected void doConvert() throws Exception {
+		_isDeleteFromOldStore = isDeleteFromOldStore();
+
 		_sourceStore = StoreFactory.getInstance();
 
 		String targetStoreClassName = getTargetStoreClassName();
@@ -191,6 +194,12 @@ public class ConvertDocumentLibrary extends BaseConvertProcess {
 		String[] values = getParameterValues();
 
 		return values[0];
+	}
+
+	protected boolean isDeleteFromOldStore() {
+		String[] values = getParameterValues();
+
+		return GetterUtil.getBoolean(values[1]);
 	}
 
 	protected void migrateDL() throws PortalException {
@@ -267,6 +276,11 @@ public class ConvertDocumentLibrary extends BaseConvertProcess {
 			else {
 				_targetStore.updateFile(
 					companyId, repositoryId, fileName, versionNumber, is);
+			}
+
+			if (_isDeleteFromOldStore) {
+				_sourceStore.deleteFile(
+					companyId, repositoryId, fileName, versionNumber);
 			}
 		}
 		catch (Exception e) {
@@ -404,6 +418,7 @@ public class ConvertDocumentLibrary extends BaseConvertProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ConvertDocumentLibrary.class);
 
+	private boolean _isDeleteFromOldStore = false;
 	private Store _sourceStore;
 	private Store _targetStore;
 

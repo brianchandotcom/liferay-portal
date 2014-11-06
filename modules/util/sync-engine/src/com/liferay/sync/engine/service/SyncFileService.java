@@ -413,6 +413,19 @@ public class SyncFileService {
 		}
 	}
 
+	public static long getSyncFilesCount(long syncAccountId, int uiEvent) {
+		try {
+			return _syncFilePersistence.countByS_U(syncAccountId, uiEvent);
+		}
+		catch (SQLException sqle) {
+			if (_logger.isDebugEnabled()) {
+				_logger.debug(sqle.getMessage(), sqle);
+			}
+
+			return 0;
+		}
+	}
+
 	public static SyncFile moveFileSyncFile(
 			Path filePath, long folderId, long syncAccountId, SyncFile syncFile)
 		throws Exception {

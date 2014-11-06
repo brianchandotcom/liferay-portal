@@ -200,13 +200,6 @@ public class SyncEngine {
 		SyncClientUpdater.scheduleAutoUpdateChecker(
 			SyncPropService.getInteger("updateCheckInterval", 1440));
 
-		List<SyncAccount> syncAccounts = SyncAccountService.findAll();
-
-		if (syncAccounts.isEmpty()) {
-			SyncEngineUtil.fireSyncEngineStateChanged(
-				SyncEngineUtil.SYNC_ENGINE_NOT_CONFIGURED);
-		}
-
 		for (long activeSyncAccountId :
 				SyncAccountService.getActiveSyncAccountIds()) {
 

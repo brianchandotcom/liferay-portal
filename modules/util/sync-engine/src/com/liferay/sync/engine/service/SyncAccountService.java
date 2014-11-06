@@ -321,6 +321,20 @@ public class SyncAccountService {
 		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
 			syncAccountId);
 
+		if (!moveFile) {
+			SyncFile syncFile = SyncFileService.fetchSyncFile(
+				syncAccount.getFilePathName());
+
+			String sourceFileKey = syncFile.getFileKey();
+
+			String targetFileKey = FileUtil.getFileKey(filePath);
+
+			if (!sourceFileKey.equals(targetFileKey)) {
+				throw new Exception(
+					"Target folder is not the moved sync data folder");
+			}
+		}
+
 		syncAccount.setActive(false);
 
 		SyncAccountService.update(syncAccount);
@@ -336,6 +350,7 @@ public class SyncAccountService {
 		syncAccount = setFilePathName(syncAccountId, filePath.toString());
 
 		syncAccount.setActive(true);
+		syncAccount.setUiEvent(SyncAccount.UI_EVENT_DEFAULT);
 
 		SyncAccountService.update(syncAccount);
 	}

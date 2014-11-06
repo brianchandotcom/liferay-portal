@@ -65,6 +65,10 @@ public class SessionManager {
 	public static void removeSession(long syncAccountId) {
 		Session session = _sessions.remove(syncAccountId);
 
+		if (session == null) {
+			return;
+		}
+
 		ExecutorService executorService = session.getExecutorService();
 
 		executorService.shutdownNow();

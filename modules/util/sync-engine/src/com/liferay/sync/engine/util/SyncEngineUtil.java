@@ -26,8 +26,6 @@ import java.util.concurrent.Executors;
  */
 public class SyncEngineUtil {
 
-	public static final int SYNC_ENGINE_NOT_CONFIGURED = 0;
-
 	public static final int SYNC_ENGINE_STATE_PROCESSED = 6;
 
 	public static final int SYNC_ENGINE_STATE_PROCESSING = 5;

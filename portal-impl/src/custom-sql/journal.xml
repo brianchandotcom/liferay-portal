@@ -96,6 +96,19 @@
 				(expirationDate <= ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByNoAssets">
+		<![CDATA[
+			SELECT
+				{JournalArticle.*}
+			FROM
+				JournalArticle
+			LEFT JOIN
+				AssetEntry ON
+					(AssetEntry.classPK = JournalArticle.resourcePrimKey)
+			WHERE
+				AssetEntry.classPK IS NULL
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByReviewDate">
 		<![CDATA[
 			SELECT

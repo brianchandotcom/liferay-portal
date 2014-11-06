@@ -22,8 +22,8 @@ public class LayoutQueryStringComposite {
 	public LayoutQueryStringComposite(
 		Layout layout, String friendlyURL, String queryString) {
 
-		_friendlyURL = friendlyURL;
 		_layout = layout;
+		_friendlyURL = friendlyURL;
 		_queryString = queryString;
 	}
 

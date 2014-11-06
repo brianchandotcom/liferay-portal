@@ -54,8 +54,8 @@ public abstract class BaseAsyncDatagramReceiveHandler
 		public DispatchJob(
 			RegistrationReference registrationReference, Datagram datagram) {
 
-			_datagram = datagram;
 			_registrationReference = registrationReference;
+			_datagram = datagram;
 		}
 
 		@Override

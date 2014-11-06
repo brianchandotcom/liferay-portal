@@ -20,8 +20,8 @@ package com.liferay.portal.kernel.search;
 public class WeightedWord implements Comparable<WeightedWord> {
 
 	public WeightedWord(String word, float weight) {
-		_weight = weight;
 		_word = word;
+		_weight = weight;
 	}
 
 	@Override

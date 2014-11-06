@@ -224,9 +224,9 @@ public class UpgradePermission extends UpgradeProcess {
 		public UpgradePermissionedModel(
 			String tableName, String pkColumnName, long primKey) {
 
+			_tableName = tableName;
 			_pkColumnName = pkColumnName;
 			_primKey = primKey;
-			_tableName = tableName;
 		}
 
 		@Override

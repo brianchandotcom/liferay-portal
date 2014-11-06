@@ -23,9 +23,9 @@ public class UserNotificationDeliveryType {
 		String name, int type, boolean defaultValue, boolean modifiable) {
 
 		_default = defaultValue;
-		_modifiable = modifiable;
 		_name = name;
 		_type = type;
+		_modifiable = modifiable;
 	}
 
 	public String getName() {

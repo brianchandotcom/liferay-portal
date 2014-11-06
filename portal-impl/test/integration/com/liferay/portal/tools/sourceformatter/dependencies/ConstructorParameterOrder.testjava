@@ -12,29 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.parsers.bbcode;
+package com.liferay.portal.tools.sourceformatter.dependencies;
 
 /**
- * @author Iliyan Peychev
+ * @author Hugo Huijser
  */
-public class BBCodeItem {
+public class ConstructorParameterOrder {
 
-	public BBCodeItem(int type, String attribute, String value) {
-		_type = type;
+	public ConstructorParameterOrder(String value, String attribute, int type) {
 		_attribute = attribute;
+		_type = type;
 		_value = value;
-	}
-
-	public String getAttribute() {
-		return _attribute;
-	}
-
-	public int getType() {
-		return _type;
-	}
-
-	public String getValue() {
-		return _value;
 	}
 
 	private final String _attribute;

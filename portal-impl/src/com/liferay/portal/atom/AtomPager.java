@@ -62,8 +62,8 @@ public class AtomPager {
 			_page = page;
 		}
 
-		_totalElements = totalElements;
 		_elementsPerPage = elementsPerPage;
+		_totalElements = totalElements;
 
 		_start = (_page - 1) * _elementsPerPage;
 

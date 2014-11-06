@@ -27,8 +27,9 @@ public class CounterRegister {
 		String name, CounterHolder counterHolder, int rangeSize) {
 
 		_name = name;
-		_rangeSize = rangeSize;
 		_counterHolder = counterHolder;
+		_rangeSize = rangeSize;
+
 		_competeLatch = new CompeteLatch();
 	}
 

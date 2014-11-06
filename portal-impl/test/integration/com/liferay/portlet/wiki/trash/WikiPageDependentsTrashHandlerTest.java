@@ -1060,10 +1060,10 @@ public class WikiPageDependentsTrashHandlerTest {
 			WikiPage parentPage, WikiPage page, WikiPage childPage,
 			WikiPage grandchildPage, WikiPage redirectPage) {
 
-			_childPage = childPage;
-			_grandchildPage = grandchildPage;
-			_page = page;
 			_parentPage = parentPage;
+			_page = page;
+			_grandchildPage = grandchildPage;
+			_childPage = childPage;
 			_redirectPage = redirectPage;
 		}
 

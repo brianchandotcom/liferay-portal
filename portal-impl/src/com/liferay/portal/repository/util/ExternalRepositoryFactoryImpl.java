@@ -33,8 +33,8 @@ public class ExternalRepositoryFactoryImpl
 	public ExternalRepositoryFactoryImpl(
 		String className, ClassLoader classLoader) {
 
-		_classLoader = classLoader;
 		_className = className;
+		_classLoader = classLoader;
 	}
 
 	@Override

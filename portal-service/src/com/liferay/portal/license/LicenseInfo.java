@@ -28,19 +28,19 @@ public class LicenseInfo {
 		long maxUsers, String[] hostNames, String[] ipAddresses,
 		String[] macAddresses) {
 
-		_description = description;
-		_expirationDate = expirationDate;
-		_hostNames = hostNames;
-		_ipAddresses = ipAddresses;
-		_licenseEntryType = licenseEntryType;
-		_licenseVersion = licenseVersion;
-		_macAddresses = macAddresses;
-		_maxUsers = maxUsers;
 		_owner = owner;
+		_description = description;
 		_productEntryName = productEntryName;
 		_productId = productId;
 		_productVersion = productVersion;
+		_licenseEntryType = licenseEntryType;
+		_licenseVersion = licenseVersion;
 		_startDate = startDate;
+		_expirationDate = expirationDate;
+		_maxUsers = maxUsers;
+		_hostNames = hostNames;
+		_ipAddresses = ipAddresses;
+		_macAddresses = macAddresses;
 	}
 
 	public String getDescription() {

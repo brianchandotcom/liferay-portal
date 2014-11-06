@@ -271,7 +271,30 @@ public class AsyncBrokerTest {
 	public void testPostPhantomReferenceResurrectionNotSupported()
 		throws Exception {
 
-		testPost();
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			AsyncBroker.class.getName(), Level.WARNING);
+
+		try {
+			testPost();
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertEquals(1, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Cancellation of orphaned noticeable futures " +
+				"is disabled because the JVM does not support phantom " +
+				"reference resurrection", logRecord.getMessage());
+
+			Throwable throwable = logRecord.getThrown();
+
+			Assert.assertSame(Throwable.class, throwable.getClass());
+		}
+		finally {
+			captureHandler.close();
+		}
 	}
 
 	@Test

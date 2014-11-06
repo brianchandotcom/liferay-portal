@@ -142,14 +142,12 @@ public class SPIRegistryImplTest {
 
 		mockSPI.spiConfiguration = spiConfiguration;
 
-		CaptureHandler captureHandler = null;
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			SPIRegistryImpl.class.getName(), Level.WARNING);
 
 		try {
 
 			// With log
-
-			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-				SPIRegistryImpl.class.getName(), Level.WARNING);
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
@@ -246,11 +244,11 @@ public class SPIRegistryImplTest {
 				"Skip unknown servlet context name portletApp2",
 				logRecord2.getMessage());
 
-			logRecords = captureHandler.resetLogLevel(Level.WARNING);
-
 			_portletSPIs.clear();
 
 			// Unregister, normal
+
+			logRecords = captureHandler.resetLogLevel(Level.WARNING);
 
 			throwException.set(false);
 
@@ -270,9 +268,7 @@ public class SPIRegistryImplTest {
 				logRecord2.getMessage());
 		}
 		finally {
-			if (captureHandler != null) {
-				captureHandler.close();
-			}
+			captureHandler.close();
 		}
 
 		_spiRegistryImpl.unregisterSPI(mockSPI);

@@ -284,9 +284,10 @@ public class AsyncBrokerTest {
 			LogRecord logRecord = logRecords.get(0);
 
 			Assert.assertEquals(
-				"Cancellation of orphaned noticeable futures " +
-				"is disabled because the JVM does not support phantom " +
-				"reference resurrection", logRecord.getMessage());
+				"Cancellation of orphaned noticeable futures is disabled " +
+					"because the JVM does not support phantom reference " +
+						"resurrection",
+				logRecord.getMessage());
 
 			Throwable throwable = logRecord.getThrown();
 

@@ -97,14 +97,12 @@ public class SelectorIntrabandTest {
 
 	@Test
 	public void testCreateAndDestroy() throws Exception {
-		CaptureHandler captureHandler = null;
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			SelectorIntraband.class.getName(), Level.INFO);
 
 		try {
 
 			// Close selector, with log
-
-			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-				SelectorIntraband.class.getName(), Level.INFO);
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
@@ -169,9 +167,7 @@ public class SelectorIntrabandTest {
 			Assert.assertTrue(logRecords.isEmpty());
 		}
 		finally {
-			if (captureHandler != null) {
-				captureHandler.close();
-			}
+			captureHandler.close();
 		}
 	}
 
@@ -191,14 +187,12 @@ public class SelectorIntrabandTest {
 
 		long sequenceId = 100;
 
-		CaptureHandler captureHandler = null;
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			BaseIntraband.class.getName(), Level.WARNING);
 
 		try {
 
 			// Receive ACK response, no ACK request, with log
-
-			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-				BaseIntraband.class.getName(), Level.WARNING);
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
@@ -504,9 +498,7 @@ public class SelectorIntrabandTest {
 			scatteringByteChannel.close();
 		}
 		finally {
-			if (captureHandler != null) {
-				captureHandler.close();
-			}
+			captureHandler.close();
 		}
 	}
 
@@ -950,16 +942,14 @@ public class SelectorIntrabandTest {
 
 		Assert.assertArrayEquals(_data, dataByteBuffer.array());
 
-		CaptureHandler captureHandler = null;
+		CaptureHandler captureHandler1 = JDKLoggerTestUtil.configureJDKLogger(
+			BaseIntraband.class.getName(), Level.WARNING);
 
 		try {
 
 			// Callback timeout, with log
 
-			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-				BaseIntraband.class.getName(), Level.WARNING);
-
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogRecord> logRecords = captureHandler1.getLogRecords();
 
 			recordCompletionHandler = new RecordCompletionHandler<Object>();
 
@@ -982,7 +972,7 @@ public class SelectorIntrabandTest {
 
 			// Callback timeout, without log
 
-			logRecords = captureHandler.resetLogLevel(Level.OFF);
+			logRecords = captureHandler1.resetLogLevel(Level.OFF);
 
 			recordCompletionHandler = new RecordCompletionHandler<Object>();
 
@@ -999,18 +989,16 @@ public class SelectorIntrabandTest {
 			Assert.assertTrue(logRecords.isEmpty());
 		}
 		finally {
-			if (captureHandler != null) {
-				captureHandler.close();
-			}
+			captureHandler1.close();
 		}
 
 		// Callback timeout, completion handler causes NPE
 
-		captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+		captureHandler1 = JDKLoggerTestUtil.configureJDKLogger(
 			SelectorIntraband.class.getName(), Level.SEVERE);
 
 		try {
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogRecord> logRecords1 = captureHandler1.getLogRecords();
 
 			recordCompletionHandler = new RecordCompletionHandler<Object>() {
 
@@ -1027,41 +1015,45 @@ public class SelectorIntrabandTest {
 
 			Selector selector = _selectorIntraband.selector;
 
+			Datagram datagram = Datagram.createRequestDatagram(_type, _data);
+
 			try {
 				_selectorIntraband.sendDatagram(
-					registrationReference,
-					Datagram.createRequestDatagram(_type, _data), attachment,
+					registrationReference, datagram, attachment,
 					EnumSet.of(CompletionType.DELIVERED),
 					recordCompletionHandler, 10, TimeUnit.MILLISECONDS);
 			}
 			finally {
-				CaptureHandler baseCaptureHandler =
+				CaptureHandler captureHandler2 =
 					JDKLoggerTestUtil.configureJDKLogger(
 						BaseIntraband.class.getName(), Level.WARNING);
+
 				try {
 					recordCompletionHandler.waitUntilTimeouted(selector);
 
-					List<LogRecord> baseLogRecords =
-						baseCaptureHandler.getLogRecords();
+					List<LogRecord> logRecords2 =
+						captureHandler2.getLogRecords();
 
-					Assert.assertEquals(1, baseLogRecords.size());
+					Assert.assertEquals(1, logRecords2.size());
 
-					IntrabandTestUtil.assertMessageStartWith(
-						baseLogRecords.get(0),
-						"Removed timeout response waiting datagram");
+					LogRecord logRecord = logRecords2.get(0);
+
+					Assert.assertEquals(
+						"Removed timeout response waiting datagram " + datagram,
+						logRecord.getMessage());
 				}
 				finally {
-					baseCaptureHandler.close();
+					captureHandler2.close();
 				}
 
 				Jdk14LogImplAdvice.waitUntilErrorCalled();
 			}
 
 			Assert.assertFalse(selector.isOpen());
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(1, logRecords1.size());
 
 			IntrabandTestUtil.assertMessageStartWith(
-				logRecords.get(0),
+				logRecords1.get(0),
 				SelectorIntraband.class +
 					".threadFactory-1 exiting exceptionally");
 
@@ -1069,7 +1061,7 @@ public class SelectorIntrabandTest {
 			scatteringByteChannel.close();
 		}
 		finally {
-			captureHandler.close();
+			captureHandler1.close();
 		}
 	}
 

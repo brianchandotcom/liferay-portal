@@ -57,13 +57,15 @@ public class DDMXMLImplTest extends BaseDDMTestCase {
 
 			Assert.assertEquals(2, logRecords.size());
 
-			LogRecord logRecord1 = logRecords.get(0);
-			LogRecord logRecord2 = logRecords.get(1);
+			LogRecord logRecord = logRecords.get(0);
 
 			Assert.assertEquals(
-				"en_US is not a valid language id", logRecord1.getMessage());
+				"en_US is not a valid language id", logRecord.getMessage());
+
+			logRecord = logRecords.get(1);
+
 			Assert.assertEquals(
-				"es_ES is not a valid language id", logRecord2.getMessage());
+				"es_ES is not a valid language id", logRecord.getMessage());
 		}
 		finally {
 			captureHandler.close();

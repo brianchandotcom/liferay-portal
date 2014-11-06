@@ -23,6 +23,7 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
@@ -60,7 +61,8 @@ public class MDRActionStagedModelDataHandlerTest
 		super.setUp();
 
 		_layout = LayoutTestUtil.addLayout(
-			stagingGroup.getGroupId(), RandomTestUtil.randomString());
+			stagingGroup.getGroupId(),
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
 
 		ServiceContext serviceContext = new ServiceContext();
 

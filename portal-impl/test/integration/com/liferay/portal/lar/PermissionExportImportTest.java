@@ -36,6 +36,7 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.listeners.ResetDatabaseExecutionTestListener;
+import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.ResourcePermissionUtil;
@@ -76,7 +77,9 @@ public class PermissionExportImportTest extends PowerMockito {
 		Group exportGroup = exportLayoutSetPrototype.getGroup();
 
 		Layout exportLayout = LayoutTestUtil.addLayout(
-			exportGroup.getGroupId(), RandomTestUtil.randomString(), true);
+			exportGroup.getGroupId(),
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
+			true);
 
 		String exportResourcePrimKey = PortletPermissionUtil.getPrimaryKey(
 			exportLayout.getPlid(), _PORTLET_ID);
@@ -97,7 +100,9 @@ public class PermissionExportImportTest extends PowerMockito {
 		Group importGroup = importLayoutSetPrototype.getGroup();
 
 		Layout importLayout = LayoutTestUtil.addLayout(
-			importGroup.getGroupId(), RandomTestUtil.randomString(), true);
+			importGroup.getGroupId(),
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
+			true);
 
 		String importResourcePrimKey = PortletPermissionUtil.getPrimaryKey(
 			importLayout.getPlid(), _PORTLET_ID);

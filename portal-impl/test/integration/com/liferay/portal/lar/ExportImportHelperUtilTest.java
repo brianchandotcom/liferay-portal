@@ -51,6 +51,7 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PortalUtil;
@@ -147,9 +148,13 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		_portletDataContextExport.setExportDataRootElement(rootElement);
 
 		_stagingPrivateLayout = LayoutTestUtil.addLayout(
-			_stagingGroup.getGroupId(), RandomTestUtil.randomString(), true);
+			_stagingGroup.getGroupId(),
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
+			true);
 		_stagingPublicLayout = LayoutTestUtil.addLayout(
-			_stagingGroup.getGroupId(), RandomTestUtil.randomString(), false);
+			_stagingGroup.getGroupId(),
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
+			false);
 
 		_portletDataContextExport.setPlid(_stagingPublicLayout.getPlid());
 
@@ -163,7 +168,9 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		_portletDataContextImport.setImportDataRootElement(rootElement);
 
 		_livePublicLayout = LayoutTestUtil.addLayout(
-			_liveGroup.getGroupId(), RandomTestUtil.randomString(), false);
+			_liveGroup.getGroupId(),
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
+			false);
 
 		_portletDataContextImport.setPlid(_livePublicLayout.getPlid());
 
@@ -385,9 +392,13 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		Group group = user.getGroup();
 
 		Layout privateLayout = LayoutTestUtil.addLayout(
-			group.getGroupId(), RandomTestUtil.randomString(), true);
+			group.getGroupId(),
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
+			true);
 		Layout publicLayout = LayoutTestUtil.addLayout(
-			group.getGroupId(), RandomTestUtil.randomString(), false);
+			group.getGroupId(),
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
+			false);
 
 		PortletDataContext portletDataContextExport =
 			PortletDataContextFactoryUtil.createExportPortletDataContext(
@@ -421,10 +432,12 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 	@Test
 	public void testGetSelectedLayoutsJSONSelectAllLayouts() throws Exception {
 		Layout layout = LayoutTestUtil.addLayout(
-			_stagingGroup.getGroupId(), RandomTestUtil.randomString());
+			_stagingGroup.getGroupId(),
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
 
 		Layout childLayout = LayoutTestUtil.addLayout(
-			_stagingGroup.getGroupId(), RandomTestUtil.randomString(),
+			_stagingGroup.getGroupId(),
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
 			layout.getPlid());
 
 		long[] selectedLayoutIds = new long[] {
@@ -449,10 +462,12 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 	@Test
 	public void testGetSelectedLayoutsJSONSelectChildLayout() throws Exception {
 		Layout layout = LayoutTestUtil.addLayout(
-			_stagingGroup.getGroupId(), RandomTestUtil.randomString());
+			_stagingGroup.getGroupId(),
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
 
 		Layout childLayout = LayoutTestUtil.addLayout(
-			_stagingGroup.getGroupId(), RandomTestUtil.randomString(),
+			_stagingGroup.getGroupId(),
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
 			layout.getPlid());
 
 		long[] selectedLayoutIds = new long[] {childLayout.getLayoutId()};
@@ -477,10 +492,12 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 	@Test
 	public void testGetSelectedLayoutsJSONSelectNoLayouts() throws Exception {
 		Layout layout = LayoutTestUtil.addLayout(
-			_stagingGroup.getGroupId(), RandomTestUtil.randomString());
+			_stagingGroup.getGroupId(),
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
 
 		LayoutTestUtil.addLayout(
-			_stagingGroup.getGroupId(), RandomTestUtil.randomString(),
+			_stagingGroup.getGroupId(),
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
 			layout.getPlid());
 
 		String selectedLayoutsJSON =
@@ -590,9 +607,13 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 	@Test
 	public void testImportLinksToLayoutsIdsReplacement() throws Exception {
 		LayoutTestUtil.addLayout(
-			_liveGroup.getGroupId(), RandomTestUtil.randomString(), true);
+			_liveGroup.getGroupId(),
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
+			true);
 		LayoutTestUtil.addLayout(
-			_liveGroup.getGroupId(), RandomTestUtil.randomString(), false);
+			_liveGroup.getGroupId(),
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
+			false);
 
 		exportImportLayouts(true);
 		exportImportLayouts(false);

@@ -32,6 +32,7 @@ import com.liferay.portal.service.ResourceTypePermissionLocalServiceUtil;
 import com.liferay.portal.service.persistence.GroupFinderUtil;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.comparator.GroupNameComparator;
@@ -173,19 +174,25 @@ public class GroupFinderTest {
 			RandomTestUtil.randomString());
 
 		LayoutTestUtil.addLayout(
-			parentGroup.getGroupId(), RandomTestUtil.randomString(), false);
+			parentGroup.getGroupId(),
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
+			false);
 
 		Group childGroup1 = GroupTestUtil.addGroup(
 			parentGroup.getGroupId(), RandomTestUtil.randomString());
 
 		LayoutTestUtil.addLayout(
-			childGroup1.getGroupId(), RandomTestUtil.randomString(), false);
+			childGroup1.getGroupId(),
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
+			false);
 
 		Group childGroup2 = GroupTestUtil.addGroup(
 			parentGroup.getGroupId(), RandomTestUtil.randomString());
 
 		LayoutTestUtil.addLayout(
-			childGroup2.getGroupId(), RandomTestUtil.randomString(), true);
+			childGroup2.getGroupId(),
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
+			true);
 
 		groups = findByLayouts(GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
@@ -218,9 +225,15 @@ public class GroupFinderTest {
 	}
 
 	protected void addLayout(long groupId) throws Exception {
-		LayoutTestUtil.addLayout(groupId, RandomTestUtil.randomString(), false);
+		LayoutTestUtil.addLayout(
+			groupId,
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
+			false);
 
-		LayoutTestUtil.addLayout(groupId, RandomTestUtil.randomString(), true);
+		LayoutTestUtil.addLayout(
+			groupId,
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
+			true);
 	}
 
 	protected List<Group> findByC_C_N_D(

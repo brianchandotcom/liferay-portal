@@ -17,8 +17,10 @@ package com.liferay.portal.util.test;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.test.randomizerbumpers.RandomizerBumper;
 import com.liferay.util.PwdGenerator;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -29,6 +31,8 @@ import java.util.Random;
  * @author Manuel de la Peña
  */
 public class RandomTestUtil {
+
+	public static final int MAX_RANDOMIZER_BUMPER_TRIES = 100;
 
 	public static Date nextDate() {
 		return new Date();
@@ -96,19 +100,48 @@ public class RandomTestUtil {
 		}
 	}
 
-	public static String randomString() {
-		return PwdGenerator.getPassword();
+	@SafeVarargs
+	public static String randomString(
+		int length, RandomizerBumper<String>... randomizerBumpers) {
+
+		generation:
+		for (int i = 0; i < MAX_RANDOMIZER_BUMPER_TRIES; i++) {
+			String randomString = PwdGenerator.getPassword(length);
+
+			for (RandomizerBumper<String> randomizerBumper :
+					randomizerBumpers) {
+
+				if (!randomizerBumper.accept(randomString)) {
+					continue generation;
+				}
+			}
+
+			return randomString;
+		}
+
+		throw new IllegalStateException(
+			"Unable to generate a random string that is acceptable by all " +
+				"randomizer bumpers :" + Arrays.toString(randomizerBumpers) +
+					" after tried :" + MAX_RANDOMIZER_BUMPER_TRIES + " times." +
+						" Please refactor your code to avoid using random " +
+							"string in this case");
 	}
 
-	public static String randomString(int length) {
-		return PwdGenerator.getPassword(length);
+	@SafeVarargs
+	public static String randomString(
+		RandomizerBumper<String>... randomizerBumpers) {
+
+		return randomString(8, randomizerBumpers);
 	}
 
-	public static String[] randomStrings(int count) {
+	@SafeVarargs
+	public static String[] randomStrings(
+		int count, RandomizerBumper<String>... randomizerBumpers) {
+
 		String[] strings = new String[count];
 
 		for (int i = 0; i < count; i++) {
-			strings[i] = PwdGenerator.getPassword();
+			strings[i] = randomString(randomizerBumpers);
 		}
 
 		return strings;

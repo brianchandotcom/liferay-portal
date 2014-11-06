@@ -95,10 +95,10 @@ public class PollerServlet extends HttpServlet {
 
 		ChannelHubManagerUtil.getChannel(companyId, userId, true);
 
-		try {
-			ChannelHubManagerUtil.registerChannelListener(
-				companyId, userId, synchronousPollerChannelListener);
+		ChannelHubManagerUtil.registerChannelListener(
+			companyId, userId, synchronousPollerChannelListener);
 
+		try {
 			JSONObject pollerResponseHeaderJSONObject =
 				PollerRequestHandlerUtil.processRequest(
 					request, pollerRequestString);

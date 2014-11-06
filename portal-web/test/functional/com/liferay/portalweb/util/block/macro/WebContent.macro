@@ -35,9 +35,10 @@
 		</if>
 
 		<execute action="CPWebcontentAddwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
+		<execute action="CPWebcontentAddwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContent}" />
 
 		<if>
-			<isset var="uploadAudio" />
+			<equals arg1="${uploadAudio}" arg2="true" />
 			<then>
 				<execute action="CPWebcontentAddwebcontent#click" locator-key1="AUDIO_BUTTON" />
 				<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="AUDIO_BROWSE_SERVER_BUTTON" value1="Browse Server" />
@@ -46,9 +47,6 @@
 				<execute action="CPWebcontentAddwebcontent#selectFrame" value1="relative=top" />
 				<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="AUDIO_OK_BUTTON" value1="OK" />
 			</then>
-			<else>
-				<execute action="CPWebcontentAddwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContent}" />
-			</else>
 		</if>
 
 		<if>

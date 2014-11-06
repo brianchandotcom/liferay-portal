@@ -54,7 +54,7 @@
 		<execute macro="DMDocument#addCP">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentFile" value="Document_1.mp3" />
-			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
+			<var name="dmDocumentTitle" value="Document_1.mp3" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -63,6 +63,7 @@
 
 		<execute macro="WebContent#addCP">
 			<var name="uploadAudio" value="true" />
+			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
@@ -84,6 +85,10 @@
 
 		<execute macro="WebContentDisplayPortlet#selectWebContent">
 			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="WebContent#viewAudioViaWCD" />

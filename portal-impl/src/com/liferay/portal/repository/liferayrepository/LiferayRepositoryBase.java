@@ -75,8 +75,8 @@ public abstract class LiferayRepositoryBase implements CapabilityProvider {
 		this.dlFolderLocalService = dlFolderLocalService;
 		this.dlFolderService = dlFolderService;
 		this.resourceLocalService = resourceLocalService;
-		_repositoryId = repositoryId;
 		_groupId = groupId;
+		_repositoryId = repositoryId;
 		_dlFolderId = dlFolderId;
 	}
 

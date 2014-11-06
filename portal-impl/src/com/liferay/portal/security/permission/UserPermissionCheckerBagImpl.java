@@ -34,10 +34,11 @@ public class UserPermissionCheckerBagImpl implements UserPermissionCheckerBag {
 	}
 
 	public UserPermissionCheckerBagImpl(long userId) {
-		_userGroups = Collections.<Group>emptySet();
 		_userId = userId;
-		_userOrgs = Collections.<Organization>emptyList();
+
+		_userGroups = Collections.<Group>emptySet();
 		_userOrgGroups = Collections.<Group>emptySet();
+		_userOrgs = Collections.<Organization>emptyList();
 		_userUserGroupGroups = Collections.<Group>emptyList();
 	}
 
@@ -45,8 +46,8 @@ public class UserPermissionCheckerBagImpl implements UserPermissionCheckerBag {
 		long userId, Set<Group> userGroups, List<Organization> userOrgs,
 		Set<Group> userOrgGroups, List<Group> userUserGroupGroups) {
 
-		_userGroups = userGroups;
 		_userId = userId;
+		_userGroups = userGroups;
 		_userOrgs = userOrgs;
 		_userOrgGroups = userOrgGroups;
 		_userUserGroupGroups = userUserGroupGroups;

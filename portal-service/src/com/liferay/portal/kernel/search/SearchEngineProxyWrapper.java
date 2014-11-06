@@ -25,9 +25,9 @@ public class SearchEngineProxyWrapper implements SearchEngine {
 		SearchEngine searchEngine, IndexSearcher indexSearcher,
 		IndexWriter indexWriter) {
 
+		_searchEngine = searchEngine;
 		_indexSearcher = indexSearcher;
 		_indexWriter = indexWriter;
-		_searchEngine = searchEngine;
 	}
 
 	@Override

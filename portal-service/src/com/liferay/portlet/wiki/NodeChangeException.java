@@ -29,8 +29,8 @@ public class NodeChangeException extends PortalException {
 	public static final int REDIRECT_PAGE = 2;
 
 	public NodeChangeException(String nodeName, String pageTitle, int type) {
-		_pageTitle = pageTitle;
 		_nodeName = nodeName;
+		_pageTitle = pageTitle;
 		_type = type;
 	}
 

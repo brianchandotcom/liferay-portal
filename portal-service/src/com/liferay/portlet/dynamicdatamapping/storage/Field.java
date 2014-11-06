@@ -56,9 +56,9 @@ public class Field implements Serializable {
 		Map<Locale, List<Serializable>> valuesMap, Locale defaultLocale) {
 
 		_ddmStructureId = ddmStructureId;
-		_defaultLocale = defaultLocale;
 		_name = name;
 		_valuesMap = valuesMap;
+		_defaultLocale = defaultLocale;
 	}
 
 	public Field(long ddmStructureId, String name, Serializable value) {

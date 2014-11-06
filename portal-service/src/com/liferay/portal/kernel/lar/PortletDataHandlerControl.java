@@ -70,8 +70,8 @@ public class PortletDataHandlerControl {
 		boolean disabled, String className, String referrerClassName) {
 
 		_namespace = namespace;
-		_controlLabel = controlLabel;
 		_controlName = controlName;
+		_controlLabel = controlLabel;
 		_disabled = disabled;
 		_className = className;
 		_referrerClassName = referrerClassName;

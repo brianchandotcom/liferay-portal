@@ -30,10 +30,10 @@ public class UserNotificationDefinition {
 		String portletId, long classNameId, int notificationType,
 		String description) {
 
-		_classNameId = classNameId;
-		_description = description;
-		_notificationType = notificationType;
 		_portletId = portletId;
+		_classNameId = classNameId;
+		_notificationType = notificationType;
+		_description = description;
 	}
 
 	public void addUserNotificationDeliveryType(

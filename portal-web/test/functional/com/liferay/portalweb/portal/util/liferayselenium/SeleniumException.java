@@ -20,7 +20,6 @@ package com.liferay.portalweb.portal.util.liferayselenium;
 public class SeleniumException extends Exception {
 
 	public SeleniumException() {
-		super();
 	}
 
 	public SeleniumException(String msg) {

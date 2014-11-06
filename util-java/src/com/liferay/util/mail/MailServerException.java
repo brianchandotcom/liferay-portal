@@ -22,7 +22,6 @@ import org.apache.commons.lang.exception.NestableException;
 public class MailServerException extends NestableException {
 
 	public MailServerException() {
-		super();
 	}
 
 	public MailServerException(String msg) {

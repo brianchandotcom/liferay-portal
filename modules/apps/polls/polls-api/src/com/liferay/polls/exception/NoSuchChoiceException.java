@@ -22,7 +22,6 @@ import com.liferay.portal.NoSuchModelException;
 public class NoSuchChoiceException extends NoSuchModelException {
 
 	public NoSuchChoiceException() {
-		super();
 	}
 
 	public NoSuchChoiceException(String msg) {

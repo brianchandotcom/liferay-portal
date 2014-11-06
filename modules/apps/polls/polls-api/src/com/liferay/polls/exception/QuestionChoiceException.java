@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class QuestionChoiceException extends PortalException {
 
 	public QuestionChoiceException() {
-		super();
 	}
 
 	public QuestionChoiceException(String msg) {

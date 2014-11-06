@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class QuestionExpiredException extends PortalException {
 
 	public QuestionExpiredException() {
-		super();
 	}
 
 	public QuestionExpiredException(String msg) {

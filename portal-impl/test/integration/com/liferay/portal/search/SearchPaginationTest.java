@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.DeleteAfterTestRun;
@@ -266,7 +267,24 @@ public class SearchPaginationTest {
 			returnedUsers.add(UserLocalServiceUtil.getUser(userId));
 		}
 
+		StringBundler sb = new StringBundler(13);
+
+		sb.append("{start=");
+		sb.append(start);
+		sb.append(", end=");
+		sb.append(end);
+		sb.append(", expectedTotal=");
+		sb.append(expectedTotal);
+		sb.append(", expectedRecalculatedStart=");
+		sb.append(expectedRecalculatedStart);
+		sb.append(", setupUsers=");
+		sb.append(_users);
+		sb.append(", returnedUsers=");
+		sb.append(returnedUsers);
+		sb.append("}");
+
 		Assert.assertEquals(
+			sb.toString(),
 			_users.subList(
 				expectedRecalculatedStart,
 				expectedRecalculatedStart + hits.getDocs().length),

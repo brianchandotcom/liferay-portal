@@ -47,6 +47,12 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -78,9 +84,21 @@ public class LiferaySeleniumHelper {
 		AntCommands antCommands = new AntCommands(
 			liferaySelenium, fileName, target);
 
-		antCommands.start();
+		ExecutorService executor = Executors.newCachedThreadPool();
 
-		antCommands.join(120000);
+		Future future = executor.submit(antCommands);
+
+		try {
+			future.get(150, TimeUnit.SECONDS);
+		}
+		catch (ExecutionException e) {
+			throw new Exception();
+		}
+		catch (TimeoutException e) {
+			future.cancel(true);
+		}
+
+		executor.shutdownNow();
 	}
 
 	public static void assertAlert(

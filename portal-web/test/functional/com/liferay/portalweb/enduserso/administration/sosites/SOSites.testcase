@@ -808,6 +808,7 @@
 
 		<execute action="SOUserBarAddSite#selectFrameTop" />
 		<execute action="SOUserBarAddSite#type" locator-key1="DESCRIPTION_FIELD" value1="${siteDescription}" />
+		<execute action="SOUserBarAddSite#assertTextEquals" locator-key1="ALERT_MESSAGE" value1="This field is required." />
 
 		<execute action="SOUserBar#sikuliAssertElementPresent" locator-key1="SCREENSHOTS_USERBAR_GO_TO_MENU_ADD_SITE_SITE_NAME_REQUIRED_PNG" />
 

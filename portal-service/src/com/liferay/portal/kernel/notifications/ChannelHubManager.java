@@ -60,6 +60,9 @@ public interface ChannelHubManager {
 
 	public void destroyChannelHub(long companyId) throws ChannelException;
 
+	public void destroyClusterChannel(long companyId, long userId)
+		throws ChannelException;
+
 	public ChannelHub fetchChannelHub(long companyId) throws ChannelException;
 
 	public ChannelHub fetchChannelHub(long companyId, boolean createIfAbsent)

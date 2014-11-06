@@ -93,6 +93,8 @@ public class PollerServlet extends HttpServlet {
 		SynchronousPollerChannelListener synchronousPollerChannelListener =
 			new SynchronousPollerChannelListener();
 
+		ChannelHubManagerUtil.getChannel(companyId, userId, true);
+
 		try {
 			ChannelHubManagerUtil.registerChannelListener(
 				companyId, userId, synchronousPollerChannelListener);

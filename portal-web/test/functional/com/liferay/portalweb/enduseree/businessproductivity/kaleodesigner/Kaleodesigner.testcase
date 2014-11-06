@@ -1469,7 +1469,7 @@
 
 		<execute macro="KaleoDesigner#viewSourceXMLLine">
 			<var name="kdSourceXML" value="INVALID" />
-			<var name="line" value="3" />
+			<var name="line" value="6" />
 		</execute>
 	</command>
 

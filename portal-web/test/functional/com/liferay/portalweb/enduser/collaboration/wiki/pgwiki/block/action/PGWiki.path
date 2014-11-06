@@ -59,6 +59,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIEW_PAGE</td>
+	<td>//a[text()='${key_wikiPageTitle}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ATTACHMENTS_BUTTON</td>
 	<td>//div[@class='article-actions']/span[contains(.,'Attachment')]/a</td>
 	<td></td>

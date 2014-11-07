@@ -994,32 +994,6 @@ $prefixes: ("-webkit-", "-moz-", "-o-", "");
 	@include text-shadow(none);
 }
 
-.taglib-form-navigator > .form-steps > ul.form-navigator.well .tab {
-	&.section-error, &.section-success {
-		.tab-label .number {
-			@include transition-duration(0.25s);
-			@include transition-property(box-shadow);
-			@include transition-timing-function(ease-out);
-		}
-	}
-
-	&.section-error .tab-label .number {
-		@include box-shadow(0 0 5px 0 #B50303);
-	}
-
-	&.section-success .tab-label .number {
-		@include box-shadow(0 0 5px 0 #488F06);
-	}
-
-	.tab-label {
-		&:hover, &:focus {
-			.number {
-				@include box-shadow(0 0 5px 0 #60BFEF);
-			}
-		}
-	}
-}
-
 .modify-pages .delete-tab {
 	@include border-radius(50%);
 	@include text-shadow(none);

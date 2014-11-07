@@ -56,8 +56,9 @@ import javax.servlet.http.HttpServletRequest;
 public class LayoutsAdminDisplayContext {
 
 	public LayoutsAdminDisplayContext(
-		HttpServletRequest request,
-		LiferayPortletResponse liferayPortletResponse) {
+			HttpServletRequest request,
+			LiferayPortletResponse liferayPortletResponse)
+		throws PortalException {
 
 		_request = request;
 		_liferayPortletResponse = liferayPortletResponse;
@@ -75,7 +76,9 @@ public class LayoutsAdminDisplayContext {
 
 			LayoutSet layoutSet = _themeDisplay.getLayoutSet();
 
-			if (layoutSet.isPrivateLayout()) {
+			Group group = layoutSet.getGroup();
+
+			if (!group.isControlPanel() && layoutSet.isPrivateLayout()) {
 				tabs1 = "private-pages";
 			}
 		}

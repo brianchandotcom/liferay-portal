@@ -105,14 +105,9 @@
 
 	<aui:input disabled="<%= !assetPublisherDisplayContext.isShowEnablePermissions() %>" name="preferences--enablePermissions--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnablePermissions() %>" />
 
-	<c:choose>
-		<c:when test="<%= assetPublisherDisplayContext.isShowEnableRelatedAssets() %>">
-			<aui:input name="preferences--enableRelatedAssets--" type="hidden" value="<%= assetPublisherDisplayContext.isEnableRelatedAssets() %>" />
-		</c:when>
-		<c:otherwise>
-			<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableRelatedAssets() %>" />
-		</c:otherwise>
-	</c:choose>
+	<c:if test="<%= assetPublisherDisplayContext.isShowEnableRelatedAssets() %>">
+		<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableRelatedAssets() %>" />
+	</c:if>
 
 	<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableRatings() %>" />
 

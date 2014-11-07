@@ -80,7 +80,7 @@
 		<execute macro="SOMembersAdministration#createAccountViaSiteInviteEmail">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
 			<var name="adminName" value="${adminName}" />
-			<var name="nonUser" value="true" />
+			<var name="nonUserInvite" value="true" />
 			<var name="singleApproverWorkflow" value="true" />
 			<var name="siteName" value="${siteName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -134,7 +134,7 @@
 		<execute macro="SOMembersAdministration#confirmMemberInviteByEmail">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
 			<var name="adminName" value="${adminName}" />
-			<var name="nonUser" value="true" />
+			<var name="nonUserInvite" value="true" />
 			<var name="siteName" value="${siteName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userName" value="${userName}" />

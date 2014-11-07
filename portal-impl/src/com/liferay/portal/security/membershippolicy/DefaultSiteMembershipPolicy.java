@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.IndexerInterval;
+import com.liferay.portal.kernel.events.IntervalAction;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -215,10 +215,10 @@ public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 
 		int count = UserLocalServiceUtil.getGroupUsersCount(group.getGroupId());
 
-		final IndexerInterval indexerIntervalInstance = new IndexerInterval();
+		final IntervalAction intervalActionInstance = new IntervalAction();
 
-		indexerIntervalInstance.setPerformActionMethod(
-			new IndexerInterval.PerformIntervalActionMethod() {
+		intervalActionInstance.setPerformActionMethod(
+			new IntervalAction.PerformIntervalActionMethod() {
 
 				@Override
 				public void performIntervalAction(int start, int end)
@@ -236,15 +236,15 @@ public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 								new long[]{user.getUserId()}, null);
 						}
 						else {
-							indexerIntervalInstance.incrementStart();
+							intervalActionInstance.incrementStart();
 						}
 					}
 				}
 
 			});
 
-		indexerIntervalInstance.setCount(count);
-		indexerIntervalInstance.performInterval();
+		intervalActionInstance.setCount(count);
+		intervalActionInstance.performInterval();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

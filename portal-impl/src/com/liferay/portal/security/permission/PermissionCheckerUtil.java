@@ -14,41 +14,16 @@
 
 package com.liferay.portal.security.permission;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class PermissionCheckerUtil {
-
-	public static Boolean containsResourcePermission(
-			PermissionChecker permissionChecker, String className, long classPK,
-			String actionId)
-		throws PortalException {
-
-		ResourcePermissionChecker resourcePermissionChecker =
-			_serviceTrackerMap.getService(className);
-
-		if (resourcePermissionChecker == null) {
-			return null;
-		}
-
-		Boolean resource = resourcePermissionChecker.checkResource(
-			permissionChecker, classPK, actionId);
-
-		if (resource != null) {
-			return resource.booleanValue();
-		}
-
-		return null;
-	}
 
 	public static void setThreadValues(User user) {
 		if (user == null) {
@@ -85,13 +60,5 @@ public class PermissionCheckerUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PermissionCheckerUtil.class);
-
-	private static final ServiceTrackerMap<String, ResourcePermissionChecker>
-		_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
-			ResourcePermissionChecker.class, "model.class.name");
-
-	static {
-		_serviceTrackerMap.open();
-	}
 
 }

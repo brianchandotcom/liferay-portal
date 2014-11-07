@@ -53,11 +53,23 @@ public class LayoutTestUtil {
 		return addLayout(group.getGroupId());
 	}
 
+	public static Layout addLayout(Group group, boolean privateLayout)
+		throws Exception {
+
+		return addLayout(group.getGroupId(), privateLayout);
+	}
+
 	public static Layout addLayout(long groupId) throws Exception {
+		return addLayout(groupId, false);
+	}
+
+	public static Layout addLayout(long groupId, boolean privateLayout)
+		throws Exception {
+
 		return addLayout(
 			groupId,
 			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
-			false);
+			privateLayout, null, false);
 	}
 
 	public static Layout addLayout(

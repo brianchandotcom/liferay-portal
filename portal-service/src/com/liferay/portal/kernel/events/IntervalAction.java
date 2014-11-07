@@ -27,18 +27,18 @@ public class IntervalAction {
 		_start++;
 	}
 
-	public void performInterval() throws PortalException {
-		int pages = _count / DEFAULT_INTERVAL;
+	public void performActions() throws PortalException {
+		int pages = _total / DEFAULT_INTERVAL;
 
 		for (int i = 0; i <= pages; i++) {
 			int end = _start + DEFAULT_INTERVAL;
 
-			performIntervalAction(_start, end);
+			performActions(_start, end);
 		}
 	}
 
-	public void setCount(int count) {
-		_count = count;
+	public void setTotal(int total) {
+		_total = total;
 	}
 
 	public void setPerformActionMethod(
@@ -49,21 +49,20 @@ public class IntervalAction {
 
 	public interface PerformIntervalActionMethod {
 
-		public void performIntervalAction(int start, int end)
-			throws PortalException;
+		public void performAction(int start, int end) throws PortalException;
 
 	}
 
-	protected void performIntervalAction(int start, int end)
+	protected void performActions(int start, int end)
 		throws PortalException {
 
 		if (_performIntervalActionMethod != null) {
-			_performIntervalActionMethod.performIntervalAction(start, end);
+			_performIntervalActionMethod.performAction(start, end);
 		}
 	}
 
-	private int _count;
 	private PerformIntervalActionMethod _performIntervalActionMethod;
 	private int _start;
+	private int _total;
 
 }

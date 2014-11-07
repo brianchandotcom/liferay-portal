@@ -49,6 +49,7 @@ import io.netty.util.concurrent.EventExecutor;
 import io.netty.util.concurrent.GenericFutureListener;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 
 import java.nio.file.Path;
@@ -165,36 +166,73 @@ public class NettyFabricWorkerExecutionChannelHandler
 			_repository.getFiles(mergedResources, false)) {
 
 			@Override
-			protected LoadedResources convert(Map<Path, Path> mergedResources) {
+			protected LoadedResources convert(Map<Path, Path> mergedResources)
+				throws IOException {
+
 				Map<Path, Path> loadedInputResources =
 					new HashMap<Path, Path>();
+
+				List<Path> missedInputResources = new ArrayList<Path>();
 
 				for (Path path : inputResources.keySet()) {
 					Path loadedInputResource = mergedResources.get(path);
 
-					if (loadedInputResource != null) {
+					if (loadedInputResource == null) {
+						missedInputResources.add(path);
+					}
+					else {
 						loadedInputResources.put(path, loadedInputResource);
 					}
 				}
 
+				if (!missedInputResources.isEmpty()) {
+					throw new IOException(
+						"Unable to get input resources :" +
+							missedInputResources);
+				}
+
 				List<Path> loadedBootstrapResources = new ArrayList<Path>();
+
+				List<Path> missedBootstrapResources = new ArrayList<Path>();
 
 				for (Path path : bootstrapResources.keySet()) {
 					Path loadedBootstrapResource = mergedResources.get(path);
 
-					if (loadedBootstrapResource != null) {
+					if (loadedBootstrapResource == null) {
+						missedBootstrapResources.add(path);
+					}
+					else {
 						loadedBootstrapResources.add(loadedBootstrapResource);
 					}
 				}
 
+				if (!missedBootstrapResources.isEmpty() &&
+					_log.isWarnEnabled()) {
+
+					_log.warn(
+						"Incomplete bootstrap classpath loaded, missed :" +
+							missedBootstrapResources);
+				}
+
 				List<Path> loadedRuntimeResources = new ArrayList<Path>();
+
+				List<Path> missedRuntimeResources = new ArrayList<Path>();
 
 				for (Path path : runtimeResources.keySet()) {
 					Path loadedRuntimeResource = mergedResources.get(path);
 
-					if (loadedRuntimeResource != null) {
+					if (loadedRuntimeResource == null) {
+						missedRuntimeResources.add(path);
+					}
+					else {
 						loadedRuntimeResources.add(loadedRuntimeResource);
 					}
+				}
+
+				if (!missedRuntimeResources.isEmpty() && _log.isWarnEnabled()) {
+					_log.warn(
+						"Incomplete runtime classpath loaded, missed :" +
+							missedRuntimeResources);
 				}
 
 				return new LoadedResources(

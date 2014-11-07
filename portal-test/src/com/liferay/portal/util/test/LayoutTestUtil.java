@@ -59,6 +59,15 @@ public class LayoutTestUtil {
 		return addLayout(group.getGroupId(), privateLayout);
 	}
 
+	public static Layout addLayout(
+			Group group, boolean privateLayout, LayoutPrototype layoutPrototype,
+			boolean linkEnabled)
+		throws Exception {
+
+		return addLayout(
+			group.getGroupId(), privateLayout, layoutPrototype, linkEnabled);
+	}
+
 	public static Layout addLayout(Group group, long parentLayoutPlid)
 		throws Exception {
 
@@ -72,10 +81,18 @@ public class LayoutTestUtil {
 	public static Layout addLayout(long groupId, boolean privateLayout)
 		throws Exception {
 
+		return addLayout(groupId, privateLayout, null, false);
+	}
+
+	public static Layout addLayout(
+			long groupId, boolean privateLayout,
+			LayoutPrototype layoutPrototype, boolean linkEnabled)
+		throws Exception {
+
 		return addLayout(
 			groupId,
 			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
-			privateLayout, null, false);
+			privateLayout, layoutPrototype, linkEnabled);
 	}
 
 	public static Layout addLayout(

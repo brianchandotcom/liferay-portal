@@ -147,14 +147,8 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		_portletDataContextExport.setExportDataRootElement(rootElement);
 
-		_stagingPrivateLayout = LayoutTestUtil.addLayout(
-			_stagingGroup.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
-			true);
-		_stagingPublicLayout = LayoutTestUtil.addLayout(
-			_stagingGroup.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
-			false);
+		_stagingPrivateLayout = LayoutTestUtil.addLayout(_stagingGroup, true);
+		_stagingPublicLayout = LayoutTestUtil.addLayout(_stagingGroup, false);
 
 		_portletDataContextExport.setPlid(_stagingPublicLayout.getPlid());
 
@@ -167,10 +161,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		_portletDataContextImport.setImportDataRootElement(rootElement);
 
-		_livePublicLayout = LayoutTestUtil.addLayout(
-			_liveGroup.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
-			false);
+		_livePublicLayout = LayoutTestUtil.addLayout(_liveGroup, false);
 
 		_portletDataContextImport.setPlid(_livePublicLayout.getPlid());
 
@@ -391,14 +382,8 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		Group group = user.getGroup();
 
-		Layout privateLayout = LayoutTestUtil.addLayout(
-			group.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
-			true);
-		Layout publicLayout = LayoutTestUtil.addLayout(
-			group.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
-			false);
+		Layout privateLayout = LayoutTestUtil.addLayout(group, true);
+		Layout publicLayout = LayoutTestUtil.addLayout(group, false);
 
 		PortletDataContext portletDataContextExport =
 			PortletDataContextFactoryUtil.createExportPortletDataContext(
@@ -599,14 +584,8 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 	@Test
 	public void testImportLinksToLayoutsIdsReplacement() throws Exception {
-		LayoutTestUtil.addLayout(
-			_liveGroup.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
-			true);
-		LayoutTestUtil.addLayout(
-			_liveGroup.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
-			false);
+		LayoutTestUtil.addLayout(_liveGroup, true);
+		LayoutTestUtil.addLayout(_liveGroup, false);
 
 		exportImportLayouts(true);
 		exportImportLayouts(false);

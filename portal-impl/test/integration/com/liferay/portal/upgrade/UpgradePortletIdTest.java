@@ -36,13 +36,11 @@ import com.liferay.portal.service.ResourcePermissionServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
-import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 
 import java.util.HashMap;
@@ -101,10 +99,7 @@ public class UpgradePortletIdTest extends UpgradePortletId {
 	protected Layout addLayout() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		return LayoutTestUtil.addLayout(
-			group.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
-			false);
+		return LayoutTestUtil.addLayout(group, false);
 	}
 
 	protected void addPortletPreferences(Layout layout, String portletId)

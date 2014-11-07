@@ -360,9 +360,7 @@ public class LayoutSetPrototypePropagationTest
 		_layoutSetPrototypeGroup = _layoutSetPrototype.getGroup();
 
 		prototypeLayout = LayoutTestUtil.addLayout(
-			_layoutSetPrototypeGroup.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
-			true);
+			_layoutSetPrototypeGroup, true);
 
 		LayoutTestUtil.updateLayoutTemplateId(
 			prototypeLayout, initialLayoutTemplateId);
@@ -376,9 +374,7 @@ public class LayoutSetPrototypePropagationTest
 			_layoutSetPrototypeJournalArticle, "column-1");
 
 		_prototypeLayout = LayoutTestUtil.addLayout(
-			_layoutSetPrototypeGroup.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
-			true);
+			_layoutSetPrototypeGroup, true);
 
 		LayoutTestUtil.updateLayoutTemplateId(
 			_prototypeLayout, initialLayoutTemplateId);
@@ -436,9 +432,7 @@ public class LayoutSetPrototypePropagationTest
 		setLinkEnabled(linkEnabled);
 
 		Layout layout = LayoutTestUtil.addLayout(
-			_layoutSetPrototypeGroup.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
-			true);
+			_layoutSetPrototypeGroup, true);
 
 		Assert.assertEquals(
 			_initialPrototypeLayoutCount, getGroupLayoutCount());

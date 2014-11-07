@@ -31,13 +31,11 @@ import com.liferay.portal.spring.aop.ServiceBeanAopCacheManagerUtil;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
-import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.StrictPortletPreferencesImpl;
@@ -939,9 +937,7 @@ public class PortletPreferencesLocalServiceTest {
 	@Test
 	public void testGetLayoutPrivatePortletPreferences() throws Exception {
 		Layout layout = LayoutTestUtil.addLayout(
-			GroupTestUtil.addGroup().getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
-			true);
+			GroupTestUtil.addGroup(), true);
 
 		PortletPreferencesTestUtil.addGroupPortletPreferences(layout, _portlet);
 
@@ -957,9 +953,7 @@ public class PortletPreferencesLocalServiceTest {
 	@Test
 	public void testGetNotLayoutPrivatePortletPreferences() throws Exception {
 		Layout layout = LayoutTestUtil.addLayout(
-			GroupTestUtil.addGroup().getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
-			false);
+			GroupTestUtil.addGroup(), false);
 
 		PortletPreferencesTestUtil.addGroupPortletPreferences(layout, _portlet);
 

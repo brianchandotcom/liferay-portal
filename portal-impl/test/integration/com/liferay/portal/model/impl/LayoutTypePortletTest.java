@@ -24,7 +24,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.listeners.ResetDatabaseExecutionTestListener;
-import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.test.GroupTestUtil;
@@ -310,10 +309,7 @@ public class LayoutTypePortletTest {
 	protected LayoutTypePortlet getLayoutTypePortlet() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		Layout layout = LayoutTestUtil.addLayout(
-			group.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
-			false);
+		Layout layout = LayoutTestUtil.addLayout(group, false);
 
 		return (LayoutTypePortlet)layout.getLayoutType();
 	}

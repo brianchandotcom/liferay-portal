@@ -17,8 +17,22 @@ package com.liferay.portal.repository.liferayrepository;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.util.RepositoryWrapper;
+import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.service.BaseServiceImpl;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.io.File;
 import java.io.InputStream;
@@ -37,7 +51,12 @@ public class LiferayWorkflowRepositoryWrapper extends RepositoryWrapper {
 			long fileEntryId, String version, ServiceContext serviceContext)
 		throws PortalException {
 
+		DLFileVersion dlFileVersion = _getWorkflowDLFileVersion(
+			fileEntryId, serviceContext);
+
 		super.revertFileEntry(fileEntryId, version, serviceContext);
+
+		_startWorkflowInstance(_getUserId(), dlFileVersion, serviceContext);
 	}
 
 	@Override
@@ -47,9 +66,16 @@ public class LiferayWorkflowRepositoryWrapper extends RepositoryWrapper {
 			boolean majorVersion, File file, ServiceContext serviceContext)
 		throws PortalException {
 
-		return super.updateFileEntry(
+		DLFileVersion dlFileVersion = _getWorkflowDLFileVersion(
+			fileEntryId, serviceContext);
+
+		FileEntry fileEntry = super.updateFileEntry(
 			fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, file, serviceContext);
+
+		_startWorkflowInstance(_getUserId(), dlFileVersion, serviceContext);
+
+		return fileEntry;
 	}
 
 	@Override
@@ -60,9 +86,95 @@ public class LiferayWorkflowRepositoryWrapper extends RepositoryWrapper {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return super.updateFileEntry(
+		DLFileVersion dlFileVersion = _getWorkflowDLFileVersion(
+			fileEntryId, serviceContext);
+
+		FileEntry fileEntry = super.updateFileEntry(
 			fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, is, size, serviceContext);
+
+		_startWorkflowInstance(_getUserId(), dlFileVersion, serviceContext);
+
+		return fileEntry;
+	}
+
+	/**
+	 * See {@link com.liferay.portal.service.BaseServiceImpl#getUserId()}
+	 */
+	private long _getUserId() throws PrincipalException {
+		String name = PrincipalThreadLocal.getName();
+
+		if (name == null) {
+			throw new PrincipalException();
+		}
+
+		if (Validator.isNull(name)) {
+			throw new PrincipalException("Principal is null");
+		}
+		else {
+			for (int i = 0; i < BaseServiceImpl.ANONYMOUS_NAMES.length; i++) {
+				if (StringUtil.equalsIgnoreCase(
+						name, BaseServiceImpl.ANONYMOUS_NAMES[i])) {
+
+					throw new PrincipalException(
+						"Principal cannot be " +
+							BaseServiceImpl.ANONYMOUS_NAMES[i]);
+				}
+			}
+		}
+
+		return GetterUtil.getLong(name);
+	}
+
+	/**
+	 * See {@link com.liferay.portlet.documentlibrary.service.impl.DLFileEntryLocalServiceImpl#updateFileEntry(long, long, String, String, String, String, String, String, boolean, String, long, java.util.Map, java.io.File, java.io.InputStream, long, com.liferay.portal.service.ServiceContext)}
+	 */
+	private DLFileVersion _getWorkflowDLFileVersion(
+			long fileEntryId, ServiceContext serviceContext)
+		throws PortalException {
+
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getDLFileEntry(
+			fileEntryId);
+
+		boolean checkedOut = dlFileEntry.isCheckedOut();
+
+		DLFileVersion dlFileVersion =
+			DLFileVersionLocalServiceUtil.getLatestFileVersion(
+				fileEntryId, !checkedOut);
+
+		boolean autoCheckIn = !checkedOut && dlFileVersion.isApproved();
+
+		int workflowAction = serviceContext.getWorkflowAction();
+
+		if (!autoCheckIn && !checkedOut &&
+			(workflowAction == WorkflowConstants.ACTION_PUBLISH)) {
+
+			return dlFileVersion;
+		}
+		else {
+			return null;
+		}
+	}
+
+	private void _startWorkflowInstance(
+			long userId, DLFileVersion dlFileVersion,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		if (dlFileVersion == null) {
+			return;
+		}
+
+		String syncEvent = DLSyncConstants.EVENT_UPDATE;
+
+		if (dlFileVersion.getVersion().equals(
+				DLFileEntryConstants.VERSION_DEFAULT)) {
+
+			syncEvent = DLSyncConstants.EVENT_ADD;
+		}
+
+		DLUtil.startWorkflowInstance(
+			userId, dlFileVersion, syncEvent, serviceContext);
 	}
 
 }

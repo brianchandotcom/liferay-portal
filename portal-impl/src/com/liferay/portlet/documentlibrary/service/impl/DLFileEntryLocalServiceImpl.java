@@ -2474,21 +2474,6 @@ public class DLFileEntryLocalServiceImpl
 						fileEntryId, majorVersion, changeLog, serviceContext);
 				}
 			}
-			else if (!checkedOut &&
-					 (serviceContext.getWorkflowAction() ==
-						WorkflowConstants.ACTION_PUBLISH)) {
-
-				String syncEvent = DLSyncConstants.EVENT_UPDATE;
-
-				if (dlFileVersion.getVersion().equals(
-						DLFileEntryConstants.VERSION_DEFAULT)) {
-
-					syncEvent = DLSyncConstants.EVENT_ADD;
-				}
-
-				DLUtil.startWorkflowInstance(
-					userId, dlFileVersion, syncEvent, serviceContext);
-			}
 		}
 		catch (PortalException pe) {
 			if (autoCheckIn) {

@@ -84,11 +84,11 @@ public class ConvertDocumentLibraryTest {
 	public void setUp() throws Exception {
 		PropsValues.DL_STORE_IMPL = FileSystemStore.class.getName();
 
-		Store store = (Store)InstanceFactory.newInstance(
+		_sourceStore = (Store)InstanceFactory.newInstance(
 			ClassLoaderUtil.getPortalClassLoader(),
 			FileSystemStore.class.getName());
 
-		StoreFactory.setInstance(store);
+		StoreFactory.setInstance(_sourceStore);
 
 		_group = GroupTestUtil.addGroup();
 
@@ -96,7 +96,7 @@ public class ConvertDocumentLibraryTest {
 			ConvertDocumentLibrary.class.getName());
 
 		_convertProcess.setParameterValues(
-			new String[] {DBStore.class.getName()});
+			new String[]{DBStore.class.getName(), Boolean.TRUE.toString()});
 	}
 
 	@After
@@ -107,6 +107,16 @@ public class ConvertDocumentLibraryTest {
 			ClassLoaderUtil.getPortalClassLoader(), PropsValues.DL_STORE_IMPL);
 
 		StoreFactory.setInstance(store);
+	}
+
+	@Test
+	public void testMigrateAndDeleteFilesInOldRepository() throws Exception {
+		testMigrateAndCheckOldRepositoryFiles(Boolean.TRUE);
+	}
+
+	@Test
+	public void testMigrateAndKeepFilesInOldRepository() throws Exception {
+		testMigrateAndCheckOldRepositoryFiles(Boolean.FALSE);
 	}
 
 	@Test
@@ -260,6 +270,33 @@ public class ConvertDocumentLibraryTest {
 			fileEntry.getFileEntryId());
 	}
 
+	protected void testMigrateAndCheckOldRepositoryFiles(Boolean delete)
+		throws Exception {
+
+		_convertProcess.setParameterValues(
+			new String[] {
+				DBStore.class.getName(), delete.toString()
+			});
+
+		Folder folder = DLAppTestUtil.addFolder(
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString());
+
+		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
+			_group.getGroupId(), folder.getFolderId(),
+			RandomTestUtil.randomString() + ".txt");
+
+		_convertProcess.convert();
+
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+		Assert.assertNotEquals(
+			delete,
+			_sourceStore.hasFile(
+				dlFileEntry.getCompanyId(), dlFileEntry.getFolderId(),
+				dlFileEntry.getName()));
+	}
+
 	protected void testMigrateDL(long folderId) throws Exception {
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
 			_group.getGroupId(), folderId,
@@ -285,5 +322,7 @@ public class ConvertDocumentLibraryTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private Store _sourceStore;
 
 }

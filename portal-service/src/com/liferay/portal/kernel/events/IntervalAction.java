@@ -28,13 +28,17 @@ public class IntervalAction {
 	}
 
 	public void performActions() throws PortalException {
-		int pages = _total / DEFAULT_INTERVAL;
+		int pages = _total / _interval;
 
 		for (int i = 0; i <= pages; i++) {
-			int end = _start + DEFAULT_INTERVAL;
+			int end = _start + _interval;
 
 			performActions(_start, end);
 		}
+	}
+
+	public void setInterval(int interval) {
+		_interval = interval;
 	}
 
 	public void setPerformActionMethod(
@@ -59,6 +63,7 @@ public class IntervalAction {
 		}
 	}
 
+	private int _interval = DEFAULT_INTERVAL;
 	private PerformIntervalActionMethod _performIntervalActionMethod;
 	private int _start;
 	private int _total;

@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.portal.kernel.events;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Jonathan McCann
  */
-public class IndexerInterval {
+public class IntervalAction {
 
 	public static final int DEFAULT_INTERVAL = 100;
 

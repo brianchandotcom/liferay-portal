@@ -270,7 +270,7 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 	);
 
 	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />fromValue);
+		Liferay.Util.focusFormField(form.fm('fromValue'));
 	</c:if>
 
 	$('#<portlet:namespace/>convertButton').on(

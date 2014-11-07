@@ -996,6 +996,10 @@
 				}
 			);
 
+			if (el.jquery) {
+				el = el[0];
+			}
+
 			if (!interacting && Util.inBrowserView(el)) {
 				A.one(el).focus();
 			}

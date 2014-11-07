@@ -58,10 +58,8 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 	@Test
 	public void testDeleteMissingLayouts() throws Exception {
-		Layout layout1 = LayoutTestUtil.addLayout(
-			group.getGroupId(), RandomTestUtil.randomString());
-		Layout layout2 = LayoutTestUtil.addLayout(
-			group.getGroupId(), RandomTestUtil.randomString());
+		Layout layout1 = LayoutTestUtil.addLayout(group);
+		Layout layout2 = LayoutTestUtil.addLayout(group);
 
 		exportImportLayouts(null, getImportParameterMap());
 
@@ -69,8 +67,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			LayoutLocalServiceUtil.getLayoutsCount(group, false),
 			LayoutLocalServiceUtil.getLayoutsCount(importedGroup, false));
 
-		LayoutTestUtil.addLayout(
-			importedGroup.getGroupId(), RandomTestUtil.randomString());
+		LayoutTestUtil.addLayout(importedGroup);
 
 		Map<String, String[]> parameterMap = getImportParameterMap();
 
@@ -183,8 +180,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 	@Test
 	public void testExportImportLayouts() throws Exception {
-		LayoutTestUtil.addLayout(
-			group.getGroupId(), RandomTestUtil.randomString());
+		LayoutTestUtil.addLayout(group);
 
 		long[] layoutIds = new long[0];
 
@@ -280,12 +276,9 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 	@Test
 	public void testExportImportLayoutsPriorities() throws Exception {
-		Layout layout1 = LayoutTestUtil.addLayout(
-			group.getGroupId(), RandomTestUtil.randomString());
-		Layout layout2 = LayoutTestUtil.addLayout(
-			group.getGroupId(), RandomTestUtil.randomString());
-		Layout layout3 = LayoutTestUtil.addLayout(
-			group.getGroupId(), RandomTestUtil.randomString());
+		Layout layout1 = LayoutTestUtil.addLayout(group);
+		Layout layout2 = LayoutTestUtil.addLayout(group);
+		Layout layout3 = LayoutTestUtil.addLayout(group);
 
 		int priority = layout1.getPriority();
 
@@ -351,8 +344,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 	@Test
 	public void testExportImportSelectedLayouts() throws Exception {
-		Layout layout = LayoutTestUtil.addLayout(
-			group.getGroupId(), RandomTestUtil.randomString());
+		Layout layout = LayoutTestUtil.addLayout(group);
 
 		long[] layoutIds = new long[] {layout.getLayoutId()};
 
@@ -373,17 +365,19 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		String defaultLanguageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getDefault());
 
-		Layout layoutA = LayoutTestUtil.addLayout(
-			group.getGroupId(), "layoutA");
+		Layout layoutA = LayoutTestUtil.addLayout(group);
+
+		String friendlyURLA = layoutA.getFriendlyURL();
 
 		layoutA = LayoutLocalServiceUtil.updateFriendlyURL(
-			layoutA.getUserId(), layoutA.getPlid(), "/layoutA-de", "de");
+			layoutA.getUserId(), layoutA.getPlid(), friendlyURLA + "-de", "de");
 
-		Layout layoutB = LayoutTestUtil.addLayout(
-			group.getGroupId(), "layoutB");
+		Layout layoutB = LayoutTestUtil.addLayout(group);
+
+		String friendlyURLB = layoutB.getFriendlyURL();
 
 		layoutB = LayoutLocalServiceUtil.updateFriendlyURL(
-			layoutB.getUserId(), layoutB.getPlid(), "/layoutB-de", "de");
+			layoutB.getUserId(), layoutB.getPlid(), friendlyURLB + "-de", "de");
 
 		long[] layoutIds = {layoutA.getLayoutId(), layoutB.getLayoutId()};
 
@@ -396,18 +390,18 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			layoutA.getUserId(), layoutA.getPlid(), "/temp-de", "de");
 
 		layoutB = LayoutLocalServiceUtil.updateFriendlyURL(
-			layoutB.getUserId(), layoutB.getPlid(), "/layoutA",
+			layoutB.getUserId(), layoutB.getPlid(), friendlyURLA,
 			defaultLanguageId);
 
 		LayoutLocalServiceUtil.updateFriendlyURL(
-			layoutB.getUserId(), layoutB.getPlid(), "/layoutA-de", "de");
+			layoutB.getUserId(), layoutB.getPlid(), friendlyURLA + "-de", "de");
 
 		layoutA = LayoutLocalServiceUtil.updateFriendlyURL(
-			layoutA.getUserId(), layoutA.getPlid(), "/layoutB",
+			layoutA.getUserId(), layoutA.getPlid(), friendlyURLB,
 			defaultLanguageId);
 
 		LayoutLocalServiceUtil.updateFriendlyURL(
-			layoutA.getUserId(), layoutA.getPlid(), "/layoutB-de", "de");
+			layoutA.getUserId(), layoutA.getPlid(), friendlyURLB + "-de", "de");
 
 		exportImportLayouts(layoutIds, getImportParameterMap());
 	}
@@ -435,8 +429,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		importedGroup = GroupTestUtil.updateDisplaySettings(
 			importedGroup.getGroupId(), targetAvailableLocales, null);
 
-		LayoutTestUtil.addLayout(
-			group.getGroupId(), RandomTestUtil.randomString());
+		LayoutTestUtil.addLayout(group);
 
 		long[] layoutIds = new long[0];
 

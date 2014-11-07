@@ -62,8 +62,7 @@ public class JournalFeedStagedModelDataHandlerTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_layout = LayoutTestUtil.addLayout(
-			stagingGroup.getGroupId(), RandomTestUtil.randomString());
+		_layout = LayoutTestUtil.addLayout(stagingGroup);
 
 		ServiceContext serviceContext = new ServiceContext();
 

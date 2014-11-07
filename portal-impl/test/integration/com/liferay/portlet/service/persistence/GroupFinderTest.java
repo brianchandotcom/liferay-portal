@@ -172,20 +172,17 @@ public class GroupFinderTest {
 		Group parentGroup = GroupTestUtil.addGroup(
 			RandomTestUtil.randomString());
 
-		LayoutTestUtil.addLayout(
-			parentGroup.getGroupId(), RandomTestUtil.randomString(), false);
+		LayoutTestUtil.addLayout(parentGroup, false);
 
 		Group childGroup1 = GroupTestUtil.addGroup(
 			parentGroup.getGroupId(), RandomTestUtil.randomString());
 
-		LayoutTestUtil.addLayout(
-			childGroup1.getGroupId(), RandomTestUtil.randomString(), false);
+		LayoutTestUtil.addLayout(childGroup1, false);
 
 		Group childGroup2 = GroupTestUtil.addGroup(
 			parentGroup.getGroupId(), RandomTestUtil.randomString());
 
-		LayoutTestUtil.addLayout(
-			childGroup2.getGroupId(), RandomTestUtil.randomString(), true);
+		LayoutTestUtil.addLayout(childGroup2, true);
 
 		groups = findByLayouts(GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
@@ -218,9 +215,9 @@ public class GroupFinderTest {
 	}
 
 	protected void addLayout(long groupId) throws Exception {
-		LayoutTestUtil.addLayout(groupId, RandomTestUtil.randomString(), false);
+		LayoutTestUtil.addLayout(groupId, false);
 
-		LayoutTestUtil.addLayout(groupId, RandomTestUtil.randomString(), true);
+		LayoutTestUtil.addLayout(groupId, true);
 	}
 
 	protected List<Group> findByC_C_N_D(

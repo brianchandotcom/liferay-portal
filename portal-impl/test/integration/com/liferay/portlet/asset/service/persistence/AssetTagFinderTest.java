@@ -371,8 +371,7 @@ public class AssetTagFinderTest {
 	protected Group addScopeGroup() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		Layout layout = LayoutTestUtil.addLayout(
-			group.getGroupId(), RandomTestUtil.randomString());
+		Layout layout = LayoutTestUtil.addLayout(group);
 
 		String name = RandomTestUtil.randomString();
 

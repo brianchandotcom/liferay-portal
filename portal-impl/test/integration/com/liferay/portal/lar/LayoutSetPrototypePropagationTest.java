@@ -208,8 +208,7 @@ public class LayoutSetPrototypePropagationTest
 		portlet.setPreferencesUniquePerLayout(false);
 
 		Layout layoutSetPrototypeLayout = LayoutTestUtil.addLayout(
-			_layoutSetPrototypeGroup.getGroupId(),
-			RandomTestUtil.randomString(), true, layoutPrototype, true);
+			_layoutSetPrototypeGroup, true, layoutPrototype, true);
 
 		Map<String, String[]> preferenceMap = new HashMap<String, String[]>();
 
@@ -358,8 +357,7 @@ public class LayoutSetPrototypePropagationTest
 		_layoutSetPrototypeGroup = _layoutSetPrototype.getGroup();
 
 		prototypeLayout = LayoutTestUtil.addLayout(
-			_layoutSetPrototypeGroup.getGroupId(),
-			RandomTestUtil.randomString(), true);
+			_layoutSetPrototypeGroup, true);
 
 		LayoutTestUtil.updateLayoutTemplateId(
 			prototypeLayout, initialLayoutTemplateId);
@@ -373,8 +371,7 @@ public class LayoutSetPrototypePropagationTest
 			_layoutSetPrototypeJournalArticle, "column-1");
 
 		_prototypeLayout = LayoutTestUtil.addLayout(
-			_layoutSetPrototypeGroup.getGroupId(),
-			RandomTestUtil.randomString(), true);
+			_layoutSetPrototypeGroup, true);
 
 		LayoutTestUtil.updateLayoutTemplateId(
 			_prototypeLayout, initialLayoutTemplateId);
@@ -432,8 +429,7 @@ public class LayoutSetPrototypePropagationTest
 		setLinkEnabled(linkEnabled);
 
 		Layout layout = LayoutTestUtil.addLayout(
-			_layoutSetPrototypeGroup.getGroupId(),
-			RandomTestUtil.randomString(), true);
+			_layoutSetPrototypeGroup, true);
 
 		Assert.assertEquals(
 			_initialPrototypeLayoutCount, getGroupLayoutCount());
@@ -474,8 +470,7 @@ public class LayoutSetPrototypePropagationTest
 		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
 
 		Layout layoutSetPrototypeLayout = LayoutTestUtil.addLayout(
-			_layoutSetPrototypeGroup.getGroupId(),
-			RandomTestUtil.randomString(), true, layoutPrototype,
+			_layoutSetPrototypeGroup, true, layoutPrototype,
 			layoutSetLayoutLinkEnabled);
 
 		layoutSetPrototypeLayout = propagateChanges(layoutSetPrototypeLayout);
@@ -628,9 +623,7 @@ public class LayoutSetPrototypePropagationTest
 		setLinkEnabled(layoutSetPrototypeLinkEnabled);
 
 		try {
-			LayoutTestUtil.addLayout(
-				group.getGroupId(), RandomTestUtil.randomString(),
-				layout.getPlid());
+			LayoutTestUtil.addLayout(group, layout.getPlid());
 
 			if (layoutSetPrototypeLinkEnabled) {
 				Assert.fail(

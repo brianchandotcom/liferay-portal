@@ -36,7 +36,6 @@ import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.StrictPortletPreferencesImpl;
@@ -938,8 +937,7 @@ public class PortletPreferencesLocalServiceTest {
 	@Test
 	public void testGetLayoutPrivatePortletPreferences() throws Exception {
 		Layout layout = LayoutTestUtil.addLayout(
-			GroupTestUtil.addGroup().getGroupId(),
-			RandomTestUtil.randomString(), true);
+			GroupTestUtil.addGroup(), true);
 
 		PortletPreferencesTestUtil.addGroupPortletPreferences(layout, _portlet);
 
@@ -955,8 +953,7 @@ public class PortletPreferencesLocalServiceTest {
 	@Test
 	public void testGetNotLayoutPrivatePortletPreferences() throws Exception {
 		Layout layout = LayoutTestUtil.addLayout(
-			GroupTestUtil.addGroup().getGroupId(),
-			RandomTestUtil.randomString(), false);
+			GroupTestUtil.addGroup(), false);
 
 		PortletPreferencesTestUtil.addGroupPortletPreferences(layout, _portlet);
 

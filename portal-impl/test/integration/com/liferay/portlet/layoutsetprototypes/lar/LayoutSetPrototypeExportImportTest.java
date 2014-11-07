@@ -95,14 +95,11 @@ public class LayoutSetPrototypeExportImportTest
 					RandomTestUtil.randomString());
 
 			LayoutTestUtil.addLayout(
-				exportedLayoutSetPrototypeGroup.getGroupId(),
-				RandomTestUtil.randomString(), true, exportedLayoutPrototype,
+				exportedLayoutSetPrototypeGroup, true, exportedLayoutPrototype,
 				true);
 		}
 		else {
-			LayoutTestUtil.addLayout(
-				exportedLayoutSetPrototypeGroup.getGroupId(),
-				RandomTestUtil.randomString(), true);
+			LayoutTestUtil.addLayout(exportedLayoutSetPrototypeGroup, true);
 		}
 
 		exportImportPortlet(PortletKeys.LAYOUT_SET_PROTOTYPE);

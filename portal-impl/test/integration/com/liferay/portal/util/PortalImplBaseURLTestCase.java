@@ -24,7 +24,6 @@ import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 
 import org.junit.Before;
@@ -47,10 +46,8 @@ public class PortalImplBaseURLTestCase {
 
 		group = GroupTestUtil.addGroup();
 
-		privateLayout = LayoutTestUtil.addLayout(
-			group.getGroupId(), RandomTestUtil.randomString(), true);
-		publicLayout = LayoutTestUtil.addLayout(
-			group.getGroupId(), RandomTestUtil.randomString());
+		privateLayout = LayoutTestUtil.addLayout(group, true);
+		publicLayout = LayoutTestUtil.addLayout(group);
 	}
 
 	protected ThemeDisplay initThemeDisplay(

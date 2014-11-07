@@ -112,8 +112,7 @@ public class MDRTestUtil {
 			long groupId, long ruleGroupId)
 		throws Exception {
 
-		Layout layout = LayoutTestUtil.addLayout(
-			groupId, RandomTestUtil.randomString());
+		Layout layout = LayoutTestUtil.addLayout(groupId);
 
 		return addRuleGroupInstance(
 			groupId, Layout.class.getName(), layout.getPlid(), ruleGroupId);

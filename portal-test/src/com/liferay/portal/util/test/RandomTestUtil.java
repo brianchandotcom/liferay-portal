@@ -17,8 +17,10 @@ package com.liferay.portal.util.test;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.test.randomizerbumpers.RandomizerBumper;
 import com.liferay.util.PwdGenerator;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -96,19 +98,46 @@ public class RandomTestUtil {
 		}
 	}
 
-	public static String randomString() {
-		return PwdGenerator.getPassword();
+	@SafeVarargs
+	public static String randomString(
+		int length, RandomizerBumper<String>... randomizerBumpers) {
+
+		generation:
+		for (int i = 0; i < _RANDOMIZER_BUMPER_TRIES_MAX; i++) {
+			String randomString = PwdGenerator.getPassword(length);
+
+			for (RandomizerBumper<String> randomizerBumper :
+					randomizerBumpers) {
+
+				if (!randomizerBumper.accept(randomString)) {
+					continue generation;
+				}
+			}
+
+			return randomString;
+		}
+
+		throw new IllegalStateException(
+			"Unable to generate a random string that is acceptable by all " +
+				"randomizer bumpers " + Arrays.toString(randomizerBumpers) +
+					" after " + _RANDOMIZER_BUMPER_TRIES_MAX + " tries");
 	}
 
-	public static String randomString(int length) {
-		return PwdGenerator.getPassword(length);
+	@SafeVarargs
+	public static String randomString(
+		RandomizerBumper<String>... randomizerBumpers) {
+
+		return randomString(8, randomizerBumpers);
 	}
 
-	public static String[] randomStrings(int count) {
+	@SafeVarargs
+	public static String[] randomStrings(
+		int count, RandomizerBumper<String>... randomizerBumpers) {
+
 		String[] strings = new String[count];
 
 		for (int i = 0; i < count; i++) {
-			strings[i] = PwdGenerator.getPassword();
+			strings[i] = randomString(randomizerBumpers);
 		}
 
 		return strings;
@@ -127,6 +156,8 @@ public class RandomTestUtil {
 
 		return unicodeProperties;
 	}
+
+	private static final int _RANDOMIZER_BUMPER_TRIES_MAX = 100;
 
 	private static Random _random = new Random();
 

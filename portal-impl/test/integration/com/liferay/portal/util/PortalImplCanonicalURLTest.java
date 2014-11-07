@@ -95,12 +95,11 @@ public class PortalImplCanonicalURLTest {
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 			if (_defaultGrouplayout1 == null) {
-				_defaultGrouplayout1 = LayoutTestUtil.addLayout(
-					_defaultGroup.getGroupId(), "home");
+				_defaultGrouplayout1 = LayoutTestUtil.addLayout(_defaultGroup);
 			}
 
 			_defaultGrouplayout2 = LayoutTestUtil.addLayout(
-				_defaultGroup.getGroupId(), "two");
+				_defaultGroup.getGroupId());
 		}
 	}
 

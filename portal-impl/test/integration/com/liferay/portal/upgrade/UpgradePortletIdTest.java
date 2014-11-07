@@ -41,7 +41,6 @@ import com.liferay.portal.upgrade.util.UpgradePortletId;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 
 import java.util.HashMap;
@@ -100,8 +99,7 @@ public class UpgradePortletIdTest extends UpgradePortletId {
 	protected Layout addLayout() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		return LayoutTestUtil.addLayout(
-			group.getGroupId(), RandomTestUtil.randomString(), false);
+		return LayoutTestUtil.addLayout(group, false);
 	}
 
 	protected void addPortletPreferences(Layout layout, String portletId)

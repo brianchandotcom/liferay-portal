@@ -348,9 +348,7 @@ public class GroupServiceTest {
 
 		Group parentOrganizationGroup = parentOrganization.getGroup();
 
-		LayoutTestUtil.addLayout(
-			parentOrganizationGroup.getGroupId(),
-			RandomTestUtil.randomString());
+		LayoutTestUtil.addLayout(parentOrganizationGroup);
 
 		Organization organization = OrganizationTestUtil.addOrganization(
 			parentOrganization.getOrganizationId(),
@@ -546,7 +544,7 @@ public class GroupServiceTest {
 	public void testScopes() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		Layout layout = LayoutTestUtil.addLayout(group.getGroupId(), "Page 1");
+		Layout layout = LayoutTestUtil.addLayout(group);
 
 		Assert.assertFalse(layout.hasScopeGroup());
 
@@ -804,8 +802,7 @@ public class GroupServiceTest {
 		else if (layout) {
 			Group group = GroupTestUtil.addGroup(RandomTestUtil.randomString());
 
-			Layout scopeLayout = LayoutTestUtil.addLayout(
-				group.getGroupId(), RandomTestUtil.randomString());
+			Layout scopeLayout = LayoutTestUtil.addLayout(group);
 
 			return GroupLocalServiceUtil.addGroup(
 				TestPropsValues.getUserId(),

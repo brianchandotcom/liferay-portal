@@ -27,7 +27,6 @@ import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.portal.util.test.RandomTestUtil;
 
 import java.lang.reflect.Field;
 
@@ -59,8 +58,7 @@ public class PortalImplLayoutSetFriendlyURLTest
 			ThemeDisplay themeDisplay = initThemeDisplay(
 				company, group, publicLayout, LOCALHOST, VIRTUAL_HOSTNAME);
 
-			Layout layout = LayoutTestUtil.addLayout(
-				defaultGroup.getGroupId(), RandomTestUtil.randomString());
+			Layout layout = LayoutTestUtil.addLayout(defaultGroup);
 
 			String friendlyURL = PortalUtil.getLayoutSetFriendlyURL(
 				layout.getLayoutSet(), themeDisplay);

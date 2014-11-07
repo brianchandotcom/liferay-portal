@@ -210,8 +210,8 @@ public class StagingImplTest {
 
 		// Layouts
 
-		LayoutTestUtil.addLayout(_group.getGroupId(), "Layout 1");
-		LayoutTestUtil.addLayout(_group.getGroupId(), "Layout 2");
+		LayoutTestUtil.addLayout(_group);
+		LayoutTestUtil.addLayout(_group);
 
 		// Create content
 

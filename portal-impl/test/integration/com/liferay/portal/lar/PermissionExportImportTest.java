@@ -75,8 +75,7 @@ public class PermissionExportImportTest extends PowerMockito {
 
 		Group exportGroup = exportLayoutSetPrototype.getGroup();
 
-		Layout exportLayout = LayoutTestUtil.addLayout(
-			exportGroup.getGroupId(), RandomTestUtil.randomString(), true);
+		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup, true);
 
 		String exportResourcePrimKey = PortletPermissionUtil.getPrimaryKey(
 			exportLayout.getPlid(), _PORTLET_ID);
@@ -96,8 +95,7 @@ public class PermissionExportImportTest extends PowerMockito {
 
 		Group importGroup = importLayoutSetPrototype.getGroup();
 
-		Layout importLayout = LayoutTestUtil.addLayout(
-			importGroup.getGroupId(), RandomTestUtil.randomString(), true);
+		Layout importLayout = LayoutTestUtil.addLayout(importGroup, true);
 
 		String importResourcePrimKey = PortletPermissionUtil.getPrimaryKey(
 			importLayout.getPlid(), _PORTLET_ID);

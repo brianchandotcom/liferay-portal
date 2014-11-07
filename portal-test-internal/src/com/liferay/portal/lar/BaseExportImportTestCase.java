@@ -26,7 +26,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.portal.util.test.RandomTestUtil;
 
 import java.io.File;
 
@@ -47,16 +46,14 @@ public class BaseExportImportTestCase {
 		group = GroupTestUtil.addGroup();
 		importedGroup = GroupTestUtil.addGroup();
 
-		layout = LayoutTestUtil.addLayout(
-			group.getGroupId(), RandomTestUtil.randomString());
+		layout = LayoutTestUtil.addLayout(group);
 
 		// Delete and readd to ensure a different layout ID (not ID or UUID).
 		// See LPS-32132.
 
 		LayoutLocalServiceUtil.deleteLayout(layout, true, new ServiceContext());
 
-		layout = LayoutTestUtil.addLayout(
-			group.getGroupId(), RandomTestUtil.randomString());
+		layout = LayoutTestUtil.addLayout(group);
 	}
 
 	@After

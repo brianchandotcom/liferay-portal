@@ -173,8 +173,7 @@ public class RoleLocalServiceTest {
 		Organization organization = (Organization)organizationAndTeam[0];
 		Team team = (Team)organizationAndTeam[1];
 
-		Layout layout = LayoutTestUtil.addLayout(
-			organization.getGroupId(), RandomTestUtil.randomString());
+		Layout layout = LayoutTestUtil.addLayout(organization.getGroupId());
 
 		Group group = GroupTestUtil.addGroup(
 			TestPropsValues.getUserId(), organization.getGroupId(), layout);

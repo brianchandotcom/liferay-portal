@@ -28,7 +28,7 @@ import java.util.Map;
 public class BaseTestCase extends LiferaySeleneseTestCase {
 
 	public BaseTestCase() {
-		InitUtil.initWithSpringAndModuleFramework();
+		InitUtil.initWithSpring(true);
 	}
 
 	@Override

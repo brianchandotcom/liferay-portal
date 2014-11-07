@@ -24,7 +24,7 @@ import junit.framework.TestSuite;
 public class BaseTestSuite extends TestSuite {
 
 	public BaseTestSuite() {
-		InitUtil.initWithSpring();
+		InitUtil.initWithSpring(false);
 	}
 
 }

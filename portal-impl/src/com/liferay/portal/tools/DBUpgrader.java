@@ -69,7 +69,7 @@ public class DBUpgrader {
 
 			stopWatch.start();
 
-			InitUtil.initWithSpringAndModuleFramework();
+			InitUtil.initWithSpring(true);
 
 			upgrade();
 			verify();

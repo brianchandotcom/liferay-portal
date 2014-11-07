@@ -59,6 +59,12 @@ public class LayoutTestUtil {
 		return addLayout(group.getGroupId(), privateLayout);
 	}
 
+	public static Layout addLayout(Group group, long parentLayoutPlid)
+		throws Exception {
+
+		return addLayout(group.getGroupId(), parentLayoutPlid);
+	}
+
 	public static Layout addLayout(long groupId) throws Exception {
 		return addLayout(groupId, false);
 	}
@@ -86,6 +92,17 @@ public class LayoutTestUtil {
 			new HashMap<Locale, String>(), new HashMap<Locale, String>(),
 			new HashMap<Locale, String>(), LayoutConstants.TYPE_PORTLET,
 			StringPool.BLANK, false, friendlyURLMap, serviceContext);
+	}
+
+	public static Layout addLayout(long groupId, long parentLayoutPlid)
+		throws Exception {
+
+		Layout layout = addLayout(groupId, false);
+
+		LayoutLocalServiceUtil.updateParentLayoutId(
+			layout.getPlid(), parentLayoutPlid);
+
+		return LayoutLocalServiceUtil.fetchLayout(layout.getPlid());
 	}
 
 	public static Layout addLayout(

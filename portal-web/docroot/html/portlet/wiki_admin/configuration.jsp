@@ -57,7 +57,7 @@ wikiSettings = WikiSettings.getInstance(themeDisplay.getSiteGroupId(), request.g
 				<dl>
 
 					<%
-					Map<String, String> definitionTerms = WikiUtil.getEmailFromDefinitionTerms(renderRequest, wikiSettings.getEmailFromAddress(), wikiSettings.getEmailFromName());
+					Map<String, String> definitionTerms = WikiUtil.getEmailFromDefinitionTerms(renderRequest);
 
 					for (Map.Entry<String, String> definitionTerm : definitionTerms.entrySet()) {
 					%>

@@ -168,22 +168,10 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 		<aui:option label="temperature" selected="<%= (type == 4) %>" value="4" />
 	</aui:select>
 
-	<aui:button type="submit" value="convert" />
+	<aui:button id="convertButton" type="submit" value="convert" />
 </aui:form>
 
-<aui:script use="aui-io-request,aui-node,aui-parse-content">
-	var setBox = function(oldBox, newBox) {
-		for (var i = oldBox.length - 1; i > -1; i--) {
-			oldBox.options[i] = null;
-		}
-
-		for (i = 0; i < newBox.length; i++) {
-			oldBox.options[i] = new Option(newBox[i], i);
-		}
-
-		oldBox.options[0].selected = true;
-	};
-
+<aui:script sandbox="<%= true %>">
 	var lengthArray = [
 		'<liferay-ui:message key="meter" />',
 		'<liferay-ui:message key="millimeter" />',
@@ -249,18 +237,34 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 
 	var unitConverterTypes = [lengthArray, areaArray, volumeArray, massArray, temperatureArray];
 
-	var selectType = A.one('#<portlet:namespace />type');
+	var setBox = function(oldBox, newBox) {
+		oldBox.empty();
 
-	selectType.on(
+		_.forEach(
+			newBox,
+			function(item, index) {
+				oldBox.append('<option value="' + index + '">' + item + '</option>');
+			}
+		);
+	};
+
+	var form = $(document.<portlet:namespace />fm);
+
+	var fromUnit = form.fm('fromUnit');
+	var toUnit = form.fm('toUnit');
+
+	var typeSelect = form.fm('type');
+
+	typeSelect.on(
 		'change',
 		function(event) {
-			var value = event.currentTarget.val();
+			var value = typeSelect.val();
 
 			var unitConverterType = unitConverterTypes[value];
 
 			if (unitConverterType) {
-				setBox(document.<portlet:namespace />fm.<portlet:namespace />fromUnit, unitConverterType);
-				setBox(document.<portlet:namespace />fm.<portlet:namespace />toUnit, unitConverterType);
+				setBox(fromUnit, unitConverterType);
+				setBox(toUnit, unitConverterType);
 			}
 		}
 	);
@@ -269,32 +273,18 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />fromValue);
 	</c:if>
 
-	var form = A.one('#<portlet:namespace />fm');
-
-	form.on(
-		'submit',
+	$('#<portlet:namespace/>convertButton').on(
+		'click',
 		function(event) {
-			var parentNode = form.attr('parentNode');
+			event.preventDefault();
 
-			parentNode.plug(A.Plugin.ParseContent);
-
-			A.io.request(
-				form.attr('action'),
+			form.ajaxSubmit(
 				{
-					form: {
-						id: form
-					},
-					on: {
-						success: function(event, id, obj) {
-							var responseData = this.get('responseData');
-
-							parentNode.setContent(responseData);
-						}
+					success: function(responseData) {
+						form.replaceWith(responseData);
 					}
 				}
 			);
-
-			event.halt();
 		}
 	);
 </aui:script>

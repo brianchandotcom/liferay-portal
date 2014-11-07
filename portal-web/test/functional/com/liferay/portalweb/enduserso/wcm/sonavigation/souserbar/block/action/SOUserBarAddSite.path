@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ALERT_MESSAGE</td>
+	<td>//div[@role='alert']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NEXT_BUTTON</td>
 	<td>//button[@id='next']</td>
 	<td></td>

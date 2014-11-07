@@ -16,9 +16,10 @@ package com.liferay.portal.verify;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -254,10 +255,9 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
-					Criterion criterion = RestrictionsFactoryUtil.eq(
-						"mimeType", originalMimeType);
+					Property property = PropertyFactoryUtil.forName("mimeType");
 
-					dynamicQuery.add(criterion);
+					dynamicQuery.add(property.eq(originalMimeType));
 				}
 
 		});
@@ -327,10 +327,9 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
-					Criterion criterion = RestrictionsFactoryUtil.eq(
-						"mimeType", originalMimeType);
+					Property property = PropertyFactoryUtil.forName("mimeType");
 
-					dynamicQuery.add(criterion);
+					dynamicQuery.add(property.eq(originalMimeType));
 				}
 
 			});

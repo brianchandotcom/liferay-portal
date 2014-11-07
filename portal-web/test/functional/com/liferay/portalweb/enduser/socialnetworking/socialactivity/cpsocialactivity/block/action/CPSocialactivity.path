@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>BLOGS_ENTRY_CHECKBOX</td>
-	<td>//input[@id='_179_com.liferay.portlet.blogs.model.BlogsEntry.enabled']</td>
+	<td>//input[contains(@id,'BlogsEntry')]</td>
 	<td></td>
 </tr>
 <tr>

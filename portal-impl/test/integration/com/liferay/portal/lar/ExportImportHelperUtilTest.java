@@ -431,9 +431,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 	@Test
 	public void testGetSelectedLayoutsJSONSelectAllLayouts() throws Exception {
-		Layout layout = LayoutTestUtil.addLayout(
-			_stagingGroup.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
+		Layout layout = LayoutTestUtil.addLayout(_stagingGroup);
 
 		Layout childLayout = LayoutTestUtil.addLayout(
 			_stagingGroup.getGroupId(),
@@ -511,8 +509,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 	public void testGetSelectedLayoutsJSONSelectParentLayout()
 		throws Exception {
 
-		Layout layout = LayoutTestUtil.addLayout(
-			_stagingGroup.getGroupId(), "Layout");
+		Layout layout = LayoutTestUtil.addLayout(_stagingGroup);
 
 		LayoutTestUtil.addLayout(
 			_stagingGroup.getGroupId(), "Child Layout", layout.getPlid());

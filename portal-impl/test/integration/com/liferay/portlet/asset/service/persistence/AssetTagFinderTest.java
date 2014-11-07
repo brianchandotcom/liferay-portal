@@ -31,7 +31,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
-import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.GroupTestUtil;
@@ -372,9 +371,7 @@ public class AssetTagFinderTest {
 	protected Group addScopeGroup() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		Layout layout = LayoutTestUtil.addLayout(
-			group.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
+		Layout layout = LayoutTestUtil.addLayout(group);
 
 		String name = RandomTestUtil.randomString();
 

@@ -52,9 +52,7 @@ public class PortalImplBaseURLTestCase {
 			group.getGroupId(),
 			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
 			true);
-		publicLayout = LayoutTestUtil.addLayout(
-			group.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
+		publicLayout = LayoutTestUtil.addLayout(group);
 	}
 
 	protected ThemeDisplay initThemeDisplay(

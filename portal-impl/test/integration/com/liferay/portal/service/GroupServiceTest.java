@@ -40,7 +40,6 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.listeners.ResetDatabaseExecutionTestListener;
-import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -349,9 +348,7 @@ public class GroupServiceTest {
 
 		Group parentOrganizationGroup = parentOrganization.getGroup();
 
-		LayoutTestUtil.addLayout(
-			parentOrganizationGroup.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
+		LayoutTestUtil.addLayout(parentOrganizationGroup);
 
 		Organization organization = OrganizationTestUtil.addOrganization(
 			parentOrganization.getOrganizationId(),
@@ -547,7 +544,7 @@ public class GroupServiceTest {
 	public void testScopes() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		Layout layout = LayoutTestUtil.addLayout(group.getGroupId(), "Page 1");
+		Layout layout = LayoutTestUtil.addLayout(group);
 
 		Assert.assertFalse(layout.hasScopeGroup());
 
@@ -805,10 +802,7 @@ public class GroupServiceTest {
 		else if (layout) {
 			Group group = GroupTestUtil.addGroup(RandomTestUtil.randomString());
 
-			Layout scopeLayout = LayoutTestUtil.addLayout(
-				group.getGroupId(),
-				RandomTestUtil.randomString(
-					FriendlyURLRandomizerBumper.INSTANCE));
+			Layout scopeLayout = LayoutTestUtil.addLayout(group);
 
 			return GroupLocalServiceUtil.addGroup(
 				TestPropsValues.getUserId(),

@@ -19,11 +19,9 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BasePortletDataHandlerTestCase;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
-import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 import com.liferay.portlet.mobiledevicerules.util.test.MDRTestUtil;
@@ -49,9 +47,7 @@ public class MDRPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 	@Override
 	protected void addStagedModels() throws Exception {
-		Layout layout = LayoutTestUtil.addLayout(
-			stagingGroup.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
+		Layout layout = LayoutTestUtil.addLayout(stagingGroup);
 
 		MDRRuleGroup ruleGroup = MDRTestUtil.addRuleGroup(
 			stagingGroup.getGroupId());

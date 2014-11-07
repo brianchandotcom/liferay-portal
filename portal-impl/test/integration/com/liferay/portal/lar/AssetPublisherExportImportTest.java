@@ -34,7 +34,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
-import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -565,9 +564,7 @@ public class AssetPublisherExportImportTest
 		Company company = CompanyLocalServiceUtil.getCompany(
 			layout.getCompanyId());
 
-		Layout secondLayout = LayoutTestUtil.addLayout(
-			group.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
+		Layout secondLayout = LayoutTestUtil.addLayout(group);
 
 		GroupTestUtil.addGroup(TestPropsValues.getUserId(), secondLayout);
 
@@ -615,9 +612,7 @@ public class AssetPublisherExportImportTest
 
 	@Test
 	public void testSeveralLegacyLayoutScopeIds() throws Exception {
-		Layout secondLayout = LayoutTestUtil.addLayout(
-			group.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
+		Layout secondLayout = LayoutTestUtil.addLayout(group);
 
 		GroupTestUtil.addGroup(TestPropsValues.getUserId(), secondLayout);
 

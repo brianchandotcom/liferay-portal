@@ -27,7 +27,6 @@ import com.liferay.portal.model.Team;
 import com.liferay.portal.model.User;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.listeners.ResetDatabaseExecutionTestListener;
-import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.comparator.RoleRoleIdComparator;
 import com.liferay.portal.util.test.GroupTestUtil;
@@ -174,9 +173,7 @@ public class RoleLocalServiceTest {
 		Organization organization = (Organization)organizationAndTeam[0];
 		Team team = (Team)organizationAndTeam[1];
 
-		Layout layout = LayoutTestUtil.addLayout(
-			organization.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
+		Layout layout = LayoutTestUtil.addLayout(organization.getGroupId());
 
 		Group group = GroupTestUtil.addGroup(
 			TestPropsValues.getUserId(), organization.getGroupId(), layout);

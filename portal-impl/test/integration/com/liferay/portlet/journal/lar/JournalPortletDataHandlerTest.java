@@ -23,7 +23,6 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
-import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -101,9 +100,7 @@ public class JournalPortletDataHandlerTest
 
 	@Override
 	protected void addStagedModels() throws Exception {
-		Layout layout = LayoutTestUtil.addLayout(
-			stagingGroup.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
+		Layout layout = LayoutTestUtil.addLayout(stagingGroup);
 
 		JournalFolder folder = JournalTestUtil.addFolder(
 			stagingGroup.getGroupId(), RandomTestUtil.randomString());

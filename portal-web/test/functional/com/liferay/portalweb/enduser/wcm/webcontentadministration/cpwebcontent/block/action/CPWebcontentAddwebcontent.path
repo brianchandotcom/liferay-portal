@@ -189,6 +189,36 @@
 	<td></td>
 </tr>
 <tr>
+	<td>AUDIO_BUTTON</td>
+	<td>//a[contains(@title,'Audio')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUDIO_DIALOGBOX</td>
+	<td>//div/table[contains(@class,'dialog_content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUDIO_BROWSE_SERVER_BUTTON</td>
+	<td>//a[contains(@title,'Browse Server')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUDIO_OK_BUTTON</td>
+	<td>//a[contains(@title,'OK')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BROWSE_IFRAME</td>
+	<td>//iframe[contains(@class,'dialog-iframe-node')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHOOSE_BUTTON</td>
+	<td>//tr/td[contains(.,'Choose')]/button</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

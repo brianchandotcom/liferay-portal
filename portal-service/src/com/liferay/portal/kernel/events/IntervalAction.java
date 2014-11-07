@@ -37,14 +37,14 @@ public class IntervalAction {
 		}
 	}
 
-	public void setTotal(int total) {
-		_total = total;
-	}
-
 	public void setPerformActionMethod(
 		PerformIntervalActionMethod performActionMethod) {
 
 		_performIntervalActionMethod = performActionMethod;
+	}
+
+	public void setTotal(int total) {
+		_total = total;
 	}
 
 	public interface PerformIntervalActionMethod {
@@ -53,9 +53,7 @@ public class IntervalAction {
 
 	}
 
-	protected void performActions(int start, int end)
-		throws PortalException {
-
+	protected void performActions(int start, int end) throws PortalException {
 		if (_performIntervalActionMethod != null) {
 			_performIntervalActionMethod.performAction(start, end);
 		}

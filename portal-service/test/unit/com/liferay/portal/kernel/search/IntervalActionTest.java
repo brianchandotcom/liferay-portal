@@ -33,7 +33,7 @@ public class IntervalActionTest {
 			new IntervalAction.PerformIntervalActionMethod() {
 
 				@Override
-				public void performIntervalAction(int start, int end)
+				public void performAction(int start, int end)
 					throws PortalException {
 
 					for (int i = 0; i < end; i++) {
@@ -43,8 +43,8 @@ public class IntervalActionTest {
 
 			});
 
-		intervalActionInstance.setCount(125);
-		intervalActionInstance.performInterval();
+		intervalActionInstance.setTotal(125);
+		intervalActionInstance.performActions();
 
 		Assert.assertEquals(200, _count);
 	}
@@ -57,7 +57,7 @@ public class IntervalActionTest {
 			new IntervalAction.PerformIntervalActionMethod() {
 
 				@Override
-				public void performIntervalAction(int start, int end)
+				public void performAction(int start, int end)
 					throws PortalException {
 
 					incrementCounter();
@@ -65,8 +65,8 @@ public class IntervalActionTest {
 
 			});
 
-		intervalActionInstance.setCount(125);
-		intervalActionInstance.performInterval();
+		intervalActionInstance.setTotal(125);
+		intervalActionInstance.performActions();
 
 		Assert.assertEquals(2, _count);
 	}

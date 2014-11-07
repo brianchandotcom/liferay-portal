@@ -42,6 +42,24 @@ public abstract class BaseSubscriptionBaseModelTestCase
 	}
 
 	@Test
+	public void testSubscriptionBaseModelWhenInNoViewableContainerModel()
+		throws Exception {
+
+		long containerModelId = addContainerModel(
+			BaseSubscriptionTestCase.PARENT_CONTAINER_MODEL_ID_DEFAULT);
+
+		long baseModelId = addBaseModel(containerModelId);
+
+		addSubscriptionBaseModel(baseModelId);
+
+		deleteContainerModelViewPermission();
+
+		updateBaseModel(baseModelId);
+
+		Assert.assertEquals(0, MailServiceTestUtil.getInboxSize());
+	}
+
+	@Test
 	public void testSubscriptionBaseModelWhenInRootContainerModel()
 		throws Exception {
 
@@ -56,6 +74,9 @@ public abstract class BaseSubscriptionBaseModelTestCase
 	}
 
 	protected abstract void addSubscriptionBaseModel(long baseModelId)
+		throws Exception;
+
+	protected abstract void deleteContainerModelViewPermission()
 		throws Exception;
 
 }

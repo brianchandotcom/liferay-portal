@@ -50,8 +50,12 @@ import javax.portlet.PortletPreferences;
 public class LayoutTestUtil {
 
 	public static Layout addLayout(Group group) throws Exception {
+		return addLayout(group.getGroupId());
+	}
+
+	public static Layout addLayout(long groupId) throws Exception {
 		return addLayout(
-			group.getGroupId(),
+			groupId,
 			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
 			false);
 	}
@@ -70,10 +74,6 @@ public class LayoutTestUtil {
 			new HashMap<Locale, String>(), new HashMap<Locale, String>(),
 			new HashMap<Locale, String>(), LayoutConstants.TYPE_PORTLET,
 			StringPool.BLANK, false, friendlyURLMap, serviceContext);
-	}
-
-	public static Layout addLayout(long groupId, String name) throws Exception {
-		return addLayout(groupId, name, false);
 	}
 
 	public static Layout addLayout(
@@ -221,7 +221,7 @@ public class LayoutTestUtil {
 			long groupId, String name, String articleId)
 		throws Exception {
 
-		Layout layout = addLayout(groupId, name);
+		Layout layout = addLayout(groupId, name, false);
 
 		UnicodeProperties typeSettingsProperties =
 			layout.getTypeSettingsProperties();
@@ -239,7 +239,7 @@ public class LayoutTestUtil {
 			long groupId, String name, long linkedToLayoutId)
 		throws Exception {
 
-		Layout layout = addLayout(groupId, name);
+		Layout layout = addLayout(groupId, name, false);
 
 		UnicodeProperties typeSettingsProperties =
 			layout.getTypeSettingsProperties();

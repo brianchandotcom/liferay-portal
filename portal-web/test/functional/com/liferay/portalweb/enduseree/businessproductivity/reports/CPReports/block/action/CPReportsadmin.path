@@ -29,11 +29,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>OPTIONS_WRENCH_ICON</td>
-	<td>//a[@title='Options']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[@class='alert alert-success']</td>
 	<td></td>
@@ -46,6 +41,22 @@
 <tr>
 	<td>ERROR_MESSAGE_2</td>
 	<td>xpath=(//div[@class='alert alert-error'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS_WRENCH_ICON</td>
+	<td>//a[@title='Options']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--OPTIONS_MENULIST-->
+<tr>
+	<td>OPTIONS_MENULIST_CONFIGURATION</td>
+	<td>//a[contains(@id,'_menu_configuration')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -130,6 +141,11 @@
 </tr>
 <!--DEFINITIONS_DEFINITION_TABLE-->
 <tr>
+	<td>DEFINITIONS_DEFINITION_TABLE_DEFINITION_NAME</td>
+	<td>//tr[contains(.,'${key_reportsDefinitionName}')]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DEFINITIONS_DEFINITION_TABLE_ACTIONS</td>
 	<td>//tr[contains(.,'${key_reportsDefinitionName}')]/td[4]/div/a[@title='Actions']</td>
 	<td></td>
@@ -163,6 +179,22 @@
 <tr>
 	<td>DEFINITIONS_DEFINITION_MENULIST_DELETE</td>
 	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DEFINITIONS_PAGINATION-->
+<tr>
+	<td>DEFINITIONS_PAGINATION_PREVIOUS_BUTTON</td>
+	<td>//ul[contains(@class,'pagination-buttons')]/li/a[contains(.,'Previous')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITIONS_PAGINATION_NEXT_BUTTON</td>
+	<td>//ul[contains(@class,'pagination-buttons')]/li/a[contains(.,'Next')]</td>
 	<td></td>
 </tr>
 <tr>

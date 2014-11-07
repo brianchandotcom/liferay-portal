@@ -57,24 +57,28 @@
 			<var name="emailFromUserName" value="Joe Bloggs" />
 			<var name="gmailAssetType" value="${siteName}" />
 			<var name="gmailMailTableMessageTitle" value="${adminName} has invited you to join ${siteName}" />
-			<var name="gmailMessageBody" value="Follow the link below to confirm or ignore this invitation:" />
+			<var name="gmailMessageBody" value="View Invitation" />
 			<var name="gmailMessageBodyClosing" value="If you have any questions, contact the administrator at ${adminEmailAddress}." />
 			<var name="gmailMessageBodyGreeting" value="${adminName} has invited you to join ${siteName} on Social Office." />
 			<var name="gmailMessageTitle" value="${adminName} has invited you to join ${siteName}" />
 		</execute>
 
+		<var name="key_gmailAssetType" value="${siteName}" />
+
 		<if>
 			<equals arg1="${nonUserInvite}" arg2="true" />
 			<then>
-				<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY" value1="Once your account is created, you can visit ${siteName} at:" />
+				<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY" value1="Once your account is created, follow the link below to confirm or ignore this invitation:" />
 			</then>
+			<else>
+				<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY" value1="Follow the link below to confirm or ignore this invitation:" />
+			</else>
 		</if>
 
-		<execute action="Gmail#click" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_SITE_INVITE_CONFIRMATION_LINK" />
+		<execute action="Gmail#assertClick" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_SITE_INVITE_CONFIRMATION_LINK" value1="View Invitation" />
 
 		<execute action="SOMembersPortlet#selectWindow" locator-key1="MEMBERS_POP_UP_WINDOW" />
 
-		<execute action="SONotifications#assertClick" locator-key1="REQUESTS_LIST_LINK" value1="Requests" />
 		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY" value1="${adminName} invited you to join ${siteName}." />
 		<execute action="SONotifications#assertClick" locator-key1="CONFIRM_BUTTON" value1="Confirm" />
 		<execute action="SONotifications#assertTextEquals" locator-key1="REQUESTS_NONE_MESSAGE" value1="You do not have any requests." />
@@ -106,7 +110,7 @@
 		<execute macro="SOMembersAdministration#confirmMemberInviteByEmail">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
 			<var name="adminName" value="${adminName}" />
-			<var name="nonUser" value="true" />
+			<var name="nonUserInvite" value="true" />
 			<var name="siteName" value="${siteName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userName" value="${userName}" />
@@ -130,13 +134,13 @@
 			<var name="emailFromUserName" value="Joe Bloggs" />
 			<var name="gmailAssetType" value="${siteName}" />
 			<var name="gmailMailTableMessageTitle" value="${adminName} has invited you to join ${siteName}" />
-			<var name="gmailMessageBody" value="Follow the link below to confirm or ignore this invitation:" />
+			<var name="gmailMessageBody" value="Follow the link below to create an account:" />
 			<var name="gmailMessageBodyClosing" value="If you have any questions, contact the administrator at ${adminEmailAddress}." />
 			<var name="gmailMessageBodyGreeting" value="${adminName} has invited you to join ${siteName} on Social Office." />
 			<var name="gmailMessageTitle" value="${adminName} has invited you to join ${siteName}" />
 		</execute>
 
-		<execute action="Gmail#click" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_SITE_INVITE_CREATE_ACCOUNT_LINK" />
+		<execute action="Gmail#assertClick" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_SITE_INVITE_CREATE_ACCOUNT_LINK" value1="Create Account" />
 
 		<execute action="PGLoginCreateAccount#selectWindow" locator-key1="CREATE_ACCOUNT_POP_UP_WINDOW" />
 		<execute action="PGLoginCreateAccount#type" locator-key1="FIRST_NAME_FIELD" value1="${userFirstName}" />

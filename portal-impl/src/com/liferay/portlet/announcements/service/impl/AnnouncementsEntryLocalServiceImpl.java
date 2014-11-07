@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.IndexerInterval;
+import com.liferay.portal.kernel.events.IntervalAction;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -474,10 +474,10 @@ public class AnnouncementsEntryLocalServiceImpl
 				params);
 		}
 
-		IndexerInterval indexerIntervalInstance = new IndexerInterval();
+		IntervalAction intervalActionInstance = new IntervalAction();
 
-		indexerIntervalInstance.setPerformActionMethod(
-			new IndexerInterval.PerformIntervalActionMethod() {
+		intervalActionInstance.setPerformActionMethod(
+			new IntervalAction.PerformIntervalActionMethod() {
 
 				@Override
 				public void performIntervalAction(int start, int end)
@@ -502,8 +502,8 @@ public class AnnouncementsEntryLocalServiceImpl
 
 			});
 
-		indexerIntervalInstance.setCount(count);
-		indexerIntervalInstance.performInterval();
+		intervalActionInstance.setCount(count);
+		intervalActionInstance.performInterval();
 	}
 
 	protected void notifyUsers(

@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerInterval;
+import com.liferay.portal.kernel.events.IntervalAction;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
@@ -610,10 +610,10 @@ public class DLFileEntryLocalServiceImpl
 
 		final int count = dlFileEntryFinder.countByExtraSettings();
 
-		IndexerInterval indexerIntervalInstance = new IndexerInterval();
+		IntervalAction intervalActionInstance = new IntervalAction();
 
-		indexerIntervalInstance.setPerformActionMethod(
-			new IndexerInterval.PerformIntervalActionMethod() {
+		intervalActionInstance.setPerformActionMethod(
+			new IntervalAction.PerformIntervalActionMethod() {
 
 				@Override
 				public void performIntervalAction(int start, int end)
@@ -629,8 +629,8 @@ public class DLFileEntryLocalServiceImpl
 
 			});
 
-		indexerIntervalInstance.setCount(count);
-		indexerIntervalInstance.performInterval();
+		intervalActionInstance.setCount(count);
+		intervalActionInstance.performInterval();
 	}
 
 	@Override
@@ -923,10 +923,10 @@ public class DLFileEntryLocalServiceImpl
 		final int count = dlFileEntryPersistence.countByR_F(
 			repositoryId, folderId);
 
-		final IndexerInterval indexerIntervalInstance = new IndexerInterval();
+		final IntervalAction intervalActionInstance = new IntervalAction();
 
-		indexerIntervalInstance.setPerformActionMethod(
-			new IndexerInterval.PerformIntervalActionMethod() {
+		intervalActionInstance.setPerformActionMethod(
+			new IntervalAction.PerformIntervalActionMethod() {
 
 				@Override
 				public void performIntervalAction(int start, int end)
@@ -944,15 +944,15 @@ public class DLFileEntryLocalServiceImpl
 								dlFileEntry);
 						}
 						else {
-							indexerIntervalInstance.incrementStart();
+							intervalActionInstance.incrementStart();
 						}
 					}
 				}
 
 			});
 
-		indexerIntervalInstance.setCount(count);
-		indexerIntervalInstance.performInterval();
+		intervalActionInstance.setCount(count);
+		intervalActionInstance.performInterval();
 	}
 
 	@Override

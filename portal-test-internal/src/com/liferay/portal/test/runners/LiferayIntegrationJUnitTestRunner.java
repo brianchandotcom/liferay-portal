@@ -19,6 +19,7 @@ import com.liferay.portal.log.CaptureAppender;
 import com.liferay.portal.test.log.ConcurrentAssertUtil;
 import com.liferay.portal.test.log.ExpectedLogsUtil;
 import com.liferay.portal.test.log.LogAssertionUtil;
+import com.liferay.portal.test.randomizerbumpers.UniqueStringRandomizerBumper;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -124,7 +125,8 @@ public class LiferayIntegrationJUnitTestRunner
 	protected List<TestRule> classRules() {
 		List<TestRule> testRules = super.classRules();
 
-		testRules.add(_testRule);
+		testRules.add(_logAssertTestRule);
+		testRules.add(_uniqueStringRandomizerBumperTestRule);
 
 		return testRules;
 	}
@@ -162,7 +164,7 @@ public class LiferayIntegrationJUnitTestRunner
 		}
 	}
 
-	private final TestRule _testRule = new TestRule() {
+	private final TestRule _logAssertTestRule = new TestRule() {
 
 		@Override
 		public Statement apply(Statement statement, Description description) {
@@ -170,5 +172,26 @@ public class LiferayIntegrationJUnitTestRunner
 		}
 
 	};
+
+	private final TestRule _uniqueStringRandomizerBumperTestRule =
+		new TestRule() {
+
+			@Override
+			public Statement apply(
+				final Statement statement, Description description) {
+
+				return new Statement() {
+
+					@Override
+					public void evaluate() throws Throwable {
+						UniqueStringRandomizerBumper.reset();
+
+						statement.evaluate();
+					}
+
+				};
+			}
+
+		};
 
 }

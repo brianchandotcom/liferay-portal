@@ -34,6 +34,7 @@ import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
+import com.liferay.portal.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import java.util.HashMap;
@@ -91,7 +92,9 @@ public class LayoutTestUtil {
 
 		return addLayout(
 			groupId,
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
+			RandomTestUtil.randomString(
+				FriendlyURLRandomizerBumper.INSTANCE,
+				UniqueStringRandomizerBumper.INSTANCE),
 			privateLayout, layoutPrototype, linkEnabled);
 	}
 

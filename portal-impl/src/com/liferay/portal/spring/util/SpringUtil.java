@@ -17,11 +17,8 @@ package com.liferay.portal.spring.util;
 import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.spring.context.ArrayApplicationContext;
 import com.liferay.portal.util.ClassLoaderUtil;
-import com.liferay.portal.util.PropsUtil;
 
 import java.util.List;
 
@@ -40,25 +37,10 @@ import org.springframework.context.support.AbstractApplicationContext;
  */
 public class SpringUtil {
 
-	public static void loadContext() {
-		loadContext(PropsUtil.getArray(PropsKeys.SPRING_CONFIGS));
-	}
-
-	public static void loadContext(List<String> extraConfigLocations) {
-		List<String> configLocations = ListUtil.fromArray(
-			PropsUtil.getArray(PropsKeys.SPRING_CONFIGS));
-
-		if (extraConfigLocations != null) {
-			configLocations.addAll(extraConfigLocations);
-		}
-
-		loadContext(
-			configLocations.toArray(new String[configLocations.size()]));
-	}
-
-	public static void loadContext(String[] configLocations) {
+	public static void loadContext(List<String> configLocations) {
 		AbstractApplicationContext applicationContext =
-			new ArrayApplicationContext(configLocations);
+			new ArrayApplicationContext(
+				configLocations.toArray(new String[configLocations.size()]));
 
 		BeanLocator beanLocator = new BeanLocatorImpl(
 			ClassLoaderUtil.getPortalClassLoader(), applicationContext);

@@ -32,8 +32,6 @@ import java.util.Random;
  */
 public class RandomTestUtil {
 
-	public static final int MAX_RANDOMIZER_BUMPER_TRIES = 100;
-
 	public static Date nextDate() {
 		return new Date();
 	}
@@ -105,7 +103,7 @@ public class RandomTestUtil {
 		int length, RandomizerBumper<String>... randomizerBumpers) {
 
 		generation:
-		for (int i = 0; i < MAX_RANDOMIZER_BUMPER_TRIES; i++) {
+		for (int i = 0; i < _RANDOMIZER_BUMPER_TRIES_MAX; i++) {
 			String randomString = PwdGenerator.getPassword(length);
 
 			for (RandomizerBumper<String> randomizerBumper :
@@ -121,10 +119,8 @@ public class RandomTestUtil {
 
 		throw new IllegalStateException(
 			"Unable to generate a random string that is acceptable by all " +
-				"randomizer bumpers :" + Arrays.toString(randomizerBumpers) +
-					" after tried :" + MAX_RANDOMIZER_BUMPER_TRIES + " times." +
-						" Please refactor your code to avoid using random " +
-							"string in this case");
+				"randomizer bumpers " + Arrays.toString(randomizerBumpers) +
+					" after " + _RANDOMIZER_BUMPER_TRIES_MAX + " tries");
 	}
 
 	@SafeVarargs
@@ -160,6 +156,8 @@ public class RandomTestUtil {
 
 		return unicodeProperties;
 	}
+
+	private static final int _RANDOMIZER_BUMPER_TRIES_MAX = 100;
 
 	private static Random _random = new Random();
 

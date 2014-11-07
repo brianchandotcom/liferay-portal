@@ -57,8 +57,8 @@ public class JavaClass {
 		_absolutePath = absolutePath;
 		_content = content;
 		_lineCount = lineCount;
-		_outerClass = outerClass;
 		_indent = indent;
+		_outerClass = outerClass;
 		_javaTermAccessLevelModifierExclusions =
 			javaTermAccessLevelModifierExclusions;
 

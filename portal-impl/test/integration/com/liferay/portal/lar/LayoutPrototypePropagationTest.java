@@ -18,10 +18,8 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.listeners.ResetDatabaseExecutionTestListener;
-import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 
 import org.junit.runner.RunWith;
@@ -49,10 +47,7 @@ public class LayoutPrototypePropagationTest
 				TestPropsValues.getUserId(), layoutPrototypeLayout,
 				journalArticle, "column-1");
 
-		layout = LayoutTestUtil.addLayout(
-			group.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
-			true, layoutPrototype, true);
+		layout = LayoutTestUtil.addLayout(group, true, layoutPrototype, true);
 
 		layout = propagateChanges(layout);
 	}

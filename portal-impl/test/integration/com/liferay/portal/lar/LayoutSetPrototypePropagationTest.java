@@ -42,7 +42,6 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.listeners.ResetDatabaseExecutionTestListener;
-import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -209,9 +208,7 @@ public class LayoutSetPrototypePropagationTest
 		portlet.setPreferencesUniquePerLayout(false);
 
 		Layout layoutSetPrototypeLayout = LayoutTestUtil.addLayout(
-			_layoutSetPrototypeGroup.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
-			true, layoutPrototype, true);
+			_layoutSetPrototypeGroup, true, layoutPrototype, true);
 
 		Map<String, String[]> preferenceMap = new HashMap<String, String[]>();
 
@@ -473,9 +470,8 @@ public class LayoutSetPrototypePropagationTest
 		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
 
 		Layout layoutSetPrototypeLayout = LayoutTestUtil.addLayout(
-			_layoutSetPrototypeGroup.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
-			true, layoutPrototype, layoutSetLayoutLinkEnabled);
+			_layoutSetPrototypeGroup, true, layoutPrototype,
+			layoutSetLayoutLinkEnabled);
 
 		layoutSetPrototypeLayout = propagateChanges(layoutSetPrototypeLayout);
 

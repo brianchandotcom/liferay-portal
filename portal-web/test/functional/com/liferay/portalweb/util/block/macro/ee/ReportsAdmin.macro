@@ -23,6 +23,31 @@
 		<execute action="CPReportsadminAddreportentry#assertClick" locator-key1="GENERATE_BUTTON" value1="Generate" />
 
 		<execute action="CPReportsadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPReportsadmin#pause" locator1="5000" />
+	</command>
+
+	<command name="configureDeliveryEmail">
+		<execute action="CPReportsadminConfiguration#assertClick" locator-key1="NAVIGATION_DELIVERY_EMAIL" value1="Delivery Email" />
+		<execute action="CPReportsadminConfiguration#type" locator-key1="DELIVERY_EMAIL_SUBJECT_FIELD" value1="${deliverySubject}" />
+		<execute action="CPReportsadminConfiguration#type" locator-key1="DELIVERY_EMAIL_BODY_FIELD" value1="${deliveryBody}" />
+		<execute action="CPReportsadminConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPReportsadminConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+
+	<command name="configureEmailFrom">
+		<execute action="CPReportsadminConfiguration#assertClick" locator-key1="NAVIGATION_EMAIL_FROM" value1="Email From" />
+		<execute action="CPReportsadminConfiguration#type" locator-key1="EMAIL_FROM_NAME_FIELD" value1="${emailFromName}" />
+		<execute action="CPReportsadminConfiguration#type" locator-key1="EMAIL_FROM_ADDRESS_FIELD" value1="${emailFromAddress}" />
+		<execute action="CPReportsadminConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPReportsadminConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+
+	<command name="configureNotificationsEmail">
+		<execute action="CPReportsadminConfiguration#assertClick" locator-key1="NAVIGATION_NOTIFICATIONS_EMAIL" value1="Notifications Email" />
+		<execute action="CPReportsadminConfiguration#type" locator-key1="NOTIFICATIONS_EMAIL_SUBJECT_FIELD" value1="${notificationSubject}" />
+		<execute action="CPReportsadminConfiguration#type" locator-key1="NOTIFICATIONS_EMAIL_BODY_FIELD" value1="${notificationBody}" />
+		<execute action="CPReportsadminConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPReportsadminConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="deleteReportEntryFile">
@@ -66,6 +91,13 @@
 				<execute action="CPReportsadmin#sikuliAssertElementPresent" locator-key1="REPORT_PDF_PNG" />
 			</then>
 		</if>
+	</command>
+
+	<command name="gotoConfiguration">
+		<execute action="CPReportsadmin#assertClick" locator-key1="OPTIONS_WRENCH_ICON" value1="Options" />
+		<execute action="CPReportsadmin#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+
+		<execute action="CPReportsadminConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 	</command>
 
 	<command name="gotoDefinitions">

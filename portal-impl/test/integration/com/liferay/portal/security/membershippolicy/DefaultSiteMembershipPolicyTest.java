@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.membershippolicy;
 
-import com.liferay.portal.kernel.search.IndexerInterval;
+import com.liferay.portal.kernel.events.IntervalAction;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -83,7 +83,7 @@ public class DefaultSiteMembershipPolicyTest
 			userIds.add(user.getUserId());
 		}
 
-		for (int i = 0; i < IndexerInterval.DEFAULT_INTERVAL; i++) {
+		for (int i = 0; i < IntervalAction.DEFAULT_INTERVAL; i++) {
 			User user = UserTestUtil.addUser();
 
 			GroupLocalServiceUtil.setUserGroups(

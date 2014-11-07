@@ -72,8 +72,7 @@ public class LayoutStagedModelDataHandlerTest
 			dependentStagedModelsMap, JournalArticle.class, journalArticle);
 
 		Layout layout = LayoutTestUtil.addTypeArticleLayout(
-			stagingGroup.getGroupId(), RandomTestUtil.randomString(),
-			journalArticle.getArticleId());
+			stagingGroup.getGroupId(), journalArticle.getArticleId());
 
 		addDependentLayoutFriendlyURLs(dependentStagedModelsMap, layout);
 
@@ -109,8 +108,7 @@ public class LayoutStagedModelDataHandlerTest
 		addDependentLayoutFriendlyURLs(dependentStagedModelsMap, linkedLayout);
 
 		Layout layout = LayoutTestUtil.addTypeLinkToLayoutLayout(
-			stagingGroup.getGroupId(), RandomTestUtil.randomString(),
-			linkedLayout.getLayoutId());
+			stagingGroup.getGroupId(), linkedLayout.getLayoutId());
 
 		List<LayoutFriendlyURL> layoutFriendlyURLs =
 			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(

@@ -36,6 +36,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import name.pachler.nio.file.FileSystem;
 import name.pachler.nio.file.FileSystems;
@@ -191,6 +192,41 @@ public class Watcher implements Runnable {
 					}
 				}
 
+				for (Path failedFilePath : _failedFilePaths) {
+					if (Files.notExists(failedFilePath)) {
+						_failedFilePaths.remove(failedFilePath);
+
+						continue;
+					}
+
+					if (!Files.isReadable(failedFilePath)) {
+						continue;
+					}
+
+					_failedFilePaths.remove(failedFilePath);
+
+					if (Files.isDirectory(failedFilePath)) {
+						registerFilePath(failedFilePath, true);
+					}
+					else {
+						SyncFile syncFile = SyncFileService.fetchSyncFile(
+							failedFilePath.toString());
+
+						if (syncFile == null) {
+							fireWatchEventListener(
+								SyncWatchEvent.EVENT_TYPE_CREATE,
+								failedFilePath);
+						}
+						else if (FileUtil.hasFileChanged(
+									syncFile, failedFilePath)) {
+
+							fireWatchEventListener(
+								SyncWatchEvent.EVENT_TYPE_MODIFY,
+								failedFilePath);
+						}
+					}
+				}
+
 				if (!watchKey.reset()) {
 					Path filePath = _filePaths.remove(watchKey);
 
@@ -238,6 +274,20 @@ public class Watcher implements Runnable {
 				new SimpleFileVisitor<Path>() {
 
 					@Override
+					public FileVisitResult postVisitDirectory(
+							Path filePath, IOException ioe)
+						throws IOException {
+
+						if (ioe != null) {
+							_failedFilePaths.add(filePath);
+
+							return FileVisitResult.CONTINUE;
+						}
+
+						return super.postVisitDirectory(filePath, ioe);
+					}
+
+					@Override
 					public FileVisitResult preVisitDirectory(
 							Path filePath,
 							BasicFileAttributes basicFileAttributes)
@@ -275,6 +325,20 @@ public class Watcher implements Runnable {
 						}
 
 						return FileVisitResult.CONTINUE;
+					}
+
+					@Override
+					public FileVisitResult visitFileFailed(
+							Path filePath, IOException ioe)
+						throws IOException {
+
+						if (ioe != null) {
+							_failedFilePaths.add(filePath);
+
+							return FileVisitResult.CONTINUE;
+						}
+
+						return super.visitFileFailed(filePath, ioe);
 					}
 
 				}
@@ -389,6 +453,7 @@ public class Watcher implements Runnable {
 	private List<String> _createdFilePathNames = new ArrayList<String>();
 	private Path _dataFilePath;
 	private List<String> _downloadedFilePathNames = new ArrayList<String>();
+	private List<Path> _failedFilePaths = new CopyOnWriteArrayList<Path>();
 	private BidirectionalMap<WatchKey, Path> _filePaths =
 		new BidirectionalMap<WatchKey, Path>();
 	private boolean _recursive;

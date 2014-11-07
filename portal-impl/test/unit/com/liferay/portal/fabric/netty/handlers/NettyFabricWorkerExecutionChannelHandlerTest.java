@@ -60,12 +60,14 @@ import io.netty.channel.embedded.EmbeddedChannel;
 import io.netty.util.concurrent.DefaultPromise;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -355,27 +357,34 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		Path inputResource1 = getAbsolutePath("inputResources1");
 		Path mappedInputResource1 = getAbsolutePath("mappedInputResource1");
 		Path inputResource2 = getAbsolutePath("inputResources2");
+		Path mappedInputResource2 = getAbsolutePath("mappedInputResource2");
 
 		mergedResources.put(inputResource1, mappedInputResource1);
+		mergedResources.put(inputResource2, mappedInputResource2);
 
 		Path bootstrapResource1 = getAbsolutePath("bootstrapResource1");
 		Path mappedBootstrapResource1 = getAbsolutePath(
 			"mappedBootstrapResource1");
 		Path bootstrapResource2 = getAbsolutePath("bootstrapResource2");
+		Path mappedBootstrapResource2 = getAbsolutePath(
+			"mappedBootstrapResource2");
 		Path bootstrapResource3 = getAbsolutePath("bootstrapResource3");
 		Path mappedBootstrapResource3 = getAbsolutePath(
 			"mappedBootstrapResource3");
 
 		mergedResources.put(bootstrapResource1, mappedBootstrapResource1);
+		mergedResources.put(bootstrapResource2, mappedBootstrapResource2);
 		mergedResources.put(bootstrapResource3, mappedBootstrapResource3);
 
 		Path runtimeResource1 = getAbsolutePath("runtimeResource1");
 		Path mappedRuntimeResource1 = getAbsolutePath("mappedRuntimeResource1");
 		Path runtimeResource2 = getAbsolutePath("runtimeResource2");
+		Path mappedRuntimeResource2 = getAbsolutePath("mappedRuntimeResource2");
 		Path runtimeResource3 = getAbsolutePath("runtimeResource3");
 		Path mappedRuntimeResource3 = getAbsolutePath("mappedRuntimeResource3");
 
 		mergedResources.put(runtimeResource1, mappedRuntimeResource1);
+		mergedResources.put(runtimeResource2, mappedRuntimeResource2);
 		mergedResources.put(runtimeResource3, mappedRuntimeResource3);
 
 		NettyFabricWorkerExecutionChannelHandler
@@ -438,20 +447,386 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		Map<Path, Path> loadedInputResources =
 			loadedResources.getInputResources();
 
-		Assert.assertEquals(1, loadedInputResources.size());
+		Assert.assertEquals(2, loadedInputResources.size());
 		Assert.assertEquals(
 			mappedInputResource1, loadedInputResources.get(inputResource1));
+		Assert.assertEquals(
+			mappedInputResource2, loadedInputResources.get(inputResource2));
 
 		processConfig = loadedResources.toProcessConfig(processConfig);
 
 		Assert.assertEquals(
 			mappedBootstrapResource1 + File.pathSeparator +
-				mappedBootstrapResource3,
+				mappedBootstrapResource2 + File.pathSeparator +
+					mappedBootstrapResource3,
 			processConfig.getBootstrapClassPath());
 		Assert.assertEquals(
 			mappedRuntimeResource1 + File.pathSeparator +
-				mappedRuntimeResource3,
+				mappedRuntimeResource2 + File.pathSeparator +
+					mappedRuntimeResource3,
 			processConfig.getRuntimeClassPath());
+	}
+
+	@Test
+	public void testLoadResourcesMissedBootstrapResources() throws Exception {
+
+		// With log
+
+		final Map<Path, Path> mergedResources = new HashMap<Path, Path>();
+
+		Path bootstrapResource1 = getAbsolutePath("bootstrapResource1");
+		Path mappedBootstrapResource1 = getAbsolutePath(
+			"mappedBootstrapResource1");
+		Path bootstrapResource2 = getAbsolutePath("bootstrapResource2");
+		Path bootstrapResource3 = getAbsolutePath("bootstrapResource3");
+
+		mergedResources.put(bootstrapResource1, mappedBootstrapResource1);
+
+		NettyFabricWorkerExecutionChannelHandler
+			nettyFabricWorkerExecutionChannelHandler =
+				new NettyFabricWorkerExecutionChannelHandler(
+					new MockRepository() {
+
+						@Override
+						public NoticeableFuture<Map<Path, Path>> getFiles(
+							Map<Path, Path> pathMap, boolean deleteAfterFetch) {
+
+							DefaultNoticeableFuture<Map<Path, Path>>
+								defaultNoticeableFuture =
+									new DefaultNoticeableFuture
+										<Map<Path, Path>>();
+
+							defaultNoticeableFuture.set(mergedResources);
+
+							return defaultNoticeableFuture;
+						}
+
+						@Override
+						public Path getRepositoryPath() {
+							return getAbsolutePath("repository");
+						}
+
+					},
+					new EmbeddedProcessExecutor(), 0);
+
+		Builder builder = new Builder();
+
+		builder.setBootstrapClassPath(
+			bootstrapResource1 + File.pathSeparator + bootstrapResource2 +
+				File.pathSeparator + bootstrapResource3);
+		builder.setRuntimeClassPath(StringPool.BLANK);
+
+		ProcessConfig processConfig = builder.build();
+
+		ProcessCallable<Serializable> processCallable =
+			new ReturnProcessCallable<Serializable>(null);
+
+		FabricResourceMappingVisitor fabricResourceMappingVisitor =
+			new FabricResourceMappingVisitor(
+				InputResource.class, getAbsolutePath("repository"));
+
+		ObjectGraphUtil.walkObjectGraph(
+			processCallable, fabricResourceMappingVisitor);
+
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			NettyFabricWorkerExecutionChannelHandler.class.getName(),
+			Level.WARNING);
+
+		try {
+			NoticeableFuture<LoadedResources> noticeableFuture =
+				nettyFabricWorkerExecutionChannelHandler.loadResources(
+					new NettyFabricWorkerConfig<Serializable>(
+						0, processConfig, processCallable,
+						fabricResourceMappingVisitor.getResourceMap()));
+
+			LoadedResources loadedResources = noticeableFuture.get();
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertEquals(1, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Incomplete bootstrap classpath loaded, missed :" +
+					Arrays.asList(bootstrapResource2, bootstrapResource3),
+				logRecord.getMessage());
+
+			Map<Path, Path> loadedInputResources =
+				loadedResources.getInputResources();
+
+			Assert.assertTrue(loadedInputResources.isEmpty());
+
+			ProcessConfig loadedProcessConfig = loadedResources.toProcessConfig(
+				processConfig);
+
+			Assert.assertEquals(
+				mappedBootstrapResource1.toString(),
+				loadedProcessConfig.getBootstrapClassPath());
+			Assert.assertEquals(
+				StringPool.BLANK, loadedProcessConfig.getRuntimeClassPath());
+		}
+		finally {
+			captureHandler.close();
+		}
+
+		// Without log
+
+		captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			NettyFabricWorkerExecutionChannelHandler.class.getName(),
+			Level.OFF);
+
+		try {
+			NoticeableFuture<LoadedResources> noticeableFuture =
+				nettyFabricWorkerExecutionChannelHandler.loadResources(
+					new NettyFabricWorkerConfig<Serializable>(
+						0, processConfig, processCallable,
+						fabricResourceMappingVisitor.getResourceMap()));
+
+			LoadedResources loadedResources = noticeableFuture.get();
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertTrue(logRecords.isEmpty());
+
+			Map<Path, Path> loadedInputResources =
+				loadedResources.getInputResources();
+
+			Assert.assertTrue(loadedInputResources.isEmpty());
+
+			ProcessConfig loadedProcessConfig = loadedResources.toProcessConfig(
+				processConfig);
+
+			Assert.assertEquals(
+				mappedBootstrapResource1.toString(),
+				loadedProcessConfig.getBootstrapClassPath());
+			Assert.assertEquals(
+				StringPool.BLANK, loadedProcessConfig.getRuntimeClassPath());
+		}
+		finally {
+			captureHandler.close();
+		}
+	}
+
+	@Test
+	public void testLoadResourcesMissedInputResources()
+		throws InterruptedException {
+
+		final Map<Path, Path> mergedResources = new HashMap<Path, Path>();
+
+		Path inputResource1 = getAbsolutePath("inputResources1");
+		Path mappedInputResource1 = getAbsolutePath("mappedInputResource1");
+		Path inputResource2 = getAbsolutePath("inputResources2");
+
+		mergedResources.put(inputResource1, mappedInputResource1);
+
+		NettyFabricWorkerExecutionChannelHandler
+			nettyFabricWorkerExecutionChannelHandler =
+				new NettyFabricWorkerExecutionChannelHandler(
+					new MockRepository() {
+
+						@Override
+						public NoticeableFuture<Map<Path, Path>> getFiles(
+							Map<Path, Path> pathMap, boolean deleteAfterFetch) {
+
+							DefaultNoticeableFuture<Map<Path, Path>>
+								defaultNoticeableFuture =
+									new DefaultNoticeableFuture
+										<Map<Path, Path>>();
+
+							defaultNoticeableFuture.set(mergedResources);
+
+							return defaultNoticeableFuture;
+						}
+
+						@Override
+						public Path getRepositoryPath() {
+							return getAbsolutePath("repository");
+						}
+
+					},
+					new EmbeddedProcessExecutor(), 0);
+
+		Builder builder = new Builder();
+
+		builder.setBootstrapClassPath(StringPool.BLANK);
+		builder.setRuntimeClassPath(StringPool.BLANK);
+
+		ProcessConfig processConfig = builder.build();
+
+		ProcessCallable<Serializable> processCallable =
+			new LoadResourceProcessCallable(
+				inputResource1.toFile(), inputResource2.toFile());
+
+		FabricResourceMappingVisitor fabricResourceMappingVisitor =
+			new FabricResourceMappingVisitor(
+				InputResource.class, getAbsolutePath("repository"));
+
+		ObjectGraphUtil.walkObjectGraph(
+			processCallable, fabricResourceMappingVisitor);
+
+		NoticeableFuture<LoadedResources> noticeableFuture =
+			nettyFabricWorkerExecutionChannelHandler.loadResources(
+				new NettyFabricWorkerConfig<Serializable>(
+					0, processConfig, processCallable,
+					fabricResourceMappingVisitor.getResourceMap()));
+
+		try {
+			noticeableFuture.get();
+		}
+		catch (ExecutionException ee) {
+			Throwable throwable = ee.getCause();
+
+			Assert.assertSame(IOException.class, throwable.getClass());
+			Assert.assertEquals(
+				"Unable to get input resources :" +
+					Arrays.asList(inputResource2),
+				throwable.getMessage());
+		}
+	}
+
+	@Test
+	public void testLoadResourcesMissedRuntimeResources() throws Exception {
+
+		// With log
+
+		final Map<Path, Path> mergedResources = new HashMap<Path, Path>();
+
+		Path runtimeResource1 = getAbsolutePath("runtimeResource1");
+		Path mappedRuntimeResource1 = getAbsolutePath("mappedRuntimeResource1");
+		Path runtimeResource2 = getAbsolutePath("runtimeResource2");
+		Path runtimeResource3 = getAbsolutePath("runtimeResource3");
+		Path mappedRuntimeResource3 = getAbsolutePath("mappedRuntimeResource3");
+
+		mergedResources.put(runtimeResource1, mappedRuntimeResource1);
+		mergedResources.put(runtimeResource3, mappedRuntimeResource3);
+
+		NettyFabricWorkerExecutionChannelHandler
+			nettyFabricWorkerExecutionChannelHandler =
+				new NettyFabricWorkerExecutionChannelHandler(
+					new MockRepository() {
+
+						@Override
+						public NoticeableFuture<Map<Path, Path>> getFiles(
+							Map<Path, Path> pathMap, boolean deleteAfterFetch) {
+
+							DefaultNoticeableFuture<Map<Path, Path>>
+								defaultNoticeableFuture =
+									new DefaultNoticeableFuture
+										<Map<Path, Path>>();
+
+							defaultNoticeableFuture.set(mergedResources);
+
+							return defaultNoticeableFuture;
+						}
+
+						@Override
+						public Path getRepositoryPath() {
+							return getAbsolutePath("repository");
+						}
+
+					},
+					new EmbeddedProcessExecutor(), 0);
+
+		Builder builder = new Builder();
+
+		builder.setBootstrapClassPath(StringPool.BLANK);
+		builder.setRuntimeClassPath(
+			runtimeResource1 + File.pathSeparator + runtimeResource2 +
+				File.pathSeparator + runtimeResource3);
+
+		ProcessConfig processConfig = builder.build();
+
+		ProcessCallable<Serializable> processCallable =
+			new ReturnProcessCallable<Serializable>(null);
+
+		FabricResourceMappingVisitor fabricResourceMappingVisitor =
+			new FabricResourceMappingVisitor(
+				InputResource.class, getAbsolutePath("repository"));
+
+		ObjectGraphUtil.walkObjectGraph(
+			processCallable, fabricResourceMappingVisitor);
+
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			NettyFabricWorkerExecutionChannelHandler.class.getName(),
+			Level.WARNING);
+
+		try {
+			NoticeableFuture<LoadedResources> noticeableFuture =
+				nettyFabricWorkerExecutionChannelHandler.loadResources(
+					new NettyFabricWorkerConfig<Serializable>(
+						0, processConfig, processCallable,
+						fabricResourceMappingVisitor.getResourceMap()));
+
+			LoadedResources loadedResources = noticeableFuture.get();
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertEquals(1, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Incomplete runtime classpath loaded, missed :" +
+					Arrays.asList(runtimeResource2),
+				logRecord.getMessage());
+
+			Map<Path, Path> loadedInputResources =
+				loadedResources.getInputResources();
+
+			Assert.assertTrue(loadedInputResources.isEmpty());
+
+			ProcessConfig loadedProcessConfig = loadedResources.toProcessConfig(
+				processConfig);
+
+			Assert.assertEquals(
+				StringPool.BLANK, loadedProcessConfig.getBootstrapClassPath());
+			Assert.assertEquals(
+				mappedRuntimeResource1 + File.pathSeparator +
+					mappedRuntimeResource3,
+				loadedProcessConfig.getRuntimeClassPath());
+		}
+		finally {
+			captureHandler.close();
+		}
+
+		// Without log
+
+		captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			NettyFabricWorkerExecutionChannelHandler.class.getName(),
+			Level.OFF);
+
+		try {
+			NoticeableFuture<LoadedResources> noticeableFuture =
+				nettyFabricWorkerExecutionChannelHandler.loadResources(
+					new NettyFabricWorkerConfig<Serializable>(
+						0, processConfig, processCallable,
+						fabricResourceMappingVisitor.getResourceMap()));
+
+			LoadedResources loadedResources = noticeableFuture.get();
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertTrue(logRecords.isEmpty());
+
+			Map<Path, Path> loadedInputResources =
+				loadedResources.getInputResources();
+
+			Assert.assertTrue(loadedInputResources.isEmpty());
+
+			ProcessConfig loadedProcessConfig = loadedResources.toProcessConfig(
+				processConfig);
+
+			Assert.assertEquals(
+				StringPool.BLANK, loadedProcessConfig.getBootstrapClassPath());
+			Assert.assertEquals(
+				mappedRuntimeResource1 + File.pathSeparator +
+					mappedRuntimeResource3,
+				loadedProcessConfig.getRuntimeClassPath());
+		}
+		finally {
+			captureHandler.close();
+		}
 	}
 
 	@AdviseWith(adviceClasses = NettyUtilAdvice.class)

@@ -474,9 +474,9 @@ public class AnnouncementsEntryLocalServiceImpl
 				params);
 		}
 
-		IntervalAction intervalActionInstance = new IntervalAction();
+		IntervalAction intervalAction = new IntervalAction();
 
-		intervalActionInstance.setPerformActionMethod(
+		intervalAction.setPerformActionMethod(
 			new IntervalAction.PerformIntervalActionMethod() {
 
 				@Override
@@ -502,8 +502,8 @@ public class AnnouncementsEntryLocalServiceImpl
 
 			});
 
-		intervalActionInstance.setTotal(count);
-		intervalActionInstance.performActions();
+		intervalAction.setTotal(count);
+		intervalAction.performActions();
 	}
 
 	protected void notifyUsers(

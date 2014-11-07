@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>CPReportsadminViewreportentryDeliverreport</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPReportsadminViewreportentryDeliverreport</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPReportsadminViewreportentryDeliverreport</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORT_NAME</td>
+	<td>//span[contains(.,'Report Name')]/../../div[contains(.,'Report Name') and contains(.,'${key_reportsFileName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_RECIPIENT_FIELD</td>
+	<td>//input[contains(@id,'reportsportlet_emailAddresses')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELIVER_BUTTON</td>
+	<td>//button[contains(.,'Deliver')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

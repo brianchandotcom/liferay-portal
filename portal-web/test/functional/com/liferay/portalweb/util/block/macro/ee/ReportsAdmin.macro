@@ -36,6 +36,20 @@
 		<execute action="CPReportsadminViewreportentry#assertElementNotPresent" locator-key1="ENTRY_FILE_TABLE_FILE" />
 	</command>
 
+	<command name="deliverReportEntryFile">
+		<var name="key_reportsFileName" value="${reportsFileName}" />
+
+		<execute action="CPReportsadminViewreportentry#assertTextEquals" locator-key1="ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
+		<execute action="CPReportsadminViewreportentry#assertClick" locator-key1="ENTRY_FILE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPReportsadminViewreportentry#assertClick" locator-key1="ENTRY_FILE_MENULIST_DELIVER_REPORT" value1="Deliver Report" />
+
+		<execute action="CPReportsadminViewreportentryDeliverreport#assertTextEquals" locator-key1="REPORT_NAME" value1="Report Name ${reportsFileName}" />
+		<execute action="CPReportsadminViewreportentryDeliverreport#type" locator-key1="EMAIL_RECIPIENT_FIELD" value1="${emailRecipientAddress}" />
+		<execute action="CPReportsadminViewreportentryDeliverreport#assertClick" locator-key1="DELIVER_BUTTON" value1="Deliver" />
+
+		<execute action="CPReportsadminViewreportentry#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="downloadReportEntryFile">
 		<var name="key_reportsFileName" value="${reportsFileName}" />
 
@@ -108,6 +122,10 @@
 		<var name="key_reportsDefinitionName" value="${reportsDefinitionName}" />
 
 		<execute action="CPReportsadmin#assertClick" locator-key1="REPORTS_ENTRY_TABLE_DEFINITION_NAME" value1="${reportsDefinitionName}" />
+	</command>
+
+	<command name="viewReportEntryFields">
+		<var name="key_reportsDefinitionName" value="${reportsDefinitionName}" />
 
 		<execute action="CPReportsadminViewreportentry#assertTextEquals" locator-key1="DEFINITION_NAME_FIELD" value1="Definition Name ${reportsDefinitionName}" />
 

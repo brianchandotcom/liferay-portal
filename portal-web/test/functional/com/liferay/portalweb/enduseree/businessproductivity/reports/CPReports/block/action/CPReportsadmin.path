@@ -39,6 +39,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_MESSAGE_1</td>
+	<td>xpath=(//div[@class='alert alert-error'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_2</td>
+	<td>xpath=(//div[@class='alert alert-error'])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -110,7 +120,7 @@
 <!--DEFINITIONS-->
 <tr>
 	<td>DEFINITIONS_ADD_REPORT_DEFINITION_BUTTON</td>
-	<td>//button[@class='btn' and contains(.,'Add Report Definition')]</td>
+	<td>//button[contains(.,'Add Report Definition')]</td>
 	<td></td>
 </tr>
 <tr>

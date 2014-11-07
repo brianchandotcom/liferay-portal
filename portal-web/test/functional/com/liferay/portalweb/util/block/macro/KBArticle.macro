@@ -220,6 +220,22 @@
 		</if>
 	</command>
 
+	<command name="gotoViaKBDisplayHierarchyNavigationPG">
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+
+		<if>
+			<isset var="kbChildArticleTitle" />
+			<then>
+				<var name="key_kbChildArticleTitle" value="${kbChildArticleTitle}" />
+
+				<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_NAVIGATION_CHILD" value1="${kbChildArticleTitle}" />
+			</then>
+			<else>
+				<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_NAVIGATION" value1="${kbArticleTitle}" />
+			</else>
+		</if>
+	</command>
+
 	<command name="gotoViaKBDisplayPG">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
@@ -367,6 +383,125 @@
 	<command name="viewDefaultViaKBDisplayPG">
 		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
 		<execute action="PGKnowledgebasedisplay#assertElementNotPresent" locator-key1="ARTICLE_TITLE" />
+	</command>
+
+	<command name="viewHierarchyViaKBDisplayPG">
+		<if>
+			<isset var="kbArticleTitle1" />
+			<then>
+				<var name="key_kbArticleTitle" value="${kbArticleTitle1}" />
+
+				<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_NAVIGATION" value1="${kbArticleTitle1}" />
+
+				<if>
+					<isset var="kbArticle1ChildArticleTitle1" />
+					<then>
+						<var name="key_kbArticleTitle" value="${kbArticleTitle1}" />
+						<var name="key_kbChildArticleTitle" value="${kbArticle1ChildArticleTitle1}" />
+
+						<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_NAVIGATION_CHILD" value1="${kbArticle1ChildArticleTitle1}" />
+					</then>
+				</if>
+
+				<if>
+					<isset var="kbArticle1ChildArticleTitle2" />
+					<then>
+						<var name="key_kbArticleTitle" value="${kbArticleTitle1}" />
+						<var name="key_kbChildArticleTitle" value="${kbArticle1ChildArticleTitle2}" />
+
+						<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_NAVIGATION_CHILD" value1="${kbArticle1ChildArticleTitle2}" />
+					</then>
+				</if>
+
+				<if>
+					<isset var="kbArticle1ChildArticleTitle3" />
+					<then>
+						<var name="key_kbArticleTitle" value="${kbArticleTitle1}" />
+						<var name="key_kbChildArticleTitle" value="${kbArticle1ChildArticleTitle3}" />
+
+						<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_NAVIGATION_CHILD" value1="${kbArticle1ChildArticleTitle3}" />
+					</then>
+				</if>
+			</then>
+		</if>
+
+		<if>
+			<isset var="kbArticleTitle2" />
+			<then>
+				<var name="key_kbArticleTitle" value="${kbArticleTitle2}" />
+
+				<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_NAVIGATION" value1="${kbArticleTitle2}" />
+
+				<if>
+					<isset var="kbArticle2ChildArticleTitle1" />
+					<then>
+						<var name="key_kbArticleTitle" value="${kbArticleTitle2}" />
+						<var name="key_kbChildArticleTitle" value="${kbArticle2ChildArticleTitle1}" />
+
+						<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_NAVIGATION_CHILD" value1="${kbArticle2ChildArticleTitle1}" />
+					</then>
+				</if>
+
+				<if>
+					<isset var="kbArticle2ChildArticleTitle2" />
+					<then>
+						<var name="key_kbArticleTitle" value="${kbArticleTitle2}" />
+						<var name="key_kbChildArticleTitle" value="${kbArticle2ChildArticleTitle2}" />
+
+						<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_NAVIGATION_CHILD" value1="${kbArticle2ChildArticleTitle2}" />
+					</then>
+				</if>
+
+				<if>
+					<isset var="kbArticle2ChildArticleTitle3" />
+					<then>
+						<var name="key_kbArticleTitle" value="${kbArticleTitle2}" />
+						<var name="key_kbChildArticleTitle" value="${kbArticle2ChildArticleTitle3}" />
+
+						<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_NAVIGATION_CHILD" value1="${kbArticle2ChildArticleTitle3}" />
+					</then>
+				</if>
+			</then>
+		</if>
+
+		<if>
+			<isset var="kbArticleTitle3" />
+			<then>
+				<var name="key_kbArticleTitle" value="${kbArticleTitle3}" />
+
+				<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_NAVIGATION" value1="${kbArticleTitle3}" />
+
+				<if>
+					<isset var="kbArticle3ChildArticleTitle1" />
+					<then>
+						<var name="key_kbArticleTitle" value="${kbArticleTitle3}" />
+						<var name="key_kbChildArticleTitle" value="${kbArticle3ChildArticleTitle1}" />
+
+						<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_NAVIGATION_CHILD" value1="${kbArticle3ChildArticleTitle1}" />
+					</then>
+				</if>
+
+				<if>
+					<isset var="kbArticle3ChildArticleTitle2" />
+					<then>
+						<var name="key_kbArticleTitle" value="${kbArticleTitle3}" />
+						<var name="key_kbChildArticleTitle" value="${kbArticle3ChildArticleTitle2}" />
+
+						<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_NAVIGATION_CHILD" value1="${kbArticle3ChildArticleTitle2}" />
+					</then>
+				</if>
+
+				<if>
+					<isset var="kbArticle3ChildArticleTitle3" />
+					<then>
+						<var name="key_kbArticleTitle" value="${kbArticleTitle3}" />
+						<var name="key_kbChildArticleTitle" value="${kbArticle3ChildArticleTitle3}" />
+
+						<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_NAVIGATION_CHILD" value1="${kbArticle3ChildArticleTitle3}" />
+					</then>
+				</if>
+			</then>
+		</if>
 	</command>
 
 	<command name="viewNoViaKBDisplayPG">

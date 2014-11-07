@@ -235,6 +235,11 @@
 </tr>
 <tr>
 	<td>GMAIL_HTML_MODE_MESSAGE_BODY_LINK</td>
+	<td>//tr[contains(.,'${key_gmailAssetType}')]//td/div[@class='msg']/a[contains(.,'${key_gmailLinkName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_HTML_MODE_MESSAGE_BODY_LINK_1</td>
 	<td>//tr[contains(.,'${key_gmailAssetType}')]//td/div[@class='msg']/a[1]</td>
 	<td></td>
 </tr>
@@ -246,6 +251,11 @@
 <tr>
 	<td>GMAIL_HTML_MODE_MESSAGE_BODY_CLOSING</td>
 	<td>//tr[contains(.,'${key_gmailAssetType}')]//td/div[@class='msg']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_HTML_MODE_MESSAGE_BODY_ATTACHMENT</td>
+	<td>//table[@class='att']//b[contains(.,'${key_gmailMesssageAttachment}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -46,7 +46,7 @@
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 
-		<case locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_LINK">
+		<case locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_LINK_1">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 	</command>

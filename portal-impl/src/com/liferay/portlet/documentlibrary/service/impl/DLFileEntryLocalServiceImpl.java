@@ -608,7 +608,7 @@ public class DLFileEntryLocalServiceImpl
 	public void convertExtraSettings(final String[] keys)
 		throws PortalException {
 
-		final int count = dlFileEntryFinder.countByExtraSettings();
+		int count = dlFileEntryFinder.countByExtraSettings();
 
 		IntervalAction intervalAction = new IntervalAction();
 

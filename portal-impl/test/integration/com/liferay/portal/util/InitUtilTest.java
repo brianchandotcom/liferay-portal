@@ -14,7 +14,7 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.portal.kernel.util.PropsKeys;
+import java.util.Arrays;
 
 import org.junit.Test;
 
@@ -25,20 +25,10 @@ public class InitUtilTest {
 
 	@Test
 	public void testBaseSeleniumTestCaseSpringConfigs() {
-		String springConfigs = PropsUtil.get(PropsKeys.SPRING_CONFIGS);
-
-		try {
-			String baseSeleniumTestCaseSpringConfigs =
-				"META-INF/management-spring.xml,META-INF/util-spring.xml";
-
-			PropsUtil.set(
-				PropsKeys.SPRING_CONFIGS, baseSeleniumTestCaseSpringConfigs);
-
-			InitUtil.initWithSpringAndModuleFramework();
-		}
-		finally {
-			PropsUtil.set(PropsKeys.SPRING_CONFIGS, springConfigs);
-		}
+		InitUtil.initWithSpring(
+			Arrays.asList(
+				"META-INF/management-spring.xml", "META-INF/util-spring.xml"),
+			true);
 	}
 
 }

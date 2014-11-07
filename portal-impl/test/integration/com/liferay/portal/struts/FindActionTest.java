@@ -123,8 +123,8 @@ public class FindActionTest {
 
 		_group = GroupTestUtil.addGroup();
 
-		_blogLayout = LayoutTestUtil.addLayout(_group.getGroupId(), "Blog");
-		_assetLayout = LayoutTestUtil.addLayout(_group.getGroupId(), "Asset");
+		_blogLayout = LayoutTestUtil.addLayout(_group);
+		_assetLayout = LayoutTestUtil.addLayout(_group);
 
 		if (portletExists) {
 			LayoutTestUtil.addPortletToLayout(_blogLayout, PortletKeys.BLOGS);

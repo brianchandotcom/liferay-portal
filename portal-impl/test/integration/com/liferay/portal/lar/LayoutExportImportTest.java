@@ -59,12 +59,8 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 	@Test
 	public void testDeleteMissingLayouts() throws Exception {
-		Layout layout1 = LayoutTestUtil.addLayout(
-			group.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
-		Layout layout2 = LayoutTestUtil.addLayout(
-			group.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
+		Layout layout1 = LayoutTestUtil.addLayout(group);
+		Layout layout2 = LayoutTestUtil.addLayout(group);
 
 		exportImportLayouts(null, getImportParameterMap());
 
@@ -72,9 +68,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			LayoutLocalServiceUtil.getLayoutsCount(group, false),
 			LayoutLocalServiceUtil.getLayoutsCount(importedGroup, false));
 
-		LayoutTestUtil.addLayout(
-			importedGroup.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
+		LayoutTestUtil.addLayout(importedGroup);
 
 		Map<String, String[]> parameterMap = getImportParameterMap();
 
@@ -187,9 +181,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 	@Test
 	public void testExportImportLayouts() throws Exception {
-		LayoutTestUtil.addLayout(
-			group.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
+		LayoutTestUtil.addLayout(group);
 
 		long[] layoutIds = new long[0];
 
@@ -285,15 +277,9 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 	@Test
 	public void testExportImportLayoutsPriorities() throws Exception {
-		Layout layout1 = LayoutTestUtil.addLayout(
-			group.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
-		Layout layout2 = LayoutTestUtil.addLayout(
-			group.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
-		Layout layout3 = LayoutTestUtil.addLayout(
-			group.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
+		Layout layout1 = LayoutTestUtil.addLayout(group);
+		Layout layout2 = LayoutTestUtil.addLayout(group);
+		Layout layout3 = LayoutTestUtil.addLayout(group);
 
 		int priority = layout1.getPriority();
 
@@ -359,9 +345,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 	@Test
 	public void testExportImportSelectedLayouts() throws Exception {
-		Layout layout = LayoutTestUtil.addLayout(
-			group.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
+		Layout layout = LayoutTestUtil.addLayout(group);
 
 		long[] layoutIds = new long[] {layout.getLayoutId()};
 
@@ -444,9 +428,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		importedGroup = GroupTestUtil.updateDisplaySettings(
 			importedGroup.getGroupId(), targetAvailableLocales, null);
 
-		LayoutTestUtil.addLayout(
-			group.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
+		LayoutTestUtil.addLayout(group);
 
 		long[] layoutIds = new long[0];
 

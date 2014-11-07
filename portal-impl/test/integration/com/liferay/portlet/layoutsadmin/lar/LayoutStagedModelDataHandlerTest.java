@@ -98,9 +98,7 @@ public class LayoutStagedModelDataHandlerTest
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
 			new HashMap<String, List<StagedModel>>();
 
-		Layout linkedLayout = LayoutTestUtil.addLayout(
-			stagingGroup.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
+		Layout linkedLayout = LayoutTestUtil.addLayout(stagingGroup);
 
 		List<LayoutFriendlyURL> linkedLayoutFriendlyURLs =
 			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
@@ -175,9 +173,7 @@ public class LayoutStagedModelDataHandlerTest
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
 			new HashMap<String, List<StagedModel>>();
 
-		Layout parentLayout = LayoutTestUtil.addLayout(
-			group.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
+		Layout parentLayout = LayoutTestUtil.addLayout(group);
 
 		addDependentStagedModel(
 			dependentStagedModelsMap, Layout.class, parentLayout);

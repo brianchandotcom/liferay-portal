@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.mobile.device.rulegroup.RuleGroupProcessorUtil;
 import com.liferay.portal.kernel.mobile.device.rulegroup.action.ActionHandler;
 import com.liferay.portal.kernel.mobile.device.rulegroup.rule.RuleHandler;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
@@ -113,9 +112,7 @@ public class MDRTestUtil {
 			long groupId, long ruleGroupId)
 		throws Exception {
 
-		Layout layout = LayoutTestUtil.addLayout(
-			groupId,
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
+		Layout layout = LayoutTestUtil.addLayout(groupId);
 
 		return addRuleGroupInstance(
 			groupId, Layout.class.getName(), layout.getPlid(), ruleGroupId);

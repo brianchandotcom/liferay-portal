@@ -32,11 +32,9 @@ import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -303,9 +301,7 @@ public abstract class BasePortletExportImportTestCase
 			layout.getPlid(), layout.getGroupId(), portletId,
 			exportParameterMap, startDate, endDate);
 
-		importedLayout = LayoutTestUtil.addLayout(
-			importedGroup.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
+		importedLayout = LayoutTestUtil.addLayout(importedGroup);
 
 		MapUtil.merge(getImportParameterMap(), importParameterMap);
 

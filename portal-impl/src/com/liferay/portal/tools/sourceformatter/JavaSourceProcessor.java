@@ -700,15 +700,27 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			});
 
 		while (true) {
-			Matcher matcher = _incorrectLineBreakPattern.matcher(newContent);
+			Matcher matcher = _incorrectLineBreakPattern1.matcher(newContent);
 
-			if (!matcher.find()) {
-				break;
+			if (matcher.find()) {
+				newContent = StringUtil.replaceFirst(
+					newContent, StringPool.NEW_LINE, StringPool.BLANK,
+					matcher.start());
+
+				continue;
 			}
 
-			newContent = StringUtil.replaceFirst(
-				newContent, StringPool.NEW_LINE, StringPool.BLANK,
-				matcher.start());
+			matcher = _incorrectLineBreakPattern2.matcher(newContent);
+
+			if (matcher.find()) {
+				newContent = StringUtil.replaceFirst(
+					newContent, StringPool.NEW_LINE, StringPool.BLANK,
+					matcher.start());
+
+				continue;
+			}
+
+			break;
 		}
 
 		newContent = sortAnnotations(newContent, StringPool.BLANK);
@@ -929,8 +941,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				StringUtil.count(beforeJavaClass, "\n") + 1;
 
 			newContent = formatJavaTerms(
-				className, fileName, absolutePath, newContent, javaClassContent,
-				javaClassLineCount, _checkJavaFieldTypesExclusions,
+				className, packagePath, file, fileName, absolutePath,
+				newContent, javaClassContent, javaClassLineCount,
+				_checkJavaFieldTypesExclusions,
 				_javaTermAccessLevelModifierExclusions, _javaTermSortExclusions,
 				_testAnnotationsExclusions);
 		}
@@ -2693,8 +2706,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\n(.+)\n\n(\t+)}\n");
 	private Pattern _incorrectCloseCurlyBracePattern2 = Pattern.compile(
 		"(\t| )@?(class |enum |interface |new )");
-	private Pattern _incorrectLineBreakPattern = Pattern.compile(
+	private Pattern _incorrectLineBreakPattern1 = Pattern.compile(
 		"\t(catch |else |finally |for |if |try |while ).*\\{\n\n\t+\\w");
+	private Pattern _incorrectLineBreakPattern2 = Pattern.compile(
+		"\\{\n\n\t*\\}");
 	private List<String> _javaTermAccessLevelModifierExclusions;
 	private List<String> _javaTermSortExclusions;
 	private Pattern _lineBreakPattern = Pattern.compile("\\}(\\)+) \\{");

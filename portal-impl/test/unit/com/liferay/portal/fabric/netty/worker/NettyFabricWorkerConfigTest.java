@@ -82,7 +82,7 @@ public class NettyFabricWorkerConfigTest {
 			Assert.fail();
 		}
 		catch (NullPointerException npe) {
-			Assert.assertEquals("Input resource map is null", npe.getMessage());
+			Assert.assertEquals("Input path map is null", npe.getMessage());
 		}
 
 		NettyFabricWorkerConfig<String> nettyFabricWorkerConfig =
@@ -92,8 +92,7 @@ public class NettyFabricWorkerConfigTest {
 
 		Assert.assertEquals(id, nettyFabricWorkerConfig.getId());
 		Assert.assertEquals(
-			Collections.emptyMap(),
-			nettyFabricWorkerConfig.getInputResourceMap());
+			Collections.emptyMap(), nettyFabricWorkerConfig.getInputPathMap());
 		Assert.assertSame(
 			processConfig, nettyFabricWorkerConfig.getProcessConfig());
 
@@ -136,22 +135,20 @@ public class NettyFabricWorkerConfigTest {
 		ProcessCallable<String> processCallable =
 			new ReturnProcessCallable<String>("Test ProcessCallable");
 
-		Map<Path, Path> inputResourceMap = new HashMap<Path, Path>();
+		Map<Path, Path> inputPathMap = new HashMap<Path, Path>();
 
-		inputResourceMap.put(Paths.get("path1"), Paths.get("path2"));
-		inputResourceMap.put(Paths.get("path3"), Paths.get("path4"));
+		inputPathMap.put(Paths.get("path1"), Paths.get("path2"));
+		inputPathMap.put(Paths.get("path3"), Paths.get("path4"));
 
 		NettyFabricWorkerConfig<String> copyNettyFabricWorkerConfig =
 			(NettyFabricWorkerConfig<String>)SerializableUtil.deserialize(
 				SerializableUtil.serialize(
 					new NettyFabricWorkerConfig<String>(
-						id, builder.build(), processCallable,
-						inputResourceMap)));
+						id, builder.build(), processCallable, inputPathMap)));
 
 		Assert.assertEquals(id, copyNettyFabricWorkerConfig.getId());
 		Assert.assertEquals(
-			inputResourceMap,
-			copyNettyFabricWorkerConfig.getInputResourceMap());
+			inputPathMap, copyNettyFabricWorkerConfig.getInputPathMap());
 
 		ProcessConfig copyProcessConfig =
 			copyNettyFabricWorkerConfig.getProcessConfig();

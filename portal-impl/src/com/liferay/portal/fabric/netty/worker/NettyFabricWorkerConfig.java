@@ -35,7 +35,7 @@ public class NettyFabricWorkerConfig<T extends Serializable>
 
 	public NettyFabricWorkerConfig(
 		long id, ProcessConfig processConfig,
-		ProcessCallable<T> processCallable, Map<Path, Path> inputResourceMap) {
+		ProcessCallable<T> processCallable, Map<Path, Path> inputPathMap) {
 
 		if (processConfig == null) {
 			throw new NullPointerException("Process config is null");
@@ -45,8 +45,8 @@ public class NettyFabricWorkerConfig<T extends Serializable>
 			throw new NullPointerException("Process callable is null");
 		}
 
-		if (inputResourceMap == null) {
-			throw new NullPointerException("Input resource map is null");
+		if (inputPathMap == null) {
+			throw new NullPointerException("Input path map is null");
 		}
 
 		_id = id;
@@ -54,14 +54,13 @@ public class NettyFabricWorkerConfig<T extends Serializable>
 		_processCallable = new NettyFabricWorkerProcessCallable<T>(
 			processCallable);
 
-		_inputResourceStringMap = new HashMap<String, String>();
+		_inputPathStringMap = new HashMap<String, String>();
 
-		for (Map.Entry<Path, Path> entry : inputResourceMap.entrySet()) {
+		for (Map.Entry<Path, Path> entry : inputPathMap.entrySet()) {
 			Path keyPath = entry.getKey();
 			Path valuePath = entry.getValue();
 
-			_inputResourceStringMap.put(
-				keyPath.toString(), valuePath.toString());
+			_inputPathStringMap.put(keyPath.toString(), valuePath.toString());
 		}
 	}
 
@@ -69,20 +68,18 @@ public class NettyFabricWorkerConfig<T extends Serializable>
 		return _id;
 	}
 
-	public Map<Path, Path> getInputResourceMap() {
-		Map<Path, Path> inputResourceMap = new HashMap<Path, Path>();
+	public Map<Path, Path> getInputPathMap() {
+		Map<Path, Path> inputPathMap = new HashMap<Path, Path>();
 
-		for (Map.Entry<String, String> entry :
-				_inputResourceStringMap.entrySet()) {
-
+		for (Map.Entry<String, String> entry : _inputPathStringMap.entrySet()) {
 			String keyPathString = entry.getKey();
 			String valuePathString = entry.getValue();
 
-			inputResourceMap.put(
+			inputPathMap.put(
 				Paths.get(keyPathString), Paths.get(valuePathString));
 		}
 
-		return inputResourceMap;
+		return inputPathMap;
 	}
 
 	public ProcessCallable<T> getProcessCallable() {
@@ -96,7 +93,7 @@ public class NettyFabricWorkerConfig<T extends Serializable>
 	private static final long serialVersionUID = 1L;
 
 	private final long _id;
-	private final Map<String, String> _inputResourceStringMap;
+	private final Map<String, String> _inputPathStringMap;
 	private final ProcessCallable<T> _processCallable;
 	private final ProcessConfig _processConfig;
 

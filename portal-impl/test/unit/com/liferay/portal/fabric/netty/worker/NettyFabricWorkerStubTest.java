@@ -86,8 +86,7 @@ public class NettyFabricWorkerStubTest {
 			Assert.fail();
 		}
 		catch (NullPointerException npe) {
-			Assert.assertEquals(
-				"Output resource map is null", npe.getMessage());
+			Assert.assertEquals("Output path map is null", npe.getMessage());
 		}
 
 		Channel channel = NettyTestUtil.createEmptyEmbeddedChannel();

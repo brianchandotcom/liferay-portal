@@ -14,7 +14,7 @@
 
 package com.liferay.portal.fabric.netty.agent;
 
-import com.liferay.portal.fabric.FabricResourceMappingVisitor;
+import com.liferay.portal.fabric.FabricPathMappingVisitor;
 import com.liferay.portal.fabric.InputResource;
 import com.liferay.portal.fabric.OutputResource;
 import com.liferay.portal.fabric.agent.FabricAgent;
@@ -101,18 +101,17 @@ public class NettyFabricAgentStub implements FabricAgent {
 
 		final long id = _idGenerator.getAndIncrement();
 
-		FabricResourceMappingVisitor fabricResourceMappingVisitor =
-			new FabricResourceMappingVisitor(
+		FabricPathMappingVisitor fabricPathMappingVisitor =
+			new FabricPathMappingVisitor(
 				OutputResource.class, _remoteRepositoryPath, true);
 
 		ObjectGraphUtil.walkObjectGraph(
-			processCallable, fabricResourceMappingVisitor);
+			processCallable, fabricPathMappingVisitor);
 
 		NettyFabricWorkerStub<T> nettyFabricWorkerStub =
 			new NettyFabricWorkerStub<T>(
 				id, _channel, _repository,
-				fabricResourceMappingVisitor.getResourceMap(),
-				_rpcRelayTimeout);
+				fabricPathMappingVisitor.getPathMap(), _rpcRelayTimeout);
 
 		final DefaultNoticeableFuture<Object> startupNoticeableFuture =
 			new DefaultNoticeableFuture<Object>();
@@ -129,16 +128,16 @@ public class NettyFabricAgentStub implements FabricAgent {
 
 			});
 
-		fabricResourceMappingVisitor = new FabricResourceMappingVisitor(
+		fabricPathMappingVisitor = new FabricPathMappingVisitor(
 			InputResource.class, _remoteRepositoryPath);
 
 		ObjectGraphUtil.walkObjectGraph(
-			processCallable, fabricResourceMappingVisitor);
+			processCallable, fabricPathMappingVisitor);
 
 		ChannelFuture channelFuture = _channel.writeAndFlush(
 			new NettyFabricWorkerConfig<T>(
 				id, processConfig, processCallable,
-				fabricResourceMappingVisitor.getResourceMap()));
+				fabricPathMappingVisitor.getPathMap()));
 
 		channelFuture.addListener(
 			new ChannelFutureListener() {

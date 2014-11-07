@@ -44,7 +44,7 @@ public class NettyFabricWorkerStub<T extends Serializable>
 
 	public NettyFabricWorkerStub(
 		long id, Channel channel, Repository repository,
-		Map<Path, Path> outputResourceMap, long rpcRelayTimeout) {
+		Map<Path, Path> outputPathMap, long rpcRelayTimeout) {
 
 		if (channel == null) {
 			throw new NullPointerException("Channel is null");
@@ -54,14 +54,14 @@ public class NettyFabricWorkerStub<T extends Serializable>
 			throw new NullPointerException("Repository is null");
 		}
 
-		if (outputResourceMap == null) {
-			throw new NullPointerException("Output resource map is null");
+		if (outputPathMap == null) {
+			throw new NullPointerException("Output path map is null");
 		}
 
 		_id = id;
 		_channel = channel;
 		_repository = repository;
-		_outputResourceMap = outputResourceMap;
+		_outputPathMap = outputPathMap;
 		_rpcRelayTimeout = rpcRelayTimeout;
 
 		final ChannelFuture channelFuture = _channel.closeFuture();
@@ -111,7 +111,7 @@ public class NettyFabricWorkerStub<T extends Serializable>
 
 	public void setResult(final T result) {
 		NoticeableFuture<Map<Path, Path>> noticeableFuture =
-			_repository.getFiles(_outputResourceMap, true);
+			_repository.getFiles(_outputPathMap, true);
 
 		noticeableFuture.addFutureListener(
 			new BaseFutureListener<Map<Path, Path>>() {
@@ -152,7 +152,7 @@ public class NettyFabricWorkerStub<T extends Serializable>
 	private final DefaultNoticeableFuture<T> _defaultNoticeableFuture =
 		new DefaultNoticeableFuture<T>();
 	private final long _id;
-	private final Map<Path, Path> _outputResourceMap;
+	private final Map<Path, Path> _outputPathMap;
 	private final Repository _repository;
 	private final long _rpcRelayTimeout;
 

@@ -808,6 +808,37 @@ public class JavaClass {
 		return line.substring(x + 1);
 	}
 
+	protected JavaTerm getJavaTerm(
+			String name, int type, int lineCount, int startPos, int endPos)
+		throws Exception {
+
+		String javaTermContent = _content.substring(startPos, endPos);
+
+		if (Validator.isNull(name) || !isValidJavaTerm(javaTermContent)) {
+			return null;
+		}
+
+		JavaTerm javaTerm = new JavaTerm(
+			name, type, javaTermContent, lineCount);
+
+		if (javaTerm.isConstructor()) {
+			_constructorCount++;
+		}
+
+		if (!javaTerm.isClass()) {
+			return javaTerm;
+		}
+
+		JavaClass innerClass = new JavaClass(
+			name, _packagePath, _file, _fileName, _absolutePath,
+			javaTermContent, lineCount, _indent + StringPool.TAB, this,
+			_javaTermAccessLevelModifierExclusions);
+
+		_innerClasses.add(innerClass);
+
+		return javaTerm;
+	}
+
 	protected Set<JavaTerm> getJavaTerms() throws Exception {
 		if (_javaTerms != null) {
 			return _javaTerms;
@@ -824,8 +855,6 @@ public class JavaClass {
 		int lineCount = _lineCount - 1;
 
 		String line = null;
-
-		JavaTerm javaTerm = null;
 
 		String javaTermName = null;
 		int javaTermLineCount = -1;
@@ -871,39 +900,19 @@ public class JavaClass {
 				if ((javaTermStartPosition != -1) &&
 					(javaTermEndPosition < _content.length())) {
 
-					String javaTermContent = _content.substring(
+					JavaTerm javaTerm = getJavaTerm(
+						javaTermName, javaTermType, javaTermLineCount,
 						javaTermStartPosition, javaTermEndPosition);
 
-					if (!isValidJavaTerm(javaTermContent)) {
+					if (javaTerm == null) {
 						return null;
 					}
 
-					if (Validator.isNotNull(javaTermName)) {
-						javaTerm = new JavaTerm(
-							javaTermName, javaTermType, javaTermContent,
-							javaTermLineCount);
-
-						if (javaTermType == JavaTerm.TYPE_STATIC_BLOCK) {
-							staticBlocks.add(javaTerm);
-						}
-						else {
-							if (javaTerm.isConstructor()) {
-								_constructorCount++;
-							}
-
-							javaTerms.add(javaTerm);
-
-							if (javaTerm.isClass()) {
-								JavaClass innerClass = new JavaClass(
-									javaTermName, _packagePath, _file,
-									_fileName, _absolutePath, javaTermContent,
-									javaTermLineCount, _indent + StringPool.TAB,
-									this,
-									_javaTermAccessLevelModifierExclusions);
-
-								_innerClasses.add(innerClass);
-							}
-						}
+					if (javaTermType == JavaTerm.TYPE_STATIC_BLOCK) {
+						staticBlocks.add(javaTerm);
+					}
+					else {
+						javaTerms.add(javaTerm);
 					}
 				}
 
@@ -949,35 +958,19 @@ public class JavaClass {
 				_content.lastIndexOf(StringPool.CLOSE_CURLY_BRACE) -
 					_indent.length();
 
-			String javaTermContent = _content.substring(
+			JavaTerm javaTerm = getJavaTerm(
+				javaTermName, javaTermType, javaTermLineCount,
 				javaTermStartPosition, javaTermEndPosition);
 
-			if (!isValidJavaTerm(javaTermContent)) {
+			if (javaTerm == null) {
 				return null;
 			}
-
-			javaTerm = new JavaTerm(
-				javaTermName, javaTermType, javaTermContent, javaTermLineCount);
 
 			if (javaTermType == JavaTerm.TYPE_STATIC_BLOCK) {
 				staticBlocks.add(javaTerm);
 			}
 			else {
-				if (javaTerm.isConstructor()) {
-					_constructorCount++;
-				}
-
 				javaTerms.add(javaTerm);
-
-				if (javaTerm.isClass()) {
-					JavaClass innerClass = new JavaClass(
-						javaTermName, _packagePath, _file, _fileName,
-						_absolutePath, javaTermContent, javaTermLineCount,
-						_indent + StringPool.TAB, this,
-						_javaTermAccessLevelModifierExclusions);
-
-					_innerClasses.add(innerClass);
-				}
 			}
 		}
 

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.events.IntervalAction;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import org.junit.Assert;
@@ -22,14 +23,14 @@ import org.junit.Test;
 /**
  * @author Jonathan McCann
  */
-public class IndexerIntervalTest {
+public class IntervalActionTest {
 
 	@Test
 	public void testIndexerIntervalEndCalculation() throws Exception {
-		IndexerInterval indexerIntervalInstance = new IndexerInterval();
+		IntervalAction intervalActionInstance = new IntervalAction();
 
-		indexerIntervalInstance.setPerformActionMethod(
-			new IndexerInterval.PerformIntervalActionMethod() {
+		intervalActionInstance.setPerformActionMethod(
+			new IntervalAction.PerformIntervalActionMethod() {
 
 				@Override
 				public void performIntervalAction(int start, int end)
@@ -42,18 +43,18 @@ public class IndexerIntervalTest {
 
 			});
 
-		indexerIntervalInstance.setCount(125);
-		indexerIntervalInstance.performInterval();
+		intervalActionInstance.setCount(125);
+		intervalActionInstance.performInterval();
 
 		Assert.assertEquals(200, _count);
 	}
 
 	@Test
 	public void testIndexerIntervalPageCalculation() throws Exception {
-		IndexerInterval indexerIntervalInstance = new IndexerInterval();
+		IntervalAction intervalActionInstance = new IntervalAction();
 
-		indexerIntervalInstance.setPerformActionMethod(
-			new IndexerInterval.PerformIntervalActionMethod() {
+		intervalActionInstance.setPerformActionMethod(
+			new IntervalAction.PerformIntervalActionMethod() {
 
 				@Override
 				public void performIntervalAction(int start, int end)
@@ -64,8 +65,8 @@ public class IndexerIntervalTest {
 
 			});
 
-		indexerIntervalInstance.setCount(125);
-		indexerIntervalInstance.performInterval();
+		intervalActionInstance.setCount(125);
+		intervalActionInstance.performInterval();
 
 		Assert.assertEquals(2, _count);
 	}

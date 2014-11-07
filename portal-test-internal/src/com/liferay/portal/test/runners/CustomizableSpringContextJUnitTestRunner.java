@@ -52,8 +52,7 @@ public abstract class CustomizableSpringContextJUnitTestRunner
 
 		configLocations.addAll(getExtraConfigLocations());
 
-		InitUtil.initWithSpringAndModuleFramework(
-			false, processConfigLocations(configLocations), false);
+		InitUtil.initWithSpring(processConfigLocations(configLocations), true);
 
 		afterApplicationContextInit();
 	}

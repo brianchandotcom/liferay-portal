@@ -41,8 +41,7 @@ public class InitializeLiferayTestEnvironment {
 
 		List<String> configLocations = getConfigLocations();
 
-		InitUtil.initWithSpringAndModuleFramework(
-			false, configLocations, false);
+		InitUtil.initWithSpring(configLocations, true);
 
 		if (System.getProperty("external-properties") == null) {
 			System.setProperty("external-properties", "portal-test.properties");

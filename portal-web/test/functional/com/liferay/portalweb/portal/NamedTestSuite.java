@@ -27,7 +27,7 @@ import junit.framework.TestSuite;
 public class NamedTestSuite extends TestSuite {
 
 	public NamedTestSuite() {
-		InitUtil.initWithSpring();
+		InitUtil.initWithSpring(false);
 
 		LiferaySelenium liferaySelenium = SeleniumUtil.getSelenium();
 

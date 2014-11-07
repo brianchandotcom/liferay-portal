@@ -1904,7 +1904,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	protected void notifyDiscussionSubscribers(
-		MBMessage message, ServiceContext serviceContext) {
+			MBMessage message, ServiceContext serviceContext)
+		throws PortalException {
 
 		if (!PrefsPropsUtil.getBoolean(
 				message.getCompanyId(),
@@ -1912,6 +1913,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			return;
 		}
+
+		MBDiscussion mbDiscussion =
+			mbDiscussionLocalService.getThreadDiscussion(message.getThreadId());
 
 		String contentURL = (String)serviceContext.getAttribute("contentURL");
 
@@ -1939,8 +1943,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		subscriptionSender.setBody(body);
 		subscriptionSender.setCompanyId(message.getCompanyId());
-		subscriptionSender.setClassName(message.getModelClassName());
-		subscriptionSender.setClassPK(message.getMessageId());
+		subscriptionSender.setClassName(MBDiscussion.class.getName());
+		subscriptionSender.setClassPK(mbDiscussion.getDiscussionId());
 		subscriptionSender.setContextAttribute(
 			"[$COMMENTS_BODY$]", message.getBody(true), false);
 		subscriptionSender.setContextAttributes(

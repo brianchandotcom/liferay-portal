@@ -51,7 +51,6 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
-import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PortalUtil;
@@ -419,9 +418,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		Layout layout = LayoutTestUtil.addLayout(_stagingGroup);
 
 		Layout childLayout = LayoutTestUtil.addLayout(
-			_stagingGroup.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
-			layout.getPlid());
+			_stagingGroup, layout.getPlid());
 
 		long[] selectedLayoutIds = new long[] {
 			layout.getLayoutId(), childLayout.getLayoutId()};
@@ -447,9 +444,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		Layout layout = LayoutTestUtil.addLayout(_stagingGroup);
 
 		Layout childLayout = LayoutTestUtil.addLayout(
-			_stagingGroup.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
-			layout.getPlid());
+			_stagingGroup, layout.getPlid());
 
 		long[] selectedLayoutIds = new long[] {childLayout.getLayoutId()};
 
@@ -474,10 +469,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 	public void testGetSelectedLayoutsJSONSelectNoLayouts() throws Exception {
 		Layout layout = LayoutTestUtil.addLayout(_stagingGroup);
 
-		LayoutTestUtil.addLayout(
-			_stagingGroup.getGroupId(),
-			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
-			layout.getPlid());
+		LayoutTestUtil.addLayout(_stagingGroup, layout.getPlid());
 
 		String selectedLayoutsJSON =
 			ExportImportHelperUtil.getSelectedLayoutsJSON(

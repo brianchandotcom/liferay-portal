@@ -100,7 +100,7 @@ public class DLFileEntryLocalServiceTest {
 			DLFileEntryLocalServiceUtil.getNoAssetFileEntries();
 
 		Assert.assertEquals(1, dlFileEntries.size());
-		
+
 		DLFileEntry dlFileEntry = dlFileEntries.get(0);
 
 		Assert.assertEquals(

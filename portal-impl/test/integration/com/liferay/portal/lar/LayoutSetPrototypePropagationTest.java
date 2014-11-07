@@ -627,11 +627,7 @@ public class LayoutSetPrototypePropagationTest
 		setLinkEnabled(layoutSetPrototypeLinkEnabled);
 
 		try {
-			LayoutTestUtil.addLayout(
-				group.getGroupId(),
-				RandomTestUtil.randomString(
-					FriendlyURLRandomizerBumper.INSTANCE),
-				layout.getPlid());
+			LayoutTestUtil.addLayout(group, layout.getPlid());
 
 			if (layoutSetPrototypeLinkEnabled) {
 				Assert.fail(

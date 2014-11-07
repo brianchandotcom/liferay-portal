@@ -22,6 +22,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.test.GroupTestUtil;
@@ -67,7 +68,8 @@ public class FriendlyURLServletTest {
 	@Test
 	public void testGetRedirectWithExistentSite() throws Exception {
 		Layout layout = LayoutTestUtil.addLayout(
-			_group.getGroupId(), RandomTestUtil.randomString());
+			_group.getGroupId(),
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
 
 		testGetRedirect(
 			getPath(_group, layout), Portal.PATH_MAIN,

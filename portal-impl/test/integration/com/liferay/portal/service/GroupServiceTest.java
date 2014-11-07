@@ -40,6 +40,7 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.listeners.ResetDatabaseExecutionTestListener;
+import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -350,7 +351,7 @@ public class GroupServiceTest {
 
 		LayoutTestUtil.addLayout(
 			parentOrganizationGroup.getGroupId(),
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
 
 		Organization organization = OrganizationTestUtil.addOrganization(
 			parentOrganization.getOrganizationId(),
@@ -805,7 +806,9 @@ public class GroupServiceTest {
 			Group group = GroupTestUtil.addGroup(RandomTestUtil.randomString());
 
 			Layout scopeLayout = LayoutTestUtil.addLayout(
-				group.getGroupId(), RandomTestUtil.randomString());
+				group.getGroupId(),
+				RandomTestUtil.randomString(
+					FriendlyURLRandomizerBumper.INSTANCE));
 
 			return GroupLocalServiceUtil.addGroup(
 				TestPropsValues.getUserId(),

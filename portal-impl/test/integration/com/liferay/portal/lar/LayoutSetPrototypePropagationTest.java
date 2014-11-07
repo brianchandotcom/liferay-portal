@@ -42,6 +42,7 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.listeners.ResetDatabaseExecutionTestListener;
+import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -209,7 +210,8 @@ public class LayoutSetPrototypePropagationTest
 
 		Layout layoutSetPrototypeLayout = LayoutTestUtil.addLayout(
 			_layoutSetPrototypeGroup.getGroupId(),
-			RandomTestUtil.randomString(), true, layoutPrototype, true);
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
+			true, layoutPrototype, true);
 
 		Map<String, String[]> preferenceMap = new HashMap<String, String[]>();
 
@@ -359,7 +361,8 @@ public class LayoutSetPrototypePropagationTest
 
 		prototypeLayout = LayoutTestUtil.addLayout(
 			_layoutSetPrototypeGroup.getGroupId(),
-			RandomTestUtil.randomString(), true);
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
+			true);
 
 		LayoutTestUtil.updateLayoutTemplateId(
 			prototypeLayout, initialLayoutTemplateId);
@@ -374,7 +377,8 @@ public class LayoutSetPrototypePropagationTest
 
 		_prototypeLayout = LayoutTestUtil.addLayout(
 			_layoutSetPrototypeGroup.getGroupId(),
-			RandomTestUtil.randomString(), true);
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
+			true);
 
 		LayoutTestUtil.updateLayoutTemplateId(
 			_prototypeLayout, initialLayoutTemplateId);
@@ -433,7 +437,8 @@ public class LayoutSetPrototypePropagationTest
 
 		Layout layout = LayoutTestUtil.addLayout(
 			_layoutSetPrototypeGroup.getGroupId(),
-			RandomTestUtil.randomString(), true);
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
+			true);
 
 		Assert.assertEquals(
 			_initialPrototypeLayoutCount, getGroupLayoutCount());
@@ -475,8 +480,8 @@ public class LayoutSetPrototypePropagationTest
 
 		Layout layoutSetPrototypeLayout = LayoutTestUtil.addLayout(
 			_layoutSetPrototypeGroup.getGroupId(),
-			RandomTestUtil.randomString(), true, layoutPrototype,
-			layoutSetLayoutLinkEnabled);
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE),
+			true, layoutPrototype, layoutSetLayoutLinkEnabled);
 
 		layoutSetPrototypeLayout = propagateChanges(layoutSetPrototypeLayout);
 
@@ -629,7 +634,9 @@ public class LayoutSetPrototypePropagationTest
 
 		try {
 			LayoutTestUtil.addLayout(
-				group.getGroupId(), RandomTestUtil.randomString(),
+				group.getGroupId(),
+				RandomTestUtil.randomString(
+					FriendlyURLRandomizerBumper.INSTANCE),
 				layout.getPlid());
 
 			if (layoutSetPrototypeLinkEnabled) {

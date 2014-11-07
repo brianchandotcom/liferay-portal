@@ -24,6 +24,7 @@ import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.DeleteAfterTestRun;
+import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
@@ -48,7 +49,8 @@ public class BaseExportImportTestCase {
 		importedGroup = GroupTestUtil.addGroup();
 
 		layout = LayoutTestUtil.addLayout(
-			group.getGroupId(), RandomTestUtil.randomString());
+			group.getGroupId(),
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
 
 		// Delete and readd to ensure a different layout ID (not ID or UUID).
 		// See LPS-32132.
@@ -56,7 +58,8 @@ public class BaseExportImportTestCase {
 		LayoutLocalServiceUtil.deleteLayout(layout, true, new ServiceContext());
 
 		layout = LayoutTestUtil.addLayout(
-			group.getGroupId(), RandomTestUtil.randomString());
+			group.getGroupId(),
+			RandomTestUtil.randomString(FriendlyURLRandomizerBumper.INSTANCE));
 	}
 
 	@After

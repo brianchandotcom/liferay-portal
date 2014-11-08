@@ -467,7 +467,7 @@ if (Validator.isNull(redirect)) {
 
 		var confirmMessage = '<%= UnicodeLanguageUtil.get(request, "you-may-lose-formatting-when-switching-from-x-to-x") %>';
 
-		confirmMessage = AUI().Lang.sub(confirmMessage, [currentFormat, newFormat]);
+		confirmMessage = AUI._.sub(confirmMessage, currentFormat, newFormat);
 
 		if (!confirm(confirmMessage)) {
 			formatSelect.selectedIndex = window.<portlet:namespace />currentFormatIndex;

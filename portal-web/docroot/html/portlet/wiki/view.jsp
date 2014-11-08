@@ -386,20 +386,17 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 	</c:otherwise>
 </c:choose>
 
-<aui:script use="aui-base">
-	var toc = A.one('#p_p_id<portlet:namespace /> .toc');
+<aui:script sandbox="<%= true %>">
+	var toc = $('#p_p_id<portlet:namespace /> .toc');
 
-	if (toc) {
-		var index = toc.one('.toc-index');
-		var trigger = toc.one('a.toc-trigger');
+	var index = toc.find('.toc-index');
 
-		trigger.on(
-			'click',
-			function(event) {
-				index.toggle();
-			}
-		);
-	}
+	toc.find('a.toc-trigger').on(
+		'click',
+		function(event) {
+			index.toggleClass('hide');
+		}
+	);
 </aui:script>
 
 <%

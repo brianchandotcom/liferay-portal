@@ -382,8 +382,10 @@
 			<var name="portletName" value="Account Settings" />
 		</execute>
 
+		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
 		<execute action="Myaccount#assertClick" locator-key1="MENU_MISCELLANEOUS_DISPLAY_SETTINGS" value1="Display Settings" />
 		<execute action="Myaccount#assertSelectedLabel" locator-key1="LANGUAGE_SELECT" value1="English (United States)" />
+		<execute action="Myaccount#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="VotePollsQuestionWithGuestPermissions" priority="4">

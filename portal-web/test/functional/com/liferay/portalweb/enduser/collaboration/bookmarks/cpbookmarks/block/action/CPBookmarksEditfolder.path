@@ -30,17 +30,17 @@
 </tr>
 <tr>
 	<td>PARENT_FOLDER_SELECT_BUTTON</td>
-	<td>//button[@id='_198_selectFolderButton']</td>
+	<td>//button[@id='_198_WAR_bookmarksweb_selectFolderButton']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PARENT_FOLDER_REMOVE_BUTTON</td>
-	<td>//button[@id='_198_removeFolderButton']</td>
+	<td>//button[@id='_198_WAR_bookmarksweb_removeFolderButton']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MERGE_WITH_PARENT_FOLDER_CHECKBOX</td>
-	<td>//input[@id='_198_mergeWithParentFolder']</td>
+	<td>//input[@id='_198_WAR_bookmarksweb_mergeWithParentFolder']</td>
 	<td></td>
 </tr>
 </tbody>

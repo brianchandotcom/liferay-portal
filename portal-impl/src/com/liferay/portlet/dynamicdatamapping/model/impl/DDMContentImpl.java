@@ -18,8 +18,4 @@ package com.liferay.portlet.dynamicdatamapping.model.impl;
  * @author Brian Wing Shun Chan
  */
 public class DDMContentImpl extends DDMContentBaseImpl {
-
-	public DDMContentImpl() {
-	}
-
 }

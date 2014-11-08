@@ -18,8 +18,4 @@ package com.liferay.portlet.asset.model.impl;
  * @author Jorge Ferrer
  */
 public class AssetTagStatsImpl extends AssetTagStatsBaseImpl {
-
-	public AssetTagStatsImpl() {
-	}
-
 }

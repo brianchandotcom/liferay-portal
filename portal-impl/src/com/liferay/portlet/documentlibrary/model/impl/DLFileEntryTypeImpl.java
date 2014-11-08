@@ -34,9 +34,6 @@ import java.util.Locale;
  */
 public class DLFileEntryTypeImpl extends DLFileEntryTypeBaseImpl {
 
-	public DLFileEntryTypeImpl() {
-	}
-
 	@Override
 	public List<DDMStructure> getDDMStructures() {
 		return DDMStructureLocalServiceUtil.getDLFileEntryTypeStructures(

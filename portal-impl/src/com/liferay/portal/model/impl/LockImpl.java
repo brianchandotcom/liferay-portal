@@ -19,9 +19,6 @@ package com.liferay.portal.model.impl;
  */
 public class LockImpl extends LockBaseImpl {
 
-	public LockImpl() {
-	}
-
 	@Override
 	public long getExpirationTime() {
 		if (isNeverExpires()) {

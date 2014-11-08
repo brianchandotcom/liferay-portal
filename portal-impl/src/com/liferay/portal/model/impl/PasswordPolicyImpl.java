@@ -18,8 +18,4 @@ package com.liferay.portal.model.impl;
  * @author Scott Lee
  */
 public class PasswordPolicyImpl extends PasswordPolicyBaseImpl {
-
-	public PasswordPolicyImpl() {
-	}
-
 }

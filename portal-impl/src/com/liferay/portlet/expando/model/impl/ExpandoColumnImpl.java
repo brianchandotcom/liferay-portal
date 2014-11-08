@@ -33,9 +33,6 @@ import java.util.Locale;
  */
 public class ExpandoColumnImpl extends ExpandoColumnBaseImpl {
 
-	public ExpandoColumnImpl() {
-	}
-
 	@Override
 	public Serializable getDefaultValue() {
 		try {

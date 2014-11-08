@@ -52,9 +52,6 @@ import java.util.TimeZone;
  */
 public class CompanyImpl extends CompanyBaseImpl {
 
-	public CompanyImpl() {
-	}
-
 	@Override
 	public int compareTo(Company company) {
 		String webId1 = getWebId();

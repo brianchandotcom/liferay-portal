@@ -50,9 +50,6 @@ import java.io.IOException;
  */
 public class LayoutSetImpl extends LayoutSetBaseImpl {
 
-	public LayoutSetImpl() {
-	}
-
 	/**
 	 * Returns the layout set's color scheme.
 	 *

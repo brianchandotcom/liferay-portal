@@ -173,9 +173,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 		}
 	}
 
-	public LayoutImpl() {
-	}
-
 	/**
 	 * Returns all layouts that are direct or indirect children of the current
 	 * layout.

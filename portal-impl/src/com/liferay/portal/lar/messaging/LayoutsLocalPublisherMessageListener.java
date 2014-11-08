@@ -37,9 +37,6 @@ import java.util.Map;
 public class LayoutsLocalPublisherMessageListener
 	extends BasePublisherMessageListener {
 
-	public LayoutsLocalPublisherMessageListener() {
-	}
-
 	@Override
 	protected void doReceive(Message message, MessageStatus messageStatus)
 		throws PortalException {

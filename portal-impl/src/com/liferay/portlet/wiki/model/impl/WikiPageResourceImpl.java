@@ -19,8 +19,4 @@ package com.liferay.portlet.wiki.model.impl;
  * @author Jorge Ferrer
  */
 public class WikiPageResourceImpl extends WikiPageResourceBaseImpl {
-
-	public WikiPageResourceImpl() {
-	}
-
 }

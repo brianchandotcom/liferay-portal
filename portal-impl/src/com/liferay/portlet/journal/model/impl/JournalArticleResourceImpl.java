@@ -18,8 +18,4 @@ package com.liferay.portlet.journal.model.impl;
  * @author Brian Wing Shun Chan
  */
 public class JournalArticleResourceImpl extends JournalArticleResourceBaseImpl {
-
-	public JournalArticleResourceImpl() {
-	}
-
 }

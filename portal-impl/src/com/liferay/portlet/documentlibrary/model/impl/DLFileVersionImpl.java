@@ -42,9 +42,6 @@ import java.util.List;
  */
 public class DLFileVersionImpl extends DLFileVersionBaseImpl {
 
-	public DLFileVersionImpl() {
-	}
-
 	@Override
 	public String buildTreePath() throws PortalException {
 		if (getFolderId() == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {

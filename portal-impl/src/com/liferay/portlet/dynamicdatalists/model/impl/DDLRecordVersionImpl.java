@@ -25,9 +25,6 @@ import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil
  */
 public class DDLRecordVersionImpl extends DDLRecordVersionBaseImpl {
 
-	public DDLRecordVersionImpl() {
-	}
-
 	@Override
 	public DDLRecord getRecord() throws PortalException {
 		return DDLRecordLocalServiceUtil.getRecord(getRecordId());

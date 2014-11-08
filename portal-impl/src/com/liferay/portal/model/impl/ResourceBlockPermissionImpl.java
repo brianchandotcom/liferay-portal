@@ -27,8 +27,4 @@ package com.liferay.portal.model.impl;
  */
 public class ResourceBlockPermissionImpl
 	extends ResourceBlockPermissionBaseImpl {
-
-	public ResourceBlockPermissionImpl() {
-	}
-
 }

@@ -18,8 +18,4 @@ package com.liferay.portlet.social.model.impl;
  * @author Brian Wing Shun Chan
  */
 public class SocialRelationImpl extends SocialRelationBaseImpl {
-
-	public SocialRelationImpl() {
-	}
-
 }

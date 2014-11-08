@@ -18,8 +18,4 @@ package com.liferay.portlet.documentlibrary.model.impl;
  * @author Brian Wing Shun Chan
  */
 public class DLSyncEventImpl extends DLSyncEventBaseImpl {
-
-	public DLSyncEventImpl() {
-	}
-
 }

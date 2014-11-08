@@ -18,8 +18,4 @@ package com.liferay.portlet.messageboards.model.impl;
  * @author Brian Wing Shun Chan
  */
 public class MBBanImpl extends MBBanBaseImpl {
-
-	public MBBanImpl() {
-	}
-
 }

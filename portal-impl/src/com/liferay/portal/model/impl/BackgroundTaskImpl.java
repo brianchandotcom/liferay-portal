@@ -34,9 +34,6 @@ import java.util.List;
  */
 public class BackgroundTaskImpl extends BackgroundTaskBaseImpl {
 
-	public BackgroundTaskImpl() {
-	}
-
 	@Override
 	public Folder addAttachmentsFolder() throws PortalException {
 		if (_attachmentsFolderId !=

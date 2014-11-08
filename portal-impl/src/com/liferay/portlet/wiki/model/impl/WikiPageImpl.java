@@ -43,9 +43,6 @@ import java.util.List;
  */
 public class WikiPageImpl extends WikiPageBaseImpl {
 
-	public WikiPageImpl() {
-	}
-
 	@Override
 	public Folder addAttachmentsFolder() throws PortalException {
 		if (_attachmentsFolderId !=

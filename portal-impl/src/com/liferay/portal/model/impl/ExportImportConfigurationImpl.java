@@ -27,9 +27,6 @@ import java.util.Map;
 public class ExportImportConfigurationImpl
 	extends ExportImportConfigurationBaseImpl {
 
-	public ExportImportConfigurationImpl() {
-	}
-
 	@Override
 	public Map<String, Serializable> getSettingsMap() {
 		if (_settingsMap != null) {

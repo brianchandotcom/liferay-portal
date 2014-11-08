@@ -37,9 +37,6 @@ public class ShoppingItemImpl extends ShoppingItemBaseImpl {
 
 	public static final int STOCK_QUANTITY_INFINITE_STOCK = -1;
 
-	public ShoppingItemImpl() {
-	}
-
 	@Override
 	public int compareTo(ShoppingItem item) {
 		return new ItemNameComparator(true).compare(this, item);

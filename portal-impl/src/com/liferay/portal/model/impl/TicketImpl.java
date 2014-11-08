@@ -21,9 +21,6 @@ import java.util.Date;
  */
 public class TicketImpl extends TicketBaseImpl {
 
-	public TicketImpl() {
-	}
-
 	@Override
 	public boolean isExpired() {
 		Date expirationDate = getExpirationDate();

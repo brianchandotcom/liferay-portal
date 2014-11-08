@@ -40,9 +40,6 @@ import java.io.IOException;
  */
 public class LayoutSetBranchImpl extends LayoutSetBranchBaseImpl {
 
-	public LayoutSetBranchImpl() {
-	}
-
 	@Override
 	public ColorScheme getColorScheme() {
 		return ThemeLocalServiceUtil.getColorScheme(

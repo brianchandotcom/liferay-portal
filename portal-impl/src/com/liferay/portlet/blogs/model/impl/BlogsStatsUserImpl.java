@@ -18,8 +18,4 @@ package com.liferay.portlet.blogs.model.impl;
  * @author Brian Wing Shun Chan
  */
 public class BlogsStatsUserImpl extends BlogsStatsUserBaseImpl {
-
-	public BlogsStatsUserImpl() {
-	}
-
 }

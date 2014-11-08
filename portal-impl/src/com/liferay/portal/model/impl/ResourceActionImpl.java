@@ -22,8 +22,4 @@ package com.liferay.portal.model.impl;
  * @see    ResourcePermissionImpl
  */
 public class ResourceActionImpl extends ResourceActionBaseImpl {
-
-	public ResourceActionImpl() {
-	}
-
 }

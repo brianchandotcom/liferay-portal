@@ -28,9 +28,6 @@ import java.util.List;
  */
 public class SCProductEntryImpl extends SCProductEntryBaseImpl {
 
-	public SCProductEntryImpl() {
-	}
-
 	@Override
 	public SCProductVersion getLatestVersion() {
 		List<SCProductVersion> results =

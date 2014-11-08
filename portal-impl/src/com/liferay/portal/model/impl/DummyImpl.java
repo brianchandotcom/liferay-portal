@@ -24,9 +24,6 @@ import java.io.Serializable;
  */
 public class DummyImpl extends BaseModelImpl<Dummy> implements Dummy {
 
-	public DummyImpl() {
-	}
-
 	@Override
 	public Object clone() {
 		return new DummyImpl();

@@ -24,9 +24,6 @@ import java.util.List;
  */
 public class OrgGroupRoleImpl extends OrgGroupRoleBaseImpl {
 
-	public OrgGroupRoleImpl() {
-	}
-
 	@Override
 	public boolean containsGroup(List<Group> groups) {
 		if (groups == null) {

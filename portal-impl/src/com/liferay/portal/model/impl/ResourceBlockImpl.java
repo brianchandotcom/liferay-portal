@@ -67,8 +67,4 @@ package com.liferay.portal.model.impl;
  * @author Connor McKay
  */
 public class ResourceBlockImpl extends ResourceBlockBaseImpl {
-
-	public ResourceBlockImpl() {
-	}
-
 }

@@ -23,9 +23,6 @@ import com.liferay.portal.model.Repository;
  */
 public class RepositoryImpl extends RepositoryBaseImpl {
 
-	public RepositoryImpl() {
-	}
-
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(Repository.class);

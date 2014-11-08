@@ -88,9 +88,6 @@ import com.liferay.portal.service.ResourceActionLocalServiceUtil;
  */
 public class ResourcePermissionImpl extends ResourcePermissionBaseImpl {
 
-	public ResourcePermissionImpl() {
-	}
-
 	@Override
 	public boolean hasActionId(String actionId) {
 		ResourceAction resourceAction =

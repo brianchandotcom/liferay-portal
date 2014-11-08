@@ -18,8 +18,4 @@ package com.liferay.portal.model.impl;
  * @author Brian Wing Shun Chan
  */
 public class WorkflowDefinitionLinkImpl extends WorkflowDefinitionLinkBaseImpl {
-
-	public WorkflowDefinitionLinkImpl() {
-	}
-
 }

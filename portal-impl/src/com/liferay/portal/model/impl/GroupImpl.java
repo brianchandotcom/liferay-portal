@@ -95,9 +95,6 @@ import java.util.Set;
  */
 public class GroupImpl extends GroupBaseImpl {
 
-	public GroupImpl() {
-	}
-
 	@Override
 	public void clearStagingGroup() {
 		_stagingGroup = null;

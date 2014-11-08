@@ -21,9 +21,6 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class ShoppingItemFieldImpl extends ShoppingItemFieldBaseImpl {
 
-	public ShoppingItemFieldImpl() {
-	}
-
 	@Override
 	public String[] getValuesArray() {
 		return _valuesArray;

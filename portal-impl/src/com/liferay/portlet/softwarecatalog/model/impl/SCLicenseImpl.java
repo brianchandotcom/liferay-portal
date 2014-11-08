@@ -18,8 +18,4 @@ package com.liferay.portlet.softwarecatalog.model.impl;
  * @author Brian Wing Shun Chan
  */
 public class SCLicenseImpl extends SCLicenseBaseImpl {
-
-	public SCLicenseImpl() {
-	}
-
 }

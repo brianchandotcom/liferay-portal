@@ -18,8 +18,4 @@ package com.liferay.portlet.shopping.model.impl;
  * @author Brian Wing Shun Chan
  */
 public class ShoppingOrderItemImpl extends ShoppingOrderItemBaseImpl {
-
-	public ShoppingOrderItemImpl() {
-	}
-
 }

@@ -18,8 +18,4 @@ package com.liferay.portlet.expando.model.impl;
  * @author Brian Wing Shun Chan
  */
 public class ExpandoRowImpl extends ExpandoRowBaseImpl {
-
-	public ExpandoRowImpl() {
-	}
-
 }

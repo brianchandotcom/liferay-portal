@@ -29,9 +29,6 @@ import java.io.InputStream;
  */
 public class ImageImpl extends ImageBaseImpl {
 
-	public ImageImpl() {
-	}
-
 	@Override
 	public byte[] getTextObj() {
 		if (_textObj != null) {

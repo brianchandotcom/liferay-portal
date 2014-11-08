@@ -20,8 +20,4 @@ package com.liferay.portlet.announcements.model.impl;
  * @author Brian Wing Shun Chan
  */
 public class AnnouncementsFlagImpl extends AnnouncementsFlagBaseImpl {
-
-	public AnnouncementsFlagImpl() {
-	}
-
 }

@@ -35,9 +35,6 @@ import java.util.List;
  */
 public class DLFolderImpl extends DLFolderBaseImpl {
 
-	public DLFolderImpl() {
-	}
-
 	@Override
 	public List<Long> getAncestorFolderIds() throws PortalException {
 		List<Long> ancestorFolderIds = new ArrayList<Long>();

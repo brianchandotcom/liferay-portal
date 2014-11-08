@@ -28,9 +28,6 @@ import java.util.List;
  */
 public class JournalFolderImpl extends JournalFolderBaseImpl {
 
-	public JournalFolderImpl() {
-	}
-
 	@Override
 	public List<Long> getAncestorFolderIds() throws PortalException {
 		List<Long> ancestorFolderIds = new ArrayList<Long>();

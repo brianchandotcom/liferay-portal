@@ -42,9 +42,6 @@ import java.util.Set;
  */
 public class MBThreadImpl extends MBThreadBaseImpl {
 
-	public MBThreadImpl() {
-	}
-
 	@Override
 	public Folder addAttachmentsFolder() throws PortalException {
 		if (_attachmentsFolderId !=

@@ -18,8 +18,4 @@ package com.liferay.portlet.asset.model.impl;
  * @author Brian Wing Shun Chan
  */
 public class AssetTagPropertyImpl extends AssetTagPropertyBaseImpl {
-
-	public AssetTagPropertyImpl() {
-	}
-
 }

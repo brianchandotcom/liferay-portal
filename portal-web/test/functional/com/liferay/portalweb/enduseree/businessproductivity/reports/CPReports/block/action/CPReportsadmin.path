@@ -188,6 +188,21 @@
 </tr>
 <!--DEFINITIONS_PAGINATION-->
 <tr>
+	<td>DEFINITIONS_PAGINATION_PAGE_NUMBER_DROPDOWN_BUTTON</td>
+	<td>//a[contains(@class,'dropdown-toggle') and contains(.,'of')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITIONS_PAGINATION_ITEMS_PER_PAGE_DROPDOWN_BUTTON</td>
+	<td>//a[contains(@class,'dropdown-toggle') and contains(.,'Items per')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITIONS_PAGINATION_ITEMS_PER_PAGE_DROPDOWN_MENU_ITEM</td>
+	<td>//ul[contains(@class,'menu-list')]/li/a/span[.='${key_itemsPerPage}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DEFINITIONS_PAGINATION_PREVIOUS_BUTTON</td>
 	<td>//ul[contains(@class,'pagination-buttons')]/li/a[contains(.,'Previous')]</td>
 	<td></td>

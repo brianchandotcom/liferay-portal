@@ -78,7 +78,7 @@
 			<var name="portletName" value="Reports Admin" />
 		</execute>
 
-		<for list="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21" param="number">
+		<for list="1,2,3,4,5,6" param="number">
 			<execute macro="ReportsAdmin#gotoDefinitions" />
 
 			<execute macro="ReportsAdmin#addReportDefinition">
@@ -91,11 +91,20 @@
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />
 
-		<var name="key_reportsDefinitionName" value="Reports Definition 21" />
+		<execute action="CPReportsadmin#assertTextEquals" locator-key1="DEFINITIONS_PAGINATION_ITEMS_PER_PAGE_DROPDOWN_BUTTON" value1="20 Items per Page" />
+		<execute action="CPReportsadmin#click" locator-key1="DEFINITIONS_PAGINATION_ITEMS_PER_PAGE_DROPDOWN_BUTTON" />
+
+		<var name="key_itemsPerPage" value="5" />
+
+		<execute action="CPReportsadmin#click" locator-key1="DEFINITIONS_PAGINATION_ITEMS_PER_PAGE_DROPDOWN_MENU_ITEM" />
+		<execute action="CPReportsadmin#assertTextEquals" locator-key1="DEFINITIONS_PAGINATION_ITEMS_PER_PAGE_DROPDOWN_BUTTON" value1="5 Items per Page" />
+		<execute action="CPReportsadmin#assertTextEquals" locator-key1="DEFINITIONS_PAGINATION_PAGE_NUMBER_DROPDOWN_BUTTON" value1="Page 1 of 2" />
+
+		<var name="key_reportsDefinitionName" value="Reports Definition 6" />
 
 		<execute action="CPReportsadmin#assertElementNotPresent" locator-key1="DEFINITIONS_DEFINITION_TABLE_DEFINITION_NAME" />
 		<execute action="CPReportsadmin#assertClick" locator-key1="DEFINITIONS_PAGINATION_NEXT_BUTTON" value1="Next" />
-		<execute action="CPReportsadmin#assertTextEquals" locator-key1="DEFINITIONS_DEFINITION_TABLE_DEFINITION_NAME" value1="Reports Definition 21" />
+		<execute action="CPReportsadmin#assertTextEquals" locator-key1="DEFINITIONS_DEFINITION_TABLE_DEFINITION_NAME" value1="Reports Definition 6" />
 		<execute action="CPReportsadmin#assertClick" locator-key1="DEFINITIONS_PAGINATION_PREVIOUS_BUTTON" value1="Previous" />
 		<execute action="CPReportsadmin#assertElementNotPresent" locator-key1="DEFINITIONS_DEFINITION_TABLE_DEFINITION_NAME" />
 	</command>

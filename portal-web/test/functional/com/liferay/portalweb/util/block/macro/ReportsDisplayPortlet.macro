@@ -7,8 +7,6 @@
 		<execute action="PGReportsdisplayViewreportentry#assertClick" locator-key1="ENTRY_FILE_MENULIST_DOWNLOAD" value1="Download" />
 		<execute action="PGReportsdisplayViewreportentry#pause" locator1="2000" />
 
-		<take-screenshot />
-
 		<if>
 			<equals arg1="${reportFormat}" arg2="pdf" />
 			<then>

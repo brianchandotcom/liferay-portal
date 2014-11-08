@@ -246,6 +246,17 @@ public class JavaClass {
 			return;
 		}
 
+		String accessModifier = getAccessModifier();
+
+		if ((javaTerm.isPrivate() &&
+			 !accessModifier.equals(_MODIFIER_PRIVATE)) ||
+			(javaTerm.isProtected() &&
+			 !accessModifier.equals(_MODIFIER_PRIVATE) &&
+			 !accessModifier.equals(_MODIFIER_PROTECTED))) {
+
+			return;
+		}
+
 		Pattern pattern = Pattern.compile("class " + _name + "[ \t\n]+extends");
 
 		Matcher matcher = pattern.matcher(_content);
@@ -770,6 +781,23 @@ public class JavaClass {
 		if (!javaTermContent.equals(newJavaTermContent)) {
 			_content = _content.replace(javaTermContent, newJavaTermContent);
 		}
+	}
+
+	protected String getAccessModifier() {
+		Matcher matcher = _classPattern.matcher(_content);
+
+		if (matcher.find()) {
+			String accessModifier = matcher.group(1);
+
+			if (accessModifier.equals(_MODIFIER_PRIVATE) ||
+				accessModifier.equals(_MODIFIER_PROTECTED) ||
+				accessModifier.equals(_MODIFIER_PUBLIC)) {
+
+				return accessModifier;
+			}
+		}
+
+		return _MODIFIER_UNKNOWN;
 	}
 
 	protected String getClassName(String line) {
@@ -1320,6 +1348,14 @@ public class JavaClass {
 				"\n" + javaTerm.getContent());
 		}
 	}
+
+	private static final String _MODIFIER_PRIVATE = "private";
+
+	private static final String _MODIFIER_PROTECTED = "protected";
+
+	private static final String _MODIFIER_PUBLIC = "public";
+
+	private static final String _MODIFIER_UNKNOWN = "unknown";
 
 	private String _absolutePath;
 	private Pattern _camelCasePattern = Pattern.compile("([a-z])([A-Z0-9])");

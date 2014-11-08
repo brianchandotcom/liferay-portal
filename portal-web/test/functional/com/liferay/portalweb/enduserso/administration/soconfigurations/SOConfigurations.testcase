@@ -178,7 +178,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-11580" name="AssignSORolePortalInstance" priority="4">
+	<command name="AssignSORolePortalInstance" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Portal Instances" />
 		</execute>

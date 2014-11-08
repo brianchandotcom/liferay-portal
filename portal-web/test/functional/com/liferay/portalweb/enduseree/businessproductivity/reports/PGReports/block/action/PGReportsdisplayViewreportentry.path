@@ -1,0 +1,96 @@
+<html>
+<head>
+<title>PGReportsdisplayViewreportentry</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGReportsdisplayViewreportentry</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGReportsdisplayViewreportentry</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITION_NAME_FIELD</td>
+	<td>//span[contains(.,'Definition Name')]/../../div[contains(.,'Definition Name') and contains(.,'${key_reportsDefinitionName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTION_FIELD</td>
+	<td>//span[contains(.,'Description')]/../../div[contains(.,'Description') and contains(.,'${key_reportsDefinitionDescription}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATA_SOURCE_NAME_FIELD</td>
+	<td>//span[contains(.,'Data Source Name')]/../../div[contains(.,'Data Source Name') and contains(.,'${key_dataSource}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORT_PARAMETERS_DEFAULT_FIELD</td>
+	<td>//span[contains(.,'Report Parameters')]/../../div[contains(.,'Report Parameters')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORT_PARAMETERS_FIELD</td>
+	<td>//span[contains(.,'Report Parameters')]/../../div[contains(.,'Report Parameters') and contains(.,'[${key_reportParameters}]')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REQUESTED_BY_FIELD</td>
+	<td>//span[contains(.,'Requested By')]/../../div[contains(.,'Requested By') and contains(.,'${key_userName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ENTRY_FILE_TABLE-->
+<tr>
+	<td>ENTRY_FILE_TABLE_FILE</td>
+	<td>//tr[contains(.,'${key_reportsFileName}')]/td</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_FILE_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_reportsFileName}')]/td[2]/div/a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ENTRY_FILE_MENULIST-->
+<tr>
+	<td>ENTRY_FILE_MENULIST_DELIVER_REPORT</td>
+	<td>//a[@role='menuitem' and contains(.,'Deliver Report')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_FILE_MENULIST_DOWNLOAD</td>
+	<td>//a[@role='menuitem' and contains(.,'Download')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_FILE_MENULIST_DELETE</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

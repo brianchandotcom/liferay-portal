@@ -1,0 +1,113 @@
+<html>
+<head>
+<title>CPReportsadminConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPReportsadminConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPReportsadminConfiguration</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_IFRAME</td>
+	<td>//iframe[@class='dialog-iframe-node ']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_EMAIL_FROM</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Email From')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_DELIVERY_EMAIL</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Delivery Email')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_NOTIFICATIONS_EMAIL</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Notifications Email')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--EMAIL_FROM-->
+<tr>
+	<td>EMAIL_FROM_NAME_FIELD</td>
+	<td>//input[contains(@id,'emailFromName')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_FROM_ADDRESS_FIELD</td>
+	<td>//input[contains(@id,'emailFromAddress')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DELIVERY_EMAIL-->
+<tr>
+	<td>DELIVERY_EMAIL_SUBJECT_FIELD</td>
+	<td>//input[contains(@id,'emailDeliverySubject')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELIVERY_EMAIL_BODY_FIELD</td>
+	<td>//textarea[contains(@id,'emailDeliveryBody')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NOTIFICATIONS_EMAIL-->
+<tr>
+	<td>NOTIFICATIONS_EMAIL_SUBJECT_FIELD</td>
+	<td>//input[contains(@id,'emailNotificationsSubject')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATIONS_EMAIL_BODY_FIELD</td>
+	<td>//textarea[contains(@id,'emailNotificationsBody')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

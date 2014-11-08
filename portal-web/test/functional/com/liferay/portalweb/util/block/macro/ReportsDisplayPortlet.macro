@@ -1,0 +1,55 @@
+<definition>
+	<command name="downloadReportEntryFile">
+		<var name="key_reportsFileName" value="${reportsFileName}" />
+
+		<execute action="PGReportsdisplayViewreportentry#assertTextEquals" locator-key1="ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
+		<execute action="PGReportsdisplayViewreportentry#assertClick" locator-key1="ENTRY_FILE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="PGReportsdisplayViewreportentry#assertClick" locator-key1="ENTRY_FILE_MENULIST_DOWNLOAD" value1="Download" />
+		<execute action="PGReportsdisplayViewreportentry#pause" locator1="2000" />
+
+		<if>
+			<equals arg1="${reportFormat}" arg2="pdf" />
+			<then>
+				<execute action="PGReportsdisplay#sikuliAssertElementPresent" locator-key1="REPORT_PDF_PNG" />
+			</then>
+		</if>
+	</command>
+
+	<command name="viewReportEntry">
+		<var name="key_reportsDefinitionName" value="${reportsDefinitionName}" />
+
+		<execute action="PGReportsdisplay#assertClick" locator-key1="REPORTS_ENTRY_TABLE_DEFINITION_NAME" value1="${reportsDefinitionName}" />
+	</command>
+
+	<command name="viewReportEntryFields">
+		<var name="key_reportsDefinitionName" value="${reportsDefinitionName}" />
+
+		<execute action="PGReportsdisplayViewreportentry#assertTextEquals" locator-key1="DEFINITION_NAME_FIELD" value1="Definition Name ${reportsDefinitionName}" />
+
+		<var name="key_reportsDefinitionDescription" value="${reportsDefinitionDescription}" />
+
+		<execute action="PGReportsdisplayViewreportentry#assertTextEquals" locator-key1="DESCRIPTION_FIELD" value1="Description ${reportsDefinitionDescription}" />
+
+		<var name="key_dataSource" value="${dataSource}" />
+
+		<execute action="PGReportsdisplayViewreportentry#assertTextEquals" locator-key1="DATA_SOURCE_NAME_FIELD" value1="Data Source Name ${dataSource}" />
+
+		<if>
+			<isset var="reportParameters" />
+			<then>
+				<execute action="PGReportsdisplayViewreportentry#assertTextEquals" locator-key1="REPORT_PARAMETERS_FIELD" value1="Report Parameters [${reportParameterse}]" />
+			</then>
+			<else>
+				<execute action="PGReportsdisplayViewreportentry#assertTextEquals" locator-key1="REPORT_PARAMETERS_DEFAULT_FIELD" value1="Report Parameters" />
+			</else>
+		</if>
+
+		<var name="key_userName" value="${userName}" />
+
+		<execute action="PGReportsdisplayViewreportentry#assertTextEquals" locator-key1="REQUESTED_BY_FIELD" value1="Requested By ${userName}" />
+
+		<var name="key_reportsFileName" value="${reportsFileName}" />
+
+		<execute action="PGReportsdisplayViewreportentry#assertTextEquals" locator-key1="ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
+	</command>
+</definition>

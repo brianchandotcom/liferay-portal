@@ -1,0 +1,66 @@
+<html>
+<head>
+<title>PGReportsdisplay</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGReportsdisplay</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGReportsdisplay</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORT_PDF_PNG</td>
+	<td>portal/screenshots/reports/report_pdf.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--REPORTS_ENTRY_TABLE-->
+<tr>
+	<td>REPORTS_ENTRY_TABLE_DEFINITION_NAME</td>
+	<td>//tr[contains(.,'${key_reportsDefinitionName}')]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORTS_ENTRY_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_reportsDefinitionName}')]/td[4]/div/a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORTS_ENTRY_TABLE_ACTIONS_1</td>
+	<td>xpath=(//tr/td[4]/div/a[@title='Actions'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--REPORTS_ENTRY_MENULIST-->
+<tr>
+	<td>REPORTS_ENTRY_MENULIST_DELETE</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

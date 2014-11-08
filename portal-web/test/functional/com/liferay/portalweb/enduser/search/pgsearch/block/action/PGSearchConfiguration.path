@@ -41,12 +41,12 @@
 <!--DISPLAY_SETTING-->
 <tr>
 	<td>DISPLAY_SETTING_BASIC_RADIO</td>
-	<td>//label[contains(@class,'radio') and contains(@for,'basic')]</td>
+	<td>//input[contains(@id,'basic') and @type='radio']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISPLAY_SETTING_ADVANCED_RADIO</td>
-	<td>//label[contains(@class,'radio') and contains(@for,'advanced')]</td>
+	<td>//input[contains(@id,'advanced') and @type='radio']</td>
 	<td></td>
 </tr>
 <tr>

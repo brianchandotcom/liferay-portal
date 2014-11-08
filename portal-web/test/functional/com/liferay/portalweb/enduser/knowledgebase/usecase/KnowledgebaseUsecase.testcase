@@ -206,4 +206,90 @@
 			<var name="kbArticleTitle" value="KB Admin Article2" />
 		</execute>
 	</command>
+
+	<command name="SearchKBArticleViaSearchPortlet" priority="5">
+		<var name="advancedSearchConfiguration">
+			<![CDATA[
+				{"facets": [
+				    {
+				        "className": "com.liferay.portal.kernel.search.facet.ScopeFacet",
+				        "data": {
+				            "frequencyThreshold": 1,
+				            "maxTerms": 10,
+				            "showAssetCount": true
+				        },
+				        "displayStyle": "scopes",
+				        "fieldName": "groupId",
+				        "label": "site",
+				        "order": "OrderHitsDesc",
+				        "static": false,
+				        "weight": 1.6
+				    },
+				    {
+				        "className": "com.liferay.portal.kernel.search.facet.AssetEntriesFacet",
+				        "data": {
+				            "frequencyThreshold": 1,
+				            "values": [
+				                "com.liferay.portal.model.User",
+				                "com.liferay.portlet.blogs.model.BlogsEntry",
+				                "com.liferay.portlet.documentlibrary.model.DLFileEntry",
+				                "com.liferay.portlet.documentlibrary.model.DLFolder",
+				                "com.liferay.portlet.journal.model.JournalArticle",
+				                "com.liferay.portlet.journal.model.JournalFolder",
+				                "com.liferay.knowledgebase.model.KBArticle",
+				                "com.liferay.portlet.messageboards.model.MBMessage",
+				                "com.liferay.portlet.wiki.model.WikiPage"
+				            ]
+				        },
+				        "displayStyle": "asset_entries",
+				        "fieldName": "entryClassName",
+				        "label": "asset-type",
+				        "order": "OrderHitsDesc",
+				        "static": false,
+				        "weight": 1.5
+				    }
+				]}
+			]]>
+		</var>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Search Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Search Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Search" />
+		</execute>
+
+		<execute macro="SearchPortlet#configureAdvancedSearchPG">
+			<var name="advancedSearchConfiguration" value="${advancedSearchConfiguration}" />
+			<var name="portletName" value="${searchPortletName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Search Page" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Knowledge" />
+		</execute>
+
+		<execute macro="Search#viewSearchPG">
+			<var name="searchAssetSummary" value="Knowledge Base Article Content" />
+			<var name="searchAssetTitle" value="Knowledge Base Article Title" />
+			<var name="searchAssetType" value="Knowledge Base Article" />
+		</execute>
+	</command>
 </definition>

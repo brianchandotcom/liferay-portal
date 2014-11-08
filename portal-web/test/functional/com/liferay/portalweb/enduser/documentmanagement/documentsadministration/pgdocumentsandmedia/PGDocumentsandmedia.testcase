@@ -1647,6 +1647,10 @@
 
 		<execute macro="DMFolder#subscribePG" />
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="DMFolder#gotoPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>

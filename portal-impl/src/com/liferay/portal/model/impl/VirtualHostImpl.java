@@ -18,8 +18,4 @@ package com.liferay.portal.model.impl;
  * @author Alexander Chow
  */
 public class VirtualHostImpl extends VirtualHostBaseImpl {
-
-	public VirtualHostImpl() {
-	}
-
 }

@@ -60,9 +60,6 @@ import java.util.Map;
  */
 public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 
-	public DLFileEntryImpl() {
-	}
-
 	@Override
 	public String buildTreePath() throws PortalException {
 		if (getFolderId() == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {

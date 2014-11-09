@@ -43,9 +43,6 @@ import java.util.Map;
  */
 public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 
-	public ExpandoValueImpl() {
-	}
-
 	@Override
 	public List<Locale> getAvailableLocales() throws PortalException {
 		if (!isColumnLocalized()) {

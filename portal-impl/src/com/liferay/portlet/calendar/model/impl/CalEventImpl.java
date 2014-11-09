@@ -23,9 +23,6 @@ import com.liferay.portal.kernel.util.Validator;
  */
 public class CalEventImpl extends CalEventBaseImpl {
 
-	public CalEventImpl() {
-	}
-
 	@Override
 	public TZSRecurrence getRecurrenceObj() {
 		if (_recurrenceObj == null) {

@@ -29,9 +29,6 @@ import com.liferay.portal.util.PortalUtil;
  */
 public class RoleImpl extends RoleBaseImpl {
 
-	public RoleImpl() {
-	}
-
 	@Override
 	public String getDescriptiveName() throws PortalException {
 		String name = getName();

@@ -95,9 +95,6 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		}
 	}
 
-	public JournalArticleImpl() {
-	}
-
 	@Override
 	public String buildTreePath() throws PortalException {
 		if (getFolderId() == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {

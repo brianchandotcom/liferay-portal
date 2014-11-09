@@ -23,9 +23,6 @@ import com.liferay.portal.service.ListTypeServiceUtil;
  */
 public class WebsiteImpl extends WebsiteBaseImpl {
 
-	public WebsiteImpl() {
-	}
-
 	@Override
 	public ListType getType() throws PortalException {
 		return ListTypeServiceUtil.getListType(getTypeId());

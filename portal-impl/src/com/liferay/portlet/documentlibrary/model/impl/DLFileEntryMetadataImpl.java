@@ -27,9 +27,6 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUt
  */
 public class DLFileEntryMetadataImpl extends DLFileEntryMetadataBaseImpl {
 
-	public DLFileEntryMetadataImpl() {
-	}
-
 	@Override
 	public DDMStructure getDDMStructure() throws PortalException {
 		return DDMStructureLocalServiceUtil.getStructure(getDDMStructureId());

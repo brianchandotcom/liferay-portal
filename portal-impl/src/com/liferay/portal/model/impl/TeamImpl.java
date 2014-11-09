@@ -23,9 +23,6 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
  */
 public class TeamImpl extends TeamBaseImpl {
 
-	public TeamImpl() {
-	}
-
 	@Override
 	public Role getRole() throws PortalException {
 		return RoleLocalServiceUtil.getTeamRole(getCompanyId(), getTeamId());

@@ -27,9 +27,6 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
  */
 public class ServiceComponentImpl extends ServiceComponentBaseImpl {
 
-	public ServiceComponentImpl() {
-	}
-
 	@Override
 	public String getIndexesSQL() {
 		return _getData("indexes-sql");

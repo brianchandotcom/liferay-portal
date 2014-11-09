@@ -88,9 +88,6 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 			PropsUtil.get(PropsKeys.ORGANIZATIONS_ROOTABLE, new Filter(type)));
 	}
 
-	public OrganizationImpl() {
-	}
-
 	@Override
 	public Address getAddress() {
 		Address address = null;

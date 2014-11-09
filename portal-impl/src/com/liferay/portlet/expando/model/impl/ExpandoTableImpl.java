@@ -21,9 +21,6 @@ import com.liferay.portlet.expando.model.ExpandoTableConstants;
  */
 public class ExpandoTableImpl extends ExpandoTableBaseImpl {
 
-	public ExpandoTableImpl() {
-	}
-
 	@Override
 	public boolean isDefaultTable() {
 		if (getName().equals(ExpandoTableConstants.DEFAULT_TABLE_NAME)) {

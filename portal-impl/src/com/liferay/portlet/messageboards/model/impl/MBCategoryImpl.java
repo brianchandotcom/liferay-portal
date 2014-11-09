@@ -27,9 +27,6 @@ import java.util.List;
  */
 public class MBCategoryImpl extends MBCategoryBaseImpl {
 
-	public MBCategoryImpl() {
-	}
-
 	@Override
 	public List<Long> getAncestorCategoryIds() throws PortalException {
 		List<Long> ancestorCategoryIds = new ArrayList<Long>();

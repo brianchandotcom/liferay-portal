@@ -21,9 +21,6 @@ import com.liferay.portlet.shopping.model.ShoppingCategoryConstants;
  */
 public class ShoppingCategoryImpl extends ShoppingCategoryBaseImpl {
 
-	public ShoppingCategoryImpl() {
-	}
-
 	@Override
 	public boolean isRoot() {
 		if (getParentCategoryId() ==

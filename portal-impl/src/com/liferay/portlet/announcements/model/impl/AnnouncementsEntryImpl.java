@@ -26,9 +26,6 @@ import com.liferay.portal.service.OrganizationLocalServiceUtil;
  */
 public class AnnouncementsEntryImpl extends AnnouncementsEntryBaseImpl {
 
-	public AnnouncementsEntryImpl() {
-	}
-
 	@Override
 	public long getGroupId() throws PortalException {
 		long groupId = 0;

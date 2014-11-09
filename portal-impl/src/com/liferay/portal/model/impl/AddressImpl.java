@@ -28,9 +28,6 @@ import com.liferay.portal.service.RegionServiceUtil;
  */
 public class AddressImpl extends AddressBaseImpl {
 
-	public AddressImpl() {
-	}
-
 	@Override
 	public Country getCountry() {
 		Country country = null;

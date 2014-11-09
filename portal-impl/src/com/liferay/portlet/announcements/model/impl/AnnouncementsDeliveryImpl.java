@@ -18,8 +18,4 @@ package com.liferay.portlet.announcements.model.impl;
  * @author Brian Wing Shun Chan
  */
 public class AnnouncementsDeliveryImpl extends AnnouncementsDeliveryBaseImpl {
-
-	public AnnouncementsDeliveryImpl() {
-	}
-
 }

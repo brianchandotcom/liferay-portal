@@ -18,8 +18,4 @@ package com.liferay.portlet.journal.model.impl;
  * @author Brian Wing Shun Chan
  */
 public class JournalContentSearchImpl extends JournalContentSearchBaseImpl {
-
-	public JournalContentSearchImpl() {
-	}
-
 }

@@ -95,12 +95,6 @@ import java.util.TreeSet;
  */
 public class UserImpl extends UserBaseImpl {
 
-	/**
-	 * Constructs the user.
-	 */
-	public UserImpl() {
-	}
-
 	@Override
 	public void addRemotePreference(RemotePreference remotePreference) {
 		_remotePreferences.put(remotePreference.getName(), remotePreference);

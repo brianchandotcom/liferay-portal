@@ -23,9 +23,6 @@ import com.liferay.portal.util.PortalUtil;
  */
 public class SystemEventImpl extends SystemEventBaseImpl {
 
-	public SystemEventImpl() {
-	}
-
 	@Override
 	public String getReferrerClassName() {
 		long referrerClassNameId = getReferrerClassNameId();

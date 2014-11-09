@@ -24,9 +24,6 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
  */
 public class UserGroupImpl extends UserGroupBaseImpl {
 
-	public UserGroupImpl() {
-	}
-
 	@Override
 	public Group getGroup() throws PortalException {
 		return GroupLocalServiceUtil.getUserGroupGroup(

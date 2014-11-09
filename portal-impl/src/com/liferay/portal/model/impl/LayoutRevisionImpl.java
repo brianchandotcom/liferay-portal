@@ -46,9 +46,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 
-	public LayoutRevisionImpl() {
-	}
-
 	@Override
 	public List<LayoutRevision> getChildren() {
 		return LayoutRevisionLocalServiceUtil.getChildLayoutRevisions(

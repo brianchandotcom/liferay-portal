@@ -29,15 +29,4 @@ package com.liferay.portal.model.impl;
  */
 public class UserNotificationDeliveryImpl
 	extends UserNotificationDeliveryBaseImpl {
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a user
-	 * notification delivery model instance should use the {@link
-	 * com.liferay.portal.model.UserNotificationDelivery} interface instead.
-	 */
-	public UserNotificationDeliveryImpl() {
-	}
-
 }

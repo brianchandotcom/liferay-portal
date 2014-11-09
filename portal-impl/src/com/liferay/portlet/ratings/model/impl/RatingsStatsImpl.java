@@ -18,8 +18,4 @@ package com.liferay.portlet.ratings.model.impl;
  * @author Brian Wing Shun Chan
  */
 public class RatingsStatsImpl extends RatingsStatsBaseImpl {
-
-	public RatingsStatsImpl() {
-	}
-
 }

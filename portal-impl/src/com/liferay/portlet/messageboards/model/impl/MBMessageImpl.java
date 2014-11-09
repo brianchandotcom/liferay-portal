@@ -43,9 +43,6 @@ import java.util.List;
  */
 public class MBMessageImpl extends MBMessageBaseImpl {
 
-	public MBMessageImpl() {
-	}
-
 	@Override
 	public Folder addAttachmentsFolder() throws PortalException {
 		if (_attachmentsFolderId !=

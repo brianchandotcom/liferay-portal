@@ -31,9 +31,6 @@ import java.util.Map;
  */
 public class ShoppingCartImpl extends ShoppingCartBaseImpl {
 
-	public ShoppingCartImpl() {
-	}
-
 	@Override
 	public void addItemId(long itemId, String fields) {
 		setItemIds(

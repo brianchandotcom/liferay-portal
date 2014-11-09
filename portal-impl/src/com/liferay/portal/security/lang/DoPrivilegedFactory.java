@@ -68,9 +68,6 @@ public class DoPrivilegedFactory
 			new BeanPrivilegedAction<T>(bean, interfaces));
 	}
 
-	public DoPrivilegedFactory() {
-	}
-
 	@Override
 	public Object getEarlyBeanReference(Object bean, String beanName)
 		throws BeansException {

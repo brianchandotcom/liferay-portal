@@ -169,6 +169,22 @@ public class JavaTerm {
 		}
 	}
 
+	public boolean isProtected() {
+		if ((_type == TYPE_CLASS_PROTECTED) ||
+			(_type == TYPE_CLASS_PROTECTED_STATIC) ||
+			(_type == TYPE_CONSTRUCTOR_PROTECTED) ||
+			(_type == TYPE_METHOD_PROTECTED) ||
+			(_type == TYPE_METHOD_PROTECTED_STATIC) ||
+			(_type == TYPE_VARIABLE_PROTECTED) ||
+			(_type == TYPE_VARIABLE_PROTECTED_STATIC)) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	public boolean isStatic() {
 		if ((_type == TYPE_CLASS_PRIVATE_STATIC) ||
 			(_type == TYPE_CLASS_PROTECTED_STATIC) ||

@@ -28,9 +28,6 @@ import java.util.List;
  */
 public class SCProductVersionImpl extends SCProductVersionBaseImpl {
 
-	public SCProductVersionImpl() {
-	}
-
 	@Override
 	public List<SCFrameworkVersion> getFrameworkVersions() {
 		return SCFrameworkVersionLocalServiceUtil.

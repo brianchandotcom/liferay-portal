@@ -23,9 +23,6 @@ import java.util.Date;
  */
 public class ShoppingCouponImpl extends ShoppingCouponBaseImpl {
 
-	public ShoppingCouponImpl() {
-	}
-
 	@Override
 	public boolean hasValidDateRange() {
 		if (hasValidStartDate() && hasValidEndDate()) {

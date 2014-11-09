@@ -19,8 +19,4 @@ package com.liferay.portlet.social.model.impl;
  */
 public class SocialActivityAchievementImpl
 	extends SocialActivityAchievementBaseImpl {
-
-	public SocialActivityAchievementImpl() {
-	}
-
 }

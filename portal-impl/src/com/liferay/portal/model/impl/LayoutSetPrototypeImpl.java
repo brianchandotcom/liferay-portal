@@ -31,9 +31,6 @@ import java.io.IOException;
  */
 public class LayoutSetPrototypeImpl extends LayoutSetPrototypeBaseImpl {
 
-	public LayoutSetPrototypeImpl() {
-	}
-
 	@Override
 	public Group getGroup() throws PortalException {
 		return GroupLocalServiceUtil.getLayoutSetPrototypeGroup(

@@ -20,8 +20,4 @@ import java.io.Serializable;
  * @author Miguel Pastor
  */
 public class FooBean6 extends FooBean5 implements Serializable {
-
-	public FooBean6() {
-	}
-
 }

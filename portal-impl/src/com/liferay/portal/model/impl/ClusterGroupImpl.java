@@ -21,9 +21,6 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class ClusterGroupImpl extends ClusterGroupBaseImpl {
 
-	public ClusterGroupImpl() {
-	}
-
 	@Override
 	public String[] getClusterNodeIdsArray() {
 		return StringUtil.split(getClusterNodeIds());

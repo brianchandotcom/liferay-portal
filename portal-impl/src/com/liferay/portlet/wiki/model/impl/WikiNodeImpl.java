@@ -34,9 +34,6 @@ import java.util.List;
  */
 public class WikiNodeImpl extends WikiNodeBaseImpl {
 
-	public WikiNodeImpl() {
-	}
-
 	@Override
 	public Folder addAttachmentsFolder() throws PortalException {
 		if (_attachmentsFolderId !=

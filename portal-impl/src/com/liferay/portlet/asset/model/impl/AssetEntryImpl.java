@@ -33,9 +33,6 @@ import java.util.List;
  */
 public class AssetEntryImpl extends AssetEntryBaseImpl {
 
-	public AssetEntryImpl() {
-	}
-
 	@Override
 	public AssetRenderer getAssetRenderer() {
 		AssetRendererFactory assetRendererFactory =

@@ -18,8 +18,4 @@ package com.liferay.portal.model.impl;
  * @author Jorge Ferrer
  */
 public class MembershipRequestImpl extends MembershipRequestBaseImpl {
-
-	public MembershipRequestImpl() {
-	}
-
 }

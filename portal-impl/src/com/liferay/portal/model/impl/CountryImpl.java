@@ -26,9 +26,6 @@ import java.util.Locale;
  */
 public class CountryImpl extends CountryBaseImpl {
 
-	public CountryImpl() {
-	}
-
 	@Override
 	public String getName(Locale locale) {
 		String name = LanguageUtil.get(

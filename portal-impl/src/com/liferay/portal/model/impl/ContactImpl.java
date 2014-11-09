@@ -24,9 +24,6 @@ import com.liferay.portal.util.PortalUtil;
  */
 public class ContactImpl extends ContactBaseImpl {
 
-	public ContactImpl() {
-	}
-
 	@Override
 	public String getFullName() {
 		FullNameGenerator fullNameGenerator =

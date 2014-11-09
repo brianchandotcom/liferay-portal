@@ -25,9 +25,6 @@ import java.util.List;
  */
 public class MDRRuleGroupImpl extends MDRRuleGroupBaseImpl {
 
-	public MDRRuleGroupImpl() {
-	}
-
 	@Override
 	public List<MDRRule> getRules() {
 		if (getRuleGroupId() > 0) {

@@ -31,9 +31,6 @@ import java.util.List;
  */
 public class UserTrackerImpl extends UserTrackerBaseImpl {
 
-	public UserTrackerImpl() {
-	}
-
 	@Override
 	public void addPath(UserTrackerPath path) {
 		try {

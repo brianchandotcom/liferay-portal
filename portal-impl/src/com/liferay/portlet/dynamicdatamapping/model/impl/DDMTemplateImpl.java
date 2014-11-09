@@ -37,9 +37,6 @@ import java.util.Locale;
  */
 public class DDMTemplateImpl extends DDMTemplateBaseImpl {
 
-	public DDMTemplateImpl() {
-	}
-
 	@Override
 	public String getDefaultLanguageId() {
 		Document document = null;

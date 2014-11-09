@@ -18,8 +18,4 @@ package com.liferay.portal.model.impl;
  * @author Brian Wing Shun Chan
  */
 public class LayoutBranchImpl extends LayoutBranchBaseImpl {
-
-	public LayoutBranchImpl() {
-	}
-
 }

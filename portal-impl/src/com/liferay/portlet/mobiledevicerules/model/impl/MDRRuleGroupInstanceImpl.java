@@ -27,9 +27,6 @@ import java.util.List;
  */
 public class MDRRuleGroupInstanceImpl extends MDRRuleGroupInstanceBaseImpl {
 
-	public MDRRuleGroupInstanceImpl() {
-	}
-
 	@Override
 	public List<MDRAction> getActions() {
 		return MDRActionLocalServiceUtil.getActions(getRuleGroupInstanceId());

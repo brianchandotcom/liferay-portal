@@ -37,9 +37,6 @@ import java.sql.ResultSetMetaData;
  */
 public abstract class UpgradeProcess extends BaseDBProcess {
 
-	public UpgradeProcess() {
-	}
-
 	public int getThreshold() {
 
 		// This upgrade process will only run if the build number is larger than

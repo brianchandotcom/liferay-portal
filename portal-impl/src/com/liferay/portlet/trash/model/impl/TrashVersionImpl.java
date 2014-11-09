@@ -21,9 +21,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
  */
 public class TrashVersionImpl extends TrashVersionBaseImpl {
 
-	public TrashVersionImpl() {
-	}
-
 	@Override
 	public String getTypeSettings() {
 		if (_typeSettingsProperties == null) {

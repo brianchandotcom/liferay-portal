@@ -33,9 +33,6 @@ import java.util.Set;
  */
 public class WebDAVPropsImpl extends WebDAVPropsBaseImpl {
 
-	public WebDAVPropsImpl() {
-	}
-
 	@Override
 	public void addProp(String name, String prefix, String uri)
 		throws Exception {

@@ -28,9 +28,6 @@ import java.util.List;
  */
 public class LayoutPrototypeImpl extends LayoutPrototypeBaseImpl {
 
-	public LayoutPrototypeImpl() {
-	}
-
 	@Override
 	public Group getGroup() throws PortalException {
 		return GroupLocalServiceUtil.getLayoutPrototypeGroup(

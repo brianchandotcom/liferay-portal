@@ -21,9 +21,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
  */
 public class MDRRuleImpl extends MDRRuleBaseImpl {
 
-	public MDRRuleImpl() {
-	}
-
 	@Override
 	public UnicodeProperties getTypeSettingsProperties() {
 		if (_typeSettingsProperties == null) {

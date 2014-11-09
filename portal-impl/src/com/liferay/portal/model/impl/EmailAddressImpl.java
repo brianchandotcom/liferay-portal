@@ -23,9 +23,6 @@ import com.liferay.portal.service.ListTypeServiceUtil;
  */
 public class EmailAddressImpl extends EmailAddressBaseImpl {
 
-	public EmailAddressImpl() {
-	}
-
 	@Override
 	public ListType getType() throws PortalException {
 		return ListTypeServiceUtil.getListType(getTypeId());

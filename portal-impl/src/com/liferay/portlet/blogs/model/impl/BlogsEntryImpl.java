@@ -35,9 +35,6 @@ import java.util.Date;
  */
 public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 
-	public BlogsEntryImpl() {
-	}
-
 	@Override
 	public String getEntryImageURL(ThemeDisplay themeDisplay) {
 		if (!isSmallImage()) {

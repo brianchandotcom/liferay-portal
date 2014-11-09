@@ -23,9 +23,6 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUt
  */
 public class DDMStructureLinkImpl extends DDMStructureLinkBaseImpl {
 
-	public DDMStructureLinkImpl() {
-	}
-
 	@Override
 	public DDMStructure getStructure() throws PortalException {
 		return DDMStructureLocalServiceUtil.getStructure(getStructureId());

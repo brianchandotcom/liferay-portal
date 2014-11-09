@@ -19,10 +19,9 @@ import com.liferay.portal.kernel.expression.ExpressionEvaluationException;
 import com.liferay.portal.kernel.expression.ExpressionFactoryUtil;
 import com.liferay.portal.kernel.util.MathUtil;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import org.testng.Assert;
 
 /**
  * @author Miguel Angelo Caldas Gallindo
@@ -64,7 +63,8 @@ public class ExpressionEvaluationTest {
 
 		double var3 = var1 + var2;
 
-		Assert.assertEquals(var1 + var2 + var3, expression.evaluate());
+		Assert.assertEquals(
+			(Double)(var1 + var2 + var3), expression.evaluate());
 	}
 
 	@Test
@@ -97,7 +97,7 @@ public class ExpressionEvaluationTest {
 
 		float var3 = var1 + var2;
 
-		Assert.assertEquals(var1 + var2 + var3, expression.evaluate());
+		Assert.assertEquals((Float)(var1 + var2 + var3), expression.evaluate());
 	}
 
 	@Test
@@ -209,7 +209,7 @@ public class ExpressionEvaluationTest {
 		double var3 = var1 + var2;
 
 		Assert.assertEquals(
-			MathUtil.sum(var1, var2, var3), expression.evaluate());
+			(Double)MathUtil.sum(var1, var2, var3), expression.evaluate());
 	}
 
 	@Test

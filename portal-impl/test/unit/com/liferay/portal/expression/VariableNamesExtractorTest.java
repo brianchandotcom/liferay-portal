@@ -16,9 +16,8 @@ package com.liferay.portal.expression;
 
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Test;
-
-import org.testng.Assert;
 
 /**
  * @author Marcellus Tavares

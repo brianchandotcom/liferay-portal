@@ -17,6 +17,7 @@ package com.liferay.portlet.shopping.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
@@ -60,7 +61,6 @@ import com.liferay.portlet.shopping.service.base.ShoppingOrderLocalServiceBaseIm
 import com.liferay.portlet.shopping.util.ShoppingUtil;
 import com.liferay.portlet.shopping.util.comparator.OrderDateComparator;
 import com.liferay.util.CreditCard;
-import com.liferay.util.PwdGenerator;
 
 import java.util.Currency;
 import java.util.Date;

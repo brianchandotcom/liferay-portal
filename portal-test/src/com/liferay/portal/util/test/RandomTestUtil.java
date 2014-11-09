@@ -16,9 +16,9 @@ package com.liferay.portal.util.test;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.randomizerbumpers.RandomizerBumper;
-import com.liferay.util.PwdGenerator;
 
 import java.util.Arrays;
 import java.util.Date;

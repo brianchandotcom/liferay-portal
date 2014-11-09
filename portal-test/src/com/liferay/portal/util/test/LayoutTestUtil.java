@@ -365,8 +365,8 @@ public class LayoutTestUtil {
 			String portletPreferenceValue)
 		throws Exception {
 
-		PortletPreferences layoutPortletPreferences =
-			LayoutTestUtil.getPortletPreferences(layout, portletId);
+		PortletPreferences layoutPortletPreferences = getPortletPreferences(
+			layout, portletId);
 
 		layoutPortletPreferences.setValue(
 			portletPreferenceName, portletPreferenceValue);
@@ -381,8 +381,8 @@ public class LayoutTestUtil {
 			Map<String, String> portletPreferences)
 		throws Exception {
 
-		PortletPreferences layoutPortletPreferences =
-			LayoutTestUtil.getPortletPreferences(layout, portletId);
+		PortletPreferences layoutPortletPreferences = getPortletPreferences(
+			layout, portletId);
 
 		for (Map.Entry<String, String> entry : portletPreferences.entrySet()) {
 			layoutPortletPreferences.setValue(entry.getKey(), entry.getValue());

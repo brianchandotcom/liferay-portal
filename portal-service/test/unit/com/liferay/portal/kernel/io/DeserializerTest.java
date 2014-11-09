@@ -204,7 +204,8 @@ public class DeserializerTest {
 		Deserializer deserializer = new Deserializer(byteBuffer);
 
 		for (int i = 0; i < _COUNT; i++) {
-			Assert.assertEquals(doubles[i], deserializer.readDouble());
+			Assert.assertEquals(
+				(Double)doubles[i], (Double)deserializer.readDouble());
 		}
 	}
 
@@ -227,7 +228,8 @@ public class DeserializerTest {
 		Deserializer deserializer = new Deserializer(byteBuffer);
 
 		for (int i = 0; i < _COUNT; i++) {
-			Assert.assertEquals(floats[i], deserializer.readFloat());
+			Assert.assertEquals(
+				(Float)floats[i], (Float)deserializer.readFloat());
 		}
 	}
 

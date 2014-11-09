@@ -14,132 +14,13 @@
 
 package com.liferay.util;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.SecureRandomUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Amos Fong
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, moved to {@link
+ *             com.liferay.portal.kernel.util.PwdGenerator}
  */
-public class PwdGenerator {
-
-	public static final String KEY1 = "0123456789";
-
-	public static final String KEY2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-	public static final String KEY3 = "abcdefghijklmnopqrstuvwxyz";
-
-	public static String getPassword() {
-		return getPassword(8, KEYS);
-	}
-
-	public static String getPassword(int length) {
-		return getPassword(length, KEYS);
-	}
-
-	public static String getPassword(int length, String... keys) {
-		if (keys == null) {
-			throw new IllegalArgumentException("Keys are null");
-		}
-
-		StringBundler fullKeySB = new StringBundler(keys);
-
-		String fullKey = fullKeySB.toString();
-
-		int fullKeyLength = fullKey.length();
-
-		int refreshPeriod = (int) (_MULTIPLIER / Math.log(fullKeyLength));
-
-		long secureLong = 0;
-
-		StringBuilder sb = new StringBuilder(length);
-
-		for (int i = 0; i < length; i++) {
-			if ((i % refreshPeriod) == 0) {
-				secureLong = SecureRandomUtil.nextLong();
-			}
-
-			int pos = Math.abs((int)(secureLong % fullKeyLength));
-
-			secureLong = secureLong / fullKeyLength;
-
-			sb.append(fullKey.charAt(pos));
-		}
-
-		return sb.toString();
-	}
-
-	public static String getPassword(String key, int length) {
-		int keysCount = 0;
-
-		if (key.contains(KEY1)) {
-			keysCount++;
-		}
-
-		if (key.contains(KEY2)) {
-			keysCount++;
-		}
-
-		if (key.contains(KEY3)) {
-			keysCount++;
-		}
-
-		if (keysCount > length) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Length is too short");
-			}
-
-			length = keysCount;
-		}
-
-		while (true) {
-			String password = getPassword(length, key);
-
-			if (key.contains(KEY1)) {
-				if (Validator.isNull(StringUtil.extractDigits(password))) {
-					continue;
-				}
-			}
-
-			if (key.contains(KEY2)) {
-				if (password.equals(StringUtil.toLowerCase(password))) {
-					continue;
-				}
-			}
-
-			if (key.contains(KEY3)) {
-				if (password.equals(StringUtil.toUpperCase(password))) {
-					continue;
-				}
-			}
-
-			return password;
-		}
-	}
-
-	public static String getPassword(
-		String key, int length, boolean useAllKeys) {
-
-		if (useAllKeys) {
-			return getPassword(key, length);
-		}
-
-		return getPassword(length, key);
-	}
-
-	public static String getPinNumber() {
-		return getPassword(4, KEY1);
-	}
-
-	private static final double _MULTIPLIER = Long.SIZE * Math.log(2);
-
-	private static final String[] KEYS = {KEY1, KEY2, KEY3};
-
-	private static Log _log = LogFactoryUtil.getLog(PwdGenerator.class);
-
+@Deprecated
+public class PwdGenerator extends com.liferay.portal.kernel.util.PwdGenerator {
 }

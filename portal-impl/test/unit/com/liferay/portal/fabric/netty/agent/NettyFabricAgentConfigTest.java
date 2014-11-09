@@ -19,10 +19,9 @@ import com.liferay.util.SerializableUtil;
 
 import java.io.File;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Test;
-
-import org.testng.Assert;
 
 /**
  * @author Shuyang Zhou

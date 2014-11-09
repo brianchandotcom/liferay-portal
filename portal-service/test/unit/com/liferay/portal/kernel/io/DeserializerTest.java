@@ -35,11 +35,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
-
-import org.testng.Assert;
 
 /**
  * @author Shuyang Zhou

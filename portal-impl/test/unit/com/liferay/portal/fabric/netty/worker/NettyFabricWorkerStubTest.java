@@ -41,11 +41,10 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.testng.Assert;
 
 /**
  * @author Shuyang Zhou

@@ -20,10 +20,9 @@ import com.liferay.portal.model.impl.UserImpl;
 import com.liferay.portal.security.lang.DoPrivilegedBean;
 import com.liferay.portal.security.lang.DoPrivilegedFactory;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import org.testng.Assert;
 
 /**
  * @author Raymond Augé

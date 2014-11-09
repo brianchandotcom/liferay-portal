@@ -37,12 +37,11 @@ import java.util.Set;
 
 import javax.servlet.ServletContext;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import org.springframework.mock.web.MockServletContext;
-
-import org.testng.Assert;
 
 /**
  * @author Carlos Sierra Andrés

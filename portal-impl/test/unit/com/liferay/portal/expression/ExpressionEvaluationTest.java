@@ -19,10 +19,9 @@ import com.liferay.portal.kernel.expression.ExpressionEvaluationException;
 import com.liferay.portal.kernel.expression.ExpressionFactoryUtil;
 import com.liferay.portal.kernel.util.MathUtil;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import org.testng.Assert;
 
 /**
  * @author Miguel Angelo Caldas Gallindo

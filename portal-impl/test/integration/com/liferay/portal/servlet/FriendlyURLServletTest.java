@@ -33,13 +33,12 @@ import java.util.Collections;
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockHttpServletRequest;
-
-import org.testng.Assert;
 
 /**
  * @author László Csontos

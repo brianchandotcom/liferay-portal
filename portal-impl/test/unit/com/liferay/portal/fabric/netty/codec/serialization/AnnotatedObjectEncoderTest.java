@@ -30,10 +30,9 @@ import java.lang.reflect.Modifier;
 
 import java.util.Date;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Test;
-
-import org.testng.Assert;
 
 /**
  * @author Shuyang Zhou

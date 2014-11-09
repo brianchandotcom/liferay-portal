@@ -25,10 +25,9 @@ import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 
 import java.util.concurrent.ExecutionException;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Test;
-
-import org.testng.Assert;
 
 /**
  * @author Shuyang Zhou

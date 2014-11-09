@@ -32,10 +32,9 @@ import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.testng.Assert;
 
 /**
  * @author Zsolt Berentey

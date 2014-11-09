@@ -28,13 +28,18 @@ import com.liferay.portal.kernel.test.NewClassLoaderJUnitTestRunner;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.util.PropsImpl;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.File;
 import java.io.IOException;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -153,19 +158,31 @@ public class SPIClassPathContextListenerTest {
 		putResource(
 			resources, _portalServiceJarFile, PortalException.class.getName());
 
-		PropsUtil.setProps(
-			new PropsImpl() {
+		final Method getMethod = Props.class.getMethod("get", String.class);
 
-				@Override
-				public String get(String key) {
-					if (key.equals(PropsKeys.JDBC_DEFAULT_DRIVER_CLASS_NAME)) {
-						return driverClassName;
+		PropsUtil.setProps(
+			(Props)ProxyUtil.newProxyInstance(
+				Props.class.getClassLoader(), new Class<?>[] {Props.class},
+				new InvocationHandler() {
+
+					@Override
+					public Object invoke(
+						Object proxy, Method method, Object[] args) {
+
+						if (getMethod.equals(method)) {
+							if (args[0].equals(
+									PropsKeys.JDBC_DEFAULT_DRIVER_CLASS_NAME)) {
+
+								return driverClassName;
+							}
+
+							return StringPool.BLANK;
+						}
+
+						throw new UnsupportedOperationException();
 					}
 
-					return super.get(key);
-				}
-
-			});
+				}));
 
 		PortalClassLoaderUtil.setClassLoader(new ClassLoader() {
 

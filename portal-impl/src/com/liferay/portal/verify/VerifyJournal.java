@@ -87,6 +87,7 @@ public class VerifyJournal extends VerifyProcess {
 		updateFolderAssets();
 		verifyOracleNewLine();
 		verifyAssets();
+		verifyResourcePrimKey();
 		verifyPermissionsAndAssets();
 		verifyJournalArticleStructures();
 		verifySearch();
@@ -656,16 +657,6 @@ public class VerifyJournal extends VerifyProcess {
 	protected void verifyPermissions(JournalArticle article)
 		throws PortalException {
 
-		long groupId = article.getGroupId();
-		String articleId = article.getArticleId();
-		double version = article.getVersion();
-
-		if (article.getResourcePrimKey() <= 0) {
-			article =
-				JournalArticleLocalServiceUtil.checkArticleResourcePrimKey(
-					groupId, articleId, version);
-		}
-
 		ResourceLocalServiceUtil.addResources(
 			article.getCompanyId(), 0, 0, JournalArticle.class.getName(),
 			article.getResourcePrimKey(), false, false, false);
@@ -690,10 +681,52 @@ public class VerifyJournal extends VerifyProcess {
 			});
 
 		actionableDynamicQuery.performActions();
+	}
+
+	protected void verifyResourcePrimKey() throws PortalException {
+		ActionableDynamicQuery actionableDynamicQuery =
+			JournalArticleLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Property resourcePrimKey = PropertyFactoryUtil.forName(
+						"resourcePrimKey");
+
+					dynamicQuery.add(resourcePrimKey.le(0));
+				}
+			}
+		);
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
+
+				@Override
+				public void performAction(Object object)
+					throws PortalException {
+
+					JournalArticle article = (JournalArticle)object;
+
+					long groupId = article.getGroupId();
+					String articleId = article.getArticleId();
+					double version = article.getVersion();
+
+					JournalArticleLocalServiceUtil.checkArticleResourcePrimKey(
+						groupId, articleId, version);
+				}
+			});
+
+		long count = actionableDynamicQuery.performCount();
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Permissions and assets verified for articles");
+			_log.debug(
+				"Processing " + count +
+					" default article versions in draft mode");
 		}
+
+		actionableDynamicQuery.performActions();
 	}
 
 	protected void verifySearch() throws Exception {

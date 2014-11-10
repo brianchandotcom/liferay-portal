@@ -114,7 +114,7 @@
 </tr>
 <tr>
 	<td>FOLDERS_TABLE_FOLDER_ACTIONS_BUTTON_GENERIC</td>
-	<td>//div[@id='_198_WAR_bookmarksweb_bookmarksFoldersSearchContainer']//tr[contains(.,'${key_folderName}')]/td[4]/div/a</td>
+	<td>//div[@id='_198_WAR_bookmarksweb_bookmarksFoldersSearchContainer']//tr/td[4]/div/a</td>
 	<td></td>
 </tr>
 <tr>

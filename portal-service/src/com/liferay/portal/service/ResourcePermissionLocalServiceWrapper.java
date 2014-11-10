@@ -102,8 +102,8 @@ public class ResourcePermissionLocalServiceWrapper
 	* permissions to view all blog posts.
 	* </p>
 	*
-	* @param resourceName the resource's name, which can be either a class
-	name or a portlet ID
+	* @param resourceName the resource's name, which can be either a class name
+	or a portlet ID
 	* @param roleName the role's name
 	* @param scope the scope
 	* @param resourceActionBitwiseValue the bitwise IDs of the actions
@@ -311,6 +311,14 @@ public class ResourcePermissionLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.model.ResourcePermission fetchResourcePermission(
+		long companyId, java.lang.String name, int scope,
+		java.lang.String primKey, long roleId) {
+		return _resourcePermissionLocalService.fetchResourcePermission(companyId,
+			name, scope, primKey, roleId);
+	}
+
+	@Override
+	public com.liferay.portal.model.ResourcePermission fetchResourcePermission(
 		long resourcePermissionId) {
 		return _resourcePermissionLocalService.fetchResourcePermission(resourcePermissionId);
 	}
@@ -357,8 +365,8 @@ public class ResourcePermissionLocalServiceWrapper
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	#getAvailableResourcePermissionActionIds(
-	long, String, int, String, Collection)}
+	#getAvailableResourcePermissionActionIds(long, String, int,
+	String, Collection)}
 	*/
 	@Deprecated
 	@Override

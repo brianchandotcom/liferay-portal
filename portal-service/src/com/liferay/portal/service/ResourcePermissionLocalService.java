@@ -110,8 +110,8 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	* permissions to view all blog posts.
 	* </p>
 	*
-	* @param resourceName the resource's name, which can be either a class
-	name or a portlet ID
+	* @param resourceName the resource's name, which can be either a class name
+	or a portlet ID
 	* @param roleName the role's name
 	* @param scope the scope
 	* @param resourceActionBitwiseValue the bitwise IDs of the actions
@@ -277,6 +277,11 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.ResourcePermission fetchResourcePermission(
+		long companyId, java.lang.String name, int scope,
+		java.lang.String primKey, long roleId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.ResourcePermission fetchResourcePermission(
 		long resourcePermissionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -313,8 +318,8 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	#getAvailableResourcePermissionActionIds(
-	long, String, int, String, Collection)}
+	#getAvailableResourcePermissionActionIds(long, String, int,
+	String, Collection)}
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

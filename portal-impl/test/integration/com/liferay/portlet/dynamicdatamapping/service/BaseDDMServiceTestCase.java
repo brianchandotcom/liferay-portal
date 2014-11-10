@@ -93,13 +93,13 @@ public class BaseDDMServiceTestCase {
 		throws Exception {
 
 		DDMXMLUtil.validateXML(definition);
-		
+
 		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
-		
+
 		return DDMStructureLocalServiceUtil.addStructure(
 			TestPropsValues.getUserId(), group.getGroupId(), parentStructureId,
-			classNameId, structureKey, getDefaultLocaleMap(name), null,
-			ddmForm, storageType, type, 
+			classNameId, structureKey, getDefaultLocaleMap(name), null, ddmForm,
+			storageType, type,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 

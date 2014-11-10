@@ -35,8 +35,8 @@ public class AWTChecker extends BaseChecker {
 	}
 
 	@Override
-	public AuthorizationProperty generateAuthorizationProperty
-		(Object... arguments) {
+	public AuthorizationProperty generateAuthorizationProperty(
+		Object... arguments) {
 
 		if ((arguments != null) && (arguments.length == 1) &&
 			(arguments[0] instanceof Permission)) {

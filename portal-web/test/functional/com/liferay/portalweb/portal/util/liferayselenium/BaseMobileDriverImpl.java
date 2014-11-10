@@ -142,8 +142,9 @@ public abstract class BaseMobileDriverImpl
 	@Override
 	public void assertNotPartialText(String locator, String pattern)
 		throws Exception {
-			throw new UnsupportedOperationException();
-		}
+
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public void assertNotSelectedLabel(String selectLocator, String pattern)

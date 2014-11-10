@@ -1295,22 +1295,25 @@ public class DLFileEntryFinderTest {
 		Assert.assertEquals("FE1.txt", dlFileEntry.getTitle());
 	}
 
-	protected int doCountBy_G_U_F_M(
-			long userId, String mimeType,
-			QueryDefinition<DLFileEntry> queryDefinition)
+	protected FileEntry addFileEntry(
+			long repositoryId, Folder folder, String titleSuffix)
 		throws Exception {
 
-		List<Long> folderIds = ListUtil.toList(
-			new long[] {_defaultRepositoryFolder.getFolderId()});
+		User user = UserTestUtil.addUser();
 
-		String[] mimeTypes = null;
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		if (mimeType != null) {
-			mimeTypes = new String[] {mimeType};
-		}
+		serviceContext.setAttribute(
+			"fileEntryTypeId",
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
+		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
-		return DLFileEntryLocalServiceUtil.getFileEntriesCount(
-			_group.getGroupId(), userId, folderIds, mimeTypes, queryDefinition);
+		return DLAppLocalServiceUtil.addFileEntry(
+			user.getUserId(), repositoryId, folder.getFolderId(), "FE1.txt",
+			ContentTypes.TEXT_PLAIN, "FE1.txt".concat(titleSuffix), null, null,
+			(byte[])null, serviceContext);
 	}
 
 	protected int doCountBy_G_U_R_F_M_NewRepository(
@@ -1548,26 +1551,23 @@ public class DLFileEntryFinderTest {
 		return new Object[] {folder, dlFileVersion};
 	}
 
-	protected FileEntry addFileEntry(
-			long repositoryId, Folder folder, String titleSuffix)
+	protected int doCountBy_G_U_F_M(
+			long userId, String mimeType,
+			QueryDefinition<DLFileEntry> queryDefinition)
 		throws Exception {
 
-		User user = UserTestUtil.addUser();
+		List<Long> folderIds = ListUtil.toList(
+			new long[] {_defaultRepositoryFolder.getFolderId()});
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+		String[] mimeTypes = null;
 
-		serviceContext.setAttribute(
-			"fileEntryTypeId",
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
-		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
-		return DLAppLocalServiceUtil.addFileEntry(
-			user.getUserId(), repositoryId, folder.getFolderId(), "FE1.txt",
-			ContentTypes.TEXT_PLAIN, "FE1.txt".concat(titleSuffix), null, null,
-			(byte[])null, serviceContext);
+		if (mimeType != null) {
+			mimeTypes = new String[] {mimeType};
 		}
+
+		return DLFileEntryLocalServiceUtil.getFileEntriesCount(
+			_group.getGroupId(), userId, folderIds, mimeTypes, queryDefinition);
+	}
 
 	private static final long _SMALL_IMAGE_ID = 1234L;
 

@@ -4825,15 +4825,15 @@ public class JournalArticleLocalServiceImpl
 
 		return journalArticleLocalService.updateArticle(
 			userId, groupId, folderId, articleId, version, titleMap,
-			descriptionMap, content, 
-			article.getDDMStructureKey(), article.getDDMTemplateKey(),
-			layoutUuid, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, reviewDateMonth, reviewDateDay,
-			reviewDateYear, reviewDateHour, reviewDateMinute, neverReview,
-			article.getIndexable(), article.isSmallImage(),
-			article.getSmallImageURL(), null, null, null, serviceContext);
+			descriptionMap, content, article.getDDMStructureKey(),
+			article.getDDMTemplateKey(), layoutUuid, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			reviewDateMonth, reviewDateDay, reviewDateYear, reviewDateHour,
+			reviewDateMinute, neverReview, article.getIndexable(),
+			article.isSmallImage(), article.getSmallImageURL(), null, null,
+			null, serviceContext);
 	}
 
 	/**
@@ -6262,9 +6262,9 @@ public class JournalArticleLocalServiceImpl
 
 		for (Element dynamicContentElement :
 				dynamicElementElement.elements("dynamic-content")) {
-			
+
 			String value = dynamicContentElement.getText();
-			
+
 			if (Validator.isNull(value)) {
 				continue;
 			}
@@ -6674,7 +6674,7 @@ public class JournalArticleLocalServiceImpl
 			article.getUserId(), article.getArticleId(), article.getVersion(),
 			article.getTitle(languageId), article.getUrlTitle(),
 			article.getDescription(languageId),
-			article.getAvailableLanguageIds(), content, 
+			article.getAvailableLanguageIds(), content,
 			article.getDDMStructureKey(), ddmTemplateKey,
 			article.isSmallImage(), article.getSmallImageId(),
 			article.getSmallImageURL(), numberOfPages, page, paginate,

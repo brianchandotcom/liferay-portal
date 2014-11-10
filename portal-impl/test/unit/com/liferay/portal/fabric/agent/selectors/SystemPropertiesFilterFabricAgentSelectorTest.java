@@ -67,25 +67,6 @@ public class SystemPropertiesFilterFabricAgentSelectorTest {
 		Assert.assertSame(fabricAgent1, iterator.next());
 	}
 
-	protected static class TestSystemPropertiesFilterFabricAgentSelector
-		extends SystemPropertiesFilterFabricAgentSelector {
-
-		public TestSystemPropertiesFilterFabricAgentSelector(String key) {
-			_key = key;
-		}
-
-		@Override
-		protected boolean accept(
-			Map<String, String> systemProperties,
-			ProcessCallable<?> processCallable) {
-
-			return systemProperties.containsKey(_key);
-		}
-
-		private final String _key;
-
-	}
-
 	protected FabricAgent createFabricAgent(
 		Map<String, String> systemProperties) {
 
@@ -120,27 +101,6 @@ public class SystemPropertiesFilterFabricAgentSelectorTest {
 
 		private final Map<String, String> _systemProperties;
 
-	} protected static class RuntimeMXBeanInvocationHandler
-		implements InvocationHandler {
-
-		public RuntimeMXBeanInvocationHandler(
-			Map<String, String> systemProperties) {
-
-			_systemProperties = systemProperties;
-		}
-
-		@Override
-		public Object invoke(Object proxy, Method method, Object[] args) {
-			String methodName = method.getName();
-
-			if (!methodName.equals("getSystemProperties")) {
-				throw new UnsupportedOperationException();
-			}
-
-			return _systemProperties;
-		}
-
-		private final Map<String, String> _systemProperties;
 	}
 
 	protected static class FabricStatusInvocationHandler
@@ -167,6 +127,48 @@ public class SystemPropertiesFilterFabricAgentSelectorTest {
 		}
 
 		private final Map<String, String> _systemProperties;
+	}
+
+	protected static class RuntimeMXBeanInvocationHandler
+		implements InvocationHandler {
+
+		public RuntimeMXBeanInvocationHandler(
+			Map<String, String> systemProperties) {
+
+			_systemProperties = systemProperties;
+		}
+
+		@Override
+		public Object invoke(Object proxy, Method method, Object[] args) {
+			String methodName = method.getName();
+
+			if (!methodName.equals("getSystemProperties")) {
+				throw new UnsupportedOperationException();
+			}
+
+			return _systemProperties;
+		}
+
+		private final Map<String, String> _systemProperties;
+	}
+
+	protected static class TestSystemPropertiesFilterFabricAgentSelector
+		extends SystemPropertiesFilterFabricAgentSelector {
+
+		public TestSystemPropertiesFilterFabricAgentSelector(String key) {
+			_key = key;
+		}
+
+		@Override
+		protected boolean accept(
+			Map<String, String> systemProperties,
+			ProcessCallable<?> processCallable) {
+
+			return systemProperties.containsKey(_key);
+		}
+
+		private final String _key;
+
 	}
 
 }

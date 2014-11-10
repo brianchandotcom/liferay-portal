@@ -1784,7 +1784,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							lineLength, lineCount, previousLine,
 							lineLeadingTabCount, previousLineLeadingTabCount);
 
-						if (combinedLinesContent != null) {
+						if ((combinedLinesContent != null) &&
+							!combinedLinesContent.equals(content)) {
+
 							return combinedLinesContent;
 						}
 					}

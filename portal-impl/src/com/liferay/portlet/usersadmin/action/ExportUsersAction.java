@@ -16,6 +16,7 @@ package com.liferay.portlet.usersadmin.action;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.portlet.DynamicActionRequest;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -73,6 +74,14 @@ public class ExportUsersAction extends PortletAction {
 		throws Exception {
 
 		try {
+			if (!actionRequest.getParameter("keywords").isEmpty()) {
+				DynamicActionRequest adjustedActionRequest = new DynamicActionRequest(actionRequest);
+
+				adjustedActionRequest.setParameter("keywords", StringPool.BLANK);
+
+				actionRequest = adjustedActionRequest;
+			}
+
 			String csv = getUsersCSV(actionRequest, actionResponse);
 
 			String fileName = "users.csv";

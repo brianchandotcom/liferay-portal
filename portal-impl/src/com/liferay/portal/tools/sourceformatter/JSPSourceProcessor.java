@@ -333,6 +333,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				"while (", ") {\n", ";\n", "\n\n"
 			});
 
+		newContent = fixBackURL(newContent);
 		newContent = fixCompatClassImports(absolutePath, newContent);
 
 		if (_stripJSPImports && !_jspContents.isEmpty()) {
@@ -445,6 +446,26 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return newContent;
+	}
+
+	protected String fixBackURL(String content) {
+		Pattern pattern = Pattern.compile(
+			"String redirect = ParamUtil\\.getString\\(request, " +
+				"\"redirect\".*\\);\nString backURL = ParamUtil\\.getString" +
+					"\\(request, \"backURL\", redirect\\);");
+
+		Matcher matcher = pattern.matcher(content);
+
+		if (matcher.find()) {
+			content = StringUtil.replace(
+				content,
+				"String backURL = ParamUtil.getString(request, \"backURL\", " +
+				"redirect);",
+				"\nString backURL = ParamUtil.getString(request, " +
+				"\"backURL\", redirect);");
+		}
+
+		return content;
 	}
 
 	@Override

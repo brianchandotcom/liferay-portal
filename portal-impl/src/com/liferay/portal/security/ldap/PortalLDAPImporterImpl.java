@@ -1333,7 +1333,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 	private static final String _USER_PASSWORD_SCREEN_NAME = "screenName";
 
 	private static final String[] _USER_PROPERTY_NAMES = {
-		"comments", "emailAddress", "firstName", "greeting", "jobTitle", 
+		"comments", "emailAddress", "firstName", "greeting", "jobTitle",
 		"languageId", "lastName", "middleName", "openId", "timeZoneId"
 	};
 

@@ -23,7 +23,9 @@ public class IncorrectClose {
 
 		public void method() {
 		}
+
 	}
 
 	private final String _var;
+
 }

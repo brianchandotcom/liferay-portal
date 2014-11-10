@@ -81,8 +81,8 @@ public class ExpandoValueServiceImpl extends ExpandoValueServiceBaseImpl {
 
 			if (entry.getValue() != null) {
 				addValue(
-						companyId, className, tableName, entry.getKey(),
-						classPK, entry.getValue());
+					companyId, className, tableName, entry.getKey(), classPK,
+					entry.getValue());
 			}
 		}
 	}

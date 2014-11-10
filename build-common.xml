@@ -653,6 +653,41 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</sequential>
 	</macrodef>
 
+	<macrodef name="compile-test-cmd">
+		<attribute name="test.type" />
+
+		<sequential>
+			<if>
+				<available file="test/@{test.type}" type="dir" />
+				<then>
+					<setup-test-classpath
+						test.type="@{test.type}"
+					/>
+
+					<mkdir dir="test-classes/@{test.type}" />
+					<mkdir dir="test-results/@{test.type}" />
+
+					<copy todir="test-classes/@{test.type}" preservelastmodified="true">
+						<fileset dir="test" includes="*.properties,META-INF/*.dtd,META-INF/*.xml" />
+						<fileset dir="test/@{test.type}" includes="**/*.policy,**/*.properties,**/dependencies/**,META-INF/*.xml" />
+					</copy>
+
+					<javac
+						classpathref="test.classpath"
+						compiler="${javac.compiler}"
+						debug="${javac.debug}"
+						deprecation="${javac.deprecation}"
+						destdir="test-classes/@{test.type}"
+						encoding="${javac.encoding}"
+						includeAntRuntime="false"
+						nowarn="${javac.nowarn}"
+						srcdir="test/@{test.type}"
+					/>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="execute">
 		<attribute default="." name="dir" />
 
@@ -1101,51 +1136,20 @@ rerun your task.
 		</if>
 	</target>
 
-	<target name="compile-test-cmd">
-		<if>
-			<available file="test/${test.type}" type="dir" />
-			<then>
-				<setup-test-classpath
-					test.type="${test.type}"
-				/>
-
-				<mkdir dir="test-classes/${test.type}" />
-				<mkdir dir="test-results/${test.type}" />
-
-				<copy todir="test-classes/${test.type}" preservelastmodified="true">
-					<fileset dir="test" includes="*.properties,META-INF/*.dtd,META-INF/*.xml" />
-					<fileset dir="test/${test.type}" includes="**/*.policy,**/*.properties,**/dependencies/**,META-INF/*.xml" />
-				</copy>
-
-				<javac
-					classpathref="test.classpath"
-					compiler="${javac.compiler}"
-					debug="${javac.debug}"
-					deprecation="${javac.deprecation}"
-					destdir="test-classes/${test.type}"
-					encoding="${javac.encoding}"
-					includeAntRuntime="false"
-					nowarn="${javac.nowarn}"
-					srcdir="test/${test.type}"
-				/>
-			</then>
-		</if>
-	</target>
-
 	<target name="compile-test-functional">
-		<ant target="compile-test-cmd">
-			<property name="test.type" value="functional" />
-		</ant>
+		<compile-test-cmd
+			test.type="functional"
+		/>
 
-		<ant target="compile-test-cmd">
-			<property name="test.type" value="functional-generated" />
-		</ant>
+		<compile-test-cmd
+			test.type="functional-generated"
+		/>
 	</target>
 
 	<target name="compile-test-integration">
-		<ant target="compile-test-cmd">
-			<property name="test.type" value="integration" />
-		</ant>
+		<compile-test-cmd
+			test.type="integration"
+		/>
 
 		<unzip
 			dest="${project.dir}/portal-impl/test-classes/integration"
@@ -1167,9 +1171,9 @@ rerun your task.
 	</target>
 
 	<target name="compile-test-unit">
-		<ant target="compile-test-cmd">
-			<property name="test.type" value="unit" />
-		</ant>
+		<compile-test-cmd
+			test.type="unit"
+		/>
 	</target>
 
 	<target name="format-javadoc">

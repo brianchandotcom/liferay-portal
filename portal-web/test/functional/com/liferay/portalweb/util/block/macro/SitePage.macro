@@ -575,14 +575,14 @@
 		<var name="key_sitePageName" value="${sitePageName}" />
 
 		<if>
-			<equals arg1="${siteChildPages}" arg2="false" />
+			<isset var="sitePageName" />
 			<then>
 				<execute action="CPSitepages#assertClick" locator-key1="PAGE_TREE_PAGE_LINK" value1="${sitePageName}" />
 			</then>
 			<elseif>
-				<equals arg1="${siteChildPages}" arg2="true" />
+				<isset var="siteChildPageName" />
 				<then>
-					<execute action="CPSitepages#assertClick" locator-key1="PAGE_TREE_PAGE_LINK_3" value1="Site Child Page Name" />
+					<execute action="CPSitepages#assertClick" locator-key1="PAGE_TREE_PAGE_LINK_3" value1="${siteChildPageName}" />
 				</then>
 			</elseif>
 		</if>

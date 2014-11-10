@@ -74,7 +74,6 @@
 
 		<execute macro="SitePage#viewNoDeletePagesAssociatedWithSiteTemplateCP">
 			<var name="siteChildPageName" value="Site Child Page Name" />
-			<var name="siteChildPages" value="true" />
 		</execute>
 	</command>
 
@@ -212,8 +211,6 @@
 	</command>
 
 	<command name="SiteAdminCannotDeletePagesThatWereCreatedBySiteTemplates" priority="3">
-		<var name="pageNamelist" value="Home,Wiki" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="User Groups" />
 		</execute>
@@ -232,9 +229,8 @@
 			<var name="userGroupName" value="UG UserGroup Name" />
 		</execute>
 
-		<for list="${pageNamelist}" param="sitePageName">
+		<for list="Home,Wiki" param="sitePageName">
 			<execute macro="SitePage#viewNoDeletePagesAssociatedWithSiteTemplateCP">
-				<var name="siteChildPages" value="false" />
 				<var name="sitePageName" value="${sitePageName}" />
 				<var name="userGroupName" value="UG UserGroup Name" />
 			</execute>

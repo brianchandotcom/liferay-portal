@@ -44,7 +44,6 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalArticleResource;
@@ -482,32 +481,7 @@ public class VerifyJournal extends VerifyProcess {
 		}
 	}
 
-	protected void verifyPermissionsAndAssets() throws Exception {
-		ActionableDynamicQuery actionableDynamicQuery =
-			JournalArticleLocalServiceUtil.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
-
-				@Override
-				public void performAction(Object object)
-					throws PortalException {
-
-					JournalArticle article = (JournalArticle)object;
-
-					verifyPermissionsAndAssets(article);
-				}
-
-			});
-
-		actionableDynamicQuery.performActions();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Permissions and assets verified for articles");
-		}
-	}
-
-	protected void verifyPermissionsAndAssets(JournalArticle article)
+	protected void verifyPermissions(JournalArticle article)
 		throws PortalException {
 
 		long groupId = article.getGroupId();
@@ -523,27 +497,30 @@ public class VerifyJournal extends VerifyProcess {
 		ResourceLocalServiceUtil.addResources(
 			article.getCompanyId(), 0, 0, JournalArticle.class.getName(),
 			article.getResourcePrimKey(), false, false, false);
+	}
 
-		try {
-			JournalArticleLocalServiceUtil.checkStructure(
-				groupId, articleId, version);
-		}
-		catch (NoSuchStructureException nsse) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Removing reference to missing structure for article " +
-						article.getId());
-			}
+	protected void verifyPermissionsAndAssets() throws Exception {
+		ActionableDynamicQuery actionableDynamicQuery =
+			JournalArticleLocalServiceUtil.getActionableDynamicQuery();
 
-			article.setDDMStructureKey(StringPool.BLANK);
-			article.setDDMTemplateKey(StringPool.BLANK);
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
 
-			JournalArticleLocalServiceUtil.updateJournalArticle(article);
-		}
-		catch (Exception e) {
-			_log.error(
-				"Unable to check the structure for article " + article.getId(),
-				e);
+				@Override
+				public void performAction(Object object)
+					throws PortalException {
+
+					JournalArticle article = (JournalArticle)object;
+
+					verifyPermissions(article);
+				}
+
+			});
+
+		actionableDynamicQuery.performActions();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Permissions and assets verified for articles");
 		}
 	}
 

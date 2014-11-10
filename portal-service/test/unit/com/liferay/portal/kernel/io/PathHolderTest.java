@@ -87,17 +87,19 @@ public class PathHolderTest {
 	public void testToStringSwitchSeparator() {
 		PathHolder pathHolder = new PathHolder(Paths.get(""));
 
-		char separatorChar = CharPool.SLASH;
+		char separatorChar = File.separatorChar;
 
-		if (File.separatorChar == CharPool.SLASH) {
-			separatorChar = CharPool.BACK_SLASH;
+		char foreignSeparatorChar = CharPool.SLASH;
+
+		if (separatorChar == CharPool.SLASH) {
+			foreignSeparatorChar = CharPool.BACK_SLASH;
 		}
 
 		ReflectionTestUtil.setFieldValue(
 			pathHolder, "_pathString",
-			"testFolder" + separatorChar + "testFile");
+			"testFolder" + foreignSeparatorChar + "testFile");
 		ReflectionTestUtil.setFieldValue(
-			pathHolder, "_separatorChar", separatorChar);
+			pathHolder, "_separatorChar", foreignSeparatorChar);
 
 		Assert.assertEquals(
 			"testFolder" + separatorChar + "testFile", pathHolder.toString());

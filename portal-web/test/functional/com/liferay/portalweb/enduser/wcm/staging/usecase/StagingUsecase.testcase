@@ -633,7 +633,6 @@
 		<execute macro="Staging#publishToLiveNow">
 			<var name="applicationName" value="Sites Directory" />
 			<var name="markAsReadyForPublication" value="true" />
-			<var name="uncheckApplication" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -3731,7 +3730,6 @@
 		<execute macro="Staging#configurePublishToLive">
 			<var name="applicationName" value="Documents and Media" />
 			<var name="checkPageName" value="Test Page 1,Test Page 2" />
-			<var name="uncheckApplication" value="true" />
 			<var name="uncheckContentNameList" value="Blogs" />
 		</execute>
 

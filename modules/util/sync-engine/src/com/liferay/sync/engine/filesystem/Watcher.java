@@ -35,7 +35,11 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.SortedMap;
+import java.util.concurrent.ConcurrentNavigableMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import name.pachler.nio.file.FileSystem;
@@ -87,10 +91,6 @@ public class Watcher implements Runnable {
 		finally {
 			_watchService = null;
 		}
-	}
-
-	public List<String> getCreatedFilePathNames() {
-		return _createdFilePathNames;
 	}
 
 	public List<String> getDownloadedFilePathNames() {
@@ -158,7 +158,7 @@ public class Watcher implements Runnable {
 							continue;
 						}
 
-						_createdFilePathNames.add(childFilePath.toString());
+						addCreatedFilePathName(childFilePath.toString());
 
 						if (_downloadedFilePathNames.remove(
 								childFilePath.toString())) {
@@ -181,8 +181,10 @@ public class Watcher implements Runnable {
 						fireWatchEventListener(childFilePath, watchEvent);
 					}
 					else if (kind == StandardWatchEventKind.ENTRY_MODIFY) {
-						if (_createdFilePathNames.remove(
-								childFilePath.toString()) ||
+						if ((removeCreatedFilePathName(
+								childFilePath.toString()) &&
+							 FileUtil.isSizeOverChecksumThreshold(
+								 childFilePath)) ||
 							Files.isDirectory(childFilePath)) {
 
 							continue;
@@ -259,6 +261,23 @@ public class Watcher implements Runnable {
 		if (_logger.isTraceEnabled()) {
 			_logger.trace("Unregistered file path {}", filePath);
 		}
+	}
+
+	protected void addCreatedFilePathName(String filePathName) {
+		clearCreatedFilePathNames();
+
+		long now = System.currentTimeMillis();
+
+		while (_createdFilePathNames.putIfAbsent(now, filePathName) != null) {
+			now++;
+		}
+	}
+
+	protected void clearCreatedFilePathNames() {
+		SortedMap<Long, String> headMap = _createdFilePathNames.headMap(
+			System.currentTimeMillis() - 5000);
+
+		headMap.clear();
 	}
 
 	protected void doRegister(Path filePath, boolean recursive)
@@ -448,9 +467,18 @@ public class Watcher implements Runnable {
 		}
 	}
 
+	protected boolean removeCreatedFilePathName(String filePathName) {
+		clearCreatedFilePathNames();
+
+		Collection<String> filePathNames = _createdFilePathNames.values();
+
+		return filePathNames.remove(filePathName);
+	}
+
 	private static Logger _logger = LoggerFactory.getLogger(Watcher.class);
 
-	private List<String> _createdFilePathNames = new ArrayList<String>();
+	private ConcurrentNavigableMap<Long, String> _createdFilePathNames =
+		new ConcurrentSkipListMap<Long, String>();
 	private Path _dataFilePath;
 	private List<String> _downloadedFilePathNames = new ArrayList<String>();
 	private List<Path> _failedFilePaths = new CopyOnWriteArrayList<Path>();

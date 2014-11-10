@@ -57,7 +57,7 @@ else {
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 
-boolean isLoginRedirectRequired = SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId());
+boolean loginRedirectRequired = SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId());
 
 String signInURL = themeDisplay.getURLSignIn();
 %>
@@ -111,7 +111,7 @@ String signInURL = themeDisplay.getURLSignIn();
 							<c:choose>
 								<c:when test="<%= messagesCount == 1 %>">
 									<c:choose>
-										<c:when test="<%= themeDisplay.isSignedIn() || !isLoginRedirectRequired %>">
+										<c:when test="<%= themeDisplay.isSignedIn() || !loginRedirectRequired %>">
 											<liferay-ui:message key="no-comments-yet" /> <a href="<%= taglibPostReplyURL %>"><liferay-ui:message key="be-the-first" /></a>
 										</c:when>
 										<c:otherwise>
@@ -121,7 +121,7 @@ String signInURL = themeDisplay.getURLSignIn();
 								</c:when>
 								<c:otherwise>
 									<c:choose>
-										<c:when test="<%= themeDisplay.isSignedIn() || !isLoginRedirectRequired %>">
+										<c:when test="<%= themeDisplay.isSignedIn() || !loginRedirectRequired %>">
 											<liferay-ui:icon
 												iconCssClass="icon-reply"
 												label="<%= true %>"
@@ -374,7 +374,7 @@ String signInURL = themeDisplay.getURLSignIn();
 														%>
 
 														<c:choose>
-															<c:when test="<%= themeDisplay.isSignedIn() || !isLoginRedirectRequired %>">
+															<c:when test="<%= themeDisplay.isSignedIn() || !loginRedirectRequired %>">
 																<liferay-ui:icon
 																	iconCssClass="icon-reply"
 																	label="<%= true %>"

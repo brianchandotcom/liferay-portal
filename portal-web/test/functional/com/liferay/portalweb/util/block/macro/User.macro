@@ -157,7 +157,7 @@
 		<execute action="PGCreateAccount#type" locator-key1="CREATE_ACCOUNT_SCREEN_NAME" value1="${userScreenName}" />
 		<execute action="PGCreateAccount#type" locator-key1="CREATE_ACCOUNT_EMAIL_ADDRESS" value1="${userEmailAddress}" />
 		<execute action="PGCreateAccount#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGCreateAccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Thank you for creating an account. Your email verification code has been sent to liferay.qa1@gmail.com. Your password has been sent to liferay.qa1@gmail.com." />
+		<execute action="PGCreateAccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Thank you for creating an account. Your email verification code has been sent to ${userEmailAddress}. Your password has been sent to ${userEmailAddress}." />
 	</command>
 
 	<command name="addInstantMessengerViaMyAccount">

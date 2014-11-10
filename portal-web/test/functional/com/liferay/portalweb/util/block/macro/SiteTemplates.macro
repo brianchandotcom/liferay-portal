@@ -20,6 +20,7 @@
 
 		<execute action="CPSitepagesAddpage#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${siteChildPageName}" />
 		<execute action="CPSitepagesAddpage#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
+
 		<execute action="CPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 

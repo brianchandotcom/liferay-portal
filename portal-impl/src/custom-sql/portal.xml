@@ -1374,16 +1374,13 @@
 				{User_.*}
 			FROM
 				User_
+			LEFT JOIN
+				AnnouncementsDelivery ON
+					(AnnouncementsDelivery.userId = User_.userId) AND
+					(User_.defaultUser = [$FALSE$]) AND
+					(AnnouncementsDelivery.type_ = ?)
 			WHERE
-				(userId NOT IN (
-					SELECT
-						userId
-					FROM
-						AnnouncementsDelivery
-					WHERE
-						type_ = ?
-				)) AND
-				(defaultUser = [$FALSE$])
+				(AnnouncementsDelivery.userId IS NULL)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.UserFinder.findByNoContacts">

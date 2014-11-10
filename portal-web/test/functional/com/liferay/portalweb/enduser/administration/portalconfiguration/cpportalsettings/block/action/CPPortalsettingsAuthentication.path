@@ -112,7 +112,7 @@
 </tr>
 <tr>
 	<td>AUTHENTICATION_GENERAL_REQUIRE_STRANGERS_TO_VERIFY_THEIR_EMAIL_ADDRESS_CHECKBOX</td>
-	<td>//input[@id='_130_company.security.strangers.verify']</td>
+	<td>//input[@id='_130_company-security-strangers-verify']</td>
 	<td></td>
 </tr>
 <tr>

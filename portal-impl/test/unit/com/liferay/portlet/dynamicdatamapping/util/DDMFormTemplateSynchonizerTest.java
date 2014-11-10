@@ -310,6 +310,7 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 				_editDDMTemplate = ddmTemplate;
 			}
 		}
+
 	}
 
 }

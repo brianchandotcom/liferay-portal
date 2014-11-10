@@ -144,6 +144,7 @@ public class MinSystemCPULoadFabricAgentSelectorTest {
 		}
 
 		private final Double _systemCpuLoad;
+
 	}
 
 	protected static class FabricAgentInvocationHandler
@@ -194,6 +195,7 @@ public class MinSystemCPULoadFabricAgentSelectorTest {
 		}
 
 		private final Double _systemCpuLoad;
+
 	}
 
 }

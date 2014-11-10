@@ -854,6 +854,7 @@ public class RegistryTest {
 
 			serviceTracker.close();
 		}
+
 	}
 
 	private abstract class TestTrackServicesByServiceTrackerCustomizer {

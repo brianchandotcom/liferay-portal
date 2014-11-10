@@ -395,6 +395,7 @@ public class NettyFabricWorkerExecutionChannelHandler
 		private final String _bootstrapClassPath;
 		private final Map<Path, Path> _inputPaths;
 		private final String _runtimeClassPath;
+
 	}
 
 	protected class PostFabricWorkerExecutionFutureListener
@@ -466,6 +467,7 @@ public class NettyFabricWorkerExecutionChannelHandler
 		private final LoadedPaths _loadedPaths;
 		private final NettyFabricWorkerConfig<Serializable>
 			_nettyFabricWorkerConfig;
+
 	}
 
 	protected class PostFabricWorkerFinishFutureListener

@@ -197,6 +197,7 @@ public class PortletRenderer {
 
 		private final HttpServletRequest _request;
 		private final HttpServletResponse _response;
+
 	}
 
 }

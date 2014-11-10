@@ -230,6 +230,7 @@ public class IntrabandRPCUtilTest {
 		}
 
 		private static final long serialVersionUID = 1L;
+
 	}
 
 }

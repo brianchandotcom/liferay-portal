@@ -2783,6 +2783,7 @@ public class IntrabandProxyUtilTest {
 
 		@Id
 		public abstract String getId2();
+
 	}
 
 	private interface TestProxyMethodsInterface {

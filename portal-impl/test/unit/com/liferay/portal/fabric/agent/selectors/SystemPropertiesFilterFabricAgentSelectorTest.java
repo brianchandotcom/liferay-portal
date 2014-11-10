@@ -127,6 +127,7 @@ public class SystemPropertiesFilterFabricAgentSelectorTest {
 		}
 
 		private final Map<String, String> _systemProperties;
+
 	}
 
 	protected static class RuntimeMXBeanInvocationHandler
@@ -150,6 +151,7 @@ public class SystemPropertiesFilterFabricAgentSelectorTest {
 		}
 
 		private final Map<String, String> _systemProperties;
+
 	}
 
 	protected static class TestSystemPropertiesFilterFabricAgentSelector

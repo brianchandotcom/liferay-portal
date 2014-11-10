@@ -747,10 +747,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			processErrorMessage(fileName, "package: " + fileName);
 		}
 
-		if (!newContent.endsWith("\n\n}") && !newContent.endsWith("{\n}")) {
-			processErrorMessage(fileName, "}: " + fileName);
-		}
-
 		if (portalSource &&
 			!_allowUseServiceUtilInServiceImpl &&
 			!className.equals("BaseServiceImpl") &&

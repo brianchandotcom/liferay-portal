@@ -144,6 +144,7 @@ public class MaxFreePhysicalMemoryFabricAgentSelectorTest {
 		}
 
 		private final Long _freePhysicalMemorySize;
+
 	}
 
 	protected static class FabricAgentInvocationHandler
@@ -194,6 +195,7 @@ public class MaxFreePhysicalMemoryFabricAgentSelectorTest {
 		}
 
 		private final Long _freePhysicalMemorySize;
+
 	}
 
 }

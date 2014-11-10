@@ -184,6 +184,7 @@ public class MapUtilTest {
 			Assert.assertTrue(map.containsValue(false));
 			Assert.assertTrue(map.get("one") instanceof Boolean);
 		}
+
 	}
 
 	public static class WhenCreatingALinkedHashMapFromArrayWithParamsType {

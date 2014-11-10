@@ -168,6 +168,7 @@ public class RestrictedByteBufferCacheServletResponse
 		public void beforeFlush() throws IOException {
 			finishResponse();
 		}
+
 	}
 
 }

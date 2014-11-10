@@ -63,7 +63,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testIncorrectClose() throws Exception {
-		test("IncorrectClose.testjava", "}:");
+		test("IncorrectClose.testjava");
 	}
 
 	@Test

@@ -367,6 +367,7 @@ public class AuthVerifierPipeline {
 
 			_authVerifierConfigurations.remove(authVerifierConfiguration);
 		}
+
 	}
 
 }

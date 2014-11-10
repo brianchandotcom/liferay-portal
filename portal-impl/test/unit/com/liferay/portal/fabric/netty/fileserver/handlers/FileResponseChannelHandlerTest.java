@@ -78,7 +78,7 @@ public class FileResponseChannelHandlerTest {
 			_path, data.length, lastModified, false);
 
 		NoticeableFuture<FileResponse> noticeableFuture = _asyncBroker.post(
-			_path.toAbsolutePath());
+			_path);
 
 		_fileResponseChannelHandler.channelRead(
 			_channelHandlerContext, fileResponse,
@@ -114,7 +114,7 @@ public class FileResponseChannelHandlerTest {
 
 	@Test
 	public void testFileNotFound() throws Exception {
-		Future<FileResponse> future = _asyncBroker.post(_path.toAbsolutePath());
+		Future<FileResponse> future = _asyncBroker.post(_path);
 
 		FileResponse fileResponse = new FileResponse(
 			_path, FileResponse.FILE_NOT_FOUND, -1, false);
@@ -156,7 +156,7 @@ public class FileResponseChannelHandlerTest {
 
 	@Test
 	public void testFileNotModified() throws Exception {
-		Future<FileResponse> future = _asyncBroker.post(_path.toAbsolutePath());
+		Future<FileResponse> future = _asyncBroker.post(_path);
 
 		FileResponse fileResponse = new FileResponse(
 			_path, FileResponse.FILE_NOT_MODIFIED, -1, false);

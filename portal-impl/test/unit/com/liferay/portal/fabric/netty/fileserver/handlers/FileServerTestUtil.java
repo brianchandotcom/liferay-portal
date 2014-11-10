@@ -158,14 +158,12 @@ public class FileServerTestUtil {
 			Path otherFile = _path2.resolve(relativePath.toString());
 
 			Assert.assertTrue(
-				otherFile.toAbsolutePath() + " does not exist",
-				Files.exists(otherFile));
+				otherFile + " does not exist", Files.exists(otherFile));
 			Assert.assertTrue(
-				otherFile.toAbsolutePath() + " is not file",
-				Files.isRegularFile(otherFile));
+				otherFile + " is not file", Files.isRegularFile(otherFile));
 			Assert.assertArrayEquals(
-				"File content does not match, file1 " + file.toAbsolutePath() +
-					", file2 " + otherFile.toAbsolutePath(),
+				"File content does not match, file1 " + file + ", file2 " +
+					otherFile,
 				Files.readAllBytes(file), Files.readAllBytes(otherFile));
 
 			return FileVisitResult.CONTINUE;

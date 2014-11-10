@@ -194,8 +194,6 @@ public class FileRequestChannelHandlerTest {
 				Path expectedFile = expectedRootFolder.resolve(
 					zipEntry.getName());
 
-				expectedFile = expectedFile.toAbsolutePath();
-
 				Assert.assertTrue(
 					"Zip entry file " + expectedFile + " does not exist",
 					Files.exists(expectedFile));
@@ -223,8 +221,6 @@ public class FileRequestChannelHandlerTest {
 				@Override
 				public FileVisitResult visitFile(
 					Path file, BasicFileAttributes attrs) {
-
-					file = file.toAbsolutePath();
 
 					Assert.assertTrue(
 						"Miss file " + file + " from zip stream",

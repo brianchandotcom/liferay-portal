@@ -16,6 +16,9 @@ package com.liferay.portlet.journal.service;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.ResourcePermission;
+import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
@@ -51,6 +54,37 @@ public class JournalArticleLocalServiceTest {
 	}
 
 	@Test
+	public void testGetByNoPermissions() throws Exception {
+		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		List<ResourcePermission> resourcePermissions =
+			ResourcePermissionLocalServiceUtil.getResourcePermissions(
+				journalArticle2.getCompanyId(), JournalArticle.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(journalArticle2.getResourcePrimKey()));
+
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			ResourcePermissionLocalServiceUtil.deleteResourcePermission(
+				resourcePermission.getResourcePermissionId());
+		}
+
+		List<JournalArticle> journalArticles =
+			JournalArticleLocalServiceUtil.getByNoPermissions();
+
+		Assert.assertEquals(1, journalArticles.size());
+
+		Assert.assertEquals(
+			journalArticle2.getArticleId(),
+			journalArticles.get(0).getArticleId());
+	}
+
+	@Test
 	public void testGetNoAssetArticles() throws Exception {
 		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
 			_group.getGroupId(),
@@ -70,8 +104,6 @@ public class JournalArticleLocalServiceTest {
 
 		List<JournalArticle> journalArticles =
 			JournalArticleLocalServiceUtil.getNoAssetArticles();
-
-		//Assert.assertEquals(1, journalArticles.size());
 
 		for (JournalArticle journalArticle : journalArticles) {
 			assetEntry = AssetEntryLocalServiceUtil.fetchEntry(

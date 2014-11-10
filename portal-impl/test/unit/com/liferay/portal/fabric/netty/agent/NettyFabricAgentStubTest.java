@@ -225,16 +225,14 @@ public class NettyFabricAgentStubTest {
 		File testOutput1 = ReflectionTestUtil.getFieldValue(
 			processCallable, "_testOutput1");
 
-		Assert.assertEquals(
-			path1.toAbsolutePath(), outputPathMap.get(testOutput1.toPath()));
+		Assert.assertEquals(path1, outputPathMap.get(testOutput1.toPath()));
 
 		Path path3 = testFile3.toPath();
 
 		File testOutput3 = ReflectionTestUtil.getFieldValue(
 			processCallable, "_testOutput3");
 
-		Assert.assertEquals(
-			path3.toAbsolutePath(), outputPathMap.get(testOutput3.toPath()));
+		Assert.assertEquals(path3, outputPathMap.get(testOutput3.toPath()));
 
 		nettyFabricWorkerStub.setResult(processCallable.call());
 

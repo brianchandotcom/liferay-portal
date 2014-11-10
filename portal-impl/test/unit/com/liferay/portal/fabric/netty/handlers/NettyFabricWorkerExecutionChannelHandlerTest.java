@@ -354,31 +354,31 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 	public void testLoadPaths() throws Exception {
 		final Map<Path, Path> mergedPaths = new HashMap<Path, Path>();
 
-		Path inputPath1 = getAbsolutePath("inputPaths1");
-		Path mappedInputPath1 = getAbsolutePath("mappedInputPath1");
-		Path inputPath2 = getAbsolutePath("inputPaths2");
-		Path mappedInputPath2 = getAbsolutePath("mappedInputPath2");
+		Path inputPath1 = Paths.get("inputPaths1");
+		Path mappedInputPath1 = Paths.get("mappedInputPath1");
+		Path inputPath2 = Paths.get("inputPaths2");
+		Path mappedInputPath2 = Paths.get("mappedInputPath2");
 
 		mergedPaths.put(inputPath1, mappedInputPath1);
 		mergedPaths.put(inputPath2, mappedInputPath2);
 
-		Path bootstrapPath1 = getAbsolutePath("bootstrapPath1");
-		Path mappedBootstrapPath1 = getAbsolutePath("mappedBootstrapPath1");
-		Path bootstrapPath2 = getAbsolutePath("bootstrapPath2");
-		Path mappedBootstrapPath2 = getAbsolutePath("mappedBootstrapPath2");
-		Path bootstrapPath3 = getAbsolutePath("bootstrapPath3");
-		Path mappedBootstrapPath3 = getAbsolutePath("mappedBootstrapPath3");
+		Path bootstrapPath1 = Paths.get("bootstrapPath1");
+		Path mappedBootstrapPath1 = Paths.get("mappedBootstrapPath1");
+		Path bootstrapPath2 = Paths.get("bootstrapPath2");
+		Path mappedBootstrapPath2 = Paths.get("mappedBootstrapPath2");
+		Path bootstrapPath3 = Paths.get("bootstrapPath3");
+		Path mappedBootstrapPath3 = Paths.get("mappedBootstrapPath3");
 
 		mergedPaths.put(bootstrapPath1, mappedBootstrapPath1);
 		mergedPaths.put(bootstrapPath2, mappedBootstrapPath2);
 		mergedPaths.put(bootstrapPath3, mappedBootstrapPath3);
 
-		Path runtimePath1 = getAbsolutePath("runtimePath1");
-		Path mappedRuntimePath1 = getAbsolutePath("mappedRuntimePath1");
-		Path runtimePath2 = getAbsolutePath("runtimePath2");
-		Path mappedRuntimePath2 = getAbsolutePath("mappedRuntimePath2");
-		Path runtimePath3 = getAbsolutePath("runtimePath3");
-		Path mappedRuntimePath3 = getAbsolutePath("mappedRuntimePath3");
+		Path runtimePath1 = Paths.get("runtimePath1");
+		Path mappedRuntimePath1 = Paths.get("mappedRuntimePath1");
+		Path runtimePath2 = Paths.get("runtimePath2");
+		Path mappedRuntimePath2 = Paths.get("mappedRuntimePath2");
+		Path runtimePath3 = Paths.get("runtimePath3");
+		Path mappedRuntimePath3 = Paths.get("mappedRuntimePath3");
 
 		mergedPaths.put(runtimePath1, mappedRuntimePath1);
 		mergedPaths.put(runtimePath2, mappedRuntimePath2);
@@ -405,7 +405,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 						@Override
 						public Path getRepositoryPath() {
-							return getAbsolutePath("repository");
+							return Paths.get("repository");
 						}
 
 					},
@@ -428,7 +428,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 		FabricPathMappingVisitor fabricPathMappingVisitor =
 			new FabricPathMappingVisitor(
-				InputResource.class, getAbsolutePath("repository"));
+				InputResource.class, Paths.get("repository"));
 
 		ObjectGraphUtil.walkObjectGraph(
 			processCallable, fabricPathMappingVisitor);
@@ -468,10 +468,10 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 		final Map<Path, Path> mergedPaths = new HashMap<Path, Path>();
 
-		Path bootstrapPath1 = getAbsolutePath("bootstrapPath1");
-		Path mappedBootstrapPath1 = getAbsolutePath("mappedBootstrapPath1");
-		Path bootstrapPath2 = getAbsolutePath("bootstrapPath2");
-		Path bootstrapPath3 = getAbsolutePath("bootstrapPath3");
+		Path bootstrapPath1 = Paths.get("bootstrapPath1");
+		Path mappedBootstrapPath1 = Paths.get("mappedBootstrapPath1");
+		Path bootstrapPath2 = Paths.get("bootstrapPath2");
+		Path bootstrapPath3 = Paths.get("bootstrapPath3");
 
 		mergedPaths.put(bootstrapPath1, mappedBootstrapPath1);
 
@@ -496,7 +496,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 						@Override
 						public Path getRepositoryPath() {
-							return getAbsolutePath("repository");
+							return Paths.get("repository");
 						}
 
 					},
@@ -516,7 +516,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 		FabricPathMappingVisitor fabricPathMappingVisitor =
 			new FabricPathMappingVisitor(
-				InputResource.class, getAbsolutePath("repository"));
+				InputResource.class, Paths.get("repository"));
 
 		ObjectGraphUtil.walkObjectGraph(
 			processCallable, fabricPathMappingVisitor);
@@ -603,9 +603,9 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 	public void testLoadPathsMissedInputPaths() throws InterruptedException {
 		final Map<Path, Path> mergedPaths = new HashMap<Path, Path>();
 
-		Path inputPath1 = getAbsolutePath("inputPaths1");
-		Path mappedInputPath1 = getAbsolutePath("mappedInputPath1");
-		Path inputPath2 = getAbsolutePath("inputPaths2");
+		Path inputPath1 = Paths.get("inputPaths1");
+		Path mappedInputPath1 = Paths.get("mappedInputPath1");
+		Path inputPath2 = Paths.get("inputPaths2");
 
 		mergedPaths.put(inputPath1, mappedInputPath1);
 
@@ -630,7 +630,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 						@Override
 						public Path getRepositoryPath() {
-							return getAbsolutePath("repository");
+							return Paths.get("repository");
 						}
 
 					},
@@ -649,7 +649,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 		FabricPathMappingVisitor fabricPathMappingVisitor =
 			new FabricPathMappingVisitor(
-				InputResource.class, getAbsolutePath("repository"));
+				InputResource.class, Paths.get("repository"));
 
 		ObjectGraphUtil.walkObjectGraph(
 			processCallable, fabricPathMappingVisitor);
@@ -681,11 +681,11 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 		final Map<Path, Path> mergedPaths = new HashMap<Path, Path>();
 
-		Path runtimePath1 = getAbsolutePath("runtimePath1");
-		Path mappedRuntimePath1 = getAbsolutePath("mappedRuntimePath1");
-		Path runtimePath2 = getAbsolutePath("runtimePath2");
-		Path runtimePath3 = getAbsolutePath("runtimePath3");
-		Path mappedRuntimePath3 = getAbsolutePath("mappedRuntimePath3");
+		Path runtimePath1 = Paths.get("runtimePath1");
+		Path mappedRuntimePath1 = Paths.get("mappedRuntimePath1");
+		Path runtimePath2 = Paths.get("runtimePath2");
+		Path runtimePath3 = Paths.get("runtimePath3");
+		Path mappedRuntimePath3 = Paths.get("mappedRuntimePath3");
 
 		mergedPaths.put(runtimePath1, mappedRuntimePath1);
 		mergedPaths.put(runtimePath3, mappedRuntimePath3);
@@ -711,7 +711,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 						@Override
 						public Path getRepositoryPath() {
-							return getAbsolutePath("repository");
+							return Paths.get("repository");
 						}
 
 					},
@@ -731,7 +731,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 		FabricPathMappingVisitor fabricPathMappingVisitor =
 			new FabricPathMappingVisitor(
-				InputResource.class, getAbsolutePath("repository"));
+				InputResource.class, Paths.get("repository"));
 
 		ObjectGraphUtil.walkObjectGraph(
 			processCallable, fabricPathMappingVisitor);
@@ -1209,12 +1209,6 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		catch (ExecutionException ee) {
 			Assert.assertSame(throwable, ee.getCause());
 		}
-	}
-
-	protected static Path getAbsolutePath(String pathString) {
-		Path path = Paths.get(pathString);
-
-		return path.toAbsolutePath();
 	}
 
 	protected NettyFabricWorkerConfig<Serializable>

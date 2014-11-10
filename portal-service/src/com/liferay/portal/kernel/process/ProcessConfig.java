@@ -14,6 +14,10 @@
 
 package com.liferay.portal.kernel.process;
 
+import com.liferay.portal.kernel.io.PathHolder;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+
 import java.io.File;
 import java.io.Serializable;
 
@@ -30,7 +34,12 @@ public class ProcessConfig implements Serializable {
 	}
 
 	public String getBootstrapClassPath() {
-		return sanitizePathSeparatorChar(_bootstrapClassPath);
+		return StringUtil.merge(
+			getBootstrapClassPathElements(), File.pathSeparator);
+	}
+
+	public String[] getBootstrapClassPathElements() {
+		return ArrayUtil.toStringArray(_bootstrapClassPathElements);
 	}
 
 	public String getJavaExecutable() {
@@ -42,7 +51,12 @@ public class ProcessConfig implements Serializable {
 	}
 
 	public String getRuntimeClassPath() {
-		return sanitizePathSeparatorChar(_runtimeClassPath);
+		return StringUtil.merge(
+			getRuntimeClassPathElements(), File.pathSeparator);
+	}
+
+	public String[] getRuntimeClassPathElements() {
+		return ArrayUtil.toStringArray(_runtimeClassPathElements);
 	}
 
 	public static class Builder {
@@ -91,29 +105,38 @@ public class ProcessConfig implements Serializable {
 
 	}
 
-	protected String sanitizePathSeparatorChar(String path) {
-		if ((path != null) && (_pathSeparatorChar != File.pathSeparatorChar)) {
-			return path.replace(_pathSeparatorChar, File.pathSeparatorChar);
-		}
-
-		return path;
-	}
-
 	private ProcessConfig(Builder builder) {
 		_arguments = builder._arguments;
-		_bootstrapClassPath = builder._bootstrapClassPath;
+
+		_bootstrapClassPathElements = toPathHolders(
+			builder._bootstrapClassPath);
+
 		_javaExecutable = builder._javaExecutable;
 		_reactClassLoader = builder._reactClassLoader;
-		_runtimeClassPath = builder._runtimeClassPath;
+
+		_runtimeClassPathElements = toPathHolders(builder._runtimeClassPath);
+	}
+
+	private PathHolder[] toPathHolders(String classPath) {
+		String[] classPathStringElements = StringUtil.split(
+			classPath, File.pathSeparatorChar);
+
+		PathHolder[] classPathElements =
+			new PathHolder[classPathStringElements.length];
+
+		for (int i = 0; i < classPathStringElements.length; i++) {
+			classPathElements[i] = new PathHolder(classPathStringElements[i]);
+		}
+
+		return classPathElements;
 	}
 
 	private static final long serialVersionUID = 1L;
 
 	private final List<String> _arguments;
-	private final String _bootstrapClassPath;
+	private final PathHolder[] _bootstrapClassPathElements;
 	private final String _javaExecutable;
-	private final char _pathSeparatorChar = File.pathSeparatorChar;
 	private final transient ClassLoader _reactClassLoader;
-	private final String _runtimeClassPath;
+	private final PathHolder[] _runtimeClassPathElements;
 
 }

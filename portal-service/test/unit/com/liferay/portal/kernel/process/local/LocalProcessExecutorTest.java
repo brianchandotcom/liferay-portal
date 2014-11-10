@@ -1223,45 +1223,6 @@ public class LocalProcessExecutorTest {
 	}
 
 	@Test
-	public void testSanitizePathSeparatorChar() {
-		Builder builder = new Builder();
-
-		ProcessConfig processConfig = builder.build();
-
-		char pathSeparatorChar = File.pathSeparatorChar;
-
-		if (pathSeparatorChar == CharPool.COLON) {
-			pathSeparatorChar = CharPool.SEMICOLON;
-		}
-		else {
-			pathSeparatorChar = CharPool.COLON;
-		}
-
-		ReflectionTestUtil.setFieldValue(
-			processConfig, "_pathSeparatorChar", pathSeparatorChar);
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("file1");
-		sb.append(pathSeparatorChar);
-		sb.append("file2");
-		sb.append(pathSeparatorChar);
-		sb.append("file3");
-
-		String path = sb.toString();
-
-		Assert.assertEquals(
-			path.replace(pathSeparatorChar, File.pathSeparatorChar),
-			ReflectionTestUtil.invoke(
-				processConfig, "sanitizePathSeparatorChar",
-				new Class<?>[] {String.class}, path));
-		Assert.assertNull(
-			ReflectionTestUtil.invoke(
-				processConfig, "sanitizePathSeparatorChar",
-				new Class<?>[] {String.class}, new Object[] {null}));
-	}
-
-	@Test
 	public void testUnserializableProcessCallable() {
 		UnserializableProcessCallable unserializableProcessCallable =
 			new UnserializableProcessCallable();

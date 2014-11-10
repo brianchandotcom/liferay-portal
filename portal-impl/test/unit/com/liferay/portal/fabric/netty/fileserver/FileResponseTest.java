@@ -53,9 +53,7 @@ public class FileResponseTest {
 		catch (NullPointerException npe) {
 		}
 
-		Path absolutePath = _fileResponse.getPath();
-
-		Assert.assertTrue(absolutePath.isAbsolute());
+		Assert.assertEquals(_path, _fileResponse.getPath());
 		Assert.assertEquals(_SIZE, _fileResponse.getSize());
 		Assert.assertEquals(
 			_LAST_MODIFIED_TIME, _fileResponse.getLastModifiedTime());
@@ -112,7 +110,7 @@ public class FileResponseTest {
 		int hash = HashUtil.hash(0, _FOLDER);
 
 		hash = HashUtil.hash(hash, _LAST_MODIFIED_TIME);
-		hash = HashUtil.hash(hash, _path.toAbsolutePath());
+		hash = HashUtil.hash(hash, _path);
 
 		Assert.assertEquals(
 			HashUtil.hash(hash, _SIZE), _fileResponse.hashCode());
@@ -127,8 +125,8 @@ public class FileResponseTest {
 		sb.append(", lastModifiedTime=");
 		sb.append(_LAST_MODIFIED_TIME);
 		sb.append(", localFile=null");
-		sb.append(", path=");
-		sb.append(_path.toAbsolutePath());
+		sb.append(", pathHolder=");
+		sb.append(_path);
 		sb.append(", size=");
 		sb.append(_SIZE);
 		sb.append("}");
@@ -153,8 +151,8 @@ public class FileResponseTest {
 		sb.append(", lastModifiedTime=");
 		sb.append(_LAST_MODIFIED_TIME);
 		sb.append(", localFile=null");
-		sb.append(", path=");
-		sb.append(_path.toAbsolutePath());
+		sb.append(", pathHolder=");
+		sb.append(_path);
 		sb.append(", status=File Not Found");
 		sb.append("}");
 
@@ -171,8 +169,8 @@ public class FileResponseTest {
 		sb.append(", lastModifiedTime=");
 		sb.append(_LAST_MODIFIED_TIME);
 		sb.append(", localFile=null");
-		sb.append(", path=");
-		sb.append(_path.toAbsolutePath());
+		sb.append(", pathHolder=");
+		sb.append(_path);
 		sb.append(", status=File Not Modified");
 		sb.append("}");
 

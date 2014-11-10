@@ -82,8 +82,7 @@ public class FileServerTest {
 		_sourceFilePath = FileServerTestUtil.createNotExistFile(
 			Paths.get("testFile"));
 
-		Future<FileResponse> future = _asyncBroker.post(
-			_sourceFilePath.toAbsolutePath());
+		Future<FileResponse> future = _asyncBroker.post(_sourceFilePath);
 
 		_clientChannel.writeAndFlush(
 			new FileRequest(_sourceFilePath, 0, false));
@@ -98,8 +97,7 @@ public class FileServerTest {
 		_sourceFilePath = FileServerTestUtil.createFileWithData(
 			Paths.get("testMissingFile"));
 
-		Future<FileResponse> future = _asyncBroker.post(
-			_sourceFilePath.toAbsolutePath());
+		Future<FileResponse> future = _asyncBroker.post(_sourceFilePath);
 
 		FileTime fileTime = Files.getLastModifiedTime(_sourceFilePath);
 
@@ -127,8 +125,7 @@ public class FileServerTest {
 
 		byte[] data = Files.readAllBytes(_sourceFilePath);
 
-		Future<FileResponse> future = _asyncBroker.post(
-			_sourceFilePath.toAbsolutePath());
+		Future<FileResponse> future = _asyncBroker.post(_sourceFilePath);
 
 		_clientChannel.writeAndFlush(
 			new FileRequest(_sourceFilePath, 0, deleteAfterFetch));
@@ -157,8 +154,7 @@ public class FileServerTest {
 
 		FileTime sourceFileTime = Files.getLastModifiedTime(_sourceFilePath);
 
-		Future<FileResponse> future = _asyncBroker.post(
-			_sourceFilePath.toAbsolutePath());
+		Future<FileResponse> future = _asyncBroker.post(_sourceFilePath);
 
 		_clientChannel.writeAndFlush(
 			new FileRequest(_sourceFilePath, 0, deleteAfterFetch));

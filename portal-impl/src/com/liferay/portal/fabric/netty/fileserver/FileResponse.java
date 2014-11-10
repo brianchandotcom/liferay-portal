@@ -14,13 +14,13 @@
 
 package com.liferay.portal.fabric.netty.fileserver;
 
+import com.liferay.portal.kernel.io.PathHolder;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /**
  * @author Shuyang Zhou
@@ -34,7 +34,7 @@ public class FileResponse implements Serializable {
 	public FileResponse(
 		Path path, long size, long lastModifiedTime, boolean folder) {
 
-		_path = String.valueOf(path.toAbsolutePath());
+		_pathHolder = new PathHolder(path);
 		_size = size;
 		_lastModifiedTime = lastModifiedTime;
 		_folder = folder;
@@ -54,7 +54,8 @@ public class FileResponse implements Serializable {
 
 		if ((_folder == fileResponse._folder) &&
 			(_lastModifiedTime == fileResponse._lastModifiedTime) &&
-			_path.equals(fileResponse._path) && (_size == fileResponse._size)) {
+			_pathHolder.equals(fileResponse._pathHolder) &&
+			(_size == fileResponse._size)) {
 
 			return true;
 		}
@@ -71,7 +72,7 @@ public class FileResponse implements Serializable {
 	}
 
 	public Path getPath() {
-		return Paths.get(_path);
+		return _pathHolder.getPath();
 	}
 
 	public long getSize() {
@@ -83,7 +84,7 @@ public class FileResponse implements Serializable {
 		int hash = HashUtil.hash(0, _folder);
 
 		hash = HashUtil.hash(hash, _lastModifiedTime);
-		hash = HashUtil.hash(hash, _path);
+		hash = HashUtil.hash(hash, _pathHolder);
 		hash = HashUtil.hash(hash, _size);
 
 		return hash;
@@ -123,8 +124,8 @@ public class FileResponse implements Serializable {
 		sb.append(_lastModifiedTime);
 		sb.append(", localFile=");
 		sb.append(_localFile);
-		sb.append(", path=");
-		sb.append(_path);
+		sb.append(", pathHolder=");
+		sb.append(_pathHolder);
 
 		if (_size == FILE_NOT_FOUND) {
 			sb.append(", status=File Not Found");
@@ -147,7 +148,7 @@ public class FileResponse implements Serializable {
 	private final boolean _folder;
 	private final long _lastModifiedTime;
 	private transient Path _localFile;
-	private final String _path;
+	private final PathHolder _pathHolder;
 	private final long _size;
 
 }

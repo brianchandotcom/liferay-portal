@@ -67,13 +67,11 @@ public class FabricPathMappingVisitor extends AnnotatedFieldMappingVisitor {
 		Path mappedPath = RepositoryHelperUtil.getRepositoryFilePath(
 			_remoteRepositoryPath, path);
 
-		mappedPath = mappedPath.toAbsolutePath();
-
 		if (_reverseMapping) {
-			_pathMap.put(mappedPath, path.toAbsolutePath());
+			_pathMap.put(mappedPath, path);
 		}
 		else {
-			_pathMap.put(path.toAbsolutePath(), mappedPath);
+			_pathMap.put(path, mappedPath);
 		}
 
 		return mappedPath.toFile();

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.fabric.netty.worker;
 
+import com.liferay.portal.kernel.io.PathHolder;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessConfig;
 import com.liferay.portal.kernel.process.ProcessException;
@@ -22,7 +23,6 @@ import com.liferay.util.SerializableUtil;
 import java.io.Serializable;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -54,13 +54,12 @@ public class NettyFabricWorkerConfig<T extends Serializable>
 		_processCallable = new NettyFabricWorkerProcessCallable<T>(
 			processCallable);
 
-		_inputPathStringMap = new HashMap<String, String>();
+		_inputPathHolderMap = new HashMap<PathHolder, PathHolder>();
 
 		for (Map.Entry<Path, Path> entry : inputPathMap.entrySet()) {
-			Path keyPath = entry.getKey();
-			Path valuePath = entry.getValue();
-
-			_inputPathStringMap.put(keyPath.toString(), valuePath.toString());
+			_inputPathHolderMap.put(
+				new PathHolder(entry.getKey()),
+				new PathHolder(entry.getValue()));
 		}
 	}
 
@@ -71,12 +70,14 @@ public class NettyFabricWorkerConfig<T extends Serializable>
 	public Map<Path, Path> getInputPathMap() {
 		Map<Path, Path> inputPathMap = new HashMap<Path, Path>();
 
-		for (Map.Entry<String, String> entry : _inputPathStringMap.entrySet()) {
-			String keyPathString = entry.getKey();
-			String valuePathString = entry.getValue();
+		for (Map.Entry<PathHolder, PathHolder> entry :
+				_inputPathHolderMap.entrySet()) {
+
+			PathHolder keyPathHolder = entry.getKey();
+			PathHolder valuePathHolder = entry.getValue();
 
 			inputPathMap.put(
-				Paths.get(keyPathString), Paths.get(valuePathString));
+				keyPathHolder.getPath(), valuePathHolder.getPath());
 		}
 
 		return inputPathMap;
@@ -93,7 +94,7 @@ public class NettyFabricWorkerConfig<T extends Serializable>
 	private static final long serialVersionUID = 1L;
 
 	private final long _id;
-	private final Map<String, String> _inputPathStringMap;
+	private final Map<PathHolder, PathHolder> _inputPathHolderMap;
 	private final ProcessCallable<T> _processCallable;
 	private final ProcessConfig _processConfig;
 

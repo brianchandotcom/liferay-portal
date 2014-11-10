@@ -14,13 +14,13 @@
 
 package com.liferay.portal.fabric.netty.fileserver;
 
+import com.liferay.portal.kernel.io.PathHolder;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /**
  * @author Shuyang Zhou
@@ -30,7 +30,7 @@ public class FileRequest implements Serializable {
 	public FileRequest(
 		Path path, long lastModifiedTime, boolean deleteAfterFetch) {
 
-		_path = String.valueOf(path.toAbsolutePath());
+		_pathHolder = new PathHolder(path);
 		_lastModifiedTime = lastModifiedTime;
 		_deleteAfterFetch = deleteAfterFetch;
 	}
@@ -49,7 +49,7 @@ public class FileRequest implements Serializable {
 
 		if ((_deleteAfterFetch == fileRequest._deleteAfterFetch) &&
 			(_lastModifiedTime == fileRequest._lastModifiedTime) &&
-			_path.equals(fileRequest._path)) {
+			_pathHolder.equals(fileRequest._pathHolder)) {
 
 			return true;
 		}
@@ -62,7 +62,7 @@ public class FileRequest implements Serializable {
 	}
 
 	public Path getPath() {
-		return Paths.get(_path);
+		return _pathHolder.getPath();
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class FileRequest implements Serializable {
 		int hash = HashUtil.hash(0, _deleteAfterFetch);
 
 		hash = HashUtil.hash(hash, _lastModifiedTime);
-		hash = HashUtil.hash(hash, _path);
+		hash = HashUtil.hash(hash, _pathHolder);
 
 		return hash;
 	}
@@ -87,8 +87,8 @@ public class FileRequest implements Serializable {
 		sb.append(_deleteAfterFetch);
 		sb.append(", lastModifiedTime=");
 		sb.append(_lastModifiedTime);
-		sb.append(", path=");
-		sb.append(_path);
+		sb.append(", pathHolder=");
+		sb.append(_pathHolder);
 		sb.append("}");
 
 		return sb.toString();
@@ -98,6 +98,6 @@ public class FileRequest implements Serializable {
 
 	private final boolean _deleteAfterFetch;
 	private final long _lastModifiedTime;
-	private final String _path;
+	private final PathHolder _pathHolder;
 
 }

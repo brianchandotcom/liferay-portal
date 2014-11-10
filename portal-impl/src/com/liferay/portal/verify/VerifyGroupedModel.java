@@ -15,6 +15,7 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.concurrent.ThrowableAwareRunnable;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -47,6 +48,10 @@ public class VerifyGroupedModel extends VerifyProcess {
 			unverifiedTableNames.add(verifiableGroupedModel.getTableName());
 		}
 
+		List<VerifiableGroupedModelRunnable> verifiableGroupedModelRunnables =
+			new ArrayList<VerifiableGroupedModelRunnable>(
+				unverifiedTableNames.size());
+
 		while (!unverifiedTableNames.isEmpty()) {
 			int count = unverifiedTableNames.size();
 
@@ -61,7 +66,10 @@ public class VerifyGroupedModel extends VerifyProcess {
 					continue;
 				}
 
-				verifyGroupedModel(verifiableGroupedModel);
+				VerifiableGroupedModelRunnable verifyAuditedModelRunnable =
+					new VerifiableGroupedModelRunnable(verifiableGroupedModel);
+
+				verifiableGroupedModelRunnables.add(verifyAuditedModelRunnable);
 
 				unverifiedTableNames.remove(
 					verifiableGroupedModel.getTableName());
@@ -72,6 +80,8 @@ public class VerifyGroupedModel extends VerifyProcess {
 					"Circular dependency detected " + unverifiedTableNames);
 			}
 		}
+
+		doVerify(verifiableGroupedModelRunnables);
 	}
 
 	@Override
@@ -182,5 +192,23 @@ public class VerifyGroupedModel extends VerifyProcess {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		VerifyGroupedModel.class);
+
+	private class VerifiableGroupedModelRunnable
+		extends ThrowableAwareRunnable {
+
+		public VerifiableGroupedModelRunnable(
+			VerifiableGroupedModel verifiableGroupedModel) {
+
+			_verifiableGroupedModel = verifiableGroupedModel;
+		}
+
+		@Override
+		protected void doRun() throws Exception {
+			verifyGroupedModel(_verifiableGroupedModel);
+		}
+
+		private final VerifiableGroupedModel _verifiableGroupedModel;
+
+	}
 
 }

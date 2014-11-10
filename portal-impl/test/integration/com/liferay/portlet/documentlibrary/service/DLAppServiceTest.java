@@ -604,6 +604,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 			DLAppServiceUtil.getFolder(subfolder.getFolderId());
 		}
+
 	}
 
 	@ExecutionTestListeners(
@@ -661,6 +662,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 			DLAppServiceUtil.getFolder(subfolder.getFolderId());
 		}
+
 	}
 
 	@ExecutionTestListeners(

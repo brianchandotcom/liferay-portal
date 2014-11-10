@@ -329,6 +329,7 @@ public class DistributedRegistryTest {
 
 		@Distributed
 		public static String name9 = "name9";
+
 	}
 
 	private interface ParentInterface {

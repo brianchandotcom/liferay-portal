@@ -63,6 +63,7 @@ public interface BulkOperationCapability extends Capability {
 		private final Class<? extends Field<T>> _field;
 		private final Operator _operator;
 		private final T _value;
+
 	}
 
 	public enum Operator {

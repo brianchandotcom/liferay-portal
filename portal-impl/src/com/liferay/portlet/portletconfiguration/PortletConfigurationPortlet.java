@@ -127,14 +127,6 @@ public class PortletConfigurationPortlet extends StrutsPortlet {
 	private class PortletConfigurationPortletPortletConfig
 		extends PortletConfigImpl {
 
-		private PortletConfigurationPortletPortletConfig(
-			PortletConfigImpl portletConfigImpl) {
-
-			super(
-				portletConfigImpl.getPortlet(),
-				portletConfigImpl.getPortletContext());
-		}
-
 		@Override
 		public ResourceBundle getResourceBundle(Locale locale) {
 			try {
@@ -165,6 +157,15 @@ public class PortletConfigurationPortlet extends StrutsPortlet {
 
 			return super.getResourceBundle(locale);
 		}
+
+		private PortletConfigurationPortletPortletConfig(
+			PortletConfigImpl portletConfigImpl) {
+
+			super(
+				portletConfigImpl.getPortlet(),
+				portletConfigImpl.getPortletContext());
+		}
+
 	}
 
 }

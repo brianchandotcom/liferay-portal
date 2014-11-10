@@ -1449,6 +1449,7 @@ public class PortletURLImpl
 
 			return generateToString();
 		}
+
 	}
 
 }

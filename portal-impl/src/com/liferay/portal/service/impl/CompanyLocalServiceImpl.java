@@ -1629,6 +1629,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		private ActionableDynamicQuery _actionableDynamicQuery;
 		private long _parentGroupId = GroupConstants.DEFAULT_PARENT_GROUP_ID;
+
 	}
 
 	protected class DeleteOrganizationActionableDynamicQuery {

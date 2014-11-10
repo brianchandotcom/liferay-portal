@@ -160,6 +160,7 @@ public class XugglerAutoInstallHelper {
 				System.setOut(printStream);
 			}
 		}
+
 	}
 
 	private static String getXugglerJarFileName() {

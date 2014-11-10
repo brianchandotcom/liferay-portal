@@ -176,6 +176,7 @@ public class AspectJMockingNewJVMJUnitTestRunner extends NewJVMJUnitTestRunner {
 		private File _dumpDir;
 		private byte[] _encodedProcessCallable;
 		private String _toString;
+
 	}
 
 }

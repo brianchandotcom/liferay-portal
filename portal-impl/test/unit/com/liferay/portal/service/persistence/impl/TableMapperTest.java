@@ -1760,6 +1760,7 @@ public class TableMapperTest {
 		}
 
 		private int _counter;
+
 	}
 
 	private class MockMultiVMPool implements MultiVMPool {

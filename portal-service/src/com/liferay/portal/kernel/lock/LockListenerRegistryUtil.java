@@ -82,6 +82,7 @@ public class LockListenerRegistryUtil {
 
 			_lockListeners.remove(lockListener);
 		}
+
 	}
 
 }

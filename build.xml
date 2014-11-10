@@ -1066,10 +1066,6 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 		<echo>The "start" target is now deprecated. Please use the "compile" target instead.</echo>
 	</target>
 
-	<target name="test">
-		<ant antfile="build-test.xml" target="test" inheritAll="false" />
-	</target>
-
 	<target name="test-integration">
 		<ant antfile="build-test.xml" target="test-integration" inheritAll="false" />
 	</target>

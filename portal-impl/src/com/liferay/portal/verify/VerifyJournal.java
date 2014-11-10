@@ -18,6 +18,9 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -83,6 +86,7 @@ public class VerifyJournal extends VerifyProcess {
 		verifyDynamicElements();
 		updateFolderAssets();
 		verifyOracleNewLine();
+		verifyAssets();
 		verifyPermissionsAndAssets();
 		verifySearch();
 		verifyTree();
@@ -247,6 +251,84 @@ public class VerifyJournal extends VerifyProcess {
 		}
 		finally {
 			DataAccess.cleanUp(con, ps);
+		}
+	}
+
+	protected void verifyAssets() throws PortalException {
+		List<JournalArticle> journalArticles =
+			JournalArticleLocalServiceUtil.getNoAssetArticles();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Processing " + journalArticles.size() +
+					" articles with no asset");
+		}
+
+		for (JournalArticle journalArticle : journalArticles) {
+			try {
+				JournalArticleLocalServiceUtil.updateAsset(
+					journalArticle.getUserId(), journalArticle, null, null,
+					null);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to update asset for article " +
+							journalArticle.getId() + ": " + e.getMessage());
+				}
+			}
+		}
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			JournalArticleLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Property status = PropertyFactoryUtil.forName("status");
+					dynamicQuery.add(status.eq(WorkflowConstants.STATUS_DRAFT));
+
+					Property version = PropertyFactoryUtil.forName("version");
+					dynamicQuery.add(
+						version.eq(JournalArticleConstants.VERSION_DEFAULT));
+				}
+			}
+		);
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
+
+				@Override
+				public void performAction(Object object)
+					throws PortalException {
+
+					JournalArticle article = (JournalArticle)object;
+
+					AssetEntry assetEntry =
+						AssetEntryLocalServiceUtil.fetchEntry(
+							JournalArticle.class.getName(),
+							article.getResourcePrimKey());
+
+					AssetEntryLocalServiceUtil.updateEntry(
+						assetEntry.getClassName(), assetEntry.getClassPK(),
+						null, assetEntry.isVisible());
+				}
+			});
+
+		long count = actionableDynamicQuery.performCount();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Processing " + count +
+					" default article versions in draft mode");
+		}
+
+		actionableDynamicQuery.performActions();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Assets verified for articles");
 		}
 	}
 
@@ -560,32 +642,6 @@ public class VerifyJournal extends VerifyProcess {
 		ResourceLocalServiceUtil.addResources(
 			article.getCompanyId(), 0, 0, JournalArticle.class.getName(),
 			article.getResourcePrimKey(), false, false, false);
-
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			JournalArticle.class.getName(), article.getResourcePrimKey());
-
-		if (assetEntry == null) {
-			try {
-				JournalArticleLocalServiceUtil.updateAsset(
-					article.getUserId(), article, null, null, null);
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to update asset for article " +
-							article.getId() + ": " + e.getMessage());
-				}
-			}
-		}
-		else if ((article.getStatus() ==
-					WorkflowConstants.STATUS_DRAFT) &&
-				 (article.getVersion() ==
-					JournalArticleConstants.VERSION_DEFAULT)) {
-
-			AssetEntryLocalServiceUtil.updateEntry(
-				assetEntry.getClassName(), assetEntry.getClassPK(), null,
-				assetEntry.isVisible());
-		}
 
 		try {
 			JournalArticleLocalServiceUtil.checkStructure(

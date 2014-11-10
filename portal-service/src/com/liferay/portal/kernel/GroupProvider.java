@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -12,21 +12,14 @@
  * details.
  */
 
-package com.liferay.polls.model.impl;
+package com.liferay.portal.kernel;
 
-import com.liferay.polls.service.PollsVoteLocalServiceUtil;
+import com.liferay.portal.model.Group;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Carlos Sierra Andrés
  */
-public class PollsChoiceImpl extends PollsChoiceBaseImpl {
+public interface GroupProvider {
 
-	public PollsChoiceImpl() {
-	}
-
-	@Override
-	public int getVotesCount() {
-		return PollsVoteLocalServiceUtil.getChoiceVotesCount(getChoiceId());
-	}
-
+	public Group get();
 }

@@ -32,7 +32,7 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance(locale);
 </thead>
 
 <%
-int totalVotes = question.getVotesCount();
+int totalVotes = escapedQuestion.getVotesCount();
 
 for (int i = 0; i < choices.size(); i++) {
 	PollsChoice choice = (PollsChoice)choices.get(i);
@@ -107,7 +107,7 @@ for (int i = 0; i < choices.size(); i++) {
 			ResourceURL resourceURL = renderResponse.createResourceURL();
 
 			resourceURL.setParameter("struts_action", "/polls/view_chart");
-			resourceURL.setParameter("questionId", Long.toString(question.getQuestionId()));
+			resourceURL.setParameter("questionId", Long.toString(escapedQuestion.getQuestionId()));
 			resourceURL.setParameter("chartType", TextFormatter.format(chart, TextFormatter.N));
 
 			String hrefTaglib = "javascript:var viewChartWindow = window.open('" + resourceURL + "', 'viewChart', 'directories=no,height=430,location=no,menubar=no,resizable=no,scrollbars=no,status=no,toolbar=no,width=420'); void(''); viewChartWindow.focus();";
@@ -121,7 +121,7 @@ for (int i = 0; i < choices.size(); i++) {
 
 	</div>
 
-	<c:if test="<%= PollsQuestionPermission.contains(permissionChecker, question, ActionKeys.UPDATE) %>">
+	<c:if test="<%= PollsQuestionPermissionUtil.contains(permissionChecker, question, ActionKeys.UPDATE) %>">
 		<br />
 
 		<liferay-ui:header
@@ -134,7 +134,7 @@ for (int i = 0; i < choices.size(); i++) {
 
 		portletURL.setParameter("struts_action", "/polls/view_question");
 		portletURL.setParameter("redirect", redirect);
-		portletURL.setParameter("questionId", String.valueOf(question.getQuestionId()));
+		portletURL.setParameter("questionId", String.valueOf(escapedQuestion.getQuestionId()));
 		portletURL.setParameter("viewResults", Boolean.TRUE.toString());
 
 		List<String> headerNames = new ArrayList<String>();
@@ -145,11 +145,11 @@ for (int i = 0; i < choices.size(); i++) {
 
 		SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, null);
 
-		int total = PollsVoteLocalServiceUtil.getQuestionVotesCount(question.getQuestionId());
+		int total = PollsVoteLocalServiceUtil.getQuestionVotesCount(escapedQuestion.getQuestionId());
 
 		searchContainer.setTotal(total);
 
-		List results = PollsVoteLocalServiceUtil.getQuestionVotes(question.getQuestionId(), searchContainer.getStart(), searchContainer.getEnd());
+		List results = PollsVoteLocalServiceUtil.getQuestionVotes(escapedQuestion.getQuestionId(), searchContainer.getStart(), searchContainer.getEnd());
 
 		searchContainer.setResults(results);
 
@@ -199,11 +199,11 @@ for (int i = 0; i < choices.size(); i++) {
 	</c:if>
 </c:if>
 
-<c:if test="<%= question.isExpired() %>">
+<c:if test="<%= escapedQuestion.isExpired() %>">
 	<br />
 
 	<div style="font-size: xx-small;">
-		<%= LanguageUtil.format(request, "voting-is-disabled-because-this-poll-expired-on-x", dateFormatDateTime.format(question.getExpirationDate()), false) %>
+		<%= LanguageUtil.format(request, "voting-is-disabled-because-this-poll-expired-on-x", dateFormatDateTime.format(escapedQuestion.getExpirationDate()), false) %>
 	</div>
 </c:if>
 

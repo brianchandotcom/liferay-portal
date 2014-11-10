@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.util.service;
+package com.liferay.polls.service;
 
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;

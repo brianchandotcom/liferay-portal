@@ -14,11 +14,13 @@
 
 package com.liferay.portal.servlet;
 
+import com.google.common.base.Optional;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.dao.shard.ShardDataSourceTargetSource;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.events.StartupAction;
 import com.liferay.portal.events.StartupHelperUtil;
+import com.liferay.portal.kernel.UserProvider;
 import com.liferay.portal.kernel.cache.Lifecycle;
 import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
@@ -95,6 +97,8 @@ import com.liferay.portlet.PortletFilterFactory;
 import com.liferay.portlet.PortletInstanceFactoryUtil;
 import com.liferay.portlet.PortletURLListenerFactory;
 import com.liferay.portlet.social.util.SocialConfigurationUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 import com.liferay.util.ContentUtil;
 import com.liferay.util.servlet.EncryptedServletRequest;
 
@@ -131,6 +135,8 @@ import org.apache.struts.tiles.TilesUtilImpl;
  * @author Brian Myunghun Kim
  */
 public class MainServlet extends ActionServlet {
+
+	private Registry _userProviderRegistration;
 
 	@Override
 	public void destroy() {
@@ -346,11 +352,32 @@ public class MainServlet extends ActionServlet {
 			_log.error(e, e);
 		}
 
+		try {
+			initProviders();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
 		servletContext.setAttribute(WebKeys.STARTUP_FINISHED, true);
 
 		StartupHelperUtil.setStartupFinished(true);
 
 		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
+	}
+
+	protected void initProviders() {
+		_userProviderRegistration = RegistryUtil.getRegistry();
+
+		_userProviderRegistration.registerService(
+			UserProvider.class, new UserProvider() {
+
+				@Override
+				public User get() {
+					return UserLocalServiceUtil.fetchUser(
+						PrincipalThreadLocal.getUserId());
+				}
+		});
 	}
 
 	@Override

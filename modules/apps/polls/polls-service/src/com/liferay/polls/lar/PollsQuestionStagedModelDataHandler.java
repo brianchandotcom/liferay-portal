@@ -15,6 +15,7 @@
 package com.liferay.polls.lar;
 
 import com.liferay.polls.model.PollsQuestion;
+import com.liferay.polls.repository.PollsQuestionRepository;
 import com.liferay.polls.service.PollsQuestionLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,13 +23,9 @@ import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.service.ServiceContext;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -74,8 +71,8 @@ public class PollsQuestionStagedModelDataHandler
 	public PollsQuestion fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return PollsQuestionLocalServiceUtil.fetchPollsQuestionByUuidAndGroupId(
-			uuid, groupId);
+		return PollsQuestionLocalServiceUtil.
+					fetchPollsQuestionByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override
@@ -97,7 +94,8 @@ public class PollsQuestionStagedModelDataHandler
 			question);
 
 		portletDataContext.addClassedModel(
-			questionElement, ExportImportPathUtil.getModelPath(question),
+			questionElement,
+			ExportImportPathUtil.getModelPath(question),
 			question);
 	}
 
@@ -121,69 +119,38 @@ public class PollsQuestionStagedModelDataHandler
 			PortletDataContext portletDataContext, PollsQuestion question)
 		throws Exception {
 
-		long userId = portletDataContext.getUserId(question.getUserUuid());
-
-		int expirationMonth = 0;
-		int expirationDay = 0;
-		int expirationYear = 0;
-		int expirationHour = 0;
-		int expirationMinute = 0;
-		boolean neverExpire = true;
-
-		Date expirationDate = question.getExpirationDate();
-
-		if (expirationDate != null) {
-			Calendar expirationCal = CalendarFactoryUtil.getCalendar();
-
-			expirationCal.setTime(expirationDate);
-
-			expirationMonth = expirationCal.get(Calendar.MONTH);
-			expirationDay = expirationCal.get(Calendar.DATE);
-			expirationYear = expirationCal.get(Calendar.YEAR);
-			expirationHour = expirationCal.get(Calendar.HOUR);
-			expirationMinute = expirationCal.get(Calendar.MINUTE);
-			neverExpire = false;
-
-			if (expirationCal.get(Calendar.AM_PM) == Calendar.PM) {
-				expirationHour += 12;
-			}
-		}
-
-		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			question);
-
 		PollsQuestion importedQuestion = null;
 
+		long scopeGroupId = portletDataContext.getScopeGroupId();
+
 		if (portletDataContext.isDataStrategyMirror()) {
-			PollsQuestion existingQuestion = fetchStagedModelByUuidAndGroupId(
-				question.getUuid(), portletDataContext.getScopeGroupId());
-
-			if (existingQuestion == null) {
-				serviceContext.setUuid(question.getUuid());
-
-				importedQuestion = PollsQuestionLocalServiceUtil.addQuestion(
-					userId, question.getTitleMap(),
-					question.getDescriptionMap(), expirationMonth,
-					expirationDay, expirationYear, expirationHour,
-					expirationMinute, neverExpire, null, serviceContext);
-			}
-			else {
-				importedQuestion = PollsQuestionLocalServiceUtil.updateQuestion(
-					userId, existingQuestion.getQuestionId(),
-					question.getTitleMap(), question.getDescriptionMap(),
-					expirationMonth, expirationDay, expirationYear,
-					expirationHour, expirationMinute, neverExpire, null,
-					serviceContext);
-			}
+			importedQuestion =
+				fetchStagedModelByUuidAndGroupId(
+					question.getUuid(), scopeGroupId);
 		}
-		else {
-			importedQuestion = PollsQuestionLocalServiceUtil.addQuestion(
-				userId, question.getTitleMap(), question.getDescriptionMap(),
-				expirationMonth, expirationDay, expirationYear, expirationHour,
-				expirationMinute, neverExpire, null, serviceContext);
+
+		if (importedQuestion == null) {
+			importedQuestion = new PollsQuestion();
+
+			//TODO: This should be executed in a context
+			importedQuestion.setCompanyId(
+				portletDataContext.getCompanyId());
+			importedQuestion.setGroupId(
+				scopeGroupId);
 		}
+
+		importedQuestion.setModelAttributes(
+			question.getModelAttributes());
+
+		_pollsQuestionRepository.persist(importedQuestion);
 
 		portletDataContext.importClassedModel(question, importedQuestion);
 	}
+
+	public void setPollsQuestionRepository(PollsQuestionRepository pollsQuestionRepository) {
+		_pollsQuestionRepository = pollsQuestionRepository;
+	}
+
+	protected PollsQuestionRepository _pollsQuestionRepository;
 
 }

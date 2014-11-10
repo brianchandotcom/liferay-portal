@@ -411,14 +411,14 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	protected void appendOrderByComparator(
 		StringBundler query, String entityAlias,
-		OrderByComparator<T> orderByComparator) {
+		OrderByComparator<? extends T> orderByComparator) {
 
 		appendOrderByComparator(query, entityAlias, orderByComparator, false);
 	}
 
 	protected void appendOrderByComparator(
 		StringBundler query, String entityAlias,
-		OrderByComparator<T> orderByComparator, boolean sqlQuery) {
+		OrderByComparator<? extends T> orderByComparator, boolean sqlQuery) {
 
 		query.append(ORDER_BY_CLAUSE);
 

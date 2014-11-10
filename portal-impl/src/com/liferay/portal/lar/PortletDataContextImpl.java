@@ -946,8 +946,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
-	public Element getImportDataGroupElement(
-		Class<? extends StagedModel> clazz) {
+	public Element getImportDataGroupElement(Class<?> clazz) {
 
 		return getImportDataGroupElement(clazz.getSimpleName());
 	}

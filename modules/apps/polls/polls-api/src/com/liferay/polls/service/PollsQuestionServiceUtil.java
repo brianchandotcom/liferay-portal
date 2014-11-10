@@ -21,6 +21,8 @@ import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
+import java.util.Map;
+
 /**
  * Provides the remote service utility for PollsQuestion. This utility wraps
  * {@link com.liferay.polls.service.impl.PollsQuestionServiceImpl} and is the
@@ -47,7 +49,7 @@ public class PollsQuestionServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		java.util.List<com.liferay.polls.model.PollsChoice> choices,
+		java.util.List<Map<String, Object>> choices,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -91,7 +93,7 @@ public class PollsQuestionServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		java.util.List<com.liferay.polls.model.PollsChoice> choices,
+		java.util.List<Map<String, Object>> choices,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

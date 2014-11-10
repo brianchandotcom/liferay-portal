@@ -20,6 +20,7 @@ import com.liferay.polls.model.PollsVote;
 import com.liferay.polls.model.PollsVoteModel;
 import com.liferay.polls.model.PollsVoteSoap;
 
+import com.liferay.polls.service.ServiceProps;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -91,14 +92,14 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
-				"value.object.entity.cache.enabled.com.liferay.polls.model.PollsVote"),
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(ServiceProps.get(
+			"value.object.entity.cache.enabled.com.liferay.polls.model.PollsVote"),
 			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
-				"value.object.finder.cache.enabled.com.liferay.polls.model.PollsVote"),
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(ServiceProps.get(
+			"value.object.finder.cache.enabled.com.liferay.polls.model.PollsVote"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
-				"value.object.column.bitmask.enabled.com.liferay.polls.model.PollsVote"),
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(ServiceProps.get(
+			"value.object.column.bitmask.enabled.com.liferay.polls.model.PollsVote"),
 			true);
 	public static final long CHOICEID_COLUMN_BITMASK = 1L;
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
@@ -156,8 +157,8 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
-				"lock.expiration.time.com.liferay.polls.model.PollsVote"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(ServiceProps.get(
+		"lock.expiration.time.com.liferay.polls.model.PollsVote"));
 
 	public PollsVoteModelImpl() {
 	}

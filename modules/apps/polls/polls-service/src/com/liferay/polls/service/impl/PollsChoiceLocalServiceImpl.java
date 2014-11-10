@@ -32,37 +32,6 @@ public class PollsChoiceLocalServiceImpl
 	extends PollsChoiceLocalServiceBaseImpl {
 
 	@Override
-	public PollsChoice addChoice(
-			long userId, long questionId, String name, String description,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		validate(name, description);
-
-		User user = userPersistence.findByPrimaryKey(userId);
-		Date now = new Date();
-
-		long choiceId = counterLocalService.increment();
-
-		PollsChoice choice = pollsChoicePersistence.create(choiceId);
-
-		choice.setUuid(serviceContext.getUuid());
-		choice.setGroupId(serviceContext.getScopeGroupId());
-		choice.setCompanyId(user.getCompanyId());
-		choice.setUserId(user.getUserId());
-		choice.setUserName(user.getFullName());
-		choice.setCreateDate(serviceContext.getCreateDate(now));
-		choice.setModifiedDate(serviceContext.getModifiedDate(now));
-		choice.setQuestionId(questionId);
-		choice.setName(name);
-		choice.setDescription(description);
-
-		pollsChoicePersistence.update(choice);
-
-		return choice;
-	}
-
-	@Override
 	public PollsChoice getChoice(long choiceId) throws PortalException {
 		return pollsChoicePersistence.findByPrimaryKey(choiceId);
 	}
@@ -75,28 +44,6 @@ public class PollsChoiceLocalServiceImpl
 	@Override
 	public int getChoicesCount(long questionId) {
 		return pollsChoicePersistence.countByQuestionId(questionId);
-	}
-
-	@Override
-	public PollsChoice updateChoice(
-			long choiceId, long questionId, String name, String description,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		validate(name, description);
-
-		pollsQuestionPersistence.findByPrimaryKey(questionId);
-
-		PollsChoice choice = pollsChoicePersistence.findByPrimaryKey(choiceId);
-
-		choice.setModifiedDate(serviceContext.getModifiedDate(null));
-		choice.setQuestionId(questionId);
-		choice.setName(name);
-		choice.setDescription(description);
-
-		pollsChoicePersistence.update(choice);
-
-		return choice;
 	}
 
 	protected void validate(String name, String description)

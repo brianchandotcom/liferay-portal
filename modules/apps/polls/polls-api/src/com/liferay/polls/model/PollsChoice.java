@@ -16,23 +16,76 @@ package com.liferay.polls.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.model.PersistedModel;
+import com.liferay.polls.exception.QuestionChoiceException;
+import com.liferay.polls.service.PollsVoteLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.Accessor;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * The extended model interface for the PollsChoice service. Represents a row in the &quot;PollsChoice&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see PollsChoiceModel
- * @see com.liferay.polls.model.impl.PollsChoiceImpl
- * @see com.liferay.polls.model.impl.PollsChoiceModelImpl
+ * @see PollsChoiceModelImpl
  * @generated
  */
 @ProviderType
-public interface PollsChoice extends PollsChoiceModel, PersistedModel {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.polls.model.impl.PollsChoiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+public class PollsChoice extends PollsChoiceModelImpl implements PollsChoiceModel {
+
+	protected PollsQuestion _pollsQuestion;
+
+	// [[@]] PollsChoice is a value object and belongs to PollsQuestion
+	// PollsChoice constructor _may_ takes PollsQuestion as an argument,
+	// but that is not necessary. The key point is that choices can only
+	// be added to the questions and not the opposite.
+
+	// [[@]] PollsChoice is NOT an value object any more. We need to know it's
+	// identity since it's votes are associated to exact, identified, choice.
+	// Therefore, one choice is no longer equal by value equality, since it
+	// depends on choices, too.
+
+	public PollsChoice() {
+		setNew(true);
+	}
+
+	/**
+	 * [[@]] returns associated polls question.
+	 * not necessary needed, we are using it only for
+	 * hacking purposes at the moment and this may be removed later.
 	 */
-	public int getVotesCount();
+	public PollsQuestion getPollsQuestion() {
+		return _pollsQuestion;
+	}
+
+	public static final Accessor<PollsChoice, String> CHOICE_NAME_ACCESSOR = new Accessor<PollsChoice, String>() {
+
+		@Override
+		public String get(PollsChoice pollsChoice) {
+			return pollsChoice.getName();
+		}
+
+		@Override
+		public Class<String> getAttributeClass() {
+			return String.class;
+		}
+
+		@Override
+		public Class<PollsChoice> getTypeClass() {
+			return PollsChoice.class;
+		}
+	};
+
+	public int getVotesCount() {
+		return PollsVoteLocalServiceUtil.getChoiceVotesCount(getChoiceId());
+	}
+
+	public void validate() throws PortalException {
+		if (Validator.isNull(getName()) || Validator.isNull(getDescription())) {
+			throw new QuestionChoiceException();
+		}
+	}
+
+
+
 }

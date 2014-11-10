@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.StagedModel;
 
 import java.util.Map;
 
@@ -102,7 +103,7 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 
 		for (PollsChoice choice : question.getChoices()) {
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, portletId, choice);
+				portletDataContext, portletId, (StagedModel)choice);
 		}
 
 		if (portletDataContext.getBooleanParameter(

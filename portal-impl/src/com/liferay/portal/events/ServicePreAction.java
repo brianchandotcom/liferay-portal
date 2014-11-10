@@ -18,6 +18,8 @@ import com.liferay.portal.LayoutPermissionException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.NoSuchUserException;
+import com.liferay.portal.kernel.CompanyProvider;
+import com.liferay.portal.kernel.GroupProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
@@ -35,12 +37,14 @@ import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SessionParamUtil;
+import com.liferay.portal.kernel.util.SiteGroupThreadLocal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -62,11 +66,13 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.VirtualLayout;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
+import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -108,6 +114,7 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -123,6 +130,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 import org.apache.commons.lang.time.StopWatch;
 
 /**
@@ -134,6 +143,55 @@ public class ServicePreAction extends Action {
 
 	public ServicePreAction() {
 		initImportLARFiles();
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		registry.registerService(CompanyProvider.class, new CompanyProvider() {
+			@Override
+			public Company get() {
+				try {
+					return CompanyLocalServiceUtil.getCompany(
+									CompanyThreadLocal.getCompanyId());
+				} catch (PortalException pe) {
+					throw new IllegalStateException(pe);
+				}
+			}
+		});
+
+		Hashtable<String, Object> properties = new Hashtable<>();
+
+		properties.put("group.type", "scoped");
+		properties.put("service.ranking", 1);
+
+		registry.registerService(GroupProvider.class, new GroupProvider() {
+			@Override
+			public Group get() {
+				try {
+					return GroupLocalServiceUtil.getGroup(
+							GroupThreadLocal.getGroupId());
+				} catch (PortalException pe) {
+					throw new IllegalStateException(pe);
+				}
+			}
+		}, properties);
+
+		properties = new Hashtable<>();
+
+		properties.put("group.type", "site");
+		properties.put("service.ranking", 0);
+
+		registry.registerService(GroupProvider.class, new GroupProvider() {
+			@Override
+			public Group get() {
+				try {
+					return GroupLocalServiceUtil.getGroup(
+							SiteGroupThreadLocal.getGroupId());
+				} catch (PortalException pe) {
+					throw new IllegalStateException(pe);
+				}
+			}
+		}, properties);
+
 	}
 
 	public ThemeDisplay initThemeDisplay(
@@ -147,6 +205,8 @@ public class ServicePreAction extends Action {
 		Company company = PortalUtil.getCompany(request);
 
 		long companyId = company.getCompanyId();
+
+		CompanyThreadLocal.setCompanyId(companyId);
 
 		// CDN host
 
@@ -676,6 +736,9 @@ public class ServicePreAction extends Action {
 				siteGroupId = PortalUtil.getSiteGroupId(layout.getGroupId());
 			}
 		}
+
+		GroupThreadLocal.setGroupId(scopeGroupId);
+		SiteGroupThreadLocal.setGroupId(siteGroupId);
 
 		// Theme and color scheme
 

@@ -130,7 +130,18 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public void click(String locator) {
-		WebDriverHelper.click(this, locator);
+		WebElement webElement = getWebElement(locator);
+
+		try {
+			webElement.click();
+		}
+		catch (Exception e) {
+			if (!webElement.isDisplayed()) {
+				scrollWebElementIntoView(webDriver, webElement);
+			}
+
+			webElement.click();
+		}
 	}
 
 	@Override
@@ -439,7 +450,17 @@ public class MobileDriverToSeleniumBridge
 	}
 
 	public String getText(String locator, String timeout) {
-		return WebDriverHelper.getText(this, locator, timeout);
+		WebElement webElement = getWebElement(webDriver, locator, timeout);
+
+		if (!webElement.isDisplayed()) {
+			scrollWebElementIntoView(webDriver, webElement);
+		}
+
+		String text = webElement.getText();
+
+		text = text.trim();
+
+		return text.replace("\n", " ");
 	}
 
 	@Override
@@ -542,7 +563,13 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public boolean isVisible(String locator) {
-		return WebDriverHelper.isVisible(this, locator);
+		WebElement webElement = getWebElement(webDriver, locator, "1");
+
+		if (!webElement.isDisplayed()) {
+			scrollWebElementIntoView(webDriver, webElement);
+		}
+
+		return webElement.isDisplayed();
 	}
 
 	@Override

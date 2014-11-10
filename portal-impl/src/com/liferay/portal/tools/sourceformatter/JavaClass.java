@@ -72,7 +72,7 @@ public class JavaClass {
 			List<String> testAnnotationsExclusions)
 		throws Exception {
 
-		if (_javaTerms == null) {
+		if ((_javaTerms == null) || _javaTerms.isEmpty()) {
 			return _content;
 		}
 
@@ -624,6 +624,15 @@ public class JavaClass {
 
 			previousJavaTerm = javaTerm;
 		}
+
+		String lastJavaTermContent = previousJavaTerm.getContent();
+
+		if (!lastJavaTermContent.endsWith("\n\n")) {
+			int x = _content.lastIndexOf(CharPool.CLOSE_CURLY_BRACE);
+
+			_content = StringUtil.insert(
+				_content, "\n", x - _indent.length() + 1);
+		}
 	}
 
 	protected String fixLeadingTabs(
@@ -984,7 +993,7 @@ public class JavaClass {
 		if (javaTermStartPosition != -1) {
 			int javaTermEndPosition =
 				_content.lastIndexOf(StringPool.CLOSE_CURLY_BRACE) -
-					_indent.length();
+					_indent.length() + 1;
 
 			JavaTerm javaTerm = getJavaTerm(
 				javaTermName, javaTermType, javaTermLineCount,

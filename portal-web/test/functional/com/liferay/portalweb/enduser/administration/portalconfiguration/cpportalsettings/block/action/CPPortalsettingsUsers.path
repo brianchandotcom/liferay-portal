@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>APPLY_TO_EXISTING_USERS_CHECKBOX</td>
-	<td>//input[@id='_130_admin.sync.default.associations']</td>
+	<td>//input[@id='_130_admin-sync-default-associations']</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,27 +61,27 @@
 <!--FIELDS-->
 <tr>
 	<td>FIELDS_TERMS_OF_USE_REQUIRED_CHECKBOX</td>
-	<td>//input[@id='_130_terms.of.use.required']</td>
+	<td>//input[@id='_130_terms-of-use-required']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FIELDS_AUTOGENERATE_USER_SCREEN_NAMES_CHECKBOX</td>
-	<td>//input[@id='_130_users.screen.name.always.autogenerate']</td>
+	<td>//input[@id='_130_users-screen-name-always-autogenerate']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FIELDS_LAST_NAME_REQUIRED_CHECKBOX</td>
-	<td>//input[@id='_130_users.last.name.required']</td>
+	<td>//input[@id='_130_users-last-name-required']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FIELDS_ENABLE_BIRTHDAY_CHECKBOX</td>
-	<td>//input[@id='_130_field.enable.com.liferay.portal.model.Contact.birthday']</td>
+	<td>//input[@id='_130_field-enable-com-liferay-portal-model-Contact-birthday']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FIELDS_ENABLE_GENDER_CHECKBOX</td>
-	<td>//input[@id='_130_field.enable.com.liferay.portal.model.Contact.male']</td>
+	<td>//input[@id='_130_field-enable-com-liferay-portal-model-Contact-male']</td>
 	<td></td>
 </tr>
 <tr>
@@ -92,22 +92,22 @@
 <!--RESERVED_CREDENTIALS-->
 <tr>
 	<td>RESERVED_CREDENTIALS_SCREEN_NAMES_HEADER</td>
-	<td>//label[@for='_130_admin.reserved.screen.names']</td>
+	<td>//label[@for='_130_admin-reserved-screen-names']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD</td>
-	<td>//textarea[@id='_130_admin.reserved.screen.names']</td>
+	<td>//textarea[@id='_130_admin-reserved-screen-names']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RESERVED_CREDENTIALS_EMAIL_ADDRESSES_HEADER</td>
-	<td>//label[@for='_130_admin.reserved.email.addresses']</td>
+	<td>//label[@for='_130_admin-reserved-email-addresses']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD</td>
-	<td>//textarea[@id='_130_admin.reserved.email.addresses']</td>
+	<td>//textarea[@id='_130_admin-reserved-email-addresses']</td>
 	<td></td>
 </tr>
 <tr>
@@ -118,42 +118,42 @@
 <!--DEFAULT_USER_ASSOCIATIONS-->
 <tr>
 	<td>DEFAULT_USER_ASSOCIATIONS_SITES_HEADER</td>
-	<td>//label[@for='_130_admin.default.group.names']</td>
+	<td>//label[@for='_130_admin-default-group-names']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DEFAULT_USER_ASSOCIATIONS_SITES_FIELD</td>
-	<td>//textarea[@id='_130_admin.default.group.names']</td>
+	<td>//textarea[@id='_130_admin-default-group-names']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_HEADER</td>
-	<td>//label[@for='_130_admin.default.organization.group.names']</td>
+	<td>//label[@for='_130_admin-default-organization-group-names']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD</td>
-	<td>//textarea[@id='_130_admin.default.organization.group.names']</td>
+	<td>//textarea[@id='_130_admin-default-organization-group-names']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DEFAULT_USER_ASSOCIATIONS_ROLES_HEADER</td>
-	<td>//label[@for='_130_admin.default.role.names']</td>
+	<td>//label[@for='_130_admin-default-role-names']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD</td>
-	<td>//textarea[@id='_130_admin.default.role.names']</td>
+	<td>//textarea[@id='_130_admin-default-role-names']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_HEADER</td>
-	<td>//label[@for='_130_admin.default.user.group.names']</td>
+	<td>//label[@for='_130_admin-default-user-group-names']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD</td>
-	<td>//textarea[@id='_130_admin.default.user.group.names']</td>
+	<td>//textarea[@id='_130_admin-default-user-group-names']</td>
 	<td></td>
 </tr>
 </tbody>

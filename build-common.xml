@@ -688,6 +688,32 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</sequential>
 	</macrodef>
 
+	<macrodef name="compile-test-integration">
+		<sequential>
+			<compile-test-cmd
+				test.type="integration"
+			/>
+
+			<unzip
+				dest="${project.dir}/portal-impl/test-classes/integration"
+				src="${project.dir}/portal-impl/portal-impl.jar"
+			>
+				<patternset>
+					<include name="META-INF/MANIFEST.MF" />
+				</patternset>
+			</unzip>
+
+			<unzip
+				dest="${project.dir}/portal-service/test-classes/integration"
+				src="${project.dir}/portal-service/portal-service.jar"
+			>
+				<patternset>
+					<include name="META-INF/MANIFEST.MF" />
+				</patternset>
+			</unzip>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="execute">
 		<attribute default="." name="dir" />
 
@@ -1127,7 +1153,8 @@ rerun your task.
 				<available file="test/unit" type="dir" />
 			</or>
 			<then>
-				<antcall target="compile-test-integration" inheritall="false" />
+				<compile-test-integration />
+
 				<antcall target="compile-test-unit" inheritall="false" />
 			</then>
 			<else>
@@ -1144,30 +1171,6 @@ rerun your task.
 		<compile-test-cmd
 			test.type="functional-generated"
 		/>
-	</target>
-
-	<target name="compile-test-integration">
-		<compile-test-cmd
-			test.type="integration"
-		/>
-
-		<unzip
-			dest="${project.dir}/portal-impl/test-classes/integration"
-			src="${project.dir}/portal-impl/portal-impl.jar"
-		>
-			<patternset>
-				<include name="META-INF/MANIFEST.MF" />
-			</patternset>
-		</unzip>
-
-		<unzip
-			dest="${project.dir}/portal-service/test-classes/integration"
-			src="${project.dir}/portal-service/portal-service.jar"
-		>
-			<patternset>
-				<include name="META-INF/MANIFEST.MF" />
-			</patternset>
-		</unzip>
 	</target>
 
 	<target name="compile-test-unit">
@@ -1480,7 +1483,9 @@ rerun your task.
 		</if>
 	</target>
 
-	<target name="test-integration" depends="compile,compile-test-integration">
+	<target name="test-integration" depends="compile">
+		<compile-test-integration />
+
 		<var name="test.class" value="*Test" />
 
 		<ant target="test-cmd">

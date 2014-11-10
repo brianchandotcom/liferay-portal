@@ -324,6 +324,15 @@ public class ResourcePermissionLocalServiceImpl
 	}
 
 	@Override
+	public ResourcePermission fetchResourcePermission(
+			long companyId, String name, int scope, String primKey,
+			long roleId) {
+
+		return resourcePermissionPersistence.fetchByC_N_S_P_R(
+			companyId, name, scope, primKey, roleId);
+	}
+
+	@Override
 	public Map<Long, Set<String>> getAvailableResourcePermissionActionIds(
 		long companyId, String name, int scope, String primKey,
 		Collection<String> actionIds) {

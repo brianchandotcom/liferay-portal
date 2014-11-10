@@ -1,4 +1,29 @@
 <definition>
+	<command name="addChildPageViaSiteTemplateCP">
+		<var name="key_siteTemplateName" value="${siteTemplateName}" />
+
+		<execute action="CPSitetemplates#click" locator-key1="SITE_TEMPLATE_TABLE_ACTIONS" value1="${siteTemplateName}" />
+		<execute action="CPSitetemplates#click" locator-key1="SITE_TEMPLATE_MENULIST_MANAGE" />
+
+		<if>
+			<isset var="childSitepageName" />
+			<then>
+				<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_LINK_2" />
+			</then>
+			<else>
+				<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_LINK_1" />
+			</else>
+		</if>
+
+		<execute action="CPSitepages#pause" locator1="3000" />
+		<execute action="CPSitepages#assertClick" locator-key1="TOOLBAR_ADD_CHILD_PAGE" value1="Add Child Page" />
+
+		<execute action="CPSitepagesAddpage#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${siteChildPageName}" />
+		<execute action="CPSitepagesAddpage#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
+
+		<execute action="CPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="addCP">
 		<execute action="CPSitetemplates#assertClick" locator-key1="ADD" value1="Add" />
 

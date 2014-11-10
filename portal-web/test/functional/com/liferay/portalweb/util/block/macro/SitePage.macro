@@ -575,14 +575,21 @@
 		<var name="key_sitePageName" value="${sitePageName}" />
 
 		<if>
-			<condition action="CPSitepages#isElementPresent" locator-key1="PAGE_TREE_PAGE_LINK" />
+			<isset var="sitePageName" />
 			<then>
 				<execute action="CPSitepages#assertClick" locator-key1="PAGE_TREE_PAGE_LINK" value1="${sitePageName}" />
-				<execute action="CPSitepages#assertElementNotPresent" locator-key1="TOOLBAR_ADD_CHILD_PAGE" value1="Add Child Page" />
-				<execute action="CPSitepages#assertElementNotPresent" locator-key1="TOOLBAR_DELETE" value1="Delete" />
-				<execute action="CPSitepages#assertTextEquals" locator-key1="BLOCK_MESSAGE" value1="This page cannot be deleted and cannot have child pages because it is associated to a site template." />
 			</then>
+			<elseif>
+				<isset var="siteChildPageName" />
+				<then>
+					<execute action="CPSitepages#assertClick" locator-key1="PAGE_TREE_PAGE_LINK_3" value1="${siteChildPageName}" />
+				</then>
+			</elseif>
 		</if>
+
+		<execute action="CPSitepages#assertElementNotPresent" locator-key1="TOOLBAR_ADD_CHILD_PAGE" value1="Add Child Page" />
+		<execute action="CPSitepages#assertElementNotPresent" locator-key1="TOOLBAR_DELETE" value1="Delete" />
+		<execute action="CPSitepages#assertTextEquals" locator-key1="BLOCK_MESSAGE" value1="This page cannot be deleted and cannot have child pages because it is associated to a site template." />
 	</command>
 
 	<command name="viewOnlyAddOptionViaSiteAdminCP">

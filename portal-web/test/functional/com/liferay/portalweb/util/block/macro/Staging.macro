@@ -224,25 +224,6 @@
 		</if>
 
 		<if>
-			<equals arg1="${uncheckApplication}" arg2="true" />
-			<then>
-				<execute action="StagingPublishtolivenow#check" locator-key1="APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
-
-				<var name="key_applicationName" value="${applicationName}" />
-
-				<execute action="StagingPublishtolivenow#uncheck" locator-key1="APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_APPLICATION_CHECKBOX" />
-			</then>
-			<else>
-				<if>
-					<condition action="StagingPublishtolivenow#isElementPresent" locator-key1="APPLICATION_CONFIGURATION_ALL_APPLICATIONS_RADIO" />
-					<then>
-						<execute action="StagingPublishtolivenow#check" locator-key1="APPLICATION_CONFIGURATION_ALL_APPLICATIONS_RADIO" />
-					</then>
-				</if>
-			</else>
-		</if>
-
-		<if>
 			<equals arg1="${checkAllContent}" arg2="true" />
 			<then>
 				<execute action="StagingPublishtolivenow#check" locator-key1="CONTENT_ALL_CONTENT_RADIO" />
@@ -544,25 +525,6 @@
 				<execute action="StagingPublishtolivenow#check" locator-key1="CONTENT_CHOOSE_CONTENT_RADIO" />
 				<execute action="StagingPublishtolivenow#check" locator-key1="CONTENT_CHOOSE_CONTENT_DELETION_CHECKBOX" />
 			</then>
-		</if>
-
-		<if>
-			<equals arg1="${uncheckApplication}" arg2="true" />
-			<then>
-				<execute action="StagingPublishtolivenow#check" locator-key1="APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
-
-				<var name="key_applicationName" value="${applicationName}" />
-
-				<execute action="StagingPublishtolivenow#uncheck" locator-key1="APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_APPLICATION_CHECKBOX" />
-			</then>
-			<else>
-				<if>
-					<condition action="StagingPublishtolivenow#isElementPresent" locator-key1="APPLICATION_CONFIGURATION_ALL_APPLICATIONS_RADIO" />
-					<then>
-						<execute action="StagingPublishtolivenow#check" locator-key1="APPLICATION_CONFIGURATION_ALL_APPLICATIONS_RADIO" />
-					</then>
-				</if>
-			</else>
 		</if>
 
 		<if>

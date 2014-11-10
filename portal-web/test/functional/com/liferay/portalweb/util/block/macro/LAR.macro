@@ -61,27 +61,6 @@
 		</if>
 
 		<if>
-			<equals arg1="${uncheckApplication}" arg2="true" />
-			<then>
-				<execute action="BasePortletExport#check" locator-key1="APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
-
-				<for list="${applicationNameList}" param="applicationName">
-					<var name="key_applicationName" value="${applicationName}" />
-
-					<execute action="BasePortletExport#uncheck" locator-key1="APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_APPLICATION_CHECKBOX" />
-				</for>
-			</then>
-			<else>
-				<if>
-					<condition action="BasePortletExport#isElementPresent" locator-key1="APPLICATION_CONFIGURATION_ALL_APPLICATIONS_RADIO" />
-					<then>
-						<execute action="BasePortletExport#check" locator-key1="APPLICATION_CONFIGURATION_ALL_APPLICATIONS_RADIO" />
-					</then>
-				</if>
-			</else>
-		</if>
-
-		<if>
 			<isset var="checkContentNameList" />
 			<then>
 				<execute action="BasePortletExport#check" locator-key1="CONTENT_CHOOSE_CONTENT_RADIO" />

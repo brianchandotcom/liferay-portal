@@ -26,6 +26,57 @@
 		<execute macro="DMDocument#tearDownCP" />
 	</tear-down>
 
+	<command name="AdminCanNotAddASubpageOfAChildPageLinkedToSiteTemplatePage" priority="4">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#addCP">
+			<var name="siteTemplateActive" value="Yes" />
+			<var name="siteTemplateName" value="Site Template Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#addSitePageViaSiteTemplateCP">
+			<var name="sitePageName" value="Site Page Name" />
+			<var name="siteTemplateName" value="Site Template Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#addChildPageViaSiteTemplateCP">
+			<var name="childSitepageName" value="true" />
+			<var name="siteChildPageName" value="Site Child Page Name" />
+			<var name="siteTemplateName" value="Site Template Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addSiteTemplateCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="SitePage#gotoCP">
+			<var name="sitePageName" value="Site Page Name" />
+		</execute>
+
+		<execute macro="SitePage#viewNoDeletePagesAssociatedWithSiteTemplateCP">
+			<var name="siteChildPageName" value="Site Child Page Name" />
+		</execute>
+	</command>
+
 	<command name="EditSiteTemplateGuestPermissions" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Site Templates" />
@@ -160,8 +211,6 @@
 	</command>
 
 	<command name="SiteAdminCannotDeletePagesThatWereCreatedBySiteTemplates" priority="3">
-		<var name="pageNamelist" value="Home,Wiki" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="User Groups" />
 		</execute>
@@ -180,7 +229,7 @@
 			<var name="userGroupName" value="UG UserGroup Name" />
 		</execute>
 
-		<for list="${pageNamelist}" param="sitePageName">
+		<for list="Home,Wiki" param="sitePageName">
 			<execute macro="SitePage#viewNoDeletePagesAssociatedWithSiteTemplateCP">
 				<var name="sitePageName" value="${sitePageName}" />
 				<var name="userGroupName" value="UG UserGroup Name" />

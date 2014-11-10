@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.service;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
@@ -32,6 +33,7 @@ import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.util.test.DLTestUtil;
 
@@ -60,6 +62,60 @@ public class DLFileEntryLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testGetMisversionedFileEntries() throws Exception {
+		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
+
+		byte[] bytes = RandomTestUtil.randomBytes();
+
+		InputStream is = new ByteArrayInputStream(bytes);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(dlFolder.getGroupId());
+
+		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), dlFolder.getRepositoryId(),
+			dlFolder.getFolderId(), RandomTestUtil.randomString(),
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK, is, bytes.length,
+			serviceContext);
+
+		DLFileEntry dlFileEntry = null;
+
+		DLFileVersion dlFileVersion = null;
+
+		try {
+			dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntry(
+				fileEntry.getFileEntryId());
+
+			dlFileVersion = dlFileEntry.getFileVersion();
+
+			dlFileVersion.setFileEntryId(12345l);
+
+			DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion);
+
+			List<DLFileEntry> dlFileEntries =
+				DLFileEntryLocalServiceUtil.getMisversionedFileEntries();
+
+			Assert.assertEquals(1, dlFileEntries.size());
+
+			Assert.assertEquals(
+				dlFileEntry.getFileEntryId(),
+				dlFileEntries.get(0).getFileEntryId());
+		}
+		finally {
+			if (dlFileEntry != null) {
+				DLFileEntryLocalServiceUtil.deleteDLFileEntry(
+					dlFileEntry.getFileEntryId());
+			}
+
+			if (dlFileVersion != null) {
+				DLFileVersionLocalServiceUtil.deleteDLFileVersion(
+					dlFileVersion.getFileVersionId());
+			}
+		}
 	}
 
 	@Test
@@ -105,6 +161,57 @@ public class DLFileEntryLocalServiceTest {
 
 		Assert.assertEquals(
 			fileEntry.getFileEntryId(), dlFileEntry.getFileEntryId());
+	}
+
+	@Test
+	public void testGetOrphanedFileEntries() throws Exception {
+		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
+
+		byte[] bytes = RandomTestUtil.randomBytes();
+
+		InputStream is = new ByteArrayInputStream(bytes);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(dlFolder.getGroupId());
+
+		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), dlFolder.getRepositoryId(),
+			dlFolder.getFolderId(), RandomTestUtil.randomString(),
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK, is, bytes.length,
+			serviceContext);
+
+		boolean indexReadOnly = SearchEngineUtil.isIndexReadOnly();
+
+		DLFileEntry dlFileEntry = null;
+
+		try {
+			SearchEngineUtil.setIndexReadOnly(true);
+
+			dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntry(
+				fileEntry.getFileEntryId());
+
+			dlFileEntry.setGroupId(10000l);
+
+			DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
+
+			List<DLFileEntry> dlFileEntries =
+				DLFileEntryLocalServiceUtil.getOrphanedFileEntries();
+
+			Assert.assertEquals(1, dlFileEntries.size());
+
+			Assert.assertEquals(
+				dlFileEntry.getFileEntryId(),
+				dlFileEntries.get(0).getFileEntryId());
+		}
+		finally {
+			if (dlFileEntry != null) {
+				DLFileEntryLocalServiceUtil.deleteDLFileEntry(
+					dlFileEntry.getFileEntryId());
+			}
+
+			SearchEngineUtil.setIndexReadOnly(indexReadOnly);
+		}
 	}
 
 	@DeleteAfterTestRun

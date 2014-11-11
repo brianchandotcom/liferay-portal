@@ -27,7 +27,7 @@ public class IntervalActionTest {
 
 	@Test
 	public void testIndexerIntervalEndCalculation() throws Exception {
-		IntervalAction intervalAction = new IntervalAction();
+		IntervalAction intervalAction = new IntervalAction(125);
 
 		intervalAction.setPerformActionMethod(
 			new IntervalAction.PerformIntervalActionMethod() {
@@ -43,7 +43,6 @@ public class IntervalActionTest {
 
 			});
 
-		intervalAction.setTotal(125);
 		intervalAction.performActions();
 
 		Assert.assertEquals(200, _count);
@@ -51,7 +50,7 @@ public class IntervalActionTest {
 
 	@Test
 	public void testIndexerIntervalPageCalculation() throws Exception {
-		IntervalAction intervalAction = new IntervalAction();
+		IntervalAction intervalAction = new IntervalAction(125);
 
 		intervalAction.setPerformActionMethod(
 			new IntervalAction.PerformIntervalActionMethod() {
@@ -65,7 +64,6 @@ public class IntervalActionTest {
 
 			});
 
-		intervalAction.setTotal(125);
 		intervalAction.performActions();
 
 		Assert.assertEquals(2, _count);

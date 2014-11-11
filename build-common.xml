@@ -488,7 +488,17 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		<attribute name="ant.target" />
 
 		<sequential>
-			<ant antfile="@{ant.build.file}" dir="@{ant.dir}" target="@{ant.target}" inheritAll="false" />
+			<if>
+				<os family="unix" />
+				<then>
+					<ant antfile="@{ant.build.file}" dir="@{ant.dir}" target="@{ant.target}" inheritAll="false" />
+				</then>
+				<else>
+					<exec dir="@{ant.dir}" executable="${ant.home}/bin/ant.bat" failonerror="true">
+						<arg line="-f @{ant.build.file} @{ant.target}" />
+					</exec>
+				</else>
+			</if>
 		</sequential>
 	</macrodef>
 

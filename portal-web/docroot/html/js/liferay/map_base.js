@@ -13,510 +13,528 @@ AUI.add(
 
 		var GeojsonBase = function() {};
 
-		GeojsonBase.prototype = {
-			addData: function(data) {
-				var instance = this;
-
-				var nativeFeatures = instance._addData(data);
-
-				var features = AArray.map(nativeFeatures, instance._wrapNativeFeature, instance);
-
-				instance.fire(
-					'featuresAdded',
-					{
-						features: features
+		A.mix(
+			GeojsonBase,
+			{
+				ATTRS: {
+					map: {
+						validator: Lang.isObject
 					}
-				);
+				},
+
+				NAME: 'lfr-map-geojson-base',
+
+				NS: 'lfr-map-geojson-base',
+
+				prototype: {
+					addData: function(data) {
+						var instance = this;
+
+						var nativeFeatures = instance._addData(data);
+
+						var features = AArray.map(nativeFeatures, instance._wrapNativeFeature, instance);
+
+						instance.fire(
+							'featuresAdded',
+							{
+								features: features
+							}
+						);
+					},
+
+					_onFeatureClick: function(event) {
+						var instance = this;
+
+						instance.fire(
+							'featureClick',
+							{
+								feature: instance._wrapNativeFeature(event.feature || event.target.feature)
+							}
+						);
+					}
+				}
 			},
-
-			_onFeatureClick: function(event) {
-				var instance = this;
-
-				instance.fire(
-					'featureClick',
-					{
-						feature: instance._wrapNativeFeature(event.feature || event.target.feature)
-					}
-				);
-			}
-		};
-
-		GeojsonBase.ATTRS = {
-			map: {
-				validator: Lang.isObject
-			}
-		};
-
-		GeojsonBase.NAME = 'lfr-map-geojson-base';
-
-		GeojsonBase.NS = 'lfr-map-geojson-base';
+			true
+		);
 
 		var MarkerBase = function() {};
 
-		MarkerBase.prototype = {
-			initializer: function() {
-				var instance = this;
+		A.mix(
+			MarkerBase,
+			{
+				ATTRS: {
+					location: {
+						validator: Lang.isObject,
+						value: {
+							lat: 0,
+							lng: 0
+						}
+					},
 
-				var location = instance.get('location');
+					map: {
+						validator: Lang.isObject
+					},
 
-				var map = instance.get('map');
+					nativeMarker: {
+						readOnly: true,
+						validator: Lang.isObject
+					}
+				},
 
-				var nativeMarker = instance._createNativeMarker(location, map);
+				NAME: 'lfr-map-marker-base',
 
-				instance._bindNativeMarker(nativeMarker);
+				NS: 'lfr-map-marker-base',
 
-				instance._set('nativeMarker', nativeMarker);
-			},
+				prototype: {
+					initializer: function() {
+						var instance = this;
 
-			_getNativeEventFn: function(eventType) {
-				var instance = this;
+						var location = instance.get('location');
 
-				var nativeEventFn = instance['_onNative' + eventType + 'Fn'];
+						var map = instance.get('map');
 
-				if (!nativeEventFn) {
-					nativeEventFn = A.rbind('_onNativeEvent', instance, eventType);
+						var nativeMarker = instance._createNativeMarker(location, map);
+
+						instance._bindNativeMarker(nativeMarker);
+
+						instance._set('nativeMarker', nativeMarker);
+					},
+
+					_getNativeEventFn: function(eventType) {
+						var instance = this;
+
+						var nativeEventFn = instance['_onNative' + eventType + 'Fn'];
+
+						if (!nativeEventFn) {
+							nativeEventFn = A.rbind('_onNativeEvent', instance, eventType);
+						}
+
+						return nativeEventFn;
+					},
+
+					_onNativeEvent: function(nativeEvent, eventType) {
+						var instance = this;
+
+						var normalizedEvent = instance._normalizeEvent(nativeEvent);
+
+						normalizedEvent.nativeEvent = nativeEvent;
+
+						instance.fire(eventType, normalizedEvent);
+					}
 				}
-
-				return nativeEventFn;
 			},
-
-			_onNativeEvent: function(nativeEvent, eventType) {
-				var instance = this;
-
-				var normalizedEvent = instance._normalizeEvent(nativeEvent);
-
-				normalizedEvent.nativeEvent = nativeEvent;
-
-				instance.fire(eventType, normalizedEvent);
-			}
-		};
-
-		MarkerBase.ATTRS = {
-			location: {
-				validator: Lang.isObject,
-				value: {
-					lat: 0,
-					lng: 0
-				}
-			},
-
-			map: {
-				validator: Lang.isObject
-			},
-
-			nativeMarker: {
-				readOnly: true,
-				validator: Lang.isObject
-			}
-		};
-
-		MarkerBase.NAME = 'lfr-map-marker-base';
-
-		MarkerBase.NS = 'lfr-map-marker-base';
+			true
+		);
 
 		var Base = function() {};
 
-		Base.CONTROLS = {
-			ATTRIBUTION: 'attribution',
-			GEOLOCATION: 'geolocation',
-			HOME: 'home',
-			OVERVIEW: 'overview',
-			PAN: 'pan',
-			ROTATE: 'rotate',
-			SCALE: 'scale',
-			SEARCH: 'search',
-			STREETVIEW: 'streetview',
-			TYPE: 'type',
-			ZOOM: 'zoom'
-		};
+		A.mix(
+			Base,
+			{
+				ATTRS: {
+					controls: {
+						validator: Lang.isArray,
+						value: [
+							'Base.CONTROLS.PAN',
+							'Base.CONTROLS.TYPE',
+							'Base.CONTROLS.ZOOM'
+						]
+					},
 
-		Base.POSITION = {
-			BOTTOM: 11,
-			BOTTOM_CENTER: 11,
-			BOTTOM_LEFT: 10,
-			BOTTOM_RIGHT: 12,
-			CENTER: 13,
-			LEFT: 5,
-			LEFT_BOTTOM: 6,
-			LEFT_CENTER: 4,
-			LEFT_TOP: 5,
-			RIGHT: 7,
-			RIGHT_BOTTOM: 9,
-			RIGHT_CENTER: 8,
-			RIGHT_TOP: 7,
-			TOP: 2,
-			TOP_CENTER: 2,
-			TOP_LEFT: 1,
-			TOP_RIGHT: 3
-		};
+					data: {
+						validator: Lang.isObject
+					},
 
-		Base.prototype = {
-			initializer: function() {
-				var instance = this;
+					geolocation: {
+						validator: Lang.isBoolean,
+						value: false
+					},
 
-				var position = instance.get('position');
+					position: {
+						validator: Lang.isObject,
+						value: {
+							location: {
+								lat: 0,
+								lng: 0
+							}
+						}
+					},
 
-				var location = (position && position.location) ? position.location : {};
+					zoom: {
+						validator: Lang.isNumber,
+						value: 11
+					}
+				},
 
-				if (!location.lat || !location.lng) {
-					Liferay.Util.getGeolocation(
-						function(latitude, longitude) {
-							var location = {
-								lat: latitude,
-								lng: longitude
-							};
+				CONTROLS: {
+					ATTRIBUTION: 'attribution',
+					GEOLOCATION: 'geolocation',
+					HOME: 'home',
+					OVERVIEW: 'overview',
+					PAN: 'pan',
+					ROTATE: 'rotate',
+					SCALE: 'scale',
+					SEARCH: 'search',
+					STREETVIEW: 'streetview',
+					TYPE: 'type',
+					ZOOM: 'zoom'
+				},
 
+				NAME: 'lfr-map-base',
+
+				NS: 'lfr-map-base',
+
+				POSITION: {
+					BOTTOM: 11,
+					BOTTOM_CENTER: 11,
+					BOTTOM_LEFT: 10,
+					BOTTOM_RIGHT: 12,
+					CENTER: 13,
+					LEFT: 5,
+					LEFT_BOTTOM: 6,
+					LEFT_CENTER: 4,
+					LEFT_TOP: 5,
+					RIGHT: 7,
+					RIGHT_BOTTOM: 9,
+					RIGHT_CENTER: 8,
+					RIGHT_TOP: 7,
+					TOP: 2,
+					TOP_CENTER: 2,
+					TOP_LEFT: 1,
+					TOP_RIGHT: 3
+				},
+
+				prototype: {
+					initializer: function() {
+						var instance = this;
+
+						var position = instance.get('position');
+
+						var location = (position && position.location) ? position.location : {};
+
+						if (!location.lat || !location.lng) {
+							Liferay.Util.getGeolocation(
+								function(latitude, longitude) {
+									var location = {
+										lat: latitude,
+										lng: longitude
+									};
+
+									instance._initializeLocation(location);
+								}
+							);
+						}
+						else {
 							instance._initializeLocation(location);
 						}
-					);
-				}
-				else {
-					instance._initializeLocation(location);
-				}
-			},
+					},
 
-			bindUI: function() {
-				var instance = this;
+					bindUI: function() {
+						var instance = this;
 
-				instance._eventHandles = [
-					instance.on('positionChange', A.bind('_onPositionChange', instance))
-				];
-			},
+						instance._eventHandles = [
+							instance.on('positionChange', A.bind('_onPositionChange', instance))
+						];
+					},
 
-			destructor: function() {
-				var instance = this;
+					destructor: function() {
+						var instance = this;
 
-				var geojsonLayer = instance._geojsonLayer;
+						var geojsonLayer = instance._geojsonLayer;
 
-				if (geojsonLayer) {
-					geojsonLayer.destroy();
-				}
-
-				var searchControl = instance._customControls[Base.CONTROLS.SEARCH];
-
-				if (searchControl) {
-					searchControl.destroy();
-				}
-
-				(new A.EventHandle(instance._eventHandles)).detach();
-			},
-
-			addMarker: function(location) {
-				var instance = this;
-
-				var MarkerImpl = instance.MarkerImpl;
-
-				if (MarkerImpl) {
-					return new MarkerImpl(
-						{
-							location: location,
-							map: instance._map
+						if (geojsonLayer) {
+							geojsonLayer.destroy();
 						}
-					);
-				}
-			},
 
-			getNativeMap: function() {
-				var instance = this;
+						var searchControl = instance._customControls[Base.CONTROLS.SEARCH];
 
-				return instance._map;
-			},
-
-			openDialog: function(dialogConfig) {
-				var instance = this;
-
-				instance._getDialog().open(dialogConfig);
-			},
-
-			_bindUIMB: function() {
-				var instance = this;
-
-				var geojsonLayer = instance._geojsonLayer;
-
-				if (geojsonLayer) {
-					geojsonLayer.on(
-						'featuresAdded',
-						function(event) {
-							var bounds = instance.getBounds();
-
-							AArray.each(
-								event.features,
-								function(item, index, collection) {
-									bounds.extend(item.getGeometry().get());
-								}
-							);
-
-							instance.fitBounds(bounds);
+						if (searchControl) {
+							searchControl.destroy();
 						}
-					);
 
-					geojsonLayer.on(
-						'featureClick',
-						function(event) {
-							instance.fire(
-								'featureClick',
+						(new A.EventHandle(instance._eventHandles)).detach();
+					},
+
+					addMarker: function(location) {
+						var instance = this;
+
+						var MarkerImpl = instance.MarkerImpl;
+
+						if (MarkerImpl) {
+							return new MarkerImpl(
 								{
-									feature: event.feature
+									location: location,
+									map: instance._map
 								}
 							);
 						}
-					);
-				}
+					},
 
-				var geolocationMarker = instance._geolocationMarker;
+					getNativeMap: function() {
+						var instance = this;
 
-				if (geolocationMarker) {
-					geolocationMarker.on(
-						'dragend',
-						function(event) {
+						return instance._map;
+					},
+
+					openDialog: function(dialogConfig) {
+						var instance = this;
+
+						instance._getDialog().open(dialogConfig);
+					},
+
+					_bindUIMB: function() {
+						var instance = this;
+
+						var geojsonLayer = instance._geojsonLayer;
+
+						if (geojsonLayer) {
+							geojsonLayer.on(
+								'featuresAdded',
+								function(event) {
+									var bounds = instance.getBounds();
+
+									AArray.each(
+										event.features,
+										function(item, index, collection) {
+											bounds.extend(item.getGeometry().get());
+										}
+									);
+
+									instance.fitBounds(bounds);
+								}
+							);
+
+							geojsonLayer.on(
+								'featureClick',
+								function(event) {
+									instance.fire(
+										'featureClick',
+										{
+											feature: event.feature
+										}
+									);
+								}
+							);
+						}
+
+						var geolocationMarker = instance._geolocationMarker;
+
+						if (geolocationMarker) {
+							geolocationMarker.on(
+								'dragend',
+								function(event) {
+									var geocoder = instance._getGeocoder();
+
+									geocoder.reverse(
+										event.location,
+										function(event) {
+											instance.set('position', event.data);
+										}
+									);
+								}
+							);
+						}
+
+						var customControls = instance._customControls;
+
+						var homeControl = customControls[Base.CONTROLS.HOME];
+
+						if (homeControl) {
+							homeControl.on('click', instance._onHomeButtonClick, instance);
+						}
+
+						var searchControl = customControls[Base.CONTROLS.SEARCH];
+
+						if (searchControl) {
+							searchControl.on(
+								'search',
+								function(event) {
+									instance.set('position', event.position);
+								}
+							);
+						}
+					},
+
+					_createCustomControls: function() {
+						var instance = this;
+
+						var controls = instance.get(STR_CONTROLS);
+
+						var customControls = {};
+
+						if (AArray.indexOf(controls, Base.CONTROLS.HOME) !== -1) {
+							var homeControl = A.Node.create(TPL_HOME_BUTTON);
+
+							customControls[Base.CONTROLS.HOME] = homeControl;
+
+							instance.addControl(homeControl, Base.POSITION.RIGHT_BOTTOM);
+						}
+
+						if (AArray.indexOf(controls, Base.CONTROLS.SEARCH) !== -1) {
+							var SearchImpl = instance.SearchImpl;
+
+							if (SearchImpl) {
+								var searchControl = A.Node.create(TPL_SEARCHBOX);
+
+								customControls[Base.CONTROLS.SEARCH] = new SearchImpl(
+									{
+										inputNode: searchControl.one('input')
+									}
+								);
+
+								instance.addControl(searchControl, Base.POSITION.TOP_LEFT);
+							}
+						}
+
+						instance._customControls = customControls;
+					},
+
+					_getControlsConfig: function() {
+						var instance = this;
+
+						var controls = instance.get(STR_CONTROLS);
+
+						var config = {};
+
+						A.Object.each(
+							instance.CONTROLS_CONFIG_MAP,
+							function(item, index, collection) {
+								config[item] = (AArray.indexOf(controls, index) !== -1);
+							}
+						);
+
+						return config;
+					},
+
+					_getDialog: function() {
+						var instance = this;
+
+						var dialog = instance._dialog;
+
+						if (!dialog) {
+							var DialogImpl = instance.DialogImpl;
+
+							if (DialogImpl) {
+								dialog = new DialogImpl(
+									{
+										map: instance._map
+									}
+								);
+
+								instance._dialog = dialog;
+							}
+						}
+
+						return dialog;
+					},
+
+					_getGeocoder: function() {
+						var instance = this;
+
+						var geocoder = instance._geocoder;
+
+						if (!geocoder) {
+							var GeoCoderImpl = instance.GeocoderImpl;
+
+							if (GeoCoderImpl) {
+								geocoder = new GeoCoderImpl();
+
+								instance._geocoder = geocoder;
+							}
+						}
+
+						return geocoder;
+					},
+
+					_initializeGeojsonData: function() {
+						var instance = this;
+
+						var data = instance.get('data');
+
+						if (data && instance._geojsonLayer) {
+							instance._geojsonLayer.addData(data);
+						}
+					},
+
+					_initializeLocation: function(location) {
+						var instance = this;
+
+						if (instance.get('geolocation') && instance.GeocoderImpl) {
 							var geocoder = instance._getGeocoder();
 
 							geocoder.reverse(
-								event.location,
+								location,
 								function(event) {
-									instance.set('position', event.data);
+									instance._initializeMap(event.data);
 								}
 							);
 						}
-					);
-				}
-
-				var customControls = instance._customControls;
-
-				var homeControl = customControls[Base.CONTROLS.HOME];
-
-				if (homeControl) {
-					homeControl.on('click', instance._onHomeButtonClick, instance);
-				}
-
-				var searchControl = customControls[Base.CONTROLS.SEARCH];
-
-				if (searchControl) {
-					searchControl.on(
-						'search',
-						function(event) {
-							instance.set('position', event.position);
+						else {
+							instance._initializeMap(
+								{
+									location: location
+								}
+							);
 						}
-					);
-				}
-			},
+					},
 
-			_createCustomControls: function() {
-				var instance = this;
+					_initializeMap: function(position) {
+						var instance = this;
 
-				var controls = instance.get(STR_CONTROLS);
+						var location = position.location;
 
-				var customControls = {};
+						instance._originalPosition = position;
 
-				if (AArray.indexOf(controls, Base.CONTROLS.HOME) !== -1) {
-					var homeControl = A.Node.create(TPL_HOME_BUTTON);
+						var controlsConfig = instance._getControlsConfig();
 
-					customControls[Base.CONTROLS.HOME] = homeControl;
+						instance._map = instance._createMap(location, controlsConfig);
 
-					instance.addControl(homeControl, Base.POSITION.RIGHT_BOTTOM);
-				}
-
-				if (AArray.indexOf(controls, Base.CONTROLS.SEARCH) !== -1) {
-					var SearchImpl = instance.SearchImpl;
-
-					if (SearchImpl) {
-						var searchControl = A.Node.create(TPL_SEARCHBOX);
-
-						customControls[Base.CONTROLS.SEARCH] = new SearchImpl(
-							{
-								inputNode: searchControl.one('input')
-							}
-						);
-
-						instance.addControl(searchControl, Base.POSITION.TOP_LEFT);
-					}
-				}
-
-				instance._customControls = customControls;
-			},
-
-			_getControlsConfig: function() {
-				var instance = this;
-
-				var controls = instance.get(STR_CONTROLS);
-
-				var config = {};
-
-				A.Object.each(
-					instance.CONTROLS_CONFIG_MAP,
-					function(item, index, collection) {
-						config[item] = (AArray.indexOf(controls, index) !== -1);
-					}
-				);
-
-				return config;
-			},
-
-			_getDialog: function() {
-				var instance = this;
-
-				var dialog = instance._dialog;
-
-				if (!dialog) {
-					var DialogImpl = instance.DialogImpl;
-
-					if (DialogImpl) {
-						dialog = new DialogImpl(
-							{
-								map: instance._map
-							}
-						);
-
-						instance._dialog = dialog;
-					}
-				}
-
-				return dialog;
-			},
-
-			_getGeocoder: function() {
-				var instance = this;
-
-				var geocoder = instance._geocoder;
-
-				if (!geocoder) {
-					var GeoCoderImpl = instance.GeocoderImpl;
-
-					if (GeoCoderImpl) {
-						geocoder = new GeoCoderImpl();
-
-						instance._geocoder = geocoder;
-					}
-				}
-
-				return geocoder;
-			},
-
-			_initializeGeojsonData: function() {
-				var instance = this;
-
-				var data = instance.get('data');
-
-				if (data && instance._geojsonLayer) {
-					instance._geojsonLayer.addData(data);
-				}
-			},
-
-			_initializeLocation: function(location) {
-				var instance = this;
-
-				if (instance.get('geolocation') && instance.GeocoderImpl) {
-					var geocoder = instance._getGeocoder();
-
-					geocoder.reverse(
-						location,
-						function(event) {
-							instance._initializeMap(event.data);
+						if (instance.get('geolocation')) {
+							instance._geolocationMarker = instance.addMarker(location);
 						}
-					);
-				}
-				else {
-					instance._initializeMap(
-						{
-							location: location
+
+						var GeojsonImpl = instance.GeojsonImpl;
+
+						if (GeojsonImpl) {
+							instance._geojsonLayer = new GeojsonImpl(
+								{
+									map: instance._map
+								}
+							);
 						}
-					);
-				}
-			},
 
-			_initializeMap: function(position) {
-				var instance = this;
+						instance._createCustomControls();
+						instance._bindUIMB();
+						instance._initializeGeojsonData();
 
-				var location = position.location;
+						instance.set('position', position);
+					},
 
-				instance._originalPosition = position;
+					_onHomeButtonClick: function(event) {
+						var instance = this;
 
-				var controlsConfig = instance._getControlsConfig();
+						event.preventDefault();
 
-				instance._map = instance._createMap(location, controlsConfig);
+						instance.set('position', instance._originalPosition);
+					},
 
-				if (instance.get('geolocation')) {
-					instance._geolocationMarker = instance.addMarker(location);
-				}
+					_onPositionChange: function(event) {
+						var instance = this;
 
-				var GeojsonImpl = instance.GeojsonImpl;
+						var location = event.newVal.location;
 
-				if (GeojsonImpl) {
-					instance._geojsonLayer = new GeojsonImpl(
-						{
-							map: instance._map
+						instance.setCenter(location);
+
+						var geolocationMarker = instance._geolocationMarker;
+
+						if (geolocationMarker) {
+							geolocationMarker.setPosition(location);
 						}
-					);
-				}
-
-				instance._createCustomControls();
-				instance._bindUIMB();
-				instance._initializeGeojsonData();
-
-				instance.set('position', position);
-			},
-
-			_onHomeButtonClick: function(event) {
-				var instance = this;
-
-				event.preventDefault();
-
-				instance.set('position', instance._originalPosition);
-			},
-
-			_onPositionChange: function(event) {
-				var instance = this;
-
-				var location = event.newVal.location;
-
-				instance.setCenter(location);
-
-				var geolocationMarker = instance._geolocationMarker;
-
-				if (geolocationMarker) {
-					geolocationMarker.setPosition(location);
-				}
-			}
-		};
-
-		Base.ATTRS = {
-			controls: {
-				validator: Lang.isArray,
-				value: [
-					Base.CONTROLS.PAN,
-					Base.CONTROLS.TYPE,
-					Base.CONTROLS.ZOOM
-				]
-			},
-
-			data: {
-				validator: Lang.isObject
-			},
-
-			geolocation: {
-				validator: Lang.isBoolean,
-				value: false
-			},
-
-			position: {
-				validator: Lang.isObject,
-				value: {
-					location: {
-						lat: 0,
-						lng: 0
 					}
 				}
 			},
-
-			zoom: {
-				validator: Lang.isNumber,
-				value: 11
-			}
-		};
-
-		Base.NAME = 'lfr-map-base';
-
-		Base.NS = 'lfr-map-base';
+			true
+		);
 
 		Liferay.MapBase = Base;
 		Liferay.MapGeojsonBase = GeojsonBase;

@@ -458,11 +458,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		if (matcher.find()) {
 			content = StringUtil.replace(
-				content,
-				"String backURL = ParamUtil.getString(request, \"backURL\", " +
-				"redirect);",
-				"\nString backURL = ParamUtil.getString(request, " +
-				"\"backURL\", redirect);");
+				content, matcher.group(),
+				matcher.group(1) + "\n\n" + matcher.group(2), matcher.start());
 		}
 
 		return content;

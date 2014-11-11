@@ -33,7 +33,8 @@ import com.liferay.portal.kernel.resiliency.spi.MockSPIProvider;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIConfiguration;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
-import com.liferay.portal.kernel.test.NewClassLoaderJUnitTestRunner;
+import com.liferay.portal.kernel.test.NewEnv;
+import com.liferay.portal.kernel.test.NewEnvMethodRule;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.StringPool;
@@ -52,13 +53,12 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Shuyang Zhou
  */
-@RunWith(NewClassLoaderJUnitTestRunner.class)
 public class IntrabandBridgeDestinationTest {
 
 	@ClassRule
@@ -293,6 +293,7 @@ public class IntrabandBridgeDestinationTest {
 		Assert.assertNull(message.get(_RECEIVE_KEY));
 	}
 
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testSendMessageBag3() throws Exception {
 
@@ -388,6 +389,9 @@ public class IntrabandBridgeDestinationTest {
 
 		Assert.assertNull(message.get(_RECEIVE_KEY));
 	}
+
+	@Rule
+	public final NewEnvMethodRule newEnvMethodRule = new NewEnvMethodRule();
 
 	private static void _installSPIs(SPI... spis) throws RemoteException {
 		Map<String, Object> spiProviderContainers =

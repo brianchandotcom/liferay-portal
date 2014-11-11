@@ -40,7 +40,7 @@ if (Validator.isNull(mapsAPIProvider)) {
 
 name = namespace + name;
 
-String modules = "liferay-map-" + mapsAPIProvider.toLowerCase();
+String modules = "liferay-map-" + StringUtil.toLowerCase(mapsAPIProvider);
 %>
 
 <c:if test='<%= mapsAPIProvider.equals("Google") %>'>
@@ -63,24 +63,25 @@ String modules = "liferay-map-" + mapsAPIProvider.toLowerCase();
 
 	var mapConfig = {
 		boundingBox: '#<%= name %>Map',
+
+		<c:if test="<%= geolocation %>">
+			controls: [MapControls.GEOLOCATION, MapControls.HOME, MapControls.PAN, MapControls.SEARCH, MapControls.TYPE, MapControls.ZOOM],
+		</c:if>
+
+		<c:if test="<%= Validator.isNotNull(points) %>">
+			data: <%= points %>,
+		</c:if>
+
 		geolocation: <%= geolocation %>
 
-	<c:if test="<%= Validator.isNotNull(points) %>">
-		,data: <%= points %>
-	</c:if>
-
-	<c:if test="<%= geolocation %>">
-		,controls: [MapControls.GEOLOCATION, MapControls.HOME, MapControls.PAN, MapControls.SEARCH, MapControls.TYPE, MapControls.ZOOM]
-	</c:if>
-
-	<c:if test="<%= Validator.isNotNull(latitude) && Validator.isNotNull(longitude) %>">
-		,position: {
-			location: {
-				lat: <%= latitude %>,
-				lng: <%= longitude %>
+		<c:if test="<%= Validator.isNotNull(latitude) && Validator.isNotNull(longitude) %>">
+			,position: {
+				location: {
+					lat: <%= latitude %>,
+					lng: <%= longitude %>
+				}
 			}
-		}
-	</c:if>
+		</c:if>
 	};
 
 	var map = new Liferay['<%= mapsAPIProvider %>Map'](mapConfig).render();

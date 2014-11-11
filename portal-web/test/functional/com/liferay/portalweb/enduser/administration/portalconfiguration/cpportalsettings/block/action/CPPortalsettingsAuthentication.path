@@ -87,37 +87,37 @@
 <!--AUTHENTICATION_GENERAL-->
 <tr>
 	<td>AUTHENTICATION_GENERAL_ALLOW_USERS_TO_AUTOMATICALLY_LOGIN_CHECKBOX</td>
-	<td>//input[@id='_130_company.security.auto.login']</td>
+	<td>//input[@id='_130_company-security-auto-login']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_GENERAL_ALLOW_USERS_TO_REQUEST_FORGOTTEN_PASSWORDS_CHECKBOX</td>
-	<td>//input[@id='_130_company.security.send.password']</td>
+	<td>//input[@id='_130_company-security-send-password']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_GENERAL__ALLOW_USERS_TO_REQUEST_PASSWORD_RESET_LINKS_CHECKBOX</td>
-	<td>//input[@id='_130_company.security.send.password.reset.link']</td>
+	<td>//input[@id='_130_company-security-send-password-reset-link']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_GENERAL_ALLOW_STRANGERS_TO_CREATE_ACCOUNTS_CHECKBOX</td>
-	<td>//input[@id='_130_company.security.strangers']</td>
+	<td>//input[@id='_130_company-security-strangers']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_GENERAL_ALLOW_STRANGERS_TO_CREATE_ACCOUNTS_WITH_A_COMPANY_EMAIL_ADDRESS_CHECKBOX</td>
-	<td>//input[@id='_130_company.security.strangers.with.mx']</td>
+	<td>//input[@id='_130_company-security-strangers-with-mx']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_GENERAL_REQUIRE_STRANGERS_TO_VERIFY_THEIR_EMAIL_ADDRESS_CHECKBOX</td>
-	<td>//input[@id='_130_company.security.strangers.verify']</td>
+	<td>//input[@id='_130_company-security-strangers-verify']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_GENERAL_HOW_DO_USERS_AUTHENTICATE_SELECT</td>
-	<td>//select[@id='_130_company.security.auth.type']</td>
+	<td>//select[@id='_130_company-security-auth-type']</td>
 	<td></td>
 </tr>
 <tr>
@@ -128,37 +128,37 @@
 <!--AUTHENTICATION_CAS-->
 <tr>
 	<td>AUTHENTICATION_CAS_ENABLED_CHECKBOX</td>
-	<td>//input[@id='_130_cas.auth.enabled']</td>
+	<td>//input[@id='_130_cas-auth-enabled']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_LOGIN_URL_FIELD</td>
-	<td>//input[@id='_130_cas.login.url']</td>
+	<td>//input[@id='_130_cas-login-url']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_LOGOUT_URL_FIELD</td>
-	<td>//input[@id='_130_cas.logout.url']</td>
+	<td>//input[@id='_130_cas-logout-url']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_SERVER_NAME_FIELD</td>
-	<td>//input[@id='_130_cas.server.name']</td>
+	<td>//input[@id='_130_cas-server-name']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_SERVER_URL_FIELD</td>
-	<td>//input[@id='_130_cas.server.url']</td>
+	<td>//input[@id='_130_cas-server-url']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_SERVICE_URL_FIELD</td>
-	<td>//input[@id='_130_cas.service.url']</td>
+	<td>//input[@id='_130_cas-service-url']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_NO_SUCH_USER_REDIRECT_URL_FIELD</td>
-	<td>//input[@id='_130_cas.no.such.user.redirect.url']</td>
+	<td>//input[@id='_130_cas-no-such-user-redirect-url']</td>
 	<td></td>
 </tr>
 <tr>
@@ -174,12 +174,12 @@
 <!--AUTHENTICATION_LDAP-->
 <tr>
 	<td>AUTHENTICATION_LDAP_ENABLED_CHECKBOX</td>
-	<td>//input[@id='_130_ldap.auth.enabled']</td>
+	<td>//input[@id='_130_ldap-auth-enabled']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_LDAP_REQUIRED_CHECKBOX</td>
-	<td>//input[@id='_130_ldap.auth.required']</td>
+	<td>//input[@id='_130_ldap-auth-required']</td>
 	<td></td>
 </tr>
 <tr>
@@ -194,7 +194,7 @@
 </tr>
 <tr>
 	<td>AUTHENTICATION_LDAP_USE_LDAP_PASSWORD_POLICY_CHECKBOX</td>
-	<td>//input[@id='_130_ldap.password.policy.enabled']</td>
+	<td>//input[@id='_130_ldap-password-policy-enabled']</td>
 	<td></td>
 </tr>
 <tr>
@@ -210,7 +210,7 @@
 <!--LDAP_SERVER-->
 <tr>
 	<td>LDAP_SERVER_SERVER_NAME</td>
-	<td>//input[@id='_130_ldap.server.name.0']</td>
+	<td>//input[@id='_130_ldap-server-name-0']</td>
 	<td></td>
 </tr>
 <tr>
@@ -225,42 +225,42 @@
 </tr>
 <tr>
 	<td>LDAP_SERVER_CONNECTION_BASE_PROVIDER_URL_HEADER</td>
-	<td>//label[@for='_130_ldap.base.provider.url.0']</td>
+	<td>//label[@for='_130_ldap-base-provider-url-0']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LDAP_SERVER_CONNECTION_BASE_PROVIDER_URL_FIELD</td>
-	<td>//input[@id='_130_ldap.base.provider.url.0']</td>
+	<td>//input[@id='_130_ldap-base-provider-url-0']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LDAP_SERVER_CONNECTION_BASE_DN_HEADER</td>
-	<td>//label[@for='_130_ldap.base.dn.0']</td>
+	<td>//label[@for='_130_ldap-base-dn-0']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LDAP_SERVER_CONNECTION_BASE_DN_FIELD</td>
-	<td>//input[@id='_130_ldap.base.dn.0']</td>
+	<td>//input[@id='_130_ldap-base-dn-0']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LDAP_SERVER_CONNECTION__PRINCIPAL_HEADER</td>
-	<td>//label[@for='_130_ldap.security.principal.0']</td>
+	<td>//label[@for='_130_ldap-security-principal-0']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LDAP_SERVER_CONNECTION_PRINCIPAL_FIELD</td>
-	<td>//input[@id='_130_ldap.security.principal.0']</td>
+	<td>//input[@id='_130_ldap-security-principal-0']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LDAP_SERVER_CONNECTION_CREDENTIALS_HEADER</td>
-	<td>//label[@for='_130_ldap.security.credentials.0']</td>
+	<td>//label[@for='_130_ldap-security-credentials-0']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LDAP_SERVER_CONNECTION_CREDENTIALS_FIELD</td>
-	<td>//input[@id='_130_ldap.security.credentials.0']</td>
+	<td>//input[@id='_130_ldap-security-credentials-0']</td>
 	<td></td>
 </tr>
 <tr>
@@ -286,72 +286,72 @@
 <!--AUTHENTICATION_CAS-->
 <tr>
 	<td>AUTHENTICATION_CAS_ENABLED_CHECKBOX</td>
-	<td>//input[@id='_130_cas.auth.enabled']</td>
+	<td>//input[@id='_130_cas-auth-enabled']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_IMPORT_FROM_LDAP_CHECKBOX</td>
-	<td>//input[@id='_130_cas.import.from.ldap']</td>
+	<td>//input[@id='_130_cas-import-from-ldap']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_LOGIN_URL_HEADER</td>
-	<td>//label[@for='_130_cas.login.url']</td>
+	<td>//label[@for='_130_cas-login-url']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_LOGIN_URL_FIELD</td>
-	<td>//input[@id='_130_cas.login.url']</td>
+	<td>//input[@id='_130_cas-login-url']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_LOGOUT_URL_HEADER</td>
-	<td>//label[@for='_130_cas.logout.url']</td>
+	<td>//label[@for='_130_cas-logout-url']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_LOGOUT_URL_FIELD</td>
-	<td>//input[@id='_130_cas.logout.url']</td>
+	<td>//input[@id='_130_cas-logout-url']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_SERVER_NAME_HEADER</td>
-	<td>//label[@for='_130_cas.server.name']</td>
+	<td>//label[@for='_130_cas-server-name']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_SERVER_NAME_FIELD</td>
-	<td>//input[@id='_130_cas.server.name']</td>
+	<td>//input[@id='_130_cas-server-name']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_SERVER_URL_HEADER</td>
-	<td>//label[@for='_130_cas.server.url']</td>
+	<td>//label[@for='_130_cas-server-url']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_SERVER_URL_FIELD</td>
-	<td>//input[@id='_130_cas.server.url']</td>
+	<td>//input[@id='_130_cas-server-url']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_SERVICE_URL_HEADER</td>
-	<td>//label[@for='_130_cas.service.url']</td>
+	<td>//label[@for='_130_cas-service-url']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_SERVICE_URL_FIELD</td>
-	<td>//input[@id='_130_cas.service.url']</td>
+	<td>//input[@id='_130_cas-service-url']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_NO_SUCH_USER_REDIRECT_URL_HEADER</td>
-	<td>//label[@for='_130_cas.no.such.user.redirect.url']</td>
+	<td>//label[@for='_130_cas-no-such-user-redirect-url']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_NO_SUCH_USER_REDIRECT_URL_FIELD</td>
-	<td>//input[@id='_130_cas.no.such.user.redirect.url']</td>
+	<td>//input[@id='_130_cas-no-such-user-redirect-url']</td>
 	<td></td>
 </tr>
 <tr>
@@ -367,57 +367,57 @@
 <!--AUTHENTICATION_NTLM-->
 <tr>
 	<td>AUTHENTICATION_NTLM_ENABLED_CHECKBOX</td>
-	<td>//input[@id='_130_ntlm.auth.enabled']</td>
+	<td>//input[@id='_130_ntlm-auth-enabled']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_HEADER</td>
-	<td>//label[@for='_130_ntlm.auth.domain.controller']</td>
+	<td>//label[@for='_130_ntlm-auth-domain-controller']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_FIELD</td>
-	<td>//input[@id='_130_ntlm.auth.domain.controller']</td>
+	<td>//input[@id='_130_ntlm-auth-domain-controller']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_NAME_HEADER</td>
-	<td>//label[@for='_130_ntlm.auth.domain.controller.name']</td>
+	<td>//label[@for='_130_ntlm-auth-domain-controller-name']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_NAME_FIELD</td>
-	<td>//input[@id='_130_ntlm.auth.domain.controller.name']</td>
+	<td>//input[@id='_130_ntlm-auth-domain-controller-name']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_NTLM_DOMAIN_HEADER</td>
-	<td>//label[@for='_130_ntlm.auth.domain']</td>
+	<td>//label[@for='_130_ntlm-auth-domain']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_NTLM_DOMAIN_FIELD</td>
-	<td>//input[@id='_130_ntlm.auth.domain']</td>
+	<td>//input[@id='_130_ntlm-auth-domain']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_NTLM_SERVICE_ACCOUNT_HEADER</td>
-	<td>//label[@for='_130_ntlm.auth.service.account']</td>
+	<td>//label[@for='_130_ntlm-auth-service-account']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_NTLM_SERVICE_ACCOUNT_FIELD</td>
-	<td>//input[@id='_130_ntlm.auth.service.account']</td>
+	<td>//input[@id='_130_ntlm-auth-service-account']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_NTLM_SERVICE_PASSWORD_HEADER</td>
-	<td>//label[@for='_130_ntlm.auth.service.password']</td>
+	<td>//label[@for='_130_ntlm-auth-service-password']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_NTLM_SERVICE_PASSWORD_FIELD</td>
-	<td>//input[@id='_130_ntlm.auth.service.password']</td>
+	<td>//input[@id='_130_ntlm-auth-service-password']</td>
 	<td></td>
 </tr>
 <tr>
@@ -428,7 +428,7 @@
 <!--AUTHENTICATION_OPEN_ID-->
 <tr>
 	<td>AUTHENTICATION_OPEN_ID_ENABLED_CHECKBOX</td>
-	<td>//input[@id='_130_open.id.auth.enabled']</td>
+	<td>//input[@id='_130_open-id-auth-enabled']</td>
 	<td></td>
 </tr>
 <tr>
@@ -439,82 +439,82 @@
 <!--AUTHENTICATION_OPEN_SSO-->
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_ENABLED_CHECKBOX</td>
-	<td>//input[@id='_130_open.sso.auth.enabled']</td>
+	<td>//input[@id='_130_open-sso-auth-enabled']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_IMPORT_FROM_LDAP_CHECKBOX</td>
-	<td>//input[@id='_130_open.sso.ldap.import.enabled']</td>
+	<td>//input[@id='_130_open-sso-ldap-import-enabled']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_LOGIN_URL_HEADER</td>
-	<td>//label[@for='_130_open.sso.login.url']</td>
+	<td>//label[@for='_130_open-sso-login-url']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_LOGIN_URL_FIELD</td>
-	<td>//input[@id='_130_open.sso.login.url']</td>
+	<td>//input[@id='_130_open-sso-login-url']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_LOGOUT_URL_HEADER</td>
-	<td>//label[@for='_130_open.sso.logout.url']</td>
+	<td>//label[@for='_130_open-sso-logout-url']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_LOGOUT_URL_FIELD</td>
-	<td>//input[@id='_130_open.sso.logout.url']</td>
+	<td>//input[@id='_130_open-sso-logout-url']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_SERVICE_URL_HEADER</td>
-	<td>//label[@for='_130_open.sso.service.url']</td>
+	<td>//label[@for='_130_open-sso-service-url']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_SERVICE_URL_FIELD</td>
-	<td>//input[@id='_130_open.sso.service.url']</td>
+	<td>//input[@id='_130_open-sso-service-url']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_SCREEN_NAME_ATTRIBUTE_HEADER</td>
-	<td>//label[@for='_130_open.sso.screen.name.attr']</td>
+	<td>//label[@for='_130_open-sso-screen-name-attr']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_SCREEN_NAME_ATTRIBUTE_FIELD</td>
-	<td>//input[@id='_130_open.sso.screen.name.attr']</td>
+	<td>//input[@id='_130_open-sso-screen-name-attr']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_EMAIL_ADDRESS_ATTRIBUTE_HEADER</td>
-	<td>//label[@for='_130_open.sso.email.address.attr']</td>
+	<td>//label[@for='_130_open-sso-email-address-attr']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_EMAIL_ADDRESS_ATTRIBUTE_FIELD</td>
-	<td>//input[@id='_130_open.sso.email.address.attr']</td>
+	<td>//input[@id='_130_open-sso-email-address-attr']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_FIRST_NAME_ATTRIBUTE_HEADER</td>
-	<td>//label[@for='_130_open.sso.first.name.attr']</td>
+	<td>//label[@for='_130_open-sso-first-name-attr']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_FIRST_NAME_ATTRIBUTE_FIELD</td>
-	<td>//input[@id='_130_open.sso.first.name.attr']</td>
+	<td>//input[@id='_130_open-sso-first-name-attr']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_LAST_NAME_ATTRIBUTE_HEADER</td>
-	<td>//label[@for='_130_open.sso.last.name.attr']</td>
+	<td>//label[@for='_130_open-sso-last-name-attr']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_LAST_NAME_ATTRIBUTE_FIELD</td>
-	<td>//input[@id='_130_open.sso.last.name.attr']</td>
+	<td>//input[@id='_130_open-sso-last-name-attr']</td>
 	<td></td>
 </tr>
 <tr>
@@ -530,22 +530,22 @@
 <!--AUTHENTICATION_SITE_MINDER-->
 <tr>
 	<td>AUTHENTICATION_SITE_MINDER_ENABLED_CHECKBOX</td>
-	<td>//input[@id='_130_siteminder.auth.enabled']</td>
+	<td>//input[@id='_130_siteminder-auth-enabled']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_SITE_MINDER_IMPORT_FROM_LDAP_CHECKBOX</td>
-	<td>//input[@id='_130_siteminder.import.from.ldap']</td>
+	<td>//input[@id='_130_siteminder-import-from-ldap']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_SITE_MINDER_USER_HEADER_HEADER</td>
-	<td>//label[@for='_130_siteminder.user.header']</td>
+	<td>//label[@for='_130_siteminder-user-header']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_SITE_MINDER_USER_HEADER_FIELD</td>
-	<td>//input[@id='_130_siteminder.user.header']</td>
+	<td>//input[@id='_130_siteminder-user-header']</td>
 	<td></td>
 </tr>
 </tbody>

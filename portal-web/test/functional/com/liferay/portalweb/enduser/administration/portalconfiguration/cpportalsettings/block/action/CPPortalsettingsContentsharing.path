@@ -36,12 +36,12 @@
 <!--CONTENT_SHARING-->
 <tr>
 	<td>CONTENT_SHARING_CHECKBOX</td>
-	<td>//input[@id='_130_sites.content.sharing.through.administrators.enabled']</td>
+	<td>//input[@id='_130_sites-content-sharing-through-administrators-enabled']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_SHARING_SELECTOR</td>
-	<td>//select[@id='_130_sites.content.sharing.with.children.enabled']</td>
+	<td>//select[@id='_130_sites-content-sharing-with-children-enabled']</td>
 	<td></td>
 </tr>
 </tbody>

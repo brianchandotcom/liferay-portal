@@ -108,17 +108,17 @@
 </tr>
 <tr>
 	<td>MAIN_CONFIGURATION_CDN_HOST_HTTP_FIELD</td>
-	<td>//input[@id='_130_cdn.host.http']</td>
+	<td>//input[@id='_130_cdn-host-http']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MAIN_CONFIGURATION_CDN_HOST_HTTPS_FIELD</td>
-	<td>//input[@id='_130_cdn.host.https']</td>
+	<td>//input[@id='_130_cdn-host-https']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MAIN_CONFIGURATION_CDN_DYNAMIC_RESOURCES_ENABLE_CHECKBOX</td>
-	<td>//input[@id='_130_cdn.dynamic.resources.enabled']</td>
+	<td>//input[@id='_130_cdn-dynamic-resources-enabled']</td>
 	<td></td>
 </tr>
 <tr>

@@ -902,6 +902,43 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</sequential>
 	</macrodef>
 
+	<macrodef name="report-test-coverage">
+		<attribute name="test.type" />
+
+		<sequential>
+			<if>
+				<equals arg1="${junit.code.coverage}" arg2="true" />
+				<then>
+					<mkdir dir="test-coverage/@{test.type}" />
+
+					<if>
+						<available file="test-coverage/@{test.type}/cobertura.ser" type="file" />
+						<then>
+							<cobertura-report
+								datafile="test-coverage/@{test.type}/cobertura.ser"
+								destdir="test-coverage/@{test.type}"
+								format="${junit.cobertura.report.format}"
+							>
+								<fileset dir="${project.dir}/portal-impl/src">
+									<include name="**/*.java" />
+								</fileset>
+								<fileset dir="${project.dir}/portal-service/src">
+									<include name="**/*.java" />
+								</fileset>
+								<fileset dir="${project.dir}/util-java/src">
+									<include name="**/*.java" />
+								</fileset>
+								<fileset dir="${project.dir}/util-taglib/src">
+									<include name="**/*.java" />
+								</fileset>
+							</cobertura-report>
+						</then>
+					</if>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="remake-dir">
 		<attribute name="dir" />
 
@@ -1299,39 +1336,6 @@ rerun your task.
 		<echoproperties />
 	</target>
 
-	<target name="report-test-coverage">
-		<if>
-			<equals arg1="${junit.code.coverage}" arg2="true" />
-			<then>
-				<mkdir dir="test-coverage/${test.type}" />
-
-				<if>
-					<available file="test-coverage/${test.type}/cobertura.ser" type="file" />
-					<then>
-						<cobertura-report
-							datafile="test-coverage/${test.type}/cobertura.ser"
-							destdir="test-coverage/${test.type}"
-							format="${junit.cobertura.report.format}"
-						>
-							<fileset dir="${project.dir}/portal-impl/src">
-								<include name="**/*.java" />
-							</fileset>
-							<fileset dir="${project.dir}/portal-service/src">
-								<include name="**/*.java" />
-							</fileset>
-							<fileset dir="${project.dir}/util-java/src">
-								<include name="**/*.java" />
-							</fileset>
-							<fileset dir="${project.dir}/util-taglib/src">
-								<include name="**/*.java" />
-							</fileset>
-						</cobertura-report>
-					</then>
-				</if>
-			</then>
-		</if>
-	</target>
-
 	<target name="setproxy" if="setproxy.proxy.host">
 		<setproxy proxyhost="${setproxy.proxy.host}" proxyport="${setproxy.proxy.port}" />
 	</target>
@@ -1491,7 +1495,9 @@ rerun your task.
 			</else>
 		</if>
 
-		<antcall target="report-test-coverage" />
+		<report-test-coverage
+			test.type="${test.type}"
+		/>
 	</target>
 
 	<target name="test-class" depends="compile,compile-test">
@@ -1520,9 +1526,9 @@ rerun your task.
 			test.type="${test.type}"
 		/>
 
-		<antcall target="report-test-coverage">
-			<param name="" value="${test.type}" />
-		</antcall>
+		<report-test-coverage
+			test.type="${test.type}"
+		/>
 	</target>
 
 	<target name="test-integration" depends="compile">
@@ -1543,9 +1549,9 @@ rerun your task.
 			test.type="integration"
 		/>
 
-		<antcall target="report-test-coverage">
-			<param name="test.type" value="integration" />
-		</antcall>
+		<report-test-coverage
+			test.type="integration"
+		/>
 	</target>
 
 	<target name="test-method" depends="compile,compile-test">
@@ -1689,9 +1695,9 @@ rerun your task.
 							test.type="integration"
 						/>
 
-						<antcall target="report-test-coverage">
-							<param name="test.type" value="integration" />
-						</antcall>
+						<report-test-coverage
+							test.type="integration"
+						/>
 					</then>
 				</if>
 
@@ -1713,9 +1719,9 @@ rerun your task.
 							test.type="integration"
 						/>
 
-						<antcall target="report-test-coverage">
-							<param name="test.type" value="integration" />
-						</antcall>
+						<report-test-coverage
+							test.type="integration"
+						/>
 					</then>
 				</if>
 			</then>
@@ -1742,9 +1748,9 @@ rerun your task.
 							test.type="unit"
 						/>
 
-						<antcall target="report-test-coverage" >
-							<param name="test.type" value="unit" />
-						</antcall>
+						<report-test-coverage
+							test.type="unit"
+						/>
 					</then>
 				</if>
 			</then>
@@ -1785,8 +1791,8 @@ rerun your task.
 			test.type="unit"
 		/>
 
-		<antcall target="report-test-coverage" >
-			<param name="test.type" value="unit" />
-		</antcall>
+		<report-test-coverage
+			test.type="unit"
+		/>
 	</target>
 </project>

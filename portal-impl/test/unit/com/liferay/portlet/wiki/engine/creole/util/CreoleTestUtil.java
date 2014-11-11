@@ -25,12 +25,31 @@ import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 
-import org.junit.Assert;
-
 /**
  * @author Roberto Díaz
  */
 public class CreoleTestUtil {
+
+	public static WikiPageNode getWikiPageNode(
+		String fileName, Class<?> clazz) {
+
+		Creole10Parser creole10parser = null;
+
+		try {
+			creole10parser = getCreole10Parser(fileName, clazz);
+
+			creole10parser.wikipage();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("File " + fileName + " does not exist");
+		}
+		catch (RecognitionException re) {
+			throw new RuntimeException(
+				"File " + fileName + " cannot be parsed");
+		}
+
+		return creole10parser.getWikiPageNode();
+	}
 
 	protected static Creole10Parser getCreole10Parser(
 			String fileName, Class<?> clazz)
@@ -47,26 +66,6 @@ public class CreoleTestUtil {
 			creole10Lexer);
 
 		return new Creole10Parser(commonTokenStream);
-	}
-
-	protected static WikiPageNode getWikiPageNode(
-		String fileName, Class<?> clazz) {
-
-		Creole10Parser creole10parser = null;
-
-		try {
-			creole10parser = getCreole10Parser(fileName, clazz);
-
-			creole10parser.wikipage();
-		}
-		catch (IOException ioe) {
-			Assert.fail("File does not exist");
-		}
-		catch (RecognitionException re) {
-			Assert.fail("File could not be parsed");
-		}
-
-		return creole10parser.getWikiPageNode();
 	}
 
 }

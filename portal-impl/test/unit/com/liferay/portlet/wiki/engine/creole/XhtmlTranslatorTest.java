@@ -16,16 +16,16 @@ package com.liferay.portlet.wiki.engine.creole;
 
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.util.HtmlImpl;
+import com.liferay.portlet.wiki.engine.creole.util.CreoleTestUtil;
 import com.liferay.portlet.wiki.engines.antlrwiki.translator.XhtmlTranslator;
 import com.liferay.portlet.wiki.model.WikiPage;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
-import org.mockito.internal.verification.VerificationModeFactory;
 
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -35,15 +35,15 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @RunWith(PowerMockRunner.class)
 public class XhtmlTranslatorTest {
 
-	@Before
-	public void setUp() {
+	@BeforeClass
+	public static void setUpClass() {
 		HtmlUtil htmlUtil = new HtmlUtil();
 
 		htmlUtil.setHtml(new HtmlImpl());
 	}
 
 	@Test
-	public void testParseCorrectlyMultipleHeadingBlocks2() {
+	public void testParseCorrectlyMultipleHeadingBlocks() {
 		WikiPage page = Mockito.mock(WikiPage.class);
 
 		Mockito.when(page.getTitle()).thenReturn("test");
@@ -54,7 +54,9 @@ public class XhtmlTranslatorTest {
 			page, null, null, null,
 			CreoleTestUtil.getWikiPageNode("heading-10.creole", getClass()));
 
-		Mockito.verify(page, VerificationModeFactory.atLeastOnce()).getTitle();
+		WikiPage wikiPage = Mockito.verify(page, Mockito.atLeast(1));
+
+		wikiPage.getTitle();
 
 		Assert.assertEquals(
 			"<h1 id=\"section-test-Level+1\">Level 1</h1><h2 " +

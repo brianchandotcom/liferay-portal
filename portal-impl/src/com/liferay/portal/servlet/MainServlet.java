@@ -855,19 +855,15 @@ public class MainServlet extends ActionServlet {
 
 		ServletContext servletContext = getServletContext();
 
-		String[] xmls = new String[] {
-			HttpUtil.URLtoString(
-				servletContext.getResource(
-					"/WEB-INF/" + Portal.PORTLET_XML_FILE_NAME_CUSTOM)),
-			HttpUtil.URLtoString(
-				servletContext.getResource("/WEB-INF/portlet-ext.xml")),
-			HttpUtil.URLtoString(
-				servletContext.getResource("/WEB-INF/liferay-portlet.xml")),
-			HttpUtil.URLtoString(
-				servletContext.getResource("/WEB-INF/liferay-portlet-ext.xml")),
-			HttpUtil.URLtoString(
-				servletContext.getResource("/WEB-INF/web.xml"))
-		};
+		String[] configs = PropsValues.PORTLET_CONFIGS;
+
+		String[] xmls = new String[configs.length];
+
+		for (int i = 0; i < configs.length; i++) {
+			String config = configs[i];
+
+			xmls[i] = HttpUtil.URLtoString(servletContext.getResource(config));
+		}
 
 		PortletLocalServiceUtil.initEAR(servletContext, xmls, pluginPackage);
 

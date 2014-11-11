@@ -130,6 +130,8 @@ public class ComboServlet extends HttpServlet {
 		Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
 			request.getQueryString());
 
+		String languageId = LanguageUtil.getLanguageId(request);
+
 		Enumeration<String> enu = Collections.enumeration(
 			parameterMap.keySet());
 
@@ -180,6 +182,8 @@ public class ComboServlet extends HttpServlet {
 
 		if (!PropsValues.COMBO_CHECK_TIMESTAMP) {
 			modulePathsString = Arrays.toString(modulePaths);
+
+			modulePathsString += languageId;
 
 			if (minifierType.equals("css") &&
 				PortalUtil.isRightToLeft(request)) {

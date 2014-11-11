@@ -22,7 +22,6 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.ResourcePermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.wiki.NoSuchPageException;
@@ -36,8 +35,7 @@ import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 @OSGiBeanProperties(
 	property = {"model.class.name=com.liferay.portlet.wiki.model.WikiPage"}
 )
-public class WikiPagePermission
-	implements BaseModelPermissionChecker, ResourcePermissionChecker {
+public class WikiPagePermission implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, long resourcePrimKey,
@@ -204,14 +202,6 @@ public class WikiPagePermission
 		throws PortalException {
 
 		check(permissionChecker, primaryKey, actionId);
-	}
-
-	@Override
-	public Boolean checkResource(
-			PermissionChecker permissionChecker, long classPK, String actionId)
-		throws PortalException {
-
-		return contains(permissionChecker, classPK, actionId);
 	}
 
 	private static boolean _hasPermission(

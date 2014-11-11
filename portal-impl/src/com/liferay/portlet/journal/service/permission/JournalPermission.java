@@ -31,7 +31,7 @@ import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
  */
 @OSGiBeanProperties(
 	property = {
-		"model.class.name=com.liferay.portlet.journal.model.JournalFolder"
+		"resource.name=com.liferay.portlet.journal"
 	}
 )
 public class JournalPermission implements ResourcePermissionChecker {

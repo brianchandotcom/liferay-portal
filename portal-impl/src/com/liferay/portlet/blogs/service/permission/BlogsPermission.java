@@ -29,7 +29,7 @@ import com.liferay.portal.util.PortletKeys;
  */
 @OSGiBeanProperties(
 	property = {
-		"model.class.name=com.liferay.portlet.blogs.model.BlogsEntry"
+		"resource.name=com.liferay.portlet.blogs"
 	}
 )
 public class BlogsPermission implements ResourcePermissionChecker {

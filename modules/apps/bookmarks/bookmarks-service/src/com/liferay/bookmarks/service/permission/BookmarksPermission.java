@@ -15,15 +15,11 @@
 package com.liferay.bookmarks.service.permission;
 
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
-import com.liferay.bookmarks.model.BookmarksFolder;
-import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourcePermissionChecker;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -33,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"model.class.name=com.liferay.bookmarks.model.BookmarksFolder"
+		"resource.name=com.liferay.bookmarks"
 	}
 )
 public class BookmarksPermission implements ResourcePermissionChecker {

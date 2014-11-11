@@ -27,7 +27,6 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.ResourcePermissionChecker;
 import com.liferay.portal.util.PropsValues;
 
 import org.osgi.service.component.annotations.Component;
@@ -40,8 +39,7 @@ import org.osgi.service.component.annotations.Component;
 		"model.class.name=com.liferay.portlet.bookmarks.model.BookmarksEntry"
 	}
 )
-public class BookmarksEntryPermission
-	implements BaseModelPermissionChecker, ResourcePermissionChecker {
+public class BookmarksEntryPermission implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, BookmarksEntry entry,
@@ -137,14 +135,6 @@ public class BookmarksEntryPermission
 		throws PortalException {
 
 		check(permissionChecker, primaryKey, actionId);
-	}
-
-	@Override
-	public Boolean checkResource(
-			PermissionChecker permissionChecker, long classPK, String actionId)
-		throws PortalException {
-
-		return contains(permissionChecker, classPK, actionId);
 	}
 
 }

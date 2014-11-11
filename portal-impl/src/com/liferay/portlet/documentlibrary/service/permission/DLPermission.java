@@ -36,7 +36,7 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
  */
 @OSGiBeanProperties(
 	property = {
-		"model.class.name=com.liferay.portal.kernel.repository.model.Folder"
+		"resource.name=com.liferay.portlet.documentlibrary"
 	}
 )
 public class DLPermission implements ResourcePermissionChecker {

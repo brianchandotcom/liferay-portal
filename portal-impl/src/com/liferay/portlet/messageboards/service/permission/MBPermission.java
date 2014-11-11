@@ -29,7 +29,7 @@ import com.liferay.portal.util.PortletKeys;
  */
 @OSGiBeanProperties(
 	property = {
-		"model.class.name=com.liferay.portlet.messageboards.model.MBCategory"
+		"resource.name=com.liferay.portlet.messageboards"
 	}
 )
 public class MBPermission implements ResourcePermissionChecker {

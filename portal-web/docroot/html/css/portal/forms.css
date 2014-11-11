@@ -102,6 +102,16 @@
 		margin-left: 0;
 	}
 
+	.lfr-ddm-repeatable-helper {
+		display: none;
+	}
+
+	.lfr-ddm-repeatable-placeholder {
+		border: 1px dotted;
+		margin-top: 15px;
+		padding: 20px 0;
+	}
+
 	.field-wrapper {
 		position: relative;
 

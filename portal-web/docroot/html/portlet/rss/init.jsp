@@ -41,16 +41,6 @@ boolean showFeedImage = GetterUtil.getBoolean(portletPreferences.getValue("showF
 String feedImageAlignment = portletPreferences.getValue("feedImageAlignment", "right");
 boolean showFeedItemAuthor = GetterUtil.getBoolean(portletPreferences.getValue("showFeedItemAuthor", Boolean.TRUE.toString()));
 
-String[] headerArticleValues = portletPreferences.getValues("headerArticleValues", new String[] {"0", ""});
-
-long headerArticleGroupId = GetterUtil.getLong(headerArticleValues[0]);
-String headerArticleId = headerArticleValues[1];
-
-String[] footerArticleValues = portletPreferences.getValues("footerArticleValues", new String[] {"0", ""});
-
-long footerArticleGroupId = GetterUtil.getLong(footerArticleValues[0]);
-String footerArticleId = footerArticleValues[1];
-
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 

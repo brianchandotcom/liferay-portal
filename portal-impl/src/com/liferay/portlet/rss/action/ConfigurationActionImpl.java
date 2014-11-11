@@ -15,13 +15,9 @@
 package com.liferay.portlet.rss.action;
 
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.servlet.SessionMessages;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PortalUtil;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -29,8 +25,6 @@ import java.util.Map;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletPreferences;
-import javax.portlet.ValidatorException;
 
 /**
  * @author Brian Wing Shun Chan
@@ -43,98 +37,9 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+		updateSubscriptions(actionRequest);
 
-		if (cmd.equals(Constants.UPDATE)) {
-			updateSubscriptions(actionRequest);
-
-			super.processAction(portletConfig, actionRequest, actionResponse);
-
-			return;
-		}
-
-		String portletResource = ParamUtil.getString(
-			actionRequest, "portletResource");
-
-		PortletPreferences preferences = actionRequest.getPreferences();
-
-		if (cmd.equals("remove-footer-article")) {
-			removeFooterArticle(actionRequest, preferences);
-		}
-		else if (cmd.equals("remove-header-article")) {
-			removeHeaderArticle(actionRequest, preferences);
-		}
-		else if (cmd.equals("set-footer-article")) {
-			setFooterArticle(actionRequest, preferences);
-		}
-		else if (cmd.equals("set-header-article")) {
-			setHeaderArticle(actionRequest, preferences);
-		}
-
-		if (!SessionErrors.isEmpty(actionRequest)) {
-			return;
-		}
-
-		try {
-			preferences.store();
-		}
-		catch (ValidatorException ve) {
-			SessionErrors.add(
-				actionRequest, ValidatorException.class.getName(), ve);
-
-			return;
-		}
-
-		SessionMessages.add(
-			actionRequest,
-			PortalUtil.getPortletId(actionRequest) +
-				SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
-			portletResource);
-
-		SessionMessages.add(
-			actionRequest,
-			PortalUtil.getPortletId(actionRequest) +
-				SessionMessages.KEY_SUFFIX_UPDATED_CONFIGURATION);
-	}
-
-	protected void removeFooterArticle(
-			ActionRequest actionRequest, PortletPreferences preferences)
-		throws Exception {
-
-		preferences.setValues("footerArticleValues", new String[] {"0", ""});
-	}
-
-	protected void removeHeaderArticle(
-			ActionRequest actionRequest, PortletPreferences preferences)
-		throws Exception {
-
-		preferences.setValues("headerArticleValues", new String[] {"0", ""});
-	}
-
-	protected void setFooterArticle(
-			ActionRequest actionRequest, PortletPreferences preferences)
-		throws Exception {
-
-		long articleGroupId = ParamUtil.getLong(
-			actionRequest, "articleGroupId");
-		String articleId = ParamUtil.getString(actionRequest, "articleId");
-
-		preferences.setValues(
-			"footerArticleValues",
-			new String[] {String.valueOf(articleGroupId), articleId});
-	}
-
-	protected void setHeaderArticle(
-			ActionRequest actionRequest, PortletPreferences preferences)
-		throws Exception {
-
-		long articleGroupId = ParamUtil.getLong(
-			actionRequest, "articleGroupId");
-		String articleId = ParamUtil.getString(actionRequest, "articleId");
-
-		preferences.setValues(
-			"headerArticleValues",
-			new String[] {String.valueOf(articleGroupId), articleId});
+		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
 
 	protected void updateSubscriptions(ActionRequest actionRequest)

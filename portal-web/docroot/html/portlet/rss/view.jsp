@@ -21,11 +21,6 @@ String url = ParamUtil.getString(request, "url");
 String title = StringPool.BLANK;
 %>
 
-<c:if test="<%= Validator.isNotNull(headerArticleId) %>">
-	<p>
-		<liferay-ui:journal-article articleId="<%= headerArticleId %>" groupId="<%= headerArticleGroupId %>" />
-	</p>
-</c:if>
 
 <div id="<portlet:namespace />feedsContainer">
 
@@ -54,12 +49,6 @@ String title = StringPool.BLANK;
 	%>
 
 </div>
-
-<c:if test="<%= Validator.isNotNull(footerArticleId) %>">
-	<p>
-		<liferay-ui:journal-article articleId="<%= footerArticleId %>" groupId="<%= footerArticleGroupId %>" />
-	</p>
-</c:if>
 
 <aui:script use="aui-base">
 	var feedsContainer = A.one('#<portlet:namespace />feedsContainer');

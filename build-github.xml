@@ -70,7 +70,10 @@
 				]]>
 			</script>
 
-			<github-post />
+			<github-post
+				github.post.data="${github.post.data}"
+				github.post.url="${github.post.url}"
+			/>
 		</sequential>
 	</macrodef>
 
@@ -107,7 +110,10 @@
 				]]>
 			</script>
 
-			<github-post />
+			<github-post
+				github.post.data="${github.post.data}"
+				github.post.url="${github.post.url}"
+			/>
 		</sequential>
 	</macrodef>
 
@@ -121,9 +127,9 @@
 				String targetURL = project.getProperty("jenkins.results.url");
 
 				if (targetURL != null) {
-					sb.append("<p>Click <a href=\"");
+					sb.append("<p>Click <a href='");
 					sb.append(targetURL);
-					sb.append("\">here</a> for more information.</p>\\n");
+					sb.append("'>here</a> for more information.</p>\\n");
 				}
 
 				project.setProperty("github.post.comment.body", sb.toString());
@@ -145,9 +151,9 @@
 				String targetURL = project.getProperty("jenkins.results.url");
 
 				if (targetURL != null) {
-					sb.append("<p>Click <a href=\"");
+					sb.append("<p>Click <a href='");
 					sb.append(targetURL);
-					sb.append("\">here</a> for more information.</p>\\n");
+					sb.append("'>here</a> for more information.</p>\\n");
 				}
 
 				project.setProperty("github.post.comment.body", sb.toString());

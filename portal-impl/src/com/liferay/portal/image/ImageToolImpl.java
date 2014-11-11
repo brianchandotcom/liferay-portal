@@ -557,7 +557,7 @@ public class ImageToolImpl implements ImageTool {
 
 		double factor = (double)width / imageWidth;
 
-		int scaledHeight = (int)(factor * imageHeight);
+		int scaledHeight = (int)Math.round(factor * imageHeight);
 		int scaledWidth = width;
 
 		return doScale(renderedImage, scaledHeight, scaledWidth);
@@ -585,8 +585,8 @@ public class ImageToolImpl implements ImageTool {
 		double factor = Math.min(
 			(double)maxHeight / imageHeight, (double)maxWidth / imageWidth);
 
-		int scaledHeight = Math.max(1, (int)(factor * imageHeight));
-		int scaledWidth = Math.max(1, (int)(factor * imageWidth));
+		int scaledHeight = Math.max(1, (int)Math.round(factor * imageHeight));
+		int scaledWidth = Math.max(1, (int)Math.round(factor * imageWidth));
 
 		return doScale(renderedImage, scaledHeight, scaledWidth);
 	}

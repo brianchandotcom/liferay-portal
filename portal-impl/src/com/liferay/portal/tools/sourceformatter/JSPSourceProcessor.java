@@ -456,13 +456,15 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		Matcher matcher = pattern.matcher(content);
 
-		if (matcher.find()) {
-			content = StringUtil.replace(
-				content, matcher.group(),
+		String newContent = content;
+
+		while (matcher.find()) {
+			newContent = StringUtil.replaceFirst(
+				newContent, matcher.group(),
 				matcher.group(1) + "\n\n" + matcher.group(2), matcher.start());
 		}
 
-		return content;
+		return newContent;
 	}
 
 	@Override

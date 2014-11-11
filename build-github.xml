@@ -118,8 +118,53 @@
 	</macrodef>
 
 	<target name="github-post-comment-failure">
+		<fail message="Please set the property ${jenkins.failure.list}" unless="jenkins.failure.list" />
+		<fail message="Please set the property ${jenkins.url}" unless="jenkins.url" />
+
 		<script classpathref="project.classpath" language="beanshell">
 			<![CDATA[
+				import org.json.JSONObject;
+
+				public String fixJsonUrlString(String jsonUrlString) {
+					if(jsonUrlString.contains("(")) {
+						jsonUrlString = jsonUrlString.replace("(", "%28");
+					}
+
+					if(jsonUrlString.contains(")")) {
+						jsonUrlString = jsonUrlString.replace(")", "%29");
+					}
+
+					if(jsonUrlString.contains("[")) {
+						jsonUrlString = jsonUrlString.replace("[", "%5B");
+					}
+
+					if(jsonUrlString.contains("]")) {
+						jsonUrlString = jsonUrlString.replace("]", "%5D");
+					}
+
+					return jsonUrlString;
+				}
+
+				public JSONObject jsonUrlStringToJsonObject(String jsonUrlString) {
+					StringBuilder sb = new StringBuilder();
+
+					URL url = new URL(fixJsonUrlString(jsonUrlString));
+
+					InputStreamReader inputStreamReader = new InputStreamReader(url.openStream());
+
+					BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+					String line;
+
+					while ((line = bufferedReader.readLine()) != null) {
+						sb.append(line);
+					}
+
+					bufferedReader.close();
+
+					return new JSONObject(sb.toString());
+				}
+
 				StringBuilder sb = new StringBuilder();
 
 				sb.append("<h1>Some tests have FAILED!</h1>\\n");
@@ -131,6 +176,57 @@
 					sb.append(targetURL);
 					sb.append("'>here</a> for more information.</p>\\n");
 				}
+
+				String jenkinsFailureList = project.getProperty("jenkins.failure.list");
+				String jenkinsUrl = project.getProperty("jenkins.url");
+
+				String[] jenkinsFailures = jenkinsFailureList.split(",");
+
+				int jenkinsFailureCount = jenkinsFailures.length;
+
+				sb.append("<h1>");
+				sb.append(jenkinsFailureCount);
+				sb.append(" Failure");
+
+				if (jenkinsFailureCount != 1) {
+					sb.append("s");
+				}
+
+				sb.append(":</h1>\\n");
+
+				sb.append("<ul>\\n");
+
+				for (String jenkinsFailure : jenkinsFailures) {
+					String jenkinsFailureUrlString = jenkinsUrl + jenkinsFailure;
+
+					String jsonUrlString = jenkinsFailureUrlString + "/api/json";
+
+					JSONObject jsonObject = jsonUrlStringToJsonObject(jsonUrlString);
+
+					sb.append("<li>");
+
+					sb.append("<a href='");
+					sb.append(jenkinsFailureUrlString);
+					sb.append("'>");
+					sb.append(jsonObject.get("className"));
+					sb.append(".");
+					sb.append(jsonObject.get("name"));
+					sb.append("</a>\\n");
+
+					String errorStackTrace = jsonObject.get("errorStackTrace");
+
+					errorStackTrace = errorStackTrace.replaceAll("\n", "<br />");
+
+					sb.append("<pre>");
+					sb.append(jsonObject.get("errorDetails"));
+					sb.append("<br /><br />");
+					sb.append(errorStackTrace);
+					sb.append("</pre>");
+
+					sb.append("</li>\\n");
+				}
+
+				sb.append("</ul>");
 
 				project.setProperty("github.post.comment.body", sb.toString());
 			]]>

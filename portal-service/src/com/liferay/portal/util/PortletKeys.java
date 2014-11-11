@@ -250,8 +250,6 @@ public class PortletKeys {
 	@Deprecated
 	public static final String TAGS_ENTRIES_NAVIGATION = ASSET_TAGS_NAVIGATION;
 
-	public static final String TEST = "com_liferay_test_portlet_TestPortlet";
-
 	public static final String TRANSLATOR = "26";
 
 	public static final String TRASH = "182";

@@ -379,6 +379,21 @@ public class SyncFileService {
 		}
 	}
 
+	public static List<SyncFile> findSyncFilesByRepositoryId(
+		long repositoryId, long syncAccountId) {
+
+		try {
+			return _syncFilePersistence.findByR_S(repositoryId, syncAccountId);
+		}
+		catch (SQLException sqle) {
+			if (_logger.isDebugEnabled()) {
+				_logger.debug(sqle.getMessage(), sqle);
+			}
+
+			return Collections.emptyList();
+		}
+	}
+
 	public static SyncFilePersistence getSyncFilePersistence() {
 		if (_syncFilePersistence != null) {
 			return _syncFilePersistence;

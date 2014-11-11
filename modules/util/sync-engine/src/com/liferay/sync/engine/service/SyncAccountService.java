@@ -25,6 +25,8 @@ import com.liferay.sync.engine.util.Encryptor;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.OSDetector;
 
+import java.io.IOException;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -137,16 +139,9 @@ public class SyncAccountService {
 
 			// Sync account
 
+			SyncAccount syncAccount = fetchSyncAccount(syncAccountId);
+
 			_syncAccountPersistence.deleteById(syncAccountId);
-
-			// Sync files
-
-			List<SyncFile> syncFiles = SyncFileService.findSyncFiles(
-				syncAccountId);
-
-			for (SyncFile syncFile : syncFiles) {
-				SyncFileService.deleteSyncFile(syncFile, false);
-			}
 
 			// Sync sites
 
@@ -155,6 +150,20 @@ public class SyncAccountService {
 
 			for (SyncSite syncSite : syncSites) {
 				SyncSiteService.deleteSyncSite(syncSite.getSyncSiteId());
+			}
+
+			// Sync file
+
+			SyncFile syncFile = SyncFileService.fetchSyncFile(
+				syncAccount.getFilePathName());
+
+			SyncFileService.deleteSyncFile(syncFile, false);
+
+			try {
+				Files.deleteIfExists(Paths.get(syncAccount.getFilePathName()));
+			}
+			catch (IOException ioe) {
+				_logger.error(ioe.getMessage(), ioe);
 			}
 
 			// Sync user

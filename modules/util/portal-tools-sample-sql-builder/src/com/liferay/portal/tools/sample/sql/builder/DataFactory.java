@@ -1536,6 +1536,7 @@ public class DataFactory {
 		journalArticleModel.setUserId(_sampleUserId);
 		journalArticleModel.setUserName(_SAMPLE_USER_NAME);
 		journalArticleModel.setCreateDate(new Date());
+		journalArticleModel.setLastPublishDate(new Date());
 		journalArticleModel.setModifiedDate(new Date());
 		journalArticleModel.setClassNameId(
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT);

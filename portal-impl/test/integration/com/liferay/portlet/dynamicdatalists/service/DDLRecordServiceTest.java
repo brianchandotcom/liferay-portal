@@ -14,25 +14,15 @@
 
 package com.liferay.portlet.dynamicdatalists.service;
 
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.test.SearchContextTestUtil;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
-import com.liferay.portlet.dynamicdatamapping.storage.Field;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
-import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
+import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordTestHelper;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -54,17 +44,12 @@ public class DDLRecordServiceTest extends BaseDDLServiceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		DDMStructure ddmStructure = addStructure(
-			PortalUtil.getClassNameId(DDLRecordSet.class), null,
-			"Test Structure", readText("test-structure.xsd"),
-			StorageType.XML.getValue(), DDMStructureConstants.TYPE_DEFAULT);
-
-		recordSet = addRecordSet(ddmStructure.getStructureId());
+		testHelper = new DDLRecordTestHelper(this, ddmStructureTestHelper);
 	}
 
 	@Test
 	public void testPublishRecordDraftWithoutChanges() throws Exception {
-		DDLRecord record = addRecord(
+		DDLRecord record = testHelper.addRecord(
 			"Joe Bloggs", "Simple description",
 			WorkflowConstants.ACTION_SAVE_DRAFT);
 
@@ -74,7 +59,7 @@ public class DDLRecordServiceTest extends BaseDDLServiceTestCase {
 
 		Assert.assertTrue(recordVersion.isDraft());
 
-		record = updateRecord(
+		record = DDLRecordTestHelper.updateRecord(
 			record.getRecordId(), record.getDDMFormValues(),
 			WorkflowConstants.ACTION_PUBLISH);
 
@@ -86,84 +71,6 @@ public class DDLRecordServiceTest extends BaseDDLServiceTestCase {
 		Assert.assertTrue(recordVersion.isApproved());
 	}
 
-	@Test
-	public void testSearchByTextAreaField() throws Exception {
-		addSampleRecords();
-
-		SearchContext searchContext = getSearchContext("example");
-
-		Hits hits = DDLRecordLocalServiceUtil.search(searchContext);
-
-		Assert.assertEquals(1, hits.getLength());
-
-		searchContext.setKeywords("description");
-
-		hits = DDLRecordLocalServiceUtil.search(searchContext);
-
-		Assert.assertEquals(2, hits.getLength());
-	}
-
-	@Test
-	public void testSearchByTextField() throws Exception {
-		addSampleRecords();
-
-		SearchContext searchContext = getSearchContext("\"Joe Bloggs\"");
-
-		Hits hits = DDLRecordLocalServiceUtil.search(searchContext);
-
-		Assert.assertEquals(1, hits.getLength());
-
-		searchContext.setKeywords("Bloggs");
-
-		hits = DDLRecordLocalServiceUtil.search(searchContext);
-
-		Assert.assertEquals(2, hits.getLength());
-	}
-
-	protected DDLRecord addRecord(
-			String name, String description, int workflowAction)
-		throws Exception {
-
-		Fields fields = new Fields();
-
-		Field nameField = new Field(
-			recordSet.getDDMStructureId(), "name", name);
-
-		nameField.setDefaultLocale(LocaleUtil.ENGLISH);
-
-		fields.put(nameField);
-
-		Field descriptionField = new Field(
-			recordSet.getDDMStructureId(), "description", description);
-
-		descriptionField.setDefaultLocale(LocaleUtil.ENGLISH);
-
-		fields.put(descriptionField);
-
-		return addRecord(recordSet.getRecordSetId(), fields, workflowAction);
-	}
-
-	protected void addSampleRecords() throws Exception {
-		addRecord(
-			"Joe Bloggs", "Simple description",
-			WorkflowConstants.ACTION_PUBLISH);
-
-		addRecord(
-			"Bloggs","Another description example",
-			WorkflowConstants.ACTION_PUBLISH);
-	}
-
-	protected SearchContext getSearchContext(String keywords) throws Exception {
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
-			group.getGroupId());
-
-		searchContext.setAttribute("recordSetId", recordSet.getRecordSetId());
-		searchContext.setAttribute("status", WorkflowConstants.STATUS_ANY);
-		searchContext.setKeywords(keywords);
-
-		return searchContext;
-	}
-
-	protected DDLRecordSet recordSet;
+	protected DDLRecordTestHelper testHelper;
 
 }

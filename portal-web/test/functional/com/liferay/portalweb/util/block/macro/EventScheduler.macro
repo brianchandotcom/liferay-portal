@@ -1,0 +1,36 @@
+<definition>
+	<command name="scheduleEventTwoMinutesInFutureWithTwelveHourClock">
+		<var group="1" input="${time}" name="hours" pattern="([0-9]*):([0-9]*) ([A-Z]*)" />
+		<var group="2" input="${time}" name="minutes" pattern="([0-9]*):([0-9]*) ([A-Z]*)" />
+		<var group="3" input="${time}" name="ampm" pattern="([0-9]*):([0-9]*) ([A-Z]*)" />
+
+		<if>
+			<equals arg1="${minutes}" arg2="58" />
+			<then>
+				<var name="minutesIncremented2" value="00" />
+				<if>
+					<equals arg1="{hours}" arg2="12" />
+					<then>
+						<var name="hours" value="01" />
+					</then>
+				</if>
+			</then>
+			<elseif>
+				<equals arg1="${minutes}" arg2="59" />
+				<then>
+					<var name="minutesIncremented2" value="01" />
+					<if>
+						<equals arg1="{hours}" arg2="12" />
+						<then>
+							<var name="hours" value="01" />
+						</then>
+					</if>
+				</then>
+			</elseif>
+			<else>
+				<var name="minutesIncremented1" value="${minutes?increment()}" />
+				<var name="minutesIncremented2" value="${minutesIncremented1?increment()}" />
+			</else>
+		</if>
+	</command>
+</definition>

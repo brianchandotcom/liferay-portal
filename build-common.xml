@@ -53,12 +53,12 @@
 	</path>
 
 	<path id="project.classpath">
-		<pathelement path="${classpath}" />
+		<pathelement path="${classpath.full}" />
 		<path refid="lib.classpath" />
 	</path>
 
 	<path id="web.classpath">
-		<pathelement path="${classpath}" />
+		<pathelement path="${classpath.full}" />
 		<fileset dir="${project.dir}/lib/development" includes="jsp-api.jar,mail.jar,servlet-api.jar" />
 		<fileset dir="${project.dir}/lib/global" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/portal" includes="bnd.jar" />
@@ -1060,9 +1060,51 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<ivy:resources type="bundle,jar,orbit" />
 			</path>
 
+			<var name="junit.classpath" value="${classpath.full}" />
+
+			<if>
+				<and>
+					<equals arg1="${basedir}" arg2="${project.dir}/portal-service" />
+					<equals arg1="@{test.type}" arg2="unit" />
+				</and>
+				<then>
+					<var name="junit.classpath" value="${classpath.portal-service-unit}" />
+				</then>
+			</if>
+
+			<if>
+				<and>
+					<equals arg1="${basedir}" arg2="${project.dir}/portal-impl" />
+					<equals arg1="@{test.type}" arg2="unit" />
+				</and>
+				<then>
+					<var name="junit.classpath" value="${classpath.portal-impl-unit}" />
+				</then>
+			</if>
+
+			<if>
+				<and>
+					<equals arg1="${basedir}" arg2="${project.dir}/portal-impl" />
+					<equals arg1="@{test.type}" arg2="integration" />
+				</and>
+				<then>
+					<var name="junit.classpath" value="${classpath.portal-impl-integration}" />
+				</then>
+			</if>
+
+			<if>
+				<and>
+					<equals arg1="${basedir}" arg2="${project.dir}/util-java" />
+					<equals arg1="@{test.type}" arg2="unit" />
+				</and>
+				<then>
+					<var name="junit.classpath" value="${classpath.util-java-unit}" />
+				</then>
+			</if>
+
 			<path id="test.classpath">
 				<pathelement path="test-classes/@{test.type}" />
-				<pathelement path="${classpath}" />
+				<pathelement path="${junit.classpath}" />
 				<pathelement path="${test.additional.classpath}" />
 				<path refid="test-ivy.classpath" />
 				<fileset dir="${project.dir}/lib/development" includes="*.jar" excludes="jalopy.jar,jetty*.jar,tomcat*.jar" />

@@ -23,6 +23,17 @@ public class IntervalAction {
 
 	public static final int DEFAULT_INTERVAL = 100;
 
+	public IntervalAction(int total) {
+		_total = total;
+
+		_interval = DEFAULT_INTERVAL;
+	}
+
+	public IntervalAction(int total, int interval) {
+		_total = total;
+		_interval = interval;
+	}
+
 	public void incrementStart() {
 		_start++;
 	}
@@ -37,18 +48,10 @@ public class IntervalAction {
 		}
 	}
 
-	public void setInterval(int interval) {
-		_interval = interval;
-	}
-
 	public void setPerformActionMethod(
 		PerformIntervalActionMethod performActionMethod) {
 
 		_performIntervalActionMethod = performActionMethod;
-	}
-
-	public void setTotal(int total) {
-		_total = total;
 	}
 
 	public interface PerformIntervalActionMethod {
@@ -63,9 +66,9 @@ public class IntervalAction {
 		}
 	}
 
-	private int _interval = DEFAULT_INTERVAL;
+	private final int _interval;
 	private PerformIntervalActionMethod _performIntervalActionMethod;
 	private int _start;
-	private int _total;
+	private final int _total;
 
 }

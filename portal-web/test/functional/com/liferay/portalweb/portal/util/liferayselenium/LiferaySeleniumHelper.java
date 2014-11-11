@@ -845,8 +845,8 @@ public class LiferaySeleniumHelper {
 		// LPS-51371
 
 		if (line.matches(
-				".*The web application \\[/jasperreports-web\\] created a ThreadLocal with key " +
-					"of type.*")) {
+				".*The web application \\[/jasperreports-web\\] created a " +
+					"ThreadLocal with key of type.*")) {
 
 			if (line.contains(
 					"[net.sf.jasperreports.engine.fonts.FontUtil$1]")) {

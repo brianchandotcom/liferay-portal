@@ -1134,15 +1134,6 @@ rerun your task.
 		<ant target="compile-test-cmd">
 			<property name="test.type" value="integration" />
 		</ant>
-
-		<unzip
-			dest="${project.dir}/portal-impl/test-classes/integration"
-			src="${project.dir}/portal-impl/portal-impl.jar"
-		>
-			<patternset>
-				<include name="META-INF/MANIFEST.MF" />
-			</patternset>
-		</unzip>
 	</target>
 
 	<target name="compile-test-unit">

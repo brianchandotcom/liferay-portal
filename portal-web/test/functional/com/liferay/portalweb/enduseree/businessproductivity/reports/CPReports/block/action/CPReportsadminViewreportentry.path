@@ -19,13 +19,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EXTEND_ACTION_PATH</td>
-	<td>CPReportsadmin</td>
+	<td>CONFIRMATION</td>
+	<td></td>
 	<td></td>
 </tr>
 <tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
 	<td></td>
-	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[contains(@class,'portlet-msg-info')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -66,6 +71,11 @@
 <!--ENTRY_FILE_TABLE-->
 <tr>
 	<td>ENTRY_FILE_TABLE_FILE</td>
+	<td>//tr[contains(.,'${key_reportsFileName}')]/td</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_FILE_TABLE_SCHEDULED_FILE</td>
 	<td>//tr[contains(.,'${key_reportsFileName}')]/td</td>
 	<td></td>
 </tr>

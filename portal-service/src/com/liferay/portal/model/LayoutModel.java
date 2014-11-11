@@ -1042,19 +1042,19 @@ public interface LayoutModel extends BaseModel<Layout>, LocalizedModel, MVCCMode
 	public Object clone();
 
 	@Override
-	public int compareTo(Layout layout);
+	public int compareTo(com.liferay.portal.model.Layout layout);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<Layout> toCacheModel();
+	public CacheModel<com.liferay.portal.model.Layout> toCacheModel();
 
 	@Override
-	public Layout toEscapedModel();
+	public com.liferay.portal.model.Layout toEscapedModel();
 
 	@Override
-	public Layout toUnescapedModel();
+	public com.liferay.portal.model.Layout toUnescapedModel();
 
 	@Override
 	public String toString();

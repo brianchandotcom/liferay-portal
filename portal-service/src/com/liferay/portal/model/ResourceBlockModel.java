@@ -197,19 +197,19 @@ public interface ResourceBlockModel extends BaseModel<ResourceBlock>, MVCCModel 
 	public Object clone();
 
 	@Override
-	public int compareTo(ResourceBlock resourceBlock);
+	public int compareTo(com.liferay.portal.model.ResourceBlock resourceBlock);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<ResourceBlock> toCacheModel();
+	public CacheModel<com.liferay.portal.model.ResourceBlock> toCacheModel();
 
 	@Override
-	public ResourceBlock toEscapedModel();
+	public com.liferay.portal.model.ResourceBlock toEscapedModel();
 
 	@Override
-	public ResourceBlock toUnescapedModel();
+	public com.liferay.portal.model.ResourceBlock toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -270,19 +270,19 @@ public interface TeamModel extends BaseModel<Team>, GroupedModel, MVCCModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(Team team);
+	public int compareTo(com.liferay.portal.model.Team team);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<Team> toCacheModel();
+	public CacheModel<com.liferay.portal.model.Team> toCacheModel();
 
 	@Override
-	public Team toEscapedModel();
+	public com.liferay.portal.model.Team toEscapedModel();
 
 	@Override
-	public Team toUnescapedModel();
+	public com.liferay.portal.model.Team toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -297,7 +297,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	*
 	* @return the layouts that are direct or indirect children of the current
 	layout
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Layout> getAllChildren() {
@@ -310,7 +309,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	*
 	* @return the ID of the topmost parent layout of the current layout
 	* @throws PortalException if a matching layout could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long getAncestorLayoutId()
@@ -324,7 +322,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	*
 	* @return the plid of the topmost parent layout of the current layout
 	* @throws PortalException if a matching layout could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long getAncestorPlid()
@@ -339,7 +336,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	*
 	* @return the current layout's list of parent layouts
 	* @throws PortalException if a matching layout could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Layout> getAncestors()
@@ -357,7 +353,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* access permissions.
 	*
 	* @return the list of all child layouts
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Layout> getChildren() {
@@ -372,7 +367,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* @return the list of all child layouts that the user has permission to
 	access
 	* @throws PortalException if a portal exception occurred
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Layout> getChildren(
@@ -390,7 +384,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	the color scheme  of the layout set that contains the current
 	layout if no color scheme is configured
 	* @throws PortalException if a portal exception occurred
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.ColorScheme getColorScheme()
@@ -450,7 +443,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* @return the CSS text for the current layout, or for the layout set if no
 	CSS text is configured in the current layout
 	* @throws PortalException if a portal exception occurred
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.lang.String getCssText()
@@ -577,7 +569,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* Returns the friendly URLs for all configured locales.
 	*
 	* @return the friendly URLs for all configured locales
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.Map<java.util.Locale, java.lang.String> getFriendlyURLMap() {
@@ -599,7 +590,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* @return the current layout's group
 	* @throws PortalException if a group with the primary key could not be
 	found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Group getGroup()
@@ -790,7 +780,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	*
 	* @return the current layout's layout set
 	* @throws PortalException if a portal exception occurred
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.LayoutSet getLayoutSet()
@@ -813,7 +802,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	*
 	* @return the current layout's linked layout, or <code>null</code> if no
 	linked layout could be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Layout getLinkedToLayout() {
@@ -933,7 +921,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* @return the current layout's parent plid, or <code>0</code> if the
 	current layout is the topmost parent layout
 	* @throws PortalException if a matching layout could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long getParentPlid()
@@ -1113,7 +1100,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* @return the current layout's theme, or the layout set's theme if no
 	layout theme is configured
 	* @throws PortalException if a portal exception occurred
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Theme getTheme()
@@ -1339,7 +1325,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	otherwise
 	* @throws PortalException if any one of the current layout's acestors could
 	not be retrieved
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public boolean hasAncestor(long layoutId)
@@ -1352,7 +1337,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	*
 	* @return <code>true</code> if the current layout has child layouts,
 	<code>false</code> otherwise
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public boolean hasChildren() {

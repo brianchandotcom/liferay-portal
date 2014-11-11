@@ -57,7 +57,6 @@ public interface Layout extends LayoutModel, PersistedModel {
 	*
 	* @return the layouts that are direct or indirect children of the current
 	layout
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.Layout> getAllChildren();
 
@@ -67,7 +66,6 @@ public interface Layout extends LayoutModel, PersistedModel {
 	*
 	* @return the ID of the topmost parent layout of the current layout
 	* @throws PortalException if a matching layout could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public long getAncestorLayoutId()
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -78,7 +76,6 @@ public interface Layout extends LayoutModel, PersistedModel {
 	*
 	* @return the plid of the topmost parent layout of the current layout
 	* @throws PortalException if a matching layout could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public long getAncestorPlid()
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -90,7 +87,6 @@ public interface Layout extends LayoutModel, PersistedModel {
 	*
 	* @return the current layout's list of parent layouts
 	* @throws PortalException if a matching layout could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.Layout> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -100,7 +96,6 @@ public interface Layout extends LayoutModel, PersistedModel {
 	* access permissions.
 	*
 	* @return the list of all child layouts
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.Layout> getChildren();
 
@@ -112,7 +107,6 @@ public interface Layout extends LayoutModel, PersistedModel {
 	* @return the list of all child layouts that the user has permission to
 	access
 	* @throws PortalException if a portal exception occurred
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.Layout> getChildren(
 		com.liferay.portal.security.permission.PermissionChecker permissionChecker)
@@ -127,7 +121,6 @@ public interface Layout extends LayoutModel, PersistedModel {
 	the color scheme  of the layout set that contains the current
 	layout if no color scheme is configured
 	* @throws PortalException if a portal exception occurred
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ColorScheme getColorScheme()
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -144,7 +137,6 @@ public interface Layout extends LayoutModel, PersistedModel {
 	* @return the CSS text for the current layout, or for the layout set if no
 	CSS text is configured in the current layout
 	* @throws PortalException if a portal exception occurred
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.lang.String getCssText()
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -164,7 +156,6 @@ public interface Layout extends LayoutModel, PersistedModel {
 	* Returns the friendly URLs for all configured locales.
 	*
 	* @return the friendly URLs for all configured locales
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.Map<java.util.Locale, java.lang.String> getFriendlyURLMap();
 
@@ -180,7 +171,6 @@ public interface Layout extends LayoutModel, PersistedModel {
 	* @return the current layout's group
 	* @throws PortalException if a group with the primary key could not be
 	found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Group getGroup()
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -221,7 +211,6 @@ public interface Layout extends LayoutModel, PersistedModel {
 	*
 	* @return the current layout's layout set
 	* @throws PortalException if a portal exception occurred
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutSet getLayoutSet()
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -238,7 +227,6 @@ public interface Layout extends LayoutModel, PersistedModel {
 	*
 	* @return the current layout's linked layout, or <code>null</code> if no
 	linked layout could be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Layout getLinkedToLayout();
 
@@ -248,7 +236,6 @@ public interface Layout extends LayoutModel, PersistedModel {
 	* @return the current layout's parent plid, or <code>0</code> if the
 	current layout is the topmost parent layout
 	* @throws PortalException if a matching layout could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public long getParentPlid()
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -277,7 +264,6 @@ public interface Layout extends LayoutModel, PersistedModel {
 	* @return the current layout's theme, or the layout set's theme if no
 	layout theme is configured
 	* @throws PortalException if a portal exception occurred
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Theme getTheme()
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -312,7 +298,6 @@ public interface Layout extends LayoutModel, PersistedModel {
 	otherwise
 	* @throws PortalException if any one of the current layout's acestors could
 	not be retrieved
-	* @throws SystemException if a system exception occurred
 	*/
 	public boolean hasAncestor(long layoutId)
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -322,7 +307,6 @@ public interface Layout extends LayoutModel, PersistedModel {
 	*
 	* @return <code>true</code> if the current layout has child layouts,
 	<code>false</code> otherwise
-	* @throws SystemException if a system exception occurred
 	*/
 	public boolean hasChildren();
 

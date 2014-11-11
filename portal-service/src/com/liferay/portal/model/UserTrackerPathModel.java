@@ -171,19 +171,20 @@ public interface UserTrackerPathModel extends BaseModel<UserTrackerPath>,
 	public Object clone();
 
 	@Override
-	public int compareTo(UserTrackerPath userTrackerPath);
+	public int compareTo(
+		com.liferay.portal.model.UserTrackerPath userTrackerPath);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<UserTrackerPath> toCacheModel();
+	public CacheModel<com.liferay.portal.model.UserTrackerPath> toCacheModel();
 
 	@Override
-	public UserTrackerPath toEscapedModel();
+	public com.liferay.portal.model.UserTrackerPath toEscapedModel();
 
 	@Override
-	public UserTrackerPath toUnescapedModel();
+	public com.liferay.portal.model.UserTrackerPath toUnescapedModel();
 
 	@Override
 	public String toString();

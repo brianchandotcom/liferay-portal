@@ -43,7 +43,6 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 	* </p>
 	*
 	* @return the layout set's color scheme
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ColorScheme getColorScheme();
 
@@ -53,24 +52,22 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 	* @return the layout set's group
 	* @throws PortalException if a group with the primary key could not be
 	found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Group getGroup()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* Returns the layout set prototype's ID, or <code>0</code> if it has no layout
-	* set prototype.
+	* Returns the layout set prototype's ID, or <code>0</code> if it has no
+	* layout set prototype.
 	*
 	* <p>
 	* Prototype is Liferay's technical name for a site template.
 	* </p>
 	*
-	* @return the layout set prototype's ID, or <code>0</code> if it has no layout
-	set prototype
+	* @return the layout set prototype's ID, or <code>0</code> if it has no
+	layout set prototype
 	* @throws PortalException if a matching layout set prototype could not be
 	found
-	* @throws SystemException if a system exception occurred
 	*/
 	public long getLayoutSetPrototypeId()
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -96,8 +93,8 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 	* "/web/sitename" or "/group/sitename" can be omitted.
 	* </p>
 	*
-	* @return the layout set's virtual host name, or an empty string if the layout
-	set has no virtual host configured
+	* @return the layout set's virtual host name, or an empty string if the
+	layout set has no virtual host configured
 	*/
 	public java.lang.String getVirtualHostname();
 

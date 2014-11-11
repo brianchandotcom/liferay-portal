@@ -1,0 +1,69 @@
+<html>
+<head>
+<title>PGKnowledgebasedisplayMoveArticle</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGKnowledgebasedisplayMoveArticle</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGKnowledgebasedisplaySelectParentArticle</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_HEADER</td>
+	<td>//div[contains(@class,'portlet-content-container')]//h3[contains(.,'${key_kbArticleTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BACK_BUTTON</td>
+	<td>//a[@title='Back']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURRENT_PARENT_TITLE</td>
+	<td>//input[contains(@class,'form-text lfr-input-resource')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURRENT_PARENT_PRIORITY</td>
+	<td>//input[@title='Priority']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_PARENT_TITLE</td>
+	<td>//div[contains(@class,'kb-new-parent')]//input[contains(@class,'form-text lfr-input-resource')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_PARENT_PRIORITY</td>
+	<td>//div[contains(@class,'kb-new-parent')]//input[@title='Priority']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_PARENT</td>
+	<td>//div/a[contains(.,'Select Parent »')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//a[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

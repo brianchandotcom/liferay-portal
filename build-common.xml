@@ -980,7 +980,6 @@ Please set the environment variable ANT_OPTS to the recommended value of
 						</not>
 					</and>
 					<then>
-						<var name="test.dir" value="functional-generated" />
 						<var name="test.type" value="functional" />
 					</then>
 				</elseif>
@@ -1006,15 +1005,6 @@ Please set the environment variable ANT_OPTS to the recommended value of
 						<var name="test.type" value="unit" />
 					</then>
 				</elseif>
-			</if>
-
-			<if>
-				<not>
-					<isset property="test.dir" />
-				</not>
-				<then>
-					<var name="test.dir" value="${test.type}" />
-				</then>
 			</if>
 		</sequential>
 	</macrodef>

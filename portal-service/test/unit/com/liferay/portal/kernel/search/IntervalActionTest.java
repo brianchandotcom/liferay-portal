@@ -17,6 +17,8 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.events.IntervalAction;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -37,7 +39,7 @@ public class IntervalActionTest {
 					throws PortalException {
 
 					for (int i = 0; i < end; i++) {
-						incrementCounter();
+						_count.incrementAndGet();
 					}
 				}
 
@@ -45,7 +47,7 @@ public class IntervalActionTest {
 
 		intervalAction.performActions();
 
-		Assert.assertEquals(200, _count);
+		Assert.assertEquals(200, _count.get());
 	}
 
 	@Test
@@ -59,20 +61,16 @@ public class IntervalActionTest {
 				public void performAction(int start, int end)
 					throws PortalException {
 
-					incrementCounter();
+					_count.incrementAndGet();
 				}
 
 			});
 
 		intervalAction.performActions();
 
-		Assert.assertEquals(2, _count);
+		Assert.assertEquals(2, _count.get());
 	}
 
-	protected void incrementCounter() {
-		_count++;
-	}
-
-	private int _count;
+	private final AtomicInteger _count = new AtomicInteger();
 
 }

@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.staging.LayoutStagingUtil;
 import com.liferay.portal.kernel.staging.StagingConstants;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -46,7 +45,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.LayoutSetBranchConstants;
-import com.liferay.portal.model.LayoutStagingHandler;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
@@ -58,6 +56,7 @@ import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.StagingLocalServiceBaseImpl;
 import com.liferay.portal.service.http.GroupServiceHttp;
+import com.liferay.portal.staging.StagingAdvicesThreadLocal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
@@ -803,13 +802,23 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 	protected Layout updateLayoutWithLayoutRevision(
 		LayoutRevision layoutRevision) {
 
-		Layout layout = layoutLocalService.fetchLayout(
-			layoutRevision.getPlid());
+		// we need the latest Layout object to avoid StaleObjectStateExceptions
+		// so we have to suppress the usage of the advice here
 
-		LayoutStagingHandler layoutStagingHandler =
-			LayoutStagingUtil.getLayoutStagingHandler(layout);
+		Layout layout = null;
 
-		layout = layoutStagingHandler.getLayout();
+		boolean stagingAdvicesThreadLocalEnabled =
+			StagingAdvicesThreadLocal.isEnabled();
+
+		try {
+			StagingAdvicesThreadLocal.setEnabled(false);
+
+			layout = layoutLocalService.fetchLayout(layoutRevision.getPlid());
+		}
+		finally {
+			StagingAdvicesThreadLocal.setEnabled(
+				stagingAdvicesThreadLocalEnabled);
+		}
 
 		layout.setUserId(layoutRevision.getUserId());
 		layout.setUserName(layoutRevision.getUserName());

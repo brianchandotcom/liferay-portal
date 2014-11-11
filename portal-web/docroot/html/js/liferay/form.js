@@ -56,16 +56,16 @@ AUI.add(
 			{
 				ATTRS: {
 					id: {},
-					namespace: {},
 					fieldRules: {
 						setter: function(val) {
 							var instance = this;
 
 							instance._processFieldRules(val);
 
-							return val
+							return val;
 						}
 					},
+					namespace: {},
 					onSubmit: {
 						valueFn: function() {
 							var instance = this;

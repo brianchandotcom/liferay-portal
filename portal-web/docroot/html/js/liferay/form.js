@@ -55,7 +55,6 @@ AUI.add(
 		var Form = A.Component.create(
 			{
 				ATTRS: {
-					id: {},
 					fieldRules: {
 						setter: function(val) {
 							var instance = this;
@@ -65,6 +64,7 @@ AUI.add(
 							return val;
 						}
 					},
+					id: {},
 					namespace: {},
 					onSubmit: {
 						valueFn: function() {

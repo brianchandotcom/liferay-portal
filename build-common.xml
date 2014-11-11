@@ -1125,7 +1125,9 @@ rerun your task.
 				<available file="test/unit" type="dir" />
 			</or>
 			<then>
-				<antcall target="compile-test-integration" inheritall="false" />
+				<compile-test-cmd
+					test.type="integration"
+				/>
 
 				<compile-test-cmd
 					test.type="unit"
@@ -1141,12 +1143,6 @@ rerun your task.
 				/>
 			</else>
 		</if>
-	</target>
-
-	<target name="compile-test-integration">
-		<compile-test-cmd
-			test.type="integration"
-		/>
 	</target>
 
 	<target name="format-javadoc">
@@ -1530,7 +1526,11 @@ rerun your task.
 		</if>
 	</target>
 
-	<target name="test-integration" depends="compile,compile-test-integration">
+	<target name="test-integration" depends="compile">
+		<compile-test-cmd
+			test.type="integration"
+		/>
+
 		<var name="test.class" value="*Test" />
 
 		<ant target="test-cmd">

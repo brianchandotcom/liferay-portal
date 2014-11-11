@@ -57,7 +57,6 @@
 				AssetEntry ON
 					(AssetEntry.classPK = BookmarksFolder.folderId)
 			WHERE
-				(AssetEntry.classNameId = ?) AND
 				(AssetEntry.classPK IS NULL)
 		]]>
 	</sql>
@@ -117,7 +116,6 @@
 				AssetEntry ON
 					(AssetEntry.classPK = BookmarksEntry.entryId)
 			WHERE
-				(AssetEntry.classNameId = ?) AND
 				(AssetEntry.classPK IS NULL)
 		]]>
 	</sql>

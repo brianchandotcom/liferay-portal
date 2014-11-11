@@ -109,10 +109,6 @@ public class BookmarksFolderFinderImpl
 
 			q.addEntity("BookmarksFolder", BookmarksFolderImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(PortalUtil.getClassNameId(BookmarksFolder.class));
-
 			return q.list(true);
 		}
 		catch (Exception e) {

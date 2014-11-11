@@ -1122,19 +1122,15 @@ rerun your task.
 				/>
 			</then>
 			<else>
-				<antcall target="compile-test-functional" inheritall="false" />
+				<compile-test-cmd
+					test.type="functional"
+				/>
+
+				<compile-test-cmd
+					test.type="functional-generated"
+				/>
 			</else>
 		</if>
-	</target>
-
-	<target name="compile-test-functional">
-		<compile-test-cmd
-			test.type="functional"
-		/>
-
-		<compile-test-cmd
-			test.type="functional-generated"
-		/>
 	</target>
 
 	<target name="compile-test-integration">

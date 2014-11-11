@@ -25,8 +25,9 @@ import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.test.AdviseWith;
-import com.liferay.portal.test.runners.AspectJMockingNewClassLoaderJUnitTestRunner;
+import com.liferay.portal.test.AspectJNewEnvMethodRule;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
@@ -59,13 +60,13 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Shuyang Zhou
  */
-@RunWith(AspectJMockingNewClassLoaderJUnitTestRunner.class)
+@NewEnv(type = NewEnv.Type.CLASSLOADER)
 public class NettyRepositoryTest {
 
 	@ClassRule
@@ -95,6 +96,7 @@ public class NettyRepositoryTest {
 		FileServerTestUtil.cleanUp();
 	}
 
+	@NewEnv(type = NewEnv.Type.NONE)
 	@Test
 	public void testConstructor() {
 		try {
@@ -607,6 +609,7 @@ public class NettyRepositoryTest {
 		}
 	}
 
+	@NewEnv(type = NewEnv.Type.NONE)
 	@Test
 	public void testGetFilesEmptyMap() throws Exception {
 		NoticeableFuture<Map<Path, Path>> noticeableFuture =
@@ -657,6 +660,7 @@ public class NettyRepositoryTest {
 		Assert.assertTrue(noticeableFuture.isCancelled());
 	}
 
+	@NewEnv(type = NewEnv.Type.NONE)
 	@Test
 	public void testGetLastModifiedTime() throws IOException {
 		Assert.assertEquals(
@@ -671,6 +675,10 @@ public class NettyRepositoryTest {
 			fileTime.toMillis(),
 			NettyRepository.getLastModifiedTime(_repositoryPath));
 	}
+
+	@Rule
+	public final AspectJNewEnvMethodRule aspectJNewEnvMethodRule =
+		new AspectJNewEnvMethodRule();
 
 	@Aspect
 	public static class DefaultNoticeableFutureAdvice {

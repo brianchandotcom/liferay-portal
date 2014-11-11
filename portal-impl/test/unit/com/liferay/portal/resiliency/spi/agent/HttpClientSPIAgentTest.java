@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.servlet.ReadOnlyServletResponse;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -44,7 +45,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.test.AdviseWith;
-import com.liferay.portal.test.runners.AspectJMockingNewClassLoaderJUnitTestRunner;
+import com.liferay.portal.test.AspectJNewEnvMethodRule;
 import com.liferay.portal.util.PropsImpl;
 import com.liferay.portal.util.PropsValues;
 
@@ -80,8 +81,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -89,7 +90,6 @@ import org.springframework.mock.web.MockHttpServletResponse;
 /**
  * @author Shuyang Zhou
  */
-@RunWith(AspectJMockingNewClassLoaderJUnitTestRunner.class)
 public class HttpClientSPIAgentTest {
 
 	@ClassRule
@@ -534,6 +534,7 @@ public class HttpClientSPIAgentTest {
 	@AdviseWith(
 		adviceClasses = {PropsUtilAdvice.class}
 	)
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testPrepareRequest() throws Exception {
 		PropsUtilAdvice.setProps(
@@ -1132,6 +1133,10 @@ public class HttpClientSPIAgentTest {
 
 		Assert.assertTrue(files.contains(tempFile.getPath()));
 	}
+
+	@Rule
+	public final AspectJNewEnvMethodRule aspectJNewEnvMethodRule =
+		new AspectJNewEnvMethodRule();
 
 	protected void closePeers(Socket socket, ServerSocket serverSocket)
 		throws IOException {

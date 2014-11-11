@@ -501,19 +501,20 @@ public interface ExportImportConfigurationModel extends BaseModel<ExportImportCo
 	public Object clone();
 
 	@Override
-	public int compareTo(ExportImportConfiguration exportImportConfiguration);
+	public int compareTo(
+		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<ExportImportConfiguration> toCacheModel();
+	public CacheModel<com.liferay.portal.model.ExportImportConfiguration> toCacheModel();
 
 	@Override
-	public ExportImportConfiguration toEscapedModel();
+	public com.liferay.portal.model.ExportImportConfiguration toEscapedModel();
 
 	@Override
-	public ExportImportConfiguration toUnescapedModel();
+	public com.liferay.portal.model.ExportImportConfiguration toUnescapedModel();
 
 	@Override
 	public String toString();

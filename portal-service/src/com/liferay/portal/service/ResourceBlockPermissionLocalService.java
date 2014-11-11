@@ -180,8 +180,8 @@ public interface ResourceBlockPermissionLocalService extends BaseLocalService,
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	#getAvailableResourceBlockPermissionActionIds(
-	String, long, List)}
+	#getAvailableResourceBlockPermissionActionIds(String, long,
+	List)}
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

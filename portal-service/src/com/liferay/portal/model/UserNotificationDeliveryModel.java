@@ -258,19 +258,20 @@ public interface UserNotificationDeliveryModel extends BaseModel<UserNotificatio
 	public Object clone();
 
 	@Override
-	public int compareTo(UserNotificationDelivery userNotificationDelivery);
+	public int compareTo(
+		com.liferay.portal.model.UserNotificationDelivery userNotificationDelivery);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<UserNotificationDelivery> toCacheModel();
+	public CacheModel<com.liferay.portal.model.UserNotificationDelivery> toCacheModel();
 
 	@Override
-	public UserNotificationDelivery toEscapedModel();
+	public com.liferay.portal.model.UserNotificationDelivery toEscapedModel();
 
 	@Override
-	public UserNotificationDelivery toUnescapedModel();
+	public com.liferay.portal.model.UserNotificationDelivery toUnescapedModel();
 
 	@Override
 	public String toString();

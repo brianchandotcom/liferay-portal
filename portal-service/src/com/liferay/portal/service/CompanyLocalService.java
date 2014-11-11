@@ -659,8 +659,8 @@ public interface CompanyLocalService extends BaseLocalService,
 	their password
 	* @param strangers whether to allow strangers to create accounts register
 	themselves in the company
-	* @param strangersWithMx whether to allow strangers to create accounts
-	with email addresses that match the company mail suffix
+	* @param strangersWithMx whether to allow strangers to create accounts with
+	email addresses that match the company mail suffix
 	* @param strangersVerify whether to require strangers who create accounts
 	to be verified via email
 	* @param siteLogo whether to allow site administrators to use their own

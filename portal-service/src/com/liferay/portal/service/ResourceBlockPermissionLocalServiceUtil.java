@@ -209,8 +209,8 @@ public class ResourceBlockPermissionLocalServiceUtil {
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	#getAvailableResourceBlockPermissionActionIds(
-	String, long, List)}
+	#getAvailableResourceBlockPermissionActionIds(String, long,
+	List)}
 	*/
 	@Deprecated
 	public static java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourceBlockPermissionActionIds(

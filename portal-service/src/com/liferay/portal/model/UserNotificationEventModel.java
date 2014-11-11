@@ -318,19 +318,20 @@ public interface UserNotificationEventModel extends BaseModel<UserNotificationEv
 	public Object clone();
 
 	@Override
-	public int compareTo(UserNotificationEvent userNotificationEvent);
+	public int compareTo(
+		com.liferay.portal.model.UserNotificationEvent userNotificationEvent);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<UserNotificationEvent> toCacheModel();
+	public CacheModel<com.liferay.portal.model.UserNotificationEvent> toCacheModel();
 
 	@Override
-	public UserNotificationEvent toEscapedModel();
+	public com.liferay.portal.model.UserNotificationEvent toEscapedModel();
 
 	@Override
-	public UserNotificationEvent toUnescapedModel();
+	public com.liferay.portal.model.UserNotificationEvent toUnescapedModel();
 
 	@Override
 	public String toString();

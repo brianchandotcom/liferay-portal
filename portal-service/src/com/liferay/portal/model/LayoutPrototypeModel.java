@@ -494,19 +494,20 @@ public interface LayoutPrototypeModel extends BaseModel<LayoutPrototype>,
 	public Object clone();
 
 	@Override
-	public int compareTo(LayoutPrototype layoutPrototype);
+	public int compareTo(
+		com.liferay.portal.model.LayoutPrototype layoutPrototype);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<LayoutPrototype> toCacheModel();
+	public CacheModel<com.liferay.portal.model.LayoutPrototype> toCacheModel();
 
 	@Override
-	public LayoutPrototype toEscapedModel();
+	public com.liferay.portal.model.LayoutPrototype toEscapedModel();
 
 	@Override
-	public LayoutPrototype toUnescapedModel();
+	public com.liferay.portal.model.LayoutPrototype toUnescapedModel();
 
 	@Override
 	public String toString();

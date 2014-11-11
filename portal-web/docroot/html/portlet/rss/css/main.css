@@ -1,14 +1,25 @@
 .portlet-rss {
+	.feed {
+		border-bottom: 1px solid #CCC;
+		margin-bottom: 30px;
+		padding-bottom: 20px;
+
+		&.last {
+			border-bottom-width: 0;
+			margin-bottom: 0;
+		}
+	}
+
 	.feed-date {
-		margin: 0.3em 0;
+		font-size: 12px;
 	}
 
 	.feed-description {
 		margin: 0 0 5px 0;
 	}
 
-	.feed-entries {
-		font-size: 1.1em;
+	.feed-entries{
+		padding-top: 10px;
 	}
 
 	.feed-entry {
@@ -16,12 +27,12 @@
 	}
 
 	.feed-entry-author {
-		display: block;
-		font-size: 0.9em;
+		font-weight: 500;
+		font-size: 14px;
 	}
 
 	.feed-entry-content {
-		padding-left: 1.8em;
+		padding-left: 20px;
 
 		img {
 			margin-right: 0.5em;
@@ -40,53 +51,20 @@
 	}
 
 	.feed-entry-title {
-		display: block;
 		font-weight: bold;
 	}
 
-	.feed-image-left {
-		margin: 4px 0 4px 20px;
-		text-align: left;
-	}
-
-	.feed-image-right {
-		float: right;
-		margin: 0 0 4px 4px;
-	}
-
-	.feed-published-date {
-		a {
-			font-weight: bold;
-			text-decoration: none;
-
-			&:before {
-				padding-right: 5px;
-			}
-		}
+	.feed-image {
+		margin-bottom: 15px;
 	}
 
 	.feed-title {
 		font-size: 1.2em;
 		font-weight: bold;
-		margin: 0 0 0.5em -20px;
 
 		a:before {
 			padding-right: 5px;
 		}
 	}
 
-	.feed {
-		padding-left: 20px;
-
-		.separator {
-			margin-left: -20px;
-		}
-	}
-
-	.header {
-		cursor: default;
-		font-weight: bold;
-		margin-top: 2px;
-		padding: 2px 5px;
-	}
 }

@@ -46,7 +46,7 @@
 		'click',
 		function(event) {
 			var expander = event.currentTarget;
-			var feedContent = expander.get('parentNode').one('.feed-entry-content');
+			var feedContent = expander.get('parentNode').get('parentNode').one('.feed-entry-content');
 
 			if (feedContent) {
 				if (expander.hasClass('icon-collapse-alt')) {

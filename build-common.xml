@@ -1143,15 +1143,6 @@ rerun your task.
 				<include name="META-INF/MANIFEST.MF" />
 			</patternset>
 		</unzip>
-
-		<unzip
-			dest="${project.dir}/portal-service/test-classes/integration"
-			src="${project.dir}/portal-service/portal-service.jar"
-		>
-			<patternset>
-				<include name="META-INF/MANIFEST.MF" />
-			</patternset>
-		</unzip>
 	</target>
 
 	<target name="compile-test-unit">

@@ -213,9 +213,9 @@ public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 	protected void verifyLimitedParentMembership(final Group group)
 		throws PortalException {
 
-		int count = UserLocalServiceUtil.getGroupUsersCount(group.getGroupId());
+		int total = UserLocalServiceUtil.getGroupUsersCount(group.getGroupId());
 
-		final IntervalAction intervalAction = new IntervalAction();
+		final IntervalAction intervalAction = new IntervalAction(total);
 
 		intervalAction.setPerformActionMethod(
 			new IntervalAction.PerformIntervalActionMethod() {
@@ -243,7 +243,6 @@ public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 
 			});
 
-		intervalAction.setTotal(count);
 		intervalAction.performActions();
 	}
 

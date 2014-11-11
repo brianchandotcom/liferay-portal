@@ -3601,6 +3601,7 @@ if (ppstate.equals("normal")) {
 
 				<ant dir="portal-web" target="test-method">
 					<property name="test.class" value="${test.simple.class.name}" />
+					<property name="test.dir" value="functional-generated" />
 					<property name="test.methods" value="${test.method.name}" />
 				</ant>
 			</then>
@@ -3611,6 +3612,7 @@ if (ppstate.equals("normal")) {
 
 				<ant dir="portal-web" target="test-class" inheritAll="false">
 					<property name="test.class" value="${test.simple.class.name}" />
+					<property name="test.dir" value="functional-generated" />
 				</ant>
 			</else>
 		</if>

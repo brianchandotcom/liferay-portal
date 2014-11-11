@@ -29,6 +29,8 @@ import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
 import java.util.List;
 
@@ -54,6 +56,25 @@ public class BookmarksFolderLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testGetNoAssetFolders() throws Exception {
+		BookmarksFolder bookmarksFolder = BookmarksTestUtil.addFolder(
+			_group.getGroupId(), RandomTestUtil.randomString());
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			BookmarksFolder.class.getName(), bookmarksFolder.getFolderId());
+
+		Assert.assertNotNull(assetEntry);
+
+		AssetEntryLocalServiceUtil.deleteAssetEntry(assetEntry);
+
+		List<BookmarksFolder> bookmarksFolders =
+			BookmarksFolderLocalServiceUtil.getNoAssetFolders();
+
+		Assert.assertEquals(1, bookmarksFolders.size());
+		Assert.assertEquals(bookmarksFolder, bookmarksFolders.get(0));
 	}
 
 	@Test

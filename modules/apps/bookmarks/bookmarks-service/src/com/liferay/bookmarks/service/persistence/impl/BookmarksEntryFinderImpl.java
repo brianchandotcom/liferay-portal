@@ -50,10 +50,6 @@ public class BookmarksEntryFinderImpl
 
 			q.addEntity("BookmarksEntry", BookmarksEntryImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(PortalUtil.getClassNameId(BookmarksEntry.class));
-
 			return q.list(true);
 		}
 		catch (Exception e) {

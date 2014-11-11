@@ -53,15 +53,11 @@
 				{BookmarksFolder.*}
 			FROM
 				BookmarksFolder
+			LEFT JOIN
+				AssetEntry ON
+					(AssetEntry.classPK = BookmarksFolder.folderId)
 			WHERE
-				(folderId NOT IN (
-					SELECT
-						classPK
-					FROM
-						AssetEntry
-					WHERE
-						classNameId = ?
-				))
+				(AssetEntry.classPK IS NULL)
 		]]>
 	</sql>
 	<sql id="com.liferay.bookmarks.service.persistence.BookmarksFolderFinder.findE_ByG_F">
@@ -116,15 +112,11 @@
 				{BookmarksEntry.*}
 			FROM
 				BookmarksEntry
+			LEFT JOIN
+				AssetEntry ON
+					(AssetEntry.classPK = BookmarksEntry.entryId)
 			WHERE
-				(entryId NOT IN (
-					SELECT
-						classPK
-					FROM
-						AssetEntry
-					WHERE
-						classNameId = ?
-				))
+				(AssetEntry.classPK IS NULL)
 		]]>
 	</sql>
 </custom-sql>

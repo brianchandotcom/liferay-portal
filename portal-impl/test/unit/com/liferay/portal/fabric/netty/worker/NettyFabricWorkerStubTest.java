@@ -27,9 +27,10 @@ import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.process.local.ReturnProcessCallable;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.test.AdviseWith;
-import com.liferay.portal.test.runners.AspectJMockingNewClassLoaderJUnitTestRunner;
+import com.liferay.portal.test.AspectJNewEnvMethodRule;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -43,13 +44,12 @@ import java.util.concurrent.ExecutionException;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Shuyang Zhou
  */
-@RunWith(AspectJMockingNewClassLoaderJUnitTestRunner.class)
 public class NettyFabricWorkerStubTest {
 
 	@ClassRule
@@ -290,6 +290,7 @@ public class NettyFabricWorkerStubTest {
 	}
 
 	@AdviseWith(adviceClasses = NettyUtilAdvice.class)
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testWrite() throws Exception {
 		EmbeddedChannel embeddedChannel = new EmbeddedChannel(
@@ -316,5 +317,9 @@ public class NettyFabricWorkerStubTest {
 
 		Assert.assertEquals(result, noticeableFuture.get());
 	}
+
+	@Rule
+	public final AspectJNewEnvMethodRule aspectJNewEnvMethodRule =
+		new AspectJNewEnvMethodRule();
 
 }

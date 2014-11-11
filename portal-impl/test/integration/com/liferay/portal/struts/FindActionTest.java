@@ -23,6 +23,8 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.test.Sync;
+import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.listeners.ResetDatabaseExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
@@ -54,9 +56,11 @@ import org.springframework.mock.web.MockHttpServletRequest;
 @ExecutionTestListeners(
 	listeners = {
 		MainServletExecutionTestListener.class,
-		ResetDatabaseExecutionTestListener.class
+		ResetDatabaseExecutionTestListener.class,
+		SynchronousDestinationExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
+@Sync
 public class FindActionTest {
 
 	@Test

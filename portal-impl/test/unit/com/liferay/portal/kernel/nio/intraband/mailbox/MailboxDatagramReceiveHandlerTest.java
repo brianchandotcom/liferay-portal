@@ -21,21 +21,21 @@ import com.liferay.portal.kernel.nio.intraband.SystemDataType;
 import com.liferay.portal.kernel.nio.intraband.test.MockIntraband;
 import com.liferay.portal.kernel.nio.intraband.test.MockRegistrationReference;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.kernel.util.PropsUtilAdvice;
 import com.liferay.portal.test.AdviseWith;
-import com.liferay.portal.test.runners.AspectJMockingNewClassLoaderJUnitTestRunner;
+import com.liferay.portal.test.AspectJNewEnvMethodRule;
 
 import java.nio.ByteBuffer;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Shuyang Zhou
  */
-@RunWith(AspectJMockingNewClassLoaderJUnitTestRunner.class)
 public class MailboxDatagramReceiveHandlerTest {
 
 	@ClassRule
@@ -47,6 +47,7 @@ public class MailboxDatagramReceiveHandlerTest {
 			PropsUtilAdvice.class, PortalExecutorManagerUtilAdvice.class
 		}
 	)
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testDoReceive() {
 		MailboxDatagramReceiveHandler mailboxDatagramReceiveHandler =
@@ -68,5 +69,9 @@ public class MailboxDatagramReceiveHandlerTest {
 
 		Assert.assertEquals(0, deserializer.readLong());
 	}
+
+	@Rule
+	public final AspectJNewEnvMethodRule aspectJNewEnvMethodRule =
+		new AspectJNewEnvMethodRule();
 
 }

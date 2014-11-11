@@ -14,21 +14,22 @@
 
 package com.liferay.portal.test;
 
-import com.liferay.portal.test.runners.AspectJMockingNewJVMJUnitTestRunner;
+import com.liferay.portal.kernel.test.NewEnv;
 
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Shuyang Zhou
  */
-@RunWith(AspectJMockingNewJVMJUnitTestRunner.class)
-public class AspectJMockingNewJVMJUnitTestRunnerTest {
+@NewEnv(type = NewEnv.Type.CLASSLOADER)
+public class AspectJNewEnvClassLoaderMethodRuleTest {
 
+	@NewEnv(type = NewEnv.Type.NONE)
 	@Test
 	public void testStaticUtil() {
 		Assert.assertEquals(1, StaticUtil.getValue1());
@@ -69,6 +70,10 @@ public class AspectJMockingNewJVMJUnitTestRunnerTest {
 		catch (IllegalStateException ise) {
 		}
 	}
+
+	@Rule
+	public final AspectJNewEnvMethodRule aspectJNewEnvMethodRule =
+		new AspectJNewEnvMethodRule();
 
 	@Aspect
 	private static class AdviceClass1 {

@@ -15,7 +15,8 @@
 package com.liferay.portal.kernel.resiliency.spi.agent.annotation;
 
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
-import com.liferay.portal.kernel.test.NewClassLoaderJUnitTestRunner;
+import com.liferay.portal.kernel.test.NewEnv;
+import com.liferay.portal.kernel.test.NewEnvMethodRule;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
 import java.util.Map;
@@ -23,13 +24,12 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Shuyang Zhou
  */
-@RunWith(NewClassLoaderJUnitTestRunner.class)
 public class DistributedRegistryTest {
 
 	@ClassRule
@@ -46,6 +46,7 @@ public class DistributedRegistryTest {
 			DistributedRegistry.class, "_prefixDirections");
 	}
 
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testClassRegisterAndUnregister() {
 		DistributedRegistry.registerDistributed(ChildClass.class);
@@ -198,6 +199,7 @@ public class DistributedRegistryTest {
 				"name" + postfix, Direction.REQUEST));
 	}
 
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testIndividualRegisterAndUnregister() {
 
@@ -283,6 +285,9 @@ public class DistributedRegistryTest {
 			DistributedRegistry.unregisterDistributed(
 				"name3", null, MatchType.PREFIX));
 	}
+
+	@Rule
+	public final NewEnvMethodRule newEnvMethodRule = new NewEnvMethodRule();
 
 	private Map<String, Direction> _exactDirections;
 	private Map<String, Direction> _postfixDirections;

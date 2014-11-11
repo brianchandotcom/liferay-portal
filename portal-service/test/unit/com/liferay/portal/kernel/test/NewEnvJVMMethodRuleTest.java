@@ -25,14 +25,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Shuyang Zhou
  */
-@RunWith(NewJVMJUnitTestRunner.class)
-public class NewJVMJUnitTestRunnerTest {
+@NewEnv(type = NewEnv.Type.JVM)
+public class NewEnvJVMMethodRuleTest {
 
 	@Before
 	public void setUp() {
@@ -62,6 +62,9 @@ public class NewJVMJUnitTestRunnerTest {
 
 		assertProcessId();
 	}
+
+	@Rule
+	public final NewEnvMethodRule newEnvMethodRule = new NewEnvMethodRule();
 
 	protected void assertProcessId() {
 		Assert.assertNotNull(_processId);

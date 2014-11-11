@@ -17,7 +17,8 @@ package com.liferay.portal.kernel.memory;
 import com.liferay.portal.kernel.memory.FinalizeManager.ReferenceFactory;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.GCUtil;
-import com.liferay.portal.kernel.test.NewClassLoaderJUnitTestRunner;
+import com.liferay.portal.kernel.test.NewEnv;
+import com.liferay.portal.kernel.test.NewEnvMethodRule;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.ThreadUtil;
@@ -31,13 +32,13 @@ import java.util.concurrent.LinkedBlockingDeque;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Shuyang Zhou
  */
-@RunWith(NewClassLoaderJUnitTestRunner.class)
+@NewEnv(type = NewEnv.Type.CLASSLOADER)
 public class FinalizeManagerTest {
 
 	@ClassRule
@@ -49,6 +50,7 @@ public class FinalizeManagerTest {
 		System.clearProperty(_THREAD_ENABLED_KEY);
 	}
 
+	@NewEnv(type = NewEnv.Type.NONE)
 	@Test
 	public void testBadFinalizeAction() {
 		final RuntimeException runtimeException = new RuntimeException();
@@ -83,6 +85,7 @@ public class FinalizeManagerTest {
 		Assert.assertNull(getReferent(reference));
 	}
 
+	@NewEnv(type = NewEnv.Type.NONE)
 	@Test
 	public void testConstructor() {
 		new FinalizeManager();
@@ -207,6 +210,9 @@ public class FinalizeManagerTest {
 	public void testRegisterWeakWithThread() throws InterruptedException {
 		doTestRegister(true, ReferenceType.WEAK);
 	}
+
+	@Rule
+	public final NewEnvMethodRule newEnvMethodRule = new NewEnvMethodRule();
 
 	protected void doTestRegister(
 			boolean threadEnabled, ReferenceType referenceType)

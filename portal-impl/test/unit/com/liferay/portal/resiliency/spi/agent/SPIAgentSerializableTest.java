@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.KeyValuePair;
@@ -41,7 +42,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.test.AdviseWith;
-import com.liferay.portal.test.runners.AspectJMockingNewClassLoaderJUnitTestRunner;
+import com.liferay.portal.test.AspectJNewEnvMethodRule;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -68,8 +69,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpSession;
@@ -77,7 +78,6 @@ import org.springframework.mock.web.MockHttpSession;
 /**
  * @author Shuyang Zhou
  */
-@RunWith(AspectJMockingNewClassLoaderJUnitTestRunner.class)
 public class SPIAgentSerializableTest {
 
 	@ClassRule
@@ -474,6 +474,7 @@ public class SPIAgentSerializableTest {
 	@AdviseWith(
 		adviceClasses = {DeserializerAdvice.class, PropsUtilAdvice.class}
 	)
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testSerialization() throws IOException {
 
@@ -699,6 +700,10 @@ public class SPIAgentSerializableTest {
 
 		_threadLocal.remove();
 	}
+
+	@Rule
+	public final AspectJNewEnvMethodRule aspectJNewEnvMethodRule =
+		new AspectJNewEnvMethodRule();
 
 	@Aspect
 	public static class DeserializerAdvice {

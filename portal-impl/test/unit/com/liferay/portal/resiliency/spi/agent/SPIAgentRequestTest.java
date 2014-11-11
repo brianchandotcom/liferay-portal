@@ -23,7 +23,8 @@ import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
-import com.liferay.portal.kernel.test.NewClassLoaderJUnitTestRunner;
+import com.liferay.portal.kernel.test.NewEnv;
+import com.liferay.portal.kernel.test.NewEnvMethodRule;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.CookieUtil;
@@ -70,8 +71,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpSession;
@@ -79,7 +80,6 @@ import org.springframework.mock.web.MockHttpSession;
 /**
  * @author Shuyang Zhou
  */
-@RunWith(NewClassLoaderJUnitTestRunner.class)
 public class SPIAgentRequestTest {
 
 	@ClassRule
@@ -741,6 +741,7 @@ public class SPIAgentRequestTest {
 		Assert.assertFalse(enumeration.hasMoreElements());
 	}
 
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testPopulatePortletSessionAttributes2() {
 
@@ -788,6 +789,7 @@ public class SPIAgentRequestTest {
 		Assert.assertFalse(enumeration.hasMoreElements());
 	}
 
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testPopulatePortletSessionAttributes3() {
 
@@ -831,6 +833,7 @@ public class SPIAgentRequestTest {
 		Assert.assertFalse(enumeration.hasMoreElements());
 	}
 
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testPopulatePortletSessionAttributes4() throws IOException {
 
@@ -882,6 +885,7 @@ public class SPIAgentRequestTest {
 		Assert.assertFalse(enumeration.hasMoreElements());
 	}
 
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testPopulatePortletSessionAttributes5() throws IOException {
 
@@ -1005,6 +1009,9 @@ public class SPIAgentRequestTest {
 			new String[] {StringPool.FALSE},
 			parameterMap.get("portalResiliencyPortletShowFooter"));
 	}
+
+	@Rule
+	public final NewEnvMethodRule newEnvMethodRule = new NewEnvMethodRule();
 
 	private static final String _HEADER_NAME_1 = "HEADER_NAME_1";
 

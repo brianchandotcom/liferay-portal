@@ -19,14 +19,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Shuyang Zhou
  */
-@RunWith(NewClassLoaderJUnitTestRunner.class)
-public class NewClassLoaderJUnitTestRunnerTest {
+@NewEnv(type = NewEnv.Type.CLASSLOADER)
+public class NewEnvClassLoaderMethodRuleTest {
 
 	@Before
 	public void setUp() {
@@ -39,9 +39,7 @@ public class NewClassLoaderJUnitTestRunnerTest {
 
 		Thread currentThread = Thread.currentThread();
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		Assert.assertSame(classLoader, contextClassLoader);
+		Assert.assertSame(classLoader, currentThread.getContextClassLoader());
 
 		_classLoader = classLoader;
 	}
@@ -79,20 +77,19 @@ public class NewClassLoaderJUnitTestRunnerTest {
 		Assert.assertEquals(value2, ValueClass.value);
 	}
 
+	@Rule
+	public final NewEnvMethodRule newEnvMethodRule = new NewEnvMethodRule();
+
 	private void assertClassLoader() {
 		Assert.assertNotNull(_classLoader);
 
 		Class<?> clazz = getClass();
 
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		Assert.assertSame(_classLoader, classLoader);
+		Assert.assertSame(_classLoader, clazz.getClassLoader());
 
 		Thread currentThread = Thread.currentThread();
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		Assert.assertSame(_classLoader, contextClassLoader);
+		Assert.assertSame(_classLoader, currentThread.getContextClassLoader());
 	}
 
 	private static final String _PROPERTY_KEY = "PROPERTY_KEY";

@@ -47,11 +47,12 @@ import com.liferay.portal.kernel.process.local.ReturnProcessCallable;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ObjectGraphUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.AdviseWith;
-import com.liferay.portal.test.runners.AspectJMockingNewClassLoaderJUnitTestRunner;
+import com.liferay.portal.test.AspectJNewEnvMethodRule;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
@@ -84,13 +85,12 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Shuyang Zhou
  */
-@RunWith(AspectJMockingNewClassLoaderJUnitTestRunner.class)
 public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 	@ClassRule
@@ -293,6 +293,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 	}
 
 	@AdviseWith(adviceClasses = NettyUtilAdvice.class)
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testIntegration() {
 		NettyFabricWorkerExecutionChannelHandler
@@ -817,6 +818,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 	}
 
 	@AdviseWith(adviceClasses = NettyUtilAdvice.class)
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testPostFabricWorkerExecutionFutureListener() throws Exception {
 
@@ -937,6 +939,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 	}
 
 	@AdviseWith(adviceClasses = NettyUtilAdvice.class)
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testPostFabricWorkerFinishFutureListener() throws Exception {
 
@@ -1056,6 +1059,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 	}
 
 	@AdviseWith(adviceClasses = NettyUtilAdvice.class)
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testPostLoadPathsFutureListener() throws Exception {
 
@@ -1133,6 +1137,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 	}
 
 	@AdviseWith(adviceClasses = NettyUtilAdvice.class)
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testSendResult() throws Exception {
 
@@ -1210,6 +1215,10 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 			Assert.assertSame(throwable, ee.getCause());
 		}
 	}
+
+	@Rule
+	public final AspectJNewEnvMethodRule aspectJNewEnvMethodRule =
+		new AspectJNewEnvMethodRule();
 
 	protected NettyFabricWorkerConfig<Serializable>
 		createNettyFabricWorkerConfig() {

@@ -23,8 +23,9 @@ import com.liferay.portal.fabric.worker.FabricWorker;
 import com.liferay.portal.kernel.concurrent.AsyncBroker;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.test.AdviseWith;
-import com.liferay.portal.test.runners.AspectJMockingNewClassLoaderJUnitTestRunner;
+import com.liferay.portal.test.AspectJNewEnvMethodRule;
 
 import io.netty.channel.embedded.EmbeddedChannel;
 import io.netty.util.Attribute;
@@ -42,13 +43,12 @@ import org.aspectj.lang.annotation.Aspect;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Shuyang Zhou
  */
-@RunWith(AspectJMockingNewClassLoaderJUnitTestRunner.class)
 public class NettyChannelAttributesTest {
 
 	@ClassRule
@@ -56,6 +56,7 @@ public class NettyChannelAttributesTest {
 		new CodeCoverageAssertor();
 
 	@AdviseWith(adviceClasses = AttributeAdvice.class)
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testConcurrentGetAsyncBroker() {
 		AsyncBroker<Long, Serializable> asyncBroker =
@@ -75,6 +76,7 @@ public class NettyChannelAttributesTest {
 	}
 
 	@AdviseWith(adviceClasses = AttributeAdvice.class)
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testConcurrentNextId() {
 		AttributeAdvice.setConcurrentValue(new AtomicLong());
@@ -83,6 +85,7 @@ public class NettyChannelAttributesTest {
 	}
 
 	@AdviseWith(adviceClasses = AttributeAdvice.class)
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testConcurrentPutFabricWorker() {
 		AttributeAdvice.setConcurrentValue(
@@ -192,6 +195,10 @@ public class NettyChannelAttributesTest {
 		Assert.assertEquals(0, NettyChannelAttributes.nextId(_embeddedChannel));
 		Assert.assertEquals(1, NettyChannelAttributes.nextId(_embeddedChannel));
 	}
+
+	@Rule
+	public final AspectJNewEnvMethodRule aspectJNewEnvMethodRule =
+		new AspectJNewEnvMethodRule();
 
 	@Aspect
 	public static class AttributeAdvice {

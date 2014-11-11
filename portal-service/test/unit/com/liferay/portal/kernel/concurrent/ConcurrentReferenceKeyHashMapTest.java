@@ -16,7 +16,8 @@ package com.liferay.portal.kernel.concurrent;
 
 import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
-import com.liferay.portal.kernel.test.NewClassLoaderJUnitTestRunner;
+import com.liferay.portal.kernel.test.NewEnv;
+import com.liferay.portal.kernel.test.NewEnvMethodRule;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.lang.ref.Reference;
@@ -27,13 +28,12 @@ import java.util.concurrent.ConcurrentMap;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Shuyang Zhou
  */
-@RunWith(NewClassLoaderJUnitTestRunner.class)
 public class ConcurrentReferenceKeyHashMapTest
 	extends BaseConcurrentReferenceHashMapTestCase {
 
@@ -41,6 +41,7 @@ public class ConcurrentReferenceKeyHashMapTest
 	public static CodeCoverageAssertor codeCoverageAssertor =
 		new CodeCoverageAssertor();
 
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testAutoRemove() throws InterruptedException {
 		System.setProperty(
@@ -84,5 +85,8 @@ public class ConcurrentReferenceKeyHashMapTest
 		new ConcurrentReferenceKeyHashMap<String, Object>(
 			10, 0.75F, 4, FinalizeManager.WEAK_REFERENCE_FACTORY);
 	}
+
+	@Rule
+	public final NewEnvMethodRule newEnvMethodRule = new NewEnvMethodRule();
 
 }

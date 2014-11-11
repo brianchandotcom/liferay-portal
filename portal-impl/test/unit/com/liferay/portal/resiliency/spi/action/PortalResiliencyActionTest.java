@@ -17,6 +17,7 @@ package com.liferay.portal.resiliency.spi.action;
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.resiliency.spi.agent.SPIAgent;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -28,7 +29,7 @@ import com.liferay.portal.resiliency.spi.agent.SPIAgentRequest;
 import com.liferay.portal.resiliency.spi.agent.SPIAgentResponse;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.test.AdviseWith;
-import com.liferay.portal.test.runners.AspectJMockingNewClassLoaderJUnitTestRunner;
+import com.liferay.portal.test.AspectJNewEnvMethodRule;
 import com.liferay.portal.util.PropsImpl;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.EventImpl;
@@ -48,8 +49,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -57,7 +58,6 @@ import org.springframework.mock.web.MockHttpServletResponse;
 /**
  * @author Shuyang Zhou
  */
-@RunWith(AspectJMockingNewClassLoaderJUnitTestRunner.class)
 public class PortalResiliencyActionTest {
 
 	@ClassRule
@@ -267,6 +267,7 @@ public class PortalResiliencyActionTest {
 	}
 
 	@AdviseWith(adviceClasses = {LifecycleAdvice.class})
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testUnknownPhase() throws Exception {
 		_mockHttpServletRequest.setAttribute(
@@ -282,6 +283,10 @@ public class PortalResiliencyActionTest {
 			Assert.assertEquals("Unkown lifecycle UNKNOWN", iae.getMessage());
 		}
 	}
+
+	@Rule
+	public final AspectJNewEnvMethodRule aspectJNewEnvMethodRule =
+		new AspectJNewEnvMethodRule();
 
 	@Aspect
 	public static class LifecycleAdvice {

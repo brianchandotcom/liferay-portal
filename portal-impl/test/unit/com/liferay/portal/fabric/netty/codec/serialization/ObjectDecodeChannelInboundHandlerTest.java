@@ -16,10 +16,11 @@ package com.liferay.portal.fabric.netty.codec.serialization;
 
 import com.liferay.portal.fabric.netty.util.NettyUtil;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.test.AdviseWith;
+import com.liferay.portal.test.AspectJNewEnvMethodRule;
 import com.liferay.portal.test.aspects.ReflectionUtilAdvice;
-import com.liferay.portal.test.runners.AspectJMockingNewClassLoaderJUnitTestRunner;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
@@ -32,13 +33,12 @@ import java.util.UUID;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Shuyang Zhou
  */
-@RunWith(AspectJMockingNewClassLoaderJUnitTestRunner.class)
 public class ObjectDecodeChannelInboundHandlerTest {
 
 	@ClassRule
@@ -83,6 +83,7 @@ public class ObjectDecodeChannelInboundHandlerTest {
 	}
 
 	@AdviseWith(adviceClasses = ReflectionUtilAdvice.class)
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testClassLoadingFailure() {
 		Throwable throwable = new Throwable();
@@ -144,6 +145,10 @@ public class ObjectDecodeChannelInboundHandlerTest {
 		Assert.assertSame(
 			dateChannelHandler, annotatedObjectDecoder.removeLast());
 	}
+
+	@Rule
+	public final AspectJNewEnvMethodRule aspectJNewEnvMethodRule =
+		new AspectJNewEnvMethodRule();
 
 	private static class DateChannelHandler
 		extends ObjectDecodeChannelInboundHandler<Date> {

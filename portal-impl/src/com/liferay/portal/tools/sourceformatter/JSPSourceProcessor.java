@@ -449,10 +449,15 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String fixBackURL(String content) {
+		String backURLPatternGroup =
+			"(String backURL = " +
+				"ParamUtil\\.getString\\(request, \"backURL\", redirect\\);)";
+		String redirectPatternGroup =
+			"(String redirect = " +
+				"ParamUtil\\.getString\\(request, \"redirect\".*\\);)";
+
 		Pattern pattern = Pattern.compile(
-			"(String redirect = ParamUtil\\.getString\\(request, " +
-				"\"redirect\".*\\);)\n(String backURL = ParamUtil" +
-					"\\.getString\\(request, \"backURL\", redirect\\);)");
+			redirectPatternGroup + "\n" + backURLPatternGroup);
 
 		Matcher matcher = pattern.matcher(content);
 

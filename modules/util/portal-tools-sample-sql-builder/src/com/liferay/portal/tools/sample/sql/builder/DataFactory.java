@@ -1293,6 +1293,7 @@ public class DataFactory {
 		ddlRecordModel.setVersionUserId(_sampleUserId);
 		ddlRecordModel.setVersionUserName(_SAMPLE_USER_NAME);
 		ddlRecordModel.setCreateDate(new Date());
+		ddlRecordModel.setLastPublishDate(new Date());
 		ddlRecordModel.setModifiedDate(new Date());
 		ddlRecordModel.setDDMStorageId(_counter.get());
 		ddlRecordModel.setRecordSetId(dDLRecordSetModel.getRecordSetId());
@@ -1315,6 +1316,7 @@ public class DataFactory {
 		ddlRecordSetModel.setUserId(_sampleUserId);
 		ddlRecordSetModel.setUserName(_SAMPLE_USER_NAME);
 		ddlRecordSetModel.setCreateDate(new Date());
+		ddlRecordSetModel.setLastPublishDate(new Date());
 		ddlRecordSetModel.setModifiedDate(new Date());
 		ddlRecordSetModel.setDDMStructureId(ddmStructureModel.getStructureId());
 		ddlRecordSetModel.setRecordSetKey(String.valueOf(_counter.get()));

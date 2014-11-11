@@ -37,6 +37,7 @@
 	.lfr-asset-icon {
 		border-right: 1px solid transparent;
 		float: left;
+		line-height: 14px;
 		margin-right: 10px;
 		padding-right: 10px;
 

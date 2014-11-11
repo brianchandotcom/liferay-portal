@@ -17,7 +17,8 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
-import com.liferay.portal.kernel.test.NewClassLoaderJUnitTestRunner;
+import com.liferay.portal.kernel.test.NewEnv;
+import com.liferay.portal.kernel.test.NewEnvMethodRule;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
 import java.io.IOException;
@@ -27,14 +28,13 @@ import java.io.StringWriter;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Shuyang Zhou
  * @author Manuel de la Peña
  */
-@RunWith(NewClassLoaderJUnitTestRunner.class)
 public class StringBundlerTest {
 
 	@ClassRule
@@ -696,6 +696,7 @@ public class StringBundlerTest {
 		Assert.assertEquals(StringPool.BLANK, sb.toString());
 	}
 
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testToStringWithoutThreadLocalBuffer() {
 		String propertyKey =
@@ -733,6 +734,7 @@ public class StringBundlerTest {
 		}
 	}
 
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testToStringWithThreadLocalBuffer() {
 		int threadLocalBufferLimit = 3;
@@ -811,6 +813,9 @@ public class StringBundlerTest {
 		Assert.assertEquals(
 			"test1test2test3test4test5", stringWriter.toString());
 	}
+
+	@Rule
+	public final NewEnvMethodRule newEnvMethodRule = new NewEnvMethodRule();
 
 	protected void assertArray(StringBundler sb, String... prefix) {
 		String[] strings = sb.getStrings();

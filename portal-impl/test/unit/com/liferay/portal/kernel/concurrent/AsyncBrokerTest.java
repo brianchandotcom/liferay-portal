@@ -19,11 +19,12 @@ import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.GCUtil;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.AdviseWith;
+import com.liferay.portal.test.AspectJNewEnvMethodRule;
 import com.liferay.portal.test.aspects.ReflectionUtilAdvice;
-import com.liferay.portal.test.runners.AspectJMockingNewClassLoaderJUnitTestRunner;
 
 import java.lang.reflect.Field;
 
@@ -36,13 +37,12 @@ import java.util.logging.LogRecord;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Shuyang Zhou
  */
-@RunWith(AspectJMockingNewClassLoaderJUnitTestRunner.class)
 public class AsyncBrokerTest {
 
 	@ClassRule
@@ -81,6 +81,7 @@ public class AsyncBrokerTest {
 		Assert.assertTrue(map.isEmpty());
 	}
 
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testOrphanCancellationAlreadyDone()
 		throws InterruptedException {
@@ -102,6 +103,7 @@ public class AsyncBrokerTest {
 			FinalizeManager.class, "_pollingCleanup", new Class<?>[0]);
 	}
 
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testOrphanCancellationNotDoneYet() throws InterruptedException {
 
@@ -164,6 +166,7 @@ public class AsyncBrokerTest {
 		}
 	}
 
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testOrphanCancellationNotSupported() throws Exception {
 		System.setProperty(_THREAD_ENABLED_KEY, StringPool.FALSE);
@@ -209,6 +212,7 @@ public class AsyncBrokerTest {
 	}
 
 	@AdviseWith(adviceClasses = ReflectionUtilAdvice.class)
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testPhantomReferenceResurrectionNotSupported()
 		throws ClassNotFoundException {
@@ -267,6 +271,7 @@ public class AsyncBrokerTest {
 	}
 
 	@AdviseWith(adviceClasses = ReflectionUtilAdvice.class)
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testPostPhantomReferenceResurrectionNotSupported()
 		throws Exception {
@@ -374,6 +379,10 @@ public class AsyncBrokerTest {
 		Assert.assertTrue(defaultNoticeableFutures.isEmpty());
 		Assert.assertFalse(asyncBroker.takeWithResult(_KEY, _VALUE));
 	}
+
+	@Rule
+	public final AspectJNewEnvMethodRule aspectJNewEnvMethodRule =
+		new AspectJNewEnvMethodRule();
 
 	private static final String _KEY = "testKey";
 

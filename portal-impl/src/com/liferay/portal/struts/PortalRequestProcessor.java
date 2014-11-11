@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.liveusers.LiveUsers;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletPreferencesIds;
 import com.liferay.portal.model.User;
@@ -753,7 +754,20 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 			// Authenticated users must have a current password
 
 			if ((user != null) && user.isPasswordReset()) {
-				return _PATH_PORTAL_UPDATE_PASSWORD;
+				try {
+					PasswordPolicy passwordPolicy = user.getPasswordPolicy();
+
+					if ((passwordPolicy == null) ||
+						passwordPolicy.isChangeRequired()) {
+
+						return _PATH_PORTAL_UPDATE_PASSWORD;
+					}
+				}
+				catch (Exception e) {
+					_log.error(e);
+
+					return _PATH_PORTAL_UPDATE_PASSWORD;
+				}
 			}
 			else if ((user != null) && !user.isPasswordReset() &&
 					 path.equals(_PATH_PORTAL_UPDATE_PASSWORD)) {

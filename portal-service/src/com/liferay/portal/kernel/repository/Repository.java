@@ -280,19 +280,6 @@ public interface Repository extends DocumentRepository {
 	public void unlockFolder(long parentFolderId, String name, String lockUuid)
 		throws PortalException;
 
-	public FileEntry updateFileEntry(
-			long userId, long fileEntryId, String sourceFileName,
-			String mimeType, String title, String description, String changeLog,
-			boolean majorVersion, File file, ServiceContext serviceContext)
-		throws PortalException;
-
-	public FileEntry updateFileEntry(
-			long userId, long fileEntryId, String sourceFileName,
-			String mimeType, String title, String description, String changeLog,
-			boolean majorVersion, InputStream is, long size,
-			ServiceContext serviceContext)
-		throws PortalException;
-
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #updateFileEntry(long, long,
 	 *             String, String, String, String, String, boolean,

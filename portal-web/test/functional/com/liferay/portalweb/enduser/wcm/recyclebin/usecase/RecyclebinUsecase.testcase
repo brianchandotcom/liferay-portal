@@ -936,7 +936,7 @@
 		</execute>
 
 		<execute macro="WikiNode#gotoCP">
-			<var name="wikiNodeName" value="${wikiNodeName}" />
+			<var name="wikiNodeName" value="Wiki Node Name" />
 		</execute>
 
 		<execute macro="WikiPage#deleteCP">

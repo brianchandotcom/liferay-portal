@@ -87,9 +87,7 @@ public class NavTag extends BaseNavTag implements BodyTag {
 			String icon = getIcon();
 
 			if (Validator.isNull(icon)) {
-				sb.append("<span class=\"icon-bar\"></span>");
-				sb.append("<span class=\"icon-bar\"></span>");
-				sb.append("<span class=\"icon-bar\"></span>");
+				sb.append("<i class=\"icon-reorder\"></i>");
 			}
 			else if (icon.equals("user") && themeDisplay.isSignedIn()) {
 				try {

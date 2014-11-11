@@ -66,7 +66,7 @@ boolean nodeInGroup = false;
 
 		<c:choose>
 			<c:when test="<%= nodeInGroup %>">
-				<div class="<portlet:namespace />pageSelectorContainer">
+				<div id="<portlet:namespace />pageSelectorContainer">
 					<aui:select label="page" name="preferences--title--">
 
 						<%
@@ -87,9 +87,9 @@ boolean nodeInGroup = false;
 					</aui:select>
 				</div>
 
-				<aui:script use="aui-base">
-					var nodeIdSelect = A.one('#<portlet:namespace/>nodeId');
-					var pageSelectorContainer = A.one('#<portlet:namespace />pageSelectorContainer');
+				<aui:script sandbox="<%= true %>">
+					var nodeIdSelect = $('#<portlet:namespace/>nodeId');
+					var pageSelectorContainer = $('#<portlet:namespace />pageSelectorContainer');
 
 					var nodeIdValue = nodeIdSelect.val();
 

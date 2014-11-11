@@ -12,51 +12,42 @@
  * details.
  */
 
-package com.liferay.portal.test.runners;
+package com.liferay.portal.test;
 
 import com.liferay.portal.aspectj.WeavingClassLoader;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
-import com.liferay.portal.kernel.test.NewJVMJUnitTestRunner;
+import com.liferay.portal.kernel.test.NewEnvMethodRule;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.test.AdviseWith;
 import com.liferay.util.SerializableUtil;
 
 import java.io.File;
 import java.io.Serializable;
 
-import java.net.URL;
+import java.lang.reflect.Method;
 
-import java.util.Collections;
+import java.net.MalformedURLException;
+
 import java.util.List;
 
 import org.aspectj.lang.annotation.Aspect;
 
-import org.junit.runners.model.FrameworkMethod;
-import org.junit.runners.model.InitializationError;
-
 /**
  * @author Shuyang Zhou
  */
-public class AspectJMockingNewJVMJUnitTestRunner extends NewJVMJUnitTestRunner {
-
-	public AspectJMockingNewJVMJUnitTestRunner(Class<?> clazz)
-		throws InitializationError {
-
-		super(clazz);
-	}
+public class AspectJNewEnvMethodRule extends NewEnvMethodRule {
 
 	@Override
-	protected List<String> createArguments(FrameworkMethod frameworkMethod) {
-		List<String> arguments = super.createArguments(frameworkMethod);
+	protected List<String> createArguments(Method method) {
+		List<String> arguments = super.createArguments(method);
 
-		AdviseWith adviseWith = frameworkMethod.getAnnotation(AdviseWith.class);
+		AdviseWith adviseWith = method.getAnnotation(AdviseWith.class);
 
 		if (adviseWith == null) {
 			return arguments;
@@ -65,7 +56,7 @@ public class AspectJMockingNewJVMJUnitTestRunner extends NewJVMJUnitTestRunner {
 		Class<?>[] adviceClasses = adviseWith.adviceClasses();
 
 		if (ArrayUtil.isEmpty(adviceClasses)) {
-			return Collections.emptyList();
+			return arguments;
 		}
 
 		StringBundler sb = new StringBundler(adviceClasses.length * 2 + 1);
@@ -92,17 +83,56 @@ public class AspectJMockingNewJVMJUnitTestRunner extends NewJVMJUnitTestRunner {
 	}
 
 	@Override
+	protected ClassLoader createClassLoader(Method method) {
+		AdviseWith adviseWith = method.getAnnotation(AdviseWith.class);
+
+		if (adviseWith == null) {
+			return super.createClassLoader(method);
+		}
+
+		Class<?>[] adviceClasses = adviseWith.adviceClasses();
+
+		if (ArrayUtil.isEmpty(adviceClasses)) {
+			return super.createClassLoader(method);
+		}
+
+		for (Class<?> adviceClass : adviceClasses) {
+			Aspect aspect = adviceClass.getAnnotation(Aspect.class);
+
+			if (aspect == null) {
+				throw new IllegalArgumentException(
+					"Class " + adviceClass.getName() + " is not an aspect");
+			}
+		}
+
+		Class<?> clazz = method.getDeclaringClass();
+
+		String className = clazz.getName();
+
+		File dumpDir = new File(
+			System.getProperty("junit.aspectj.dump"),
+			className.concat(StringPool.PERIOD).concat(method.getName()));
+
+		try {
+			return new WeavingClassLoader(
+				ClassPathUtil.getClassPathURLs(CLASS_PATH), adviceClasses,
+				dumpDir);
+		}
+		catch (MalformedURLException murle) {
+			throw new RuntimeException(murle);
+		}
+	}
+
+	@Override
 	protected ProcessCallable<Serializable> processProcessCallable(
 		ProcessCallable<Serializable> processCallable, MethodKey methodKey) {
-
-		String dumpDirName = System.getProperty("junit.aspectj.dump");
 
 		Class<?> clazz = methodKey.getDeclaringClass();
 
 		String className = clazz.getName();
 
 		File dumpDir = new File(
-			dumpDirName,
+			System.getProperty("junit.aspectj.dump"),
 			className.concat(StringPool.PERIOD).concat(
 				methodKey.getMethodName()));
 
@@ -137,26 +167,23 @@ public class AspectJMockingNewJVMJUnitTestRunner extends NewJVMJUnitTestRunner {
 			ClassLoader contextClassLoader =
 				currentThread.getContextClassLoader();
 
-			String jvmClassPath = ClassPathUtil.getJVMClassPath(true);
-
 			try {
-				URL[] urls = ClassPathUtil.getClassPathURLs(jvmClassPath);
-
 				for (int i = 0; i < aspectClassNames.length; i++) {
 					aspectClasses[i] = contextClassLoader.loadClass(
 						aspectClassNames[i]);
 				}
 
 				WeavingClassLoader weavingClassLoader = new WeavingClassLoader(
-					urls, aspectClasses, _dumpDir);
-
-				Object originalProcessCallable = SerializableUtil.deserialize(
-					_encodedProcessCallable, weavingClassLoader);
+					ClassPathUtil.getClassPathURLs(
+						ClassPathUtil.getJVMClassPath(true)),
+					aspectClasses, _dumpDir);
 
 				currentThread.setContextClassLoader(weavingClassLoader);
 
 				return ReflectionTestUtil.invoke(
-					originalProcessCallable, "call", new Class<?>[0]);
+					SerializableUtil.deserialize(
+						_encodedProcessCallable, weavingClassLoader),
+					"call", new Class<?>[0]);
 			}
 			catch (Exception e) {
 				throw new ProcessException(e);
@@ -173,9 +200,9 @@ public class AspectJMockingNewJVMJUnitTestRunner extends NewJVMJUnitTestRunner {
 
 		private static final long serialVersionUID = 1L;
 
-		private File _dumpDir;
-		private byte[] _encodedProcessCallable;
-		private String _toString;
+		private final File _dumpDir;
+		private final byte[] _encodedProcessCallable;
+		private final String _toString;
 
 	}
 

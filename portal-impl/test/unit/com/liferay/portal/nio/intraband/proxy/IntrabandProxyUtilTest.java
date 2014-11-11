@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.nio.intraband.test.MockRegistrationReference;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -52,8 +53,8 @@ import com.liferay.portal.nio.intraband.proxy.IntrabandProxyUtil.MethodsBag;
 import com.liferay.portal.nio.intraband.proxy.IntrabandProxyUtil.TemplateSkeleton;
 import com.liferay.portal.nio.intraband.proxy.IntrabandProxyUtil.TemplateStub;
 import com.liferay.portal.test.AdviseWith;
+import com.liferay.portal.test.AspectJNewEnvMethodRule;
 import com.liferay.portal.test.aspects.ReflectionUtilAdvice;
-import com.liferay.portal.test.runners.AspectJMockingNewClassLoaderJUnitTestRunner;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.PropsValues;
 
@@ -98,8 +99,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.Opcodes;
@@ -120,7 +121,6 @@ import org.objectweb.asm.tree.VarInsnNode;
 /**
  * @author Shuyang Zhou
  */
-@RunWith(AspectJMockingNewClassLoaderJUnitTestRunner.class)
 public class IntrabandProxyUtilTest {
 
 	@ClassRule
@@ -331,12 +331,14 @@ public class IntrabandProxyUtilTest {
 		Assert.assertEquals("doStuff2-()V", proxyMethodSignatures[1]);
 	}
 
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testGenerateSkeletonClassFunction() throws Exception {
 		_doTestGenerateSkeletonClassFunction(TestGenerateInterface1.class);
 		_doTestGenerateSkeletonClassFunction(TestGenerateInterface2.class);
 	}
 
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testGenerateSkeletonClassStructure() throws Exception {
 		_doTestGenerateSkeletonClassStructure(TestGenerateInterface1.class);
@@ -345,6 +347,7 @@ public class IntrabandProxyUtilTest {
 		_doTestGenerateSkeletonClassStructure(TestGenerateClass2.class);
 	}
 
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testGenerateStubClassFunction() throws Exception {
 
@@ -498,6 +501,7 @@ public class IntrabandProxyUtilTest {
 		}
 	}
 
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testGenerateStubClassStructure() throws Exception {
 		_doTestGenerateStubClassStructure(
@@ -547,6 +551,7 @@ public class IntrabandProxyUtilTest {
 	}
 
 	@AdviseWith(adviceClasses = {ReflectionUtilAdvice.class})
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testInitializationFailure() throws ClassNotFoundException {
 		Throwable throwable = new Throwable();
@@ -983,6 +988,7 @@ public class IntrabandProxyUtilTest {
 	}
 
 	@AdviseWith(adviceClasses = {DisableProxyClassesDump.class})
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testToClassProxyClassesDumpDisabled()
 		throws FileNotFoundException {
@@ -991,6 +997,7 @@ public class IntrabandProxyUtilTest {
 	}
 
 	@AdviseWith(adviceClasses = {EnableProxyClassesDump.class})
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testToClassProxyClassesDumpEnabled()
 		throws FileNotFoundException {
@@ -1004,6 +1011,10 @@ public class IntrabandProxyUtilTest {
 		_doTestValidate(true);
 		_doTestValidate(false);
 	}
+
+	@Rule
+	public final AspectJNewEnvMethodRule aspectJNewEnvMethodRule =
+		new AspectJNewEnvMethodRule();
 
 	@Aspect
 	public static class DisableProxyClassesDump {

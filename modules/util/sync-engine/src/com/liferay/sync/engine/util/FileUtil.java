@@ -52,10 +52,7 @@ import org.slf4j.LoggerFactory;
 public class FileUtil {
 
 	public static String getChecksum(Path filePath) throws IOException {
-		if (!Files.exists(filePath) ||
-			(Files.size(filePath) >
-				PropsValues.SYNC_FILE_CHECKSUM_THRESHOLD_SIZE)) {
-
+		if (!isValidChecksum(filePath)) {
 			return "";
 		}
 
@@ -226,6 +223,19 @@ public class FileUtil {
 		}
 
 		return false;
+	}
+
+	public static boolean isValidChecksum(Path filePath)
+		throws IOException {
+
+		if (!Files.exists(filePath) ||
+			(Files.size(filePath) >
+					PropsValues.SYNC_FILE_CHECKSUM_THRESHOLD_SIZE)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	public static boolean isValidFileName(String fileName) {

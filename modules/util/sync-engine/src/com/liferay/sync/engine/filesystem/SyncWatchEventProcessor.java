@@ -115,8 +115,11 @@ public class SyncWatchEventProcessor implements Runnable {
 
 		Path sourceFilePath = Paths.get(syncFile.getFilePathName());
 
-		if (targetFilePath.equals(sourceFilePath) &&
-			!FileUtil.hasFileChanged(syncFile)) {
+		if (targetFilePath.equals(sourceFilePath)) {
+			if (FileUtil.hasFileChanged(syncFile)) {
+				SyncFileService.updateFileSyncFile(
+					targetFilePath, _syncAccountId, syncFile);
+			}
 		}
 		else if (Files.exists(sourceFilePath)) {
 			try {
@@ -290,15 +293,6 @@ public class SyncWatchEventProcessor implements Runnable {
 				_syncAccountId, SyncEngineUtil.SYNC_ENGINE_STATE_PROCESSING);
 
 			return;
-		}
-
-		Watcher watcher = WatcherRegistry.getWatcher(_syncAccountId);
-
-		if (watcher != null) {
-			List<String> createdFilePathNames =
-				watcher.getCreatedFilePathNames();
-
-			createdFilePathNames.clear();
 		}
 
 		if (_logger.isTraceEnabled()) {

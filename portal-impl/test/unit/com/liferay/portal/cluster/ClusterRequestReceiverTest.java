@@ -19,11 +19,12 @@ import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.AdviseWith;
-import com.liferay.portal.test.runners.AspectJMockingNewJVMJUnitTestRunner;
+import com.liferay.portal.test.AspectJNewEnvMethodRule;
 
 import java.util.logging.Level;
 
@@ -31,13 +32,13 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Tina Tian
  */
-@RunWith(AspectJMockingNewJVMJUnitTestRunner.class)
+@NewEnv(type = NewEnv.Type.JVM)
 public class ClusterRequestReceiverTest
 	extends BaseClusterExecutorImplTestCase {
 
@@ -299,6 +300,10 @@ public class ClusterRequestReceiverTest
 			}
 		}
 	}
+
+	@Rule
+	public final AspectJNewEnvMethodRule aspectJNewEnvMethodRule =
+		new AspectJNewEnvMethodRule();
 
 	@Aspect
 	public static class SetJGroupsSingleThreadPoolAdvice {

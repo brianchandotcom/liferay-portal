@@ -24,6 +24,7 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.SearchContextTestUtil;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
@@ -50,8 +51,8 @@ public class DDLRecordSearchTest {
 
 	@Before
 	public void setUp() throws Exception {
-		ddlRecordTestHelper = new DDLRecordTestHelper(this);
-		group = ddlRecordTestHelper.getGroup();
+		group = GroupTestUtil.addGroup();
+		ddlRecordTestHelper = new DDLRecordTestHelper(this, group);
 		searchContext = getSearchContext(null);
 	}
 

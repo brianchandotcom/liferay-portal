@@ -82,21 +82,35 @@ public class DDMStructureTestUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		Map<Locale, String> nameMap = new HashMap<Locale, String>();
-
-		nameMap.put(defaultLocale, "Test Structure");
-
-		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
 		String ddlStorageType = GetterUtil.getString(
 			PropsUtil.get(PropsKeys.DYNAMIC_DATA_LISTS_STORAGE_TYPE));
+
+		return addStructure(
+			groupId, className, parentStructureId, null, "Test Structure",
+			definition, defaultLocale, ddlStorageType,
+			DDMStructureConstants.TYPE_DEFAULT, serviceContext);
+	}
+
+	public static DDMStructure addStructure(
+			long groupId, String className, long parentStructureId,
+			String structureKey, String name, String definition,
+			Locale defaultLocale, String storageType, int type,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+
+		nameMap.put(defaultLocale, name);
+
+		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
 		return DDMStructureLocalServiceUtil.addStructure(
 			TestPropsValues.getUserId(), groupId, parentStructureId,
-			PortalUtil.getClassNameId(className), null, nameMap, null, ddmForm,
-			ddlStorageType, DDMStructureConstants.TYPE_DEFAULT, serviceContext);
+			PortalUtil.getClassNameId(className), structureKey, nameMap, null,
+			ddmForm, storageType, type, serviceContext);
 	}
 
 	public static DDMStructure addStructure(

@@ -17,10 +17,12 @@ package com.liferay.portlet.dynamicdatamapping.service;
 import com.liferay.portal.kernel.locale.test.LocaleTestUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.DependenciesTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
@@ -31,7 +33,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestHelper;
+import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 
 import java.io.File;
 
@@ -44,8 +46,7 @@ public class BaseDDMServiceTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		ddmStructureTestHelper = new DDMStructureTestHelper();
-		group = ddmStructureTestHelper.getGroup();
+		group = GroupTestUtil.addGroup();
 	}
 
 	protected DDMTemplate addDisplayTemplate(
@@ -114,8 +115,11 @@ public class BaseDDMServiceTestCase {
 			String definition, String storageType, int type)
 		throws Exception {
 
-		return ddmStructureTestHelper.addStructure(
-			classNameId, structureKey, name, definition, storageType, type);
+		return DDMStructureTestUtil.addStructure(
+			group.getGroupId(), PortalUtil.getClassName(classNameId),
+			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, structureKey,
+			name, definition, LocaleUtil.getSiteDefault(), storageType, type,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
 	protected DDMTemplate addTemplate(
@@ -185,8 +189,6 @@ public class BaseDDMServiceTestCase {
 		return DependenciesTestUtil.readText(
 			getClass(), getBasePath() + fileName);
 	}
-
-	protected DDMStructureTestHelper ddmStructureTestHelper;
 
 	@DeleteAfterTestRun
 	protected Group group;

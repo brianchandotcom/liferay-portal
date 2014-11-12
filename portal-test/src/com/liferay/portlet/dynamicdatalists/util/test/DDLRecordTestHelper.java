@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.test.DependenciesTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordConstants;
@@ -27,12 +26,10 @@ import com.liferay.portlet.dynamicdatalists.model.DDLRecordSetConstants;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
-import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestHelper;
+import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -57,17 +54,9 @@ public class DDLRecordTestHelper {
 			serviceContext);
 	}
 
-	public DDLRecordTestHelper(Object testCase) throws Exception {
-		this(testCase, new DDMStructureTestHelper());
-	}
-
-	public DDLRecordTestHelper(
-			Object testCase, DDMStructureTestHelper ddmStructureTestHelper)
-		throws Exception {
-
+	public DDLRecordTestHelper(Object testCase, Group group) throws Exception {
 		_clazz = testCase.getClass();
-		_ddmStructureTestHelper = ddmStructureTestHelper;
-		_group = ddmStructureTestHelper.getGroup();
+		_group = group;
 		_recordSet = addRecordSet();
 	}
 
@@ -111,10 +100,9 @@ public class DDLRecordTestHelper {
 	}
 
 	protected DDLRecordSet addRecordSet() throws Exception {
-		DDMStructure ddmStructure = _ddmStructureTestHelper.addStructure(
-			PortalUtil.getClassNameId(DDLRecordSet.class), null,
-			"Test Structure", readText("test-structure.xsd"),
-			StorageType.XML.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), DDLRecordSet.class.getName(),
+			readText("test-structure.xsd"));
 
 		return addRecordSet(ddmStructure.getStructureId());
 	}
@@ -141,7 +129,6 @@ public class DDLRecordTestHelper {
 	}
 
 	private final Class<?> _clazz;
-	private final DDMStructureTestHelper _ddmStructureTestHelper;
 	private final Group _group;
 	private final DDLRecordSet _recordSet;
 

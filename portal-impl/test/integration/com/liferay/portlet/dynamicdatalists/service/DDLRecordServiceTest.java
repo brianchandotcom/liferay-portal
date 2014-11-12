@@ -16,10 +16,13 @@ package com.liferay.portlet.dynamicdatalists.service;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordTestHelper;
@@ -44,7 +47,9 @@ public class DDLRecordServiceTest extends BaseDDLServiceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		testHelper = new DDLRecordTestHelper(this, ddmStructureTestHelper);
+		_group = GroupTestUtil.addGroup();
+
+		testHelper = new DDLRecordTestHelper(this, _group);
 	}
 
 	@Test
@@ -72,5 +77,8 @@ public class DDLRecordServiceTest extends BaseDDLServiceTestCase {
 	}
 
 	protected DDLRecordTestHelper testHelper;
+
+	@DeleteAfterTestRun
+	private Group _group;
 
 }

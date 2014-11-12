@@ -55,9 +55,17 @@ AUI.add(
 		var Form = A.Component.create(
 			{
 				ATTRS: {
+					fieldRules: {
+						setter: function(val) {
+							var instance = this;
+
+							instance._processFieldRules(val);
+
+							return val;
+						}
+					},
 					id: {},
 					namespace: {},
-					fieldRules: {},
 					onSubmit: {
 						valueFn: function() {
 							var instance = this;
@@ -75,15 +83,6 @@ AUI.add(
 
 						var id = instance.get('id');
 
-						var fieldRules = instance.get('fieldRules');
-
-						var rules = {};
-						var fieldStrings = {};
-
-						for (var rule in fieldRules) {
-							instance._processFieldRule(rules, fieldStrings, fieldRules[rule]);
-						}
-
 						var form = document[id];
 						var formNode = A.one(form);
 
@@ -93,12 +92,12 @@ AUI.add(
 						if (formNode) {
 							var formValidator = new A.FormValidator(
 								{
-									boundingBox: formNode,
-									fieldStrings: fieldStrings,
-									rules: rules
+									boundingBox: formNode
 								}
 							);
 							instance.formValidator = formValidator;
+
+							instance._processFieldRules();
 
 							instance._bindForm();
 						}
@@ -194,6 +193,28 @@ AUI.add(
 							}
 
 							fieldStrings[validatorName] = errorMessage;
+						}
+					},
+
+					_processFieldRules: function(fieldRules) {
+						var instance = this;
+
+						if (!fieldRules) {
+							fieldRules = instance.get('fieldRules');
+						}
+
+						var fieldStrings = {};
+						var rules = {};
+
+						for (var rule in fieldRules) {
+							instance._processFieldRule(rules, fieldStrings, fieldRules[rule]);
+						}
+
+						var formValidator = instance.formValidator;
+
+						if (formValidator) {
+							formValidator.set('fieldStrings', fieldStrings);
+							formValidator.set('rules', rules);
 						}
 					}
 				},

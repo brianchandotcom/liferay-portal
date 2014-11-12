@@ -630,7 +630,7 @@ preferences will no longer be used in the RSS portlet.
 #### How should I update my code?
 
 Even though these preferences were removed, an ADT can be created to obtain the
-same result. Liferay will publish this ADT so that it can used in the RSS
+same result. Liferay will publish this ADT so that it can be used in the RSS
 portlet.
 
 #### Why was this change made?

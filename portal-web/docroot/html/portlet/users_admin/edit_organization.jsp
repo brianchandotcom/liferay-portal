@@ -18,6 +18,7 @@
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
+
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 Organization organization = (Organization)request.getAttribute(WebKeys.ORGANIZATION);

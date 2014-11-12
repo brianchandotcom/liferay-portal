@@ -23,6 +23,7 @@ String tabs1 = "roles";
 String tabs2 = ParamUtil.getString(request, "tabs2", "current");
 
 String redirect = ParamUtil.getString(request, "redirect");
+
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 Role role = (Role)request.getAttribute(WebKeys.ROLE);

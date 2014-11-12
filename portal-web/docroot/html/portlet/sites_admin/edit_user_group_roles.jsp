@@ -22,6 +22,7 @@ String tabs1 = ParamUtil.getString(request, "tabs1", "current");
 int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
 
 String redirect = ParamUtil.getString(request, "redirect");
+
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 Group group = (Group)request.getAttribute(WebKeys.GROUP);

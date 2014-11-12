@@ -333,6 +333,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				"while (", ") {\n", ";\n", "\n\n"
 			});
 
+		newContent = fixRedirectBackURL(newContent);
+
 		newContent = fixCompatClassImports(absolutePath, newContent);
 
 		if (_stripJSPImports && !_jspContents.isEmpty()) {
@@ -442,6 +444,20 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		if (!content.equals(newContent)) {
 			_jspContents.put(fileName, newContent);
+		}
+
+		return newContent;
+	}
+
+	protected String fixRedirectBackURL(String content) {
+		Matcher matcher = _redirectBackURLPattern.matcher(content);
+
+		String newContent = content;
+
+		while (matcher.find()) {
+			newContent = StringUtil.replaceFirst(
+				newContent, matcher.group(),
+				matcher.group(1) + "\n\n" + matcher.group(2), matcher.start());
 		}
 
 		return newContent;
@@ -1303,6 +1319,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"(<.*\n*page.import=\".*>\n*)+", Pattern.MULTILINE);
 	private Pattern _jspIncludeFilePattern = Pattern.compile("/.*[.]jsp[f]?");
 	private boolean _moveFrequentlyUsedImportsToCommonInit;
+	private Pattern _redirectBackURLPattern = Pattern.compile(
+		"(String redirect = ParamUtil\\.getString\\(request, \"redirect\".*" +
+			"\\);)\n(String backURL = ParamUtil\\.getString\\(request, \"" +
+				"backURL\", redirect\\);)");
 	private boolean _stripJSPImports = true;
 	private Pattern _taglibLanguageKeyPattern1 = Pattern.compile(
 		"(?:confirmation|label|(?:M|m)essage|message key|names|title)=\"[^A-Z" +

@@ -606,6 +606,12 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			entry.setPriority(priority.intValue());
 		}
 
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(classNameId);
+
+		entry.setListable(assetRendererFactory.isListable(classPK));
+
 		// Categories
 
 		if (categoryIds != null) {
@@ -816,6 +822,12 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		AssetEntry entry = assetEntryPersistence.findByC_C(
 			classNameId, classPK);
 
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(classNameId);
+
+		entry.setListable(assetRendererFactory.isListable(classPK));
+
 		entry.setPublishDate(publishDate);
 
 		return updateVisible(entry, visible);
@@ -831,6 +843,12 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		AssetEntry entry = assetEntryPersistence.findByC_C(
 			classNameId, classPK);
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(classNameId);
+
+		entry.setListable(assetRendererFactory.isListable(classPK));
 
 		entry.setExpirationDate(expirationDate);
 		entry.setPublishDate(publishDate);

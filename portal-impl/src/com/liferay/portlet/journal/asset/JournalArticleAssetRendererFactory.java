@@ -209,6 +209,19 @@ public class JournalArticleAssetRendererFactory
 	}
 
 	@Override
+	public boolean isListable(long classPK) {
+		JournalArticle journalArticle =
+			JournalArticleLocalServiceUtil.fetchLatestArticle(
+				classPK, WorkflowConstants.STATUS_APPROVED, true);
+
+		if ((journalArticle != null) && journalArticle.isIndexable()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/history.png";
 	}

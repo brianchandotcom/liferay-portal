@@ -29,6 +29,7 @@ import java.lang.reflect.Field;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -131,6 +132,91 @@ public class LocalizationImplTest {
 		Assert.assertEquals(
 			"The default language ids from Document and XML don't match",
 			languageIdsFromDoc, languageIdsFromXml);
+	}
+
+	@Test
+	public void testGetModifiedLocales() throws Exception {
+		String key = "mykey";
+
+		String defaultLanguageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getDefault());
+
+		PortletPreferences preferences = new PortletPreferencesImpl();
+
+		LocalizationUtil.setPreferencesValue(
+			preferences, key, defaultLanguageId, "A0");
+
+		LocalizationUtil.setPreferencesValue(
+			preferences, key, _germanLanguageId, "B0");
+
+		Map<Locale, String> oldLocalizationMap =
+			LocalizationUtil.getLocalizationMap(preferences, key);
+
+		LocalizationUtil.setPreferencesValue(
+			preferences, key, defaultLanguageId, "A1");
+
+		LocalizationUtil.setPreferencesValue(
+			preferences, key, _germanLanguageId, "B1");
+
+		Map<Locale, String> newLocalizationMap =
+			LocalizationUtil.getLocalizationMap(preferences, key);
+
+		List<Locale> modifiedLocales = LocalizationUtil.getModifiedLocales(
+			oldLocalizationMap, newLocalizationMap);
+
+		Assert.assertTrue(modifiedLocales.contains(LocaleUtil.getDefault()));
+		Assert.assertTrue(modifiedLocales.contains(LocaleUtil.GERMANY));
+	}
+
+	@Test
+	public void testGetPreferencesValue() throws Exception {
+		String key = "mykey";
+
+		LocaleUtil.setDefault(
+			LocaleUtil.US.getLanguage(), LocaleUtil.US.getCountry(),
+			LocaleUtil.US.getVariant());
+
+		PortletPreferences preferences = new PortletPreferencesImpl();
+
+		LocalizationUtil.setPreferencesValue(
+			preferences, key, _englishLanguageId, "A");
+
+		LocalizationUtil.setPreferencesValue(
+			preferences, key, _germanLanguageId, "B");
+
+		Assert.assertEquals(
+			"A",
+			LocalizationUtil.getPreferencesValue(
+				preferences, key, _englishLanguageId));
+
+		Assert.assertEquals(
+			"B",
+			LocalizationUtil.getPreferencesValue(
+				preferences, key, _germanLanguageId));
+
+		Assert.assertEquals(
+			"A",
+			LocalizationUtil.getPreferencesValue(
+				preferences, key, _spanishLanguageId));
+
+		LocaleUtil.setDefault(
+			LocaleUtil.GERMANY.getLanguage(), LocaleUtil.GERMANY.getCountry(),
+			LocaleUtil.GERMANY.getVariant());
+
+		Assert.assertEquals(
+			"A",
+			LocalizationUtil.getPreferencesValue(
+				preferences, key, _englishLanguageId));
+
+		Assert.assertEquals(
+			"B",
+			LocalizationUtil.getPreferencesValue(
+				preferences, key, _germanLanguageId));
+
+		Assert.assertEquals(
+			"B",
+			LocalizationUtil.getPreferencesValue(
+				preferences, key, _spanishLanguageId));
 	}
 
 	@Test

@@ -108,35 +108,7 @@ catch (Exception e) {
 				for (int j = 0; j < entries.size(); j++) {
 					SyndEntry entry = (SyndEntry)entries.get(j);
 
-					String entryLink = entry.getLink();
-
-					if (Validator.isNotNull(entryLink) && !HttpUtil.hasDomain(entryLink)) {
-						entryLink = baseURL + entryLink;
-					}
-
-					String author = entry.getAuthor();
-
-					List<SyndEnclosure> enclosures = (List<SyndEnclosure>)entry.getEnclosures();
-
-					String enclosureLink = StringPool.BLANK;
-					String enclosureLinkTitle = entry.getTitle();
-
-					for (SyndEnclosure enclosure : enclosures) {
-						if (Validator.isNotNull(enclosure.getUrl())) {
-							enclosureLink = enclosure.getUrl();
-
-							int pos = enclosureLink.lastIndexOf(StringPool.FORWARD_SLASH);
-
-							if (pos > -1) {
-								enclosureLinkTitle = enclosureLink.substring(pos + 1);
-							}
-							else {
-								enclosureLinkTitle = enclosureLink;
-							}
-
-							break;
-						}
-					}
+					RSSFeedEntryDisplayContext rssFeedEntryDisplayContext = new RSSFeedEntryDisplayContext(entry, request, rssFeed);
 				%>
 
 					<div class="feed-entry">

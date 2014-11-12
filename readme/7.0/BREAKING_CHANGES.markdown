@@ -610,3 +610,32 @@ UI. In addition, all the features, such as filters, developed for categories can
 be used now in asset publishers and faceted search.
 
 ---------------------------------------
+
+### Removed the "header web content" and "footer web content" preferences from the RSS Portlet
+- **Date:** 2014-Nov-12
+- **JIRA Ticket:** LPS-46984
+
+#### What changed?
+
+The preferences "header web content" and "footer web content" from the RSS 
+portlet were removed. The portlet supports ADT now and the templating 
+capabilities would cover any need.
+
+#### Who is affected?
+
+RSS Portlets displayed in pages using these preferences won't use them anymore.
+
+#### How should I update my code?
+
+Even though these preferences were removed, an Application Display Template can
+be created to obtain the same result. Liferay will publish this application
+display template so that it can used in the RSS portlet.
+
+
+#### Why was this change made?
+
+The support for Application Display Templates will cover not only this use case
+but also many other in a much simpler way.
+
+---------------------------------------
+

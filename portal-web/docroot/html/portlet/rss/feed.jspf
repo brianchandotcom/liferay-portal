@@ -15,67 +15,14 @@
 --%>
 
 <%
-SyndFeed feed = null;
+RSSFeed rssFeed = new RSSFeed(url, title);
 
-try {
-	ObjectValuePair ovp = RSSUtil.getFeed(url);
-
-	feed = (SyndFeed)ovp.getValue();
-
-	if (Validator.isNull(title)) {
-		title = feed.getTitle();
-	}
-}
-catch (Exception e) {
-}
+SyndFeed feed = rssFeed.getFeed();
 %>
 
 <c:choose>
 	<c:when test="<%= (Validator.isNotNull(url)) && (feed != null) %>">
 		<div class="feed">
-
-			<%
-			String baseURL = null;
-
-			String feedLink = feed.getLink();
-
-			if (Validator.isNull(feedLink) || !HttpUtil.hasDomain(feedLink)) {
-				baseURL = HttpUtil.getProtocol(url).concat(Http.PROTOCOL_DELIMITER).concat(HttpUtil.getDomain(url));
-
-				if (Validator.isNotNull(feedLink)) {
-					feedLink = baseURL.concat(feedLink);
-				}
-				else {
-					feedLink = baseURL;
-				}
-			}
-			else {
-				baseURL = HttpUtil.getProtocol(feedLink).concat(Http.PROTOCOL_DELIMITER).concat(HttpUtil.getDomain(feedLink));
-			}
-
-			Date publishedDate = feed.getPublishedDate();
-			String description = feed.getDescription();
-
-			SyndImage feedImage = feed.getImage();
-
-			String feedImageLink = StringPool.BLANK;
-			String feedImageURL = StringPool.BLANK;
-
-			if (feedImage != null) {
-				feedImageLink = feedImage.getLink();
-
-				if (!HttpUtil.hasDomain(feedImageLink)) {
-					feedImageLink = baseURL + feedImageLink;
-				}
-
-				feedImageURL = feedImage.getUrl();
-
-				if (!HttpUtil.hasDomain(feedImageURL)) {
-					feedImageURL = baseURL + feedImageURL;
-				}
-			}
-			%>
-
 			<c:if test="<%= showFeedTitle %>">
 				<div class="feed-title">
 					<aui:a cssClass="icon-rss" href="<%= RSSUtil.escapeJavaScriptLink(feedLink) %>" target="_blank"><%= HtmlUtil.escape(title) %></aui:a>

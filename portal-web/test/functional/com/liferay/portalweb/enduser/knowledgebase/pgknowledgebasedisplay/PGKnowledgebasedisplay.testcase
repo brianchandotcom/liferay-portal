@@ -99,6 +99,41 @@
 		</execute>
 	</command>
 
+	<command name="AssertNoDuplicateBreadcrumbsWhenAddingParentArticle" priority="5" >
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Content Parent" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title Parent" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Content Child" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title Child" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="KBArticle#gotoViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Title Child" />
+		</execute>
+
+		<execute macro="KBArticle#moveArticleViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Title Child" />
+		</execute>
+
+		<execute action="PGKnowledgebasedisplaySelectParentArticle#selectFrame" locator-key1="SELECT_PARENT_IFRAME" />
+		<execute action="PGKnowledgebasedisplaySelectParentArticle#assertElementNotPresent" locator-key1="BREADCRUMB_HOME_DUPLICATE" />
+	</command>
+
 	<command name="DeleteKBArticleViaKBDisplay" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
@@ -159,6 +194,47 @@
 		<execute macro="KBArticle#viewViaKBDisplayPG">
 			<var name="kbArticleContent" value="Knowledge Base Article Content Edit" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title Edit" />
+		</execute>
+	</command>
+
+	<command name="SelectParentArticleViaKBDisplayPG" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Content Parent" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title Parent" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Content Child" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title Child" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="KBArticle#gotoViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Title Child" />
+		</execute>
+
+		<execute macro="KBArticle#moveArticleViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Title Child" />
+		</execute>
+
+		<execute macro="KBArticle#selectParentPGViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Title Parent" />
+		</execute>
+
+		<execute macro="KBArticle#viewHierarchyViaKBDisplayPG">
+			<var name="kbArticle1ChildArticleTitle1" value="Knowledge Base Article Title Child" />
+			<var name="kbArticleTitle1" value="Knowledge Base Article Title Parent" />
 		</execute>
 	</command>
 

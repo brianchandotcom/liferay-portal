@@ -170,48 +170,7 @@ catch (Exception e) {
 								<span class="feed-entry-enclosure"><aui:a href="<%= RSSUtil.escapeJavaScriptLink(enclosureLink) %>" target="_blank"><%= HtmlUtil.escape(enclosureLinkTitle) %></aui:a></span>
 							</c:if>
 
-							<%
-							for (int k = 0; k < contents.size(); k++) {
-								content = (SyndContent)contents.get(k);
-
-								if ((content == null) || Validator.isNull(content.getValue())) {
-									continue;
-								}
-
-								String sanitizedValue = null;
-
-								String type = content.getType();
-
-								if (com.liferay.util.RSSUtil.getFormatType(feed.getFeedType()).equals(com.liferay.util.RSSUtil.ATOM) && (type.equals("html") || type.equals("xhtml"))) {
-									String value = StringUtil.replace(
-										content.getValue(),
-										new String[] {
-											"src=\"/",
-											"href=\"/"
-										},
-										new String[] {
-											"src=\"" + baseURL + "/",
-											"href=\"" + baseURL + "/"
-										});
-
-									try {
-										sanitizedValue = SanitizerUtil.sanitize(company.getCompanyId(), scopeGroupId, user.getUserId(), null, 0, ContentTypes.TEXT_HTML, Sanitizer.MODE_XSS, value, null);
-									}
-									catch (SanitizerException se) {
-										sanitizedValue = StringPool.BLANK;
-									}
-								}
-								else {
-									sanitizedValue = HtmlUtil.escape(content.getValue());
-								}
-							%>
-
-								<%= sanitizedValue %>
-
-							<%
-							}
-							%>
-
+							<%= rssFeedEntryDisplayContext.getSanitizedContent() %>
 						</div>
 					</div>
 

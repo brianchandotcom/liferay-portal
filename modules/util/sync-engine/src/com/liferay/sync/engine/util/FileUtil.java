@@ -226,7 +226,7 @@ public class FileUtil {
 	}
 
 	public static boolean isValidChecksum(Path filePath) throws IOException {
-		if (!Files.exists(filePath) ||
+		if (Files.notExists(filePath) ||
 			(Files.size(filePath) >
 				PropsValues.SYNC_FILE_CHECKSUM_THRESHOLD_SIZE)) {
 

@@ -153,6 +153,12 @@ public class Watcher implements Runnable {
 					Path childFilePath = parentFilePath.resolve(
 						pathImpl.toString());
 
+					if (OSDetector.isWindows() &&
+						childFilePath.startsWith(_dataFilePath)) {
+
+						continue;
+					}
+
 					if (kind == StandardWatchEventKind.ENTRY_CREATE) {
 						if (isIgnoredFilePath(childFilePath)) {
 							continue;

@@ -295,7 +295,8 @@ public class ConvertDocumentLibraryTest {
 		Assert.assertNotEquals(
 			delete,
 			_sourceStore.hasFile(
-				dlRootFileEntry.getCompanyId(), dlRootFileEntry.getFolderId(),
+				dlRootFileEntry.getCompanyId(),
+				dlRootFileEntry.getDataRepositoryId(),
 				dlRootFileEntry.getName()));
 
 		DLFileEntry dlFolderFileEntry = (DLFileEntry)folderFileEntry.getModel();
@@ -304,7 +305,8 @@ public class ConvertDocumentLibraryTest {
 			delete,
 			_sourceStore.hasFile(
 				dlFolderFileEntry.getCompanyId(),
-				dlFolderFileEntry.getFolderId(), dlFolderFileEntry.getName()));
+				dlFolderFileEntry.getDataRepositoryId(),
+				dlFolderFileEntry.getName()));
 	}
 
 	protected void testMigrateDL(long folderId) throws Exception {

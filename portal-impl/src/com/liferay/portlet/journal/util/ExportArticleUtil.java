@@ -38,9 +38,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -51,100 +51,99 @@ import javax.servlet.http.HttpServletResponse;
 public class ExportArticleUtil extends PortletAction {
 
 	public static void sendFile(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
-		try {
-			long groupId = ParamUtil.getLong(actionRequest, "groupId");
-			String articleId = ParamUtil.getString(actionRequest, "articleId");
+		long groupId = ParamUtil.getLong(portletRequest, "groupId");
+		String articleId = ParamUtil.getString(portletRequest, "articleId");
 
-			String targetExtension = ParamUtil.getString(
-				actionRequest, "targetExtension");
+		String targetExtension = ParamUtil.getString(
+			portletRequest, "targetExtension");
 
-			PortletPreferences portletPreferences =
-				actionRequest.getPreferences();
+		PortletPreferences portletPreferences = portletRequest.getPreferences();
 
-			String[] allowedExtensions = StringUtil.split(
-				portletPreferences.getValue("extensions", null));
+		String[] allowedExtensions = StringUtil.split(
+			portletPreferences.getValue("extensions", null));
 
-			String languageId = LanguageUtil.getLanguageId(actionRequest);
-			PortletRequestModel portletRequestModel = new PortletRequestModel(
-				actionRequest, actionResponse);
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-			HttpServletRequest request = PortalUtil.getHttpServletRequest(
-				actionRequest);
-			HttpServletResponse response = PortalUtil.getHttpServletResponse(
-				actionResponse);
+		String languageId = LanguageUtil.getLanguageId(portletRequest);
+		PortletRequestModel portletRequestModel = new PortletRequestModel(
+			portletRequest, portletResponse);
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			portletRequest);
+		HttpServletResponse response = PortalUtil.getHttpServletResponse(
+			portletResponse);
 
-			JournalArticleDisplay articleDisplay =
-				JournalContentUtil.getDisplay(
-					groupId, articleId, null, "export", languageId, 1,
-					portletRequestModel, themeDisplay);
+		JournalArticleDisplay articleDisplay =
+			JournalContentUtil.getDisplay(
+				groupId, articleId, null, "export", languageId, 1,
+				portletRequestModel, themeDisplay);
 
-			int pages = articleDisplay.getNumberOfPages();
+		int pages = articleDisplay.getNumberOfPages();
 
-			StringBundler sb = new StringBundler(pages + 12);
+		StringBundler sb = new StringBundler(pages + 12);
 
-			sb.append("<html>");
+		sb.append("<html>");
 
-			sb.append("<head>");
-			sb.append("<meta content=\"");
-			sb.append(ContentTypes.TEXT_HTML_UTF8);
-			sb.append("\" http-equiv=\"content-type\" />");
-			sb.append("<base href=\"");
-			sb.append(themeDisplay.getPortalURL());
-			sb.append("\" />");
-			sb.append("</head>");
+		sb.append("<head>");
+		sb.append("<meta content=\"");
+		sb.append(ContentTypes.TEXT_HTML_UTF8);
+		sb.append("\" http-equiv=\"content-type\" />");
+		sb.append("<base href=\"");
+		sb.append(themeDisplay.getPortalURL());
+		sb.append("\" />");
+		sb.append("</head>");
 
-			sb.append("<body>");
+		sb.append("<body>");
+
+		sb.append(articleDisplay.getContent());
+
+		for (int i = 2; i <= pages; i++) {
+			articleDisplay = JournalContentUtil.getDisplay(
+				groupId, articleId, "export", languageId, i, themeDisplay);
 
 			sb.append(articleDisplay.getContent());
+		}
 
-			for (int i = 2; i <= pages; i++) {
-				articleDisplay = JournalContentUtil.getDisplay(
-					groupId, articleId, "export", languageId, i, themeDisplay);
+		sb.append("</body>");
+		sb.append("</html>");
 
-				sb.append(articleDisplay.getContent());
-			}
+		InputStream is = new UnsyncByteArrayInputStream(
+			sb.toString().getBytes(StringPool.UTF8));
 
-			sb.append("</body>");
-			sb.append("</html>");
+		String title = articleDisplay.getTitle();
+		String sourceExtension = "html";
 
-			InputStream is = new UnsyncByteArrayInputStream(
-				sb.toString().getBytes(StringPool.UTF8));
+		String fileName = title.concat(StringPool.PERIOD).concat(
+			sourceExtension);
 
-			String title = articleDisplay.getTitle();
-			String sourceExtension = "html";
+		String contentType = MimeTypesUtil.getContentType(fileName);
 
-			String fileName = title.concat(StringPool.PERIOD).concat(
-				sourceExtension);
-
-			if (Validator.isNotNull(targetExtension) &&
-				ArrayUtil.contains(allowedExtensions, targetExtension)) {
-
-				String id = DLUtil.getTempFileId(
-					articleDisplay.getId(),
-					String.valueOf(articleDisplay.getVersion()), languageId);
-
-				File convertedFile = DocumentConversionUtil.convert(
-					id, is, sourceExtension, targetExtension);
-
-				if (convertedFile != null) {
-					fileName = title.concat(StringPool.PERIOD).concat(
-						targetExtension);
-
-					is = new FileInputStream(convertedFile);
-				}
-			}
-
-			String contentType = MimeTypesUtil.getContentType(fileName);
+		if (Validator.isNull(targetExtension) ||
+			!ArrayUtil.contains(allowedExtensions, targetExtension)) {
 
 			ServletResponseUtil.sendFile(
 				request, response, fileName, is, contentType);
+
+			return;
 		}
-		catch (Exception e) {
+
+		String id = DLUtil.getTempFileId(
+			articleDisplay.getId(), String.valueOf(articleDisplay.getVersion()),
+			languageId);
+
+		File convertedFile = DocumentConversionUtil.convert(
+			id, is, sourceExtension, targetExtension);
+
+		if (convertedFile != null) {
+			fileName = title.concat(StringPool.PERIOD).concat(targetExtension);
+
+			is = new FileInputStream(convertedFile);
 		}
+
+		ServletResponseUtil.sendFile(
+			request, response, fileName, is, contentType);
 	}
 
 }

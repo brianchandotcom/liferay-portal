@@ -15,35 +15,37 @@
 --%>
 
 <%
-RSSFeed rssFeed = new RSSFeed(url, title);
-
 SyndFeed feed = rssFeed.getFeed();
 %>
 
 <c:choose>
-	<c:when test="<%= (Validator.isNotNull(url)) && (feed != null) %>">
+	<c:when test="<%= Validator.isNotNull(rssFeed.getUrl()) && (feed != null) %>">
 		<div class="feed">
-			<c:if test="<%= showFeedTitle %>">
+			<c:if test="<%= rssDisplayContext.isShowFeedTitle() %>">
 				<div class="feed-title">
-					<aui:a cssClass="icon-rss" href="<%= RSSUtil.escapeJavaScriptLink(feedLink) %>" target="_blank"><%= HtmlUtil.escape(title) %></aui:a>
+					<aui:a cssClass="icon-rss" href="<%= RSSUtil.escapeJavaScriptLink(rssFeed.getFeedLink()) %>" target="_blank"><%= HtmlUtil.escape(rssFeed.getTitle()) %></aui:a>
 				</div>
 			</c:if>
 
-			<c:if test="<%= (publishedDate != null) && showFeedPublishedDate %>">
+			<c:if test="<%= (feed.getPublishedDate() != null) && rssDisplayContext.isShowFeedDescription() %>">
 				<div class="feed-date feed-published-date">
-					<aui:a cssClass="icon-calendar" href="<%= RSSUtil.escapeJavaScriptLink(feedLink) %>" target="_blank"><%= dateFormatDateTime.format(publishedDate) %></aui:a>
+					<aui:a cssClass="icon-calendar" href="<%= RSSUtil.escapeJavaScriptLink(rssFeed.getFeedLink()) %>" target="_blank"><%= dateFormatDateTime.format(feed.getPublishedDate()) %></aui:a>
 				</div>
 			</c:if>
 
-			<c:if test="<%= Validator.isNotNull(description) && showFeedDescription %>">
+			<c:if test="<%= Validator.isNotNull(feed.getDescription()) && rssDisplayContext.isShowFeedDescription() %>">
 				<div class="feed-description">
-					<%= HtmlUtil.escape(description) %>
+					<%= HtmlUtil.escape(feed.getDescription()) %>
 				</div>
 			</c:if>
 
-			<c:if test="<%= (feedImage != null) && showFeedImage %>">
-				<div class="feed-image-<%= feedImageAlignment %>">
-					<aui:a href="<%= RSSUtil.escapeJavaScriptLink(feedImageLink) %>" target="_blank" title="<%= HtmlUtil.escapeAttribute(feedImage.getTitle()) %>"><img alt="<%= HtmlUtil.escapeAttribute(feedImage.getDescription()) %>" src="<%= HtmlUtil.escapeHREF(feedImageURL) %>" /></aui:a>
+			<%
+			SyndImage feedImage = feed.getImage();
+			%>
+
+			<c:if test="<%= (feedImage != null) && rssDisplayContext.isShowFeedImage() %>">
+				<div class="feed-image-<%= rssDisplayContext.getFeedImageAlignment() %>">
+					<aui:a href="<%= RSSUtil.escapeJavaScriptLink(rssFeed.getFeedImageLink()) %>" target="_blank" title="<%= HtmlUtil.escapeAttribute(feedImage.getTitle()) %>"><img alt="<%= HtmlUtil.escapeAttribute(feedImage.getDescription()) %>" src="<%= HtmlUtil.escapeHREF(rssFeedDisplayContext.getFeedImageURL()) %>" /></aui:a>
 				</div>
 			</c:if>
 
@@ -52,30 +54,30 @@ SyndFeed feed = rssFeed.getFeed();
 				<%
 				List entries = feed.getEntries();
 
-				for (int j = 0; j < entries.size(); j++) {
+				for (int j = 0; (j < entries.size()) && (j < rssDisplayContext.getEntriesPerFeed()); j++) {
 					SyndEntry entry = (SyndEntry)entries.get(j);
 
 					RSSFeedEntryDisplayContext rssFeedEntryDisplayContext = new RSSFeedEntryDisplayContext(entry, request, rssFeed);
 				%>
 
 					<div class="feed-entry">
-						<i class='entry-expander feed-entry-expander <%= (windowState.equals(WindowState.MAXIMIZED) || (j < expandedEntriesPerFeed)) ? "icon-collapse-alt" : "icon-expand-alt" %>'></i>
+						<i class='entry-expander feed-entry-expander <%= (windowState.equals(WindowState.MAXIMIZED) || (j < rssDisplayContext.getExpandedEntriesPerFeed())) ? "icon-collapse-alt" : "icon-expand-alt" %>'></i>
 
-						<span class="feed-entry-title"><aui:a href="<%= RSSUtil.escapeJavaScriptLink(entryLink) %>" target="_blank"><%= HtmlUtil.escape(entry.getTitle()) %></aui:a></span>
+						<span class="feed-entry-title"><aui:a href="<%= RSSUtil.escapeJavaScriptLink(rssFeedEntryDisplayContext.getEntryLink()) %>" target="_blank"><%= HtmlUtil.escape(entry.getTitle()) %></aui:a></span>
 
-						<div class="feed-entry-content <%= (windowState.equals(WindowState.MAXIMIZED) || (j < expandedEntriesPerFeed)) ? "" : "hide" %>">
+						<div class="feed-entry-content <%= (windowState.equals(WindowState.MAXIMIZED) || (j < rssDisplayContext.getExpandedEntriesPerFeed())) ? "" : "hide" %>">
 							<c:if test="<%= entry.getPublishedDate() != null %>">
 								<div class="feed-date icon-time">
 									<%= dateFormatDateTime.format(entry.getPublishedDate()) %>
 								</div>
 							</c:if>
 
-							<c:if test="<%= showFeedItemAuthor && Validator.isNotNull(author) %>">
-								<span class="feed-entry-author"><%= HtmlUtil.escape(author) %></span>
+							<c:if test="<%= rssDisplayContext.isShowFeedItemAuthor() && Validator.isNotNull(entry.getAuthor()) %>">
+								<span class="feed-entry-author"><%= HtmlUtil.escape(entry.getAuthor()) %></span>
 							</c:if>
 
-							<c:if test="<%= Validator.isNotNull(enclosureLink) %>">
-								<span class="feed-entry-enclosure"><aui:a href="<%= RSSUtil.escapeJavaScriptLink(enclosureLink) %>" target="_blank"><%= HtmlUtil.escape(enclosureLinkTitle) %></aui:a></span>
+							<c:if test="<%= Validator.isNotNull(rssFeedEntryDisplayContext.getEnclosureLink()) %>">
+								<span class="feed-entry-enclosure"><aui:a href="<%= RSSUtil.escapeJavaScriptLink(rssFeedEntryDisplayContext.getEnclosureLink()) %>" target="_blank"><%= HtmlUtil.escape(rssFeedEntryDisplayContext.getEnclosureLinkTitle()) %></aui:a></span>
 							</c:if>
 
 							<%= rssFeedEntryDisplayContext.getSanitizedContent() %>
@@ -83,9 +85,6 @@ SyndFeed feed = rssFeed.getFeed();
 					</div>
 
 				<%
-					if ((j + 1) >= entriesPerFeed) {
-						break;
-					}
 				}
 				%>
 
@@ -98,7 +97,7 @@ SyndFeed feed = rssFeed.getFeed();
 	</c:when>
 	<c:otherwise>
 		<div class="alert alert-danger">
-			<liferay-ui:message arguments="<%= HtmlUtil.escape(urls[i]) %>" key="cannot-be-found" translateArguments="<%= false %>" />
+			<liferay-ui:message arguments="<%= HtmlUtil.escape(rssFeed.getUrl()) %>" key="cannot-be-found" translateArguments="<%= false %>" />
 		</div>
 	</c:otherwise>
 </c:choose>

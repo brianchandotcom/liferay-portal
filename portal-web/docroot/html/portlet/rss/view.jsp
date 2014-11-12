@@ -16,27 +16,17 @@
 
 <%@ include file="/html/portlet/rss/init.jsp" %>
 
-<%
-String url = ParamUtil.getString(request, "url");
-String title = StringPool.BLANK;
-%>
-
 <div id="<portlet:namespace />feedsContainer">
 
 	<%
-	for (int i = 0; i < urls.length; i++) {
-		url = urls[i];
+	List<RSSFeed> rssFeeds = rssDisplayContext.getRSSFeeds();
 
-		if (i < titles.length) {
-			title = titles[i];
-		}
-		else {
-			title = StringPool.BLANK;
-		}
+	for (int i = 0; i < rssFeeds.size(); i++) {
+		RSSFeed rssFeed = rssFeeds.get(i);
 
 		boolean last = false;
 
-		if (i == (urls.length - 1)) {
+		if (i == (rssFeeds.size() - 1)) {
 			last = true;
 		}
 	%>

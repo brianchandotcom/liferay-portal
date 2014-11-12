@@ -101,12 +101,14 @@ String portletURLString = portletURL.toString();
 	}
 
 	function <portlet:namespace />doDeleteUserGroups(userGroupIds) {
-		document.<portlet:namespace />fm.method = 'post';
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.DELETE %>';
-		document.<portlet:namespace />fm.<portlet:namespace />redirect.value = document.<portlet:namespace />fm.<portlet:namespace />userGroupsRedirect.value;
-		document.<portlet:namespace />fm.<portlet:namespace />deleteUserGroupIds.value = userGroupIds;
+		var form = AUI.$(document.<portlet:namespace />fm);
 
-		submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/user_groups_admin/edit_user_group" /></portlet:actionURL>');
+		form.attr('method','post');
+		form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
+		form.fm('redirect').val(form.fm('userGroupsRedirect').val());
+		form.fm('deleteUserGroupIds').val(userGroupIds);
+
+		submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/user_groups_admin/edit_user_group" /></portlet:actionURL>');
 	}
 
 	Liferay.provide(
@@ -117,7 +119,7 @@ String portletURLString = portletURL.toString();
 				'<%= UserGroup.class.getName() %>',
 				Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds')
 			);
-	},
+		},
 		['liferay-util-list-fields']
 	);
 

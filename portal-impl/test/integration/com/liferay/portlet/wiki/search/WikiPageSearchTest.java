@@ -104,7 +104,6 @@ public class WikiPageSearchTest extends BaseSearchTestCase {
 	public void testSearchWithinDDMStructure() throws Exception {
 	}
 
-	@Ignore
 	@Test
 	public void testSpecificFields() throws Exception {
 		WikiPageSearchTestHelper helper = new WikiPageSearchTestHelper();

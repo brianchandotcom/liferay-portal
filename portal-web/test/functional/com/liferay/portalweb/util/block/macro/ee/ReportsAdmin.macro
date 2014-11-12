@@ -26,6 +26,29 @@
 		<execute action="CPReportsadmin#pause" locator1="5000" />
 	</command>
 
+	<command name="addScheduleEntry">
+		<var name="key_reportsDefinitionName" value="${reportsDefinitionName}" />
+
+		<execute action="CPReportsadmin#assertClick" locator-key1="DEFINITIONS_DEFINITION_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPReportsadmin#assertClick" locator-key1="DEFINITIONS_DEFINITION_MENULIST_ADD_SCHEDULE" value1="Add Schedule" />
+
+		<var method="selenium#getValue(//span[@class='lfr-input-time ']/input)" name="time" />
+
+		<execute macro="EventScheduler#scheduleEventTwoMinutesInFutureWithTwelveHourClock">
+			<var name="time" value="${time}" />
+		</execute>
+
+		<execute action="CPReportsadminAddscheduleentry#type" locator-key1="START_DATE_TIME_FIELD" value1="${hours}:${minutesIncremented2} ${ampm}" />
+
+		<execute action="CPReportsadminAddscheduleentry#select" locator-key1="REPORT_FORMAT_SELECT" value1="${reportFormat}" />
+		<execute action="CPReportsadminAddscheduleentry#type" locator-key1="EMAIL_NOTIFICATIONS_FIELD" value1="${emailNotificationsAddress}" />
+		<execute action="CPReportsadminAddscheduleentry#type" locator-key1="EMAIL_RECIPIENT_FIELD" value1="${emailRecipientAddress}" />
+		<execute action="CPReportsadminAddscheduleentry#assertClick" locator-key1="SCHEDULE_BUTTON" value1="Schedule" />
+
+		<execute action="CPReportsadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPReportsadmin#pause" locator1="5000" />
+	</command>
+
 	<command name="configureDeliveryEmail">
 		<execute action="CPReportsadminConfiguration#assertClick" locator-key1="NAVIGATION_DELIVERY_EMAIL" value1="Delivery Email" />
 		<execute action="CPReportsadminConfiguration#type" locator-key1="DELIVERY_EMAIL_SUBJECT_FIELD" value1="${deliverySubject}" />
@@ -150,6 +173,12 @@
 		<execute action="CPReportsadmin#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no entries." />
 	</command>
 
+	<command name="viewNoReportEntryFile">
+		<var name="key_reportsFileName" value="${reportsFileName}" />
+
+		<execute action="CPReportsadminViewreportentry#assertElementNotPresent" locator-key1="ENTRY_FILE_TABLE_FILE" />
+	</command>
+
 	<command name="viewReportEntry">
 		<var name="key_reportsDefinitionName" value="${reportsDefinitionName}" />
 
@@ -185,6 +214,14 @@
 
 		<var name="key_reportsFileName" value="${reportsFileName}" />
 
-		<execute action="CPReportsadminViewreportentry#assertTextEquals" locator-key1="ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
+		<if>
+			<equals arg1="${scheduled}" arg2="true" />
+			<then>
+				<execute action="CPReportsadminViewreportentry#assertTextEquals" locator-key1="ENTRY_FILE_TABLE_SCHEDULED_FILE" value1="${reportsFileName}" />
+			</then>
+			<else>
+				<execute action="CPReportsadminViewreportentry#assertTextEquals" locator-key1="ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
+			</else>
+		</if>
 	</command>
 </definition>

@@ -50,6 +50,56 @@
 		<execute action="CPReportsadmin#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter a valid email address." />
 	</command>
 
+	<command name="AddSchedule" priority="5">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Reports Admin" />
+		</execute>
+
+		<execute macro="ReportsAdmin#gotoDefinitions" />
+
+		<execute macro="ReportsAdmin#addReportDefinition">
+			<var name="dataSource" value="Portal" />
+			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
+			<var name="reportsDefinitionName" value="Reports Definition Name" />
+			<var name="templateFile" value="reports_admin_template_source_sample.jrxml" />
+		</execute>
+
+		<execute macro="ReportsAdmin#addScheduleEntry">
+			<var name="emailNotificationsAddress" value="test@liferay.com" />
+			<var name="emailRecipientAddress" value="test@liferay.com" />
+			<var name="reportFormat" value="pdf" />
+			<var name="reportsDefinitionName" value="Reports Definition Name" />
+		</execute>
+
+		<execute macro="ReportsAdmin#viewReportEntry">
+			<var name="reportsDefinitionName" value="Reports Definition Name" />
+		</execute>
+
+		<execute macro="ReportsAdmin#viewNoReportEntryFile">
+			<var name="reportsFileName" value="reports_admin_template_source_sample" />
+		</execute>
+
+		<execute action="CPReportsadminViewreportentry#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Processing report. This may take several minutes." />
+		<execute action="CPReportsadmin#pause" locator1="120000" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Reports Admin" />
+		</execute>
+
+		<execute macro="ReportsAdmin#viewReportEntry">
+			<var name="reportsDefinitionName" value="Reports Definition Name" />
+		</execute>
+
+		<execute macro="ReportsAdmin#viewReportEntryFields">
+			<var name="dataSource" value="portal" />
+			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
+			<var name="reportsDefinitionName" value="Reports Definition Name" />
+			<var name="reportsFileName" value="reports_admin_template_source_sample" />
+			<var name="scheduled" value="true" />
+			<var name="userName" value="Test Test" />
+		</execute>
+	</command>
+
 	<command name="DeleteReportFile" priority="5">
 		<var name="reportsDefinitionName" value="Reports Definition Name" />
 		<var name="reportsFileName" value="reports_admin_template_source_sample.csv" />
@@ -94,13 +144,13 @@
 			<var name="portletName" value="Reports Admin" />
 		</execute>
 
-		<var name="key_reportsDefinitionName" value="${reportsDefinitionName}" />
+		<execute macro="ReportsAdmin#viewReportEntry">
+			<var name="reportsDefinitionName" value="Reports Definition Name" />
+		</execute>
 
-		<execute action="CPReportsadmin#assertClick" locator-key1="REPORTS_ENTRY_TABLE_DEFINITION_NAME" value1="${reportsDefinitionName}" />
-
-		<var name="key_reportsFileName" value="${reportsFileName}" />
-
-		<execute action="CPReportsadminViewreportentry#assertElementNotPresent" locator-key1="ENTRY_FILE_TABLE_FILE" />
+		<execute macro="ReportsAdmin#viewNoReportEntryFile">
+			<var name="reportsFileName" value="${reportsFileName}" />
+		</execute>
 	</command>
 
 	<command name="DeliverReportToEmail" priority="5">

@@ -12,7 +12,7 @@
 		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
-	<command name="addChildPGViaKBDisplay">
+	<command name="addChildPGViaKBDisplayPG">
 		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_ACTIONS_BUTTON" value1="Actions" />
 		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ACTIONS_MENULIST_ADD_CHILD_ARTICLE" value1="Add Child Article" />
 
@@ -149,7 +149,7 @@
 		<execute action="PGKnowledgebasearticle#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="The selected article no longer exists." />
 	</command>
 
-	<command name="deletePGViaKBDisplay">
+	<command name="deletePGViaKBDisplayPG">
 		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_ACTIONS_BUTTON" value1="Actions" />
 		<execute action="PGKnowledgebasedisplay#assertClickNoError" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
 		<execute action="PGKnowledgebasedisplay#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
@@ -169,7 +169,7 @@
 		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
-	<command name="editKBArticleViaKBDisplay">
+	<command name="editKBArticleViaKBDisplayPG">
 		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_ACTIONS_BUTTON" value1="Actions" />
 		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ACTIONS_MENULIST_EDIT" value1="Edit" />
 
@@ -220,7 +220,13 @@
 		</if>
 	</command>
 
-	<command name="gotoViaKBDisplayHierarchyNavigationPG">
+	<command name="gotoViaKBDisplayPG">
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+
+		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_NAVIGATION" value1="${kbArticleTitle}" />
+	</command>
+
+	<command name="gotoViaKBDisplayPGHierarchyNavigationPG">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<if>
@@ -234,12 +240,6 @@
 				<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_NAVIGATION" value1="${kbArticleTitle}" />
 			</else>
 		</if>
-	</command>
-
-	<command name="gotoViaKBDisplayPG">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-
-		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_NAVIGATION" value1="${kbArticleTitle}" />
 	</command>
 
 	<command name="moveArticleViaKBDisplayPG">
@@ -262,13 +262,15 @@
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute action="PGKnowledgebasedisplaySelectParentArticle#selectFrame" locator-key1="SELECT_PARENT_IFRAME" />
+		<execute action="PGKnowledgebasedisplaySelectParentArticle#assertTextEquals" locator-key1="ARTICLE_TITLE" value1="${kbArticleTitle}" />
 		<execute action="PGKnowledgebasedisplaySelectParentArticle#click" locator-key1="CHOOSE_BUTTON" value1="Choose" />
 		<execute action="PGKnowledgebasedisplaySelectParentArticle#selectFrame" locator-key1="FRAME_HEADER" />
 		<execute action="PGKnowledgebasedisplaySelectParentArticle#click" locator-key1="CLOSE_BUTTON" />
 
 		<execute action="PGKnowledgebasedisplayMoveArticle#click" locator-key1="SAVE_BUTTON" />
 
-		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGKnowledgebasedisplay#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="selectPGViaKBArticle">

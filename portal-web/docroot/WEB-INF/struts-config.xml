@@ -1622,8 +1622,6 @@
 
 		<!-- RSS -->
 
-		<action path="/rss/article" forward="portlet.rss.article" />
-
 		<action path="/rss/view" forward="portlet.rss.view" />
 
 		<!-- Search -->

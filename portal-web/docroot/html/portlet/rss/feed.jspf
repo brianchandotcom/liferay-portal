@@ -231,7 +231,7 @@ catch (Exception e) {
 	</c:when>
 	<c:otherwise>
 		<div class="alert alert-danger">
-			<%= LanguageUtil.format(request, "cannot-be-found", HtmlUtil.escape(urls[i]), false) %>
+			<liferay-ui:message arguments="<%= HtmlUtil.escape(urls[i]) %>" key="cannot-be-found" translateArguments="false" />
 		</div>
 	</c:otherwise>
 </c:choose>

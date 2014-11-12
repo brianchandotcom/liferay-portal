@@ -351,20 +351,16 @@ public class VerifyProperties extends VerifyProcess {
 			"xml.doctype.declaration.allowed",
 			"xml.doctype.declaration.allowed", "com.liferay.xsl.content.web"
 		},
-
 		new String[] {
 			"xml.external.general.entities.allowed",
 			"xml.external.general.entities.allowed",
 			"com.liferay.xsl.content.web"
 		},
-
 		new String[] {
 			"xml.external.parameter.entities.allowed",
 			"xml.external.parameter.entities.allowed",
 			"com.liferay.xsl.content.web"
-
 		},
-
 		new String[] {
 			"xsl.secure.processing.enabled", "xsl.secure.processing.enabled",
 			"com.liferay.xsl.content.web"

@@ -96,7 +96,7 @@ boolean nodeInGroup = false;
 					nodeIdSelect.on(
 						'change',
 						function() {
-							pageSelectorContainer.toggle(nodeIdSelect.val() === nodeIdValue);
+							pageSelectorContainer.toggleClass('hide', nodeIdSelect.val() !== nodeIdValue);
 						}
 					);
 				</aui:script>

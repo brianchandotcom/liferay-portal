@@ -56,7 +56,11 @@ public class WorkflowHandlerInvocationCounter<T> implements AutoCloseable {
 
 		AtomicInteger count = _countMap.get(method);
 
-		return (count == null) ? 0 : count.get();
+		if (count == null) {
+			return 0;
+		}
+
+		return count.get();
 	}
 
 	private WorkflowHandler<T> _createInvocationCounterWorkflowHandler(
@@ -66,7 +70,7 @@ public class WorkflowHandlerInvocationCounter<T> implements AutoCloseable {
 		ClassLoader classLoader = currentThread.getContextClassLoader();
 
 		return (WorkflowHandler<T>)ProxyUtil.newProxyInstance(
-			classLoader, new Class<?>[]{WorkflowHandler.class},
+			classLoader, new Class<?>[] {WorkflowHandler.class},
 			new InvocationHandler() {
 
 				@Override
@@ -77,6 +81,7 @@ public class WorkflowHandlerInvocationCounter<T> implements AutoCloseable {
 
 					if (count == null) {
 						count = new AtomicInteger();
+
 						_countMap.put(method, count);
 					}
 

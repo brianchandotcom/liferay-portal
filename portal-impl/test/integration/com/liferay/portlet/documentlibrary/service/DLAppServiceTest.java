@@ -186,7 +186,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		public void shouldHaveDefaultVersion() throws Exception {
 			String fileName = RandomTestUtil.randomString();
 
-			FileEntry fileEntry = DLAppTestUtil.addFileEntry(
+			FileEntry fileEntry = addFileEntry(
 				group.getGroupId(), parentFolder.getFolderId(), fileName);
 
 			Assert.assertEquals(
@@ -336,7 +336,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			@Override
 			protected void doRun() throws Exception {
 				try {
-					FileEntry fileEntry = DLAppTestUtil.addFileEntry(
+					FileEntry fileEntry = addFileEntry(
 						group.getGroupId(), parentFolder.getFolderId(),
 						"Test-" + _index + ".txt");
 
@@ -517,9 +517,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			AtomicInteger counter = registerDLSyncEventProcessorMessageListener(
 				DLSyncConstants.EVENT_UPDATE);
 
-			FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-				group.getGroupId(), parentFolder.getRepositoryId(),
-				parentFolder.getFolderId());
+			FileEntry fileEntry = addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId());
 
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -762,7 +761,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				registerDLSyncEventProcessorMessageListener(
 					DLSyncConstants.EVENT_DELETE);
 
-			FileEntry fileEntry = DLAppTestUtil.addFileEntry(
+			FileEntry fileEntry = addFileEntry(
 				group.getGroupId(), parentFolder.getFolderId(),
 				RandomTestUtil.randomString());
 
@@ -1013,7 +1012,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		public void shouldIncrementMajorVersion() throws Exception {
 			String fileName = "TestVersion.txt";
 
-			FileEntry fileEntry = DLAppTestUtil.addFileEntry(
+			FileEntry fileEntry = addFileEntry(
 				group.getGroupId(), parentFolder.getFolderId(), fileName);
 
 			fileEntry = updateFileEntry(
@@ -1031,7 +1030,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		public void shouldIncrementMinorVersion() throws Exception {
 			String fileName = "TestVersion.txt";
 
-			FileEntry fileEntry = DLAppTestUtil.addFileEntry(
+			FileEntry fileEntry = addFileEntry(
 				group.getGroupId(), parentFolder.getFolderId(), fileName);
 
 			fileEntry = updateFileEntry(

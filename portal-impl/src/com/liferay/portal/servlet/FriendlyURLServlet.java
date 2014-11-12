@@ -182,16 +182,17 @@ public class FriendlyURLServlet extends HttpServlet {
 	protected String getPathInfo(HttpServletRequest request) {
 		String requestURI = request.getRequestURI();
 
-		String contextPath = request.getContextPath();
-		String pathContext = PortalUtil.getPathContext(request);
-
 		int pos = requestURI.indexOf(Portal.JSESSIONID);
 
 		if (pos != -1) {
 			requestURI = requestURI.substring(0, pos);
 		}
 
+		String pathContext = PortalUtil.getPathContext(request);
+
 		requestURI = pathContext.concat(requestURI);
+
+		String contextPath = request.getContextPath();
 
 		return requestURI.substring(
 			contextPath.length() + _friendlyURLPathPrefix.length());

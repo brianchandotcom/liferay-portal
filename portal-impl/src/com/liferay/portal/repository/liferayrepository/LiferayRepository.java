@@ -26,14 +26,20 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
+import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.service.BaseServiceImpl;
 import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portal.service.RepositoryService;
 import com.liferay.portal.service.ResourceLocalService;
@@ -749,8 +755,8 @@ public class LiferayRepository
 
 	@Override
 	public FileEntry updateFileEntry(
-			long fileEntryId, String sourceFileName, String mimeType,
-			String title, String description, String changeLog,
+			long userId, long fileEntryId, String sourceFileName,
+			String mimeType, String title, String description, String changeLog,
 			boolean majorVersion, File file, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -776,8 +782,8 @@ public class LiferayRepository
 
 	@Override
 	public FileEntry updateFileEntry(
-			long fileEntryId, String sourceFileName, String mimeType,
-			String title, String description, String changeLog,
+			long userId, long fileEntryId, String sourceFileName,
+			String mimeType, String title, String description, String changeLog,
 			boolean majorVersion, InputStream is, long size,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -794,6 +800,44 @@ public class LiferayRepository
 			serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #updateFileEntry(long, long,
+	 *             String, String, String, String, String, boolean,
+	 *             java.io.File, com.liferay.portal.service.ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public FileEntry updateFileEntry(
+			long fileEntryId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog,
+			boolean majorVersion, File file, ServiceContext serviceContext)
+		throws PortalException {
+
+		return updateFileEntry(
+			_getUserId(), fileEntryId, sourceFileName, mimeType, title,
+			description, changeLog, majorVersion, file, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #updateFileEntry(long, long,
+	 *             String, String, String, String, String, boolean,
+	 *             java.io.InputStream, long,
+	 *             com.liferay.portal.service.ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public FileEntry updateFileEntry(
+			long fileEntryId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog,
+			boolean majorVersion, InputStream is, long size,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return updateFileEntry(
+			_getUserId(), fileEntryId, sourceFileName, mimeType, title,
+			description, changeLog, majorVersion, is, size, serviceContext);
 	}
 
 	@Override
@@ -837,6 +881,34 @@ public class LiferayRepository
 
 		return dlFolderService.verifyInheritableLock(
 			toFolderId(folderId), lockUuid);
+	}
+
+	/**
+	 * See {@link com.liferay.portal.service.BaseServiceImpl#getUserId()}
+	 */
+	private long _getUserId() throws PrincipalException {
+		String name = PrincipalThreadLocal.getName();
+
+		if (name == null) {
+			throw new PrincipalException();
+		}
+
+		if (Validator.isNull(name)) {
+			throw new PrincipalException("Principal is null");
+		}
+		else {
+			for (int i = 0; i < BaseServiceImpl.ANONYMOUS_NAMES.length; i++) {
+				if (StringUtil.equalsIgnoreCase(
+						name, BaseServiceImpl.ANONYMOUS_NAMES[i])) {
+
+					throw new PrincipalException(
+						"Principal cannot be " +
+							BaseServiceImpl.ANONYMOUS_NAMES[i]);
+				}
+			}
+		}
+
+		return GetterUtil.getLong(name);
 	}
 
 }

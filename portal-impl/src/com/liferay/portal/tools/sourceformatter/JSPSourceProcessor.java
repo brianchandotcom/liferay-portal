@@ -333,7 +333,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				"while (", ") {\n", ";\n", "\n\n"
 			});
 
-		newContent = fixBackURL(newContent);
+		newContent = fixRedirectBackURL(newContent);
+
 		newContent = fixCompatClassImports(absolutePath, newContent);
 
 		if (_stripJSPImports && !_jspContents.isEmpty()) {
@@ -448,7 +449,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		return newContent;
 	}
 
-	protected String fixBackURL(String content) {
+	protected String fixRedirectBackURL(String content) {
 		Matcher matcher = _redirectBackURLPattern.matcher(content);
 
 		String newContent = content;

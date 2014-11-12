@@ -424,6 +424,10 @@ public class PropsValues {
 
 	public static final int CONTROL_PANEL_NAVIGATION_MAX_SITES = GetterUtil.getInteger(PropsUtil.get(PropsKeys.CONTROL_PANEL_NAVIGATION_MAX_SITES));
 
+	public static final int COUNTER_DATA_CENTER_COUNT = GetterUtil.getInteger(PropsUtil.get(PropsKeys.COUNTER_DATA_CENTER_COUNT), 1);
+
+	public static final int COUNTER_DATA_CENTER_DEPLOYMENT_ID = GetterUtil.getInteger(PropsUtil.get(PropsKeys.COUNTER_DATA_CENTER_DEPLOYMENT_ID));
+
 	public static final int COUNTER_INCREMENT = GetterUtil.getInteger(PropsUtil.get(PropsKeys.COUNTER_INCREMENT));
 
 	public static final String CUSTOM_SQL_FUNCTION_ISNOTNULL = PropsUtil.get(PropsKeys.CUSTOM_SQL_FUNCTION_ISNOTNULL);

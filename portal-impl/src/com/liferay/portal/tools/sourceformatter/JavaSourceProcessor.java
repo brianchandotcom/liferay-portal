@@ -1754,6 +1754,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 								(previousLineLeadingTabCount > 0) &&
 								line.endsWith(StringPool.SEMICOLON) &&
 								!previousLine.contains(
+									StringPool.TAB + "for (") &&
+								!previousLine.contains(
 									StringPool.TAB + "try (")) {
 
 								line = StringUtil.replaceFirst(

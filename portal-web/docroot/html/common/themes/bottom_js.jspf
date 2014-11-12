@@ -196,7 +196,7 @@ if (layout != null) {
 					List<Portlet> companyPortlets = PortletLocalServiceUtil.getPortlets(themeDisplay.getCompanyId());
 
 					for (Portlet portlet : companyPortlets) {
-						if (portlet.isAjaxable() || (portlet.isActive() && portlet.isReady() && !portlet.isUndeployedPortlet() && !portlet.isSinglePageApplication())) {
+						if (portlet.isActive() && portlet.isReady() && !portlet.isUndeployedPortlet() && !portlet.isSinglePageApplication()) {
 					%>
 
 							Liferay.Surface.blacklist.route['<%= portlet.getPortletId() %>'] = true;

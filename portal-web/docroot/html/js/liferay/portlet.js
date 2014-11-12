@@ -591,7 +591,7 @@
 
 				var url = portlet.refreshURL;
 
-				var placeHolder = A.Node.create('<div class="loading-animation" id="p_load' + id + '" />');
+				var placeHolder = A.Node.create('<div class="loading-animation" id="p_p_id' + id + '" />');
 
 				if (data.portletAjaxable && url) {
 					portlet.placeBefore(placeHolder);

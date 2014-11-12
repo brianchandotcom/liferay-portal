@@ -46,12 +46,24 @@
 		<sequential>
 			<fail message="Please set the property ${github.pull.request.number}." unless="github.pull.request.number" />
 
+			<propertyregex
+				input="@{github.post.comment.body}"
+				override="true"
+				property="github.post.comment.body"
+				regexp="&quot;"
+				replace="\\&quot;"
+			/>
+
 			<script classpathref="project.classpath" language="beanshell">
 				<![CDATA[
 					StringBuilder sb = new StringBuilder();
 
 					sb.append("{");
-					sb.append("\"body\":\"@{github.post.comment.body}\"");
+
+					sb.append("\"body\":\"");
+					sb.append(project.getProperty("github.post.comment.body"));
+					sb.append("\"");
+
 					sb.append("}");
 
 					project.setProperty("github.post.data", sb.toString());
@@ -172,9 +184,9 @@
 				String githubJenkinsResultsURL = project.getProperty("github.jenkins.results.url");
 
 				if (githubJenkinsResultsURL != null) {
-					sb.append("<p>Click <a href='");
+					sb.append("<p>Click <a href=\\\"");
 					sb.append(githubJenkinsResultsURL);
-					sb.append("'>here</a> for more information.</p>");
+					sb.append("\\\">here</a> for more information.</p>");
 				}
 
 				sb.append("<h1>");
@@ -199,9 +211,9 @@
 					JSONObject jsonObject = toJSONObject(githubJenkinsFailureURL + "/api/json");
 
 					sb.append("<li>");
-					sb.append("<a href='");
+					sb.append("<a href=\\\"");
 					sb.append(githubJenkinsFailureURL);
-					sb.append("'>");
+					sb.append("\\\">");
 					sb.append(jsonObject.get("className"));
 					sb.append(".");
 					sb.append(jsonObject.get("name"));
@@ -241,9 +253,9 @@
 				String githubJenkinsResultsURL = project.getProperty("github.jenkins.results.url");
 
 				if (githubJenkinsResultsURL != null) {
-					sb.append("<p>Click <a href='");
+					sb.append("<p>Click <a href=\\\"");
 					sb.append(githubJenkinsResultsURL);
-					sb.append("'>here</a> for more information.</p>");
+					sb.append("\\\">here</a> for more information.</p>");
 				}
 
 				project.setProperty("github.post.comment.body", sb.toString());

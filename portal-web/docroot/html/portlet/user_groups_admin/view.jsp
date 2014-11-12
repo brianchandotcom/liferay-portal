@@ -58,8 +58,7 @@ String portletURLString = portletURL.toString();
 
 		<portlet:namespace />getUsersCount(
 			className, ids, status,
-			function(event, id, obj) {
-				var responseData = this.get('responseData');
+			function(responseData, status, xhrObj) {
 				var count = parseInt(responseData);
 
 				if (count > 0) {
@@ -67,8 +66,7 @@ String portletURLString = portletURL.toString();
 
 					<portlet:namespace />getUsersCount(
 						className, ids, status,
-						function(event, id, obj) {
-							responseData = this.get('responseData')
+						function(responseData, status, xhrObj) {
 							count = parseInt(responseData);
 
 							if (count > 0) {
@@ -123,26 +121,17 @@ String portletURLString = portletURL.toString();
 		['liferay-util-list-fields']
 	);
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />getUsersCount',
-		function(className, ids, status, callback) {
-			var A = AUI();
-
-			A.io.request(
-				'<%= themeDisplay.getPathMain() %>/user_groups_admin/get_users_count',
-				{
-					data: {
-						className: className,
-						ids: ids,
-						status: status
-					},
-					on: {
-						success: callback
-					}
-				}
-			);
-		},
-		['aui-io']
-	);
+	function <portlet:namespace />getUsersCount(className, ids, status, callback) {
+		AUI.$.ajax(
+			{
+				url: '<%= themeDisplay.getPathMain() %>/user_groups_admin/get_users_count',
+				data: {
+					className: className,
+					ids: ids,
+					status: status
+				},
+				success: callback
+			}
+		);
+	}
 </aui:script>

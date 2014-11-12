@@ -193,7 +193,7 @@
 
 				String githubJenkinsFailureURLPathsString = project.getProperty("github.jenkins.failure.url.paths");
 
-				String[] githubJenkinsFailureURLPaths = githubJenkinsFailureURLPathsString.split(",");
+				String[] githubJenkinsFailureURLPaths = githubJenkinsFailureURLPathsString.split(" ");
 
 				sb.append(githubJenkinsFailureURLPaths.length);
 				sb.append(" Failure");

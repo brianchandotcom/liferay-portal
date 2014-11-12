@@ -49,6 +49,10 @@ public class SyncSiteService {
 	public static SyncSite activateSyncSite(long syncSiteId, boolean reset) {
 		SyncSite syncSite = fetchSyncSite(syncSiteId);
 
+		if (syncSite.isActive()) {
+			return syncSite;
+		}
+
 		syncSite.setActive(true);
 
 		if (reset) {
@@ -62,6 +66,10 @@ public class SyncSiteService {
 
 	public static SyncSite deactivateSyncSite(long syncSiteId) {
 		SyncSite syncSite = fetchSyncSite(syncSiteId);
+
+		if (!syncSite.isActive()) {
+			return syncSite;
+		}
 
 		return deactivateSyncSite(syncSite);
 	}

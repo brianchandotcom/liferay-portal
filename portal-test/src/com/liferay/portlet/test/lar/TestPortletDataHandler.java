@@ -17,6 +17,7 @@ package com.liferay.portlet.test.lar;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -35,6 +36,7 @@ import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.ReadOnlyException;
 
 /**
  * @author Eudaldo Alonso
@@ -51,7 +53,7 @@ public class TestPortletDataHandler extends BasePortletDataHandler {
 	protected PortletPreferences doDeleteData(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
-		throws Exception {
+		throws ReadOnlyException {
 
 		if (portletPreferences == null) {
 			return portletPreferences;
@@ -67,7 +69,7 @@ public class TestPortletDataHandler extends BasePortletDataHandler {
 	protected PortletPreferences doProcessExportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
-		throws Exception {
+		throws PortletDataException {
 
 		String articleId = portletPreferences.getValue("articleId", null);
 
@@ -99,16 +101,16 @@ public class TestPortletDataHandler extends BasePortletDataHandler {
 			portletDataContext.setScopeGroupId(articleGroupId);
 		}
 
-		JournalArticle article =
+		JournalArticle journalArticle =
 			JournalArticleLocalServiceUtil.fetchLatestArticle(
 				articleGroupId, articleId, WorkflowConstants.STATUS_APPROVED);
 
-		if (article == null) {
-			article = JournalArticleLocalServiceUtil.fetchLatestArticle(
+		if (journalArticle == null) {
+			journalArticle = JournalArticleLocalServiceUtil.fetchLatestArticle(
 				articleGroupId, articleId, WorkflowConstants.STATUS_EXPIRED);
 		}
 
-		if (article == null) {
+		if (journalArticle == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Portlet " + portletId +
@@ -121,7 +123,7 @@ public class TestPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
-			portletDataContext, portletId, article);
+			portletDataContext, portletId, journalArticle);
 
 		portletDataContext.setScopeGroupId(previousScopeGroupId);
 

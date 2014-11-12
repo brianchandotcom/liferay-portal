@@ -268,10 +268,10 @@ public abstract class BasePrototypePropagationTestCase {
 	protected Group group;
 	protected String initialLayoutTemplateId = "2_2_columns";
 	protected JournalArticle journalArticle;
-	protected String portletId;
 	protected Layout layout;
 	protected LayoutPrototype layoutPrototype;
 	protected Layout layoutPrototypeLayout;
+	protected String portletId;
 	protected Layout prototypeLayout;
 
 }

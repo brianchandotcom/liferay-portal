@@ -88,6 +88,11 @@ public abstract class BaseServiceImpl implements BaseService {
 		return UserLocalServiceUtil.getUserById(getUserId());
 	}
 
+	/**
+	 * See {@link
+	 * com.liferay.portal.repository.liferayrepository.LiferayRepository#_getUserId(
+	 * )}
+	 */
 	public long getUserId() throws PrincipalException {
 		String name = PrincipalThreadLocal.getName();
 

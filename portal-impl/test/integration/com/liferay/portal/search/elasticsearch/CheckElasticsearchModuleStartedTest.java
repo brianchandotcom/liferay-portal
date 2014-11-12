@@ -30,24 +30,22 @@ import org.junit.runner.RunWith;
 public class CheckElasticsearchModuleStartedTest {
 
 	@Test
-	public void testElasticsearchIsTheSearchEngine() throws Exception {
+	public void testElasticsearchIsTheSearchEngine() {
 		Registry registry = RegistryUtil.getRegistry();
 
-		SearchEngine searchEngineService = registry.getService(
-			SearchEngine.class);
+		SearchEngine searchEngine = registry.getService(SearchEngine.class);
 
-		Assert.assertNotNull(searchEngineService);
+		Assert.assertNotNull(searchEngine);
 
-		Class<? extends SearchEngine> searchEngineServiceClass =
-			searchEngineService.getClass();
+		Class<? extends SearchEngine> searchEngineClass =
+			searchEngine.getClass();
 
-		String searchEngineServiceClassName =
-			searchEngineServiceClass.getCanonicalName();
+		String searchEngineClassName = searchEngineClass.getName();
 
 		Assert.assertTrue(
 			"The service registered as SearchEngine is " +
-				searchEngineServiceClassName,
-			searchEngineServiceClassName.endsWith("ElasticsearchSearchEngine"));
+				searchEngineClassName,
+			searchEngineClassName.endsWith("ElasticsearchSearchEngine"));
 	}
 
 }

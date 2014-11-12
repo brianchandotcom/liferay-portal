@@ -686,6 +686,17 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</sequential>
 	</macrodef>
 
+	<macrodef name="compile-test-integration">
+		<sequential>
+			<compile-test-cmd
+				test.type="integration"
+			/>
+
+			<ant dir="${project.dir}/portal-service" target="jar" />
+			<ant dir="${project.dir}/portal-impl" target="jar" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="execute">
 		<attribute default="." name="dir" />
 
@@ -1328,9 +1339,7 @@ rerun your task.
 				<available file="test/unit" type="dir" />
 			</or>
 			<then>
-				<compile-test-cmd
-					test.type="integration"
-				/>
+				<compile-test-integration />
 
 				<compile-test-cmd
 					test.type="unit"
@@ -1500,9 +1509,7 @@ rerun your task.
 	</target>
 
 	<target name="test-integration" depends="compile">
-		<compile-test-cmd
-			test.type="integration"
-		/>
+		<compile-test-integration />
 
 		<test-cmd
 			junit.forkmode="once"

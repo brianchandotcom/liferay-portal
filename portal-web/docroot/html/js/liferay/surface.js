@@ -164,6 +164,7 @@ AUI.add(
 
 				var redirect = new A.Url(instance.getRedirect(url.toString()));
 
+				redirect.setParameter('p_p_ajax', false);
 				redirect.setParameter('p_p_isolated', true);
 
 				url.setParameter(namespace + 'redirect', redirect.toString());
@@ -224,6 +225,7 @@ AUI.add(
 				if (redirect) {
 					var url = new A.Url(redirect);
 
+					url.removeParameter('p_p_ajax');
 					url.removeParameter('p_p_isolated');
 
 					A.config.win.history.replaceState(null, title, url.toString());
@@ -369,6 +371,7 @@ AUI.add(
 					},
 					urlParams: {
 						value: {
+							p_p_ajax: false,
 							p_p_isolated: true
 						}
 					}

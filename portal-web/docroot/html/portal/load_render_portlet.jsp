@@ -25,7 +25,9 @@ portletDisplay.setNamespace(PortalUtil.getPortletNamespace(portlet.getPortletId(
 String url = PortletURLUtil.getRefreshURL(request, themeDisplay);
 %>
 
-<div class="loading-animation" id="p_load<%= portletDisplay.getNamespace() %>"></div>
+<div class="loading-animation" id="p_p_id<%= portletDisplay.getNamespace() %>">
+	<div id="p_p_id<%= portletDisplay.getNamespace() %>-defaultScreen"></div>
+</div>
 
 <aui:script use="aui-base">
 	var ns = '<%= portletDisplay.getNamespace() %>';
@@ -35,7 +37,7 @@ String url = PortletURLUtil.getRefreshURL(request, themeDisplay);
 			onComplete: function(portlet, portletId) {
 				portlet.refreshURL = '<%= HtmlUtil.escapeJS(url) %>';
 			},
-			placeHolder: A.one('#p_load' + ns),
+			placeHolder: A.one('#p_p_id' + ns),
 			url: '<%= HtmlUtil.escapeJS(url) %>'
 		}
 	);

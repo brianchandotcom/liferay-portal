@@ -70,17 +70,13 @@ public class LayoutsAdminDisplayContext {
 		_themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String portletName = getPortletName();
-
 		if (Validator.isNull(tabs1)) {
 			tabs1 = "public-pages";
 
-			if (!portletName.equals(PortletKeys.GROUP_PAGES)) {
-				LayoutSet layoutSet = _themeDisplay.getLayoutSet();
+			LayoutSet layoutSet = _themeDisplay.getLayoutSet();
 
-				if (layoutSet.isPrivateLayout()) {
-					tabs1 = "private-pages";
-				}
+			if (layoutSet.isPrivateLayout()) {
+				tabs1 = "private-pages";
 			}
 		}
 
@@ -111,6 +107,8 @@ public class LayoutsAdminDisplayContext {
 
 		_privateLayout = privateLayout;
 		_tabs1 = tabs1;
+
+		String portletName = getPortletName();
 
 		if (portletName.equals(PortletKeys.LAYOUTS_ADMIN) ||
 			portletName.equals(PortletKeys.MY_ACCOUNT)) {

@@ -1650,6 +1650,11 @@ public class JournalArticleLocalServiceWrapper
 		return _journalArticleLocalService.getBeanIdentifier();
 	}
 
+	@Override
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getByNoPermissions() {
+		return _journalArticleLocalService.getByNoPermissions();
+	}
+
 	/**
 	* Returns an ordered range of all the web content articles matching the
 	* company and workflow status.
@@ -2071,6 +2076,11 @@ public class JournalArticleLocalServiceWrapper
 		int status) throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalArticleLocalService.getLatestVersion(groupId, articleId,
 			status);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getNoAssetArticles() {
+		return _journalArticleLocalService.getNoAssetArticles();
 	}
 
 	/**

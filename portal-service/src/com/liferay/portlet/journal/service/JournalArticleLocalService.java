@@ -1420,6 +1420,9 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	*/
 	public java.lang.String getBeanIdentifier();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getByNoPermissions();
+
 	/**
 	* Returns an ordered range of all the web content articles matching the
 	* company and workflow status.
@@ -1782,6 +1785,9 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public double getLatestVersion(long groupId, java.lang.String articleId,
 		int status) throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getNoAssetArticles();
 
 	/**
 	* Returns the number of web content articles that are not recycled.

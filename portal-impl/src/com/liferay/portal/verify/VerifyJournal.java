@@ -18,6 +18,9 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -41,7 +44,6 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalArticleResource;
@@ -79,7 +81,9 @@ public class VerifyJournal extends VerifyProcess {
 		verifyCreateDate();
 		updateFolderAssets();
 		verifyOracleNewLine();
-		verifyPermissionsAndAssets();
+		verifyAssets();
+		verifyResourcePrimKey();
+		verifyPermissions();
 		verifySearch();
 		verifyTree();
 		verifyURLTitle();
@@ -202,6 +206,84 @@ public class VerifyJournal extends VerifyProcess {
 		}
 		finally {
 			DataAccess.cleanUp(con, ps);
+		}
+	}
+
+	protected void verifyAssets() throws PortalException {
+		List<JournalArticle> journalArticles =
+			JournalArticleLocalServiceUtil.getNoAssetArticles();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Processing " + journalArticles.size() +
+					" articles with no asset");
+		}
+
+		for (JournalArticle journalArticle : journalArticles) {
+			try {
+				JournalArticleLocalServiceUtil.updateAsset(
+					journalArticle.getUserId(), journalArticle, null, null,
+					null);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to update asset for article " +
+							journalArticle.getId() + ": " + e.getMessage());
+				}
+			}
+		}
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			JournalArticleLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Property status = PropertyFactoryUtil.forName("status");
+					dynamicQuery.add(status.eq(WorkflowConstants.STATUS_DRAFT));
+
+					Property version = PropertyFactoryUtil.forName("version");
+					dynamicQuery.add(
+						version.eq(JournalArticleConstants.VERSION_DEFAULT));
+				}
+			}
+		);
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
+
+				@Override
+				public void performAction(Object object)
+					throws PortalException {
+
+					JournalArticle article = (JournalArticle)object;
+
+					AssetEntry assetEntry =
+						AssetEntryLocalServiceUtil.fetchEntry(
+							JournalArticle.class.getName(),
+							article.getResourcePrimKey());
+
+					AssetEntryLocalServiceUtil.updateEntry(
+						assetEntry.getClassName(), assetEntry.getClassPK(),
+						null, assetEntry.isVisible());
+				}
+			});
+
+		long count = actionableDynamicQuery.performCount();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Processing " + count +
+					" default article versions in draft mode");
+		}
+
+		actionableDynamicQuery.performActions();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Assets verified for articles");
 		}
 	}
 
@@ -400,9 +482,34 @@ public class VerifyJournal extends VerifyProcess {
 		}
 	}
 
-	protected void verifyPermissionsAndAssets() throws Exception {
+	protected void verifyPermissions() throws PortalException {
+		List<JournalArticle> journalArticles =
+			JournalArticleLocalServiceUtil.getByNoPermissions();
+
+		for (JournalArticle journalArticle : journalArticles) {
+			ResourceLocalServiceUtil.addResources(
+				journalArticle.getCompanyId(), 0, 0,
+				JournalArticle.class.getName(),
+				journalArticle.getResourcePrimKey(), false, false, false);
+		}
+	}
+
+	protected void verifyResourcePrimKey() throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
 			JournalArticleLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Property resourcePrimKey = PropertyFactoryUtil.forName(
+						"resourcePrimKey");
+
+					dynamicQuery.add(resourcePrimKey.le(0));
+				}
+			}
+		);
 
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod() {
@@ -413,82 +520,24 @@ public class VerifyJournal extends VerifyProcess {
 
 					JournalArticle article = (JournalArticle)object;
 
-					verifyPermissionsAndAssets(article);
-				}
+					long groupId = article.getGroupId();
+					String articleId = article.getArticleId();
+					double version = article.getVersion();
 
+					JournalArticleLocalServiceUtil.checkArticleResourcePrimKey(
+						groupId, articleId, version);
+				}
 			});
 
-		actionableDynamicQuery.performActions();
+		long count = actionableDynamicQuery.performCount();
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Permissions and assets verified for articles");
-		}
-	}
-
-	protected void verifyPermissionsAndAssets(JournalArticle article)
-		throws PortalException {
-
-		long groupId = article.getGroupId();
-		String articleId = article.getArticleId();
-		double version = article.getVersion();
-
-		if (article.getResourcePrimKey() <= 0) {
-			article =
-				JournalArticleLocalServiceUtil.checkArticleResourcePrimKey(
-					groupId, articleId, version);
+			_log.debug(
+				"Processing " + count +
+					" default article versions in draft mode");
 		}
 
-		ResourceLocalServiceUtil.addResources(
-			article.getCompanyId(), 0, 0, JournalArticle.class.getName(),
-			article.getResourcePrimKey(), false, false, false);
-
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			JournalArticle.class.getName(), article.getResourcePrimKey());
-
-		if (assetEntry == null) {
-			try {
-				JournalArticleLocalServiceUtil.updateAsset(
-					article.getUserId(), article, null, null, null);
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to update asset for article " +
-							article.getId() + ": " + e.getMessage());
-				}
-			}
-		}
-		else if ((article.getStatus() ==
-					WorkflowConstants.STATUS_DRAFT) &&
-				 (article.getVersion() ==
-					JournalArticleConstants.VERSION_DEFAULT)) {
-
-			AssetEntryLocalServiceUtil.updateEntry(
-				assetEntry.getClassName(), assetEntry.getClassPK(), null,
-				assetEntry.isVisible());
-		}
-
-		try {
-			JournalArticleLocalServiceUtil.checkStructure(
-				groupId, articleId, version);
-		}
-		catch (NoSuchStructureException nsse) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Removing reference to missing structure for article " +
-						article.getId());
-			}
-
-			article.setDDMStructureKey(StringPool.BLANK);
-			article.setDDMTemplateKey(StringPool.BLANK);
-
-			JournalArticleLocalServiceUtil.updateJournalArticle(article);
-		}
-		catch (Exception e) {
-			_log.error(
-				"Unable to check the structure for article " + article.getId(),
-				e);
-		}
+		actionableDynamicQuery.performActions();
 	}
 
 	protected void verifySearch() throws Exception {

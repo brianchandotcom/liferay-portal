@@ -69,6 +69,14 @@ public class CheckboxParametersPortletFilter
 				dynamicActionRequest.setParameter(
 					checkboxName, Boolean.FALSE.toString());
 			}
+			else {
+				String value = dynamicActionRequest.getParameter(checkboxName);
+
+				if (Validator.equals(value, "on")) {
+					dynamicActionRequest.setParameter(
+						checkboxName, Boolean.TRUE.toString());
+				}
+			}
 		}
 
 		filterChain.doFilter(dynamicActionRequest, actionResponse);
@@ -98,6 +106,15 @@ public class CheckboxParametersPortletFilter
 			if (!parameterNames.contains(checkboxName)) {
 				dynamicResourceRequest.setParameter(
 					checkboxName, Boolean.FALSE.toString());
+			}
+			else {
+				String value = dynamicResourceRequest.getParameter(
+					checkboxName);
+
+				if (Validator.equals(value, "on")) {
+					dynamicResourceRequest.setParameter(
+						checkboxName, Boolean.TRUE.toString());
+				}
 			}
 		}
 

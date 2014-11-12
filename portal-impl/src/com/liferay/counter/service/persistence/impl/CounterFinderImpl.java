@@ -19,6 +19,7 @@ import com.liferay.counter.model.CounterHolder;
 import com.liferay.counter.model.CounterRegister;
 import com.liferay.counter.model.impl.CounterImpl;
 import com.liferay.counter.service.persistence.CounterFinder;
+import com.liferay.counter.service.util.MultiDataCenterCounterIncrementer;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.concurrent.CompeteLatch;
@@ -59,6 +60,15 @@ public class CounterFinderImpl
 	@Override
 	public void afterPropertiesSet() {
 		CacheRegistryUtil.register(this);
+
+		if (PropsValues.COUNTER_DATA_CENTER_COUNT > 1) {
+			_multiDataCenterCounterIncrementer.initialize(
+				PropsValues.COUNTER_DATA_CENTER_COUNT,
+				PropsValues.COUNTER_DATA_CENTER_DEPLOYMENT_ID);
+		}
+		else {
+			_multiDataCenterCounterIncrementer = null;
+		}
 	}
 
 	@Override
@@ -113,7 +123,15 @@ public class CounterFinderImpl
 
 		CounterRegister counterRegister = getCounterRegister(name);
 
-		return _competeIncrement(counterRegister, size);
+		long value = _competeIncrement(counterRegister, size);
+
+		if (_multiDataCenterCounterIncrementer == null) {
+			return value;
+		}
+		else {
+			return _multiDataCenterCounterIncrementer.getMultiClusterSafeValue(
+				value);
+		}
 	}
 
 	@Override
@@ -195,6 +213,12 @@ public class CounterFinderImpl
 		CounterRegister counterRegister = createCounterRegister(name, size);
 
 		_counterRegisterMap.put(name, counterRegister);
+	}
+
+	public void setMultiDataCenterCounterIncrementer(
+		MultiDataCenterCounterIncrementer multiDataCenterCounterIncrementer) {
+
+		_multiDataCenterCounterIncrementer = multiDataCenterCounterIncrementer;
 	}
 
 	protected CounterRegister createCounterRegister(String name) {
@@ -428,6 +452,8 @@ public class CounterFinderImpl
 
 	private final Map<String, CounterRegister> _counterRegisterMap =
 		new ConcurrentHashMap<String, CounterRegister>();
+	private MultiDataCenterCounterIncrementer
+		_multiDataCenterCounterIncrementer;
 	private final Map<String, Integer> _rangeSizeMap =
 		new ConcurrentHashMap<String, Integer>();
 

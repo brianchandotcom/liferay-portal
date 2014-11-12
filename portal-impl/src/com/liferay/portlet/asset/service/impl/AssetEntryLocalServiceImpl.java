@@ -575,12 +575,9 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 			entry.setCreateDate(createDate);
 
-			entry.setModifiedDate(modifiedDate);
 			entry.setClassNameId(classNameId);
 			entry.setClassPK(classPK);
 			entry.setClassUuid(classUuid);
-			entry.setVisible(visible);
-			entry.setExpirationDate(expirationDate);
 
 			if (priority == null) {
 				entry.setPriority(0);

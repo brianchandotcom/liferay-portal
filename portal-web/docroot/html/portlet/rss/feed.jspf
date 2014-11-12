@@ -116,17 +116,6 @@ catch (Exception e) {
 
 					String author = entry.getAuthor();
 
-					SyndContent content = entry.getDescription();
-
-					List contents = new ArrayList();
-
-					if (content == null) {
-						contents = entry.getContents();
-					}
-					else {
-						contents.add(content);
-					}
-
 					List<SyndEnclosure> enclosures = (List<SyndEnclosure>)entry.getEnclosures();
 
 					String enclosureLink = StringPool.BLANK;

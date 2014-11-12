@@ -30,6 +30,7 @@ import com.liferay.util.RSSUtil;
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndFeed;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -85,6 +86,20 @@ public class RSSFeedEntryDisplayContext {
 		}
 
 		return sb.toString();
+	}
+
+	protected List<SyndContent> getContents() {
+		SyndContent content = _entry.getDescription();
+
+		if (Validator.isNull(content)) {
+			return _entry.getContents();
+		}
+
+		List<SyndContent> contents = new ArrayList<SyndContent>();
+
+		contents.add(content);
+
+		return contents;
 	}
 
 }

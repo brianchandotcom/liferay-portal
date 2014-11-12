@@ -761,11 +761,6 @@
 			<bean class="com.liferay.portal.service.permission.RolePermissionImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.service.permission.SubscriptionPermissionUtil" class="com.liferay.portal.service.permission.SubscriptionPermissionUtil">
-		<property name="subscriptionPermission">
-			<bean class="com.liferay.portal.service.permission.SubscriptionPermissionImpl" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portal.service.permission.TeamPermissionUtil" class="com.liferay.portal.service.permission.TeamPermissionUtil">
 		<property name="teamPermission">
 			<bean class="com.liferay.portal.service.permission.TeamPermissionImpl" />

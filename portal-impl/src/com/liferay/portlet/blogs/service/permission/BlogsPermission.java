@@ -17,11 +17,9 @@ package com.liferay.portlet.blogs.service.permission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourcePermissionChecker;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
 
 /**
@@ -49,23 +47,16 @@ public class BlogsPermission implements ResourcePermissionChecker {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		Group group = GroupLocalServiceUtil.fetchGroup(classPK);
-
-		if (group == null) {
-			return BlogsEntryPermission.contains(
-				permissionChecker, classPK, actionId);
-		}
-
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, group.getGroupId(), RESOURCE_NAME,
-			group.getGroupId(), PortletKeys.BLOGS, actionId);
+			permissionChecker, classPK, RESOURCE_NAME, classPK,
+			PortletKeys.BLOGS, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();
 		}
 
 		return permissionChecker.hasPermission(
-			classPK, RESOURCE_NAME, group.getGroupId(), actionId);
+			classPK, RESOURCE_NAME, classPK, actionId);
 	}
 
 	@Override

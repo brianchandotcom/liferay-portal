@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.mail.Account;
 import com.liferay.portal.kernel.mail.SMTPAccount;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.util.SubscriptionSender;
+import com.liferay.portal.util.GroupSubscriptionCheckSubscriptionSender;
 import com.liferay.portlet.messageboards.NoSuchMailingListException;
 import com.liferay.portlet.messageboards.model.MBMailingList;
 import com.liferay.portlet.messageboards.service.MBMailingListLocalServiceUtil;
@@ -28,7 +28,12 @@ import com.liferay.portlet.messageboards.service.MBMailingListLocalServiceUtil;
  * @author Brian Wing Shun Chan
  * @author Thiago Moreira
  */
-public class MBSubscriptionSender extends SubscriptionSender {
+public class MBSubscriptionSender
+	extends GroupSubscriptionCheckSubscriptionSender {
+
+	public MBSubscriptionSender(String resourceName) {
+		super(resourceName);
+	}
 
 	public void addMailingListSubscriber(long groupId, long categoryId)
 		throws PortalException {

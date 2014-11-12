@@ -449,17 +449,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String fixBackURL(String content) {
-		String backURLPatternGroup =
-			"(String backURL = " +
-				"ParamUtil\\.getString\\(request, \"backURL\", redirect\\);)";
-		String redirectPatternGroup =
-			"(String redirect = " +
-				"ParamUtil\\.getString\\(request, \"redirect\".*\\);)";
-
-		Pattern pattern = Pattern.compile(
-			redirectPatternGroup + "\n" + backURLPatternGroup);
-
-		Matcher matcher = pattern.matcher(content);
+		Matcher matcher = _redirectBackURLPattern.matcher(content);
 
 		String newContent = content;
 
@@ -1328,6 +1318,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"(<.*\n*page.import=\".*>\n*)+", Pattern.MULTILINE);
 	private Pattern _jspIncludeFilePattern = Pattern.compile("/.*[.]jsp[f]?");
 	private boolean _moveFrequentlyUsedImportsToCommonInit;
+	private Pattern _redirectBackURLPattern = Pattern.compile(
+		"(String redirect = ParamUtil\\.getString\\(request, \"redirect\".*" +
+			"\\);)\n(String backURL = ParamUtil\\.getString\\(request, \"" +
+				"backURL\", redirect\\);)");
 	private boolean _stripJSPImports = true;
 	private Pattern _taglibLanguageKeyPattern1 = Pattern.compile(
 		"(?:confirmation|label|(?:M|m)essage|message key|names|title)=\"[^A-Z" +

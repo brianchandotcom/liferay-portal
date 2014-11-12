@@ -566,7 +566,16 @@
 				<execute action="SOSite#assertTextEquals" locator-key1="NAVIGATION_WIKI" value1="Wiki" />
 				<execute action="SOSite#click" locator-key1="NAVIGATION_MEMBERS" value1="Members" />
 
-				<execute action="SOMembersPortlet#assertTextEquals" locator-key1="MEMBERS_LINK_ALL" value1="View all 1 users." />
+				<if>
+					<isset var="numberOfMembers" />
+					<then>
+						<execute action="SOMembersPortlet#assertTextEquals" locator-key1="MEMBERS_LINK_ALL" value1="View all ${numberOfMembers} users." />
+					</then>
+					<else>
+						<execute action="SOMembersPortlet#assertTextEquals" locator-key1="MEMBERS_LINK_ALL" value1="View all 1 users." />
+					</else>
+				</if>
+
 				<execute action="SOMembersPortlet#type" locator-key1="MEMBERS_LIST_SEARCH" value1="${userEmailAddress}" />
 				<execute action="SOMembersPortlet#assertTextEquals" locator-key1="MEMBERS_LIST_EMPTY" value1="There are no results." />
 				<execute action="SOMembersPortlet#assertTextNotPresent" value1="${userListName}" />

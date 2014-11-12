@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -87,7 +88,9 @@ public class ConvertDocumentLibrary extends BaseConvertProcess {
 			}
 		}
 
-		return new String[] {sb.toString()};
+		return new String[] {
+			sb.toString(), "delete-files-from-previous-repository=checkbox"
+		};
 	}
 
 	@Override
@@ -150,6 +153,12 @@ public class ConvertDocumentLibrary extends BaseConvertProcess {
 
 			throw new FileSystemStoreRootDirException();
 		}
+	}
+
+	protected boolean deleteFilesFromSourceStore() {
+		String[] values = getParameterValues();
+
+		return GetterUtil.getBoolean(values[1]);
 	}
 
 	@Override
@@ -267,6 +276,11 @@ public class ConvertDocumentLibrary extends BaseConvertProcess {
 			else {
 				_targetStore.updateFile(
 					companyId, repositoryId, fileName, versionNumber, is);
+			}
+
+			if (deleteFilesFromSourceStore()) {
+				_sourceStore.deleteFile(
+					companyId, repositoryId, fileName, versionNumber);
 			}
 		}
 		catch (Exception e) {

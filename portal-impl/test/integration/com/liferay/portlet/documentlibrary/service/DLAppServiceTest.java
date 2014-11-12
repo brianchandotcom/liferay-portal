@@ -457,6 +457,11 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				FileEntry fileEntry = addFileEntry(
 					group.getGroupId(), parentFolder.getFolderId());
 
+				Assert.assertEquals(
+					1,
+					invocationCounter.getCount(
+						"updateStatus", int.class, Map.class));
+
 				ServiceContext serviceContext =
 					ServiceContextTestUtil.getServiceContext(
 						group.getGroupId());
@@ -464,9 +469,19 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				DLAppServiceUtil.checkOutFileEntry(
 					fileEntry.getFileEntryId(), serviceContext);
 
+				Assert.assertEquals(
+					1,
+					invocationCounter.getCount(
+						"updateStatus", int.class, Map.class));
+
 				updateFileEntry(
 					group.getGroupId(), fileEntry.getFileEntryId(),
 					RandomTestUtil.randomString(), true);
+
+				Assert.assertEquals(
+					1,
+					invocationCounter.getCount(
+						"updateStatus", int.class, Map.class));
 
 				DLAppServiceUtil.checkInFileEntry(
 					fileEntry.getFileEntryId(), false,
@@ -475,8 +490,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				Assert.assertEquals(
 					2,
 					invocationCounter.getCount(
-						"updateStatus", int.class, Map.class)
-				);
+						"updateStatus", int.class, Map.class));
 			}
 		}
 
@@ -556,6 +570,11 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 					serviceContext);
 
 				addFileEntry(group.getGroupId(), folder.getFolderId());
+
+				Assert.assertEquals(
+					1,
+					invocationCounter.getCount(
+						"updateStatus", int.class, Map.class));
 
 				DLAppServiceUtil.copyFolder(
 					folder.getRepositoryId(), folder.getFolderId(),
@@ -827,11 +846,21 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				FileEntry fileEntry = addFileEntry(
 					group.getGroupId(), parentFolder.getFolderId());
 
+				Assert.assertEquals(
+					1,
+					invocationCounter.getCount(
+						"updateStatus", int.class, Map.class));
+
 				String version = fileEntry.getVersion();
 
 				updateFileEntry(
 					group.getGroupId(), fileEntry.getFileEntryId(),
 					RandomTestUtil.randomString(), true);
+
+				Assert.assertEquals(
+					2,
+					invocationCounter.getCount(
+						"updateStatus", int.class, Map.class));
 
 				ServiceContext serviceContext =
 					ServiceContextTestUtil.getServiceContext(
@@ -981,6 +1010,11 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 				FileEntry fileEntry = addFileEntry(
 					group.getGroupId(), parentFolder.getFolderId());
+
+				Assert.assertEquals(
+					1,
+					invocationCounter.getCount(
+						"updateStatus", int.class, Map.class));
 
 				updateFileEntry(
 					group.getGroupId(), fileEntry.getFileEntryId(),

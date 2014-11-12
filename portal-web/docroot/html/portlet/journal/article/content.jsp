@@ -41,7 +41,7 @@ if (article != null) {
 	}
 }
 
-Locale[] availableLocales = new Locale[0];
+Locale[] availableLocales = new Locale[] {LocaleUtil.fromLanguageId(defaultLanguageId)};
 
 if (ddmFields != null) {
 	Set<Locale> availableLocalesSet = ddmFields.getAvailableLocales();

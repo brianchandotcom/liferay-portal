@@ -17,9 +17,11 @@ package com.liferay.portlet.dynamicdatamapping.util;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.dynamicdatamapping.BaseDDMTestCase;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldType;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
@@ -123,6 +125,55 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 		finally {
 			captureHandler.close();
 		}
+	}
+
+	@Test
+	public void testConversionWithEmptyField() throws Exception {
+		DDMForm ddmForm = createDDMForm(
+			createAvailableLocales(LocaleUtil.BRAZIL, LocaleUtil.US),
+			LocaleUtil.US);
+
+		DDMFormField ddmFormField = new DDMFormField(
+			"Integer", DDMFormFieldType.INTEGER);
+
+		ddmFormField.setDataType("integer");
+
+		LocalizedValue label = new LocalizedValue(LocaleUtil.US);
+
+		label.addString(LocaleUtil.BRAZIL, "Inteiro");
+		label.addString(LocaleUtil.US, "Integer");
+
+		ddmFormField.setLabel(label);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMStructure ddmStructure = createStructure("Test Structure", ddmForm);
+
+		DDMFormValues ddmFormValues = createDDMFormValues(
+			ddmForm, _availableLocales, LocaleUtil.US);
+
+		DDMFormFieldValue integerDDMFormFieldValue = createDDMFormFieldValue(
+			"rztm", "Integer",
+			createLocalizedValue(
+				StringPool.BLANK, StringPool.BLANK, LocaleUtil.US));
+
+		ddmFormValues.addDDMFormFieldValue(integerDDMFormFieldValue);
+
+		Fields fields = DDMFormValuesToFieldsConverterUtil.convert(
+			ddmStructure, ddmFormValues);
+
+		Assert.assertNotNull(fields);
+
+		Field integerField = fields.get("Integer");
+
+		testField(
+			integerField, createValuesList(""), createValuesList(""),
+			_availableLocales, LocaleUtil.US);
+
+		Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
+
+		Assert.assertEquals(
+			"Integer_INSTANCE_rztm", fieldsDisplayField.getValue());
 	}
 
 	@Test

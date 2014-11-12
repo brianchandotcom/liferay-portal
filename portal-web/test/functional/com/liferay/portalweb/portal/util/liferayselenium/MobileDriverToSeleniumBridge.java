@@ -18,6 +18,8 @@ import com.thoughtworks.selenium.Selenium;
 
 import io.appium.java_client.MobileDriver;
 
+import java.io.IOException;
+
 import java.util.List;
 
 import org.openqa.selenium.WebElement;
@@ -136,8 +138,8 @@ public class MobileDriverToSeleniumBridge
 			webElement.click();
 		}
 		catch (Exception e) {
-			if (!webElement.isDisplayed()) {
-				scrollWebElementIntoView(webElement);
+			if (!isInViewport(locator)) {
+				swipeWebElementIntoView(locator);
 			}
 
 			webElement.click();
@@ -452,8 +454,8 @@ public class MobileDriverToSeleniumBridge
 	public String getText(String locator, String timeout) {
 		WebElement webElement = getWebElement(locator, timeout);
 
-		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webElement);
+		if (!isInViewport(locator)) {
+			swipeWebElementIntoView(locator);
 		}
 
 		String text = webElement.getText();
@@ -541,6 +543,25 @@ public class MobileDriverToSeleniumBridge
 		return WebDriverHelper.isElementPresent(this, locator);
 	}
 
+	public boolean isInViewport(String locator) {
+		int elementPositionCenterY = WebDriverHelper.getElementPositionCenterY(
+			this, locator);
+
+		int viewportPositionBottom = WebDriverHelper.getViewportPositionBottom(
+			this);
+
+		int viewportPositionTop = WebDriverHelper.getScrollOffsetY(this);
+
+		if ((elementPositionCenterY >= viewportPositionBottom) ||
+			(elementPositionCenterY <= viewportPositionTop)) {
+
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+
 	@Override
 	public boolean isOrdered(String locator1, String locator2) {
 		throw new UnsupportedOperationException();
@@ -566,10 +587,15 @@ public class MobileDriverToSeleniumBridge
 		WebElement webElement = getWebElement(locator, "1");
 
 		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webElement);
+			return webElement.isDisplayed();
 		}
+		else {
+			if (!isInViewport(locator)) {
+				swipeWebElementIntoView(locator);
+			}
 
-		return webElement.isDisplayed();
+			return isInViewport(locator);
+		}
 	}
 
 	@Override
@@ -904,8 +930,44 @@ public class MobileDriverToSeleniumBridge
 		return WebDriverHelper.getWebElements(this, locator, timeout);
 	}
 
-	protected void scrollWebElementIntoView(WebElement webElement) {
-		WebDriverHelper.scrollWebElementIntoView(this, webElement);
+	protected void swipeWebElementIntoView(String locator) {
+		int elementPositionCenterY = WebDriverHelper.getElementPositionCenterY(
+			this, locator);
+
+		for (int i = 0; i < 25; i++) {
+			int viewportPositionBottom =
+				WebDriverHelper.getViewportPositionBottom(this);
+
+			int viewportPositionTop = WebDriverHelper.getScrollOffsetY(this);
+
+			if (elementPositionCenterY >= viewportPositionBottom) {
+				try {
+					Process p = Runtime.getRuntime().exec(
+						"adb -s emulator-5554 shell /data/local/swipe_up.sh");
+				}
+				catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			else if (elementPositionCenterY <= viewportPositionTop ) {
+				try {
+					Process p = Runtime.getRuntime().exec(
+						"adb -s emulator-5554 shell /data/local/swipe_down.sh");
+				}
+				catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			else {
+				break;
+			}
+
+			try {
+				LiferaySeleniumHelper.pause("1000");
+			}
+			catch (Exception e) {
+			}
+		}
 	}
 
 }

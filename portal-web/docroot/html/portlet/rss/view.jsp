@@ -21,7 +21,6 @@ String url = ParamUtil.getString(request, "url");
 String title = StringPool.BLANK;
 %>
 
-
 <div id="<portlet:namespace />feedsContainer">
 
 	<%

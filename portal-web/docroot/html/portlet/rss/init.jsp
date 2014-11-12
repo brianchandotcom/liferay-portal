@@ -28,8 +28,6 @@ page import="com.sun.syndication.feed.synd.SyndFeed" %><%@
 page import="com.sun.syndication.feed.synd.SyndImage" %>
 
 <%
-String portletResource = ParamUtil.getString(request, "portletResource");
-
 String[] urls = portletPreferences.getValues("urls", new String[0]);
 String[] titles = portletPreferences.getValues("titles", new String[0]);
 int entriesPerFeed = GetterUtil.getInteger(portletPreferences.getValue("entriesPerFeed", "8"));

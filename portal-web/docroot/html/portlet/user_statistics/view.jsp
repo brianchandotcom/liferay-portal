@@ -101,21 +101,19 @@ if (!rankingNamesList.isEmpty()) {
 	<aui:script sandbox="<%= true %>">
 		var searchTopUsers = $('#<portlet:namespace />searchTopUsers');
 
-		if (searchTopUsers.length) {
-			var parent = searchTopUsers.parent();
+		var parent = searchTopUsers.parent();
 
-			searchTopUsers.on(
-				'click',
-				'a',
-				function(event) {
-					event.preventDefault();
+		searchTopUsers.on(
+			'click',
+			'a',
+			function(event) {
+				event.preventDefault();
 
-					var uri = $(event.currentTarget).attr('href').replace(/p_p_state=normal/i, 'p_p_state=exclusive');
+				var uri = $(event.currentTarget).attr('href').replace(/p_p_state=normal/i, 'p_p_state=exclusive');
 
-					parent.load(uri);
-				}
-			);
-		}
+				parent.load(uri);
+			}
+		);
 	</aui:script>
 
 <%

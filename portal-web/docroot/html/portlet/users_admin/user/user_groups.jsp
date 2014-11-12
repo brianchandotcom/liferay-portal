@@ -82,30 +82,15 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 		url="javascript:;"
 	/>
 
-	<aui:script use="liferay-search-container,escape">
-		var <portlet:namespace />addUserGroupIds = [];
-		var <portlet:namespace />deleteUserGroupIds = [];
-
-		function <portlet:namespace />addUserGroup(userGroupId) {
-			for (var i = 0; i < <portlet:namespace />deleteUserGroupIds.length; i++) {
-				if (<portlet:namespace />deleteUserGroupIds[i] == userGroupId) {
-					<portlet:namespace />deleteUserGroupIds.splice(i, 1);
-
-					break;
-				}
-			}
-
-			<portlet:namespace />addUserGroupIds.push(userGroupId);
-
-			document.<portlet:namespace />fm.<portlet:namespace />addUserGroupIds.value = <portlet:namespace />addUserGroupIds.join(',');
-			document.<portlet:namespace />fm.<portlet:namespace />deleteUserGroupIds.value = <portlet:namespace />deleteUserGroupIds.join(',');
-		}
-
+	<aui:script use="escape,liferay-search-container">
 		var Util = Liferay.Util;
 
 		var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />userGroupsSearchContainer');
 
 		var searchContainerContentBox = searchContainer.get('contentBox');
+
+		var <portlet:namespace />addUserGroupIds = [];
+		var <portlet:namespace />deleteUserGroupIds = [];
 
 		searchContainerContentBox.delegate(
 			'click',
@@ -160,7 +145,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 		A.one('#<portlet:namespace />openUserGroupsLink').on(
 			'click',
 			function(event) {
-				Liferay.Util.selectEntity(
+				Util.selectEntity(
 					{
 						dialog: {
 							constrain: true,
@@ -179,8 +164,6 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 					},
 					function(event) {
 						var A = AUI();
-
-						var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />userGroupsSearchContainer');
 
 						var rowColumns = [];
 

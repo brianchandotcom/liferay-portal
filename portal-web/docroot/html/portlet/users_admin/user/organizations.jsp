@@ -105,10 +105,10 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 	/>
 
 	<aui:script use="liferay-search-container">
+		var Util = Liferay.Util;
+
 		var <portlet:namespace />addOrganizationIds = [];
 		var <portlet:namespace />deleteOrganizationIds = [];
-
-		var Util = Liferay.Util;
 
 		var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />organizationsSearchContainer');
 

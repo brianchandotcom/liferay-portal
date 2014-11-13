@@ -322,6 +322,7 @@ public class AsyncBrokerTest {
 		Assert.assertSame(noticeableFuture, asyncBroker.take(_KEY));
 		Assert.assertTrue(defaultNoticeableFutures.isEmpty());
 		Assert.assertNull(asyncBroker.take(_KEY));
+		Assert.assertTrue(noticeableFuture.cancel(true));
 	}
 
 	@Test

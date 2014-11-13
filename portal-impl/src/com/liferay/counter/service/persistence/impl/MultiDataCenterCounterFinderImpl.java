@@ -38,7 +38,8 @@ public class MultiDataCenterCounterFinderImpl extends CounterFinderImpl {
 					" or data center deployment ID " + dataCenterDeploymentId);
 		}
 
-		_multiDataCenterDeploymentId = (byte)dataCenterDeploymentId;
+		_mostSignificantByte = (byte)(dataCenterDeploymentId <<
+			(_BYTE_SHIFTS_MAX - _multiDataCenterBits));
 	}
 
 	@Override
@@ -60,17 +61,15 @@ public class MultiDataCenterCounterFinderImpl extends CounterFinderImpl {
 		BigEndianCodec.putLong(bytes, 0, value);
 
 		int x = (bytes[0] >>> _multiDataCenterBits);
-		int y = _multiDataCenterDeploymentId <<
-			(_BYTE_SHIFTS_MAX - _multiDataCenterBits);
 
-		bytes[0] = (byte)(x + (byte)y);
+		bytes[0] = (byte)(x + _mostSignificantByte);
 
 		return BigEndianCodec.getLong(bytes, 0);
 	}
 
 	private static final int _BYTE_SHIFTS_MAX = 7;
 
+	private final byte _mostSignificantByte;
 	private final int _multiDataCenterBits;
-	private final byte _multiDataCenterDeploymentId;
 
 }

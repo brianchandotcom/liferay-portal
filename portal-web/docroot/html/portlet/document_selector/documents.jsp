@@ -35,6 +35,12 @@ if (folderId > 0) {
 	folder = DLAppServiceUtil.getFolder(folderId);
 }
 
+long repositoryId = groupId;
+
+if (folder != null) {
+	repositoryId = folder.getRepositoryId();
+}
+
 String ckEditorFuncNum = DocumentSelectorUtil.getCKEditorFuncNum(request);
 String eventName = ParamUtil.getString(request, "eventName");
 boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector");
@@ -98,7 +104,7 @@ portletURL.setParameter("type", type);
 					<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_LIBRARY %>" var="addFolderURL">
 						<portlet:param name="struts_action" value="/document_library/edit_folder" />
 						<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-						<portlet:param name="repositoryId" value="<%= String.valueOf(groupId) %>" />
+						<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 						<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
 					</liferay-portlet:renderURL>
 
@@ -128,6 +134,7 @@ portletURL.setParameter("type", type);
 							<portlet:param name="struts_action" value="/document_selector/add_file_entry" />
 							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
 							<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 							<portlet:param name="type" value="<%= type %>" />
 						</liferay-portlet:renderURL>
@@ -192,8 +199,8 @@ portletURL.setParameter("type", type);
 			iteratorURL="<%= portletURL %>"
 		>
 			<liferay-ui:search-container-results
-				results="<%= DLAppServiceUtil.getFolders(groupId, folderId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-				total="<%= DLAppServiceUtil.getFoldersCount(groupId, folderId) %>"
+				results="<%= DLAppServiceUtil.getFolders(repositoryId, folderId, searchContainer.getStart(), searchContainer.getEnd()) %>"
+				total="<%= DLAppServiceUtil.getFoldersCount(repositoryId, folderId) %>"
 			/>
 
 			<liferay-ui:search-container-row
@@ -231,14 +238,23 @@ portletURL.setParameter("type", type);
 				</liferay-ui:search-container-column-text>
 
 				<%
-				List<Long> subfolderIds = DLAppServiceUtil.getSubfolderIds(curFolder.getRepositoryId(), curFolder.getFolderId(), false);
+				int foldersCount = 0;
 
-				int foldersCount = subfolderIds.size();
+				try {
+					foldersCount = DLAppServiceUtil.getFoldersCount(curFolder.getRepositoryId(), curFolder.getFolderId());
+				}
+				catch (Exception e) {
 
-				subfolderIds.clear();
-				subfolderIds.add(curFolder.getFolderId());
+				}
 
-				int fileEntriesCount = DLAppServiceUtil.getFoldersFileEntriesCount(curFolder.getRepositoryId(), subfolderIds, WorkflowConstants.STATUS_APPROVED);
+				int fileEntriesCount = 0;
+
+				try {
+					fileEntriesCount = DLAppServiceUtil.getFoldersFileEntriesCount(curFolder.getRepositoryId(), Arrays.asList(curFolder.getFolderId()), WorkflowConstants.STATUS_APPROVED);
+				}
+				catch (Exception e) {
+
+				}
 				%>
 
 				<liferay-ui:search-container-column-text
@@ -318,7 +334,7 @@ portletURL.setParameter("type", type);
 
 			searchContext.setStart(entryStart);
 
-			Hits hits = DLAppServiceUtil.search(groupId, searchContext);
+			Hits hits = DLAppServiceUtil.search(repositoryId, searchContext);
 
 			searchContainer.setTotal(hits.getLength());
 
@@ -327,9 +343,9 @@ portletURL.setParameter("type", type);
 		else {
 			String[] mimeTypes = DocumentSelectorUtil.getMimeTypes(request);
 
-			searchContainer.setTotal(DLAppServiceUtil.getFileEntriesCount(groupId, folderId, mimeTypes));
+			searchContainer.setTotal(DLAppServiceUtil.getFileEntriesCount(repositoryId, folderId, mimeTypes));
 
-			searchContainer.setResults(DLAppServiceUtil.getFileEntries(groupId, folderId, mimeTypes, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()));
+			searchContainer.setResults(DLAppServiceUtil.getFileEntries(repositoryId, folderId, mimeTypes, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()));
 		}
 		%>
 

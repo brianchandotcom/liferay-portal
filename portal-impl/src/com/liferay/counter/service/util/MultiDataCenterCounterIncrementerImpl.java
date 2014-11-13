@@ -14,7 +14,6 @@
 
 package com.liferay.counter.service.util;
 
-import com.liferay.portal.kernel.util.ByteUtils;
 import com.liferay.portal.kernel.util.LongUtil;
 
 /**
@@ -37,9 +36,9 @@ public class MultiDataCenterCounterIncrementerImpl
 			return;
 		}
 
-		_multiDataCenterBits = ByteUtils.getNumberBits(dataCenterCount);
+		_multiDataCenterBits = getNumberBits(dataCenterCount);
 
-		int numberBits = ByteUtils.getNumberBits(dataCenterDeploymentId);
+		int numberBits = getNumberBits(dataCenterDeploymentId);
 
 		if (numberBits > _multiDataCenterBits) {
 			throw new IllegalArgumentException(
@@ -50,6 +49,14 @@ public class MultiDataCenterCounterIncrementerImpl
 		}
 
 		_multiDataCenterDeploymentId = (byte)dataCenterDeploymentId;
+	}
+
+	protected static int getNumberBits(int value) {
+		if (value == 0) {
+			return 0;
+		}
+
+		return 32 - Integer.numberOfLeadingZeros(value - 1);
 	}
 
 	private int _multiDataCenterBits;

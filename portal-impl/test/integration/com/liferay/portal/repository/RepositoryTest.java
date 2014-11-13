@@ -63,18 +63,6 @@ public class RepositoryTest {
 	}
 
 	@Test
-	public void testAddAndDeleteFileEntries() throws Exception {
-		addAndDeleteFileEntries(false);
-	}
-
-	@Test
-	public void testAddAndDeleteFileEntriesInHiddenRepository()
-		throws Exception {
-
-		addAndDeleteFileEntries(true);
-	}
-
-	@Test
 	public void testAddFileEntryInRepository() throws Exception {
 		long classNameId = PortalUtil.getClassNameId(LiferayRepository.class);
 
@@ -186,62 +174,45 @@ public class RepositoryTest {
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
 	}
 
-	protected void addAndDeleteFileEntries(boolean hidden) throws Exception {
-
-		// One default and one mapped repository
-
-		long defaultRepositoryId = _group.getGroupId();
+	@Test
+	public void testFileEntriesAreDeletedWhenDeletingAllRepositories()
+		throws Exception {
 
 		long classNameId = PortalUtil.getClassNameId(LiferayRepository.class);
 
 		Repository dlRepository = RepositoryLocalServiceUtil.addRepository(
 			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1", "Test 1",
-			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), hidden,
+			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), true,
 			new ServiceContext());
 
-		long[] repositoryIds = {dlRepository.getRepositoryId()};
+		long[] fileEntryIds = new long[2];
 
-		if (!hidden) {
-			repositoryIds = new long[] {
-				defaultRepositoryId, dlRepository.getRepositoryId()
-			};
-		}
-
-		long[] fileEntryIds = new long[4];
-
-		long[] folderIds = new long[2];
+		long[] folderIds = new long[1];
 
 		// Add folders and files
 
-		for (int i = 0; i < repositoryIds.length; i++) {
-			long repositoryId = repositoryIds[i];
+		long[] entryIds = populateRepository(dlRepository.getRepositoryId());
 
-			long[] entryIds = populateRepository(repositoryId);
-
-			fileEntryIds[i] = entryIds[0];
-			folderIds[i] = entryIds[1];
-			fileEntryIds[i + 2] = entryIds[2];
-		}
+		fileEntryIds[0] = entryIds[0];
+		fileEntryIds[1] = entryIds[2];
+		folderIds[0] = entryIds[1];
 
 		// Delete repositories
 
 		DLAppLocalServiceUtil.deleteAllRepositories(_group.getGroupId());
 
-		for (int i = 0; i < repositoryIds.length; i++) {
-			long repositoryId = repositoryIds[i];
-
-			long fileEntryId = fileEntryIds[i];
-
+		for (int i = 0; i < fileEntryIds.length; i++) {
 			try {
 				LocalRepository localRepository =
-					RepositoryServiceUtil.getLocalRepositoryImpl(repositoryId);
+					RepositoryServiceUtil.getLocalRepositoryImpl(
+						dlRepository.getRepositoryId());
 
-				localRepository.getFileEntry(fileEntryId);
+				localRepository.getFileEntry(fileEntryIds[i]);
 
 				Assert.fail(
-					"Should not be able to get file entry " + fileEntryId +
-						" from repository " + repositoryId);
+					"Should not be able to get file entry " + fileEntryIds[i] +
+						" from repository " + dlRepository.getRepositoryId());
 			}
 			catch (Exception e) {
 			}

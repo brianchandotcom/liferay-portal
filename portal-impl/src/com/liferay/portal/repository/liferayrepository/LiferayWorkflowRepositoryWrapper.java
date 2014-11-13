@@ -100,8 +100,8 @@ public class LiferayWorkflowRepositoryWrapper extends RepositoryWrapper {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #updateFileEntry(long, long,
-	 *             String, String, String, String, String, boolean,
-	 *             java.io.File, com.liferay.portal.service.ServiceContext)}
+	 *             String, String, String, String, String, boolean, File,
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -118,9 +118,8 @@ public class LiferayWorkflowRepositoryWrapper extends RepositoryWrapper {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #updateFileEntry(long, long,
-	 *             String, String, String, String, String, boolean,
-	 *             java.io.InputStream, long,
-	 *             com.liferay.portal.service.ServiceContext)}
+	 *             String, String, String, String, String, boolean, InputStream,
+	 *             long, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -165,7 +164,10 @@ public class LiferayWorkflowRepositoryWrapper extends RepositoryWrapper {
 	}
 
 	/**
-	 * See {@link com.liferay.portlet.documentlibrary.service.impl.DLFileEntryLocalServiceImpl#updateFileEntry(long, long, String, String, String, String, String, String, boolean, String, long, java.util.Map, java.io.File, java.io.InputStream, long, com.liferay.portal.service.ServiceContext)}
+	 * See {@link
+	 * com.liferay.portlet.documentlibrary.service.impl.DLFileEntryLocalServiceImpl#updateFileEntry(
+	 * long, long, String, String, String, String, String, String, boolean,
+	 * String, long, java.util.Map, File, InputStream, long, ServiceContext)}
 	 */
 	private DLFileVersion _getWorkflowDLFileVersion(
 			long fileEntryId, ServiceContext serviceContext)

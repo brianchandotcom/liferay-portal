@@ -83,7 +83,10 @@ public class LiferayWorkflowLocalRepositoryWrapper
 	}
 
 	/**
-	 * See {@link com.liferay.portlet.documentlibrary.service.impl.DLFileEntryLocalServiceImpl#updateFileEntry(long, long, String, String, String, String, String, String, boolean, String, long, java.util.Map, java.io.File, java.io.InputStream, long, com.liferay.portal.service.ServiceContext)}
+	 * See {@link
+	 * com.liferay.portlet.documentlibrary.service.impl.DLFileEntryLocalServiceImpl#updateFileEntry(
+	 * long, long, String, String, String, String, String, String, boolean,
+	 * String, long, java.util.Map, File, InputStream, long, ServiceContext)}
 	 */
 	private DLFileVersion _getWorkflowDLFileVersion(
 			long fileEntryId, ServiceContext serviceContext)

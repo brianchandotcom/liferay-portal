@@ -282,8 +282,8 @@ public interface Repository extends DocumentRepository {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #updateFileEntry(long, long,
-	 *             String, String, String, String, String, boolean,
-	 *             java.io.File, com.liferay.portal.service.ServiceContext)}
+	 *             String, String, String, String, String, boolean, File,
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	public FileEntry updateFileEntry(
@@ -294,9 +294,8 @@ public interface Repository extends DocumentRepository {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #updateFileEntry(long, long,
-	 *             String, String, String, String, String, boolean,
-	 *             java.io.InputStream, long,
-	 *             com.liferay.portal.service.ServiceContext)}
+	 *             String, String, String, String, String, boolean, InputStream,
+	 *             long, ServiceContext)}
 	 */
 	@Deprecated
 	public FileEntry updateFileEntry(

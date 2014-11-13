@@ -124,13 +124,11 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 			return;
 		}
 
-		String embedURL = _googleDocsMetadataHelper.getFieldValue(
-			GoogleDocsConstants.DDM_FIELD_NAME_EMBED_URL);
-
 		printWriter.format(
-			"<iframe width='100%%' height='300' frameborder='0' src='%s'>" +
-				"</iframe>",
-			embedURL);
+			"<iframe frameborder=\"0\" height=\"300\" src=\"%s\" " +
+				"width=\"100%%\"></iframe>",
+			_googleDocsMetadataHelper.getFieldValue(
+				GoogleDocsConstants.DDM_FIELD_NAME_EMBED_URL));
 	}
 
 	private int _getIndex(List<? extends UIItem> uiItems, String key) {

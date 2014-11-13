@@ -14,6 +14,7 @@
 
 package com.liferay.rss.web.configuration;
 
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -26,9 +27,18 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=com_liferay_rss_web_portlet_RSSPortlet"
+	},
+	service = ConfigurationAction.class
+)
 public class RSSConfiguration extends DefaultConfigurationAction {
 
 	@Override

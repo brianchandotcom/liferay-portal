@@ -16,6 +16,7 @@ package com.liferay.rss.web.template;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.rss.RSSFeed;
@@ -28,9 +29,18 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eudaldo Alonso
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=com_liferay_rss_web_portlet_RSSPortlet"
+	},
+	service = TemplateHandler.class
+)
 public class RSSPortletDisplayTemplateHandler
 	extends BasePortletDisplayTemplateHandler {
 

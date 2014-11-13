@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusException;
 import com.liferay.portal.kernel.messaging.MessageListener;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author Michael C. Han
  */
@@ -46,11 +49,9 @@ public class SynchronousMessageListener implements MessageListener {
 			return;
 		}
 
-		synchronized (this) {
-			_results = message.getPayload();
+		_results = message.getPayload();
 
-			notify();
-		}
+		_countDownLatch.countDown();
 	}
 
 	public Object send() throws MessageBusException {
@@ -60,15 +61,13 @@ public class SynchronousMessageListener implements MessageListener {
 		_messageBus.registerMessageListener(responseDestinationName, this);
 
 		try {
-			synchronized (this) {
-				_messageBus.sendMessage(destinationName, _message);
+			_messageBus.sendMessage(destinationName, _message);
 
-				wait(_timeout);
+			_countDownLatch.await(_timeout, TimeUnit.MILLISECONDS);
 
-				if (_results == null) {
-					throw new MessageBusException(
-						"No reply received for message: " + _message);
-				}
+			if (_results == null) {
+				throw new MessageBusException(
+					"No reply received for message: " + _message);
 			}
 
 			return _results;
@@ -87,6 +86,7 @@ public class SynchronousMessageListener implements MessageListener {
 		}
 	}
 
+	private final CountDownLatch _countDownLatch = new CountDownLatch(1);
 	private final Message _message;
 	private final MessageBus _messageBus;
 	private final String _responseId;

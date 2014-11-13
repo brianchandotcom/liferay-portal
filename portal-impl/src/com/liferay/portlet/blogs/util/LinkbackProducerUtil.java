@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.blogs.util;
 
-import com.liferay.ibm.icu.util.Calendar;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -34,6 +33,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.xml.StAXReaderUtil;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;

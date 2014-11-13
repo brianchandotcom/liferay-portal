@@ -14,7 +14,7 @@
 
 package com.liferay.counter.service.util;
 
-import com.liferay.portal.kernel.util.LongUtil;
+import com.liferay.portal.kernel.io.BigEndianCodec;
 
 /**
  * @author Michael C. Han
@@ -27,7 +27,7 @@ public class MultiDataCenterCounterIncrementerImpl
 			return value;
 		}
 
-		return LongUtil.shiftRightAndPadLeftMostByte(
+		return shiftRightAndPadLeftMostByte(
 			value, _multiDataCenterBits, _multiDataCenterDeploymentId);
 	}
 
@@ -58,6 +58,26 @@ public class MultiDataCenterCounterIncrementerImpl
 
 		return 32 - Integer.numberOfLeadingZeros(value - 1);
 	}
+
+	protected static long shiftRightAndPadLeftMostByte(
+		long longValue, int positions, byte padding) {
+
+		if (positions > _MAXIMUM_BYTE_SHIFTS) {
+			throw new IllegalArgumentException("Cannot shift more than 8 bits");
+		}
+
+		byte[] bytes = new byte[8];
+
+		BigEndianCodec.putLong(bytes, 0, longValue);
+
+		bytes[0] =
+			(byte)((bytes[0] >>> positions) +
+			(byte)(padding << (_MAXIMUM_BYTE_SHIFTS - positions)));
+
+		return BigEndianCodec.getLong(bytes, 0);
+	}
+
+	private static final int _MAXIMUM_BYTE_SHIFTS = 7;
 
 	private int _multiDataCenterBits;
 	private byte _multiDataCenterDeploymentId;

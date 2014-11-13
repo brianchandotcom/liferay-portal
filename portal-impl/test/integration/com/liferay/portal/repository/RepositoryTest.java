@@ -83,6 +83,44 @@ public class RepositoryTest {
 		addAndDeleteRepositories(false);
 	}
 
+	@Test
+	public void testGetMountFoldersCountWithHiddenRepository()
+		throws Exception {
+
+		long classNameId = PortalUtil.getClassNameId(LiferayRepository.class);
+
+		RepositoryLocalServiceUtil.addRepository(
+			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1", "Test 1",
+			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), true,
+			new ServiceContext());
+
+		Assert.assertEquals(
+			0,
+			DLFolderServiceUtil.getMountFoldersCount(
+				_group.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+	}
+
+	@Test
+	public void testGetMountFoldersCountWithNotHiddenRepository()
+		throws Exception {
+
+		long classNameId = PortalUtil.getClassNameId(LiferayRepository.class);
+
+		RepositoryLocalServiceUtil.addRepository(
+			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1", "Test 1",
+			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), false,
+			new ServiceContext());
+
+		Assert.assertEquals(
+			1,
+			DLFolderServiceUtil.getMountFoldersCount(
+				_group.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+	}
+
 	protected void addAndDeleteFileEntries(boolean hidden) throws Exception {
 
 		// One default and one mapped repository
@@ -227,21 +265,6 @@ public class RepositoryTest {
 			new ServiceContext());
 
 		repositoryIds[1] = repository.getRepositoryId();
-
-		if (hidden) {
-			Assert.assertEquals(
-				initialMountFolders,
-				DLFolderServiceUtil.getMountFoldersCount(
-					_group.getGroupId(),
-					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
-		}
-		else {
-			Assert.assertEquals(
-				initialMountFolders + 1,
-				DLFolderServiceUtil.getMountFoldersCount(
-					_group.getGroupId(),
-					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
-		}
 
 		// Delete repositories
 

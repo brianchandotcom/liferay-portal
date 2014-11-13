@@ -30,10 +30,10 @@ public interface DLFilePicker {
 
 	public String getJavascript() throws PortalException;
 
+	public String getJavascriptModuleName() throws PortalException;
+
 	public String getOnClickCallback() throws PortalException;
 
 	public String getTitleFieldName() throws PortalException;
-
-	public String getJavascriptModuleName() throws PortalException;
 
 }

@@ -101,9 +101,9 @@ public class GoogleDocsDLFilePicker implements DLFilePicker {
 		return GoogleDocsConstants.DDM_FIELD_NAME_TITLE;
 	}
 
-	private GoogleDocsConfigurationHelper _googleDocsConfigurationHelper;
-	private GoogleDocsMetadataHelper _googleDocsMetadataHelper;
-	private String _namespace;
-	private String _onFilePickCallback;
+	private final GoogleDocsConfigurationHelper _googleDocsConfigurationHelper;
+	private final GoogleDocsMetadataHelper _googleDocsMetadataHelper;
+	private final String _namespace;
+	private final String _onFilePickCallback;
 
 }

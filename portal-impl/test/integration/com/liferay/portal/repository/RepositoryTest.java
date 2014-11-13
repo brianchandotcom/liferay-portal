@@ -35,6 +35,7 @@ import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.test.GroupTestUtil;
+import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -71,6 +72,37 @@ public class RepositoryTest {
 		throws Exception {
 
 		addAndDeleteFileEntries(true);
+	}
+
+	@Test
+	public void testAddFileEntryInRepository() throws Exception {
+		long classNameId = PortalUtil.getClassNameId(LiferayRepository.class);
+
+		Repository dlRepository = RepositoryLocalServiceUtil.addRepository(
+			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1", "Test 1",
+			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), true,
+			new ServiceContext());
+
+		long repositoryId = dlRepository.getRepositoryId();
+
+		long[] entryIds = populateRepository(repositoryId);
+
+		Assert.assertEquals(
+			1,
+			DLAppServiceUtil.getFoldersCount(
+				repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+
+		Assert.assertEquals(
+			1,
+			DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(
+				repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				WorkflowConstants.STATUS_ANY));
+
+		Assert.assertEquals(
+			1,
+			DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(
+				repositoryId, entryIds[1], WorkflowConstants.STATUS_ANY));
 	}
 
 	@Test
@@ -180,67 +212,16 @@ public class RepositoryTest {
 
 		long[] folderIds = new long[2];
 
-		InputStream inputStream = new UnsyncByteArrayInputStream(
-			_TEST_CONTENT.getBytes());
-
 		// Add folders and files
 
 		for (int i = 0; i < repositoryIds.length; i++) {
 			long repositoryId = repositoryIds[i];
 
-			int initialFoldersCount = DLAppServiceUtil.getFoldersCount(
-				repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+			long[] entryIds = populateRepository(repositoryId);
 
-			LocalRepository localRepository =
-				RepositoryServiceUtil.getLocalRepositoryImpl(repositoryId);
-
-			String name1 =
-				String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) +
-					".txt";
-
-			FileEntry fileEntry1 = localRepository.addFileEntry(
-				TestPropsValues.getUserId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name1,
-				ContentTypes.TEXT_PLAIN, name1, StringPool.BLANK,
-				StringPool.BLANK, inputStream, _TEST_CONTENT.length(),
-				new ServiceContext());
-
-			fileEntryIds[i] = fileEntry1.getFileEntryId();
-
-			Folder folder = localRepository.addFolder(
-				TestPropsValues.getUserId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				String.valueOf(repositoryId), String.valueOf(repositoryId),
-				new ServiceContext());
-
-			folderIds[i] = folder.getFolderId();
-
-			String name2 = String.valueOf(folderIds[i]) + ".txt";
-
-			FileEntry fileEntry2 = localRepository.addFileEntry(
-				TestPropsValues.getUserId(), folderIds[i], name2,
-				ContentTypes.TEXT_PLAIN, name2, StringPool.BLANK,
-				StringPool.BLANK, inputStream, _TEST_CONTENT.length(),
-				new ServiceContext());
-
-			fileEntryIds[i + 2] = fileEntry2.getFileEntryId();
-
-			Assert.assertEquals(
-				initialFoldersCount + 1,
-				DLAppServiceUtil.getFoldersCount(
-					repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
-
-			Assert.assertEquals(
-				1,
-				DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(
-					repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-					WorkflowConstants.STATUS_ANY));
-
-			Assert.assertEquals(
-				1,
-				DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(
-					repositoryId, folder.getFolderId(),
-					WorkflowConstants.STATUS_ANY));
+			fileEntryIds[i] = entryIds[0];
+			folderIds[i] = entryIds[1];
+			fileEntryIds[i + 2] = entryIds[2];
 		}
 
 		// Delete repositories
@@ -265,6 +246,40 @@ public class RepositoryTest {
 			catch (Exception e) {
 			}
 		}
+	}
+
+	protected long[] populateRepository(long repositoryId) throws Exception {
+		InputStream inputStream = new UnsyncByteArrayInputStream(
+			_TEST_CONTENT.getBytes());
+
+		LocalRepository localRepository =
+			RepositoryServiceUtil.getLocalRepositoryImpl(repositoryId);
+
+		String name1 = RandomTestUtil.randomString();
+
+		FileEntry fileEntry = localRepository.addFileEntry(
+			TestPropsValues.getUserId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name1,
+			ContentTypes.TEXT_PLAIN, name1, StringPool.BLANK, StringPool.BLANK,
+			inputStream, _TEST_CONTENT.length(), new ServiceContext());
+
+		Folder folder = localRepository.addFolder(
+			TestPropsValues.getUserId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			String.valueOf(repositoryId), String.valueOf(repositoryId),
+			new ServiceContext());
+
+		String name2 = RandomTestUtil.randomString();
+
+		FileEntry folderFileEntry = localRepository.addFileEntry(
+			TestPropsValues.getUserId(), folder.getFolderId(), name2,
+			ContentTypes.TEXT_PLAIN, name2, StringPool.BLANK, StringPool.BLANK,
+			inputStream, _TEST_CONTENT.length(), new ServiceContext());
+
+		return new long[] {
+			fileEntry.getFileEntryId(), folder.getFolderId(),
+			folderFileEntry.getFileEntryId()
+		};
 	}
 
 	private static final String _TEST_CONTENT =

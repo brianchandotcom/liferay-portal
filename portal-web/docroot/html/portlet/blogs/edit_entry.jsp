@@ -164,7 +164,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 				<aui:fieldset cssClass="entry-abstract">
 					<div class="lfr-blogs-small-image-selector">
-						<liferay-ui:image-selector fileEntryId="<%= smallImageFileEntryId %>" paramName="smallImageFileEntryId"  />
+						<liferay-ui:image-selector fileEntryId="<%= smallImageFileEntryId %>" paramName="smallImageFileEntryId" />
 					</div>
 
 					<div class="entry-description">

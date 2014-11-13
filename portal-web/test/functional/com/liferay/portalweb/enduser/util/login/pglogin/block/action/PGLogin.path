@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CREATE_ACCOUNT_LINK</td>
+	<td>//a[contains(.,'Create Account')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR_MESSAGE_1</td>
 	<td>xpath=(//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))])[1]</td>
 	<td></td>

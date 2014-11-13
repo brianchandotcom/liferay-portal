@@ -49,6 +49,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CAPTCHA_IMAGE</td>
+	<td>//img[@id='_58_captcha']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAPTCHA_REFRESH</td>
+	<td>//img[@id='refreshCaptcha']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEXT_VERIFICATION_FIELD</td>
+	<td>//input[@id='_58_captchaText']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_BUTTON</td>
 	<td>//button[contains(.,'Save')]</td>
 	<td></td>

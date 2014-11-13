@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.rss.context;
+package com.liferay.portal.rss;
 
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
@@ -38,15 +38,14 @@ import java.util.List;
 /**
  * @author Eudaldo Alonso
  */
-public class RSSFeedEntryDisplayContext {
+public class RSSFeedEntry {
 
-	public RSSFeedEntryDisplayContext(
-		SyndEntry syndEntry, ThemeDisplay themeDisplay,
-		RSSFeedContext rssFeedContext) {
+	public RSSFeedEntry(
+		SyndEntry syndEntry, ThemeDisplay themeDisplay, RSSFeed rssFeed) {
 
 		_syndEntry = syndEntry;
 		_themeDisplay = themeDisplay;
-		_rssFeedContext = rssFeedContext;
+		_rssFeed = rssFeed;
 
 		List<SyndEnclosure> syndEnclosures = syndEntry.getEnclosures();
 
@@ -80,15 +79,15 @@ public class RSSFeedEntryDisplayContext {
 		if (Validator.isNotNull(syndEntryLink) &&
 			!HttpUtil.hasDomain(syndEntryLink)) {
 
-			syndEntryLink = rssFeedContext.getBaseURL() + syndEntryLink;
+			syndEntryLink = rssFeed.getBaseURL() + syndEntryLink;
 		}
 
 		_syndEntryLink = syndEntryLink;
 	}
 
 	public String getSanitizedContent() {
-		String baseURL = _rssFeedContext.getBaseURL();
-		SyndFeed syndFeed = _rssFeedContext.getSyndFeed();
+		String baseURL = _rssFeed.getBaseURL();
+		SyndFeed syndFeed = _rssFeed.getSyndFeed();
 
 		List<SyndContent> syndContents = getSyndContents();
 
@@ -165,7 +164,7 @@ public class RSSFeedEntryDisplayContext {
 		return syndContents;
 	}
 
-	private final RSSFeedContext _rssFeedContext;
+	private final RSSFeed _rssFeed;
 	private final String _syndEnclosureLink;
 	private final String _syndEnclosureLinkTitle;
 	private final SyndEntry _syndEntry;

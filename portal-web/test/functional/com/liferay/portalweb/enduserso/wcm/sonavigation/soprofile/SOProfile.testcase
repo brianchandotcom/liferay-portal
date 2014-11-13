@@ -21,6 +21,30 @@
 		<execute macro="SOUser#tearDownCP" />
 	</tear-down>
 
+	<command name="GoBackToSOProfileFromControlPanel" priority="5">
+		<execute macro="Page#gotoMyProfile" />
+
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN_CONTROL_PANEL" value1="Control Panel" />
+		<execute action="Dockbar#click" locator1="//a[@title='Back']" />
+
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_NAME" value1="${adminName}" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_EMAIL" value1="${adminEmailAddress}" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="ADD_INTRODUCTION" value1="Introduction" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="ADD_TAGS" value1="Tags" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="ADD_PHONES" value1="Phones" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="ADD_EMAIL_ADDRESS" value1="Email Address" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="ADD_INSTANT_MESSENGER" value1="Instant Messenger" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="ADD_ADDRESSES" value1="Addresses" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="ADD_WEBSITES" value1="Websites" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="ADD_SOCIAL_NETWORK" value1="Social Network" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="ADD_SMS" value1="SMS" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="ADD_PROJECTS" value1="Add" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="NAVIGATION_PROFILE" value1="Profile" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="NAVIGATION_CONTACTS" value1="Contacts" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="NAVIGATION_MICROBLOGS" value1="Microblogs" />
+	</command>
+
 	<command known-issues="LIFERAYQA-11550" name="ViewProfileLocalized" priority="4">
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />

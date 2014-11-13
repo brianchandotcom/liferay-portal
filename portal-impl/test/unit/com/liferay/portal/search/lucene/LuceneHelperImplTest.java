@@ -842,7 +842,7 @@ public class LuceneHelperImplTest {
 		}
 
 		@Override
-		public void execute(
+		public FutureClusterResponses execute(
 			ClusterRequest clusterRequest,
 			ClusterResponseCallback clusterResponseCallback) {
 
@@ -861,25 +861,8 @@ public class LuceneHelperImplTest {
 			catch (InterruptedException ie) {
 				throw new RuntimeException(ie);
 			}
-		}
 
-		@Override
-		public void execute(
-			ClusterRequest clusterRequest,
-			ClusterResponseCallback clusterResponseCallback, long timeout,
-			TimeUnit timeUnit) {
-
-			FutureClusterResponses futureClusterResponses = execute(
-				clusterRequest);
-
-			try {
-				clusterResponseCallback.callback(
-					futureClusterResponses.get(
-						timeout, timeUnit).getClusterResponses());
-			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
-			}
+			return futureClusterResponses;
 		}
 
 		@Override

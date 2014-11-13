@@ -264,15 +264,15 @@ public class RepositoryTest {
 		try {
 			LocalRepository localRepository =
 				RepositoryServiceUtil.getLocalRepositoryImpl(
-					dlRepository2.getRepositoryId());
+					_group.getGroupId());
 
 			localRepository.getFileEntry(fileEntryIds[0]);
 
 			localRepository.getFileEntry(fileEntryIds[1]);
 
 			Assert.fail(
-				"Should be able to get file entry from repository " +
-					dlRepository2.getRepositoryId());
+				"Should not be able to get file entry from repository " +
+					_group.getGroupId());
 		}
 		catch (Exception e) {
 		}

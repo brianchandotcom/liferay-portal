@@ -137,44 +137,6 @@ public class RepositoryTest {
 	}
 
 	@Test
-	public void testGetMountFoldersCountWithHiddenRepository()
-		throws Exception {
-
-		long classNameId = PortalUtil.getClassNameId(LiferayRepository.class);
-
-		RepositoryLocalServiceUtil.addRepository(
-			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1", "Test 1",
-			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), true,
-			new ServiceContext());
-
-		Assert.assertEquals(
-			0,
-			DLFolderServiceUtil.getMountFoldersCount(
-				_group.getGroupId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
-	}
-
-	@Test
-	public void testGetMountFoldersCountWithNotHiddenRepository()
-		throws Exception {
-
-		long classNameId = PortalUtil.getClassNameId(LiferayRepository.class);
-
-		RepositoryLocalServiceUtil.addRepository(
-			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1", "Test 1",
-			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), false,
-			new ServiceContext());
-
-		Assert.assertEquals(
-			1,
-			DLFolderServiceUtil.getMountFoldersCount(
-				_group.getGroupId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
-	}
-
-	@Test
 	public void testFileEntriesAreDeletedWhenDeletingAllRepositories()
 		throws Exception {
 
@@ -217,6 +179,44 @@ public class RepositoryTest {
 			catch (Exception e) {
 			}
 		}
+	}
+
+	@Test
+	public void testGetMountFoldersCountWithHiddenRepository()
+		throws Exception {
+
+		long classNameId = PortalUtil.getClassNameId(LiferayRepository.class);
+
+		RepositoryLocalServiceUtil.addRepository(
+			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1", "Test 1",
+			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), true,
+			new ServiceContext());
+
+		Assert.assertEquals(
+			0,
+			DLFolderServiceUtil.getMountFoldersCount(
+				_group.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+	}
+
+	@Test
+	public void testGetMountFoldersCountWithNotHiddenRepository()
+		throws Exception {
+
+		long classNameId = PortalUtil.getClassNameId(LiferayRepository.class);
+
+		RepositoryLocalServiceUtil.addRepository(
+			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1", "Test 1",
+			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), false,
+			new ServiceContext());
+
+		Assert.assertEquals(
+			1,
+			DLFolderServiceUtil.getMountFoldersCount(
+				_group.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
 	}
 
 	protected long[] populateRepository(long repositoryId) throws Exception {

@@ -60,8 +60,9 @@ public class LiferayTrashCapability implements TrashCapability {
 	public void deleteFolder(Folder folder) throws PortalException {
 		List<DLFileEntry> dlFileEntries =
 			DLFileEntryLocalServiceUtil.getGroupFileEntries(
-				folder.getGroupId(), 0, folder.getFolderId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+				folder.getGroupId(), 0, folder.getRepositoryId(),
+				folder.getFolderId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
 
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
 			FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);

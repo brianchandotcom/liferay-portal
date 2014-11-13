@@ -180,6 +180,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="folderId" arrayable-operator="OR" />
 		</finder>
+		<finder name="R_F" return-type="Collection">
+			<finder-column name="repositoryId" />
+			<finder-column name="folderId" />
+		</finder>
 		<finder name="F_N" return-type="Collection">
 			<finder-column name="folderId" />
 			<finder-column name="name" />
@@ -606,6 +610,10 @@
 		<finder name="R_M" return-type="DLFolder">
 			<finder-column name="repositoryId" />
 			<finder-column name="mountPoint" />
+		</finder>
+		<finder name="R_P" return-type="Collection">
+			<finder-column name="repositoryId" />
+			<finder-column name="parentFolderId" />
 		</finder>
 		<finder name="P_N" return-type="Collection">
 			<finder-column name="parentFolderId" />

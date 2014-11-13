@@ -337,6 +337,19 @@ public class DLFolderPersistenceTest {
 	}
 
 	@Test
+	public void testCountByR_P() {
+		try {
+			_persistence.countByR_P(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
+
+			_persistence.countByR_P(0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testCountByP_N() {
 		try {
 			_persistence.countByP_N(RandomTestUtil.nextLong(), StringPool.BLANK);

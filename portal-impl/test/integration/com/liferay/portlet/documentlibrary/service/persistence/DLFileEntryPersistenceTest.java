@@ -389,6 +389,19 @@ public class DLFileEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByR_F() {
+		try {
+			_persistence.countByR_F(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
+
+			_persistence.countByR_F(0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testCountByF_N() {
 		try {
 			_persistence.countByF_N(RandomTestUtil.nextLong(), StringPool.BLANK);

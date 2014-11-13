@@ -168,6 +168,13 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		boolean includeTrashedEntries)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public void deleteFileEntriesByRepository(long repositoryId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public void deleteFileEntriesByRepository(long repositoryId, long folderId,
+		boolean includeTrashedEntries)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry deleteFileEntry(
@@ -535,6 +542,12 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getGroupFileEntries(
 		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntry> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getGroupFileEntries(
+		long groupId, long userId, long repositoryId, long rootFolderId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntry> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -511,8 +511,8 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portal.kernel.repository.util.RepositoryTrashUtil.moveFileEntryFromTrash(
-	long, long, long, long, ServiceContext)}
+	RepositoryTrashUtil#moveFileEntryFromTrash(long, long, long,
+	long, ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -526,8 +526,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portal.kernel.repository.util.RepositoryTrashUtil.moveFileEntryToTrash(
-	long, long, long)}
+	RepositoryTrashUtil#moveFileEntryToTrash(long, long, long)}
 	*/
 	@Deprecated
 	@Override
@@ -548,8 +547,8 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portal.kernel.repository.util.RepositoryTrashUtil.restoreFileEntryFromTrash(
-	long, long, long)}
+	RepositoryTrashUtil#restoreFileEntryFromTrash(long, long,
+	long)}
 	*/
 	@Deprecated
 	@Override

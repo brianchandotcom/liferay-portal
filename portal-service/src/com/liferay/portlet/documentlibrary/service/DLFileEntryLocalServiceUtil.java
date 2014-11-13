@@ -204,6 +204,20 @@ public class DLFileEntryLocalServiceUtil {
 		getService().deleteFileEntries(groupId, folderId, includeTrashedEntries);
 	}
 
+	public static void deleteFileEntriesByRepository(long repositoryId,
+		long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteFileEntriesByRepository(repositoryId, folderId);
+	}
+
+	public static void deleteFileEntriesByRepository(long repositoryId,
+		long folderId, boolean includeTrashedEntries)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.deleteFileEntriesByRepository(repositoryId, folderId,
+			includeTrashedEntries);
+	}
+
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry deleteFileEntry(
 		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -668,6 +682,15 @@ public class DLFileEntryLocalServiceUtil {
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntry> obc) {
 		return getService().getGroupFileEntries(groupId, start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getGroupFileEntries(
+		long groupId, long userId, long repositoryId, long rootFolderId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntry> obc) {
+		return getService()
+				   .getGroupFileEntries(groupId, userId, repositoryId,
+			rootFolderId, start, end, obc);
 	}
 
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getGroupFileEntries(

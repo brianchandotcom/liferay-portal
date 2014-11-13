@@ -114,9 +114,22 @@ public class DLFolderLocalServiceUtil {
 		return getService().createDLFolder(folderId);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #deleteAllByGroup(long)}
+	*/
 	public static void deleteAll(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteAll(groupId);
+	}
+
+	public static void deleteAllByGroup(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteAllByGroup(groupId);
+	}
+
+	public static void deleteAllByRepository(long repositoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteAllByRepository(repositoryId);
 	}
 
 	public static void deleteDLFileEntryTypeDLFolder(long fileEntryTypeId,
@@ -490,6 +503,11 @@ public class DLFolderLocalServiceUtil {
 		return getService().getFolderId(companyId, folderId);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getGroupFolderIds(long,
+	long)}
+	*/
+	@Deprecated
 	public static java.util.List<java.lang.Long> getFolderIds(long groupId,
 		long parentFolderId) {
 		return getService().getFolderIds(groupId, parentFolderId);
@@ -613,6 +631,16 @@ public class DLFolderLocalServiceUtil {
 			includeMountfolders);
 	}
 
+	public static java.util.List<java.lang.Long> getGroupFolderIds(
+		long groupId, long parentFolderId) {
+		return getService().getGroupFolderIds(groupId, parentFolderId);
+	}
+
+	public static void getGroupSubfolderIds(
+		java.util.List<java.lang.Long> folderIds, long groupId, long folderId) {
+		getService().getGroupSubfolderIds(folderIds, groupId, folderId);
+	}
+
 	public static com.liferay.portlet.documentlibrary.model.DLFolder getMountFolder(
 		long repositoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -640,6 +668,11 @@ public class DLFolderLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static java.util.List<java.lang.Long> getRepositoryFolderIds(
+		long repositoryId, long parentFolderId) {
+		return getService().getRepositoryFolderIds(repositoryId, parentFolderId);
+	}
+
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getRepositoryFolders(
 		long repositoryId, int start, int end) {
 		return getService().getRepositoryFolders(repositoryId, start, end);
@@ -649,6 +682,16 @@ public class DLFolderLocalServiceUtil {
 		return getService().getRepositoryFoldersCount(repositoryId);
 	}
 
+	public static void getRepositorySubfolderIds(
+		java.util.List<java.lang.Long> folderIds, long repositoryId,
+		long folderId) {
+		getService().getRepositorySubfolderIds(folderIds, repositoryId, folderId);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getGroupSubfolderIds(List,
+	long, long)}
+	*/
 	public static void getSubfolderIds(
 		java.util.List<java.lang.Long> folderIds, long groupId, long folderId) {
 		getService().getSubfolderIds(folderIds, groupId, folderId);

@@ -100,7 +100,16 @@ public interface DLFolderLocalService extends BaseLocalService,
 	public com.liferay.portlet.documentlibrary.model.DLFolder createDLFolder(
 		long folderId);
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #deleteAllByGroup(long)}
+	*/
 	public void deleteAll(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public void deleteAllByGroup(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public void deleteAllByRepository(long repositoryId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteDLFileEntryTypeDLFolder(long fileEntryTypeId,
@@ -405,6 +414,11 @@ public interface DLFolderLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getFolderId(long companyId, long folderId);
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getGroupFolderIds(long,
+	long)}
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<java.lang.Long> getFolderIds(long groupId,
 		long parentFolderId);
@@ -497,6 +511,14 @@ public interface DLFolderLocalService extends BaseLocalService,
 		boolean includeMountfolders);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<java.lang.Long> getGroupFolderIds(long groupId,
+		long parentFolderId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public void getGroupSubfolderIds(java.util.List<java.lang.Long> folderIds,
+		long groupId, long folderId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFolder getMountFolder(
 		long repositoryId)
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -519,12 +541,25 @@ public interface DLFolderLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<java.lang.Long> getRepositoryFolderIds(
+		long repositoryId, long parentFolderId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getRepositoryFolders(
 		long repositoryId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRepositoryFoldersCount(long repositoryId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public void getRepositorySubfolderIds(
+		java.util.List<java.lang.Long> folderIds, long repositoryId,
+		long folderId);
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getGroupSubfolderIds(List,
+	long, long)}
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void getSubfolderIds(java.util.List<java.lang.Long> folderIds,
 		long groupId, long folderId);

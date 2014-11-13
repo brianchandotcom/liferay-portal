@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>PGKnowledgebasedisplaySelectParentArticle</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGKnowledgebasedisplaySelectParentArticle</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGKnowledgebasedisplaySelectParentArticle</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAME_HEADER</td>
+	<td>//div[contains(@class,'modal-header')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_PARENT_IFRAME</td>
+	<td>//iframe[contains(@id,'knowledgebaseportlet') and contains(@class,'iframe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BREADCRUMB_HOME</td>
+	<td>//ul[contains(@class,'breadcrumb')]//a[contains(.,'Home')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_TITLE</td>
+	<td>//div[contains(@class,'searchcontainer-content')]//td[contains(.,'${key_kbArticleTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHOOSE_BUTTON</td>
+	<td>//tr[contains(.,'${key_kbArticleTitle}')]//button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLOSE_BUTTON</td>
+	<td>//div[contains(@class,'dialog-iframe-modal')]//button[contains(@class,'close')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

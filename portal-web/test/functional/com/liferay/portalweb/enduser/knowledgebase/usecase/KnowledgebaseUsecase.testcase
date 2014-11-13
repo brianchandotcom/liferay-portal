@@ -83,7 +83,7 @@
 			<var name="kbArticleTitle" value="KB Admin Article" />
 		</execute>
 
-		<execute macro="KBArticle#deletePGViaKBDisplay">
+		<execute macro="KBArticle#deletePGViaKBDisplayPG">
 			<var name="kbArticleTitle" value="KB Admin Article" />
 		</execute>
 

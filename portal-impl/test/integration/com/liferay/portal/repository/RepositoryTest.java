@@ -374,8 +374,6 @@ public class RepositoryTest {
 		LocalRepository localRepository =
 			RepositoryServiceUtil.getLocalRepositoryImpl(repositoryId);
 
-		String name1 = RandomTestUtil.randomString();
-
 		FileEntry fileEntry = localRepository.addFileEntry(
 			TestPropsValues.getUserId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -388,8 +386,6 @@ public class RepositoryTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			new ServiceContext());
-
-		String name2 = RandomTestUtil.randomString();
 
 		FileEntry folderFileEntry = localRepository.addFileEntry(
 			TestPropsValues.getUserId(), folder.getFolderId(),

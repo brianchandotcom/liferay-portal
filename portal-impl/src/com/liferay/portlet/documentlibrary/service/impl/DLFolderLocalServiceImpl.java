@@ -47,6 +47,8 @@ import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.TreeModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.WorkflowDefinitionLink;
+import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
@@ -167,8 +169,16 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			description, false, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #deleteAllByGroup(long)}
+	 */
 	@Override
 	public void deleteAll(long groupId) throws PortalException {
+		deleteAllByGroup(groupId);
+	}
+
+	@Override
+	public void deleteAllByGroup(long groupId) throws PortalException {
 		Group group = groupLocalService.getGroup(groupId);
 
 		List<DLFolder> dlFolders = dlFolderPersistence.findByGroupId(groupId);
@@ -188,6 +198,51 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		try {
 			DLStoreUtil.deleteDirectory(
 				group.getCompanyId(), groupId, StringPool.BLANK);
+		}
+		catch (NoSuchDirectoryException nsde) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsde.getMessage());
+			}
+		}
+	}
+
+	@Override
+	public void deleteAllByRepository(long repositoryId)
+		throws PortalException {
+
+		Repository repository = RepositoryLocalServiceUtil.fetchRepository(
+			repositoryId);
+
+		long groupId = repositoryId;
+
+		if (repository != null) {
+			groupId = repository.getGroupId();
+		}
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		List<DLFolder> dlFolders = dlFolderPersistence.findByRepositoryId(
+			repositoryId);
+
+		for (DLFolder dlFolder : dlFolders) {
+			dlFolderLocalService.deleteFolder(dlFolder);
+		}
+
+		if (repository != null) {
+			dlFileEntryLocalService.deleteFileEntriesByRepository(
+				repository.getRepositoryId(), repository.getDlFolderId());
+		}
+		else {
+			dlFileEntryLocalService.deleteFileEntries(
+				groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+			dlFileShortcutLocalService.deleteFileShortcuts(
+				groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		}
+
+		try {
+			DLStoreUtil.deleteDirectory(
+				group.getCompanyId(), repositoryId, StringPool.BLANK);
 		}
 		catch (NoSuchDirectoryException nsde) {
 			if (_log.isDebugEnabled()) {
@@ -465,15 +520,14 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		return folderId;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getGroupFolderIds(long,
+	 *             long)}
+	 */
+	@Deprecated
 	@Override
 	public List<Long> getFolderIds(long groupId, long parentFolderId) {
-		List<Long> folderIds = new ArrayList<Long>();
-
-		folderIds.add(parentFolderId);
-
-		getSubfolderIds(folderIds, groupId, parentFolderId);
-
-		return folderIds;
+		return getGroupFolderIds(groupId, parentFolderId);
 	}
 
 	@Override
@@ -641,6 +695,32 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<Long> getGroupFolderIds(long groupId, long parentFolderId) {
+		List<Long> folderIds = new ArrayList<Long>();
+
+		folderIds.add(parentFolderId);
+
+		getGroupSubfolderIds(folderIds, groupId, parentFolderId);
+
+		return folderIds;
+	}
+
+	@Override
+	public void getGroupSubfolderIds(
+		List<Long> folderIds, long groupId, long folderId) {
+
+		List<DLFolder> dlFolders = dlFolderPersistence.findByG_P(
+			groupId, folderId);
+
+		for (DLFolder dlFolder : dlFolders) {
+			folderIds.add(dlFolder.getFolderId());
+
+			getGroupSubfolderIds(
+				folderIds, dlFolder.getGroupId(), dlFolder.getFolderId());
+		}
+	}
+
+	@Override
 	public DLFolder getMountFolder(long repositoryId) throws PortalException {
 		return dlFolderPersistence.findByR_M(repositoryId, true);
 	}
@@ -666,6 +746,19 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<Long> getRepositoryFolderIds(
+		long repositoryId, long parentFolderId) {
+
+		List<Long> folderIds = new ArrayList<Long>();
+
+		folderIds.add(parentFolderId);
+
+		getRepositorySubfolderIds(folderIds, repositoryId, parentFolderId);
+
+		return folderIds;
+	}
+
+	@Override
 	public List<DLFolder> getRepositoryFolders(
 		long repositoryId, int start, int end) {
 
@@ -678,18 +771,29 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void getSubfolderIds(
-		List<Long> folderIds, long groupId, long folderId) {
+	public void getRepositorySubfolderIds(
+		List<Long> folderIds, long repositoryId, long folderId) {
 
-		List<DLFolder> dlFolders = dlFolderPersistence.findByG_P(
-			groupId, folderId);
+		List<DLFolder> dlFolders = dlFolderPersistence.findByR_P(
+			repositoryId, folderId);
 
 		for (DLFolder dlFolder : dlFolders) {
 			folderIds.add(dlFolder.getFolderId());
 
-			getSubfolderIds(
-				folderIds, dlFolder.getGroupId(), dlFolder.getFolderId());
+			getRepositorySubfolderIds(
+				folderIds, dlFolder.getRepositoryId(), dlFolder.getFolderId());
 		}
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getGroupSubfolderIds(List,
+	 *             long, long)}
+	 */
+	@Override
+	public void getSubfolderIds(
+		List<Long> folderIds, long groupId, long folderId) {
+
+		getGroupSubfolderIds(folderIds, groupId, folderId);
 	}
 
 	@Override
@@ -1179,7 +1283,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		List<Long> subfolderIds = new ArrayList<Long>();
 
-		getSubfolderIds(
+		getGroupSubfolderIds(
 			subfolderIds, dlFolder.getGroupId(), dlFolder.getFolderId());
 
 		if (subfolderIds.contains(parentFolderId)) {

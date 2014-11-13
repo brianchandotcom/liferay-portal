@@ -697,6 +697,39 @@ public class DLFileEntryLocalServiceImpl
 		}
 	}
 
+	@Override
+	public void deleteFileEntriesByRepository(long repositoryId, long folderId)
+		throws PortalException {
+
+		deleteFileEntries(repositoryId, folderId, true);
+	}
+
+	@Override
+	public void deleteFileEntriesByRepository(
+			long repositoryId, long folderId, boolean includeTrashedEntries)
+		throws PortalException {
+
+		int count = dlFileEntryPersistence.countByR_F(repositoryId, folderId);
+
+		int pages = count / _DELETE_INTERVAL;
+
+		for (int i = 0; i <= pages; i++) {
+			int start = (i * _DELETE_INTERVAL);
+			int end = start + _DELETE_INTERVAL;
+
+			List<DLFileEntry> dlFileEntries = dlFileEntryPersistence.findByR_F(
+				repositoryId, folderId, start, end);
+
+			for (DLFileEntry dlFileEntry : dlFileEntries) {
+				if (includeTrashedEntries ||
+					!dlFileEntry.isInTrashExplicitly()) {
+
+					dlFileEntryLocalService.deleteFileEntry(dlFileEntry);
+				}
+			}
+		}
+	}
+
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(
@@ -1282,8 +1315,25 @@ public class DLFileEntryLocalServiceImpl
 		long groupId, long userId, long rootFolderId, int start, int end,
 		OrderByComparator<DLFileEntry> obc) {
 
-		List<Long> folderIds = dlFolderLocalService.getFolderIds(
-			groupId, rootFolderId);
+		return getGroupFileEntries(
+			groupId, userId, 0, rootFolderId, start, end, obc);
+	}
+
+	@Override
+	public List<DLFileEntry> getGroupFileEntries(
+		long groupId, long userId, long repositoryId, long rootFolderId,
+		int start, int end, OrderByComparator<DLFileEntry> obc) {
+
+		List<Long> folderIds = null;
+
+		if (repositoryId != 0) {
+			folderIds = dlFolderLocalService.getRepositoryFolderIds(
+				repositoryId, rootFolderId);
+		}
+		else {
+			folderIds = dlFolderLocalService.getGroupFolderIds(
+				groupId, rootFolderId);
+		}
 
 		if (folderIds.isEmpty()) {
 			return Collections.emptyList();
@@ -1293,13 +1343,29 @@ public class DLFileEntryLocalServiceImpl
 			new QueryDefinition<DLFileEntry>(
 				WorkflowConstants.STATUS_ANY, start, end, obc);
 
-		if (userId <= 0) {
-			return dlFileEntryFinder.findByG_F(
-				groupId, folderIds, queryDefinition);
+		if (repositoryId == 0) {
+			if (userId <= 0) {
+				return dlFileEntryFinder.findByG_F(
+					groupId, folderIds, queryDefinition);
+			}
+			else {
+				return dlFileEntryFinder.findByG_U_F(
+					groupId, userId, folderIds, queryDefinition);
+			}
 		}
 		else {
-			return dlFileEntryFinder.findByG_U_F(
-				groupId, userId, folderIds, queryDefinition);
+			List<Long> repositoryIds = new ArrayList<>();
+
+			repositoryIds.add(repositoryId);
+
+			if (userId <= 0) {
+				return dlFileEntryFinder.findByG_R_F(
+					groupId, repositoryIds, folderIds, queryDefinition);
+			}
+			else {
+				return dlFileEntryFinder.findByG_U_R_F(
+					groupId, userId, repositoryIds, folderIds, queryDefinition);
+			}
 		}
 	}
 

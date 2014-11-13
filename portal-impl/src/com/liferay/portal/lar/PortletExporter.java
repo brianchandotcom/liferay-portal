@@ -1258,6 +1258,11 @@ public class PortletExporter {
 		@Override
 		public Void call() throws PortalException {
 			Group group = GroupLocalServiceUtil.getGroup(_groupId);
+
+			if (group.isStagedRemotely()) {
+				return null;
+			}
+
 			Layout layout = LayoutLocalServiceUtil.fetchLayout(_plid);
 
 			if (ExportImportThreadLocal.isStagingInProcess() &&

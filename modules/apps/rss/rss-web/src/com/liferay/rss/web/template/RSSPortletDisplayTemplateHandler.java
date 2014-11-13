@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.rss.RSSFeed;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
+import com.liferay.rss.web.util.RSSPortletKeys;
 
 import java.util.List;
 import java.util.Locale;
@@ -42,7 +42,7 @@ public class RSSPortletDisplayTemplateHandler
 	@Override
 	public String getName(Locale locale) {
 		String portletTitle = PortalUtil.getPortletTitle(
-			PortletKeys.RSS, locale);
+			RSSPortletKeys.RSS, locale);
 
 		return portletTitle.concat(StringPool.SPACE).concat(
 			LanguageUtil.get(locale, "template"));
@@ -50,7 +50,7 @@ public class RSSPortletDisplayTemplateHandler
 
 	@Override
 	public String getResourceName() {
-		return PortletKeys.RSS;
+		return RSSPortletKeys.RSS;
 	}
 
 	@Override

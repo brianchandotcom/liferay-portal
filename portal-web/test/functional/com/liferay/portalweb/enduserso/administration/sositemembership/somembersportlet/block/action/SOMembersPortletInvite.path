@@ -61,6 +61,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MEMBERS_INVITE_VIEW_MORE_LINK</td>
+	<td>//div[@class='more-results']/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

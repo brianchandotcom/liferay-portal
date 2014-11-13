@@ -7,7 +7,7 @@
 	text-align: center;
 
 	&.drop-enabled, &.drop-active {
-		outline: 1px dashed #CCC;
+		outline: 2px dashed rgba(176, 180, 187, 0.5);
 	}
 
 	&.drop-active {

@@ -12,37 +12,18 @@
  * details.
  */
 
-package com.liferay.counter.service.util;
+package com.liferay.counter.service.persistence.impl;
 
 import com.liferay.portal.kernel.io.BigEndianCodec;
 
 /**
  * @author Michael C. Han
+ * @author Shuyang Zhou
  */
-public class MultiDataCenterCounterIncrementerImpl
-	implements MultiDataCenterCounterIncrementer {
+public class MultiDataCenterCounterFinderImpl extends CounterFinderImpl {
 
-	public long getMultiClusterSafeValue(long value) {
-		if (_multiDataCenterBits == 0) {
-			return value;
-		}
-
-		byte[] bytes = new byte[8];
-
-		BigEndianCodec.putLong(bytes, 0, value);
-
-		bytes[0] =
-			(byte)((bytes[0] >>> _multiDataCenterBits) +
-			(byte)(_multiDataCenterDeploymentId <<
-				(_MAXIMUM_BYTE_SHIFTS - _multiDataCenterBits)));
-
-		return BigEndianCodec.getLong(bytes, 0);
-	}
-
-	public void initialize(int dataCenterCount, int dataCenterDeploymentId) {
-		if (dataCenterCount <= 1) {
-			return;
-		}
+	public MultiDataCenterCounterFinderImpl(
+		int dataCenterCount, int dataCenterDeploymentId) {
 
 		_multiDataCenterBits = getNumberBits(dataCenterCount);
 
@@ -63,6 +44,11 @@ public class MultiDataCenterCounterIncrementerImpl
 		_multiDataCenterDeploymentId = (byte)dataCenterDeploymentId;
 	}
 
+	@Override
+	public long increment(String name, int size) {
+		return getMultiClusterSafeValue(super.increment(name, size));
+	}
+
 	protected static int getNumberBits(int value) {
 		if (value == 0) {
 			return 0;
@@ -71,9 +57,22 @@ public class MultiDataCenterCounterIncrementerImpl
 		return 32 - Integer.numberOfLeadingZeros(value - 1);
 	}
 
+	protected long getMultiClusterSafeValue(long value) {
+		byte[] bytes = new byte[8];
+
+		BigEndianCodec.putLong(bytes, 0, value);
+
+		bytes[0] =
+			(byte)((bytes[0] >>> _multiDataCenterBits) +
+			(byte)(_multiDataCenterDeploymentId <<
+				(_MAXIMUM_BYTE_SHIFTS - _multiDataCenterBits)));
+
+		return BigEndianCodec.getLong(bytes, 0);
+	}
+
 	private static final int _MAXIMUM_BYTE_SHIFTS = 7;
 
-	private int _multiDataCenterBits;
-	private byte _multiDataCenterDeploymentId;
+	private final int _multiDataCenterBits;
+	private final byte _multiDataCenterDeploymentId;
 
 }

@@ -403,21 +403,6 @@
 		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<portlet>
-		<portlet-name>39</portlet-name>
-		<icon>/html/icons/rss.png</icon>
-		<struts-path>rss</struts-path>
-		<configuration-action-class>com.liferay.portlet.rss.action.ConfigurationActionImpl</configuration-action-class>
-		<template-handler>com.liferay.portlet.rss.template.RSSPortletDisplayTemplateHandler</template-handler>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
-		<instanceable>true</instanceable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>0</render-weight>
-		<header-portlet-css>/html/portlet/rss/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-rss</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>47</portlet-name>
 		<icon>/html/icons/default.png</icon>
 		<struts-path>hello_world</struts-path>

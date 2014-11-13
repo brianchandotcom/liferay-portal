@@ -385,47 +385,6 @@
 		<supported-public-render-parameter>title</supported-public-render-parameter>
 	</portlet>
 	<portlet>
-		<portlet-name>39</portlet-name>
-		<display-name>RSS</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
-		<init-param>
-			<name>config-template</name>
-			<value>/html/portlet/rss/configuration.jsp</value>
-		</init-param>
-		<init-param>
-			<name>template-path</name>
-			<value>/html/portlet/rss/</value>
-		</init-param>
-		<init-param>
-			<name>view-action</name>
-			<value>/rss/view</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<portlet-preferences>
-			<preference>
-				<name>entriesPerFeed</name>
-				<value>4</value>
-			</preference>
-			<preference>
-				<name>urls</name>
-				<value>http://www.liferay.com/community/blogs/-/blogs_stream/community/rss</value>
-				<value>http://rss.news.yahoo.com/rss/tech</value>
-				<value>http://partners.userland.com/nytRss/technology.xml</value>
-			</preference>
-			<preferences-validator>com.liferay.portlet.rss.RSSPreferencesValidator</preferences-validator>
-		</portlet-preferences>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
-	</portlet>
-	<portlet>
 		<portlet-name>47</portlet-name>
 		<display-name>Hello World</display-name>
 		<portlet-class>com.liferay.portlet.helloworld.HelloWorldPortlet</portlet-class>

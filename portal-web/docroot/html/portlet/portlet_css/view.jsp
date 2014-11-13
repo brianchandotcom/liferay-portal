@@ -24,6 +24,10 @@ String tabs1Names = "portlet-configuration,text-styles,background-styles,border-
 if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 	tabs1Names = tabs1Names + ",wap-styling";
 }
+
+DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
+
+decimalFormatSymbols.setDecimalSeparator('.');
 %>
 
 <div id="lfr-look-and-feel">
@@ -115,7 +119,7 @@ if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 							<aui:select label="size" name="lfr-font-size" showEmptyOption="<%= true %>">
 
 								<%
-								DecimalFormat decimalFormat = new DecimalFormat("#.##em");
+								DecimalFormat decimalFormat = new DecimalFormat("#.##em", decimalFormatSymbols);
 
 								for (double i = 0.1; i <= 12; i += 0.1) {
 									String value = decimalFormat.format(i);
@@ -150,7 +154,7 @@ if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 							<aui:select label="word-spacing" name="lfr-font-space" showEmptyOption="<%= true %>">
 
 								<%
-								DecimalFormat decimalFormat = new DecimalFormat("#.##em");
+								DecimalFormat decimalFormat = new DecimalFormat("#.##em", decimalFormatSymbols);
 
 								for (double i = -1; i <= 1; i += 0.05) {
 									String value = decimalFormat.format(i);
@@ -171,7 +175,7 @@ if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 							<aui:select label="line-height" name="lfr-font-leading" showEmptyOption="<%= true %>">
 
 								<%
-								DecimalFormat decimalFormat = new DecimalFormat("#.##em");
+								DecimalFormat decimalFormat = new DecimalFormat("#.##em", decimalFormatSymbols);
 
 								for (double i = 0.1; i <= 12; i += 0.1) {
 									String value = decimalFormat.format(i);

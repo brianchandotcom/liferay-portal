@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.util.Normalizer;
 
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -220,8 +219,6 @@ public class AUIUtil {
 	}
 
 	public static String normalizeId(String name) {
-		name = Normalizer.normalizeToAscii(name);
-
 		Matcher matcher = _friendlyURLPattern.matcher(name);
 
 		return matcher.replaceAll(StringPool.DASH);

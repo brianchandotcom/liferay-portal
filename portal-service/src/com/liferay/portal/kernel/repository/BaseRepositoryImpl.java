@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.repository.capabilities.CapabilityProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilderUtil;
+import com.liferay.portal.kernel.repository.util.RepositoryUserUtil;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -29,14 +30,10 @@ import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.RepositoryEntry;
-import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.service.BaseServiceImpl;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.RepositoryEntryLocalService;
 import com.liferay.portal.service.ServiceContext;
@@ -463,8 +460,9 @@ public abstract class BaseRepositoryImpl
 		throws PortalException {
 
 		return updateFileEntry(
-			_getUserId(), fileEntryId, sourceFileName, mimeType, title,
-			description, changeLog, majorVersion, file, serviceContext);
+			RepositoryUserUtil.getUserId(), fileEntryId, sourceFileName,
+			mimeType, title, description, changeLog, majorVersion, file,
+			serviceContext);
 	}
 
 	/**
@@ -482,8 +480,9 @@ public abstract class BaseRepositoryImpl
 		throws PortalException {
 
 		return updateFileEntry(
-			_getUserId(), fileEntryId, sourceFileName, mimeType, title,
-			description, changeLog, majorVersion, is, size, serviceContext);
+			RepositoryUserUtil.getUserId(), fileEntryId, sourceFileName,
+			mimeType, title, description, changeLog, majorVersion, is, size,
+			serviceContext);
 	}
 
 	@Override
@@ -541,34 +540,6 @@ public abstract class BaseRepositoryImpl
 	protected DLAppHelperLocalService dlAppHelperLocalService;
 	protected RepositoryEntryLocalService repositoryEntryLocalService;
 	protected UserLocalService userLocalService;
-
-	/**
-	 * See {@link com.liferay.portal.service.BaseServiceImpl#getUserId()}
-	 */
-	private long _getUserId() throws PrincipalException {
-		String name = PrincipalThreadLocal.getName();
-
-		if (name == null) {
-			throw new PrincipalException();
-		}
-
-		if (Validator.isNull(name)) {
-			throw new PrincipalException("Principal is null");
-		}
-		else {
-			for (int i = 0; i < BaseServiceImpl.ANONYMOUS_NAMES.length; i++) {
-				if (StringUtil.equalsIgnoreCase(
-						name, BaseServiceImpl.ANONYMOUS_NAMES[i])) {
-
-					throw new PrincipalException(
-						"Principal cannot be " +
-							BaseServiceImpl.ANONYMOUS_NAMES[i]);
-				}
-			}
-		}
-
-		return GetterUtil.getLong(name);
-	}
 
 	private long _companyId;
 	private long _groupId;

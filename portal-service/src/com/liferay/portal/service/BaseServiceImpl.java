@@ -90,8 +90,7 @@ public abstract class BaseServiceImpl implements BaseService {
 
 	/**
 	 * See {@link
-	 * com.liferay.portal.repository.liferayrepository.LiferayRepository#_getUserId(
-	 * )}
+	 * com.liferay.portal.kernel.repository.util.RepositoryUserUtil#getUserId()}
 	 */
 	public long getUserId() throws PrincipalException {
 		String name = PrincipalThreadLocal.getName();

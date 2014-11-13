@@ -17,14 +17,9 @@ package com.liferay.portal.repository.liferayrepository;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.repository.util.RepositoryUserUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.util.RepositoryWrapper;
-import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.service.BaseServiceImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
@@ -56,7 +51,8 @@ public class LiferayWorkflowRepositoryWrapper extends RepositoryWrapper {
 
 		super.revertFileEntry(fileEntryId, version, serviceContext);
 
-		_startWorkflowInstance(_getUserId(), dlFileVersion, serviceContext);
+		_startWorkflowInstance(
+			RepositoryUserUtil.getUserId(), dlFileVersion, serviceContext);
 	}
 
 	@Override
@@ -112,8 +108,9 @@ public class LiferayWorkflowRepositoryWrapper extends RepositoryWrapper {
 		throws PortalException {
 
 		return updateFileEntry(
-			_getUserId(), fileEntryId, sourceFileName, mimeType, title,
-			description, changeLog, majorVersion, file, serviceContext);
+			RepositoryUserUtil.getUserId(), fileEntryId, sourceFileName,
+			mimeType, title, description, changeLog, majorVersion, file,
+			serviceContext);
 	}
 
 	/**
@@ -131,36 +128,9 @@ public class LiferayWorkflowRepositoryWrapper extends RepositoryWrapper {
 		throws PortalException {
 
 		return updateFileEntry(
-			_getUserId(), fileEntryId, sourceFileName, mimeType, title,
-			description, changeLog, majorVersion, is, size, serviceContext);
-	}
-
-	/**
-	 * See {@link com.liferay.portal.service.BaseServiceImpl#getUserId()}
-	 */
-	private long _getUserId() throws PrincipalException {
-		String name = PrincipalThreadLocal.getName();
-
-		if (name == null) {
-			throw new PrincipalException();
-		}
-
-		if (Validator.isNull(name)) {
-			throw new PrincipalException("Principal is null");
-		}
-		else {
-			for (int i = 0; i < BaseServiceImpl.ANONYMOUS_NAMES.length; i++) {
-				if (StringUtil.equalsIgnoreCase(
-						name, BaseServiceImpl.ANONYMOUS_NAMES[i])) {
-
-					throw new PrincipalException(
-						"Principal cannot be " +
-							BaseServiceImpl.ANONYMOUS_NAMES[i]);
-				}
-			}
-		}
-
-		return GetterUtil.getLong(name);
+			RepositoryUserUtil.getUserId(), fileEntryId, sourceFileName,
+			mimeType, title, description, changeLog, majorVersion, is, size,
+			serviceContext);
 	}
 
 	/**

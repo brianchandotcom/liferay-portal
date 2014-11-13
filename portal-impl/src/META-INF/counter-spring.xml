@@ -24,8 +24,8 @@
 		<property name="dataSource" ref="counterDataSource" />
 		<property name="sessionFactory" ref="counterSessionFactory" />
 	</bean>
-	<bean id="com.liferay.counter.service.persistence.CounterFinder" class="com.liferay.counter.service.persistence.impl.CounterFinderImpl">
-		<property name="dataSource" ref="counterDataSource" />
-		<property name="sessionFactory" ref="counterSessionFactory" />
+	<bean id="com.liferay.counter.service.persistence.CounterFinder" class="com.liferay.counter.service.persistence.impl.CounterFinderFactory" factory-method="createCounterFinder">
+		<constructor-arg ref="counterDataSource" />
+		<constructor-arg ref="counterSessionFactory" />
 	</bean>
 </beans>

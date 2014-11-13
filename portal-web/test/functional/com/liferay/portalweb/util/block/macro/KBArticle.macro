@@ -93,6 +93,13 @@
 					<execute action="CPKnowledgebaseadminAddarticle#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter valid content." />
 				</then>
 			</elseif>
+			<elseif>
+				<equals arg1="${kbArticleDuplicateFriendlyURL}" arg2="true" />
+				<then>
+					<execute action="CPKnowledgebaseadminAddarticle#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+					<execute action="CPKnowledgebaseadminAddarticle#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter a unique friendly URL." />
+				</then>
+			</elseif>
 			<else>
 				<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</else>

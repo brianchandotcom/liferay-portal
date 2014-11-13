@@ -98,31 +98,22 @@ if (!rankingNamesList.isEmpty()) {
 		</div>
 	</c:if>
 
-	<aui:script use="aui-io-plugin-deprecated">
-		var searchTopUsers = A.one('#<portlet:namespace />searchTopUsers');
+	<aui:script sandbox="<%= true %>">
+		var searchTopUsers = $('#<portlet:namespace />searchTopUsers');
 
-		if (searchTopUsers) {
-			var parent = searchTopUsers.ancestor();
+		var parent = searchTopUsers.parent();
 
-			parent.plug(
-				A.Plugin.IO,
-				{
-					autoLoad: false
-				}
-			);
+		searchTopUsers.on(
+			'click',
+			'a',
+			function(event) {
+				event.preventDefault();
 
-			searchTopUsers.all('a').on(
-				'click',
-				function(event) {
-					event.preventDefault();
+				var uri = $(event.currentTarget).attr('href').replace(/p_p_state=normal/i, 'p_p_state=exclusive');
 
-					var uri = event.currentTarget.get('href').replace(/p_p_state=normal/i, 'p_p_state=exclusive');
-
-					parent.io.set('uri', uri);
-					parent.io.start();
-				}
-			);
-		}
+				parent.load(uri);
+			}
+		);
 	</aui:script>
 
 <%

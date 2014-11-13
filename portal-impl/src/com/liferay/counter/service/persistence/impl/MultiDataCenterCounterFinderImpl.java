@@ -25,7 +25,7 @@ public class MultiDataCenterCounterFinderImpl extends CounterFinderImpl {
 	public MultiDataCenterCounterFinderImpl(
 		int dataCenterCount, int dataCenterDeploymentId) {
 
-		_multiDataCenterBits = getNumberBits(dataCenterCount);
+		_multiDataCenterBits = getNumberBits(dataCenterCount - 1);
 
 		if (_multiDataCenterBits > _MAXIMUM_BYTE_SHIFTS) {
 			throw new IllegalArgumentException("Cannot shift more than 8 bits");
@@ -54,7 +54,7 @@ public class MultiDataCenterCounterFinderImpl extends CounterFinderImpl {
 			return 0;
 		}
 
-		return 32 - Integer.numberOfLeadingZeros(value - 1);
+		return 32 - Integer.numberOfLeadingZeros(value);
 	}
 
 	protected long getMultiClusterSafeValue(long value) {

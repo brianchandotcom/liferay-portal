@@ -68,7 +68,8 @@ public class RepositoryTest {
 
 		Repository dlRepository = RepositoryLocalServiceUtil.addRepository(
 			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1", "Test 1",
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), true,
 			new ServiceContext());
 
@@ -101,7 +102,8 @@ public class RepositoryTest {
 
 		Repository repository = RepositoryLocalServiceUtil.addRepository(
 			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1", "Test 1",
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), true,
 			new ServiceContext());
 
@@ -109,14 +111,15 @@ public class RepositoryTest {
 
 		DLFolder dlFolder = DLFolderServiceUtil.addFolder(
 			_group.getGroupId(), _group.getGroupId(), false,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder", "Folder",
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			new ServiceContext());
 
 		repository = RepositoryLocalServiceUtil.addRepository(
 			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
-			dlFolder.getFolderId(), "Test 2", "Test 2",
-			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), true,
-			new ServiceContext());
+			dlFolder.getFolderId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), PortletKeys.DOCUMENT_LIBRARY,
+			new UnicodeProperties(), true, new ServiceContext());
 
 		repositoryIds[1] = repository.getRepositoryId();
 
@@ -144,7 +147,8 @@ public class RepositoryTest {
 
 		Repository dlRepository = RepositoryLocalServiceUtil.addRepository(
 			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1", "Test 1",
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), true,
 			new ServiceContext());
 
@@ -189,7 +193,8 @@ public class RepositoryTest {
 
 		RepositoryLocalServiceUtil.addRepository(
 			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1", "Test 1",
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), true,
 			new ServiceContext());
 
@@ -208,7 +213,8 @@ public class RepositoryTest {
 
 		RepositoryLocalServiceUtil.addRepository(
 			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1", "Test 1",
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), false,
 			new ServiceContext());
 
@@ -217,6 +223,148 @@ public class RepositoryTest {
 			DLFolderServiceUtil.getMountFoldersCount(
 				_group.getGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+	}
+
+	@Test
+	public void
+			testRepositoryFileEntriesAreDeletedWhenDeletingLiferayRepository()
+		throws Exception {
+
+		long classNameId = PortalUtil.getClassNameId(LiferayRepository.class);
+
+		long[] fileEntryIds = new long[4];
+
+		long[] folderIds = new long[2];
+
+		// Add folders and files
+
+		long[] entryIds = populateRepository(_group.getGroupId());
+
+		fileEntryIds[0] = entryIds[0];
+		fileEntryIds[1] = entryIds[2];
+		folderIds[0] = entryIds[1];
+
+		Repository dlRepository2 = RepositoryLocalServiceUtil.addRepository(
+			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), true,
+			new ServiceContext());
+
+		entryIds = populateRepository(dlRepository2.getRepositoryId());
+
+		fileEntryIds[2] = entryIds[0];
+		fileEntryIds[3] = entryIds[2];
+		folderIds[1] = entryIds[1];
+
+		// Delete repositories
+
+		DLAppLocalServiceUtil.deleteAll(_group.getGroupId());
+
+		try {
+			LocalRepository localRepository =
+				RepositoryServiceUtil.getLocalRepositoryImpl(
+					dlRepository2.getRepositoryId());
+
+			localRepository.getFileEntry(fileEntryIds[0]);
+
+			localRepository.getFileEntry(fileEntryIds[1]);
+
+			Assert.fail(
+				"Should be able to get file entry from repository " +
+					dlRepository2.getRepositoryId());
+		}
+		catch (Exception e) {
+		}
+
+		try {
+			LocalRepository localRepository =
+				RepositoryServiceUtil.getLocalRepositoryImpl(
+					dlRepository2.getRepositoryId());
+
+			localRepository.getFileEntry(fileEntryIds[2]);
+
+			localRepository.getFileEntry(fileEntryIds[3]);
+		}
+		catch (Exception e) {
+			Assert.fail(
+				"Should not be able to get file entry from repository " +
+					dlRepository2.getRepositoryId());
+		}
+	}
+
+	@Test
+	public void testRepositoryFileEntriesAreDeletedWhenDeletingRepository()
+		throws Exception {
+
+		long classNameId = PortalUtil.getClassNameId(LiferayRepository.class);
+
+		Repository dlRepository1 = RepositoryLocalServiceUtil.addRepository(
+			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), true,
+			new ServiceContext());
+
+		long[] fileEntryIds = new long[4];
+
+		long[] folderIds = new long[2];
+
+		// Add folders and files
+
+		long[] entryIds = populateRepository(dlRepository1.getRepositoryId());
+
+		fileEntryIds[0] = entryIds[0];
+		fileEntryIds[1] = entryIds[2];
+		folderIds[0] = entryIds[1];
+
+		Repository dlRepository2 = RepositoryLocalServiceUtil.addRepository(
+			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), true,
+			new ServiceContext());
+
+		entryIds = populateRepository(dlRepository2.getRepositoryId());
+
+		fileEntryIds[2] = entryIds[0];
+		fileEntryIds[3] = entryIds[2];
+		folderIds[1] = entryIds[1];
+
+		// Delete repositories
+
+		DLAppLocalServiceUtil.deleteAll(dlRepository1.getRepositoryId());
+
+		try {
+			LocalRepository localRepository =
+				RepositoryServiceUtil.getLocalRepositoryImpl(
+					dlRepository2.getRepositoryId());
+
+			localRepository.getFileEntry(fileEntryIds[0]);
+
+			localRepository.getFileEntry(fileEntryIds[1]);
+
+			Assert.fail(
+				"Should be able to get file entry from repository " +
+					dlRepository2.getRepositoryId());
+		}
+		catch (Exception e) {
+		}
+
+		try {
+			LocalRepository localRepository =
+				RepositoryServiceUtil.getLocalRepositoryImpl(
+					dlRepository2.getRepositoryId());
+
+			localRepository.getFileEntry(fileEntryIds[2]);
+
+			localRepository.getFileEntry(fileEntryIds[3]);
+		}
+		catch (Exception e) {
+			Assert.fail(
+				"Should not be able to get file entry from repository " +
+					dlRepository2.getRepositoryId());
+		}
 	}
 
 	protected long[] populateRepository(long repositoryId) throws Exception {
@@ -230,21 +378,23 @@ public class RepositoryTest {
 
 		FileEntry fileEntry = localRepository.addFileEntry(
 			TestPropsValues.getUserId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name1,
-			ContentTypes.TEXT_PLAIN, name1, StringPool.BLANK, StringPool.BLANK,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			inputStream, _TEST_CONTENT.length(), new ServiceContext());
 
 		Folder folder = localRepository.addFolder(
 			TestPropsValues.getUserId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			String.valueOf(repositoryId), String.valueOf(repositoryId),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			new ServiceContext());
 
 		String name2 = RandomTestUtil.randomString();
 
 		FileEntry folderFileEntry = localRepository.addFileEntry(
-			TestPropsValues.getUserId(), folder.getFolderId(), name2,
-			ContentTypes.TEXT_PLAIN, name2, StringPool.BLANK, StringPool.BLANK,
+			TestPropsValues.getUserId(), folder.getFolderId(),
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			inputStream, _TEST_CONTENT.length(), new ServiceContext());
 
 		return new long[] {

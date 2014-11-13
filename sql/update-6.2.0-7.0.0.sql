@@ -1,3 +1,4 @@
+alter table AssetEntry add listable BOOLEAN default true;
 alter table BlogsEntry add subtitle STRING null;
 alter table BlogsEntry add coverImageFileEntryId LONG;
 alter table BlogsEntry add coverImageURL STRING null;

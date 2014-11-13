@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.PortletDataHandlerStatusMessageSenderUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -60,6 +61,7 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletItem;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletItemLocalServiceUtil;
@@ -88,6 +90,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.Callable;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -241,9 +244,11 @@ public class PortletExporter {
 			DateRange adjustedDateRange = new DateRange(
 				startDate, portletDataContext.getEndDate());
 
-			ExportImportDateUtil.updateLastPublishDate(
-				portletId, jxPortletPreferences, adjustedDateRange,
-				portletDataContext.getEndDate());
+			TransactionCommitCallbackRegistryUtil.registerCallback(
+				new UpdatePortletLastPublishDateCallable(
+					adjustedDateRange, portletDataContext.getEndDate(),
+					portletDataContext.getGroupId(), layout.getPlid(),
+					portletId));
 		}
 	}
 
@@ -1246,5 +1251,66 @@ public class PortletExporter {
 		DeletionSystemEventExporter.getInstance();
 	private final PermissionExporter _permissionExporter =
 		PermissionExporter.getInstance();
+
+	private class UpdatePortletLastPublishDateCallable
+		implements Callable<Void> {
+
+		@Override
+		public Void call() throws PortalException {
+			Group group = GroupLocalServiceUtil.getGroup(_groupId);
+
+			if (group.isStagedRemotely()) {
+				return null;
+			}
+
+			Layout layout = LayoutLocalServiceUtil.fetchLayout(_plid);
+
+			if (ExportImportThreadLocal.isStagingInProcess() &&
+				group.hasStagingGroup()) {
+
+				group = group.getStagingGroup();
+
+				if (layout != null) {
+					layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+						layout.getUuid(), group.getGroupId(),
+						layout.isPrivateLayout());
+				}
+			}
+
+			if (layout == null) {
+				layout = new LayoutImpl();
+
+				layout.setCompanyId(group.getCompanyId());
+				layout.setGroupId(group.getGroupId());
+			}
+
+			javax.portlet.PortletPreferences jxPortletPreferences =
+				PortletPreferencesFactoryUtil.getStrictPortletSetup(
+					layout, _portletId);
+
+			ExportImportDateUtil.updateLastPublishDate(
+				_portletId, jxPortletPreferences, _dateRange, _endDate);
+
+			return null;
+		}
+
+		private UpdatePortletLastPublishDateCallable(
+			DateRange dateRange, Date endDate, long groupId, long plid,
+			String portletId) {
+
+			_dateRange = dateRange;
+			_endDate = endDate;
+			_groupId = groupId;
+			_plid = plid;
+			_portletId = portletId;
+		}
+
+		private final DateRange _dateRange;
+		private final Date _endDate;
+		private final long _groupId;
+		private final long _plid;
+		private final String _portletId;
+
+	}
 
 }

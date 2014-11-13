@@ -18,12 +18,11 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImportDateUtil;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.lar.MissingReferences;
-import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.staging.StagingUtil;
-import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -38,7 +37,6 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.StagingLocalServiceUtil;
-import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
 import com.liferay.portal.spring.transaction.TransactionalCallableUtil;
 
 import java.io.File;
@@ -46,8 +44,6 @@ import java.io.Serializable;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
-
-import org.springframework.transaction.interceptor.TransactionAttribute;
 
 /**
  * @author Julio Camarero
@@ -89,6 +85,8 @@ public class LayoutStagingBackgroundTaskExecutor
 		MissingReferences missingReferences = null;
 
 		try {
+			ExportImportThreadLocal.setLayoutStagingInProcess(true);
+
 			Callable<MissingReferences> layoutStagingCallable =
 				new LayoutStagingCallable(
 					backgroundTask.getBackgroundTaskId(),
@@ -96,7 +94,7 @@ public class LayoutStagingBackgroundTaskExecutor
 					userId);
 
 			missingReferences = TransactionalCallableUtil.call(
-				_transactionAttribute, layoutStagingCallable);
+				transactionAttribute, layoutStagingCallable);
 		}
 		catch (Throwable t) {
 			if (_log.isDebugEnabled()) {
@@ -120,6 +118,8 @@ public class LayoutStagingBackgroundTaskExecutor
 			throw new SystemException(t);
 		}
 		finally {
+			ExportImportThreadLocal.setLayoutStagingInProcess(false);
+
 			StagingUtil.unlockGroup(targetGroupId);
 		}
 
@@ -162,10 +162,6 @@ public class LayoutStagingBackgroundTaskExecutor
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutStagingBackgroundTaskExecutor.class);
 
-	private final TransactionAttribute _transactionAttribute =
-		TransactionAttributeBuilder.build(
-			Propagation.REQUIRED, new Class<?>[] {Exception.class});
-
 	private class LayoutStagingCallable implements Callable<MissingReferences> {
 
 		@Override
@@ -207,26 +203,6 @@ public class LayoutStagingBackgroundTaskExecutor
 					_userId, _targetGroupId, privateLayout, parameterMap, file);
 
 				initLayoutSetBranches(_userId, _sourceGroupId, _targetGroupId);
-
-				boolean updateLastPublishDate = MapUtil.getBoolean(
-					parameterMap,
-					PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE);
-
-				if (updateLastPublishDate) {
-					Group sourceGroup = GroupLocalServiceUtil.getGroup(
-						_sourceGroupId);
-
-					if (!sourceGroup.hasStagingGroup()) {
-						ExportImportDateUtil.updateLastPublishDate(
-							_sourceGroupId, privateLayout, dateRange,
-							dateRange.getEndDate());
-					}
-					else {
-						ExportImportDateUtil.updateLastPublishDate(
-							_targetGroupId, privateLayout, dateRange,
-							dateRange.getEndDate());
-					}
-				}
 			}
 			finally {
 				FileUtil.delete(file);

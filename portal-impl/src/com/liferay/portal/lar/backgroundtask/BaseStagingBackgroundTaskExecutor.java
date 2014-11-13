@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lar.MissingReference;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.LayoutSet;
@@ -33,11 +34,14 @@ import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
 
 import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.springframework.transaction.interceptor.TransactionAttribute;
 
 /**
  * @author Mate Thurzo
@@ -142,5 +146,9 @@ public abstract class BaseStagingBackgroundTaskExecutor
 
 		return backgroundTaskResult;
 	}
+
+	protected TransactionAttribute transactionAttribute =
+		TransactionAttributeBuilder.build(
+			Propagation.REQUIRED, new Class<?>[]{Exception.class});
 
 }

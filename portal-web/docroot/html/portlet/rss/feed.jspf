@@ -15,241 +15,102 @@
 --%>
 
 <%
-SyndFeed feed = null;
-
-try {
-	ObjectValuePair ovp = RSSUtil.getFeed(url);
-
-	feed = (SyndFeed)ovp.getValue();
-
-	if (Validator.isNull(title)) {
-		title = feed.getTitle();
-	}
-}
-catch (Exception e) {
-}
+SyndFeed feed = rssFeed.getFeed();
 %>
 
 <c:choose>
-	<c:when test="<%= (Validator.isNotNull(url)) && (feed != null) %>">
-		<div class="feed">
+	<c:when test="<%= Validator.isNotNull(rssFeed.getUrl()) && (feed != null) %>">
+		<div class="feed <%= last ? "last" : StringPool.BLANK %>">
 
 			<%
-			String baseURL = null;
-
-			String feedLink = feed.getLink();
-
-			if (Validator.isNull(feedLink) || !HttpUtil.hasDomain(feedLink)) {
-				baseURL = HttpUtil.getProtocol(url).concat(Http.PROTOCOL_DELIMITER).concat(HttpUtil.getDomain(url));
-
-				if (Validator.isNotNull(feedLink)) {
-					feedLink = baseURL.concat(feedLink);
-				}
-				else {
-					feedLink = baseURL;
-				}
-			}
-			else {
-				baseURL = HttpUtil.getProtocol(feedLink).concat(Http.PROTOCOL_DELIMITER).concat(HttpUtil.getDomain(feedLink));
-			}
-
-			Date publishedDate = feed.getPublishedDate();
-			String description = feed.getDescription();
-
 			SyndImage feedImage = feed.getImage();
-
-			String feedImageLink = StringPool.BLANK;
-			String feedImageURL = StringPool.BLANK;
-
-			if (feedImage != null) {
-				feedImageLink = feedImage.getLink();
-
-				if (!HttpUtil.hasDomain(feedImageLink)) {
-					feedImageLink = baseURL + feedImageLink;
-				}
-
-				feedImageURL = feedImage.getUrl();
-
-				if (!HttpUtil.hasDomain(feedImageURL)) {
-					feedImageURL = baseURL + feedImageURL;
-				}
-			}
 			%>
 
-			<c:if test="<%= showFeedTitle %>">
+			<c:if test="<%= (feedImage != null) && rssDisplayContext.isShowFeedImage() %>">
+				<div class="feed-image">
+					<img alt="<%= HtmlUtil.escapeAttribute(feedImage.getDescription()) %>" src="<%= HtmlUtil.escapeHREF(rssFeed.getFeedImageURL()) %>" />
+				</div>
+			</c:if>
+
+			<c:if test="<%= rssDisplayContext.isShowFeedTitle() %>">
 				<div class="feed-title">
-					<aui:a cssClass="icon-rss" href="<%= _escapeJavaScriptLink(feedLink) %>" target="_blank"><%= HtmlUtil.escape(title) %></aui:a>
+					<aui:a href="<%= RSSUtil.escapeJavaScriptLink(rssFeed.getFeedLink()) %>" target="_blank"><%= HtmlUtil.escape(rssFeed.getTitle()) %></aui:a>
 				</div>
 			</c:if>
 
-			<c:if test="<%= (publishedDate != null) && showFeedPublishedDate %>">
+			<c:if test="<%= (feed.getPublishedDate() != null) && rssDisplayContext.isShowFeedDescription() %>">
 				<div class="feed-date feed-published-date">
-					<aui:a cssClass="icon-calendar" href="<%= _escapeJavaScriptLink(feedLink) %>" target="_blank"><%= dateFormatDateTime.format(publishedDate) %></aui:a>
+					<liferay-ui:icon
+						iconCssClass="icon-calendar"
+						label="<%= true %>"
+						message="<%= dateFormatDateTime.format(feed.getPublishedDate()) %>"
+					/>
 				</div>
 			</c:if>
 
-			<c:if test="<%= Validator.isNotNull(description) && showFeedDescription %>">
+			<c:if test="<%= Validator.isNotNull(feed.getDescription()) && rssDisplayContext.isShowFeedDescription() %>">
 				<div class="feed-description">
-					<%= HtmlUtil.escape(description) %>
+					<%= HtmlUtil.escape(feed.getDescription()) %>
 				</div>
 			</c:if>
 
-			<c:if test="<%= (feedImage != null) && showFeedImage %>">
-				<div class="feed-image-<%= feedImageAlignment %>">
-					<aui:a href="<%= _escapeJavaScriptLink(feedImageLink) %>" target="_blank" title="<%= HtmlUtil.escapeAttribute(feedImage.getTitle()) %>"><img alt="<%= HtmlUtil.escapeAttribute(feedImage.getDescription()) %>" src="<%= HtmlUtil.escapeHREF(feedImageURL) %>" /></aui:a>
-				</div>
-			</c:if>
+			<%
+			List entries = feed.getEntries();
+			%>
 
-			<div class="feed-entries">
+			<c:if test="<%= !entries.isEmpty() %>">
+				<liferay-ui:panel-container cssClass="feed-entries" extended="<%= false %>" id="rssFeedsPanelContainer" persistState="<%= false %>">
 
-				<%
-				List entries = feed.getEntries();
+					<%
+					for (int j = 0; (j < entries.size()) && (j < rssDisplayContext.getEntriesPerFeed()); j++) {
+						SyndEntry entry = (SyndEntry)entries.get(j);
 
-				for (int j = 0; j < entries.size(); j++) {
-					SyndEntry entry = (SyndEntry)entries.get(j);
+						RSSFeedEntryDisplayContext rssFeedEntryDisplayContext = new RSSFeedEntryDisplayContext(entry, request, rssFeed);
+					%>
 
-					String entryLink = entry.getLink();
+						<liferay-ui:panel cssClass="feed-entry" defaultState='<%= (themeDisplay.isStateMaximized() || (j < rssDisplayContext.getExpandedEntriesPerFeed())) ? "open" : "closed" %>' extended="<%= false%>" title="<%= HtmlUtil.escape(entry.getTitle()) %>">
+							<div class="feed-entry-content">
+								<c:if test="<%= rssDisplayContext.isShowFeedItemAuthor() && Validator.isNotNull(entry.getAuthor()) %>">
+									<div class="feed-entry-author">
+										<%= HtmlUtil.escape(entry.getAuthor()) %>
+									</div>
+								</c:if>
 
-					if (Validator.isNotNull(entryLink) && !HttpUtil.hasDomain(entryLink)) {
-						entryLink = baseURL + entryLink;
+								<c:if test="<%= entry.getPublishedDate() != null %>">
+									<div class="feed-date">
+										<liferay-ui:icon
+											iconCssClass="icon-calendar"
+											label="<%= true %>"
+											message="<%= dateFormatDateTime.format(entry.getPublishedDate()) %>"
+										/>
+									</div>
+								</c:if>
+
+								<c:if test="<%= Validator.isNotNull(rssFeedEntryDisplayContext.getEnclosureLink()) %>">
+									<div class="feed-entry-enclosure">
+										<aui:a href="<%= RSSUtil.escapeJavaScriptLink(rssFeedEntryDisplayContext.getEnclosureLink()) %>" target="_blank"><%= HtmlUtil.escape(rssFeedEntryDisplayContext.getEnclosureLinkTitle()) %></aui:a>
+									</div>
+								</c:if>
+
+								<%= rssFeedEntryDisplayContext.getSanitizedContent() %>
+
+								<br />
+
+								<aui:a href="<%= RSSUtil.escapeJavaScriptLink(rssFeedEntryDisplayContext.getEntryLink()) %>"><liferay-ui:message key="read-more" /></aui:a>
+							</div>
+						</liferay-ui:panel>
+
+					<%
 					}
+					%>
 
-					String author = entry.getAuthor();
-
-					SyndContent content = entry.getDescription();
-
-					List contents = new ArrayList();
-
-					if (content == null) {
-						contents = entry.getContents();
-					}
-					else {
-						contents.add(content);
-					}
-
-					List<SyndEnclosure> enclosures = (List<SyndEnclosure>)entry.getEnclosures();
-
-					String enclosureLink = StringPool.BLANK;
-					String enclosureLinkTitle = entry.getTitle();
-
-					for (SyndEnclosure enclosure : enclosures) {
-						if (Validator.isNotNull(enclosure.getUrl())) {
-							enclosureLink = enclosure.getUrl();
-
-							int pos = enclosureLink.lastIndexOf(StringPool.FORWARD_SLASH);
-
-							if (pos > -1) {
-								enclosureLinkTitle = enclosureLink.substring(pos + 1);
-							}
-							else {
-								enclosureLinkTitle = enclosureLink;
-							}
-
-							break;
-						}
-					}
-				%>
-
-					<div class="feed-entry">
-						<i class='entry-expander feed-entry-expander <%= (windowState.equals(WindowState.MAXIMIZED) || (j < expandedEntriesPerFeed)) ? "icon-collapse-alt" : "icon-expand-alt" %>'></i>
-
-						<span class="feed-entry-title"><aui:a href="<%= _escapeJavaScriptLink(entryLink) %>" target="_blank"><%= HtmlUtil.escape(entry.getTitle()) %></aui:a></span>
-
-						<div class="feed-entry-content <%= (windowState.equals(WindowState.MAXIMIZED) || (j < expandedEntriesPerFeed)) ? "" : "hide" %>">
-							<c:if test="<%= entry.getPublishedDate() != null %>">
-								<div class="feed-date icon-time">
-									<%= dateFormatDateTime.format(entry.getPublishedDate()) %>
-								</div>
-							</c:if>
-
-							<c:if test="<%= showFeedItemAuthor && Validator.isNotNull(author) %>">
-								<span class="feed-entry-author"><%= HtmlUtil.escape(author) %></span>
-							</c:if>
-
-							<c:if test="<%= Validator.isNotNull(enclosureLink) %>">
-								<span class="feed-entry-enclosure"><aui:a href="<%= _escapeJavaScriptLink(enclosureLink) %>" target="_blank"><%= HtmlUtil.escape(enclosureLinkTitle) %></aui:a></span>
-							</c:if>
-
-							<%
-							for (int k = 0; k < contents.size(); k++) {
-								content = (SyndContent)contents.get(k);
-
-								if ((content == null) || Validator.isNull(content.getValue())) {
-									continue;
-								}
-
-								String sanitizedValue = null;
-
-								String type = content.getType();
-
-								if (com.liferay.util.RSSUtil.getFormatType(feed.getFeedType()).equals(com.liferay.util.RSSUtil.ATOM) && (type.equals("html") || type.equals("xhtml"))) {
-									String value = StringUtil.replace(
-										content.getValue(),
-										new String[] {
-											"src=\"/",
-											"href=\"/"
-										},
-										new String[] {
-											"src=\"" + baseURL + "/",
-											"href=\"" + baseURL + "/"
-										});
-
-									try {
-										sanitizedValue = SanitizerUtil.sanitize(company.getCompanyId(), scopeGroupId, user.getUserId(), null, 0, ContentTypes.TEXT_HTML, Sanitizer.MODE_XSS, value, null);
-									}
-									catch (SanitizerException se) {
-										sanitizedValue = StringPool.BLANK;
-									}
-								}
-								else {
-									sanitizedValue = HtmlUtil.escape(content.getValue());
-								}
-							%>
-
-								<%= sanitizedValue %>
-
-							<%
-							}
-							%>
-
-						</div>
-					</div>
-
-				<%
-					if ((j + 1) >= entriesPerFeed) {
-						break;
-					}
-				}
-				%>
-
-			</div>
-
-			<c:if test="<%= !last %>">
-				<div class="separator"><!-- --></div>
+				</liferay-ui:panel-container>
 			</c:if>
 		</div>
 	</c:when>
-	<c:otherwise>
+	<c:when test="<%= portletDisplay.isShowConfigurationIcon() %>">
 		<div class="alert alert-danger">
-			<liferay-ui:message arguments="<%= HtmlUtil.escape(urls[i]) %>" key="cannot-be-found" translateArguments="<%= false %>" />
+			<liferay-ui:message arguments="<%= HtmlUtil.escape(rssFeed.getUrl()) %>" key="cannot-be-found" translateArguments="<%= false %>" />
 		</div>
-	</c:otherwise>
+	</c:when>
 </c:choose>
-
-<%!
-private String _escapeJavaScriptLink(String link) {
-	if (Validator.isNull(link)) {
-		return StringPool.BLANK;
-	}
-
-	if (link.indexOf(StringPool.COLON) == 10) {
-		String protocol = StringUtil.toLowerCase(link.substring(0, 10));
-
-		if (protocol.equals("javascript")) {
-			link = StringUtil.replaceFirst(link, StringPool.COLON, "%3a");
-		}
-	}
-
-	return link;
-}
-%>

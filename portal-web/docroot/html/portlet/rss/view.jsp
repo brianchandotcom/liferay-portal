@@ -16,27 +16,17 @@
 
 <%@ include file="/html/portlet/rss/init.jsp" %>
 
-<%
-String url = ParamUtil.getString(request, "url");
-String title = StringPool.BLANK;
-%>
-
 <div id="<portlet:namespace />feedsContainer">
 
 	<%
-	for (int i = 0; i < urls.length; i++) {
-		url = urls[i];
+	List<RSSFeed> rssFeeds = rssDisplayContext.getRSSFeeds();
 
-		if (i < titles.length) {
-			title = titles[i];
-		}
-		else {
-			title = StringPool.BLANK;
-		}
+	for (int i = 0; i < rssFeeds.size(); i++) {
+		RSSFeed rssFeed = rssFeeds.get(i);
 
 		boolean last = false;
 
-		if (i == (urls.length - 1)) {
+		if (i == (rssFeeds.size() - 1)) {
 			last = true;
 		}
 	%>
@@ -48,29 +38,3 @@ String title = StringPool.BLANK;
 	%>
 
 </div>
-
-<aui:script use="aui-base">
-	var feedsContainer = A.one('#<portlet:namespace />feedsContainer');
-
-	feedsContainer.delegate(
-		'click',
-		function(event) {
-			var expander = event.currentTarget;
-			var feedContent = expander.get('parentNode').one('.feed-entry-content');
-
-			if (feedContent) {
-				if (expander.hasClass('icon-collapse-alt')) {
-					expander.addClass('icon-expand-alt');
-					expander.removeClass('icon-collapse-alt');
-				}
-				else {
-					expander.addClass('icon-collapse-alt');
-					expander.removeClass('icon-expand-alt');
-				}
-
-				feedContent.toggle();
-			}
-		},
-		'.entry-expander'
-	);
-</aui:script>

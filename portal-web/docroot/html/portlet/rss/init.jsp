@@ -16,28 +16,17 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.sanitizer.Sanitizer" %><%@
-page import="com.liferay.portal.kernel.sanitizer.SanitizerException" %><%@
-page import="com.liferay.portal.kernel.sanitizer.SanitizerUtil" %><%@
+<%@ page import="com.liferay.portlet.rss.context.RSSDisplayContext" %><%@
+page import="com.liferay.portlet.rss.context.RSSFeed" %><%@
+page import="com.liferay.portlet.rss.context.RSSFeedEntryDisplayContext" %><%@
 page import="com.liferay.portlet.rss.util.RSSUtil" %>
 
-<%@ page import="com.sun.syndication.feed.synd.SyndContent" %><%@
-page import="com.sun.syndication.feed.synd.SyndEnclosure" %><%@
-page import="com.sun.syndication.feed.synd.SyndEntry" %><%@
+<%@ page import="com.sun.syndication.feed.synd.SyndEntry" %><%@
 page import="com.sun.syndication.feed.synd.SyndFeed" %><%@
 page import="com.sun.syndication.feed.synd.SyndImage" %>
 
 <%
-String[] urls = portletPreferences.getValues("urls", new String[0]);
-String[] titles = portletPreferences.getValues("titles", new String[0]);
-int entriesPerFeed = GetterUtil.getInteger(portletPreferences.getValue("entriesPerFeed", "8"));
-int expandedEntriesPerFeed = GetterUtil.getInteger(portletPreferences.getValue("expandedEntriesPerFeed", "1"));
-boolean showFeedTitle = GetterUtil.getBoolean(portletPreferences.getValue("showFeedTitle", Boolean.TRUE.toString()));
-boolean showFeedPublishedDate = GetterUtil.getBoolean(portletPreferences.getValue("showFeedPublishedDate", Boolean.TRUE.toString()));
-boolean showFeedDescription = GetterUtil.getBoolean(portletPreferences.getValue("showFeedDescription", Boolean.TRUE.toString()));
-boolean showFeedImage = GetterUtil.getBoolean(portletPreferences.getValue("showFeedImage", Boolean.TRUE.toString()));
-String feedImageAlignment = portletPreferences.getValue("feedImageAlignment", "right");
-boolean showFeedItemAuthor = GetterUtil.getBoolean(portletPreferences.getValue("showFeedItemAuthor", Boolean.TRUE.toString()));
+RSSDisplayContext rssDisplayContext = new RSSDisplayContext(request, portletPreferences);
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

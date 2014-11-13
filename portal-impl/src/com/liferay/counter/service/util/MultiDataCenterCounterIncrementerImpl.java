@@ -27,8 +27,16 @@ public class MultiDataCenterCounterIncrementerImpl
 			return value;
 		}
 
-		return shiftRightAndPadLeftMostByte(
-			value, _multiDataCenterBits, _multiDataCenterDeploymentId);
+		byte[] bytes = new byte[8];
+
+		BigEndianCodec.putLong(bytes, 0, value);
+
+		bytes[0] =
+			(byte)((bytes[0] >>> _multiDataCenterBits) +
+			(byte)(_multiDataCenterDeploymentId <<
+				(_MAXIMUM_BYTE_SHIFTS - _multiDataCenterBits)));
+
+		return BigEndianCodec.getLong(bytes, 0);
 	}
 
 	public void initialize(int dataCenterCount, int dataCenterDeploymentId) {
@@ -61,20 +69,6 @@ public class MultiDataCenterCounterIncrementerImpl
 		}
 
 		return 32 - Integer.numberOfLeadingZeros(value - 1);
-	}
-
-	protected static long shiftRightAndPadLeftMostByte(
-		long longValue, int positions, byte padding) {
-
-		byte[] bytes = new byte[8];
-
-		BigEndianCodec.putLong(bytes, 0, longValue);
-
-		bytes[0] =
-			(byte)((bytes[0] >>> positions) +
-			(byte)(padding << (_MAXIMUM_BYTE_SHIFTS - positions)));
-
-		return BigEndianCodec.getLong(bytes, 0);
 	}
 
 	private static final int _MAXIMUM_BYTE_SHIFTS = 7;

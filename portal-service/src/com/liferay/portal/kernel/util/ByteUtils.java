@@ -23,13 +23,4 @@ public class ByteUtils {
 		return (int)Math.ceil(Math.log(intValue) / Math.log(2));
 	}
 
-	public static short toUnsigned(byte b) {
-		if (b < 0) {
-			return (short)(256 + b);
-		}
-		else {
-			return (short)b;
-		}
-	}
-
 }

@@ -651,6 +651,39 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</sequential>
 	</macrodef>
 
+	<macrodef name="compile-test">
+		<attribute name="test.type" />
+
+		<sequential>
+			<if>
+				<equals arg1="@{test.type}" arg2="integration" />
+				<then>
+					<compile-test-integration />
+				</then>
+				<elseif>
+					<equals arg1="@{test.type}" arg2="unit" />
+					<then>
+						<compile-test-cmd
+							test.type="unit"
+						/>
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="@{test.type}" arg2="functional" />
+					<then>
+						<compile-test-cmd
+							test.type="functional"
+						/>
+
+						<compile-test-cmd
+							test.type="functional-generated"
+						/>
+					</then>
+				</elseif>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="compile-test-cmd">
 		<attribute name="test.type" />
 
@@ -1479,7 +1512,7 @@ rerun your task.
 		<antcall target="test-unit" />
 	</target>
 
-	<target name="test-class" depends="compile,compile-test">
+	<target name="test-class" depends="compile">
 		<set-test-type />
 
 		<if>
@@ -1498,6 +1531,10 @@ rerun your task.
 				</then>
 			</elseif>
 		</if>
+
+		<compile-test
+			test.type="${test.type}"
+		/>
 
 		<test-cmd
 			junit.forkmode="perTest"
@@ -1531,7 +1568,7 @@ rerun your task.
 		/>
 	</target>
 
-	<target name="test-method" depends="compile,compile-test">
+	<target name="test-method" depends="compile">
 		<set-test-type />
 
 		<if>
@@ -1555,6 +1592,10 @@ rerun your task.
 				</then>
 			</elseif>
 		</if>
+
+		<compile-test
+			test.type="${test.type}"
+		/>
 
 		<if>
 			<isset property="test.dir" />

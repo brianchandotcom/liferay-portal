@@ -12,19 +12,25 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.service;
+package com.liferay.portal.kernel.locale.test;
 
-import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordTestUtil;
-import com.liferay.portlet.dynamicdatamapping.service.BaseDDMServiceTestCase;
+import com.liferay.portal.kernel.util.LocaleUtil;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 /**
- * @author Marcellus Tavares
+ * @author André de Oliveira
  */
-public class BaseDDLServiceTestCase extends BaseDDMServiceTestCase {
+public class LocaleTestUtil {
 
-	@Override
-	protected String getBasePath() {
-		return DDLRecordTestUtil.getBasePath();
+	public static Map<Locale, String> getDefaultLocaleMap(String defaultValue) {
+		Map<Locale, String> map = new HashMap<Locale, String>();
+
+		map.put(LocaleUtil.getSiteDefault(), defaultValue);
+
+		return map;
 	}
 
 }

@@ -14,23 +14,27 @@
 
 package com.liferay.document.library.google.docs.util;
 
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+
+import javax.portlet.PortletPreferences;
+
 /**
- * @author Iván Zaera
+ * @author Ivan Zaera
  */
-public class GoogleDocsConstants {
+public class GoogleDocsConfigurationHelper {
 
-	public static final String DDM_FIELD_NAME_DESCRIPTION = "Description";
+	public GoogleDocsConfigurationHelper(long companyId) {
+		_portletPreferences = PrefsPropsUtil.getPreferences(companyId);
+	}
 
-	public static final String DDM_FIELD_NAME_EDIT_URL = "Edit_URL";
+	public String getGoogleAppsAPIKey() {
+		return _portletPreferences.getValue("googleAppsAPIKey", "");
+	}
 
-	public static final String DDM_FIELD_NAME_EMBED_URL = "Embed_URL";
+	public String getGoogleClientId() {
+		return _portletPreferences.getValue("googleClientId", "");
+	}
 
-	public static final String DDM_FIELD_NAME_ICON = "Icon";
-
-	public static final String DDM_FIELD_NAME_ID = "ID";
-
-	public static final String DDM_FIELD_NAME_TITLE = "Title";
-
-	public static final String DDM_STRUCTURE_KEY_GOOGLE_DOCS = "GOOGLE_DOCS";
+	private final PortletPreferences _portletPreferences;
 
 }

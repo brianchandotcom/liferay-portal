@@ -1591,6 +1591,10 @@
 		Util,
 		'toggleDisabled',
 		function(button, state) {
+			if (button.jquery) {
+				button = button.get();
+			}
+
 			if (!A.instanceOf(button, A.NodeList)) {
 				button = A.all(button);
 			}

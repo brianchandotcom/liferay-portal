@@ -313,11 +313,7 @@ else {
 			</c:if>
 		</div>
 
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="file" onChange='<%= renderResponse.getNamespace() + "validateTitle();" %>' type="file">
-			<aui:validator name="acceptFiles">
-				'<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>'
-			</aui:validator>
-		</aui:input>
+		<%@ include file="/html/portlet/document_library/edit_file_entry_picker.jspf" %>
 
 		<aui:input name="title">
 			<aui:validator errorMessage="you-must-specify-a-file-or-a-title" name="custom">
@@ -375,7 +371,6 @@ else {
 						List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
 
 						for (DDMStructure ddmStructure : ddmStructures) {
-							if (dlEditFileEntryDisplayContext.isDDMStructureVisible(ddmStructure)) {
 								Fields fields = null;
 
 								try {
@@ -387,6 +382,10 @@ else {
 								}
 				%>
 
+								<c:if test="<%= !dlEditFileEntryDisplayContext.isDDMStructureVisible(ddmStructure) %>">
+									<div class="hide">
+								</c:if>
+
 								<liferay-ddm:html
 									classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
 									classPK="<%= ddmStructure.getPrimaryKey() %>"
@@ -395,8 +394,11 @@ else {
 									requestedLocale="<%= locale %>"
 								/>
 
+								<c:if test="<%= !dlEditFileEntryDisplayContext.isDDMStructureVisible(ddmStructure) %>">
+									</div>
+								</c:if>
+
 				<%
-							}
 						}
 					}
 					catch (Exception e) {

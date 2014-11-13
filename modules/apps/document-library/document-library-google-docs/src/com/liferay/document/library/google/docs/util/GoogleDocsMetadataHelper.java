@@ -63,6 +63,22 @@ public class GoogleDocsMetadataHelper {
 		}
 	}
 
+	public boolean containsField(String fieldName) {
+		initFields();
+
+		Field field = _fields.get(fieldName);
+
+		if (field != null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public DDMStructure getDDMStructure() {
+		return _ddmStructure;
+	}
+
 	public String getFieldValue(String fieldName) {
 		initFields();
 

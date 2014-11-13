@@ -30,4 +30,4 @@ RSSDisplayContext rssDisplayContext = new RSSDisplayContext(request, portletPref
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
-<%@ include file="/html/portlet/rss/init-ext.jsp" %>
+<%@ include file="/init-ext.jsp" %>

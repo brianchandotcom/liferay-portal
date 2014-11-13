@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/rss/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 List<RSSFeed> rssFeeds = rssDisplayContext.getRSSFeeds();

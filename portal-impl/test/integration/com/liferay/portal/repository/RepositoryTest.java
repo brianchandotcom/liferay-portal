@@ -74,13 +74,46 @@ public class RepositoryTest {
 	}
 
 	@Test
-	public void testAddAndDeleteHiddenRepositories() throws Exception {
-		addAndDeleteRepositories(true);
-	}
+	public void testDeleteAllRepositories() throws Exception {
+		long[] repositoryIds = new long[2];
 
-	@Test
-	public void testAddAndDeleteRepositories() throws Exception {
-		addAndDeleteRepositories(false);
+		long classNameId = PortalUtil.getClassNameId(LiferayRepository.class);
+
+		Repository repository = RepositoryLocalServiceUtil.addRepository(
+			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1", "Test 1",
+			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), true,
+			new ServiceContext());
+
+		repositoryIds[0] = repository.getRepositoryId();
+
+		DLFolder dlFolder = DLFolderServiceUtil.addFolder(
+			_group.getGroupId(), _group.getGroupId(), false,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder", "Folder",
+			new ServiceContext());
+
+		repository = RepositoryLocalServiceUtil.addRepository(
+			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
+			dlFolder.getFolderId(), "Test 2", "Test 2",
+			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), true,
+			new ServiceContext());
+
+		repositoryIds[1] = repository.getRepositoryId();
+
+		// Delete repositories
+
+		DLAppLocalServiceUtil.deleteAllRepositories(_group.getGroupId());
+
+		for (long repositoryId : repositoryIds) {
+			try {
+				RepositoryServiceUtil.getLocalRepositoryImpl(repositoryId);
+
+				Assert.fail(
+					"Should not be able to access repository " + repositoryId);
+			}
+			catch (Exception e) {
+			}
+		}
 	}
 
 	@Test
@@ -232,60 +265,6 @@ public class RepositoryTest {
 			catch (Exception e) {
 			}
 		}
-	}
-
-	protected void addAndDeleteRepositories(boolean hidden) throws Exception {
-
-		// Add repositories
-
-		int initialMountFolders = DLFolderServiceUtil.getMountFoldersCount(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-		long[] repositoryIds = new long[2];
-
-		long classNameId = PortalUtil.getClassNameId(LiferayRepository.class);
-
-		Repository repository = RepositoryLocalServiceUtil.addRepository(
-			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1", "Test 1",
-			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), hidden,
-			new ServiceContext());
-
-		repositoryIds[0] = repository.getRepositoryId();
-
-		DLFolder dlFolder = DLFolderServiceUtil.addFolder(
-			_group.getGroupId(), _group.getGroupId(), false,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder", "Folder",
-			new ServiceContext());
-
-		repository = RepositoryLocalServiceUtil.addRepository(
-			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
-			dlFolder.getFolderId(), "Test 2", "Test 2",
-			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), hidden,
-			new ServiceContext());
-
-		repositoryIds[1] = repository.getRepositoryId();
-
-		// Delete repositories
-
-		DLAppLocalServiceUtil.deleteAllRepositories(_group.getGroupId());
-
-		for (long repositoryId : repositoryIds) {
-			try {
-				RepositoryServiceUtil.getLocalRepositoryImpl(repositoryId);
-
-				Assert.fail(
-					"Should not be able to access repository " + repositoryId);
-			}
-			catch (Exception e) {
-			}
-		}
-
-		Assert.assertEquals(
-			initialMountFolders,
-			DLFolderServiceUtil.getMountFoldersCount(
-				_group.getGroupId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
 	}
 
 	private static final String _TEST_CONTENT =

@@ -1196,4 +1196,14 @@
 		<execute action="SOSite#assertTextEquals" locator-key1="NAVIGATION_WIKI" value1="Wiki" />
 		<execute action="SOSite#assertTextEquals" locator-key1="NAVIGATION_MEMBERS" value1="Members" />
 	</command>
+
+	<command name="ViewCaptchaCheckWithSORole" priority="5">
+		<execute macro="User#logoutPG" />
+
+		<execute action="PGLogin#assertClick" locator-key1="CREATE_ACCOUNT_LINK" value1="Create Account" />
+
+		<execute action="PGLoginCreateAccount#assertElementPresent" locator-key1="CAPTCHA_IMAGE" />
+		<execute action="PGLoginCreateAccount#assertElementPresent" locator-key1="CAPTCHA_REFRESH" />
+		<execute action="PGLoginCreateAccount#assertElementPresent" locator-key1="TEXT_VERIFICATION_FIELD" />
+	</command>
 </definition>

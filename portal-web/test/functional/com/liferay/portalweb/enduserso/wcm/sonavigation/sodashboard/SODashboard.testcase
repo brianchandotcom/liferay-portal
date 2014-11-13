@@ -21,6 +21,21 @@
 		<execute macro="SOUser#tearDownCP" />
 	</tear-down>
 
+	<command name="GoBackToSODashboardFromControlPanel" priority="5">
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN_CONTROL_PANEL" value1="Control Panel" />
+		<execute action="Dockbar#click" locator1="//a[@title='Back']" />
+
+		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_DASHBOARD" value1="Dashboard" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_CONTACTS_CENTER" value1="Contacts Center" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_MICROBLOGS" value1="Microblogs" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_MESSAGES" value1="Messages" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_MY_DOCUMENTS" value1="My Documents" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+	</command>
+
 	<command known-issues="LIFERAYQA-11550" name="ViewDashboardLocalized" priority="4">
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />

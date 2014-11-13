@@ -68,7 +68,7 @@ SyndFeed feed = rssFeed.getFeed();
 						RSSFeedEntryDisplayContext rssFeedEntryDisplayContext = new RSSFeedEntryDisplayContext(entry, request, rssFeed);
 					%>
 
-						<liferay-ui:panel cssClass="feed-entry" extended="<%= (themeDisplay.isStateMaximized() || (j < rssDisplayContext.getExpandedEntriesPerFeed())) %>" title="<%= HtmlUtil.escape(entry.getTitle()) %>">
+						<liferay-ui:panel cssClass="feed-entry" defaultState='<%= (themeDisplay.isStateMaximized() || (j < rssDisplayContext.getExpandedEntriesPerFeed())) ? "open" : "closed" %>' extended="<%= false%>" title="<%= HtmlUtil.escape(entry.getTitle()) %>">
 							<div class="feed-entry-content">
 								<c:if test="<%= rssDisplayContext.isShowFeedItemAuthor() && Validator.isNotNull(entry.getAuthor()) %>">
 									<div class="feed-entry-author">

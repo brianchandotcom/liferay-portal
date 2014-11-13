@@ -38,29 +38,3 @@
 	%>
 
 </div>
-
-<aui:script use="aui-base">
-	var feedsContainer = A.one('#<portlet:namespace />feedsContainer');
-
-	feedsContainer.delegate(
-		'click',
-		function(event) {
-			var expander = event.currentTarget;
-			var feedContent = expander.get('parentNode').get('parentNode').one('.feed-entry-content');
-
-			if (feedContent) {
-				if (expander.hasClass('icon-collapse-alt')) {
-					expander.addClass('icon-expand-alt');
-					expander.removeClass('icon-collapse-alt');
-				}
-				else {
-					expander.addClass('icon-collapse-alt');
-					expander.removeClass('icon-expand-alt');
-				}
-
-				feedContent.toggle();
-			}
-		},
-		'.entry-expander'
-	);
-</aui:script>

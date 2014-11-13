@@ -119,7 +119,17 @@ public class MultiDataCenterCounterFinderImplTest {
 
 	@Test
 	public void testInvalidConfiguration() {
-		new MultiDataCenterCounterFinderImpl(2, 2);
+		try {
+			new MultiDataCenterCounterFinderImpl(2, 2);
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"Invalid data center count (2) or data center deployment id " +
+					"(2). Please consult the appropriate documentation.",
+				iae.getMessage());
+		}
 	}
 
 }

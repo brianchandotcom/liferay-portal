@@ -86,7 +86,7 @@
 				<div class="display-template">
 
 					<%
-					TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(RSSFeedContext.class.getName());
+					TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(RSSFeed.class.getName());
 					%>
 
 					<liferay-ui:ddm-template-selector

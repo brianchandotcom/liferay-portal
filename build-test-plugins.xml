@@ -81,6 +81,20 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 		</for>
 
 		<if>
+			<and>
+				<isset property="jenkins.shared.user.content.dir" />
+				<isset property="top.level.build.number" />
+				<isset property="top.level.job.name" />
+			</and>
+			<then>
+				<unzip
+					dest="${liferay.home}/deploy"
+					src="${jenkins.shared.user.content.dir}/jobs/${top.level.job.name}/builds/${top.level.build.number}/downloads/extraapps.war.zip"
+				/>
+			</then>
+		</if>
+
+		<if>
 			<matches pattern="http" string="${test.build.plugins.war.zip.url}" />
 			<then>
 				<for list="${plugins.includes}" param="plugin.includes">

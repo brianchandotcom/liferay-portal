@@ -15,10 +15,12 @@
 package com.liferay.rss.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.rss.web.upgrade.RSSUpgrade;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
 * @author Eudaldo Alonso
@@ -47,5 +49,9 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class RSSPortlet extends MVCPortlet {
+
+	@Reference(unbind = "-")
+	protected void setRSSUpgrade(RSSUpgrade rssUpgrade) {
+	}
 
 }

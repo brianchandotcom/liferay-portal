@@ -618,39 +618,6 @@ select:focus {
 
 /* ---------- Form navigator ---------- */
 
-.taglib-form-navigator > .form-steps > ul.form-navigator.well .tab {
-	&.active {
-		.tab-label {
-			.message {
-				color: #000;
-			}
-
-			.number {
-				background: #60BFEF;
-			}
-
-			.tab-icon {
-				color: #60BFEF;
-			}
-		}
-	}
-
-	&.section-error .tab-label .message {
-		color: #B50303;
-	}
-
-	.tab-label {
-		.message {
-			color: #000;
-		}
-
-		.number {
-			background: #CCC;
-			color: #FFF;
-		}
-	}
-}
-
 @include respond-to(phone, tablet) {
 	.taglib-form-navigator {
 		position: relative;
@@ -661,23 +628,22 @@ select:focus {
 			width: 100%;
 		}
 
-		.form-navigator.nav.well {
+		.form-navigator.nav.list-group {
 			border-width: 1px 0 0;
 
-			@include box-shadow(none);
-
-			clear: both;
-			float: none;
 			margin: 1em 0 0;
-			padding: 1em 0.5em;
 			position: static;
 			width: 100%;
 
 			> li {
+				border-width: 0;
 				display: inline-block;
 
+				&.nav-header {
+					display: block;
+				}
+
 				> a {
-					margin: 0;
 					padding: 0.1em 1em;
 				}
 			}
@@ -1054,32 +1020,6 @@ $prefixes: ("-webkit-", "-moz-", "-o-", "");
 
 .breadcrumb > li {
 	@include text-shadow(none);
-}
-
-.taglib-form-navigator > .form-steps > ul.form-navigator.well .tab {
-	&.section-error, &.section-success {
-		.tab-label .number {
-			@include transition-duration(0.25s);
-			@include transition-property(box-shadow);
-			@include transition-timing-function(ease-out);
-		}
-	}
-
-	&.section-error .tab-label .number {
-		@include box-shadow(0 0 5px 0 #B50303);
-	}
-
-	&.section-success .tab-label .number {
-		@include box-shadow(0 0 5px 0 #488F06);
-	}
-
-	.tab-label {
-		&:hover, &:focus {
-			.number {
-				@include box-shadow(0 0 5px 0 #60BFEF);
-			}
-		}
-	}
 }
 
 .modify-pages .delete-tab {

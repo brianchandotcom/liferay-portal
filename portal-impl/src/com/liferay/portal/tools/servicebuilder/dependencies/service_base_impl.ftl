@@ -260,10 +260,10 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 		}
 
 		/**
-		 * Returns the number of rows that match the dynamic query.
+		 * Returns the number of rows matching the dynamic query.
 		 *
 		 * @param dynamicQuery the dynamic query
-		 * @return the number of rows that match the dynamic query
+		 * @return the number of rows matching the dynamic query
 		 */
 		@Override
 		public long dynamicQueryCount(DynamicQuery dynamicQuery) {
@@ -271,11 +271,11 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 		}
 
 		/**
-		 * Returns the number of rows that match the dynamic query.
+		 * Returns the number of rows matching the dynamic query.
 		 *
 		 * @param dynamicQuery the dynamic query
 		 * @param projection the projection to apply to the query
-		 * @return the number of rows that match the dynamic query
+		 * @return the number of rows matching the dynamic query
 		 */
 		@Override
 		public long dynamicQueryCount(DynamicQuery dynamicQuery, Projection projection) {
@@ -511,7 +511,7 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 		<#if entity.hasUuid() && entity.hasColumn("companyId")>
 			<#if entity.hasColumn("groupId") && (entity.name != "Group")>
 				/**
-				 * Returns all the ${entity.humanNames} that match the UUID and company.
+				 * Returns all the ${entity.humanNames} matching the UUID and company.
 				 *
 				 * @param uuid the UUID of the ${entity.humanNames}
 				 * @param companyId the primary key of the company
@@ -523,7 +523,7 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 				}
 
 				/**
-				 * Returns a range of ${entity.humanNames} that match the UUID and company.
+				 * Returns a range of ${entity.humanNames} matching the UUID and company.
 				 *
 				 * @param uuid the UUID of the ${entity.humanNames}
 				 * @param companyId the primary key of the company

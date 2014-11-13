@@ -8,7 +8,7 @@
 
 	<#assign fieldRawValue = paramUtil.getString(request, "${namespacedFieldName}", fieldRawValue)>
 
-	<#if (fieldRawValue?? && fieldRawValue != "")>
+	<#if (validator.isNotNull(fieldRawValue))>
 		<#assign fieldLayoutJSONObject = jsonFactoryUtil.createJSONObject(fieldRawValue)>
 
 		<#if (fieldLayoutJSONObject.getLong("groupId") > 0)>
@@ -19,13 +19,13 @@
 
 		<#assign selectedLayout = layoutLocalService.fetchLayout(selectedLayoutGroupId, fieldLayoutJSONObject.getBoolean("privateLayout"), fieldLayoutJSONObject.getLong("layoutId"))!"">
 
-		<#if (selectedLayout??)>
+		<#if (validator.isNotNull(selectedLayout))>
 			<#assign selectedPlid = selectedLayout.getPlid()>
 		</#if>
 	</#if>
 
 	<@aui.select helpMessage=escape(fieldStructure.tip) name=namespacedFieldName label=escape(label) required=required showEmptyOption=!required>
-		<#if (selectedLayout?? && !layoutPermission.contains(permissionChecker, selectedLayout, "VIEW"))>
+		<#if (validator.isNotNull(selectedLayout) && !layoutPermission.contains(permissionChecker, selectedLayout, "VIEW"))>
 			<optgroup label="${languageUtil.get(requestedLocale, "current")}">
 				<@getLayoutOption
 					layout = selectedLayout

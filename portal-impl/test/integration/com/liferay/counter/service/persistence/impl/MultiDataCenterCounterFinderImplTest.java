@@ -24,18 +24,16 @@ import org.testng.Assert;
 public class MultiDataCenterCounterFinderImplTest {
 
 	@Test
-	public void testIncrement2DataCenters() throws Exception {
-		long value = Long.MAX_VALUE;
-
+	public void testIncrement2DataCenters() {
 		MultiDataCenterCounterFinderImpl multiDataCenterCounterFinderImpl =
 			new MultiDataCenterCounterFinderImpl(2, 0);
 
 		Assert.assertEquals(
 			0l, multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(0));
-
 		Assert.assertEquals(
 			4611686018427387903l,
-			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(value));
+			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(
+				Long.MAX_VALUE));
 
 		multiDataCenterCounterFinderImpl = new MultiDataCenterCounterFinderImpl(
 			2, 1);
@@ -45,22 +43,21 @@ public class MultiDataCenterCounterFinderImplTest {
 			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(0));
 		Assert.assertEquals(
 			9223372036854775807l,
-			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(value));
+			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(
+				Long.MAX_VALUE));
 	}
 
 	@Test
-	public void testIncrement5DataCenters() throws Exception {
-		long value = Long.MAX_VALUE;
-
+	public void testIncrement5DataCenters() {
 		MultiDataCenterCounterFinderImpl multiDataCenterCounterFinderImpl =
 			new MultiDataCenterCounterFinderImpl(5, 0);
 
 		Assert.assertEquals(
 			0l, multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(0));
-
 		Assert.assertEquals(
 			1152921504606846975l,
-			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(value));
+			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(
+				Long.MAX_VALUE));
 
 		multiDataCenterCounterFinderImpl = new MultiDataCenterCounterFinderImpl(
 			5, 1);
@@ -68,10 +65,10 @@ public class MultiDataCenterCounterFinderImplTest {
 		Assert.assertEquals(
 			1152921504606846976l,
 			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(0));
-
 		Assert.assertEquals(
 			2305843009213693951l,
-			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(value));
+			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(
+				Long.MAX_VALUE));
 
 		multiDataCenterCounterFinderImpl = new MultiDataCenterCounterFinderImpl(
 			5, 2);
@@ -79,10 +76,10 @@ public class MultiDataCenterCounterFinderImplTest {
 		Assert.assertEquals(
 			2305843009213693952l,
 			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(0));
-
 		Assert.assertEquals(
 			3458764513820540927l,
-			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(value));
+			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(
+				Long.MAX_VALUE));
 
 		multiDataCenterCounterFinderImpl = new MultiDataCenterCounterFinderImpl(
 			5, 3);
@@ -90,10 +87,10 @@ public class MultiDataCenterCounterFinderImplTest {
 		Assert.assertEquals(
 			3458764513820540928l,
 			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(0));
-
 		Assert.assertEquals(
 			4611686018427387903l,
-			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(value));
+			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(
+				Long.MAX_VALUE));
 
 		multiDataCenterCounterFinderImpl = new MultiDataCenterCounterFinderImpl(
 			5, 4);
@@ -101,29 +98,27 @@ public class MultiDataCenterCounterFinderImplTest {
 		Assert.assertEquals(
 			4611686018427387904l,
 			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(0));
-
 		Assert.assertEquals(
 			5764607523034234879l,
-			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(value));
+			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(
+				Long.MAX_VALUE));
 	}
 
 	@Test
-	public void testIncrementSingleDataCenter() throws Exception {
-		long value = Long.MAX_VALUE;
-
+	public void testIncrementSingleDataCenter() {
 		MultiDataCenterCounterFinderImpl multiDataCenterCounterFinderImpl =
 			new MultiDataCenterCounterFinderImpl(1, 0);
 
 		Assert.assertEquals(
 			0, multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(0));
-
 		Assert.assertEquals(
-			value,
-			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(value));
+			Long.MAX_VALUE,
+			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(
+				Long.MAX_VALUE));
 	}
 
 	@Test
-	public void testInvalidConfiguration() throws Exception {
+	public void testInvalidConfiguration() {
 		new MultiDataCenterCounterFinderImpl(2, 2);
 	}
 

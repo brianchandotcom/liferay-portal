@@ -2301,29 +2301,14 @@ module.framework.properties.osgi.console=11312</echo>
 	</target>
 
 	<target name="prepare-extraapps-plugins">
-		<fail message="Please set jenkins.shared.user.content.dir and test.build.extraapps.zip.url">
-			<condition>
-				<not>
-					<and>
-						<isset property="jenkins.shared.user.content.dir" />
-						<isset property="test.build.extraapps.zip.url" />
-						<isset property="top.level.build.number" />
-						<isset property="top.level.job.name" />
-					</and>
-				</not>
-			</condition>
-		</fail>
+		<fail message="Please set the property ${jenkins.shared.user.content.dir}." unless="jenkins.shared.user.content.dir" />
+		<fail message="Please set the property ${test.build.extraapps.zip.url}." unless="test.build.extraapps.zip.url" />
+		<fail message="Please set the property ${top.level.build.number}." unless="top.level.build.number" />
+		<fail message="Please set the property ${top.level.job.name}." unless="top.level.job.name" />
 
-		<trycatch>
-			<try>
-				<get
-					dest="extraapps.war.zip"
-					src="${test.build.extraapps.zip.url}"
-				/>
+		<get dest="extraapps.war.zip" src="${test.build.extraapps.zip.url}" />
 
-				<copy file="extraapps.war.zip" todir="${jenkins.shared.user.content.dir}/jobs/${top.level.job.name}/builds/${top.level.build.number}/downloads" />
-			</try>
-		</trycatch>
+		<copy file="extraapps.war.zip" todir="${jenkins.shared.user.content.dir}/jobs/${top.level.job.name}/builds/${top.level.build.number}/downloads" />
 	</target>
 
 	<target name="prepare-portal-properties">

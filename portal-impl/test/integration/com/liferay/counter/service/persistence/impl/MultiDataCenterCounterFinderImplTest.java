@@ -20,6 +20,7 @@ import org.testng.Assert;
 
 /**
  * @author Michael C. Han
+ * @author Shuyang Zhou
  */
 public class MultiDataCenterCounterFinderImplTest {
 
@@ -129,6 +130,16 @@ public class MultiDataCenterCounterFinderImplTest {
 				"Invalid data center count (2) or data center deployment id " +
 					"(2). Please consult the appropriate documentation.",
 				iae.getMessage());
+		}
+
+		try {
+			new MultiDataCenterCounterFinderImpl(1 << 8, 2);
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"Cannot shift more than 8 bits", iae.getMessage());
 		}
 	}
 

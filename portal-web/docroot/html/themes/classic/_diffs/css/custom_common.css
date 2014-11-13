@@ -628,6 +628,34 @@ select:focus {
 			width: 100%;
 		}
 
+		.form-navigator.nav.list-group {
+			border-width: 1px 0 0;
+
+			margin: 1em 0 0;
+			position: static;
+			width: 100%;
+
+			> li {
+				border-width: 0;
+				display: inline-block;
+
+				&.nav-header {
+					display: block;
+				}
+
+				> a {
+					padding: 0.1em 1em;
+				}
+			}
+
+			.button-holder {
+				padding-bottom: 20px;
+				padding-left: 0;
+				position: absolute;
+				top: 100%;
+			}
+		}
+
 		.nobr {
 			white-space: normal;
 		}

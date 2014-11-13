@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.util.DateRange;
@@ -102,6 +103,8 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 		MissingReferences missingReferences = null;
 
 		try {
+			ExportImportThreadLocal.setLayoutStagingInProcess(true);
+
 			file = exportLayoutsAsFile(
 				sourceGroupId, privateLayout, layoutIdMap, parameterMap,
 				remoteGroupId, dateRange.getStartDate(), dateRange.getEndDate(),
@@ -171,6 +174,8 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 			throw new SystemException(ioe);
 		}
 		finally {
+			ExportImportThreadLocal.setLayoutStagingInProcess(false);
+
 			StreamUtil.cleanUp(fileInputStream);
 
 			FileUtil.delete(file);

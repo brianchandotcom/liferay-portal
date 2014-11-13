@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.rss.context;
+package com.liferay.rss.web.context;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;

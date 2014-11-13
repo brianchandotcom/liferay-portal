@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.rss.action;
+package com.liferay.rss.web.configuration;
 
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -29,7 +29,7 @@ import javax.portlet.PortletConfig;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigurationActionImpl extends DefaultConfigurationAction {
+public class RSSConfiguration extends DefaultConfigurationAction {
 
 	@Override
 	public void processAction(

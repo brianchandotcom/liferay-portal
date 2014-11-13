@@ -15,8 +15,6 @@
 --%>
 
 <%
-RSSFeed rssFeed = new RSSFeed(url, title);
-
 SyndFeed feed = rssFeed.getFeed();
 %>
 

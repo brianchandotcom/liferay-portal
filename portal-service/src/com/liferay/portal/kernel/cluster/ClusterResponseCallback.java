@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.cluster;
 
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.TimeoutException;
 
 /**
  * @author Shuyang Zhou
@@ -23,12 +22,5 @@ import java.util.concurrent.TimeoutException;
 public interface ClusterResponseCallback {
 
 	public void callback(BlockingQueue<ClusterNodeResponse> blockingQueue);
-
-	public void callback(ClusterNodeResponses clusterNodeResponses);
-
-	public void processInterruptedException(
-		InterruptedException interruptedException);
-
-	public void processTimeoutException(TimeoutException timeoutException);
 
 }

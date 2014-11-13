@@ -198,47 +198,54 @@ public class NettyRepository implements Repository {
 
 		final Path cachedLocalFilePath = pathMap.get(remoteFilePath);
 
-		final NoticeableFuture<FileResponse> noticeableFuture =
-			asyncBroker.post(remoteFilePath);
+		final DefaultNoticeableFuture<FileResponse> defaultNoticeableFuture =
+			new DefaultNoticeableFuture<FileResponse>();
 
-		NettyUtil.scheduleCancellation(
-			channel, noticeableFuture, getFileTimeout);
+		NoticeableFuture<FileResponse> noticeableFuture = asyncBroker.post(
+			remoteFilePath, defaultNoticeableFuture);
 
-		ChannelFuture channelFuture = channel.writeAndFlush(
-			new FileRequest(
-				remoteFilePath, getLastModifiedTime(cachedLocalFilePath),
-				deleteAfterFetch));
+		if (noticeableFuture == null) {
+			noticeableFuture = defaultNoticeableFuture;
 
-		channelFuture.addListener(
-			new ChannelFutureListener() {
+			NettyUtil.scheduleCancellation(
+				channel, defaultNoticeableFuture, getFileTimeout);
 
-				@Override
-				public void operationComplete(ChannelFuture channelFuture) {
-					if (channelFuture.isSuccess()) {
-						return;
+			ChannelFuture channelFuture = channel.writeAndFlush(
+				new FileRequest(
+					remoteFilePath, getLastModifiedTime(cachedLocalFilePath),
+					deleteAfterFetch));
+
+			channelFuture.addListener(
+				new ChannelFutureListener() {
+
+					@Override
+					public void operationComplete(ChannelFuture channelFuture) {
+						if (channelFuture.isSuccess()) {
+							return;
+						}
+
+						if (channelFuture.isCancelled()) {
+							defaultNoticeableFuture.cancel(true);
+
+							return;
+						}
+
+						Throwable throwable = new IOException(
+							"Unable to fetch remote file " + remoteFilePath,
+							channelFuture.cause());
+
+						if (!asyncBroker.takeWithException(
+								remoteFilePath, throwable)) {
+
+							_log.error(
+								"Unable to place exception because no future " +
+									"exists with ID " + remoteFilePath,
+								throwable);
+						}
 					}
 
-					if (channelFuture.isCancelled()) {
-						noticeableFuture.cancel(true);
-
-						return;
-					}
-
-					Throwable throwable = new IOException(
-						"Unable to fetch remote file " + remoteFilePath,
-						channelFuture.cause());
-
-					if (!asyncBroker.takeWithException(
-							remoteFilePath, throwable)) {
-
-						_log.error(
-							"Unable to place exception because no future " +
-								"exists with ID " + remoteFilePath,
-							throwable);
-					}
-				}
-
-			});
+				});
+		}
 
 		return new NoticeableFutureConverter<Path, FileResponse>(
 			noticeableFuture) {
@@ -268,20 +275,43 @@ public class NettyRepository implements Repository {
 						return cachedLocalFilePath;
 					}
 
-					FileHelperUtil.move(
-						fileResponse.getLocalFile(), localFilePath);
+					Path targetLocalFilePath = localFilePath;
 
-					if (populateCache) {
-						pathMap.put(remoteFilePath, localFilePath);
+					synchronized (fileResponse) {
+						Path recheckCacheLocalFilePath = pathMap.get(
+							remoteFilePath);
+
+						if (recheckCacheLocalFilePath != null) {
+							targetLocalFilePath = recheckCacheLocalFilePath;
+						}
+
+						Path tempLocalFilePath = fileResponse.getLocalFile();
+
+						if (tempLocalFilePath.startsWith(repositoryPath)) {
+							Files.copy(
+								fileResponse.getLocalFile(),
+								targetLocalFilePath);
+						}
+						else {
+							Files.move(
+								fileResponse.getLocalFile(),
+								targetLocalFilePath);
+						}
+
+						if (populateCache) {
+							pathMap.put(remoteFilePath, targetLocalFilePath);
+						}
+
+						fileResponse.setLocalFile(targetLocalFilePath);
 					}
 
 					if (_log.isDebugEnabled()) {
 						_log.debug(
 							"Fetched remote file " + remoteFilePath + " to " +
-								localFilePath);
+								targetLocalFilePath);
 					}
 
-					return localFilePath;
+					return targetLocalFilePath;
 				}
 
 			};

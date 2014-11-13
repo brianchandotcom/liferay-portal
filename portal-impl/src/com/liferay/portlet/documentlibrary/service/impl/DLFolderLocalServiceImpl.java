@@ -47,8 +47,6 @@ import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.TreeModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.WorkflowDefinitionLink;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
@@ -210,7 +208,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	public void deleteAllByRepository(long repositoryId)
 		throws PortalException {
 
-		Repository repository = RepositoryLocalServiceUtil.fetchRepository(
+		Repository repository = repositoryLocalService.fetchRepository(
 			repositoryId);
 
 		long groupId = repositoryId;
@@ -219,7 +217,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			groupId = repository.getGroupId();
 		}
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = groupLocalService.getGroup(groupId);
 
 		List<DLFolder> dlFolders = dlFolderPersistence.findByRepositoryId(
 			repositoryId);

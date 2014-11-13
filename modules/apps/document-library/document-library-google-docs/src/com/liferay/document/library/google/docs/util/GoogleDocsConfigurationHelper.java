@@ -35,6 +35,6 @@ public class GoogleDocsConfigurationHelper {
 		return _portletPreferences.getValue("googleClientId", "");
 	}
 
-	private PortletPreferences _portletPreferences;
+	private final PortletPreferences _portletPreferences;
 
 }

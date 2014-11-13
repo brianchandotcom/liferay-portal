@@ -58,7 +58,7 @@ public class FreeMarkerRenderer {
 		_attributes.put(key, value);
 	}
 
-	private Map<String, Object> _attributes = new HashMap<>();
-	private Template _template;
+	private final Map<String, Object> _attributes = new HashMap<>();
+	private final Template _template;
 
 }

@@ -17,6 +17,7 @@
 <%
 DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker("onFilePick");
 %>
+
 <c:choose>
 	<c:when test="<%= dlFilePicker == null %>">
 		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="file" onChange='<%= renderResponse.getNamespace() + "validateTitle();" %>' type="file">
@@ -27,30 +28,32 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker("onFil
 	</c:when>
 	<c:otherwise>
 		<aui:field-wrapper label="file">
-			<aui:button cssClass="customized-file-button disabled" disabled="true" name="file" value="select-file"/>
+			<aui:button cssClass="customized-file-button disabled" disabled="true" name="file" value="select-file" />
 
 			<img id="<portlet:namespace />pickButtonIcon">
 
 			<span id="<portlet:namespace />pickButtonTitle"></span>
 		</aui:field-wrapper>
 
-		<aui:script use="aui-base">
+		<aui:script sandbox="<%= true %>">
 			var onFilePick = function(fields) {
 				var documentIconURL = fields['<%= dlFilePicker.getIconFieldName() %>'];
 				var documentTitle = fields['<%= dlFilePicker.getTitleFieldName() %>'];
 				var documentDescription = fields['<%= dlFilePicker.getDescriptionFieldName() %>'];
 
-				A.one('#<portlet:namespace />pickButtonIcon').attr('src', documentIconURL);
+				$('#<portlet:namespace />pickButtonIcon').attr('src', documentIconURL);
 
-				A.one('#<portlet:namespace />pickButtonTitle').html(documentTitle);
+				$('#<portlet:namespace />pickButtonTitle').html(documentTitle);
 
-				A.one('#<portlet:namespace />title').val(documentTitle);
-				A.one('#<portlet:namespace />description').val(documentDescription);
+				$('#<portlet:namespace />title').val(documentTitle);
+				$('#<portlet:namespace />description').val(documentDescription);
 
-				A.all('#<portlet:namespace />fm .lfr-ddm-container .field-wrapper').each(
-					function(item, index) {
-						var fieldName = item.getAttribute('data-fieldname');
-						var input = item.one('input');
+				$('#<portlet:namespace />fm .lfr-ddm-container .field-wrapper').each(
+					function(index, item) {
+						item = $(item);
+
+						var fieldName = item.data('fieldname');
+						var input = item.find('input');
 
 						input.val(fields[fieldName]);
 					}
@@ -59,11 +62,13 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker("onFil
 
 			<%= dlFilePicker.getJavascript() %>
 
-			var filePicker = new <%= dlFilePicker.getJavascriptModuleName() %>(function() {
-				Liferay.Util.toggleDisabled(A.one('.customized-file-button'), false);
-			});
+			var filePicker = new <%= dlFilePicker.getJavascriptModuleName() %>(
+				function() {
+					Liferay.Util.toggleDisabled($('.customized-file-button'), false);
+				}
+			);
 
-			A.one('.customized-file-button').on('click', filePicker['<%= dlFilePicker.getOnClickCallback() %>'], filePicker);
+			$('.customized-file-button').on('click', _.bind(filePicker['<%= dlFilePicker.getOnClickCallback() %>'], filePicker));
 		</aui:script>
 	</c:otherwise>
 </c:choose>

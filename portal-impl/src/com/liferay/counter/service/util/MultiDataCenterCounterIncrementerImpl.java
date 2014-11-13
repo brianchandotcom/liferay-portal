@@ -38,6 +38,10 @@ public class MultiDataCenterCounterIncrementerImpl
 
 		_multiDataCenterBits = getNumberBits(dataCenterCount);
 
+		if (_multiDataCenterBits > _MAXIMUM_BYTE_SHIFTS) {
+			throw new IllegalArgumentException("Cannot shift more than 8 bits");
+		}
+
 		int numberBits = getNumberBits(dataCenterDeploymentId);
 
 		if (numberBits > _multiDataCenterBits) {
@@ -61,10 +65,6 @@ public class MultiDataCenterCounterIncrementerImpl
 
 	protected static long shiftRightAndPadLeftMostByte(
 		long longValue, int positions, byte padding) {
-
-		if (positions > _MAXIMUM_BYTE_SHIFTS) {
-			throw new IllegalArgumentException("Cannot shift more than 8 bits");
-		}
 
 		byte[] bytes = new byte[8];
 

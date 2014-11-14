@@ -23,7 +23,13 @@
 
 						var inputName = ns + name;
 
-						return formEl[inputName] || formEl.ownerDocument.getElementById(inputName);
+						var inputNode = formEl[inputName] || formEl.ownerDocument.getElementById(inputName);
+
+						if (inputNode && inputNode.length) {
+							inputNode = $.makeArray(inputNode);
+						}
+
+						return inputNode;
 					}
 				}
 			);
@@ -31,7 +37,7 @@
 			retVal = nodes;
 		}
 		else {
-			if (typeof name == 'string') {
+			if (typeof name === 'string') {
 				instance.data('fm.' + name, value);
 			}
 		}

@@ -370,7 +370,7 @@ AUI.add(
 				EXTENDS: Ratings,
 
 				prototype: {
-					_createRating: function() {
+					_buildLabel: function() {
 						var instance = this;
 
 						var totalEntries = instance.get('totalEntries');
@@ -378,14 +378,18 @@ AUI.add(
 
 						var description = instance._fixScore(totalScore - (totalEntries - totalScore));
 
-						var label = instance._getLabel(description, totalEntries);
+						return instance._getLabel(description, totalEntries);
+					},
+
+					_createRating: function() {
+						var instance = this;
 
 						var namespace = instance.get(STR_NAMESPACE);
 
 						instance.ratings = new A.ThumbRating(
 							{
 								boundingBox: '#' + namespace + 'ratingThumb',
-								label: label,
+								label: instance._buildLabel(),
 								srcNode: '#' + namespace + 'ratingThumbContent'
 							}
 						).render();
@@ -475,19 +479,12 @@ AUI.add(
 					_createRating: function() {
 						var instance = this;
 
-						var totalEntries = instance.get('totalEntries');
-						var totalScore = instance.get('totalScore');
-
-						var description = instance._fixScore(totalScore - (totalEntries - totalScore));
-
-						var label = instance._getLabel(description, totalEntries);
-
 						var namespace = instance.get(STR_NAMESPACE);
 
 						instance.ratings = new LikeRatingImpl(
 							{
 								boundingBox: '#' + namespace + 'ratingLike',
-								label: label,
+								label: instance._buildLabel(),
 								srcNode: '#' + namespace + 'ratingLikeContent'
 							}
 						).render();

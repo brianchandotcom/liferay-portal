@@ -407,6 +407,7 @@
 		<icon>/html/icons/rss.png</icon>
 		<struts-path>rss</struts-path>
 		<configuration-action-class>com.liferay.portlet.rss.action.ConfigurationActionImpl</configuration-action-class>
+		<template-handler>com.liferay.portlet.rss.template.RSSPortletDisplayTemplateHandler</template-handler>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<instanceable>true</instanceable>

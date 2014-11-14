@@ -27,6 +27,26 @@ import java.util.List;
  */
 public class TreePathUtil {
 
+	public static long[] getPrimaryKeys(String treePath) {
+		if (Validator.isNull(treePath)) {
+			return null;
+		}
+
+		if (treePath.length() == 1) {
+			return new long[0];
+		}
+
+		if (treePath.charAt(0) == CharPool.SLASH) {
+			treePath = treePath.substring(1);
+		}
+
+		if (treePath.charAt(treePath.length() - 1) == CharPool.SLASH) {
+			treePath = treePath.substring(0, treePath.length() - 1);
+		}
+
+		return StringUtil.split(treePath, StringPool.SLASH, 0L);
+	}
+
 	public static void rebuildTree(
 			long companyId, long parentPrimaryKey, String parentTreePath,
 			TreeModelTasks<?> treeModelTasks)

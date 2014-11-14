@@ -16,6 +16,8 @@ package com.liferay.portlet.rss.util;
 
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 
@@ -25,6 +27,22 @@ import com.sun.syndication.feed.synd.SyndFeed;
  * @author Brian Wing Shun Chan
  */
 public class RSSUtil {
+
+	public static String escapeJavaScriptLink(String link) {
+		if (Validator.isNull(link)) {
+			return StringPool.BLANK;
+		}
+
+		if (link.indexOf(StringPool.COLON) == 10) {
+			String protocol = StringUtil.toLowerCase(link.substring(0, 10));
+
+			if (protocol.equals("javascript")) {
+				link = StringUtil.replaceFirst(link, StringPool.COLON, "%3a");
+			}
+		}
+
+		return link;
+	}
 
 	public static ObjectValuePair<String, SyndFeed> getFeed(String url) {
 		WebCacheItem wci = new RSSWebCacheItem(url);

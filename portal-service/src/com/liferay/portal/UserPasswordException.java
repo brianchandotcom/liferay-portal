@@ -149,6 +149,32 @@ public class UserPasswordException extends PortalException {
 
 	}
 
+	public static class MustNotBeChangedYet extends UserPasswordException {
+
+		public MustNotBeChangedYet(long userId, Date changeableDate) {
+			super(
+				String.format(
+					"Password for user %s must not be changed until %s", userId,
+					changeableDate),
+				PASSWORD_TOO_YOUNG);
+
+			_userId = userId;
+			_changeableDate = changeableDate;
+		}
+
+		public Date getChangeableDate() {
+			return _changeableDate;
+		}
+
+		public long getUserId() {
+			return _userId;
+		}
+
+		private final Date _changeableDate;
+		private long _userId;
+
+	}
+
 	public static class MustNotBeEqualToCurrent extends UserPasswordException {
 
 		public MustNotBeEqualToCurrent(long userId) {
@@ -208,32 +234,6 @@ public class UserPasswordException extends PortalException {
 
 	}
 
-	public static class MustNotBeChangedYet extends UserPasswordException {
-
-		public MustNotBeChangedYet(long userId, Date changeableDate) {
-			super(
-				String.format(
-					"Password for user %s must not be changed until %s", userId,
-					changeableDate),
-				PASSWORD_TOO_YOUNG);
-
-			_userId = userId;
-			_changeableDate = changeableDate;
-		}
-
-		public Date getChangeableDate() {
-			return _changeableDate;
-		}
-
-		public long getUserId() {
-			return _userId;
-		}
-
-		private final Date _changeableDate;
-		private long _userId;
-
-	}
-
 	public static class MustNotBeTrivial extends UserPasswordException {
 
 		public MustNotBeTrivial(long userId) {
@@ -253,9 +253,12 @@ public class UserPasswordException extends PortalException {
 
 	}
 
-	public static class MustNotHaveDictionaryWords extends UserPasswordException {
+	public static class MustNotHaveDictionaryWords
+		extends UserPasswordException {
 
-		public MustNotHaveDictionaryWords(long userId, Set<String> trivialWords) {
+		public MustNotHaveDictionaryWords(
+			long userId, Set<String> trivialWords) {
+
 			super(
 				String.format(
 					"Password for user %s must not contain any dictionary " +

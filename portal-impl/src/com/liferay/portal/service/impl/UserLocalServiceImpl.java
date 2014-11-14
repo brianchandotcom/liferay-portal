@@ -4821,7 +4821,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					user.getCompanyId(), PropsKeys.LDAP_ERROR_PASSWORD_HISTORY);
 
 				if (msg.contains(passwordHistory)) {
-					throw new UserPasswordException.MustNotBeRecentlyUsed(userId);
+					throw new UserPasswordException.MustNotBeRecentlyUsed(
+						userId);
 				}
 			}
 

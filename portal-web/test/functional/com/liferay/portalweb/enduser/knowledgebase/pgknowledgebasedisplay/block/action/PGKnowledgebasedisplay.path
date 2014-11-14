@@ -50,8 +50,48 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ARTICLE_RSS</td>
+	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'RSS')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_SUBSCRIBE</td>
+	<td>//div[@class='kb-article-container']//a[contains(.,'Subscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_UNSUBSCRIBE</td>
+	<td>//div[@class='kb-article-container']//div//a[contains(.,'Unsubscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_HISTORY</td>
+	<td>//div[@class='kb-article-container']//a[contains(.,'History')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_PRINT</td>
+	<td>//div[@class='kb-article-container']//a[contains(.,'Print')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_ACTIONS_BUTTON</td>
+	<td>//div[@class='kb-article-container']//div//span[contains(.,'Actions')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ARTICLE_CONTENT</td>
 	<td>//div[@class='kb-article-container']//div[@class='kb-article-body']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_PREVIOUS</td>
+	<td>//div[@class='kb-article-container']//span[@class='kb-article-previous']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_NEXT</td>
+	<td>//div[@class='kb-article-container']//span[@class='kb-article-next']/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -77,46 +117,6 @@
 <tr>
 	<td>ARTICLE_SUGGESTIONS_VIEW</td>
 	<td>//div[@class='kb-article-container']//div[@class='kb-article-feedback-actions']/a[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ARTICLE_RSS</td>
-	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'RSS')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ARTICLE_SUBSCRIBE</td>
-	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'Subscribe')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ARTICLE_UNSUBSCRIBE</td>
-	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'Unsubscribe')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ARTICLE_HISTORY</td>
-	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'History')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ARTICLE_PRINT</td>
-	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'Print')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ARTICLE_ACTIONS_BUTTON</td>
-	<td>//div[@class='kb-article-container']//div//span[contains(.,'Actions')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ARTICLE_PREVIOUS</td>
-	<td>//div[@class='kb-article-container']//div/span[@class='kb-article-previous']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ARTICLE_NEXT</td>
-	<td>//div[@class='kb-article-container']//div/span[@class='kb-article-next']</td>
 	<td></td>
 </tr>
 <tr>

@@ -15,6 +15,8 @@
 package com.liferay.portlet.dynamicdatamapping.render;
 
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldType;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
@@ -43,7 +45,13 @@ public class DateDDMFormFieldValueRenderer
 			public String get(DDMFormFieldValue ddmFormFieldValue) {
 				Value value = ddmFormFieldValue.getValue();
 
-				long valueLong = Long.valueOf(value.getString(locale));
+				String valueString = value.getString(locale);
+
+				if (Validator.isNull(valueString)) {
+					return StringPool.BLANK;
+				}
+
+				long valueLong = Long.valueOf(valueString);
 
 				Format format = FastDateFormatFactoryUtil.getDate(locale);
 

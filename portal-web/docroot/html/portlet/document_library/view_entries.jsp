@@ -449,7 +449,7 @@ dlSearchContainer.setResults(results);
 
 							<c:if test='<%= ArrayUtil.contains(entryColumns, "downloads") %>'>
 								<liferay-ui:search-container-column-text
-									name="dowloads"
+									name="downloads"
 									value="<%= String.valueOf(fileEntry.getReadCount()) %>"
 								/>
 							</c:if>

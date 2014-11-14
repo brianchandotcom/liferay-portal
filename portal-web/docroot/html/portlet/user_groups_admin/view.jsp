@@ -55,7 +55,9 @@ String portletURLString = portletURL.toString();
 		var status = <%= WorkflowConstants.STATUS_INACTIVE %>
 
 		<portlet:namespace />getUsersCount(
-			className, ids, status,
+			className,
+			ids,
+			status,
 			function(responseData) {
 				var count = parseInt(responseData);
 
@@ -63,7 +65,9 @@ String portletURLString = portletURL.toString();
 					status = <%= WorkflowConstants.STATUS_APPROVED %>
 
 					<portlet:namespace />getUsersCount(
-						className, ids, status,
+						className,
+						ids,
+						status,
 						function(responseData) {
 							count = parseInt(responseData);
 

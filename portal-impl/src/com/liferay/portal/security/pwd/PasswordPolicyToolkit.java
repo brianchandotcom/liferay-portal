@@ -112,10 +112,11 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 				throw new UserPasswordException.MustNotBeTrivial(userId);
 			}
 
-			if (Validator.isNotNull(passwordPolicy.getRegex()) &&
-				!password1.matches(passwordPolicy.getRegex())) {
+			String regex = passwordPolicy.getRegex();
 
-				throw new UserPasswordException.MustBeValid(userId);
+			if (Validator.isNotNull(regex) && !password1.matches(regex)) {
+				throw new UserPasswordException.MustComplyWithRegex(
+					userId, regex);
 			}
 		}
 

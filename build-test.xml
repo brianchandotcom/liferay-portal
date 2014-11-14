@@ -1275,6 +1275,107 @@ create database lportal${database.index} character set utf8;</echo>
 		</if>
 	</target>
 
+	<target name="deploy-regular-plugins">
+
+		<!-- Deploy plugin war files to deploy directory -->
+
+		<if>
+			<isset property="hook.plugins.includes" />
+			<then>
+				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
+					<property name="plugin.types" value="hooks" />
+					<property name="plugins.includes" value="${hook.plugins.includes}" />
+				</ant>
+			</then>
+		</if>
+
+		<if>
+			<isset property="layouttpl.plugins.includes" />
+			<then>
+				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
+					<property name="plugin.types" value="layouttpl" />
+					<property name="plugins.includes" value="${layouttpl.plugins.includes}" />
+				</ant>
+			</then>
+		</if>
+
+		<if>
+			<isset property="portlet.plugins.includes" />
+			<then>
+				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
+					<property name="plugin.types" value="portlets" />
+					<property name="plugins.includes" value="${portlet.plugins.includes}" />
+				</ant>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${test.pacl}" arg2="true" />
+			<then>
+				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
+					<property name="plugin.types" value="portlets" />
+					<property name="plugins.includes" value="chat-portlet,flash-portlet,portal-compat-hook,sample-service-builder-portlet,test-pacl-portlet" />
+				</ant>
+			</then>
+		</if>
+
+		<if>
+			<isset property="theme.plugins.includes" />
+			<then>
+				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
+					<property name="plugin.types" value="themes" />
+					<property name="plugins.includes" value="${theme.plugins.includes}" />
+				</ant>
+			</then>
+		</if>
+
+		<if>
+			<isset property="web.plugins.includes" />
+			<then>
+				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
+					<property name="plugin.types" value="webs" />
+					<property name="plugins.includes" value="${web.plugins.includes}" />
+				</ant>
+			</then>
+		</if>
+
+		<!-- Copy plugin war files to additional deploy directories if additional bundles are present -->
+
+		<if>
+			<isset property="app.server.bundles.size" />
+			<then>
+				<var name="app.server.bundle.index" value="1" />
+
+				<antelope:repeat count="${app.server.bundles.size}">
+					<set-app-server-properties
+						app.server.bundle.index="${app.server.bundle.index}"
+					/>
+
+					<copy todir="${test.app.server.parent.dir}/deploy">
+						<fileset dir="${liferay.home}/deploy" />
+					</copy>
+
+					<math
+						datatype="int"
+						operand1="${app.server.bundle.index}"
+						operand2="1"
+						operation="+"
+						result="app.server.bundle.index"
+					/>
+				</antelope:repeat>
+
+				<var name="app.server.bundle.index" unset="true" />
+			</then>
+		</if>
+	</target>
+
+	<target name="deploy-required-plugins">
+		<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
+			<property name="plugin.types" value="portlets" />
+			<property name="plugins.includes" value="marketplace-portlet" />
+		</ant>
+	</target>
+
 	<target name="evaluate-logs">
 		<if>
 			<available file="portal-web/test-ant-scripts/log" />
@@ -3776,97 +3877,9 @@ if (ppstate.equals("normal")) {
 			</then>
 		</if>
 
-		<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
-			<property name="plugin.types" value="portlets" />
-			<property name="plugins.includes" value="marketplace-portlet" />
-		</ant>
+		<antcall target="deploy-required-plugins" />
 
-		<if>
-			<isset property="hook.plugins.includes" />
-			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
-					<property name="plugin.types" value="hooks" />
-					<property name="plugins.includes" value="${hook.plugins.includes}" />
-				</ant>
-			</then>
-		</if>
-
-		<if>
-			<isset property="layouttpl.plugins.includes" />
-			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
-					<property name="plugin.types" value="layouttpl" />
-					<property name="plugins.includes" value="${layouttpl.plugins.includes}" />
-				</ant>
-			</then>
-		</if>
-
-		<if>
-			<isset property="portlet.plugins.includes" />
-			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
-					<property name="plugin.types" value="portlets" />
-					<property name="plugins.includes" value="${portlet.plugins.includes}" />
-				</ant>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${test.pacl}" arg2="true" />
-			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
-					<property name="plugin.types" value="portlets" />
-					<property name="plugins.includes" value="chat-portlet,flash-portlet,portal-compat-hook,sample-service-builder-portlet,test-pacl-portlet" />
-				</ant>
-			</then>
-		</if>
-
-		<if>
-			<isset property="theme.plugins.includes" />
-			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
-					<property name="plugin.types" value="themes" />
-					<property name="plugins.includes" value="${theme.plugins.includes}" />
-				</ant>
-			</then>
-		</if>
-
-		<if>
-			<isset property="web.plugins.includes" />
-			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
-					<property name="plugin.types" value="webs" />
-					<property name="plugins.includes" value="${web.plugins.includes}" />
-				</ant>
-			</then>
-		</if>
-
-		<if>
-			<isset property="app.server.bundles.size" />
-			<then>
-				<var name="app.server.bundle.index" value="1" />
-
-				<antelope:repeat count="${app.server.bundles.size}">
-					<set-app-server-properties
-						app.server.bundle.index="${app.server.bundle.index}"
-					/>
-
-					<copy todir="${test.app.server.parent.dir}/deploy">
-						<fileset dir="${liferay.home}/deploy" />
-					</copy>
-
-					<math
-						datatype="int"
-						operand1="${app.server.bundle.index}"
-						operand2="1"
-						operation="+"
-						result="app.server.bundle.index"
-					/>
-				</antelope:repeat>
-
-				<var name="app.server.bundle.index" unset="true" />
-			</then>
-		</if>
+		<antcall target="deploy-regular-plugins" />
 
 		<if>
 			<isset property="web.xml.timeout" />

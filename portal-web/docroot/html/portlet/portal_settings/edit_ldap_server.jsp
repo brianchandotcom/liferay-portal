@@ -376,7 +376,7 @@ for (int i = 0 ; i < groupMappingArray.length ; i++) {
 
 		var form = AUI.$(document.<portlet:namespace />fm);
 
-		var ldapType = form.fm('defaultLdap').prop('value');
+		var ldapType = form.fm('defaultLdap').filter(':checked').val();
 
 		if (ldapType == 'apache') {
 			baseProviderURL = 'ldap://localhost:10389';

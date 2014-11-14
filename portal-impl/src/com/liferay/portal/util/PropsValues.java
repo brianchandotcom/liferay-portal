@@ -1592,6 +1592,8 @@ public class PropsValues {
 
 	public static final int RSS_CONNECTION_TIMEOUT = GetterUtil.getInteger(PropsUtil.get(PropsKeys.RSS_CONNECTION_TIMEOUT));
 
+	public static final String RSS_DISPLAY_TEMPLATES_CONFIG = PropsUtil.get(PropsKeys.RSS_DISPLAY_TEMPLATES_CONFIG);
+
 	public static String[] RSS_FEED_TYPES = PropsUtil.getArray(PropsKeys.RSS_FEED_TYPES);
 
 	public static boolean RSS_FEEDS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.RSS_FEEDS_ENABLED));

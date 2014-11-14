@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<root>
+	<template>
+		<template-key>rss-web-content-ftl</template-key>
+		<name>portlet-display-template-name-basic</name>
+		<description>portlet-display-template-description-basic</description>
+		<language>ftl</language>
+		<script-file>com/liferay/portlet/rss/dependencies/portlet_display_template_show_web_content.ftl</script-file>
+		<cacheable>false</cacheable>
+	</template>
+</root>

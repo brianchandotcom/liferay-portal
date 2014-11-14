@@ -203,8 +203,10 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 }
 
 .portlet-dynamic-data-list-display, .portlet-dynamic-data-lists, .portlet-journal {
-	.lfr-ddm-container .field-wrapper {
-		@include border-radius(6px);
+	.lfr-ddm-container {
+		.lfr-ddm-repeatable-placeholder, .field-wrapper {
+			@include border-radius(6px);
+		}
 	}
 }
 

@@ -111,6 +111,12 @@ public class DDMImpl implements DDM {
 
 		if (refererPortletName == null) {
 			refererPortletName = serviceContext.getPortletId();
+
+			if (refererPortletName == null) {
+				throw new IllegalArgumentException(
+					"ServiceContext must have either refererPortletName or " +
+						"portletPreferenceIds set.");
+			}
 		}
 
 		return DDMDisplayRegistryUtil.getDDMDisplay(refererPortletName);

@@ -6,9 +6,9 @@ A set of variables have been made available for the template developers:
 
 {$ddmTemplateId}: the current template id
 
-{$entries}: the list of locales that are being shown in this portlet
+{$entries}: the list of feeds that are being shown in this portlet
 
-{$entry}: the locale when there's only one locale
+{$entry}: the feed when there's only one feed
 
 {$locale}: the locale of the site
 

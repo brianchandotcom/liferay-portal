@@ -1024,7 +1024,7 @@ public class DLImpl implements DL {
 	@Override
 	public String getThumbnailSrc(
 			FileEntry fileEntry, FileVersion fileVersion,
-			DLFileShortcut dlFileShortcut, ThemeDisplay themeDisplay)
+			ThemeDisplay themeDisplay)
 		throws Exception {
 
 		String thumbnailQueryString = null;

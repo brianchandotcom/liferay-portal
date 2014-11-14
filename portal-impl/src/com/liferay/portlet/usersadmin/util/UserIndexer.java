@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -45,10 +46,11 @@ import com.liferay.portal.util.PropsValues;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -408,26 +410,20 @@ public class UserIndexer extends BaseIndexer {
 			long userId, long[] organizationIds)
 		throws Exception {
 
-		List<Organization> ancestorOrganizations =
-			new ArrayList<Organization>();
+		Set<Long> ancestorOrganizationIds = new HashSet<Long>();
 
 		for (long organizationId : organizationIds) {
 			Organization organization =
 				OrganizationLocalServiceUtil.getOrganization(organizationId);
 
-			ancestorOrganizations.addAll(organization.getAncestors());
+			long[] ancestorIds = organization.getAncestorIds();
+
+			for (int i = 0; i < ancestorIds.length; i++) {
+				ancestorOrganizationIds.add(ancestorIds[i]);
+			}
 		}
 
-		long[] ancestorOrganizationIds = new long[ancestorOrganizations.size()];
-
-		for (int i = 0; i < ancestorOrganizations.size(); i++) {
-			Organization ancestorOrganization = ancestorOrganizations.get(i);
-
-			ancestorOrganizationIds[i] =
-				ancestorOrganization.getOrganizationId();
-		}
-
-		return ancestorOrganizationIds;
+		return ArrayUtil.toLongArray(ancestorOrganizationIds);
 	}
 
 	@Override

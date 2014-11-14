@@ -395,6 +395,22 @@ public abstract class BaseRepositoryImpl
 		return fileEntry.getLock();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #revertFileEntry(long, long,
+	 *             String, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public void revertFileEntry(
+			long fileEntryId, String version, ServiceContext serviceContext)
+		throws PortalException {
+
+		revertFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
+			fileEntryId, version, serviceContext);
+	}
+
 	@Override
 	public Hits search(SearchContext searchContext) throws SearchException {
 		searchContext.setSearchEngineId(SearchEngineUtil.GENERIC_ENGINE_ID);

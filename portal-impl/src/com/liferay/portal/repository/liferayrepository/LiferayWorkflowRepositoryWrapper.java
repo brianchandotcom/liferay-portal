@@ -195,19 +195,32 @@ public class LiferayWorkflowRepositoryWrapper extends RepositoryWrapper {
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
+	public void revertFileEntry(
+			long userId, long fileEntryId, String version,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		super.revertFileEntry(userId, fileEntryId, version, serviceContext);
+
+		FileEntry fileEntry = super.getFileEntry(fileEntryId);
+
+		_workflowCapability.revertFileEntry(userId, fileEntry, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #revertFileEntry(long, long,
+	 *             String, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
 	public void revertFileEntry(
 			long fileEntryId, String version, ServiceContext serviceContext)
 		throws PortalException {
 
-		super.revertFileEntry(fileEntryId, version, serviceContext);
-
-		FileEntry fileEntry = super.getFileEntry(fileEntryId);
-
-		_workflowCapability.revertFileEntry(
+		revertFileEntry(
 			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
 				getUserId(),
-			fileEntry, serviceContext);
+			fileEntryId, version, serviceContext);
 	}
 
 	@Override

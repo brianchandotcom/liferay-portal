@@ -448,11 +448,12 @@ public abstract class CMISRepositoryHandler
 
 	@Override
 	public void revertFileEntry(
-			long fileEntryId, String version, ServiceContext serviceContext)
+			long userId, long fileEntryId, String version,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_baseCmisRepository.revertFileEntry(
-			fileEntryId, version, serviceContext);
+			userId, fileEntryId, version, serviceContext);
 	}
 
 	@Override

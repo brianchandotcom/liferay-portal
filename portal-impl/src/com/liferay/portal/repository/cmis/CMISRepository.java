@@ -1132,9 +1132,9 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
 	public void revertFileEntry(
-			long fileEntryId, String version, ServiceContext serviceContext)
+			long userId, long fileEntryId, String version,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		try {
@@ -1167,9 +1167,10 @@ public class CMISRepository extends BaseCmisRepository {
 			ContentStream contentStream = oldVersion.getContentStream();
 
 			updateFileEntry(
-				fileEntryId, contentStream.getFileName(), mimeType, title,
-				StringPool.BLANK, changeLog, true, contentStream.getStream(),
-				contentStream.getLength(), serviceContext);
+				userId, fileEntryId, contentStream.getFileName(), mimeType,
+				title, StringPool.BLANK, changeLog, true,
+				contentStream.getStream(), contentStream.getLength(),
+				serviceContext);
 		}
 		catch (PortalException pe) {
 			throw pe;

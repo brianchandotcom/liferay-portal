@@ -1106,6 +1106,7 @@
 		<execute macro="DDLRecord#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 			<var name="ddlRecordFieldData" value="${fieldPredefinedValue}" />
+			<var name="ddlRecordFieldDataTableDisplay" value="5,678" />
 			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
@@ -1137,6 +1138,7 @@
 		<execute macro="DDLRecord#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
+			<var name="ddlRecordFieldDataTableDisplay" value="4,421" />
 			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
@@ -1608,6 +1610,7 @@
 		<execute macro="DDLRecord#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 			<var name="ddlRecordFieldData" value="${fieldPredefinedValue}" />
+			<var name="ddlRecordFieldDataTableDisplay" value="9,011" />
 			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
@@ -1639,6 +1642,7 @@
 		<execute macro="DDLRecord#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
+			<var name="ddlRecordFieldDataTableDisplay" value="5,553" />
 			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>

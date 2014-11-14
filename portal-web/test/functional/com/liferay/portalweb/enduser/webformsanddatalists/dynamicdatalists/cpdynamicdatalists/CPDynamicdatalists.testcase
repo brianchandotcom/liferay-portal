@@ -2543,7 +2543,7 @@
 	<command name="EditBooleanFieldFieldLabel" priority="5">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
-		<var name="ddlRecordFieldData" value="true" />
+		<var name="ddlRecordFieldData" value="Yes" />
 		<var name="field" value="Boolean" />
 		<var name="fieldFieldLabel" value="Boolean" />
 		<var name="fieldFieldLabelEdit" value="Boolean Edit" />
@@ -2645,7 +2645,7 @@
 	<command name="EditBooleanFieldName" priority="5">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
-		<var name="ddlRecordFieldData" value="true" />
+		<var name="ddlRecordFieldData" value="Yes" />
 		<var name="field" value="Boolean" />
 		<var name="fieldFieldLabel" value="Boolean" />
 		<var name="fieldName" value="Boolean" />
@@ -2747,7 +2747,7 @@
 	<command name="EditBooleanFieldShowLabel" priority="5">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
-		<var name="ddlRecordFieldData" value="true" />
+		<var name="ddlRecordFieldData" value="Yes" />
 		<var name="field" value="Boolean" />
 		<var name="fieldFieldLabel" value="Boolean" />
 		<var name="fieldName" value="Boolean" />
@@ -3589,7 +3589,7 @@
 	<command name="ImportLAR" priority="5">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
-		<var name="ddlRecordFieldData" value="true" />
+		<var name="ddlRecordFieldData" value="Yes" />
 		<var name="field" value="Boolean" />
 		<var name="fieldFieldLabel" value="Boolean" />
 		<var name="fieldName" value="Boolean" />
@@ -3701,7 +3701,7 @@
 	<command name="ViewBooleanFieldPredefinedValue" priority="5">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
-		<var name="ddlRecordFieldData" value="false" />
+		<var name="ddlRecordFieldData" value="No" />
 		<var name="field" value="Boolean" />
 		<var name="fieldFieldLabel" value="Boolean" />
 		<var name="fieldName" value="Boolean" />
@@ -3785,7 +3785,7 @@
 		</execute>
 
 		<execute macro="DDLRecord#viewFirstFieldCP">
-			<var name="ddlRecordFieldData" value="true" />
+			<var name="ddlRecordFieldData" value="Yes" />
 			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>

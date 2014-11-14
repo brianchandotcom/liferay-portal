@@ -1027,7 +1027,7 @@
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldBoolean">
-			<var name="ddlRecordFieldData" value="true" />
+			<var name="ddlRecordFieldData" value="Yes" />
 			<var name="fieldFieldLabel" value="Employee" />
 			<var name="fieldName" value="Employee" />
 		</execute>

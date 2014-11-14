@@ -112,7 +112,12 @@ Group selGroup = layoutsAdminDisplayContext.getSelGroup();
 	<div class="lfr-app-column-view manage-view row">
 		<c:if test="<%= !group.isLayoutPrototype() %>">
 			<div class="col-md-3">
-				<c:if test="<%= layoutsAdminDisplayContext.getStagingGroup() != null %>">
+
+				<%
+				Group stagingGroup = layoutsAdminDisplayContext.getStagingGroup();
+				%>
+
+				<c:if test="<%= stagingGroup.isStagingGroup() %>">
 
 					<%
 					long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");

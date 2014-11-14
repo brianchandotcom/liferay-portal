@@ -696,6 +696,13 @@ public interface RoleLocalService extends BaseLocalService,
 	public java.util.List<com.liferay.portal.model.Role> getUserGroupGroupRoles(
 		long userId, long groupId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Role> getUserGroupGroupRoles(
+		long userId, long groupId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserGroupGroupRolesCount(long userId, long groupId);
+
 	/**
 	* Returns all the user's roles within the user group.
 	*

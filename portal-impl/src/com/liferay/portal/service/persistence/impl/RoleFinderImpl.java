@@ -64,6 +64,9 @@ public class RoleFinderImpl
 	public static final String COUNT_BY_USER_GROUP =
 		RoleFinder.class.getName() + ".countByUserGroup";
 
+	public static final String COUNT_BY_USER_GROUP_GROUP_ROLE =
+		RoleFinder.class.getName() + ".countByUserGroupGroupRole";
+
 	public static final String COUNT_BY_USER_GROUP_SITE =
 		RoleFinder.class.getName() + ".countByUserGroupSite";
 
@@ -273,6 +276,44 @@ public class RoleFinderImpl
 	}
 
 	@Override
+	public int countByUserGroupGroupRole(long userId, long groupId) {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(COUNT_BY_USER_GROUP_GROUP_ROLE);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(userId);
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
 	public List<Role> findBySystem(long companyId) {
 		Session session = null;
 
@@ -301,6 +342,14 @@ public class RoleFinderImpl
 
 	@Override
 	public List<Role> findByUserGroupGroupRole(long userId, long groupId) {
+		return findByUserGroupGroupRole(
+			userId, groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	@Override
+	public List<Role> findByUserGroupGroupRole(
+		long userId, long groupId, int start, int end) {
+
 		Session session = null;
 
 		try {
@@ -317,7 +366,7 @@ public class RoleFinderImpl
 			qPos.add(userId);
 			qPos.add(groupId);
 
-			return q.list(true);
+			return (List<Role>)QueryUtil.list(q, getDialect(), start, end);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

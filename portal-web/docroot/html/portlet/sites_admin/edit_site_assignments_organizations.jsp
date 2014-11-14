@@ -121,15 +121,13 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 
 		<liferay-ui:search-container-column-text
 			name="region"
-		>
-			<liferay-ui:write bean="<%= organization %>" property="region" />
-		</liferay-ui:search-container-column-text>
+			value="<%= UsersAdmin.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization) %>"
+		/>
 
 		<liferay-ui:search-container-column-text
 			name="country"
-		>
-			<liferay-ui:write bean="<%= organization %>" property="country" />
-		</liferay-ui:search-container-column-text>
+			value="<%= UsersAdmin.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %>"
+		/>
 	</liferay-ui:search-container-row>
 
 	<liferay-util:buffer var="formButton">

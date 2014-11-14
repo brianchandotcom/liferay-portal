@@ -2627,6 +2627,12 @@ public interface PropsKeys {
 
 	public static final String UPLOAD_SERVLET_REQUEST_IMPL_TEMP_DIR = "com.liferay.portal.upload.UploadServletRequestImpl.temp.dir";
 
+	public static final String USER_ADMIN_ORGANIZATION_COLUMN_LIMIT = "user.admin.organization.column.limit";
+
+	public static final String USER_ADMIN_ROLE_COLUMN_LIMIT = "user.admin.role.column.limit";
+
+	public static final String USER_ADMIN_USER_GROUP_COLUMN_LIMIT = "user.admin.user.group.column.limit";
+
 	public static final String USER_GROUPS_COPY_LAYOUTS_TO_USER_PERSONAL_SITE = "user.groups.copy.layouts.to.user.personal.site";
 
 	public static final String USER_GROUPS_INDEXER_ENABLED = "user.groups.indexer.enabled";

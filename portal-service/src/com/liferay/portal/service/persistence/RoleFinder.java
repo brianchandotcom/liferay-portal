@@ -42,11 +42,16 @@ public interface RoleFinder {
 		java.lang.Integer[] types,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params);
 
+	public int countByUserGroupGroupRole(long userId, long groupId);
+
 	public java.util.List<com.liferay.portal.model.Role> findBySystem(
 		long companyId);
 
 	public java.util.List<com.liferay.portal.model.Role> findByUserGroupGroupRole(
 		long userId, long groupId);
+
+	public java.util.List<com.liferay.portal.model.Role> findByUserGroupGroupRole(
+		long userId, long groupId, int start, int end);
 
 	public java.util.List<com.liferay.portal.model.Role> findByUserGroupRole(
 		long userId, long groupId);

@@ -16,18 +16,21 @@ package com.liferay.portlet.usersadmin.util;
 
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Address;
@@ -95,6 +98,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.portlet.ActionRequest;
@@ -855,6 +859,23 @@ public class UsersAdminImpl implements UsersAdmin {
 		}
 
 		return orderByComparator;
+	}
+
+	@Override
+	public <T> String getUserColumnText(
+		Locale locale, List<? extends T> list, Accessor<T, String> accessor,
+		int count) {
+
+		String result = ListUtil.toString(
+			list, accessor, StringPool.COMMA_AND_SPACE);
+
+		if (list.size() < count) {
+			result += StringPool.SPACE + LanguageUtil.format(
+				locale, "and-x-more", String.valueOf(count - list.size()),
+				false);
+		}
+
+		return result;
 	}
 
 	@Override

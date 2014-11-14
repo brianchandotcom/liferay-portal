@@ -65,8 +65,7 @@ page import="com.liferay.portlet.usergroupsadmin.search.UserGroupGroupChecker" %
 page import="com.liferay.portlet.usersadmin.search.GroupDisplayTerms" %><%@
 page import="com.liferay.portlet.usersadmin.search.OrganizationDisplayTerms" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserDisplayTerms" %><%@
-page import="com.liferay.portlet.usersadmin.search.UserOrganizationChecker" %><%@
-page import="com.liferay.portlet.usersadmin.util.UsersAdmin" %>
+page import="com.liferay.portlet.usersadmin.search.UserOrganizationChecker" %>
 
 <%
 boolean showActiveUserSelect = true;

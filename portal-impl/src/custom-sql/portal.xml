@@ -1069,6 +1069,23 @@
 				(Users_UserGroups.userId = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.service.persistence.RoleFinder.countByUserGroupGroupRole">
+		<![CDATA[
+			SELECT
+				COUNT(Role_.roleId) AS COUNT_VALUE
+			FROM
+				Role_
+			INNER JOIN
+				UserGroupGroupRole ON
+					(UserGroupGroupRole.roleId = Role_.roleId)
+			INNER JOIN
+				Users_UserGroups ON
+					(Users_UserGroups.userGroupId = UserGroupGroupRole.userGroupId)
+			WHERE
+				(Users_UserGroups.userId = ?) AND
+				(UserGroupGroupRole.groupId = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.service.persistence.RoleFinder.countByUserGroupSite">
 		<![CDATA[
 			SELECT

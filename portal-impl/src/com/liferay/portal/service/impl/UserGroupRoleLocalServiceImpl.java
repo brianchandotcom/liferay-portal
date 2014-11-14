@@ -199,6 +199,13 @@ public class UserGroupRoleLocalServiceImpl
 	}
 
 	@Override
+	public List<UserGroupRole> getUserGroupRoles(
+		long userId, long groupId, int start, int end) {
+
+		return userGroupRolePersistence.findByU_G(userId, groupId, start, end);
+	}
+
+	@Override
 	public List<UserGroupRole> getUserGroupRolesByGroup(long groupId) {
 		return userGroupRolePersistence.findByGroupId(groupId);
 	}
@@ -216,6 +223,11 @@ public class UserGroupRoleLocalServiceImpl
 
 		return userGroupRoleFinder.findByUserUserGroupGroupRole(
 			userId, groupId);
+	}
+
+	@Override
+	public int getUserGroupRolesCount(long userId, long groupId) {
+		return userGroupRolePersistence.countByU_G(userId, groupId);
 	}
 
 	@Override

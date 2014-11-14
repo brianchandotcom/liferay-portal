@@ -30,9 +30,13 @@
 	value="<%= user2.getJobTitle() %>"
 />
 
+<%
+List<Organization> userOrganizations = OrganizationLocalServiceUtil.getUserOrganizations(user2.getUserId(), 0, PropsValues.USER_ADMIN_ORGANIZATION_COLUMN_LIMIT);
+int userOrganizationsCount = OrganizationLocalServiceUtil.getUserOrganizationsCount(user2.getUserId());
+%>
+
 <liferay-ui:search-container-column-text
 	href="<%= rowURL %>"
 	name="organizations"
->
-	<liferay-ui:write bean="<%= user2 %>" property="organizations" />
-</liferay-ui:search-container-column-text>
+	value="<%= HtmlUtil.escape(UsersAdminUtil.getUserColumnText(locale, userOrganizations, Organization.NAME_ACCESSOR, userOrganizationsCount)) %>"
+/>

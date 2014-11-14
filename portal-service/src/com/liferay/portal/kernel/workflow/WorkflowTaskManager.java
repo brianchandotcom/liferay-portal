@@ -51,6 +51,10 @@ public interface WorkflowTaskManager {
 			Map<String, Serializable> workflowContext)
 		throws WorkflowException;
 
+	public WorkflowTask fetchWorkflowTask(
+			long companyId, long workflowTaskInstanceId)
+		throws WorkflowException;
+
 	public List<String> getNextTransitionNames(
 			long companyId, long userId, long workflowTaskId)
 		throws WorkflowException;

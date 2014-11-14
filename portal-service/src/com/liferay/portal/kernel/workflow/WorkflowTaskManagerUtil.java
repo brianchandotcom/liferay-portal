@@ -65,6 +65,14 @@ public class WorkflowTaskManagerUtil {
 			workflowContext);
 	}
 
+	public static WorkflowTask fetchWorkflowTask(
+			long companyId, long workflowTaskId)
+		throws WorkflowException {
+
+		return getWorkflowTaskManager().fetchWorkflowTask(
+			companyId, workflowTaskId);
+	}
+
 	public static List<String> getNextTransitionNames(
 			long companyId, long userId, long workflowTaskId)
 		throws WorkflowException {

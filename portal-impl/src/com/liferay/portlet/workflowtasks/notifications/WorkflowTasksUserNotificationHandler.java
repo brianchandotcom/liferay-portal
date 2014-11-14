@@ -20,8 +20,11 @@ import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowTask;
+import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
 
 /**
@@ -43,6 +46,18 @@ public class WorkflowTasksUserNotificationHandler
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			userNotificationEvent.getPayload());
+
+		long workflowTaskId = jsonObject.getLong("workflowTaskId");
+
+		WorkflowTask workflowTask = WorkflowTaskManagerUtil.fetchWorkflowTask(
+			serviceContext.getCompanyId(), workflowTaskId);
+
+		if (workflowTask == null) {
+			UserNotificationEventLocalServiceUtil.deleteUserNotificationEvent(
+				userNotificationEvent.getUserNotificationEventId());
+
+			return null;
+		}
 
 		return HtmlUtil.escape(jsonObject.getString("notificationMessage"));
 	}

@@ -15,14 +15,18 @@
 package com.liferay.portal.kernel.notifications;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.UserNotificationDelivery;
 import com.liferay.portal.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.model.UserNotificationEvent;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserNotificationDeliveryLocalServiceUtil;
 
@@ -56,6 +60,25 @@ public abstract class BaseUserNotificationHandler
 			if (userNotificationFeedEntry != null) {
 				userNotificationFeedEntry.setOpenDialog(isOpenDialog());
 				userNotificationFeedEntry.setPortletId(getPortletId());
+			}
+			else {
+				Portlet portlet = PortletLocalServiceUtil.getPortletById(
+					getPortletId());
+
+				String body = StringUtil.replace(
+					_DEFAULT_BODY_TEMPLATE,
+					new String[]{"[$BODY$]", "[$TITLE$]"},
+					new String[] {
+						LanguageUtil.format(
+							serviceContext.getLocale(),
+							"notification-for-x-was-deleted",
+							portlet.getDisplayName()),
+						LanguageUtil.get(
+							serviceContext.getLocale(),
+							"notification-no-longer-applies")});
+
+				userNotificationFeedEntry = new UserNotificationFeedEntry(
+					false, body, StringPool.BLANK);
 			}
 
 			return userNotificationFeedEntry;
@@ -144,8 +167,7 @@ public abstract class BaseUserNotificationHandler
 			return sb.toString();
 		}
 		else {
-			return "<div class=\"title\">[$TITLE$]</div><div class=\"body\">" +
-				"[$BODY$]</div>";
+			return _DEFAULT_BODY_TEMPLATE;
 		}
 	}
 
@@ -176,6 +198,10 @@ public abstract class BaseUserNotificationHandler
 	protected void setSelector(String selector) {
 		_selector = selector;
 	}
+
+	private static final String _DEFAULT_BODY_TEMPLATE =
+		"<div class=\"title\">[$TITLE$]</div><div class=\"body\">[$BODY$]" +
+			"</div>";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseUserNotificationHandler.class);

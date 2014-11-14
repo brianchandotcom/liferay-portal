@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Conjunction;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Repository;
@@ -662,9 +664,18 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 
 					long liferayRepositoryClassNameId =
 						PortalUtil.getClassNameId(LiferayRepository.class);
+					long tempFileRepositoryClassNameId =
+						PortalUtil.getClassNameId(TempFileEntryUtil.class);
 
-					dynamicQuery.add(
+					Conjunction conjunction =
+						RestrictionsFactoryUtil.conjunction();
+
+					conjunction.add(
 						classNameIdProperty.ne(liferayRepositoryClassNameId));
+					conjunction.add(
+						classNameIdProperty.ne(tempFileRepositoryClassNameId));
+
+					dynamicQuery.add(conjunction);
 
 					Disjunction disjunction =
 						RestrictionsFactoryUtil.disjunction();

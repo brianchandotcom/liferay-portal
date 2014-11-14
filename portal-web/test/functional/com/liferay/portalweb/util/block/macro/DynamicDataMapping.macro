@@ -34,7 +34,7 @@
 			<elseif>
 				<equals arg1="${field}" arg2="Paragraph" />
 				<then>
-					<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
+					<execute action="Dynamicdatamapping#doubleClick" locator-key1="FORM_FIELD" />
 				</then>
 			</elseif>
 			<elseif>
@@ -78,7 +78,7 @@
 
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
-		<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
+		<execute action="Dynamicdatamapping#doubleClick" locator-key1="FORM_FIELD" />
 		<execute action="Dynamicdatamapping#mouseOver" locator-key1="FORM_FIELD" />
 		<execute action="Dynamicdatamapping#clickNoError" locator-key1="FORM_FIELD_DELETE_ICON" />
 		<execute action="Dynamicdatamapping#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected entries? They will be deleted immediately." />
@@ -90,7 +90,7 @@
 
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
-		<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
+		<execute action="Dynamicdatamapping#doubleClick" locator-key1="FORM_FIELD" />
 
 		<if>
 			<isset var="fieldFieldLabelEdit" />
@@ -122,7 +122,7 @@
 
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
-		<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
+		<execute action="Dynamicdatamapping#doubleClick" locator-key1="FORM_FIELD" />
 		<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_INDEXABLE" />
 		<execute action="Dynamicdatamapping#click" locator-key1="SETTINGS_CELL_EDITOR_NOT_INDEXABLE_RADIO" />
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
@@ -134,7 +134,7 @@
 	<command name="editFieldLabelAndFieldNameCmd">
 		<var name="key_fieldFieldLabel" value="${field}" />
 
-		<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
+		<execute action="Dynamicdatamapping#doubleClick" locator-key1="FORM_FIELD" />
 		<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_FIELD_LABEL" />
 		<execute action="Dynamicdatamapping#type" locator-key1="SETTINGS_CELL_EDITOR_FIELD" value1="${fieldFieldLabel}" />
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
@@ -163,7 +163,7 @@
 
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
-		<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
+		<execute action="Dynamicdatamapping#doubleClick" locator-key1="FORM_FIELD" />
 		<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_LOCALIZABLE" />
 		<execute action="Dynamicdatamapping#click" locator-key1="SETTINGS_CELL_EDITOR_NO_RADIO" />
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
@@ -177,7 +177,7 @@
 
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
-		<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
+		<execute action="Dynamicdatamapping#doubleClick" locator-key1="FORM_FIELD" />
 		<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_OPTIONS" />
 
 		<var name="i" value="0" />
@@ -216,7 +216,7 @@
 
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
-		<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
+		<execute action="Dynamicdatamapping#doubleClick" locator-key1="FORM_FIELD" />
 		<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_PREDEFINED_VALUE" />
 
 		<if>
@@ -291,7 +291,7 @@
 
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
-		<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
+		<execute action="Dynamicdatamapping#doubleClick" locator-key1="FORM_FIELD" />
 		<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_REPEATABLE" />
 		<execute action="Dynamicdatamapping#click" locator-key1="SETTINGS_CELL_EDITOR_YES_RADIO" />
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
@@ -305,7 +305,7 @@
 
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
-		<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
+		<execute action="Dynamicdatamapping#doubleClick" locator-key1="FORM_FIELD" />
 		<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_SHOW_LABEL" />
 
 		<if>
@@ -336,7 +336,7 @@
 
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
-		<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
+		<execute action="Dynamicdatamapping#doubleClick" locator-key1="FORM_FIELD" />
 		<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_STYLE" />
 		<execute action="Dynamicdatamapping#type" locator-key1="SETTINGS_CELL_EDITOR_TEXT_AREA" value1="${fieldStyle}" />
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
@@ -349,7 +349,7 @@
 
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
-		<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
+		<execute action="Dynamicdatamapping#doubleClick" locator-key1="FORM_FIELD" />
 		<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_TEXT" />
 		<execute action="Dynamicdatamapping#type" locator-key1="SETTINGS_CELL_EDITOR_TEXT_AREA" value1="${fieldText}" />
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
@@ -362,7 +362,7 @@
 
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
-		<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
+		<execute action="Dynamicdatamapping#doubleClick" locator-key1="FORM_FIELD" />
 		<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_TIP" />
 		<execute action="Dynamicdatamapping#type" locator-key1="SETTINGS_CELL_EDITOR_TEXT_AREA" value1="${fieldTip}" />
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
@@ -377,7 +377,7 @@
 
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
-		<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
+		<execute action="Dynamicdatamapping#doubleClick" locator-key1="FORM_FIELD" />
 		<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_WIDTH" />
 
 		<var name="key_widthSize" value="${widthSize}" />

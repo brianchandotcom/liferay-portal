@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>FIELD_LABEL_HIDDEN</td>
-	<td>//div[@data-fieldname='${key_fieldName}']/../div/input[@type='hidden']</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/../../div/input[@type='hidden']</td>
 	<td></td>
 </tr>
 <tr>
@@ -70,7 +70,7 @@
 </tr>
 <tr>
 	<td>BOOLEAN_CHECKBOX</td>
-	<td>//div[@data-fieldname='${key_fieldName}']/label/input</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/input</td>
 	<td></td>
 </tr>
 <tr>

@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `6e26e7c`.*
+*This document has been reviewed through commit `87c168f`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -611,30 +611,28 @@ be used now in asset publishers and faceted search.
 
 ---------------------------------------
 
-### Method getClassNamePortletId(String) in PortalUtil has been removed
+### Removed the `getClassNamePortletId(String)` Method from `PortalUtil` Class
 - **Date:** 2014-Nov-11
 - **JIRA Ticket:** LPS-50604
 
 #### What changed?
 
-The method getClassNamePortletId(String) from the class PortalUtil has
-been removed. 
+The `getClassNamePortletId(String)` method from the `PortalUtil` class has been
+removed.
 
 #### Who is affected?
 
-This will affect any plugin using the method.
+This affects any plugin using the method.
 
 #### How should I update my code?
 
-If you are using that method, you should implement it yourself in a
-private utility class. The code is fairly simple so you shoul not have
-any problems with it.
+If you are using the method, you should implement it yourself in a private
+utility class.
 
 #### Why was this change made?
 
-This change was needed in order to modularize the portal and it has been 
-decided not to provide this method any more because it is not being used 
-anywhere inside the portal.
+This change was needed in order to modularize the portal. Also, the method is no
+longer being used inside Liferay Portal.
 
 ---------------------------------------
 

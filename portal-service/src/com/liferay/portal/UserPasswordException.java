@@ -15,9 +15,10 @@
 package com.liferay.portal;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -257,20 +258,20 @@ public class UserPasswordException extends PortalException {
 		extends UserPasswordException {
 
 		public MustNotContainDictionaryWords(
-			long userId, Set<String> dictionaryWords) {
+			long userId, List<String> dictionaryWords) {
 
 			super(
 				String.format(
 					"Password for user %s must not contain any dictionary " +
-						"words including: %s",
-					userId, dictionaryWords),
+						"words such as: %s",
+					userId, _getDictionaryWordsString(dictionaryWords)),
 				PASSWORD_CONTAINS_TRIVIAL_WORDS);
 
 			_userId = userId;
 			_dictionaryWords = dictionaryWords;
 		}
 
-		public Set<String> getDictionaryWords() {
+		public List<String> getDictionaryWords() {
 			return _dictionaryWords;
 		}
 
@@ -278,9 +279,22 @@ public class UserPasswordException extends PortalException {
 			return _userId;
 		}
 
-		private final Set<String> _dictionaryWords;
+		private final List<String> _dictionaryWords;
 		private long _userId;
 
+	}
+
+	private static String _getDictionaryWordsString(
+		List<String> dictionaryWords) {
+
+		if (dictionaryWords.size() <= 10) {
+			return dictionaryWords.toString();
+		}
+
+		List sampleDictionaryWords = dictionaryWords.subList(0, 10);
+
+		return sampleDictionaryWords.toString() + StringPool.SPACE +
+			   StringPool.TRIPLE_PERIOD;
 	}
 
 	private UserPasswordException(String message, int type) {

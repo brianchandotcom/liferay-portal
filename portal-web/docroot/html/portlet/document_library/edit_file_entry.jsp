@@ -334,7 +334,9 @@ else {
 				if (folder != null) {
 					DLFolder dlFolder = (DLFolder)folder.getModel();
 
-					inherited = dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_INHERIT;
+					if (dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_INHERIT) {
+						inherited = true;
+					}
 				}
 
 				List<DLFileEntryType> dlFileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), folderId, inherited);

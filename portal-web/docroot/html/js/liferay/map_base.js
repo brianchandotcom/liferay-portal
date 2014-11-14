@@ -11,7 +11,8 @@ AUI.add(
 
 		var TPL_SEARCHBOX = '<div class="col-md-6 search-controls"><input class="search-input" placeholder="" type="text"></div>';
 
-		var GeojsonBase = function() {};
+		var GeojsonBase = function() {
+		};
 
 		A.mix(
 			GeojsonBase,
@@ -57,7 +58,8 @@ AUI.add(
 			true
 		);
 
-		var MarkerBase = function() {};
+		var MarkerBase = function() {
+		};
 
 		A.mix(
 			MarkerBase,
@@ -126,7 +128,8 @@ AUI.add(
 			true
 		);
 
-		var Base = function() {};
+		var Base = function() {
+		};
 
 		A.mix(
 			Base,

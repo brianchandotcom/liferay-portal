@@ -106,7 +106,7 @@ editPublicRenderParameterURL.setParameter("portletResource", portletResource);
 	</aui:button-row>
 </aui:form>
 
-<aui:script use="aui-base">
+<aui:script>
 
 	<%
 	for (PublicRenderParameterConfiguration publicRenderParameterConfiguration : publicRenderParameterConfigurations) {

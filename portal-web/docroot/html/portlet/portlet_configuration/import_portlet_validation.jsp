@@ -22,7 +22,16 @@ String redirect = ParamUtil.getString(request, "redirect");
 Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDisplay);
 %>
 
-<aui:form cssClass="lfr-export-dialog" method="post" name="fm1">
+<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="importPortletURL">
+	<portlet:param name="p_p_isolated" value="true" />
+	<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
+	<portlet:param name="redirect" value="<%= redirect %>" />
+	<portlet:param name="portletResource" value="<%= portletResource %>" />
+	<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+	<portlet:param name="validate" value="<%= String.valueOf(Boolean.FALSE) %>" />
+</liferay-portlet:resourceURL>
+
+<aui:form action="<%= importPortletURL %>" cssClass="lfr-export-dialog" method="post" name="fm1">
 	<div class="lfr-dynamic-uploader">
 		<div class="lfr-upload-container" id="<portlet:namespace />fileUpload"></div>
 	</div>
@@ -66,8 +75,8 @@ Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDispla
 				tempFileURL: {
 					method: Liferay.Service.bind('/layout/get-temp-file-names'),
 					params: {
-						groupId: <%= scopeGroupId %>,
-						folderName: '<%= HtmlUtil.escapeJS(ExportImportHelper.TEMP_FOLDER_NAME + selPortlet.getPortletId()) %>'
+						folderName: '<%= HtmlUtil.escapeJS(ExportImportHelper.TEMP_FOLDER_NAME + selPortlet.getPortletId()) %>',
+						groupId: <%= scopeGroupId %>
 					}
 				},
 				uploadFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>"><portlet:param name="struts_action" value="/portlet_configuration/export_import" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="plid" value="<%= String.valueOf(exportableLayout.getPlid()) %>" /><portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getScopeGroupId()) %>" /><portlet:param name="portletResource" value="<%= portletResource %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= Group.class.getName() %>" />'
@@ -103,33 +112,17 @@ Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDispla
 	</aui:script>
 </aui:form>
 
-<aui:script use="aui-base,aui-io-plugin-deprecated,aui-loading-mask-deprecated">
-	var form = A.one('#<portlet:namespace />fm1');
-
-	form.on(
-		'submit',
+<aui:script sandbox="<%= true %>">
+	$('#<portlet:namespace />continueButton').on(
+		'click',
 		function(event) {
-			event.halt();
+			event.preventDefault();
 
-			var exportImportOptions = A.one('#<portlet:namespace />exportImportOptions');
-
-			exportImportOptions.plug(
-				A.Plugin.IO,
+			$('#<portlet:namespace />fm1').ajaxSubmit(
 				{
-					form: {
-						id: '<portlet:namespace />fm1'
-					},
-
-					<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="importPortletURL">
-						<portlet:param name="p_p_isolated" value="true" />
-						<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
-						<portlet:param name="redirect" value="<%= redirect %>" />
-						<portlet:param name="portletResource" value="<%= portletResource %>" />
-						<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-						<portlet:param name="validate" value="<%= String.valueOf(Boolean.FALSE) %>" />
-					</liferay-portlet:resourceURL>
-
-					uri: '<%= importPortletURL %>'
+					success: function(responseData) {
+						$('#<portlet:namespace />exportImportOptions').html(responseData);
+					}
 				}
 			);
 		}

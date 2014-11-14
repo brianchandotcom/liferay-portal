@@ -76,8 +76,8 @@ List groupNames = (List)objArray[8];
 			url="javascript:;"
 		/>
 
-		<aui:script use="aui-base">
-			A.one('#<portlet:namespace /><%= HtmlUtil.escapeJS(targetId) %>').on(
+		<aui:script>
+			AUI.$('#<portlet:namespace /><%= HtmlUtil.escapeJS(targetId) %>').on(
 				'click',
 				function(event) {
 					Liferay.Util.selectEntity(

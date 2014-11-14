@@ -110,22 +110,24 @@ if (step == 1) {
 				<liferay-ui:search-iterator />
 			</liferay-ui:search-container>
 
-			<aui:script use="aui-base">
-				A.one('#<portlet:namespace />selectSiteRoleFm').delegate(
+			<aui:script sandbox="<%= true %>">
+				$('#<portlet:namespace />selectSiteRoleFm').on(
 					'click',
+					'.group-selector-button',
 					function(event) {
-						var groupId = event.currentTarget.attr('data-groupid');
+						var groupId = $(event.currentTarget).data('groupid');
 
-						document.<portlet:namespace />selectSiteRoleFm.<portlet:namespace />groupId.value = groupId;
+						var form = $(document.<portlet:namespace />selectSiteRoleFm);
+
+						form.fm('groupId').val(groupId);
 
 						<%
 						portletURL.setParameter("resetCur", Boolean.TRUE.toString());
 						portletURL.setParameter("step", "2");
 						%>
 
-						submitForm(document.<portlet:namespace />selectSiteRoleFm, '<%= portletURL.toString() %>');
-					},
-					'.group-selector-button'
+						submitForm(form, '<%= portletURL.toString() %>');
+					}
 				);
 			</aui:script>
 		</c:when>

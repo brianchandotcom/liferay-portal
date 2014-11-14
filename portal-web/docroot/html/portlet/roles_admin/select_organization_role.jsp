@@ -139,22 +139,24 @@ if (step == 1) {
 				<liferay-ui:search-iterator />
 			</liferay-ui:search-container>
 
-			<aui:script use="aui-base">
-				A.one('#<portlet:namespace />selectOrganizationRoleFm').delegate(
+			<aui:script sandbox="<%= true %>">
+				$('#<portlet:namespace />selectOrganizationRoleFm').on(
 					'click',
+					'.organization-selector-button',
 					function(event) {
-						var organizationId = event.currentTarget.attr('data-organizationid');
+						var organizationId = $(event.currentTarget).data('organizationid');
 
-						document.<portlet:namespace />selectOrganizationRoleFm.<portlet:namespace />organizationId.value = organizationId;
+						var form = $(document.<portlet:namespace />selectOrganizationRoleFm);
+
+						form.fm('organizationId').val(organizationId);
 
 						<%
 						portletURL.setParameter("resetCur", Boolean.TRUE.toString());
 						portletURL.setParameter("step", "2");
 						%>
 
-						submitForm(document.<portlet:namespace />selectOrganizationRoleFm, '<%= portletURL.toString() %>');
-					},
-					'.organization-selector-button'
+						submitForm(form, '<%= portletURL.toString() %>');
+					}
 				);
 			</aui:script>
 		</c:when>

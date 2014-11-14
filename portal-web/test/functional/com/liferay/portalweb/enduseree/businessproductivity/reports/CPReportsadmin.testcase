@@ -630,6 +630,11 @@
 			<var name="gmailMesssageAttachment" value="reports_admin_template_source_sample.pdf" />
 		</execute>
 
+		<var name="key_gmailAssetType" value="New Report: reports_admin_template_source_sample.pdf" />
+		<var name="key_gmailLinkName" value="report" />
+
+		<execute action="Gmail#assertElementNotPresent" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_LINK" />
+
 		<execute macro="Gmail#tearDown">
 			<var name="userEmailAddress" value="${emailAddress2}" />
 			<var name="userPassword" value="${emailPassword2}" />

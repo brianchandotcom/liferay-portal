@@ -17,7 +17,7 @@
 		<if>
 			<isset var="notificationCount" />
 			<then>
-				<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATIONS_VIEW_ALL_NOTIFICATIONS" value1="notifications (${notificationCount})" />
+				<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATIONS_VIEW_ALL_NOTIFICATIONS" value1="Notifications (${notificationCount})" />
 			</then>
 			<else>
 				<execute action="PGNotificationsdockbar#click" locator-key1="NOTIFICATIONS_VIEW_ALL_NOTIFICATIONS" />

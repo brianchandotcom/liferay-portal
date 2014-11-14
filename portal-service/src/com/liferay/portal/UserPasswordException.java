@@ -134,7 +134,8 @@ public class UserPasswordException extends PortalException {
 
 		public MustNotBeChanged(long userId) {
 			super(
-				String.format("Password for user %s cannot be changed", userId),
+				String.format(
+					"Password for user %s must not be changed", userId),
 				PASSWORD_NOT_CHANGEABLE);
 
 			_userId = userId;
@@ -148,12 +149,13 @@ public class UserPasswordException extends PortalException {
 
 	}
 
-	public static class MustNotBeCurrent extends UserPasswordException {
+	public static class MustNotBeEqualToCurrent extends UserPasswordException {
 
-		public MustNotBeCurrent(long userId) {
+		public MustNotBeEqualToCurrent(long userId) {
 			super(
 				String.format(
-					"Password for user %s must not be their current password",
+					"Password for user %s must not be equal to their current " +
+						"password",
 					userId),
 				PASSWORD_SAME_AS_CURRENT);
 
@@ -186,9 +188,9 @@ public class UserPasswordException extends PortalException {
 
 	}
 
-	public static class MustNotBeRecent extends UserPasswordException {
+	public static class MustNotBeRecentlyUsed extends UserPasswordException {
 
-		public MustNotBeRecent(long userId) {
+		public MustNotBeRecentlyUsed(long userId) {
 			super(
 				String.format(
 					"Password for user %s has been used too recently",
@@ -206,9 +208,9 @@ public class UserPasswordException extends PortalException {
 
 	}
 
-	public static class MustNotBeTooYoung extends UserPasswordException {
+	public static class MustNotBeChangedYet extends UserPasswordException {
 
-		public MustNotBeTooYoung(long userId, Date changeableDate) {
+		public MustNotBeChangedYet(long userId, Date changeableDate) {
 			super(
 				String.format(
 					"Password for user %s must not be changed until %s", userId,
@@ -251,13 +253,13 @@ public class UserPasswordException extends PortalException {
 
 	}
 
-	public static class MustNotHaveTrivialWords extends UserPasswordException {
+	public static class MustNotHaveDictionaryWords extends UserPasswordException {
 
-		public MustNotHaveTrivialWords(long userId, Set<String> trivialWords) {
+		public MustNotHaveDictionaryWords(long userId, Set<String> trivialWords) {
 			super(
 				String.format(
-					"Password for user %s must not contain any trivial words " +
-						"including: %s",
+					"Password for user %s must not contain any dictionary " +
+						"words including: %s",
 					userId, trivialWords),
 				PASSWORD_CONTAINS_TRIVIAL_WORDS);
 

@@ -89,7 +89,7 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 			if (!passwordPolicy.isAllowDictionaryWords() &&
 				WordsUtil.isDictionaryWord(password1)) {
 
-				throw new UserPasswordException.MustNotHaveTrivialWords(
+				throw new UserPasswordException.MustNotHaveDictionaryWords(
 					userId, WordsUtil.getDictionarySet());
 			}
 
@@ -142,7 +142,7 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 			if ((passwordModificationElapsedTime < minAge) &&
 				!user.getPasswordReset()) {
 
-				throw new UserPasswordException.MustNotBeTooYoung(
+				throw new UserPasswordException.MustNotBeChangedYet(
 					userId, new Date(passwordModfiedDate.getTime() + minAge));
 			}
 		}
@@ -150,12 +150,12 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 		if (PasswordTrackerLocalServiceUtil.isSameAsCurrentPassword(
 				userId, password1)) {
 
-			throw new UserPasswordException.MustNotBeCurrent(userId);
+			throw new UserPasswordException.MustNotBeEqualToCurrent(userId);
 		}
 		else if (!PasswordTrackerLocalServiceUtil.isValidPassword(
 					userId, password1)) {
 
-			throw new UserPasswordException.MustNotBeRecent(userId);
+			throw new UserPasswordException.MustNotBeRecentlyUsed(userId);
 		}
 	}
 

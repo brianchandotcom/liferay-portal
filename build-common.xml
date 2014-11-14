@@ -882,6 +882,45 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</sequential>
 	</macrodef>
 
+	<macrodef name="junit-test-cmd">
+		<attribute name="security.manager" default="" />
+		<attribute name="java.security.policy" default=""/>
+		<attribute name="fork.mode" default="once"/>
+		<attribute name="fileset" />
+		<attribute name="test.type" />
+
+		<sequential>
+			<junit dir="${project.dir}" fork="on" forkmode="@{fork.mode}" haltonfailure="${junit.halt.on.failure}" jvm="${junit.jvm}" outputtoformatters="false" printsummary="on" showoutput="true">
+				<sysproperty key="junit.aspectj.dump" file="woven-classes" />
+				<sysproperty key="junit.cobertura.agent" value="${junit.cobertura.agent}" />
+				<sysproperty key="junit.code.coverage" value="${junit.code.coverage}" />
+				<sysproperty key="junit.code.coverage.dump" value="${junit.code.coverage.dump}" />
+				<sysproperty key="junit.debug" value="${junit.debug}" />
+				<sysproperty key="net.sourceforge.cobertura.datafile" file="test-coverage/${test.type}/cobertura.ser" />
+				<jvmarg line="${junit.cobertura.agent}" />
+				<jvmarg line="${junit.debug.jpda}" />
+				<jvmarg value="-Xmx${junit.java.mx}" />
+				<jvmarg value="-XX:MaxPermSize=${junit.java.maxpermsize}" />
+				<jvmarg value="-Dexternal-properties=${test.properties}" />
+				<jvmarg value="-Dfile.encoding=UTF-8" />
+				<jvmarg value="-Dfixed.issues=${fixed.issues}" />
+				<jvmarg value="-Djava.net.preferIPv4Stack=true" />
+				<jvmarg line="@{security.manager}" />
+				<jvmarg line="@{java.security.policy}" />
+				<jvmarg value="-Dliferay.lib.portal.dir=${project.dir}/lib/portal" />
+				<jvmarg value="-Dliferay.mode=test" />
+				<jvmarg value="-Duser.timezone=GMT" />
+				<classpath location="test-coverage" />
+				<classpath refid="test.classpath" />
+				<formatter type="brief" usefile="false" />
+				<formatter type="xml" />
+				<batchtest todir="test-results/@{test.type}">
+					<fileset refid="@{fileset}" />
+				</batchtest>
+			</junit>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="manifest-helper">
 		<attribute name="analyze" default="false" />
 
@@ -1247,20 +1286,46 @@ rerun your task.
 				</else>
 			</if>
 
-			<setup-test-classpath
-				test.type="@{test.type}"
-			/>
-
 			<if>
 				<available file="test/${current.test.dir}" type="dir" />
 				<then>
-					<resourcecount property="test.with.security.count">
-						<fileset
+					<fileset
+							id="test.with.security.fileset"
 							dir="test-classes/${current.test.dir}"
 							includes="**/@{test.class}.class"
-						>
-							<filename regex=".*/pacl/test/[\w]+Test.class" negate="false" />
-						</fileset>
+							>
+						<exclude name="**/DLAppServiceHttpTest.class" />
+						<exclude name="**/DLAppServiceJsonTest.class" />
+						<exclude name="**/DLAppServiceSoapTest.class" />
+						<exclude name="**/UserServiceHttpTest.class" />
+						<exclude name="**/UserServiceSoapTest.class" />
+						<exclude name="${test.excludes}" />
+						<filename regex="${junit.test.excludes}" negate="true" />
+						<filename regex=".*/pacl/test/[\w]+Test.class" negate="false" />
+					</fileset>
+
+					<resourcecount property="test.with.security.count">
+						<fileset refid="test.with.security.fileset"/>
+					</resourcecount>
+
+					<fileset
+							id="test.without.security.fileset"
+							dir="test-classes/${current.test.dir}"
+							includes="**/@{test.class}.class"
+							>
+						<exclude name="**/DLAppServiceHttpTest.class" />
+						<exclude name="**/DLAppServiceJsonTest.class" />
+						<exclude name="**/DLAppServiceSoapTest.class" />
+						<exclude name="**/UserServiceHttpTest.class" />
+						<exclude name="**/UserServiceSoapTest.class" />
+						<exclude name="${test.excludes}" />
+						<filename regex="${junit.test.excludes}" negate="true" />
+						<filename regex=".*/pacl/test/[\w]+Test.class" negate="true" />
+						<filename regex=".*/[\w]+PersistenceTest.class" negate="true" />
+					</fileset>
+
+					<resourcecount property="test.without.security.count">
+						<fileset refid="test.without.security.fileset"/>
 					</resourcecount>
 
 					<if>
@@ -1268,95 +1333,33 @@ rerun your task.
 							<equals arg1="${test.with.security.count}" arg2="0" />
 						</not>
 						<then>
-							<junit dir="${project.dir}" fork="on" forkmode="once" haltonfailure="${junit.halt.on.failure}" jvm="${junit.jvm}" outputtoformatters="false" printsummary="on" showoutput="true">
-								<sysproperty key="junit.aspectj.dump" file="woven-classes" />
-								<sysproperty key="junit.cobertura.agent" value="${junit.cobertura.agent}" />
-								<sysproperty key="junit.code.coverage" value="${junit.code.coverage}" />
-								<sysproperty key="junit.code.coverage.dump" value="${junit.code.coverage.dump}" />
-								<sysproperty key="junit.debug" value="${junit.debug}" />
-								<sysproperty key="net.sourceforge.cobertura.datafile" file="test-coverage/@{test.type}/cobertura.ser" />
-								<jvmarg line="${junit.cobertura.agent}" />
-								<jvmarg line="${junit.debug.jpda}" />
-								<jvmarg value="-Xmx${junit.java.mx}" />
-								<jvmarg value="-XX:MaxPermSize=${junit.java.maxpermsize}" />
-								<jvmarg value="-Dexternal-properties=${test.properties}" />
-								<jvmarg value="-Dfile.encoding=UTF-8" />
-								<jvmarg value="-Dfixed.issues=${fixed.issues}" />
-								<jvmarg value="-Djava.net.preferIPv4Stack=true" />
-								<jvmarg value="-Djava.security.manager" />
-								<jvmarg value="-Djava.security.policy=${basedir}/test-classes/@{test.type}/com/liferay/portal/security/pacl/security.policy" />
-								<jvmarg value="-Dliferay.lib.portal.dir=${project.dir}/lib/portal" />
-								<jvmarg value="-Dliferay.mode=test" />
-								<jvmarg value="-Duser.timezone=GMT" />
-								<classpath location="test-coverage" />
-								<classpath refid="test.classpath" />
-								<formatter type="brief" usefile="false" />
-								<formatter type="xml" />
-								<batchtest todir="test-results/@{test.type}">
-									<fileset dir="test-classes/${current.test.dir}" includes="**/@{test.class}.class">
-										<exclude name="**/DLAppServiceHttpTest.class" />
-										<exclude name="**/DLAppServiceJsonTest.class" />
-										<exclude name="**/DLAppServiceSoapTest.class" />
-										<exclude name="**/UserServiceHttpTest.class" />
-										<exclude name="**/UserServiceSoapTest.class" />
-										<exclude name="${test.excludes}" />
-										<filename regex="${junit.test.excludes}" negate="true" />
-										<filename regex=".*/pacl/test/[\w]+Test.class" negate="false" />
-									</fileset>
-								</batchtest>
-							</junit>
+							<setup-test-classpath
+								test.type="@{test.type}"
+							/>
+
+							<junit-test-cmd 
+								security.manager="-Djava.security.manager" 
+								java.security.policy="-Djava.security.policy=${basedir}/test-classes/@{test.type}/com/liferay/portal/security/pacl/security.policy" 
+								fileset="test.with.security.fileset"
+								test.type="@{test.type}"
+							/>
 						</then>
 					</if>
 
-					<resourcecount property="test.without.security.count">
-						<fileset
-							dir="test-classes/${current.test.dir}"
-							includes="**/@{test.class}.class"
-						>
-							<filename regex=".*/pacl/test/[\w]+Test.class" negate="true" />
-						</fileset>
-					</resourcecount>
-
 					<if>
 						<not>
-							<equals arg1="${test.without.security.count}" arg2="0" />
+							<equals arg1="${test.without.security.fileset}" arg2="0" />
 						</not>
 						<then>
-							<junit dir="${project.dir}" fork="on" forkmode="@{junit.forkmode}" haltonfailure="${junit.halt.on.failure}" jvm="${junit.jvm}" outputtoformatters="false" printsummary="on" showoutput="true">
-								<sysproperty key="junit.aspectj.dump" file="woven-classes" />
-								<sysproperty key="junit.cobertura.agent" value="${junit.cobertura.agent}" />
-								<sysproperty key="junit.code.coverage" value="${junit.code.coverage}" />
-								<sysproperty key="junit.code.coverage.dump" value="${junit.code.coverage.dump}" />
-								<sysproperty key="junit.debug" value="${junit.debug}" />
-								<sysproperty key="net.sourceforge.cobertura.datafile" file="test-coverage/@{test.type}/cobertura.ser" />
-								<jvmarg line="${junit.cobertura.agent}" />
-								<jvmarg line="${junit.debug.jpda}" />
-								<jvmarg value="-Xmx${junit.java.mx}" />
-								<jvmarg value="-XX:MaxPermSize=${junit.java.maxpermsize}" />
-								<jvmarg value="-Dexternal-properties=${test.properties}" />
-								<jvmarg value="-Dfile.encoding=UTF-8" />
-								<jvmarg value="-Dfixed.issues=${fixed.issues}" />
-								<jvmarg value="-Djava.net.preferIPv4Stack=true" />
-								<jvmarg value="-Dliferay.lib.portal.dir=${project.dir}/lib/portal" />
-								<jvmarg value="-Dliferay.mode=test" />
-								<jvmarg value="-Duser.timezone=GMT" />
-								<classpath location="test-coverage" />
-								<classpath refid="test.classpath" />
-								<formatter type="brief" usefile="false" />
-								<formatter type="xml" />
-								<batchtest todir="test-results/@{test.type}">
-									<fileset dir="test-classes/${current.test.dir}" includes="**/@{test.class}.class">
-										<exclude name="**/DLAppServiceHttpTest.class" />
-										<exclude name="**/DLAppServiceJsonTest.class" />
-										<exclude name="**/DLAppServiceSoapTest.class" />
-										<exclude name="**/UserServiceHttpTest.class" />
-										<exclude name="**/UserServiceSoapTest.class" />
-										<exclude name="${test.excludes}" />
-										<filename regex="${junit.test.excludes}" negate="true" />
-										<filename regex=".*/pacl/test/[\w]+Test.class" negate="true" />
-									</fileset>
-								</batchtest>
-							</junit>
+							<setup-test-classpath
+								test.type="@{test.type}"
+							/>
+
+							<junit-test-cmd 
+								fileset="test.without.security.fileset" 
+								fork.mode="@{junit.forkmode}"
+								test.type="@{test.type}"
+							/>
 						</then>
 					</if>
 				</then>

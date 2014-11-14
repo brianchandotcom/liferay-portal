@@ -185,13 +185,13 @@ String privateVirtualHost = ParamUtil.getString(request, "privateVirtualHost", B
 	</c:if>
 </aui:fieldset>
 
-<aui:script use="aui-base">
-	var friendlyURL = A.one('#<portlet:namespace />friendlyURL');
+<aui:script sandbox="<%= true %>">
+	var friendlyURL = $('#<portlet:namespace />friendlyURL');
 
 	friendlyURL.on(
-		['blur', 'change', 'focus'],
+		'change',
 		function(event) {
-			var value = A.Lang.trim(friendlyURL.val());
+			var value = friendlyURL.val().trim();
 
 			if (value == '/') {
 				value = '';
@@ -203,7 +203,7 @@ String privateVirtualHost = ParamUtil.getString(request, "privateVirtualHost", B
 						var str = '';
 
 						if (index == 0) {
-							str = '/' + match
+							str = '/' + match;
 						}
 
 						return str;

@@ -77,10 +77,8 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLoc
 		<a id="<portlet:namespace />publishProcessesLink"><liferay-ui:message key="the-status-of-the-publication-can-be-checked-on-the-publish-screen" /></a>
 	</div>
 
-	<aui:script use="aui-base">
-		var publishProcessesLink = A.one('#<portlet:namespace />publishProcessesLink');
-
-		publishProcessesLink.on(
+	<aui:script>
+		AUI.$('#<portlet:namespace />publishProcessesLink').on(
 			'click',
 			function(event) {
 				Liferay.Util.openWindow(
@@ -239,22 +237,22 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLoc
 			</aui:fieldset>
 		</div>
 
-		<aui:script use="aui-base">
-			var remoteStagingOptions = A.one('#<portlet:namespace />remoteStagingOptions');
-			var stagedPortlets = A.one('#<portlet:namespace />stagedPortlets');
+		<aui:script sandbox="<%= true %>">
+			var remoteStagingOptions = $('#<portlet:namespace />remoteStagingOptions');
+			var stagedPortlets = $('#<portlet:namespace />stagedPortlets');
 
-			var stagingTypes = A.one('#<portlet:namespace />stagingTypes');
+			var stagingTypes = $('#<portlet:namespace />stagingTypes');
 
-			stagingTypes.delegate(
+			stagingTypes.on(
 				'click',
+				'input',
 				function(event) {
-					var value = event.currentTarget.val();
+					var value = $(event.currentTarget).val();
 
-					stagedPortlets.toggle(value != '<%= StagingConstants.TYPE_NOT_STAGED %>');
+					stagedPortlets.toggleClass('hide', value == '<%= StagingConstants.TYPE_NOT_STAGED %>');
 
-					remoteStagingOptions.toggle(value == '<%= StagingConstants.TYPE_REMOTE_STAGING %>');
-				},
-				'input'
+					remoteStagingOptions.toggleClass('hide', value != '<%= StagingConstants.TYPE_REMOTE_STAGING %>');
+				}
 			);
 		</aui:script>
 	</c:when>

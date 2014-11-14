@@ -68,6 +68,12 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		for (TrashEntry entry : entries) {
+			entry = trashEntryPersistence.fetchByPrimaryKey(entry.getEntryId());
+
+			if (entry == null) {
+				continue;
+			}
+
 			try {
 				TrashHandler trashHandler =
 					TrashHandlerRegistryUtil.getTrashHandler(

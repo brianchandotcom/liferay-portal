@@ -28,22 +28,6 @@ import com.sun.syndication.feed.synd.SyndFeed;
  */
 public class RSSUtil {
 
-	public static String escapeJavaScriptLink(String link) {
-		if (Validator.isNull(link)) {
-			return StringPool.BLANK;
-		}
-
-		if (link.indexOf(StringPool.COLON) == 10) {
-			String protocol = StringUtil.toLowerCase(link.substring(0, 10));
-
-			if (protocol.equals("javascript")) {
-				link = StringUtil.replaceFirst(link, StringPool.COLON, "%3a");
-			}
-		}
-
-		return link;
-	}
-
 	public static ObjectValuePair<String, SyndFeed> getFeed(String url) {
 		WebCacheItem wci = new RSSWebCacheItem(url);
 

@@ -100,6 +100,10 @@ public class HtmlUtil {
 		return getHtml().escapeJS(js);
 	}
 
+	public static String escapeJSLink(String link) {
+		return getHtml().escapeJSLink(link);
+	}
+
 	/**
 	 * Escapes the URL value so that it is safe to use as a URL.
 	 *

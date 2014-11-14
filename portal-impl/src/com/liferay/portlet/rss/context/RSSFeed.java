@@ -31,63 +31,66 @@ public class RSSFeed {
 	public RSSFeed(String url, String title) {
 		_url = url;
 
-		SyndFeed feed = getFeed();
+		SyndFeed syndFeed = getSyndFeed();
 
-		if (feed == null) {
+		if (syndFeed == null) {
 			_baseURL = StringPool.BLANK;
-			_feedImageLink = StringPool.BLANK;
-			_feedImageURL = StringPool.BLANK;
-			_feedLink = StringPool.BLANK;
+			_syndFeedImageLink = StringPool.BLANK;
+			_syndFeedImageURL = StringPool.BLANK;
+			_syndFeedLink = StringPool.BLANK;
 			_title = title;
 
 			return;
 		}
 
 		if (Validator.isNull(title)) {
-			title = feed.getTitle();
+			title = syndFeed.getTitle();
 		}
 
 		String baseURL = StringPool.BLANK;
-		String feedImageLink = StringPool.BLANK;
-		String feedImageURL = StringPool.BLANK;
-		String feedLink = feed.getLink();
+		String syndFeedImageLink = StringPool.BLANK;
+		String syndFeedImageURL = StringPool.BLANK;
+		String syndFeedLink = syndFeed.getLink();
 
-		if (Validator.isNull(feedLink) || !HttpUtil.hasDomain(feedLink)) {
+		if (Validator.isNull(syndFeedLink) ||
+			!HttpUtil.hasDomain(syndFeedLink)) {
+
 			baseURL = HttpUtil.getProtocol(_url).concat(
 				Http.PROTOCOL_DELIMITER).concat(HttpUtil.getDomain(_url));
 
-			if (Validator.isNotNull(feedLink)) {
-				feedLink = baseURL.concat(feedLink);
+			if (Validator.isNotNull(syndFeedLink)) {
+				syndFeedLink = baseURL.concat(syndFeedLink);
 			}
 			else {
-				feedLink = baseURL;
+				syndFeedLink = baseURL;
 			}
 		}
 		else {
-			baseURL = HttpUtil.getProtocol(feedLink).concat(
-				Http.PROTOCOL_DELIMITER).concat(HttpUtil.getDomain(feedLink));
+			baseURL = HttpUtil.getProtocol(syndFeedLink).concat(
+				Http.PROTOCOL_DELIMITER).concat(
+					HttpUtil.getDomain(syndFeedLink));
 		}
 
-		SyndImage feedImage = feed.getImage();
+		SyndImage syndImage = syndFeed.getImage();
 
-		if (feedImage != null) {
-			feedImageLink = feedImage.getLink();
+		if (syndImage != null) {
+			syndFeedImageLink = syndImage.getLink();
 
-			if (!HttpUtil.hasDomain(feedImageLink)) {
-				feedImageLink = baseURL + feedImageLink;
+			if (!HttpUtil.hasDomain(syndFeedImageLink)) {
+				syndFeedImageLink = baseURL + syndFeedImageLink;
 			}
 
-			feedImageURL = feedImage.getUrl();
+			syndFeedImageURL = syndImage.getUrl();
 
-			if (!HttpUtil.hasDomain(feedImageURL)) {
-				feedImageURL = baseURL + feedImageURL;
+			if (!HttpUtil.hasDomain(syndFeedImageURL)) {
+				syndFeedImageURL = baseURL + syndFeedImageURL;
 			}
 		}
 
 		_baseURL = baseURL;
-		_feedImageLink = feedImageLink;
-		_feedImageURL = feedImageURL;
-		_feedLink = feedLink;
+		_syndFeedImageLink = syndFeedImageLink;
+		_syndFeedImageURL = syndFeedImageURL;
+		_syndFeedLink = syndFeedLink;
 		_title = title;
 	}
 
@@ -95,48 +98,48 @@ public class RSSFeed {
 		return _baseURL;
 	}
 
-	public SyndFeed getFeed() {
-		if (_feed != null) {
-			return _feed;
+	public SyndFeed getSyndFeed() {
+		if (_syndFeed != null) {
+			return _syndFeed;
 		}
 
 		try {
 			ObjectValuePair ovp = com.liferay.portlet.rss.util.RSSUtil.getFeed(
 				_url);
 
-			_feed = (SyndFeed)ovp.getValue();
+			_syndFeed = (SyndFeed)ovp.getValue();
 		}
 		catch (Exception e) {
 		}
 
-		return _feed;
+		return _syndFeed;
 	}
 
-	public String getFeedImageLink() {
-		return _feedImageLink;
+	public String getSyndFeedImageLink() {
+		return _syndFeedImageLink;
 	}
 
-	public String getFeedImageURL() {
-		return _feedImageURL;
+	public String getSyndFeedImageURL() {
+		return _syndFeedImageURL;
 	}
 
-	public String getFeedLink() {
-		return _feedLink;
+	public String getSyndFeedLink() {
+		return _syndFeedLink;
 	}
 
 	public String getTitle() {
 		return _title;
 	}
 
-	public String getUrl() {
+	public String getURL() {
 		return _url;
 	}
 
 	private final String _baseURL;
-	private SyndFeed _feed;
-	private final String _feedImageLink;
-	private final String _feedImageURL;
-	private final String _feedLink;
+	private SyndFeed _syndFeed;
+	private final String _syndFeedImageLink;
+	private final String _syndFeedImageURL;
+	private final String _syndFeedLink;
 	private final String _title;
 	private final String _url;
 

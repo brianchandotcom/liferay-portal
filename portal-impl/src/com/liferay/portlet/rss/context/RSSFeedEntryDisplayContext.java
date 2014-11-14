@@ -44,55 +44,47 @@ import javax.servlet.http.HttpServletRequest;
 public class RSSFeedEntryDisplayContext {
 
 	public RSSFeedEntryDisplayContext(
-		SyndEntry entry, HttpServletRequest request, RSSFeed rssFeed) {
+		SyndEntry syndEntry, HttpServletRequest request, RSSFeed rssFeed) {
 
-		String entryLink = entry.getLink();
+		String syndEntryLink = syndEntry.getLink();
 
-		if (Validator.isNotNull(entryLink) && !HttpUtil.hasDomain(entryLink)) {
-			entryLink = rssFeed.getBaseURL() + entryLink;
+		if (Validator.isNotNull(syndEntryLink) &&
+			!HttpUtil.hasDomain(syndEntryLink)) {
+
+			syndEntryLink = rssFeed.getBaseURL() + syndEntryLink;
 		}
 
-		List<SyndEnclosure> enclosures =
-			(List<SyndEnclosure>)entry.getEnclosures();
+		List<SyndEnclosure> syndEnclosures =
+			(List<SyndEnclosure>)syndEntry.getEnclosures();
 
-		String enclosureLink = StringPool.BLANK;
-		String enclosureLinkTitle = entry.getTitle();
+		String syndEnclosureLink = StringPool.BLANK;
+		String syndEnclosureLinkTitle = syndEntry.getTitle();
 
-		for (SyndEnclosure enclosure : enclosures) {
-			if (Validator.isNotNull(enclosure.getUrl())) {
-				enclosureLink = enclosure.getUrl();
+		for (SyndEnclosure syndEnclosure : syndEnclosures) {
+			if (Validator.isNotNull(syndEnclosure.getUrl())) {
+				syndEnclosureLink = syndEnclosure.getUrl();
 
-				int pos = enclosureLink.lastIndexOf(StringPool.FORWARD_SLASH);
+				int pos = syndEnclosureLink.lastIndexOf(
+					StringPool.FORWARD_SLASH);
 
 				if (pos > -1) {
-					enclosureLinkTitle = enclosureLink.substring(pos + 1);
+					syndEnclosureLinkTitle = syndEnclosureLink.substring(
+						pos + 1);
 				}
 				else {
-					enclosureLinkTitle = enclosureLink;
+					syndEnclosureLinkTitle = syndEnclosureLink;
 				}
 
 				break;
 			}
 		}
 
-		_entry = entry;
-		_entryLink = entryLink;
-		_enclosureLink = enclosureLink;
-		_enclosureLinkTitle = enclosureLinkTitle;
+		_syndEntry = syndEntry;
+		_syndEntryLink = syndEntryLink;
+		_syndEnclosureLink = syndEnclosureLink;
+		_syndEnclosureLinkTitle = syndEnclosureLinkTitle;
 		_request = request;
 		_rssFeed = rssFeed;
-	}
-
-	public String getEnclosureLink() {
-		return _enclosureLink;
-	}
-
-	public String getEnclosureLinkTitle() {
-		return _enclosureLinkTitle;
-	}
-
-	public String getEntryLink() {
-		return _entryLink;
 	}
 
 	public String getSanitizedContent() {
@@ -100,27 +92,29 @@ public class RSSFeedEntryDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		String baseURL = _rssFeed.getBaseURL();
-		SyndFeed feed = _rssFeed.getFeed();
+		SyndFeed syndFeed = _rssFeed.getSyndFeed();
 
-		List<SyndContent> contents = getContents();
+		List<SyndContent> syndContents = getSyndContents();
 
-		StringBundler sb = new StringBundler(contents.size());
+		StringBundler sb = new StringBundler(syndContents.size());
 
-		for (SyndContent content : contents) {
-			if ((content == null) || Validator.isNull(content.getValue())) {
+		for (SyndContent syndContent : syndContents) {
+			if ((syndContent == null) ||
+				Validator.isNull(syndContent.getValue())) {
+
 				continue;
 			}
 
 			String sanitizedValue = StringPool.BLANK;
 
-			String feedType = feed.getFeedType();
-			String type = content.getType();
+			String feedType = syndFeed.getFeedType();
+			String type = syndContent.getType();
 
 			if (RSSUtil.getFormatType(feedType).equals(RSSUtil.ATOM) &&
 				(type.equals("html") || type.equals("xhtml"))) {
 
 				String value = StringUtil.replace(
-					content.getValue(), new String[]{"src=\"/", "href=\"/"},
+					syndContent.getValue(), new String[]{"src=\"/", "href=\"/"},
 					new String[] {
 						"src=\"" + baseURL + "/", "href=\"" + baseURL + "/"});
 
@@ -136,7 +130,7 @@ public class RSSFeedEntryDisplayContext {
 				}
 			}
 			else {
-				sanitizedValue = HtmlUtil.escape(content.getValue());
+				sanitizedValue = HtmlUtil.escape(syndContent.getValue());
 			}
 
 			sb.append(sanitizedValue);
@@ -145,25 +139,37 @@ public class RSSFeedEntryDisplayContext {
 		return sb.toString();
 	}
 
-	protected List<SyndContent> getContents() {
-		SyndContent content = _entry.getDescription();
-
-		if (Validator.isNull(content)) {
-			return _entry.getContents();
-		}
-
-		List<SyndContent> contents = new ArrayList<SyndContent>();
-
-		contents.add(content);
-
-		return contents;
+	public String getSyndEnclosureLink() {
+		return _syndEnclosureLink;
 	}
 
-	private final String _enclosureLink;
-	private final String _enclosureLinkTitle;
-	private final SyndEntry _entry;
-	private final String _entryLink;
+	public String getSyndEnclosureLinkTitle() {
+		return _syndEnclosureLinkTitle;
+	}
+
+	public String getSyndEntryLink() {
+		return _syndEntryLink;
+	}
+
+	protected List<SyndContent> getSyndContents() {
+		SyndContent syndContent = _syndEntry.getDescription();
+
+		if (Validator.isNull(syndContent)) {
+			return _syndEntry.getContents();
+		}
+
+		List<SyndContent> syndContents = new ArrayList<SyndContent>();
+
+		syndContents.add(syndContent);
+
+		return syndContents;
+	}
+
 	private final HttpServletRequest _request;
 	private final RSSFeed _rssFeed;
+	private final String _syndEnclosureLink;
+	private final String _syndEnclosureLinkTitle;
+	private final SyndEntry _syndEntry;
+	private final String _syndEntryLink;
 
 }

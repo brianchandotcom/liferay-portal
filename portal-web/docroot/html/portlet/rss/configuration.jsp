@@ -50,7 +50,7 @@
 
 				<%
 				String[] titles = rssDisplayContext.getTitles();
-				String[] urls = rssDisplayContext.getUrls();
+				String[] urls = rssDisplayContext.getURLs();
 
 				if (urls.length == 0) {
 					urls = new String[1];

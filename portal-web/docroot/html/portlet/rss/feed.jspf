@@ -14,10 +14,6 @@
  */
 --%>
 
-<%
-SyndFeed syndFeed = rssFeedContext.getSyndFeed();
-%>
-
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(rssFeedContext.getURL()) && (syndFeed != null) %>">
 		<div class="feed <%= last ? "last" : StringPool.BLANK %>">
@@ -55,17 +51,17 @@ SyndFeed syndFeed = rssFeedContext.getSyndFeed();
 			</c:if>
 
 			<%
-			List syndEntries = syndFeed.getEntries();
+			List<RSSFeedEntryDisplayContext> rssFeedEntryDisplayContexts = rssFeedContext.getRSSFeedEntryDisplayContexts(themeDisplay);
 			%>
 
-			<c:if test="<%= !syndEntries.isEmpty() %>">
+			<c:if test="<%= !rssFeedEntryDisplayContexts.isEmpty() %>">
 				<liferay-ui:panel-container cssClass="feed-entries" extended="<%= false %>" id="rssFeedsPanelContainer" persistState="<%= false %>">
 
 					<%
-					for (int j = 0; (j < syndEntries.size()) && (j < rssDisplayContext.getEntriesPerFeed()); j++) {
-						SyndEntry syndEntry = (SyndEntry)syndEntries.get(j);
+					for (int j = 0; (j < rssFeedEntryDisplayContexts.size()) && (j < rssDisplayContext.getEntriesPerFeed()); j++) {
+						RSSFeedEntryDisplayContext rssFeedEntryDisplayContext = rssFeedEntryDisplayContexts.get(j);
 
-						RSSFeedEntryDisplayContext rssFeedEntryDisplayContext = new RSSFeedEntryDisplayContext(syndEntry, request, rssFeedContext);
+						SyndEntry syndEntry = rssFeedEntryDisplayContext.getSyndEntry();
 					%>
 
 						<liferay-ui:panel cssClass="feed-entry" defaultState='<%= (themeDisplay.isStateMaximized() || (j < rssDisplayContext.getExpandedEntriesPerFeed())) ? "open" : "closed" %>' extended="<%= false%>" title="<%= HtmlUtil.escape(syndEntry.getTitle()) %>">

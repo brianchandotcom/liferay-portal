@@ -149,12 +149,6 @@ public interface DestinationNames {
 
 	public static final String TEST_TRANSACTION = "liferay/test_transaction";
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #SUBSCRIPTION_SENDER}
-	 */
-	@Deprecated
-	public static final String WIKI = "liferay/wiki";
-
 	public static final String WORKFLOW_DEFINITION =
 		"liferay/workflow_definition";
 

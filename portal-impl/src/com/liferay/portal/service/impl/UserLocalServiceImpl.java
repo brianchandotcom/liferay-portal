@@ -3040,8 +3040,22 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		LinkedHashMap<String, Object> params, int start, int end,
 		OrderByComparator<User> obc) {
 
-		return userFinder.findByKeywords(
-			companyId, keywords, status, params, start, end, obc);
+		if (!PropsValues.USERS_INDEXER_ENABLED ||
+			!PropsValues.USERS_SEARCH_WITH_INDEX || isUseCustomSQL(params)) {
+
+			return userFinder.findByKeywords(
+				companyId, keywords, status, params, start, end, obc);
+		}
+
+		try {
+			return UsersAdminUtil.getUsers(
+				search(
+					companyId, keywords, status, params, start, end,
+					getSortFromComparator(obc)));
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
 	}
 
 	/**
@@ -3190,9 +3204,24 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		LinkedHashMap<String, Object> params, boolean andSearch, int start,
 		int end, OrderByComparator<User> obc) {
 
-		return userFinder.findByC_FN_MN_LN_SN_EA_S(
-			companyId, firstName, middleName, lastName, screenName,
-			emailAddress, status, params, andSearch, start, end, obc);
+		if (!PropsValues.USERS_INDEXER_ENABLED ||
+			!PropsValues.USERS_SEARCH_WITH_INDEX || isUseCustomSQL(params)) {
+
+			return userFinder.findByC_FN_MN_LN_SN_EA_S(
+				companyId, firstName, middleName, lastName, screenName,
+				emailAddress, status, params, andSearch, start, end, obc);
+		}
+
+		try {
+			return UsersAdminUtil.getUsers(
+				search(
+					companyId, firstName, middleName, lastName, screenName,
+					emailAddress, status, params, andSearch, start, end,
+					getSortFromComparator(obc)));
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
 	}
 
 	/**
@@ -5972,6 +6001,23 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 	protected String getLogin(String login) {
 		return StringUtil.lowerCase(StringUtil.trim(login));
+	}
+
+	protected Sort[] getSortFromComparator(OrderByComparator<User> obc) {
+		String[] orderByFields = obc.getOrderByFields();
+
+		String orderBy = obc.getOrderBy();
+		String[] orders = StringUtil.split(orderBy);
+
+		Sort[] sorts = new Sort[orders.length];
+
+		for (int i = 0; i < orderByFields.length; i++) {
+			boolean reverse = orders[i].contains("DESC");
+
+			sorts[i] = new Sort(orderByFields[i], reverse);
+		}
+
+		return sorts;
 	}
 
 	protected boolean isUseCustomSQL(LinkedHashMap<String, Object> params) {

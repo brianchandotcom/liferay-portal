@@ -21,7 +21,6 @@ import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.subscriptions.BaseSubscriptionLocalizedContentTestCase;
-import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
@@ -56,7 +55,7 @@ public class MBSubscriptionLocalizedContentTest
 		throws Exception {
 
 		MBCategoryLocalServiceUtil.subscribeCategory(
-			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
+			user.getUserId(), group.getGroupId(), containerModelId);
 	}
 
 	@Override

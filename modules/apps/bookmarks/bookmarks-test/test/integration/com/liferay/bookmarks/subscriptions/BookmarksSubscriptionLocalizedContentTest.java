@@ -28,7 +28,6 @@ import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.subscriptions.BaseSubscriptionLocalizedContentTestCase;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
-import com.liferay.portal.util.test.TestPropsValues;
 
 import org.junit.runner.RunWith;
 
@@ -61,7 +60,7 @@ public class BookmarksSubscriptionLocalizedContentTest
 		throws Exception {
 
 		BookmarksFolderLocalServiceUtil.subscribeFolder(
-			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
+			user.getUserId(), group.getGroupId(), containerModelId);
 	}
 
 	@Override

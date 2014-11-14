@@ -20,7 +20,6 @@ import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.subscriptions.BaseSubscriptionBaseModelTestCase;
-import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
@@ -70,7 +69,7 @@ public class WikiSubscriptionBaseModelTest
 		WikiPage page = WikiPageLocalServiceUtil.getPage(baseModelId);
 
 		WikiPageLocalServiceUtil.subscribePage(
-			TestPropsValues.getUserId(), page.getNodeId(), page.getTitle());
+			user.getUserId(), page.getNodeId(), page.getTitle());
 	}
 
 	@Override

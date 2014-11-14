@@ -24,7 +24,6 @@ import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.subscriptions.BaseSubscriptionLocalizedContentTestCase;
-import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
@@ -62,7 +61,7 @@ public class JournalSubscriptionLocalizedContentTest
 		throws Exception {
 
 		JournalFolderLocalServiceUtil.subscribe(
-			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
+			user.getUserId(), group.getGroupId(), containerModelId);
 	}
 
 	@Override

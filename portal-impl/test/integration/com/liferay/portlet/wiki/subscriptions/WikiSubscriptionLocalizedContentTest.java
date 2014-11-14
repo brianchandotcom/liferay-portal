@@ -21,7 +21,6 @@ import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.subscriptions.BaseSubscriptionLocalizedContentTestCase;
-import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
@@ -66,7 +65,7 @@ public class WikiSubscriptionLocalizedContentTest
 		throws Exception {
 
 		WikiNodeLocalServiceUtil.subscribeNode(
-			TestPropsValues.getUserId(), _node.getNodeId());
+			user.getUserId(), _node.getNodeId());
 	}
 
 	@Override

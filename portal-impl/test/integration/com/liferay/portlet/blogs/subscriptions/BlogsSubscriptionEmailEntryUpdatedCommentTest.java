@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.Sync;
@@ -34,7 +36,7 @@ import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.MailServiceTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
-import com.liferay.portal.util.test.TestPropsValues;
+import com.liferay.portal.util.test.UserTestUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.util.BlogsConstants;
@@ -60,6 +62,7 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 	@Before
 	public void setUp() throws Exception {
 		group = GroupTestUtil.addGroup();
+		_user = UserTestUtil.addGroupUser(group, RoleConstants.SITE_MEMBER);
 	}
 
 	@Test
@@ -67,7 +70,7 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 		BlogsEntry entry = BlogsTestUtil.addEntry(group, true);
 
 		BlogsEntryLocalServiceUtil.subscribe(
-			TestPropsValues.getUserId(), group.getGroupId());
+			_user.getUserId(), group.getGroupId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(entry.getGroupId());
@@ -90,7 +93,7 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 		BlogsEntry entry = BlogsTestUtil.addEntry(group, true);
 
 		BlogsEntryLocalServiceUtil.subscribe(
-			TestPropsValues.getUserId(), group.getGroupId());
+			_user.getUserId(), group.getGroupId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(entry.getGroupId());
@@ -117,7 +120,7 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 		BlogsEntry entry = BlogsTestUtil.addEntry(group, true);
 
 		BlogsEntryLocalServiceUtil.subscribe(
-			TestPropsValues.getUserId(), group.getGroupId());
+			_user.getUserId(), group.getGroupId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(entry.getGroupId());
@@ -153,5 +156,7 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 
 	@DeleteAfterTestRun
 	protected Group group;
+
+	private User _user;
 
 }

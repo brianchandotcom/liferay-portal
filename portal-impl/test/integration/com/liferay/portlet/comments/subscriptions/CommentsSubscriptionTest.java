@@ -16,6 +16,7 @@ package com.liferay.portlet.comments.subscriptions;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.Sync;
@@ -52,7 +53,7 @@ public class CommentsSubscriptionTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_user = UserTestUtil.addOmniAdminUser();
+		_user = UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER);
 	}
 
 	@Test

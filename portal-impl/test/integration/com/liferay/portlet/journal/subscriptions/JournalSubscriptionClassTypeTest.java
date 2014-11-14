@@ -26,7 +26,6 @@ import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.subscriptions.BaseSubscriptionClassTypeTestCase;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
-import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
@@ -94,7 +93,7 @@ public class JournalSubscriptionClassTypeTest
 	@Override
 	protected void addSubscriptionClassType(long classTypeId) throws Exception {
 		JournalArticleLocalServiceUtil.subscribeStructure(
-			group.getGroupId(), TestPropsValues.getUserId(), classTypeId);
+			group.getGroupId(), user.getUserId(), classTypeId);
 	}
 
 	@Override
@@ -102,7 +101,7 @@ public class JournalSubscriptionClassTypeTest
 		throws Exception {
 
 		JournalArticleLocalServiceUtil.unsubscribeStructure(
-			group.getGroupId(), TestPropsValues.getUserId(), classTypeId);
+			group.getGroupId(), user.getUserId(), classTypeId);
 	}
 
 	@Override

@@ -27,7 +27,6 @@ import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.subscriptions.BaseSubscriptionBaseModelTestCase;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
-import com.liferay.portal.util.test.TestPropsValues;
 
 import org.junit.runner.RunWith;
 
@@ -69,7 +68,7 @@ public class BookmarksSubscriptionBaseModelTest
 	@Override
 	protected void addSubscriptionBaseModel(long baseModelId) throws Exception {
 		BookmarksEntryLocalServiceUtil.subscribeEntry(
-			TestPropsValues.getUserId(), baseModelId);
+			user.getUserId(), baseModelId);
 	}
 
 	@Override

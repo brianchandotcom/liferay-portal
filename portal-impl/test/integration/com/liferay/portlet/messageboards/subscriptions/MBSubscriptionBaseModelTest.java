@@ -20,7 +20,6 @@ import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.subscriptions.BaseSubscriptionBaseModelTestCase;
-import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
@@ -60,7 +59,7 @@ public class MBSubscriptionBaseModelTest
 	@Override
 	protected void addSubscriptionBaseModel(long baseModelId) throws Exception {
 		MBMessageLocalServiceUtil.subscribeMessage(
-			TestPropsValues.getUserId(), baseModelId);
+			user.getUserId(), baseModelId);
 	}
 
 	@Override

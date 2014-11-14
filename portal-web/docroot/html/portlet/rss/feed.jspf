@@ -15,11 +15,11 @@
 --%>
 
 <%
-SyndFeed syndFeed = rssFeed.getSyndFeed();
+SyndFeed syndFeed = rssFeedContext.getSyndFeed();
 %>
 
 <c:choose>
-	<c:when test="<%= Validator.isNotNull(rssFeed.getURL()) && (syndFeed != null) %>">
+	<c:when test="<%= Validator.isNotNull(rssFeedContext.getURL()) && (syndFeed != null) %>">
 		<div class="feed <%= last ? "last" : StringPool.BLANK %>">
 
 			<%
@@ -28,13 +28,13 @@ SyndFeed syndFeed = rssFeed.getSyndFeed();
 
 			<c:if test="<%= (syndImage != null) && rssDisplayContext.isShowFeedImage() %>">
 				<div class="feed-image">
-					<img alt="<%= HtmlUtil.escapeAttribute(syndImage.getDescription()) %>" src="<%= HtmlUtil.escapeHREF(rssFeed.getSyndFeedImageURL()) %>" />
+					<img alt="<%= HtmlUtil.escapeAttribute(syndImage.getDescription()) %>" src="<%= HtmlUtil.escapeHREF(rssFeedContext.getSyndFeedImageURL()) %>" />
 				</div>
 			</c:if>
 
 			<c:if test="<%= rssDisplayContext.isShowFeedTitle() %>">
 				<div class="feed-title">
-					<aui:a href="<%= RSSUtil.escapeJavaScriptLink(rssFeed.getSyndFeedLink()) %>" target="_blank"><%= HtmlUtil.escape(rssFeed.getTitle()) %></aui:a>
+					<aui:a href="<%= RSSUtil.escapeJavaScriptLink(rssFeedContext.getSyndFeedLink()) %>" target="_blank"><%= HtmlUtil.escape(rssFeedContext.getTitle()) %></aui:a>
 				</div>
 			</c:if>
 
@@ -65,7 +65,7 @@ SyndFeed syndFeed = rssFeed.getSyndFeed();
 					for (int j = 0; (j < entries.size()) && (j < rssDisplayContext.getEntriesPerFeed()); j++) {
 						SyndEntry syndEntry = (SyndEntry)entries.get(j);
 
-						RSSFeedEntryDisplayContext rssFeedEntryDisplayContext = new RSSFeedEntryDisplayContext(syndEntry, request, rssFeed);
+						RSSFeedEntryDisplayContext rssFeedEntryDisplayContext = new RSSFeedEntryDisplayContext(syndEntry, request, rssFeedContext);
 					%>
 
 						<liferay-ui:panel cssClass="feed-entry" defaultState='<%= (themeDisplay.isStateMaximized() || (j < rssDisplayContext.getExpandedEntriesPerFeed())) ? "open" : "closed" %>' extended="<%= false%>" title="<%= HtmlUtil.escape(syndEntry.getTitle()) %>">
@@ -110,7 +110,7 @@ SyndFeed syndFeed = rssFeed.getSyndFeed();
 	</c:when>
 	<c:when test="<%= portletDisplay.isShowConfigurationIcon() %>">
 		<div class="alert alert-danger">
-			<liferay-ui:message arguments="<%= HtmlUtil.escape(rssFeed.getURL()) %>" key="cannot-be-found" translateArguments="<%= false %>" />
+			<liferay-ui:message arguments="<%= HtmlUtil.escape(rssFeedContext.getURL()) %>" key="cannot-be-found" translateArguments="<%= false %>" />
 		</div>
 	</c:when>
 </c:choose>

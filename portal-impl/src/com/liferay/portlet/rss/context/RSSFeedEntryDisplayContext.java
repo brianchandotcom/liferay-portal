@@ -44,14 +44,15 @@ import javax.servlet.http.HttpServletRequest;
 public class RSSFeedEntryDisplayContext {
 
 	public RSSFeedEntryDisplayContext(
-		SyndEntry syndEntry, HttpServletRequest request, RSSFeed rssFeed) {
+		SyndEntry syndEntry, HttpServletRequest request,
+		RSSFeedContext rssFeedContext) {
 
 		String syndEntryLink = syndEntry.getLink();
 
 		if (Validator.isNotNull(syndEntryLink) &&
 			!HttpUtil.hasDomain(syndEntryLink)) {
 
-			syndEntryLink = rssFeed.getBaseURL() + syndEntryLink;
+			syndEntryLink = rssFeedContext.getBaseURL() + syndEntryLink;
 		}
 
 		List<SyndEnclosure> syndEnclosures =
@@ -84,15 +85,15 @@ public class RSSFeedEntryDisplayContext {
 		_syndEnclosureLink = syndEnclosureLink;
 		_syndEnclosureLinkTitle = syndEnclosureLinkTitle;
 		_request = request;
-		_rssFeed = rssFeed;
+		_rssFeedContext = rssFeedContext;
 	}
 
 	public String getSanitizedContent() {
 		ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String baseURL = _rssFeed.getBaseURL();
-		SyndFeed syndFeed = _rssFeed.getSyndFeed();
+		String baseURL = _rssFeedContext.getBaseURL();
+		SyndFeed syndFeed = _rssFeedContext.getSyndFeed();
 
 		List<SyndContent> syndContents = getSyndContents();
 
@@ -166,7 +167,7 @@ public class RSSFeedEntryDisplayContext {
 	}
 
 	private final HttpServletRequest _request;
-	private final RSSFeed _rssFeed;
+	private final RSSFeedContext _rssFeedContext;
 	private final String _syndEnclosureLink;
 	private final String _syndEnclosureLinkTitle;
 	private final SyndEntry _syndEntry;

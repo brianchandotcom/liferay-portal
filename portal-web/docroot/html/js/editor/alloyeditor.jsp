@@ -124,7 +124,116 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 
 <div class="alloy-editor alloy-editor-placeholder <%= cssClass %>" contenteditable="false" data-placeholder="<%= LanguageUtil.get(request, placeholder) %>" id="<%= name %>" name="<%= name %>"><%= contents %></div>
 
-<aui:script>
+<aui:script use="aui-base,alloy-editor">
+	document.getElementById('<%= name %>').setAttribute('contenteditable', true);
+
+	<%
+ 	Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
+ 	contentsLanguageId = LocaleUtil.toLanguageId(contentsLocale);
+
+	String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
+	String languageId = LocaleUtil.toLanguageId(locale);
+ 	%>
+
+	var alloyEditor = new A.AlloyEditor(
+		{
+			contentsLangDirection: '<%= HtmlUtil.escapeJS(contentsLanguageDir) %>',
+
+			contentsLanguage: '<%= contentsLanguageId.replace("iw_", "he_") %>',
+
+			language: '<%= languageId.replace("iw_", "he_") %>',
+
+	 		srcNode: '#<%= name %>',
+
+			title: false,
+
+			toolbars:
+				<c:choose>
+					<c:when test='<%= alloyEditorMode.equals("text") %>'>
+						{},
+					</c:when>
+					<c:otherwise>
+						{
+							add: ['imageselector'],
+							image: ['left', 'right'],
+							styles: ['strong', 'em', 'u', 'h1', 'h2', 'a', 'twitter']
+						},
+					</c:otherwise>
+				</c:choose>
+
+			<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_SELECTOR %>" varImpl="documentSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="struts_action" value="/document_selector/view" />
+				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+				<portlet:param name="eventName" value='<%= name + "selectDocument" %>' />
+				<portlet:param name="showGroupsSelector" value="true" />
+			</liferay-portlet:renderURL>
+
+			<%
+			if (fileBrowserParamsMap != null) {
+				for (Map.Entry<String, String> entry : fileBrowserParamsMap.entrySet()) {
+					documentSelectorURL.setParameter(entry.getKey(), entry.getValue());
+				}
+			}
+			%>
+
+			filebrowserBrowseUrl: '<%= documentSelectorURL %>',
+			filebrowserFlashBrowseUrl: '<%= documentSelectorURL %>&Type=flash',
+			filebrowserImageBrowseLinkUrl: '<%= documentSelectorURL %>&Type=image',
+			filebrowserImageBrowseUrl: '<%= documentSelectorURL %>&Type=image'
+		}
+	);
+
+	<c:if test="<%= Validator.isNotNull(onBlurMethod) %>">
+		alloyEditor.get('nativeEditor').on(
+			'blur',
+			function(event) {
+				window['<%= HtmlUtil.escapeJS(onBlurMethod) %>'](event.editor);
+			}
+		);
+	</c:if>
+
+	<c:if test="<%= Validator.isNotNull(onChangeMethod) %>">
+		alloyEditor.get('nativeEditor').on(
+			'change',
+			function(event) {
+				window['<%= HtmlUtil.escapeJS(onChangeMethod) %>'](window['<%= name %>'].getHTML());
+			}
+		);
+	</c:if>
+
+	<c:if test="<%= Validator.isNotNull(onFocusMethod) %>">
+		alloyEditor.get('nativeEditor').on(
+			'focus',
+			function(event) {
+				window['<%= HtmlUtil.escapeJS(onFocusMethod) %>'](event.editor);
+			}
+		);
+	</c:if>
+
+	alloyEditor.get('nativeEditor').on(
+		'instanceReady',
+		function(event) {
+			<c:if test="<%= Validator.isNotNull(onInitMethod) %>">
+				window['<%= HtmlUtil.escapeJS(onInitMethod) %>']();
+			</c:if>
+
+			window['<%= name %>'].editor = alloyEditor;
+
+			window['<%= name %>'].instanceReady = true;
+		}
+	);
+
+	<c:if test='<%= alloyEditorMode.equals("text") %>'>
+		alloyEditor.get('nativeEditor').on(
+			'key',
+			function(event) {
+				if (event.data.keyCode === 13) {
+					event.cancel();
+				}
+			}
+		);
+	</c:if>
+
 	window['<%= name %>'] = {
 		destroy: function() {
 			window['<%= name %>'].editor.destroy();
@@ -191,117 +300,6 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			CKEDITOR.instances['<%= name %>'].setData(value);
 		}
 	};
-</aui:script>
-
-<aui:script use="aui-base,alloy-editor">
-	document.getElementById('<%= name %>').setAttribute('contenteditable', true);
-
-	<%
- 	Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
- 	contentsLanguageId = LocaleUtil.toLanguageId(contentsLocale);
-
-	String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
-	String languageId = LocaleUtil.toLanguageId(locale);
- 	%>
-
-	var alloyEditor = new A.AlloyEditor(
-		{
-			contentsLangDirection: '<%= HtmlUtil.escapeJS(contentsLanguageDir) %>',
-
-			contentsLanguage: '<%= contentsLanguageId.replace("iw_", "he_") %>',
-
-			language: '<%= languageId.replace("iw_", "he_") %>',
-
-	 		srcNode: '#<%= name %>',
-
-			title: false,
-
-			toolbars:
-				<c:choose>
-					<c:when test='<%= alloyEditorMode.equals("text") %>'>
-						{},
-					</c:when>
-					<c:otherwise>
-						{
-							add: ['imageselector'],
-							image: ['left', 'right'],
-							styles: ['strong', 'em', 'u', 'h1', 'h2', 'a', 'twitter']
-						},
-					</c:otherwise>
-				</c:choose>
-
-			<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_SELECTOR %>" varImpl="documentSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="struts_action" value="/document_selector/view" />
-				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-				<portlet:param name="eventName" value='<%= name + "selectDocument" %>' />
-				<portlet:param name="showGroupsSelector" value="true" />
-			</liferay-portlet:renderURL>
-
-			<%
-			if (fileBrowserParamsMap != null) {
-				for (Map.Entry<String, String> entry : fileBrowserParamsMap.entrySet()) {
-					documentSelectorURL.setParameter(entry.getKey(), entry.getValue());
-				}
-			}
-			%>
-
-			filebrowserBrowseUrl: '<%= documentSelectorURL %>',
-			filebrowserFlashBrowseUrl: '<%= documentSelectorURL %>&Type=flash',
-			filebrowserImageBrowseLinkUrl: '<%= documentSelectorURL %>&Type=image',
-			filebrowserImageBrowseUrl: '<%= documentSelectorURL %>&Type=image'
-		}
-	);
-
-	<c:if test="<%= Validator.isNotNull(onBlurMethod) %>">
-		alloyEditor._editor.on(
-			'blur',
-			function(event) {
-				window['<%= HtmlUtil.escapeJS(onBlurMethod) %>'](event.editor);
-			}
-		);
-	</c:if>
-
-	<c:if test="<%= Validator.isNotNull(onChangeMethod) %>">
-		alloyEditor._editor.on(
-			'change',
-			function(event) {
-				window['<%= HtmlUtil.escapeJS(onChangeMethod) %>'](window['<%= name %>'].getHTML());
-			}
-		);
-	</c:if>
-
-	<c:if test="<%= Validator.isNotNull(onFocusMethod) %>">
-		alloyEditor._editor.on(
-			'focus',
-			function(event) {
-				window['<%= HtmlUtil.escapeJS(onFocusMethod) %>'](event.editor);
-			}
-		);
-	</c:if>
-
-	alloyEditor._editor.on(
-		'instanceReady',
-		function(event) {
-			<c:if test="<%= Validator.isNotNull(onInitMethod) %>">
-				window['<%= HtmlUtil.escapeJS(onInitMethod) %>']();
-			</c:if>
-
-			window['<%= name %>'].editor = alloyEditor;
-
-			window['<%= name %>'].instanceReady = true;
-		}
-	);
-
-	<c:if test='<%= alloyEditorMode.equals("text") %>'>
-		alloyEditor._editor.on(
-			'key',
-			function(event) {
-				if (event.data.keyCode === 13) {
-					event.cancel();
-				}
-			}
-		);
-	</c:if>
 
 	var destroyInstance = function(event) {
 		if (event.portletId === '<%= portletId %>') {

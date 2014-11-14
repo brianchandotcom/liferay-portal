@@ -23,9 +23,13 @@ String uploadProgressId = "dlFileEntryUploadProgress";
 
 long folderId = ParamUtil.getLong(request, "folderId");
 
+long repositoryId = scopeGroupId;
+
 if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	try {
-		DLAppServiceUtil.getFolder(folderId);
+		Folder folder = DLAppServiceUtil.getFolder(folderId);
+
+		repositoryId = folder.getRepositoryId();
 	}
 	catch (NoSuchFolderException nsfe) {
 		folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
@@ -59,6 +63,7 @@ String[] mimeTypes = DocumentSelectorUtil.getMimeTypes(request);
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="uploadProgressId" type="hidden" value="<%= uploadProgressId %>" />
+	<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
 	<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
 
 	<liferay-ui:error exception="<%= AntivirusScannerException.class %>">

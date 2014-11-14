@@ -152,6 +152,8 @@ public class EditFileEntryAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		long repositoryId = ParamUtil.getLong(
+			uploadPortletRequest, "repositoryId");
 		long folderId = ParamUtil.getLong(uploadPortletRequest, "folderId");
 		String sourceFileName = uploadPortletRequest.getFileName("file");
 		String title = ParamUtil.getString(uploadPortletRequest, "title");
@@ -198,9 +200,8 @@ public class EditFileEntryAction extends PortletAction {
 				DLFileEntry.class.getName(), uploadPortletRequest);
 
 			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-				themeDisplay.getScopeGroupId(), folderId, sourceFileName,
-				contentType, title, description, changeLog, inputStream, size,
-				serviceContext);
+				repositoryId, folderId, sourceFileName, contentType, title,
+				description, changeLog, inputStream, size, serviceContext);
 
 			AssetPublisherUtil.addRecentFolderId(
 				actionRequest, DLFileEntry.class.getName(), folderId);

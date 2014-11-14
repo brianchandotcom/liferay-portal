@@ -89,7 +89,7 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 			if (!passwordPolicy.isAllowDictionaryWords() &&
 				WordsUtil.isDictionaryWord(password1)) {
 
-				throw new UserPasswordException.MustNotHaveDictionaryWords(
+				throw new UserPasswordException.MustNotContainDictionaryWords(
 					userId, WordsUtil.getDictionarySet());
 			}
 

@@ -253,32 +253,32 @@ public class UserPasswordException extends PortalException {
 
 	}
 
-	public static class MustNotHaveDictionaryWords
+	public static class MustNotContainDictionaryWords
 		extends UserPasswordException {
 
-		public MustNotHaveDictionaryWords(
-			long userId, Set<String> trivialWords) {
+		public MustNotContainDictionaryWords(
+			long userId, Set<String> dictionaryWords) {
 
 			super(
 				String.format(
 					"Password for user %s must not contain any dictionary " +
 						"words including: %s",
-					userId, trivialWords),
+					userId, dictionaryWords),
 				PASSWORD_CONTAINS_TRIVIAL_WORDS);
 
 			_userId = userId;
-			_trivialWords = trivialWords;
+			_dictionaryWords = dictionaryWords;
 		}
 
-		public Set<String> getTrivialWords() {
-			return _trivialWords;
+		public Set<String> getDictionaryWords() {
+			return _dictionaryWords;
 		}
 
 		public long getUserId() {
 			return _userId;
 		}
 
-		private final Set<String> _trivialWords;
+		private final Set<String> _dictionaryWords;
 		private long _userId;
 
 	}

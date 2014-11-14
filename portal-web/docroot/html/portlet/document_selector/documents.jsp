@@ -158,6 +158,7 @@ portletURL.setParameter("type", type);
 							<portlet:param name="struts_action" value="/document_selector/add_file_entry" />
 							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
 							<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 							<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryType.getFileEntryTypeId()) %>" />
 							<portlet:param name="type" value="<%= type %>" />
@@ -244,7 +245,6 @@ portletURL.setParameter("type", type);
 					foldersCount = DLAppServiceUtil.getFoldersCount(curFolder.getRepositoryId(), curFolder.getFolderId());
 				}
 				catch (Exception e) {
-
 				}
 
 				int fileEntriesCount = 0;
@@ -253,7 +253,6 @@ portletURL.setParameter("type", type);
 					fileEntriesCount = DLAppServiceUtil.getFoldersFileEntriesCount(curFolder.getRepositoryId(), Arrays.asList(curFolder.getFolderId()), WorkflowConstants.STATUS_APPROVED);
 				}
 				catch (Exception e) {
-
 				}
 				%>
 

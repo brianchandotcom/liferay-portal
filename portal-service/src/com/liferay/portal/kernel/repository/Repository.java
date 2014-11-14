@@ -66,8 +66,23 @@ public interface Repository extends DocumentRepository {
 
 	public FileVersion cancelCheckOut(long fileEntryId) throws PortalException;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #checkInFileEntry(long, long,
+	 *             boolean, String, ServiceContext)}
+	 */
+	@Deprecated
 	public void checkInFileEntry(
 			long fileEntryId, boolean major, String changeLog,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public void checkInFileEntry(
+			long userId, long fileEntryId, boolean major, String changeLog,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public void checkInFileEntry(
+			long userId, long fileEntryId, String lockUuid,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -79,6 +94,11 @@ public interface Repository extends DocumentRepository {
 	public void checkInFileEntry(long fileEntryId, String lockUuid)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #checkInFileEntry(long, long,
+	 *             String, com.liferay.portal.service.ServiceContext)}
+	 */
+	@Deprecated
 	public void checkInFileEntry(
 			long fileEntryId, String lockUuid, ServiceContext serviceContext)
 		throws PortalException;

@@ -272,7 +272,7 @@ public class CMISRepository extends BaseCmisRepository {
 
 	@Override
 	public void checkInFileEntry(
-		long fileEntryId, boolean major, String changeLog,
+		long userId, long fileEntryId, boolean major, String changeLog,
 		ServiceContext serviceContext) {
 
 		try {
@@ -314,9 +314,11 @@ public class CMISRepository extends BaseCmisRepository {
 
 	@Override
 	public void checkInFileEntry(
-		long fileEntryId, String lockUuid, ServiceContext serviceContext) {
+		long userId, long fileEntryId, String lockUuid,
+		ServiceContext serviceContext) {
 
-		checkInFileEntry(fileEntryId, false, StringPool.BLANK, serviceContext);
+		checkInFileEntry(
+			userId, fileEntryId, false, StringPool.BLANK, serviceContext);
 	}
 
 	@Override

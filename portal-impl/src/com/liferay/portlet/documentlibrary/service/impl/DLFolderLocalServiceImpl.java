@@ -1046,7 +1046,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 			if (restrictionType ==
 					DLFolderConstants.
-					RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW) {
+						RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW) {
 
 				workflowDefinitionOVPs.add(
 					new ObjectValuePair<Long, String>(

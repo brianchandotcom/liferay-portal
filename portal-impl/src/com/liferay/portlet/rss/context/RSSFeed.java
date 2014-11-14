@@ -31,9 +31,9 @@ public class RSSFeed {
 	public RSSFeed(String url, String title) {
 		_url = url;
 
-		SyndFeed feed = getFeed();
+		SyndFeed syndFeed = getSyndFeed();
 
-		if (feed == null) {
+		if (syndFeed == null) {
 			_baseURL = StringPool.BLANK;
 			_feedImageLink = StringPool.BLANK;
 			_feedImageURL = StringPool.BLANK;
@@ -44,13 +44,13 @@ public class RSSFeed {
 		}
 
 		if (Validator.isNull(title)) {
-			title = feed.getTitle();
+			title = syndFeed.getTitle();
 		}
 
 		String baseURL = StringPool.BLANK;
 		String feedImageLink = StringPool.BLANK;
 		String feedImageURL = StringPool.BLANK;
-		String feedLink = feed.getLink();
+		String feedLink = syndFeed.getLink();
 
 		if (Validator.isNull(feedLink) || !HttpUtil.hasDomain(feedLink)) {
 			baseURL = HttpUtil.getProtocol(_url).concat(
@@ -68,16 +68,16 @@ public class RSSFeed {
 				Http.PROTOCOL_DELIMITER).concat(HttpUtil.getDomain(feedLink));
 		}
 
-		SyndImage feedImage = feed.getImage();
+		SyndImage syndImage = syndFeed.getImage();
 
-		if (feedImage != null) {
-			feedImageLink = feedImage.getLink();
+		if (syndImage != null) {
+			feedImageLink = syndImage.getLink();
 
 			if (!HttpUtil.hasDomain(feedImageLink)) {
 				feedImageLink = baseURL + feedImageLink;
 			}
 
-			feedImageURL = feedImage.getUrl();
+			feedImageURL = syndImage.getUrl();
 
 			if (!HttpUtil.hasDomain(feedImageURL)) {
 				feedImageURL = baseURL + feedImageURL;
@@ -95,21 +95,21 @@ public class RSSFeed {
 		return _baseURL;
 	}
 
-	public SyndFeed getFeed() {
-		if (_feed != null) {
-			return _feed;
+	public SyndFeed getSyndFeed() {
+		if (_syndFeed != null) {
+			return _syndFeed;
 		}
 
 		try {
 			ObjectValuePair ovp = com.liferay.portlet.rss.util.RSSUtil.getFeed(
 				_url);
 
-			_feed = (SyndFeed)ovp.getValue();
+			_syndFeed = (SyndFeed)ovp.getValue();
 		}
 		catch (Exception e) {
 		}
 
-		return _feed;
+		return _syndFeed;
 	}
 
 	public String getFeedImageLink() {
@@ -128,12 +128,12 @@ public class RSSFeed {
 		return _title;
 	}
 
-	public String getUrl() {
+	public String getURL() {
 		return _url;
 	}
 
 	private final String _baseURL;
-	private SyndFeed _feed;
+	private SyndFeed _syndFeed;
 	private final String _feedImageLink;
 	private final String _feedImageURL;
 	private final String _feedLink;

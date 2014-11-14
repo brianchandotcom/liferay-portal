@@ -101,7 +101,7 @@ public class RSSDisplayContext {
 		List<RSSFeed> rssFeeds = new ArrayList<RSSFeed>();
 
 		String[] titles = getTitles();
-		String[] urls = getUrls();
+		String[] urls = getURLs();
 
 		for (int i = 0; i < urls.length; i++) {
 			String url = urls[i];
@@ -127,7 +127,7 @@ public class RSSDisplayContext {
 		return _titles;
 	}
 
-	public String[] getUrls() {
+	public String[] getURLs() {
 		if (_urls != null) {
 			return _urls;
 		}

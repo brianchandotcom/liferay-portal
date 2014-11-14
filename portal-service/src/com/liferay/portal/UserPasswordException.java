@@ -95,12 +95,62 @@ public class UserPasswordException extends PortalException {
 
 	}
 
-	public static class MustBeValid extends UserPasswordException {
+	public static class MustComplyWithListeners extends UserPasswordException {
+		public MustComplyWithListeners(
+			long userId, ModelListenerException modelListenerException) {
 
-		public MustBeValid(long userId) {
 			super(
-				String.format("Password for user %s must be valid", userId),
+				String.format(
+					"Password must not make a user model listener fail: " +
+						modelListenerException.getMessage()),
 				PASSWORD_INVALID);
+
+			_modelListenerException = modelListenerException;
+			_userId = userId;
+		}
+
+		public ModelListenerException getModelListenerException() {
+			return _modelListenerException;
+		}
+
+		public long getUserId() {
+			return _userId;
+		}
+
+		private final ModelListenerException _modelListenerException;
+		private long _userId;
+
+	}
+
+	public static class MustComplyWithRegex extends UserPasswordException {
+		public MustComplyWithRegex(long userId, String regex) {
+			super(
+				String.format("Password must comply with regex: " + regex),
+				PASSWORD_INVALID);
+
+			_regex = regex;
+			_userId = userId;
+		}
+
+		public String getRegex() {
+			return _regex;
+		}
+
+		public long getUserId() {
+			return _userId;
+		}
+
+		private final String _regex;
+		private long _userId;
+
+	}
+
+	public static class MustMatch extends UserPasswordException {
+
+		public MustMatch(long userId) {
+			super(
+				String.format("Passwords for user %s must match", userId),
+				PASSWORDS_DO_NOT_MATCH);
 
 			_userId = userId;
 		}
@@ -113,12 +163,14 @@ public class UserPasswordException extends PortalException {
 
 	}
 
-	public static class MustMatch extends UserPasswordException {
+	public static class MustMatchCurrentPassword extends UserPasswordException {
 
-		public MustMatch(long userId) {
+		public MustMatchCurrentPassword(long userId) {
 			super(
-				String.format("Passwords for user %s must match", userId),
-				PASSWORDS_DO_NOT_MATCH);
+				String.format(
+					"Password for user %s does not match the current password",
+					userId),
+				PASSWORD_INVALID);
 
 			_userId = userId;
 		}
@@ -294,7 +346,7 @@ public class UserPasswordException extends PortalException {
 		List sampleDictionaryWords = dictionaryWords.subList(0, 10);
 
 		return sampleDictionaryWords.toString() + StringPool.SPACE +
-			   StringPool.TRIPLE_PERIOD;
+			StringPool.TRIPLE_PERIOD;
 	}
 
 	private UserPasswordException(String message, int type) {

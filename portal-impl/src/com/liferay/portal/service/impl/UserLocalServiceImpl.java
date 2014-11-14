@@ -4826,7 +4826,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				}
 			}
 
-			throw new UserPasswordException.MustBeValid(userId);
+			throw new UserPasswordException.MustComplyWithListeners(
+				userId, mle);
 		}
 
 		if (!silentUpdate) {
@@ -5670,7 +5671,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		if (Validator.isNull(password)) {
-			throw new UserPasswordException.MustBeValid(userId);
+			throw new UserPasswordException.MustNotBeNull(userId);
 		}
 
 		int authResult = Authenticator.FAILURE;
@@ -6450,7 +6451,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		throws PortalException {
 
 		if (Validator.isNull(password1) || Validator.isNull(password2)) {
-			throw new UserPasswordException.MustBeValid(userId);
+			throw new UserPasswordException.MustNotBeNull(userId);
 		}
 
 		if (!password1.equals(password2)) {

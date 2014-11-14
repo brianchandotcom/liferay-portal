@@ -113,7 +113,8 @@ public class EditUserAction
 				login, currentPassword, user.getPassword());
 
 			if (!validPassword) {
-				throw new UserPasswordException.MustBeValid(user.getUserId());
+				throw new UserPasswordException.MustMatchCurrentPassword(
+					user.getUserId());
 			}
 		}
 		else if (Validator.isNotNull(newPassword)) {

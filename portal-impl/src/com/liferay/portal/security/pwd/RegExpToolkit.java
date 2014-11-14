@@ -54,7 +54,8 @@ public class RegExpToolkit extends BasicToolkit {
 				_log.warn("User " + userId + " attempted an invalid password");
 			}
 
-			throw new UserPasswordException.MustBeValid(userId);
+			throw new UserPasswordException.MustComplyWithRegex(
+				userId, _pattern);
 		}
 	}
 

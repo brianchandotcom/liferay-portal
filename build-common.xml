@@ -1292,7 +1292,7 @@ rerun your task.
 					</fileset>
 
 					<resourcecount property="test.without.security.count">
-						<fileset refid="test.without.security.or.persistence.fileset"/>
+						<fileset refid="test.without.security.fileset"/>
 					</resourcecount>
 
 					<if>
@@ -1315,7 +1315,7 @@ rerun your task.
 
 					<if>
 						<not>
-							<equals arg1="${test.without.security.or.persistence.count}" arg2="0" />
+							<equals arg1="${test.without.security.fileset}" arg2="0" />
 						</not>
 						<then>
 							<setup-test-classpath
@@ -1323,8 +1323,8 @@ rerun your task.
 							/>
 
 							<junit-test-cmd 
-								fileset="test.without.security.or.persistence.fileset" 
-								fork.mode="${junit.forkmode}"
+								fileset="test.without.security.fileset" 
+								fork.mode="@{junit.forkmode}"
 								test.type="@{test.type}"
 							/>
 						</then>

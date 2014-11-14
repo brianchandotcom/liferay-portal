@@ -19,6 +19,8 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.test.randomizerbumpers.NumericStringRandomizerBumper;
+import com.liferay.portal.test.randomizerbumpers.UniqueStringRandomizerBumper;
 
 /**
  * @author Roberto Díaz
@@ -26,8 +28,7 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 public class RoleTestUtil {
 
 	public static long addGroupRole(long groupId) throws Exception {
-		Role role = addRole(
-			RandomTestUtil.randomString(), RoleConstants.TYPE_SITE);
+		Role role = addRole(RoleConstants.TYPE_SITE);
 
 		RoleLocalServiceUtil.addGroupRole(groupId, role.getRoleId());
 
@@ -35,8 +36,7 @@ public class RoleTestUtil {
 	}
 
 	public static long addOrganizationRole(long groupId) throws Exception {
-		Role role = addRole(
-			RandomTestUtil.randomString(), RoleConstants.TYPE_ORGANIZATION);
+		Role role = addRole(RoleConstants.TYPE_ORGANIZATION);
 
 		RoleLocalServiceUtil.addGroupRole(groupId, role.getRoleId());
 
@@ -44,8 +44,7 @@ public class RoleTestUtil {
 	}
 
 	public static long addRegularRole(long groupId) throws Exception {
-		Role role = addRole(
-			RandomTestUtil.randomString(), RoleConstants.TYPE_REGULAR);
+		Role role = addRole(RoleConstants.TYPE_REGULAR);
 
 		RoleLocalServiceUtil.addGroupRole(groupId, role.getRoleId());
 
@@ -71,6 +70,14 @@ public class RoleTestUtil {
 			TestPropsValues.getCompanyId(), roleName);
 
 		addResourcePermission(role, resourceName, scope, primKey, actionId);
+	}
+
+	public static Role addRole(int roleType) throws Exception {
+		return addRole(
+			RandomTestUtil.randomString(
+				NumericStringRandomizerBumper.INSTANCE,
+				UniqueStringRandomizerBumper.INSTANCE),
+			roleType);
 	}
 
 	public static Role addRole(String roleName, int roleType) throws Exception {

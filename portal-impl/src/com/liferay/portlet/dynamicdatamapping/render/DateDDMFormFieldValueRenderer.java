@@ -45,13 +45,13 @@ public class DateDDMFormFieldValueRenderer
 			public String get(DDMFormFieldValue ddmFormFieldValue) {
 				Value value = ddmFormFieldValue.getValue();
 
-				String stringValue = value.getString(locale);
+				String valueString = value.getString(locale);
 
-				if (Validator.isNull(stringValue)) {
+				if (Validator.isNull(valueString)) {
 					return StringPool.BLANK;
 				}
 
-				long valueLong = Long.valueOf(stringValue);
+				long valueLong = Long.valueOf(valueString);
 
 				Format format = FastDateFormatFactoryUtil.getDate(locale);
 

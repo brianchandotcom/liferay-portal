@@ -66,10 +66,14 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 	}
 
 	protected boolean isNull(Value value) {
-		if ((value == null) ||
-			Validator.isNull(value.getString(value.getDefaultLocale()))) {
-
+		if (value == null) {
 			return true;
+		}
+
+		for (Locale availableLocale : value.getAvailableLocales()) {
+			if (Validator.isNull(value.getString(availableLocale))) {
+				return true;
+			}
 		}
 
 		return false;

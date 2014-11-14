@@ -172,6 +172,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #deleteAllByGroup(long)}
 	 */
+	@Deprecated
 	@Override
 	public void deleteAll(long groupId) throws PortalException {
 		deleteAllByGroup(groupId);
@@ -789,6 +790,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	 * @deprecated As of 7.0.0, replaced by {@link #getGroupSubfolderIds(List,
 	 *             long, long)}
 	 */
+	@Deprecated
 	@Override
 	public void getSubfolderIds(
 		List<Long> folderIds, long groupId, long folderId) {

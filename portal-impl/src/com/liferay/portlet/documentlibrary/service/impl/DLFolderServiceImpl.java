@@ -522,8 +522,9 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by more general {@link #updateFolder(
-	 *             long, String, String, long, List, int, ServiceContext)}
+	 * @deprecated As of 7.0.0, replaced by more general {@link
+	 *             #updateFolder(long, String, String, long, List, int,
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	@Override

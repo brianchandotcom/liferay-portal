@@ -141,9 +141,9 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 			settings.getModifiableSettings();
 
 		String subscriptionBodyPreferencesKey =
-			LocalizationUtil.getPreferencesKey(
+			LocalizationUtil.getLocalizedName(
 				"emailEntryUpdatedBody",
-				LocaleUtil.toLanguageId(LocaleUtil.US));
+				LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
 
 		modifiableSettings.setValue(
 			subscriptionBodyPreferencesKey, "[$BLOGS_ENTRY_UPDATE_COMMENT$]");

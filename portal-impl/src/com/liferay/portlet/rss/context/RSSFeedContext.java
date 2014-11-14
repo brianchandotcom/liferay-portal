@@ -26,9 +26,9 @@ import com.sun.syndication.feed.synd.SyndImage;
 /**
  * @author Eudaldo Alonso
  */
-public class RSSFeed {
+public class RSSFeedContext {
 
-	public RSSFeed(String url, String title) {
+	public RSSFeedContext(String url, String title) {
 		_url = url;
 
 		SyndFeed syndFeed = getSyndFeed();

@@ -19,10 +19,10 @@
 <div id="<portlet:namespace />feedsContainer">
 
 	<%
-	List<RSSFeed> rssFeeds = rssDisplayContext.getRSSFeeds();
+	List<RSSFeedContext> rssFeeds = rssDisplayContext.getRSSFeedContexts();
 
 	for (int i = 0; i < rssFeeds.size(); i++) {
-		RSSFeed rssFeed = rssFeeds.get(i);
+		RSSFeedContext rssFeed = rssFeeds.get(i);
 
 		boolean last = false;
 

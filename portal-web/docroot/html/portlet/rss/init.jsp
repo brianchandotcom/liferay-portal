@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%@ page import="com.liferay.portlet.rss.context.RSSDisplayContext" %><%@
-page import="com.liferay.portlet.rss.context.RSSFeed" %><%@
+page import="com.liferay.portlet.rss.context.RSSFeedContext" %><%@
 page import="com.liferay.portlet.rss.context.RSSFeedEntryDisplayContext" %><%@
 page import="com.liferay.portlet.rss.util.RSSUtil" %>
 

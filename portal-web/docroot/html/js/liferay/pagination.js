@@ -99,13 +99,7 @@ AUI.add(
 
 					TPL_ITEM_CONTAINER: '<ul class="direction-down dropdown-menu lfr-menu-list" id="{id}" role="menu" />',
 
-					TPL_LABEL: ' {items} {per} {page}',
-
 					TPL_RESULTS: '<small class="search-results" id="{id}">{value}</small>',
-
-					TPL_RESULTS_MESSAGE: '{showing} {from} - {to} {of} {x} {results}.',
-
-					TPL_RESULTS_MESSAGE_SHORT: '{showing} {x} {results}.',
 
 					renderUI: function() {
 						var instance = this;
@@ -119,6 +113,10 @@ AUI.add(
 						var namespace = instance.get('namespace');
 
 						var deltaSelectorId = namespace + 'dataSelectorId';
+
+						instance._itemsPerPageMessage = Liferay.Language.get('items-per-page');
+						instance._resultsMessage = Liferay.Language.get('showing-x-x-of-x-results');
+						instance._resultsMessageShort = Liferay.Language.get('showing-x-results');
 
 						var selectorLabel = instance._getLabelContent();
 
@@ -236,22 +234,13 @@ AUI.add(
 
 						var results = {};
 
-						var strings = instance.get(STRINGS);
-
 						if (!itemsPerPage) {
 							itemsPerPage = instance.get(ITEMS_PER_PAGE);
 						}
 
 						results.amount = itemsPerPage;
 
-						results.title = Lang.sub(
-							instance.TPL_LABEL,
-							{
-								items: strings.items,
-								page: strings.page,
-								per: strings.per
-							}
-						);
+						results.title = instance._itemsPerPageMessage;
 
 						return results;
 					},
@@ -260,7 +249,6 @@ AUI.add(
 						var instance = this;
 
 						var results = instance.get(RESULTS);
-						var strings = instance.get(STRINGS);
 
 						if (!Lang.isValue(page)) {
 							page = instance.get(PAGE);
@@ -270,25 +258,18 @@ AUI.add(
 							itemsPerPage = instance.get(ITEMS_PER_PAGE);
 						}
 
-						var tpl = instance.TPL_RESULTS_MESSAGE_SHORT;
-
-						var values = {
-							results: strings.results,
-							showing: strings.showing,
-							x: results
-						};
+						var resultsContent;
 
 						if (results > itemsPerPage) {
 							var tmp = page * itemsPerPage;
 
-							tpl = instance.TPL_RESULTS_MESSAGE;
-
-							values.from = ((page - 1) * itemsPerPage) + 1;
-							values.of = strings.of;
-							values.to = tmp < results ? tmp : results;
+							resultsContent = Lang.sub(instance._resultsMessage, [((page - 1) * itemsPerPage) + 1, tmp < results ? tmp : results, results]);
+						}
+						else {
+							resultsContent = Lang.sub(instance._resultsMessageShort, [results]);
 						}
 
-						return Lang.sub(tpl, values);
+						return resultsContent;
 					},
 
 					_onChangeRequest: function(event) {

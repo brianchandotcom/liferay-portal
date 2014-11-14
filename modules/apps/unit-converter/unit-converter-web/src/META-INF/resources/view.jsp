@@ -240,12 +240,14 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 	var setBox = function(oldBox, newBox) {
 		oldBox.empty();
 
-		_.forEach(
+		var options = _.map(
 			newBox,
 			function(item, index) {
-				oldBox.append('<option value="' + index + '">' + item + '</option>');
+				return '<option value="' + index + '">' + item + '</option>';
 			}
 		);
+
+		oldBox.append(options.join(''));
 	};
 
 	var form = $(document.<portlet:namespace />fm);

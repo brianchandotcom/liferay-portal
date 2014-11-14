@@ -248,8 +248,7 @@ public class UserIndexer extends BaseIndexer {
 
 		document.addKeyword(
 			"ancestorOrganizationIds",
-			getAncestorOrganizationIds(
-				user.getUserId(), user.getOrganizationIds()));
+			getAncestorOrganizationIds(user.getOrganizationIds()));
 		document.addText("emailAddress", user.getEmailAddress());
 		document.addText("firstName", user.getFirstName());
 		document.addText("fullName", user.getFullName());
@@ -406,8 +405,7 @@ public class UserIndexer extends BaseIndexer {
 		reindexUsers(companyId);
 	}
 
-	protected long[] getAncestorOrganizationIds(
-			long userId, long[] organizationIds)
+	protected long[] getAncestorOrganizationIds(long[] organizationIds)
 		throws Exception {
 
 		Set<Long> ancestorOrganizationIds = new HashSet<Long>();

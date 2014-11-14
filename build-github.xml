@@ -204,26 +204,40 @@
 
 					JSONObject jsonObject = toJSONObject(githubJenkinsFailureURL + "/api/json");
 
-					sb.append("<li>");
-					sb.append("<a href=\\\"");
-					sb.append(githubJenkinsFailureURL);
-					sb.append("\\\">");
-					sb.append(jsonObject.get("className"));
-					sb.append(".");
-					sb.append(jsonObject.get("name"));
-					sb.append("</a>");
-					sb.append("<pre>");
-					sb.append(jsonObject.get("errorDetails"));
-					sb.append("<br /><br />");
+					if (jsonObject.has("result")) {
+						sb.append("<li>");
+						sb.append("<a href=\\\"");
+						sb.append(githubJenkinsFailureURL);
+						sb.append("\\\">");
+						sb.append(jsonObject.get("fullDisplayName"));
+						sb.append("</a>");
+						sb.append("<pre>RESULT: ");
+						sb.append(jsonObject.get("result"));
+						sb.append("</pre>");
+						sb.append("</li>");
+					}
+					else {
+						sb.append("<li>");
+						sb.append("<a href=\\\"");
+						sb.append(githubJenkinsFailureURL);
+						sb.append("\\\">");
+						sb.append(jsonObject.get("className"));
+						sb.append(".");
+						sb.append(jsonObject.get("name"));
+						sb.append("</a>");
+						sb.append("<pre>");
+						sb.append(jsonObject.get("errorDetails"));
+						sb.append("<br /><br />");
 
-					String errorStackTrace = jsonObject.get("errorStackTrace");
+						String errorStackTrace = jsonObject.get("errorStackTrace");
 
-					errorStackTrace = errorStackTrace.replaceAll("\n", "<br />");
+						errorStackTrace = errorStackTrace.replaceAll("\n", "<br />");
 
-					sb.append(errorStackTrace);
+						sb.append(errorStackTrace);
 
-					sb.append("</pre>");
-					sb.append("</li>");
+						sb.append("</pre>");
+						sb.append("</li>");
+					}
 				}
 
 				sb.append("</ul>");

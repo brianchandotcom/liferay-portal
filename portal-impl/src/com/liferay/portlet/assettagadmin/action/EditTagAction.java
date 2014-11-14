@@ -25,6 +25,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portlet.asset.AssetTagException;
+import com.liferay.portlet.asset.DuplicateTagException;
 import com.liferay.portlet.asset.NoSuchTagException;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.model.AssetTagConstants;
@@ -71,6 +72,9 @@ public class EditTagAction extends PortletAction {
 		catch (Exception e) {
 			if (e instanceof AssetTagException) {
 				SessionErrors.add(actionRequest, e.getClass(), e);
+			}
+			else if (e instanceof DuplicateTagException) {
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else if (e instanceof NoSuchTagException ||
 					 e instanceof PrincipalException) {

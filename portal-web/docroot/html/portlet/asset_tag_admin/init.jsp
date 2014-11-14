@@ -17,6 +17,7 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%@ page import="com.liferay.portlet.asset.AssetTagException" %><%@
+page import="com.liferay.portlet.asset.DuplicateTagException" %><%@
 page import="com.liferay.portlet.asset.NoSuchTagException" %><%@
 page import="com.liferay.portlet.asset.model.AssetTagProperty" %><%@
 page import="com.liferay.portlet.asset.model.impl.AssetTagPropertyImpl" %><%@

@@ -590,19 +590,20 @@ public interface MBCategoryModel extends BaseModel<MBCategory>, ContainerModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(MBCategory mbCategory);
+	public int compareTo(
+		com.liferay.portlet.messageboards.model.MBCategory mbCategory);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<MBCategory> toCacheModel();
+	public CacheModel<com.liferay.portlet.messageboards.model.MBCategory> toCacheModel();
 
 	@Override
-	public MBCategory toEscapedModel();
+	public com.liferay.portlet.messageboards.model.MBCategory toEscapedModel();
 
 	@Override
-	public MBCategory toUnescapedModel();
+	public com.liferay.portlet.messageboards.model.MBCategory toUnescapedModel();
 
 	@Override
 	public String toString();

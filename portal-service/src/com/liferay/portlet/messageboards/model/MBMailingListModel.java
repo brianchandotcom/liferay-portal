@@ -541,19 +541,20 @@ public interface MBMailingListModel extends BaseModel<MBMailingList>,
 	public Object clone();
 
 	@Override
-	public int compareTo(MBMailingList mbMailingList);
+	public int compareTo(
+		com.liferay.portlet.messageboards.model.MBMailingList mbMailingList);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<MBMailingList> toCacheModel();
+	public CacheModel<com.liferay.portlet.messageboards.model.MBMailingList> toCacheModel();
 
 	@Override
-	public MBMailingList toEscapedModel();
+	public com.liferay.portlet.messageboards.model.MBMailingList toEscapedModel();
 
 	@Override
-	public MBMailingList toUnescapedModel();
+	public com.liferay.portlet.messageboards.model.MBMailingList toUnescapedModel();
 
 	@Override
 	public String toString();

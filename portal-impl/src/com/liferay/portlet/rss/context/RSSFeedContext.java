@@ -16,10 +16,11 @@ package com.liferay.portlet.rss.context;
 
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.rss.util.RSSUtil;
+import com.liferay.portal.kernel.webcache.WebCacheItem;
+import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
+import com.liferay.portlet.rss.util.RSSWebCacheItem;
 
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.feed.synd.SyndImage;
@@ -104,13 +105,10 @@ public class RSSFeedContext {
 			return _syndFeed;
 		}
 
-		try {
-			ObjectValuePair<String, SyndFeed> ovp = RSSUtil.getFeed(_url);
+		WebCacheItem wci = new RSSWebCacheItem(_url);
 
-			_syndFeed = ovp.getValue();
-		}
-		catch (Exception e) {
-		}
+		_syndFeed = (SyndFeed)WebCachePoolUtil.get(
+			RSSFeedContext.class.getName() + StringPool.PERIOD + _url, wci);
 
 		return _syndFeed;
 	}

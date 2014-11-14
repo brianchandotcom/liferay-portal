@@ -3842,6 +3842,33 @@ if (ppstate.equals("normal")) {
 		</if>
 
 		<if>
+			<isset property="app.server.bundles.size" />
+			<then>
+				<var name="app.server.bundle.index" value="1" />
+
+				<antelope:repeat count="${app.server.bundles.size}">
+					<set-app-server-properties
+						app.server.bundle.index="${app.server.bundle.index}"
+					/>
+
+					<copy todir="${test.app.server.parent.dir}/deploy">
+						<fileset dir="${liferay.home}/deploy" />
+					</copy>
+
+					<math
+						datatype="int"
+						operand1="${app.server.bundle.index}"
+						operand2="1"
+						operation="+"
+						result="app.server.bundle.index"
+					/>
+				</antelope:repeat>
+
+				<var name="app.server.bundle.index" unset="true" />
+			</then>
+		</if>
+
+		<if>
 			<isset property="web.xml.timeout" />
 			<then>
 				<replace

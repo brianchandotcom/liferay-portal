@@ -255,8 +255,14 @@ public class SyncSiteService {
 			SyncFileService.deleteSyncFile(syncFile, false);
 		}
 
+		Path filePath = Paths.get(syncSite.getFilePathName());
+
+		if (!Files.exists(filePath)) {
+			return;
+		}
+
 		Files.walkFileTree(
-			Paths.get(syncSite.getFilePathName()),
+			filePath,
 			new SimpleFileVisitor<Path>() {
 
 				@Override

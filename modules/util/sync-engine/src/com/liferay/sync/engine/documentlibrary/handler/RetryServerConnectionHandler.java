@@ -16,8 +16,10 @@ package com.liferay.sync.engine.documentlibrary.handler;
 
 import com.liferay.sync.engine.documentlibrary.event.Event;
 import com.liferay.sync.engine.documentlibrary.model.SyncContext;
+import com.liferay.sync.engine.documentlibrary.util.FileEventUtil;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.service.SyncAccountService;
+import com.liferay.sync.engine.util.ConnectionRetryUtil;
 import com.liferay.sync.engine.util.ReleaseInfo;
 
 import org.slf4j.Logger;
@@ -45,6 +47,10 @@ public class RetryServerConnectionHandler extends GetSyncContextHandler {
 			}
 
 			syncAccount.setState(SyncAccount.STATE_CONNECTED);
+
+			FileEventUtil.retryFileTransfers(getSyncAccountId());
+
+			ConnectionRetryUtil.resetRetryDelay(getSyncAccountId());
 		}
 		else {
 			syncAccount.setState(SyncAccount.STATE_DISCONNECTED);

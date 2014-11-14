@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.util.CalendarFactoryImpl;
@@ -140,6 +141,20 @@ public class DDMFormFieldValueRendererTest extends BaseDDMTestCase {
 			ddmFormFieldValue, LocaleUtil.BRAZIL);
 
 		Assert.assertEquals("22/10/14", renderedValue);
+	}
+
+	@Test
+	public void testDateFieldValueRendererWithEmptyValue() {
+		DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
+			"Date", new UnlocalizedValue(StringPool.BLANK));
+
+		DDMFormFieldValueRenderer ddmFormFieldValueRenderer =
+			new DateDDMFormFieldValueRenderer();
+
+		String renderedValue = ddmFormFieldValueRenderer.render(
+			ddmFormFieldValue, LocaleUtil.US);
+
+		Assert.assertEquals(StringPool.BLANK, renderedValue);
 	}
 
 	@Test

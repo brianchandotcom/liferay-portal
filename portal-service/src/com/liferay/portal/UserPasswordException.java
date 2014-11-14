@@ -68,6 +68,50 @@ public class UserPasswordException extends PortalException {
 		return _type;
 	}
 
+	public static class CannotBeChangedYet extends UserPasswordException {
+
+		public CannotBeChangedYet(long userId, Date changeableDate) {
+			super(
+				String.format(
+					"Password for user %s cannot be changed until %s", userId,
+					changeableDate),
+				PASSWORD_TOO_YOUNG);
+
+			_userId = userId;
+			_changeableDate = changeableDate;
+		}
+
+		public Date getChangeableDate() {
+			return _changeableDate;
+		}
+
+		public long getUserId() {
+			return _userId;
+		}
+
+		private final Date _changeableDate;
+		private long _userId;
+
+	}
+
+	public static class CannotNotBeChanged extends UserPasswordException {
+
+		public CannotNotBeChanged(long userId) {
+			super(
+				String.format("Password for user %s cannot be changed", userId),
+				PASSWORD_NOT_CHANGEABLE);
+
+			_userId = userId;
+		}
+
+		public long getUserId() {
+			return _userId;
+		}
+
+		private long _userId;
+
+	}
+
 	public static class MustBeLonger extends UserPasswordException {
 
 		public MustBeLonger(long userId, int minLength) {
@@ -118,24 +162,6 @@ public class UserPasswordException extends PortalException {
 			super(
 				String.format("Passwords for user %s must match", userId),
 				PASSWORDS_DO_NOT_MATCH);
-
-			_userId = userId;
-		}
-
-		public long getUserId() {
-			return _userId;
-		}
-
-		private long _userId;
-
-	}
-
-	public static class CannotNotBeChanged extends UserPasswordException {
-
-		public CannotNotBeChanged(long userId) {
-			super(
-				String.format("Password for user %s cannot be changed", userId),
-				PASSWORD_NOT_CHANGEABLE);
 
 			_userId = userId;
 		}
@@ -207,32 +233,6 @@ public class UserPasswordException extends PortalException {
 
 	}
 
-	public static class CannotBeChangedYet extends UserPasswordException {
-
-		public CannotBeChangedYet(long userId, Date changeableDate) {
-			super(
-				String.format(
-					"Password for user %s cannot be changed until %s", userId,
-					changeableDate),
-				PASSWORD_TOO_YOUNG);
-
-			_userId = userId;
-			_changeableDate = changeableDate;
-		}
-
-		public Date getChangeableDate() {
-			return _changeableDate;
-		}
-
-		public long getUserId() {
-			return _userId;
-		}
-
-		private final Date _changeableDate;
-		private long _userId;
-
-	}
-
 	public static class MustNotBeTrivial extends UserPasswordException {
 
 		public MustNotBeTrivial(long userId) {
@@ -252,9 +252,12 @@ public class UserPasswordException extends PortalException {
 
 	}
 
-	public static class MustNotHaveDictionaryWords extends UserPasswordException {
+	public static class MustNotHaveDictionaryWords
+		extends UserPasswordException {
 
-		public MustNotHaveDictionaryWords(long userId, Set<String> trivialWords) {
+		public MustNotHaveDictionaryWords(
+			long userId, Set<String> trivialWords) {
+
 			super(
 				String.format(
 					"Password for user %s must not contain any dictionary " +

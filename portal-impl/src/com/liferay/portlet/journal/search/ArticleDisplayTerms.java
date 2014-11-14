@@ -186,44 +186,6 @@ public class ArticleDisplayTerms extends DisplayTerms {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (Validator.isNotNull(ddmStructureKey) &&
-			!ddmStructureKey.equals("0")) {
-
-			DDMStructure ddmStructure = null;
-
-			try {
-				ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
-					themeDisplay.getSiteGroupId(),
-					PortalUtil.getClassNameId(JournalArticle.class),
-					ddmStructureKey);
-			}
-			catch (SystemException se) {
-			}
-
-			if (ddmStructure != null) {
-				return 0;
-			}
-		}
-
-		if (Validator.isNotNull(ddmTemplateKey) &&
-			!ddmTemplateKey.equals("0")) {
-
-			DDMTemplate ddmTemplate = null;
-
-			try {
-				ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
-					themeDisplay.getSiteGroupId(),
-					PortalUtil.getClassNameId(JournalArticle.class),
-					ddmTemplateKey);
-			}
-			catch (SystemException se) {
-			}
-
-			if (ddmTemplate != null) {
-				return 0;
-			}
-		}
-
 		return themeDisplay.getScopeGroupId();
 	}
 

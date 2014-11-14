@@ -5,9 +5,9 @@
 ##
 ##  $ddmTemplateId: the current template id
 ##
-##  $entries: the list of locales that are being shown in the portlet
+##  $entries: the list of feeds that are being shown in the portlet
 ##
-##  $entry: the locale when there's only one locale
+##  $entry: the feed when there's only one feed
 ##
 ##  $locale: the locale of the site
 ##

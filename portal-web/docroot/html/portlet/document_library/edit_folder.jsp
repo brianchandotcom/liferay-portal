@@ -208,20 +208,19 @@ if (workflowEnabled) {
 							url='<%= "javascript:" + renderResponse.getNamespace() + "openFileEntryTypeSelector();" %>'
 						/>
 
-						<div id="<portlet:namespace />defaultDocumentTypeDiv">
-							<aui:select cssClass='<%= !fileEntryTypes.isEmpty() ? "default-document-type" : "default-document-type hide" %>' helpMessage="default-document-type-help" label="default-document-type" name="defaultFileEntryTypeId">
+						<aui:select cssClass='<%= !fileEntryTypes.isEmpty() ? "default-document-type" : "default-document-type hide" %>' helpMessage="default-document-type-help" label="default-document-type" name="defaultFileEntryTypeId">
 
-								<%
-									for (DLFileEntryType fileEntryType : fileEntryTypes) {
-								%>
+							<%
+							for (DLFileEntryType fileEntryType : fileEntryTypes) {
+							%>
 
 								<aui:option id='<%= renderResponse.getNamespace() + "defaultFileEntryTypeId-" + fileEntryType.getFileEntryTypeId() %>' label="<%= HtmlUtil.escape(fileEntryType.getName(locale)) %>" selected="<%= (fileEntryType.getFileEntryTypeId() == defaultFileEntryTypeId) %>" value="<%= fileEntryType.getFileEntryTypeId() %>" />
 
-								<%
-									}
-								%>
+							<%
+							}
+							%>
 
-							</aui:select>
+						</aui:select>
 						</div>
 					</div>
 				</c:if>
@@ -375,7 +374,7 @@ if (workflowEnabled) {
 
 			var select = A.one('#<portlet:namespace />defaultFileEntryTypeId');
 
-			var selectContainer = A.one('#<portlet:namespace />defaultDocumentTypeDiv');
+			var selectContainer = A.one('#<portlet:namespace />restrictionTypeDefinedDiv .default-document-type');
 
 			selectContainer.show();
 

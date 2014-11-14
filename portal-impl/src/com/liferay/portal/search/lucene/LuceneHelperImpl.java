@@ -15,7 +15,6 @@
 package com.liferay.portal.search.lucene;
 
 import com.liferay.portal.kernel.cluster.Address;
-import com.liferay.portal.kernel.cluster.BaseClusterResponseCallback;
 import com.liferay.portal.kernel.cluster.ClusterEvent;
 import com.liferay.portal.kernel.cluster.ClusterEventListener;
 import com.liferay.portal.kernel.cluster.ClusterEventType;
@@ -23,8 +22,11 @@ import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
+import com.liferay.portal.kernel.cluster.ClusterNodeResponses;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
+import com.liferay.portal.kernel.cluster.ClusterResponseCallback;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
+import com.liferay.portal.kernel.concurrent.BaseFutureListener;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
@@ -77,8 +79,8 @@ import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import org.apache.commons.lang.time.StopWatch;
 import org.apache.lucene.analysis.Analyzer;
@@ -960,7 +962,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 	}
 
 	private void _loadIndexFromCluster(
-		IndexAccessor indexAccessor, long localLastGeneration) {
+		final IndexAccessor indexAccessor, long localLastGeneration) {
 
 		List<Address> clusterNodeAddresses =
 			ClusterExecutorUtil.getClusterNodeAddresses();
@@ -982,10 +984,27 @@ public class LuceneHelperImpl implements LuceneHelper {
 				_getLastGenerationMethodKey, indexAccessor.getCompanyId()),
 			true);
 
-		ClusterExecutorUtil.execute(
-			clusterRequest,
-			new LoadIndexClusterResponseCallback(
-				indexAccessor, clusterNodeAddressesCount, localLastGeneration));
+		FutureClusterResponses futureClusterResponses =
+			ClusterExecutorUtil.execute(
+				clusterRequest,
+				new LoadIndexClusterResponseCallback(
+					indexAccessor, clusterNodeAddressesCount,
+					localLastGeneration));
+
+		futureClusterResponses.addFutureListener(
+			new BaseFutureListener<ClusterNodeResponses>() {
+
+				@Override
+				public void completeWithException(
+					Future<ClusterNodeResponses> future, Throwable throwable) {
+
+					_log.error(
+						"Unable to load index for company " +
+							indexAccessor.getCompanyId(),
+						throwable);
+				}
+
+			});
 	}
 
 	private static final long _CLUSTER_LINK_NODE_BOOTUP_RESPONSE_TIMEOUT =
@@ -1088,7 +1107,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 	}
 
 	private class LoadIndexClusterResponseCallback
-		extends BaseClusterResponseCallback {
+		implements ClusterResponseCallback {
 
 		public LoadIndexClusterResponseCallback(
 			IndexAccessor indexAccessor, int clusterNodeAddressesCount,
@@ -1200,13 +1219,6 @@ public class LuceneHelperImpl implements LuceneHelper {
 					}
 				}
 			}
-		}
-
-		@Override
-		public void processTimeoutException(TimeoutException timeoutException) {
-			_log.error(
-				"Unable to load index for company " + _companyId,
-				timeoutException);
 		}
 
 		private int _clusterNodeAddressesCount;

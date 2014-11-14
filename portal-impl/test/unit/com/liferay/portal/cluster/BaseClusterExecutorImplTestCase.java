@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.cluster.Address;
-import com.liferay.portal.kernel.cluster.BaseClusterResponseCallback;
 import com.liferay.portal.kernel.cluster.ClusterEvent;
 import com.liferay.portal.kernel.cluster.ClusterEventListener;
 import com.liferay.portal.kernel.cluster.ClusterEventType;
@@ -27,6 +26,7 @@ import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponses;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
+import com.liferay.portal.kernel.cluster.ClusterResponseCallback;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
@@ -48,6 +48,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Exchanger;
 import java.util.concurrent.ExecutionException;
@@ -469,50 +470,20 @@ public abstract class BaseClusterExecutorImplTestCase
 	}
 
 	protected class MockClusterResponseCallback
-		extends BaseClusterResponseCallback {
+		implements ClusterResponseCallback {
 
 		@Override
-		public void callback(ClusterNodeResponses clusterNodeResponses) {
+		public void callback(BlockingQueue<ClusterNodeResponse> blockingQueue) {
 			try {
-				_messageExchanger.exchange(clusterNodeResponses);
+				_messageExchanger.exchange(blockingQueue);
 			}
 			catch (Exception e) {
 			}
 		}
 
-		@Override
-		public void processInterruptedException(
-			InterruptedException interruptedException) {
-
-			try {
-				_interruptedExceptionExchanger.exchange(interruptedException);
-			}
-			catch (Exception e) {
-			}
-		}
-
-		@Override
-		public void processTimeoutException(TimeoutException timeoutException) {
-			try {
-				_timeoutExceptionExchanger.exchange(timeoutException);
-			}
-			catch (Exception e) {
-			}
-		}
-
-		public InterruptedException waitInterruptedException()
+		public BlockingQueue<ClusterNodeResponse> waitMessage()
 			throws Exception {
 
-			try {
-				return _interruptedExceptionExchanger.exchange(
-					null, 1000, TimeUnit.MILLISECONDS);
-			}
-			catch (TimeoutException te) {
-				return null;
-			}
-		}
-
-		public ClusterNodeResponses waitMessage() throws Exception {
 			try {
 				return _messageExchanger.exchange(
 					null, 1000, TimeUnit.MILLISECONDS);
@@ -522,23 +493,9 @@ public abstract class BaseClusterExecutorImplTestCase
 			}
 		}
 
-		public TimeoutException waitTimeoutException() throws Exception {
-			try {
-				return _timeoutExceptionExchanger.exchange(
-					null, 2000, TimeUnit.MILLISECONDS);
-			}
-			catch (TimeoutException te) {
-				return null;
-			}
-		}
-
-		private final Exchanger<InterruptedException>
-			_interruptedExceptionExchanger =
-				new Exchanger<InterruptedException>();
-		private final Exchanger<ClusterNodeResponses> _messageExchanger =
-			new Exchanger<ClusterNodeResponses>();
-		private final Exchanger<TimeoutException> _timeoutExceptionExchanger =
-			new Exchanger<TimeoutException>();
+		private final Exchanger<BlockingQueue<ClusterNodeResponse>>
+			_messageExchanger =
+				new Exchanger<BlockingQueue<ClusterNodeResponse>>();
 
 	}
 

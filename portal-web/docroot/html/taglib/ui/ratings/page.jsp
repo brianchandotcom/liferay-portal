@@ -149,17 +149,17 @@ if (ratingsEntry != null) {
 								<c:when test="<%= themeDisplay.isSignedIn() %>">
 									<c:choose>
 										<c:when test="<%= TrashUtil.isInTrash(className, classPK) %>">
-											<span class="rating-element rating-<%= (yourScore > 0) ? "on" : "off" %> rating-thumb-up" title="<liferay-ui:message key="ratings-are-disabled-because-this-entry-is-in-the-recycle-bin" />"></span>
+											<span class="rating-element rating-thumb-up rating-<%= (yourScore > 0) ? "on" : "off" %>" title="<liferay-ui:message key="ratings-are-disabled-because-this-entry-is-in-the-recycle-bin" />"></span>
 
 											<c:if test='<%= type.equals("thumbs") %>'>
-												<span class="rating-element rating-<%= (yourScore == 0) ? "on" : "off" %> rating-thumb-down" title="<liferay-ui:message key="ratings-are-disabled-because-this-entry-is-in-the-recycle-bin" />"></span>
+												<span class="rating-element rating-thumb-down rating-<%= (yourScore == 0) ? "on" : "off" %>" title="<liferay-ui:message key="ratings-are-disabled-because-this-entry-is-in-the-recycle-bin" />"></span>
 											</c:if>
 										</c:when>
 										<c:otherwise>
-											<a class="rating-element rating-<%= (yourScore > 0) ? "on" : "off" %> rating-thumb-up icon-thumbs-up" href="javascript:;"></a>
+											<a class="icon-thumbs-up rating-element rating-thumb-up rating-<%= (yourScore > 0) ? "on" : "off" %>" href="javascript:;"></a>
 
 											<c:if test='<%= type.equals("thumbs") %>'>
-												<a class="rating-element rating-<%= (yourScore == 0) ? "on" : "off" %> rating-thumb-down icon-thumbs-down" href="javascript:;"></a>
+												<a class="icon-thumbs-down rating-element rating-thumb-down rating-<%= (yourScore == 0) ? "on" : "off" %>" href="javascript:;"></a>
 											</c:if>
 
 											<div class="rating-input-container">

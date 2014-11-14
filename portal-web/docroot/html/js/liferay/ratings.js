@@ -373,9 +373,10 @@ AUI.add(
 					_createRating: function() {
 						var instance = this;
 
-						var description = instance._fixScore(instance.get('totalScore') - (instance.get('totalEntries') - instance.get('totalScore')));
-
 						var totalEntries = instance.get('totalEntries');
+						var totalScore = instance.get('totalScore');
+
+						var description = instance._fixScore(totalScore - (totalEntries - totalScore));
 
 						var label = instance._getLabel(description, totalEntries);
 
@@ -441,63 +442,68 @@ AUI.add(
 			}
 		);
 
-		var LikeRatingImpl = A.Component.create({
-			NAME: 'LikeRatingImpl',
+		var LikeRatingImpl = A.Component.create(
+			{
+				EXTENDS: A.ThumbRating,
 
-			EXTENDS: A.ThumbRating,
+				NAME: 'LikeRatingImpl',
 
-			prototype: {
-				renderUI: function() {
-					var instance = this;
+				prototype: {
+					renderUI: function() {
+						var instance = this;
 
-					var cssClasses = instance.get('cssClasses');
+						var cssClasses = instance.get('cssClasses');
 
-					A.ThumbRating.superclass.renderUI.apply(this, arguments);
+						A.ThumbRating.superclass.renderUI.apply(this, arguments);
 
-					var elements = instance.get('elements');
+						var elements = instance.get('elements');
 
-					elements.addClass(cssClasses.off);
-					elements.item(0).addClass(cssClasses.up);
+						elements.addClass(cssClasses.off);
+						elements.item(0).addClass(cssClasses.up);
+					}
 				}
 			}
-		});
+		);
 
-		var LikeRating = A.Component.create({
-			NAME: 'LikeRating',
+		var LikeRating = A.Component.create(
+			{
+				EXTENDS: ThumbRating,
 
-			EXTENDS: ThumbRating,
+				NAME: 'LikeRating',
 
-			prototype: {
-				_createRating: function() {
-					var instance = this;
+				prototype: {
+					_createRating: function() {
+						var instance = this;
 
-					var description = instance._fixScore(instance.get('totalScore') - (instance.get('totalEntries') - instance.get('totalScore')));
+						var totalEntries = instance.get('totalEntries');
+						var totalScore = instance.get('totalScore');
 
-					var totalEntries = instance.get('totalEntries');
+						var description = instance._fixScore(totalScore - (totalEntries - totalScore));
 
-					var label = instance._getLabel(description, totalEntries);
+						var label = instance._getLabel(description, totalEntries);
 
-					var namespace = instance.get(STR_NAMESPACE);
+						var namespace = instance.get(STR_NAMESPACE);
 
-					instance.ratings = new LikeRatingImpl(
-						{
-							boundingBox: '#' + namespace + 'ratingLike',
-							label: label,
-							srcNode: '#' + namespace + 'ratingLikeContent'
-						}
-					).render();
-				},
+						instance.ratings = new LikeRatingImpl(
+							{
+								boundingBox: '#' + namespace + 'ratingLike',
+								label: label,
+								srcNode: '#' + namespace + 'ratingLikeContent'
+							}
+						).render();
+					},
 
-				_getLabel: function(desc, totalEntries) {
-					return Lang.sub(
-						'{desc}',
-						{
-							desc: desc
-						}
-					);
+					_getLabel: function(desc, totalEntries) {
+						return Lang.sub(
+							'{desc}',
+							{
+								desc: desc
+							}
+						);
+					}
 				}
 			}
-		});
+		);
 
 		Ratings.StarRating = StarRating;
 		Ratings.ThumbRating = ThumbRating;

@@ -31,12 +31,14 @@ long parentFolderId = BeanParamUtil.getLong(folder, request, "parentFolderId", D
 
 String parentFolderName = LanguageUtil.get(request, "home");
 
-if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-	parentFolder = folder.getParentFolder();
+try {
+	if (parentFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		parentFolder = DLAppLocalServiceUtil.getFolder(parentFolderId);
 
-	if (parentFolder != null) {
 		parentFolderName = parentFolder.getName();
 	}
+}
+catch (NoSuchFolderException nsfe) {
 }
 
 boolean rootFolder = ParamUtil.getBoolean(request, "rootFolder");
@@ -86,17 +88,6 @@ if (workflowEnabled) {
 
 	<aui:fieldset>
 		<c:if test="<%= !rootFolder %>">
-
-			<%
-			try {
-				if (parentFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-					parentFolder = DLAppLocalServiceUtil.getFolder(parentFolderId);
-				}
-			}
-			catch (NoSuchFolderException nsfe) {
-			}
-			%>
-
 			<c:if test="<%= folder != null %>">
 				<aui:input name="parentFolder" type="resource" value="<%= parentFolderName %>" />
 			</c:if>

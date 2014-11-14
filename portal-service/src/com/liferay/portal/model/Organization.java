@@ -56,6 +56,8 @@ public interface Organization extends OrganizationModel, PersistedModel,
 
 	public java.util.List<com.liferay.portal.model.Address> getAddresses();
 
+	public long[] getAncestorIds();
+
 	public java.util.List<com.liferay.portal.model.Organization> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

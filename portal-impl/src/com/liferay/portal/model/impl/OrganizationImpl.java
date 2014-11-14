@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TreePathUtil;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
@@ -114,6 +115,17 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 	public List<Address> getAddresses() {
 		return AddressLocalServiceUtil.getAddresses(
 			getCompanyId(), Organization.class.getName(), getOrganizationId());
+	}
+
+	@Override
+	public long[] getAncestorIds() {
+		long[] primaryKeys = TreePathUtil.getPrimaryKeys(getTreePath());
+
+		long[] ancestorIds = new long[primaryKeys.length-1];
+
+		System.arraycopy(primaryKeys, 0, ancestorIds, 0, primaryKeys.length-1);
+
+		return ancestorIds;
 	}
 
 	@Override

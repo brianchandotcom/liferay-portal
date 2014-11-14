@@ -212,6 +212,10 @@ public class OrganizationWrapper implements Organization,
 		return _organization.getAddresses();
 	}
 
+	public long[] getAncestorIds() {
+		return _organization.getAncestorIds();
+	}
+
 	@Override
 	public java.util.List<com.liferay.portal.model.Organization> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException {

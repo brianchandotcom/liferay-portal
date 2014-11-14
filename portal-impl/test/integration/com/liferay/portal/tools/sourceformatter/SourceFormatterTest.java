@@ -23,7 +23,7 @@ import org.junit.Test;
 public class SourceFormatterTest {
 
 	@Test
-	public void testSourceFormatter() throws Exception {
+	public void testSourceFormatter() throws Throwable {
 		SourceFormatter sourceFormatter = SourceFormatterUtil.create(
 			false, true, false, false);
 

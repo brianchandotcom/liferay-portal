@@ -128,12 +128,12 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 	document.getElementById('<%= name %>').setAttribute('contenteditable', true);
 
 	<%
- 	Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
- 	contentsLanguageId = LocaleUtil.toLanguageId(contentsLocale);
+	Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
+	contentsLanguageId = LocaleUtil.toLanguageId(contentsLocale);
 
 	String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
 	String languageId = LocaleUtil.toLanguageId(locale);
- 	%>
+	%>
 
 	var alloyEditor = new A.AlloyEditor(
 		{
@@ -143,9 +143,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 
 			language: '<%= languageId.replace("iw_", "he_") %>',
 
-	 		srcNode: '#<%= name %>',
-
-			title: false,
+			srcNode: '#<%= name %>',
 
 			toolbars:
 				<c:choose>
@@ -183,8 +181,10 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 		}
 	);
 
+	var nativeEditor = alloyEditor.get('nativeEditor');
+
 	<c:if test="<%= Validator.isNotNull(onBlurMethod) %>">
-		alloyEditor.get('nativeEditor').on(
+		nativeEditor.on(
 			'blur',
 			function(event) {
 				window['<%= HtmlUtil.escapeJS(onBlurMethod) %>'](event.editor);
@@ -193,7 +193,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 	</c:if>
 
 	<c:if test="<%= Validator.isNotNull(onChangeMethod) %>">
-		alloyEditor.get('nativeEditor').on(
+		nativeEditor.on(
 			'change',
 			function(event) {
 				window['<%= HtmlUtil.escapeJS(onChangeMethod) %>'](window['<%= name %>'].getHTML());
@@ -202,7 +202,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 	</c:if>
 
 	<c:if test="<%= Validator.isNotNull(onFocusMethod) %>">
-		alloyEditor.get('nativeEditor').on(
+		nativeEditor.on(
 			'focus',
 			function(event) {
 				window['<%= HtmlUtil.escapeJS(onFocusMethod) %>'](event.editor);
@@ -210,7 +210,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 		);
 	</c:if>
 
-	alloyEditor.get('nativeEditor').on(
+	nativeEditor.on(
 		'instanceReady',
 		function(event) {
 			<c:if test="<%= Validator.isNotNull(onInitMethod) %>">
@@ -224,7 +224,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 	);
 
 	<c:if test='<%= alloyEditorMode.equals("text") %>'>
-		alloyEditor.get('nativeEditor').on(
+		nativeEditor.on(
 			'key',
 			function(event) {
 				if (event.data.keyCode === 13) {

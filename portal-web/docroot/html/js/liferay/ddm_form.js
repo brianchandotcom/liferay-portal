@@ -11,9 +11,9 @@ AUI.add(
 
 		var SELECTOR_REPEAT_BUTTONS = '.lfr-ddm-repeatable-add-button, .lfr-ddm-repeatable-delete-button';
 
-		var TPL_REPEATABLE_ADD = '<a class="lfr-ddm-repeatable-add-button icon-plus-sign" href="javascript:;"></a>';
+		var TPL_REPEATABLE_ADD = '<a class="icon-plus-sign lfr-ddm-repeatable-add-button" href="javascript:;"></a>';
 
-		var TPL_REPEATABLE_DELETE = '<a class="hide lfr-ddm-repeatable-delete-button icon-minus-sign" href="javascript:;"></a>';
+		var TPL_REPEATABLE_DELETE = '<a class="hide icon-minus-sign lfr-ddm-repeatable-delete-button" href="javascript:;"></a>';
 
 		var TPL_REPEATABLE_HELPER = '<div class="lfr-ddm-repeatable-helper"></div>';
 
@@ -266,7 +266,6 @@ AUI.add(
 
 						if (instance.get('repeatable')) {
 							instance.renderRepeatableUI();
-
 							instance.syncRepeatablelUI();
 						}
 

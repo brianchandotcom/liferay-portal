@@ -2843,6 +2843,41 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>map</name>
+		<tag-class>com.liferay.taglib.ui.MapTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>geolocation</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>latitude</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>longitude</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>points</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>provider</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>menu-item</name>
 		<tag-class>com.liferay.taglib.ui.MenuItemTag</tag-class>
 		<body-content>JSP</body-content>

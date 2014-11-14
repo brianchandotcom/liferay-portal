@@ -19,7 +19,7 @@
 <%
 PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId());
 
-String mapsAPIProvider = PrefsParamUtil.getString(companyPortletPreferences, request, "mapsAPIProvider", "googleMaps");
+String mapsAPIProvider = PrefsParamUtil.getString(companyPortletPreferences, request, "mapsAPIProvider", "Google");
 String googleMapsAPIKey = PrefsParamUtil.getString(companyPortletPreferences, request, "googleMapsAPIKey", "");
 %>
 
@@ -29,13 +29,13 @@ String googleMapsAPIKey = PrefsParamUtil.getString(companyPortletPreferences, re
 
 <p><liferay-ui:message key="select-the-maps-api-provider-to-use-when-displaying-geolocalized-assets" /></p>
 
-<aui:input checked='<%= mapsAPIProvider.equals("googleMaps") %>' helpMessage="use-google-maps-as-the-maps-api-provider" id="mapsGoogleMapsEnabled" label="google-maps" name="settings--mapsAPIProvider--" type="radio" value="googleMaps" />
+<aui:input checked='<%= mapsAPIProvider.equals("Google") %>' helpMessage="use-google-maps-as-the-maps-api-provider" id="mapsGoogleMapsEnabled" label="google-maps" name="settings--mapsAPIProvider--" type="radio" value="Google" />
 
 <div class="maps-google-maps-api-key" id="<portlet:namespace />googleMapsAPIKey">
 	<aui:input helpMessage="set-the-google-maps-api-key-that-will-be-used-for-this-set-of-pages" label='<%= LanguageUtil.get(request, "google-maps-api-key") + " (" + LanguageUtil.get(request, "optional") + ")" %>' name="settings--googleMapsAPIKey--" size="40" type="text" value="<%= googleMapsAPIKey %>" />
 </div>
 
-<aui:input checked='<%= mapsAPIProvider.equals("openStreetMap") %>' helpMessage="use-openstreetmap-as-the-maps-api-provider" id="mapsOpenStreetMapEnabled" label="openstreetmap" name="settings--mapsAPIProvider--" type="radio" value="openStreetMap" />
+<aui:input checked='<%= mapsAPIProvider.equals("OpenStreet") %>' helpMessage="use-openstreetmap-as-the-maps-api-provider" id="mapsOpenStreetMapEnabled" label="openstreetmap" name="settings--mapsAPIProvider--" type="radio" value="OpenStreet" />
 
 <aui:script>
 	Liferay.Util.toggleRadio('<portlet:namespace />mapsGoogleMapsEnabled', '<portlet:namespace />googleMapsAPIKey', '');

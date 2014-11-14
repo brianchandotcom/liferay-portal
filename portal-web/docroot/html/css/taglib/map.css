@@ -1,0 +1,27 @@
+.lfr-map {
+	border: 1px solid transparent;
+	min-height: 400px;
+	width: 100%;
+
+	.home-button {
+		margin: 5px;
+	}
+
+	.search-controls {
+		margin-top: 5px;
+
+		.search-input {
+			width: 100%;
+		}
+	}
+}
+
+/* Skin */
+
+.lfr-map {
+	border-color: #CCC;
+
+	.search-controls: {
+		font-size: 15px;
+	}
+}

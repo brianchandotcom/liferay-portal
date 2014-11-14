@@ -640,3 +640,29 @@ others, providing a much simpler way to create custom preferences.
 
 ---------------------------------------
 
+### Method getClassNamePortletId(String) in PortalUtil has been removed
+- **Date:** 2014-Nov-11
+- **JIRA Ticket:** LPS-50604
+
+#### What changed?
+
+The method getClassNamePortletId(String) from the class PortalUtil has
+been removed. 
+
+#### Who is affected?
+
+This will affect any plugin using the method.
+
+#### How should I update my code?
+
+If you are using that method, you should implement it yourself in a
+private utility class. The code is fairly simple so you shoul not have
+any problems with it.
+
+#### Why was this change made?
+
+This change was needed in order to modularize the portal and it has been 
+decided not to provide this method any more because it is not being used 
+anywhere inside the portal.
+
+---------------------------------------

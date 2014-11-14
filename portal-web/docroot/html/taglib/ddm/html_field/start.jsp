@@ -46,17 +46,22 @@
 		<aui:input name="<%= ddmFormValuesInputName %>" type="hidden" />
 
 		<aui:script use="liferay-ddm-form">
-			new Liferay.DDM.Form(
-				{
-					container: '#<%= randomNamespace %>',
-					ddmFormValuesInput: '#<portlet:namespace /><%= ddmFormValuesInputName %>',
-					definition: <%= DDMFormJSONSerializerUtil.serialize(ddmForm) %>,
-					doAsGroupId: <%= scopeGroupId %>,
-					fieldsNamespace: '<%= fieldsNamespace %>',
-					mode: '<%= mode %>',
-					p_l_id: <%= themeDisplay.getPlid() %>,
-					portletNamespace: '<portlet:namespace />',
-					repeatable: <%= repeatable %>
+			Liferay.component(
+				'<portlet:namespace /><%= fieldsNamespace %>ddmForm',
+				function() {
+					return new Liferay.DDM.Form(
+						{
+							container: '#<%= randomNamespace %>',
+							ddmFormValuesInput: '#<portlet:namespace /><%= ddmFormValuesInputName %>',
+							definition: <%= DDMFormJSONSerializerUtil.serialize(ddmForm) %>,
+							doAsGroupId: <%= scopeGroupId %>,
+							fieldsNamespace: '<%= fieldsNamespace %>',
+							mode: '<%= mode %>',
+							p_l_id: <%= themeDisplay.getPlid() %>,
+							portletNamespace: '<portlet:namespace />',
+							repeatable: <%= repeatable %>
+						}
+					);
 				}
 			);
 		</aui:script>

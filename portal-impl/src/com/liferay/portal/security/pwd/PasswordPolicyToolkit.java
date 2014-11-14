@@ -90,7 +90,7 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 				WordsUtil.isDictionaryWord(password1)) {
 
 				throw new UserPasswordException.MustNotContainDictionaryWords(
-					userId, WordsUtil.getDictionarySet());
+					userId, WordsUtil.getDictionaryList());
 			}
 
 			if (password1.length() < passwordPolicy.getMinLength()) {

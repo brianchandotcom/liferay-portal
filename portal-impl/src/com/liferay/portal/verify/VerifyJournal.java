@@ -79,7 +79,7 @@ public class VerifyJournal extends VerifyProcess {
 	@Override
 	protected void doVerify() throws Exception {
 		verifyContent();
-		verifyDynamicElement();
+		verifyDynamicElements();
 		verifyCreateAndModifiedDates();
 		updateFolderAssets();
 		verifyOracleNewLine();
@@ -185,8 +185,7 @@ public class VerifyJournal extends VerifyProcess {
 		}
 	}
 
-	protected void updateImageElement(
-			Element element, String name, int index)
+	protected void updateImageElement(Element element, String name, int index)
 		throws PortalException {
 
 		Element dynamicContentElement = element.element("dynamic-content");
@@ -387,35 +386,37 @@ public class VerifyJournal extends VerifyProcess {
 		}
 	}
 
-	protected void verifyDynamicElement() throws Exception {
+	protected void verifyDynamicElements() throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
 			JournalArticleLocalServiceUtil.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-				new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod() {
 
-					@Override
-					public void performAction(Object object)
-							throws PortalException {
+				@Override
+				public void performAction(Object object) {
+					JournalArticle article = (JournalArticle)object;
 
-						JournalArticle article = (JournalArticle)object;
-
-						try {
-							verifyDynamicElement(article);
-						}
-						catch (Exception e) {
-							_log.error(
-								"Unable to get content for article" +
-									article.getId(), e);
-						}
+					try {
+						verifyDynamicElements(article);
 					}
+					catch (Exception e) {
+						_log.error(
+							"Unable to get content for article" +
+								article.getId(), e);
+					}
+				}
 
-				});
+			});
 
 		actionableDynamicQuery.performActions();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Dynamic elements verified for articles");
+		}
 	}
 
-	protected void verifyDynamicElement(JournalArticle article)
+	protected void verifyDynamicElements(JournalArticle article)
 		throws Exception {
 
 		Document document = SAXReaderUtil.read(article.getContent());

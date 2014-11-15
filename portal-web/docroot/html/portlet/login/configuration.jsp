@@ -21,9 +21,9 @@ String emailFromName = ParamUtil.getString(request, "preferences--emailFromName-
 String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", LoginUtil.getEmailFromAddress(portletPreferences, company.getCompanyId()));
 %>
 
-<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
+<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
-<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL" />
+<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />

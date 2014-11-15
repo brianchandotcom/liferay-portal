@@ -20,11 +20,11 @@
 blogsPortletInstanceSettings = BlogsPortletInstanceSettings.getInstance(layout, portletId, request.getParameterMap());
 %>
 
-<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL">
+<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">
 	<liferay-portlet:param name="settingsScope" value="portletInstance" />
 </liferay-portlet:actionURL>
 
-<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL" />
+<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />

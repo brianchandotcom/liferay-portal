@@ -44,7 +44,7 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 }
 %>
 
-<liferay-ui:tabs names="<%= tabs1Names %>" refresh="false">
+<liferay-ui:tabs names="<%= tabs1Names %>" refresh="<%= false %>">
 
 	<%
 	boolean checkContentDisplayPage = ParamUtil.getBoolean(request, "checkContentDisplayPage");
@@ -79,7 +79,7 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 					draggableTree="<%= false %>"
 					groupId="<%= groupId %>"
 					portletURL="<%= layoutsAdminDisplayContext.getEditLayoutURL() %>"
-					privateLayout="true"
+					privateLayout="<%= true %>"
 					rootNodeName="<%= layoutsAdminDisplayContext.getRootNodeName() %>"
 					saveState="<%= false %>"
 					selPlid="<%= layoutsAdminDisplayContext.getSelPlid() %>"

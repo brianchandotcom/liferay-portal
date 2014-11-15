@@ -160,7 +160,7 @@ String taskExecutorClassName = localPublishing ? LayoutStagingBackgroundTaskExec
 					%>
 
 					<liferay-ui:icon-delete
-						label="true"
+						label="<%= true %>"
 						message='<%= ((completionDate != null) && completionDate.before(new Date())) ? "clear" : "cancel" %>'
 						url="<%= deleteBackgroundTaskURL %>"
 					/>

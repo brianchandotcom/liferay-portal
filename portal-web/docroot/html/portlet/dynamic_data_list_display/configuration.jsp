@@ -36,9 +36,9 @@ catch (NoSuchRecordSetException nsrse) {
 request.setAttribute("record_set_action.jsp-selRecordSet", selRecordSet);
 %>
 
-<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
+<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
-<liferay-portlet:renderURL portletConfiguration="true" varImpl="configurationRenderURL" />
+<liferay-portlet:renderURL portletConfiguration="<%= true %>" varImpl="configurationRenderURL" />
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm1">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />

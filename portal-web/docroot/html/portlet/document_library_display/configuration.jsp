@@ -22,11 +22,11 @@ dlPortletInstanceSettings = DLPortletInstanceSettings.getInstance(layout, portle
 DLDisplayConfigurationDisplayContext dlDisplayConfigurationDisplayContext = new DLDisplayConfigurationDisplayContext(request, dlPortletInstanceSettings);
 %>
 
-<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL">
+<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">
 	<liferay-portlet:param name="settingsScope" value="portletInstance" />
 </liferay-portlet:actionURL>
 
-<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL" />
+<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />

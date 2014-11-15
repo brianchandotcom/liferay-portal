@@ -51,24 +51,24 @@ String portletURLString = portletURL.toString();
 		<portlet:namespace />doDeleteUserGroup('<%= UserGroup.class.getName() %>', userGroupId);
 	}
 
-	function <portlet:namespace />doDeleteUserGroup(className, id) {
-		var ids = id;
-
+	function <portlet:namespace />doDeleteUserGroup(className, ids) {
 		var status = <%= WorkflowConstants.STATUS_INACTIVE %>
 
 		<portlet:namespace />getUsersCount(
-			className, ids, status,
-			function(event, id, obj) {
-				var responseData = this.get('responseData');
+			className,
+			ids,
+			status,
+			function(responseData) {
 				var count = parseInt(responseData);
 
 				if (count > 0) {
 					status = <%= WorkflowConstants.STATUS_APPROVED %>
 
 					<portlet:namespace />getUsersCount(
-						className, ids, status,
-						function(event, id, obj) {
-							responseData = this.get('responseData')
+						className,
+						ids,
+						status,
+						function(responseData) {
 							count = parseInt(responseData);
 
 							if (count > 0) {
@@ -77,9 +77,9 @@ String portletURLString = portletURL.toString();
 								}
 							}
 							else {
-								var message = null;
+								var message;
 
-								if (id && (id.toString().split(',').length > 1)) {
+								if (ids && (ids.toString().split(',').length > 1)) {
 									message = '<%= UnicodeLanguageUtil.get(request, "one-or-more-user-groups-are-associated-with-deactivated-users.-do-you-want-to-proceed-with-deleting-the-selected-user-groups-by-automatically-unassociating-the-deactivated-users") %>';
 								}
 								else {
@@ -103,12 +103,28 @@ String portletURLString = portletURL.toString();
 	}
 
 	function <portlet:namespace />doDeleteUserGroups(userGroupIds) {
-		document.<portlet:namespace />fm.method = 'post';
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.DELETE %>';
-		document.<portlet:namespace />fm.<portlet:namespace />redirect.value = document.<portlet:namespace />fm.<portlet:namespace />userGroupsRedirect.value;
-		document.<portlet:namespace />fm.<portlet:namespace />deleteUserGroupIds.value = userGroupIds;
+		var form = AUI.$(document.<portlet:namespace />fm);
 
-		submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/user_groups_admin/edit_user_group" /></portlet:actionURL>');
+		form.attr('method', 'post');
+		form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
+		form.fm('redirect').val(form.fm('userGroupsRedirect').val());
+		form.fm('deleteUserGroupIds').val(userGroupIds);
+
+		submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/user_groups_admin/edit_user_group" /></portlet:actionURL>');
+	}
+
+	function <portlet:namespace />getUsersCount(className, ids, status, callback) {
+		AUI.$.ajax(
+			'<%= themeDisplay.getPathMain() %>/user_groups_admin/get_users_count',
+			{
+				data: {
+					className: className,
+					ids: ids,
+					status: status
+				},
+				success: callback
+			}
+		);
 	}
 
 	Liferay.provide(
@@ -119,30 +135,7 @@ String portletURLString = portletURL.toString();
 				'<%= UserGroup.class.getName() %>',
 				Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds')
 			);
-	},
-		['liferay-util-list-fields']
-	);
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />getUsersCount',
-		function(className, ids, status, callback) {
-			var A = AUI();
-
-			A.io.request(
-				'<%= themeDisplay.getPathMain() %>/user_groups_admin/get_users_count',
-				{
-					data: {
-						className: className,
-						ids: ids,
-						status: status
-					},
-					on: {
-						success: callback
-					}
-				}
-			);
 		},
-		['aui-io']
+		['liferay-util-list-fields']
 	);
 </aui:script>

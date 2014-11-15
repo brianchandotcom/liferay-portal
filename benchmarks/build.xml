@@ -14,4 +14,10 @@
 			<arg value="${sample.sql.properties.file}" />
 		</java>
 	</target>
+
+	<target name="clean">
+		<delete>
+			<fileset dir="." includes="*.csv,*.sql" />
+		</delete>
+	</target>
 </project>

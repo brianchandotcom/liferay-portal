@@ -80,7 +80,7 @@
 		</execute>
 
 		<execute action="CPReportsadminViewreportentry#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Processing report. This may take several minutes." />
-		<execute action="CPReportsadmin#pause" locator1="120000" />
+		<execute action="CPReportsadmin#pause" locator1="180000" />
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Reports Admin" />

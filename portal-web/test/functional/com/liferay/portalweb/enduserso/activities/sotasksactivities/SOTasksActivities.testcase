@@ -1247,6 +1247,161 @@
 		<execute action="SOActivities#sikuliAssertElementPresent" locator-key1="SCREENSHOTS_ACTIVITIES_TASK_ACTIVITY_PRIORITY_LOW_PNG" />
 	</command>
 
+	<command name="ViewTaskAssignedToMeReopened" priority="5">
+		<var name="pageName" value="Tasks" />
+		<var name="portletName" value="Tasks" />
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
+		<var name="soPage" value="true" />
+		<var name="taskDescription" value="Task Description" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOUserBar#addPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="SOUserBar#addPortlet">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOTasks#addTask">
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+			<var name="taskReporter" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOTasks#resolveTask">
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+			<var name="taskReporter" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOTasks#reopenTask">
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+			<var name="taskReporter" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOActivities#viewTasksActivityEntry">
+			<var name="action" value="Reopened a task." />
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+			<var name="userName" value="${adminFirstName}" />
+		</execute>
+
+		<execute macro="SOActivities#viewTasksActivityEntry">
+			<var name="action" value="Resolved a task." />
+			<var name="row" value="02" />
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+			<var name="userName" value="${adminFirstName}" />
+		</execute>
+
+		<execute macro="SOActivities#viewTasksActivityEntry">
+			<var name="action" value="Created a new task." />
+			<var name="row" value="03" />
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+			<var name="userName" value="${adminFirstName}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOActivities#viewTasksActivityEntry">
+			<var name="action" value="Reopened a task." />
+			<var name="dashboardView" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+			<var name="userName" value="${adminFirstName}" />
+		</execute>
+
+		<execute macro="SOActivities#viewTasksActivityEntry">
+			<var name="action" value="Resolved a task." />
+			<var name="dashboardView" value="true" />
+			<var name="row" value="02" />
+			<var name="siteName" value="${siteName}" />
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+			<var name="userName" value="${adminFirstName}" />
+		</execute>
+
+		<execute macro="SOActivities#viewTasksActivityEntry">
+			<var name="action" value="Created a new task." />
+			<var name="dashboardView" value="true" />
+			<var name="row" value="03" />
+			<var name="siteName" value="${siteName}" />
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+			<var name="userName" value="${adminFirstName}" />
+		</execute>
+
+		<execute macro="Page#gotoMyProfile" />
+
+		<execute macro="SOActivities#viewTasksActivityEntry">
+			<var name="action" value="Reopened a task." />
+			<var name="profileView" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+			<var name="userName" value="${adminFirstName}" />
+		</execute>
+
+		<execute macro="SOActivities#viewTasksActivityEntry">
+			<var name="action" value="Resolved a task." />
+			<var name="profileView" value="true" />
+			<var name="row" value="02" />
+			<var name="siteName" value="${siteName}" />
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+			<var name="userName" value="${adminFirstName}" />
+		</execute>
+
+		<execute macro="SOActivities#viewTasksActivityEntry">
+			<var name="action" value="Created a new task." />
+			<var name="profileView" value="true" />
+			<var name="row" value="03" />
+			<var name="siteName" value="${siteName}" />
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+			<var name="userName" value="${adminFirstName}" />
+		</execute>
+	</command>
+
 	<command name="ViewTaskAssignedToMeResolved" priority="4">
 		<var name="pageName" value="Tasks" />
 		<var name="portletName" value="Tasks" />

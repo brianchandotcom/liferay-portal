@@ -272,19 +272,19 @@ public interface MBBanModel extends BaseModel<MBBan>, StagedGroupedModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.portlet.messageboards.model.MBBan mbBan);
+	public int compareTo(MBBan mbBan);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portlet.messageboards.model.MBBan> toCacheModel();
+	public CacheModel<MBBan> toCacheModel();
 
 	@Override
-	public com.liferay.portlet.messageboards.model.MBBan toEscapedModel();
+	public MBBan toEscapedModel();
 
 	@Override
-	public com.liferay.portlet.messageboards.model.MBBan toUnescapedModel();
+	public MBBan toUnescapedModel();
 
 	@Override
 	public String toString();

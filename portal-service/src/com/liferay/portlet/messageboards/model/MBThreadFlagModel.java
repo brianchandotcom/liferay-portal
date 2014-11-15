@@ -259,20 +259,19 @@ public interface MBThreadFlagModel extends BaseModel<MBThreadFlag>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.portlet.messageboards.model.MBThreadFlag mbThreadFlag);
+	public int compareTo(MBThreadFlag mbThreadFlag);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portlet.messageboards.model.MBThreadFlag> toCacheModel();
+	public CacheModel<MBThreadFlag> toCacheModel();
 
 	@Override
-	public com.liferay.portlet.messageboards.model.MBThreadFlag toEscapedModel();
+	public MBThreadFlag toEscapedModel();
 
 	@Override
-	public com.liferay.portlet.messageboards.model.MBThreadFlag toUnescapedModel();
+	public MBThreadFlag toUnescapedModel();
 
 	@Override
 	public String toString();

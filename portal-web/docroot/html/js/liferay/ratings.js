@@ -216,8 +216,11 @@ AUI.add(
 
 					var ratings = Liferay.Ratings.StarRating;
 
-					if (config.type != 'stars') {
+					if (config.type === 'thumbs') {
 						ratings = Liferay.Ratings.ThumbRating;
+					}
+					else if (config.type === 'like') {
+						ratings = Liferay.Ratings.LikeRating;
 					}
 
 					var ratingInstance = new ratings(config);
@@ -367,6 +370,31 @@ AUI.add(
 				EXTENDS: Ratings,
 
 				prototype: {
+					_buildLabel: function() {
+						var instance = this;
+
+						var totalEntries = instance.get('totalEntries');
+						var totalScore = instance.get('totalScore');
+
+						var description = instance._fixScore(totalScore - (totalEntries - totalScore));
+
+						return instance._getLabel(description, totalEntries);
+					},
+
+					_createRating: function() {
+						var instance = this;
+
+						var namespace = instance.get(STR_NAMESPACE);
+
+						instance.ratings = new A.ThumbRating(
+							{
+								boundingBox: '#' + namespace + 'ratingThumb',
+								label: instance._buildLabel(),
+								srcNode: '#' + namespace + 'ratingThumbContent'
+							}
+						).render();
+					},
+
 					_itemSelect: function(event) {
 						var instance = this;
 
@@ -382,24 +410,13 @@ AUI.add(
 						var instance = this;
 
 						if (themeDisplay.isSignedIn()) {
-							var description = instance._fixScore(instance.get('totalScore') - (instance.get('totalEntries') - instance.get('totalScore')));
-
-							var totalEntries = instance.get('totalEntries');
 							var yourScore = instance.get(STR_YOUR_SCORE);
-
-							var label = instance._getLabel(description, totalEntries);
 
 							var yourScoreIndex = instance._convertToIndex(yourScore);
 
 							var namespace = instance.get(STR_NAMESPACE);
 
-							instance.ratings = new A.ThumbRating(
-								{
-									boundingBox: '#' + namespace + 'ratingThumb',
-									label: label,
-									srcNode: '#' + namespace + 'ratingThumbContent'
-								}
-							).render();
+							instance._createRating();
 
 							if (instance.get(STR_INITIAL_FOCUS)) {
 								A.one('#' + namespace + 'ratingThumb a').focus();
@@ -429,8 +446,65 @@ AUI.add(
 			}
 		);
 
+		var LikeRatingImpl = A.Component.create(
+			{
+				EXTENDS: A.ThumbRating,
+
+				NAME: 'LikeRatingImpl',
+
+				prototype: {
+					renderUI: function() {
+						var instance = this;
+
+						var cssClasses = instance.get('cssClasses');
+
+						A.ThumbRating.superclass.renderUI.apply(this, arguments);
+
+						var elements = instance.get('elements');
+
+						elements.addClass(cssClasses.off);
+						elements.item(0).addClass(cssClasses.up);
+					}
+				}
+			}
+		);
+
+		var LikeRating = A.Component.create(
+			{
+				EXTENDS: ThumbRating,
+
+				NAME: 'LikeRating',
+
+				prototype: {
+					_createRating: function() {
+						var instance = this;
+
+						var namespace = instance.get(STR_NAMESPACE);
+
+						instance.ratings = new LikeRatingImpl(
+							{
+								boundingBox: '#' + namespace + 'ratingLike',
+								label: instance._buildLabel(),
+								srcNode: '#' + namespace + 'ratingLikeContent'
+							}
+						).render();
+					},
+
+					_getLabel: function(desc, totalEntries) {
+						return Lang.sub(
+							'{desc}',
+							{
+								desc: desc
+							}
+						);
+					}
+				}
+			}
+		);
+
 		Ratings.StarRating = StarRating;
 		Ratings.ThumbRating = ThumbRating;
+		Ratings.LikeRating = LikeRating;
 
 		Liferay.Ratings = Ratings;
 	},

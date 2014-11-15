@@ -36,6 +36,10 @@
 			<execute function="Click#pauseClickAt" />
 		</case>
 
+		<case locator-key1="NOTIFICATION_MENU_NOTIFICATION_DROPDOWN_BUTTON">
+			<execute function="Click#makeVisibleClickAt" />
+		</case>
+
 		<case locator-key1="NOTIFICATION_MENU_VIEW_NOTIFICATIONS_LINK">
 			<execute function="AssertClick#assertPartialTextClickAt" />
 		</case>

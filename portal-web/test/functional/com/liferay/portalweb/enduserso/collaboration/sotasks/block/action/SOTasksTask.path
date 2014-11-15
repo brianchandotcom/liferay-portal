@@ -74,6 +74,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TASK_REOPEN_BUTTON</td>
+	<td>//button[contains(.,'Reopen')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TASK_EDIT_BUTTON</td>
 	<td>//button[contains(.,'Edit')]</td>
 	<td></td>

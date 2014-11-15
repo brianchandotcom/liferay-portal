@@ -240,6 +240,8 @@
 	</target>
 
 	<target name="clean">
+		<ant dir="benchmarks" target="clean" inheritAll="false" />
+
 		<ant dir="classes" target="clean" inheritAll="false" />
 
 		<ant dir="portal-service" target="clean" inheritAll="false" />

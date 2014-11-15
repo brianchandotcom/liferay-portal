@@ -87,7 +87,7 @@
 </tr>
 <tr>
 	<td>FORM_FIELDS_2_CHECKBOX_NAME</td>
-	<td>//div[@class='checkbox']/label[contains(.,'${key_form2Title}')]</td>
+	<td>//div[contains(@class,'checkbox')]/label[contains(.,'${key_form2Title}')]</td>
 	<td></td>
 </tr>
 <tr>

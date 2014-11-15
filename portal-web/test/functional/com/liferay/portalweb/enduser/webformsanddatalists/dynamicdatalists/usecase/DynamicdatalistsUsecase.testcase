@@ -250,8 +250,6 @@
 			<var name="ddlRecordFieldData" value="Contenido" />
 		</execute>
 
-		<execute macro="DDLRecord#saveTranslation" />
-
 		<execute macro="DDLRecord#publishCP" />
 
 		<execute macro="Page#gotoContentCP">
@@ -1310,7 +1308,7 @@
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldBoolean">
-			<var name="ddlRecordFieldData" value="true" />
+			<var name="ddlRecordFieldData" value="Yes" />
 			<var name="fieldFieldLabel" value="Employee" />
 			<var name="fieldName" value="Employee" />
 		</execute>
@@ -1652,8 +1650,6 @@
 		<execute macro="DDLRecord#populateTranslationFieldText">
 			<var name="ddlRecordFieldData" value="Contenido" />
 		</execute>
-
-		<execute macro="DDLRecord#saveTranslation" />
 
 		<execute macro="DDLRecord#publishCP" />
 

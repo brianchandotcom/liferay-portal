@@ -20,8 +20,6 @@
 		<var name="key_localizedLanguage" value="${localizedLanguage}" />
 
 		<execute action="CPDynamicdatalistsListEditrecord#assertClick" locator-key1="ADD_TRANSLATION_MENULIST_LANGUAGE" value1="${localizedLanguage}" />
-
-		<execute action="CPDynamicdatalistsListEditrecordtranslation#selectFrame" locator-key1="RECORD_TRANSLATION_IFRAME" />
 	</command>
 
 	<command name="addViaDDLDisplayPG">
@@ -331,13 +329,6 @@
 		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
-	<command name="saveTranslation">
-		<execute action="CPDynamicdatalistsListEditrecordtranslation#assertClick" locator-key1="ADD_TRANSLATION_BUTTON" value1="Add Translation" />
-
-		<execute action="CPDynamicdatalistsListEditrecord#selectFrame" value1="relative=top" />
-		<execute action="CPDynamicdatalistsListEditrecord#assertTextEquals" locator-key1="INFO_MESSAGE" value1="The changes in your translations will be available once the content is published." />
-	</command>
-
 	<command name="viewCP">
 		<execute action="CPDynamicdatalists#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${ddlListName}" />
 		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
@@ -587,7 +578,16 @@
 	<command name="viewViaDDLDisplayPG">
 		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="HEADER_TITLE" value1="${ddlListName}" />
 		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_ONE_NAME" value1="${fieldFieldLabel}" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="${ddlRecordFieldData}" />
+
+		<if>
+			<isset var="ddlRecordFieldDataTableDisplay" />
+			<then>
+				<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="${ddlRecordFieldDataTableDisplay}" />
+			</then>
+			<else>
+				<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="${ddlRecordFieldData}" />
+			</else>
+		</if>
 
 		<if>
 			<equals arg1="${userRole}" arg2="Guest" />

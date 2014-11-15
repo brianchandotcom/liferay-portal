@@ -88,7 +88,10 @@
 		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
 
 		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
-		<execute action="SOMicroblogs#assertClick" locator-key1="MICROBLOGS_ENTRY_COMMENT_LINK" value1="Comment" />
+
+		<execute macro="SOMicroblogs#displayMicroblogsCommentTextFieldCmd">
+			<var name="commentCount" value="${commentCount}" />
+		</execute>
 
 		<if>
 			<condition action="SOMicroblogs#isElementPresent" locator-key1="MICROBLOGS_ENTRY_COMMENT_CONTENT_FIELD" />
@@ -526,6 +529,17 @@
 		</while>
 	</command>
 
+	<command name="unsubscribeFromMicroblogsEntryNotifications">
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="SOUserBar#assertElementPresent" locator-key1="NOTIFICATION" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="1" />
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_NOTIFICATION_DROPDOWN_BUTTON" />
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_NOTIFICATION_UNSUBSCRIBE" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
+	</command>
+
 	<command name="viewCharacterCountdownCmd">
 		<var attribute="value" locator-key="MICROBLOGS_CONTENT_INPUT_FIELD" name="textFieldContent" path="SOMicroblogs" />
 		<var name="textFieldContentLength" value="${textFieldContent?length()}" />
@@ -784,6 +798,18 @@
 
 		<execute action="SOProfile#assertTextEquals" locator-key1="USER_NAME" value1="${mentionUserName}" />
 		<execute action="SOProfile#assertTextEquals" locator-key1="USER_EMAIL" value1="${mentionUserEmailAddress}" />
+	</command>
+
+	<command name="viewMicroblogsEntryMentionNotification">
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="SOUserBar#assertElementPresent" locator-key1="NOTIFICATION" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="1" />
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${microblogsEntryAuthorName} tagged you in a post." />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${microblogsEntryContent}" />
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
 	</command>
 
 	<command name="viewMicroblogsEntryMentions">

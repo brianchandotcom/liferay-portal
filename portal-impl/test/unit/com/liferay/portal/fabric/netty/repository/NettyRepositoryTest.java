@@ -222,8 +222,13 @@ public class NettyRepositoryTest {
 			NettyRepository.class.getName(), Level.FINEST);
 
 		try {
-			NoticeableFuture<Path> noticeableFuture = _nettyRepository.getFile(
+			NoticeableFuture<Path> noticeableFuture1 = _nettyRepository.getFile(
 				remoteFilePath, null, false);
+
+			NoticeableFuture<Path> noticeableFuture2 = _nettyRepository.getFile(
+				remoteFilePath, null, false);
+
+			Assert.assertNotSame(noticeableFuture1, noticeableFuture2);
 
 			FileResponse fileResponse = new FileResponse(
 				remoteFilePath, System.currentTimeMillis(), 0, false);
@@ -233,8 +238,10 @@ public class NettyRepositoryTest {
 			_asyncBroker.takeWithResult(remoteFilePath, fileResponse);
 
 			Path localFilePath = FileServerTestUtil.registerForCleanUp(
-				noticeableFuture.get());
+				noticeableFuture1.get());
 
+			Assert.assertSame(localFilePath, noticeableFuture2.get());
+			Assert.assertSame(localFilePath, fileResponse.getLocalFile());
 			Assert.assertNotNull(localFilePath);
 			Assert.assertTrue(Files.notExists(tempFilePath));
 			Assert.assertTrue(Files.exists(localFilePath));
@@ -245,7 +252,7 @@ public class NettyRepositoryTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertEquals(2, logRecords.size());
+			Assert.assertEquals(4, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -254,6 +261,19 @@ public class NettyRepositoryTest {
 				logRecord.getMessage());
 
 			logRecord = logRecords.get(1);
+
+			Assert.assertEquals(
+				"Fetching remote file " + remoteFilePath,
+				logRecord.getMessage());
+
+			logRecord = logRecords.get(2);
+
+			Assert.assertEquals(
+				"Fetched remote file " + remoteFilePath + " to " +
+					localFilePath,
+				logRecord.getMessage());
+
+			logRecord = logRecords.get(3);
 
 			Assert.assertEquals(
 				"Fetched remote file " + remoteFilePath + " to " +
@@ -270,15 +290,23 @@ public class NettyRepositoryTest {
 
 		FileServerTestUtil.createFileWithData(tempFilePath);
 
-		Path localFilePath = FileServerTestUtil.registerForCleanUp(
-			Paths.get("localFile"));
+		Path localFilePath1 = FileServerTestUtil.registerForCleanUp(
+			_repositoryPath.resolve("localFile1"));
+
+		Path localFilePath2 = FileServerTestUtil.registerForCleanUp(
+			_repositoryPath.resolve("localFile2"));
 
 		captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			NettyRepository.class.getName(), Level.OFF);
 
 		try {
-			NoticeableFuture<Path> noticeableFuture = _nettyRepository.getFile(
-				remoteFilePath, localFilePath, false);
+			NoticeableFuture<Path> noticeableFuture1 = _nettyRepository.getFile(
+				remoteFilePath, localFilePath1, false);
+
+			NoticeableFuture<Path> noticeableFuture2 = _nettyRepository.getFile(
+				remoteFilePath, localFilePath2, false);
+
+			Assert.assertNotSame(noticeableFuture1, noticeableFuture2);
 
 			FileResponse fileResponse = new FileResponse(
 				remoteFilePath, System.currentTimeMillis(), 0, false);
@@ -287,9 +315,12 @@ public class NettyRepositoryTest {
 
 			_asyncBroker.takeWithResult(remoteFilePath, fileResponse);
 
-			Assert.assertSame(localFilePath, noticeableFuture.get());
+			Assert.assertSame(localFilePath1, noticeableFuture1.get());
+			Assert.assertSame(localFilePath2, noticeableFuture2.get());
+			Assert.assertSame(localFilePath2, fileResponse.getLocalFile());
 			Assert.assertTrue(Files.notExists(tempFilePath));
-			Assert.assertTrue(Files.exists(localFilePath));
+			Assert.assertTrue(Files.exists(localFilePath1));
+			Assert.assertTrue(Files.exists(localFilePath2));
 			Assert.assertTrue(pathMap.isEmpty());
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();

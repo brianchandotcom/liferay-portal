@@ -240,25 +240,11 @@
 	</target>
 
 	<target name="clean">
-		<ant dir="benchmarks" target="clean" inheritAll="false" />
+		<setup-sdk />
 
-		<ant dir="classes" target="clean" inheritAll="false" />
-
-		<ant dir="portal-service" target="clean" inheritAll="false" />
-
-		<ant dir="util-bridges" target="clean" inheritAll="false" />
-		<ant dir="util-java" target="clean" inheritAll="false" />
-		<ant dir="util-slf4j" target="clean" inheritAll="false" />
-		<ant dir="util-taglib" target="clean" inheritAll="false" />
-
-		<ant dir="portal-impl" target="clean" inheritAll="false" />
-		<ant dir="portal-pacl" target="clean" inheritAll="false" />
-		<ant dir="portal-test" target="clean" inheritAll="false" />
-		<ant dir="portal-test-internal" target="clean" inheritAll="false" />
-
-		<ant dir="portal-web" target="clean" inheritAll="false" />
-
-		<ant dir="sql" target="clean" inheritAll="false" />
+		<subant target="clean">
+			 <fileset dir="." includes="*/build.xml" />
+		</subant>
 
 		<delete dir="${doc.dir}" />
 
@@ -295,13 +281,6 @@
 		</if>
 
 		<if>
-			<equals arg1="${app.server.type}" arg2="resin" />
-			<then>
-				<ant dir="support-resin" target="clean" inheritAll="false" />
-			</then>
-		</if>
-
-		<if>
 			<equals arg1="${app.server.type}" arg2="tomcat" />
 			<then>
 				<delete failonerror="false">
@@ -310,15 +289,6 @@
 						includes="*-hook.xml,*-portlet.xml"
 					/>
 				</delete>
-
-				<ant dir="support-tomcat" target="clean" inheritAll="false" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${app.server.type}" arg2="websphere" />
-			<then>
-				<ant dir="support-websphere" target="clean" inheritAll="false" />
 			</then>
 		</if>
 
@@ -383,13 +353,6 @@
 				<delete dir="${app.server.work.dir}" />
 			</then>
 		</if>
-
-		<setup-sdk />
-
-		<ant-execute
-			ant.dir="${project.dir}/modules"
-			ant.target="clean"
-		/>
 
 		<antcall target="print-current-time" />
 	</target>

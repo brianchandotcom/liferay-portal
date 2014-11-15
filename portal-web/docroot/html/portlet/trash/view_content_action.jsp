@@ -44,16 +44,13 @@ TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(trashRender
 		</portlet:renderURL>
 
 		<%
-		Map<String, Object> data = new HashMap<String, Object>();
-
-		data.put("uri", moveURL);
+		String taglibOnClick = renderResponse.getNamespace() + "restoreDialog('" + moveURL + "')";
 		%>
 
 		<liferay-ui:icon
-			cssClass="trash-restore-link"
-			data="<%= data %>"
 			iconCssClass="icon-undo"
 			message="restore"
+			onClick="<%= taglibOnClick %>"
 			url="javascript:;"
 		/>
 	</c:if>

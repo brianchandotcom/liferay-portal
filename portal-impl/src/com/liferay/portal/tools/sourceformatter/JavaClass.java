@@ -667,7 +667,8 @@ public class JavaClass {
 		String javaTermContent = "\n" + javaTerm.getContent();
 
 		Pattern methodNameAndParametersPattern = Pattern.compile(
-			"\n" + _indent + "(private |protected |public )(.|\n)*?(\\{|;)\n");
+			"\n" + _indent + "(private |protected |public ).*?(\\{|;)\n",
+			Pattern.DOTALL);
 
 		Matcher matcher = methodNameAndParametersPattern.matcher(
 			javaTermContent);

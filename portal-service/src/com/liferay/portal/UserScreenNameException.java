@@ -68,26 +68,14 @@ public class UserScreenNameException extends PortalException {
 						"of the following special characters: %s",
 					screenName, userId, new String(validSpecialChars)));
 
-			_userId = userId;
-			_screenName = screenName;
-			_validSpecialChars = validSpecialChars;
+			this.userId = userId;
+			this.screenName = screenName;
+			this.validSpecialChars = validSpecialChars;
 		}
 
-		public String getScreenName() {
-			return _screenName;
-		}
-
-		public long getUserId() {
-			return _userId;
-		}
-
-		public char[] getValidSpecialChars() {
-			return _validSpecialChars;
-		}
-
-		private String _screenName;
-		private long _userId;
-		private final char[] _validSpecialChars;
+		public final String screenName;
+		public final long userId;
+		public final char[] validSpecialChars;
 
 	}
 
@@ -100,20 +88,12 @@ public class UserScreenNameException extends PortalException {
 						"used by user %s",
 					screenName, userId));
 
-			_userId = userId;
-			_screenName = screenName;
+			this.userId = userId;
+			this.screenName = screenName;
 		}
 
-		public String getScreenName() {
-			return _screenName;
-		}
-
-		public long getUserId() {
-			return _userId;
-		}
-
-		private String _screenName;
-		private long _userId;
+		public final String screenName;
+		public final long userId;
 
 	}
 
@@ -148,20 +128,12 @@ public class UserScreenNameException extends PortalException {
 					screenName, userId,
 					PropsKeys.USERS_SCREEN_NAME_ALLOW_NUMERIC));
 
-			_userId = userId;
-			_screenName = screenName;
+			this.userId = userId;
+			this.screenName = screenName;
 		}
 
-		public String getScreenName() {
-			return _screenName;
-		}
-
-		public long getUserId() {
-			return _userId;
-		}
-
-		private String _screenName;
-		private long _userId;
+		public final String screenName;
+		public final long userId;
 
 	}
 
@@ -177,26 +149,14 @@ public class UserScreenNameException extends PortalException {
 						"for anonymous users such as: %s",
 					screenName, userId, StringUtil.merge(reservedScreenNames)));
 
-			_userId = userId;
-			_screenName = screenName;
-			_reservedScreenNames = reservedScreenNames;
+			this.userId = userId;
+			this.screenName = screenName;
+			this.reservedScreenNames = reservedScreenNames;
 		}
 
-		public String[] getReservedScreenNames() {
-			return _reservedScreenNames;
-		}
-
-		public String getScreenName() {
-			return _screenName;
-		}
-
-		public long getUserId() {
-			return _userId;
-		}
-
-		private final String[] _reservedScreenNames;
-		private String _screenName;
-		private long _userId;
+		public final String[] reservedScreenNames;
+		public final String screenName;
+		public final long userId;
 
 	}
 
@@ -210,26 +170,14 @@ public class UserScreenNameException extends PortalException {
 					"Screen name %s for user %s must not be used by group %s",
 					screenName, userId, group.getGroupId()));
 
-			_userId = userId;
-			_screenName = screenName;
-			_group = group;
+			this.userId = userId;
+			this.screenName = screenName;
+			this.group = group;
 		}
 
-		public Group getGroup() {
-			return _group;
-		}
-
-		public String getScreenName() {
-			return _screenName;
-		}
-
-		public long getUserId() {
-			return _userId;
-		}
-
-		private final Group _group;
-		private String _screenName;
-		private long _userId;
+		public final Group group;
+		public final String screenName;
+		public final long userId;
 
 	}
 
@@ -246,26 +194,14 @@ public class UserScreenNameException extends PortalException {
 					screenName, userId),
 				new GroupFriendlyURLException(exceptionType));
 
-			_userId = userId;
-			_screenName = screenName;
-			_exceptionType = exceptionType;
+			this.userId = userId;
+			this.screenName = screenName;
+			this.exceptionType = exceptionType;
 		}
 
-		public int getExceptionType() {
-			return _exceptionType;
-		}
-
-		public String getScreenName() {
-			return _screenName;
-		}
-
-		public long getUserId() {
-			return _userId;
-		}
-
-		private final int _exceptionType;
-		private String _screenName;
-		private long _userId;
+		public final int exceptionType;
+		public final String screenName;
+		public final long userId;
 
 	}
 
@@ -281,26 +217,14 @@ public class UserScreenNameException extends PortalException {
 					screenName, userId,
 					ClassUtil.getClassName(screenNameValidator)));
 
-			_userId = userId;
-			_screenName = screenName;
-			_screenNameValidator = screenNameValidator;
+			this.userId = userId;
+			this.screenName = screenName;
+			this.screenNameValidator = screenNameValidator;
 		}
 
-		public String getScreenName() {
-			return _screenName;
-		}
-
-		public ScreenNameValidator getScreenNameValidator() {
-			return _screenNameValidator;
-		}
-
-		public long getUserId() {
-			return _userId;
-		}
-
-		private String _screenName;
-		private final ScreenNameValidator _screenNameValidator;
-		private long _userId;
+		public final String screenName;
+		public final ScreenNameValidator screenNameValidator;
+		public final long userId;
 
 	}
 

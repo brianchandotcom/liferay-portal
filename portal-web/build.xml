@@ -7,7 +7,7 @@
 
 	<property name="alloy.version" value="3.0.0" />
 	<property name="alloy-font-awesome.version" value="1.0.0" />
-	<property name="alloyeditor.version" value="0.2.2" />
+	<property name="alloyeditor.version" value="0.2.5" />
 	<property name="ckeditor.file" value="ckeditor_4.3.5_liferay.zip" />
 	<property name="scayt.file" value="scayt_4.3.5.zip" />
 	<property name="tinymce.file" value="tinymce_3.5.6.zip" />

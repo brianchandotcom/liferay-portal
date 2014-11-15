@@ -19,37 +19,21 @@
 <%
 String portletId = portletDisplay.getRootPortletId();
 
-String mainPath = themeDisplay.getPathMain();
-
 String doAsUserId = themeDisplay.getDoAsUserId();
 
 if (Validator.isNull(doAsUserId)) {
 	doAsUserId = Encryptor.encrypt(company.getKeyObj(), String.valueOf(themeDisplay.getUserId()));
 }
 
-long doAsGroupId = themeDisplay.getDoAsGroupId();
-
-String alloyEditorConfigFileName = ParamUtil.getString(request, "ckEditorConfigFileName");
-
-if (!_alloyEditorConfigFileNames.contains(alloyEditorConfigFileName)) {
-	alloyEditorConfigFileName = "alloyconfig.jsp";
-}
-
 String alloyEditorMode = ParamUtil.getString(request, "alloyEditorMode");
-
-Map<String, String> configParamsMap = (Map<String, String>)request.getAttribute("liferay-ui:input-editor:configParams");
-
-String configParams = marshallParams(configParamsMap);
 
 String contents = (String)request.getAttribute("liferay-ui:input-editor:contents");
 String contentsLanguageId = (String)request.getAttribute("liferay-ui:input-editor:contentsLanguageId");
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClass"));
-String cssClasses = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClasses"));
 String editorImpl = (String)request.getAttribute("liferay-ui:input-editor:editorImpl");
 Map<String, String> fileBrowserParamsMap = (Map<String, String>)request.getAttribute("liferay-ui:input-editor:fileBrowserParams");
 String name = namespace + GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:name")) + "Editor";
 String initMethod = (String)request.getAttribute("liferay-ui:input-editor:initMethod");
-boolean inlineEdit = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:inlineEdit"));
 
 String onBlurMethod = (String)request.getAttribute("liferay-ui:input-editor:onBlurMethod");
 
@@ -76,14 +60,7 @@ if (Validator.isNotNull(onInitMethod)) {
 }
 
 String placeholder = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:placeholder"));
-boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:resizable"));
 boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:skipEditorLoading"));
-
-String toolbarSet = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:toolbarSet"));
-
-if (alloyEditorMode.equals("text")) {
-	toolbarSet = "none";
-}
 %>
 
 <c:if test="<%= !skipEditorLoading %>">
@@ -134,12 +111,121 @@ if (alloyEditorMode.equals("text")) {
 	CKEDITOR.env.isCompatible = true;
 </script>
 
-<div class="alloy-editor alloy-editor-placeholder <%= cssClass %>" contenteditable="true" data-placeholder="<%= LanguageUtil.get(request, placeholder) %>" id="<%= name %>" name="<%= name %>"><%= contents %></div>
+<div class="alloy-editor alloy-editor-placeholder <%= cssClass %>" contenteditable="false" data-placeholder="<%= LanguageUtil.get(request, placeholder) %>" id="<%= name %>" name="<%= name %>"><%= contents %></div>
 
-<aui:script use="aui-base">
+<aui:script use="aui-base,alloy-editor">
+	document.getElementById('<%= name %>').setAttribute('contenteditable', true);
+
+	<%
+	Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
+	contentsLanguageId = LocaleUtil.toLanguageId(contentsLocale);
+
+	String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
+	String languageId = LocaleUtil.toLanguageId(locale);
+	%>
+
+	var alloyEditor = new A.AlloyEditor(
+		{
+			contentsLangDirection: '<%= HtmlUtil.escapeJS(contentsLanguageDir) %>',
+
+			contentsLanguage: '<%= contentsLanguageId.replace("iw_", "he_") %>',
+
+			language: '<%= languageId.replace("iw_", "he_") %>',
+
+			srcNode: '#<%= name %>',
+
+			toolbars:
+				<c:choose>
+					<c:when test='<%= alloyEditorMode.equals("text") %>'>
+						{},
+					</c:when>
+					<c:otherwise>
+						{
+							add: ['imageselector'],
+							image: ['left', 'right'],
+							styles: ['strong', 'em', 'u', 'h1', 'h2', 'a', 'twitter']
+						},
+					</c:otherwise>
+				</c:choose>
+
+			<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_SELECTOR %>" varImpl="documentSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="struts_action" value="/document_selector/view" />
+				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+				<portlet:param name="eventName" value='<%= name + "selectDocument" %>' />
+				<portlet:param name="showGroupsSelector" value="true" />
+			</liferay-portlet:renderURL>
+
+			<%
+			if (fileBrowserParamsMap != null) {
+				for (Map.Entry<String, String> entry : fileBrowserParamsMap.entrySet()) {
+					documentSelectorURL.setParameter(entry.getKey(), entry.getValue());
+				}
+			}
+			%>
+
+			filebrowserBrowseUrl: '<%= documentSelectorURL %>',
+			filebrowserFlashBrowseUrl: '<%= documentSelectorURL %>&Type=flash',
+			filebrowserImageBrowseLinkUrl: '<%= documentSelectorURL %>&Type=image',
+			filebrowserImageBrowseUrl: '<%= documentSelectorURL %>&Type=image'
+		}
+	);
+
+	var nativeEditor = alloyEditor.get('nativeEditor');
+
+	<c:if test="<%= Validator.isNotNull(onBlurMethod) %>">
+		nativeEditor.on(
+			'blur',
+			function(event) {
+				window['<%= HtmlUtil.escapeJS(onBlurMethod) %>'](event.editor);
+			}
+		);
+	</c:if>
+
+	<c:if test="<%= Validator.isNotNull(onChangeMethod) %>">
+		nativeEditor.on(
+			'change',
+			function(event) {
+				window['<%= HtmlUtil.escapeJS(onChangeMethod) %>'](window['<%= name %>'].getHTML());
+			}
+		);
+	</c:if>
+
+	<c:if test="<%= Validator.isNotNull(onFocusMethod) %>">
+		nativeEditor.on(
+			'focus',
+			function(event) {
+				window['<%= HtmlUtil.escapeJS(onFocusMethod) %>'](event.editor);
+			}
+		);
+	</c:if>
+
+	nativeEditor.on(
+		'instanceReady',
+		function(event) {
+			<c:if test="<%= Validator.isNotNull(onInitMethod) %>">
+				window['<%= HtmlUtil.escapeJS(onInitMethod) %>']();
+			</c:if>
+
+			window['<%= name %>'].editor = alloyEditor;
+
+			window['<%= name %>'].instanceReady = true;
+		}
+	);
+
+	<c:if test='<%= alloyEditorMode.equals("text") %>'>
+		nativeEditor.on(
+			'key',
+			function(event) {
+				if (event.data.keyCode === 13) {
+					event.cancel();
+				}
+			}
+		);
+	</c:if>
+
 	window['<%= name %>'] = {
 		destroy: function() {
-			CKEDITOR.instances['<%= name %>'].destroy();
+			window['<%= name %>'].editor.destroy();
 
 			window['<%= name %>'] = null;
 		},
@@ -204,112 +290,9 @@ if (alloyEditorMode.equals("text")) {
 		}
 	};
 
-	CKEDITOR.inline(
-		'<%= name %>',
-		{
-			customConfig: '<%= PortalUtil.getPathContext() %>/html/js/editor/alloyeditor/<%= HtmlUtil.escapeJS(alloyEditorConfigFileName) %>?p_p_id=<%= HttpUtil.encodeURL(portletId) %>&p_main_path=<%= HttpUtil.encodeURL(mainPath) %>&contentsLanguageId=<%= HttpUtil.encodeURL(contentsLanguageId) %>&colorSchemeCssClass=<%= HttpUtil.encodeURL(themeDisplay.getColorScheme().getCssClass()) %>&cssClasses=<%= HttpUtil.encodeURL(cssClasses) %>&cssPath=<%= HttpUtil.encodeURL(themeDisplay.getPathThemeCss()) %>&doAsGroupId=<%= HttpUtil.encodeURL(String.valueOf(doAsGroupId)) %>&doAsUserId=<%= HttpUtil.encodeURL(doAsUserId) %>&imagesPath=<%= HttpUtil.encodeURL(themeDisplay.getPathThemeImages()) %>&inlineEdit=<%= inlineEdit %><%= configParams %>&languageId=<%= HttpUtil.encodeURL(LocaleUtil.toLanguageId(locale)) %>&name=<%= name %>&resizable=<%= resizable %>&toolbarSet=<%= HttpUtil.encodeURL(toolbarSet) %>',
-				<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_SELECTOR %>" varImpl="documentSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-					<portlet:param name="struts_action" value="/document_selector/view" />
-					<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-					<portlet:param name="eventName" value='<%= name + "selectDocument" %>' />
-					<portlet:param name="showGroupsSelector" value="true" />
-				</liferay-portlet:renderURL>
-
-				<%
-				if (fileBrowserParamsMap != null) {
-					for (Map.Entry<String, String> entry : fileBrowserParamsMap.entrySet()) {
-						documentSelectorURL.setParameter(entry.getKey(), entry.getValue());
-					}
-				}
-				%>
-
-				filebrowserBrowseUrl: '<%= documentSelectorURL %>',
-				filebrowserFlashBrowseUrl: '<%= documentSelectorURL %>&Type=flash',
-				filebrowserImageBrowseLinkUrl: '<%= documentSelectorURL %>&Type=image',
-				filebrowserImageBrowseUrl: '<%= documentSelectorURL %>&Type=image'
-		}
-	);
-
-	if (window['<%= name %>Config']) {
-		window['<%= name %>Config']();
-	}
-
-	var alloyEditor = CKEDITOR.instances['<%= name %>'];
-
-	<c:if test="<%= Validator.isNotNull(onBlurMethod) %>">
-		alloyEditor.on(
-			'blur',
-			function(event) {
-				window['<%= HtmlUtil.escapeJS(onBlurMethod) %>'](event.editor);
-			}
-		);
-	</c:if>
-
-	<c:if test="<%= Validator.isNotNull(onChangeMethod) %>">
-		alloyEditor.on(
-			'change',
-			function(event) {
-				window['<%= HtmlUtil.escapeJS(onChangeMethod) %>'](window['<%= name %>'].getHTML());
-			}
-		);
-	</c:if>
-
-	<c:if test="<%= Validator.isNotNull(onFocusMethod) %>">
-		alloyEditor.on(
-			'focus',
-			function(event) {
-				window['<%= HtmlUtil.escapeJS(onFocusMethod) %>'](event.editor);
-			}
-		);
-	</c:if>
-
-	alloyEditor.on(
-		'instanceReady',
-		function(event) {
-			<c:if test="<%= Validator.isNotNull(onInitMethod) %>">
-				window['<%= HtmlUtil.escapeJS(onInitMethod) %>']();
-			</c:if>
-
-			window['<%= name %>'].instanceReady = true;
-		}
-	);
-
-	<c:if test='<%= alloyEditorMode.equals("text") %>'>
-		alloyEditor.on(
-			'key',
-			function(event) {
-				if (event.data.keyCode === 13) {
-					event.cancel();
-				}
-			}
-		);
-	</c:if>
-
 	var destroyInstance = function(event) {
 		if (event.portletId === '<%= portletId %>') {
-			try {
-				var ckeditorInstances = window.CKEDITOR.instances;
-
-				A.Object.each(
-					ckeditorInstances,
-					function(value, key) {
-						var instance = ckeditorInstances[key];
-
-						A.Object.each(
-							instance.config.toolbars,
-							function(value, key) {
-								value.destroy();
-							}
-						);
-
-						delete ckeditorInstances[key];
-
-						instance.destroy();
-					}
-				);
-			}
-			catch (error) {
-			}
+			window['<%= name %>'].destroy();
 
 			Liferay.detach('destroyPortlet', destroyInstance);
 		}
@@ -335,6 +318,4 @@ public String marshallParams(Map<String, String> params) {
 
 	return sb.toString();
 }
-
-private static Set<String> _alloyEditorConfigFileNames = SetUtil.fromArray(new String[] {"alloyconfig.jsp"});
 %>

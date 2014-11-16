@@ -27,6 +27,23 @@ import java.io.InputStream;
  */
 public interface DocumentRepository extends CapabilityProvider {
 
+	public FileEntry addFileEntry(
+			long userId, long folderId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog, File file,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public FileEntry addFileEntry(
+			long userId, long folderId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog, InputStream is,
+			long size, ServiceContext serviceContext)
+		throws PortalException;
+
+	public FileEntry copyFileEntry(
+			long userId, long groupId, long fileEntryId, long destFolderId,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public long getRepositoryId();
 
 	public FileEntry updateFileEntry(

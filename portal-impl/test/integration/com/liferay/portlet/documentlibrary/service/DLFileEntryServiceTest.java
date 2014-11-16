@@ -229,6 +229,9 @@ public class DLFileEntryServiceTest {
 
 		dlFileEntry = updateDLFileEntry(dlFileEntry, serviceContext);
 
+		dlFileEntry = updateStatus(
+			dlFileEntry.getLatestFileVersion(true), serviceContext);
+
 		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(true);
 
 		dlFileEntry = DLFileEntryLocalServiceUtil.deleteFileVersion(
@@ -254,6 +257,9 @@ public class DLFileEntryServiceTest {
 		dlFileEntry.setTitle(title);
 
 		dlFileEntry = updateDLFileEntry(dlFileEntry, serviceContext);
+
+		dlFileEntry = updateStatus(
+			dlFileEntry.getLatestFileVersion(true), serviceContext);
 
 		Assert.assertEquals(
 			DLUtil.getSanitizedFileName(title, dlFileEntry.getExtension()),

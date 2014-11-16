@@ -60,8 +60,8 @@ public abstract class BaseRepositoryImpl
 
 	@Override
 	public FileEntry addFileEntry(
-			long folderId, String sourceFileName, String mimeType, String title,
-			String description, String changeLog, File file,
+			long userId, long folderId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog, File file,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -73,7 +73,7 @@ public abstract class BaseRepositoryImpl
 			size = file.length();
 
 			return addFileEntry(
-				folderId, sourceFileName, mimeType, title, description,
+				userId, folderId, sourceFileName, mimeType, title, description,
 				changeLog, is, size, serviceContext);
 		}
 		catch (IOException ioe) {
@@ -91,6 +91,45 @@ public abstract class BaseRepositoryImpl
 	}
 
 	/**
+	 * @deprecated As of 7.0.0, see {@link #addFileEntry(long, long, String,
+	 *             String, String, String, String, File, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public FileEntry addFileEntry(
+			long folderId, String sourceFileName, String mimeType, String title,
+			String description, String changeLog, File file,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
+			folderId, sourceFileName, mimeType, title, description, changeLog,
+			file, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, see {@link #addFileEntry(long, long, String,
+	 *             String, String, String, String, InputStream, long,
+	 *             ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public FileEntry addFileEntry(
+			long folderId, String sourceFileName, String mimeType, String title,
+			String description, String changeLog, InputStream is, long size,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
+			sourceFileName, mimeType, title, description, changeLog, is, size,
+			serviceContext);
+	}
+
+	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
 	 *             String, ServiceContext)}
 	 */
@@ -100,6 +139,23 @@ public abstract class BaseRepositoryImpl
 		throws PortalException {
 
 		checkInFileEntry(fileEntryId, lockUuid, new ServiceContext());
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #copyFileEntry(long, long,
+	 *             long, long, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public FileEntry copyFileEntry(
+			long groupId, long fileEntryId, long destFolderId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return copyFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
+			groupId, fileEntryId, destFolderId, serviceContext);
 	}
 
 	@Override

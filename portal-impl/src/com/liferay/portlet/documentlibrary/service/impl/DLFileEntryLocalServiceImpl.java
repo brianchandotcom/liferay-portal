@@ -91,7 +91,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
@@ -367,8 +366,6 @@ public class DLFileEntryLocalServiceImpl
 			// Latest file version
 
 			removeFileVersion(dlFileEntry, latestDLFileVersion);
-
-			latestDLFileVersion = lastDLFileVersion;
 		}
 		else {
 
@@ -398,16 +395,6 @@ public class DLFileEntryLocalServiceImpl
 				user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 				dlFileEntry.getName(),
 				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION, version);
-		}
-
-		// Workflow
-
-		if ((serviceContext.getWorkflowAction() ==
-				WorkflowConstants.ACTION_PUBLISH) && !keepFileVersionLabel) {
-
-			DLUtil.startWorkflowInstance(
-				userId, latestDLFileVersion, DLSyncConstants.EVENT_UPDATE,
-				serviceContext);
 		}
 
 		unlockFileEntry(fileEntryId);
@@ -1473,6 +1460,26 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	@Override
+	public boolean isKeepFileVersionLabel(
+			long fileEntryId, ServiceContext serviceContext)
+		throws PortalException {
+
+		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
+			fileEntryId);
+
+		DLFileVersion lastDLFileVersion =
+			dlFileVersionLocalService.getFileVersion(
+				dlFileEntry.getFileEntryId(), dlFileEntry.getVersion());
+
+		DLFileVersion latestDLFileVersion =
+			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
+
+		return isKeepFileVersionLabel(
+			dlFileEntry, lastDLFileVersion, latestDLFileVersion,
+			serviceContext);
+	}
+
+	@Override
 	public Lock lockFileEntry(long userId, long fileEntryId)
 		throws PortalException {
 
@@ -1720,6 +1727,36 @@ public class DLFileEntryLocalServiceImpl
 			userId, fileEntryId, sourceFileName, extension, mimeType, title,
 			description, changeLog, majorVersion, extraSettings,
 			fileEntryTypeId, fieldsMap, file, is, size, serviceContext);
+	}
+
+	@Override
+	public DLFileEntry updateFileEntryType(
+			long userId, long fileEntryId, long fileEntryTypeId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
+
+		DLFileEntry dlFileEntry = dlFileEntryLocalService.getFileEntry(
+			fileEntryId);
+
+		dlFileEntry.setFileEntryTypeId(fileEntryTypeId);
+
+		dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
+
+		DLFileVersion dlFileVersion =
+			dlFileVersionLocalService.getLatestFileVersion(
+				fileEntryId, !dlFileEntry.isCheckedOut());
+
+		dlFileVersion.setUserId(user.getUserId());
+		dlFileVersion.setUserName(user.getFullName());
+		dlFileVersion.setModifiedDate(
+			serviceContext.getModifiedDate(new Date()));
+		dlFileVersion.setFileEntryTypeId(fileEntryTypeId);
+
+		dlFileVersionLocalService.updateDLFileVersion(dlFileVersion);
+
+		return dlFileEntry;
 	}
 
 	@Override

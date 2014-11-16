@@ -853,6 +853,14 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	}
 
 	@Override
+	public boolean isKeepFileVersionLabel(long fileEntryId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntryLocalService.isKeepFileVersionLabel(fileEntryId,
+			serviceContext);
+	}
+
+	@Override
 	public com.liferay.portal.model.Lock lockFileEntry(long userId,
 		long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -948,6 +956,15 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 			sourceFileName, mimeType, title, description, changeLog,
 			majorVersion, fileEntryTypeId, fieldsMap, file, is, size,
 			serviceContext);
+	}
+
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFileEntry updateFileEntryType(
+		long userId, long fileEntryId, long fileEntryTypeId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntryLocalService.updateFileEntryType(userId,
+			fileEntryId, fileEntryTypeId, serviceContext);
 	}
 
 	@Override

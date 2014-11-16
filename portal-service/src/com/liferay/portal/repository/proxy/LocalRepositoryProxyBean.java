@@ -83,6 +83,18 @@ public class LocalRepositoryProxyBean
 	}
 
 	@Override
+	public FileEntry copyFileEntry(
+			long userId, long groupId, long fileEntryId, long destFolderId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		FileEntry fileEntry = _localRepository.copyFileEntry(
+			userId, groupId, fileEntryId, destFolderId, serviceContext);
+
+		return newFileEntryProxyBean(fileEntry);
+	}
+
+	@Override
 	public void deleteAll() throws PortalException {
 		_localRepository.deleteAll();
 	}

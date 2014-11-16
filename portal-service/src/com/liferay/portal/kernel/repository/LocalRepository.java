@@ -21,27 +21,12 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 
-import java.io.File;
-import java.io.InputStream;
-
 import java.util.List;
 
 /**
  * @author Alexander Chow
  */
 public interface LocalRepository extends DocumentRepository {
-
-	public FileEntry addFileEntry(
-			long userId, long folderId, String sourceFileName, String mimeType,
-			String title, String description, String changeLog, File file,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	public FileEntry addFileEntry(
-			long userId, long folderId, String sourceFileName, String mimeType,
-			String title, String description, String changeLog, InputStream is,
-			long size, ServiceContext serviceContext)
-		throws PortalException;
 
 	public Folder addFolder(
 			long userId, long parentFolderId, String name, String description,

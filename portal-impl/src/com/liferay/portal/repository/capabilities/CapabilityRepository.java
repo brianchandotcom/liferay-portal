@@ -16,6 +16,7 @@ package com.liferay.portal.repository.capabilities;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.Repository;
+import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
 import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -51,16 +52,23 @@ public class CapabilityRepository
 
 	@Override
 	public FileEntry addFileEntry(
-			long folderId, String sourceFileName, String mimeType, String title,
-			String description, String changeLog, File file,
+			long userId, long folderId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog, File file,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		Repository repository = getRepository();
 
 		FileEntry fileEntry = repository.addFileEntry(
-			folderId, sourceFileName, mimeType, title, description, changeLog,
-			file, serviceContext);
+			userId, folderId, sourceFileName, mimeType, title, description,
+			changeLog, file, serviceContext);
+
+		WorkflowCapability workflowCapability = getInternalCapability(
+			WorkflowCapability.class);
+
+		if (workflowCapability != null) {
+			workflowCapability.addFileEntry(userId, fileEntry, serviceContext);
+		}
 
 		_repositoryEventTrigger.trigger(
 			RepositoryEventType.Add.class, FileEntry.class, fileEntry);
@@ -70,21 +78,67 @@ public class CapabilityRepository
 
 	@Override
 	public FileEntry addFileEntry(
-			long folderId, String sourceFileName, String mimeType, String title,
-			String description, String changeLog, InputStream is, long size,
-			ServiceContext serviceContext)
+			long userId, long folderId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog, InputStream is,
+			long size, ServiceContext serviceContext)
 		throws PortalException {
 
 		Repository repository = getRepository();
 
 		FileEntry fileEntry = repository.addFileEntry(
-			folderId, sourceFileName, mimeType, title, description, changeLog,
-			is, size, serviceContext);
+			userId, folderId, sourceFileName, mimeType, title, description,
+			changeLog, is, size, serviceContext);
+
+		WorkflowCapability workflowCapability = getInternalCapability(
+			WorkflowCapability.class);
+
+		if (workflowCapability != null) {
+			workflowCapability.addFileEntry(userId, fileEntry, serviceContext);
+		}
 
 		_repositoryEventTrigger.trigger(
 			RepositoryEventType.Add.class, FileEntry.class, fileEntry);
 
 		return fileEntry;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, see {@link #addFileEntry(long, long, String,
+	 *             String, String, String, String, File, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public FileEntry addFileEntry(
+			long folderId, String sourceFileName, String mimeType, String title,
+			String description, String changeLog, File file,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
+			folderId, sourceFileName, mimeType, title, description, changeLog,
+			file, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, see {@link #addFileEntry(long, long, String,
+	 *             String, String, String, String, InputStream, long,
+	 *             ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public FileEntry addFileEntry(
+			long folderId, String sourceFileName, String mimeType, String title,
+			String description, String changeLog, InputStream is, long size,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
+			folderId, sourceFileName, mimeType, title, description, changeLog,
+			is, size, serviceContext);
 	}
 
 	@Override
@@ -130,6 +184,16 @@ public class CapabilityRepository
 
 		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
 
+		WorkflowCapability workflowCapability = getInternalCapability(
+			WorkflowCapability.class);
+
+		if (workflowCapability != null) {
+			workflowCapability.checkInFileEntry(
+				com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+					getUserId(),
+				fileEntry, serviceContext);
+		}
+
 		_repositoryEventTrigger.trigger(
 			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
 	}
@@ -145,6 +209,16 @@ public class CapabilityRepository
 
 		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
 
+		WorkflowCapability workflowCapability = getInternalCapability(
+			WorkflowCapability.class);
+
+		if (workflowCapability != null) {
+			workflowCapability.checkInFileEntry(
+				com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+					getUserId(),
+				fileEntry, new ServiceContext());
+		}
+
 		_repositoryEventTrigger.trigger(
 			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
 	}
@@ -159,6 +233,16 @@ public class CapabilityRepository
 		repository.checkInFileEntry(fileEntryId, lockUuid, serviceContext);
 
 		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
+
+		WorkflowCapability workflowCapability = getInternalCapability(
+			WorkflowCapability.class);
+
+		if (workflowCapability != null) {
+			workflowCapability.checkInFileEntry(
+				com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+					getUserId(),
+				fileEntry, new ServiceContext());
+		}
 
 		_repositoryEventTrigger.trigger(
 			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
@@ -199,19 +283,43 @@ public class CapabilityRepository
 
 	@Override
 	public FileEntry copyFileEntry(
-			long groupId, long fileEntryId, long destFolderId,
+			long userId, long groupId, long fileEntryId, long destFolderId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		Repository repository = getRepository();
 
 		FileEntry fileEntry = repository.copyFileEntry(
-			groupId, fileEntryId, destFolderId, serviceContext);
+			userId, groupId, fileEntryId, destFolderId, serviceContext);
+
+		WorkflowCapability workflowCapability = getInternalCapability(
+			WorkflowCapability.class);
+
+		if (workflowCapability != null) {
+			workflowCapability.addFileEntry(userId, fileEntry, serviceContext);
+		}
 
 		_repositoryEventTrigger.trigger(
 			RepositoryEventType.Add.class, FileEntry.class, fileEntry);
 
 		return fileEntry;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #copyFileEntry(long, long,
+	 *             long, long, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public FileEntry copyFileEntry(
+			long groupId, long fileEntryId, long destFolderId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return copyFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
+			groupId, fileEntryId, destFolderId, serviceContext);
 	}
 
 	@Override

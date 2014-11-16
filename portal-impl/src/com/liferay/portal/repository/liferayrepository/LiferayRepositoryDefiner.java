@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
 import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
+import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
 import com.liferay.portal.repository.capabilities.LiferayBulkOperationCapability;
 import com.liferay.portal.repository.capabilities.LiferaySyncCapability;
 import com.liferay.portal.repository.capabilities.LiferayTrashCapability;
+import com.liferay.portal.repository.capabilities.LiferayWorkflowCapability;
 
 /**
  * @author Adolfo Pérez
@@ -62,6 +64,8 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 
 		capabilityRegistry.addSupportedCapability(
 			SyncCapability.class, _liferaySyncCapability);
+		capabilityRegistry.addSupportedCapability(
+			WorkflowCapability.class, _liferayWorkflowCapability);
 	}
 
 	@Override
@@ -90,6 +94,8 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 		new LiferaySyncCapability();
 	private final LiferayTrashCapability _liferayTrashCapability =
 		new LiferayTrashCapability();
+	private final LiferayWorkflowCapability _liferayWorkflowCapability =
+		new LiferayWorkflowCapability();
 	private RepositoryFactory _repositoryFactory;
 
 	private class LiferayRepositoryFactoryWrapper implements RepositoryFactory {

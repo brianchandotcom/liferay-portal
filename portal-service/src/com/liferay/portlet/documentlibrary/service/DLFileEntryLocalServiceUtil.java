@@ -767,6 +767,12 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().isFileEntryCheckedOut(fileEntryId);
 	}
 
+	public static boolean isKeepFileVersionLabel(long fileEntryId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().isKeepFileVersionLabel(fileEntryId, serviceContext);
+	}
+
 	public static com.liferay.portal.model.Lock lockFileEntry(long userId,
 		long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -854,6 +860,15 @@ public class DLFileEntryLocalServiceUtil {
 				   .updateFileEntry(userId, fileEntryId, sourceFileName,
 			mimeType, title, description, changeLog, majorVersion,
 			fileEntryTypeId, fieldsMap, file, is, size, serviceContext);
+	}
+
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntry updateFileEntryType(
+		long userId, long fileEntryId, long fileEntryTypeId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateFileEntryType(userId, fileEntryId, fileEntryTypeId,
+			serviceContext);
 	}
 
 	public static void updateSmallImage(long smallImageId, long largeImageId)

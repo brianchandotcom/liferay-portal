@@ -530,9 +530,8 @@ public class DLFileEntryTypeLocalServiceImpl
 					dlFileVersion.getFileVersionId());
 			}
 
-			dlFileEntryLocalService.updateFileEntry(
-				userId, dlFileEntry.getFileEntryId(), null, null, null, null,
-				null, false, defaultFileEntryTypeId, null, null, null, 0,
+			dlFileEntryLocalService.updateFileEntryType(
+				userId, dlFileEntry.getFileEntryId(), defaultFileEntryTypeId,
 				serviceContext);
 
 			dlAppHelperLocalService.updateAsset(

@@ -72,6 +72,16 @@ public class LocalRepositoryWrapper implements LocalRepository {
 	}
 
 	@Override
+	public FileEntry copyFileEntry(
+			long userId, long groupId, long fileEntryId, long destFolderId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return _localRepository.copyFileEntry(
+			userId, groupId, fileEntryId, destFolderId, serviceContext);
+	}
+
+	@Override
 	public void deleteAll() throws PortalException {
 		_localRepository.deleteAll();
 	}

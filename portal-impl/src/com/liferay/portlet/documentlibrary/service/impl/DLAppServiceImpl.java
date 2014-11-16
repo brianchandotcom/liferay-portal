@@ -211,8 +211,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Repository repository = getRepository(repositoryId);
 
 		FileEntry fileEntry = repository.addFileEntry(
-			folderId, sourceFileName, mimeType, title, description, changeLog,
-			file, serviceContext);
+			getUserId(), folderId, sourceFileName, mimeType, title, description,
+			changeLog, file, serviceContext);
 
 		dlAppHelperLocalService.addFileEntry(
 			getUserId(), fileEntry, fileEntry.getFileVersion(), serviceContext);
@@ -296,8 +296,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Repository repository = getRepository(repositoryId);
 
 		FileEntry fileEntry = repository.addFileEntry(
-			folderId, sourceFileName, mimeType, title, description, changeLog,
-			is, size, serviceContext);
+			getUserId(), folderId, sourceFileName, mimeType, title, description,
+			changeLog, is, size, serviceContext);
 
 		dlAppHelperLocalService.addFileEntry(
 			getUserId(), fileEntry, fileEntry.getFileVersion(), serviceContext);
@@ -3226,9 +3226,10 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			fileVersions.size() - 1);
 
 		FileEntry destinationFileEntry = toRepository.addFileEntry(
-			newFolderId, fileEntry.getTitle(), latestFileVersion.getMimeType(),
-			latestFileVersion.getTitle(), latestFileVersion.getDescription(),
-			StringPool.BLANK, latestFileVersion.getContentStream(false),
+			getUserId(), newFolderId, fileEntry.getTitle(),
+			latestFileVersion.getMimeType(), latestFileVersion.getTitle(),
+			latestFileVersion.getDescription(), StringPool.BLANK,
+			latestFileVersion.getContentStream(false),
 			latestFileVersion.getSize(), serviceContext);
 
 		FileVersion oldDestinationFileVersion =
@@ -3293,7 +3294,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			for (FileEntry srcFileEntry : srcFileEntries) {
 				try {
 					FileEntry fileEntry = repository.copyFileEntry(
-						curDestFolder.getGroupId(),
+						getUserId(), curDestFolder.getGroupId(),
 						srcFileEntry.getFileEntryId(),
 						curDestFolder.getFolderId(), serviceContext);
 

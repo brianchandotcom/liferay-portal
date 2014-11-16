@@ -49,6 +49,7 @@ page import="com.liferay.portlet.documentlibrary.context.DLConfigurationDisplayC
 page import="com.liferay.portlet.documentlibrary.context.DLEditFileEntryDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.context.DLEditFileEntryDisplayContextUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.context.DLEntryListDisplayContext" %><%@
+page import="com.liferay.portlet.documentlibrary.context.DLFilePicker" %><%@
 page import="com.liferay.portlet.documentlibrary.context.DLViewFileVersionDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.context.DLViewFileVersionDisplayContextUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata" %><%@

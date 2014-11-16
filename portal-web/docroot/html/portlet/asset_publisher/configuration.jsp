@@ -26,9 +26,9 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<AssetRendererFactory>();
 %>
 
-<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
+<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
-<liferay-portlet:renderURL portletConfiguration="true" varImpl="configurationRenderURL" />
+<liferay-portlet:renderURL portletConfiguration="<%= true %>" varImpl="configurationRenderURL" />
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit="event.preventDefault();">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
@@ -103,7 +103,7 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 					<liferay-ui:search-container-column-text
 						align="right"
 					>
-						<liferay-portlet:actionURL portletConfiguration="true" var="deleteURL">
+						<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="deleteURL">
 							<portlet:param name="<%= Constants.CMD %>" value="remove-scope" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 							<portlet:param name="scopeId" value="<%= AssetPublisherUtil.getScopeId(group, scopeGroupId) %>" />
@@ -131,7 +131,7 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 						}
 					%>
 
-						<liferay-portlet:actionURL portletConfiguration="true" var="addScopeURL">
+						<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="addScopeURL">
 							<portlet:param name="<%= Constants.CMD %>" value="add-scope" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 							<portlet:param name="scopeId" value="<%= AssetPublisherUtil.getScopeId(group, scopeGroupId) %>" />

@@ -20,12 +20,12 @@
 wikiSettings = WikiSettings.getInstance(themeDisplay.getSiteGroupId(), request.getParameterMap());
 %>
 
-<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL">
+<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">
 	<portlet:param name="serviceName" value="<%= WikiConstants.SERVICE_NAME %>" />
 	<portlet:param name="settingsScope" value="group" />
 </liferay-portlet:actionURL>
 
-<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL" />
+<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />

@@ -81,7 +81,7 @@ boolean last = (assetEntryOrder == (searchContainer.getTotal() - 1));
 	</c:when>
 </c:choose>
 
-<liferay-portlet:actionURL portletConfiguration="true" var="deleteURL">
+<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="deleteURL">
 	<portlet:param name="<%= Constants.CMD %>" value="remove-selection" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="assetEntryOrder" value="<%= String.valueOf(assetEntryOrder) %>" />

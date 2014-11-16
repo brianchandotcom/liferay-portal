@@ -59,7 +59,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLoc
 
 		<liferay-ui:icon-delete
 			confirmation="are-you-sure-you-want-to-remove-the-initial-staging-publication"
-			label="true"
+			label="<%= true %>"
 			message="clear"
 			url="<%= deleteBackgroundTaskURL %>"
 		/>

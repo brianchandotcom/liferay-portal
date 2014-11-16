@@ -148,7 +148,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 									direction="down"
 									icon=""
 									message='<%= LanguageUtil.get(request, "page") + StringPool.SPACE + cur + StringPool.SPACE + suffix %>'
-									showWhenSingleIcon="true"
+									showWhenSingleIcon="<%= true %>"
 								>
 
 									<%
@@ -199,7 +199,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 									direction="down"
 									icon=""
 									message='<%= delta + StringPool.SPACE + LanguageUtil.get(request, "items-per-page") %>'
-									showWhenSingleIcon="true"
+									showWhenSingleIcon="<%= true %>"
 								>
 
 									<%

@@ -614,6 +614,23 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			type, andOperator);
 	}
 
+	@Override
+	public DDMStructure updateStructure(
+			long groupId, long parentStructureId, long classNameId,
+			String structureKey, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, DDMForm ddmForm,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		DDMStructurePermission.check(
+			getPermissionChecker(), groupId, classNameId, structureKey,
+			ActionKeys.UPDATE);
+
+		return ddmStructureLocalService.updateStructure(
+			groupId, parentStructureId, classNameId, structureKey, nameMap,
+			descriptionMap, ddmForm, serviceContext);
+	}
+
 	/**
 	 * Updates the structure matching the class name ID, structure key, and
 	 * group, replacing its old parent structure, name map, description map, and
@@ -638,7 +655,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	public DDMStructure updateStructure(
 			long groupId, long parentStructureId, long classNameId,
 			String structureKey, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String xsd,
+			Map<Locale, String> descriptionMap, String definition,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -648,7 +665,22 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 
 		return ddmStructureLocalService.updateStructure(
 			groupId, parentStructureId, classNameId, structureKey, nameMap,
-			descriptionMap, xsd, serviceContext);
+			descriptionMap, definition, serviceContext);
+	}
+
+	@Override
+	public DDMStructure updateStructure(
+			long structureId, long parentStructureId,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			DDMForm ddmForm, ServiceContext serviceContext)
+		throws PortalException {
+
+		DDMStructurePermission.check(
+			getPermissionChecker(), structureId, ActionKeys.UPDATE);
+
+		return ddmStructureLocalService.updateStructure(
+			structureId, parentStructureId, nameMap, descriptionMap, ddmForm,
+			serviceContext);
 	}
 
 	/**

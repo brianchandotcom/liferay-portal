@@ -1287,6 +1287,37 @@ public class DDMStructureLocalServiceImpl
 			type, andOperator);
 	}
 
+	@Override
+	public DDMStructure updateDDMForm(
+			long structureId, DDMForm ddmForm, ServiceContext serviceContext)
+		throws PortalException {
+
+		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
+			structureId);
+
+		return doUpdateStructure(
+			structure.getParentStructureId(), structure.getNameMap(),
+			structure.getDescriptionMap(), ddmForm, serviceContext, structure);
+	}
+
+	@Override
+	public DDMStructure updateStructure(
+			long groupId, long parentStructureId, long classNameId,
+			String structureKey, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, DDMForm ddmForm,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		structureKey = getStructureKey(structureKey);
+
+		DDMStructure structure = ddmStructurePersistence.findByG_C_S(
+			groupId, classNameId, structureKey);
+
+		return doUpdateStructure(
+			parentStructureId, nameMap, descriptionMap, ddmForm, serviceContext,
+			structure);
+	}
+
 	/**
 	 * Updates the structure matching the class name ID, structure key, and
 	 * group, replacing its old parent structure, name map, description map, and
@@ -1315,14 +1346,33 @@ public class DDMStructureLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		DDMXMLUtil.validateXML(definition);
+
+		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
+
 		structureKey = getStructureKey(structureKey);
 
 		DDMStructure structure = ddmStructurePersistence.findByG_C_S(
 			groupId, classNameId, structureKey);
 
 		return doUpdateStructure(
-			parentStructureId, nameMap, descriptionMap, definition,
-			serviceContext, structure);
+			parentStructureId, nameMap, descriptionMap, ddmForm, serviceContext,
+			structure);
+	}
+
+	@Override
+	public DDMStructure updateStructure(
+			long structureId, long parentStructureId,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			DDMForm ddmForm, ServiceContext serviceContext)
+		throws PortalException {
+
+		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
+			structureId);
+
+		return doUpdateStructure(
+			parentStructureId, nameMap, descriptionMap, ddmForm, serviceContext,
+			structure);
 	}
 
 	/**
@@ -1348,12 +1398,16 @@ public class DDMStructureLocalServiceImpl
 			String definition, ServiceContext serviceContext)
 		throws PortalException {
 
+		DDMXMLUtil.validateXML(definition);
+
+		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
+
 		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
 			structureId);
 
 		return doUpdateStructure(
-			parentStructureId, nameMap, descriptionMap, definition,
-			serviceContext, structure);
+			parentStructureId, nameMap, descriptionMap, ddmForm, serviceContext,
+			structure);
 	}
 
 	/**
@@ -1373,13 +1427,16 @@ public class DDMStructureLocalServiceImpl
 			long structureId, String definition, ServiceContext serviceContext)
 		throws PortalException {
 
+		DDMXMLUtil.validateXML(definition);
+
+		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
+
 		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
 			structureId);
 
 		return doUpdateStructure(
 			structure.getParentStructureId(), structure.getNameMap(),
-			structure.getDescriptionMap(), definition, serviceContext,
-			structure);
+			structure.getDescriptionMap(), ddmForm, serviceContext, structure);
 	}
 
 	protected DDMStructureVersion addStructureVersion(
@@ -1437,16 +1494,13 @@ public class DDMStructureLocalServiceImpl
 
 	protected DDMStructure doUpdateStructure(
 			long parentStructureId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String definition,
+			Map<Locale, String> descriptionMap, DDMForm ddmForm,
 			ServiceContext serviceContext, DDMStructure structure)
 		throws PortalException {
 
 		// Structure
 
-		DDMXMLUtil.validateXML(definition);
-
 		DDMForm parentDDMForm = getParentDDMForm(parentStructureId);
-		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
 
 		validate(nameMap, parentDDMForm, ddmForm);
 
@@ -1463,7 +1517,7 @@ public class DDMStructureLocalServiceImpl
 		structure.setVersion(version);
 		structure.setNameMap(nameMap);
 		structure.setDescriptionMap(descriptionMap);
-		structure.setDefinition(definition);
+		structure.setDefinition(DDMFormXSDSerializerUtil.serialize(ddmForm));
 
 		ddmStructurePersistence.update(structure);
 

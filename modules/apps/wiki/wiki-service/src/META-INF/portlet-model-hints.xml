@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.portlet.wiki.model.WikiNode">
+	<model name="com.liferay.wiki.model.WikiNode">
 		<field name="uuid" type="String" />
 		<field name="nodeId" type="long" />
 		<field name="groupId" type="long" />
@@ -22,7 +22,7 @@
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
 	</model>
-	<model name="com.liferay.portlet.wiki.model.WikiPage">
+	<model name="com.liferay.wiki.model.WikiPage">
 		<field name="uuid" type="String" />
 		<field name="pageId" type="long" />
 		<field name="resourcePrimKey" type="long" />
@@ -63,7 +63,7 @@
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
 	</model>
-	<model name="com.liferay.portlet.wiki.model.WikiPageResource">
+	<model name="com.liferay.wiki.model.WikiPageResource">
 		<field name="uuid" type="String" />
 		<field name="resourcePrimKey" type="long" />
 		<field name="nodeId" type="long" />

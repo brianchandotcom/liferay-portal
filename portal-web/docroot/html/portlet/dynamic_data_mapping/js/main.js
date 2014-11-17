@@ -508,10 +508,10 @@ AUI.add(
 
 				if (isString(str)) {
 					for (var i = 0; i < str.length; i++) {
-						var character = str.charAt(i);
+						var item = str.charAt(i);
 
-						if (!A.Text.Unicode.test(character, 'L') && !A.Text.Unicode.test(character, 'N') && !A.Text.Unicode.test(character, 'Pd')) {
-							str = str.replace(character, STR_SPACE);
+						if (!A.Text.Unicode.test(item, 'L') && !A.Text.Unicode.test(item, 'N') && !A.Text.Unicode.test(item, 'Pd')) {
+							str = str.replace(item, STR_SPACE);
 						}
 					}
 

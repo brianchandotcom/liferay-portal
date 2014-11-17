@@ -12,26 +12,36 @@
  * details.
  */
 
-package com.liferay.portlet.wiki.upgrade.v1_0_0;
+package com.liferay.wiki.web.path;
 
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.wiki.WikiPortletInstanceSettings;
-import com.liferay.portlet.wiki.WikiSettings;
-import com.liferay.portlet.wiki.util.WikiConstants;
-import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.portal.kernel.struts.path.AuthPublicPath;
+
+import java.util.Map;
 
 /**
  * @author Iván Zaera
  */
-public class UpgradePortletSettings
-	extends com.liferay.portal.upgrade.v7_0_0.UpgradePortletSettings {
+public class BaseAuthPublicPath implements AuthPublicPath {
+
+	public static final String AUTH_PUBLIC_PATH = "auth.public.path";
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		upgradeMainPortlet(
-			WikiPortletKeys.WIKI, WikiConstants.SERVICE_NAME,
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-			WikiPortletInstanceSettings.ALL_KEYS, WikiSettings.ALL_KEYS);
+	public String path() {
+		return _path;
 	}
+
+	protected void updatePath(Map<String, String> properties) {
+		if (!properties.containsKey(AUTH_PUBLIC_PATH)) {
+			_path = null;
+
+			return;
+		}
+
+		String path = properties.get(AUTH_PUBLIC_PATH);
+
+		_path = path;
+	}
+
+	private String _path;
 
 }

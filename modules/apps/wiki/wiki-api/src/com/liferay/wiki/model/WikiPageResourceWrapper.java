@@ -94,7 +94,7 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 
 	@Override
 	public int compareTo(
-		WikiPageResource wikiPageResource) {
+		com.liferay.wiki.model.WikiPageResource wikiPageResource) {
 		return _wikiPageResource.compareTo(wikiPageResource);
 	}
 
@@ -267,12 +267,12 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<WikiPageResource> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.wiki.model.WikiPageResource> toCacheModel() {
 		return _wikiPageResource.toCacheModel();
 	}
 
 	@Override
-	public WikiPageResource toEscapedModel() {
+	public com.liferay.wiki.model.WikiPageResource toEscapedModel() {
 		return new WikiPageResourceWrapper(_wikiPageResource.toEscapedModel());
 	}
 
@@ -282,7 +282,7 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	}
 
 	@Override
-	public WikiPageResource toUnescapedModel() {
+	public com.liferay.wiki.model.WikiPageResource toUnescapedModel() {
 		return new WikiPageResourceWrapper(_wikiPageResource.toUnescapedModel());
 	}
 

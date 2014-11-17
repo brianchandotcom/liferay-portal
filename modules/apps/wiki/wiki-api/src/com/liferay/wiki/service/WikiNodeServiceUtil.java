@@ -16,13 +16,14 @@ package com.liferay.wiki.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.wiki.model.WikiNode;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for WikiNode. This utility wraps
- * {@link com.liferay.portlet.wiki.service.impl.WikiNodeServiceImpl} and is the
+ * {@link com.liferay.wiki.service.impl.WikiNodeServiceImpl} and is the
  * primary access point for service operations in application layer code running
  * on a remote server. Methods of this service are expected to have security
  * checks based on the propagated JAAS credentials because this service can be
@@ -30,8 +31,8 @@ import com.liferay.wiki.model.WikiNode;
  *
  * @author Brian Wing Shun Chan
  * @see WikiNodeService
- * @see com.liferay.portlet.wiki.service.base.WikiNodeServiceBaseImpl
- * @see com.liferay.portlet.wiki.service.impl.WikiNodeServiceImpl
+ * @see com.liferay.wiki.service.base.WikiNodeServiceBaseImpl
+ * @see com.liferay.wiki.service.impl.WikiNodeServiceImpl
  * @generated
  */
 @ProviderType
@@ -39,9 +40,9 @@ public class WikiNodeServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.wiki.service.impl.WikiNodeServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.wiki.service.impl.WikiNodeServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static WikiNode addNode(
+	public static com.liferay.wiki.model.WikiNode addNode(
 		java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -62,35 +63,35 @@ public class WikiNodeServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
-	public static WikiNode getNode(
-		long groupId, java.lang.String name)
+	public static com.liferay.wiki.model.WikiNode getNode(long groupId,
+		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getNode(groupId, name);
 	}
 
-	public static WikiNode getNode(long nodeId)
+	public static com.liferay.wiki.model.WikiNode getNode(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getNode(nodeId);
 	}
 
-	public static java.util.List<WikiNode> getNodes(
+	public static java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getNodes(groupId);
 	}
 
-	public static java.util.List<WikiNode> getNodes(
+	public static java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
 		long groupId, int start, int end) {
 		return getService().getNodes(groupId, start, end);
 	}
 
-	public static java.util.List<WikiNode> getNodes(
+	public static java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
 		long groupId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getNodes(groupId, status);
 	}
 
-	public static java.util.List<WikiNode> getNodes(
+	public static java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
 		long groupId, int status, int start, int end) {
 		return getService().getNodes(groupId, status, start, end);
 	}
@@ -110,8 +111,8 @@ public class WikiNodeServiceUtil {
 		getService().importPages(nodeId, importer, inputStreams, options);
 	}
 
-	public static WikiNode moveNodeToTrash(
-		long nodeId) throws com.liferay.portal.kernel.exception.PortalException {
+	public static com.liferay.wiki.model.WikiNode moveNodeToTrash(long nodeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().moveNodeToTrash(nodeId);
 	}
 
@@ -139,22 +140,15 @@ public class WikiNodeServiceUtil {
 		getService().unsubscribeNode(nodeId);
 	}
 
-	public static WikiNode updateNode(
-		long nodeId, java.lang.String name, java.lang.String description,
+	public static com.liferay.wiki.model.WikiNode updateNode(long nodeId,
+		java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateNode(nodeId, name, description, serviceContext);
 	}
 
 	public static WikiNodeService getService() {
-		if (_service == null) {
-			_service = (WikiNodeService)PortalBeanLocatorUtil.locate(WikiNodeService.class.getName());
-
-			ReferenceRegistry.registerReference(WikiNodeServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -164,5 +158,14 @@ public class WikiNodeServiceUtil {
 	public void setService(WikiNodeService service) {
 	}
 
-	private static WikiNodeService _service;
+	private static ServiceTracker<WikiNodeService, WikiNodeService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(WikiNodeServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<WikiNodeService, WikiNodeService>(bundle.getBundleContext(),
+				WikiNodeService.class, null);
+
+		_serviceTracker.open();
+	}
 }

@@ -17,7 +17,6 @@ package com.liferay.wiki.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.service.ServiceWrapper;
-import com.liferay.wiki.model.WikiNode;
 
 /**
  * Provides a wrapper for {@link WikiNodeLocalService}.
@@ -35,14 +34,14 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	}
 
 	@Override
-	public WikiNode addDefaultNode(long userId,
+	public com.liferay.wiki.model.WikiNode addDefaultNode(long userId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeLocalService.addDefaultNode(userId, serviceContext);
 	}
 
 	@Override
-	public WikiNode addNode(long userId,
+	public com.liferay.wiki.model.WikiNode addNode(long userId,
 		java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -51,7 +50,7 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	}
 
 	@Override
-	public void addNodeResources(WikiNode node,
+	public void addNodeResources(com.liferay.wiki.model.WikiNode node,
 		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_wikiNodeLocalService.addNodeResources(node, addGroupPermissions,
@@ -59,7 +58,7 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	}
 
 	@Override
-	public void addNodeResources(WikiNode node,
+	public void addNodeResources(com.liferay.wiki.model.WikiNode node,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_wikiNodeLocalService.addNodeResources(node, groupPermissions,
@@ -89,8 +88,8 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	* @return the wiki node that was added
 	*/
 	@Override
-	public WikiNode addWikiNode(
-		WikiNode wikiNode) {
+	public com.liferay.wiki.model.WikiNode addWikiNode(
+		com.liferay.wiki.model.WikiNode wikiNode) {
 		return _wikiNodeLocalService.addWikiNode(wikiNode);
 	}
 
@@ -101,12 +100,12 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	* @return the new wiki node
 	*/
 	@Override
-	public WikiNode createWikiNode(long nodeId) {
+	public com.liferay.wiki.model.WikiNode createWikiNode(long nodeId) {
 		return _wikiNodeLocalService.createWikiNode(nodeId);
 	}
 
 	@Override
-	public void deleteNode(WikiNode node)
+	public void deleteNode(com.liferay.wiki.model.WikiNode node)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_wikiNodeLocalService.deleteNode(node);
 	}
@@ -141,7 +140,7 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	* @throws PortalException if a wiki node with the primary key could not be found
 	*/
 	@Override
-	public WikiNode deleteWikiNode(long nodeId)
+	public com.liferay.wiki.model.WikiNode deleteWikiNode(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeLocalService.deleteWikiNode(nodeId);
 	}
@@ -153,8 +152,8 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	* @return the wiki node that was removed
 	*/
 	@Override
-	public WikiNode deleteWikiNode(
-		WikiNode wikiNode) {
+	public com.liferay.wiki.model.WikiNode deleteWikiNode(
+		com.liferay.wiki.model.WikiNode wikiNode) {
 		return _wikiNodeLocalService.deleteWikiNode(wikiNode);
 	}
 
@@ -179,7 +178,7 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	* Performs a dynamic query on the database and returns a range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.wiki.model.impl.WikiNodeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiNodeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -198,7 +197,7 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.wiki.model.impl.WikiNodeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiNodeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -243,19 +242,19 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	}
 
 	@Override
-	public WikiNode fetchNode(long groupId,
+	public com.liferay.wiki.model.WikiNode fetchNode(long groupId,
 		java.lang.String name) {
 		return _wikiNodeLocalService.fetchNode(groupId, name);
 	}
 
 	@Override
-	public WikiNode fetchNodeByUuidAndGroupId(
+	public com.liferay.wiki.model.WikiNode fetchNodeByUuidAndGroupId(
 		java.lang.String uuid, long groupId) {
 		return _wikiNodeLocalService.fetchNodeByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override
-	public WikiNode fetchWikiNode(long nodeId) {
+	public com.liferay.wiki.model.WikiNode fetchWikiNode(long nodeId) {
 		return _wikiNodeLocalService.fetchWikiNode(nodeId);
 	}
 
@@ -267,7 +266,7 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	* @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	*/
 	@Override
-	public WikiNode fetchWikiNodeByUuidAndGroupId(
+	public com.liferay.wiki.model.WikiNode fetchWikiNodeByUuidAndGroupId(
 		java.lang.String uuid, long groupId) {
 		return _wikiNodeLocalService.fetchWikiNodeByUuidAndGroupId(uuid, groupId);
 	}
@@ -288,13 +287,13 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	}
 
 	@Override
-	public java.util.List<WikiNode> getCompanyNodes(
+	public java.util.List<com.liferay.wiki.model.WikiNode> getCompanyNodes(
 		long companyId, int start, int end) {
 		return _wikiNodeLocalService.getCompanyNodes(companyId, start, end);
 	}
 
 	@Override
-	public java.util.List<WikiNode> getCompanyNodes(
+	public java.util.List<com.liferay.wiki.model.WikiNode> getCompanyNodes(
 		long companyId, int status, int start, int end) {
 		return _wikiNodeLocalService.getCompanyNodes(companyId, status, start,
 			end);
@@ -317,41 +316,41 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	}
 
 	@Override
-	public WikiNode getNode(long groupId,
+	public com.liferay.wiki.model.WikiNode getNode(long groupId,
 		java.lang.String nodeName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeLocalService.getNode(groupId, nodeName);
 	}
 
 	@Override
-	public WikiNode getNode(long nodeId)
+	public com.liferay.wiki.model.WikiNode getNode(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeLocalService.getNode(nodeId);
 	}
 
 	@Override
-	public java.util.List<WikiNode> getNodes(
+	public java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeLocalService.getNodes(groupId);
 	}
 
 	@Override
-	public java.util.List<WikiNode> getNodes(
+	public java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
 		long groupId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeLocalService.getNodes(groupId, start, end);
 	}
 
 	@Override
-	public java.util.List<WikiNode> getNodes(
+	public java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
 		long groupId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeLocalService.getNodes(groupId, status);
 	}
 
 	@Override
-	public java.util.List<WikiNode> getNodes(
+	public java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
 		long groupId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeLocalService.getNodes(groupId, status, start, end);
@@ -382,7 +381,7 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	* @throws PortalException if a wiki node with the primary key could not be found
 	*/
 	@Override
-	public WikiNode getWikiNode(long nodeId)
+	public com.liferay.wiki.model.WikiNode getWikiNode(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeLocalService.getWikiNode(nodeId);
 	}
@@ -396,7 +395,7 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	* @throws PortalException if a matching wiki node could not be found
 	*/
 	@Override
-	public WikiNode getWikiNodeByUuidAndGroupId(
+	public com.liferay.wiki.model.WikiNode getWikiNodeByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeLocalService.getWikiNodeByUuidAndGroupId(uuid, groupId);
@@ -406,7 +405,7 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	* Returns a range of all the wiki nodes.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.wiki.model.impl.WikiNodeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiNodeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of wiki nodes
@@ -414,7 +413,7 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	* @return the range of wiki nodes
 	*/
 	@Override
-	public java.util.List<WikiNode> getWikiNodes(
+	public java.util.List<com.liferay.wiki.model.WikiNode> getWikiNodes(
 		int start, int end) {
 		return _wikiNodeLocalService.getWikiNodes(start, end);
 	}
@@ -427,7 +426,7 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	* @return the matching wiki nodes, or an empty list if no matches were found
 	*/
 	@Override
-	public java.util.List<WikiNode> getWikiNodesByUuidAndCompanyId(
+	public java.util.List<com.liferay.wiki.model.WikiNode> getWikiNodesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId) {
 		return _wikiNodeLocalService.getWikiNodesByUuidAndCompanyId(uuid,
 			companyId);
@@ -444,9 +443,9 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	* @return the range of matching wiki nodes, or an empty list if no matches were found
 	*/
 	@Override
-	public java.util.List<WikiNode> getWikiNodesByUuidAndCompanyId(
+	public java.util.List<com.liferay.wiki.model.WikiNode> getWikiNodesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiNode> orderByComparator) {
 		return _wikiNodeLocalService.getWikiNodesByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
 	}
@@ -471,22 +470,21 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	}
 
 	@Override
-	public WikiNode moveNodeToTrash(
-		long userId, WikiNode node)
+	public com.liferay.wiki.model.WikiNode moveNodeToTrash(long userId,
+		com.liferay.wiki.model.WikiNode node)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeLocalService.moveNodeToTrash(userId, node);
 	}
 
 	@Override
-	public WikiNode moveNodeToTrash(
-		long userId, long nodeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public com.liferay.wiki.model.WikiNode moveNodeToTrash(long userId,
+		long nodeId) throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeLocalService.moveNodeToTrash(userId, nodeId);
 	}
 
 	@Override
 	public void restoreNodeFromTrash(long userId,
-		WikiNode node)
+		com.liferay.wiki.model.WikiNode node)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_wikiNodeLocalService.restoreNodeFromTrash(userId, node);
 	}
@@ -514,7 +512,7 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	}
 
 	@Override
-	public WikiNode updateNode(long nodeId,
+	public com.liferay.wiki.model.WikiNode updateNode(long nodeId,
 		java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -523,8 +521,8 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	}
 
 	@Override
-	public WikiNode updateStatus(long userId,
-		WikiNode node, int status,
+	public com.liferay.wiki.model.WikiNode updateStatus(long userId,
+		com.liferay.wiki.model.WikiNode node, int status,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeLocalService.updateStatus(userId, node, status,
@@ -538,8 +536,8 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	* @return the wiki node that was updated
 	*/
 	@Override
-	public WikiNode updateWikiNode(
-		WikiNode wikiNode) {
+	public com.liferay.wiki.model.WikiNode updateWikiNode(
+		com.liferay.wiki.model.WikiNode wikiNode) {
 		return _wikiNodeLocalService.updateWikiNode(wikiNode);
 	}
 

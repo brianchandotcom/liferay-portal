@@ -23,8 +23,8 @@ import com.liferay.portal.model.PersistedModel;
  *
  * @author Brian Wing Shun Chan
  * @see WikiPageResourceModel
- * @see com.liferay.portlet.wiki.model.impl.WikiPageResourceImpl
- * @see com.liferay.portlet.wiki.model.impl.WikiPageResourceModelImpl
+ * @see com.liferay.wiki.model.impl.WikiPageResourceImpl
+ * @see com.liferay.wiki.model.impl.WikiPageResourceModelImpl
  * @generated
  */
 @ProviderType
@@ -32,6 +32,6 @@ public interface WikiPageResource extends WikiPageResourceModel, PersistedModel 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.wiki.model.impl.WikiPageResourceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to {@link com.liferay.wiki.model.impl.WikiPageResourceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 }

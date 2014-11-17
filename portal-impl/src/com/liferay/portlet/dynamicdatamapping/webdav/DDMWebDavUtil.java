@@ -238,11 +238,13 @@ public class DDMWebDavUtil {
 
 				String definition = StringUtil.read(request.getInputStream());
 
+				DDMForm ddmForm = getDDMForm(definition);
+
 				DDMStructureServiceUtil.updateStructure(
 					structure.getGroupId(), structure.getParentStructureId(),
 					structure.getClassNameId(), structure.getStructureKey(),
 					structure.getNameMap(), structure.getDescriptionMap(),
-					definition, new ServiceContext());
+					ddmForm, new ServiceContext());
 
 				return HttpServletResponse.SC_CREATED;
 			}

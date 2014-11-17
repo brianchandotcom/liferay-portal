@@ -630,21 +630,22 @@ public class DLFileEntryTypeLocalServiceImpl
 		}
 
 		try {
+			DDMForm ddmForm = getDDMForm(definition);
+
 			if (ddmStructure == null) {
 				ddmStructure = ddmStructureLocalService.addStructure(
 					userId, groupId,
 					DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 					classNameLocalService.getClassNameId(
 						DLFileEntryMetadata.class),
-					ddmStructureKey, nameMap, descriptionMap,
-					getDDMForm(definition), "xml",
+					ddmStructureKey, nameMap, descriptionMap, ddmForm, "xml",
 					DDMStructureConstants.TYPE_AUTO, serviceContext);
 			}
 			else {
 				ddmStructure = ddmStructureLocalService.updateStructure(
 					ddmStructure.getStructureId(),
 					ddmStructure.getParentStructureId(), nameMap,
-					descriptionMap, definition, serviceContext);
+					descriptionMap, ddmForm, serviceContext);
 			}
 
 			return ddmStructure.getStructureId();

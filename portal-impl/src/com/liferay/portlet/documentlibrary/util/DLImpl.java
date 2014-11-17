@@ -1010,6 +1010,11 @@ public class DLImpl implements DL {
 		return sb.toString();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getThumbnailSrc(FileEntry,
+	 *             ThemeDisplay)}
+	 */
+	@Deprecated
 	@Override
 	public String getThumbnailSrc(
 			FileEntry fileEntry, DLFileShortcut dlFileShortcut,
@@ -1017,14 +1022,27 @@ public class DLImpl implements DL {
 		throws Exception {
 
 		return getThumbnailSrc(
-			fileEntry, fileEntry.getFileVersion(), dlFileShortcut,
-			themeDisplay);
+			fileEntry, fileEntry.getFileVersion(), themeDisplay);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getThumbnailSrc(FileEntry,
+	 *             FileVersion, ThemeDisplay)}
+	 */
+	@Deprecated
+	@Override
+	public String getThumbnailSrc(
+			FileEntry fileEntry, FileVersion fileVersion,
+			DLFileShortcut dlFileShortcut, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		return getThumbnailSrc(fileEntry, fileVersion, themeDisplay);
 	}
 
 	@Override
 	public String getThumbnailSrc(
 			FileEntry fileEntry, FileVersion fileVersion,
-			DLFileShortcut dlFileShortcut, ThemeDisplay themeDisplay)
+			ThemeDisplay themeDisplay)
 		throws Exception {
 
 		String thumbnailQueryString = null;
@@ -1043,6 +1061,15 @@ public class DLImpl implements DL {
 
 		return getImageSrc(
 			fileEntry, fileVersion, themeDisplay, thumbnailQueryString);
+	}
+
+	@Override
+	public String getThumbnailSrc(
+			FileEntry fileEntry, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		return getThumbnailSrc(
+			fileEntry, fileEntry.getFileVersion(), themeDisplay);
 	}
 
 	@Override

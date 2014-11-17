@@ -79,7 +79,7 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 					boolean hasVideo = VideoProcessorUtil.hasVideo(fileVersion);
 
 					String href = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(fileEntry.getExtension()) + ".png";
-					String src = DLUtil.getThumbnailSrc(fileEntry, fileVersion, null, themeDisplay);
+					String src = DLUtil.getThumbnailSrc(fileEntry, fileVersion, themeDisplay);
 
 					int playerHeight = 500;
 

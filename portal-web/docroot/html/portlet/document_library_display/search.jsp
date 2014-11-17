@@ -193,7 +193,7 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 						description="<%= (summary != null) ? summary.getContent() : fileEntry.getDescription() %>"
 						mbMessages="<%= searchResult.getMBMessages() %>"
 						queryTerms="<%= hits.getQueryTerms() %>"
-						thumbnailSrc="<%= DLUtil.getThumbnailSrc(fileEntry, null, themeDisplay) %>"
+						thumbnailSrc="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>"
 						title="<%= (summary != null) ? summary.getTitle() : fileEntry.getTitle() %>"
 						url="<%= rowURL %>"
 					/>

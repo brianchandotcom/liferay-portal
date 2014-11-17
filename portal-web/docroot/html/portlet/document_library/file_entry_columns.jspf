@@ -70,7 +70,7 @@ for (int j = 0; j < fileEntryColumns.length; j++) {
 			>
 
 				<%
-				String thumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, latestFileVersion, fileShortcut, themeDisplay);
+				String thumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, latestFileVersion, themeDisplay);
 				%>
 
 				<span class="entry-thumbnail">

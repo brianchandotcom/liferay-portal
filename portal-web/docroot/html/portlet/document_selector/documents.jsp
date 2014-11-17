@@ -356,7 +356,7 @@ portletURL.setParameter("type", type);
 			<liferay-ui:search-container-column-text
 				name="document"
 			>
-				<img align="left" alt="" src="<%= DLUtil.getThumbnailSrc(fileEntry, null, themeDisplay) %>" style="<%= DLUtil.getThumbnailStyle() %>" />
+				<img align="left" alt="" src="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>" style="<%= DLUtil.getThumbnailStyle() %>" />
 				<%= HtmlUtil.escape(fileEntry.getTitle()) %>
 			</liferay-ui:search-container-column-text>
 

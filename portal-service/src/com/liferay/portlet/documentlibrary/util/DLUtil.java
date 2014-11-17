@@ -285,6 +285,11 @@ public class DLUtil {
 		return getDL().getTempFileId(id, version, languageId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getThumbnailSrc(FileEntry,
+	 *             ThemeDisplay)}
+	 */
+	@Deprecated
 	public static String getThumbnailSrc(
 			FileEntry fileEntry, DLFileShortcut dlFileShortcut,
 			ThemeDisplay themeDisplay)
@@ -293,6 +298,11 @@ public class DLUtil {
 		return getDL().getThumbnailSrc(fileEntry, dlFileShortcut, themeDisplay);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getThumbnailSrc(FileEntry,
+	 *             FileVersion, ThemeDisplay)}
+	 */
+	@Deprecated
 	public static String getThumbnailSrc(
 			FileEntry fileEntry, FileVersion fileVersion,
 			DLFileShortcut dlFileShortcut, ThemeDisplay themeDisplay)
@@ -300,6 +310,21 @@ public class DLUtil {
 
 		return getDL().getThumbnailSrc(
 			fileEntry, fileVersion, dlFileShortcut, themeDisplay);
+	}
+
+	public static String getThumbnailSrc(
+			FileEntry fileEntry, FileVersion fileVersion,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		return getDL().getThumbnailSrc(fileEntry, fileVersion, themeDisplay);
+	}
+
+	public static String getThumbnailSrc(
+			FileEntry fileEntry, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		return getDL().getThumbnailSrc(fileEntry, themeDisplay);
 	}
 
 	public static String getThumbnailStyle() throws Exception {

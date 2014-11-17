@@ -919,14 +919,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		Type javaType = new Type("boolean");
 
 		JavaMethod setAttributeMethod = tagJavaClass.getMethodBySignature(
-			setAttributeMethodName, new Type[] {javaType});
-
-		if (setAttributeMethod == null) {
-			JavaClass superJavaClass = tagJavaClass.getSuperJavaClass();
-
-			setAttributeMethod = superJavaClass.getMethodBySignature(
-				setAttributeMethodName, new Type[] {javaType});
-		}
+			setAttributeMethodName, new Type[] {javaType}, true);
 
 		if (setAttributeMethod == null) {
 			return line;

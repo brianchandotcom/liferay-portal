@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
-import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.model.WikiPageDisplay;
 
 /**
  * Provides the local service interface for WikiPage. Methods of this
@@ -36,8 +34,8 @@ import com.liferay.wiki.model.WikiPageDisplay;
  *
  * @author Brian Wing Shun Chan
  * @see WikiPageLocalServiceUtil
- * @see com.liferay.portlet.wiki.service.base.WikiPageLocalServiceBaseImpl
- * @see com.liferay.portlet.wiki.service.impl.WikiPageLocalServiceImpl
+ * @see com.liferay.wiki.service.base.WikiPageLocalServiceBaseImpl
+ * @see com.liferay.wiki.service.impl.WikiPageLocalServiceImpl
  * @generated
  */
 @ProviderType
@@ -48,18 +46,18 @@ public interface WikiPageLocalService extends BaseLocalService,
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link WikiPageLocalServiceUtil} to access the wiki page local service. Add custom service methods to {@link com.liferay.portlet.wiki.service.impl.WikiPageLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link WikiPageLocalServiceUtil} to access the wiki page local service. Add custom service methods to {@link com.liferay.wiki.service.impl.WikiPageLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public WikiPage addPage(long userId,
-		long nodeId, java.lang.String title, java.lang.String content,
+	public com.liferay.wiki.model.WikiPage addPage(long userId, long nodeId,
+		java.lang.String title, java.lang.String content,
 		java.lang.String summary, boolean minorEdit,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public WikiPage addPage(long userId,
-		long nodeId, java.lang.String title, double version,
-		java.lang.String content, java.lang.String summary, boolean minorEdit,
-		java.lang.String format, boolean head, java.lang.String parentTitle,
+	public com.liferay.wiki.model.WikiPage addPage(long userId, long nodeId,
+		java.lang.String title, double version, java.lang.String content,
+		java.lang.String summary, boolean minorEdit, java.lang.String format,
+		boolean head, java.lang.String parentTitle,
 		java.lang.String redirectTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -87,11 +85,11 @@ public interface WikiPageLocalService extends BaseLocalService,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void addPageResources(WikiPage page,
+	public void addPageResources(com.liferay.wiki.model.WikiPage page,
 		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void addPageResources(WikiPage page,
+	public void addPageResources(com.liferay.wiki.model.WikiPage page,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -117,14 +115,14 @@ public interface WikiPageLocalService extends BaseLocalService,
 	* @return the wiki page that was added
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public WikiPage addWikiPage(
-		WikiPage wikiPage);
+	public com.liferay.wiki.model.WikiPage addWikiPage(
+		com.liferay.wiki.model.WikiPage wikiPage);
 
 	public void changeNode(long userId, long nodeId, java.lang.String title,
 		long newNodeId, com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public WikiPage changeParent(long userId,
+	public com.liferay.wiki.model.WikiPage changeParent(long userId,
 		long nodeId, java.lang.String title, java.lang.String newParentTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -139,7 +137,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 	* @param pageId the primary key for the new wiki page
 	* @return the new wiki page
 	*/
-	public WikiPage createWikiPage(long pageId);
+	public com.liferay.wiki.model.WikiPage createWikiPage(long pageId);
 
 	public void deletePage(long nodeId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -153,7 +151,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, send = false, type = SystemEventConstants.TYPE_DELETE)
-	public void deletePage(WikiPage page)
+	public void deletePage(com.liferay.wiki.model.WikiPage page)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deletePageAttachment(long nodeId, java.lang.String title,
@@ -189,7 +187,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 	* @throws PortalException if a wiki page with the primary key could not be found
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public WikiPage deleteWikiPage(long pageId)
+	public com.liferay.wiki.model.WikiPage deleteWikiPage(long pageId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -199,8 +197,8 @@ public interface WikiPageLocalService extends BaseLocalService,
 	* @return the wiki page that was removed
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public WikiPage deleteWikiPage(
-		WikiPage wikiPage);
+	public com.liferay.wiki.model.WikiPage deleteWikiPage(
+		com.liferay.wiki.model.WikiPage wikiPage);
 
 	public void discardDraft(long nodeId, java.lang.String title, double version)
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -220,7 +218,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 	* Performs a dynamic query on the database and returns a range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -236,7 +234,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -271,31 +269,30 @@ public interface WikiPageLocalService extends BaseLocalService,
 		com.liferay.portal.kernel.dao.orm.Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPage fetchLatestPage(
-		long nodeId, java.lang.String title, int status, boolean preferApproved);
+	public com.liferay.wiki.model.WikiPage fetchLatestPage(long nodeId,
+		java.lang.String title, int status, boolean preferApproved);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPage fetchLatestPage(
+	public com.liferay.wiki.model.WikiPage fetchLatestPage(
 		long resourcePrimKey, long nodeId, int status, boolean preferApproved);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPage fetchLatestPage(
+	public com.liferay.wiki.model.WikiPage fetchLatestPage(
 		long resourcePrimKey, int status, boolean preferApproved);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPage fetchPage(long nodeId,
+	public com.liferay.wiki.model.WikiPage fetchPage(long nodeId,
 		java.lang.String title);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPage fetchPage(long nodeId,
+	public com.liferay.wiki.model.WikiPage fetchPage(long nodeId,
 		java.lang.String title, double version);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPage fetchPage(
-		long resourcePrimKey);
+	public com.liferay.wiki.model.WikiPage fetchPage(long resourcePrimKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPage fetchWikiPage(long pageId);
+	public com.liferay.wiki.model.WikiPage fetchWikiPage(long pageId);
 
 	/**
 	* Returns the wiki page matching the UUID and group.
@@ -305,7 +302,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 	* @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPage fetchWikiPageByUuidAndGroupId(
+	public com.liferay.wiki.model.WikiPage fetchWikiPageByUuidAndGroupId(
 		java.lang.String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -319,16 +316,16 @@ public interface WikiPageLocalService extends BaseLocalService,
 	public java.lang.String getBeanIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<WikiPage> getChildren(
+	public java.util.List<com.liferay.wiki.model.WikiPage> getChildren(
 		long nodeId, boolean head, java.lang.String parentTitle);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<WikiPage> getChildren(
+	public java.util.List<com.liferay.wiki.model.WikiPage> getChildren(
 		long nodeId, boolean head, java.lang.String parentTitle, int start,
 		int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<WikiPage> getChildren(
+	public java.util.List<com.liferay.wiki.model.WikiPage> getChildren(
 		long nodeId, boolean head, java.lang.String parentTitle, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -340,11 +337,11 @@ public interface WikiPageLocalService extends BaseLocalService,
 		java.lang.String parentTitle, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<WikiPage> getDependentPages(
+	public java.util.List<com.liferay.wiki.model.WikiPage> getDependentPages(
 		long nodeId, boolean head, java.lang.String title, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPage getDraftPage(long nodeId,
+	public com.liferay.wiki.model.WikiPage getDraftPage(long nodeId,
 		java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -353,126 +350,125 @@ public interface WikiPageLocalService extends BaseLocalService,
 		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<WikiPage> getIncomingLinks(
+	public java.util.List<com.liferay.wiki.model.WikiPage> getIncomingLinks(
 		long nodeId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPage getLatestPage(long nodeId,
+	public com.liferay.wiki.model.WikiPage getLatestPage(long nodeId,
 		java.lang.String title, int status, boolean preferApproved)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPage getLatestPage(
-		long resourcePrimKey, long nodeId, int status, boolean preferApproved)
+	public com.liferay.wiki.model.WikiPage getLatestPage(long resourcePrimKey,
+		long nodeId, int status, boolean preferApproved)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPage getLatestPage(
-		long resourcePrimKey, int status, boolean preferApproved)
+	public com.liferay.wiki.model.WikiPage getLatestPage(long resourcePrimKey,
+		int status, boolean preferApproved)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<WikiPage> getNoAssetPages();
+	public java.util.List<com.liferay.wiki.model.WikiPage> getNoAssetPages();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<WikiPage> getOrphans(
+	public java.util.List<com.liferay.wiki.model.WikiPage> getOrphans(
 		long nodeId) throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<WikiPage> getOutgoingLinks(
+	public java.util.List<com.liferay.wiki.model.WikiPage> getOutgoingLinks(
 		long nodeId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public WikiPage getPage(long nodeId,
+	public com.liferay.wiki.model.WikiPage getPage(long nodeId,
 		java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public WikiPage getPage(long nodeId,
+	public com.liferay.wiki.model.WikiPage getPage(long nodeId,
 		java.lang.String title, java.lang.Boolean head)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public WikiPage getPage(long nodeId,
+	public com.liferay.wiki.model.WikiPage getPage(long nodeId,
 		java.lang.String title, double version)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public WikiPage getPage(long resourcePrimKey)
+	public com.liferay.wiki.model.WikiPage getPage(long resourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public WikiPage getPage(
-		long resourcePrimKey, java.lang.Boolean head)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPage getPageByPageId(long pageId)
+	public com.liferay.wiki.model.WikiPage getPage(long resourcePrimKey,
+		java.lang.Boolean head)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPageDisplay getPageDisplay(
-		long nodeId, java.lang.String title,
+	public com.liferay.wiki.model.WikiPage getPageByPageId(long pageId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.wiki.model.WikiPageDisplay getPageDisplay(long nodeId,
+		java.lang.String title, javax.portlet.PortletURL viewPageURL,
+		javax.portlet.PortletURL editPageURL,
+		java.lang.String attachmentURLPrefix)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.wiki.model.WikiPageDisplay getPageDisplay(
+		com.liferay.wiki.model.WikiPage page,
 		javax.portlet.PortletURL viewPageURL,
 		javax.portlet.PortletURL editPageURL,
 		java.lang.String attachmentURLPrefix)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPageDisplay getPageDisplay(
-		WikiPage page,
-		javax.portlet.PortletURL viewPageURL,
-		javax.portlet.PortletURL editPageURL,
-		java.lang.String attachmentURLPrefix)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<WikiPage> getPages(
+	public java.util.List<com.liferay.wiki.model.WikiPage> getPages(
 		java.lang.String format);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<WikiPage> getPages(
+	public java.util.List<com.liferay.wiki.model.WikiPage> getPages(
 		long nodeId, boolean head, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<WikiPage> getPages(
+	public java.util.List<com.liferay.wiki.model.WikiPage> getPages(
 		long nodeId, boolean head, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> obc);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<WikiPage> getPages(
+	public java.util.List<com.liferay.wiki.model.WikiPage> getPages(
 		long nodeId, boolean head, int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<WikiPage> getPages(
+	public java.util.List<com.liferay.wiki.model.WikiPage> getPages(
 		long nodeId, boolean head, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> obc);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<WikiPage> getPages(
+	public java.util.List<com.liferay.wiki.model.WikiPage> getPages(
 		long nodeId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<WikiPage> getPages(
+	public java.util.List<com.liferay.wiki.model.WikiPage> getPages(
 		long nodeId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> obc);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<WikiPage> getPages(
+	public java.util.List<com.liferay.wiki.model.WikiPage> getPages(
 		long nodeId, java.lang.String title, boolean head, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<WikiPage> getPages(
+	public java.util.List<com.liferay.wiki.model.WikiPage> getPages(
 		long nodeId, java.lang.String title, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<WikiPage> getPages(
+	public java.util.List<com.liferay.wiki.model.WikiPage> getPages(
 		long nodeId, java.lang.String title, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> obc);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<WikiPage> getPages(
+	public java.util.List<com.liferay.wiki.model.WikiPage> getPages(
 		long resourcePrimKey, long nodeId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<WikiPage> getPages(
+	public java.util.List<com.liferay.wiki.model.WikiPage> getPages(
 		long userId, long nodeId, int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -506,12 +502,12 @@ public interface WikiPageLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPage getPreviousVersionPage(
-		WikiPage page)
+	public com.liferay.wiki.model.WikiPage getPreviousVersionPage(
+		com.liferay.wiki.model.WikiPage page)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<WikiPage> getRecentChanges(
+	public java.util.List<com.liferay.wiki.model.WikiPage> getRecentChanges(
 		long groupId, long nodeId, int start, int end);
 
 	/**
@@ -520,7 +516,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<WikiPage> getRecentChanges(
+	public java.util.List<com.liferay.wiki.model.WikiPage> getRecentChanges(
 		long nodeId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -537,7 +533,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<WikiPage> getRedirectPages(
+	public java.util.List<com.liferay.wiki.model.WikiPage> getRedirectPages(
 		long nodeId, boolean head, java.lang.String redirectTitle, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -553,7 +549,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 	* @throws PortalException if a wiki page with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPage getWikiPage(long pageId)
+	public com.liferay.wiki.model.WikiPage getWikiPage(long pageId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -565,7 +561,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 	* @throws PortalException if a matching wiki page could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPage getWikiPageByUuidAndGroupId(
+	public com.liferay.wiki.model.WikiPage getWikiPageByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -573,7 +569,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 	* Returns a range of all the wiki pages.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of wiki pages
@@ -581,7 +577,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 	* @return the range of wiki pages
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<WikiPage> getWikiPages(
+	public java.util.List<com.liferay.wiki.model.WikiPage> getWikiPages(
 		int start, int end);
 
 	/**
@@ -592,7 +588,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 	* @return the matching wiki pages, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<WikiPage> getWikiPagesByUuidAndCompanyId(
+	public java.util.List<com.liferay.wiki.model.WikiPage> getWikiPagesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
 	/**
@@ -606,9 +602,9 @@ public interface WikiPageLocalService extends BaseLocalService,
 	* @return the range of matching wiki pages, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<WikiPage> getWikiPagesByUuidAndCompanyId(
+	public java.util.List<com.liferay.wiki.model.WikiPage> getWikiPagesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the number of wiki pages.
@@ -621,8 +617,8 @@ public interface WikiPageLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasDraftPage(long nodeId, java.lang.String title);
 
-	public void moveDependentToTrash(
-		WikiPage page, long trashEntryId)
+	public void moveDependentToTrash(com.liferay.wiki.model.WikiPage page,
+		long trashEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -650,8 +646,8 @@ public interface WikiPageLocalService extends BaseLocalService,
 		java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public WikiPage movePageFromTrash(
-		long userId, long nodeId, java.lang.String title, long newNodeId,
+	public com.liferay.wiki.model.WikiPage movePageFromTrash(long userId,
+		long nodeId, java.lang.String title, long newNodeId,
 		java.lang.String newParentTitle)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -660,22 +656,21 @@ public interface WikiPageLocalService extends BaseLocalService,
 	long, String, long, String)} *
 	*/
 	@java.lang.Deprecated
-	public WikiPage movePageFromTrash(
-		long userId, long nodeId, java.lang.String title,
-		java.lang.String newParentTitle,
+	public com.liferay.wiki.model.WikiPage movePageFromTrash(long userId,
+		long nodeId, java.lang.String title, java.lang.String newParentTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public WikiPage movePageToTrash(
-		long userId, long nodeId, java.lang.String title)
+	public com.liferay.wiki.model.WikiPage movePageToTrash(long userId,
+		long nodeId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public WikiPage movePageToTrash(
-		long userId, long nodeId, java.lang.String title, double version)
+	public com.liferay.wiki.model.WikiPage movePageToTrash(long userId,
+		long nodeId, java.lang.String title, double version)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public WikiPage movePageToTrash(
-		long userId, WikiPage page)
+	public com.liferay.wiki.model.WikiPage movePageToTrash(long userId,
+		com.liferay.wiki.model.WikiPage page)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void renamePage(long userId, long nodeId, java.lang.String title,
@@ -693,11 +688,11 @@ public interface WikiPageLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void restorePageFromTrash(long userId,
-		WikiPage page)
+		com.liferay.wiki.model.WikiPage page)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public WikiPage revertPage(long userId,
-		long nodeId, java.lang.String title, double version,
+	public com.liferay.wiki.model.WikiPage revertPage(long userId, long nodeId,
+		java.lang.String title, double version,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -714,16 +709,15 @@ public interface WikiPageLocalService extends BaseLocalService,
 	public void unsubscribePage(long userId, long nodeId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void updateAsset(long userId,
-		WikiPage page, long[] assetCategoryIds,
-		java.lang.String[] assetTagNames, long[] assetLinkEntryIds)
+	public void updateAsset(long userId, com.liferay.wiki.model.WikiPage page,
+		long[] assetCategoryIds, java.lang.String[] assetTagNames,
+		long[] assetLinkEntryIds)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public WikiPage updatePage(long userId,
-		long nodeId, java.lang.String title, double version,
-		java.lang.String content, java.lang.String summary, boolean minorEdit,
-		java.lang.String format, java.lang.String parentTitle,
-		java.lang.String redirectTitle,
+	public com.liferay.wiki.model.WikiPage updatePage(long userId, long nodeId,
+		java.lang.String title, double version, java.lang.String content,
+		java.lang.String summary, boolean minorEdit, java.lang.String format,
+		java.lang.String parentTitle, java.lang.String redirectTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -732,18 +726,18 @@ public interface WikiPageLocalService extends BaseLocalService,
 	int, ServiceContext, Map)}
 	*/
 	@java.lang.Deprecated
-	public WikiPage updateStatus(long userId,
-		WikiPage page, int status,
+	public com.liferay.wiki.model.WikiPage updateStatus(long userId,
+		com.liferay.wiki.model.WikiPage page, int status,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public WikiPage updateStatus(long userId,
-		WikiPage page, int status,
+	public com.liferay.wiki.model.WikiPage updateStatus(long userId,
+		com.liferay.wiki.model.WikiPage page, int status,
 		com.liferay.portal.service.ServiceContext serviceContext,
 		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public WikiPage updateStatus(long userId,
+	public com.liferay.wiki.model.WikiPage updateStatus(long userId,
 		long resourcePrimKey, int status,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -755,8 +749,8 @@ public interface WikiPageLocalService extends BaseLocalService,
 	* @return the wiki page that was updated
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public WikiPage updateWikiPage(
-		WikiPage wikiPage);
+	public com.liferay.wiki.model.WikiPage updateWikiPage(
+		com.liferay.wiki.model.WikiPage wikiPage);
 
 	public void validateTitle(java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException;

@@ -16,13 +16,14 @@ package com.liferay.wiki.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.wiki.model.WikiNode;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for WikiNode. This utility wraps
- * {@link com.liferay.portlet.wiki.service.impl.WikiNodeLocalServiceImpl} and is the
+ * {@link com.liferay.wiki.service.impl.WikiNodeLocalServiceImpl} and is the
  * primary access point for service operations in application layer code running
  * on the local server. Methods of this service will not have security checks
  * based on the propagated JAAS credentials because this service can only be
@@ -30,8 +31,8 @@ import com.liferay.wiki.model.WikiNode;
  *
  * @author Brian Wing Shun Chan
  * @see WikiNodeLocalService
- * @see com.liferay.portlet.wiki.service.base.WikiNodeLocalServiceBaseImpl
- * @see com.liferay.portlet.wiki.service.impl.WikiNodeLocalServiceImpl
+ * @see com.liferay.wiki.service.base.WikiNodeLocalServiceBaseImpl
+ * @see com.liferay.wiki.service.impl.WikiNodeLocalServiceImpl
  * @generated
  */
 @ProviderType
@@ -39,31 +40,29 @@ public class WikiNodeLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.wiki.service.impl.WikiNodeLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.wiki.service.impl.WikiNodeLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static WikiNode addDefaultNode(
-		long userId, com.liferay.portal.service.ServiceContext serviceContext)
+	public static com.liferay.wiki.model.WikiNode addDefaultNode(long userId,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addDefaultNode(userId, serviceContext);
 	}
 
-	public static WikiNode addNode(long userId,
+	public static com.liferay.wiki.model.WikiNode addNode(long userId,
 		java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addNode(userId, name, description, serviceContext);
 	}
 
-	public static void addNodeResources(
-		WikiNode node,
+	public static void addNodeResources(com.liferay.wiki.model.WikiNode node,
 		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.addNodeResources(node, addGroupPermissions, addGuestPermissions);
 	}
 
-	public static void addNodeResources(
-		WikiNode node,
+	public static void addNodeResources(com.liferay.wiki.model.WikiNode node,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().addNodeResources(node, groupPermissions, guestPermissions);
@@ -88,8 +87,8 @@ public class WikiNodeLocalServiceUtil {
 	* @param wikiNode the wiki node
 	* @return the wiki node that was added
 	*/
-	public static WikiNode addWikiNode(
-		WikiNode wikiNode) {
+	public static com.liferay.wiki.model.WikiNode addWikiNode(
+		com.liferay.wiki.model.WikiNode wikiNode) {
 		return getService().addWikiNode(wikiNode);
 	}
 
@@ -99,12 +98,11 @@ public class WikiNodeLocalServiceUtil {
 	* @param nodeId the primary key for the new wiki node
 	* @return the new wiki node
 	*/
-	public static WikiNode createWikiNode(
-		long nodeId) {
+	public static com.liferay.wiki.model.WikiNode createWikiNode(long nodeId) {
 		return getService().createWikiNode(nodeId);
 	}
 
-	public static void deleteNode(WikiNode node)
+	public static void deleteNode(com.liferay.wiki.model.WikiNode node)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteNode(node);
 	}
@@ -135,8 +133,8 @@ public class WikiNodeLocalServiceUtil {
 	* @return the wiki node that was removed
 	* @throws PortalException if a wiki node with the primary key could not be found
 	*/
-	public static WikiNode deleteWikiNode(
-		long nodeId) throws com.liferay.portal.kernel.exception.PortalException {
+	public static com.liferay.wiki.model.WikiNode deleteWikiNode(long nodeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteWikiNode(nodeId);
 	}
 
@@ -146,8 +144,8 @@ public class WikiNodeLocalServiceUtil {
 	* @param wikiNode the wiki node
 	* @return the wiki node that was removed
 	*/
-	public static WikiNode deleteWikiNode(
-		WikiNode wikiNode) {
+	public static com.liferay.wiki.model.WikiNode deleteWikiNode(
+		com.liferay.wiki.model.WikiNode wikiNode) {
 		return getService().deleteWikiNode(wikiNode);
 	}
 
@@ -170,7 +168,7 @@ public class WikiNodeLocalServiceUtil {
 	* Performs a dynamic query on the database and returns a range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.wiki.model.impl.WikiNodeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiNodeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -188,7 +186,7 @@ public class WikiNodeLocalServiceUtil {
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.wiki.model.impl.WikiNodeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiNodeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -229,18 +227,17 @@ public class WikiNodeLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static WikiNode fetchNode(
-		long groupId, java.lang.String name) {
+	public static com.liferay.wiki.model.WikiNode fetchNode(long groupId,
+		java.lang.String name) {
 		return getService().fetchNode(groupId, name);
 	}
 
-	public static WikiNode fetchNodeByUuidAndGroupId(
+	public static com.liferay.wiki.model.WikiNode fetchNodeByUuidAndGroupId(
 		java.lang.String uuid, long groupId) {
 		return getService().fetchNodeByUuidAndGroupId(uuid, groupId);
 	}
 
-	public static WikiNode fetchWikiNode(
-		long nodeId) {
+	public static com.liferay.wiki.model.WikiNode fetchWikiNode(long nodeId) {
 		return getService().fetchWikiNode(nodeId);
 	}
 
@@ -251,7 +248,7 @@ public class WikiNodeLocalServiceUtil {
 	* @param groupId the primary key of the group
 	* @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	*/
-	public static WikiNode fetchWikiNodeByUuidAndGroupId(
+	public static com.liferay.wiki.model.WikiNode fetchWikiNodeByUuidAndGroupId(
 		java.lang.String uuid, long groupId) {
 		return getService().fetchWikiNodeByUuidAndGroupId(uuid, groupId);
 	}
@@ -269,12 +266,12 @@ public class WikiNodeLocalServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
-	public static java.util.List<WikiNode> getCompanyNodes(
+	public static java.util.List<com.liferay.wiki.model.WikiNode> getCompanyNodes(
 		long companyId, int start, int end) {
 		return getService().getCompanyNodes(companyId, start, end);
 	}
 
-	public static java.util.List<WikiNode> getCompanyNodes(
+	public static java.util.List<com.liferay.wiki.model.WikiNode> getCompanyNodes(
 		long companyId, int status, int start, int end) {
 		return getService().getCompanyNodes(companyId, status, start, end);
 	}
@@ -292,36 +289,36 @@ public class WikiNodeLocalServiceUtil {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
-	public static WikiNode getNode(
-		long groupId, java.lang.String nodeName)
+	public static com.liferay.wiki.model.WikiNode getNode(long groupId,
+		java.lang.String nodeName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getNode(groupId, nodeName);
 	}
 
-	public static WikiNode getNode(long nodeId)
+	public static com.liferay.wiki.model.WikiNode getNode(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getNode(nodeId);
 	}
 
-	public static java.util.List<WikiNode> getNodes(
+	public static java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getNodes(groupId);
 	}
 
-	public static java.util.List<WikiNode> getNodes(
+	public static java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
 		long groupId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getNodes(groupId, start, end);
 	}
 
-	public static java.util.List<WikiNode> getNodes(
+	public static java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
 		long groupId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getNodes(groupId, status);
 	}
 
-	public static java.util.List<WikiNode> getNodes(
+	public static java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
 		long groupId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getNodes(groupId, status, start, end);
@@ -348,8 +345,8 @@ public class WikiNodeLocalServiceUtil {
 	* @return the wiki node
 	* @throws PortalException if a wiki node with the primary key could not be found
 	*/
-	public static WikiNode getWikiNode(
-		long nodeId) throws com.liferay.portal.kernel.exception.PortalException {
+	public static com.liferay.wiki.model.WikiNode getWikiNode(long nodeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getWikiNode(nodeId);
 	}
 
@@ -361,7 +358,7 @@ public class WikiNodeLocalServiceUtil {
 	* @return the matching wiki node
 	* @throws PortalException if a matching wiki node could not be found
 	*/
-	public static WikiNode getWikiNodeByUuidAndGroupId(
+	public static com.liferay.wiki.model.WikiNode getWikiNodeByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getWikiNodeByUuidAndGroupId(uuid, groupId);
@@ -371,14 +368,14 @@ public class WikiNodeLocalServiceUtil {
 	* Returns a range of all the wiki nodes.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.wiki.model.impl.WikiNodeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiNodeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of wiki nodes
 	* @param end the upper bound of the range of wiki nodes (not inclusive)
 	* @return the range of wiki nodes
 	*/
-	public static java.util.List<WikiNode> getWikiNodes(
+	public static java.util.List<com.liferay.wiki.model.WikiNode> getWikiNodes(
 		int start, int end) {
 		return getService().getWikiNodes(start, end);
 	}
@@ -390,7 +387,7 @@ public class WikiNodeLocalServiceUtil {
 	* @param companyId the primary key of the company
 	* @return the matching wiki nodes, or an empty list if no matches were found
 	*/
-	public static java.util.List<com.liferay.portlet.wiki.model.WikiNode> getWikiNodesByUuidAndCompanyId(
+	public static java.util.List<com.liferay.wiki.model.WikiNode> getWikiNodesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId) {
 		return getService().getWikiNodesByUuidAndCompanyId(uuid, companyId);
 	}
@@ -405,9 +402,9 @@ public class WikiNodeLocalServiceUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the range of matching wiki nodes, or an empty list if no matches were found
 	*/
-	public static java.util.List<com.liferay.portlet.wiki.model.WikiNode> getWikiNodesByUuidAndCompanyId(
+	public static java.util.List<com.liferay.wiki.model.WikiNode> getWikiNodesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiNode> orderByComparator) {
 		return getService()
 				   .getWikiNodesByUuidAndCompanyId(uuid, companyId, start, end,
 			orderByComparator);
@@ -429,20 +426,19 @@ public class WikiNodeLocalServiceUtil {
 		getService().importPages(userId, nodeId, importer, inputStreams, options);
 	}
 
-	public static WikiNode moveNodeToTrash(
-		long userId, WikiNode node)
+	public static com.liferay.wiki.model.WikiNode moveNodeToTrash(long userId,
+		com.liferay.wiki.model.WikiNode node)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().moveNodeToTrash(userId, node);
 	}
 
-	public static WikiNode moveNodeToTrash(
-		long userId, long nodeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static com.liferay.wiki.model.WikiNode moveNodeToTrash(long userId,
+		long nodeId) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().moveNodeToTrash(userId, nodeId);
 	}
 
 	public static void restoreNodeFromTrash(long userId,
-		WikiNode node)
+		com.liferay.wiki.model.WikiNode node)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().restoreNodeFromTrash(userId, node);
 	}
@@ -466,15 +462,15 @@ public class WikiNodeLocalServiceUtil {
 		getService().unsubscribeNode(userId, nodeId);
 	}
 
-	public static WikiNode updateNode(
-		long nodeId, java.lang.String name, java.lang.String description,
+	public static com.liferay.wiki.model.WikiNode updateNode(long nodeId,
+		java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateNode(nodeId, name, description, serviceContext);
 	}
 
-	public static WikiNode updateStatus(
-		long userId, WikiNode node, int status,
+	public static com.liferay.wiki.model.WikiNode updateStatus(long userId,
+		com.liferay.wiki.model.WikiNode node, int status,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateStatus(userId, node, status, serviceContext);
@@ -486,20 +482,13 @@ public class WikiNodeLocalServiceUtil {
 	* @param wikiNode the wiki node
 	* @return the wiki node that was updated
 	*/
-	public static WikiNode updateWikiNode(
-		WikiNode wikiNode) {
+	public static com.liferay.wiki.model.WikiNode updateWikiNode(
+		com.liferay.wiki.model.WikiNode wikiNode) {
 		return getService().updateWikiNode(wikiNode);
 	}
 
 	public static WikiNodeLocalService getService() {
-		if (_service == null) {
-			_service = (WikiNodeLocalService)PortalBeanLocatorUtil.locate(WikiNodeLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(WikiNodeLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -509,5 +498,14 @@ public class WikiNodeLocalServiceUtil {
 	public void setService(WikiNodeLocalService service) {
 	}
 
-	private static WikiNodeLocalService _service;
+	private static ServiceTracker<WikiNodeLocalService, WikiNodeLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(WikiNodeLocalServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<WikiNodeLocalService, WikiNodeLocalService>(bundle.getBundleContext(),
+				WikiNodeLocalService.class, null);
+
+		_serviceTracker.open();
+	}
 }

@@ -14,31 +14,24 @@
 
 package com.liferay.portlet.dynamicdatamapping.service;
 
+import com.liferay.portal.kernel.locale.test.LocaleTestUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.test.DependenciesTestUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
-import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
+import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestHelper;
 
 import java.io.File;
-import java.io.InputStream;
-
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 
 import org.junit.Before;
 
@@ -49,7 +42,10 @@ public class BaseDDMServiceTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		group = GroupTestUtil.addGroup();
+		Group testGroup = GroupTestUtil.addGroup();
+
+		ddmStructureTestHelper = new DDMStructureTestHelper(testGroup);
+		group = testGroup;
 	}
 
 	protected DDMTemplate addDisplayTemplate(
@@ -92,15 +88,9 @@ public class BaseDDMServiceTestCase {
 			String name, String definition, String storageType, int type)
 		throws Exception {
 
-		DDMXMLUtil.validateXML(definition);
-
-		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
-
-		return DDMStructureLocalServiceUtil.addStructure(
-			TestPropsValues.getUserId(), group.getGroupId(), parentStructureId,
-			classNameId, structureKey, getDefaultLocaleMap(name), null, ddmForm,
-			storageType, type,
-			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+		return ddmStructureTestHelper.addStructure(
+			parentStructureId, classNameId, structureKey, name, definition,
+			storageType, type);
 	}
 
 	protected DDMStructure addStructure(long classNameId, String name)
@@ -118,9 +108,8 @@ public class BaseDDMServiceTestCase {
 			String definition, String storageType, int type)
 		throws Exception {
 
-		return addStructure(
-			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, classNameId,
-			structureKey, name, definition, storageType, type);
+		return ddmStructureTestHelper.addStructure(
+			classNameId, structureKey, name, definition, storageType, type);
 	}
 
 	protected DDMTemplate addTemplate(
@@ -151,21 +140,14 @@ public class BaseDDMServiceTestCase {
 
 		return DDMTemplateLocalServiceUtil.addTemplate(
 			TestPropsValues.getUserId(), group.getGroupId(), classNameId,
-			classPK, templateKey, getDefaultLocaleMap(name), null, type, mode,
-			language, script, cacheable, smallImage, smallImageURL, smallFile,
+			classPK, templateKey, LocaleTestUtil.getDefaultLocaleMap(name),
+			null, type, mode, language, script, cacheable, smallImage,
+			smallImageURL, smallFile,
 			ServiceContextTestUtil.getServiceContext());
 	}
 
 	protected String getBasePath() {
 		return "com/liferay/portlet/dynamicdatamapping/dependencies/";
-	}
-
-	protected Map<Locale, String> getDefaultLocaleMap(String defaultValue) {
-		Map<Locale, String> map = new HashMap<Locale, String>();
-
-		map.put(LocaleUtil.getSiteDefault(), defaultValue);
-
-		return map;
 	}
 
 	protected String getTestStructureDefinition(String storageType)
@@ -194,15 +176,11 @@ public class BaseDDMServiceTestCase {
 	}
 
 	protected String readText(String fileName) throws Exception {
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		InputStream inputStream = classLoader.getResourceAsStream(
-			getBasePath() + fileName);
-
-		return StringUtil.read(inputStream);
+		return DependenciesTestUtil.readText(
+			getClass(), getBasePath() + fileName);
 	}
+
+	protected DDMStructureTestHelper ddmStructureTestHelper;
 
 	@DeleteAfterTestRun
 	protected Group group;

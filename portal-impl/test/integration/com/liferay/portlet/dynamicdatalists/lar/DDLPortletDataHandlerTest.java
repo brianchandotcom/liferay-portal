@@ -21,7 +21,8 @@ import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
-import com.liferay.portlet.dynamicdatalists.util.test.DDLTestUtil;
+import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordSetTestHelper;
+import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordTestHelper;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 
@@ -39,11 +40,15 @@ public class DDLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			stagingGroup.getGroupId(), DDLRecordSet.class.getName());
 
-		DDLRecordSet recordSet = DDLTestUtil.addRecordSet(
-			stagingGroup.getGroupId(), ddmStructure.getStructureId());
+		DDLRecordSetTestHelper recordSetTestHelper = new DDLRecordSetTestHelper(
+			stagingGroup);
 
-		DDLTestUtil.addRecord(
-			stagingGroup.getGroupId(), recordSet.getRecordSetId());
+		DDLRecordSet recordSet = recordSetTestHelper.addRecordSet(ddmStructure);
+
+		DDLRecordTestHelper recordTestHelper = new DDLRecordTestHelper(
+			stagingGroup, recordSet);
+
+		recordTestHelper.addRecord();
 	}
 
 	@Override

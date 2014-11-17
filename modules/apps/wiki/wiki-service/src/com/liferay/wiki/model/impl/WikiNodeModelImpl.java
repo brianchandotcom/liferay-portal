@@ -42,6 +42,7 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
+
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiNodeModel;
 import com.liferay.wiki.model.WikiNodeSoap;
@@ -76,7 +77,7 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a wiki node model instance should use the {@link com.liferay.portlet.wiki.model.WikiNode} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a wiki node model instance should use the {@link com.liferay.wiki.model.WikiNode} interface instead.
 	 */
 	public static final String TABLE_NAME = "WikiNode";
 	public static final Object[][] TABLE_COLUMNS = {
@@ -103,14 +104,14 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portlet.wiki.model.WikiNode"),
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.wiki.model.WikiNode"),
 			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portlet.wiki.model.WikiNode"),
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.wiki.model.WikiNode"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portlet.wiki.model.WikiNode"),
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.wiki.model.WikiNode"),
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
@@ -170,8 +171,8 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portlet.wiki.model.WikiNode"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
+				"lock.expiration.time.com.liferay.wiki.model.WikiNode"));
 
 	public WikiNodeModelImpl() {
 	}
@@ -1110,7 +1111,7 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portlet.wiki.model.WikiNode");
+		sb.append("com.liferay.wiki.model.WikiNode");
 		sb.append("</model-name>");
 
 		sb.append(

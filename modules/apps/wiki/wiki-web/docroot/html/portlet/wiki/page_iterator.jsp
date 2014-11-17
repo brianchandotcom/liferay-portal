@@ -359,12 +359,12 @@ for (int i = 0; i < results.size(); i++) {
 			row.addText(StringPool.BLANK);
 		}
 		else {
-			row.addJSP("/html/portlet/wiki/page_history_action.jsp", "entry-action");
+			row.addJSP("/html/portlet/wiki/page_history_action.jsp", "entry-action", application, request, response);
 		}
 	}
 
 	if (type.equals("all_pages") || type.equals("categorized_pages") || type.equals("draft_pages") || type.equals("orphan_pages") || type.equals("recent_changes") || type.equals("tagged_pages")) {
-		row.addJSP("/html/portlet/wiki/page_action.jsp", "entry-action");
+		row.addJSP("/html/portlet/wiki/page_action.jsp", "entry-action", application, request, response);
 	}
 
 	// Add result row

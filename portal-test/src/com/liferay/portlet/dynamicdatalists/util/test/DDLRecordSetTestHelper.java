@@ -17,6 +17,7 @@ package com.liferay.portlet.dynamicdatalists.util.test;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSetConstants;
@@ -44,10 +45,8 @@ public class DDLRecordSetTestHelper {
 
 		nameMap.put(LocaleUtil.US, "Test Record Set");
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		return DDLRecordSetLocalServiceUtil.addRecordSet(
 			TestPropsValues.getUserId(), _group.getGroupId(),

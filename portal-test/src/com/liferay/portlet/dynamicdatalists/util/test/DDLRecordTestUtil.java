@@ -15,14 +15,67 @@
 package com.liferay.portlet.dynamicdatalists.util.test;
 
 import com.liferay.portal.kernel.test.DependenciesTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.test.TestPropsValues;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
+import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
+import com.liferay.portlet.dynamicdatamapping.model.Value;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
+
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
 
 /**
  * @author Marcellus Tavares
  * @author André de Oliveira
  */
 public class DDLRecordTestUtil {
+
+	public static DDMFormValues createDDMFormValues(DDMForm ddmForm) {
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
+
+		Set<Locale> availableLocales = new HashSet<Locale>();
+
+		availableLocales.add(LocaleUtil.US);
+
+		ddmFormValues.setAvailableLocales(availableLocales);
+		ddmFormValues.setDefaultLocale(LocaleUtil.US);
+
+		return ddmFormValues;
+	}
+
+	public static DDMFormFieldValue createLocalizedTextDDMFormFieldValue(
+		String name, String enValue) {
+
+		Value localizedValue = new LocalizedValue(LocaleUtil.US);
+
+		localizedValue.addString(LocaleUtil.US, enValue);
+
+		return createTextDDMFormFieldValue(name, localizedValue);
+	}
+
+	public static DDMFormFieldValue createTextDDMFormFieldValue(
+		String name, Value value) {
+
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+		ddmFormFieldValue.setInstanceId(StringUtil.randomString());
+		ddmFormFieldValue.setName(name);
+		ddmFormFieldValue.setValue(value);
+
+		return ddmFormFieldValue;
+	}
+
+	public static DDMFormFieldValue createUnlocalizedTextDDMFormFieldValue(
+		String name, String value) {
+
+		return createTextDDMFormFieldValue(name, new UnlocalizedValue(value));
+	}
 
 	public static String getBasePath() {
 		return "com/liferay/portlet/dynamicdatalists/dependencies/";

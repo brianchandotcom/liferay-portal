@@ -74,19 +74,11 @@ public class DDMStructureTestHelper {
 			DDMStructureConstants.TYPE_DEFAULT);
 	}
 
-	public DDMStructure addStructureJson(String definition) throws Exception {
-		return addStructure(definition, StorageType.JSON.getValue());
-	}
-
-	public DDMStructure addStructureXml(String definition) throws Exception {
-		return addStructure(definition, StorageType.XML.getValue());
-	}
-
 	public DDMStructure addStructureXsd(Class<?> testClass) throws Exception {
 		String definition = DDLRecordTestUtil.readText(
 			testClass, "test-structure.xsd");
 
-		return addStructureXml(definition);
+		return addStructure(definition, StorageType.XML.toString());
 	}
 
 	private final Group _group;

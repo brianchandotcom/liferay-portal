@@ -44,7 +44,7 @@ for (WikiPage childPage : childPages) {
 		request.setAttribute(WikiWebKeys.WIKI_TREE_WALKER_DEPTH, depth + 1);
 %>
 
-		<liferay-util:include page="/html/portlet/wiki/page_tree.jsp" />
+		<liferay-util:include page="/html/portlet/wiki/page_tree.jsp" servletContext="<%= application %>" />
 
 <%
 	}

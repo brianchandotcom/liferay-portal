@@ -41,7 +41,7 @@
 		</permissions>
 	</portlet-resource>
 	<model-resource>
-		<model-name>com.liferay.portlet.wiki</model-name>
+		<model-name>com.liferay.wiki</model-name>
 		<portlet-ref>
 			<portlet-name>36_WAR_wikiweb</portlet-name>
 			<portlet-name>154_WAR_wikiweb</portlet-name>
@@ -62,7 +62,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.portlet.wiki.model.WikiNode</model-name>
+		<model-name>com.liferay.wiki.model.WikiNode</model-name>
 		<portlet-ref>
 			<portlet-name>36_WAR_wikiweb</portlet-name>
 			<portlet-name>154_WAR_wikiweb</portlet-name>
@@ -96,7 +96,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.portlet.wiki.model.WikiPage</model-name>
+		<model-name>com.liferay.wiki.model.WikiPage</model-name>
 		<portlet-ref>
 			<portlet-name>36_WAR_wikiweb</portlet-name>
 			<portlet-name>154_WAR_wikiweb</portlet-name>

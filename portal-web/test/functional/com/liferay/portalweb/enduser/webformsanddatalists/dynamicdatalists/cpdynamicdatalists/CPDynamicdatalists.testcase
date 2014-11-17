@@ -1144,8 +1144,6 @@
 	<command name="AddListRecordWithGeolocationField" priority="5">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
-		<var name="ddlRecordFieldData" value="34.028623, -117.810337" />
-		<var name="ddlRecordFieldDataFormatted" value="Latitude: 34.029, Longitude: -117.81" />
 		<var name="field" value="Geolocation" />
 		<var name="fieldFieldLabel" value="Geolocation" />
 		<var name="fieldName" value="Geolocation" />

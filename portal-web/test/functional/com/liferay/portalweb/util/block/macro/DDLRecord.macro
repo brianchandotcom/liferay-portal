@@ -174,7 +174,15 @@
 		<execute action="CPDynamicdatalistsListAddrecord#assertClick" locator-key1="GEOLOCATION_GEOLOCATE" value1="Geolocate" />
 		<execute action="CPDynamicdatalistsListAddrecord#sikuliClick" locator-key1="GEOLOCATION_SHARE_LOCATION_BUTTON_PNG" />
 		<execute action="CPDynamicdatalistsListAddrecord#sikuliClick" locator-key1="GEOLOCATION_SHARE_LOCATION_BUTTON_PNG" />
+		<execute action="CPDynamicdatalistsListAddrecord#pause" locator1="2000" />
 		<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="GEOLOCATION_LOCATION_LABEL" value1="Location:" />
+
+		<var method="selenium#getText(//div[@data-fieldname='Geolocation']/p/span)" name="coordinates" />
+
+		<var group="0" input="${coordinates}" name="ddlRecordFieldData" pattern="([0.0-9.9]*), ([-0.0-9.9]*)" />
+
+		<echo message="Location coordinates: ${ddlRecordFieldData}" />
+
 		<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="GEOLOCATION_LOCATION" value1="${ddlRecordFieldData}" />
 	</command>
 
@@ -518,6 +526,20 @@
 			<isset var="workflowStatus" />
 			<then>
 				<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_TWO_RECORD_1_WORKFLOW_STATUS" value1="Pending" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${field}" arg2="Geolocation" />
+			<then>
+				<var method="selenium#getText(//div[@id='_167_ocerSearchContainer']//tr/td[1]/a)" name="coordinates" />
+
+				<echo message="Location rounded coordinates: ${coordinates}" />
+
+				<var group="1" input="${coordinates}" name="latitude" pattern="Latitude: ([0.0-9.9]*), Longitude: ([-0.0-9.9]*)" />
+				<var group="2" input="${coordinates}" name="longitude" pattern="Latitude: ([0.0-9.9]*), Longitude: ([-0.0-9.9]*)" />
+
+				<var name="ddlRecordFieldData" value="Latitude: ${latitude}, Longitude: ${longitude}" />
 			</then>
 		</if>
 

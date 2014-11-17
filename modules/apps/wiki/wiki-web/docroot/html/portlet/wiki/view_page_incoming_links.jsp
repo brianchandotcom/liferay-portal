@@ -16,12 +16,12 @@
 
 <%@ include file="/html/portlet/wiki/init.jsp" %>
 
-<liferay-util:include page="/html/portlet/wiki/top_links.jsp" />
+<liferay-util:include page="/html/portlet/wiki/top_links.jsp" servletContext="<%= application %>" />
 
-<liferay-util:include page="/html/portlet/wiki/page_tabs.jsp">
+<liferay-util:include page="/html/portlet/wiki/page_tabs.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="tabs1" value="incoming-links" />
 </liferay-util:include>
 
-<liferay-util:include page="/html/portlet/wiki/page_iterator.jsp">
+<liferay-util:include page="/html/portlet/wiki/page_iterator.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="type" value="incoming_links" />
 </liferay-util:include>

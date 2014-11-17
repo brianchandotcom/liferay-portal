@@ -636,21 +636,24 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 * group, replacing its old parent structure, name map, description map, and
 	 * XSD with new ones.
 	 *
-	 * @param  groupId the primary key of the group
-	 * @param  parentStructureId the primary key of the new parent structure
-	 * @param  classNameId the primary key of the class name for the structure's
-	 *         related model
-	 * @param  structureKey the unique string identifying the structure
-	 * @param  nameMap the structure's new locales and localized names
-	 * @param  descriptionMap the structure's new locales and localized
-	 *         description
-	 * @param  xsd the structure's new XML schema definition
-	 * @param  serviceContext the service context to be applied. Can set the
-	 *         modification date.
-	 * @return the updated structure
-	 * @throws PortalException if the user did not have permission to update the
-	 *         structure or if a portal exception occurred
+	 * @param      groupId the primary key of the group
+	 * @param      parentStructureId the primary key of the new parent structure
+	 * @param      classNameId the primary key of the class name for the
+	 *             structure's related model
+	 * @param      structureKey the unique string identifying the structure
+	 * @param      nameMap the structure's new locales and localized names
+	 * @param      descriptionMap the structure's new locales and localized
+	 *             description
+	 * @param      definition the structure's new XML schema definition
+	 * @param      serviceContext the service context to be applied. Can set the
+	 *             modification date.
+	 * @return     the updated structure
+	 * @throws     PortalException if the user did not have permission to update
+	 *             the structure or if a portal exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link #updateStructure(long, long,
+	 *             long, String, Map, Map, DDMForm, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public DDMStructure updateStructure(
 			long groupId, long parentStructureId, long classNameId,
@@ -687,30 +690,33 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 * Updates the structure matching the structure ID, replacing the old parent
 	 * structure ID, name map, description map, and XSD with the new values.
 	 *
-	 * @param  structureId the primary key of the structure
-	 * @param  parentStructureId the new parent structure primary key
-	 * @param  nameMap the structure's new locales and localized names
-	 * @param  descriptionMap the structure's new locales and localized
-	 *         description
-	 * @param  xsd the new XML schema definition of the structure
-	 * @param  serviceContext the service context to be applied. Can set the
-	 *         modification date.
-	 * @return the updated structure
-	 * @throws PortalException if the user did not have permission to update the
-	 *         structure or if a portal exception occurred
+	 * @param      structureId the primary key of the structure
+	 * @param      parentStructureId the new parent structure primary key
+	 * @param      nameMap the structure's new locales and localized names
+	 * @param      descriptionMap the structure's new locales and localized
+	 *             description
+	 * @param      definition the new XML schema definition of the structure
+	 * @param      serviceContext the service context to be applied. Can set the
+	 *             modification date.
+	 * @return     the updated structure
+	 * @throws     PortalException if the user did not have permission to update
+	 *             the structure or if a portal exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link #updateStructure(long, long,
+	 *             Map, Map, DDMForm, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public DDMStructure updateStructure(
 			long structureId, long parentStructureId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String xsd, ServiceContext serviceContext)
+			String definition, ServiceContext serviceContext)
 		throws PortalException {
 
 		DDMStructurePermission.check(
 			getPermissionChecker(), structureId, ActionKeys.UPDATE);
 
 		return ddmStructureLocalService.updateStructure(
-			structureId, parentStructureId, nameMap, descriptionMap, xsd,
+			structureId, parentStructureId, nameMap, descriptionMap, definition,
 			serviceContext);
 	}
 

@@ -1323,21 +1323,25 @@ public class DDMStructureLocalServiceImpl
 	 * group, replacing its old parent structure, name map, description map, and
 	 * XSD with new ones.
 	 *
-	 * @param  groupId the primary key of the group
-	 * @param  parentStructureId the primary key of the new parent structure
-	 * @param  classNameId the primary key of the class name for the structure's
-	 *         related model
-	 * @param  structureKey the unique string identifying the structure
-	 * @param  nameMap the structure's new locales and localized names
-	 * @param  descriptionMap the structure's new locales and localized
-	 *         description
-	 * @param  definition the structure's new XML schema definition
-	 * @param  serviceContext the service context to be applied. Can set the
-	 *         structure's modification date.
-	 * @return the updated structure
-	 * @throws PortalException if a matching structure could not be found, if
-	 *         the XSD was not well-formed, or if a portal exception occurred
+	 * @param      groupId the primary key of the group
+	 * @param      parentStructureId the primary key of the new parent structure
+	 * @param      classNameId the primary key of the class name for the
+	 *             structure's related model
+	 * @param      structureKey the unique string identifying the structure
+	 * @param      nameMap the structure's new locales and localized names
+	 * @param      descriptionMap the structure's new locales and localized
+	 *             description
+	 * @param      definition the structure's new XML schema definition
+	 * @param      serviceContext the service context to be applied. Can set the
+	 *             structure's modification date.
+	 * @return     the updated structure
+	 * @throws     PortalException if a matching structure could not be found,
+	 *             if the XSD was not well-formed, or if a portal exception
+	 *             occurred
+	 * @deprecated As of 7.0.0, replaced by {@link #updateStructure(long, long,
+	 *             long, String, Map, Map, DDMForm, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public DDMStructure updateStructure(
 			long groupId, long parentStructureId, long classNameId,
@@ -1379,18 +1383,22 @@ public class DDMStructureLocalServiceImpl
 	 * Updates the structure matching the structure ID, replacing its old parent
 	 * structure, name map, description map, and XSD with new ones.
 	 *
-	 * @param  structureId the primary key of the structure
-	 * @param  parentStructureId the primary key of the new parent structure
-	 * @param  nameMap the structure's new locales and localized names
-	 * @param  descriptionMap the structure's new locales and localized
-	 *         descriptions
-	 * @param  definition the structure's new XML schema definition
-	 * @param  serviceContext the service context to be applied. Can set the
-	 *         structure's modification date.
-	 * @return the updated structure
-	 * @throws PortalException if a matching structure could not be found, if
-	 *         the XSD was not well-formed, or if a portal exception occurred
+	 * @param      structureId the primary key of the structure
+	 * @param      parentStructureId the primary key of the new parent structure
+	 * @param      nameMap the structure's new locales and localized names
+	 * @param      descriptionMap the structure's new locales and localized
+	 *             descriptions
+	 * @param      definition the structure's new XML schema definition
+	 * @param      serviceContext the service context to be applied. Can set the
+	 *             structure's modification date.
+	 * @return     the updated structure
+	 * @throws     PortalException if a matching structure could not be found,
+	 *             if the XSD was not well-formed, or if a portal exception
+	 *             occurred
+	 * @deprecated As of 7.0.0, replaced by {@link #updateStructure(long, long,
+	 *             Map, Map, DDMForm, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public DDMStructure updateStructure(
 			long structureId, long parentStructureId,
@@ -1414,14 +1422,18 @@ public class DDMStructureLocalServiceImpl
 	 * Updates the structure matching the structure ID, replacing its XSD with a
 	 * new one.
 	 *
-	 * @param  structureId the primary key of the structure
-	 * @param  definition the structure's new XML schema definition
-	 * @param  serviceContext the service context to be applied. Can set the
-	 *         structure's modification date.
-	 * @return the updated structure
-	 * @throws PortalException if a matching structure could not be found, if
-	 *         the XSD was not well-formed, or if a portal exception occurred
+	 * @param      structureId the primary key of the structure
+	 * @param      definition the structure's new XML schema definition
+	 * @param      serviceContext the service context to be applied. Can set the
+	 *             structure's modification date.
+	 * @return     the updated structure
+	 * @throws     PortalException if a matching structure could not be found,
+	 *             if the XSD was not well-formed, or if a portal exception
+	 *             occurred
+	 * @deprecated As of 7.0.0, replaced by {@link #updateDDMForm(long, String,
+	 *             ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public DDMStructure updateXSD(
 			long structureId, String definition, ServiceContext serviceContext)

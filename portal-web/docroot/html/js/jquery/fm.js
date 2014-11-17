@@ -25,7 +25,7 @@
 
 						var inputNode = formEl[inputName] || formEl.ownerDocument.getElementById(inputName);
 
-						if (inputNode && inputNode.length) {
+						if (inputNode && !inputNode.nodeName) {
 							inputNode = $.makeArray(inputNode);
 						}
 

@@ -172,8 +172,7 @@ public class DLFileEntryAssetRenderer
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String thumbnailSrc = DLUtil.getThumbnailSrc(
-			_fileEntry, null, themeDisplay);
+		String thumbnailSrc = DLUtil.getThumbnailSrc(_fileEntry, themeDisplay);
 
 		if (Validator.isNotNull(thumbnailSrc)) {
 			return thumbnailSrc;

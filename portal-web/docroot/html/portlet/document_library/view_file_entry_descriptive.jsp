@@ -69,7 +69,7 @@ if (fileShortcut != null) {
 	showCheckbox="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>"
 	status="<%= latestFileVersion.getStatus() %>"
 	thumbnailDivStyle="<%= DLUtil.getThumbnailStyle(false, 9) %>"
-	thumbnailSrc="<%= DLUtil.getThumbnailSrc(fileEntry, latestFileVersion, fileShortcut, themeDisplay) %>"
+	thumbnailSrc="<%= DLUtil.getThumbnailSrc(fileEntry, latestFileVersion, themeDisplay) %>"
 	thumbnailStyle="<%= DLUtil.getThumbnailStyle() %>"
 	title="<%= latestFileVersion.getTitle() %>"
 	url="<%= tempRowURL.toString() %>"

@@ -177,7 +177,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	}
 
 	@Override
-	public int compareTo(WikiNode wikiNode) {
+	public int compareTo(com.liferay.wiki.model.WikiNode wikiNode) {
 		return _wikiNode.compareTo(wikiNode);
 	}
 
@@ -820,12 +820,12 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<WikiNode> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.wiki.model.WikiNode> toCacheModel() {
 		return _wikiNode.toCacheModel();
 	}
 
 	@Override
-	public WikiNode toEscapedModel() {
+	public com.liferay.wiki.model.WikiNode toEscapedModel() {
 		return new WikiNodeWrapper(_wikiNode.toEscapedModel());
 	}
 
@@ -835,7 +835,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	}
 
 	@Override
-	public WikiNode toUnescapedModel() {
+	public com.liferay.wiki.model.WikiNode toUnescapedModel() {
 		return new WikiNodeWrapper(_wikiNode.toUnescapedModel());
 	}
 

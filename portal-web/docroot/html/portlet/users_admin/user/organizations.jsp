@@ -107,8 +107,8 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 	<aui:script use="liferay-search-container">
 		var Util = Liferay.Util;
 
-		var <portlet:namespace />addOrganizationIds = [];
-		var <portlet:namespace />deleteOrganizationIds = [];
+		var addOrganizationIds = [];
+		var deleteOrganizationIds = [];
 
 		var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />organizationsSearchContainer');
 
@@ -133,18 +133,18 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 
 				searchContainer.deleteRow(tr, rowId);
 
-				for (var i = 0; i < <portlet:namespace />addOrganizationIds.length; i++) {
-					if (<portlet:namespace />addOrganizationIds[i] == rowId) {
-						<portlet:namespace />addOrganizationIds.splice(i, 1);
+				for (var i = 0; i < addOrganizationIds.length; i++) {
+					if (addOrganizationIds[i] == rowId) {
+						addOrganizationIds.splice(i, 1);
 
 						break;
 					}
 				}
 
-				<portlet:namespace />deleteOrganizationIds.push(rowId);
+				deleteOrganizationIds.push(rowId);
 
-				document.<portlet:namespace />fm.<portlet:namespace />addOrganizationIds.value = <portlet:namespace />addOrganizationIds.join(',');
-				document.<portlet:namespace />fm.<portlet:namespace />deleteOrganizationIds.value = <portlet:namespace />deleteOrganizationIds.join(',');
+				document.<portlet:namespace />fm.<portlet:namespace />addOrganizationIds.value = addOrganizationIds.join(',');
+				document.<portlet:namespace />fm.<portlet:namespace />deleteOrganizationIds.value = deleteOrganizationIds.join(',');
 			},
 			'.modify-link'
 		);
@@ -191,18 +191,18 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 							searchContainer.addRow(rowColumns, event.organizationid);
 							searchContainer.updateDataStore();
 
-							<portlet:namespace />addOrganizationIds.push(event.organizationid);
+							addOrganizationIds.push(event.organizationid);
 
-							for (var i = 0; i < <portlet:namespace />deleteOrganizationIds.length; i++) {
-								if (<portlet:namespace />deleteOrganizationIds[i] == event.organizationid) {
-									<portlet:namespace />deleteOrganizationIds.splice(i, 1);
+							for (var i = 0; i < deleteOrganizationIds.length; i++) {
+								if (deleteOrganizationIds[i] == event.organizationid) {
+									deleteOrganizationIds.splice(i, 1);
 
 									break;
 								}
 							}
 
-							document.<portlet:namespace />fm.<portlet:namespace />addOrganizationIds.value = <portlet:namespace />addOrganizationIds.join(',');
-							document.<portlet:namespace />fm.<portlet:namespace />deleteOrganizationIds.value = <portlet:namespace />deleteOrganizationIds.join(',');
+							document.<portlet:namespace />fm.<portlet:namespace />addOrganizationIds.value = addOrganizationIds.join(',');
+							document.<portlet:namespace />fm.<portlet:namespace />deleteOrganizationIds.value = deleteOrganizationIds.join(',');
 						}
 					);
 				}

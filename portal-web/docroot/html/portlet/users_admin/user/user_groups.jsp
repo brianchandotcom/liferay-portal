@@ -89,8 +89,8 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 
 		var searchContainerContentBox = searchContainer.get('contentBox');
 
-		var <portlet:namespace />addUserGroupIds = [];
-		var <portlet:namespace />deleteUserGroupIds = [];
+		var addUserGroupIds = [];
+		var deleteUserGroupIds = [];
 
 		searchContainerContentBox.delegate(
 			'click',
@@ -111,18 +111,18 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 
 				searchContainer.deleteRow(tr, rowId);
 
-				for (var i = 0; i < <portlet:namespace />addUserGroupIds.length; i++) {
-					if (<portlet:namespace />addUserGroupIds[i] == rowId) {
-						<portlet:namespace />addUserGroupIds.splice(i, 1);
+				for (var i = 0; i < addUserGroupIds.length; i++) {
+					if (addUserGroupIds[i] == rowId) {
+						addUserGroupIds.splice(i, 1);
 
 						break;
 					}
 				}
 
-				<portlet:namespace />deleteUserGroupIds.push(rowId);
+				deleteUserGroupIds.push(rowId);
 
-				document.<portlet:namespace />fm.<portlet:namespace />addUserGroupIds.value = <portlet:namespace />addUserGroupIds.join(',');
-				document.<portlet:namespace />fm.<portlet:namespace />deleteUserGroupIds.value = <portlet:namespace />deleteUserGroupIds.join(',');
+				document.<portlet:namespace />fm.<portlet:namespace />addUserGroupIds.value = addUserGroupIds.join(',');
+				document.<portlet:namespace />fm.<portlet:namespace />deleteUserGroupIds.value = deleteUserGroupIds.join(',');
 			},
 			'.modify-link'
 		);
@@ -173,18 +173,18 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 						searchContainer.addRow(rowColumns, event.usergroupid);
 						searchContainer.updateDataStore();
 
-						for (var i = 0; i < <portlet:namespace />deleteUserGroupIds.length; i++) {
-							if (<portlet:namespace />deleteUserGroupIds[i] == event.usergroupid) {
-								<portlet:namespace />deleteUserGroupIds.splice(i, 1);
+						for (var i = 0; i < deleteUserGroupIds.length; i++) {
+							if (deleteUserGroupIds[i] == event.usergroupid) {
+								deleteUserGroupIds.splice(i, 1);
 
 								break;
 							}
 						}
 
-						<portlet:namespace />addUserGroupIds.push(event.usergroupid);
+						addUserGroupIds.push(event.usergroupid);
 
-						document.<portlet:namespace />fm.<portlet:namespace />addUserGroupIds.value = <portlet:namespace />addUserGroupIds.join(',');
-						document.<portlet:namespace />fm.<portlet:namespace />deleteUserGroupIds.value = <portlet:namespace />deleteUserGroupIds.join(',');
+						document.<portlet:namespace />fm.<portlet:namespace />addUserGroupIds.value = addUserGroupIds.join(',');
+						document.<portlet:namespace />fm.<portlet:namespace />deleteUserGroupIds.value = deleteUserGroupIds.join(',');
 					}
 				);
 			}

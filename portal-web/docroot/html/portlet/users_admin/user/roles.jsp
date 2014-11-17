@@ -517,46 +517,46 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 
 <c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
 	<aui:script>
-		var <portlet:namespace />addRoleIds = [];
-		var <portlet:namespace />deleteRoleIds = [];
+		var addRoleIds = [];
+		var deleteRoleIds = [];
 
-		var <portlet:namespace />addGroupRolesGroupIds = [];
-		var <portlet:namespace />addGroupRolesRoleIds = [];
-		var <portlet:namespace />deleteGroupRolesGroupIds = [];
-		var <portlet:namespace />deleteGroupRolesRoleIds = [];
+		var addGroupRolesGroupIds = [];
+		var addGroupRolesRoleIds = [];
+		var deleteGroupRolesGroupIds = [];
+		var deleteGroupRolesRoleIds = [];
 
 		function <portlet:namespace />deleteRegularRole(roleId) {
-			for (var i = 0; i < <portlet:namespace />addRoleIds.length; i++) {
-				if (<portlet:namespace />addRoleIds[i] == roleId) {
-					<portlet:namespace />addRoleIds.splice(i, 1);
+			for (var i = 0; i < addRoleIds.length; i++) {
+				if (addRoleIds[i] == roleId) {
+					addRoleIds.splice(i, 1);
 
 					break;
 				}
 			}
 
-			<portlet:namespace />deleteRoleIds.push(roleId);
+			deleteRoleIds.push(roleId);
 
-			document.<portlet:namespace />fm.<portlet:namespace />addRoleIds.value = <portlet:namespace />addRoleIds.join(',');
-			document.<portlet:namespace />fm.<portlet:namespace />deleteRoleIds.value = <portlet:namespace />deleteRoleIds.join(',');
+			document.<portlet:namespace />fm.<portlet:namespace />addRoleIds.value = addRoleIds.join(',');
+			document.<portlet:namespace />fm.<portlet:namespace />deleteRoleIds.value = deleteRoleIds.join(',');
 		}
 
 		function <portlet:namespace />deleteGroupRole(roleId, groupId) {
-			for (var i = 0; i < <portlet:namespace />addGroupRolesRoleIds.length; i++) {
-				if ((<portlet:namespace />addGroupRolesGroupIds[i] == groupId) && (<portlet:namespace />addGroupRolesRoleIds[i] == roleId)) {
-					<portlet:namespace />addGroupRolesGroupIds.splice(i, 1);
-					<portlet:namespace />addGroupRolesRoleIds.splice(i, 1);
+			for (var i = 0; i < addGroupRolesRoleIds.length; i++) {
+				if ((addGroupRolesGroupIds[i] == groupId) && (addGroupRolesRoleIds[i] == roleId)) {
+					addGroupRolesGroupIds.splice(i, 1);
+					addGroupRolesRoleIds.splice(i, 1);
 
 					break;
 				}
 			}
 
-			<portlet:namespace />deleteGroupRolesGroupIds.push(groupId);
-			<portlet:namespace />deleteGroupRolesRoleIds.push(roleId);
+			deleteGroupRolesGroupIds.push(groupId);
+			deleteGroupRolesRoleIds.push(roleId);
 
-			document.<portlet:namespace />fm.<portlet:namespace />addGroupRolesGroupIds.value = <portlet:namespace />addGroupRolesGroupIds.join(',');
-			document.<portlet:namespace />fm.<portlet:namespace />addGroupRolesRoleIds.value = <portlet:namespace />addGroupRolesRoleIds.join(',');
-			document.<portlet:namespace />fm.<portlet:namespace />deleteGroupRolesGroupIds.value = <portlet:namespace />deleteGroupRolesGroupIds.join(',');
-			document.<portlet:namespace />fm.<portlet:namespace />deleteGroupRolesRoleIds.value = <portlet:namespace />deleteGroupRolesRoleIds.join(',');
+			document.<portlet:namespace />fm.<portlet:namespace />addGroupRolesGroupIds.value = addGroupRolesGroupIds.join(',');
+			document.<portlet:namespace />fm.<portlet:namespace />addGroupRolesRoleIds.value = addGroupRolesRoleIds.join(',');
+			document.<portlet:namespace />fm.<portlet:namespace />deleteGroupRolesGroupIds.value = deleteGroupRolesGroupIds.join(',');
+			document.<portlet:namespace />fm.<portlet:namespace />deleteGroupRolesRoleIds.value = deleteGroupRolesRoleIds.join(',');
 		}
 
 		Liferay.provide(
@@ -580,38 +580,38 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 				if (groupId) {
 					rowColumns.push('<a class="modify-link" data-groupId="' + groupId + '" data-rowId="' + roleId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>');
 
-					<portlet:namespace />addGroupRolesGroupIds.push(groupId);
-					<portlet:namespace />addGroupRolesRoleIds.push(roleId);
+					addGroupRolesGroupIds.push(groupId);
+					addGroupRolesRoleIds.push(roleId);
 
-					for (var i = 0; i < <portlet:namespace />deleteGroupRolesRoleIds.length; i++) {
-						if ((<portlet:namespace />deleteGroupRolesGroupIds[i] == groupId) && (<portlet:namespace />deleteGroupRolesRoleIds[i] == roleId)) {
-							<portlet:namespace />deleteGroupRolesGroupIds.splice(i, 1);
-							<portlet:namespace />deleteGroupRolesRoleIds.splice(i, 1);
+					for (var i = 0; i < deleteGroupRolesRoleIds.length; i++) {
+						if ((deleteGroupRolesGroupIds[i] == groupId) && (deleteGroupRolesRoleIds[i] == roleId)) {
+							deleteGroupRolesGroupIds.splice(i, 1);
+							deleteGroupRolesRoleIds.splice(i, 1);
 
 							break;
 						}
 					}
 
-					document.<portlet:namespace />fm.<portlet:namespace />addGroupRolesGroupIds.value = <portlet:namespace />addGroupRolesGroupIds.join(',');
-					document.<portlet:namespace />fm.<portlet:namespace />addGroupRolesRoleIds.value = <portlet:namespace />addGroupRolesRoleIds.join(',');
-					document.<portlet:namespace />fm.<portlet:namespace />deleteGroupRolesGroupIds.value = <portlet:namespace />deleteGroupRolesGroupIds.join(',');
-					document.<portlet:namespace />fm.<portlet:namespace />deleteGroupRolesRoleIds.value = <portlet:namespace />deleteGroupRolesRoleIds.join(',');
+					document.<portlet:namespace />fm.<portlet:namespace />addGroupRolesGroupIds.value = addGroupRolesGroupIds.join(',');
+					document.<portlet:namespace />fm.<portlet:namespace />addGroupRolesRoleIds.value = addGroupRolesRoleIds.join(',');
+					document.<portlet:namespace />fm.<portlet:namespace />deleteGroupRolesGroupIds.value = deleteGroupRolesGroupIds.join(',');
+					document.<portlet:namespace />fm.<portlet:namespace />deleteGroupRolesRoleIds.value = deleteGroupRolesRoleIds.join(',');
 				}
 				else {
 					rowColumns.push('<a class="modify-link" data-rowId="' + roleId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>');
 
-					<portlet:namespace />addRoleIds.push(roleId);
+					addRoleIds.push(roleId);
 
-					for (var i = 0; i < <portlet:namespace />deleteRoleIds.length; i++) {
-						if (<portlet:namespace />deleteRoleIds[i] == roleId) {
-							<portlet:namespace />deleteRoleIds.splice(i, 1);
+					for (var i = 0; i < deleteRoleIds.length; i++) {
+						if (deleteRoleIds[i] == roleId) {
+							deleteRoleIds.splice(i, 1);
 
 							break;
 						}
 					}
 
-					document.<portlet:namespace />fm.<portlet:namespace />addRoleIds.value = <portlet:namespace />addRoleIds.join(',');
-					document.<portlet:namespace />fm.<portlet:namespace />deleteRoleIds.value = <portlet:namespace />deleteRoleIds.join(',');
+					document.<portlet:namespace />fm.<portlet:namespace />addRoleIds.value = addRoleIds.join(',');
+					document.<portlet:namespace />fm.<portlet:namespace />deleteRoleIds.value = deleteRoleIds.join(',');
 				}
 
 				searchContainer.addRow(rowColumns, roleId);

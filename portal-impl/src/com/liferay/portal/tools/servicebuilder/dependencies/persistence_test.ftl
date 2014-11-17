@@ -29,6 +29,8 @@ import ${packagePath}.service.persistence.${entity.name}PK;
 import ${packagePath}.service.persistence.${entity.name}Persistence;
 import ${packagePath}.service.persistence.${entity.name}Util;
 
+import com.liferay.arquillian.extension.persistence.internal.annotation.PersistenceTest;
+
 import ${beanLocatorUtil};
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -39,8 +41,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.test.AssertUtils;
-import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
@@ -81,15 +83,12 @@ import org.junit.runner.RunWith;
 /**
  * @generated
  */
-<#if osgiModule>
-	@RunWith(Arquillian.class)
-<#else>
-	@RunWith(LiferayIntegrationJUnitTestRunner.class)
+<#if !osgiModule>
+@PersistenceTest
 </#if>
+@RunWith(Arquillian.class)
+@Transactional(propagation = Propagation.REQUIRED)
 public class ${entity.name}PersistenceTest {
-
-	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(PersistenceTestRule.INSTANCE, new TransactionalTestRule(Propagation.REQUIRED));
 
 	@After
 	public void tearDown() throws Exception {

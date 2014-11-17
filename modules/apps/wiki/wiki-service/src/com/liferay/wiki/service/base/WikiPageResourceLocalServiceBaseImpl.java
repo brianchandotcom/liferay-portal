@@ -39,7 +39,6 @@ import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.service.WikiPageResourceLocalService;
-import com.liferay.wiki.service.WikiPageResourceLocalServiceUtil;
 import com.liferay.wiki.service.persistence.WikiPageResourcePersistence;
 
 import java.io.Serializable;
@@ -67,7 +66,7 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portlet.wiki.service.WikiPageResourceLocalServiceUtil} to access the wiki page resource local service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.wiki.service.WikiPageResourceLocalServiceUtil} to access the wiki page resource local service.
 	 */
 
 	/**
@@ -228,7 +227,7 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(WikiPageResourceLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.wiki.service.WikiPageResourceLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(WikiPageResource.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -239,7 +238,7 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(WikiPageResourceLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.wiki.service.WikiPageResourceLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(WikiPageResource.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -305,7 +304,7 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 	 *
 	 * @return the wiki page resource local service
 	 */
-	public WikiPageResourceLocalService getWikiPageResourceLocalService() {
+	public com.liferay.wiki.service.WikiPageResourceLocalService getWikiPageResourceLocalService() {
 		return wikiPageResourceLocalService;
 	}
 
@@ -315,7 +314,7 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 	 * @param wikiPageResourceLocalService the wiki page resource local service
 	 */
 	public void setWikiPageResourceLocalService(
-		WikiPageResourceLocalService wikiPageResourceLocalService) {
+		com.liferay.wiki.service.WikiPageResourceLocalService wikiPageResourceLocalService) {
 		this.wikiPageResourceLocalService = wikiPageResourceLocalService;
 	}
 
@@ -358,13 +357,13 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.portlet.wiki.model.WikiPageResource",
+		persistedModelLocalServiceRegistry.register("com.liferay.wiki.model.WikiPageResource",
 			wikiPageResourceLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portlet.wiki.model.WikiPageResource");
+			"com.liferay.wiki.model.WikiPageResource");
 	}
 
 	/**
@@ -419,8 +418,8 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = WikiPageResourceLocalService.class)
-	protected WikiPageResourceLocalService wikiPageResourceLocalService;
+	@BeanReference(type = com.liferay.wiki.service.WikiPageResourceLocalService.class)
+	protected com.liferay.wiki.service.WikiPageResourceLocalService wikiPageResourceLocalService;
 	@BeanReference(type = WikiPageResourcePersistence.class)
 	protected WikiPageResourcePersistence wikiPageResourcePersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

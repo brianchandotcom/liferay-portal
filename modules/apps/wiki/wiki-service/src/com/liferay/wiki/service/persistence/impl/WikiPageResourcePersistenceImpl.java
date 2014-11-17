@@ -267,7 +267,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching wiki page resource
-	 * @throws com.liferay.wiki.exception.NoSuchPageResourceException if a matching wiki page resource could not be found
+	 * @throws com.liferay.wiki.NoSuchPageResourceException if a matching wiki page resource could not be found
 	 */
 	@Override
 	public WikiPageResource findByUuid_First(String uuid,
@@ -317,7 +317,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching wiki page resource
-	 * @throws com.liferay.wiki.exception.NoSuchPageResourceException if a matching wiki page resource could not be found
+	 * @throws com.liferay.wiki.NoSuchPageResourceException if a matching wiki page resource could not be found
 	 */
 	@Override
 	public WikiPageResource findByUuid_Last(String uuid,
@@ -375,7 +375,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next wiki page resource
-	 * @throws com.liferay.wiki.exception.NoSuchPageResourceException if a wiki page resource with the primary key could not be found
+	 * @throws com.liferay.wiki.NoSuchPageResourceException if a wiki page resource with the primary key could not be found
 	 */
 	@Override
 	public WikiPageResource[] findByUuid_PrevAndNext(long resourcePrimKey,
@@ -621,12 +621,12 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 			new String[] { Long.class.getName(), String.class.getName() });
 
 	/**
-	 * Returns the wiki page resource where nodeId = &#63; and title = &#63; or throws a {@link com.liferay.wiki.exception.NoSuchPageResourceException} if it could not be found.
+	 * Returns the wiki page resource where nodeId = &#63; and title = &#63; or throws a {@link com.liferay.wiki.NoSuchPageResourceException} if it could not be found.
 	 *
 	 * @param nodeId the node ID
 	 * @param title the title
 	 * @return the matching wiki page resource
-	 * @throws com.liferay.wiki.exception.NoSuchPageResourceException if a matching wiki page resource could not be found
+	 * @throws com.liferay.wiki.NoSuchPageResourceException if a matching wiki page resource could not be found
 	 */
 	@Override
 	public WikiPageResource findByN_T(long nodeId, String title)
@@ -1036,7 +1036,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	 *
 	 * @param resourcePrimKey the primary key of the wiki page resource
 	 * @return the wiki page resource that was removed
-	 * @throws com.liferay.wiki.exception.NoSuchPageResourceException if a wiki page resource with the primary key could not be found
+	 * @throws com.liferay.wiki.NoSuchPageResourceException if a wiki page resource with the primary key could not be found
 	 */
 	@Override
 	public WikiPageResource remove(long resourcePrimKey)
@@ -1049,7 +1049,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	 *
 	 * @param primaryKey the primary key of the wiki page resource
 	 * @return the wiki page resource that was removed
-	 * @throws com.liferay.wiki.exception.NoSuchPageResourceException if a wiki page resource with the primary key could not be found
+	 * @throws com.liferay.wiki.NoSuchPageResourceException if a wiki page resource with the primary key could not be found
 	 */
 	@Override
 	public WikiPageResource remove(Serializable primaryKey)
@@ -1118,7 +1118,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 
 	@Override
 	public WikiPageResource updateImpl(
-		WikiPageResource wikiPageResource) {
+		com.liferay.wiki.model.WikiPageResource wikiPageResource) {
 		wikiPageResource = toUnwrappedModel(wikiPageResource);
 
 		boolean isNew = wikiPageResource.isNew();
@@ -1213,7 +1213,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	 *
 	 * @param primaryKey the primary key of the wiki page resource
 	 * @return the wiki page resource
-	 * @throws com.liferay.wiki.exception.NoSuchPageResourceException if a wiki page resource with the primary key could not be found
+	 * @throws com.liferay.wiki.NoSuchPageResourceException if a wiki page resource with the primary key could not be found
 	 */
 	@Override
 	public WikiPageResource findByPrimaryKey(Serializable primaryKey)
@@ -1233,11 +1233,11 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	}
 
 	/**
-	 * Returns the wiki page resource with the primary key or throws a {@link com.liferay.wiki.exception.NoSuchPageResourceException} if it could not be found.
+	 * Returns the wiki page resource with the primary key or throws a {@link com.liferay.wiki.NoSuchPageResourceException} if it could not be found.
 	 *
 	 * @param resourcePrimKey the primary key of the wiki page resource
 	 * @return the wiki page resource
-	 * @throws com.liferay.wiki.exception.NoSuchPageResourceException if a wiki page resource with the primary key could not be found
+	 * @throws com.liferay.wiki.NoSuchPageResourceException if a wiki page resource with the primary key could not be found
 	 */
 	@Override
 	public WikiPageResource findByPrimaryKey(long resourcePrimKey)

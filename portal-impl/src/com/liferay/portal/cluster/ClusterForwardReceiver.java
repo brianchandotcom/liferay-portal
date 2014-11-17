@@ -45,8 +45,8 @@ public class ClusterForwardReceiver extends BaseReceiver {
 			String destinationName = message.getDestinationName();
 
 			if (Validator.isNotNull(destinationName)) {
-				if (_log.isInfoEnabled()) {
-					_log.info(
+				if (_log.isDebugEnabled()) {
+					_log.debug(
 						"Forwarding cluster link message " + message + " to " +
 							destinationName);
 				}

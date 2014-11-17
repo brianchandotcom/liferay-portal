@@ -23,6 +23,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.dynamicdatalists.NoSuchRecordException;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
@@ -90,7 +91,15 @@ public class EditRecordAction extends PortletAction {
 				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
-				throw e;
+				Throwable cause = e.getCause();
+
+				if (cause instanceof DuplicateFileException) {
+					SessionErrors.add(
+						actionRequest, DuplicateFileException.class);
+				}
+				else {
+					throw e;
+				}
 			}
 		}
 	}

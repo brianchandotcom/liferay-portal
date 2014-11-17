@@ -106,6 +106,7 @@ if (translating) {
 		<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(fileMaxSize, locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
 	</liferay-ui:error>
 
+	<liferay-ui:error exception="<%= DuplicateFileException.class %>" message="a-file-with-that-name-already-exists" />
 	<liferay-ui:error exception="<%= StorageFieldRequiredException.class %>" message="please-fill-out-all-required-fields" />
 
 	<c:if test="<%= !translating %>">

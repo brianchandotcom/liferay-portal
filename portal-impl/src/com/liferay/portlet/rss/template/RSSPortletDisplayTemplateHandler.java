@@ -16,13 +16,17 @@ package com.liferay.portlet.rss.template;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
+import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
 import com.liferay.portlet.rss.context.RSSFeedContext;
 
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Eudaldo Alonso
@@ -47,6 +51,27 @@ public class RSSPortletDisplayTemplateHandler
 	@Override
 	public String getResourceName() {
 		return PortletKeys.RSS;
+	}
+
+	@Override
+	public Map<String, TemplateVariableGroup> getTemplateVariableGroups(
+			long classPK, String language, Locale locale)
+		throws Exception {
+
+		Map<String, TemplateVariableGroup> templateVariableGroups =
+			super.getTemplateVariableGroups(classPK, language, locale);
+
+		TemplateVariableGroup templateVariableGroup =
+			templateVariableGroups.get("fields");
+
+		templateVariableGroup.empty();
+
+		templateVariableGroup.addCollectionVariable(
+			"rss-feeds", List.class, PortletDisplayTemplateConstants.ENTRIES,
+			"rss-feed", RSSFeedContext.class, "curEntry",
+			"getSyndFeed().getTitle()");
+
+		return templateVariableGroups;
 	}
 
 	@Override

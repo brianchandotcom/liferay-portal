@@ -90,6 +90,17 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 			return;
 		}
 
+		try {
+			initChannels();
+		}
+		catch (Exception e) {
+			if (_log.isErrorEnabled()) {
+				_log.error("Unable to initialize channels", e);
+			}
+
+			throw new IllegalStateException(e);
+		}
+
 		for (JChannel jChannel : _transportJChannels) {
 			BaseReceiver baseReceiver = (BaseReceiver)jChannel.getReceiver();
 
@@ -147,7 +158,6 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 		return _transportJChannels.get(channelIndex);
 	}
 
-	@Override
 	protected void initChannels() throws Exception {
 		Properties transportProperties = PropsUtil.getProperties(
 			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT, true);

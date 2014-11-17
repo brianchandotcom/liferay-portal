@@ -428,7 +428,11 @@ public class NettyFabricClient implements FabricClient {
 			Channel channel = _channel;
 
 			if (channel != null) {
-				disposeRepository(channel);
+				_reconnectCounter.set(0);
+
+				ChannelFuture channelFuture = channel.close();
+
+				channelFuture.syncUninterruptibly();
 			}
 		}
 

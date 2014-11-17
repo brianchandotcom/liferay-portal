@@ -55,14 +55,10 @@ public class SendPasswordException extends PortalException {
 						"company %s",
 				company));
 
-			_company = company;
+			this.company = company;
 		}
 
-		public Company getCompany() {
-			return _company;
-		}
-
-		private final Company _company;
+		public final Company company;
 
 	}
 

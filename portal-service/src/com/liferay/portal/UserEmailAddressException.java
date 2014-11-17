@@ -63,26 +63,14 @@ public class UserEmailAddressException extends PortalException {
 						"must be equal",
 					emailAddress1, emailAddress2, user.getUserId()));
 
-			_user = user;
-			_emailAddress1 = emailAddress1;
-			_emailAddress2 = emailAddress2;
+			this.user = user;
+			this.emailAddress1 = emailAddress1;
+			this.emailAddress2 = emailAddress2;
 		}
 
-		public String getEmailAddress1() {
-			return _emailAddress1;
-		}
-
-		public String getEmailAddress2() {
-			return _emailAddress2;
-		}
-
-		public User getUser() {
-			return _user;
-		}
-
-		private final String _emailAddress1;
-		private final String _emailAddress2;
-		private final User _user;
+		public final String emailAddress1;
+		public final String emailAddress2;
+		public final User user;
 
 	}
 
@@ -95,20 +83,12 @@ public class UserEmailAddressException extends PortalException {
 						"used by user %s",
 					emailAddress, userId));
 
-			_userId = userId;
-			_emailAddress = emailAddress;
+			this.userId = userId;
+			this.emailAddress = emailAddress;
 		}
 
-		public String getEmailAddress() {
-			return _emailAddress;
-		}
-
-		public long getUserId() {
-			return _userId;
-		}
-
-		private String _emailAddress;
-		private final long _userId;
+		public String emailAddress;
+		public final long userId;
 
 	}
 
@@ -137,20 +117,12 @@ public class UserEmailAddressException extends PortalException {
 					"Email name address %s must validate with %s", emailAddress,
 					ClassUtil.getClassName(emailAddressValidator)));
 
-			_emailAddress = emailAddress;
-			_emailAddressValidator = emailAddressValidator;
+			this.emailAddress = emailAddress;
+			this.emailAddressValidator = emailAddressValidator;
 		}
 
-		public String getEmailAddress() {
-			return _emailAddress;
-		}
-
-		public EmailAddressValidator getEmailAddressValidator() {
-			return _emailAddressValidator;
-		}
-
-		private String _emailAddress;
-		private final EmailAddressValidator _emailAddressValidator;
+		public String emailAddress;
+		public final EmailAddressValidator emailAddressValidator;
 
 	}
 

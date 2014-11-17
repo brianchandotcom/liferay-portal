@@ -27,13 +27,9 @@ public class UndeployedExternalRepositoryException extends RepositoryException {
 				className.getClassName() + " because its plugin is not " +
 					"deployed");
 
-		_className = className;
+		this.className = className;
 	}
 
-	public ClassName getClassName() {
-		return _className;
-	}
-
-	private final ClassName _className;
+	public final ClassName className;
 
 }

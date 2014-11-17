@@ -63,20 +63,12 @@ public class UserLockoutException extends PortalException {
 					"User %s is locked out of a required LDAP server: %s",
 					fullUserDN, ldapMessage));
 
-			_fullUserDN = fullUserDN;
-			_ldapMessage = ldapMessage;
+			this.fullUserDN = fullUserDN;
+			this.ldapMessage = ldapMessage;
 		}
 
-		public String getFullUserDN() {
-			return _fullUserDN;
-		}
-
-		public String getLDAPMessage() {
-			return _ldapMessage;
-		}
-
-		private final String _fullUserDN;
-		private final String _ldapMessage;
+		public final String fullUserDN;
+		public final String ldapMessage;
 
 	}
 
@@ -93,20 +85,12 @@ public class UserLockoutException extends PortalException {
 						user.getLockoutDate().getTime() +
 							passwordPolicy.getLockoutDuration() * 1000)));
 
-			_user = user;
-			_passwordPolicy = passwordPolicy;
+			this.user = user;
+			this.passwordPolicy = passwordPolicy;
 		}
 
-		public PasswordPolicy getPasswordPolicy() {
-			return _passwordPolicy;
-		}
-
-		public User getUser() {
-			return _user;
-		}
-
-		private final PasswordPolicy _passwordPolicy;
-		private final User _user;
+		public final PasswordPolicy passwordPolicy;
+		public final User user;
 
 	}
 

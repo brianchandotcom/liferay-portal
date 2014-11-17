@@ -86,6 +86,19 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 	}
 
 	@Override
+	public void initialize() {
+		if (!isEnabled()) {
+			return;
+		}
+
+		for (JChannel jChannel : _transportJChannels) {
+			BaseReceiver baseReceiver = (BaseReceiver)jChannel.getReceiver();
+
+			baseReceiver.openLatch();
+		}
+	}
+
+	@Override
 	public void sendMulticastMessage(Message message, Priority priority) {
 		if (!isEnabled()) {
 			return;

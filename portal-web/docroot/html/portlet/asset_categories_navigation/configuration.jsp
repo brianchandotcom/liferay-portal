@@ -104,18 +104,13 @@
 </aui:form>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveConfiguration',
-		function() {
-			if (document.<portlet:namespace />fm.<portlet:namespace />assetVocabularyIds) {
-				document.<portlet:namespace />fm.<portlet:namespace />assetVocabularyIds.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentAssetVocabularyIds);
-			}
+	function <portlet:namespace />saveConfiguration() {
+		var form = AUI.$(document.<portlet:namespace />fm);
 
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['liferay-util-list-fields']
-	);
+		form.fm('assetVocabularyIds').val(Liferay.Util.listSelect(form.fm('currentAssetVocabularyIds')));
+
+		submitForm(form);
+	}
 
 	Liferay.Util.toggleSelectBox('<portlet:namespace />allAssetVocabularies', 'false', '<portlet:namespace />assetVocabulariesBoxes');
 </aui:script>

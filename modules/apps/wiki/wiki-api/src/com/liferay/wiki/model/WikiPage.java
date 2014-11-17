@@ -23,8 +23,8 @@ import com.liferay.portal.model.PersistedModel;
  *
  * @author Brian Wing Shun Chan
  * @see WikiPageModel
- * @see com.liferay.portlet.wiki.model.impl.WikiPageImpl
- * @see com.liferay.portlet.wiki.model.impl.WikiPageModelImpl
+ * @see com.liferay.wiki.model.impl.WikiPageImpl
+ * @see com.liferay.wiki.model.impl.WikiPageModelImpl
  * @generated
  */
 @ProviderType
@@ -32,14 +32,14 @@ public interface WikiPage extends WikiPageModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.wiki.model.impl.WikiPageImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to {@link com.liferay.wiki.model.impl.WikiPageImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public WikiPage fetchParentPage();
+	public com.liferay.wiki.model.WikiPage fetchParentPage();
 
-	public WikiPage fetchRedirectPage();
+	public com.liferay.wiki.model.WikiPage fetchRedirectPage();
 
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries();
 
@@ -50,7 +50,7 @@ public interface WikiPage extends WikiPageModel, PersistedModel {
 
 	public long getAttachmentsFolderId();
 
-	public java.util.List<WikiPage> getChildPages();
+	public java.util.List<com.liferay.wiki.model.WikiPage> getChildPages();
 
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFileEntries();
 
@@ -59,23 +59,23 @@ public interface WikiPage extends WikiPageModel, PersistedModel {
 
 	public int getDeletedAttachmentsFileEntriesCount();
 
-	public WikiNode getNode();
+	public com.liferay.wiki.model.WikiNode getNode();
 
 	public long getNodeAttachmentsFolderId();
 
-	public WikiPage getParentPage()
+	public com.liferay.wiki.model.WikiPage getParentPage()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.util.List<WikiPage> getParentPages();
+	public java.util.List<com.liferay.wiki.model.WikiPage> getParentPages();
 
-	public WikiPage getRedirectPage()
+	public com.liferay.wiki.model.WikiPage getRedirectPage()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.util.List<WikiPage> getViewableChildPages();
+	public java.util.List<com.liferay.wiki.model.WikiPage> getViewableChildPages();
 
-	public WikiPage getViewableParentPage();
+	public com.liferay.wiki.model.WikiPage getViewableParentPage();
 
-	public java.util.List<WikiPage> getViewableParentPages();
+	public java.util.List<com.liferay.wiki.model.WikiPage> getViewableParentPages();
 
 	public void setAttachmentsFolderId(long attachmentsFolderId);
 }

@@ -83,6 +83,22 @@
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="rssFeedsDisplaySettingsPanel" persistState="<%= true %>" title="display-settings">
 			<aui:fieldset>
+				<div class="display-template">
+
+					<%
+					TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(RSSFeedContext.class.getName());
+					%>
+
+					<liferay-ui:ddm-template-selector
+						classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
+						displayStyle="<%= rssDisplayContext.getDisplayStyle() %>"
+						displayStyleGroupId="<%= rssDisplayContext.getDisplayStyleGroupId() %>"
+						label="display-template"
+						refreshURL="<%= configurationRenderURL.toString() %>"
+						showEmptyOption="<%= true %>"
+					/>
+				</div>
+
 				<aui:input name="preferences--showFeedTitle--" type="checkbox" value="<%= rssDisplayContext.isShowFeedTitle() %>" />
 
 				<aui:input name="preferences--showFeedPublishedDate--" type="checkbox" value="<%= rssDisplayContext.isShowFeedPublishedDate() %>" />

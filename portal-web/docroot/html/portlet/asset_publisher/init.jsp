@@ -36,8 +36,7 @@ page import="com.liferay.portlet.assetpublisher.util.AssetPublisherUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMImpl" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil" %><%@
 page import="com.liferay.portlet.messageboards.model.MBDiscussion" %><%@
-page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants" %><%@
-page import="com.liferay.util.RSSUtil" %>
+page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants" %>
 
 <%
 AssetPublisherDisplayContext assetPublisherDisplayContext = new AssetPublisherDisplayContext(request, portletPreferences);

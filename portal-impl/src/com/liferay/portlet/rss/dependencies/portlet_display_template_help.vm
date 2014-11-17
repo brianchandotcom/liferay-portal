@@ -1,0 +1,22 @@
+##
+## You can use Velocity to define display templates for the RSS portlet.
+##
+## A set of variables have been made available for the template developers:
+##
+##  $ddmTemplateId: the current template id
+##
+##  $entries: the list of feeds that are being shown in the portlet
+##
+##  $entry: the feed when there's only one feed
+##
+##  $locale: the locale of the site
+##
+##  $renderRequest: the render request
+##
+##  $renderResponse: the render response
+##
+##  $themeDisplay: the theme display
+##
+## The variable $templatesPath can be used to include another template through
+## its template key, e.g. #parse ("$templatesPath/LAYOUT-PARENT").
+##

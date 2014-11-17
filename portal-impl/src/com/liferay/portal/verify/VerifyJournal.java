@@ -79,8 +79,8 @@ public class VerifyJournal extends VerifyProcess {
 	@Override
 	protected void doVerify() throws Exception {
 		verifyContent();
-		verifyDynamicElements();
 		verifyCreateAndModifiedDates();
+		verifyDynamicElements();
 		updateFolderAssets();
 		verifyOracleNewLine();
 		verifyPermissionsAndAssets();
@@ -190,13 +190,13 @@ public class VerifyJournal extends VerifyProcess {
 
 		Element dynamicContentElement = element.element("dynamic-content");
 
-		String imageId = dynamicContentElement.attributeValue("id");
+		long imageId = GetterUtil.getLong(
+			dynamicContentElement.attributeValue("id"));
 
 		JournalArticleImage image =
-			JournalArticleImageLocalServiceUtil.getArticleImage(
-				Long.valueOf(imageId));
+			JournalArticleImageLocalServiceUtil.getArticleImage(imageId);
 
-		image.setElName(name + "_" + index);
+		image.setElName(name + StringPool.UNDERLINE + index);
 
 		JournalArticleImageLocalServiceUtil.updateJournalArticleImage(image);
 	}
@@ -402,8 +402,9 @@ public class VerifyJournal extends VerifyProcess {
 					}
 					catch (Exception e) {
 						_log.error(
-							"Unable to get content for article" +
-								article.getId(), e);
+							"Unable to get content for article " +
+								article.getId(),
+							e);
 					}
 				}
 

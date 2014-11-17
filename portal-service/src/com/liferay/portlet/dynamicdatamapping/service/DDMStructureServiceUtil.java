@@ -548,6 +548,19 @@ public class DDMStructureServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure updateStructure(
+		long groupId, long parentStructureId, long classNameId,
+		java.lang.String structureKey,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateStructure(groupId, parentStructureId, classNameId,
+			structureKey, nameMap, descriptionMap, ddmForm, serviceContext);
+	}
+
 	/**
 	* Updates the structure matching the class name ID, structure key, and
 	* group, replacing its old parent structure, name map, description map, and
@@ -555,30 +568,45 @@ public class DDMStructureServiceUtil {
 	*
 	* @param groupId the primary key of the group
 	* @param parentStructureId the primary key of the new parent structure
-	* @param classNameId the primary key of the class name for the structure's
-	related model
+	* @param classNameId the primary key of the class name for the
+	structure's related model
 	* @param structureKey the unique string identifying the structure
 	* @param nameMap the structure's new locales and localized names
 	* @param descriptionMap the structure's new locales and localized
 	description
-	* @param xsd the structure's new XML schema definition
+	* @param definition the structure's new XML schema definition
 	* @param serviceContext the service context to be applied. Can set the
 	modification date.
 	* @return the updated structure
-	* @throws PortalException if the user did not have permission to update the
-	structure or if a portal exception occurred
+	* @throws PortalException if the user did not have permission to update
+	the structure or if a portal exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #updateStructure(long, long,
+	long, String, Map, Map, DDMForm, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure updateStructure(
 		long groupId, long parentStructureId, long classNameId,
 		java.lang.String structureKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String xsd,
+		java.lang.String definition,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateStructure(groupId, parentStructureId, classNameId,
-			structureKey, nameMap, descriptionMap, xsd, serviceContext);
+			structureKey, nameMap, descriptionMap, definition, serviceContext);
+	}
+
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure updateStructure(
+		long structureId, long parentStructureId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateStructure(structureId, parentStructureId, nameMap,
+			descriptionMap, ddmForm, serviceContext);
 	}
 
 	/**
@@ -590,23 +618,26 @@ public class DDMStructureServiceUtil {
 	* @param nameMap the structure's new locales and localized names
 	* @param descriptionMap the structure's new locales and localized
 	description
-	* @param xsd the new XML schema definition of the structure
+	* @param definition the new XML schema definition of the structure
 	* @param serviceContext the service context to be applied. Can set the
 	modification date.
 	* @return the updated structure
-	* @throws PortalException if the user did not have permission to update the
-	structure or if a portal exception occurred
+	* @throws PortalException if the user did not have permission to update
+	the structure or if a portal exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #updateStructure(long, long,
+	Map, Map, DDMForm, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure updateStructure(
 		long structureId, long parentStructureId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String xsd,
+		java.lang.String definition,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateStructure(structureId, parentStructureId, nameMap,
-			descriptionMap, xsd, serviceContext);
+			descriptionMap, definition, serviceContext);
 	}
 
 	public static DDMStructureService getService() {

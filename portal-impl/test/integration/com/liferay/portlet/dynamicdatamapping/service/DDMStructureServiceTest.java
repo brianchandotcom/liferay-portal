@@ -328,7 +328,7 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 		return DDMStructureLocalServiceUtil.updateStructure(
 			structure.getStructureId(), structure.getParentStructureId(),
 			structure.getNameMap(), structure.getDescriptionMap(),
-			structure.getDefinition(),
+			structure.getDDMForm(),
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 

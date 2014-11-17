@@ -782,7 +782,7 @@ public class DDMStructureServiceHttp {
 		long classNameId, java.lang.String structureKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String xsd,
+		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -791,7 +791,45 @@ public class DDMStructureServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					parentStructureId, classNameId, structureKey, nameMap,
-					descriptionMap, xsd, serviceContext);
+					descriptionMap, ddmForm, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portlet.dynamicdatamapping.model.DDMStructure)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure updateStructure(
+		HttpPrincipal httpPrincipal, long groupId, long parentStructureId,
+		long classNameId, java.lang.String structureKey,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String definition,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(DDMStructureServiceUtil.class,
+					"updateStructure", _updateStructureParameterTypes23);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					parentStructureId, classNameId, structureKey, nameMap,
+					descriptionMap, definition, serviceContext);
 
 			Object returnObj = null;
 
@@ -819,16 +857,53 @@ public class DDMStructureServiceHttp {
 		HttpPrincipal httpPrincipal, long structureId, long parentStructureId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String xsd,
+		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DDMStructureServiceUtil.class,
-					"updateStructure", _updateStructureParameterTypes23);
+					"updateStructure", _updateStructureParameterTypes24);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					structureId, parentStructureId, nameMap, descriptionMap,
-					xsd, serviceContext);
+					ddmForm, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portlet.dynamicdatamapping.model.DDMStructure)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure updateStructure(
+		HttpPrincipal httpPrincipal, long structureId, long parentStructureId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String definition,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(DDMStructureServiceUtil.class,
+					"updateStructure", _updateStructureParameterTypes25);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					structureId, parentStructureId, nameMap, descriptionMap,
+					definition, serviceContext);
 
 			Object returnObj = null;
 
@@ -948,10 +1023,21 @@ public class DDMStructureServiceHttp {
 		};
 	private static final Class<?>[] _updateStructureParameterTypes22 = new Class[] {
 			long.class, long.class, long.class, java.lang.String.class,
-			java.util.Map.class, java.util.Map.class, java.lang.String.class,
+			java.util.Map.class, java.util.Map.class,
+			com.liferay.portlet.dynamicdatamapping.model.DDMForm.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateStructureParameterTypes23 = new Class[] {
+			long.class, long.class, long.class, java.lang.String.class,
+			java.util.Map.class, java.util.Map.class, java.lang.String.class,
+			com.liferay.portal.service.ServiceContext.class
+		};
+	private static final Class<?>[] _updateStructureParameterTypes24 = new Class[] {
+			long.class, long.class, java.util.Map.class, java.util.Map.class,
+			com.liferay.portlet.dynamicdatamapping.model.DDMForm.class,
+			com.liferay.portal.service.ServiceContext.class
+		};
+	private static final Class<?>[] _updateStructureParameterTypes25 = new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
 			java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class

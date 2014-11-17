@@ -287,7 +287,7 @@ public class DDMStructureStagedModelDataHandler
 					DDMStructureLocalServiceUtil.updateStructure(
 						existingStructure.getStructureId(), parentStructureId,
 						structure.getNameMap(), structure.getDescriptionMap(),
-						structure.getDefinition(), serviceContext);
+						structure.getDDMForm(), serviceContext);
 			}
 		}
 		else {

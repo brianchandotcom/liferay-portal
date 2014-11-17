@@ -37,12 +37,11 @@ import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
 import com.liferay.portlet.dynamicdatamapping.StructureDefinitionException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateElementException;
 import com.liferay.portlet.dynamicdatamapping.StructureNameException;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -204,14 +203,14 @@ public class EditStructureAction extends PortletAction {
 		}
 	}
 
-	protected String getDefinition(ActionRequest actionRequest)
+	protected DDMForm getDDMForm(ActionRequest actionRequest)
 		throws PortalException {
 
 		try {
 			String definition = ParamUtil.getString(
 				actionRequest, "definition");
 
-			return DDMXSDUtil.getXSD(definition);
+			return DDMFormJSONDeserializerUtil.deserialize(definition);
 		}
 		catch (PortalException pe) {
 			throw new StructureDefinitionException(pe);
@@ -274,7 +273,7 @@ public class EditStructureAction extends PortletAction {
 			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
-		String definition = getDefinition(actionRequest);
+		DDMForm ddmForm = getDDMForm(actionRequest);
 		String storageType = ParamUtil.getString(actionRequest, "storageType");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -283,9 +282,6 @@ public class EditStructureAction extends PortletAction {
 		DDMStructure structure = null;
 
 		if (cmd.equals(Constants.ADD)) {
-			DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(
-				definition);
-
 			structure = DDMStructureServiceUtil.addStructure(
 				groupId, parentStructureId, scopeClassNameId, structureKey,
 				nameMap, descriptionMap, ddmForm, storageType,
@@ -293,7 +289,7 @@ public class EditStructureAction extends PortletAction {
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
 			structure = DDMStructureServiceUtil.updateStructure(
-				classPK, parentStructureId, nameMap, descriptionMap, definition,
+				classPK, parentStructureId, nameMap, descriptionMap, ddmForm,
 				serviceContext);
 		}
 

@@ -1287,21 +1287,9 @@ public class DDMStructureLocalServiceImpl
 			type, andOperator);
 	}
 
-	/**
-	 * Updates the structure matching the structure ID, replacing its XSD with a
-	 * new one.
-	 *
-	 * @param  structureId the primary key of the structure
-	 * @param  definition the structure's new XML schema definition
-	 * @param  serviceContext the service context to be applied. Can set the
-	 *         structure's modification date.
-	 * @return the updated structure
-	 * @throws PortalException if a matching structure could not be found, if
-	 *         the XSD was not well-formed, or if a portal exception occurred
-	 */
 	@Override
-	public DDMStructure updateDefinition(
-			long structureId, String definition, ServiceContext serviceContext)
+	public DDMStructure updateDDMForm(
+			long structureId, DDMForm ddmForm, ServiceContext serviceContext)
 		throws PortalException {
 
 		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
@@ -1309,35 +1297,14 @@ public class DDMStructureLocalServiceImpl
 
 		return doUpdateStructure(
 			structure.getParentStructureId(), structure.getNameMap(),
-			structure.getDescriptionMap(), definition, serviceContext,
-			structure);
+			structure.getDescriptionMap(), ddmForm, serviceContext, structure);
 	}
 
-	/**
-	 * Updates the structure matching the class name ID, structure key, and
-	 * group, replacing its old parent structure, name map, description map, and
-	 * XSD with new ones.
-	 *
-	 * @param  groupId the primary key of the group
-	 * @param  parentStructureId the primary key of the new parent structure
-	 * @param  classNameId the primary key of the class name for the structure's
-	 *         related model
-	 * @param  structureKey the unique string identifying the structure
-	 * @param  nameMap the structure's new locales and localized names
-	 * @param  descriptionMap the structure's new locales and localized
-	 *         description
-	 * @param  definition the structure's new XML schema definition
-	 * @param  serviceContext the service context to be applied. Can set the
-	 *         structure's modification date.
-	 * @return the updated structure
-	 * @throws PortalException if a matching structure could not be found, if
-	 *         the XSD was not well-formed, or if a portal exception occurred
-	 */
 	@Override
 	public DDMStructure updateStructure(
 			long groupId, long parentStructureId, long classNameId,
 			String structureKey, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String definition,
+			Map<Locale, String> descriptionMap, DDMForm ddmForm,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -1347,26 +1314,91 @@ public class DDMStructureLocalServiceImpl
 			groupId, classNameId, structureKey);
 
 		return doUpdateStructure(
-			parentStructureId, nameMap, descriptionMap, definition,
-			serviceContext, structure);
+			parentStructureId, nameMap, descriptionMap, ddmForm, serviceContext,
+			structure);
+	}
+
+	/**
+	 * Updates the structure matching the class name ID, structure key, and
+	 * group, replacing its old parent structure, name map, description map, and
+	 * XSD with new ones.
+	 *
+	 * @param      groupId the primary key of the group
+	 * @param      parentStructureId the primary key of the new parent structure
+	 * @param      classNameId the primary key of the class name for the
+	 *             structure's related model
+	 * @param      structureKey the unique string identifying the structure
+	 * @param      nameMap the structure's new locales and localized names
+	 * @param      descriptionMap the structure's new locales and localized
+	 *             description
+	 * @param      definition the structure's new XML schema definition
+	 * @param      serviceContext the service context to be applied. Can set the
+	 *             structure's modification date.
+	 * @return     the updated structure
+	 * @throws     PortalException if a matching structure could not be found,
+	 *             if the XSD was not well-formed, or if a portal exception
+	 *             occurred
+	 * @deprecated As of 7.0.0, replaced by {@link #updateStructure(long, long,
+	 *             long, String, Map, Map, DDMForm, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public DDMStructure updateStructure(
+			long groupId, long parentStructureId, long classNameId,
+			String structureKey, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String definition,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		DDMXMLUtil.validateXML(definition);
+
+		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
+
+		structureKey = getStructureKey(structureKey);
+
+		DDMStructure structure = ddmStructurePersistence.findByG_C_S(
+			groupId, classNameId, structureKey);
+
+		return doUpdateStructure(
+			parentStructureId, nameMap, descriptionMap, ddmForm, serviceContext,
+			structure);
+	}
+
+	@Override
+	public DDMStructure updateStructure(
+			long structureId, long parentStructureId,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			DDMForm ddmForm, ServiceContext serviceContext)
+		throws PortalException {
+
+		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
+			structureId);
+
+		return doUpdateStructure(
+			parentStructureId, nameMap, descriptionMap, ddmForm, serviceContext,
+			structure);
 	}
 
 	/**
 	 * Updates the structure matching the structure ID, replacing its old parent
 	 * structure, name map, description map, and XSD with new ones.
 	 *
-	 * @param  structureId the primary key of the structure
-	 * @param  parentStructureId the primary key of the new parent structure
-	 * @param  nameMap the structure's new locales and localized names
-	 * @param  descriptionMap the structure's new locales and localized
-	 *         descriptions
-	 * @param  definition the structure's new XML schema definition
-	 * @param  serviceContext the service context to be applied. Can set the
-	 *         structure's modification date.
-	 * @return the updated structure
-	 * @throws PortalException if a matching structure could not be found, if
-	 *         the XSD was not well-formed, or if a portal exception occurred
+	 * @param      structureId the primary key of the structure
+	 * @param      parentStructureId the primary key of the new parent structure
+	 * @param      nameMap the structure's new locales and localized names
+	 * @param      descriptionMap the structure's new locales and localized
+	 *             descriptions
+	 * @param      definition the structure's new XML schema definition
+	 * @param      serviceContext the service context to be applied. Can set the
+	 *             structure's modification date.
+	 * @return     the updated structure
+	 * @throws     PortalException if a matching structure could not be found,
+	 *             if the XSD was not well-formed, or if a portal exception
+	 *             occurred
+	 * @deprecated As of 7.0.0, replaced by {@link #updateStructure(long, long,
+	 *             Map, Map, DDMForm, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public DDMStructure updateStructure(
 			long structureId, long parentStructureId,
@@ -1374,12 +1406,49 @@ public class DDMStructureLocalServiceImpl
 			String definition, ServiceContext serviceContext)
 		throws PortalException {
 
+		DDMXMLUtil.validateXML(definition);
+
+		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
+
 		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
 			structureId);
 
 		return doUpdateStructure(
-			parentStructureId, nameMap, descriptionMap, definition,
-			serviceContext, structure);
+			parentStructureId, nameMap, descriptionMap, ddmForm, serviceContext,
+			structure);
+	}
+
+	/**
+	 * Updates the structure matching the structure ID, replacing its XSD with a
+	 * new one.
+	 *
+	 * @param      structureId the primary key of the structure
+	 * @param      definition the structure's new XML schema definition
+	 * @param      serviceContext the service context to be applied. Can set the
+	 *             structure's modification date.
+	 * @return     the updated structure
+	 * @throws     PortalException if a matching structure could not be found,
+	 *             if the XSD was not well-formed, or if a portal exception
+	 *             occurred
+	 * @deprecated As of 7.0.0, replaced by {@link #updateDDMForm(long, String,
+	 *             ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public DDMStructure updateXSD(
+			long structureId, String definition, ServiceContext serviceContext)
+		throws PortalException {
+
+		DDMXMLUtil.validateXML(definition);
+
+		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
+
+		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
+			structureId);
+
+		return doUpdateStructure(
+			structure.getParentStructureId(), structure.getNameMap(),
+			structure.getDescriptionMap(), ddmForm, serviceContext, structure);
 	}
 
 	protected DDMStructureVersion addStructureVersion(
@@ -1437,16 +1506,13 @@ public class DDMStructureLocalServiceImpl
 
 	protected DDMStructure doUpdateStructure(
 			long parentStructureId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String definition,
+			Map<Locale, String> descriptionMap, DDMForm ddmForm,
 			ServiceContext serviceContext, DDMStructure structure)
 		throws PortalException {
 
 		// Structure
 
-		DDMXMLUtil.validateXML(definition);
-
 		DDMForm parentDDMForm = getParentDDMForm(parentStructureId);
-		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
 
 		validate(nameMap, parentDDMForm, ddmForm);
 
@@ -1463,7 +1529,7 @@ public class DDMStructureLocalServiceImpl
 		structure.setVersion(version);
 		structure.setNameMap(nameMap);
 		structure.setDescriptionMap(descriptionMap);
-		structure.setDefinition(definition);
+		structure.setDefinition(DDMFormXSDSerializerUtil.serialize(ddmForm));
 
 		ddmStructurePersistence.update(structure);
 

@@ -221,7 +221,6 @@ if (workflowEnabled) {
 							%>
 
 						</aui:select>
-						</div>
 					</div>
 				</c:if>
 

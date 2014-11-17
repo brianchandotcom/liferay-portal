@@ -16,12 +16,12 @@
 
 <%@ include file="/html/portlet/wiki/init.jsp" %>
 
-<liferay-util:include page="/html/portlet/wiki/top_links.jsp" />
+<liferay-util:include page="/html/portlet/wiki/top_links.jsp" servletContext="<%= application %>" />
 
 <liferay-ui:header
 	title="all-pages"
 />
 
-<liferay-util:include page="/html/portlet/wiki/page_iterator.jsp">
+<liferay-util:include page="/html/portlet/wiki/page_iterator.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="type" value="all_pages" />
 </liferay-util:include>

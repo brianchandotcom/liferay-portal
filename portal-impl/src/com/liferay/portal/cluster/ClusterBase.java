@@ -60,17 +60,6 @@ public abstract class ClusterBase {
 
 			_initJGroupsProperties = true;
 		}
-
-		try {
-			initChannels();
-		}
-		catch (Exception e) {
-			if (_log.isErrorEnabled()) {
-				_log.error("Unable to initialize channels", e);
-			}
-
-			throw new IllegalStateException(e);
-		}
 	}
 
 	public abstract void destroy();
@@ -168,8 +157,6 @@ public abstract class ClusterBase {
 						networkInterface.getName());
 		}
 	}
-
-	protected abstract void initChannels() throws Exception;
 
 	protected void initSystemProperties() {
 		for (String systemProperty :

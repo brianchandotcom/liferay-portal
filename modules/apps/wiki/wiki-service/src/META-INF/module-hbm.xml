@@ -2,10 +2,10 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping default-lazy="false" auto-import="false">
-	<import class="com.liferay.portlet.wiki.model.WikiNode" />
-	<import class="com.liferay.portlet.wiki.model.WikiPage" />
-	<import class="com.liferay.portlet.wiki.model.WikiPageResource" />
-	<class name="com.liferay.portlet.wiki.model.impl.WikiNodeImpl" table="WikiNode">
+	<import class="com.liferay.wiki.model.WikiNode" />
+	<import class="com.liferay.wiki.model.WikiPage" />
+	<import class="com.liferay.wiki.model.WikiPageResource" />
+	<class name="com.liferay.wiki.model.impl.WikiNodeImpl" table="WikiNode">
 		<cache usage="read-write" />
 		<id name="nodeId" type="long">
 			<generator class="assigned" />
@@ -25,7 +25,7 @@
 		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
-	<class name="com.liferay.portlet.wiki.model.impl.WikiPageImpl" table="WikiPage">
+	<class name="com.liferay.wiki.model.impl.WikiPageImpl" table="WikiPage">
 		<cache usage="read-write" />
 		<id name="pageId" type="long">
 			<generator class="assigned" />
@@ -53,7 +53,7 @@
 		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
-	<class name="com.liferay.portlet.wiki.model.impl.WikiPageResourceImpl" table="WikiPageResource">
+	<class name="com.liferay.wiki.model.impl.WikiPageResourceImpl" table="WikiPageResource">
 		<cache usage="read-write" />
 		<id name="resourcePrimKey" type="long">
 			<generator class="assigned" />

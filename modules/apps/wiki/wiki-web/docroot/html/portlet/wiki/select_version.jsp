@@ -42,7 +42,7 @@ portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portlet.wiki.model.WikiPage"
+			className="com.liferay.wiki.model.WikiPage"
 			modelVar="curWikiPage"
 		>
 			<liferay-ui:search-container-column-text

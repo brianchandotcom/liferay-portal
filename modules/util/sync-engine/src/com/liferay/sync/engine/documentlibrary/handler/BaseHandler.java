@@ -108,6 +108,22 @@ public class BaseHandler implements Handler<Void> {
 					statusLine.getStatusCode(), statusLine.getReasonPhrase());
 			}
 
+			if (_logger.isTraceEnabled()) {
+				Class<?> clazz = this.getClass();
+
+				SyncFile syncFile = (SyncFile)getParameterValue("syncFile");
+
+				if (syncFile != null) {
+					_logger.trace(
+						"Handling response {} file path {}",
+							clazz.getSimpleName(), syncFile.getFilePathName());
+				}
+				else {
+					_logger.trace(
+						"Handling response {}", clazz.getSimpleName());
+				}
+			}
+
 			doHandleResponse(httpResponse);
 		}
 		catch (Exception e) {

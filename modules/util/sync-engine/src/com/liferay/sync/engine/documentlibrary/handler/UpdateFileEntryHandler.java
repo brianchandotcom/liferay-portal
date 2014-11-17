@@ -73,6 +73,9 @@ public class UpdateFileEntryHandler extends BaseSyncDLObjectHandler {
 		if (getParameterValue("filePath") != null) {
 			localSyncFile.setUiEvent(SyncFile.UI_EVENT_UPLOADED);
 		}
+		else {
+			localSyncFile.setUiEvent(SyncFile.UI_EVENT_DEFAULT);
+		}
 
 		localSyncFile.setVersion(remoteSyncFile.getVersion());
 

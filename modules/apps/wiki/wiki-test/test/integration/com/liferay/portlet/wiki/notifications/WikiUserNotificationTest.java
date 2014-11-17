@@ -12,32 +12,30 @@
  * details.
  */
 
-package com.liferay.portlet.wiki.subscriptions;
+package com.liferay.portlet.wiki.notifications;
 
 import com.liferay.portal.kernel.test.AggregateTestRule;
+import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailTestRule;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.subscriptions.BaseSubscriptionLocalizedContentTestCase;
+import com.liferay.portal.util.BaseUserNotificationTestCase;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
-import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.portlet.wiki.util.WikiConstants;
 import com.liferay.portlet.wiki.util.test.WikiTestUtil;
+import com.liferay.wiki.constants.WikiPortletKeys;
 
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 
 /**
  * @author Roberto Díaz
+ * @author Sergio González
  */
 @Sync
-public class WikiSubscriptionLocalizedContentTest
-	extends BaseSubscriptionLocalizedContentTestCase {
+public class WikiUserNotificationTest extends BaseUserNotificationTestCase {
 
 	@ClassRule
 	@Rule
@@ -46,55 +44,33 @@ public class WikiSubscriptionLocalizedContentTest
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			SynchronousMailTestRule.INSTANCE);
 
-	@Before
 	@Override
-	public void setUp() throws Exception {
-		super.setUp();
+	protected BaseModel<?> addBaseModel() throws Exception {
+		return WikiTestUtil.addPage(
+			group.getGroupId(), _node.getNodeId(), true);
+	}
 
+	@Override
+	protected void addContainerModel() throws Exception {
 		_node = WikiTestUtil.addNode(group.getGroupId());
 	}
 
 	@Override
-	protected long addBaseModel(long containerModelId) throws Exception {
-		WikiPage page = WikiTestUtil.addPage(
-			group.getGroupId(), _node.getNodeId(), true);
-
-		return page.getResourcePrimKey();
+	protected String getPortletId() {
+		return WikiPortletKeys.WIKI;
 	}
 
 	@Override
-	protected void addSubscriptionContainerModel(long containerModelId)
-		throws Exception {
-
+	protected void subscribeToContainer() throws Exception {
 		WikiNodeLocalServiceUtil.subscribeNode(
 			user.getUserId(), _node.getNodeId());
 	}
 
 	@Override
-	protected String getPortletId() {
-		return PortletKeys.WIKI;
-	}
+	protected BaseModel<?> updateBaseModel(BaseModel<?> baseModel)
+		throws Exception {
 
-	@Override
-	protected String getServiceName() {
-		return WikiConstants.SERVICE_NAME;
-	}
-
-	@Override
-	protected String getSubscriptionAddedBodyPreferenceName() {
-		return "emailPageAddedBody";
-	}
-
-	@Override
-	protected String getSubscriptionUpdatedBodyPreferenceName() {
-		return "emailPageUpdatedBody";
-	}
-
-	@Override
-	protected void updateBaseModel(long baseModelId) throws Exception {
-		WikiPage page = WikiPageLocalServiceUtil.getPage(baseModelId);
-
-		WikiTestUtil.updatePage(page);
+		return WikiTestUtil.updatePage((WikiPage)baseModel);
 	}
 
 	private WikiNode _node;

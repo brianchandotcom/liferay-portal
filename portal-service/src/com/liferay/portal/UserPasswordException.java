@@ -140,6 +140,7 @@ public class UserPasswordException extends PortalException {
 	}
 
 	public static class MustComplyWithListeners extends UserPasswordException {
+
 		public MustComplyWithListeners(
 			long userId, ModelListenerException modelListenerException) {
 
@@ -167,6 +168,7 @@ public class UserPasswordException extends PortalException {
 	}
 
 	public static class MustComplyWithRegex extends UserPasswordException {
+
 		public MustComplyWithRegex(long userId, String regex) {
 			super(
 				String.format("Password must comply with regex: " + regex),

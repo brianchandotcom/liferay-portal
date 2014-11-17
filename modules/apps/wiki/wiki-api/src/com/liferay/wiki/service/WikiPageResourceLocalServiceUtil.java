@@ -16,13 +16,14 @@ package com.liferay.wiki.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.wiki.model.WikiPageResource;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for WikiPageResource. This utility wraps
- * {@link com.liferay.portlet.wiki.service.impl.WikiPageResourceLocalServiceImpl} and is the
+ * {@link com.liferay.wiki.service.impl.WikiPageResourceLocalServiceImpl} and is the
  * primary access point for service operations in application layer code running
  * on the local server. Methods of this service will not have security checks
  * based on the propagated JAAS credentials because this service can only be
@@ -30,8 +31,8 @@ import com.liferay.wiki.model.WikiPageResource;
  *
  * @author Brian Wing Shun Chan
  * @see WikiPageResourceLocalService
- * @see com.liferay.portlet.wiki.service.base.WikiPageResourceLocalServiceBaseImpl
- * @see com.liferay.portlet.wiki.service.impl.WikiPageResourceLocalServiceImpl
+ * @see com.liferay.wiki.service.base.WikiPageResourceLocalServiceBaseImpl
+ * @see com.liferay.wiki.service.impl.WikiPageResourceLocalServiceImpl
  * @generated
  */
 @ProviderType
@@ -39,9 +40,9 @@ public class WikiPageResourceLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.wiki.service.impl.WikiPageResourceLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.wiki.service.impl.WikiPageResourceLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static WikiPageResource addPageResource(
+	public static com.liferay.wiki.model.WikiPageResource addPageResource(
 		long nodeId, java.lang.String title) {
 		return getService().addPageResource(nodeId, title);
 	}
@@ -52,8 +53,8 @@ public class WikiPageResourceLocalServiceUtil {
 	* @param wikiPageResource the wiki page resource
 	* @return the wiki page resource that was added
 	*/
-	public static WikiPageResource addWikiPageResource(
-		WikiPageResource wikiPageResource) {
+	public static com.liferay.wiki.model.WikiPageResource addWikiPageResource(
+		com.liferay.wiki.model.WikiPageResource wikiPageResource) {
 		return getService().addWikiPageResource(wikiPageResource);
 	}
 
@@ -63,7 +64,7 @@ public class WikiPageResourceLocalServiceUtil {
 	* @param resourcePrimKey the primary key for the new wiki page resource
 	* @return the new wiki page resource
 	*/
-	public static WikiPageResource createWikiPageResource(
+	public static com.liferay.wiki.model.WikiPageResource createWikiPageResource(
 		long resourcePrimKey) {
 		return getService().createWikiPageResource(resourcePrimKey);
 	}
@@ -89,7 +90,7 @@ public class WikiPageResourceLocalServiceUtil {
 	* @return the wiki page resource that was removed
 	* @throws PortalException if a wiki page resource with the primary key could not be found
 	*/
-	public static WikiPageResource deleteWikiPageResource(
+	public static com.liferay.wiki.model.WikiPageResource deleteWikiPageResource(
 		long resourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteWikiPageResource(resourcePrimKey);
@@ -101,8 +102,8 @@ public class WikiPageResourceLocalServiceUtil {
 	* @param wikiPageResource the wiki page resource
 	* @return the wiki page resource that was removed
 	*/
-	public static WikiPageResource deleteWikiPageResource(
-		WikiPageResource wikiPageResource) {
+	public static com.liferay.wiki.model.WikiPageResource deleteWikiPageResource(
+		com.liferay.wiki.model.WikiPageResource wikiPageResource) {
 		return getService().deleteWikiPageResource(wikiPageResource);
 	}
 
@@ -125,7 +126,7 @@ public class WikiPageResourceLocalServiceUtil {
 	* Performs a dynamic query on the database and returns a range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.wiki.model.impl.WikiPageResourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageResourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -143,7 +144,7 @@ public class WikiPageResourceLocalServiceUtil {
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.wiki.model.impl.WikiPageResourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageResourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -184,17 +185,17 @@ public class WikiPageResourceLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static WikiPageResource fetchPageResource(
+	public static com.liferay.wiki.model.WikiPageResource fetchPageResource(
 		long nodeId, java.lang.String title) {
 		return getService().fetchPageResource(nodeId, title);
 	}
 
-	public static WikiPageResource fetchPageResource(
+	public static com.liferay.wiki.model.WikiPageResource fetchPageResource(
 		java.lang.String uuid) {
 		return getService().fetchPageResource(uuid);
 	}
 
-	public static WikiPageResource fetchWikiPageResource(
+	public static com.liferay.wiki.model.WikiPageResource fetchWikiPageResource(
 		long resourcePrimKey) {
 		return getService().fetchWikiPageResource(resourcePrimKey);
 	}
@@ -212,13 +213,13 @@ public class WikiPageResourceLocalServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
-	public static WikiPageResource getPageResource(
+	public static com.liferay.wiki.model.WikiPageResource getPageResource(
 		long nodeId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPageResource(nodeId, title);
 	}
 
-	public static WikiPageResource getPageResource(
+	public static com.liferay.wiki.model.WikiPageResource getPageResource(
 		long pageResourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPageResource(pageResourcePrimKey);
@@ -242,7 +243,7 @@ public class WikiPageResourceLocalServiceUtil {
 	* @return the wiki page resource
 	* @throws PortalException if a wiki page resource with the primary key could not be found
 	*/
-	public static WikiPageResource getWikiPageResource(
+	public static com.liferay.wiki.model.WikiPageResource getWikiPageResource(
 		long resourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getWikiPageResource(resourcePrimKey);
@@ -252,14 +253,14 @@ public class WikiPageResourceLocalServiceUtil {
 	* Returns a range of all the wiki page resources.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.wiki.model.impl.WikiPageResourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageResourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of wiki page resources
 	* @param end the upper bound of the range of wiki page resources (not inclusive)
 	* @return the range of wiki page resources
 	*/
-	public static java.util.List<WikiPageResource> getWikiPageResources(
+	public static java.util.List<com.liferay.wiki.model.WikiPageResource> getWikiPageResources(
 		int start, int end) {
 		return getService().getWikiPageResources(start, end);
 	}
@@ -288,20 +289,13 @@ public class WikiPageResourceLocalServiceUtil {
 	* @param wikiPageResource the wiki page resource
 	* @return the wiki page resource that was updated
 	*/
-	public static WikiPageResource updateWikiPageResource(
-		WikiPageResource wikiPageResource) {
+	public static com.liferay.wiki.model.WikiPageResource updateWikiPageResource(
+		com.liferay.wiki.model.WikiPageResource wikiPageResource) {
 		return getService().updateWikiPageResource(wikiPageResource);
 	}
 
 	public static WikiPageResourceLocalService getService() {
-		if (_service == null) {
-			_service = (WikiPageResourceLocalService)PortalBeanLocatorUtil.locate(WikiPageResourceLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(WikiPageResourceLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -311,5 +305,14 @@ public class WikiPageResourceLocalServiceUtil {
 	public void setService(WikiPageResourceLocalService service) {
 	}
 
-	private static WikiPageResourceLocalService _service;
+	private static ServiceTracker<WikiPageResourceLocalService, WikiPageResourceLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(WikiPageResourceLocalServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<WikiPageResourceLocalService, WikiPageResourceLocalService>(bundle.getBundleContext(),
+				WikiPageResourceLocalService.class, null);
+
+		_serviceTracker.open();
+	}
 }

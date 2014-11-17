@@ -16,52 +16,43 @@ package com.liferay.wiki.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.wiki.exception.NoSuchPageException;
-import com.liferay.wiki.model.WikiPage;
-
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
 @ProviderType
 public interface WikiPageFinder {
+	public int countByCreateDate(long groupId, long nodeId,
+		java.util.Date createDate, boolean before);
 
-	public int countByCreateDate(
-		long groupId, long nodeId, java.util.Date createDate, boolean before);
+	public int countByCreateDate(long groupId, long nodeId,
+		java.sql.Timestamp createDate, boolean before);
 
-	public int countByCreateDate(
+	public int filterCountByCreateDate(long groupId, long nodeId,
+		java.util.Date createDate, boolean before);
+
+	public int filterCountByCreateDate(long groupId, long nodeId,
+		java.sql.Timestamp createDate, boolean before);
+
+	public java.util.List<com.liferay.wiki.model.WikiPage> filterFindByCreateDate(
+		long groupId, long nodeId, java.util.Date createDate, boolean before,
+		int start, int end);
+
+	public java.util.List<com.liferay.wiki.model.WikiPage> filterFindByCreateDate(
 		long groupId, long nodeId, java.sql.Timestamp createDate,
-		boolean before);
+		boolean before, int start, int end);
 
-	public int filterCountByCreateDate(
-		long groupId, long nodeId, java.util.Date createDate, boolean before);
+	public com.liferay.wiki.model.WikiPage findByResourcePrimKey(
+		long resourcePrimKey)
+		throws com.liferay.wiki.exception.NoSuchPageException;
 
-	public int filterCountByCreateDate(
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByCreateDate(
+		long groupId, long nodeId, java.util.Date createDate, boolean before,
+		int start, int end);
+
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByCreateDate(
 		long groupId, long nodeId, java.sql.Timestamp createDate,
-		boolean before);
+		boolean before, int start, int end);
 
-	public java.util.List<WikiPage>
-		filterFindByCreateDate(
-			long groupId, long nodeId, java.util.Date createDate,
-			boolean before, int start, int end);
-
-	public java.util.List<WikiPage>
-		filterFindByCreateDate(
-			long groupId, long nodeId, java.sql.Timestamp createDate,
-			boolean before, int start, int end);
-
-	public WikiPage findByResourcePrimKey(long resourcePrimKey)
-		throws NoSuchPageException;
-
-	public java.util.List<WikiPage>
-		findByCreateDate(
-			long groupId, long nodeId, java.util.Date createDate,
-			boolean before, int start, int end);
-
-	public java.util.List<WikiPage>
-		findByCreateDate(
-			long groupId, long nodeId, java.sql.Timestamp createDate,
-			boolean before, int start, int end);
-
-	public java.util.List<WikiPage> findByNoAssets();
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByNoAssets();
 }

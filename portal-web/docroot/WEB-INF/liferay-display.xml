@@ -20,7 +20,6 @@
 	<category name="category.collaboration">
 		<portlet id="19" />
 		<portlet id="33" />
-		<portlet id="36" />
 		<portlet id="114" />
 		<portlet id="115" />
 		<portlet id="169" />
@@ -61,7 +60,6 @@
 		<portlet id="151" />
 		<portlet id="152" />
 		<portlet id="153" />
-		<portlet id="154" />
 		<portlet id="157" />
 		<portlet id="158" />
 		<portlet id="161" />
@@ -104,9 +102,5 @@
 		<portlet id="58" />
 		<portlet id="82" />
 		<portlet id="98" />
-	</category>
-	<category name="category.wiki">
-		<portlet id="36" />
-		<portlet id="54" />
 	</category>
 </display>

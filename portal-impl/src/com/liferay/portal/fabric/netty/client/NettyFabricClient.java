@@ -123,10 +123,12 @@ public class NettyFabricClient implements FabricClient {
 	}
 
 	@Override
-	public synchronized void disconnect() throws InterruptedException {
+	public synchronized void disconnect(boolean quiet)
+		throws InterruptedException {
+
 		_reconnectCounter.set(0);
 
-		doDisconnect();
+		doDisconnect(quiet);
 	}
 
 	protected void disposeRepository(Channel channel) {
@@ -149,8 +151,12 @@ public class NettyFabricClient implements FabricClient {
 		channelFuture.addListener(new PostConnectChannelFutureListener());
 	}
 
-	protected void doDisconnect() throws InterruptedException {
+	protected void doDisconnect(boolean quiet) throws InterruptedException {
 		if (_channel == null) {
+			if (quiet) {
+				return;
+			}
+
 			throw new IllegalStateException(
 				"Netty fabric client is not started");
 		}
@@ -345,7 +351,7 @@ public class NettyFabricClient implements FabricClient {
 					channelFuture.cause());
 			}
 
-			doDisconnect();
+			doDisconnect(false);
 		}
 
 	}
@@ -363,7 +369,7 @@ public class NettyFabricClient implements FabricClient {
 				_log.info("Disconnected from " + channel.remoteAddress());
 			}
 
-			doDisconnect();
+			doDisconnect(false);
 		}
 
 	}
@@ -393,7 +399,7 @@ public class NettyFabricClient implements FabricClient {
 
 			_log.error("Unable to register Netty fabric agent on " + _channel);
 
-			doDisconnect();
+			doDisconnect(false);
 		}
 
 	}

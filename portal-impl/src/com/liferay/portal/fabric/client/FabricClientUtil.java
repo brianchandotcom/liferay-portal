@@ -25,8 +25,8 @@ public class FabricClientUtil {
 		getFabricClient().connect();
 	}
 
-	public static void disconnect() throws Exception {
-		getFabricClient().disconnect();
+	public static void disconnect(boolean quiet) throws Exception {
+		getFabricClient().disconnect(quiet);
 	}
 
 	public static FabricClient getFabricClient() {

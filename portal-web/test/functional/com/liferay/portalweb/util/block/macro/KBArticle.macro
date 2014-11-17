@@ -126,6 +126,58 @@
 		<execute action="PGKnowledgebasearticleConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
+	<command name="configureKBDisplaySettingsPG">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute action="PGKnowledgebasedisplayConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="PGKnowledgebasedisplayConfiguration#assertClick" locator-key1="DISPLAY_SETTINGS" value1="Display Settings" />
+
+		<if>
+			<equals arg1="${subscribe}" arg2="true" />
+			<then>
+				<execute action="PGKnowledgebasedisplayConfigurationDisplaysettings#check" locator-key1="ENABLE_SUBSCRIPTIONS_CHECKBOX" />
+			</then>
+			<elseif>
+				<equals arg1="${subscribe}" arg2="false" />
+				<then>
+					<execute action="PGKnowledgebasedisplayConfigurationDisplaysettings#uncheck" locator-key1="ENABLE_SUBSCRIPTIONS_CHECKBOX" />
+				</then>
+			</elseif>
+		</if>
+
+		<if>
+			<equals arg1="${history}" arg2="true" />
+			<then>
+				<execute action="PGKnowledgebasedisplayConfigurationDisplaysettings#check" locator-key1="ENABLE_HISTORY_CHECKBOX" />
+			</then>
+			<elseif>
+				<equals arg1="${history}" arg2="false" />
+				<then>
+					<execute action="PGKnowledgebasedisplayConfigurationDisplaysettings#uncheck" locator-key1="ENABLE_HISTORY_CHECKBOX" />
+				</then>
+			</elseif>
+		</if>
+
+		<if>
+			<equals arg1="${print}" arg2="true" />
+			<then>
+				<execute action="PGKnowledgebasedisplayConfigurationDisplaysettings#check" locator-key1="ENABLE_PRINT_CHECKBOX" />
+			</then>
+			<elseif>
+				<equals arg1="${print}" arg2="false" />
+				<then>
+					<execute action="PGKnowledgebasedisplayConfigurationDisplaysettings#uncheck" locator-key1="ENABLE_PRINT_CHECKBOX" />
+				</then>
+			</elseif>
+		</if>
+
+		<execute action="PGKnowledgebasedisplayConfigurationDisplaysettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGKnowledgebasedisplayConfigurationDisplaysettings#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="PGKnowledgebasedisplayConfigurationDisplaysettings#selectFrame" value1="relative=top" />
+	</command>
+
 	<command name="configureKBSection">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Knowledge Base Section" />
@@ -408,6 +460,12 @@
 		<execute action="CPKnowledgebaseadmin#assertElementNotPresent" locator-key1="ARTICLE_TABLE_TITLE_GENERIC" />
 	</command>
 
+	<command name="viewDefaultKBDisplaySettingsPG">
+		<execute action="PGKnowledgebasedisplay#assertElementPresent" locator-key1="ARTICLE_SUBSCRIBE" value1="Subscribe" />
+		<execute action="PGKnowledgebasedisplay#assertElementPresent" locator-key1="ARTICLE_HISTORY" value1="History" />
+		<execute action="PGKnowledgebasedisplay#assertElementPresent" locator-key1="ARTICLE_PRINT" value1="Print" />
+	</command>
+
 	<command name="viewDefaultViaKBArticlePG">
 		<execute action="PGKnowledgebasearticle#assertTextEquals" locator-key1="CONFIGURE_INFO_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
 		<execute action="PGKnowledgebasearticle#assertElementNotPresent" locator-key1="ARTICLE_TITLE" />
@@ -534,6 +592,75 @@
 					</then>
 				</if>
 			</then>
+		</if>
+	</command>
+
+	<command name="viewKBDisplayPG">
+		<if>
+			<equals arg1="${subscribe}" arg2="true" />
+			<then>
+				<execute action="PGKnowledgebasedisplay#assertElementPresent" locator-key1="ARTICLE_SUBSCRIBE" value1="Subscribe" />
+			</then>
+			<elseif>
+				<equals arg1="${subscribe}" arg2="false" />
+				<then>
+					<execute action="PGKnowledgebasedisplay#assertElementNotPresent" locator-key1="ARTICLE_SUBSCRIBE" value1="Subscribe" />
+				</then>
+			</elseif>
+		</if>
+
+		<if>
+			<equals arg1="${history}" arg2="true" />
+			<then>
+				<execute action="PGKnowledgebasedisplay#assertElementPresent" locator-key1="ARTICLE_HISTORY" value1="History" />
+			</then>
+			<elseif>
+				<equals arg1="${history}" arg2="false" />
+				<then>
+					<execute action="PGKnowledgebasedisplay#assertElementNotPresent" locator-key1="ARTICLE_HISTORY" value1="History" />
+				</then>
+			</elseif>
+		</if>
+
+		<if>
+			<equals arg1="${print}" arg2="true" />
+			<then>
+				<execute action="PGKnowledgebasedisplay#assertElementPresent" locator-key1="ARTICLE_PRINT" value1="Print" />
+			</then>
+			<elseif>
+				<equals arg1="${print}" arg2="false" />
+				<then>
+					<execute action="PGKnowledgebasedisplay#assertElementNotPresent" locator-key1="ARTICLE_PRINT" value1="Print" />
+				</then>
+			</elseif>
+		</if>
+	</command>
+
+	<command name="viewNavigationLinksPG">
+		<if>
+			<equals arg1="${previous}" arg2="true" />
+			<then>
+				<execute action="PGKnowledgebasedisplay#assertElementPresent" locator-key1="ARTICLE_PREVIOUS" value1="Previous" />
+			</then>
+			<elseif>
+				<equals arg1="${previous}" arg2="false" />
+				<then>
+					<execute action="PGKnowledgebasedisplay#assertElementNotPresent" locator-key1="ARTICLE_PREVIOUS" value1="Previous" />
+				</then>
+			</elseif>
+		</if>
+
+		<if>
+			<equals arg1="${next}" arg2="true" />
+			<then>
+				<execute action="PGKnowledgebasedisplay#assertElementPresent" locator-key1="ARTICLE_NEXT" value1="Next" />
+			</then>
+			<elseif>
+				<equals arg1="${next}" arg2="false" />
+				<then>
+					<execute action="PGKnowledgebasedisplay#assertElementNotPresent" locator-key1="ARTICLE_NEXT" value1="Next" />
+				</then>
+			</elseif>
 		</if>
 	</command>
 

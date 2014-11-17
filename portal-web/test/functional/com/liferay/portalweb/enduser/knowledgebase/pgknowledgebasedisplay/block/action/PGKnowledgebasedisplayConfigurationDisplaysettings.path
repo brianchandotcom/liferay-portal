@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>PGKnowledgebasedisplayConfigurationDisplaysettings</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGKnowledgebasedisplayConfigurationDisplaysettings</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGKnowledgebasedisplayConfigurationDisplaysettings</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_SUBSCRIPTIONS_CHECKBOX</td>
+	<td>//input[contains(@id,'Subscriptions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_HISTORY_CHECKBOX</td>
+	<td>//input[contains(@id,'History')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_PRINT_CHECKBOX</td>
+	<td>//input[contains(@id,'Print')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

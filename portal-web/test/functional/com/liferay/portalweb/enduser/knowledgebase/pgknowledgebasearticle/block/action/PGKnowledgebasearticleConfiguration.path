@@ -19,23 +19,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONFIGURATION_IFRAME</td>
-	<td>//iframe[contains(@id,'knowledgebaseportlet') and contains(@id,'configurationIframeDialog_iframe')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='alert alert-success']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_BUTTON</td>
-	<td>//button[contains(.,'Select')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SAVE_BUTTON</td>
-	<td>//button[contains(.,'Save')]</td>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>PGKnowledgebasedisplayConfiguration</td>
 	<td></td>
 </tr>
 </tbody>

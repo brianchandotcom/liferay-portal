@@ -5,7 +5,6 @@
 	<#assign dateFormat = "dd MMM yyyy - HH:mm:ss" />
 
 	<#list entries as entry>
-
 		<#assign cssClass = "">
 
 		<#if !entry_has_next>
@@ -57,16 +56,16 @@
 				<@liferay_ui["panel-container"] cssClass="feed-entries" extended=false id="rssFeedsPanelContainer" persistState=false>
 					<#list rssFeedEntryDisplayContexts as rssFeedEntryDisplayContext>
 						<#if (rssFeedEntryDisplayContext_index > entriesPerFeed?number)>
-							<#break>							
+							<#break>
 						</#if>
-
-						<#assign syndEntry = rssFeedEntryDisplayContext.getSyndEntry()>
 
 						<#assign defaultState = "close">
 
 						<#if themeDisplay.isStateMaximized() || (rssFeedEntryDisplayContext_index <= expandedEntriesPerFeed?number)>
 							<#assign defaultState = "open">
 						</#if>
+
+						<#assign syndEntry = rssFeedEntryDisplayContext.getSyndEntry()>
 
 						<@liferay_ui["panel"] cssClass="feed-entry" defaultState="${defaultState}" extended=false title="${htmlUtil.escape(syndEntry.getTitle())}">
 							<div class="feed-entry-content">

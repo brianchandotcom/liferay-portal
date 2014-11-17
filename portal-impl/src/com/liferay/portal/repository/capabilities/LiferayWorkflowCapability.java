@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
@@ -85,7 +87,7 @@ public class LiferayWorkflowCapability implements WorkflowCapability {
 			long userId, FileEntry fileEntry, ServiceContext serviceContext)
 		throws PortalException {
 
-		throw new UnsupportedOperationException();
+		_startWorkflowInstance(userId, fileEntry, serviceContext);
 	}
 
 	@Override
@@ -93,7 +95,63 @@ public class LiferayWorkflowCapability implements WorkflowCapability {
 			long userId, FileEntry fileEntry, ServiceContext serviceContext)
 		throws PortalException {
 
-		throw new UnsupportedOperationException();
+		_startWorkflowInstance(userId, fileEntry, serviceContext);
+	}
+
+	private DLFileVersion _getWorkflowDLFileVersion(
+			long fileEntryId, ServiceContext serviceContext)
+		throws PortalException {
+
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getDLFileEntry(
+			fileEntryId);
+
+		if (dlFileEntry.isCheckedOut()) {
+			return null;
+		}
+
+		DLFileVersion dlFileVersion =
+			DLFileVersionLocalServiceUtil.getLatestFileVersion(
+				fileEntryId, true);
+
+		if (dlFileVersion.isApproved() ||
+			(serviceContext.getWorkflowAction() ==
+					WorkflowConstants.ACTION_PUBLISH)) {
+
+			return dlFileVersion;
+		}
+
+		return null;
+	}
+
+	private void _startWorkflowInstance(
+			long userId, DLFileVersion dlFileVersion,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		if (dlFileVersion == null) {
+			return;
+		}
+
+		String syncEvent = DLSyncConstants.EVENT_UPDATE;
+
+		if (dlFileVersion.getVersion().equals(
+				DLFileEntryConstants.VERSION_DEFAULT)) {
+
+			syncEvent = DLSyncConstants.EVENT_ADD;
+		}
+
+		DLUtil.startWorkflowInstance(
+			userId, dlFileVersion, syncEvent, serviceContext);
+	}
+
+	private void _startWorkflowInstance(
+			long userId, FileEntry fileEntry, ServiceContext serviceContext)
+		throws PortalException {
+
+		DLFileVersion dlFileVersion = _getWorkflowDLFileVersion(
+			fileEntry.getFileEntryId(), serviceContext);
+
+		_startWorkflowInstance(userId, dlFileVersion, serviceContext);
 	}
 
 }

@@ -111,7 +111,8 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 			throws PortalException {
 
 			return new LiferayWorkflowLocalRepositoryWrapper(
-				_repositoryFactory.createLocalRepository(repositoryId));
+				_repositoryFactory.createLocalRepository(repositoryId),
+				_liferayWorkflowCapability);
 		}
 
 		@Override
@@ -119,7 +120,8 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 			throws PortalException {
 
 			return new LiferayWorkflowRepositoryWrapper(
-				_repositoryFactory.createRepository(repositoryId));
+				_repositoryFactory.createRepository(repositoryId),
+				_liferayWorkflowCapability);
 		}
 
 		private final RepositoryFactory _repositoryFactory;

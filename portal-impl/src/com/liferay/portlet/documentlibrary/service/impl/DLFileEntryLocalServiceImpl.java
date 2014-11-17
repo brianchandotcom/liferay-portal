@@ -2452,11 +2452,6 @@ public class DLFileEntryLocalServiceImpl
 		unlockFileEntry(dlFileEntry.getFileEntryId());
 	}
 
-	/**
-	 * See {@link
-	 * com.liferay.portal.repository.liferayrepository.LiferayWorkflowRepositoryWrapper#_getWorkflowDLFileVersion(
-	 * long, ServiceContext)}
-	 */
 	protected DLFileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,
 			String extension, String mimeType, String title, String description,

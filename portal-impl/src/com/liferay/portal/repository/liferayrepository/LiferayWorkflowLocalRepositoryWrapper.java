@@ -16,17 +16,10 @@ package com.liferay.portal.repository.liferayrepository;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.util.LocalRepositoryWrapper;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
-import com.liferay.portlet.documentlibrary.model.DLFileVersion;
-import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.io.File;
 import java.io.InputStream;
@@ -38,9 +31,58 @@ public class LiferayWorkflowLocalRepositoryWrapper
 	extends LocalRepositoryWrapper {
 
 	public LiferayWorkflowLocalRepositoryWrapper(
-		LocalRepository localRepository) {
+		LocalRepository localRepository,
+		WorkflowCapability workflowCapability) {
 
 		super(localRepository);
+
+		_workflowCapability = workflowCapability;
+	}
+
+	@Override
+	public FileEntry addFileEntry(
+			long userId, long folderId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog, File file,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		FileEntry fileEntry = super.addFileEntry(
+			userId, folderId, sourceFileName, mimeType, title, description,
+			changeLog, file, serviceContext);
+
+		_workflowCapability.addFileEntry(userId, fileEntry, serviceContext);
+
+		return fileEntry;
+	}
+
+	@Override
+	public FileEntry addFileEntry(
+			long userId, long folderId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog, InputStream is,
+			long size, ServiceContext serviceContext)
+		throws PortalException {
+
+		FileEntry fileEntry = super.addFileEntry(
+			userId, folderId, sourceFileName, mimeType, title, description,
+			changeLog, is, size, serviceContext);
+
+		_workflowCapability.addFileEntry(userId, fileEntry, serviceContext);
+
+		return fileEntry;
+	}
+
+	@Override
+	public FileEntry copyFileEntry(
+			long userId, long groupId, long fileEntryId, long destFolderId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		FileEntry fileEntry = super.copyFileEntry(
+			userId, groupId, fileEntryId, destFolderId, serviceContext);
+
+		_workflowCapability.addFileEntry(userId, fileEntry, serviceContext);
+
+		return fileEntry;
 	}
 
 	@Override
@@ -50,16 +92,11 @@ public class LiferayWorkflowLocalRepositoryWrapper
 			boolean majorVersion, File file, ServiceContext serviceContext)
 		throws PortalException {
 
-		DLFileVersionReference dlFileVersionReference =
-			_getWorkflowDLFileVersion(fileEntryId, serviceContext);
-
-		super.updateFileEntry(
+		FileEntry fileEntry = super.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, file, serviceContext);
 
-		_startWorkflowInstance(
-			userId, dlFileVersionReference.fetchDLFileVersion(),
-			serviceContext);
+		_workflowCapability.updateFileEntry(userId, fileEntry, serviceContext);
 
 		return super.getFileEntry(fileEntryId);
 	}
@@ -72,106 +109,15 @@ public class LiferayWorkflowLocalRepositoryWrapper
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DLFileVersionReference dlFileVersionReference =
-			_getWorkflowDLFileVersion(fileEntryId, serviceContext);
-
-		super.updateFileEntry(
+		FileEntry fileEntry = super.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, is, size, serviceContext);
 
-		_startWorkflowInstance(
-			userId, dlFileVersionReference.fetchDLFileVersion(),
-			serviceContext);
+		_workflowCapability.updateFileEntry(userId, fileEntry, serviceContext);
 
 		return super.getFileEntry(fileEntryId);
 	}
 
-	/**
-	 * See {@link
-	 * com.liferay.portlet.documentlibrary.service.impl.DLFileEntryLocalServiceImpl#updateFileEntry(
-	 * long, long, String, String, String, String, String, String, boolean,
-	 * String, long, java.util.Map, File, InputStream, long, ServiceContext)}
-	 */
-	private DLFileVersionReference _getWorkflowDLFileVersion(
-			long fileEntryId, ServiceContext serviceContext)
-		throws PortalException {
-
-		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getDLFileEntry(
-			fileEntryId);
-
-		boolean checkedOut = dlFileEntry.isCheckedOut();
-
-		DLFileVersion dlFileVersion =
-			DLFileVersionLocalServiceUtil.getLatestFileVersion(
-				fileEntryId, !checkedOut);
-
-		boolean autoCheckIn = !checkedOut && dlFileVersion.isApproved();
-
-		if (autoCheckIn) {
-			return new DLFileVersionReference(autoCheckIn, fileEntryId, null);
-		}
-
-		int workflowAction = serviceContext.getWorkflowAction();
-
-		if (!checkedOut &&
-			(workflowAction == WorkflowConstants.ACTION_PUBLISH)) {
-
-			return new DLFileVersionReference(
-				autoCheckIn, fileEntryId, dlFileVersion);
-		}
-
-		return new DLFileVersionReference(autoCheckIn, fileEntryId, null);
-	}
-
-	private void _startWorkflowInstance(
-			long userId, DLFileVersion dlFileVersion,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		if (dlFileVersion == null) {
-			return;
-		}
-
-		String syncEvent = DLSyncConstants.EVENT_UPDATE;
-
-		if (dlFileVersion.getVersion().equals(
-				DLFileEntryConstants.VERSION_DEFAULT)) {
-
-			syncEvent = DLSyncConstants.EVENT_ADD;
-		}
-
-		DLUtil.startWorkflowInstance(
-			userId, dlFileVersion, syncEvent, serviceContext);
-	}
-
-	private static final class DLFileVersionReference {
-
-		public DLFileVersionReference(
-			boolean autoCheckIn, long fileEntryId,
-			DLFileVersion dlFileVersion) {
-
-			_autoCheckIn = autoCheckIn;
-			_fileEntryId = fileEntryId;
-			_dlFileVersion = dlFileVersion;
-		}
-
-		public DLFileVersion fetchDLFileVersion() throws PortalException {
-			if (_dlFileVersion != null) {
-				return _dlFileVersion;
-			}
-
-			if (_autoCheckIn) {
-				return DLFileVersionLocalServiceUtil.getLatestFileVersion(
-					_fileEntryId, false);
-			}
-
-			return null;
-		}
-
-		private final boolean _autoCheckIn;
-		private final DLFileVersion _dlFileVersion;
-		private final long _fileEntryId;
-
-	}
+	private final WorkflowCapability _workflowCapability;
 
 }

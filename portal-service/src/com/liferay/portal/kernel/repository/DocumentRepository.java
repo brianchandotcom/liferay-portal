@@ -39,12 +39,27 @@ public interface DocumentRepository extends CapabilityProvider {
 			long size, ServiceContext serviceContext)
 		throws PortalException;
 
+	public void checkInFileEntry(
+			long userId, long fileEntryId, boolean major, String changeLog,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public void checkInFileEntry(
+			long userId, long fileEntryId, String lockUuid,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public FileEntry copyFileEntry(
 			long userId, long groupId, long fileEntryId, long destFolderId,
 			ServiceContext serviceContext)
 		throws PortalException;
 
 	public long getRepositoryId();
+
+	public void revertFileEntry(
+			long userId, long fileEntryId, String version,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	public FileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,

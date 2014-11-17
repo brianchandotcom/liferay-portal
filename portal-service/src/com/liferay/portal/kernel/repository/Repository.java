@@ -76,16 +76,6 @@ public interface Repository extends DocumentRepository {
 			ServiceContext serviceContext)
 		throws PortalException;
 
-	public void checkInFileEntry(
-			long userId, long fileEntryId, boolean major, String changeLog,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	public void checkInFileEntry(
-			long userId, long fileEntryId, String lockUuid,
-			ServiceContext serviceContext)
-		throws PortalException;
-
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
 	 *             String, ServiceContext)}
@@ -291,11 +281,6 @@ public interface Repository extends DocumentRepository {
 
 	public Lock refreshFolderLock(
 			String lockUuid, long companyId, long expirationTime)
-		throws PortalException;
-
-	public void revertFileEntry(
-			long userId, long fileEntryId, String version,
-			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

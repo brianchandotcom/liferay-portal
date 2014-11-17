@@ -36,6 +36,8 @@ public interface ClusterLink {
 
 	public List<Address> getTransportAddresses(Priority priority);
 
+	public void initialize();
+
 	public boolean isEnabled();
 
 	public void sendMulticastMessage(Message message, Priority priority);

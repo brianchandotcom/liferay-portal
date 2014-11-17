@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.portlet.wiki.service.persistence.WikiPageFinder.countByCreateDate">
+	<sql id="com.liferay.wiki.service.persistence.WikiPageFinder.countByCreateDate">
 		<![CDATA[
 			SELECT
 				COUNT(*) AS COUNT_VALUE
@@ -15,7 +15,7 @@
 				(status = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.wiki.service.persistence.WikiPageFinder.findByResourcePrimKey">
+	<sql id="com.liferay.wiki.service.persistence.WikiPageFinder.findByResourcePrimKey">
 		<![CDATA[
 			SELECT
 				{WikiPage.*}
@@ -26,7 +26,7 @@
 				(head = [$TRUE$])
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.wiki.service.persistence.WikiPageFinder.findByCreateDate">
+	<sql id="com.liferay.wiki.service.persistence.WikiPageFinder.findByCreateDate">
 		<![CDATA[
 			SELECT
 				{WikiPage.*}
@@ -42,7 +42,7 @@
 				createDate DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.wiki.service.persistence.WikiPageFinder.findByNoAssets">
+	<sql id="com.liferay.wiki.service.persistence.WikiPageFinder.findByNoAssets">
 		<![CDATA[
 			SELECT
 				{WikiPage.*}

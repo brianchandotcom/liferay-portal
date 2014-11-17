@@ -15,7 +15,7 @@
 package com.liferay.wiki.upgrade.v1_0_0;
 
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.wiki.WikiSettings;
+import com.liferay.wiki.configuration.WikiSettings;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
 /**

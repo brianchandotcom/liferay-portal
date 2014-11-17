@@ -851,13 +851,13 @@ public class DLAppLocalServiceUtil {
 	the file entry type to default all Liferay file entries to </li>
 	<li> dlFileEntryTypesSearchContainerPrimaryKeys - a
 	comma-delimited list of file entry type primary keys allowed in
-	the given folder and all descendants </li> <li>
-	overrideFileEntryTypes - boolean specifying whether to override
-	ancestral folder's restriction of file entry types allowed </li>
+	the given folder and all descendants </li> <li> restrictionType
+	- specifying restriction type of file entry types allowed </li>
 	<li> workflowDefinitionXYZ - the workflow definition name
 	specified per file entry type. The parameter name must be the
-	string <code>workflowDefinition</code> appended by the <code>
-	fileEntryTypeId</code> (optionally <code>0</code>). </li> </ul>
+	string <code>workflowDefinition</code> appended by the
+	<code>fileEntryTypeId</code> (optionally <code>0</code>).</li>
+	</ul>
 	* @return the folder
 	* @throws PortalException if the current or new parent folder could not be
 	found, or if the new parent folder's information was invalid

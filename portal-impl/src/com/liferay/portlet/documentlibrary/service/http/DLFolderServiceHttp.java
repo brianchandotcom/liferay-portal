@@ -1110,13 +1110,49 @@ public class DLFolderServiceHttp {
 		}
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
+		HttpPrincipal httpPrincipal, long folderId, java.lang.String name,
+		java.lang.String description, long defaultFileEntryTypeId,
+		java.util.List<java.lang.Long> fileEntryTypeIds, int restrictionType,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
+					"updateFolder", _updateFolderParameterTypes33);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					folderId, name, description, defaultFileEntryTypeId,
+					fileEntryTypeIds, restrictionType, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portlet.documentlibrary.model.DLFolder)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static boolean verifyInheritableLock(HttpPrincipal httpPrincipal,
 		long folderId, java.lang.String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"verifyInheritableLock",
-					_verifyInheritableLockParameterTypes33);
+					_verifyInheritableLockParameterTypes34);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					folderId, lockUuid);
@@ -1255,7 +1291,12 @@ public class DLFolderServiceHttp {
 			long.class, java.util.List.class, boolean.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
-	private static final Class<?>[] _verifyInheritableLockParameterTypes33 = new Class[] {
+	private static final Class<?>[] _updateFolderParameterTypes33 = new Class[] {
+			long.class, java.lang.String.class, java.lang.String.class,
+			long.class, java.util.List.class, int.class,
+			com.liferay.portal.service.ServiceContext.class
+		};
+	private static final Class<?>[] _verifyInheritableLockParameterTypes34 = new Class[] {
 			long.class, java.lang.String.class
 		};
 }

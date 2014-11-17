@@ -121,6 +121,7 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #deleteAllByGroup(long)}
 	*/
+	@Deprecated
 	@Override
 	public void deleteAll(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -767,6 +768,7 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	* @deprecated As of 7.0.0, replaced by {@link #getGroupSubfolderIds(List,
 	long, long)}
 	*/
+	@Deprecated
 	@Override
 	public void getSubfolderIds(java.util.List<java.lang.Long> folderIds,
 		long groupId, long folderId) {
@@ -870,6 +872,11 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 		return _dlFolderLocalService.updateDLFolder(dlFolder);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced {@link #updateFolder(long, long,
+	String, String, long, List, int, ServiceContext)}
+	*/
+	@Deprecated
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
 		long folderId, java.lang.String name, java.lang.String description,
@@ -885,6 +892,23 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
+		long folderId, java.lang.String name, java.lang.String description,
+		long defaultFileEntryTypeId,
+		java.util.List<java.lang.Long> fileEntryTypeIds, int restrictionType,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFolderLocalService.updateFolder(folderId, name, description,
+			defaultFileEntryTypeId, fileEntryTypeIds, restrictionType,
+			serviceContext);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
+	String, String, long, List, int, ServiceContext)}
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
 		long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, long defaultFileEntryTypeId,
 		java.util.List<java.lang.Long> fileEntryTypeIds,
@@ -897,6 +921,24 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
+		long folderId, long parentFolderId, java.lang.String name,
+		java.lang.String description, long defaultFileEntryTypeId,
+		java.util.List<java.lang.Long> fileEntryTypeIds, int restrictionType,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFolderLocalService.updateFolder(folderId, parentFolderId,
+			name, description, defaultFileEntryTypeId, fileEntryTypeIds,
+			restrictionType, serviceContext);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #
+	updateFolderAndFileEntryTypes(long, long, long, String,
+	String, long, List, int, ServiceContext)}
+	*/
+	@Deprecated
+	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolderAndFileEntryTypes(
 		long userId, long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, long defaultFileEntryTypeId,
@@ -907,6 +949,19 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 		return _dlFolderLocalService.updateFolderAndFileEntryTypes(userId,
 			folderId, parentFolderId, name, description,
 			defaultFileEntryTypeId, fileEntryTypeIds, overrideFileEntryTypes,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolderAndFileEntryTypes(
+		long userId, long folderId, long parentFolderId, java.lang.String name,
+		java.lang.String description, long defaultFileEntryTypeId,
+		java.util.List<java.lang.Long> fileEntryTypeIds, int restrictionType,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFolderLocalService.updateFolderAndFileEntryTypes(userId,
+			folderId, parentFolderId, name, description,
+			defaultFileEntryTypeId, fileEntryTypeIds, restrictionType,
 			serviceContext);
 	}
 

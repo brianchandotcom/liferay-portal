@@ -302,6 +302,11 @@ public class CMISFolder extends CMISModel implements Folder {
 	}
 
 	@Override
+	public int getRestrictionType() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(DLFolderConstants.getClassName());
 	}

@@ -30,7 +30,9 @@ boolean inherited = true;
 if ((folder != null) && (folder.getModel() instanceof DLFolder)) {
 	DLFolder dlFolder = (DLFolder)folder.getModel();
 
-	inherited = !dlFolder.isOverrideFileEntryTypes();
+	if (dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW) {
+		inherited = false;
+	}
 }
 
 if ((folder == null) || folder.isSupportsMetadata()) {

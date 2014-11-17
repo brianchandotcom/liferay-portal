@@ -571,7 +571,7 @@
 		<column name="lastPostDate" type="Date" />
 		<column name="defaultFileEntryTypeId" type="long" />
 		<column name="hidden" type="boolean" />
-		<column name="overrideFileEntryTypes" type="boolean" />
+		<column name="restrictionType" type="int" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />

@@ -68,7 +68,9 @@ public class DLFileEntryWorkflowHandler
 		while (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(folderId);
 
-			if (dlFolder.isOverrideFileEntryTypes()) {
+			if (dlFolder.getRestrictionType() !=
+					DLFolderConstants.RESTRICTION_TYPE_INHERIT) {
+
 				break;
 			}
 

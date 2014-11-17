@@ -30,6 +30,12 @@ public class DLFolderConstants {
 
 	public static final long DEFAULT_PARENT_FOLDER_ID = 0;
 
+	public static final int RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW = 1;
+
+	public static final int RESTRICTION_TYPE_INHERIT = 0;
+
+	public static final int RESTRICTION_TYPE_WORKFLOW = 2;
+
 	public static String getClassName() {
 		return DLFolder.class.getName();
 	}

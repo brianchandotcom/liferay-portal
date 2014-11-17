@@ -97,13 +97,13 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 			{ "lastPostDate", Types.TIMESTAMP },
 			{ "defaultFileEntryTypeId", Types.BIGINT },
 			{ "hidden_", Types.BOOLEAN },
-			{ "overrideFileEntryTypes", Types.BOOLEAN },
+			{ "restrictionType", Types.INTEGER },
 			{ "status", Types.INTEGER },
 			{ "statusByUserId", Types.BIGINT },
 			{ "statusByUserName", Types.VARCHAR },
 			{ "statusDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DLFolder (uuid_ VARCHAR(75) null,folderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,mountPoint BOOLEAN,parentFolderId LONG,treePath STRING null,name VARCHAR(100) null,description STRING null,lastPostDate DATE null,defaultFileEntryTypeId LONG,hidden_ BOOLEAN,overrideFileEntryTypes BOOLEAN,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DLFolder (uuid_ VARCHAR(75) null,folderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,mountPoint BOOLEAN,parentFolderId LONG,treePath STRING null,name VARCHAR(100) null,description STRING null,lastPostDate DATE null,defaultFileEntryTypeId LONG,hidden_ BOOLEAN,restrictionType INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DLFolder";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFolder.parentFolderId ASC, dlFolder.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFolder.parentFolderId ASC, DLFolder.name ASC";
@@ -160,7 +160,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		model.setLastPostDate(soapModel.getLastPostDate());
 		model.setDefaultFileEntryTypeId(soapModel.getDefaultFileEntryTypeId());
 		model.setHidden(soapModel.getHidden());
-		model.setOverrideFileEntryTypes(soapModel.getOverrideFileEntryTypes());
+		model.setRestrictionType(soapModel.getRestrictionType());
 		model.setStatus(soapModel.getStatus());
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
@@ -257,7 +257,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		attributes.put("lastPostDate", getLastPostDate());
 		attributes.put("defaultFileEntryTypeId", getDefaultFileEntryTypeId());
 		attributes.put("hidden", getHidden());
-		attributes.put("overrideFileEntryTypes", getOverrideFileEntryTypes());
+		attributes.put("restrictionType", getRestrictionType());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -374,11 +374,10 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 			setHidden(hidden);
 		}
 
-		Boolean overrideFileEntryTypes = (Boolean)attributes.get(
-				"overrideFileEntryTypes");
+		Integer restrictionType = (Integer)attributes.get("restrictionType");
 
-		if (overrideFileEntryTypes != null) {
-			setOverrideFileEntryTypes(overrideFileEntryTypes);
+		if (restrictionType != null) {
+			setRestrictionType(restrictionType);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -748,18 +747,13 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 	@JSON
 	@Override
-	public boolean getOverrideFileEntryTypes() {
-		return _overrideFileEntryTypes;
+	public int getRestrictionType() {
+		return _restrictionType;
 	}
 
 	@Override
-	public boolean isOverrideFileEntryTypes() {
-		return _overrideFileEntryTypes;
-	}
-
-	@Override
-	public void setOverrideFileEntryTypes(boolean overrideFileEntryTypes) {
-		_overrideFileEntryTypes = overrideFileEntryTypes;
+	public void setRestrictionType(int restrictionType) {
+		_restrictionType = restrictionType;
 	}
 
 	@JSON
@@ -1133,7 +1127,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		dlFolderImpl.setLastPostDate(getLastPostDate());
 		dlFolderImpl.setDefaultFileEntryTypeId(getDefaultFileEntryTypeId());
 		dlFolderImpl.setHidden(getHidden());
-		dlFolderImpl.setOverrideFileEntryTypes(getOverrideFileEntryTypes());
+		dlFolderImpl.setRestrictionType(getRestrictionType());
 		dlFolderImpl.setStatus(getStatus());
 		dlFolderImpl.setStatusByUserId(getStatusByUserId());
 		dlFolderImpl.setStatusByUserName(getStatusByUserName());
@@ -1340,7 +1334,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 		dlFolderCacheModel.hidden = getHidden();
 
-		dlFolderCacheModel.overrideFileEntryTypes = getOverrideFileEntryTypes();
+		dlFolderCacheModel.restrictionType = getRestrictionType();
 
 		dlFolderCacheModel.status = getStatus();
 
@@ -1404,8 +1398,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		sb.append(getDefaultFileEntryTypeId());
 		sb.append(", hidden=");
 		sb.append(getHidden());
-		sb.append(", overrideFileEntryTypes=");
-		sb.append(getOverrideFileEntryTypes());
+		sb.append(", restrictionType=");
+		sb.append(getRestrictionType());
 		sb.append(", status=");
 		sb.append(getStatus());
 		sb.append(", statusByUserId=");
@@ -1496,8 +1490,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		sb.append(getHidden());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>overrideFileEntryTypes</column-name><column-value><![CDATA[");
-		sb.append(getOverrideFileEntryTypes());
+			"<column><column-name>restrictionType</column-name><column-value><![CDATA[");
+		sb.append(getRestrictionType());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>status</column-name><column-value><![CDATA[");
@@ -1558,7 +1552,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	private boolean _hidden;
 	private boolean _originalHidden;
 	private boolean _setOriginalHidden;
-	private boolean _overrideFileEntryTypes;
+	private int _restrictionType;
 	private int _status;
 	private int _originalStatus;
 	private boolean _setOriginalStatus;

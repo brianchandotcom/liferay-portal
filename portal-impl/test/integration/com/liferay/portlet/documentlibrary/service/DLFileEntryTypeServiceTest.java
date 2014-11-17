@@ -311,7 +311,9 @@ public class DLFileEntryTypeServiceTest {
 		serviceContext.setAttribute(
 			"dlFileEntryTypesSearchContainerPrimaryKeys",
 			ArrayUtil.toString(dlFileEntryTypes, "primaryKey"));
-		serviceContext.setAttribute("overrideFileEntryTypes", true);
+		serviceContext.setAttribute(
+			"restrictionType",
+			DLFolderConstants.RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW);
 
 		return serviceContext;
 	}

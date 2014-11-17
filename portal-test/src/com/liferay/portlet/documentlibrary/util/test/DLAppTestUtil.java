@@ -629,7 +629,8 @@ public abstract class DLAppTestUtil {
 		DLFolder dlFolder = (DLFolder)folder.getModel();
 
 		dlFolder.setDefaultFileEntryTypeId(defaultFileEntryTypeId);
-		dlFolder.setOverrideFileEntryTypes(true);
+		dlFolder.setRestrictionType(
+			DLFolderConstants.RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW);
 
 		DLFolderLocalServiceUtil.updateDLFolder(dlFolder);
 

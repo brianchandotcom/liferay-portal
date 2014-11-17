@@ -17,6 +17,7 @@ package com.liferay.sync.engine.documentlibrary.event;
 import com.liferay.sync.engine.SyncEngine;
 import com.liferay.sync.engine.documentlibrary.handler.Handler;
 import com.liferay.sync.engine.model.SyncAccount;
+import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.session.Session;
 import com.liferay.sync.engine.session.SessionManager;
@@ -114,7 +115,16 @@ public abstract class BaseEvent implements Event {
 			if (_logger.isTraceEnabled()) {
 				Class<?> clazz = this.getClass();
 
-				_logger.trace("Processing {}", clazz.getSimpleName());
+				SyncFile syncFile = (SyncFile)getParameterValue("syncFile");
+
+				if (syncFile != null) {
+					_logger.trace(
+						"Processing event {} file path {}",
+						clazz.getSimpleName(), syncFile.getFilePathName());
+				}
+				else {
+					_logger.trace("Processing event {}", clazz.getSimpleName());
+				}
 			}
 
 			processRequest();

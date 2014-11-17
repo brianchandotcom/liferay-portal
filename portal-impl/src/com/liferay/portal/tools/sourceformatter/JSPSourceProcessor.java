@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -893,8 +894,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			String line, String tag, String attributeAndValue)
 		throws Exception {
 
-		if (!attributeAndValue.endsWith("\"false\"") &&
-			!attributeAndValue.endsWith("\"true\"")) {
+		if (!attributeAndValue.endsWith(StringPool.QUOTE) ||
+			attributeAndValue.contains("\"<%=")) {
 
 			return line;
 		}
@@ -909,28 +910,34 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			return line;
 		}
 
-		int pos = attributeAndValue.indexOf(StringPool.EQUAL);
+		int pos = attributeAndValue.indexOf("=\"");
 
 		String attribute = attributeAndValue.substring(0, pos);
 
 		String setAttributeMethodName =
 			"set" + TextFormatter.format(attribute, TextFormatter.G);
 
-		Type javaType = new Type("boolean");
+		for (String dataType : getPrimitiveTagAttributeDataTypes()) {
+			Type javaType = new Type(dataType);
 
-		JavaMethod setAttributeMethod = tagJavaClass.getMethodBySignature(
-			setAttributeMethodName, new Type[] {javaType}, true);
+			JavaMethod setAttributeMethod = tagJavaClass.getMethodBySignature(
+				setAttributeMethodName, new Type[] {javaType}, true);
 
-		if (setAttributeMethod == null) {
-			return line;
+			if (setAttributeMethod != null) {
+				String value = attributeAndValue.substring(
+					pos + 2, attributeAndValue.length() - 1);
+
+				String newAttributeAndValue = StringUtil.replace(
+					attributeAndValue,
+					StringPool.QUOTE + value + StringPool.QUOTE,
+					"\"<%= " + value + " %>\"");
+
+				return StringUtil.replace(
+					line, attributeAndValue, newAttributeAndValue);
+			}
 		}
 
-		String newAttributeAndValue = StringUtil.replace(
-			attributeAndValue, new String[] {"\"false\"", "\"true\""},
-			new String[] {"\"<%= false %>\"", "\"<%= true %>\""});
-
-		return StringUtil.replace(
-			line, attributeAndValue, newAttributeAndValue);
+		return line;
 	}
 
 	protected String formatTaglibQuotes(
@@ -1024,6 +1031,17 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return duplicateImports;
+	}
+
+	protected Set<String> getPrimitiveTagAttributeDataTypes() {
+		if (_primitiveTagAttributeDataTypes != null) {
+			return _primitiveTagAttributeDataTypes;
+		}
+
+		_primitiveTagAttributeDataTypes = SetUtil.fromArray(
+			new String[] {"boolean", "double", "int", "long"});
+
+		return _primitiveTagAttributeDataTypes;
 	}
 
 	protected JavaClass getTagJavaClass(String tag) throws Exception {
@@ -1463,6 +1481,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"(<.*\n*page.import=\".*>\n*)+", Pattern.MULTILINE);
 	private Pattern _jspIncludeFilePattern = Pattern.compile("/.*[.]jsp[f]?");
 	private boolean _moveFrequentlyUsedImportsToCommonInit;
+	private Set<String> _primitiveTagAttributeDataTypes;
 	private Pattern _redirectBackURLPattern = Pattern.compile(
 		"(String redirect = ParamUtil\\.getString\\(request, \"redirect\".*" +
 			"\\);)\n(String backURL = ParamUtil\\.getString\\(request, \"" +

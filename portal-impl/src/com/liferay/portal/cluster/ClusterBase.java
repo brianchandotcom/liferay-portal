@@ -46,7 +46,7 @@ public abstract class ClusterBase {
 			return;
 		}
 
-		if (!_initialized) {
+		if (!_initJGroupsProperties) {
 			initSystemProperties();
 
 			try {
@@ -58,7 +58,7 @@ public abstract class ClusterBase {
 				}
 			}
 
-			_initialized = true;
+			_initJGroupsProperties = true;
 		}
 
 		try {
@@ -196,6 +196,6 @@ public abstract class ClusterBase {
 
 	private static final Log _log = LogFactoryUtil.getLog(ClusterBase.class);
 
-	private static boolean _initialized;
+	private static boolean _initJGroupsProperties;
 
 }

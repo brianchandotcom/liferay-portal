@@ -22,6 +22,7 @@ import java.util.List;
 
 import org.jgroups.Address;
 import org.jgroups.Message;
+import org.jgroups.View;
 
 /**
  * @author Shuyang Zhou
@@ -37,7 +38,7 @@ public class ClusterForwardReceiver extends BaseReceiver {
 	}
 
 	@Override
-	public void receive(Message message) {
+	protected void doReceive(Message message) {
 		if (!_localTransportAddresses.contains(message.getSrc()) ||
 			(message.getDest() != null)) {
 
@@ -50,6 +51,10 @@ public class ClusterForwardReceiver extends BaseReceiver {
 				_log.debug("Block received message " + message);
 			}
 		}
+	}
+
+	@Override
+	protected void doViewAccepted(View oldView, View newView) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

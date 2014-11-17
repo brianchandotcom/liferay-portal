@@ -927,6 +927,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				String value = attributeAndValue.substring(
 					pos + 2, attributeAndValue.length() - 1);
 
+				if (!isValidTagAttributeValue(value, dataType)) {
+					return line;
+				}
+
 				String newAttributeAndValue = StringUtil.replace(
 					attributeAndValue,
 					StringPool.QUOTE + value + StringPool.QUOTE,
@@ -1331,6 +1335,29 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 				return true;
 			}
+		}
+
+		return false;
+	}
+
+	protected boolean isValidTagAttributeValue(String value, String dataType) {
+		if (dataType.equals("boolean")) {
+			return Validator.isBoolean(value);
+		}
+
+		if (dataType.equals("double")) {
+			try {
+				Double.parseDouble(value);
+			}
+			catch (NumberFormatException nfe) {
+				return false;
+			}
+
+			return true;
+		}
+
+		if (dataType.equals("int") || dataType.equals("long")) {
+			return Validator.isNumber(value);
 		}
 
 		return false;

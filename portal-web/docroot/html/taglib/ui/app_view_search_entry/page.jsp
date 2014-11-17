@@ -120,7 +120,7 @@ summary.setQueryTerms(queryTerms);
 			<div class="entry-attachment">
 				<aui:a class="lfr-discussion-details" href="<%= url %>">
 					<div class="image">
-						<img alt="<%= HtmlUtil.escapeAttribute(fileEntry.getTitle()) %>" class="attachment" src="<%= DLUtil.getThumbnailSrc(fileEntry, null, themeDisplay) %>" />
+						<img alt="<%= HtmlUtil.escapeAttribute(fileEntry.getTitle()) %>" class="attachment" src="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>" />
 					</div>
 
 					<span class="title">

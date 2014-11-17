@@ -75,7 +75,7 @@ boolean showSyntaxHelp = ((toggleValue != null) && toggleValue.equals("block"));
 				<liferay-ui:message key="syntax-help" />
 			</h3>
 
-			<liferay-util:include page="<%= WikiServiceUtil.getHelpPage(format) %>" />
+			<liferay-util:include page="<%= WikiServiceUtil.getHelpPage(format) %>" servletContext="<%= application %>" />
 
 			<aui:a href="<%= WikiServiceUtil.getHelpURL(format) %>" target="_blank"><liferay-ui:message key="learn-more" /> &raquo;</aui:a>
 		</aui:col>

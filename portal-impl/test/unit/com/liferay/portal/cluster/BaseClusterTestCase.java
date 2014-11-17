@@ -22,13 +22,20 @@ import java.io.DataOutput;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+
+import org.jgroups.Receiver;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -41,13 +48,92 @@ public class BaseClusterTestCase {
 
 	@Before
 	public void setUp() {
-		_captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+		_clusterBaseCaptureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			ClusterBase.class.getName(), Level.OFF);
 	}
 
 	@After
 	public void tearDown() {
-		_captureHandler.close();
+		_clusterBaseCaptureHandler.close();
+	}
+
+	@Aspect
+	public static class BaseReceiverAdvice {
+
+		public static void awaitMessageReceived() {
+			if (_countDownLatch == null) {
+				throw new NullPointerException("CountDownLatch is null");
+			}
+
+			try {
+				_countDownLatch.await(1000, TimeUnit.MILLISECONDS);
+			}
+			catch (InterruptedException te) {
+			}
+		}
+
+		public static Object getJgroupsMessagePayload(
+			Receiver receiver, org.jgroups.Address sourceAddress) {
+
+			synchronized(BaseReceiverAdvice.class) {
+				List<org.jgroups.Message> jgroupsMessageList =
+					_jgroupsMessages.get(receiver);
+
+				if ((jgroupsMessageList == null) ||
+					jgroupsMessageList.isEmpty()) {
+
+					return null;
+				}
+
+				for (org.jgroups.Message jgroupsMessage : jgroupsMessageList) {
+					if (!sourceAddress.equals(jgroupsMessage.getSrc())) {
+						continue;
+					}
+
+					return jgroupsMessage.getObject();
+				}
+
+				return null;
+			}
+		}
+
+		public static void reset(int expectedMessageNumber) {
+			_countDownLatch = new CountDownLatch(expectedMessageNumber);
+
+			_jgroupsMessages.clear();
+		}
+
+		@Around(
+			"execution(* com.liferay.portal.cluster.BaseReceiver." +
+				"doReceive(org.jgroups.Message))")
+		public void doReceive(ProceedingJoinPoint proceedingJoinPoint)
+			throws Throwable {
+
+			synchronized(BaseReceiverAdvice.class) {
+				Receiver receiver = (Receiver)proceedingJoinPoint.getThis();
+				org.jgroups.Message jgroupsMessage =
+					(org.jgroups.Message)proceedingJoinPoint.getArgs()[0];
+
+				List<org.jgroups.Message> jgroupsMessageList =
+					_jgroupsMessages.get(receiver);
+
+				if (jgroupsMessageList == null) {
+					jgroupsMessageList = new ArrayList<org.jgroups.Message>();
+
+					_jgroupsMessages.put(receiver, jgroupsMessageList);
+				}
+
+				jgroupsMessageList.add(jgroupsMessage);
+
+				_countDownLatch.countDown();
+			}
+		}
+
+		private static CountDownLatch _countDownLatch;
+		private static final Map<Receiver, List<org.jgroups.Message>>
+			_jgroupsMessages =
+				new HashMap<Receiver, List<org.jgroups.Message>>();
+
 	}
 
 	@Aspect
@@ -95,12 +181,29 @@ public class BaseClusterTestCase {
 	@Aspect
 	public static class JChannelExceptionAdvice {
 
+		public static void setConnectException(Exception exception) {
+			_connectException = exception;
+		}
+
+		@Around("call(* org.jgroups.JChannel.connect(..))")
+		public void connect(ProceedingJoinPoint proceedingJoinPoint)
+			throws Throwable {
+
+			if (_connectException != null) {
+				throw _connectException;
+			}
+
+			proceedingJoinPoint.proceed(proceedingJoinPoint.getArgs());
+		}
+
 		@Around("call(* org.jgroups.JChannel.send(..))")
-		public Object throwException(ProceedingJoinPoint proceedingJoinPoint)
+		public Object send(ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 
 			throw new Exception();
 		}
+
+		private static Exception _connectException;
 
 	}
 
@@ -161,6 +264,6 @@ public class BaseClusterTestCase {
 
 	}
 
-	private CaptureHandler _captureHandler;
+	private CaptureHandler _clusterBaseCaptureHandler;
 
 }

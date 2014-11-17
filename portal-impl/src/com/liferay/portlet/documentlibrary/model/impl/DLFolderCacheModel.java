@@ -76,8 +76,8 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Externalizable 
 		sb.append(defaultFileEntryTypeId);
 		sb.append(", hidden=");
 		sb.append(hidden);
-		sb.append(", overrideFileEntryTypes=");
-		sb.append(overrideFileEntryTypes);
+		sb.append(", restrictionType=");
+		sb.append(restrictionType);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -162,7 +162,7 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Externalizable 
 
 		dlFolderImpl.setDefaultFileEntryTypeId(defaultFileEntryTypeId);
 		dlFolderImpl.setHidden(hidden);
-		dlFolderImpl.setOverrideFileEntryTypes(overrideFileEntryTypes);
+		dlFolderImpl.setRestrictionType(restrictionType);
 		dlFolderImpl.setStatus(status);
 		dlFolderImpl.setStatusByUserId(statusByUserId);
 
@@ -204,7 +204,7 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Externalizable 
 		lastPostDate = objectInput.readLong();
 		defaultFileEntryTypeId = objectInput.readLong();
 		hidden = objectInput.readBoolean();
-		overrideFileEntryTypes = objectInput.readBoolean();
+		restrictionType = objectInput.readInt();
 		status = objectInput.readInt();
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
@@ -263,7 +263,7 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Externalizable 
 		objectOutput.writeLong(lastPostDate);
 		objectOutput.writeLong(defaultFileEntryTypeId);
 		objectOutput.writeBoolean(hidden);
-		objectOutput.writeBoolean(overrideFileEntryTypes);
+		objectOutput.writeInt(restrictionType);
 		objectOutput.writeInt(status);
 		objectOutput.writeLong(statusByUserId);
 
@@ -294,7 +294,7 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Externalizable 
 	public long lastPostDate;
 	public long defaultFileEntryTypeId;
 	public boolean hidden;
-	public boolean overrideFileEntryTypes;
+	public int restrictionType;
 	public int status;
 	public long statusByUserId;
 	public String statusByUserName;

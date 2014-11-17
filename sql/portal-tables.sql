@@ -692,7 +692,7 @@ create table DLFolder (
 	lastPostDate DATE null,
 	defaultFileEntryTypeId LONG,
 	hidden_ BOOLEAN,
-	overrideFileEntryTypes BOOLEAN,
+	restrictionType INTEGER,
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,

@@ -186,6 +186,11 @@ public class FolderProxyBean
 	}
 
 	@Override
+	public int getRestrictionType() {
+		return _folder.getRestrictionType();
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return _folder.getStagedModelType();
 	}

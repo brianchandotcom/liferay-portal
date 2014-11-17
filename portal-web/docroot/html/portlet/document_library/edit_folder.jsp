@@ -29,6 +29,18 @@ Folder parentFolder = null;
 
 long parentFolderId = BeanParamUtil.getLong(folder, request, "parentFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
+String parentFolderName = LanguageUtil.get(request, "home");
+
+try {
+	if (parentFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		parentFolder = DLAppLocalServiceUtil.getFolder(parentFolderId);
+
+		parentFolderName = parentFolder.getName();
+	}
+}
+catch (NoSuchFolderException nsfe) {
+}
+
 boolean rootFolder = ParamUtil.getBoolean(request, "rootFolder");
 
 boolean workflowEnabled = WorkflowEngineManagerUtil.isDeployed() && (WorkflowHandlerRegistryUtil.getWorkflowHandler(DLFileEntry.class.getName()) != null) && DLFolderPermission.contains(permissionChecker, themeDisplay.getScopeGroupId(), folderId, ActionKeys.UPDATE);
@@ -76,21 +88,6 @@ if (workflowEnabled) {
 
 	<aui:fieldset>
 		<c:if test="<%= !rootFolder %>">
-
-			<%
-			String parentFolderName = LanguageUtil.get(request, "home");
-
-			try {
-				if (parentFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-					parentFolder = DLAppLocalServiceUtil.getFolder(parentFolderId);
-
-					parentFolderName = parentFolder.getName();
-				}
-			}
-			catch (NoSuchFolderException nsfe) {
-			}
-			%>
-
 			<c:if test="<%= folder != null %>">
 				<aui:input name="parentFolder" type="resource" value="<%= parentFolderName %>" />
 			</c:if>
@@ -138,46 +135,11 @@ if (workflowEnabled) {
 
 			<aui:field-wrapper helpMessage='<%= rootFolder ? "" : "document-type-restrictions-help" %>' label='<%= rootFolder ? "" : (workflowEnabled ? "document-type-restrictions-and-workflow" : "document-type-restrictions") %>'>
 				<c:if test="<%= !rootFolder %>">
-					<aui:input checked="<%= !dlFolder.isOverrideFileEntryTypes() %>" id="useFileEntryTypes" label='<%= workflowEnabled ? "use-document-type-restrictions-and-workflow-of-the-parent-folder" : "use-document-type-restrictions-of-the-parent-folder" %>' name="overrideFileEntryTypes" type="radio" value="<%= false %>" />
+					<aui:input checked="<%= dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_INHERIT %>" id="restrictionTypeInherit" label='<%= workflowEnabled ? LanguageUtil.format(locale, "use-document-type-restrictions-and-workflow-of-the-parent-folder-x", parentFolderName, false) : LanguageUtil.format(locale, "use-document-type-restrictions-of-the-parent-folder-x", parentFolderName, false) %>' name="restrictionType" type="radio" value="<%= DLFolderConstants.RESTRICTION_TYPE_INHERIT %>" />
 
-					<aui:input checked="<%= dlFolder.isOverrideFileEntryTypes() %>" id="overrideFileEntryTypes" label='<%= workflowEnabled ? "define-specific-document-type-restrictions-and-workflow-for-this-folder" : "define-specific-document-type-restrictions-for-this-folder" %>' name="overrideFileEntryTypes" type="radio" value="<%= true %>" />
-				</c:if>
+					<aui:input checked="<%= dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW %>" id="restrictionTypeDefined" label='<%= workflowEnabled ? LanguageUtil.format(locale, "define-specific-document-type-restrictions-and-workflow-for-this-folder-x", folder.getName(), false) : LanguageUtil.format(locale, "define-specific-document-type-restrictions-for-this-folder-x", folder.getName(), false) %>' name="restrictionType" type="radio" value="<%= DLFolderConstants.RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW %>" />
 
-				<div id="<portlet:namespace />overrideParentSettings">
-					<c:if test="<%= workflowEnabled %>">
-						<div class='<%= (rootFolder || fileEntryTypes.isEmpty()) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />defaultWorkflow">
-							<aui:select label="default-workflow-for-all-document-types" name='<%= "workflowDefinition" + DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL %>'>
-
-								<aui:option label="no-workflow" value="" />
-
-								<%
-								WorkflowDefinitionLink workflowDefinitionLink = null;
-
-								try {
-									workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(company.getCompanyId(), repositoryId, DLFolderConstants.getClassName(), folderId, DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true);
-								}
-								catch (NoSuchWorkflowDefinitionLinkException nswdle) {
-								}
-
-								for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
-									boolean selected = false;
-
-									if ((workflowDefinitionLink != null) && workflowDefinitionLink.getWorkflowDefinitionName().equals(workflowDefinition.getName()) && (workflowDefinitionLink.getWorkflowDefinitionVersion() == workflowDefinition.getVersion())) {
-										selected = true;
-									}
-								%>
-
-									<aui:option label='<%= HtmlUtil.escape(workflowDefinition.getName()) + " (" + LanguageUtil.format(locale, "version-x", workflowDefinition.getVersion(), false) + ")" %>' selected="<%= selected %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
-
-								<%
-								}
-								%>
-
-							</aui:select>
-						</div>
-					</c:if>
-
-					<c:if test="<%= !rootFolder %>">
+					<div class='<%= (folder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />restrictionTypeDefinedDiv">
 						<liferay-ui:search-container
 							headerNames="<%= headerNames %>"
 							total="<%= fileEntryTypes.size() %>"
@@ -200,7 +162,6 @@ if (workflowEnabled) {
 								<c:if test="<%= workflowEnabled %>">
 									<liferay-ui:search-container-column-text name="workflow">
 										<aui:select label="" name='<%= "workflowDefinition" + dlFileEntryType.getFileEntryTypeId() %>' title="workflow-definition">
-
 											<aui:option label="no-workflow" value="" />
 
 											<%
@@ -220,7 +181,7 @@ if (workflowEnabled) {
 												}
 											%>
 
-												<aui:option label='<%= HtmlUtil.escape(workflowDefinition.getName()) + " (" + LanguageUtil.format(locale, "version-x", workflowDefinition.getVersion(), false) + ")" %>' selected="<%= selected %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
+												<aui:option label='<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + " (" + LanguageUtil.format(locale, "version-x", workflowDefinition.getVersion(), false) + ")" %>' selected="<%= selected %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
 
 											<%
 											}
@@ -260,8 +221,49 @@ if (workflowEnabled) {
 							%>
 
 						</aui:select>
-					</c:if>
-				</div>
+					</div>
+				</c:if>
+
+				<c:if test="<%= workflowEnabled %>">
+					<c:choose>
+						<c:when test="<%= !rootFolder %>">
+							<aui:input checked="<%= dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_WORKFLOW %>" id="restrictionTypeWorkflow" label='<%= LanguageUtil.format(locale, "default-workflow-for-this-folder-x", folder.getName(), false) %>' name="restrictionType" type="radio" value="<%= DLFolderConstants.RESTRICTION_TYPE_WORKFLOW %>" />
+						</c:when>
+						<c:otherwise>
+							<aui:input name="restrictionType" type="hidden" value="<%= DLFolderConstants.RESTRICTION_TYPE_WORKFLOW %>" />
+						</c:otherwise>
+					</c:choose>
+
+					<div class='<%= (rootFolder || (folder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_WORKFLOW)) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />restrictionTypeWorkflowDiv">
+						<aui:select label="default-workflow-for-all-document-types" name='<%= "workflowDefinition" + DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL %>'>
+							<aui:option label="no-workflow" value="" />
+
+							<%
+							WorkflowDefinitionLink workflowDefinitionLink = null;
+
+							try {
+								workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(company.getCompanyId(), repositoryId, DLFolderConstants.getClassName(), folderId, DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true);
+							}
+							catch (NoSuchWorkflowDefinitionLinkException nswdle) {
+							}
+
+							for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
+								boolean selected = false;
+
+								if ((workflowDefinitionLink != null) && workflowDefinitionLink.getWorkflowDefinitionName().equals(workflowDefinition.getName()) && (workflowDefinitionLink.getWorkflowDefinitionVersion() == workflowDefinition.getVersion())) {
+									selected = true;
+								}
+							%>
+
+								<aui:option label='<%= workflowDefinition.getName() + " (" + LanguageUtil.format(locale, "version-x", workflowDefinition.getVersion(), false) + ")" %>' selected="<%= selected %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
+
+							<%
+							}
+							%>
+
+						</aui:select>
+					</div>
+				</c:if>
 			</aui:field-wrapper>
 		</c:if>
 
@@ -290,7 +292,7 @@ if (workflowEnabled) {
 			for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
 			%>
 
-				<aui:option label='<%= HtmlUtil.escape(workflowDefinition.getName()) + " (" + LanguageUtil.format(locale, "version-x", workflowDefinition.getVersion(), false) + ")" %>' selected="<% selected %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
+				<aui:option label='<%= workflowDefinition.getName() + " (" + LanguageUtil.format(locale, "version-x", workflowDefinition.getVersion(), false) + ")" %>' selected="<% selected %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
 
 			<%
 			}
@@ -350,9 +352,9 @@ if (workflowEnabled) {
 
 			<c:choose>
 				<c:when test="<%= workflowEnabled %>">
-					var defaultWorkflow = A.one('#<portlet:namespace />defaultWorkflow');
+					var restrictionTypeWorkflow = A.one('#<portlet:namespace />restrictionTypeWorkflow');
 
-					defaultWorkflow.hide();
+					restrictionTypeWorkflow.hide();
 
 					var workflowDefinitions = '<%= UnicodeFormatter.toString(workflowDefinitionsBuffer) %>';
 
@@ -371,21 +373,22 @@ if (workflowEnabled) {
 
 			var select = A.one('#<portlet:namespace />defaultFileEntryTypeId');
 
-			var selectContainer = A.one('#<portlet:namespace />overrideParentSettings .default-document-type');
+			var selectContainer = A.one('#<portlet:namespace />restrictionTypeDefinedDiv .default-document-type');
 
 			selectContainer.show();
 
 			var option = A.Node.create('<option id="<portlet:namespace />defaultFileEntryTypeId-' + fileEntryTypeId + '" value="' + fileEntryTypeId + '">' + fileEntryTypeName + '</option>');
 
-			option.show();
+			select.show();
 
 			select.append(option);
 		},
 		['liferay-search-container']
 	);
 
-	Liferay.Util.toggleRadio('<portlet:namespace />overrideFileEntryTypes', '<portlet:namespace />overrideParentSettings', '');
-	Liferay.Util.toggleRadio('<portlet:namespace />useFileEntryTypes', '', '<portlet:namespace />overrideParentSettings');
+	Liferay.Util.toggleRadio('<portlet:namespace />restrictionTypeInherit', '', ['<portlet:namespace />restrictionTypeDefinedDiv', '<portlet:namespace />restrictionTypeWorkflowDiv']);
+	Liferay.Util.toggleRadio('<portlet:namespace />restrictionTypeDefined', '<portlet:namespace />restrictionTypeDefinedDiv', '<portlet:namespace />restrictionTypeWorkflowDiv');
+	Liferay.Util.toggleRadio('<portlet:namespace />restrictionTypeWorkflow', '<portlet:namespace />restrictionTypeWorkflowDiv', '<portlet:namespace />restrictionTypeDefinedDiv');
 </aui:script>
 
 <aui:script use="liferay-search-container">
@@ -406,18 +409,18 @@ if (workflowEnabled) {
 
 			documentTypesChanged = true;
 
-			var select = A.one('#<portlet:namespace />defaultFileEntryTypeId');
+			var select = A.one('#<%= liferayPortletResponse.getNamespace() + "workflowDefinition" + DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL %>');
 
-			var selectContainer = A.one('#<portlet:namespace />overrideParentSettings .default-document-type')
+			var selectContainer = A.one('#<portlet:namespace />restrictionTypeWorkflow');
 
 			var fileEntryTypesCount = select.get('children').size();
 
 			if (fileEntryTypesCount == 0) {
 				selectContainer.hide();
 
-				var defaultWorkflow = A.one('#<portlet:namespace />defaultWorkflow');
+				var restrictionTypeWorkflow = A.one('#<portlet:namespace />restrictionTypeWorkflow');
 
-				defaultWorkflow.show();
+				restrictionTypeWorkflow.show();
 			}
 			else {
 				selectContainer.show();

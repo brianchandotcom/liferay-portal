@@ -548,7 +548,9 @@ public class DLFileEntryTypeLocalServiceImpl
 		for (DLFolder subFolder : subFolders) {
 			long subFolderId = subFolder.getFolderId();
 
-			if (subFolder.isOverrideFileEntryTypes()) {
+			if (subFolder.getRestrictionType() ==
+					DLFolderConstants.RESTRICTION_TYPE_INHERIT) {
+
 				continue;
 			}
 
@@ -598,7 +600,10 @@ public class DLFileEntryTypeLocalServiceImpl
 		while (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(folderId);
 
-			if (dlFolder.isOverrideFileEntryTypes()) {
+			if (dlFolder.getRestrictionType() ==
+					DLFolderConstants.
+						RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW) {
+
 				break;
 			}
 

@@ -1758,7 +1758,7 @@
 				);
 			}
 		},
-		['aui-base', 'liferay-util-list-fields']
+		['aui-base']
 	);
 
 	Liferay.provide(

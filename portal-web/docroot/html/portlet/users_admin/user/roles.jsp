@@ -535,8 +535,14 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 		}
 
 		function <portlet:namespace />deleteGroupRole(roleId, groupId) {
-			A.Array.removeItem(addGroupRolesGroupIds, groupId);
-			A.Array.removeItem(addGroupRolesRoleIds, roleId);
+			for (var i = 0; i < addGroupRolesRoleIds.length; i++) {
+				if ((addGroupRolesGroupIds[i] == groupId) && (addGroupRolesRoleIds[i] == roleId)) {
+					addGroupRolesGroupIds.splice(i, 1);
+					addGroupRolesRoleIds.splice(i, 1);
+
+					break;
+				}
+			}
 
 			deleteGroupRolesGroupIds.push(groupId);
 			deleteGroupRolesRoleIds.push(roleId);
@@ -568,8 +574,14 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 				if (groupId) {
 					rowColumns.push('<a class="modify-link" data-groupId="' + groupId + '" data-rowId="' + roleId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>');
 
-					A.Array.removeItem(deleteGroupRolesGroupIds, groupId);
-					A.Array.removeItem(deleteGroupRolesRoleIds, roleId);
+					for (var i = 0; i < deleteGroupRolesRoleIds.length; i++) {
+						if ((deleteGroupRolesGroupIds[i] == groupId) && (deleteGroupRolesRoleIds[i] == roleId)) {
+							deleteGroupRolesGroupIds.splice(i, 1);
+							deleteGroupRolesRoleIds.splice(i, 1);
+
+							break;
+						}
+					}
 
 					addGroupRolesGroupIds.push(groupId);
 					addGroupRolesRoleIds.push(roleId);

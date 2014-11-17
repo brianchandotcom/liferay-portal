@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import java.util.concurrent.CountDownLatch;
+
 import org.jgroups.Address;
 import org.jgroups.Message;
 import org.jgroups.Receiver;
@@ -28,7 +30,7 @@ import org.jgroups.View;
 /**
  * @author Tina Tian
  */
-public class BaseReceiver implements Receiver {
+public abstract class BaseReceiver implements Receiver {
 
 	@Override
 	public void block() {
@@ -39,11 +41,25 @@ public class BaseReceiver implements Receiver {
 	}
 
 	public View getView() {
-		return view;
+		return _view;
+	}
+
+	public void openLatch() {
+		_countDownLatch.countDown();
 	}
 
 	@Override
 	public void receive(Message message) {
+		try {
+			_countDownLatch.await();
+		}
+		catch (InterruptedException ie) {
+			_log.error(
+				"Latch opened prematurely by interruption. Dependence may " +
+					"not be ready.");
+		}
+
+		doReceive(message);
 	}
 
 	@Override
@@ -64,11 +80,35 @@ public class BaseReceiver implements Receiver {
 			_log.info("Accepted view " + view);
 		}
 
-		this.view = view;
+		if (_view == null) {
+			_view = view;
+
+			return;
+		}
+
+		try {
+			_countDownLatch.await();
+		}
+		catch (InterruptedException ie) {
+			_log.error(
+				"Latch opened prematurely by interruption. Dependence may " +
+					"not be ready.");
+		}
+
+		View oldView = _view;
+
+		_view = view;
+
+		doViewAccepted(oldView, view);
 	}
 
-	protected volatile View view;
+	protected abstract void doReceive(Message message);
+
+	protected abstract void doViewAccepted(View oldView, View newView);
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseReceiver.class);
+
+	private final CountDownLatch _countDownLatch = new CountDownLatch(1);
+	private volatile View _view;
 
 }

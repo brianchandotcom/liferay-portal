@@ -3027,8 +3027,6 @@
 	</command>
 
 	<command name="SubscribeToWikiFrontPageAndViewEntryInGmail" priority="5">
-		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain=" />
-
 		<var name="userEmailAddress" property-value="email.address.2" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />

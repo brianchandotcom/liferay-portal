@@ -30,8 +30,6 @@
 	</tear-down>
 
 	<command name="ConfirmMemberInviteSiteByEmailNonUserViaWorkflow" priority="5">
-		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain={line.separator}captcha.check.portal.create_account=false" />
-
 		<var name="siteDescription" value="Workflow Site Description" />
 		<var name="siteName" value="Workflow Site Name" />
 		<var name="siteType" value="Open" />

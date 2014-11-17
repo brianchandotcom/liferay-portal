@@ -4418,8 +4418,6 @@
 	</command>
 
 	<command known-issues="SOS-2479" name="ViewNoMessageNotificationViaEmail" priority="4">
-		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain=" />
-
 		<var name="messageBody" value="Message Body" />
 		<var name="messageReplyBody" value="Message Reply Body" />
 		<var name="messageSubject" value="Message Subject" />

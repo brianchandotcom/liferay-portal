@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
-import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.model.WikiPageSoap;
 import com.liferay.wiki.service.WikiPageServiceUtil;
 
 import java.rmi.RemoteException;
@@ -68,16 +66,16 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class WikiPageServiceSoap {
-	public static WikiPageSoap addPage(
-		long nodeId, java.lang.String title, java.lang.String content,
+	public static com.liferay.wiki.model.WikiPageSoap addPage(long nodeId,
+		java.lang.String title, java.lang.String content,
 		java.lang.String summary, boolean minorEdit,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			WikiPage returnValue = WikiPageServiceUtil.addPage(nodeId,
+			com.liferay.wiki.model.WikiPage returnValue = WikiPageServiceUtil.addPage(nodeId,
 					title, content, summary, minorEdit, serviceContext);
 
-			return WikiPageSoap.toSoapModel(returnValue);
+			return com.liferay.wiki.model.WikiPageSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -86,18 +84,18 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static WikiPageSoap addPage(
-		long nodeId, java.lang.String title, java.lang.String content,
+	public static com.liferay.wiki.model.WikiPageSoap addPage(long nodeId,
+		java.lang.String title, java.lang.String content,
 		java.lang.String summary, boolean minorEdit, java.lang.String format,
 		java.lang.String parentTitle, java.lang.String redirectTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			WikiPage returnValue = WikiPageServiceUtil.addPage(nodeId,
+			com.liferay.wiki.model.WikiPage returnValue = WikiPageServiceUtil.addPage(nodeId,
 					title, content, summary, minorEdit, format, parentTitle,
 					redirectTitle, serviceContext);
 
-			return WikiPageSoap.toSoapModel(returnValue);
+			return com.liferay.wiki.model.WikiPageSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -254,14 +252,13 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static WikiPageSoap fetchPage(
-		long nodeId, java.lang.String title, double version)
-		throws RemoteException {
+	public static com.liferay.wiki.model.WikiPageSoap fetchPage(long nodeId,
+		java.lang.String title, double version) throws RemoteException {
 		try {
-			WikiPage returnValue = WikiPageServiceUtil.fetchPage(nodeId,
+			com.liferay.wiki.model.WikiPage returnValue = WikiPageServiceUtil.fetchPage(nodeId,
 					title, version);
 
-			return WikiPageSoap.toSoapModel(returnValue);
+			return com.liferay.wiki.model.WikiPageSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -270,14 +267,14 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static WikiPageSoap[] getChildren(
+	public static com.liferay.wiki.model.WikiPageSoap[] getChildren(
 		long groupId, long nodeId, boolean head, java.lang.String parentTitle)
 		throws RemoteException {
 		try {
-			java.util.List<WikiPage> returnValue = WikiPageServiceUtil.getChildren(groupId,
+			java.util.List<com.liferay.wiki.model.WikiPage> returnValue = WikiPageServiceUtil.getChildren(groupId,
 					nodeId, head, parentTitle);
 
-			return WikiPageSoap.toSoapModels(returnValue);
+			return com.liferay.wiki.model.WikiPageSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -286,13 +283,13 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static WikiPageSoap getDraftPage(
+	public static com.liferay.wiki.model.WikiPageSoap getDraftPage(
 		long nodeId, java.lang.String title) throws RemoteException {
 		try {
-			WikiPage returnValue = WikiPageServiceUtil.getDraftPage(nodeId,
+			com.liferay.wiki.model.WikiPage returnValue = WikiPageServiceUtil.getDraftPage(nodeId,
 					title);
 
-			return WikiPageSoap.toSoapModel(returnValue);
+			return com.liferay.wiki.model.WikiPageSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -301,13 +298,13 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static WikiPageSoap[] getNodePages(
+	public static com.liferay.wiki.model.WikiPageSoap[] getNodePages(
 		long nodeId, int max) throws RemoteException {
 		try {
-			java.util.List<WikiPage> returnValue = WikiPageServiceUtil.getNodePages(nodeId,
+			java.util.List<com.liferay.wiki.model.WikiPage> returnValue = WikiPageServiceUtil.getNodePages(nodeId,
 					max);
 
-			return WikiPageSoap.toSoapModels(returnValue);
+			return com.liferay.wiki.model.WikiPageSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -356,13 +353,13 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static WikiPageSoap[] getOrphans(
+	public static com.liferay.wiki.model.WikiPageSoap[] getOrphans(
 		long groupId, long nodeId) throws RemoteException {
 		try {
-			java.util.List<WikiPage> returnValue = WikiPageServiceUtil.getOrphans(groupId,
+			java.util.List<com.liferay.wiki.model.WikiPage> returnValue = WikiPageServiceUtil.getOrphans(groupId,
 					nodeId);
 
-			return WikiPageSoap.toSoapModels(returnValue);
+			return com.liferay.wiki.model.WikiPageSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -371,29 +368,28 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static WikiPageSoap getPage(
-		long groupId, long nodeId, java.lang.String title)
-		throws RemoteException {
-		try {
-			WikiPage returnValue = WikiPageServiceUtil.getPage(groupId,
-					nodeId, title);
-
-			return WikiPageSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static WikiPageSoap getPage(
+	public static com.liferay.wiki.model.WikiPageSoap getPage(long groupId,
 		long nodeId, java.lang.String title) throws RemoteException {
 		try {
-			WikiPage returnValue = WikiPageServiceUtil.getPage(nodeId,
+			com.liferay.wiki.model.WikiPage returnValue = WikiPageServiceUtil.getPage(groupId,
+					nodeId, title);
+
+			return com.liferay.wiki.model.WikiPageSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.wiki.model.WikiPageSoap getPage(long nodeId,
+		java.lang.String title) throws RemoteException {
+		try {
+			com.liferay.wiki.model.WikiPage returnValue = WikiPageServiceUtil.getPage(nodeId,
 					title);
 
-			return WikiPageSoap.toSoapModel(returnValue);
+			return com.liferay.wiki.model.WikiPageSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -402,14 +398,14 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static WikiPageSoap getPage(
-		long nodeId, java.lang.String title, java.lang.Boolean head)
+	public static com.liferay.wiki.model.WikiPageSoap getPage(long nodeId,
+		java.lang.String title, java.lang.Boolean head)
 		throws RemoteException {
 		try {
-			WikiPage returnValue = WikiPageServiceUtil.getPage(nodeId,
+			com.liferay.wiki.model.WikiPage returnValue = WikiPageServiceUtil.getPage(nodeId,
 					title, head);
 
-			return WikiPageSoap.toSoapModel(returnValue);
+			return com.liferay.wiki.model.WikiPageSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -418,14 +414,13 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static WikiPageSoap getPage(
-		long nodeId, java.lang.String title, double version)
-		throws RemoteException {
+	public static com.liferay.wiki.model.WikiPageSoap getPage(long nodeId,
+		java.lang.String title, double version) throws RemoteException {
 		try {
-			WikiPage returnValue = WikiPageServiceUtil.getPage(nodeId,
+			com.liferay.wiki.model.WikiPage returnValue = WikiPageServiceUtil.getPage(nodeId,
 					title, version);
 
-			return WikiPageSoap.toSoapModel(returnValue);
+			return com.liferay.wiki.model.WikiPageSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -434,16 +429,15 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static WikiPageSoap[] getPages(
-		long groupId, long nodeId, boolean head, int status, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> obc)
+	public static com.liferay.wiki.model.WikiPageSoap[] getPages(long groupId,
+		long nodeId, boolean head, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> obc)
 		throws RemoteException {
 		try {
-			java.util.List<WikiPage> returnValue = WikiPageServiceUtil.getPages(groupId,
+			java.util.List<com.liferay.wiki.model.WikiPage> returnValue = WikiPageServiceUtil.getPages(groupId,
 					nodeId, head, status, start, end, obc);
 
-			return WikiPageSoap.toSoapModels(returnValue);
+			return com.liferay.wiki.model.WikiPageSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -452,14 +446,14 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static WikiPageSoap[] getPages(
-		long groupId, long userId, long nodeId, int status, int start, int end)
+	public static com.liferay.wiki.model.WikiPageSoap[] getPages(long groupId,
+		long userId, long nodeId, int status, int start, int end)
 		throws RemoteException {
 		try {
-			java.util.List<WikiPage> returnValue = WikiPageServiceUtil.getPages(groupId,
+			java.util.List<com.liferay.wiki.model.WikiPage> returnValue = WikiPageServiceUtil.getPages(groupId,
 					userId, nodeId, status, start, end);
 
-			return WikiPageSoap.toSoapModels(returnValue);
+			return com.liferay.wiki.model.WikiPageSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -542,14 +536,14 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static WikiPageSoap[] getRecentChanges(
+	public static com.liferay.wiki.model.WikiPageSoap[] getRecentChanges(
 		long groupId, long nodeId, int start, int end)
 		throws RemoteException {
 		try {
-			java.util.List<WikiPage> returnValue = WikiPageServiceUtil.getRecentChanges(groupId,
+			java.util.List<com.liferay.wiki.model.WikiPage> returnValue = WikiPageServiceUtil.getRecentChanges(groupId,
 					nodeId, start, end);
 
-			return WikiPageSoap.toSoapModels(returnValue);
+			return com.liferay.wiki.model.WikiPageSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -623,13 +617,13 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static WikiPageSoap movePageToTrash(
+	public static com.liferay.wiki.model.WikiPageSoap movePageToTrash(
 		long nodeId, java.lang.String title) throws RemoteException {
 		try {
-			WikiPage returnValue = WikiPageServiceUtil.movePageToTrash(nodeId,
+			com.liferay.wiki.model.WikiPage returnValue = WikiPageServiceUtil.movePageToTrash(nodeId,
 					title);
 
-			return WikiPageSoap.toSoapModel(returnValue);
+			return com.liferay.wiki.model.WikiPageSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -638,14 +632,14 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static WikiPageSoap movePageToTrash(
+	public static com.liferay.wiki.model.WikiPageSoap movePageToTrash(
 		long nodeId, java.lang.String title, double version)
 		throws RemoteException {
 		try {
-			WikiPage returnValue = WikiPageServiceUtil.movePageToTrash(nodeId,
+			com.liferay.wiki.model.WikiPage returnValue = WikiPageServiceUtil.movePageToTrash(nodeId,
 					title, version);
 
-			return WikiPageSoap.toSoapModel(returnValue);
+			return com.liferay.wiki.model.WikiPageSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -695,15 +689,15 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static WikiPageSoap revertPage(
-		long nodeId, java.lang.String title, double version,
+	public static com.liferay.wiki.model.WikiPageSoap revertPage(long nodeId,
+		java.lang.String title, double version,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			WikiPage returnValue = WikiPageServiceUtil.revertPage(nodeId,
+			com.liferay.wiki.model.WikiPage returnValue = WikiPageServiceUtil.revertPage(nodeId,
 					title, version, serviceContext);
 
-			return WikiPageSoap.toSoapModel(returnValue);
+			return com.liferay.wiki.model.WikiPageSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -736,19 +730,18 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static WikiPageSoap updatePage(
-		long nodeId, java.lang.String title, double version,
-		java.lang.String content, java.lang.String summary, boolean minorEdit,
-		java.lang.String format, java.lang.String parentTitle,
-		java.lang.String redirectTitle,
+	public static com.liferay.wiki.model.WikiPageSoap updatePage(long nodeId,
+		java.lang.String title, double version, java.lang.String content,
+		java.lang.String summary, boolean minorEdit, java.lang.String format,
+		java.lang.String parentTitle, java.lang.String redirectTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			WikiPage returnValue = WikiPageServiceUtil.updatePage(nodeId,
+			com.liferay.wiki.model.WikiPage returnValue = WikiPageServiceUtil.updatePage(nodeId,
 					title, version, content, summary, minorEdit, format,
 					parentTitle, redirectTitle, serviceContext);
 
-			return WikiPageSoap.toSoapModel(returnValue);
+			return com.liferay.wiki.model.WikiPageSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

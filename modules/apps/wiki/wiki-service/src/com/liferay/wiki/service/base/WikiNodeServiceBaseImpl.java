@@ -22,24 +22,19 @@ import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.BaseServiceImpl;
-import com.liferay.portal.service.persistence.GroupFinder;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.SubscriptionPersistence;
 import com.liferay.portal.service.persistence.SystemEventPersistence;
-import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.WorkflowInstanceLinkPersistence;
 import com.liferay.portal.util.PortalUtil;
 
-import com.liferay.portlet.asset.service.persistence.AssetEntryFinder;
 import com.liferay.portlet.asset.service.persistence.AssetEntryPersistence;
 import com.liferay.portlet.trash.service.persistence.TrashEntryPersistence;
 import com.liferay.portlet.trash.service.persistence.TrashVersionPersistence;
+
 import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.service.WikiNodeService;
-import com.liferay.wiki.service.WikiPageLocalService;
-import com.liferay.wiki.service.WikiPageService;
 import com.liferay.wiki.service.persistence.WikiNodePersistence;
 import com.liferay.wiki.service.persistence.WikiPageFinder;
 import com.liferay.wiki.service.persistence.WikiPagePersistence;
@@ -63,7 +58,7 @@ public abstract class WikiNodeServiceBaseImpl extends BaseServiceImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portlet.wiki.service.WikiNodeServiceUtil} to access the wiki node remote service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.wiki.service.WikiNodeServiceUtil} to access the wiki node remote service.
 	 */
 
 	/**
@@ -71,7 +66,7 @@ public abstract class WikiNodeServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the wiki node local service
 	 */
-	public WikiNodeLocalService getWikiNodeLocalService() {
+	public com.liferay.wiki.service.WikiNodeLocalService getWikiNodeLocalService() {
 		return wikiNodeLocalService;
 	}
 
@@ -81,7 +76,7 @@ public abstract class WikiNodeServiceBaseImpl extends BaseServiceImpl
 	 * @param wikiNodeLocalService the wiki node local service
 	 */
 	public void setWikiNodeLocalService(
-		WikiNodeLocalService wikiNodeLocalService) {
+		com.liferay.wiki.service.WikiNodeLocalService wikiNodeLocalService) {
 		this.wikiNodeLocalService = wikiNodeLocalService;
 	}
 
@@ -90,7 +85,7 @@ public abstract class WikiNodeServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the wiki node remote service
 	 */
-	public WikiNodeService getWikiNodeService() {
+	public com.liferay.wiki.service.WikiNodeService getWikiNodeService() {
 		return wikiNodeService;
 	}
 
@@ -100,7 +95,7 @@ public abstract class WikiNodeServiceBaseImpl extends BaseServiceImpl
 	 * @param wikiNodeService the wiki node remote service
 	 */
 	public void setWikiNodeService(
-		WikiNodeService wikiNodeService) {
+		com.liferay.wiki.service.WikiNodeService wikiNodeService) {
 		this.wikiNodeService = wikiNodeService;
 	}
 
@@ -195,24 +190,6 @@ public abstract class WikiNodeServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setGroupPersistence(GroupPersistence groupPersistence) {
 		this.groupPersistence = groupPersistence;
-	}
-
-	/**
-	 * Returns the group finder.
-	 *
-	 * @return the group finder
-	 */
-	public GroupFinder getGroupFinder() {
-		return groupFinder;
-	}
-
-	/**
-	 * Sets the group finder.
-	 *
-	 * @param groupFinder the group finder
-	 */
-	public void setGroupFinder(GroupFinder groupFinder) {
-		this.groupFinder = groupFinder;
 	}
 
 	/**
@@ -367,24 +344,6 @@ public abstract class WikiNodeServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the user finder.
-	 *
-	 * @return the user finder
-	 */
-	public UserFinder getUserFinder() {
-		return userFinder;
-	}
-
-	/**
-	 * Sets the user finder.
-	 *
-	 * @param userFinder the user finder
-	 */
-	public void setUserFinder(UserFinder userFinder) {
-		this.userFinder = userFinder;
-	}
-
-	/**
 	 * Returns the workflow instance link local service.
 	 *
 	 * @return the workflow instance link local service
@@ -477,24 +436,6 @@ public abstract class WikiNodeServiceBaseImpl extends BaseServiceImpl
 	public void setAssetEntryPersistence(
 		AssetEntryPersistence assetEntryPersistence) {
 		this.assetEntryPersistence = assetEntryPersistence;
-	}
-
-	/**
-	 * Returns the asset entry finder.
-	 *
-	 * @return the asset entry finder
-	 */
-	public AssetEntryFinder getAssetEntryFinder() {
-		return assetEntryFinder;
-	}
-
-	/**
-	 * Sets the asset entry finder.
-	 *
-	 * @param assetEntryFinder the asset entry finder
-	 */
-	public void setAssetEntryFinder(AssetEntryFinder assetEntryFinder) {
-		this.assetEntryFinder = assetEntryFinder;
 	}
 
 	/**
@@ -597,7 +538,7 @@ public abstract class WikiNodeServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the wiki page local service
 	 */
-	public WikiPageLocalService getWikiPageLocalService() {
+	public com.liferay.wiki.service.WikiPageLocalService getWikiPageLocalService() {
 		return wikiPageLocalService;
 	}
 
@@ -607,7 +548,7 @@ public abstract class WikiNodeServiceBaseImpl extends BaseServiceImpl
 	 * @param wikiPageLocalService the wiki page local service
 	 */
 	public void setWikiPageLocalService(
-		WikiPageLocalService wikiPageLocalService) {
+		com.liferay.wiki.service.WikiPageLocalService wikiPageLocalService) {
 		this.wikiPageLocalService = wikiPageLocalService;
 	}
 
@@ -616,7 +557,7 @@ public abstract class WikiNodeServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the wiki page remote service
 	 */
-	public WikiPageService getWikiPageService() {
+	public com.liferay.wiki.service.WikiPageService getWikiPageService() {
 		return wikiPageService;
 	}
 
@@ -626,7 +567,7 @@ public abstract class WikiNodeServiceBaseImpl extends BaseServiceImpl
 	 * @param wikiPageService the wiki page remote service
 	 */
 	public void setWikiPageService(
-		WikiPageService wikiPageService) {
+		com.liferay.wiki.service.WikiPageService wikiPageService) {
 		this.wikiPageService = wikiPageService;
 	}
 
@@ -724,10 +665,10 @@ public abstract class WikiNodeServiceBaseImpl extends BaseServiceImpl
 		}
 	}
 
-	@BeanReference(type = WikiNodeLocalService.class)
-	protected WikiNodeLocalService wikiNodeLocalService;
-	@BeanReference(type = WikiNodeService.class)
-	protected WikiNodeService wikiNodeService;
+	@BeanReference(type = com.liferay.wiki.service.WikiNodeLocalService.class)
+	protected com.liferay.wiki.service.WikiNodeLocalService wikiNodeLocalService;
+	@BeanReference(type = com.liferay.wiki.service.WikiNodeService.class)
+	protected com.liferay.wiki.service.WikiNodeService wikiNodeService;
 	@BeanReference(type = WikiNodePersistence.class)
 	protected WikiNodePersistence wikiNodePersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
@@ -738,8 +679,6 @@ public abstract class WikiNodeServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portal.service.GroupService groupService;
 	@BeanReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
-	@BeanReference(type = GroupFinder.class)
-	protected GroupFinder groupFinder;
 	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
 	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
 	@BeanReference(type = com.liferay.portal.service.SubscriptionLocalService.class)
@@ -756,8 +695,6 @@ public abstract class WikiNodeServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portal.service.UserService userService;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	@BeanReference(type = UserFinder.class)
-	protected UserFinder userFinder;
 	@BeanReference(type = com.liferay.portal.service.WorkflowInstanceLinkLocalService.class)
 	protected com.liferay.portal.service.WorkflowInstanceLinkLocalService workflowInstanceLinkLocalService;
 	@BeanReference(type = WorkflowInstanceLinkPersistence.class)
@@ -768,8 +705,6 @@ public abstract class WikiNodeServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portlet.asset.service.AssetEntryService assetEntryService;
 	@BeanReference(type = AssetEntryPersistence.class)
 	protected AssetEntryPersistence assetEntryPersistence;
-	@BeanReference(type = AssetEntryFinder.class)
-	protected AssetEntryFinder assetEntryFinder;
 	@BeanReference(type = com.liferay.portlet.trash.service.TrashEntryLocalService.class)
 	protected com.liferay.portlet.trash.service.TrashEntryLocalService trashEntryLocalService;
 	@BeanReference(type = com.liferay.portlet.trash.service.TrashEntryService.class)
@@ -780,10 +715,10 @@ public abstract class WikiNodeServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portlet.trash.service.TrashVersionLocalService trashVersionLocalService;
 	@BeanReference(type = TrashVersionPersistence.class)
 	protected TrashVersionPersistence trashVersionPersistence;
-	@BeanReference(type = WikiPageLocalService.class)
-	protected WikiPageLocalService wikiPageLocalService;
-	@BeanReference(type = WikiPageService.class)
-	protected WikiPageService wikiPageService;
+	@BeanReference(type = com.liferay.wiki.service.WikiPageLocalService.class)
+	protected com.liferay.wiki.service.WikiPageLocalService wikiPageLocalService;
+	@BeanReference(type = com.liferay.wiki.service.WikiPageService.class)
+	protected com.liferay.wiki.service.WikiPageService wikiPageService;
 	@BeanReference(type = WikiPagePersistence.class)
 	protected WikiPagePersistence wikiPagePersistence;
 	@BeanReference(type = WikiPageFinder.class)

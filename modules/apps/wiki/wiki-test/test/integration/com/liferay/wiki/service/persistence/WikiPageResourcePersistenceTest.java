@@ -56,6 +56,7 @@ import java.util.Set;
  * @generated
  */
 public class WikiPageResourcePersistenceTest {
+
 	@Rule
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,

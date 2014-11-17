@@ -33,6 +33,10 @@ import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordSetTestHelper;
 import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordTestHelper;
+import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordTestUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestHelper;
 
 import org.junit.Assert;
@@ -56,18 +60,12 @@ public class DDLRecordSearchTest {
 
 	@Before
 	public void setUp() throws Exception {
-		Group group = GroupTestUtil.addGroup();
+		_group = GroupTestUtil.addGroup();
 
-		DDLRecordSetTestHelper ddlRecordSetTestHelper =
-			new DDLRecordSetTestHelper(group);
-		DDMStructureTestHelper ddmStructureTestHelper =
-			new DDMStructureTestHelper(group);
-		DDLRecordSet ddlRecordSet = ddlRecordSetTestHelper.addRecordSet(
-			ddmStructureTestHelper.addStructureXsd(this.getClass()));
+		DDLRecordSet recordSet = addRecordSet();
 
-		_ddlRecordTestHelper = new DDLRecordTestHelper(ddlRecordSet, group);
-		_group = group;
-		_searchContext = _getSearchContext(group, ddlRecordSet);
+		_recordTestHelper = new DDLRecordTestHelper(_group, recordSet);
+		_searchContext = getSearchContext(_group, recordSet);
 	}
 
 	@Test
@@ -92,9 +90,45 @@ public class DDLRecordSearchTest {
 		assertSearch("Bloggs", 2);
 	}
 
+	protected static SearchContext getSearchContext(
+			Group group, DDLRecordSet recordSet)
+		throws Exception {
+
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
+			group.getGroupId());
+
+		searchContext.setAttribute("recordSetId", recordSet.getRecordSetId());
+		searchContext.setAttribute("status", WorkflowConstants.STATUS_ANY);
+
+		return searchContext;
+	}
+
 	protected void addRecord(String name, String description) throws Exception {
-		_ddlRecordTestHelper.addRecord(
-			name, description, WorkflowConstants.ACTION_PUBLISH);
+		DDMFormValues ddmFormValues = createDDMFormValues();
+
+		DDMFormFieldValue nameDDMFormFieldValue =
+			createLocalizedTextDDMFormFieldValue("name", name);
+
+		ddmFormValues.addDDMFormFieldValue(nameDDMFormFieldValue);
+
+		DDMFormFieldValue descriptionDDMFormFieldValue =
+			createLocalizedTextDDMFormFieldValue("description", description);
+
+		ddmFormValues.addDDMFormFieldValue(descriptionDDMFormFieldValue);
+
+		_recordTestHelper.addRecord(
+			ddmFormValues, WorkflowConstants.ACTION_PUBLISH);
+	}
+
+	protected DDLRecordSet addRecordSet() throws Exception {
+		DDLRecordSetTestHelper recordSetTestHelper = new DDLRecordSetTestHelper(
+			_group);
+
+		DDMStructureTestHelper ddmStructureTestHelper =
+			new DDMStructureTestHelper(_group);
+
+		return recordSetTestHelper.addRecordSet(
+			ddmStructureTestHelper.addStructureXsd(this.getClass()));
 	}
 
 	protected void assertSearch(String keywords, int length) {
@@ -103,6 +137,21 @@ public class DDLRecordSearchTest {
 		Hits hits = DDLRecordLocalServiceUtil.search(_searchContext);
 
 		Assert.assertEquals(length, hits.getLength());
+	}
+
+	protected DDMFormValues createDDMFormValues() throws Exception {
+		DDLRecordSet recordSet = _recordTestHelper.getRecordSet();
+
+		DDMStructure ddmStructure = recordSet.getDDMStructure();
+
+		return DDLRecordTestUtil.createDDMFormValues(ddmStructure.getDDMForm());
+	}
+
+	protected DDMFormFieldValue createLocalizedTextDDMFormFieldValue(
+		String name, String enValue) {
+
+		return DDLRecordTestUtil.createLocalizedTextDDMFormFieldValue(
+			name, enValue);
 	}
 
 	protected boolean isExactPhraseQueryImplementedForSearchEngine() {
@@ -118,24 +167,10 @@ public class DDLRecordSearchTest {
 		return false;
 	}
 
-	private static SearchContext _getSearchContext(
-			Group group, DDLRecordSet recordSet)
-		throws Exception {
-
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
-			group.getGroupId());
-
-		searchContext.setAttribute("recordSetId", recordSet.getRecordSetId());
-		searchContext.setAttribute("status", WorkflowConstants.STATUS_ANY);
-
-		return searchContext;
-	}
-
-	private DDLRecordTestHelper _ddlRecordTestHelper;
-
 	@DeleteAfterTestRun
 	private Group _group;
 
+	private DDLRecordTestHelper _recordTestHelper;
 	private SearchContext _searchContext;
 
 }

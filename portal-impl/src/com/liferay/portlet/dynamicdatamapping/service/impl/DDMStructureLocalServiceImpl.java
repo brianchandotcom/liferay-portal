@@ -1288,32 +1288,6 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Updates the structure matching the structure ID, replacing its XSD with a
-	 * new one.
-	 *
-	 * @param  structureId the primary key of the structure
-	 * @param  definition the structure's new XML schema definition
-	 * @param  serviceContext the service context to be applied. Can set the
-	 *         structure's modification date.
-	 * @return the updated structure
-	 * @throws PortalException if a matching structure could not be found, if
-	 *         the XSD was not well-formed, or if a portal exception occurred
-	 */
-	@Override
-	public DDMStructure updateDefinition(
-			long structureId, String definition, ServiceContext serviceContext)
-		throws PortalException {
-
-		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
-			structureId);
-
-		return doUpdateStructure(
-			structure.getParentStructureId(), structure.getNameMap(),
-			structure.getDescriptionMap(), definition, serviceContext,
-			structure);
-	}
-
-	/**
 	 * Updates the structure matching the class name ID, structure key, and
 	 * group, replacing its old parent structure, name map, description map, and
 	 * XSD with new ones.
@@ -1380,6 +1354,32 @@ public class DDMStructureLocalServiceImpl
 		return doUpdateStructure(
 			parentStructureId, nameMap, descriptionMap, definition,
 			serviceContext, structure);
+	}
+
+	/**
+	 * Updates the structure matching the structure ID, replacing its XSD with a
+	 * new one.
+	 *
+	 * @param  structureId the primary key of the structure
+	 * @param  definition the structure's new XML schema definition
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         structure's modification date.
+	 * @return the updated structure
+	 * @throws PortalException if a matching structure could not be found, if
+	 *         the XSD was not well-formed, or if a portal exception occurred
+	 */
+	@Override
+	public DDMStructure updateXSD(
+			long structureId, String definition, ServiceContext serviceContext)
+		throws PortalException {
+
+		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
+			structureId);
+
+		return doUpdateStructure(
+			structure.getParentStructureId(), structure.getNameMap(),
+			structure.getDescriptionMap(), definition, serviceContext,
+			structure);
 	}
 
 	protected DDMStructureVersion addStructureVersion(

@@ -345,25 +345,25 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.polls.service"
 		},
 
-		// XSL
+		// XSL content
 
 		new String[] {
-			"xml.doctype.declaration.allowed",
+			"xsl.content.xml.doctype.declaration.allowed",
 			"xml.doctype.declaration.allowed", "com.liferay.xsl.content.web"
 		},
 		new String[] {
-			"xml.external.general.entities.allowed",
+			"xsl.content.xml.external.general.entities.allowed",
 			"xml.external.general.entities.allowed",
 			"com.liferay.xsl.content.web"
 		},
 		new String[] {
-			"xml.external.parameter.entities.allowed",
+			"xsl.content.xml.external.parameter.entities.allowed",
 			"xml.external.parameter.entities.allowed",
 			"com.liferay.xsl.content.web"
 		},
 		new String[] {
-			"xsl.secure.processing.enabled", "xsl.secure.processing.enabled",
-			"com.liferay.xsl.content.web"
+			"xsl.content.xsl.secure.processing.enabled",
+			"xsl.secure.processing.enabled", "com.liferay.xsl.content.web"
 		}
 	};
 

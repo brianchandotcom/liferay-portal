@@ -39,6 +39,8 @@ import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.impl.WikiNodeModelImpl;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 
+import org.jboss.arquillian.junit.Arquillian;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Rule;

@@ -23,10 +23,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.liferay.portlet.wiki.service.http.WikiPageServiceSoap}.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.wiki.service.http.WikiPageServiceSoap}.
  *
  * @author Brian Wing Shun Chan
- * @see com.liferay.portlet.wiki.service.http.WikiPageServiceSoap
+ * @see com.liferay.wiki.service.http.WikiPageServiceSoap
  * @generated
  */
 @ProviderType

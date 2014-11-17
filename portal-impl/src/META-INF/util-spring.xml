@@ -805,6 +805,10 @@
 			<bean class="com.liferay.portal.util.LayoutTypePortletFactoryImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.security.ldap.LDAPFilterValidator" class="com.liferay.portal.security.ldap.LDAPFilterValidatorImpl" />
+	<bean id="com.liferay.portal.kernel.ldap.LDAPUtil" class="com.liferay.portal.kernel.ldap.LDAPUtil">
+		<property name="ldapFilterValidator" ref="com.liferay.portal.security.ldap.LDAPFilterValidator" />
+	</bean>
 	<bean id="com.liferay.portal.util.Portal" class="com.liferay.portal.util.PortalImpl" />
 	<bean id="com.liferay.portal.util.PortalUtil" class="com.liferay.portal.util.PortalUtil">
 		<property name="portal" ref="com.liferay.portal.util.Portal" />

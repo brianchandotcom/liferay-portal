@@ -126,16 +126,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 			<div class="form-group">
 				<aui:input label="category" name="categoryName" type="resource" value="<%= categoryName %>" />
 
-				<portlet:renderURL var="selectCategoryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-					<portlet:param name="struts_action" value="/shopping/select_category" />
-					<portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
-				</portlet:renderURL>
-
-				<%
-				String taglibOpenCategoryWindow = "var categoryWindow = window.open('" + selectCategoryURL + "', 'category', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680'); void(''); categoryWindow.focus();";
-				%>
-
-				<aui:button onClick="<%= taglibOpenCategoryWindow %>" value="select" />
+				<aui:button id="selectCategoryButton" value="select" />
 
 				<aui:button onClick='<%= renderResponse.getNamespace() + "removeCategory();" %>' value="remove" />
 			</div>
@@ -596,4 +587,29 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 	function <portlet:namespace />toggleInfiniteStock(checkbox) {
 		submitForm(document.<portlet:namespace />fm);
 	}
+</aui:script>
+
+<aui:script use="aui-base">
+	A.one('#<portlet:namespace />selectCategoryButton').on(
+		'click',
+		function(event) {
+			Liferay.Util.selectEntity(
+				{
+					dialog: {
+						constrain: true,
+						modal: true,
+						width: 680
+					},
+					id: '<portlet:namespace />selectCategory',
+					title: '<liferay-ui:message arguments="category" key="select-x" />',
+					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/shopping/select_category" /><portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" /></portlet:renderURL>'
+				},
+				function(event) {
+					document.<portlet:namespace />fm.<portlet:namespace />categoryId.value = event.categoryid;
+
+					document.getElementById('<portlet:namespace />categoryName').value = A.Lang.String.unescapeEntities(event.name);
+				}
+			);
+		}
+	);
 </aui:script>

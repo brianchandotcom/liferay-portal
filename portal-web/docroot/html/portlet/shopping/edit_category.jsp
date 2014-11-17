@@ -69,16 +69,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 			<div class="form-group">
 				<aui:input label="parent-category" name="parentCategoryName" type="resource" value="<%= parentCategoryName %>" />
 
-				<portlet:renderURL var="selectCategoryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-					<portlet:param name="struts_action" value="/shopping/select_category" />
-					<portlet:param name="categoryId" value="<%= String.valueOf(parentCategoryId) %>" />
-				</portlet:renderURL>
-
-				<%
-				String taglibOpenCategoryWindow = "var categoryWindow = window.open('" + selectCategoryURL + "', 'category', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680'); void('');categoryWindow.focus();";
-				%>
-
-				<aui:button onClick="<%= taglibOpenCategoryWindow %>" value="select" />
+				<aui:button id="selectCategoryButton" value="select" />
 
 				<aui:button onClick='<%= renderResponse.getNamespace() + "removeCategory();" %>' value="remove" />
 			</div>
@@ -142,25 +133,39 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 		},
 		['aui-base']
 	);
+</aui:script>
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />selectCategory',
-		function(parentCategoryId, parentCategoryName) {
-			var A = AUI();
+<aui:script use="aui-base">
+	A.one('#<portlet:namespace />selectCategoryButton').on(
+		'click',
+		function(event) {
+			Liferay.Util.selectEntity(
+				{
+					dialog: {
+						constrain: true,
+						modal: true,
+						width: 680
+					},
+					id: '<portlet:namespace />selectCategory',
+					title: '<liferay-ui:message arguments="category" key="select-x" />',
+					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/shopping/select_category" /><portlet:param name="categoryId" value="<%= String.valueOf(parentCategoryId) %>" /></portlet:renderURL>'
+				},
+				function(event) {
+					var parentCategoryId = event.categoryid;
 
-			document.<portlet:namespace />fm.<portlet:namespace />parentCategoryId.value = parentCategoryId;
+					document.<portlet:namespace />fm.<portlet:namespace />parentCategoryId.value = parentCategoryId;
 
-			document.getElementById('<portlet:namespace />parentCategoryName').value = parentCategoryName;
+					document.getElementById('<portlet:namespace />parentCategoryName').value = event.name;
 
-			if (parentCategoryId != <%= ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>) {
-				var mergeWithParent = A.one('#<portlet:namespace />merge-with-parent-checkbox-div');
+					if (parentCategoryId != <%= ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>) {
+						var mergeWithParent = A.one('#<portlet:namespace />merge-with-parent-checkbox-div');
 
-				if (mergeWithParent) {
-					mergeWithParent.show();
+						if (mergeWithParent) {
+							mergeWithParent.show();
+						}
+					}
 				}
-			}
-		},
-		['aui-base']
+			);
+		}
 	);
 </aui:script>

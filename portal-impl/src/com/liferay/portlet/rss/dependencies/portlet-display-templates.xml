@@ -2,11 +2,11 @@
 
 <root>
 	<template>
-		<template-key>rss-web-content-ftl</template-key>
-		<name>portlet-display-template-name-basic</name>
-		<description>portlet-display-template-description-basic</description>
+		<template-key>rss-navigation-ftl</template-key>
+		<name>portlet-display-template-name-navigation</name>
+		<description>portlet-display-template-description-navigation</description>
 		<language>ftl</language>
-		<script-file>com/liferay/portlet/rss/dependencies/portlet_display_template_show_web_content.ftl</script-file>
+		<script-file>com/liferay/portlet/rss/dependencies/portlet_display_template_navigation.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 </root>

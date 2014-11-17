@@ -2,7 +2,8 @@ Bundle-Name: Liferay Wiki Web
 Bundle-SymbolicName: com.liferay.wiki.web
 Bundle-Version: 1.0.0
 Include-Resource:\
-	WEB-INF/classes/portlet.properties=docroot/WEB-INF/src/portlet.properties
+	WEB-INF/classes/portlet.properties=docroot/WEB-INF/src/portlet.properties,
+	WEB-INF/classes/resource-actions=docroot/WEB-INF/src/resource-actions
 Web-ContextPath: /wiki-web
 
 -donotcopy=(docroot/WEB-INF/src|.*\.jar|.*\.java)

@@ -23,8 +23,8 @@ import com.liferay.portal.model.PersistedModel;
  *
  * @author Brian Wing Shun Chan
  * @see WikiNodeModel
- * @see com.liferay.portlet.wiki.model.impl.WikiNodeImpl
- * @see com.liferay.portlet.wiki.model.impl.WikiNodeModelImpl
+ * @see com.liferay.wiki.model.impl.WikiNodeImpl
+ * @see com.liferay.wiki.model.impl.WikiNodeModelImpl
  * @generated
  */
 @ProviderType
@@ -32,7 +32,7 @@ public interface WikiNode extends WikiNodeModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.wiki.model.impl.WikiNodeImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to {@link com.liferay.wiki.model.impl.WikiNodeImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
 		throws com.liferay.portal.kernel.exception.PortalException;

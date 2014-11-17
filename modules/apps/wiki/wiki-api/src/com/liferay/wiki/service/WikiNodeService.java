@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.security.ac.AccessControlled;
 import com.liferay.portal.service.BaseService;
-import com.liferay.wiki.model.WikiNode;
 
 /**
  * Provides the remote service interface for WikiNode. Methods of this
@@ -33,8 +32,8 @@ import com.liferay.wiki.model.WikiNode;
  *
  * @author Brian Wing Shun Chan
  * @see WikiNodeServiceUtil
- * @see com.liferay.portlet.wiki.service.base.WikiNodeServiceBaseImpl
- * @see com.liferay.portlet.wiki.service.impl.WikiNodeServiceImpl
+ * @see com.liferay.wiki.service.base.WikiNodeServiceBaseImpl
+ * @see com.liferay.wiki.service.impl.WikiNodeServiceImpl
  * @generated
  */
 @AccessControlled
@@ -46,10 +45,10 @@ public interface WikiNodeService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link WikiNodeServiceUtil} to access the wiki node remote service. Add custom service methods to {@link com.liferay.portlet.wiki.service.impl.WikiNodeServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link WikiNodeServiceUtil} to access the wiki node remote service. Add custom service methods to {@link com.liferay.wiki.service.impl.WikiNodeServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public WikiNode addNode(
-		java.lang.String name, java.lang.String description,
+	public com.liferay.wiki.model.WikiNode addNode(java.lang.String name,
+		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -64,30 +63,30 @@ public interface WikiNodeService extends BaseService {
 	public java.lang.String getBeanIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiNode getNode(long groupId,
+	public com.liferay.wiki.model.WikiNode getNode(long groupId,
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiNode getNode(long nodeId)
+	public com.liferay.wiki.model.WikiNode getNode(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<WikiNode> getNodes(
+	public java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<WikiNode> getNodes(
+	public java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
 		long groupId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<WikiNode> getNodes(
+	public java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
 		long groupId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<WikiNode> getNodes(
+	public java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
 		long groupId, int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -101,7 +100,7 @@ public interface WikiNodeService extends BaseService {
 		java.util.Map<java.lang.String, java.lang.String[]> options)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public WikiNode moveNodeToTrash(long nodeId)
+	public com.liferay.wiki.model.WikiNode moveNodeToTrash(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void restoreNodeFromTrash(long nodeId)
@@ -120,7 +119,7 @@ public interface WikiNodeService extends BaseService {
 	public void unsubscribeNode(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public WikiNode updateNode(long nodeId,
+	public com.liferay.wiki.model.WikiNode updateNode(long nodeId,
 		java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;

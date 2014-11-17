@@ -87,7 +87,7 @@ searchContainer.setResults(results);
 
 		// Action
 
-		row.addJSP("/html/portlet/wiki/node_action.jsp", "entry-action");
+		row.addJSP("/html/portlet/wiki/node_action.jsp", "entry-action", application, request, response);
 
 		// Add result row
 

@@ -20,13 +20,13 @@
 WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 %>
 
-<liferay-util:include page="/html/portlet/wiki/top_links.jsp" />
+<liferay-util:include page="/html/portlet/wiki/top_links.jsp" servletContext="<%= application %>" />
 
 <liferay-ui:header
 	title="recent-changes"
 />
 
-<liferay-util:include page="/html/portlet/wiki/page_iterator.jsp">
+<liferay-util:include page="/html/portlet/wiki/page_iterator.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="type" value="recent_changes" />
 </liferay-util:include>
 

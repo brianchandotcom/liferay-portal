@@ -44,7 +44,7 @@ if (Validator.isNotNull(languageId)) {
 		<aui:input name="targetVersion" type="hidden" value="<%= targetVersion %>" />
 
 		<aui:row cssClass="diff-version-head">
-			<aui:col cssClass="diff-source-selector" width="30">
+			<aui:col cssClass="diff-source-selector" width="<%= 30 %>">
 				<div class="diff-selector">
 					<liferay-ui:icon-menu cssClass="diff-selector-version pull-right" direction="down" extended="<%= false %>" icon="../aui/caret-bottom-right" message='<%= LanguageUtil.format(request, "version-x", sourceVersion) %>' showArrow="<%= true %>" showWhenSingleIcon="<%= true %>" useIconCaret="<%= true %>">
 
@@ -77,7 +77,7 @@ if (Validator.isNotNull(languageId)) {
 				</c:if>
 			</aui:col>
 
-			<aui:col cssClass="diff-target-selector" width="70">
+			<aui:col cssClass="diff-target-selector" width="<%= 70 %>">
 				<div class="diff-selector">
 					<liferay-ui:icon-menu cssClass="diff-selector-version" direction="down" extended="<%= false %>" icon="../aui/caret-bottom-right" message='<%= LanguageUtil.format(request, "version-x", targetVersion) %>' showArrow="<%= true %>" showWhenSingleIcon="<%= true %>" useIconCaret="<%= true %>">
 
@@ -112,7 +112,7 @@ if (Validator.isNotNull(languageId)) {
 		</aui:row>
 
 		<aui:row>
-			<aui:col cssClass="search-container-column" width="30">
+			<aui:col cssClass="search-container-column" width="<%= 30 %>">
 
 				<%
 				List<DiffVersion> diffVersions = diffVersionsInfo.getDiffVersions();
@@ -200,7 +200,7 @@ if (Validator.isNotNull(languageId)) {
 					</div>
 				</div>
 			</aui:col>
-			<aui:col cssClass="diff-container-column" width="70">
+			<aui:col cssClass="diff-container-column" width="<%= 70 %>">
 				<div class="diff-version-filter hide" id="<portlet:namespace />versionFilter">
 				</div>
 

@@ -34,7 +34,7 @@ JournalFolder folder = (JournalFolder)request.getAttribute(WebKeys.JOURNAL_FOLDE
 	%>
 
 	<aui:row>
-		<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="100">
+		<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= 100 %>">
 			<c:if test="<%= Validator.isNotNull(folder.getDescription()) %>">
 				<div class="lfr-asset-description">
 					<%= HtmlUtil.escape(folder.getDescription()) %>

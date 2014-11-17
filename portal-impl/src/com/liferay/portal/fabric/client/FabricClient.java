@@ -21,6 +21,6 @@ public interface FabricClient {
 
 	public void connect() throws Exception;
 
-	public void disconnect() throws Exception;
+	public void disconnect(boolean quiet) throws Exception;
 
 }

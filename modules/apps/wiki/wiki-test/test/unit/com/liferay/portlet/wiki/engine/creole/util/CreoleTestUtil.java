@@ -14,9 +14,9 @@
 
 package com.liferay.portlet.wiki.engine.creole.util;
 
-import com.liferay.portal.parsers.creole.ast.WikiPageNode;
-import com.liferay.portal.parsers.creole.parser.Creole10Lexer;
-import com.liferay.portal.parsers.creole.parser.Creole10Parser;
+import com.liferay.wiki.parsers.creole.ast.WikiPageNode;
+import com.liferay.wiki.parsers.creole.parser.Creole10Lexer;
+import com.liferay.wiki.parsers.creole.parser.Creole10Parser;
 
 import java.io.IOException;
 import java.io.InputStream;

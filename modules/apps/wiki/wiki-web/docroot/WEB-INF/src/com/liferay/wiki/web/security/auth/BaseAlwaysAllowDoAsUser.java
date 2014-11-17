@@ -12,26 +12,31 @@
  * details.
  */
 
-package com.liferay.portlet.wiki.upgrade.v1_0_0;
+package com.liferay.wiki.web.security.auth;
 
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.wiki.WikiPortletInstanceSettings;
-import com.liferay.portlet.wiki.WikiSettings;
-import com.liferay.portlet.wiki.util.WikiConstants;
-import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.portal.kernel.security.auth.AlwaysAllowDoAsUser;
+
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * @author Iván Zaera
  */
-public class UpgradePortletSettings
-	extends com.liferay.portal.upgrade.v7_0_0.UpgradePortletSettings {
+public class BaseAlwaysAllowDoAsUser implements AlwaysAllowDoAsUser {
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		upgradeMainPortlet(
-			WikiPortletKeys.WIKI, WikiConstants.SERVICE_NAME,
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-			WikiPortletInstanceSettings.ALL_KEYS, WikiSettings.ALL_KEYS);
+	public Collection<String> getActionNames() {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public Collection<String> getPaths() {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public Collection<String> getStrutsActions() {
+		return Collections.emptyList();
 	}
 
 }

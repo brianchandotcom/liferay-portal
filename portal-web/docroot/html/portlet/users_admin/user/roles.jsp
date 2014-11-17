@@ -526,13 +526,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 		var deleteGroupRolesRoleIds = [];
 
 		function <portlet:namespace />deleteRegularRole(roleId) {
-			for (var i = 0; i < addRoleIds.length; i++) {
-				if (addRoleIds[i] == roleId) {
-					addRoleIds.splice(i, 1);
-
-					break;
-				}
-			}
+			A.Array.removeItem(addRoleIds, roleId);
 
 			deleteRoleIds.push(roleId);
 
@@ -541,14 +535,8 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 		}
 
 		function <portlet:namespace />deleteGroupRole(roleId, groupId) {
-			for (var i = 0; i < addGroupRolesRoleIds.length; i++) {
-				if ((addGroupRolesGroupIds[i] == groupId) && (addGroupRolesRoleIds[i] == roleId)) {
-					addGroupRolesGroupIds.splice(i, 1);
-					addGroupRolesRoleIds.splice(i, 1);
-
-					break;
-				}
-			}
+			A.Array.removeItem(addGroupRolesGroupIds, groupId);
+			A.Array.removeItem(addGroupRolesRoleIds, roleId);
 
 			deleteGroupRolesGroupIds.push(groupId);
 			deleteGroupRolesRoleIds.push(roleId);
@@ -580,17 +568,11 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 				if (groupId) {
 					rowColumns.push('<a class="modify-link" data-groupId="' + groupId + '" data-rowId="' + roleId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>');
 
+					A.Array.removeItem(deleteGroupRolesGroupIds, groupId);
+					A.Array.removeItem(deleteGroupRolesRoleIds, roleId);
+
 					addGroupRolesGroupIds.push(groupId);
 					addGroupRolesRoleIds.push(roleId);
-
-					for (var i = 0; i < deleteGroupRolesRoleIds.length; i++) {
-						if ((deleteGroupRolesGroupIds[i] == groupId) && (deleteGroupRolesRoleIds[i] == roleId)) {
-							deleteGroupRolesGroupIds.splice(i, 1);
-							deleteGroupRolesRoleIds.splice(i, 1);
-
-							break;
-						}
-					}
 
 					document.<portlet:namespace />fm.<portlet:namespace />addGroupRolesGroupIds.value = addGroupRolesGroupIds.join(',');
 					document.<portlet:namespace />fm.<portlet:namespace />addGroupRolesRoleIds.value = addGroupRolesRoleIds.join(',');
@@ -600,15 +582,9 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 				else {
 					rowColumns.push('<a class="modify-link" data-rowId="' + roleId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>');
 
+					A.Array.removeItem(deleteRoleIds, roleId);
+
 					addRoleIds.push(roleId);
-
-					for (var i = 0; i < deleteRoleIds.length; i++) {
-						if (deleteRoleIds[i] == roleId) {
-							deleteRoleIds.splice(i, 1);
-
-							break;
-						}
-					}
 
 					document.<portlet:namespace />fm.<portlet:namespace />addRoleIds.value = addRoleIds.join(',');
 					document.<portlet:namespace />fm.<portlet:namespace />deleteRoleIds.value = deleteRoleIds.join(',');

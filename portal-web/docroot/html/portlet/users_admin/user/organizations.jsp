@@ -133,13 +133,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 
 				searchContainer.deleteRow(tr, rowId);
 
-				for (var i = 0; i < addOrganizationIds.length; i++) {
-					if (addOrganizationIds[i] == rowId) {
-						addOrganizationIds.splice(i, 1);
-
-						break;
-					}
-				}
+				A.Array.removeItem(addOrganizationIds, rowId);
 
 				deleteOrganizationIds.push(rowId);
 
@@ -191,15 +185,9 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 							searchContainer.addRow(rowColumns, event.organizationid);
 							searchContainer.updateDataStore();
 
+							A.Array.removeItem(deleteOrganizationIds, event.organizationid);
+
 							addOrganizationIds.push(event.organizationid);
-
-							for (var i = 0; i < deleteOrganizationIds.length; i++) {
-								if (deleteOrganizationIds[i] == event.organizationid) {
-									deleteOrganizationIds.splice(i, 1);
-
-									break;
-								}
-							}
 
 							document.<portlet:namespace />fm.<portlet:namespace />addOrganizationIds.value = addOrganizationIds.join(',');
 							document.<portlet:namespace />fm.<portlet:namespace />deleteOrganizationIds.value = deleteOrganizationIds.join(',');

@@ -138,13 +138,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 
 						addGroupIds.push(event.groupid);
 
-						for (var i = 0; i < deleteGroupIds.length; i++) {
-							if (deleteGroupIds[i] == event.groupid) {
-								deleteGroupIds.splice(i, 1);
-
-								break;
-							}
-						}
+						A.Array.removeItem(deleteGroupIds, event.groupid);
 
 						document.<portlet:namespace />fm.<portlet:namespace />addGroupIds.value = addGroupIds.join(',');
 						document.<portlet:namespace />fm.<portlet:namespace />deleteGroupIds.value = deleteGroupIds.join(',');
@@ -171,13 +165,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 
 				searchContainer.deleteRow(tr, rowId);
 
-				for (var i = 0; i < addGroupIds.length; i++) {
-					if (addGroupIds[i] == rowId) {
-						addGroupIds.splice(i, 1);
-
-						break;
-					}
-				}
+				A.Array.removeItem(addGroupIds, event.rowId);
 
 				<portlet:namespace />deleteGroupIds.push(rowId);
 

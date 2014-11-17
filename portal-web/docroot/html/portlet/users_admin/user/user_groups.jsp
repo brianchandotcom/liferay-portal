@@ -111,13 +111,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 
 				searchContainer.deleteRow(tr, rowId);
 
-				for (var i = 0; i < addUserGroupIds.length; i++) {
-					if (addUserGroupIds[i] == rowId) {
-						addUserGroupIds.splice(i, 1);
-
-						break;
-					}
-				}
+				A.Array.removeItem(addUserGroupIds, rowId);
 
 				deleteUserGroupIds.push(rowId);
 
@@ -173,13 +167,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 						searchContainer.addRow(rowColumns, event.usergroupid);
 						searchContainer.updateDataStore();
 
-						for (var i = 0; i < deleteUserGroupIds.length; i++) {
-							if (deleteUserGroupIds[i] == event.usergroupid) {
-								deleteUserGroupIds.splice(i, 1);
-
-								break;
-							}
-						}
+						A.Array.removeItem(deleteUserGroupIds, event.usergroupid);
 
 						addUserGroupIds.push(event.usergroupid);
 

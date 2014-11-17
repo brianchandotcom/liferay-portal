@@ -93,6 +93,8 @@ if (translating) {
 	<aui:input name="languageId" type="hidden" value="<%= languageId %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 
+	<liferay-ui:error exception="<%= DuplicateFileException.class %>" message="a-file-with-that-name-already-exists" />
+
 	<liferay-ui:error exception="<%= FileSizeException.class %>">
 
 		<%
@@ -106,7 +108,6 @@ if (translating) {
 		<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(fileMaxSize, locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
 	</liferay-ui:error>
 
-	<liferay-ui:error exception="<%= DuplicateFileException.class %>" message="a-file-with-that-name-already-exists" />
 	<liferay-ui:error exception="<%= StorageFieldRequiredException.class %>" message="please-fill-out-all-required-fields" />
 
 	<c:if test="<%= !translating %>">

@@ -725,8 +725,8 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				test.type="integration"
 			/>
 
-			<ant dir="${project.dir}/portal-service" target="jar" />
-			<ant dir="${project.dir}/portal-impl" target="jar" />
+			<ant dir="${project.dir}/portal-service" target="jar" inheritAll="false" />
+			<ant dir="${project.dir}/portal-impl" target="jar" inheritAll="false" />
 
 			<delete dir="${java.io.tmpdir}/osgi" />
 		</sequential>

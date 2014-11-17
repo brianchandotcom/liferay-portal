@@ -12,11 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.verify;
+package com.liferay.portlet.wiki.verify;
 
 import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
+import com.liferay.portal.verify.BaseVerifyProcessTestCase;
+import com.liferay.portal.verify.VerifyProcess;
+import com.liferay.portlet.wiki.verify.model.WikiServiceVerifyProcess;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -24,7 +27,7 @@ import org.junit.Rule;
 /**
  * @author Manuel de la Peña
  */
-public class VerifyWikiTest extends BaseVerifyProcessTestCase {
+public class VerifierTest extends BaseVerifyProcessTestCase {
 
 	@ClassRule
 	@Rule
@@ -34,7 +37,7 @@ public class VerifyWikiTest extends BaseVerifyProcessTestCase {
 
 	@Override
 	protected VerifyProcess getVerifyProcess() {
-		return new VerifyWiki();
+		return new WikiServiceVerifyProcess();
 	}
 
 }

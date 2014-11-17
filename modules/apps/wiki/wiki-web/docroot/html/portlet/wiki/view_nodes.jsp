@@ -113,7 +113,7 @@ searchContainer.setResults(results);
 
 				<c:if test="<%= showPermissionsButton %>">
 					<liferay-security:permissionsURL
-						modelResource="com.liferay.portlet.wiki"
+						modelResource="com.liferay.wiki"
 						modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>"
 						resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
 						var="permissionsURL"

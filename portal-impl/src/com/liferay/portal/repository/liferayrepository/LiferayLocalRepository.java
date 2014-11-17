@@ -155,6 +155,26 @@ public class LiferayLocalRepository
 	}
 
 	@Override
+	public void checkInFileEntry(
+			long userId, long fileEntryId, boolean major, String changeLog,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		throw new UnsupportedOperationException(
+			"This method is not supported by this repository");
+	}
+
+	@Override
+	public void checkInFileEntry(
+			long userId, long fileEntryId, String lockUuid,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		throw new UnsupportedOperationException(
+			"This method is not supported by this repository");
+	}
+
+	@Override
 	public FileEntry copyFileEntry(
 		long userId, long groupId, long fileEntryId, long destFolderId,
 		ServiceContext serviceContext) {
@@ -270,6 +290,16 @@ public class LiferayLocalRepository
 			userId, folderId, parentFolderId, serviceContext);
 
 		return new LiferayFolder(dlFolder);
+	}
+
+	@Override
+	public void revertFileEntry(
+			long userId, long fileEntryId, String version,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		throw new UnsupportedOperationException(
+			"This method is not supported by this repository");
 	}
 
 	@Override

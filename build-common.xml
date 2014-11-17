@@ -726,7 +726,15 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			/>
 
 			<ant dir="${project.dir}/portal-service" target="jar" inheritAll="false" />
-			<ant dir="${project.dir}/portal-impl" target="jar" inheritAll="false" />
+
+			<if>
+				<uptodate targetfile="${project.dir}/portal-impl/portal-impl.jar">
+					<srcfiles dir= "${project.dir}/portal-impl/classes" includes="**/*" />
+				</uptodate>
+				<else>
+					<ant dir="${project.dir}/portal-impl" target="jar" inheritAll="false" />
+				</else>
+			</if>
 
 			<delete dir="${java.io.tmpdir}/osgi" />
 		</sequential>

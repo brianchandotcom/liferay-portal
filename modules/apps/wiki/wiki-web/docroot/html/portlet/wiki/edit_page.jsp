@@ -32,7 +32,7 @@ String title = BeanParamUtil.getString(wikiPage, request, "title");
 boolean editTitle = ParamUtil.getBoolean(request, "editTitle");
 
 String content = BeanParamUtil.getString(wikiPage, request, "content");
-String format = BeanParamUtil.getString(wikiPage, request, "format", wikiSettings.getDefaultFormat());
+String selectedFormat = BeanParamUtil.getString(wikiPage, request, "format", wikiSettings.getDefaultFormat());
 String parentTitle = BeanParamUtil.getString(wikiPage, request, "parentTitle");
 
 boolean preview = ParamUtil.getBoolean(request, "preview");
@@ -63,7 +63,7 @@ else if ((wikiPage == null) && editTitle) {
 
 	wikiPage.setNew(true);
 	wikiPage.setNodeId(node.getNodeId());
-	wikiPage.setFormat(format);
+	wikiPage.setFormat(selectedFormat);
 	wikiPage.setParentTitle(parentTitle);
 }
 
@@ -91,10 +91,10 @@ if ((templateNodeId > 0) && Validator.isNotNull(templateTitle)) {
 			parentTitle = templatePage.getParentTitle();
 
 			if (wikiPage.isNew()) {
-				format = templatePage.getFormat();
+				selectedFormat = templatePage.getFormat();
 
 				wikiPage.setContent(templatePage.getContent());
-				wikiPage.setFormat(format);
+				wikiPage.setFormat(selectedFormat);
 				wikiPage.setParentTitle(parentTitle);
 			}
 		}
@@ -142,14 +142,14 @@ if (Validator.isNull(redirect)) {
 	}
 
 	try {
-		content = SanitizerUtil.sanitize(themeDisplay.getCompanyId(), scopeGroupId, themeDisplay.getUserId(), WikiPage.class.getName(), 0, "text/" + format, content);
+		content = SanitizerUtil.sanitize(themeDisplay.getCompanyId(), scopeGroupId, themeDisplay.getUserId(), WikiPage.class.getName(), 0, "text/" + selectedFormat, content);
 	}
 	catch (SanitizerException se) {
 		content = StringPool.BLANK;
 	}
 
 	wikiPage.setContent(content);
-	wikiPage.setFormat(format);
+	wikiPage.setFormat(selectedFormat);
 	%>
 
 	<liferay-ui:message key="preview" />:
@@ -245,15 +245,19 @@ if (Validator.isNull(redirect)) {
 					<aui:input name="parent" type="resource" value="<%= parentTitle %>" />
 				</c:if>
 
+				<%
+					Collection<String> formats = WikiServiceUtil.getFormats();
+				%>
+
 				<c:choose>
-					<c:when test="<%= (WikiPageConstants.FORMATS.length > 1) %>">
+					<c:when test="<%= !formats.isEmpty() %>">
 						<aui:select changesContext="<%= true %>" name="format">
 
 							<%
-							for (int i = 0; i < WikiPageConstants.FORMATS.length; i++) {
+							for (String format : formats) {
 							%>
 
-								<aui:option label='<%= LanguageUtil.get(request, "wiki.formats." + WikiPageConstants.FORMATS[i]) %>' selected="<%= format.equals(WikiPageConstants.FORMATS[i]) %>" value="<%= WikiPageConstants.FORMATS[i] %>" />
+								<aui:option label='<%= LanguageUtil.get(request, "wiki.formats." + format) %>' selected="<%= selectedFormat.equals(format) %>" value="<%= format %>" />
 
 							<%
 							}
@@ -263,7 +267,7 @@ if (Validator.isNull(redirect)) {
 
 					</c:when>
 					<c:otherwise>
-						<aui:input name="format" type="hidden" value="<%= format %>" />
+						<aui:input name="format" type="hidden" value="<%= selectedFormat %>" />
 					</c:otherwise>
 				</c:choose>
 			</aui:fieldset>
@@ -274,7 +278,7 @@ if (Validator.isNull(redirect)) {
 				request.setAttribute("edit_page.jsp-wikiPage", wikiPage);
 				%>
 
-				<liferay-util:include page="<%= WikiUtil.getEditPage(format) %>" />
+				<liferay-util:include page="<%= WikiServiceUtil.getEditPage(selectedFormat) %>" servletContext="<%= application %>" />
 			</div>
 
 			<c:if test="<%= wikiPage != null %>">

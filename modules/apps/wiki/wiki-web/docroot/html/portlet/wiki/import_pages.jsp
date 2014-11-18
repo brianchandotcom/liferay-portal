@@ -28,7 +28,7 @@ WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 
 long nodeId = BeanParamUtil.getLong(node, request, "nodeId");
 
-String[] importers = PropsValues.WIKI_IMPORTERS;
+String[] importers = ArrayUtil.toStringArray(WikiServiceUtil.getImporters());
 
 if (Validator.isNull(tabs2)) {
 	tabs2 = importers[0];
@@ -66,7 +66,7 @@ portletURL.setParameter("nodeId", String.valueOf(nodeId));
 	<liferay-ui:error exception="<%= ImportFilesException.class %>" message="please-provide-all-mandatory-files-and-make-sure-the-file-types-are-valid" />
 	<liferay-ui:error exception="<%= NoSuchNodeException.class %>" message="the-node-could-not-be-found" />
 
-	<liferay-util:include page="<%= PropsUtil.get(PropsKeys.WIKI_IMPORTERS_PAGE, new Filter(tabs2)) %>" />
+	<liferay-util:include page="<%= WikiServiceUtil.getWikiImporterPage(tabs2) %>" servletContext="<%= application %>" />
 
 	<aui:button-row>
 		<aui:button type="submit" value="import" />

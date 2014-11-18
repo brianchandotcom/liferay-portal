@@ -138,17 +138,12 @@ IGConfigurationDisplayContext igConfigurationDisplayContext = new IGConfiguratio
 			);
 		}
 	);
-</aui:script>
 
-<aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveConfiguration',
-		function() {
-			document.<portlet:namespace />fm.<portlet:namespace />mimeTypes.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentMimeTypes);
+	function <portlet:namespace />saveConfiguration() {
+		var form = AUI.$(document.<portlet:namespace />fm);
 
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['liferay-util-list-fields']
-	);
+		form.fm('mimeTypes').val(Liferay.Util.listSelect(form.fm('currentMimeTypes')));
+
+		submitForm(form);
+	}
 </aui:script>

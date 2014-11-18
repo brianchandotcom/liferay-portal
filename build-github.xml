@@ -129,6 +129,8 @@
 
 		<script classpathref="project.classpath" language="beanshell">
 			<![CDATA[
+				import java.util.concurrent.TimeUnit;
+
 				import org.json.JSONObject;
 
 				public String fixURL(String url) {
@@ -149,6 +151,47 @@
 					}
 
 					return url;
+				}
+
+				public String toFormattedBuildTime(String githubJenkinsBuildTime) {
+					int milliseconds = Integer.parseInt(githubJenkinsBuildTime);
+
+					int seconds = TimeUnit.MILLISECONDS.toSeconds(milliseconds) % 60;
+					int minutes = TimeUnit.MILLISECONDS.toMinutes(milliseconds) % 60;
+					int hours = TimeUnit.MILLISECONDS.toHours(milliseconds);
+
+					StringBuilder sb = new StringBuilder();
+
+					if (hours > 0) {
+						sb.append(hours);
+						sb.append(" hour");
+
+						if (hours > 1) {
+							sb.append("s");
+						}
+
+						sb.append(" ");
+					}
+
+					if (minutes > 0) {
+						sb.append(minutes);
+						sb.append(" minute");
+
+						if (minutes > 1) {
+							sb.append("s");
+						}
+
+						sb.append(" ");
+					}
+
+					sb.append(seconds);
+					sb.append(" second");
+
+					if (seconds > 1) {
+						sb.append("s");
+					}
+
+					return sb.toString();
 				}
 
 				public JSONObject toJSONObject(String url) {
@@ -179,7 +222,7 @@
 
 				if (githubJenkinsBuildTime != null) {
 					sb.append("<p>Build Time: ");
-					sb.append(githubJenkinsBuildTime);
+					sb.append(toFormattedBuildTime(githubJenkinsBuildTime));
 					sb.append("</p>");
 				}
 
@@ -262,6 +305,49 @@
 	<target name="github-post-comment-success">
 		<script classpathref="project.classpath" language="beanshell">
 			<![CDATA[
+				import java.util.concurrent.TimeUnit;
+
+				public String toFormattedBuildTime(String githubJenkinsBuildTime) {
+					int milliseconds = Integer.parseInt(githubJenkinsBuildTime);
+
+					int seconds = TimeUnit.MILLISECONDS.toSeconds(milliseconds) % 60;
+					int minutes = TimeUnit.MILLISECONDS.toMinutes(milliseconds) % 60;
+					int hours = TimeUnit.MILLISECONDS.toHours(milliseconds);
+
+					StringBuilder sb = new StringBuilder();
+
+					if (hours > 0) {
+						sb.append(hours);
+						sb.append(" hour");
+
+						if (hours > 1) {
+							sb.append("s");
+						}
+
+						sb.append(" ");
+					}
+
+					if (minutes > 0) {
+						sb.append(minutes);
+						sb.append(" minute");
+
+						if (minutes > 1) {
+							sb.append("s");
+						}
+
+						sb.append(" ");
+					}
+
+					sb.append(seconds);
+					sb.append(" second");
+
+					if (seconds > 1) {
+						sb.append("s");
+					}
+
+					return sb.toString();
+				}
+
 				StringBuilder sb = new StringBuilder();
 
 				sb.append("<h1>All tests have PASSED!</h1>");
@@ -270,7 +356,7 @@
 
 				if (githubJenkinsBuildTime != null) {
 					sb.append("<p>Build Time: ");
-					sb.append(githubJenkinsBuildTime);
+					sb.append(toFormattedBuildTime(githubJenkinsBuildTime));
 					sb.append("</p>");
 				}
 

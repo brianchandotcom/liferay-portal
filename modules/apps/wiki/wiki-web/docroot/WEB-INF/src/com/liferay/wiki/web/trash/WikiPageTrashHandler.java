@@ -38,7 +38,6 @@ import com.liferay.portlet.trash.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.web.asset.WikiPageAssetRenderer;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageResource;
@@ -48,6 +47,7 @@ import com.liferay.wiki.service.WikiPageServiceUtil;
 import com.liferay.wiki.service.permission.WikiNodePermission;
 import com.liferay.wiki.service.permission.WikiPagePermission;
 import com.liferay.wiki.util.WikiPageAttachmentsUtil;
+import com.liferay.wiki.web.asset.WikiPageAssetRenderer;
 
 import java.util.ArrayList;
 import java.util.List;

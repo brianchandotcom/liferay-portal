@@ -29,12 +29,12 @@ import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.trash.RestoreEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.web.asset.WikiNodeTrashRenderer;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.permission.WikiNodePermission;
+import com.liferay.wiki.web.asset.WikiNodeTrashRenderer;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -19,20 +19,6 @@ package com.liferay.wiki.configuration;
  */
 public class WikiPropsKeys {
 
-	public static final String FORMATS_CONFIGURATION_INTERWIKI =
-		"formats.configuration.interwiki";
-
-	public static final String FORMATS_CONFIGURATION_MAIN =
-		"formats.configuration.main";
-
-	public static final String FORMATS_EDIT_PAGE = "formats.edit.page";
-
-	public static final String FORMATS_ENGINE = "formats.engine";
-
-	public static final String FORMATS_HELP_PAGE = "formats.help.page";
-
-	public static final String FORMATS_HELP_URL = "formats.help.url";
-
 	public static final String FRONT_PAGE_NAME = "front.page.name";
 
 	public static final String IMPORTERS_CLASS = "importers.class";

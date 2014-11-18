@@ -92,21 +92,22 @@ public class ResourceBlockLocalServiceTest {
 
 		resourceBlockPermissionsContainer.addPermission(_ROLE_ID, _ACTION_IDS);
 
-		String permissionsHash =
-			resourceBlockPermissionsContainer.getPermissionsHash();
-
 		Semaphore semaphore = new Semaphore(0);
 
-		List<Callable<Void>> callables = new ArrayList<Callable<Void>>();
+		Callable<Void> updateResourceBlockIdCallable =
+			new UpdateResourceBlockIdCallable(
+				permissionedModel, resourceBlockPermissionsContainer,
+				semaphore);
+
+		Callable<Void> releaseResourceBlockCallable =
+			new ReleaseResourceBlockCallable(permissionedModel, semaphore);
+
+		List<Callable<Void>> callables = new ArrayList<Callable<Void>>(
+			_REFERENCE_COUNT * 2);
 
 		for (int i = 0; i < _REFERENCE_COUNT; i++) {
-			callables.add(
-				new UpdateResourceBlockIdCallable(
-					permissionedModel, permissionsHash,
-					resourceBlockPermissionsContainer, semaphore));
-
-			callables.add(
-				new ReleaseResourceBlockCallable(permissionedModel, semaphore));
+			callables.add(updateResourceBlockIdCallable);
+			callables.add(releaseResourceBlockCallable);
 		}
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
@@ -133,11 +134,14 @@ public class ResourceBlockLocalServiceTest {
 
 		permissionedModel.setResourceBlockId(_RESOURCE_BLOCK_ID);
 
-		List<Callable<Void>> callables = new ArrayList<Callable<Void>>();
+		Callable<Void> releaseResourceBlockCallable =
+			new ReleaseResourceBlockCallable(permissionedModel, null);
+
+		List<Callable<Void>> callables = new ArrayList<Callable<Void>>(
+			_REFERENCE_COUNT);
 
 		for (int i = 0; i < _REFERENCE_COUNT; i++) {
-			callables.add(
-				new ReleaseResourceBlockCallable(permissionedModel, null));
+			callables.add(releaseResourceBlockCallable);
 		}
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
@@ -178,16 +182,15 @@ public class ResourceBlockLocalServiceTest {
 
 		resourceBlockPermissionsContainer.addPermission(_ROLE_ID, _ACTION_IDS);
 
-		String permissionsHash =
-			resourceBlockPermissionsContainer.getPermissionsHash();
+		Callable<Void> updateResourceBlockIdCallable =
+			new UpdateResourceBlockIdCallable(
+				permissionedModel, resourceBlockPermissionsContainer, null);
 
-		List<Callable<Void>> callables = new ArrayList<Callable<Void>>();
+		List<Callable<Void>> callables = new ArrayList<Callable<Void>>(
+			_REFERENCE_COUNT);
 
 		for (int i = 0; i < _REFERENCE_COUNT; i++) {
-			callables.add(
-				new UpdateResourceBlockIdCallable(
-					permissionedModel, permissionsHash,
-					resourceBlockPermissionsContainer, null));
+			callables.add(updateResourceBlockIdCallable);
 		}
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
@@ -321,13 +324,6 @@ public class ResourceBlockLocalServiceTest {
 
 	private class ReleaseResourceBlockCallable implements Callable<Void> {
 
-		public ReleaseResourceBlockCallable(
-			PermissionedModel permissionedModel, Semaphore semaphore) {
-
-			_permissionedModel = permissionedModel;
-			_semaphore = semaphore;
-		}
-
 		@Override
 		public Void call() throws Exception {
 			if (_semaphore != null) {
@@ -340,24 +336,19 @@ public class ResourceBlockLocalServiceTest {
 			return null;
 		}
 
-		private PermissionedModel _permissionedModel;
-		private Semaphore _semaphore;
+		private ReleaseResourceBlockCallable(
+			PermissionedModel permissionedModel, Semaphore semaphore) {
+
+			_permissionedModel = permissionedModel;
+			_semaphore = semaphore;
+		}
+
+		private final PermissionedModel _permissionedModel;
+		private final Semaphore _semaphore;
 
 	}
 
 	private class UpdateResourceBlockIdCallable implements Callable<Void> {
-
-		public UpdateResourceBlockIdCallable(
-			PermissionedModel permissionedModel, String permissionsHash,
-			ResourceBlockPermissionsContainer resourceBlockPermissionsContainer,
-			Semaphore semaphore) {
-
-			_permissionedModel = permissionedModel;
-			_permissionsHash = permissionsHash;
-			_resourceBlockPermissionsContainer =
-				resourceBlockPermissionsContainer;
-			_semaphore = semaphore;
-		}
 
 		@Override
 		public Void call() throws Exception {
@@ -365,7 +356,8 @@ public class ResourceBlockLocalServiceTest {
 				try {
 					ResourceBlockLocalServiceUtil.updateResourceBlockId(
 						_COMPANY_ID, _GROUP_ID, _MODEL_NAME, _permissionedModel,
-						_permissionsHash, _resourceBlockPermissionsContainer);
+						_resourceBlockPermissionsContainer.getPermissionsHash(),
+						_resourceBlockPermissionsContainer);
 
 					if (_semaphore != null) {
 						_semaphore.release();
@@ -380,11 +372,21 @@ public class ResourceBlockLocalServiceTest {
 			return null;
 		}
 
-		private PermissionedModel _permissionedModel;
-		private String _permissionsHash;
-		private ResourceBlockPermissionsContainer
+		private UpdateResourceBlockIdCallable(
+			PermissionedModel permissionedModel,
+			ResourceBlockPermissionsContainer resourceBlockPermissionsContainer,
+			Semaphore semaphore) {
+
+			_permissionedModel = permissionedModel;
+			_resourceBlockPermissionsContainer =
+				resourceBlockPermissionsContainer;
+			_semaphore = semaphore;
+		}
+
+		private final PermissionedModel _permissionedModel;
+		private final ResourceBlockPermissionsContainer
 			_resourceBlockPermissionsContainer;
-		private Semaphore _semaphore;
+		private final Semaphore _semaphore;
 
 	}
 

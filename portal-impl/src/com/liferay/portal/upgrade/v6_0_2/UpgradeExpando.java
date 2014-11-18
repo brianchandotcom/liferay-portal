@@ -96,8 +96,7 @@ public class UpgradeExpando extends UpgradeProcess {
 			JournalArticle.class.getName(), JournalArticleImpl.TABLE_NAME,
 			"id_");
 
-		updateTables(
-			"com.liferay.wiki.model.WikiPage", "WikiPage", "pageId");
+		updateTables("com.liferay.wiki.model.WikiPage", "WikiPage", "pageId");
 	}
 
 	protected boolean hasRow(long companyId, long tableId, long classPK)

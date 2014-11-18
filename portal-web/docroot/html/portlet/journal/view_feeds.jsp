@@ -127,18 +127,15 @@ portletURL.setParameter("struts_action", "/journal/view_feeds");
 <aui:script>
 	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />deleteFeeds',
-		function() {
-			if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-feeds") %>')) {
-				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.DELETE %>';
-				document.<portlet:namespace />fm.<portlet:namespace />groupId.value = '<%= scopeGroupId %>';
-				document.<portlet:namespace />fm.<portlet:namespace />deleteFeedIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+	function <portlet:namespace />deleteFeeds() {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-feeds") %>')) {
+			var form = AUI.$(document.<portlet:namespace />fm);
 
-				submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/journal/edit_feed" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
-			}
-		},
-		['liferay-util-list-fields']
-	);
+			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
+			form.fm('groupId').val('<%= scopeGroupId %>');
+			form.fm('deleteFeedIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+			submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/journal/edit_feed" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+		}
+	}
 </aui:script>

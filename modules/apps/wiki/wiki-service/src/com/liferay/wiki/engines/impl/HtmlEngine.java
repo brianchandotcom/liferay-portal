@@ -40,10 +40,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Jorge Ferrer
  * @author Zsigmond Rab
  */
+@Component(
+	service = WikiEngine.class,
+	property = {
+		"enabled=true", "format=html",
+		"edit.page=/html/portlet/wiki/edit/html.jsp"
+	}
+)
 public class HtmlEngine implements WikiEngine {
 
 	public HtmlEngine() {
@@ -77,14 +86,6 @@ public class HtmlEngine implements WikiEngine {
 		catch (Exception e) {
 			throw new PageContentException(e);
 		}
-	}
-
-	@Override
-	public void setInterWikiConfiguration(String interWikiConfiguration) {
-	}
-
-	@Override
-	public void setMainConfiguration(String mainConfiguration) {
 	}
 
 	@Override

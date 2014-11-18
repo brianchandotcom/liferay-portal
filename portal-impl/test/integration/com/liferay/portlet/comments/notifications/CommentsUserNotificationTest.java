@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.comments.notifications;
 
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.test.Sync;
@@ -24,7 +25,10 @@ import com.liferay.portal.util.BaseUserNotificationTestCase;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
+import com.liferay.portlet.messageboards.model.MBDiscussion;
+import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 
 import org.junit.runner.RunWith;
@@ -59,6 +63,30 @@ public class CommentsUserNotificationTest extends BaseUserNotificationTestCase {
 	@Override
 	protected String getPortletId() {
 		return PortletKeys.COMMENTS;
+	}
+
+	@Override
+	protected boolean isValidUserNotificationEventObject(
+			long baseEntryId, JSONObject userNotificationEventJSONObject)
+		throws Exception {
+
+		long classPK = userNotificationEventJSONObject.getLong("classPK");
+
+		MBMessage message = MBMessageLocalServiceUtil.getMessage(baseEntryId);
+
+		if (!message.isDiscussion()) {
+			return false;
+		}
+
+		MBDiscussion discussion =
+			MBDiscussionLocalServiceUtil.getThreadDiscussion(
+				message.getThreadId());
+
+		if (discussion.getDiscussionId() != classPK) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

@@ -692,6 +692,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<available file="test/@{test.type}" type="dir" />
 				<then>
 					<setup-test-classpath
+						file="${project.dir}/dependencies/ivy-persistence-test.xml"
 						test.type="@{test.type}"
 					/>
 
@@ -1136,13 +1137,10 @@ Please set the environment variable ANT_OPTS to the recommended value of
 
 	<macrodef name="setup-test-classpath">
 		<attribute name="test.type" />
+		<attribute name="file" default="${project.dir}/dependencies/ivy-test.xml" />
 
 		<sequential>
-			<ivy:resolve log="download-only">
-				<dependency name="arquillian-junit-container" org="org.jboss.arquillian.junit" rev="1.1.2.Final" />
-				<dependency name="com.liferay.arquillian.extension" org="com.liferay" rev="1.0.0-SNAPSHOT" />
-				<exclude org="junit" />
-			</ivy:resolve>
+			<ivy:resolve log="download-only" file="@{file}" />
 
 			<path id="test-ivy.classpath">
 				<ivy:resources type="bundle,jar,orbit" />
@@ -1289,9 +1287,6 @@ rerun your task.
 				</else>
 			</if>
 
-			<setup-test-classpath
-				test.type="@{test.type}"
-			/>
 
 			<if>
 				<available file="test/${current.test.dir}" type="dir" />
@@ -1310,6 +1305,10 @@ rerun your task.
 							<equals arg1="${test.with.security.count}" arg2="0" />
 						</not>
 						<then>
+							<setup-test-classpath
+								test.type="@{test.type}"
+							/>
+
 							<junit-cmd
 								forkmode="once"
 								test.type="@{test.type}"
@@ -1338,20 +1337,70 @@ rerun your task.
 						</then>
 					</if>
 
-					<resourcecount property="test.without.security.count">
+					<resourcecount property="test.with.persistence.count">
 						<fileset
-							dir="test-classes/${current.test.dir}"
-							includes="**/@{test.class}.class"
-						>
-							<filename regex=".*/pacl/test/[\w]+Test.class" negate="true" />
+								dir="test-classes/${current.test.dir}"
+								includes="**/@{test.class}.class"
+								>
+							<filename regex=".*/[\w]+PersistenceTest.class" negate="false" />
 						</fileset>
 					</resourcecount>
 
 					<if>
 						<not>
-							<equals arg1="${test.without.security.count}" arg2="0" />
+							<equals arg1="${test.with.persistence.count}" arg2="0" />
 						</not>
 						<then>
+							<setup-test-classpath
+								file="${project.dir}/dependencies/ivy-persistence-test.xml"
+								test.type="@{test.type}"
+							/>
+
+							<junit-cmd
+									forkmode="@{junit.forkmode}"
+									test.type="@{test.type}"
+									>
+								<misc>
+									<jvmarg value="-Dliferay.lib.portal.dir=${project.dir}/lib/portal" />
+									<jvmarg value="-Dliferay.mode=test" />
+								</misc>
+								<test.classes>
+									<batchtest todir="test-results/@{test.type}">
+										<fileset dir="test-classes/${current.test.dir}" includes="**/@{test.class}.class">
+											<exclude name="**/DLAppServiceHttpTest.class" />
+											<exclude name="**/DLAppServiceJsonTest.class" />
+											<exclude name="**/DLAppServiceSoapTest.class" />
+											<exclude name="**/UserServiceHttpTest.class" />
+											<exclude name="**/UserServiceSoapTest.class" />
+											<exclude name="${test.excludes}" />
+											<filename regex="${junit.test.excludes}" negate="true" />
+											<filename regex=".*/[\w]+PersistenceTest.class" negate="false" />
+										</fileset>
+									</batchtest>
+								</test.classes>
+							</junit-cmd>
+						</then>
+					</if>
+
+					<resourcecount property="test.without.security.or.persistence.count">
+						<fileset
+							dir="test-classes/${current.test.dir}"
+							includes="**/@{test.class}.class"
+						>
+							<filename regex=".*/pacl/test/[\w]+Test.class" negate="true" />
+							<filename regex=".*/[\w]+PersistenceTest.class" negate="true" />
+						</fileset>
+					</resourcecount>
+
+					<if>
+						<not>
+							<equals arg1="${test.without.security.or.persistence.count}" arg2="0" />
+						</not>
+						<then>
+							<setup-test-classpath
+								test.type="@{test.type}"
+							/>
+
 							<junit-cmd
 								forkmode="@{junit.forkmode}"
 								test.type="@{test.type}"
@@ -1371,6 +1420,7 @@ rerun your task.
 											<exclude name="${test.excludes}" />
 											<filename regex="${junit.test.excludes}" negate="true" />
 											<filename regex=".*/pacl/test/[\w]+Test.class" negate="true" />
+											<filename regex=".*/[\w]+PersistenceTest.class" negate="true" />
 										</fileset>
 									</batchtest>
 								</test.classes>
@@ -1663,9 +1713,20 @@ rerun your task.
 			replace="com."
 		/>
 
-		<setup-test-classpath
-			test.type="${test.type}"
-		/>
+		<if>
+			<contains string="${test.class.name}" substring="PersistenceTest" />
+			<then>
+				<setup-test-classpath
+					file="${project.dir}/dependencies/ivy-persistence-test.xml"
+					test.type="${test.type}"
+				/>
+			</then>
+			<else>
+				<setup-test-classpath
+					test.type="${test.type}"
+				/>
+			</else>
+		</if>
 
 		<junit-cmd
 			forkmode="once"

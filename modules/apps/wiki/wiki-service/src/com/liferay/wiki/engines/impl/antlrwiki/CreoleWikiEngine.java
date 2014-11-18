@@ -40,9 +40,20 @@ import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Miguel Pastor
  */
+@Component(
+	service = WikiEngine.class,
+	property = {
+		"enabled=true", "format=creole",
+		"edit.page=/html/portlet/wiki/edit/wiki.jsp",
+		"help.page=/html/portlet/wiki/help/creole.jsp",
+		"help.url=http://www.wikicreole.org/wiki/Creole1.0"
+	}
+)
 public class CreoleWikiEngine implements WikiEngine {
 
 	@Override
@@ -95,14 +106,6 @@ public class CreoleWikiEngine implements WikiEngine {
 		}
 
 		return outgoingLinks;
-	}
-
-	@Override
-	public void setInterWikiConfiguration(String interWikiConfiguration) {
-	}
-
-	@Override
-	public void setMainConfiguration(String mainConfiguration) {
 	}
 
 	@Override

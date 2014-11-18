@@ -732,8 +732,40 @@ public class LocalProcessExecutorTest {
 
 			Throwable throwable = ee.getCause();
 
+			Assert.assertSame(ProcessException.class, throwable.getClass());
 			Assert.assertEquals(
 				DummyExceptionProcessCallable.class.getName(),
+				throwable.getMessage());
+		}
+
+		RuntimeExceptionProcessCallable runtimeExceptionProcessCallable =
+			new RuntimeExceptionProcessCallable();
+
+		processChannel =
+			_localProcessExecutor.execute(
+				_createJPDAProcessConfig(_JPDA_OPTIONS1),
+				runtimeExceptionProcessCallable);
+
+		future = processChannel.getProcessNoticeableFuture();
+
+		try {
+			future.get();
+
+			Assert.fail();
+		}
+		catch (ExecutionException ee) {
+			Assert.assertFalse(future.isCancelled());
+			Assert.assertTrue(future.isDone());
+
+			Throwable throwable = ee.getCause();
+
+			Assert.assertSame(ProcessException.class, throwable.getClass());
+
+			throwable = throwable.getCause();
+
+			Assert.assertSame(RuntimeException.class, throwable.getClass());
+			Assert.assertEquals(
+				RuntimeExceptionProcessCallable.class.getName(),
 				throwable.getMessage());
 		}
 	}
@@ -2186,6 +2218,26 @@ public class LocalProcessExecutorTest {
 		private static final long serialVersionUID = 1L;
 
 		private String _returnValue;
+
+	}
+
+	private static class RuntimeExceptionProcessCallable
+		implements ProcessCallable<Serializable> {
+
+		@Override
+		public Serializable call() {
+			throw new RuntimeException(
+				RuntimeExceptionProcessCallable.class.getName());
+		}
+
+		@Override
+		public String toString() {
+			Class<?> clazz = getClass();
+
+			return clazz.getSimpleName();
+		}
+
+		private static final long serialVersionUID = 1L;
 
 	}
 

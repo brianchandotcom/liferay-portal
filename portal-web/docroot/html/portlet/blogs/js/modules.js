@@ -14,6 +14,15 @@
 								'aui-io-request',
 								'liferay-portlet-base'
 							]
+						},
+						'liferay-blogs-uploader': {
+							path: 'upload.js',
+							requires: [
+								'aui-base',
+								'aui-progressbar',
+								'liferay-notice',
+								'uploader'
+							]
 						}
 					},
 					root: PATH_PORTLET + '/blogs/js/'

@@ -1000,6 +1000,10 @@
 		<priority value="WARN" />
 	</category>
 
+	<category name="com.liferay.portlet.documentlibrary.messaging">
+		<priority value="WARN" />
+	</category>
+
 	<category name="com.liferay.portlet.documentlibrary.sharepoint">
 		<priority value="WARN" />
 	</category>

@@ -166,7 +166,9 @@ public class JournalContentPortlet extends MVCPortlet {
 
 	@Activate
 	protected void activate() {
-		initLogger(getClass().getClassLoader());
+		Class<? extends MVCPortlet> clazz = getClass();
+
+		initLogger(clazz.getClassLoader());
 	}
 
 	protected void initLogger(ClassLoader classLoader) {

@@ -4,8 +4,8 @@
 
 <style>
 	.portlet-rss .feed-entry-content {
-        margin-bottom: 20px;
-        padding-left: 0;
+		margin-bottom: 20px;
+		padding-left: 0;
 	}
 </style>
 

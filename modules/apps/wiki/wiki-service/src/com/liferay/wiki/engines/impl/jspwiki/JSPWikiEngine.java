@@ -45,9 +45,18 @@ import java.util.regex.Pattern;
 
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Jorge Ferrer
  */
+@Component(
+	service = WikiEngine.class,
+	property = {
+		"enabled=false", "format=creole"
+	}
+)
 public class JSPWikiEngine implements WikiEngine {
 
 	public static String decodeJSPWikiName(String jspWikiName) {
@@ -131,17 +140,25 @@ public class JSPWikiEngine implements WikiEngine {
 	}
 
 	@Override
-	public void setInterWikiConfiguration(String interWikiConfiguration) {
-	}
-
-	@Override
-	public void setMainConfiguration(String mainConfiguration) {
-		setProperties(mainConfiguration);
-	}
-
-	@Override
 	public boolean validate(long nodeId, String newContent) {
 		return true;
+	}
+
+	@Activate
+	protected void activate() throws IOException {
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"com/liferay/wiki/engines/impl/jspwiki/dependencies/jspwiki.properties");
+
+		try {
+			_properties.load(inputStream);
+		}
+		finally {
+			inputStream.close();
+		}
 	}
 
 	protected String convert(com.liferay.wiki.model.WikiPage page)
@@ -301,6 +318,6 @@ public class JSPWikiEngine implements WikiEngine {
 
 	private final Map<Long, LiferayJSPWikiEngine> _engines =
 		new ConcurrentHashMap<>();
-	private Properties _properties;
+	private Properties _properties = new Properties();
 
 }

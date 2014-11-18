@@ -41,6 +41,7 @@
 
 	<command name="deleteRepeatableField">
 		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_fieldNumber" value="${fieldNumber}" />
 
 		<execute action="CPDynamicdatalistsListAddrecord#click" locator-key1="FIELD_DELETE" />
 	</command>
@@ -72,8 +73,6 @@
 		<var name="key_localizedLanguage" value="${localizedLanguage}" />
 
 		<execute action="CPDynamicdatalistsListEditrecord#assertClick" locator-key1="AVAILABLE_TRANSLATION" value1="${localizedLanguage}" />
-
-		<execute action="CPDynamicdatalistsListEditrecordtranslation#selectFrame" locator-key1="RECORD_TRANSLATION_IFRAME" />
 	</command>
 
 	<command name="editViaRecordViewCP">
@@ -107,12 +106,28 @@
 		<if>
 			<equals arg1="${ddlRecordFieldData}" arg2="No" />
 			<then>
-				<execute action="CPDynamicdatalistsListAddrecord#uncheck" locator-key1="BOOLEAN_CHECKBOX" />
+				<if>
+					<equals arg1="${fieldShowLabel}" arg2="No" />
+					<then>
+						<execute action="CPDynamicdatalistsListAddrecord#uncheck" locator-key1="BOOLEAN_LABEL_HIDDEN_CHECKBOX" />
+					</then>
+					<else>
+						<execute action="CPDynamicdatalistsListAddrecord#uncheck" locator-key1="BOOLEAN_CHECKBOX" />
+					</else>
+				</if>
 			</then>
 			<elseif>
 				<equals arg1="${ddlRecordFieldData}" arg2="Yes" />
 				<then>
-					<execute action="CPDynamicdatalistsListAddrecord#check" locator-key1="BOOLEAN_CHECKBOX" />
+					<if>
+						<equals arg1="${fieldShowLabel}" arg2="No" />
+						<then>
+							<execute action="CPDynamicdatalistsListAddrecord#check" locator-key1="BOOLEAN_LABEL_HIDDEN_CHECKBOX" />
+						</then>
+						<else>
+							<execute action="CPDynamicdatalistsListAddrecord#check" locator-key1="BOOLEAN_CHECKBOX" />
+						</else>
+					</if>
 				</then>
 			</elseif>
 			<else>

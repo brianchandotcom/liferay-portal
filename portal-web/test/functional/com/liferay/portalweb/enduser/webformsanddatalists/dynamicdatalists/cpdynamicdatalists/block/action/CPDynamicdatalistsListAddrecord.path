@@ -65,11 +65,16 @@
 </tr>
 <tr>
 	<td>FIELD_DELETE</td>
-	<td>//div[@data-fieldname='${key_fieldName}']/a[contains(@class,'ddm-repeatable-delete-button')]</td>
+	<td>xpath=(//div[@data-fieldname='${key_fieldName}']/a[contains(@class,'ddm-repeatable-delete-button')])[${key_fieldNumber}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BOOLEAN_CHECKBOX</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/label/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOLEAN_LABEL_HIDDEN_CHECKBOX</td>
 	<td>//div[@data-fieldname='${key_fieldName}']/input</td>
 	<td></td>
 </tr>

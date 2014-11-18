@@ -36,8 +36,6 @@ import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.SocialActivityCounterConstants;
 import com.liferay.portlet.social.model.SocialActivityCounterDefinition;
 import com.liferay.portlet.social.util.SocialCounterPeriodUtil;
-import com.liferay.portlet.wiki.model.WikiNode;
-import com.liferay.portlet.wiki.model.WikiPage;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -54,60 +52,69 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	public UpgradeSocial() {
 		putEquityToActivityMap(
-			BlogsEntry.class, ActionKeys.ADD_DISCUSSION,
+			BlogsEntry.class.getName(), ActionKeys.ADD_DISCUSSION,
 			SocialActivityConstants.TYPE_ADD_COMMENT);
-		putEquityToActivityMap(BlogsEntry.class, ActionKeys.ADD_ENTRY, 2);
 		putEquityToActivityMap(
-			BlogsEntry.class, ActionKeys.ADD_VOTE,
+			BlogsEntry.class.getName(), ActionKeys.ADD_ENTRY, 2);
+		putEquityToActivityMap(
+			BlogsEntry.class.getName(), ActionKeys.ADD_VOTE,
 			SocialActivityConstants.TYPE_ADD_VOTE);
 		putEquityToActivityMap(
-			BlogsEntry.class, ActionKeys.SUBSCRIBE,
+			BlogsEntry.class.getName(), ActionKeys.SUBSCRIBE,
 			SocialActivityConstants.TYPE_SUBSCRIBE);
-		putEquityToActivityMap(BlogsEntry.class, ActionKeys.UPDATE, 3);
 		putEquityToActivityMap(
-			BlogsEntry.class, ActionKeys.VIEW,
+			BlogsEntry.class.getName(), ActionKeys.UPDATE, 3);
+		putEquityToActivityMap(
+			BlogsEntry.class.getName(), ActionKeys.VIEW,
 			SocialActivityConstants.TYPE_VIEW);
 
-		putEquityToActivityMap(JournalArticle.class, ActionKeys.ADD_ARTICLE, 1);
 		putEquityToActivityMap(
-			JournalArticle.class, ActionKeys.ADD_DISCUSSION,
+			JournalArticle.class.getName(), ActionKeys.ADD_ARTICLE, 1);
+		putEquityToActivityMap(
+			JournalArticle.class.getName(), ActionKeys.ADD_DISCUSSION,
 			SocialActivityConstants.TYPE_ADD_COMMENT);
-		putEquityToActivityMap(JournalArticle.class, ActionKeys.UPDATE, 2);
 		putEquityToActivityMap(
-			JournalArticle.class, ActionKeys.VIEW,
+			JournalArticle.class.getName(), ActionKeys.UPDATE, 2);
+		putEquityToActivityMap(
+			JournalArticle.class.getName(), ActionKeys.VIEW,
 			SocialActivityConstants.TYPE_VIEW);
 
 		putEquityToActivityMap(
-			MBCategory.class, ActionKeys.SUBSCRIBE,
+			MBCategory.class.getName(), ActionKeys.SUBSCRIBE,
 			SocialActivityConstants.TYPE_SUBSCRIBE);
-		putEquityToActivityMap(MBMessage.class, ActionKeys.ADD_MESSAGE, 1);
 		putEquityToActivityMap(
-			MBMessage.class, ActionKeys.ADD_VOTE,
+			MBMessage.class.getName(), ActionKeys.ADD_MESSAGE, 1);
+		putEquityToActivityMap(
+			MBMessage.class.getName(), ActionKeys.ADD_VOTE,
 			SocialActivityConstants.TYPE_ADD_VOTE);
-		putEquityToActivityMap(MBMessage.class, ActionKeys.REPLY_TO_MESSAGE, 2);
 		putEquityToActivityMap(
-			MBMessage.class, ActionKeys.VIEW,
+			MBMessage.class.getName(), ActionKeys.REPLY_TO_MESSAGE, 2);
+		putEquityToActivityMap(
+			MBMessage.class.getName(), ActionKeys.VIEW,
 			SocialActivityConstants.TYPE_VIEW);
 		putEquityToActivityMap(
-			MBThread.class, ActionKeys.SUBSCRIBE, MBMessage.class,
-			SocialActivityConstants.TYPE_SUBSCRIBE);
+			MBThread.class.getName(), ActionKeys.SUBSCRIBE,
+			MBMessage.class.getName(), SocialActivityConstants.TYPE_SUBSCRIBE);
 
 		putEquityToActivityMap(
-			WikiNode.class, ActionKeys.SUBSCRIBE,
+			"com.liferay.wiki.model.WikiNode", ActionKeys.SUBSCRIBE,
 			SocialActivityConstants.TYPE_SUBSCRIBE);
 		putEquityToActivityMap(
-			WikiPage.class, ActionKeys.ADD_ATTACHMENT,
+			"com.liferay.wiki.model.WikiPage", ActionKeys.ADD_ATTACHMENT,
 			SocialActivityConstants.TYPE_ADD_ATTACHMENT);
 		putEquityToActivityMap(
-			WikiPage.class, ActionKeys.ADD_DISCUSSION,
+			"com.liferay.wiki.model.WikiPage", ActionKeys.ADD_DISCUSSION,
 			SocialActivityConstants.TYPE_ADD_COMMENT);
-		putEquityToActivityMap(WikiPage.class, ActionKeys.ADD_PAGE, 1);
 		putEquityToActivityMap(
-			WikiPage.class, ActionKeys.SUBSCRIBE,
+			"com.liferay.wiki.model.WikiPage", ActionKeys.ADD_PAGE, 1);
+		putEquityToActivityMap(
+			"com.liferay.wiki.model.WikiPage", ActionKeys.SUBSCRIBE,
 			SocialActivityConstants.TYPE_SUBSCRIBE);
-		putEquityToActivityMap(WikiPage.class, ActionKeys.UPDATE, 2);
 		putEquityToActivityMap(
-			WikiPage.class, ActionKeys.VIEW, SocialActivityConstants.TYPE_VIEW);
+			"com.liferay.wiki.model.WikiPage", ActionKeys.UPDATE, 2);
+		putEquityToActivityMap(
+			"com.liferay.wiki.model.WikiPage", ActionKeys.VIEW,
+			SocialActivityConstants.TYPE_VIEW);
 	}
 
 	protected void addActivityCounter(
@@ -720,7 +727,7 @@ public class UpgradeSocial extends UpgradeProcess {
 	}
 
 	protected void putEquityToActivityMap(
-		Class<?> equityClass, String equityActionId, Class<?> activityClass,
+		String equityClass, String equityActionId, String activityClass,
 		int activityType) {
 
 		long equityClassNameId = PortalUtil.getClassNameId(equityClass);
@@ -732,7 +739,7 @@ public class UpgradeSocial extends UpgradeProcess {
 	}
 
 	protected void putEquityToActivityMap(
-		Class<?> equityClass, String equityActionId, int activityType) {
+		String equityClass, String equityActionId, int activityType) {
 
 		putEquityToActivityMap(
 			equityClass, equityActionId, equityClass, activityType);

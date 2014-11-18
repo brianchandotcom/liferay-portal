@@ -31,14 +31,15 @@ import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 
-import net.htmlparser.jericho.Source;
-import net.htmlparser.jericho.StartTag;
-
-import javax.portlet.PortletURL;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.portlet.PortletURL;
+
+import net.htmlparser.jericho.Source;
+import net.htmlparser.jericho.StartTag;
 
 import org.osgi.service.component.annotations.Component;
 

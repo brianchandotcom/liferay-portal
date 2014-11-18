@@ -143,6 +143,9 @@ public abstract class BaseImageSelectorAction extends PortletAction {
 
 			imageJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
 
+			imageJSONObject.put("randomId", uploadPortletRequest.getParameter(
+				"randomId"));
+
 			imageJSONObject.put(
 				"url",
 				PortletFileRepositoryUtil.getPortletFileEntryURL(

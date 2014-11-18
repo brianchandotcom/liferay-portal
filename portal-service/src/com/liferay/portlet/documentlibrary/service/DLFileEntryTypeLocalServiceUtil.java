@@ -288,10 +288,10 @@ public class DLFileEntryTypeLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
@@ -299,11 +299,11 @@ public class DLFileEntryTypeLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
@@ -427,12 +427,29 @@ public class DLFileEntryTypeLocalServiceUtil {
 		return getService().getDLFileEntryTypes(start, end);
 	}
 
+	/**
+	* Returns all the document library file entry types matching the UUID and company.
+	*
+	* @param uuid the UUID of the document library file entry types
+	* @param companyId the primary key of the company
+	* @return the matching document library file entry types, or an empty list if no matches were found
+	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDLFileEntryTypesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId) {
 		return getService()
 				   .getDLFileEntryTypesByUuidAndCompanyId(uuid, companyId);
 	}
 
+	/**
+	* Returns a range of document library file entry types matching the UUID and company.
+	*
+	* @param uuid the UUID of the document library file entry types
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of document library file entry types
+	* @param end the upper bound of the range of document library file entry types (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching document library file entry types, or an empty list if no matches were found
+	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDLFileEntryTypesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator) {

@@ -293,19 +293,20 @@ public interface SCFrameworkVersionModel extends BaseModel<SCFrameworkVersion>,
 	public Object clone();
 
 	@Override
-	public int compareTo(SCFrameworkVersion scFrameworkVersion);
+	public int compareTo(
+		com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion scFrameworkVersion);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<SCFrameworkVersion> toCacheModel();
+	public CacheModel<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> toCacheModel();
 
 	@Override
-	public SCFrameworkVersion toEscapedModel();
+	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion toEscapedModel();
 
 	@Override
-	public SCFrameworkVersion toUnescapedModel();
+	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion toUnescapedModel();
 
 	@Override
 	public String toString();

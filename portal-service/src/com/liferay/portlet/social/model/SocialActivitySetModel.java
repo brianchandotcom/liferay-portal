@@ -280,19 +280,20 @@ public interface SocialActivitySetModel extends AttachedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(SocialActivitySet socialActivitySet);
+	public int compareTo(
+		com.liferay.portlet.social.model.SocialActivitySet socialActivitySet);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<SocialActivitySet> toCacheModel();
+	public CacheModel<com.liferay.portlet.social.model.SocialActivitySet> toCacheModel();
 
 	@Override
-	public SocialActivitySet toEscapedModel();
+	public com.liferay.portlet.social.model.SocialActivitySet toEscapedModel();
 
 	@Override
-	public SocialActivitySet toUnescapedModel();
+	public com.liferay.portlet.social.model.SocialActivitySet toUnescapedModel();
 
 	@Override
 	public String toString();

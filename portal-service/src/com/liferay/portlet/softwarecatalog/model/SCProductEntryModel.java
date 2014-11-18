@@ -363,19 +363,20 @@ public interface SCProductEntryModel extends BaseModel<SCProductEntry>,
 	public Object clone();
 
 	@Override
-	public int compareTo(SCProductEntry scProductEntry);
+	public int compareTo(
+		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<SCProductEntry> toCacheModel();
+	public CacheModel<com.liferay.portlet.softwarecatalog.model.SCProductEntry> toCacheModel();
 
 	@Override
-	public SCProductEntry toEscapedModel();
+	public com.liferay.portlet.softwarecatalog.model.SCProductEntry toEscapedModel();
 
 	@Override
-	public SCProductEntry toUnescapedModel();
+	public com.liferay.portlet.softwarecatalog.model.SCProductEntry toUnescapedModel();
 
 	@Override
 	public String toString();

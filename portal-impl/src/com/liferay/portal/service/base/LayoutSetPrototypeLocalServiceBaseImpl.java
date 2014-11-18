@@ -195,10 +195,10 @@ public abstract class LayoutSetPrototypeLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
+	 * Returns the number of rows matching the dynamic query.
 	 *
 	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows that match the dynamic query
+	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
@@ -206,11 +206,11 @@ public abstract class LayoutSetPrototypeLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
+	 * Returns the number of rows matching the dynamic query.
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
-	 * @return the number of rows that match the dynamic query
+	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
@@ -228,7 +228,7 @@ public abstract class LayoutSetPrototypeLocalServiceBaseImpl
 	 * Returns the layout set prototype with the matching UUID and company.
 	 *
 	 * @param uuid the layout set prototype's UUID
-	 * @param  companyId the primary key of the company
+	 * @param companyId the primary key of the company
 	 * @return the matching layout set prototype, or <code>null</code> if a matching layout set prototype could not be found
 	 */
 	@Override
@@ -345,7 +345,7 @@ public abstract class LayoutSetPrototypeLocalServiceBaseImpl
 	 * Returns the layout set prototype with the matching UUID and company.
 	 *
 	 * @param uuid the layout set prototype's UUID
-	 * @param  companyId the primary key of the company
+	 * @param companyId the primary key of the company
 	 * @return the matching layout set prototype
 	 * @throws PortalException if a matching layout set prototype could not be found
 	 */

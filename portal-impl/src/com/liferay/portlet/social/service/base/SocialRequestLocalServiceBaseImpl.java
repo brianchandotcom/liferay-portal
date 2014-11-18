@@ -182,10 +182,10 @@ public abstract class SocialRequestLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
+	 * Returns the number of rows matching the dynamic query.
 	 *
 	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows that match the dynamic query
+	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
@@ -193,11 +193,11 @@ public abstract class SocialRequestLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
+	 * Returns the number of rows matching the dynamic query.
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
-	 * @return the number of rows that match the dynamic query
+	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
@@ -274,12 +274,29 @@ public abstract class SocialRequestLocalServiceBaseImpl
 		return socialRequestPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
+	/**
+	 * Returns all the social requests matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the social requests
+	 * @param companyId the primary key of the company
+	 * @return the matching social requests, or an empty list if no matches were found
+	 */
 	@Override
 	public List<SocialRequest> getSocialRequestsByUuidAndCompanyId(
 		String uuid, long companyId) {
 		return socialRequestPersistence.findByUuid_C(uuid, companyId);
 	}
 
+	/**
+	 * Returns a range of social requests matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the social requests
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of social requests
+	 * @param end the upper bound of the range of social requests (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching social requests, or an empty list if no matches were found
+	 */
 	@Override
 	public List<SocialRequest> getSocialRequestsByUuidAndCompanyId(
 		String uuid, long companyId, int start, int end,

@@ -196,19 +196,20 @@ public interface SocialRelationModel extends BaseModel<SocialRelation> {
 	public Object clone();
 
 	@Override
-	public int compareTo(SocialRelation socialRelation);
+	public int compareTo(
+		com.liferay.portlet.social.model.SocialRelation socialRelation);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<SocialRelation> toCacheModel();
+	public CacheModel<com.liferay.portlet.social.model.SocialRelation> toCacheModel();
 
 	@Override
-	public SocialRelation toEscapedModel();
+	public com.liferay.portlet.social.model.SocialRelation toEscapedModel();
 
 	@Override
-	public SocialRelation toUnescapedModel();
+	public com.liferay.portlet.social.model.SocialRelation toUnescapedModel();
 
 	@Override
 	public String toString();

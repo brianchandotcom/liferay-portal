@@ -533,19 +533,19 @@ public interface WikiNodeModel extends BaseModel<WikiNode>, ContainerModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(WikiNode wikiNode);
+	public int compareTo(com.liferay.portlet.wiki.model.WikiNode wikiNode);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<WikiNode> toCacheModel();
+	public CacheModel<com.liferay.portlet.wiki.model.WikiNode> toCacheModel();
 
 	@Override
-	public WikiNode toEscapedModel();
+	public com.liferay.portlet.wiki.model.WikiNode toEscapedModel();
 
 	@Override
-	public WikiNode toUnescapedModel();
+	public com.liferay.portlet.wiki.model.WikiNode toUnescapedModel();
 
 	@Override
 	public String toString();

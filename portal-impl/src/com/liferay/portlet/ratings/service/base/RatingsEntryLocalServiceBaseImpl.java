@@ -201,10 +201,10 @@ public abstract class RatingsEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
+	 * Returns the number of rows matching the dynamic query.
 	 *
 	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows that match the dynamic query
+	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
@@ -212,11 +212,11 @@ public abstract class RatingsEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
+	 * Returns the number of rows matching the dynamic query.
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
-	 * @return the number of rows that match the dynamic query
+	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
@@ -234,7 +234,7 @@ public abstract class RatingsEntryLocalServiceBaseImpl
 	 * Returns the ratings entry with the matching UUID and company.
 	 *
 	 * @param uuid the ratings entry's UUID
-	 * @param  companyId the primary key of the company
+	 * @param companyId the primary key of the company
 	 * @return the matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	 */
 	@Override
@@ -359,7 +359,7 @@ public abstract class RatingsEntryLocalServiceBaseImpl
 	 * Returns the ratings entry with the matching UUID and company.
 	 *
 	 * @param uuid the ratings entry's UUID
-	 * @param  companyId the primary key of the company
+	 * @param companyId the primary key of the company
 	 * @return the matching ratings entry
 	 * @throws PortalException if a matching ratings entry could not be found
 	 */

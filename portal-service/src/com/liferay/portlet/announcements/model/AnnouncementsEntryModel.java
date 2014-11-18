@@ -395,19 +395,20 @@ public interface AnnouncementsEntryModel extends AttachedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(AnnouncementsEntry announcementsEntry);
+	public int compareTo(
+		com.liferay.portlet.announcements.model.AnnouncementsEntry announcementsEntry);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<AnnouncementsEntry> toCacheModel();
+	public CacheModel<com.liferay.portlet.announcements.model.AnnouncementsEntry> toCacheModel();
 
 	@Override
-	public AnnouncementsEntry toEscapedModel();
+	public com.liferay.portlet.announcements.model.AnnouncementsEntry toEscapedModel();
 
 	@Override
-	public AnnouncementsEntry toUnescapedModel();
+	public com.liferay.portlet.announcements.model.AnnouncementsEntry toUnescapedModel();
 
 	@Override
 	public String toString();

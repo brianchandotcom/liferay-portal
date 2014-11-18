@@ -17,7 +17,7 @@ package com.liferay.portlet.messageboards.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 /**
- * @author Brian Wing Shun Chan
+ * @generated
  */
 @ProviderType
 public interface MBMessageFinder {

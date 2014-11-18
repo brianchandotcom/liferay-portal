@@ -189,10 +189,10 @@ public abstract class MDRActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
+	 * Returns the number of rows matching the dynamic query.
 	 *
 	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows that match the dynamic query
+	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
@@ -200,11 +200,11 @@ public abstract class MDRActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
+	 * Returns the number of rows matching the dynamic query.
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
-	 * @return the number of rows that match the dynamic query
+	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
@@ -344,12 +344,29 @@ public abstract class MDRActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 		return mdrActionPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
+	/**
+	 * Returns all the m d r actions matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the m d r actions
+	 * @param companyId the primary key of the company
+	 * @return the matching m d r actions, or an empty list if no matches were found
+	 */
 	@Override
 	public List<MDRAction> getMDRActionsByUuidAndCompanyId(String uuid,
 		long companyId) {
 		return mdrActionPersistence.findByUuid_C(uuid, companyId);
 	}
 
+	/**
+	 * Returns a range of m d r actions matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the m d r actions
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of m d r actions
+	 * @param end the upper bound of the range of m d r actions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching m d r actions, or an empty list if no matches were found
+	 */
 	@Override
 	public List<MDRAction> getMDRActionsByUuidAndCompanyId(String uuid,
 		long companyId, int start, int end,

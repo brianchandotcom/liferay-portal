@@ -669,19 +669,19 @@ public interface WikiPageModel extends BaseModel<WikiPage>, ContainerModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(WikiPage wikiPage);
+	public int compareTo(com.liferay.portlet.wiki.model.WikiPage wikiPage);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<WikiPage> toCacheModel();
+	public CacheModel<com.liferay.portlet.wiki.model.WikiPage> toCacheModel();
 
 	@Override
-	public WikiPage toEscapedModel();
+	public com.liferay.portlet.wiki.model.WikiPage toEscapedModel();
 
 	@Override
-	public WikiPage toUnescapedModel();
+	public com.liferay.portlet.wiki.model.WikiPage toUnescapedModel();
 
 	@Override
 	public String toString();

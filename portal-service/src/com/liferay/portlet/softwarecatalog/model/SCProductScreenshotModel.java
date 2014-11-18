@@ -194,19 +194,20 @@ public interface SCProductScreenshotModel extends BaseModel<SCProductScreenshot>
 	public Object clone();
 
 	@Override
-	public int compareTo(SCProductScreenshot scProductScreenshot);
+	public int compareTo(
+		com.liferay.portlet.softwarecatalog.model.SCProductScreenshot scProductScreenshot);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<SCProductScreenshot> toCacheModel();
+	public CacheModel<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> toCacheModel();
 
 	@Override
-	public SCProductScreenshot toEscapedModel();
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot toEscapedModel();
 
 	@Override
-	public SCProductScreenshot toUnescapedModel();
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot toUnescapedModel();
 
 	@Override
 	public String toString();

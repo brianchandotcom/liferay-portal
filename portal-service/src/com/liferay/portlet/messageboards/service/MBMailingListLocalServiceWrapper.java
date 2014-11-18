@@ -191,10 +191,10 @@ public class MBMailingListLocalServiceWrapper
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
 	public long dynamicQueryCount(
@@ -203,11 +203,11 @@ public class MBMailingListLocalServiceWrapper
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
 	public long dynamicQueryCount(
@@ -313,6 +313,13 @@ public class MBMailingListLocalServiceWrapper
 		return _mbMailingListLocalService.getMBMailingLists(start, end);
 	}
 
+	/**
+	* Returns all the message boards mailing lists matching the UUID and company.
+	*
+	* @param uuid the UUID of the message boards mailing lists
+	* @param companyId the primary key of the company
+	* @return the matching message boards mailing lists, or an empty list if no matches were found
+	*/
 	@Override
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> getMBMailingListsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId) {
@@ -320,6 +327,16 @@ public class MBMailingListLocalServiceWrapper
 			companyId);
 	}
 
+	/**
+	* Returns a range of message boards mailing lists matching the UUID and company.
+	*
+	* @param uuid the UUID of the message boards mailing lists
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of message boards mailing lists
+	* @param end the upper bound of the range of message boards mailing lists (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching message boards mailing lists, or an empty list if no matches were found
+	*/
 	@Override
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> getMBMailingListsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,

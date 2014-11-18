@@ -17,7 +17,7 @@ package com.liferay.portlet.mobiledevicerules.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 /**
- * @author Edward C. Han
+ * @generated
  */
 @ProviderType
 public interface MDRRuleGroupFinder {

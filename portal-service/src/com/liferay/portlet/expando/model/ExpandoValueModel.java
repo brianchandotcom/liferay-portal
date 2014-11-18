@@ -223,19 +223,20 @@ public interface ExpandoValueModel extends AttachedModel, BaseModel<ExpandoValue
 	public Object clone();
 
 	@Override
-	public int compareTo(ExpandoValue expandoValue);
+	public int compareTo(
+		com.liferay.portlet.expando.model.ExpandoValue expandoValue);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<ExpandoValue> toCacheModel();
+	public CacheModel<com.liferay.portlet.expando.model.ExpandoValue> toCacheModel();
 
 	@Override
-	public ExpandoValue toEscapedModel();
+	public com.liferay.portlet.expando.model.ExpandoValue toEscapedModel();
 
 	@Override
-	public ExpandoValue toUnescapedModel();
+	public com.liferay.portlet.expando.model.ExpandoValue toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -161,10 +161,10 @@ public class RepositoryEntryLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
@@ -172,11 +172,11 @@ public class RepositoryEntryLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
@@ -246,12 +246,29 @@ public class RepositoryEntryLocalServiceUtil {
 		return getService().getRepositoryEntries(start, end);
 	}
 
+	/**
+	* Returns all the repository entries matching the UUID and company.
+	*
+	* @param uuid the UUID of the repository entries
+	* @param companyId the primary key of the company
+	* @return the matching repository entries, or an empty list if no matches were found
+	*/
 	public static java.util.List<com.liferay.portal.model.RepositoryEntry> getRepositoryEntriesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId) {
 		return getService()
 				   .getRepositoryEntriesByUuidAndCompanyId(uuid, companyId);
 	}
 
+	/**
+	* Returns a range of repository entries matching the UUID and company.
+	*
+	* @param uuid the UUID of the repository entries
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of repository entries
+	* @param end the upper bound of the range of repository entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching repository entries, or an empty list if no matches were found
+	*/
 	public static java.util.List<com.liferay.portal.model.RepositoryEntry> getRepositoryEntriesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator) {

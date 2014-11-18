@@ -19,13 +19,19 @@ import com.liferay.portal.fabric.netty.agent.NettyFabricAgentConfig;
 import com.liferay.portal.fabric.netty.codec.serialization.AnnotatedObjectDecoder;
 import com.liferay.portal.fabric.netty.codec.serialization.AnnotatedObjectEncoder;
 import com.liferay.portal.fabric.netty.fileserver.handlers.FileRequestChannelHandler;
+import com.liferay.portal.fabric.netty.handlers.NettyChannelAttributes;
 import com.liferay.portal.fabric.netty.handlers.NettyFabricWorkerExecutionChannelHandler;
 import com.liferay.portal.fabric.netty.repository.NettyRepository;
 import com.liferay.portal.fabric.netty.rpc.handlers.NettyRPCChannelHandler;
 import com.liferay.portal.fabric.repository.Repository;
+import com.liferay.portal.fabric.worker.FabricWorker;
+import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutor;
+import com.liferay.portal.kernel.process.TerminationProcessException;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
 
 import io.netty.bootstrap.Bootstrap;
@@ -45,12 +51,16 @@ import io.netty.util.concurrent.DefaultEventExecutorGroup;
 import io.netty.util.concurrent.EventExecutorGroup;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import java.util.Map;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -161,6 +171,8 @@ public class NettyFabricClient implements FabricClient {
 			channelFuture.sync();
 		}
 		finally {
+			terminateFabricWorkers(_channel);
+
 			disposeRepository(_channel);
 
 			EventLoop eventLoop = _channel.eventLoop();
@@ -287,6 +299,63 @@ public class NettyFabricClient implements FabricClient {
 		}
 	}
 
+	protected void terminateFabricWorkers(Channel channel) {
+		Map<Long, FabricWorker<?>> fabricWorkers =
+			NettyChannelAttributes.getFabricWorkers(channel);
+
+		if (fabricWorkers == null) {
+			return;
+		}
+
+		for (Map.Entry<Long, FabricWorker<?>> entry :
+				fabricWorkers.entrySet()) {
+
+			FabricWorker<?> fabricWorker = entry.getValue();
+
+			fabricWorker.write(_runtimeExitProcessCallable);
+
+			NoticeableFuture<?> noticeableFuture =
+				fabricWorker.getProcessNoticeableFuture();
+
+			try {
+				try {
+					noticeableFuture.get(
+						_nettyFabricClientConfig.getExecutionTimeout(),
+						TimeUnit.MILLISECONDS);
+				}
+				catch (TimeoutException te) {
+					fabricWorker.write(_runtimeHaltProcessCallable);
+
+					noticeableFuture.get(
+						_nettyFabricClientConfig.getExecutionTimeout(),
+						TimeUnit.MILLISECONDS);
+				}
+			}
+			catch (Throwable t) {
+				if (t instanceof ExecutionException) {
+					Throwable cause = t.getCause();
+
+					if (cause instanceof TerminationProcessException) {
+						TerminationProcessException tpe =
+							(TerminationProcessException)cause;
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Forcibly terminate fabric worker: " +
+									entry.getKey() + ", with exit code :" +
+										tpe.getExitCode());
+						}
+
+						continue;
+					}
+				}
+
+				_log.error(
+					"Unable to terminate fabric worker: " + entry.getKey(), t);
+			}
+		}
+	}
+
 	protected class NettyFabricClientChannelInitializer
 		extends ChannelInitializer<SocketChannel> {
 
@@ -398,6 +467,8 @@ public class NettyFabricClient implements FabricClient {
 
 	}
 
+	private static final int _FABRIC_AGENT_SHUTDOWN_CODE = 211;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		NettyFabricClient.class);
 
@@ -412,6 +483,38 @@ public class NettyFabricClient implements FabricClient {
 	private static final AttributeKey<EventExecutorGroup>
 		_rpcEventExecutorGroupAttributeKey = AttributeKey.valueOf(
 			"RPCEventExecutorGroup");
+
+	private static final ProcessCallable<Serializable>
+		_runtimeExitProcessCallable = new ProcessCallable<Serializable>() {
+
+			@Override
+			public Serializable call() throws ProcessException {
+				Runtime runtime = Runtime.getRuntime();
+
+				runtime.exit(_FABRIC_AGENT_SHUTDOWN_CODE);
+
+				return null;
+			}
+
+			private static final long serialVersionUID = 1L;
+
+		};
+
+	private static final ProcessCallable<Serializable>
+		_runtimeHaltProcessCallable = new ProcessCallable<Serializable>() {
+
+			@Override
+			public Serializable call() throws ProcessException {
+				Runtime runtime = Runtime.getRuntime();
+
+				runtime.halt(_FABRIC_AGENT_SHUTDOWN_CODE);
+
+				return null;
+			}
+
+			private static final long serialVersionUID = 1L;
+
+		};
 
 	private Bootstrap _bootstrap;
 	private volatile Channel _channel;

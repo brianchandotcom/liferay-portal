@@ -62,16 +62,20 @@ public class NettyChannelAttributes {
 	public static <T extends Serializable> FabricWorker<T> getFabricWorker(
 		Channel channel, long id) {
 
-		Attribute<Map<Long, FabricWorker<?>>> attribute = channel.attr(
-			_fabricWorkersKey);
-
-		Map<Long, FabricWorker<?>> fabricWorkers = attribute.get();
+		Map<Long, FabricWorker<?>> fabricWorkers = getFabricWorkers(channel);
 
 		if (fabricWorkers == null) {
 			return null;
 		}
 
 		return (FabricWorker<T>)fabricWorkers.get(id);
+	}
+
+	public static Map<Long, FabricWorker<?>> getFabricWorkers(Channel channel) {
+		Attribute<Map<Long, FabricWorker<?>>> attribute = channel.attr(
+			_fabricWorkersKey);
+
+		return attribute.get();
 	}
 
 	public static NettyFabricAgentStub getNettyFabricAgentStub(

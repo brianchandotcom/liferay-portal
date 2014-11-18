@@ -149,7 +149,7 @@ public class EditRecordAction extends PortletAction {
 
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
-		return ddmStructure.getDDMForm();
+		return ddmStructure.getFullHierarchyDDMForm();
 	}
 
 	protected DDMFormValues getDDMFormValues(ActionRequest actionRequest)

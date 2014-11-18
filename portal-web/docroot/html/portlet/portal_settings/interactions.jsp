@@ -177,46 +177,45 @@ for (Portlet portlet : portlets) {
 	</liferay-ui:tabs>
 </c:if>
 
-<aui:script use="aui-base,liferay-util-list-fields">
-	Liferay.Util.toggleBoxes('<portlet:namespace />socialInteractionsSocialRelationTypesEnabled','<portlet:namespace />socialRelations');
+<aui:script sandbox="<%= true %>">
+	var Util = Liferay.Util;
 
-	Liferay.Util.toggleRadio('<portlet:namespace />socialInteractionsAnyUser', '', '<portlet:namespace />socialInteractionsUsersWrapper');
-	Liferay.Util.toggleRadio('<portlet:namespace />socialInteractionsChooseUsers', '<portlet:namespace />socialInteractionsUsersWrapper', '');
+	Util.toggleBoxes('<portlet:namespace />socialInteractionsSocialRelationTypesEnabled','<portlet:namespace />socialRelations');
+
+	Util.toggleRadio('<portlet:namespace />socialInteractionsAnyUser', '', '<portlet:namespace />socialInteractionsUsersWrapper');
+	Util.toggleRadio('<portlet:namespace />socialInteractionsChooseUsers', '<portlet:namespace />socialInteractionsUsersWrapper', '');
 
 	<%
 	for (Portlet socialInteractionsConfigurationPortlet : socialInteractionsConfigurationPortlets) {
 	%>
 
-		Liferay.Util.toggleBoxes('<%= renderResponse.getNamespace() + "socialInteractionsSocialRelationTypesEnabled" + socialInteractionsConfigurationPortlet.getPortletId() + "Checkbox" %>','<%= renderResponse.getNamespace() + "socialRelations" + socialInteractionsConfigurationPortlet.getPortletId() %>');
+		Util.toggleBoxes('<%= renderResponse.getNamespace() + "socialInteractionsSocialRelationTypesEnabled" + socialInteractionsConfigurationPortlet.getPortletId() + "Checkbox" %>','<%= renderResponse.getNamespace() + "socialRelations" + socialInteractionsConfigurationPortlet.getPortletId() %>');
 
-		Liferay.Util.toggleRadio('<%= renderResponse.getNamespace() + "inheritSocialInteractionsConfiguration" + socialInteractionsConfigurationPortlet.getPortletId() %>', '', '<%= renderResponse.getNamespace() + "socialInteractionsUsersWrapper" + socialInteractionsConfigurationPortlet.getPortletId() %>');
-		Liferay.Util.toggleRadio('<%= renderResponse.getNamespace() + "socialInteractionsAnyUser" + socialInteractionsConfigurationPortlet.getPortletId() %>', '', '<%= renderResponse.getNamespace() + "socialInteractionsUsersWrapper" + socialInteractionsConfigurationPortlet.getPortletId() %>');
-		Liferay.Util.toggleRadio('<%= renderResponse.getNamespace() + "socialInteractionsChooseUsers" + socialInteractionsConfigurationPortlet.getPortletId() %>', '<%= renderResponse.getNamespace() + "socialInteractionsUsersWrapper" + socialInteractionsConfigurationPortlet.getPortletId() %>', '');
+		Util.toggleRadio('<%= renderResponse.getNamespace() + "inheritSocialInteractionsConfiguration" + socialInteractionsConfigurationPortlet.getPortletId() %>', '', '<%= renderResponse.getNamespace() + "socialInteractionsUsersWrapper" + socialInteractionsConfigurationPortlet.getPortletId() %>');
+		Util.toggleRadio('<%= renderResponse.getNamespace() + "socialInteractionsAnyUser" + socialInteractionsConfigurationPortlet.getPortletId() %>', '', '<%= renderResponse.getNamespace() + "socialInteractionsUsersWrapper" + socialInteractionsConfigurationPortlet.getPortletId() %>');
+		Util.toggleRadio('<%= renderResponse.getNamespace() + "socialInteractionsChooseUsers" + socialInteractionsConfigurationPortlet.getPortletId() %>', '<%= renderResponse.getNamespace() + "socialInteractionsUsersWrapper" + socialInteractionsConfigurationPortlet.getPortletId() %>', '');
 
 	<%
 	}
 	%>
 
-	var form = A.one('#<portlet:namespace />fm');
+	var form = $(document.<portlet:namespace />fm);
 
 	form.on(
 		'submit',
-		function(e) {
-			var socialInteractionsSocialRelationTypesInputName = '<portlet:namespace />settings--socialInteractionsSocialRelationTypes--';
-
-			document.<portlet:namespace />fm[socialInteractionsSocialRelationTypesInputName].value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentSocialInteractionsSocialRelationTypes);
+		function() {
+			form.fm('settings--socialInteractionsSocialRelationTypes--').val(Util.listSelect(form.fm('currentSocialInteractionsSocialRelationTypes')));
 
 			<%
 			for (Portlet socialInteractionsConfigurationPortlet : socialInteractionsConfigurationPortlets) {
 			%>
 
-				socialInteractionsSocialRelationTypesInputName = '<portlet:namespace />settings--socialInteractionsSocialRelationTypes<%= socialInteractionsConfigurationPortlet.getPortletId() %>--';
-
-				document.<portlet:namespace />fm[socialInteractionsSocialRelationTypesInputName].value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentSocialInteractionsSocialRelationTypes<%= socialInteractionsConfigurationPortlet.getPortletId() %>);
+				form.fm('settings--socialInteractionsSocialRelationTypes<%= socialInteractionsConfigurationPortlet.getPortletId() %>--').val(Util.listSelect(form.fm('currentSocialInteractionsSocialRelationTypes<%= socialInteractionsConfigurationPortlet.getPortletId() %>')));
 
 			<%
 			}
 			%>
 
-		});
+		}
+	);
 </aui:script>

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -256,6 +257,9 @@ public class NewEnvMethodRule implements MethodRule {
 			ClassLoader contextClassLoader =
 				currentThread.getContextClassLoader();
 
+			System.setProperty(
+				SystemProperties.SYSTEM_PROPERTIES_QUIET, StringPool.TRUE);
+
 			try {
 				Class<?> clazz = contextClassLoader.loadClass(_testClassName);
 
@@ -324,6 +328,12 @@ public class NewEnvMethodRule implements MethodRule {
 
 			currentThread.setContextClassLoader(_newClassLoader);
 
+			String quiet = System.getProperty(
+				SystemProperties.SYSTEM_PROPERTIES_QUIET);
+
+			System.setProperty(
+				SystemProperties.SYSTEM_PROPERTIES_QUIET, StringPool.TRUE);
+
 			try {
 				Class<?> clazz = _newClassLoader.loadClass(_testClassName);
 
@@ -343,6 +353,15 @@ public class NewEnvMethodRule implements MethodRule {
 				throw ite.getTargetException();
 			}
 			finally {
+				if (quiet == null) {
+					System.clearProperty(
+						SystemProperties.SYSTEM_PROPERTIES_QUIET);
+				}
+				else {
+					System.setProperty(
+						SystemProperties.SYSTEM_PROPERTIES_QUIET, quiet);
+				}
+
 				currentThread.setContextClassLoader(contextClassLoader);
 			}
 		}

@@ -1941,15 +1941,15 @@ public class DLAppHelperLocalServiceImpl
 		subscriptionSender.setUserId(fileVersion.getUserId());
 
 		subscriptionSender.addPersistedSubscribers(
-			Folder.class.getName(), fileVersion.getGroupId());
+			DLFolder.class.getName(), fileVersion.getGroupId());
 
 		if (folder != null) {
 			subscriptionSender.addPersistedSubscribers(
-				Folder.class.getName(), folder.getFolderId());
+				DLFolder.class.getName(), folder.getFolderId());
 
 			for (Long ancestorFolderId : folder.getAncestorFolderIds()) {
 				subscriptionSender.addPersistedSubscribers(
-					Folder.class.getName(), ancestorFolderId);
+					DLFolder.class.getName(), ancestorFolderId);
 			}
 		}
 

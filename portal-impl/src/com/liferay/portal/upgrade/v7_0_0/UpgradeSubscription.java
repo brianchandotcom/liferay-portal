@@ -14,25 +14,39 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
 
 /**
  * @author Eduardo Garcia
+ * @author Roberto Díaz
  */
 public class UpgradeSubscription extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		updateSubscriptionClassNames(
+			DLFolder.class.getName(), Folder.class.getName());
+
+		updateSubscriptionClassNames(
+			JournalFolder.class.getName(), JournalArticle.class.getName());
+	}
+
+	protected void updateSubscriptionClassNames(
+			String newClassName, String oldClassName)
+		throws Exception {
+
 		StringBundler sb = new StringBundler(4);
 
 		sb.append("update Subscription set classNameId = ");
-		sb.append(PortalUtil.getClassNameId(JournalFolder.class));
+		sb.append(PortalUtil.getClassNameId(newClassName));
 		sb.append(" where classNameId = ");
-		sb.append(PortalUtil.getClassNameId(JournalArticle.class));
+		sb.append(PortalUtil.getClassNameId(oldClassName));
 
 		runSQL(sb.toString());
 	}

@@ -4,14 +4,6 @@
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 
-		<execute macro="Marketplace#downloadAndInstallApp">
-			<var name="appName" value="Audience Targeting" />
-		</execute>
-
-		<execute macro="Portlet#shutdownServer" />
-
-		<execute macro="Portlet#startServer" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

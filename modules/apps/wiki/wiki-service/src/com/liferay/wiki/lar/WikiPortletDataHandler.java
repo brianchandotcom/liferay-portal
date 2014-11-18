@@ -36,9 +36,10 @@ import com.liferay.wiki.util.WikiCacheThreadLocal;
 import com.liferay.wiki.util.WikiCacheUtil;
 import com.liferay.wiki.util.WikiConstants;
 
-import javax.portlet.PortletPreferences;
 import java.util.List;
 import java.util.Map;
+
+import javax.portlet.PortletPreferences;
 
 /**
  * @author Bruno Farache

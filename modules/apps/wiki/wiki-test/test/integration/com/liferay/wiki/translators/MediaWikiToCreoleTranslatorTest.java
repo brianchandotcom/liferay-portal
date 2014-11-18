@@ -15,7 +15,7 @@
 package com.liferay.wiki.translators;
 
 import com.liferay.portal.test.LiferayIntegrationTestRule;
-import com.liferay.wiki.translators.MediaWikiToCreoleTranslator;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;

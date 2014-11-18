@@ -95,7 +95,7 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 
 			if (password1.length() < passwordPolicy.getMinLength()) {
 				throw new UserPasswordException.MustBeLonger(
-					userId, passwordPolicy.getMinLength());
+					passwordPolicy.getMinLength(), userId);
 			}
 
 			if ((getUsageCount(password1, _alphanumericCharsetArray) <
@@ -116,7 +116,7 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 
 			if (Validator.isNotNull(regex) && !password1.matches(regex)) {
 				throw new UserPasswordException.MustComplyWithRegex(
-					userId, regex);
+					regex, userId);
 			}
 		}
 

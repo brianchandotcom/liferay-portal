@@ -4827,7 +4827,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 
 			throw new UserPasswordException.MustComplyWithListeners(
-				userId, mle);
+				mle, userId);
 		}
 
 		if (!silentUpdate) {

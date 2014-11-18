@@ -55,7 +55,7 @@ public class RegExpToolkit extends BasicToolkit {
 			}
 
 			throw new UserPasswordException.MustComplyWithRegex(
-				userId, _pattern);
+				_pattern, userId);
 		}
 	}
 

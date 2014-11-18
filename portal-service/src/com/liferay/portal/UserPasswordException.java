@@ -71,7 +71,7 @@ public class UserPasswordException extends PortalException {
 
 	public static class MustBeLonger extends UserPasswordException {
 
-		public MustBeLonger(long userId, int minLength) {
+		public MustBeLonger(int minLength, long userId) {
 			super(
 				String.format(
 					"Password for user %s must be at least %s characters",
@@ -98,7 +98,7 @@ public class UserPasswordException extends PortalException {
 	public static class MustComplyWithListeners extends UserPasswordException {
 
 		public MustComplyWithListeners(
-			long userId, ModelListenerException modelListenerException) {
+			ModelListenerException modelListenerException, long userId) {
 
 			super(
 				String.format(
@@ -125,7 +125,7 @@ public class UserPasswordException extends PortalException {
 
 	public static class MustComplyWithRegex extends UserPasswordException {
 
-		public MustComplyWithRegex(long userId, String regex) {
+		public MustComplyWithRegex(String regex, long userId) {
 			super(
 				String.format("Password must comply with regex: " + regex),
 				PASSWORD_INVALID);

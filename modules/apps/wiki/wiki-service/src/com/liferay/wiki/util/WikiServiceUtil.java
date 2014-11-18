@@ -55,6 +55,7 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.wiki.configuration.WikiPropsKeys;
 import com.liferay.wiki.engines.WikiEngine;
+import com.liferay.wiki.engines.impl.WikiEngineTracker;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.exception.WikiFormatException;
 import com.liferay.wiki.model.WikiNode;
@@ -65,11 +66,15 @@ import com.liferay.wiki.service.permission.WikiNodePermission;
 import com.liferay.wiki.util.comparator.PageCreateDateComparator;
 import com.liferay.wiki.util.comparator.PageTitleComparator;
 import com.liferay.wiki.util.comparator.PageVersionComparator;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
 
 import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -423,6 +428,12 @@ public class WikiServiceUtil {
 		return entries;
 	}
 
+	public static Collection<String> getFormats() {
+		WikiEngineTracker wikiEngineTracker = _getWikiEngineTracker();
+
+		return wikiEngineTracker.getFormats();
+	}
+
 	public static String getFormattedContent(
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			WikiPage wikiPage, PortletURL viewPageURL, PortletURL editPageURL,
@@ -584,6 +595,10 @@ public class WikiServiceUtil {
 		return _instance._validate(nodeId, content, format);
 	}
 
+	private static WikiEngineTracker _getWikiEngineTracker() {
+		return _wikiEngineServiceTracker.getService();
+	}
+
 	private String _convert(
 			WikiPage page, PortletURL viewPageURL, PortletURL editPageURL,
 			String attachmentURLPrefix)
@@ -656,63 +671,33 @@ public class WikiServiceUtil {
 	}
 
 	private String _getEditPage(String format) {
-		return PropsUtil.get(
-			WikiPropsKeys.FORMATS_EDIT_PAGE, new Filter(format));
+		WikiEngineTracker wikiEngineTracker = _getWikiEngineTracker();
+
+		return wikiEngineTracker.getProperty(format, "edit.page");
 	}
 
 	private WikiEngine _getEngine(String format) throws WikiFormatException {
-		WikiEngine engine = _engines.get(format);
+		WikiEngineTracker wikiEngineTracker = _getWikiEngineTracker();
 
-		if (engine != null) {
-			return engine;
+		WikiEngine engine = wikiEngineTracker.getWikiEngine(format);
+
+		if (engine == null) {
+			throw new WikiFormatException("Unknown wiki format " + format);
 		}
 
-		synchronized (_engines) {
-			engine = _engines.get(format);
-
-			if (engine != null) {
-				return engine;
-			}
-
-			try {
-				String engineClassName = PropsUtil.get(
-					WikiPropsKeys.FORMATS_ENGINE, new Filter(format));
-
-				if (engineClassName == null) {
-					throw new WikiFormatException(format);
-				}
-
-				Class<?> clazz = getClass();
-
-				engine = (WikiEngine)InstanceFactory.newInstance(
-					clazz.getClassLoader(), engineClassName);
-
-				engine.setInterWikiConfiguration(
-					_readConfigurationFile(
-						WikiPropsKeys.FORMATS_CONFIGURATION_INTERWIKI,
-						format));
-				engine.setMainConfiguration(
-					_readConfigurationFile(
-						WikiPropsKeys.FORMATS_CONFIGURATION_MAIN, format));
-
-				_engines.put(format, engine);
-
-				return engine;
-			}
-			catch (Exception e) {
-				throw new WikiFormatException(e);
-			}
-		}
+		return engine;
 	}
 
 	private String _getHelpPage(String format) {
-		return PropsUtil.get(
-			WikiPropsKeys.FORMATS_HELP_PAGE, new Filter(format));
+		WikiEngineTracker wikiEngineTracker = _getWikiEngineTracker();
+
+		return wikiEngineTracker.getProperty(format, "help.page");
 	}
 
 	private String _getHelpURL(String format) {
-		return PropsUtil.get(
-			WikiPropsKeys.FORMATS_HELP_URL, new Filter(format));
+		WikiEngineTracker wikiEngineTracker = _getWikiEngineTracker();
+
+		return wikiEngineTracker.getProperty(format, "help.url");
 	}
 
 	private Map<String, Boolean> _getLinks(WikiPage page)
@@ -778,7 +763,16 @@ public class WikiServiceUtil {
 			"\\[\\$END_PAGE_TITLE_EDIT\\$\\]");
 	private static final Pattern _viewPageURLPattern = Pattern.compile(
 		"\\[\\$BEGIN_PAGE_TITLE\\$\\](.*?)\\[\\$END_PAGE_TITLE\\$\\]");
+	private static final ServiceTracker<WikiEngineTracker, WikiEngineTracker>
+		_wikiEngineServiceTracker;
 
-	private final Map<String, WikiEngine> _engines = new ConcurrentHashMap<>();
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(WikiServiceUtil.class);
+
+		_wikiEngineServiceTracker = new ServiceTracker<>(
+			bundle.getBundleContext(), WikiEngineTracker.class, null);
+
+		_wikiEngineServiceTracker.open();
+	}
 
 }

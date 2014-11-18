@@ -28,7 +28,7 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PortletKeys;import com.liferay.portlet.blogs.model.BlogsEntry;
 
 import java.util.HashMap;
 import java.util.List;
@@ -146,24 +146,7 @@ public class AddDefaultLayoutPrototypesAction
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
 	}
-
-	protected void addWikiPage(
-			long companyId, long defaultUserId,
-			List<LayoutPrototype> layoutPrototypes)
-		throws Exception {
-
-		Layout layout = addLayoutPrototype(
-			companyId, defaultUserId, "layout-prototype-wiki-title",
-			"layout-prototype-wiki-description", "2_columns_iii",
-			layoutPrototypes);
-
-		if (layout == null) {
-			return;
-		}
-
-		addPortletId(layout, PortletKeys.WIKI, "column-1");
-	}
-
+	
 	protected void doRun(long companyId) throws Exception {
 		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(companyId);
 
@@ -173,7 +156,6 @@ public class AddDefaultLayoutPrototypesAction
 
 		addBlogPage(companyId, defaultUserId, layoutPrototypes);
 		addWebContentPage(companyId, defaultUserId, layoutPrototypes);
-		addWikiPage(companyId, defaultUserId, layoutPrototypes);
 	}
 
 }

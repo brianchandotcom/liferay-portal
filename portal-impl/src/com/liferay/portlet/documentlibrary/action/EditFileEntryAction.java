@@ -914,7 +914,14 @@ public class EditFileEntryAction extends PortletAction {
 			setForward(actionRequest, "portlet.document_library.error");
 		}
 		else {
-			throw e;
+			Throwable cause = e.getCause();
+
+			if (cause instanceof DuplicateFileException) {
+				SessionErrors.add(actionRequest, DuplicateFileException.class);
+			}
+			else {
+				throw e;
+			}
 		}
 	}
 

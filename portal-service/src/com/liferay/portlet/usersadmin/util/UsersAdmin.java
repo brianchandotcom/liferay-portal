@@ -250,10 +250,16 @@ public interface UsersAdmin {
 	public List<EmailAddress> getEmailAddresses(
 		ActionRequest actionRequest, List<EmailAddress> defaultEmailAddresses);
 
+	public long[] getGroupIds(PortletRequest portletRequest)
+		throws PortalException;
+
 	public OrderByComparator<Group> getGroupOrderByComparator(
 		String orderByCol, String orderByType);
 
 	public Long[] getOrganizationIds(List<Organization> organizations);
+
+	public long[] getOrganizationIds(PortletRequest portletRequest)
+		throws PortalException;
 
 	public OrderByComparator<Organization> getOrganizationOrderByComparator(
 		String orderByCol, String orderByType);
@@ -268,12 +274,18 @@ public interface UsersAdmin {
 	public List<Phone> getPhones(
 		ActionRequest actionRequest, List<Phone> defaultPhones);
 
+	public long[] getRoleIds(PortletRequest portletRequest)
+		throws PortalException;
+
 	public OrderByComparator<Role> getRoleOrderByComparator(
 		String orderByCol, String orderByType);
 
 	public <T> String getUserColumnText(
 		Locale locale, List<? extends T> list, Accessor<T, String> accessor,
 		int count);
+
+	public long[] getUserGroupIds(PortletRequest portletRequest)
+		throws PortalException;
 
 	public OrderByComparator<UserGroup> getUserGroupOrderByComparator(
 		String orderByCol, String orderByType);

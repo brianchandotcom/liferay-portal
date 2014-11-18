@@ -173,10 +173,6 @@ public class ImageProcessorImpl
 
 	@Override
 	public boolean isSupported(String mimeType) {
-		if (Validator.isNull(mimeType)) {
-			return false;
-		}
-
 		return _imageMimeTypes.contains(mimeType);
 	}
 

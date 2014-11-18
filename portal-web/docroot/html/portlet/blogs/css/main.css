@@ -144,6 +144,18 @@
 				margin-bottom: 0;
 			}
 		}
+
+		.uploading-image-container {
+			display: inline-block;
+
+			.progressbar {
+				height: 20px;
+			}
+		}
+
+		.uploading-image {
+			opacity: 0.4;
+		}
 	}
 
 	.categorization-wrapper, .custom-attributes-wrapper, .display-date-wrapper, .email-entry-updated-wrapper, .entry-abstract-wrapper, .permissions-wrapper, .pingback-enabled-wrapper, .related-assets-wrapper, .trackback-enabled-wrapper {

@@ -308,10 +308,6 @@ public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 			}
 		}
 
-		@Override
-		protected void doViewAccepted(View oldView, View newView) {
-		}
-
 	}
 
 }

@@ -28,12 +28,12 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationTestRule;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
-import com.liferay.wiki.web.asset.WikiPageAssetRenderer;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageServiceUtil;
 import com.liferay.wiki.util.test.WikiTestUtil;
+import com.liferay.wiki.web.asset.WikiPageAssetRenderer;
 
 import java.util.List;
 

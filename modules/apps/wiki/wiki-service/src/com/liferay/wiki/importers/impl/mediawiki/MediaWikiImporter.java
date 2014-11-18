@@ -56,6 +56,7 @@ import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.translators.MediaWikiToCreoleTranslator;
+import org.osgi.service.component.annotations.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -73,6 +74,12 @@ import java.util.regex.Pattern;
  * @author Alvaro del Castillo
  * @author Jorge Ferrer
  */
+@Component(
+	service = WikiImporter.class,
+	property = {
+		"importer=MediaWiki", "page=/html/portlet/wiki/import/mediawiki.jsp"
+	}
+)
 public class MediaWikiImporter implements WikiImporter {
 
 	public static final String SHARED_IMAGES_CONTENT = "See attachments";

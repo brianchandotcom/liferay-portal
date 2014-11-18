@@ -401,99 +401,74 @@ for (int i = 0; i < results.size(); i++) {
 <liferay-ui:search-iterator paginate='<%= type.equals("history") ? false : true %>' searchContainer="<%= searchContainer %>" />
 
 <c:if test='<%= type.equals("history") %>'>
-	<aui:script use="aui-base">
+	<aui:script>
+		function <portlet:namespace />initRowsChecked() {
+			var $ = AUI.$;
 
+			var rowIds = $('input[name=<portlet:namespace />rowIds]');
+
+			rowIds.slice(2).prop('checked', false);
+		}
+
+		function <portlet:namespace />updateRowsChecked(element) {
+			var rowsChecked = AUI.$('input[name=<portlet:namespace />rowIds]:checked');
+
+			if (rowsChecked.length > 2) {
+				var index = 2;
+
+				if (rowsChecked.eq(2).is(element)) {
+					index = 1;
+				}
+
+				rowsChecked.eq(index).prop('checked', false);
+			}
+		}
+	</aui:script>
+
+	<aui:script sandbox="<%= true %>">
 		<c:if test="<%= results.size() > 1 %>">
 
 			<%
 			WikiPage latestWikiPage = (WikiPage)results.get(1);
 			%>
 
-			var compareButton = A.one('#<portlet:namespace />compare');
+			$('#<portlet:namespace />compare').on(
+				'click',
+				function(event) {
+					<portlet:renderURL var="compareVersionURL">
+						<portlet:param name="struts_action" value="/wiki/compare_versions" />
+						<portlet:param name="backURL" value="<%= currentURL %>" />
+						<portlet:param name="tabs3" value="versions" />
+						<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
+						<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
+						<portlet:param name="type" value="html" />
+					</portlet:renderURL>
 
-			if (compareButton) {
-				compareButton.on(
-					'click',
-					function(event) {
-						event.preventDefault();
+					var uri = '<%= compareVersionURL %>';
 
-						<portlet:renderURL var="compareVersionURL">
-							<portlet:param name="struts_action" value="/wiki/compare_versions" />
-							<portlet:param name="backURL" value="<%= currentURL %>" />
-							<portlet:param name="tabs3" value="versions" />
-							<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
-							<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-							<portlet:param name="type" value="html" />
-						</portlet:renderURL>
+					var rowIds = $('input[name=<portlet:namespace />rowIds]:checked');
 
-						var uri = '<%= compareVersionURL %>';
+					var rowIdsSize = rowIds.length;
 
-						var rowIds = A.all('input[name=<portlet:namespace />rowIds]:checked');
-
-						var rowIdsSize = rowIds.size();
-
-						if ((rowIdsSize == 0) || (rowIdsSize == 2)) {
-							if (rowIdsSize == 0) {
-								uri = Liferay.Util.addParams('<portlet:namespace />sourceVersion=<%= latestWikiPage.getVersion() %>', uri);
-								uri = Liferay.Util.addParams('<portlet:namespace />targetVersion=<%= wikiPage.getVersion() %>', uri);
-							}
-							else if (rowIdsSize == 2) {
-								uri = Liferay.Util.addParams('<portlet:namespace />sourceVersion=' + rowIds.item(1).val(), uri);
-								uri = Liferay.Util.addParams('<portlet:namespace />targetVersion=' + rowIds.item(0).val(), uri);
-							}
-
-							location.href = uri;
+					if ((rowIdsSize == 0) || (rowIdsSize == 2)) {
+						if (rowIdsSize == 0) {
+							uri = Liferay.Util.addParams('<portlet:namespace />sourceVersion=<%= latestWikiPage.getVersion() %>', uri);
+							uri = Liferay.Util.addParams('<portlet:namespace />targetVersion=<%= wikiPage.getVersion() %>', uri);
 						}
+						else if (rowIdsSize == 2) {
+							uri = Liferay.Util.addParams('<portlet:namespace />sourceVersion=' + rowIds.eq(1).val(), uri);
+							uri = Liferay.Util.addParams('<portlet:namespace />targetVersion=' + rowIds.eq(0).val(), uri);
+						}
+
+						location.href = uri;
 					}
-				);
-			}
+				}
+			);
 		</c:if>
 
-		Liferay.provide(
-			window,
-			'<portlet:namespace />initRowsChecked',
-			function() {
-				var A = AUI();
-
-				var rowIds = A.all('input[name=<portlet:namespace />rowIds]');
-
-				rowIds.each(
-					function(item, index, collection) {
-						if (index >= 2) {
-							item.attr('checked', false);
-						}
-					}
-				);
-			},
-			['aui-base']
-		);
-
-		Liferay.provide(
-			window,
-			'<portlet:namespace />updateRowsChecked',
-			function(element) {
-				var A = AUI();
-
-				var rowsChecked = A.all('input[name=<portlet:namespace />rowIds]:checked');
-
-				if (rowsChecked.size() > 2) {
-					var index = 2;
-
-					if (rowsChecked.item(2).compareTo(element)) {
-						index = 1;
-					}
-
-					rowsChecked.item(index).attr('checked', false);
-				}
-			},
-			['aui-base', 'selector-css3']
-		);
-	</aui:script>
-
-	<aui:script use="aui-base">
 		<portlet:namespace />initRowsChecked();
 
-		A.all('input[name=<portlet:namespace />rowIds]').on(
+		$('input[name=<portlet:namespace />rowIds]').on(
 			'click',
 			function(event) {
 				<portlet:namespace />updateRowsChecked(event.currentTarget);

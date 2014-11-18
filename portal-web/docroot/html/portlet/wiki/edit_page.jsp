@@ -242,7 +242,7 @@ if (Validator.isNull(redirect)) {
 
 				<c:choose>
 					<c:when test="<%= (WikiPageConstants.FORMATS.length > 1) %>">
-						<aui:select changesContext="<%= true %>" name="format" onChange='<%= renderResponse.getNamespace() + "changeFormat(this);" %>'>
+						<aui:select changesContext="<%= true %>" name="format">
 
 							<%
 							for (int i = 0; i < WikiPageConstants.FORMATS.length; i++) {
@@ -459,41 +459,57 @@ if (Validator.isNull(redirect)) {
 	</c:choose>
 </aui:form>
 
+<aui:script sandbox="<%= true %>">
+	var form = $(document.<portlet:namespace />fm);
+
+	var formatSelect = form.fm('format');
+
+	var currentFormat = formatSelect.val();
+	var currentIndex = formatSelect.prop('selectedIndex');
+
+	formatSelect.on(
+		'change',
+		function(event) {
+			var newFormat = formatSelect.val();
+
+			var confirmMessage = '<%= UnicodeLanguageUtil.get(request, "you-may-lose-formatting-when-switching-from-x-to-x") %>';
+
+			confirmMessage = _.sub(confirmMessage, currentFormat, newFormat);
+
+			if (!confirm(confirmMessage)) {
+				formatSelect.prop('selectedIndex', currentIndex);
+
+				return;
+			}
+
+			var editor = window.<portlet:namespace />editor;
+
+			if (editor) {
+				form.fm('content').val(editor.getHTML());
+			}
+
+			submitForm(form, null, null, false);
+		}
+	);
+</aui:script>
+
 <aui:script>
-	function <portlet:namespace />changeFormat(formatSelect) {
-		var currentFormat = formatSelect.options[window.<portlet:namespace />currentFormatIndex].text;
-
-		var newFormat = formatSelect.options[formatSelect.selectedIndex].text;
-
-		var confirmMessage = '<%= UnicodeLanguageUtil.get(request, "you-may-lose-formatting-when-switching-from-x-to-x") %>';
-
-		confirmMessage = AUI().Lang.sub(confirmMessage, [currentFormat, newFormat]);
-
-		if (!confirm(confirmMessage)) {
-			formatSelect.selectedIndex = window.<portlet:namespace />currentFormatIndex;
-
-			return;
-		}
-
-		if (window.<portlet:namespace />editor) {
-			document.<portlet:namespace />fm.<portlet:namespace />content.value = window.<portlet:namespace />editor.getHTML();
-		}
-
-		submitForm(document.<portlet:namespace />fm, null, null, false);
-	}
-
 	function <portlet:namespace />discardDraftPage() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.DELETE %>';
+		var form = AUI.$(document.<portlet:namespace />fm);
 
-		submitForm(document.<portlet:namespace />fm);
+		form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
+
+		submitForm(form);
 	}
 
 	function <portlet:namespace />getSuggestionsContent() {
-		return document.<portlet:namespace />fm.<portlet:namespace />title.value + ' ' + window.<portlet:namespace />editor.getHTML();
+		return AUI.$(document.<portlet:namespace />fm).fm('title').val() + ' ' + window.<portlet:namespace />editor.getHTML();
 	}
 
 	function <portlet:namespace />moveToTrashPage() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.MOVE_TO_TRASH %>';
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		form.fm('<%= Constants.CMD %>').val('<%= Constants.MOVE_TO_TRASH %>');
 
 		<portlet:renderURL var="nodeURL">
 			<portlet:param name="struts_action" value="/wiki/view" />
@@ -501,39 +517,47 @@ if (Validator.isNull(redirect)) {
 			<portlet:param name="tag" value="<%= StringPool.BLANK %>" />
 		</portlet:renderURL>
 
-		document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= nodeURL.toString() %>';
+		form.fm('redirect').val('<%= nodeURL.toString() %>');
 
-		submitForm(document.<portlet:namespace />fm);
+		submitForm(form);
 	}
 
 	function <portlet:namespace />previewPage() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '';
-		document.<portlet:namespace />fm.<portlet:namespace />preview.value = 'true';
+		var form = AUI.$(document.<portlet:namespace />fm);
 
-		if (window.<portlet:namespace />editor) {
-			document.<portlet:namespace />fm.<portlet:namespace />content.value = window.<portlet:namespace />editor.getHTML();
+		form.fm('<%= Constants.CMD %>').val('');
+		form.fm('preview').val('true');
+
+		var editor = window.<portlet:namespace />editor;
+
+		if (editor) {
+			form.fm('content').val(editor.getHTML());
 		}
 
-		submitForm(document.<portlet:namespace />fm);
+		submitForm(form);
 	}
 
 	function <portlet:namespace />publishPage() {
-		document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = '<%= WorkflowConstants.ACTION_PUBLISH %>';
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		form.fm('workflowAction').val('<%= WorkflowConstants.ACTION_PUBLISH %>');
 
 		<portlet:namespace />savePage();
 	}
 
 	function <portlet:namespace />savePage() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= newPage ? Constants.ADD : Constants.UPDATE %>';
+		var form = AUI.$(document.<portlet:namespace />fm);
 
-		if (window.<portlet:namespace />editor) {
-			document.<portlet:namespace />fm.<portlet:namespace />content.value = window.<portlet:namespace />editor.getHTML();
+		form.fm('<%= Constants.CMD %>').val('<%= newPage ? Constants.ADD : Constants.UPDATE %>');
+
+		var editor = window.<portlet:namespace />editor;
+
+		if (editor) {
+			form.fm('content').val(editor.getHTML());
 		}
 
-		submitForm(document.<portlet:namespace />fm);
+		submitForm(form);
 	}
-
-	window.<portlet:namespace />currentFormatIndex = document.<portlet:namespace />fm.<portlet:namespace />format.selectedIndex;
 </aui:script>
 
 <%

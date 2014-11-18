@@ -282,11 +282,12 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 	/>
 </div>
 
-<aui:script use="aui-base,escape">
-	A.getBody().delegate(
+<aui:script sandbox="<%= true %>">
+	$('body').on(
 		'click',
+		'.compare-to-link a',
 		function(event) {
-			var currentTarget = event.currentTarget;
+			var currentTarget = $(event.currentTarget);
 
 			Liferay.Util.selectEntity(
 				{
@@ -298,7 +299,7 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 					eventName: '<portlet:namespace />selectVersionFm',
 					id: '<portlet:namespace />compareVersions' + currentTarget.attr('id'),
 					title: '<liferay-ui:message key="compare-versions" />',
-					uri: currentTarget.attr('data-uri')
+					uri: currentTarget.data('uri')
 				},
 				function(event) {
 					<portlet:renderURL var="compareVersionURL">
@@ -317,7 +318,6 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 					location.href = uri;
 				}
 			);
-		},
-		'.compare-to-link a'
+		}
 	);
 </aui:script>

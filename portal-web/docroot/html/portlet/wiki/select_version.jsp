@@ -86,6 +86,6 @@ portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script use="aui-base">
+<aui:script>
 	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectVersionFm', '<%= HtmlUtil.escapeJS(eventName) %>');
 </aui:script>

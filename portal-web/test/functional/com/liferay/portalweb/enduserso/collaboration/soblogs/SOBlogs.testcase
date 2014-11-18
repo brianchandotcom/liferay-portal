@@ -2178,8 +2178,6 @@
 	</command>
 
 	<command name="SubscribeToSOBlogsEntryAndViewEntryInGmail" priority="5">
-		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain=" />
-
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="userEmailAddress" property-value="email.address.2" />
@@ -2296,8 +2294,6 @@
 	</command>
 
 	<command name="UserFlagsEntryAndAdminViewsNotificationInGmail" priority="4">
-		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain=" />
-
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="flagReason" value="Spam" />

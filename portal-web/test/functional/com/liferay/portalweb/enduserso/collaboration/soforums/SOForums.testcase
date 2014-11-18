@@ -3048,8 +3048,6 @@
 	</command>
 
 	<command name="SubscribeToSOCategoryThreadAndViewEntryInGmail" priority="5">
-		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain=" />
-
 		<var name="categoryName" value="MB Category Name" />
 		<var name="threadBody" value="MB Category Thread Message Body" />
 		<var name="threadSubject" value="MB Category Thread Message Subject" />
@@ -3171,8 +3169,6 @@
 	</command>
 
 	<command name="UserFlagsSOCategoryThreadAndAdminViewsNotificationInGmail" priority="4">
-		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain=" />
-
 		<var name="categoryName" value="MB Category Name" />
 		<var name="siteDescription2" value="Open Site2 Description" />
 		<var name="siteName2" value="Open Site2 Name" />

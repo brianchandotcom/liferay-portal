@@ -1412,8 +1412,6 @@
 	</command>
 
 	<command name="ConfirmMemberInviteSiteByEmail" priority="5">
-		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain=" />
-
 		<var name="siteDescription" value="Social Office Site Description" />
 		<var name="siteName" value="Social Office Site Name" />
 		<var name="siteType" value="Open" />
@@ -1494,8 +1492,6 @@
 	</command>
 
 	<command name="ConfirmMemberInviteSiteByEmailNonSOUser" priority="5">
-		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain=" />
-
 		<var name="siteDescription" value="Regular Site Description" />
 		<var name="siteName" value="Regular Site Name" />
 		<var name="siteType" value="Open" />
@@ -1601,8 +1597,6 @@
 	</command>
 
 	<command name="ConfirmMemberInviteSiteByEmailNonUser" priority="5">
-		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain={line.separator}captcha.check.portal.create_account=false" />
-
 		<var name="siteDescription" value="New Site Description" />
 		<var name="siteName" value="New Site Name" />
 		<var name="siteType" value="Open" />
@@ -2557,29 +2551,6 @@
 			<var name="userName" value="${userName2}" />
 			<var name="userScreenName" value="${userScreenName2}" />
 		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
-			<var name="userLoginFullName" value="${adminName}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute action="SOMembersPortlet#select" locator-key1="ROLE_FILTER_DROPDOWN" value1="Owners" />
-
-		<var name="key_userEmailAddress" value="${userEmailAddress}" />
-
-		<execute action="SOMembersPortlet#assertTextEquals" locator-key1="MEMBERS_LIST_NAME" value1="${userListName}" />
-		<execute action="SOMembersPortlet#assertTextNotPresent" value1="${userListName2}" />
-		<execute action="SOMembersPortlet#select" locator-key1="ROLE_FILTER_DROPDOWN" value1="Administrators" />
-
-		<var name="key_userEmailAddress" value="${userEmailAddress2}" />
-
-		<execute action="SOMembersPortlet#assertTextEquals" locator-key1="MEMBERS_LIST_NAME" value1="${userListName2}" />
-		<execute action="SOMembersPortlet#assertTextNotPresent" value1="${userListName}" />
 	</command>
 
 	<command name="InviteMembersSiteViaNonSiteCreators" priority="5">

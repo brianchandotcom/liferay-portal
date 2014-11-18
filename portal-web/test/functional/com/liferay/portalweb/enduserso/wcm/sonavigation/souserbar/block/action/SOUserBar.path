@@ -165,6 +165,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NOTIFICATION_MENU_NOTIFICATION_DROPDOWN_BUTTON</td>
+	<td>//a[@class='dropdown-toggle']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_MENU_NOTIFICATION_UNSUBSCRIBE</td>
+	<td>//a[contains(.,'Unsubscribe')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NOTIFICATION_MENU_MARK_AS_READ_NOTIFICATIONS_LINK</td>
 	<td>//div[@class='nonactionable']//a[contains(.,'Mark as Read')]</td>
 	<td></td>

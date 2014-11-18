@@ -3027,8 +3027,6 @@
 	</command>
 
 	<command name="SubscribeToWikiFrontPageAndViewEntryInGmail" priority="5">
-		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain=" />
-
 		<var name="userEmailAddress" property-value="email.address.2" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />
@@ -3121,6 +3119,98 @@
 		</execute>
 
 		<execute action="Home#open" locator1="http://localhost:8080" />
+	</command>
+
+	<command name="ViewSOWikiEditControlsAsGuest" priority="5">
+		<var name="attachmentFileName" value="Document_1.jpg" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+		<var name="wikiChildPageContent" value="Wiki FrontPage Child Page Content" />
+		<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page Title" />
+		<var name="wikiPageContent" value="Wiki FrontPage Content" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#addFrontPagePG">
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#gotoPG">
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+
+		<execute macro="WikiPage#addAttachmentViaPageDetailsPG">
+			<var name="attachmentFileName" value="${attachmentFileName}" />
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#gotoPG">
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+
+		<execute macro="WikiPage#addChildPagePG">
+			<var name="wikiChildPageContent" value="${wikiChildPageContent}" />
+			<var name="wikiChildPageTitle" value="${wikiChildPageTitle}" />
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<var name="key_attachmentFileName" value="${attachmentFileName}" />
+
+		<execute action="PGWiki#assertElementNotPresent" locator-key1="EDIT_BUTTON" value1="Edit" />
+		<execute action="PGWiki#assertClick" locator-key1="ATTACHMENTS_BUTTON" value1="1 Attachment" />
+
+		<execute action="PGWikiWikipageAttachments#assertElementNotPresent" locator-key1="ADD_ATTACHMENTS_BUTTON" />
+		<execute action="PGWikiWikipageAttachments#assertElementNotPresent" locator-key1="ATTACHMENT_TABLE_REMOVE" value1="Remove" />
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<var name="key_wikiPageTitle" value="${wikiChildPageTitle}" />
+
+		<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
+
+		<execute action="PGWikiAllpages#assertElementNotPresent" locator-key1="WIKI_PAGE_TABLE_ACTIONS" />
+		<execute action="PGWikiAllpages#assertElementNotPresent" locator-key1="WIKI_PAGE_MENULIST_EDIT" />
+		<execute action="PGWikiAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiChildPageTitle}" />
+
+		<execute action="PGWiki#assertElementNotPresent" locator-key1="EDIT_BUTTON" value1="Edit" />
 	</command>
 
 	<command known-issues="LPS-45435" name="ViewSOWikiFrontPageChildPageAsGuest" priority="4">

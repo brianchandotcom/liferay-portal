@@ -271,16 +271,7 @@
 	</command>
 
 	<command name="editPG">
-		<if>
-			<condition action="PGMessageboardsThread#isElementNotPresent" locator-key1="MESSAGE_EDIT_1" />
-			<then>
-				<execute action="PGMessageboardsThread#makeVisible" locator-key1="MESSAGE_EDIT_1" value1="Edit" />
-				<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_EDIT_1" value1="Edit" />
-			</then>
-			<else>
-				<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_EDIT_1" value1="Edit" />
-			</else>
-		</if>
+		<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_EDIT_1" value1="Edit" />
 
 		<if>
 			<isset var="threadSubjectEdit" />
@@ -396,16 +387,7 @@
 	</command>
 
 	<command name="markAsAnswerPG">
-		<if>
-			<condition action="PGMessageboardsThread#isElementNotPresent" locator-key1="MESSAGE_MARK_AS_AN_ANSWER_1" />
-			<then>
-				<execute action="PGMessageboardsThread#makeVisible" locator-key1="MESSAGE_MARK_AS_AN_ANSWER_1" value1="Mark as an Answer" />
-				<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_MARK_AS_AN_ANSWER_1" value1="Mark as an Answer" />
-			</then>
-			<else>
-				<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_MARK_AS_AN_ANSWER_1" value1="Mark as an Answer" />
-			</else>
-		</if>
+		<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_MARK_AS_AN_ANSWER_1" value1="Mark as an Answer" />
 
 		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_ANSWER_1" value1="Answer" />
 	</command>
@@ -519,16 +501,7 @@
 
 		<execute action="PGMessageboards#assertClick" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
 
-		<if>
-			<condition action="PGMessageboardsThread#isElementNotPresent" locator-key1="MESSAGE_QUICK_REPLY_1" />
-			<then>
-				<execute action="PGMessageboardsThread#makeVisible" locator-key1="MESSAGE_QUICK_REPLY_1" value1="Quick Reply" />
-				<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_QUICK_REPLY_1" value1="Quick Reply" />
-			</then>
-			<else>
-				<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_QUICK_REPLY_1" value1="Quick Reply" />
-			</else>
-		</if>
+		<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_QUICK_REPLY_1" value1="Quick Reply" />
 
 		<execute action="PGMessageboardsThread#type" locator-key1="QUICK_REPLY_BODY_FIELD" value1="${threadReplyBody}" />
 		<execute action="PGMessageboardsThread#assertClick" locator-key1="QUICK_REPLY_PUBLISH_BUTTON" value1="Publish" />
@@ -595,10 +568,11 @@
 		</if>
 
 		<if>
-			<condition action="PGMessageboardsThread#isElementNotPresent" locator-key1="MESSAGE_REPLY_1" />
+			<isset var="threadReplySpecific" />
 			<then>
-				<execute action="PGMessageboardsThread#makeVisible" locator-key1="MESSAGE_REPLY_1" value1="Reply" />
-				<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_REPLY_1" value1="Reply" />
+				<var name="key_threadBody" value="${threadBody}" />
+
+				<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_REPLY_SPECIFIC" value1="Reply" />
 			</then>
 			<else>
 				<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_REPLY_1" value1="Reply" />
@@ -606,6 +580,13 @@
 		</if>
 
 		<execute action="PGMessageboardsPostthread#type" locator-key1="BODY_FIELD" value1="${threadReplyBody}" />
+
+		<if>
+			<equals arg1="${anonymous}" arg2="true" />
+			<then>
+				<execute action="PGMessageboardsPostthread#check" locator-key1="ANONYMOUS_CHECKBOX" />
+			</then>
+		</if>
 
 		<if>
 			<isset var="mbThreadAttachment" />
@@ -639,16 +620,7 @@
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
 		<execute action="PGMessageboards#click" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
 
-		<if>
-			<condition action="PGMessageboardsThread#isElementNotPresent" locator-key1="MESSAGE_REPLY_WITH_QUOTE_1" />
-			<then>
-				<execute action="PGMessageboardsThread#makeVisible" locator-key1="MESSAGE_REPLY_WITH_QUOTE_1" value1="Reply with Quote" />
-				<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_REPLY_WITH_QUOTE_1" value1="Reply with Quote" />
-			</then>
-			<else>
-				<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_REPLY_WITH_QUOTE_1" value1="Reply with Quote" />
-			</else>
-		</if>
+		<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_REPLY_WITH_QUOTE_1" value1="Reply with Quote" />
 
 		<execute action="PGMessageboardsPostthread#click" locator-key1="SOURCE_BUTTON" />
 		<execute action="PGMessageboardsPostthread#type" locator-key1="BODY_FIELD_SOURCE_ON_SEND_KEYS" value1="${threadReplyBody}" />

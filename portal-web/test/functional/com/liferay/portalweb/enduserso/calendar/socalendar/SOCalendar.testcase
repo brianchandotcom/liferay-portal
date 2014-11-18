@@ -1749,8 +1749,6 @@
 	</command>
 
 	<command name="ViewCalendarEventInviteGmail" priority="4">
-		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain=" />
-
 		<var name="eventTitle" value="Calendar Event Title" />
 		<var name="eventType" value="Regular" />
 		<var name="userEmailAddress" property-value="email.address.2" />

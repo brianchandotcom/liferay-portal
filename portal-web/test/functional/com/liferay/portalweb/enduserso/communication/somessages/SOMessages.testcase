@@ -3248,8 +3248,6 @@
 	</command>
 
 	<command name="ViewMessageGmail" priority="4">
-		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain=" />
-
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />
 		<var name="pageName" value="Messages" />
@@ -3768,8 +3766,6 @@
 	</command>
 
 	<command name="ViewMessagesGmail" priority="4">
-		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain=" />
-
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />
 		<var name="pageName" value="Messages" />

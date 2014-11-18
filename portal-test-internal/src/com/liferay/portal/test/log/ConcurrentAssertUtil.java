@@ -14,6 +14,8 @@
 
 package com.liferay.portal.test.log;
 
+import com.liferay.portal.kernel.util.ReflectionUtil;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -24,16 +26,16 @@ import org.junit.Assert;
  */
 public class ConcurrentAssertUtil {
 
-	public static void caughtFailure(String message) {
+	public static void caughtFailure(Exception exception) {
 		Thread currentThread = Thread.currentThread();
 
 		if (currentThread != _thread) {
-			_concurrentFailureMessages.put(currentThread, message);
+			_concurrentFailures.put(currentThread, exception);
 
 			_thread.interrupt();
 		}
 		else {
-			Assert.fail(message);
+			ReflectionUtil.throwException(exception);
 		}
 	}
 
@@ -41,18 +43,21 @@ public class ConcurrentAssertUtil {
 		_thread = null;
 
 		try {
-			for (Map.Entry<Thread, String> entry :
-					_concurrentFailureMessages.entrySet()) {
+			for (Map.Entry<Thread, Exception> entry :
+					_concurrentFailures.entrySet()) {
 
 				Thread thread = entry.getKey();
+				Exception exception = entry.getValue();
 
 				Assert.fail(
 					"Thread " + thread + " caught concurrent failure: " +
-						entry.getValue());
+						exception);
+
+				ReflectionUtil.throwException(exception);
 			}
 		}
 		finally {
-			_concurrentFailureMessages.clear();
+			_concurrentFailures.clear();
 		}
 	}
 
@@ -60,8 +65,8 @@ public class ConcurrentAssertUtil {
 		_thread = Thread.currentThread();
 	}
 
-	private static final Map<Thread, String> _concurrentFailureMessages =
-		new ConcurrentHashMap<Thread, String>();
+	private static final Map<Thread, Exception> _concurrentFailures =
+		new ConcurrentHashMap<Thread, Exception>();
 	private static volatile Thread _thread;
 
 }

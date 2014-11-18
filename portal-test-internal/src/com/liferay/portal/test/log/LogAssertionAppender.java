@@ -14,9 +14,12 @@
 
 package com.liferay.portal.test.log;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
+import org.apache.log4j.spi.ThrowableInformation;
 
 /**
  * @author William Newbury
@@ -40,9 +43,21 @@ public class LogAssertionAppender extends AppenderSkeleton {
 		Level level = loggingEvent.getLevel();
 
 		if (level.equals(Level.ERROR) || level.equals(Level.FATAL)) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append("{loggerName=");
+			sb.append(loggingEvent.getLoggerName());
+			sb.append(", level=");
+			sb.append(loggingEvent.getLevel());
+			sb.append(", message=");
+			sb.append(loggingEvent.getMessage());
+
+			ThrowableInformation throwableInformation =
+				loggingEvent.getThrowableInformation();
+
 			ConcurrentAssertUtil.caughtFailure(
-				"Test failed due to logged error: " +
-					loggingEvent.getMessage());
+				new Exception(
+					sb.toString(), throwableInformation.getThrowable()));
 		}
 	}
 

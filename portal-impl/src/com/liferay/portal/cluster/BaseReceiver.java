@@ -37,7 +37,7 @@ public abstract class BaseReceiver implements Receiver {
 	}
 
 	@Override
-	public void getState(OutputStream outputStream) throws Exception {
+	public void getState(OutputStream outputStream) {
 	}
 
 	public View getView() {
@@ -63,7 +63,7 @@ public abstract class BaseReceiver implements Receiver {
 	}
 
 	@Override
-	public void setState(InputStream inputStream) throws Exception {
+	public void setState(InputStream inputStream) {
 	}
 
 	@Override
@@ -104,7 +104,8 @@ public abstract class BaseReceiver implements Receiver {
 
 	protected abstract void doReceive(Message message);
 
-	protected abstract void doViewAccepted(View oldView, View newView);
+	protected void doViewAccepted(View oldView, View newView) {
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseReceiver.class);
 

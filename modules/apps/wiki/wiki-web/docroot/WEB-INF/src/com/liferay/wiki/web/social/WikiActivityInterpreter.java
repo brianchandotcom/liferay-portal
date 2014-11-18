@@ -221,7 +221,7 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 		throws Exception {
 
 		if (!WikiPagePermission.contains(
-			permissionChecker, activity.getClassPK(), ActionKeys.VIEW)) {
+				permissionChecker, activity.getClassPK(), ActionKeys.VIEW)) {
 
 			return false;
 		}

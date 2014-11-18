@@ -27,13 +27,13 @@ import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.service.WikiPageResourceLocalService;
 import com.liferay.wiki.service.configuration.configurator.WikiServiceConfigurator;
 import com.liferay.wiki.util.comparator.PageVersionComparator;
+import com.liferay.wiki.verify.model.WikiNodeVerifiableModel;
+import com.liferay.wiki.verify.model.WikiPageResourceVerifiableModel;
+import com.liferay.wiki.verify.model.WikiPageVerifiableModel;
 
 import java.util.Date;
 import java.util.List;
 
-import com.liferay.wiki.verify.model.WikiNodeVerifiableModel;
-import com.liferay.wiki.verify.model.WikiPageResourceVerifiableModel;
-import com.liferay.wiki.verify.model.WikiPageVerifiableModel;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 

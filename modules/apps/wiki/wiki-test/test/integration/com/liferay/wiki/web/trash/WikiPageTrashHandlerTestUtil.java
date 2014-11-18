@@ -43,7 +43,7 @@ public class WikiPageTrashHandlerTestUtil {
 
 		return WikiTestUtil.addPage(
 			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-			(Long) parentBaseModel.getPrimaryKeyObj(), getSearchKeywords(),
+			(Long)parentBaseModel.getPrimaryKeyObj(), getSearchKeywords(),
 			approved);
 	}
 

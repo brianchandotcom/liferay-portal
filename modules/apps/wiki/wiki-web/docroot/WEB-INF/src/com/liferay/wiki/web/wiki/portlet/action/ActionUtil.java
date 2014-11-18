@@ -231,6 +231,7 @@ public class ActionUtil {
 		catch (NoSuchPageException nspe) {
 			if (title.equals(WikiPropsValues.FRONT_PAGE_NAME) &&
 				(version == 0)) {
+
 				page = getFirstVisiblePage(nodeId, portletRequest);
 			}
 			else {

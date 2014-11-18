@@ -22,8 +22,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.expando.model.ExpandoTableConstants;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.impl.JournalArticleImpl;
-import com.liferay.portlet.wiki.model.WikiPage;
-import com.liferay.portlet.wiki.model.impl.WikiPageImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -99,7 +97,7 @@ public class UpgradeExpando extends UpgradeProcess {
 			"id_");
 
 		updateTables(
-			WikiPage.class.getName(), WikiPageImpl.TABLE_NAME, "pageId");
+			"com.liferay.wiki.model.WikiPage", "WikiPage", "pageId");
 	}
 
 	protected boolean hasRow(long companyId, long tableId, long classPK)

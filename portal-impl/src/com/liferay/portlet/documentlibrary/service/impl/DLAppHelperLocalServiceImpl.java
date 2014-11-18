@@ -99,12 +99,6 @@ public class DLAppHelperLocalServiceImpl
 			return;
 		}
 
-		updateAsset(
-			userId, fileEntry, fileVersion,
-			serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames(),
-			serviceContext.getAssetLinkEntryIds());
-
 		if (PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED) {
 			mbMessageLocalService.addDiscussionMessage(
 				fileEntry.getUserId(), fileEntry.getUserName(),

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.repository.util.RepositoryWrapper;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 
 import java.io.File;
 import java.io.InputStream;
@@ -48,6 +49,12 @@ public class LiferayWorkflowRepositoryWrapper extends RepositoryWrapper {
 			userId, folderId, sourceFileName, mimeType, title, description,
 			changeLog, file, serviceContext);
 
+		DLAppHelperLocalServiceUtil.updateAsset(
+			userId, fileEntry, fileEntry.getFileVersion(),
+			serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds());
+
 		_workflowCapability.addFileEntry(userId, fileEntry, serviceContext);
 
 		return fileEntry;
@@ -63,6 +70,12 @@ public class LiferayWorkflowRepositoryWrapper extends RepositoryWrapper {
 		FileEntry fileEntry = super.addFileEntry(
 			userId, folderId, sourceFileName, mimeType, title, description,
 			changeLog, is, size, serviceContext);
+
+		DLAppHelperLocalServiceUtil.updateAsset(
+			userId, fileEntry, fileEntry.getFileVersion(),
+			serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds());
 
 		_workflowCapability.addFileEntry(userId, fileEntry, serviceContext);
 
@@ -152,6 +165,12 @@ public class LiferayWorkflowRepositoryWrapper extends RepositoryWrapper {
 
 		FileEntry fileEntry = super.copyFileEntry(
 			userId, groupId, fileEntryId, destFolderId, serviceContext);
+
+		DLAppHelperLocalServiceUtil.updateAsset(
+			userId, fileEntry, fileEntry.getFileVersion(),
+			serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds());
 
 		_workflowCapability.addFileEntry(userId, fileEntry, serviceContext);
 

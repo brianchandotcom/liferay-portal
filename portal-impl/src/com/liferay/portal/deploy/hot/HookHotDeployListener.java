@@ -1919,7 +1919,16 @@ public class HookHotDeployListener
 				serviceImplClass.getConstructor(
 					new Class<?>[] {serviceTypeClass});
 
-			Object serviceProxy = PortalBeanLocatorUtil.locate(serviceType);
+			Object serviceProxy = null;
+
+			try {
+				serviceProxy = PortalBeanLocatorUtil.locate(serviceType);
+			}
+			catch (BeanLocatorException ble) {
+				Registry registry = RegistryUtil.getRegistry();
+
+				serviceProxy = registry.getService(serviceTypeClass);
+			}
 
 			if (ProxyUtil.isProxyClass(serviceProxy.getClass())) {
 				initServices(

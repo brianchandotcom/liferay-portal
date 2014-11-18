@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.diff.DiffHtmlUtil;
 import com.liferay.portal.kernel.diff.DiffVersion;
 import com.liferay.portal.kernel.diff.DiffVersionsInfo;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -58,6 +59,8 @@ import com.liferay.wiki.engines.WikiEngine;
 import com.liferay.wiki.engines.impl.WikiEngineTracker;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.exception.WikiFormatException;
+import com.liferay.wiki.importers.WikiImporter;
+import com.liferay.wiki.importers.impl.WikiImporterTracker;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageDisplay;
@@ -485,6 +488,12 @@ public class WikiServiceUtil {
 		return _instance._getHelpURL(format);
 	}
 
+	public static Collection<String> getImporters() {
+		WikiImporterTracker wikiImporterTracker = _getWikiImporterTracker();
+
+		return wikiImporterTracker.getImporters();
+	}
+
 	public static Map<String, Boolean> getLinks(WikiPage page)
 		throws PageContentException {
 
@@ -549,6 +558,26 @@ public class WikiServiceUtil {
 		return orderByComparator;
 	}
 
+	public static WikiImporter getWikiImporter(String importer) {
+		WikiImporterTracker wikiImporterTracker = _getWikiImporterTracker();
+
+		WikiImporter wikiImporter = wikiImporterTracker.getWikiImporter(
+			importer);
+
+		if (wikiImporter == null) {
+			throw new SystemException(
+				"Unable to instantiate wiki importer with name " + importer);
+		}
+
+		return wikiImporter;
+	}
+
+	public static String getWikiImporterPage(String format) {
+		WikiImporterTracker wikiImporterTracker = _getWikiImporterTracker();
+
+		return wikiImporterTracker.getProperty(format, "page");
+	}
+
 	public static List<WikiNode> orderNodes(
 		List<WikiNode> nodes, String[] visibleNodeNames) {
 
@@ -597,6 +626,10 @@ public class WikiServiceUtil {
 
 	private static WikiEngineTracker _getWikiEngineTracker() {
 		return _wikiEngineServiceTracker.getService();
+	}
+
+	private static WikiImporterTracker _getWikiImporterTracker() {
+		return _wikiImporterServiceTracker.getService();
 	}
 
 	private String _convert(
@@ -765,6 +798,8 @@ public class WikiServiceUtil {
 		"\\[\\$BEGIN_PAGE_TITLE\\$\\](.*?)\\[\\$END_PAGE_TITLE\\$\\]");
 	private static final ServiceTracker<WikiEngineTracker, WikiEngineTracker>
 		_wikiEngineServiceTracker;
+	private static final ServiceTracker<
+		WikiImporterTracker, WikiImporterTracker> _wikiImporterServiceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(WikiServiceUtil.class);
@@ -773,6 +808,11 @@ public class WikiServiceUtil {
 			bundle.getBundleContext(), WikiEngineTracker.class, null);
 
 		_wikiEngineServiceTracker.open();
+
+		_wikiImporterServiceTracker = new ServiceTracker<>(
+			bundle.getBundleContext(), WikiImporterTracker.class, null);
+
+		_wikiImporterServiceTracker.open();
 	}
 
 }

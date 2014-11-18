@@ -213,11 +213,14 @@ public class ResourceBlockLocalServiceTest {
 		Connection connection = DataAccess.getConnection();
 
 		PreparedStatement preparedStatement = connection.prepareStatement(
-			"INSERT INTO ResourceBlock (resourceBlockId, referenceCount) " +
-				"VALUES (?, ?)");
+			"INSERT INTO ResourceBlock (resourceBlockId, companyId, groupId, " +
+				"name, referenceCount) VALUES (?, ?, ?, ?, ?)");
 
 		preparedStatement.setLong(1, resourceBlockId);
-		preparedStatement.setLong(2, referenceCount);
+		preparedStatement.setLong(2, _COMPANY_ID);
+		preparedStatement.setLong(3, _GROUP_ID);
+		preparedStatement.setString(4, _MODEL_NAME);
+		preparedStatement.setLong(5, referenceCount);
 
 		Assert.assertEquals(1, preparedStatement.executeUpdate());
 

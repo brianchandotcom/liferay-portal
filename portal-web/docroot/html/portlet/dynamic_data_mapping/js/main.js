@@ -507,14 +507,13 @@ AUI.add(
 				var instance = this;
 
 				if (isString(str)) {
-					A.each(
-						str,
-						function(item, index) {
-							if (!A.Text.Unicode.test(item, 'L') && !A.Text.Unicode.test(item, 'N') && !A.Text.Unicode.test(item, 'Pd')) {
-								str = str.replace(item, STR_SPACE);
-							}
+					for (var i = 0; i < str.length; i++) {
+						var item = str.charAt(i);
+
+						if (!A.Text.Unicode.test(item, 'L') && !A.Text.Unicode.test(item, 'N') && !A.Text.Unicode.test(item, 'Pd')) {
+							str = str.replace(item, STR_SPACE);
 						}
-					);
+					}
 
 					str = str.replace(/\s/g, '_');
 				}

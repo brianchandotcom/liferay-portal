@@ -17,6 +17,7 @@ package com.liferay.portal.service;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.model.PermissionedModel;
 import com.liferay.portal.model.ResourceBlockPermissionsContainer;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
@@ -109,7 +110,9 @@ public class ResourceBlockLocalServiceTest {
 		}
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
-			_THREAD_COUNT);
+			_THREAD_COUNT,
+			new NamedThreadFactory(
+				"Concurrent Accessing-", Thread.NORM_PRIORITY, null));
 
 		List<Future<Void>> futures = executorService.invokeAll(callables);
 
@@ -138,7 +141,9 @@ public class ResourceBlockLocalServiceTest {
 		}
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
-			_THREAD_COUNT);
+			_THREAD_COUNT,
+			new NamedThreadFactory(
+				"Concurrent Release-", Thread.NORM_PRIORITY, null));
 
 		List<Future<Void>> futures = executorService.invokeAll(callables);
 
@@ -186,7 +191,9 @@ public class ResourceBlockLocalServiceTest {
 		}
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
-			_THREAD_COUNT);
+			_THREAD_COUNT,
+			new NamedThreadFactory(
+				"Concurrent Update-", Thread.NORM_PRIORITY, null));
 
 		List<Future<Void>> futures = executorService.invokeAll(callables);
 

@@ -420,10 +420,6 @@ public class EditEntryAction extends PortletAction {
 		StringBundler sb = new StringBundler(8);
 
 		sb.append("<img ");
-		sb.append(EditorConstants.DATA_IMAGE_ID_ATTRIBUTE);
-		sb.append("=\"");
-		sb.append(tempAttachment.getFileEntryId());
-		sb.append("\" ");
 		sb.append("src=\"");
 
 		sb.append(
@@ -537,7 +533,7 @@ public class EditEntryAction extends PortletAction {
 		List<FileEntry> entryAttachments = new ArrayList<>(
 			tempAttachments.size());
 
-		String content = entry.getContent();
+		String content = ParamUtil.getString(actionRequest, "content");
 
 		for (FileEntry tempAttachment : tempAttachments) {
 			String fileName = ParamUtil.getString(
@@ -668,7 +664,7 @@ public class EditEntryAction extends PortletAction {
 
 			if (entry != null && !tempAttachments.isEmpty()) {
 				content = updateContentAttachmentLinks(
-					entry.getGroupId(), entry, tempAttachments, actionRequest);
+						entry.getGroupId(), entry, tempAttachments, actionRequest);
 
 				entry = BlogsEntryServiceUtil.updateEntry(
 					entry.getEntryId(), title, subtitle, description, content,

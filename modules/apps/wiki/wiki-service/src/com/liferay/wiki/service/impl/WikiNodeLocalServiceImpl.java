@@ -49,6 +49,7 @@ import com.liferay.wiki.importers.WikiImporter;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.base.WikiNodeLocalServiceBaseImpl;
+import com.liferay.wiki.util.WikiServiceUtil;
 
 import java.io.InputStream;
 
@@ -362,7 +363,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 		WikiNode node = getNode(nodeId);
 
-		WikiImporter wikiImporter = getWikiImporter(importer);
+		WikiImporter wikiImporter = WikiServiceUtil.getWikiImporter(importer);
 
 		wikiImporter.importPages(userId, node, inputStreams, options);
 	}
@@ -523,38 +524,6 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		return nodes;
 	}
 
-	protected WikiImporter getWikiImporter(String importer) {
-		WikiImporter wikiImporter = _wikiImporters.get(importer);
-
-		if (wikiImporter == null) {
-			String importerClassName = PropsUtil.get(
-				WikiPropsKeys.IMPORTERS_CLASS, new Filter(importer));
-
-			if (importerClassName != null) {
-				try {
-					wikiImporter = (WikiImporter)InstanceFactory.newInstance(
-						getClassLoader(), importerClassName);
-
-					_wikiImporters.put(importer, wikiImporter);
-				}
-				catch (Exception e) {
-					throw new SystemException(
-						"Unable to instantiate wiki importer class " +
-							importerClassName,
-						e);
-				}
-			}
-
-			if (importer == null) {
-				throw new SystemException(
-					"Unable to instantiate wiki importer class " +
-						importerClassName);
-			}
-		}
-
-		return wikiImporter;
-	}
-
 	protected void moveDependentsToTrash(long nodeId, long trashEntryId)
 		throws PortalException {
 
@@ -603,7 +572,5 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiNodeLocalServiceImpl.class);
-
-	private final Map<String, WikiImporter> _wikiImporters = new HashMap<>();
 
 }

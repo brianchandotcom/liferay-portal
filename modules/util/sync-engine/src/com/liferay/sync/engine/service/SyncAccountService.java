@@ -27,10 +27,13 @@ import com.liferay.sync.engine.util.OSDetector;
 
 import java.io.IOException;
 
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.sql.SQLException;
 
@@ -143,9 +146,16 @@ public class SyncAccountService {
 
 			_syncAccountPersistence.deleteById(syncAccountId);
 
-			// Delete sync sites and then sync files so that we do not encounter
-			// a java.nio.file.DirectoryNotEmptyException when trying to delete
-			// the account folder
+			// Sync files
+
+			try {
+				deleteSyncFiles(syncAccount);
+			}
+			catch (IOException ioe) {
+				_logger.error(ioe.getMessage(), ioe);
+			}
+
+			// Sync sites
 
 			List<SyncSite> syncSites = SyncSiteService.findSyncSites(
 				syncAccountId);
@@ -154,23 +164,15 @@ public class SyncAccountService {
 				SyncSiteService.deleteSyncSite(syncSite.getSyncSiteId());
 			}
 
-			SyncFile syncFile = SyncFileService.fetchSyncFile(
-				syncAccount.getFilePathName());
-
-			SyncFileService.deleteSyncFile(syncFile, false);
-
-			try {
-				Files.deleteIfExists(Paths.get(syncAccount.getFilePathName()));
-			}
-			catch (IOException ioe) {
-				_logger.error(ioe.getMessage(), ioe);
-			}
-
 			// Sync user
 
 			SyncUser syncUser = SyncUserService.fetchSyncUser(syncAccountId);
 
 			SyncUserService.deleteSyncUser(syncUser.getSyncUserId());
+
+			// Sync watch events
+
+			SyncWatchEventService.deleteSyncWatchEvents(syncAccountId);
 		}
 		catch (SQLException sqle) {
 			if (_logger.isDebugEnabled()) {
@@ -362,6 +364,47 @@ public class SyncAccountService {
 		syncAccount.setUiEvent(SyncAccount.UI_EVENT_DEFAULT);
 
 		SyncAccountService.update(syncAccount);
+	}
+
+	protected static void deleteSyncFiles(SyncAccount syncAccount)
+		throws IOException {
+
+		SyncFile syncFile = SyncFileService.fetchSyncFile(
+			syncAccount.getFilePathName());
+
+		SyncFileService.deleteSyncFile(syncFile, false);
+
+		Path filePath = Paths.get(syncAccount.getFilePathName());
+
+		if (!Files.exists(filePath)) {
+			return;
+		}
+
+		Files.walkFileTree(
+			filePath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult postVisitDirectory(
+						Path filePath, IOException ioe)
+					throws IOException {
+
+					Files.deleteIfExists(filePath);
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(
+						Path filePath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					Files.deleteIfExists(filePath);
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

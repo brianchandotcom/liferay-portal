@@ -76,6 +76,8 @@ public class Session {
 
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 
+		httpClientBuilder.disableAutomaticRetries();
+
 		CredentialsProvider credentialsProvider =
 			new BasicCredentialsProvider();
 

@@ -3,5 +3,5 @@ Bundle-SymbolicName: com.liferay.sync.engine
 Bundle-Version: 2.0.0
 Export-Package: *
 Include-Resource:\
-	sync-log4j.xml=src/sync-log4j.xml,\
+	sync-logback.xml=src/sync-logback.xml,\
 	sync.properties=src/sync.properties

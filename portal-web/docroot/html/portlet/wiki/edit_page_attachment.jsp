@@ -144,8 +144,8 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 			tempFileURL: {
 				method: Liferay.Service.bind('/wikipage/get-temp-file-names'),
 				params: {
-					nodeId: <%= node.getNodeId() %>,
-					folderName: 'com.liferay.portlet.wiki.action.EditPageAttachmentsAction'
+					folderName: 'com.liferay.portlet.wiki.action.EditPageAttachmentsAction',
+					nodeId: <%= node.getNodeId() %>
 				}
 			},
 			uploadFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>"><portlet:param name="struts_action" value="/wiki/edit_page_attachment" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" /><portlet:param name="title" value="<%= wikiPage.getTitle() %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= WikiPage.class.getName() %>" />'

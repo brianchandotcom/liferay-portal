@@ -407,13 +407,7 @@ for (int i = 0; i < results.size(); i++) {
 
 			var rowIds = $('input[name=<portlet:namespace />rowIds]');
 
-			rowIds.each(
-				function(index, item) {
-					if (index >= 2) {
-						$(item).prop('checked', false);
-					}
-				}
-			);
+			rowIds.slice(2).prop('checked', false);
 		}
 
 		function <portlet:namespace />updateRowsChecked(element) {
@@ -477,7 +471,7 @@ for (int i = 0; i < results.size(); i++) {
 		$('input[name=<portlet:namespace />rowIds]').on(
 			'click',
 			function(event) {
-				<portlet:namespace />updateRowsChecked($(event.currentTarget));
+				<portlet:namespace />updateRowsChecked(event.currentTarget);
 			}
 		);
 	</aui:script>

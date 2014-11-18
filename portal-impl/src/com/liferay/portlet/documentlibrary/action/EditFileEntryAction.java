@@ -976,13 +976,8 @@ public class EditFileEntryAction extends PortletAction {
 		InputStream inputStream = null;
 
 		try {
-			String contentType = null;
-			long size = 0;
-
-			if (uploadPortletRequest.getParameter("file") != null) {
-				contentType = uploadPortletRequest.getContentType("file");
-				size = uploadPortletRequest.getSize("file");
-			}
+			String contentType = uploadPortletRequest.getContentType("file");
+			long size = uploadPortletRequest.getSize("file");
 
 			if ((cmd.equals(Constants.ADD) ||
 				 cmd.equals(Constants.ADD_DYNAMIC)) &&

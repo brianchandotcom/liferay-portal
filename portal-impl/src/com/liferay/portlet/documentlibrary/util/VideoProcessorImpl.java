@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemEnv;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xuggler.XugglerUtil;
 import com.liferay.portal.log.Log4jLogFactoryImpl;
@@ -166,16 +165,8 @@ public class VideoProcessorImpl
 
 	@Override
 	public boolean isSupported(String mimeType) {
-		if (Validator.isNull(mimeType)) {
-			return false;
-		}
-
-		try {
-			if (XugglerUtil.isEnabled()) {
-				return _videoMimeTypes.contains(mimeType);
-			}
-		}
-		catch (Exception e) {
+		if (_videoMimeTypes.contains(mimeType) && XugglerUtil.isEnabled()) {
+			return true;
 		}
 
 		return false;

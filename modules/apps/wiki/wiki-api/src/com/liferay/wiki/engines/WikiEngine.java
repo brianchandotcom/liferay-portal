@@ -56,23 +56,6 @@ public interface WikiEngine {
 		throws PageContentException;
 
 	/**
-	 * Set the configuration to support quick links to other wikis. The format
-	 * of the configuration is specific to the wiki engine.
-	 *
-	 * @param interWikiConfiguration the configuration to support quick links to
-	 *        other wikis
-	 */
-	public void setInterWikiConfiguration(String interWikiConfiguration);
-
-	/**
-	 * Sets the main wiki configuration as a String. The format of the
-	 * configuration is specific to the wiki engine.
-	 *
-	 * @param mainConfiguration the main configuration of the wiki engine
-	 */
-	public void setMainConfiguration(String mainConfiguration);
-
-	/**
 	 * Returns <code>true</code> if the content of a wiki page for this engine
 	 * is valid.
 	 *

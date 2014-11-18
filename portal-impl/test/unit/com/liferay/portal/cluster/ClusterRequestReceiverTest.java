@@ -52,15 +52,12 @@ public class ClusterRequestReceiverTest
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			ClusterRequestReceiver.class.getName(), Level.OFF);
 
-		ClusterExecutorImpl clusterExecutorImpl1 = null;
-		ClusterExecutorImpl clusterExecutorImpl2 = null;
+		ClusterExecutorImpl clusterExecutorImpl1 = getClusterExecutorImpl();
+		ClusterExecutorImpl clusterExecutorImpl2 = getClusterExecutorImpl();
 
 		try {
 
 			// Test 1, return value is null
-
-			clusterExecutorImpl1 = getClusterExecutorImpl();
-			clusterExecutorImpl2 = getClusterExecutorImpl();
 
 			ClusterRequest clusterRequest = ClusterRequest.createUnicastRequest(
 				new MethodHandler(testMethod1MethodKey, StringPool.BLANK),
@@ -133,13 +130,8 @@ public class ClusterRequestReceiverTest
 		finally {
 			captureHandler.close();
 
-			if (clusterExecutorImpl1 != null) {
-				clusterExecutorImpl1.destroy();
-			}
-
-			if (clusterExecutorImpl2 != null) {
-				clusterExecutorImpl2.destroy();
-			}
+			clusterExecutorImpl1.destroy();
+			clusterExecutorImpl2.destroy();
 		}
 	}
 
@@ -151,15 +143,12 @@ public class ClusterRequestReceiverTest
 		})
 	@Test
 	public void testInvokeWithSingleThreadPool() throws Exception {
-		ClusterExecutorImpl clusterExecutorImpl1 = null;
-		ClusterExecutorImpl clusterExecutorImpl2 = null;
+		ClusterExecutorImpl clusterExecutorImpl1 = getClusterExecutorImpl();
+		ClusterExecutorImpl clusterExecutorImpl2 = getClusterExecutorImpl();
 
 		String value = "testValue";
 
 		try {
-			clusterExecutorImpl1 = getClusterExecutorImpl();
-			clusterExecutorImpl2 = getClusterExecutorImpl();
-
 			Address address = clusterExecutorImpl2.getLocalClusterNodeAddress();
 
 			ClusterRequest clusterRequest1 =
@@ -186,13 +175,8 @@ public class ClusterRequestReceiverTest
 				address);
 		}
 		finally {
-			if (clusterExecutorImpl1 != null) {
-				clusterExecutorImpl1.destroy();
-			}
-
-			if (clusterExecutorImpl2 != null) {
-				clusterExecutorImpl2.destroy();
-			}
+			clusterExecutorImpl1.destroy();
+			clusterExecutorImpl2.destroy();
 		}
 	}
 

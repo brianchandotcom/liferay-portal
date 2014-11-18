@@ -69,15 +69,12 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 	public void testDestroy() {
 		TransportationConfigurationAdvice.setChannelCount(2);
 
-		ClusterLinkImpl clusterLinkImpl = null;
+		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl();
 
 		try {
-			clusterLinkImpl = getClusterLinkImpl();
-
 			List<JChannel> jChannels = getJChannels(clusterLinkImpl);
 
 			Assert.assertEquals(2, jChannels.size());
-
 			Assert.assertTrue(isOpen(jChannels.get(0)));
 			Assert.assertTrue(isOpen(jChannels.get(1)));
 
@@ -87,9 +84,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 			Assert.assertFalse(isOpen(jChannels.get(1)));
 		}
 		finally {
-			if (clusterLinkImpl != null) {
-				clusterLinkImpl.destroy();
-			}
+			clusterLinkImpl.destroy();
 		}
 	}
 
@@ -107,15 +102,12 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			ClusterLinkImpl.class.getName(), Level.FINE);
 
-		ClusterLinkImpl clusterLinkImpl = null;
+		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl();
 
 		try {
-			clusterLinkImpl = getClusterLinkImpl();
-
 			List<JChannel> jChannels = getJChannels(clusterLinkImpl);
 
 			Assert.assertEquals(2, jChannels.size());
-
 			Assert.assertSame(
 				jChannels.get(0), clusterLinkImpl.getChannel(Priority.LEVEL1));
 			Assert.assertSame(
@@ -126,7 +118,6 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 				jChannels.get(0), clusterLinkImpl.getChannel(Priority.LEVEL4));
 			Assert.assertSame(
 				jChannels.get(0), clusterLinkImpl.getChannel(Priority.LEVEL5));
-
 			Assert.assertSame(
 				jChannels.get(1), clusterLinkImpl.getChannel(Priority.LEVEL6));
 			Assert.assertSame(
@@ -141,9 +132,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		finally {
 			captureHandler.close();
 
-			if (clusterLinkImpl != null) {
-				clusterLinkImpl.destroy();
-			}
+			clusterLinkImpl.destroy();
 		}
 	}
 
@@ -158,11 +147,9 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 	public void testGetLocalTransportAddresses() {
 		TransportationConfigurationAdvice.setChannelCount(2);
 
-		ClusterLinkImpl clusterLinkImpl = null;
+		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl();
 
 		try {
-			clusterLinkImpl = getClusterLinkImpl();
-
 			List<Address> addresses =
 				clusterLinkImpl.getLocalTransportAddresses();
 
@@ -173,15 +160,12 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 			Assert.assertSame(
 				jChannels.get(0).getAddress(),
 				addresses.get(0).getRealAddress());
-
 			Assert.assertSame(
 				jChannels.get(1).getAddress(),
 				addresses.get(1).getRealAddress());
 		}
 		finally {
-			if (clusterLinkImpl != null) {
-				clusterLinkImpl.destroy();
-			}
+			clusterLinkImpl.destroy();
 		}
 	}
 
@@ -196,13 +180,10 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 	public void testGetTransportAddressesByPriority() {
 		TransportationConfigurationAdvice.setChannelCount(2);
 
-		ClusterLinkImpl clusterLinkImpl1 = null;
-		ClusterLinkImpl clusterLinkImpl2 = null;
+		ClusterLinkImpl clusterLinkImpl1 = getClusterLinkImpl();
+		ClusterLinkImpl clusterLinkImpl2 = getClusterLinkImpl();
 
 		try {
-			clusterLinkImpl1 = getClusterLinkImpl();
-			clusterLinkImpl2 = getClusterLinkImpl();
-
 			List<JChannel> jChannels1 = getJChannels(clusterLinkImpl1);
 			List<JChannel> jChannels2 = getJChannels(clusterLinkImpl2);
 
@@ -216,14 +197,12 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 			Assert.assertEquals(2, addresses1.size());
 			Assert.assertEquals(2, addresses2.size());
-
 			Assert.assertTrue(
 				addresses1.contains(
 					new AddressImpl(jChannels1.get(0).getAddress())));
 			Assert.assertTrue(
 				addresses1.contains(
 					new AddressImpl(jChannels2.get(0).getAddress())));
-
 			Assert.assertTrue(
 				addresses2.contains(
 					new AddressImpl(jChannels1.get(1).getAddress())));
@@ -232,13 +211,8 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 					new AddressImpl(jChannels2.get(1).getAddress())));
 		}
 		finally {
-			if (clusterLinkImpl1 != null) {
-				clusterLinkImpl1.destroy();
-			}
-
-			if (clusterLinkImpl2 != null) {
-				clusterLinkImpl2.destroy();
-			}
+			clusterLinkImpl1.destroy();
+			clusterLinkImpl2.destroy();
 		}
 	}
 
@@ -271,7 +245,6 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 			}
 			catch (IllegalStateException ise) {
 				Assert.assertEquals(0, logRecords.size());
-
 				Assert.assertEquals(
 					"java.lang.IllegalArgumentException: Channel count must " +
 						"be between 1 and " + ClusterLinkImpl.MAX_CHANNEL_COUNT,
@@ -291,11 +264,9 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 			}
 			catch (IllegalStateException ise) {
 				Assert.assertEquals(1, logRecords.size());
-
 				Assert.assertEquals(
 					"Unable to initialize channels",
 					logRecords.get(0).getMessage());
-
 				Assert.assertEquals(
 					"java.lang.IllegalArgumentException: Channel count must " +
 						"be between 1 and " + ClusterLinkImpl.MAX_CHANNEL_COUNT,
@@ -321,15 +292,11 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 		BaseReceiverAdvice.reset(3);
 
-		ClusterLinkImpl clusterLinkImpl1 = null;
-		ClusterLinkImpl clusterLinkImpl2 = null;
-		ClusterLinkImpl clusterLinkImpl3 = null;
+		ClusterLinkImpl clusterLinkImpl1 = getClusterLinkImpl();
+		ClusterLinkImpl clusterLinkImpl2 = getClusterLinkImpl();
+		ClusterLinkImpl clusterLinkImpl3 = getClusterLinkImpl();
 
 		try {
-			clusterLinkImpl1 = getClusterLinkImpl();
-			clusterLinkImpl2 = getClusterLinkImpl();
-			clusterLinkImpl3 = getClusterLinkImpl();
-
 			List<JChannel> jChannels1 = getJChannels(clusterLinkImpl1);
 			List<JChannel> jChannels2 = getJChannels(clusterLinkImpl2);
 			List<JChannel> jChannels3 = getJChannels(clusterLinkImpl3);
@@ -368,17 +335,9 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 				message.getPayload(), receivedMessage3.getPayload());
 		}
 		finally {
-			if (clusterLinkImpl1 != null) {
-				clusterLinkImpl1.destroy();
-			}
-
-			if (clusterLinkImpl2 != null) {
-				clusterLinkImpl2.destroy();
-			}
-
-			if (clusterLinkImpl3 != null) {
-				clusterLinkImpl3.destroy();
-			}
+			clusterLinkImpl1.destroy();
+			clusterLinkImpl2.destroy();
+			clusterLinkImpl3.destroy();
 		}
 	}
 
@@ -397,13 +356,11 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			ClusterLinkImpl.class.getName(), Level.WARNING);
 
-		ClusterLinkImpl clusterLinkImpl = null;
+		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl();
 
 		try {
 
 			// Test 1, send message when clusterLinkImpl is destroyed
-
-			clusterLinkImpl = getClusterLinkImpl();
 
 			clusterLinkImpl.destroy();
 
@@ -438,9 +395,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		finally {
 			captureHandler.close();
 
-			if (clusterLinkImpl != null) {
-				clusterLinkImpl.destroy();
-			}
+			clusterLinkImpl.destroy();
 		}
 	}
 
@@ -458,13 +413,10 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 		BaseReceiverAdvice.reset(1);
 
-		ClusterLinkImpl clusterLinkImpl1 = null;
-		ClusterLinkImpl clusterLinkImpl2 = null;
+		ClusterLinkImpl clusterLinkImpl1 = getClusterLinkImpl();
+		ClusterLinkImpl clusterLinkImpl2 = getClusterLinkImpl();
 
 		try {
-			clusterLinkImpl1 = getClusterLinkImpl();
-			clusterLinkImpl2 = getClusterLinkImpl();
-
 			List<JChannel> jChannels1 = getJChannels(clusterLinkImpl1);
 			List<JChannel> jChannels2 = getJChannels(clusterLinkImpl2);
 
@@ -496,13 +448,8 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 				message.getPayload(), receivedMessage2.getPayload());
 		}
 		finally {
-			if (clusterLinkImpl1 != null) {
-				clusterLinkImpl1.destroy();
-			}
-
-			if (clusterLinkImpl2 != null) {
-				clusterLinkImpl2.destroy();
-			}
+			clusterLinkImpl1.destroy();
+			clusterLinkImpl2.destroy();
 		}
 	}
 
@@ -521,13 +468,11 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			ClusterLinkImpl.class.getName(), Level.WARNING);
 
-		ClusterLinkImpl clusterLinkImpl = null;
+		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl();
 
 		try {
 
 			// Test 1, send message when clusterLinkImpl is destroyed
-
-			clusterLinkImpl = getClusterLinkImpl();
 
 			clusterLinkImpl.destroy();
 
@@ -564,9 +509,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		finally {
 			captureHandler.close();
 
-			if (clusterLinkImpl != null) {
-				clusterLinkImpl.destroy();
-			}
+			clusterLinkImpl.destroy();
 		}
 	}
 

@@ -23,9 +23,9 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -68,33 +68,27 @@ public class BaseClusterTestCase {
 			try {
 				_countDownLatch.await(1000, TimeUnit.MILLISECONDS);
 			}
-			catch (InterruptedException te) {
+			catch (InterruptedException ie) {
 			}
 		}
 
 		public static Object getJgroupsMessagePayload(
 			Receiver receiver, org.jgroups.Address sourceAddress) {
 
-			synchronized(BaseReceiverAdvice.class) {
-				List<org.jgroups.Message> jgroupsMessageList =
-					_jgroupsMessages.get(receiver);
+			List<org.jgroups.Message> jgroupsMessageList = _jgroupsMessages.get(
+				receiver);
 
-				if ((jgroupsMessageList == null) ||
-					jgroupsMessageList.isEmpty()) {
-
-					return null;
-				}
-
-				for (org.jgroups.Message jgroupsMessage : jgroupsMessageList) {
-					if (!sourceAddress.equals(jgroupsMessage.getSrc())) {
-						continue;
-					}
-
-					return jgroupsMessage.getObject();
-				}
-
+			if ((jgroupsMessageList == null) || jgroupsMessageList.isEmpty()) {
 				return null;
 			}
+
+			for (org.jgroups.Message jgroupsMessage : jgroupsMessageList) {
+				if (sourceAddress.equals(jgroupsMessage.getSrc())) {
+					return jgroupsMessage.getObject();
+				}
+			}
+
+			return null;
 		}
 
 		public static void reset(int expectedMessageNumber) {
@@ -106,33 +100,34 @@ public class BaseClusterTestCase {
 		@Around(
 			"execution(* com.liferay.portal.cluster.BaseReceiver." +
 				"doReceive(org.jgroups.Message))")
-		public void doReceive(ProceedingJoinPoint proceedingJoinPoint)
-			throws Throwable {
+		public void doReceive(ProceedingJoinPoint proceedingJoinPoint) {
+			Receiver receiver = (Receiver)proceedingJoinPoint.getThis();
+			org.jgroups.Message jgroupsMessage =
+				(org.jgroups.Message)proceedingJoinPoint.getArgs()[0];
 
-			synchronized(BaseReceiverAdvice.class) {
-				Receiver receiver = (Receiver)proceedingJoinPoint.getThis();
-				org.jgroups.Message jgroupsMessage =
-					(org.jgroups.Message)proceedingJoinPoint.getArgs()[0];
+			List<org.jgroups.Message> jgroupsMessageList = _jgroupsMessages.get(
+				receiver);
 
-				List<org.jgroups.Message> jgroupsMessageList =
-					_jgroupsMessages.get(receiver);
+			if (jgroupsMessageList == null) {
+				jgroupsMessageList = new ArrayList<org.jgroups.Message>();
 
-				if (jgroupsMessageList == null) {
-					jgroupsMessageList = new ArrayList<org.jgroups.Message>();
+				List<org.jgroups.Message> previousJgroupsMessageList =
+					_jgroupsMessages.putIfAbsent(receiver, jgroupsMessageList);
 
-					_jgroupsMessages.put(receiver, jgroupsMessageList);
+				if (previousJgroupsMessageList != null) {
+					jgroupsMessageList = previousJgroupsMessageList;
 				}
-
-				jgroupsMessageList.add(jgroupsMessage);
-
-				_countDownLatch.countDown();
 			}
+
+			jgroupsMessageList.add(jgroupsMessage);
+
+			_countDownLatch.countDown();
 		}
 
 		private static CountDownLatch _countDownLatch;
-		private static final Map<Receiver, List<org.jgroups.Message>>
+		private static final ConcurrentMap<Receiver, List<org.jgroups.Message>>
 			_jgroupsMessages =
-				new HashMap<Receiver, List<org.jgroups.Message>>();
+				new ConcurrentHashMap<Receiver, List<org.jgroups.Message>>();
 
 	}
 
@@ -193,13 +188,11 @@ public class BaseClusterTestCase {
 				throw _connectException;
 			}
 
-			proceedingJoinPoint.proceed(proceedingJoinPoint.getArgs());
+			proceedingJoinPoint.proceed();
 		}
 
 		@Around("call(* org.jgroups.JChannel.send(..))")
-		public Object send(ProceedingJoinPoint proceedingJoinPoint)
-			throws Throwable {
-
+		public Object send() throws Exception {
 			throw new Exception();
 		}
 

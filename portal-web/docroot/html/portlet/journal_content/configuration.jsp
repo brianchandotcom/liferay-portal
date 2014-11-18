@@ -139,17 +139,17 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 	</aui:fieldset>
 
 	<aui:button-row>
-		<aui:button type="submit" />
+		<aui:button name="saveButton" type="submit" />
 	</aui:button-row>
 </aui:form>
 
-<aui:script use="aui-base,liferay-util-list-fields">
-	A.one('#<portlet:namespace />webContentSelector').on(
+<aui:script sandbox="<%= true %>">
+	var form = AUI.$(document.<portlet:namespace />fm);
+
+	$('#<portlet:namespace />webContentSelector').on(
 		'click',
 		function(event) {
 			event.preventDefault();
-
-			var currentTarget = event.currentTarget;
 
 			<liferay-portlet:renderURL portletName="<%= PortletKeys.ASSET_BROWSER %>" refererPlid="<%= PortalUtil.getControlPanelPlid(company.getCompanyId()) %>" var="selectWebContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="struts_action" value="/asset_browser/view" />
@@ -172,13 +172,13 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 					uri: '<%= selectWebContentURL %>'
 				},
 				function(event) {
-					document.<portlet:namespace />fm.<portlet:namespace />assetEntryId.value = event.assetentryid;
-					document.<portlet:namespace />fm.<portlet:namespace />ddmTemplateKey.value = '';
+					form.fm('assetEntryId').val(event.assetentryid);
+					form.fm('ddmTemplateKey').val('');
 
-					A.one('.displaying-article-id-holder').show();
-					A.one('.displaying-help-message-holder').hide();
+					$('.displaying-article-id-holder').removeClass('hide');
+					$('.displaying-help-message-holder').addClass('hide');
 
-					var displayArticleId = A.one('.displaying-article-id');
+					var displayArticleId = $('.displaying-article-id');
 
 					displayArticleId.html(event.assettitle + ' (<liferay-ui:message key="modified" />)');
 
@@ -188,14 +188,14 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 		}
 	);
 
-	A.one('#<portlet:namespace />fm').on(
-		'submit',
+	form.fm('saveButton').on(
+		'click',
 		function(event) {
 			event.preventDefault();
 
-			document.<portlet:namespace />fm.<portlet:namespace />extensions.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentExtensions);
+			form.fm('extensions').val(Liferay.Util.listSelect(form.fm('currentExtensions')));
 
-			submitForm(document.<portlet:namespace />fm);
+			submitForm(form);
 		}
 	);
 </aui:script>

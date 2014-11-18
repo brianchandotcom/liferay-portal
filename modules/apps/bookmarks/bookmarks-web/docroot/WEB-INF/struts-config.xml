@@ -22,7 +22,7 @@
 		<action path="/bookmarks/search" forward="/portlet/bookmarks/search.jsp" />
 
 		<action path="/bookmarks/select_folder" type="com.liferay.bookmarks.web.portlet.action.EditFolderAction">
-			<forward name="portlet.bookmarks.edit_folder" path="/portlet/bookmarks/select_folder" />
+			<forward name="portlet.bookmarks.edit_folder" path="/portlet/bookmarks/select_folder.jsp" />
 			<forward name="portlet.bookmarks.error" path="/portlet/bookmarks/error.jsp" />
 		</action>
 

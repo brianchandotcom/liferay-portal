@@ -28,8 +28,9 @@ import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.service.WikiPageServiceUtil;
 import com.liferay.wiki.util.WikiServiceUtil;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Jorge Ferrer

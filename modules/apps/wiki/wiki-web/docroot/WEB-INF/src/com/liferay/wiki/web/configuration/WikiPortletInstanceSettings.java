@@ -29,9 +29,11 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
-import javax.portlet.ValidatorException;
 import java.io.IOException;
+
 import java.util.Map;
+
+import javax.portlet.ValidatorException;
 
 /**
  * @author Iván Zaera

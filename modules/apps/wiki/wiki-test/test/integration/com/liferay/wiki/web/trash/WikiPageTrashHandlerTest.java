@@ -24,9 +24,9 @@ import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationTestRule;
 import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
-import com.liferay.wiki.web.asset.WikiPageAssetRenderer;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
+import com.liferay.wiki.web.asset.WikiPageAssetRenderer;
 
 import org.junit.ClassRule;
 import org.junit.Ignore;

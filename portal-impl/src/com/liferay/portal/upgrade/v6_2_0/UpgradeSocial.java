@@ -27,8 +27,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.wiki.model.WikiPage;
-import com.liferay.portlet.wiki.social.WikiActivityKeys;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -247,7 +245,8 @@ public class UpgradeSocial extends UpgradeProcess {
 	}
 
 	protected void updateWikiPageActivities() throws Exception {
-		long classNameId = PortalUtil.getClassNameId(WikiPage.class);
+		long classNameId = PortalUtil.getClassNameId(
+			"com.liferay.wiki.model.WikiPage");
 
 		runSQL("delete from SocialActivity where classNameId = " + classNameId);
 
@@ -274,10 +273,10 @@ public class UpgradeSocial extends UpgradeProcess {
 				long resourcePrimKey = rs.getLong("resourcePrimKey");
 				double version = rs.getDouble("version");
 
-				int type = WikiActivityKeys.ADD_PAGE;
+				int type = 1;
 
 				if (version > 1.0) {
-					type = WikiActivityKeys.UPDATE_PAGE;
+					type = 2;
 				}
 
 				modifiedDate = getUniqueModifiedDate(

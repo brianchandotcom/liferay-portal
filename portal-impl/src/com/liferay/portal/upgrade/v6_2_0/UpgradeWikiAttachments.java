@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.v6_2_0.BaseUpgradeAttachments;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.wiki.model.WikiPage;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,7 +31,7 @@ public class UpgradeWikiAttachments extends BaseUpgradeAttachments {
 
 	@Override
 	protected String getClassName() {
-		return WikiPage.class.getName();
+		return "com.liferay.wiki.model.WikiPage";
 	}
 
 	@Override

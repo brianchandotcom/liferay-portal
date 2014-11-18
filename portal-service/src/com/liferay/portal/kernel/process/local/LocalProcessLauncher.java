@@ -43,9 +43,7 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class LocalProcessLauncher {
 
-	public static void main(String[] arguments)
-		throws ClassNotFoundException, IOException {
-
+	public static void main(String[] arguments) throws IOException {
 		PrintStream oldOutPrintStream = System.out;
 
 		ObjectOutputStream objectOutputStream = null;
@@ -130,11 +128,20 @@ public class LocalProcessLauncher {
 
 			outProcessOutputStream.flush();
 		}
-		catch (ProcessException pe) {
+		catch (Throwable t) {
 			errPrintStream.flush();
 
+			ProcessException processException = null;
+
+			if (t instanceof ProcessException) {
+				processException = (ProcessException)t;
+			}
+			else {
+				processException = new ProcessException(t);
+			}
+
 			errProcessOutputStream.writeProcessCallable(
-				new ExceptionProcessCallable(pe));
+				new ExceptionProcessCallable(processException));
 
 			errProcessOutputStream.flush();
 		}

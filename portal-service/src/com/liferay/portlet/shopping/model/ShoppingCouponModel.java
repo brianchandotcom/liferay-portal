@@ -395,19 +395,20 @@ public interface ShoppingCouponModel extends BaseModel<ShoppingCoupon>,
 	public Object clone();
 
 	@Override
-	public int compareTo(ShoppingCoupon shoppingCoupon);
+	public int compareTo(
+		com.liferay.portlet.shopping.model.ShoppingCoupon shoppingCoupon);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<ShoppingCoupon> toCacheModel();
+	public CacheModel<com.liferay.portlet.shopping.model.ShoppingCoupon> toCacheModel();
 
 	@Override
-	public ShoppingCoupon toEscapedModel();
+	public com.liferay.portlet.shopping.model.ShoppingCoupon toEscapedModel();
 
 	@Override
-	public ShoppingCoupon toUnescapedModel();
+	public com.liferay.portlet.shopping.model.ShoppingCoupon toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -226,10 +226,10 @@ public class AssetVocabularyLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
@@ -237,11 +237,11 @@ public class AssetVocabularyLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
@@ -286,12 +286,29 @@ public class AssetVocabularyLocalServiceUtil {
 		return getService().getAssetVocabularies(start, end);
 	}
 
+	/**
+	* Returns all the asset vocabularies matching the UUID and company.
+	*
+	* @param uuid the UUID of the asset vocabularies
+	* @param companyId the primary key of the company
+	* @return the matching asset vocabularies, or an empty list if no matches were found
+	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> getAssetVocabulariesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId) {
 		return getService()
 				   .getAssetVocabulariesByUuidAndCompanyId(uuid, companyId);
 	}
 
+	/**
+	* Returns a range of asset vocabularies matching the UUID and company.
+	*
+	* @param uuid the UUID of the asset vocabularies
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of asset vocabularies
+	* @param end the upper bound of the range of asset vocabularies (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching asset vocabularies, or an empty list if no matches were found
+	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> getAssetVocabulariesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator) {

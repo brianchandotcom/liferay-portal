@@ -182,19 +182,20 @@ public interface AnnouncementsFlagModel extends BaseModel<AnnouncementsFlag> {
 	public Object clone();
 
 	@Override
-	public int compareTo(AnnouncementsFlag announcementsFlag);
+	public int compareTo(
+		com.liferay.portlet.announcements.model.AnnouncementsFlag announcementsFlag);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<AnnouncementsFlag> toCacheModel();
+	public CacheModel<com.liferay.portlet.announcements.model.AnnouncementsFlag> toCacheModel();
 
 	@Override
-	public AnnouncementsFlag toEscapedModel();
+	public com.liferay.portlet.announcements.model.AnnouncementsFlag toEscapedModel();
 
 	@Override
-	public AnnouncementsFlag toUnescapedModel();
+	public com.liferay.portlet.announcements.model.AnnouncementsFlag toUnescapedModel();
 
 	@Override
 	public String toString();

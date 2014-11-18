@@ -190,10 +190,10 @@ public class RepositoryLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
@@ -201,11 +201,11 @@ public class RepositoryLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
@@ -303,11 +303,28 @@ public class RepositoryLocalServiceUtil {
 		return getService().getRepositories(start, end);
 	}
 
+	/**
+	* Returns all the repositories matching the UUID and company.
+	*
+	* @param uuid the UUID of the repositories
+	* @param companyId the primary key of the company
+	* @return the matching repositories, or an empty list if no matches were found
+	*/
 	public static java.util.List<com.liferay.portal.model.Repository> getRepositoriesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId) {
 		return getService().getRepositoriesByUuidAndCompanyId(uuid, companyId);
 	}
 
+	/**
+	* Returns a range of repositories matching the UUID and company.
+	*
+	* @param uuid the UUID of the repositories
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of repositories
+	* @param end the upper bound of the range of repositories (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching repositories, or an empty list if no matches were found
+	*/
 	public static java.util.List<com.liferay.portal.model.Repository> getRepositoriesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Repository> orderByComparator) {

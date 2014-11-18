@@ -588,9 +588,9 @@ public class WikiPageServiceSoap {
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #renamePage(long, String,
-	String, ServiceContext)}
-	*
+	String, ServiceContext)} *
 	*/
+	@Deprecated
 	public static void movePage(long nodeId, java.lang.String title,
 		java.lang.String newTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)

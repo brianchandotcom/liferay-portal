@@ -307,19 +307,20 @@ public interface SCProductVersionModel extends AuditedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(SCProductVersion scProductVersion);
+	public int compareTo(
+		com.liferay.portlet.softwarecatalog.model.SCProductVersion scProductVersion);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<SCProductVersion> toCacheModel();
+	public CacheModel<com.liferay.portlet.softwarecatalog.model.SCProductVersion> toCacheModel();
 
 	@Override
-	public SCProductVersion toEscapedModel();
+	public com.liferay.portlet.softwarecatalog.model.SCProductVersion toEscapedModel();
 
 	@Override
-	public SCProductVersion toUnescapedModel();
+	public com.liferay.portlet.softwarecatalog.model.SCProductVersion toUnescapedModel();
 
 	@Override
 	public String toString();

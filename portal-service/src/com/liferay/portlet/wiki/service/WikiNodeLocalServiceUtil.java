@@ -205,10 +205,10 @@ public class WikiNodeLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
@@ -216,11 +216,11 @@ public class WikiNodeLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
@@ -382,11 +382,28 @@ public class WikiNodeLocalServiceUtil {
 		return getService().getWikiNodes(start, end);
 	}
 
+	/**
+	* Returns all the wiki nodes matching the UUID and company.
+	*
+	* @param uuid the UUID of the wiki nodes
+	* @param companyId the primary key of the company
+	* @return the matching wiki nodes, or an empty list if no matches were found
+	*/
 	public static java.util.List<com.liferay.portlet.wiki.model.WikiNode> getWikiNodesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId) {
 		return getService().getWikiNodesByUuidAndCompanyId(uuid, companyId);
 	}
 
+	/**
+	* Returns a range of wiki nodes matching the UUID and company.
+	*
+	* @param uuid the UUID of the wiki nodes
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of wiki nodes
+	* @param end the upper bound of the range of wiki nodes (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching wiki nodes, or an empty list if no matches were found
+	*/
 	public static java.util.List<com.liferay.portlet.wiki.model.WikiNode> getWikiNodesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator) {

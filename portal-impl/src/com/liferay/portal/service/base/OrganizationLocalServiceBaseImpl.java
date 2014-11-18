@@ -214,10 +214,10 @@ public abstract class OrganizationLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
+	 * Returns the number of rows matching the dynamic query.
 	 *
 	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows that match the dynamic query
+	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
@@ -225,11 +225,11 @@ public abstract class OrganizationLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
+	 * Returns the number of rows matching the dynamic query.
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
-	 * @return the number of rows that match the dynamic query
+	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
@@ -247,7 +247,7 @@ public abstract class OrganizationLocalServiceBaseImpl
 	 * Returns the organization with the matching UUID and company.
 	 *
 	 * @param uuid the organization's UUID
-	 * @param  companyId the primary key of the company
+	 * @param companyId the primary key of the company
 	 * @return the matching organization, or <code>null</code> if a matching organization could not be found
 	 */
 	@Override
@@ -363,7 +363,7 @@ public abstract class OrganizationLocalServiceBaseImpl
 	 * Returns the organization with the matching UUID and company.
 	 *
 	 * @param uuid the organization's UUID
-	 * @param  companyId the primary key of the company
+	 * @param companyId the primary key of the company
 	 * @return the matching organization
 	 * @throws PortalException if a matching organization could not be found
 	 */

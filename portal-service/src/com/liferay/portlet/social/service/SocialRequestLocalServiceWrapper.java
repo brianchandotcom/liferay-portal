@@ -234,10 +234,10 @@ public class SocialRequestLocalServiceWrapper
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
 	public long dynamicQueryCount(
@@ -246,11 +246,11 @@ public class SocialRequestLocalServiceWrapper
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
 	public long dynamicQueryCount(
@@ -426,6 +426,13 @@ public class SocialRequestLocalServiceWrapper
 		return _socialRequestLocalService.getSocialRequests(start, end);
 	}
 
+	/**
+	* Returns all the social requests matching the UUID and company.
+	*
+	* @param uuid the UUID of the social requests
+	* @param companyId the primary key of the company
+	* @return the matching social requests, or an empty list if no matches were found
+	*/
 	@Override
 	public java.util.List<com.liferay.portlet.social.model.SocialRequest> getSocialRequestsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId) {
@@ -433,6 +440,16 @@ public class SocialRequestLocalServiceWrapper
 			companyId);
 	}
 
+	/**
+	* Returns a range of social requests matching the UUID and company.
+	*
+	* @param uuid the UUID of the social requests
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of social requests
+	* @param end the upper bound of the range of social requests (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching social requests, or an empty list if no matches were found
+	*/
 	@Override
 	public java.util.List<com.liferay.portlet.social.model.SocialRequest> getSocialRequestsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,

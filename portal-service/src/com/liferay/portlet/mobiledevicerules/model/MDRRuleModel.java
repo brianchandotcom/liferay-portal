@@ -506,19 +506,20 @@ public interface MDRRuleModel extends BaseModel<MDRRule>, LocalizedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(MDRRule mdrRule);
+	public int compareTo(
+		com.liferay.portlet.mobiledevicerules.model.MDRRule mdrRule);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<MDRRule> toCacheModel();
+	public CacheModel<com.liferay.portlet.mobiledevicerules.model.MDRRule> toCacheModel();
 
 	@Override
-	public MDRRule toEscapedModel();
+	public com.liferay.portlet.mobiledevicerules.model.MDRRule toEscapedModel();
 
 	@Override
-	public MDRRule toUnescapedModel();
+	public com.liferay.portlet.mobiledevicerules.model.MDRRule toUnescapedModel();
 
 	@Override
 	public String toString();

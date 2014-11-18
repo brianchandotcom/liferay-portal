@@ -479,19 +479,19 @@ public interface CalEventModel extends BaseModel<CalEvent>, StagedGroupedModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(CalEvent calEvent);
+	public int compareTo(com.liferay.portlet.calendar.model.CalEvent calEvent);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<CalEvent> toCacheModel();
+	public CacheModel<com.liferay.portlet.calendar.model.CalEvent> toCacheModel();
 
 	@Override
-	public CalEvent toEscapedModel();
+	public com.liferay.portlet.calendar.model.CalEvent toEscapedModel();
 
 	@Override
-	public CalEvent toUnescapedModel();
+	public com.liferay.portlet.calendar.model.CalEvent toUnescapedModel();
 
 	@Override
 	public String toString();

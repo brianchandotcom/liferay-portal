@@ -165,19 +165,20 @@ public interface ExpandoTableModel extends BaseModel<ExpandoTable>, TypedModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(ExpandoTable expandoTable);
+	public int compareTo(
+		com.liferay.portlet.expando.model.ExpandoTable expandoTable);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<ExpandoTable> toCacheModel();
+	public CacheModel<com.liferay.portlet.expando.model.ExpandoTable> toCacheModel();
 
 	@Override
-	public ExpandoTable toEscapedModel();
+	public com.liferay.portlet.expando.model.ExpandoTable toEscapedModel();
 
 	@Override
-	public ExpandoTable toUnescapedModel();
+	public com.liferay.portlet.expando.model.ExpandoTable toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -255,19 +255,20 @@ public interface SocialActivityLimitModel extends AttachedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(SocialActivityLimit socialActivityLimit);
+	public int compareTo(
+		com.liferay.portlet.social.model.SocialActivityLimit socialActivityLimit);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<SocialActivityLimit> toCacheModel();
+	public CacheModel<com.liferay.portlet.social.model.SocialActivityLimit> toCacheModel();
 
 	@Override
-	public SocialActivityLimit toEscapedModel();
+	public com.liferay.portlet.social.model.SocialActivityLimit toEscapedModel();
 
 	@Override
-	public SocialActivityLimit toUnescapedModel();
+	public com.liferay.portlet.social.model.SocialActivityLimit toUnescapedModel();
 
 	@Override
 	public String toString();

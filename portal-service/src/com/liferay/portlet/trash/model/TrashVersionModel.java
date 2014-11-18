@@ -197,19 +197,20 @@ public interface TrashVersionModel extends AttachedModel, BaseModel<TrashVersion
 	public Object clone();
 
 	@Override
-	public int compareTo(TrashVersion trashVersion);
+	public int compareTo(
+		com.liferay.portlet.trash.model.TrashVersion trashVersion);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<TrashVersion> toCacheModel();
+	public CacheModel<com.liferay.portlet.trash.model.TrashVersion> toCacheModel();
 
 	@Override
-	public TrashVersion toEscapedModel();
+	public com.liferay.portlet.trash.model.TrashVersion toEscapedModel();
 
 	@Override
-	public TrashVersion toUnescapedModel();
+	public com.liferay.portlet.trash.model.TrashVersion toUnescapedModel();
 
 	@Override
 	public String toString();

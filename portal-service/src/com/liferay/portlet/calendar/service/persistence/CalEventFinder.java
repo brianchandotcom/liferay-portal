@@ -17,7 +17,7 @@ package com.liferay.portlet.calendar.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 /**
- * @author Brian Wing Shun Chan
+ * @generated
  */
 @ProviderType
 public interface CalEventFinder {

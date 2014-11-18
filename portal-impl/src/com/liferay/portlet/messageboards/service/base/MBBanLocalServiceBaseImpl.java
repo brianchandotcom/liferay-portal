@@ -185,10 +185,10 @@ public abstract class MBBanLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
+	 * Returns the number of rows matching the dynamic query.
 	 *
 	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows that match the dynamic query
+	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
@@ -196,11 +196,11 @@ public abstract class MBBanLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
+	 * Returns the number of rows matching the dynamic query.
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
-	 * @return the number of rows that match the dynamic query
+	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
@@ -329,11 +329,28 @@ public abstract class MBBanLocalServiceBaseImpl extends BaseLocalServiceImpl
 		return mbBanPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
+	/**
+	 * Returns all the message boards bans matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the message boards bans
+	 * @param companyId the primary key of the company
+	 * @return the matching message boards bans, or an empty list if no matches were found
+	 */
 	@Override
 	public List<MBBan> getMBBansByUuidAndCompanyId(String uuid, long companyId) {
 		return mbBanPersistence.findByUuid_C(uuid, companyId);
 	}
 
+	/**
+	 * Returns a range of message boards bans matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the message boards bans
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of message boards bans
+	 * @param end the upper bound of the range of message boards bans (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching message boards bans, or an empty list if no matches were found
+	 */
 	@Override
 	public List<MBBan> getMBBansByUuidAndCompanyId(String uuid, long companyId,
 		int start, int end, OrderByComparator<MBBan> orderByComparator) {

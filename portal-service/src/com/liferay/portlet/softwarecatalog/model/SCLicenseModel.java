@@ -204,19 +204,20 @@ public interface SCLicenseModel extends BaseModel<SCLicense> {
 	public Object clone();
 
 	@Override
-	public int compareTo(SCLicense scLicense);
+	public int compareTo(
+		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<SCLicense> toCacheModel();
+	public CacheModel<com.liferay.portlet.softwarecatalog.model.SCLicense> toCacheModel();
 
 	@Override
-	public SCLicense toEscapedModel();
+	public com.liferay.portlet.softwarecatalog.model.SCLicense toEscapedModel();
 
 	@Override
-	public SCLicense toUnescapedModel();
+	public com.liferay.portlet.softwarecatalog.model.SCLicense toUnescapedModel();
 
 	@Override
 	public String toString();

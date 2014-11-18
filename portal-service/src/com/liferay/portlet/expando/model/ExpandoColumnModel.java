@@ -196,19 +196,20 @@ public interface ExpandoColumnModel extends BaseModel<ExpandoColumn> {
 	public Object clone();
 
 	@Override
-	public int compareTo(ExpandoColumn expandoColumn);
+	public int compareTo(
+		com.liferay.portlet.expando.model.ExpandoColumn expandoColumn);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<ExpandoColumn> toCacheModel();
+	public CacheModel<com.liferay.portlet.expando.model.ExpandoColumn> toCacheModel();
 
 	@Override
-	public ExpandoColumn toEscapedModel();
+	public com.liferay.portlet.expando.model.ExpandoColumn toEscapedModel();
 
 	@Override
-	public ExpandoColumn toUnescapedModel();
+	public com.liferay.portlet.expando.model.ExpandoColumn toUnescapedModel();
 
 	@Override
 	public String toString();

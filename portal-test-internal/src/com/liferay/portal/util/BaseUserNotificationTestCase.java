@@ -333,7 +333,7 @@ public abstract class BaseUserNotificationTestCase {
 	}
 
 	protected List<JSONObject> getUserNotificationEventsJSONObjects(
-			long userId, long blogsEntryId)
+			long userId, long baseEntryId)
 		throws Exception {
 
 		List<UserNotificationEvent> userNotificationEvents =
@@ -352,7 +352,7 @@ public abstract class BaseUserNotificationTestCase {
 
 			long classPK = userNotificationEventJSONObject.getLong("classPK");
 
-			if (classPK != blogsEntryId) {
+			if (classPK != baseEntryId) {
 				continue;
 			}
 

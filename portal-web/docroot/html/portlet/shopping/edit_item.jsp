@@ -559,11 +559,17 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 		}
 		%>
 
-		var itemQuantitiesWindow = window.open(itemQuantitiesURL, 'itemQuantities', 'directories=no,height=400,location=no,menubar=no,resizable=no,scrollbars=yes,status=no,toolbar=no,width=300');
-
-		void('');
-
-		itemQuantitiesWindow.focus();
+		Liferay.Util.openWindow(
+			{
+				dialog: {
+					width: 680
+				},
+				id: '<portlet:namespace />itemQuantities',
+				refreshWindow: window,
+				title: '<%= UnicodeLanguageUtil.get(request, "edit-stock-quantity") %>',
+				uri: itemQuantitiesURL
+			}
+		);
 	}
 
 	function <portlet:namespace />removeCategory() {

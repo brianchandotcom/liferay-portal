@@ -99,7 +99,7 @@ String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 								<portlet:param name="groupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getLiveGroupId()) %>" />
 							</liferay-portlet:renderURL>
 
-							form.get('<portlet:namespace />redirect').val('<%= HttpUtil.addParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", layoutsAdminDisplayContext.getSelPlid()) %>');
+							form.get('<portlet:namespace />redirect').val('<%= HttpUtil.addNamespacedParameter(redirectURL.toString(), liferayPortletResponse.getNamespace(), "selPlid", layoutsAdminDisplayContext.getSelPlid()) %>');
 
 							loadingMask.show();
 

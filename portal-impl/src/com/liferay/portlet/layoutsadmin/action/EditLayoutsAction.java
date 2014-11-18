@@ -215,8 +215,8 @@ public class EditLayoutsAction extends PortletAction {
 				closeRedirect = updateCloseRedirect(
 					themeDisplay, closeRedirect, group, null, oldFriendlyURL);
 
-				redirect = HttpUtil.addParameter(
-					redirect, actionResponse.getNamespace() + "closeRedirect",
+				redirect = HttpUtil.addNamespacedParameter(
+					redirect, actionResponse.getNamespace(), "closeRedirect",
 					closeRedirect);
 			}
 			else if (cmd.equals("display_order")) {

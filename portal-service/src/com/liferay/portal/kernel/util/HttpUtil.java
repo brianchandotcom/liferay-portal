@@ -34,6 +34,42 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class HttpUtil {
 
+	public static String addNamespacedParameter(
+		String url, String namespace, String name, boolean value) {
+
+		return getHttp().addNamespacedParameter(url, namespace, name, value);
+	}
+
+	public static String addNamespacedParameter(
+		String url, String namespace, String name, double value) {
+
+		return getHttp().addNamespacedParameter(url, namespace, name, value);
+	}
+
+	public static String addNamespacedParameter(
+		String url, String namespace, String name, int value) {
+
+		return getHttp().addNamespacedParameter(url, namespace, name, value);
+	}
+
+	public static String addNamespacedParameter(
+		String url, String namespace, String name, long value) {
+
+		return getHttp().addNamespacedParameter(url, namespace, name, value);
+	}
+
+	public static String addNamespacedParameter(
+		String url, String namespace, String name, short value) {
+
+		return getHttp().addNamespacedParameter(url, namespace, name, value);
+	}
+
+	public static String addNamespacedParameter(
+		String url, String namespace, String name, String value) {
+
+		return getHttp().addNamespacedParameter(url, namespace, name, value);
+	}
+
 	public static String addParameter(String url, String name, boolean value) {
 		return getHttp().addParameter(url, name, value);
 	}

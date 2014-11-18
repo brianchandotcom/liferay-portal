@@ -52,6 +52,24 @@ public interface Http {
 
 	public static final int URL_MAXIMUM_LENGTH = 2083;
 
+	public String addNamespacedParameter(
+		String url, String namespace, String name, boolean value);
+
+	public String addNamespacedParameter(
+		String url, String namespace, String name, double value);
+
+	public String addNamespacedParameter(
+		String url, String namespace, String name, int value);
+
+	public String addNamespacedParameter(
+		String url, String namespace, String name, long value);
+
+	public String addNamespacedParameter(
+		String url, String namespace, String name, short value);
+
+	public String addNamespacedParameter(
+		String url, String namespace, String name, String value);
+
 	public String addParameter(String url, String name, boolean value);
 
 	public String addParameter(String url, String name, double value);

@@ -34,7 +34,7 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 		<%
 		FileEntry fileEntry = (FileEntry)SessionMessages.get(renderRequest, "imageUploaded");
 
-		previewURL = HttpUtil.addParameter(previewURL, renderResponse.getNamespace() + "tempImageFileName", tempImageFileName);
+		previewURL = HttpUtil.addNamespacedParameter(previewURL, renderResponse.getNamespace(), "tempImageFileName", tempImageFileName);
 		%>
 
 		<aui:script>

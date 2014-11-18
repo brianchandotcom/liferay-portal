@@ -242,11 +242,11 @@ public class EditArticleAction extends PortletAction {
 
 					if (Validator.isNotNull(redirect)) {
 						if (cmd.equals(Constants.ADD) && (article != null)) {
-							redirect = HttpUtil.addParameter(
-								redirect, namespace + "className",
+							redirect = HttpUtil.addNamespacedParameter(
+								redirect, namespace, "className",
 								JournalArticle.class.getName());
-							redirect = HttpUtil.addParameter(
-								redirect, namespace + "classPK",
+							redirect = HttpUtil.addNamespacedParameter(
+								redirect, namespace, "classPK",
 								JournalArticleAssetRenderer.getClassPK(
 									article));
 						}

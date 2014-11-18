@@ -180,6 +180,53 @@ public class HttpImpl implements Http {
 	}
 
 	@Override
+	public String addNamespacedParameter(
+		String url, String namespace, String name, boolean value) {
+
+		return addNamespacedParameter(
+			url, namespace, name, String.valueOf(value));
+	}
+
+	@Override
+	public String addNamespacedParameter(
+		String url, String namespace, String name, double value) {
+
+		return addNamespacedParameter(
+			url, namespace, name, String.valueOf(value));
+	}
+
+	@Override
+	public String addNamespacedParameter(
+		String url, String namespace, String name, int value) {
+
+		return addNamespacedParameter(
+			url, namespace, name, String.valueOf(value));
+	}
+
+	@Override
+	public String addNamespacedParameter(
+		String url, String namespace, String name, long value) {
+
+		return addNamespacedParameter(
+			url, namespace, name, String.valueOf(value));
+	}
+
+	@Override
+	public String addNamespacedParameter(
+		String url, String namespace, String name, short value) {
+
+		return addNamespacedParameter(
+			url, namespace, name, String.valueOf(value));
+	}
+
+	@Override
+	public String addNamespacedParameter(
+		String url, String namespace, String name, String value) {
+
+		return addParameter(url, namespace + name, value);
+	}
+
+	@Override
 	public String addParameter(String url, String name, boolean value) {
 		return addParameter(url, name, String.valueOf(value));
 	}

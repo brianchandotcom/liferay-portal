@@ -213,11 +213,11 @@ public class EditEntryAction extends PortletAction {
 							String namespace = PortalUtil.getPortletNamespace(
 								portletId);
 
-							redirect = HttpUtil.addParameter(
-								redirect, namespace + "className",
+							redirect = HttpUtil.addNamespacedParameter(
+								redirect, namespace, "className",
 								BlogsEntry.class.getName());
-							redirect = HttpUtil.addParameter(
-								redirect, namespace + "classPK",
+							redirect = HttpUtil.addNamespacedParameter(
+								redirect, namespace, "classPK",
 								entry.getEntryId());
 						}
 

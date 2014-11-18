@@ -70,8 +70,7 @@ page import="com.liferay.portlet.journal.service.permission.JournalPermission" %
 page import="com.liferay.portlet.journal.util.JournalConverterUtil" %><%@
 page import="com.liferay.portlet.journal.util.JournalSearcher" %><%@
 page import="com.liferay.portlet.journal.util.JournalUtil" %><%@
-page import="com.liferay.portlet.journal.util.comparator.ArticleVersionComparator" %><%@
-page import="com.liferay.util.RSSUtil" %>
+page import="com.liferay.portlet.journal.util.comparator.ArticleVersionComparator" %>
 
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);

@@ -16,25 +16,36 @@
 
 <%@ include file="/html/portlet/rss/init.jsp" %>
 
-<div id="<portlet:namespace />feedsContainer">
+<%
+long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(rssDisplayContext.getDisplayStyleGroupId(), rssDisplayContext.getDisplayStyle());
 
-	<%
-	List<RSSFeedContext> rssFeedContexts = rssDisplayContext.getRSSFeedContexts();
+List<RSSFeedContext> rssFeedContexts = rssDisplayContext.getRSSFeedContexts();
+%>
 
-	for (int i = 0; i < rssFeedContexts.size(); i++) {
-		RSSFeedContext rssFeedContext = rssFeedContexts.get(i);
+<c:choose>
+	<c:when test="<%= portletDisplayDDMTemplateId > 0 %>">
+		<%= PortletDisplayTemplateUtil.renderDDMTemplate(request, response, portletDisplayDDMTemplateId, rssFeedContexts) %>
+	</c:when>
+	<c:otherwise>
 
-		boolean last = false;
+		<%
+		for (int i = 0; i < rssFeedContexts.size(); i++) {
+			RSSFeedContext rssFeedContext = rssFeedContexts.get(i);
 
-		if (i == (rssFeedContexts.size() - 1)) {
-			last = true;
+			boolean last = false;
+
+			if (i == (rssFeedContexts.size() - 1)) {
+				last = true;
+			}
+
+			SyndFeed syndFeed = rssFeedContext.getSyndFeed();
+		%>
+
+			<%@ include file="/html/portlet/rss/feed.jspf" %>
+
+		<%
 		}
-	%>
+		%>
 
-		<%@ include file="/html/portlet/rss/feed.jspf" %>
-
-	<%
-	}
-	%>
-
-</div>
+	</c:otherwise>
+</c:choose>

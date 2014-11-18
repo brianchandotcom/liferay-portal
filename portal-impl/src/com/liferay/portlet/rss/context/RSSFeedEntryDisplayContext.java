@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.util.RSSUtil;
 
 import com.sun.syndication.feed.synd.SyndContent;
@@ -36,19 +35,17 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Eudaldo Alonso
  */
 public class RSSFeedEntryDisplayContext {
 
 	public RSSFeedEntryDisplayContext(
-		SyndEntry syndEntry, HttpServletRequest request,
+		SyndEntry syndEntry, ThemeDisplay themeDisplay,
 		RSSFeedContext rssFeedContext) {
 
 		_syndEntry = syndEntry;
-		_request = request;
+		_themeDisplay = themeDisplay;
 		_rssFeedContext = rssFeedContext;
 
 		List<SyndEnclosure> syndEnclosures = syndEntry.getEnclosures();
@@ -90,9 +87,6 @@ public class RSSFeedEntryDisplayContext {
 	}
 
 	public String getSanitizedContent() {
-		ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String baseURL = _rssFeedContext.getBaseURL();
 		SyndFeed syndFeed = _rssFeedContext.getSyndFeed();
 
@@ -122,9 +116,9 @@ public class RSSFeedEntryDisplayContext {
 
 				try {
 					sanitizedValue = SanitizerUtil.sanitize(
-						themeDisplay.getCompanyGroupId(),
-						themeDisplay.getScopeGroupId(),
-						themeDisplay.getUserId(), null, 0,
+						_themeDisplay.getCompanyGroupId(),
+						_themeDisplay.getScopeGroupId(),
+						_themeDisplay.getUserId(), null, 0,
 						ContentTypes.TEXT_HTML, Sanitizer.MODE_XSS, value,
 						null);
 				}
@@ -149,6 +143,10 @@ public class RSSFeedEntryDisplayContext {
 		return _syndEnclosureLinkTitle;
 	}
 
+	public SyndEntry getSyndEntry() {
+		return _syndEntry;
+	}
+
 	public String getSyndEntryLink() {
 		return _syndEntryLink;
 	}
@@ -167,11 +165,11 @@ public class RSSFeedEntryDisplayContext {
 		return syndContents;
 	}
 
-	private final HttpServletRequest _request;
 	private final RSSFeedContext _rssFeedContext;
 	private final String _syndEnclosureLink;
 	private final String _syndEnclosureLinkTitle;
 	private final SyndEntry _syndEntry;
 	private final String _syndEntryLink;
+	private final ThemeDisplay _themeDisplay;
 
 }

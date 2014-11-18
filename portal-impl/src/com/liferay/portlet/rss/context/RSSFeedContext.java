@@ -16,13 +16,19 @@ package com.liferay.portlet.rss.context;
 
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.rss.util.RSSUtil;
+import com.liferay.portal.kernel.webcache.WebCacheItem;
+import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.rss.util.RSSWebCacheItem;
 
+import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.feed.synd.SyndImage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Eudaldo Alonso
@@ -99,18 +105,38 @@ public class RSSFeedContext {
 		return _baseURL;
 	}
 
+	public List<RSSFeedEntryDisplayContext> getRSSFeedEntryDisplayContexts(
+		ThemeDisplay themeDisplay) {
+
+		if (_rssFeedEntryDisplayContexts != null) {
+			return _rssFeedEntryDisplayContexts;
+		}
+
+		_rssFeedEntryDisplayContexts =
+			new ArrayList<RSSFeedEntryDisplayContext>();
+
+		SyndFeed syndFeed = getSyndFeed();
+
+		for (Object syndEntry : syndFeed.getEntries()) {
+			RSSFeedEntryDisplayContext rssFeedEntryDisplayContext =
+				new RSSFeedEntryDisplayContext(
+					(SyndEntry)syndEntry, themeDisplay, this);
+
+			_rssFeedEntryDisplayContexts.add(rssFeedEntryDisplayContext);
+		}
+
+		return _rssFeedEntryDisplayContexts;
+	}
+
 	public SyndFeed getSyndFeed() {
 		if (_syndFeed != null) {
 			return _syndFeed;
 		}
 
-		try {
-			ObjectValuePair<String, SyndFeed> ovp = RSSUtil.getFeed(_url);
+		WebCacheItem wci = new RSSWebCacheItem(_url);
 
-			_syndFeed = ovp.getValue();
-		}
-		catch (Exception e) {
-		}
+		_syndFeed = (SyndFeed)WebCachePoolUtil.get(
+			RSSFeedContext.class.getName() + StringPool.PERIOD + _url, wci);
 
 		return _syndFeed;
 	}
@@ -136,6 +162,7 @@ public class RSSFeedContext {
 	}
 
 	private final String _baseURL;
+	private List<RSSFeedEntryDisplayContext> _rssFeedEntryDisplayContexts;
 	private SyndFeed _syndFeed;
 	private final String _syndFeedImageLink;
 	private final String _syndFeedImageURL;

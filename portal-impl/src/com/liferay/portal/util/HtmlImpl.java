@@ -302,6 +302,23 @@ public class HtmlImpl implements Html {
 		return escape(js, ESCAPE_MODE_JS);
 	}
 
+	@Override
+	public String escapeJSLink(String link) {
+		if (Validator.isNull(link)) {
+			return StringPool.BLANK;
+		}
+
+		if (link.indexOf(StringPool.COLON) == 10) {
+			String protocol = StringUtil.toLowerCase(link.substring(0, 10));
+
+			if (protocol.equals("javascript")) {
+				link = StringUtil.replaceFirst(link, StringPool.COLON, "%3a");
+			}
+		}
+
+		return link;
+	}
+
 	/**
 	 * Escapes the URL value so that it is safe to use as a URL.
 	 *

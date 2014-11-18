@@ -23,9 +23,18 @@ import java.util.Map;
 
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Jorge Ferrer
  */
+@Component(
+	service = WikiEngine.class,
+	property = {
+		"enabled=false", "format=text",
+		"edit.page=/html/portlet/wiki/edit/plain_text.jsp",
+	}
+)
 public class TextEngine implements WikiEngine {
 
 	@Override
@@ -44,14 +53,6 @@ public class TextEngine implements WikiEngine {
 	@Override
 	public Map<String, Boolean> getOutgoingLinks(WikiPage page) {
 		return Collections.emptyMap();
-	}
-
-	@Override
-	public void setInterWikiConfiguration(String interWikiConfiguration) {
-	}
-
-	@Override
-	public void setMainConfiguration(String mainConfiguration) {
 	}
 
 	@Override

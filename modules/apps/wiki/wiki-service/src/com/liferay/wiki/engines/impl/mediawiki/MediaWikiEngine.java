@@ -42,9 +42,20 @@ import org.jamwiki.parser.ParserOutput;
 import org.jamwiki.parser.ParserUtil;
 import org.jamwiki.parser.TableOfContents;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Jonathan Potter
  */
+@Component(
+	service = WikiEngine.class,
+	property = {
+		"enabled=true", "format=mediawiki",
+		"edit.page=/html/portlet/wiki/edit/wiki.jsp",
+		"help.page=/html/portlet/wiki/help/mediawiki.jsp",
+		"help.url=http://www.mediawiki.org/wiki/Help:Formatting"
+	}
+)
 public class MediaWikiEngine implements WikiEngine {
 
 	@Override
@@ -103,14 +114,6 @@ public class MediaWikiEngine implements WikiEngine {
 		}
 
 		return outgoingLinks;
-	}
-
-	@Override
-	public void setInterWikiConfiguration(String interWikiConfiguration) {
-	}
-
-	@Override
-	public void setMainConfiguration(String mainConfiguration) {
 	}
 
 	@Override

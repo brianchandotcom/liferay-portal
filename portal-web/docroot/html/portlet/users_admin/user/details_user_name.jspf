@@ -14,21 +14,39 @@
  */
 --%>
 
-<aui:select bean="<%= selContact %>" disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, "prefix") %>' label="title[person]" listType="<%= ListTypeConstants.CONTACT_PREFIX %>" listTypeFieldName="prefixId" model="<%= Contact.class %>" name="prefixId" showEmptyOption="<%= true %>" />
-
 <liferay-ui:error exception="<%= ContactFirstNameException.class %>" message="please-enter-a-valid-first-name" />
 <liferay-ui:error exception="<%= ContactFullNameException.class %>" message="please-enter-a-valid-first-middle-and-last-name" />
 
-<aui:input disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, "firstName") %>' name="firstName" />
+<%
+for (Map<String, Object> userField: userFields) {
+	String name = (String)userField.get("name");
+	boolean required = Boolean.valueOf((Boolean)userField.get("required"));
+	String[] options = (String[])userField.get("options");
+%>
 
-<aui:input disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, "middleName") %>' name="middleName" />
+<c:choose>
+	<c:when test="<%= Validator.isNull(options) %>">
+		<aui:input disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, name) %>' name="<%= name %>">
+			<c:if test="<%= required %>">
+				<aui:validator name="required" />
+			</c:if>
+		</aui:input>
+	</c:when>
+	<c:otherwise>
+		<aui:select disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, name) %>' label="<%= name %>" name="<%= name %>" showEmptyOption="<%= true %>" >
+		<%
+		for (String option: options) {
+		%>
 
-<liferay-ui:error exception="<%= ContactLastNameException.class %>" message="please-enter-a-valid-last-name" />
+			<aui:option label='<%= option %>' value="<%= option %>" />
 
-<aui:input disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, "lastName") %>' name="lastName">
-	<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_LAST_NAME_REQUIRED, PropsValues.USERS_LAST_NAME_REQUIRED) %>">
-		<aui:validator name="required" />
-	</c:if>
-</aui:input>
+		<%
+		}
+		%>
+		</aui:select>
+	</c:otherwise>
+</c:choose>
 
-<aui:select bean="<%= selContact %>" disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, "suffix") %>' label="suffix" listType="<%= ListTypeConstants.CONTACT_SUFFIX %>" listTypeFieldName="suffixId" model="<%= Contact.class %>" name="suffixId" showEmptyOption="<%= true %>" />
+<%
+}
+%>

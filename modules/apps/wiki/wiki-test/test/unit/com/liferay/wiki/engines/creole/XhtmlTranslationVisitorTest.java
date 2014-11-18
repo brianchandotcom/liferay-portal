@@ -17,9 +17,9 @@ package com.liferay.wiki.engines.creole;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.wiki.parsers.creole.visitor.impl.XhtmlTranslationVisitor;
 import com.liferay.portal.util.HtmlImpl;
 import com.liferay.wiki.engines.creole.util.CreoleTestUtil;
+import com.liferay.wiki.parsers.creole.visitor.impl.XhtmlTranslationVisitor;
 
 import org.junit.Assert;
 import org.junit.Before;

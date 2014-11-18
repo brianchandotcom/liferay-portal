@@ -56,11 +56,11 @@ import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.translators.MediaWikiToCreoleTranslator;
-import org.osgi.service.component.annotations.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -69,6 +69,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Alvaro del Castillo

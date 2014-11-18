@@ -78,20 +78,12 @@ public class UserPasswordException extends PortalException {
 					userId, minLength),
 				PASSWORD_LENGTH);
 
-			_minLength = minLength;
-			_userId = userId;
+			this.minLength = minLength;
+			this.userId = userId;
 		}
 
-		public int getMinLength() {
-			return _minLength;
-		}
-
-		public long getUserId() {
-			return _userId;
-		}
-
-		private final int _minLength;
-		private long _userId;
+		public final int minLength;
+		public final long userId;
 
 	}
 
@@ -106,20 +98,12 @@ public class UserPasswordException extends PortalException {
 						modelListenerException.getMessage()),
 				PASSWORD_INVALID);
 
-			_modelListenerException = modelListenerException;
-			_userId = userId;
+			this.modelListenerException = modelListenerException;
+			this.userId = userId;
 		}
 
-		public ModelListenerException getModelListenerException() {
-			return _modelListenerException;
-		}
-
-		public long getUserId() {
-			return _userId;
-		}
-
-		private final ModelListenerException _modelListenerException;
-		private long _userId;
+		public final ModelListenerException modelListenerException;
+		public final long userId;
 
 	}
 
@@ -130,20 +114,12 @@ public class UserPasswordException extends PortalException {
 				String.format("Password must comply with regex: " + regex),
 				PASSWORD_INVALID);
 
-			_regex = regex;
-			_userId = userId;
+			this.regex = regex;
+			this.userId = userId;
 		}
 
-		public String getRegex() {
-			return _regex;
-		}
-
-		public long getUserId() {
-			return _userId;
-		}
-
-		private final String _regex;
-		private long _userId;
+		public final String regex;
+		public final long userId;
 
 	}
 
@@ -154,14 +130,10 @@ public class UserPasswordException extends PortalException {
 				String.format("Passwords for user %s must match", userId),
 				PASSWORDS_DO_NOT_MATCH);
 
-			_userId = userId;
+			this.userId = userId;
 		}
 
-		public long getUserId() {
-			return _userId;
-		}
-
-		private long _userId;
+		public final long userId;
 
 	}
 
@@ -174,14 +146,10 @@ public class UserPasswordException extends PortalException {
 					userId),
 				PASSWORD_INVALID);
 
-			_userId = userId;
+			this.userId = userId;
 		}
 
-		public long getUserId() {
-			return _userId;
-		}
-
-		private long _userId;
+		public final long userId;
 
 	}
 
@@ -193,14 +161,10 @@ public class UserPasswordException extends PortalException {
 					"Password for user %s must not be changed", userId),
 				PASSWORD_NOT_CHANGEABLE);
 
-			_userId = userId;
+			this.userId = userId;
 		}
 
-		public long getUserId() {
-			return _userId;
-		}
-
-		private long _userId;
+		public final long userId;
 
 	}
 
@@ -213,20 +177,12 @@ public class UserPasswordException extends PortalException {
 					changeableDate),
 				PASSWORD_TOO_YOUNG);
 
-			_userId = userId;
-			_changeableDate = changeableDate;
+			this.userId = userId;
+			this.changeableDate = changeableDate;
 		}
 
-		public Date getChangeableDate() {
-			return _changeableDate;
-		}
-
-		public long getUserId() {
-			return _userId;
-		}
-
-		private final Date _changeableDate;
-		private long _userId;
+		private final Date changeableDate;
+		private long userId;
 
 	}
 
@@ -240,14 +196,10 @@ public class UserPasswordException extends PortalException {
 					userId),
 				PASSWORD_SAME_AS_CURRENT);
 
-			_userId = userId;
+			this.userId = userId;
 		}
 
-		public long getUserId() {
-			return _userId;
-		}
-
-		private long _userId;
+		public final long userId;
 
 	}
 
@@ -258,14 +210,10 @@ public class UserPasswordException extends PortalException {
 				String.format("Password for user %s must not be null", userId),
 				PASSWORD_INVALID);
 
-			_userId = userId;
+			this.userId = userId;
 		}
 
-		public long getUserId() {
-			return _userId;
-		}
-
-		private long _userId;
+		private long userId;
 
 	}
 
@@ -278,14 +226,10 @@ public class UserPasswordException extends PortalException {
 						userId),
 				PASSWORD_ALREADY_USED);
 
-			_userId = userId;
+			this.userId = userId;
 		}
 
-		public long getUserId() {
-			return _userId;
-		}
-
-		private long _userId;
+		private long userId;
 
 	}
 
@@ -297,14 +241,10 @@ public class UserPasswordException extends PortalException {
 					"Password for user %s must not be too trivial", userId),
 				PASSWORD_TOO_TRIVIAL);
 
-			_userId = userId;
+			this.userId = userId;
 		}
 
-		public long getUserId() {
-			return _userId;
-		}
-
-		private long _userId;
+		private long userId;
 
 	}
 
@@ -321,20 +261,12 @@ public class UserPasswordException extends PortalException {
 					userId, _getDictionaryWordsString(dictionaryWords)),
 				PASSWORD_CONTAINS_TRIVIAL_WORDS);
 
-			_userId = userId;
-			_dictionaryWords = dictionaryWords;
+			this.userId = userId;
+			this.dictionaryWords = dictionaryWords;
 		}
 
-		public List<String> getDictionaryWords() {
-			return _dictionaryWords;
-		}
-
-		public long getUserId() {
-			return _userId;
-		}
-
-		private final List<String> _dictionaryWords;
-		private long _userId;
+		private final List<String> dictionaryWords;
+		private long userId;
 
 	}
 

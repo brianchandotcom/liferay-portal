@@ -727,6 +727,13 @@ public class UpgradeSocial extends UpgradeProcess {
 	}
 
 	protected void putEquityToActivityMap(
+		String equityClass, String equityActionId, int activityType) {
+
+		putEquityToActivityMap(
+			equityClass, equityActionId, equityClass, activityType);
+	}
+
+	protected void putEquityToActivityMap(
 		String equityClass, String equityActionId, String activityClass,
 		int activityType) {
 
@@ -736,13 +743,6 @@ public class UpgradeSocial extends UpgradeProcess {
 		_equityToActivityMap.put(
 			encodeEquityToActivityKey(equityClassNameId, equityActionId),
 			new Tuple(activityClassNameId, activityType));
-	}
-
-	protected void putEquityToActivityMap(
-		String equityClass, String equityActionId, int activityType) {
-
-		putEquityToActivityMap(
-			equityClass, equityActionId, equityClass, activityType);
 	}
 
 	protected void updateActivityCounter(

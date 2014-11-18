@@ -175,6 +175,14 @@
 
 				sb.append("<h1>Some tests have FAILED!</h1>");
 
+				String githubJenkinsBuildTime = project.getProperty("github.jenkins.build.time");
+
+				if (githubJenkinsBuildTime != null) {
+					sb.append("<p>Build Time: ");
+					sb.append(githubJenkinsBuildTime);
+					sb.append("</p>");
+				}
+
 				String githubJenkinsResultsURL = project.getProperty("github.jenkins.results.url");
 
 				if (githubJenkinsResultsURL != null) {
@@ -257,6 +265,14 @@
 				StringBuilder sb = new StringBuilder();
 
 				sb.append("<h1>All tests have PASSED!</h1>");
+
+				String githubJenkinsBuildTime = project.getProperty("github.jenkins.build.time");
+
+				if (githubJenkinsBuildTime != null) {
+					sb.append("<p>Build Time: ");
+					sb.append(githubJenkinsBuildTime);
+					sb.append("</p>");
+				}
 
 				String githubJenkinsResultsURL = project.getProperty("github.jenkins.results.url");
 

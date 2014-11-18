@@ -21,8 +21,6 @@ public class WikiPropsKeys {
 
 	public static final String FRONT_PAGE_NAME = "front.page.name";
 
-	public static final String IMPORTERS_CLASS = "importers.class";
-
 	public static final String INITIAL_NODE_NAME = "initial.node.name";
 
 	public static final String PAGE_TITLES_REGEXP = "page.titles.regexp";

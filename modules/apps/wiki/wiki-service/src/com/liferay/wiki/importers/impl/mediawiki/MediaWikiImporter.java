@@ -57,6 +57,7 @@ import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.translators.MediaWikiToCreoleTranslator;
+import org.osgi.service.component.annotations.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -74,6 +75,12 @@ import java.util.regex.Pattern;
  * @author Alvaro del Castillo
  * @author Jorge Ferrer
  */
+@Component(
+	service = WikiImporter.class,
+	property = {
+		"importer=MediaWiki", "page=/html/portlet/wiki/import/mediawiki.jsp"
+	}
+)
 public class MediaWikiImporter implements WikiImporter {
 
 	public static final String SHARED_IMAGES_CONTENT = "See attachments";
@@ -706,7 +713,7 @@ public class MediaWikiImporter implements WikiImporter {
 	private static Pattern _redirectPattern = Pattern.compile(
 		"#REDIRECT \\[\\[([^\\]]*)\\]\\]");
 	private static Set<String> _specialMediaWikiDirs = SetUtil.fromArray(
-		new String[] {"archive", "temp", "thumb"});
+		new String[]{"archive", "temp", "thumb"});
 	private static Pattern _wikiPageTitlesRemovePattern = Pattern.compile(
 		WikiPropsValues.PAGE_TITLES_REMOVE_REGEXP);
 

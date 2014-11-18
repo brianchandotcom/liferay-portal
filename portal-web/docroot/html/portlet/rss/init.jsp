@@ -18,8 +18,7 @@
 
 <%@ page import="com.liferay.portlet.rss.context.RSSDisplayContext" %><%@
 page import="com.liferay.portlet.rss.context.RSSFeedContext" %><%@
-page import="com.liferay.portlet.rss.context.RSSFeedEntryDisplayContext" %><%@
-page import="com.liferay.portlet.rss.util.RSSUtil" %>
+page import="com.liferay.portlet.rss.context.RSSFeedEntryDisplayContext" %>
 
 <%@ page import="com.sun.syndication.feed.synd.SyndEntry" %><%@
 page import="com.sun.syndication.feed.synd.SyndFeed" %><%@

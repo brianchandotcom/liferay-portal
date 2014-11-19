@@ -17,6 +17,7 @@ package com.liferay.sync.engine.session;
 import com.btr.proxy.search.ProxySearch;
 
 import com.liferay.sync.engine.documentlibrary.handler.Handler;
+import com.liferay.sync.engine.util.PropsValues;
 
 import java.net.ProxySelector;
 import java.net.URL;
@@ -89,6 +90,8 @@ public class Session {
 
 		RequestConfig.Builder builder = RequestConfig.custom();
 
+		builder.setConnectTimeout(PropsValues.SYNC_HTTP_CONNECTION_TIMEOUT);
+		builder.setSocketTimeout(PropsValues.SYNC_HTTP_SOCKET_TIMEOUT);
 		builder.setStaleConnectionCheckEnabled(false);
 
 		httpClientBuilder.setDefaultRequestConfig(builder.build());

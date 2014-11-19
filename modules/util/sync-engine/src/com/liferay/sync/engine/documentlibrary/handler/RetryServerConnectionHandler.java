@@ -50,7 +50,7 @@ public class RetryServerConnectionHandler extends GetSyncContextHandler {
 
 			FileEventUtil.retryFileTransfers(getSyncAccountId());
 
-			ConnectionRetryUtil.resetRetryDelay(getSyncAccountId());
+			ConnectionRetryUtil.resetRetry(getSyncAccountId());
 		}
 		else {
 			syncAccount.setState(SyncAccount.STATE_DISCONNECTED);

@@ -59,7 +59,8 @@ public class ConnectionRetryUtil {
 		return delay;
 	}
 
-	public static void resetRetryDelay(long syncAccountId) {
+	public static void resetRetry(long syncAccountId) {
+		_counts.remove(syncAccountId);
 		_delays.remove(syncAccountId);
 	}
 

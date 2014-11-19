@@ -185,7 +185,9 @@ public class SyncEngine {
 
 		_executorService.execute(watcher);
 
-		synchronizeSyncFiles(filePath, syncAccountId, watchEventListener);
+		if (!ConnectionRetryUtil.retryInProgress(syncAccountId)) {
+			synchronizeSyncFiles(filePath, syncAccountId, watchEventListener);
+		}
 
 		scheduleGetSyncDLObjectUpdateEvent(
 			syncAccount, syncWatchEventProcessor, scheduledFuture, watcher);

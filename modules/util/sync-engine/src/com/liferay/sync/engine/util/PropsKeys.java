@@ -48,6 +48,12 @@ public interface PropsKeys {
 	public static final String SYNC_FILE_PATCHING_THRESHOLD_SIZE_RATIO =
 		"sync.file.patching.threshold.size.ratio";
 
+	public static final String SYNC_HTTP_CONNECTION_TIMEOUT =
+		"sync.http.connection.timeout";
+
+	public static final String SYNC_HTTP_SOCKET_TIMEOUT =
+		"sync.http.socket.timeout";
+
 	public static final String SYNC_LOGGER_CONFIGURATION_FILE =
 		"sync.logger.configuration.file";
 

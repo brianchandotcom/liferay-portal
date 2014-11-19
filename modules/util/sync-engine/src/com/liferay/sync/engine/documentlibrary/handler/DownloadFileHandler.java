@@ -57,13 +57,13 @@ public class DownloadFileHandler extends BaseHandler {
 
 	@Override
 	public void handleException(Exception e) {
-		_logger.error(e.getMessage(), e);
-
 		if (!(e instanceof HttpResponseException)) {
 			super.handleException(e);
 
 			return;
 		}
+
+		_logger.error(e.getMessage(), e);
 
 		HttpResponseException hre = (HttpResponseException)e;
 

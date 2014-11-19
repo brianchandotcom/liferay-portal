@@ -384,7 +384,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 									<aui:input field="maxQuantity" fieldParam='<%= "maxQuantity" + i %>' ignoreRequestValue="<%= true %>" label="max-qty" model="<%= ShoppingItemPrice.class %>" name="maxQuantity" value="<%= String.valueOf(maxQuantity) %>" />
 								</td>
 								<td>
-									<aui:input field="price" fieldParam='<%= "price" + i %>' ignoreRequestValue="<%= true %>" format="<%= doubleFormat %>" label="price" model="<%= ShoppingItemPrice.class %>" name="price" value="<%= String.valueOf(price) %>" />
+									<aui:input field="price" fieldParam='<%= "price" + i %>' format="<%= doubleFormat %>" ignoreRequestValue="<%= true %>" label="price" model="<%= ShoppingItemPrice.class %>" name="price" value="<%= String.valueOf(price) %>" />
 								</td>
 								<td>
 									<aui:input field="discount" fieldParam='<%= "discount" + i %>' ignoreRequestValue="<%= true %>" label="discount" model="<%= ShoppingItemPrice.class %>" name="discount" value="<%= percentFormat.format(discount) %>" />
@@ -398,7 +398,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 							<table class="lfr-table">
 							<tr>
 								<td>
-									<aui:input field="shipping" fieldParam='<%= "shipping" + i %>' ignoreRequestValue="<%= true %>" format="<%= doubleFormat %>" model="<%= ShoppingItemPrice.class %>" name="shipping" value="<%= String.valueOf(shipping) %>" />
+									<aui:input field="shipping" fieldParam='<%= "shipping" + i %>' format="<%= doubleFormat %>" ignoreRequestValue="<%= true %>" model="<%= ShoppingItemPrice.class %>" name="shipping" value="<%= String.valueOf(shipping) %>" />
 								</td>
 								<td>
 									<aui:input ignoreRequestValue="<%= true %>" label="use-shipping-formula" name='<%= "useShippingFormula" + i %>' type="checkbox" value="<%= useShippingFormula %>" />

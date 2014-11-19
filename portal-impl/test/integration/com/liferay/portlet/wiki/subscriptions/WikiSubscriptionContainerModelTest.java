@@ -20,7 +20,6 @@ import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.subscriptions.BaseSubscriptionContainerModelTestCase;
-import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
@@ -89,7 +88,7 @@ public class WikiSubscriptionContainerModelTest
 		throws Exception {
 
 		WikiNodeLocalServiceUtil.subscribeNode(
-			TestPropsValues.getUserId(), containerModelId);
+			user.getUserId(), containerModelId);
 	}
 
 	@Override

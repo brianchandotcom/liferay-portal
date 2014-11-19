@@ -15,8 +15,11 @@
 package com.liferay.portal.util.subscriptions;
 
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.model.User;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.util.test.GroupTestUtil;
+import com.liferay.portal.util.test.UserTestUtil;
 
 import org.junit.Before;
 
@@ -29,6 +32,8 @@ public abstract class BaseSubscriptionTestCase {
 	@Before
 	public void setUp() throws Exception {
 		group = GroupTestUtil.addGroup();
+
+		user = UserTestUtil.addGroupUser(group, RoleConstants.SITE_MEMBER);
 	}
 
 	protected long addBaseModel(long containerModelId) throws Exception {
@@ -46,5 +51,8 @@ public abstract class BaseSubscriptionTestCase {
 
 	@DeleteAfterTestRun
 	protected Group group;
+
+	@DeleteAfterTestRun
+	protected User user;
 
 }

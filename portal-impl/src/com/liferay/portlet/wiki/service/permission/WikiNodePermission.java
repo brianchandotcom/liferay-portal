@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.ResourcePermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
@@ -31,8 +30,7 @@ import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 @OSGiBeanProperties(
 	property = {"model.class.name=com.liferay.portlet.wiki.model.WikiNode"}
 )
-public class WikiNodePermission
-	implements BaseModelPermissionChecker, ResourcePermissionChecker {
+public class WikiNodePermission implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, long nodeId, String actionId)
@@ -111,14 +109,6 @@ public class WikiNodePermission
 		throws PortalException {
 
 		check(permissionChecker, primaryKey, actionId);
-	}
-
-	@Override
-	public Boolean checkResource(
-			PermissionChecker permissionChecker, long classPK, String actionId)
-		throws PortalException {
-
-		return contains(permissionChecker, classPK, actionId);
 	}
 
 }

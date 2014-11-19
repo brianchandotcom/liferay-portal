@@ -15,13 +15,16 @@
 package com.liferay.portlet.messageboards.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
-import com.liferay.portal.model.Group;
+import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourcePermissionChecker;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.ResourceLocalServiceUtil;
+import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
 
 /**
@@ -29,7 +32,7 @@ import com.liferay.portal.util.PortletKeys;
  */
 @OSGiBeanProperties(
 	property = {
-		"model.class.name=com.liferay.portlet.messageboards.model.MBCategory"
+		"resource.name=com.liferay.portlet.messageboards"
 	}
 )
 public class MBPermission implements ResourcePermissionChecker {
@@ -50,23 +53,35 @@ public class MBPermission implements ResourcePermissionChecker {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		Group group = GroupLocalServiceUtil.fetchGroup(classPK);
-
-		if (group == null) {
-			return MBCategoryPermission.contains(
-				permissionChecker, classPK, actionId);
-		}
-
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, group.getGroupId(), RESOURCE_NAME,
-			group.getGroupId(), PortletKeys.MESSAGE_BOARDS, actionId);
+			permissionChecker, classPK, RESOURCE_NAME, classPK,
+			PortletKeys.MESSAGE_BOARDS, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();
 		}
 
+		try {
+			int count =
+				ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
+					permissionChecker.getCompanyId(), RESOURCE_NAME,
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(classPK));
+
+			if (count == 0) {
+				ResourceLocalServiceUtil.addResources(
+					permissionChecker.getCompanyId(), classPK, 0, RESOURCE_NAME,
+					classPK, false, true, true);
+			}
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+		}
+
 		return permissionChecker.hasPermission(
-			classPK, RESOURCE_NAME, group.getGroupId(), actionId);
+			classPK, RESOURCE_NAME, classPK, actionId);
 	}
 
 	@Override
@@ -76,5 +91,7 @@ public class MBPermission implements ResourcePermissionChecker {
 
 		return contains(permissionChecker, classPK, actionId);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(MBPermission.class);
 
 }

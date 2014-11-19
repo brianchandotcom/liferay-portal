@@ -15,9 +15,11 @@
 package com.liferay.portlet.journal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
@@ -30,7 +32,12 @@ import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
  * @author Juan Fernández
  * @author Zsolt Berentey
  */
-public class JournalFolderPermission {
+@OSGiBeanProperties(
+	property = {
+		"model.class.name=com.liferay.portlet.journal.model.JournalFolder"
+	}
+)
+public class JournalFolderPermission implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, JournalFolder folder,
@@ -116,6 +123,15 @@ public class JournalFolderPermission {
 
 			return contains(permissionChecker, folder, actionId);
 		}
+	}
+
+	@Override
+	public void checkBaseModel(
+			PermissionChecker permissionChecker, long groupId, long primaryKey,
+			String actionId)
+		throws PortalException {
+
+		check(permissionChecker, groupId, primaryKey, actionId);
 	}
 
 	private static boolean _hasPermission(

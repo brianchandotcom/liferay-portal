@@ -24,8 +24,8 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetRenderer;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.model.MBDiscussion;
+import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
 
 /**
  * @author Roberto Díaz
@@ -38,11 +38,11 @@ public class CommentsUserNotificationHandler
 		setPortletId(PortletKeys.COMMENTS);
 	}
 
-	protected MBMessage fetchMBMessage(JSONObject jsonObject) {
+	protected MBDiscussion fetchDiscussion(JSONObject jsonObject) {
 		long classPK = jsonObject.getLong("classPK");
 
 		try {
-			return MBMessageLocalServiceUtil.fetchMBMessage(classPK);
+			return MBDiscussionLocalServiceUtil.fetchDiscussion(classPK);
 		}
 		catch (SystemException se) {
 			return null;
@@ -51,13 +51,14 @@ public class CommentsUserNotificationHandler
 
 	@Override
 	protected AssetRenderer getAssetRenderer(JSONObject jsonObject) {
-		MBMessage message = fetchMBMessage(jsonObject);
+		MBDiscussion mbDiscussion = fetchDiscussion(jsonObject);
 
-		if (message == null) {
+		if (mbDiscussion == null) {
 			return null;
 		}
 
-		return getAssetRenderer(message.getClassName(), message.getClassPK());
+		return getAssetRenderer(
+			mbDiscussion.getClassName(), mbDiscussion.getClassPK());
 	}
 
 	@Override
@@ -65,9 +66,9 @@ public class CommentsUserNotificationHandler
 		JSONObject jsonObject, AssetRenderer assetRenderer,
 		ServiceContext serviceContext) {
 
-		MBMessage message = fetchMBMessage(jsonObject);
+		MBDiscussion mbDiscussion = fetchDiscussion(jsonObject);
 
-		if (message == null) {
+		if (mbDiscussion == null) {
 			return null;
 		}
 
@@ -101,7 +102,7 @@ public class CommentsUserNotificationHandler
 				title,
 				HtmlUtil.escape(
 					PortalUtil.getUserName(
-						message.getUserId(), StringPool.BLANK)),
+						mbDiscussion.getUserId(), StringPool.BLANK)),
 				HtmlUtil.escape(
 					assetRenderer.getTitle(serviceContext.getLocale())));
 		}
@@ -110,7 +111,7 @@ public class CommentsUserNotificationHandler
 				title,
 				HtmlUtil.escape(
 					PortalUtil.getUserName(
-						message.getUserId(), StringPool.BLANK)));
+						mbDiscussion.getUserId(), StringPool.BLANK)));
 		}
 
 		return title;

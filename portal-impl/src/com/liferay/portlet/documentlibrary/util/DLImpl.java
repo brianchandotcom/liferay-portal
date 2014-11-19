@@ -1323,7 +1323,7 @@ public class DLImpl implements DL {
 		long[] folderIdsArray = ArrayUtil.toLongArray(ancestorFolderIds);
 
 		return SubscriptionLocalServiceUtil.isSubscribed(
-			companyId, userId, Folder.class.getName(), folderIdsArray);
+			companyId, userId, DLFolder.class.getName(), folderIdsArray);
 	}
 
 	@Override

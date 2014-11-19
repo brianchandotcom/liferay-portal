@@ -880,7 +880,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		}
 
 		subscriptionLocalService.addSubscription(
-			userId, groupId, Folder.class.getName(), folderId);
+			userId, groupId, DLFolder.class.getName(), folderId);
 	}
 
 	/**
@@ -925,7 +925,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		}
 
 		subscriptionLocalService.deleteSubscription(
-			userId, Folder.class.getName(), folderId);
+			userId, DLFolder.class.getName(), folderId);
 	}
 
 	/**

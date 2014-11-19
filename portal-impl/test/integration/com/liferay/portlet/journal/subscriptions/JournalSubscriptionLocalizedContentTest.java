@@ -24,7 +24,7 @@ import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.subscriptions.BaseSubscriptionLocalizedContentTestCase;
-import com.liferay.portal.util.test.TestPropsValues;
+import com.liferay.portal.util.test.UserTestUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
@@ -33,6 +33,7 @@ import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
 import javax.portlet.PortletPreferences;
 
+import org.junit.Before;
 import org.junit.runner.RunWith;
 
 /**
@@ -49,6 +50,14 @@ import org.junit.runner.RunWith;
 public class JournalSubscriptionLocalizedContentTest
 	extends BaseSubscriptionLocalizedContentTestCase {
 
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		user = UserTestUtil.addOmniAdminUser();
+	}
+
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {
 		JournalArticle article = JournalTestUtil.addArticle(
@@ -62,7 +71,7 @@ public class JournalSubscriptionLocalizedContentTest
 		throws Exception {
 
 		JournalFolderLocalServiceUtil.subscribe(
-			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
+			user.getUserId(), group.getGroupId(), containerModelId);
 	}
 
 	@Override

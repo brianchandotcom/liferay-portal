@@ -19,6 +19,9 @@ import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.bookmarks.util.BookmarksTestUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
@@ -27,7 +30,6 @@ import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.subscriptions.BaseSubscriptionBaseModelTestCase;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
-import com.liferay.portal.util.test.TestPropsValues;
 
 import org.junit.runner.RunWith;
 
@@ -60,16 +62,31 @@ public class BookmarksSubscriptionBaseModelTest
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-		BookmarksFolder folder = BookmarksTestUtil.addFolder(
+		_folder = BookmarksTestUtil.addFolder(
 			containerModelId, RandomTestUtil.randomString(), serviceContext);
 
-		return folder.getFolderId();
+		return _folder.getFolderId();
 	}
 
 	@Override
 	protected void addSubscriptionBaseModel(long baseModelId) throws Exception {
 		BookmarksEntryLocalServiceUtil.subscribeEntry(
-			TestPropsValues.getUserId(), baseModelId);
+			user.getUserId(), baseModelId);
+	}
+
+	@Override
+	protected void removeContainerModelResourceViewPermission()
+		throws Exception {
+
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.GUEST, BookmarksFolder.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(_folder.getFolderId()), ActionKeys.VIEW);
+
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.SITE_MEMBER, BookmarksFolder.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(_folder.getFolderId()), ActionKeys.VIEW);
 	}
 
 	@Override
@@ -79,5 +96,7 @@ public class BookmarksSubscriptionBaseModelTest
 
 		BookmarksTestUtil.updateEntry(entry);
 	}
+
+	private BookmarksFolder _folder;
 
 }

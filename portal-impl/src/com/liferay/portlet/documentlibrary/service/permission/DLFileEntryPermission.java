@@ -23,7 +23,6 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.ResourcePermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
@@ -43,8 +42,7 @@ import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 		"model.class.name=com.liferay.portlet.documentlibrary.model.DLFileEntry"
 	}
 )
-public class DLFileEntryPermission
-	implements BaseModelPermissionChecker, ResourcePermissionChecker {
+public class DLFileEntryPermission implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, DLFileEntry dlFileEntry,
@@ -176,14 +174,6 @@ public class DLFileEntryPermission
 		throws PortalException {
 
 		check(permissionChecker, primaryKey, actionId);
-	}
-
-	@Override
-	public Boolean checkResource(
-			PermissionChecker permissionChecker, long classPK, String actionId)
-		throws PortalException {
-
-		return contains(permissionChecker, classPK, actionId);
 	}
 
 }

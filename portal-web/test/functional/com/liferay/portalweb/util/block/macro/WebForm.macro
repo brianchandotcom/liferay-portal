@@ -1,61 +1,84 @@
 <definition>
-	<command name="sendPG">
-		<var name="key_form1Title" value="${form1Title}" />
-		<var name="key_form2Title" value="${form2Title}" />
-		<var name="key_form3Title" value="${form3Title}" />
-
-		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_INFORMATION_TITLE" value1="${formInformationTitle}" />
-		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_INFORMATION_DESCRIPTION" value1="${formInformationDescription}" />
-		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_1_HEADER" value1="${form1Title}" />
-		<execute action="PGWebform#type" locator-key1="FORM_FIELDS_1_FIELD" value1="${form1Value}" />
+	<command name="populateFormField">
+		<var name="key_fieldName" value="${fieldName}" />
 
 		<if>
-			<equals arg1="${checkbox}" arg2="true" />
+			<equals arg1="${fieldType}" arg2="Text" />
 			<then>
-				<execute action="PGWebform#uncheck" locator-key1="FORM_FIELDS_2_CHECKBOX" />
-				<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_3_HEADER" value1="${form3Title}" />
-				<execute action="PGWebform#type" locator-key1="FORM_FIELDS_3_FIELD" value1="${form3Value}" />
-
-				<execute action="PGWebform#assertClick" locator-key1="SEND_BUTTON" value1="Send" />
-				<execute action="PGWebform#assertTextEquals" locator-key1="SUCCESS_MESSAGE_FORM" value1="The form information was sent successfully." />
-
-				<execute action="PGWebform#check" locator-key1="FORM_FIELDS_2_CHECKBOX" />
+				<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_FIELD_HEADER" value1="${fieldName}" />
+				<execute action="PGWebform#type" locator-key1="FORM_FIELDS_TEXT_FIELD" value1="${formFieldValue}" />
 			</then>
-			<else>
-				<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_2_HEADER" value1="${form2Title}" />
-				<execute action="PGWebform#select" locator-key1="FORM_FIELDS_2_SELECT" value1="${form2Value}" />
-				<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_3_HEADER" value1="${form3Title}" />
-				<execute action="PGWebform#type" locator-key1="FORM_FIELDS_3_FIELD" value1="${form3Value}" />
-			</else>
 		</if>
 
+		<if>
+			<equals arg1="${fieldType}" arg2="Select" />
+			<then>
+				<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_FIELD_HEADER" value1="${fieldName}" />
+				<execute action="PGWebform#select" locator-key1="FORM_FIELDS_SELECT_FIELD" value1="${formFieldValue}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${fieldType}" arg2="Check Box" />
+			<then>
+				<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_CHECKBOX_FIELD_HEADER" value1="${fieldName}" />
+				<execute action="PGWebform#assertElementPresent" locator-key1="FORM_FIELDS_CHECKBOX_FIELD" />
+				<execute action="PGWebform#check" locator-key1="FORM_FIELDS_CHECKBOX_FIELD" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${fieldType}" arg2="Text Box" />
+			<then>
+				<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_FIELD_HEADER" value1="${fieldName}" />
+				<execute action="PGWebform#type" locator-key1="FORM_FIELDS_TEXT_BOX_FIELD" value1="${formFieldValue}" />
+			</then>
+		</if>
+	</command>
+
+	<command name="sendPG">
 		<execute action="PGWebform#assertClick" locator-key1="SEND_BUTTON" value1="Send" />
 		<execute action="PGWebform#assertTextEquals" locator-key1="SUCCESS_MESSAGE_FORM" value1="The form information was sent successfully." />
 	</command>
 
-	<command name="viewPG">
-		<var name="key_form1Title" value="${form1Title}" />
-		<var name="key_form2Title" value="${form2Title}" />
-		<var name="key_form3Title" value="${form3Title}" />
-
-		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_INFORMATION_TITLE" value1="${formInformationTitle}" />
-		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_INFORMATION_DESCRIPTION" value1="${formInformationDescription}" />
-		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_1_HEADER" value1="${form1Title}" />
-		<execute action="PGWebform#assertElementPresent" locator-key1="FORM_FIELDS_1_FIELD" />
+	<command name="viewFormField">
+		<var name="key_fieldName" value="${fieldName}" />
 
 		<if>
-			<equals arg1="${checkbox}" arg2="true" />
+			<equals arg1="${fieldType}" arg2="Text" />
 			<then>
-				<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_2_CHECKBOX_NAME" value1="${form2Title}" />
-				<execute action="PGWebform#assertElementPresent" locator-key1="FORM_FIELDS_2_CHECKBOX" />
+				<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_FIELD_HEADER" value1="${fieldName}" />
+				<execute action="PGWebform#assertElementPresent" locator-key1="FORM_FIELDS_TEXT_FIELD" />
 			</then>
-			<else>
-				<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_2_HEADER" value1="${form2Title}" />
-				<execute action="PGWebform#assertElementPresent" locator-key1="FORM_FIELDS_2_SELECT" />
-			</else>
 		</if>
 
-		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_3_HEADER" value1="${form3Title}" />
-		<execute action="PGWebform#assertElementPresent" locator-key1="FORM_FIELDS_3_FIELD" />
+		<if>
+			<equals arg1="${fieldType}" arg2="Select" />
+			<then>
+				<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_FIELD_HEADER" value1="${fieldName}" />
+				<execute action="PGWebform#assertElementPresent" locator-key1="FORM_FIELDS_SELECT_FIELD" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${fieldType}" arg2="Check Box" />
+			<then>
+				<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_CHECKBOX_FIELD_HEADER" value1="${fieldName}" />
+				<execute action="PGWebform#assertElementPresent" locator-key1="FORM_FIELDS_CHECKBOX_FIELD" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${fieldType}" arg2="Text Box" />
+			<then>
+				<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_FIELD_HEADER" value1="${fieldName}" />
+				<execute action="PGWebform#assertElementPresent" locator-key1="FORM_FIELDS_TEXT_BOX_FIELD" />
+			</then>
+		</if>
+	</command>
+
+	<command name="viewPG">
+		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_INFORMATION_TITLE" value1="${formInformationTitle}" />
+		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_INFORMATION_DESCRIPTION" value1="${formInformationDescription}" />
 	</command>
 </definition>

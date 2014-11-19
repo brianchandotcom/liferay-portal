@@ -28,7 +28,8 @@ public interface ElasticsearchConnection {
 
 	public Client getClient();
 
-	public ClusterHealthResponse getClusterHealthResponse();
+	public ClusterHealthResponse getClusterHealthResponse(
+		long timeout, int nodeCount);
 
 	public void initialize();
 

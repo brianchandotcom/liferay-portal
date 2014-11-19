@@ -200,7 +200,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 			new PortalExecutorManagerUtil();
 
 		portalExecutorManagerUtil.setPortalExecutorManager(
-			new ClusterExecutorImplTest.MockPortalExecutorManager());
+			new MockPortalExecutorManager());
 
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			ClusterExecutorImpl.class.getName(), Level.SEVERE);
@@ -584,7 +584,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 				futureClusterResponses.get();
 
 			Assert.assertEquals(0, clusterNodeResponses.size());
-			Assert.assertFalse(TestBean.TIMESTAMP.equals(timestamp));
+			Assert.assertNotEquals(TestBean.TIMESTAMP, timestamp);
 		}
 		finally {
 			clusterExecutorImpl.destroy();
@@ -697,19 +697,14 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			// Test 5, if ClusterNode is alive by ClusterNode ID
 
-			boolean clusterNodeAlive = clusterExecutorImpl1.isClusterNodeAlive(
-				clusterNode2.getClusterNodeId());
-
 			Assert.assertTrue(
 				clusterExecutorImpl1.isClusterNodeAlive(
 					clusterNode2.getClusterNodeId()));
 
 			// Test 6, if ClusterNode is alive by address
 
-			clusterNodeAlive = clusterExecutorImpl1.isClusterNodeAlive(
-				address2);
-
-			Assert.assertTrue(clusterNodeAlive);
+			Assert.assertTrue(
+				clusterExecutorImpl1.isClusterNodeAlive(address2));
 		}
 		finally {
 			clusterExecutorImpl1.destroy();

@@ -605,20 +605,6 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 			clusterLinkImpl, "_transportJChannels");
 	}
 
-	protected org.jgroups.Address getJGroupsAddress(
-		List<JChannel> jChannels, int index) {
-
-		JChannel jChannel = jChannels.get(index);
-
-		return jChannel.getAddress();
-	}
-
-	protected Object getRealAddress(List<Address> addresses, int index) {
-		Address address = addresses.get(index);
-
-		return address.getRealAddress();
-	}
-
 	protected boolean isOpen(JChannel jChannel) {
 		String state = jChannel.getState();
 

@@ -3051,7 +3051,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			return UsersAdminUtil.getUsers(
 				search(
 					companyId, keywords, status, params, start, end,
-					getSortFromComparator(obc)));
+					getSortsFromOrderByComparator(obc)));
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -3217,7 +3217,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				search(
 					companyId, firstName, middleName, lastName, screenName,
 					emailAddress, status, params, andSearch, start, end,
-					getSortFromComparator(obc)));
+					getSortsFromOrderByComparator(obc)));
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -6003,16 +6003,18 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return StringUtil.lowerCase(StringUtil.trim(login));
 	}
 
-	protected Sort[] getSortFromComparator(OrderByComparator<User> obc) {
+	protected Sort[] getSortsFromOrderByComparator(
+		OrderByComparator<User> obc) {
+
 		String[] orderByFields = obc.getOrderByFields();
 
 		String orderBy = obc.getOrderBy();
-		String[] orders = StringUtil.split(orderBy);
+		String[] orderByClauses = StringUtil.split(orderBy);
 
-		Sort[] sorts = new Sort[orders.length];
+		Sort[] sorts = new Sort[orderByClauses.length];
 
 		for (int i = 0; i < orderByFields.length; i++) {
-			boolean reverse = orders[i].contains("DESC");
+			boolean reverse = orderByClauses[i].contains("DESC");
 
 			sorts[i] = new Sort(orderByFields[i], reverse);
 		}

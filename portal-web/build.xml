@@ -1012,13 +1012,12 @@ Please set the property "jdk.6.home" in build.properties.
 			<pathelement location="${project.dir}/lib/portal/commons-httpclient.jar" />
 			<pathelement location="${project.dir}/lib/portal/portletbridge-core.jar" />
 			<pathelement location="${project.dir}/lib/portal/portletbridge-portlet.jar" />
-			<pathelement location="${project.dir}/lib/portal/spring-asm.jar" />
 			<pathelement location="${project.dir}/lib/portal/spring-beans.jar" />
 			<pathelement location="${project.dir}/lib/portal/spring-context.jar" />
 			<pathelement location="${project.dir}/lib/portal/spring-core.jar" />
 			<pathelement location="${project.dir}/lib/portal/spring-expression.jar" />
 			<pathelement location="${project.dir}/lib/portal/spring-web.jar" />
-			<pathelement location="${project.dir}/lib/portal/spring-web-servlet.jar" />
+			<pathelement location="${project.dir}/lib/portal/spring-webmvc.jar" />
 			<pathelement location="${project.dir}/lib/portal/struts-el.jar" />
 			<pathelement location="${project.dir}/lib/portal/tika-core.jar" />
 		</path>

@@ -99,7 +99,7 @@ public class ClusterRequestReceiverTest
 				clusterExecutorImpl2.getLocalClusterNodeAddress(),
 				"Return value is not serializable");
 
-			// Test 4, exception
+			// Test 4, throw exception
 
 			timestamp = String.valueOf(System.currentTimeMillis());
 

@@ -85,7 +85,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			Assert.assertEquals(2, clusterEventListeners.size());
 
-			// Add
+			// Test 1, add ClusterEventListener
 
 			ClusterEventListener clusterEventListener =
 				new MockClusterEventListener();
@@ -97,7 +97,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			Assert.assertEquals(3, clusterEventListeners.size());
 
-			// Remove
+			// Test 2, remove ClusterEventListener
 
 			clusterExecutorImpl.removeClusterEventListener(
 				clusterEventListener);
@@ -107,7 +107,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			Assert.assertEquals(2, clusterEventListeners.size());
 
-			// Set
+			// Test 3, set ClusterEventListener
 
 			clusterEventListeners = new ArrayList<ClusterEventListener>();
 
@@ -151,7 +151,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 			assertClusterEvent(
 				clusterEvent, ClusterEventType.JOIN, clusterNode2);
 
-			// Disconnected network
+			// Test 1, disconnect network
 
 			updateView(clusterExecutorImpl1);
 
@@ -160,7 +160,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 			assertClusterEvent(
 				clusterEvent, ClusterEventType.DEPART, clusterNode2);
 
-			// Reconnected network
+			// Test 2, reconnect network
 
 			updateView(clusterExecutorImpl1, clusterExecutorImpl2);
 
@@ -208,7 +208,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 		try {
 
-			// Test 1, exception in initialization with log enabled
+			// Test 1, connect channel with log enabled
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
@@ -226,7 +226,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 					logRecords, "Unable to initialize", Exception.class);
 			}
 
-			// Test 2, exception in initialization with log disabled
+			// Test 2, connect channel with log disabled
 
 			logRecords = captureHandler.resetLogLevel(Level.OFF);
 
@@ -245,7 +245,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 				Assert.assertTrue(logRecords.isEmpty());
 			}
 
-			// Test 2, exception in sendNotifyRequest
+			// Test 3, send notify message
 
 			JChannelExceptionAdvice.setConnectException(null);
 
@@ -262,7 +262,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 				"Unable to send notify message",
 				logRecords.get(1).getMessage());
 
-			// Test 3, exception in portalLocalInetSockAddressConfigured
+			// Test 4, configurate InetSockAddress
 
 			logRecords = captureHandler.resetLogLevel(Level.SEVERE);
 
@@ -273,7 +273,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 				logRecords, "Unable to determine configure node port",
 				Exception.class);
 
-			// Test 4, exception in execute multicast request
+			// Test 5, execute multicast request
 
 			ClusterRequest clusterRequest =
 				ClusterRequest.createMulticastRequest(null);
@@ -288,7 +288,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 					"Unable to send multicast request", e.getMessage());
 			}
 
-			// Test 5, exception in execute unicast request
+			// Test 6, execute unicast request
 
 			clusterRequest = ClusterRequest.createUnicastRequest(
 				null, new AddressImpl(new MockAddress()));
@@ -323,7 +323,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 		try {
 
-			// fireAndForget is false
+			// Test 1, execute with fireAndForget disabled
 
 			timestamp = String.valueOf(System.currentTimeMillis());
 
@@ -342,7 +342,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 				futureClusterResponses.get(), clusterRequest.getUuid(),
 				timestamp, clusterExecutorImpl1.getClusterNodeAddresses());
 
-			// fireAndForget is true
+			// Test 2, execute with fireAndForget enabled
 
 			timestamp = String.valueOf(System.currentTimeMillis());
 
@@ -380,7 +380,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 		try {
 
-			// Test 1, execute TestBean.testMethod1
+			// Test 1, execute when return value is null
 
 			ClusterNode clusterNode = clusterExecutorImpl.getLocalClusterNode();
 
@@ -395,7 +395,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 				futureClusterResponses.get(), clusterRequest.getUuid(), null,
 				clusterExecutorImpl.getLocalClusterNodeAddress());
 
-			// Test 2, execute TestBean.testMethod2
+			// Test 2, execute when return value is not serializable
 
 			clusterRequest = ClusterRequest.createUnicastRequest(
 				new MethodHandler(testMethod2MethodKey),
@@ -409,7 +409,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 				clusterExecutorImpl.getLocalClusterNodeAddress(),
 				"Return value is not serializable");
 
-			// Test 3, execute TestBean.testMethod3
+			// Test 3, execute when exception is thrown
 
 			String timestamp = String.valueOf(System.currentTimeMillis());
 
@@ -424,7 +424,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 				futureClusterResponses, clusterRequest.getUuid(),
 				clusterExecutorImpl.getLocalClusterNodeAddress(), timestamp);
 
-			// Test 4, execute TestBean.testMethod4
+			// Test 4, execute when methodHandler is null
 
 			clusterRequest = ClusterRequest.createUnicastRequest(
 				null, clusterExecutorImpl.getLocalClusterNodeAddress());
@@ -453,7 +453,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 		try {
 
-			// Test 1, notify message
+			// Test 1, send notify message
 
 			BaseReceiverAdvice.reset(1);
 
@@ -470,7 +470,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 				ClusterMessageType.NOTIFY,
 				clusterRequest.getClusterMessageType());
 
-			// Test 2, shortcutLocalMethod is false
+			// Test 2, execute with shortcutLocalMethod disabled
 
 			BaseReceiverAdvice.reset(1);
 
@@ -501,7 +501,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 				methodHandler.toString(),
 				clusterRequest.getMethodHandler().toString());
 
-			// Test 3, shortcutLocalMethod is true
+			// Test 3, execute with shortcutLocalMethod enabled
 
 			BaseReceiverAdvice.reset(1);
 
@@ -542,7 +542,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 		try {
 
-			// Test 1, skipLocal is false
+			// Test 1, execute with skipLocal disabled
 
 			String timestamp = String.valueOf(System.currentTimeMillis());
 
@@ -563,7 +563,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 				futureClusterResponses.get(), clusterRequest.getUuid(),
 				timestamp, address);
 
-			// Test 2, skipLocal is true
+			// Test 2, execute with skipLocal enabled
 
 			timestamp = String.valueOf(System.currentTimeMillis());
 
@@ -634,6 +634,9 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 		ClusterExecutorImpl clusterExecutorImpl2 = getClusterExecutorImpl();
 
 		try {
+
+			// Test 1, get local ClusterNode
+
 			MockClusterEventListener mockClusterEventListener =
 				new MockClusterEventListener();
 
@@ -650,6 +653,8 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			Assert.assertNotNull(clusterNode2);
 
+			// Test 2, get address of local ClusterNode
+
 			Address address1 =
 				clusterExecutorImpl1.getLocalClusterNodeAddress();
 
@@ -659,6 +664,8 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 				clusterExecutorImpl2.getLocalClusterNodeAddress();
 
 			Assert.assertNotNull(address2);
+
+			// Test 3, get addresses of all ClusterNodes
 
 			ClusterEvent clusterEvent =
 				mockClusterEventListener.waitJoinMessage();
@@ -673,6 +680,8 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 			Assert.assertTrue(addresses.contains(address1));
 			Assert.assertTrue(addresses.contains(address2));
 
+			// Test 4, get all ClusterNodes
+
 			List<ClusterNode> clusterNodes =
 				clusterExecutorImpl1.getClusterNodes();
 
@@ -680,12 +689,16 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 			Assert.assertTrue(clusterNodes.contains(clusterNode1));
 			Assert.assertTrue(clusterNodes.contains(clusterNode2));
 
+			// Test 5, if ClusterNode is alive by ClusterNode ID
+
 			boolean clusterNodeAlive = clusterExecutorImpl1.isClusterNodeAlive(
 				clusterNode2.getClusterNodeId());
 
 			Assert.assertTrue(
 				clusterExecutorImpl1.isClusterNodeAlive(
 					clusterNode2.getClusterNodeId()));
+
+			// Test 6, if ClusterNode is alive by address
 
 			clusterNodeAlive = clusterExecutorImpl1.isClusterNodeAlive(
 				address2);
@@ -954,35 +967,35 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			Assert.assertTrue(fieldClusterEventListeners.isEmpty());
 
-			// Test 5, getClusterNodeAddresses
+			// Test 5, get address of ClusterNode
 
 			List<Address> addresses =
 				clusterExecutorImpl.getClusterNodeAddresses();
 
 			Assert.assertTrue(addresses.isEmpty());
 
-			// Test 6, getClusterNodes
+			// Test 6, get ClusterNode
 
 			List<ClusterNode> clusterNodes =
 				clusterExecutorImpl.getClusterNodes();
 
 			Assert.assertTrue(clusterNodes.isEmpty());
 
-			// Test 7, getLocalClusterNode
+			// Test 7, get local ClusterNode
 
 			Assert.assertNull(clusterExecutorImpl.getLocalClusterNode());
 
-			// Test 8, getLocalClusterNodeAddress
+			// Test 8, get address of local ClusterNode
 
 			Assert.assertNull(clusterExecutorImpl.getLocalClusterNodeAddress());
 
-			// Test 9, isClusterNodeAlive by address
+			// Test 9, if ClusterNode is alive by address
 
 			Assert.assertFalse(
 				clusterExecutorImpl.isClusterNodeAlive(
 					new AddressImpl(new MockAddress())));
 
-			// Test 10, isClusterNodeAlive by clusterNodeId
+			// Test 10, if ClusterNode is alive by ClusterNode ID
 
 			Assert.assertFalse(
 				clusterExecutorImpl.isClusterNodeAlive("WrongClusterNodeId"));
@@ -993,12 +1006,12 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 				clusterExecutorImpl.execute(
 					ClusterRequest.createMulticastRequest(null)));
 
-			// Test 12, portalServerInetSocketAddressConfigured
+			// Test 12, configurate InetSocketAddress of remote
 
 			clusterExecutorImpl.portalServerInetSocketAddressConfigured(
 				new InetSocketAddress(80));
 
-			// Test 13, portalLocalInetSockAddressConfigured
+			// Test 13, configurate InetSocketAddress of local
 
 			clusterExecutorImpl.portalLocalInetSockAddressConfigured(
 				new InetSocketAddress(80));

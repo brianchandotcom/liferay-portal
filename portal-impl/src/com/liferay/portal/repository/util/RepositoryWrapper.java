@@ -79,6 +79,8 @@ public class RepositoryWrapper implements Repository {
 		throws PortalException {
 
 		return _repository.addFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
 			folderId, sourceFileName, mimeType, title, description, changeLog,
 			file, serviceContext);
 	}
@@ -97,6 +99,8 @@ public class RepositoryWrapper implements Repository {
 		throws PortalException {
 
 		return _repository.addFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
 			folderId, sourceFileName, mimeType, title, description, changeLog,
 			is, size, serviceContext);
 	}
@@ -128,6 +132,8 @@ public class RepositoryWrapper implements Repository {
 		throws PortalException {
 
 		_repository.checkInFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
 			fileEntryId, major, changeLog, serviceContext);
 	}
 
@@ -156,7 +162,10 @@ public class RepositoryWrapper implements Repository {
 	public void checkInFileEntry(long fileEntryId, String lockUuid)
 		throws PortalException {
 
-		_repository.checkInFileEntry(fileEntryId, lockUuid);
+		_repository.checkInFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
+			fileEntryId, lockUuid, new ServiceContext());
 	}
 
 	/**
@@ -169,7 +178,10 @@ public class RepositoryWrapper implements Repository {
 			long fileEntryId, String lockUuid, ServiceContext serviceContext)
 		throws PortalException {
 
-		_repository.checkInFileEntry(fileEntryId, lockUuid, serviceContext);
+		_repository.checkInFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
+			fileEntryId, lockUuid, serviceContext);
 	}
 
 	@Override
@@ -212,6 +224,8 @@ public class RepositoryWrapper implements Repository {
 		throws PortalException {
 
 		return _repository.copyFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
 			groupId, fileEntryId, destFolderId, serviceContext);
 	}
 
@@ -607,7 +621,10 @@ public class RepositoryWrapper implements Repository {
 			long fileEntryId, String version, ServiceContext serviceContext)
 		throws PortalException {
 
-		_repository.revertFileEntry(fileEntryId, version, serviceContext);
+		_repository.revertFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
+			fileEntryId, version, serviceContext);
 	}
 
 	@Override
@@ -692,6 +709,8 @@ public class RepositoryWrapper implements Repository {
 		throws PortalException {
 
 		return _repository.updateFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
 			fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, file, serviceContext);
 	}
@@ -711,6 +730,8 @@ public class RepositoryWrapper implements Repository {
 		throws PortalException {
 
 		return _repository.updateFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
 			fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, is, size, serviceContext);
 	}

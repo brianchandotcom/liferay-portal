@@ -22,7 +22,6 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.service.persistence.UserGroupRolePK;
-import com.liferay.portal.service.persistence.UserGroupRoleUtil;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
@@ -30,6 +29,8 @@ import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portal.util.test.UserTestUtil;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -48,7 +49,7 @@ public class UserGroupRoleLocalServiceTest {
 		new TransactionalTestRule();
 
 	@Test
-	public void testAddUserGroupRole() throws Throwable {
+	public void testAddUserGroupRoles() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
 		_user = UserTestUtil.addUser(null, _group.getGroupId());
@@ -59,26 +60,18 @@ public class UserGroupRoleLocalServiceTest {
 		UserGroupRolePK userGroupRolePK = new UserGroupRolePK(
 			_user.getUserId(), _group.getGroupId(), role.getRoleId());
 
-		UserGroupRole userGroupRole = addUserGroupRole(userGroupRolePK);
+		List<UserGroupRole> userGroupRoles =
+			UserGroupRoleLocalServiceUtil.addUserGroupRoles(
+				new long[] {_user.getUserId()}, _group.getGroupId(),
+				role.getRoleId());
+
+		Assert.assertEquals(1, userGroupRoles.size());
 
 		EntityCacheUtil.clearLocalCache();
 
 		Assert.assertEquals(
-			userGroupRole,
-			UserGroupRoleUtil.fetchByPrimaryKey(userGroupRolePK));
-	}
-
-	protected UserGroupRole addUserGroupRole(UserGroupRolePK userGroupRolePK) {
-		UserGroupRole userGroupRole = UserGroupRoleUtil.fetchByPrimaryKey(
-			userGroupRolePK);
-
-		Assert.assertNull(userGroupRole);
-
-		userGroupRole = UserGroupRoleUtil.create(userGroupRolePK);
-
-		userGroupRole = UserGroupRoleUtil.update(userGroupRole);
-
-		return userGroupRole;
+			userGroupRoles.get(0),
+			UserGroupRoleLocalServiceUtil.fetchUserGroupRole(userGroupRolePK));
 	}
 
 	@DeleteAfterTestRun

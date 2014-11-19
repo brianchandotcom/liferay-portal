@@ -157,12 +157,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 			List<JChannel> jChannels = getJChannels(clusterLinkImpl);
 
-			Assert.assertSame(
-				jChannels.get(0).getAddress(),
-				addresses.get(0).getRealAddress());
-			Assert.assertSame(
-				jChannels.get(1).getAddress(),
-				addresses.get(1).getRealAddress());
+			assertAddresses(addresses, jChannels.get(0), jChannels.get(1));
 		}
 		finally {
 			clusterLinkImpl.destroy();
@@ -197,18 +192,9 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 			Assert.assertEquals(2, addresses1.size());
 			Assert.assertEquals(2, addresses2.size());
-			Assert.assertTrue(
-				addresses1.contains(
-					new AddressImpl(jChannels1.get(0).getAddress())));
-			Assert.assertTrue(
-				addresses1.contains(
-					new AddressImpl(jChannels2.get(0).getAddress())));
-			Assert.assertTrue(
-				addresses2.contains(
-					new AddressImpl(jChannels1.get(1).getAddress())));
-			Assert.assertTrue(
-				addresses2.contains(
-					new AddressImpl(jChannels2.get(1).getAddress())));
+
+			assertAddresses(addresses1, jChannels1.get(0), jChannels2.get(0));
+			assertAddresses(addresses2, jChannels1.get(1), jChannels2.get(1));
 		}
 		finally {
 			clusterLinkImpl1.destroy();
@@ -264,9 +250,11 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 			}
 			catch (IllegalStateException ise) {
 				Assert.assertEquals(1, logRecords.size());
+
+				LogRecord logRecord = logRecords.get(0);
+
 				Assert.assertEquals(
-					"Unable to initialize channels",
-					logRecords.get(0).getMessage());
+					"Unable to initialize channels", logRecord.getMessage());
 				Assert.assertEquals(
 					"java.lang.IllegalArgumentException: Channel count must " +
 						"be between 1 and " + ClusterLinkImpl.MAX_CHANNEL_COUNT,
@@ -577,10 +565,23 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	}
 
+	protected void assertAddresses(
+		List<Address> addresses, JChannel... jChannels) {
+
+		Assert.assertEquals(addresses.size(), jChannels.length);
+
+		for (JChannel jChannel : jChannels) {
+			Assert.assertTrue(
+				addresses.contains(new AddressImpl(jChannel.getAddress())));
+		}
+	}
+
 	protected Message createMessage() {
 		Message message = new Message();
 
-		message.setPayload(UUID.randomUUID().toString());
+		UUID uuid = UUID.randomUUID();
+
+		message.setPayload(uuid.toString());
 
 		return message;
 	}

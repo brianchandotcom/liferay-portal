@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.cluster.ClusterEventType;
 import com.liferay.portal.kernel.cluster.ClusterMessageType;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
+import com.liferay.portal.kernel.cluster.ClusterNodeResponses;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
@@ -253,14 +254,16 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			clusterExecutorImpl.initialize();
 
+			LogRecord logRecord1 = logRecords.get(0);
+			LogRecord logRecord2 = logRecords.get(1);
+
 			Assert.assertEquals(2, logRecords.size());
 			Assert.assertEquals(
 				"Unable to parse portal InetSocketAddress from bad " +
 					"address:8080",
-				logRecords.get(0).getMessage());
+				logRecord1.getMessage());
 			Assert.assertEquals(
-				"Unable to send notify message",
-				logRecords.get(1).getMessage());
+				"Unable to send notify message", logRecord2.getMessage());
 
 			// Test 4, configurate InetSockAddress
 
@@ -493,13 +496,13 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 				channel.getReceiver(), channel.getAddress());
 
 			clusterRequest = (ClusterRequest)object;
+			MethodHandler newMethodHandler = clusterRequest.getMethodHandler();
 
 			Assert.assertEquals(
 				ClusterMessageType.EXECUTE,
 				clusterRequest.getClusterMessageType());
 			Assert.assertEquals(
-				methodHandler.toString(),
-				clusterRequest.getMethodHandler().toString());
+				methodHandler.toString(), newMethodHandler.toString());
 
 			// Test 3, execute with shortcutLocalMethod enabled
 
@@ -577,7 +580,10 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 			futureClusterResponses = clusterExecutorImpl.execute(
 				clusterRequest);
 
-			Assert.assertEquals(0, futureClusterResponses.get().size());
+			ClusterNodeResponses clusterNodeResponses =
+				futureClusterResponses.get();
+
+			Assert.assertEquals(0, clusterNodeResponses.size());
 			Assert.assertFalse(TestBean.TIMESTAMP.equals(timestamp));
 		}
 		finally {

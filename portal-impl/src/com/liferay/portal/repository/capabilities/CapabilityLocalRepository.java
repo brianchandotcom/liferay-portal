@@ -102,6 +102,40 @@ public class CapabilityLocalRepository
 	}
 
 	@Override
+	public void checkInFileEntry(
+			long userId, long fileEntryId, boolean major, String changeLog,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		LocalRepository localRepository = getRepository();
+
+		localRepository.checkInFileEntry(
+			userId, fileEntryId, major, changeLog, serviceContext);
+
+		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
+	}
+
+	@Override
+	public void checkInFileEntry(
+			long userId, long fileEntryId, String lockUuid,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		LocalRepository localRepository = getRepository();
+
+		localRepository.checkInFileEntry(
+			userId, fileEntryId, lockUuid, serviceContext);
+
+		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
+	}
+
+	@Override
 	public FileEntry copyFileEntry(
 			long userId, long groupId, long fileEntryId, long destFolderId,
 			ServiceContext serviceContext)
@@ -243,6 +277,23 @@ public class CapabilityLocalRepository
 			RepositoryEventType.Move.class, Folder.class, folder);
 
 		return folder;
+	}
+
+	@Override
+	public void revertFileEntry(
+			long userId, long fileEntryId, String version,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		LocalRepository localRepository = getRepository();
+
+		localRepository.revertFileEntry(
+			userId, fileEntryId, version, serviceContext);
+
+		FileEntry fileEntry = getFileEntry(fileEntryId);
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
 	}
 
 	@Override

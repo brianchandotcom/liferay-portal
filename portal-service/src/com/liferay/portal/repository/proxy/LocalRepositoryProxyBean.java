@@ -83,6 +83,26 @@ public class LocalRepositoryProxyBean
 	}
 
 	@Override
+	public void checkInFileEntry(
+			long userId, long fileEntryId, boolean major, String changeLog,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_localRepository.checkInFileEntry(
+			userId, fileEntryId, major, changeLog, serviceContext);
+	}
+
+	@Override
+	public void checkInFileEntry(
+			long userId, long fileEntryId, String lockUuid,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_localRepository.checkInFileEntry(
+			userId, fileEntryId, lockUuid, serviceContext);
+	}
+
+	@Override
 	public FileEntry copyFileEntry(
 			long userId, long groupId, long fileEntryId, long destFolderId,
 			ServiceContext serviceContext)
@@ -205,6 +225,16 @@ public class LocalRepositoryProxyBean
 			userId, folderId, parentFolderId, serviceContext);
 
 		return newFolderProxyBean(folder);
+	}
+
+	@Override
+	public void revertFileEntry(
+			long userId, long fileEntryId, String version,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_localRepository.revertFileEntry(
+			userId, fileEntryId, version, serviceContext);
 	}
 
 	@Override

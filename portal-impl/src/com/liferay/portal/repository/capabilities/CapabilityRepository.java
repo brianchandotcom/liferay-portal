@@ -156,16 +156,50 @@ public class CapabilityRepository
 		return fileVersion;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #checkInFileEntry(long, long,
+	 *             boolean, String, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public void checkInFileEntry(
 			long fileEntryId, boolean major, String changeLog,
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		checkInFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
+			fileEntryId, major, changeLog, serviceContext);
+	}
+
+	@Override
+	public void checkInFileEntry(
+			long userId, long fileEntryId, boolean major, String changeLog,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		Repository repository = getRepository();
 
 		repository.checkInFileEntry(
-			fileEntryId, major, changeLog, serviceContext);
+			userId, fileEntryId, major, changeLog, serviceContext);
+
+		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
+	}
+
+	@Override
+	public void checkInFileEntry(
+			long userId, long fileEntryId, String lockUuid,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		Repository repository = getRepository();
+
+		repository.checkInFileEntry(
+			userId, fileEntryId, lockUuid, serviceContext);
 
 		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
 
@@ -188,19 +222,20 @@ public class CapabilityRepository
 			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #checkInFileEntry(long, long,
+	 *             String, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public void checkInFileEntry(
 			long fileEntryId, String lockUuid, ServiceContext serviceContext)
 		throws PortalException {
 
-		Repository repository = getRepository();
-
-		repository.checkInFileEntry(fileEntryId, lockUuid, serviceContext);
-
-		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
-
-		_repositoryEventTrigger.trigger(
-			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
+		checkInFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
+			fileEntryId, lockUuid, serviceContext);
 	}
 
 	@Override
@@ -685,10 +720,39 @@ public class CapabilityRepository
 
 	@Override
 	public void revertFileEntry(
+			long userId, long fileEntryId, String version,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		Repository repository = getRepository();
+
+		repository.revertFileEntry(
+			userId, fileEntryId, version, serviceContext);
+
+		FileEntry fileEntry = getFileEntry(fileEntryId);
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #revertFileEntry(long, long,
+	 *             String, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public void revertFileEntry(
 			long fileEntryId, String version, ServiceContext serviceContext)
 		throws PortalException {
 
-		getRepository().revertFileEntry(fileEntryId, version, serviceContext);
+		Repository repository = getRepository();
+
+		repository.revertFileEntry(fileEntryId, version, serviceContext);
+
+		FileEntry fileEntry = getFileEntry(fileEntryId);
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
 	}
 
 	@Override

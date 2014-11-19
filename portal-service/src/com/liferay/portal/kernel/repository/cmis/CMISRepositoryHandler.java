@@ -77,21 +77,22 @@ public abstract class CMISRepositoryHandler
 
 	@Override
 	public void checkInFileEntry(
-			long fileEntryId, boolean major, String changeLog,
+			long userId, long fileEntryId, boolean major, String changeLog,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		_baseCmisRepository.checkInFileEntry(
-			fileEntryId, major, changeLog, serviceContext);
+			userId, fileEntryId, major, changeLog, serviceContext);
 	}
 
 	@Override
 	public void checkInFileEntry(
-			long fileEntryId, String lockUuid, ServiceContext serviceContext)
+			long userId, long fileEntryId, String lockUuid,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_baseCmisRepository.checkInFileEntry(
-			fileEntryId, lockUuid, serviceContext);
+			userId, fileEntryId, lockUuid, serviceContext);
 	}
 
 	@Override
@@ -448,11 +449,12 @@ public abstract class CMISRepositoryHandler
 
 	@Override
 	public void revertFileEntry(
-			long fileEntryId, String version, ServiceContext serviceContext)
+			long userId, long fileEntryId, String version,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_baseCmisRepository.revertFileEntry(
-			fileEntryId, version, serviceContext);
+			userId, fileEntryId, version, serviceContext);
 	}
 
 	@Override

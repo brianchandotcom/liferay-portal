@@ -79,6 +79,8 @@ public class RepositoryWrapper implements Repository {
 		throws PortalException {
 
 		return _repository.addFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
 			folderId, sourceFileName, mimeType, title, description, changeLog,
 			file, serviceContext);
 	}
@@ -97,6 +99,8 @@ public class RepositoryWrapper implements Repository {
 		throws PortalException {
 
 		return _repository.addFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
 			folderId, sourceFileName, mimeType, title, description, changeLog,
 			is, size, serviceContext);
 	}
@@ -116,6 +120,11 @@ public class RepositoryWrapper implements Repository {
 		return _repository.cancelCheckOut(fileEntryId);
 	}
 
+	/**
+	 * As of 7.0.0, replaced by {@link #checkInFileEntry(long, long, boolean,
+	 *              String, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public void checkInFileEntry(
 			long fileEntryId, boolean major, String changeLog,
@@ -123,7 +132,29 @@ public class RepositoryWrapper implements Repository {
 		throws PortalException {
 
 		_repository.checkInFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
 			fileEntryId, major, changeLog, serviceContext);
+	}
+
+	@Override
+	public void checkInFileEntry(
+			long userId, long fileEntryId, boolean major, String changeLog,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_repository.checkInFileEntry(
+			userId, fileEntryId, major, changeLog, serviceContext);
+	}
+
+	@Override
+	public void checkInFileEntry(
+			long userId, long fileEntryId, String lockUuid,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_repository.checkInFileEntry(
+			userId, fileEntryId, lockUuid, serviceContext);
 	}
 
 	@Deprecated
@@ -131,15 +162,26 @@ public class RepositoryWrapper implements Repository {
 	public void checkInFileEntry(long fileEntryId, String lockUuid)
 		throws PortalException {
 
-		_repository.checkInFileEntry(fileEntryId, lockUuid);
+		_repository.checkInFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
+			fileEntryId, lockUuid, new ServiceContext());
 	}
 
+	/**
+	 * As of 7.0.0, replaced by {@link #checkInFileEntry(long, long, String,
+	 *              ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public void checkInFileEntry(
 			long fileEntryId, String lockUuid, ServiceContext serviceContext)
 		throws PortalException {
 
-		_repository.checkInFileEntry(fileEntryId, lockUuid, serviceContext);
+		_repository.checkInFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
+			fileEntryId, lockUuid, serviceContext);
 	}
 
 	@Override
@@ -182,6 +224,8 @@ public class RepositoryWrapper implements Repository {
 		throws PortalException {
 
 		return _repository.copyFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
 			groupId, fileEntryId, destFolderId, serviceContext);
 	}
 
@@ -559,10 +603,28 @@ public class RepositoryWrapper implements Repository {
 
 	@Override
 	public void revertFileEntry(
+			long userId, long fileEntryId, String version,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_repository.revertFileEntry(
+			userId, fileEntryId, version, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #revertFileEntry(long, long,
+	 *             String, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public void revertFileEntry(
 			long fileEntryId, String version, ServiceContext serviceContext)
 		throws PortalException {
 
-		_repository.revertFileEntry(fileEntryId, version, serviceContext);
+		_repository.revertFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
+			fileEntryId, version, serviceContext);
 	}
 
 	@Override
@@ -647,6 +709,8 @@ public class RepositoryWrapper implements Repository {
 		throws PortalException {
 
 		return _repository.updateFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
 			fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, file, serviceContext);
 	}
@@ -666,6 +730,8 @@ public class RepositoryWrapper implements Repository {
 		throws PortalException {
 
 		return _repository.updateFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
 			fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, is, size, serviceContext);
 	}

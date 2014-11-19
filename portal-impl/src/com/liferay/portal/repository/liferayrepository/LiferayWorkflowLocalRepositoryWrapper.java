@@ -85,6 +85,33 @@ public class LiferayWorkflowLocalRepositoryWrapper
 	}
 
 	@Override
+	public void checkInFileEntry(
+			long userId, long fileEntryId, boolean major, String changeLog,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		super.checkInFileEntry(
+			userId, fileEntryId, major, changeLog, serviceContext);
+
+		FileEntry fileEntry = super.getFileEntry(fileEntryId);
+
+		_workflowCapability.checkInFileEntry(userId, fileEntry, serviceContext);
+	}
+
+	@Override
+	public void checkInFileEntry(
+			long userId, long fileEntryId, String lockUuid,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		super.checkInFileEntry(userId, fileEntryId, lockUuid, serviceContext);
+
+		FileEntry fileEntry = super.getFileEntry(fileEntryId);
+
+		_workflowCapability.checkInFileEntry(userId, fileEntry, serviceContext);
+	}
+
+	@Override
 	public FileEntry copyFileEntry(
 			long userId, long groupId, long fileEntryId, long destFolderId,
 			ServiceContext serviceContext)
@@ -102,6 +129,18 @@ public class LiferayWorkflowLocalRepositoryWrapper
 		_workflowCapability.addFileEntry(userId, fileEntry, serviceContext);
 
 		return fileEntry;
+	}
+
+	@Override
+	public void revertFileEntry(
+		long userId, long fileEntryId, String version,
+		ServiceContext serviceContext) throws PortalException {
+
+		super.revertFileEntry(userId, fileEntryId, version, serviceContext);
+
+		FileEntry fileEntry = super.getFileEntry(fileEntryId);
+
+		_workflowCapability.revertFileEntry(userId, fileEntry, serviceContext);
 	}
 
 	@Override

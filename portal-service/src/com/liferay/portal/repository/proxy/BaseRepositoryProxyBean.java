@@ -141,6 +141,11 @@ public class BaseRepositoryProxyBean
 		return _baseRepository.cancelCheckOut(fileEntryId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #checkInFileEntry(long, long,
+	 *             boolean, String, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public void checkInFileEntry(
 			long fileEntryId, boolean major, String changeLog,
@@ -149,6 +154,26 @@ public class BaseRepositoryProxyBean
 
 		_baseRepository.checkInFileEntry(
 			fileEntryId, major, changeLog, serviceContext);
+	}
+
+	@Override
+	public void checkInFileEntry(
+			long userId, long fileEntryId, boolean major, String changeLog,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_baseRepository.checkInFileEntry(
+			userId, fileEntryId, major, changeLog, serviceContext);
+	}
+
+	@Override
+	public void checkInFileEntry(
+			long userId, long fileEntryId, String lockUuid,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_baseRepository.checkInFileEntry(
+			userId, fileEntryId, lockUuid, serviceContext);
 	}
 
 	/**
@@ -163,6 +188,11 @@ public class BaseRepositoryProxyBean
 		_baseRepository.checkInFileEntry(fileEntryId, lockUuid);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #checkInFileEntry(long, long,
+	 *             String, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public void checkInFileEntry(
 			long fileEntryId, String lockUuid, ServiceContext serviceContext)
@@ -686,6 +716,21 @@ public class BaseRepositoryProxyBean
 		return (Lock)newProxyInstance(lock, Lock.class);
 	}
 
+	@Override
+	public void revertFileEntry(
+			long userId, long fileEntryId, String version,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_baseRepository.revertFileEntry(
+			userId, fileEntryId, version, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #revertFileEntry(long, long,
+	 *             String, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public void revertFileEntry(
 			long fileEntryId, String version, ServiceContext serviceContext)

@@ -75,6 +75,26 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 	}
 
 	@Override
+	public void checkInFileEntry(
+			long userId, long fileEntryId, boolean major, String changeLog,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_repository.checkInFileEntry(
+			userId, fileEntryId, major, changeLog, serviceContext);
+	}
+
+	@Override
+	public void checkInFileEntry(
+			long userId, long fileEntryId, String lockUuid,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_repository.checkInFileEntry(
+			userId, fileEntryId, lockUuid, serviceContext);
+	}
+
+	@Override
 	public FileEntry copyFileEntry(
 			long userId, long groupId, long fileEntryId, long destFolderId,
 			ServiceContext serviceContext)
@@ -176,6 +196,16 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 		ServiceContext serviceContext) {
 
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void revertFileEntry(
+			long userId, long fileEntryId, String version,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_repository.revertFileEntry(
+			userId, fileEntryId, version, serviceContext);
 	}
 
 	@Override

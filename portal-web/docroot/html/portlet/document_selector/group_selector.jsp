@@ -19,7 +19,7 @@
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1");
 
-long groupId = ParamUtil.getLong(request, "groupId");
+long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 
 Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 

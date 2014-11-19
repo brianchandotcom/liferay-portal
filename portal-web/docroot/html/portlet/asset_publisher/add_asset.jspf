@@ -31,7 +31,7 @@
 			%>
 
 			<aui:nav-item
-				href="<%= _getURL(groupId, plid, entry.getValue(), message, defaultAssetPublisher, layout, pageContext, liferayPortletResponse) %>"
+				href="<%= _getURL(groupId, plid, entry.getValue(), assetRendererFactory.getPortletId(), message, defaultAssetPublisher, layout, pageContext, liferayPortletResponse) %>"
 				iconCssClass="<%= assetRendererFactory.getIconCssClass() %>"
 				iconSrc="<%= assetRendererFactory.getIconPath(liferayPortletRequest) %>"
 				label='<%= LanguageUtil.format(request, (groupIds.length == 1) ? "add-x" : "add-x-in-x", new Object [] {HtmlUtil.escape(message), HtmlUtil.escape((GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale))}, false) %>'
@@ -52,7 +52,7 @@
 				%>
 
 					<aui:nav-item
-						href="<%= _getURL(groupId, plid, entry.getValue(), message, defaultAssetPublisher, layout, pageContext, liferayPortletResponse) %>"
+						href="<%= _getURL(groupId, plid, entry.getValue(), assetRendererFactory.getPortletId(), message, defaultAssetPublisher, layout, pageContext, liferayPortletResponse) %>"
 						iconCssClass="<%= assetRendererFactory.getIconCssClass() %>"
 						iconSrc="<%= assetRendererFactory.getIconPath(liferayPortletRequest) %>"
 						label="<%= HtmlUtil.escape(message) %>"
@@ -98,17 +98,19 @@ private String _getMessage(String className, Map<String, PortletURL> addPortletU
 	return message;
 }
 
-private String _getURL(long groupId, long plid, PortletURL addPortletURL, String message, boolean defaultAssetPublisher, Layout layout, PageContext pageContext, LiferayPortletResponse liferayPortletResponse) {
+private String _getURL(long groupId, long plid, PortletURL addPortletURL, String portletId, String message, boolean defaultAssetPublisher, Layout layout, PageContext pageContext, LiferayPortletResponse liferayPortletResponse) {
 	addPortletURL.setParameter("groupId", String.valueOf(groupId));
 	addPortletURL.setParameter("showHeader", Boolean.FALSE.toString());
 
 	String addPortletURLString = addPortletURL.toString();
 
-	addPortletURLString = HttpUtil.addParameter(addPortletURLString, "doAsGroupId", groupId);
-	addPortletURLString = HttpUtil.addParameter(addPortletURLString, "refererPlid", plid);
+	String namespace = PortalUtil.getPortletNamespace(portletId);
+
+	addPortletURLString = HttpUtil.addParameter(addPortletURLString, namespace + "doAsGroupId", groupId);
+	addPortletURLString = HttpUtil.addParameter(addPortletURLString, namespace + "refererPlid", plid);
 
 	if (defaultAssetPublisher) {
-		addPortletURLString = HttpUtil.addParameter(addPortletURLString, "layoutUuid", layout.getUuid());
+		addPortletURLString = HttpUtil.addParameter(addPortletURLString, namespace + "layoutUuid", layout.getUuid());
 	}
 
 	return "javascript:Liferay.Util.openWindow({dialog: {destroyOnHide: true}, id: '" + liferayPortletResponse.getNamespace() + "editAsset', title: '" + HtmlUtil.escapeJS(LanguageUtil.format((HttpServletRequest)pageContext.getRequest(), "new-x", HtmlUtil.escape(message), false)) + "', uri: '" + HtmlUtil.escapeJS(addPortletURLString) + "'});";

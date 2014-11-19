@@ -32,6 +32,7 @@ public abstract class BaseSubscriptionTestCase {
 	@Before
 	public void setUp() throws Exception {
 		group = GroupTestUtil.addGroup();
+
 		user = UserTestUtil.addGroupUser(group, RoleConstants.SITE_MEMBER);
 	}
 

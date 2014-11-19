@@ -14,7 +14,6 @@
 
 package com.liferay.bookmarks.service.permission;
 
-import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -32,11 +31,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Jorge Ferrer
  */
-@Component(
-	property = {
-		"resource.name=com.liferay.bookmarks"
-	}
-)
+@Component(property = {"resource.name=com.liferay.bookmarks"})
 public class BookmarksPermission implements ResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME = "com.liferay.bookmarks";

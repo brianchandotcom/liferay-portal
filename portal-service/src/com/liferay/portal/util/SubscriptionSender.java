@@ -553,8 +553,8 @@ public class SubscriptionSender implements Serializable {
 		if (bulk) {
 			if (UserNotificationManagerUtil.isDeliver(
 					user.getUserId(), portletId, _notificationClassNameId,
-				_notificationType,
-				UserNotificationDeliveryConstants.TYPE_EMAIL)) {
+					_notificationType,
+					UserNotificationDeliveryConstants.TYPE_EMAIL)) {
 
 				InternetAddress bulkAddress = new InternetAddress(
 					user.getEmailAddress(), user.getFullName());
@@ -585,8 +585,7 @@ public class SubscriptionSender implements Serializable {
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"User with email address " + emailAddress +
-						" does not exist for company " + companyId
-				);
+						" does not exist for company " + companyId);
 			}
 
 			sendEmail(to, locale);

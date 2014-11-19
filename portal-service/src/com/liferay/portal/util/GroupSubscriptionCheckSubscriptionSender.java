@@ -47,11 +47,13 @@ public class GroupSubscriptionCheckSubscriptionSender
 				ResourceActionLocalServiceUtil.fetchResourceAction(
 					subscription.getClassName(), ActionKeys.SUBSCRIBE);
 
-			if (resourceAction != null) {
-				return ResourcePermissionCheckerUtil.containsResourcePermission(
-					permissionChecker, _resourceName, subscription.getClassPK(),
-					ActionKeys.SUBSCRIBE);
+			if (resourceAction == null) {
+				return true;
 			}
+
+			return ResourcePermissionCheckerUtil.containsResourcePermission(
+				permissionChecker, _resourceName, subscription.getClassPK(),
+				ActionKeys.SUBSCRIBE);
 		}
 		else {
 			return super.hasSubscribePermission(

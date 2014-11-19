@@ -30,11 +30,7 @@ import com.liferay.portal.util.PortletKeys;
 /**
  * @author Jorge Ferrer
  */
-@OSGiBeanProperties(
-	property = {
-		"resource.name=com.liferay.portlet.journal"
-	}
-)
+@OSGiBeanProperties(property = {"resource.name=com.liferay.portlet.journal"})
 public class JournalPermission implements ResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME = "com.liferay.portlet.journal";

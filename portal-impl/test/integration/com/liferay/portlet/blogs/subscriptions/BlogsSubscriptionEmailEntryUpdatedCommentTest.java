@@ -61,16 +61,17 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 
 	@Before
 	public void setUp() throws Exception {
-		group = GroupTestUtil.addGroup();
-		_user = UserTestUtil.addGroupUser(group, RoleConstants.SITE_MEMBER);
+		_group = GroupTestUtil.addGroup();
+
+		_user = UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER);
 	}
 
 	@Test
 	public void testEmailEntryUpdatedNotSentIfNotSpecified() throws Exception {
-		BlogsEntry entry = BlogsTestUtil.addEntry(group, true);
+		BlogsEntry entry = BlogsTestUtil.addEntry(_group, true);
 
 		BlogsEntryLocalServiceUtil.subscribe(
-			_user.getUserId(), group.getGroupId());
+			_user.getUserId(), _group.getGroupId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(entry.getGroupId());
@@ -90,10 +91,10 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 
 		setUpBlogsSettings();
 
-		BlogsEntry entry = BlogsTestUtil.addEntry(group, true);
+		BlogsEntry entry = BlogsTestUtil.addEntry(_group, true);
 
 		BlogsEntryLocalServiceUtil.subscribe(
-			_user.getUserId(), group.getGroupId());
+			_user.getUserId(), _group.getGroupId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(entry.getGroupId());
@@ -117,10 +118,10 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 
 		setUpBlogsSettings();
 
-		BlogsEntry entry = BlogsTestUtil.addEntry(group, true);
+		BlogsEntry entry = BlogsTestUtil.addEntry(_group, true);
 
 		BlogsEntryLocalServiceUtil.subscribe(
-			_user.getUserId(), group.getGroupId());
+			_user.getUserId(), _group.getGroupId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(entry.getGroupId());
@@ -138,7 +139,7 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 
 	protected void setUpBlogsSettings() throws Exception {
 		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
-			group.getGroupId(), BlogsConstants.SERVICE_NAME);
+			_group.getGroupId(), BlogsConstants.SERVICE_NAME);
 
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();
@@ -155,8 +156,9 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 	}
 
 	@DeleteAfterTestRun
-	protected Group group;
+	private Group _group;
 
+	@DeleteAfterTestRun
 	private User _user;
 
 }

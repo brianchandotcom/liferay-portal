@@ -60,6 +60,9 @@ public class UserGroupRoleLocalServiceTest {
 		UserGroupRolePK userGroupRolePK = new UserGroupRolePK(
 			_user.getUserId(), _group.getGroupId(), role.getRoleId());
 
+		Assert.assertNull(
+			UserGroupRoleLocalServiceUtil.fetchUserGroupRole(userGroupRolePK));
+
 		List<UserGroupRole> userGroupRoles =
 			UserGroupRoleLocalServiceUtil.addUserGroupRoles(
 				new long[] {_user.getUserId()}, _group.getGroupId(),

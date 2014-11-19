@@ -64,18 +64,13 @@
 		</div>
 	</div>
 
-	<@aui["script"] use="aui-base">
-		A.use(
-			'aui-tabview',
-			function(Y) {
-				new Y.TabView(
-					{
-						srcNode: '#<@liferay_portlet.namespace />feedsTab',
-						stacked: true,
-						type: 'pills'
-					}
-				).render();
+	<@aui["script"] use="aui-base,aui-tabview">
+		new Y.TabView(
+			{
+				srcNode: '#<@liferay_portlet.namespace />feedsTab',
+				stacked: true,
+				type: 'pills'
 			}
-		);
+		).render();
 	</@>
 </#if>

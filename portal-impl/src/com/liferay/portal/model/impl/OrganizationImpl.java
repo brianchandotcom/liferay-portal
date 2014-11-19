@@ -121,6 +121,10 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 	public long[] getAncestorIds() {
 		long[] primaryKeys = TreePathUtil.getPrimaryKeys(getTreePath());
 
+		if (ArrayUtil.isEmpty(primaryKeys)) {
+			return new long[0];
+		}
+
 		long[] ancestorIds = new long[primaryKeys.length-1];
 
 		System.arraycopy(primaryKeys, 0, ancestorIds, 0, primaryKeys.length-1);

@@ -416,8 +416,8 @@ public class UserIndexer extends BaseIndexer {
 
 			long[] ancestorIds = organization.getAncestorIds();
 
-			for (int i = 0; i < ancestorIds.length; i++) {
-				ancestorOrganizationIds.add(ancestorIds[i]);
+			for (long ancestorId : ancestorIds) {
+				ancestorOrganizationIds.add(ancestorId);
 			}
 		}
 

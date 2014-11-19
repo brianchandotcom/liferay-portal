@@ -154,8 +154,6 @@
 	</command>
 
 	<command name="DeliverReportToEmail" priority="5">
-		<var name="emailAddress1" property-value="email.address.1" />
-		<var name="emailAddress2" property-value="email.address.2" />
 		<var name="emailAddress3" property-value="email.address.3" />
 		<var name="emailPassword3" property-value="email.password.3" />
 
@@ -182,8 +180,8 @@
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
-			<var name="emailNotificationsAddress" value="${emailAddress1}" />
-			<var name="emailRecipientAddress" value="${emailAddress2}" />
+			<var name="emailNotificationsAddress" value="test@liferay.com" />
+			<var name="emailRecipientAddress" value="test@liferay.com" />
 			<var name="reportFormat" value="pdf" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
 		</execute>
@@ -502,7 +500,6 @@
 
 	<command name="ViewEmailNotificationDelivery" priority="5">
 		<var name="emailAddress1" property-value="email.address.1" />
-		<var name="emailAddress2" property-value="email.address.2" />
 		<var name="emailPassword1" property-value="email.password.1" />
 
 		<execute macro="Page#gotoCP">
@@ -529,7 +526,7 @@
 
 		<execute macro="ReportsAdmin#addReportEntry">
 			<var name="emailNotificationsAddress" value="${emailAddress1}" />
-			<var name="emailRecipientAddress" value="${emailAddress2}" />
+			<var name="emailRecipientAddress" value="test@liferay.com" />
 			<var name="reportFormat" value="pdf" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
 		</execute>
@@ -577,9 +574,8 @@
 	</command>
 
 	<command name="ViewEmailRecipientDelivery" priority="5">
-		<var name="emailAddress1" property-value="email.address.1" />
 		<var name="emailAddress2" property-value="email.address.2" />
-		<var name="emailPassword2" property-value="email.password.1" />
+		<var name="emailPassword2" property-value="email.password.2" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Server Administration" />
@@ -604,7 +600,7 @@
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
-			<var name="emailNotificationsAddress" value="${emailAddress1}" />
+			<var name="emailNotificationsAddress" value="test@liferay.com" />
 			<var name="emailRecipientAddress" value="${emailAddress2}" />
 			<var name="reportFormat" value="pdf" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />

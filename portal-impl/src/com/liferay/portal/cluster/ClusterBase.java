@@ -46,7 +46,7 @@ public abstract class ClusterBase {
 			return;
 		}
 
-		if (!_initialized) {
+		if (!_initJGroupsProperties) {
 			initSystemProperties();
 
 			try {
@@ -58,18 +58,7 @@ public abstract class ClusterBase {
 				}
 			}
 
-			_initialized = true;
-		}
-
-		try {
-			initChannels();
-		}
-		catch (Exception e) {
-			if (_log.isErrorEnabled()) {
-				_log.error("Unable to initialize channels", e);
-			}
-
-			throw new IllegalStateException(e);
+			_initJGroupsProperties = true;
 		}
 	}
 
@@ -169,8 +158,6 @@ public abstract class ClusterBase {
 		}
 	}
 
-	protected abstract void initChannels() throws Exception;
-
 	protected void initSystemProperties() {
 		for (String systemProperty :
 				PropsValues.CLUSTER_LINK_CHANNEL_SYSTEM_PROPERTIES) {
@@ -196,6 +183,6 @@ public abstract class ClusterBase {
 
 	private static final Log _log = LogFactoryUtil.getLog(ClusterBase.class);
 
-	private static boolean _initialized;
+	private static boolean _initJGroupsProperties;
 
 }

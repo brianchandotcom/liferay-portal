@@ -86,6 +86,16 @@ public class ClusterLinkUtil {
 		return clusterLink.getTransportAddresses(priority);
 	}
 
+	public static void initialize() {
+		ClusterLink clusterLink = getClusterLink();
+
+		if (clusterLink == null) {
+			return;
+		}
+
+		clusterLink.initialize();
+	}
+
 	public static boolean isForwardMessage(Message message) {
 		return message.getBoolean(ClusterLink.CLUSTER_FORWARD_MESSAGE);
 	}

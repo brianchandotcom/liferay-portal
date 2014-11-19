@@ -66,9 +66,9 @@ public class InitializeLiferayTestEnvironment {
 	}
 
 	@Inject
-	private final Event<LiferayContextCreatedEvent> _event;
+	private Event<LiferayContextCreatedEvent> _event;
 
 	@Inject
-	private final Instance<ServiceLoader> _instance;
+	private Instance<ServiceLoader> _instance;
 
 }

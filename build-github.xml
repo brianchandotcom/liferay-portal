@@ -282,14 +282,17 @@
 
 						String errorStackTrace = jsonObject.get("errorStackTrace");
 
-						errorStackTrace = errorStackTrace.replaceAll("\n", "<br />");
 						errorStackTrace = errorStackTrace.replaceAll("\t", "&#09;");
 						errorStackTrace = errorStackTrace.replaceAll("\\\"", "&#34;");
 						errorStackTrace = errorStackTrace.replaceAll("'", "&#39;");
+						errorStackTrace = errorStackTrace.replaceAll("<", "&#60;");
+						errorStackTrace = errorStackTrace.replaceAll(">", "&#62;");
 						errorStackTrace = errorStackTrace.replaceAll("\\[", "&#91;");
 						errorStackTrace = errorStackTrace.replaceAll("\\]", "&#93;");
 						errorStackTrace = errorStackTrace.replaceAll("\\{", "&#123;");
 						errorStackTrace = errorStackTrace.replaceAll("\\}", "&#125;");
+
+						errorStackTrace = errorStackTrace.replaceAll("\n", "<br />");
 
 						sb.append(errorStackTrace);
 

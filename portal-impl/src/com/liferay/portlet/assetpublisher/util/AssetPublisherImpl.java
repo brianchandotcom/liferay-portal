@@ -375,7 +375,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		String description, String title, String userName,
 		boolean isAdvancedSearch, boolean isAndOperator, int start, int end) {
 
-		AssetEntryQuery assetEntryQuery = buildAssetEntryQuery(
+		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
 			classNameIds, groupIds, keywords, description, title, userName,
 			isAdvancedSearch, isAndOperator, start, end);
 
@@ -633,7 +633,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		String description, String title, String userName,
 		boolean isAdvancedSearch, boolean isAndOperator, int start, int end) {
 
-		AssetEntryQuery assetEntryQuery = buildAssetEntryQuery(
+		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
 			classNameIds, groupIds, keywords, description, title, userName,
 			isAdvancedSearch, isAndOperator, start, end);
 
@@ -1421,7 +1421,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 			getSubscriptionClassPK(plid, portletId));
 	}
 
-	protected AssetEntryQuery buildAssetEntryQuery(
+	protected AssetEntryQuery getAssetEntryQuery(
 		long[] classNameIds, long[] groupIds, String keywords,
 		String description, String title, String userName,
 		boolean isAdvancedSearch, boolean isAndOperator, int start, int end) {

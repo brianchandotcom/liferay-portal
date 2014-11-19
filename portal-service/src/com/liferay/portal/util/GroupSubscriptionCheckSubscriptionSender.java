@@ -16,11 +16,13 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.ResourceAction;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourcePermissionCheckerUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.ResourceActionLocalServiceUtil;
 
 /**
  * @author Roberto Díaz
@@ -41,9 +43,15 @@ public class GroupSubscriptionCheckSubscriptionSender
 			subscription.getClassPK());
 
 		if (group != null) {
-			return ResourcePermissionCheckerUtil.containsResourcePermission(
-				permissionChecker, _resourceName, subscription.getClassPK(),
-				ActionKeys.SUBSCRIBE);
+			ResourceAction resourceAction =
+				ResourceActionLocalServiceUtil.fetchResourceAction(
+					subscription.getClassName(), ActionKeys.SUBSCRIBE);
+
+			if (resourceAction != null) {
+				return ResourcePermissionCheckerUtil.containsResourcePermission(
+					permissionChecker, _resourceName, subscription.getClassPK(),
+					ActionKeys.SUBSCRIBE);
+			}
 		}
 		else {
 			return super.hasSubscribePermission(

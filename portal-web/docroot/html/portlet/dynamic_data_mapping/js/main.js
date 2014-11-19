@@ -17,7 +17,7 @@ AUI.add(
 		var MAP_HIDDEN_FIELD_ATTRS = {
 			checkbox: ['readOnly', 'required'],
 
-			DEFAULT: ['readOnly'],
+			DEFAULT: ['readOnly', 'width'],
 
 			separator: ['indexType', 'localizable', 'predefinedValue', 'readOnly', 'required']
 		};

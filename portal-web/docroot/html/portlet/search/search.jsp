@@ -121,11 +121,12 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 	</c:if>
 </aui:form>
 
-<aui:script use="aui-base">
-	A.one('#<portlet:namespace />searchContainer').delegate(
+<aui:script sandbox="<%= true %>">
+	$('#<portlet:namespace />searchContainer').on(
 		'click',
+		'a',
 		function(event) {
-			var targetId = event.currentTarget.get('id');
+			var targetId = $(event.currentTarget).attr('id');
 
 			if (targetId === '<portlet:namespace />searchButton') {
 				<portlet:namespace />search();
@@ -137,110 +138,59 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 
 				window.location.href = '<%= clearSearchURL %>';
 			}
-		},
-		'a'
+		}
 	);
 
-	A.one('#<portlet:namespace />keywords').on(
+	$('#<portlet:namespace />keywords').on(
 		'keydown',
 		function(event) {
-			keyCode = event.keyCode;
-
-			if (keyCode === 13) {
+			if (event.keyCode === 13) {
 				<portlet:namespace />search();
 			}
 		}
 	);
 
-	var searchContainer = A.one('.portlet-search .result .lfr-search-container');
+	$('.portlet-search .result .lfr-search-container').on(
+		'click',
+		'.table-cell .asset-entry .toggle-details',
+		function(event) {
+			var handle = $(event.currentTarget);
+			var rowTD = handle.parentsUntil('.table-data', '.table-cell');
 
-	if (searchContainer) {
-		searchContainer.delegate(
-			'click',
-			function(event) {
-				document.<portlet:namespace />fm.<portlet:namespace /><%= SearchContainer.DEFAULT_CUR_PARAM %>.value = 1;
+			var documentFields = rowTD.find('.asset-entry .asset-entry-fields');
 
-				submitForm(document.<portlet:namespace />fm);
+			if (handle.text() == '[+]') {
+				documentFields.removeClass('hide');
 
-				event.preventDefault();
-			},
-			'.page-links a.first'
-		);
-
-		searchContainer.delegate(
-			'click',
-			function(event) {
-				document.<portlet:namespace />fm.<portlet:namespace /><%= SearchContainer.DEFAULT_CUR_PARAM %>.value = parseInt(document.<portlet:namespace />fm.<portlet:namespace /><%= SearchContainer.DEFAULT_CUR_PARAM %>.value) - 1;
-
-				submitForm(document.<portlet:namespace />fm);
-
-				event.preventDefault();
-			},
-			'.page-links a.previous'
-		);
-
-		searchContainer.delegate(
-			'click',
-			function(event) {
-				document.<portlet:namespace />fm.<portlet:namespace /><%= SearchContainer.DEFAULT_CUR_PARAM %>.value = parseInt(document.<portlet:namespace />fm.<portlet:namespace /><%= SearchContainer.DEFAULT_CUR_PARAM %>.value) + 1;
-
-				submitForm(document.<portlet:namespace />fm);
-
-				event.preventDefault();
-			},
-			'.page-links a.next'
-		);
-	}
-
-	var resultsGrid = A.one('.portlet-search .result .searchcontainer-content');
-
-	if (resultsGrid) {
-		resultsGrid.delegate(
-			'click',
-			function(event) {
-				var handle = event.currentTarget;
-				var rowTD = handle.ancestor('.table-cell');
-
-				var documentFields = rowTD.one('.asset-entry .asset-entry-fields');
-
-				if (handle.text() == '[+]') {
-					documentFields.show();
-					handle.text('[-]');
-				}
-				else if (handle.text() == '[-]') {
-					documentFields.hide();
-					handle.text('[+]');
-				}
-			},
-			'.table-cell .asset-entry .toggle-details'
-		);
-	}
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />addSearchProvider',
-		function() {
-			window.external.AddSearchProvider('<%= themeDisplay.getPortalURL() %><%= PortalUtil.getPathMain() %>/search/open_search_description.xml?p_l_id=<%= themeDisplay.getPlid() %>&groupId=<%= groupId %>');
-		},
-		['aui-base']
-	);
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />search',
-		function() {
-			document.<portlet:namespace />fm.<portlet:namespace /><%= SearchContainer.DEFAULT_CUR_PARAM %>.value = 1;
-
-			var keywords = document.<portlet:namespace />fm.<portlet:namespace />keywords.value;
-
-			keywords = keywords.replace(/^\s+|\s+$/, '');
-
-			if (keywords != '') {
-				submitForm(document.<portlet:namespace />fm);
+				handle.text('[-]');
 			}
-		},
-		['aui-base']
+			else if (handle.text() == '[-]') {
+				documentFields.addClass('hide');
+
+				handle.text('[+]');
+			}
+		}
 	);
+</aui:script>
+
+<aui:script>
+	function <portlet:namespace />addSearchProvider() {
+		window.external.AddSearchProvider('<%= themeDisplay.getPortalURL() %><%= PortalUtil.getPathMain() %>/search/open_search_description.xml?p_l_id=<%= themeDisplay.getPlid() %>&groupId=<%= groupId %>');
+	}
+
+	function <portlet:namespace />search() {
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		form.fm('<%= SearchContainer.DEFAULT_CUR_PARAM %>').val(1);
+
+		var keywords = form.fm('keywords').val();
+
+		keywords = keywords.replace(/^\s+|\s+$/, '');
+
+		if (keywords != '') {
+			submitForm(form);
+		}
+	}
 </aui:script>
 
 <%

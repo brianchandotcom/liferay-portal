@@ -125,9 +125,10 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 			return new long[0];
 		}
 
-		long[] ancestorIds = new long[primaryKeys.length-1];
+		long[] ancestorIds = new long[primaryKeys.length - 1];
 
-		System.arraycopy(primaryKeys, 0, ancestorIds, 0, primaryKeys.length-1);
+		System.arraycopy(
+			primaryKeys, 0, ancestorIds, 0, primaryKeys.length - 1);
 
 		return ancestorIds;
 	}

@@ -84,7 +84,7 @@
 			</attribute>
 		</attributes>
 	</component>
-		<component name="Alert" bodyContent="true">
+	<component name="Alert" bodyContent="true">
 		<attributes>
 			<attribute>
 				<name>animated</name>

@@ -724,8 +724,15 @@ public class CapabilityRepository
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		getRepository().revertFileEntry(
+		Repository repository = getRepository();
+
+		repository.revertFileEntry(
 			userId, fileEntryId, version, serviceContext);
+
+		FileEntry fileEntry = getFileEntry(fileEntryId);
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
 	}
 
 	/**
@@ -738,7 +745,14 @@ public class CapabilityRepository
 			long fileEntryId, String version, ServiceContext serviceContext)
 		throws PortalException {
 
-		getRepository().revertFileEntry(fileEntryId, version, serviceContext);
+		Repository repository = getRepository();
+
+		repository.revertFileEntry(fileEntryId, version, serviceContext);
+
+		FileEntry fileEntry = getFileEntry(fileEntryId);
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
 	}
 
 	@Override

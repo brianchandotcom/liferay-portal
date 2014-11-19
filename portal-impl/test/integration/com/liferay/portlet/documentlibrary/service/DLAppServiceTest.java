@@ -880,6 +880,32 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			}
 		}
 
+		@Test
+		public void shouldFireSyncEvent() throws Exception {
+			AtomicInteger updateCounter =
+				registerDLSyncEventProcessorMessageListener(
+					DLSyncConstants.EVENT_UPDATE);
+
+			FileEntry fileEntry = addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId());
+
+			String version = fileEntry.getVersion();
+
+			Assert.assertEquals(0, updateCounter.get());
+
+			updateFileEntry(
+				group.getGroupId(), fileEntry.getFileEntryId(),
+				RandomTestUtil.randomString(), true);
+
+			Assert.assertEquals(2, updateCounter.get());
+
+			DLAppServiceUtil.revertFileEntry(
+				fileEntry.getFileEntryId(), version,
+				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+			Assert.assertEquals(4, updateCounter.get());
+		}
+
 	}
 
 	@ExecutionTestListeners(

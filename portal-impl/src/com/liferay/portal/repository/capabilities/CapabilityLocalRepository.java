@@ -285,8 +285,15 @@ public class CapabilityLocalRepository
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		getRepository().revertFileEntry(
+		LocalRepository localRepository = getRepository();
+
+		localRepository.revertFileEntry(
 			userId, fileEntryId, version, serviceContext);
+
+		FileEntry fileEntry = getFileEntry(fileEntryId);
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
 	}
 
 	@Override

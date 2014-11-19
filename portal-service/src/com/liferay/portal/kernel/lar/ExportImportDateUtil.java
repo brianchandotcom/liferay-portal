@@ -212,6 +212,32 @@ public class ExportImportDateUtil {
 	}
 
 	public static Date getLastPublishDate(
+			PortletDataContext portletDataContext,
+			PortletPreferences jxPortletPreferences)
+		throws PortalException {
+
+		String range = MapUtil.getString(
+			portletDataContext.getParameterMap(), "range");
+
+		if (range.equals(RANGE_FROM_LAST_PUBLISH_DATE)) {
+			Date portletLastPublishDate = getLastPublishDate(
+				jxPortletPreferences);
+
+			if (portletLastPublishDate == null) {
+				return null;
+			}
+
+			if (portletLastPublishDate.before(
+					portletDataContext.getStartDate())) {
+
+				return portletLastPublishDate;
+			}
+		}
+
+		return portletDataContext.getStartDate();
+	}
+
+	public static Date getLastPublishDate(
 		PortletPreferences jxPortletPreferences) {
 
 		long lastPublishDate = GetterUtil.getLong(

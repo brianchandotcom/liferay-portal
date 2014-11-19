@@ -112,6 +112,8 @@
 		<var name="pageNameURL" value="${pageName?replace(' ', '-')}" />
 		<var name="pageNameURL" value="/${pageNameURL?lowercase()}" />
 
+		<var name="key_pageNameURL" value="${pageNameURL}" />
+
 		<execute action="Gmail#assertClick" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_LINK" value1="${pageNameURL}" />
 
 		<if>

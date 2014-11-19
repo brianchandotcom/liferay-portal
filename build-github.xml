@@ -153,6 +153,22 @@
 					return url;
 				}
 
+				public String fixJSONString(String jsonString) {
+					jsonString = jsonString.replaceAll("\t", "&#09;");
+					jsonString = jsonString.replaceAll("\\\"", "&#34;");
+					jsonString = jsonString.replaceAll("'", "&#39;");
+					jsonString = jsonString.replaceAll("<", "&#60;");
+					jsonString = jsonString.replaceAll(">", "&#62;");
+					jsonString = jsonString.replaceAll("\\[", "&#91;");
+					jsonString = jsonString.replaceAll("\\]", "&#93;");
+					jsonString = jsonString.replaceAll("\\{", "&#123;");
+					jsonString = jsonString.replaceAll("\\}", "&#125;");
+
+					jsonString = jsonString.replaceAll("\n", "<br />");
+
+					return jsonString;
+				}
+
 				public String toFormattedBuildTime(String githubJenkinsBuildTime) {
 					int milliseconds = Integer.parseInt(githubJenkinsBuildTime);
 
@@ -277,25 +293,9 @@
 						sb.append(jsonObject.get("name"));
 						sb.append("</a>");
 						sb.append("<pre>");
-						sb.append(jsonObject.get("errorDetails"));
+						sb.append(fixJSONString(jsonObject.get("errorDetails"));
 						sb.append("<br /><br />");
-
-						String errorStackTrace = jsonObject.get("errorStackTrace");
-
-						errorStackTrace = errorStackTrace.replaceAll("\t", "&#09;");
-						errorStackTrace = errorStackTrace.replaceAll("\\\"", "&#34;");
-						errorStackTrace = errorStackTrace.replaceAll("'", "&#39;");
-						errorStackTrace = errorStackTrace.replaceAll("<", "&#60;");
-						errorStackTrace = errorStackTrace.replaceAll(">", "&#62;");
-						errorStackTrace = errorStackTrace.replaceAll("\\[", "&#91;");
-						errorStackTrace = errorStackTrace.replaceAll("\\]", "&#93;");
-						errorStackTrace = errorStackTrace.replaceAll("\\{", "&#123;");
-						errorStackTrace = errorStackTrace.replaceAll("\\}", "&#125;");
-
-						errorStackTrace = errorStackTrace.replaceAll("\n", "<br />");
-
-						sb.append(errorStackTrace);
-
+						sb.append(fixJSONString(jsonObject.get("errorStackTrace"));
 						sb.append("</pre>");
 						sb.append("</li>");
 					}

@@ -148,9 +148,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 			function(event) {
 				event.selectors.each(
 					function(item, index, collection) {
-						var modifyLink = searchContainerContentBox.one('.modify-link[data-rowid="' + item.attr('data-organizationid') + '"]');
-
-						if (!modifyLink) {
+						if (A.Array.indexOf(deleteOrganizationIds, item.attr('data-organizationid')) != -1) {
 							Util.toggleDisabled(item, false);
 						}
 					}

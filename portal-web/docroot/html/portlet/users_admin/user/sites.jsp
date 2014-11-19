@@ -181,9 +181,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 			function(event) {
 				event.selectors.each(
 					function(item, index, collection) {
-						var modifyLink = searchContainerContentBox.one('.modify-link[data-rowid="' + item.attr('data-groupid') + '"]');
-
-						if (!modifyLink) {
+						if (A.Array.indexOf(deleteGroupIds, item.attr('data-groupid')) != -1) {
 							Util.toggleDisabled(item, false);
 						}
 					}

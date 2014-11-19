@@ -274,9 +274,13 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 							var groupId = item.attr('data-groupid');
 							var roleId = item.attr('data-roleid');
 
-							var modifyLink = searchContainerContentBox.one('.modify-link[data-groupid="' + groupId + '"][data-rowid="' + roleId + '"]');
+							for (var i = 0; i < deleteGroupRolesGroupIds.length; i++) {
+								if ((deleteGroupRolesGroupIds[i] == groupId) && (deleteGroupRolesRoleIds[i] == roleId)) {
+									Util.toggleDisabled(item, false);
 
-							Util.toggleDisabled(item, !!modifyLink);
+									break;
+								}
+							}
 						}
 					);
 				}
@@ -433,9 +437,13 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 								var groupId = item.attr('data-groupid');
 								var roleId = item.attr('data-roleid');
 
-								var modifyLink = searchContainerContentBox.one('.modify-link[data-groupid="' + groupId + '"][data-rowid="' + roleId + '"]');
+								for (var i = 0; i < deleteGroupRolesGroupIds.length; i++) {
+									if ((deleteGroupRolesGroupIds[i] == groupId) && (deleteGroupRolesRoleIds[i] == roleId)) {
+										Util.toggleDisabled(item, false);
 
-								Util.toggleDisabled(item, !!modifyLink);
+										break;
+									}
+								}
 							}
 						);
 					}
@@ -645,9 +653,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 			function(event) {
 				event.selectors.each(
 					function(item, index, collection) {
-						var modifyLink = searchContainerContentBox.one('.modify-link[data-rowid="' + item.attr('data-roleid') + '"]');
-
-						if (!modifyLink) {
+						if (A.Array.indexOf(deleteRoleIds, item.attr('data-roleid')) != -1) {
 							Util.toggleDisabled(item, false);
 						}
 					}

@@ -25,7 +25,6 @@ import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.impl.UserGroupRoleCacheModel;
 import com.liferay.portal.model.impl.UserGroupRoleImpl;
 import com.liferay.portal.service.persistence.UserGroupRolePK;
-import com.liferay.portal.service.persistence.UserGroupRolePersistence;
 import com.liferay.portal.service.persistence.UserGroupRoleUtil;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.TransactionalTestRule;
@@ -78,30 +77,27 @@ public class UserGroupRoleLocalServiceTest {
 
 		EntityCacheUtil.clearLocalCache();
 
-		UserGroupRole userGroupRoleFetched = _persistence.fetchByPrimaryKey(
-			userGroupRolePK);
+		UserGroupRole userGroupRoleFetched =
+			UserGroupRoleUtil.fetchByPrimaryKey(userGroupRolePK);
 
 		Assert.assertEquals(userGroupRole, userGroupRoleFetched);
 	}
 
 	protected UserGroupRole addUserGroupRole(UserGroupRolePK userGroupRolePK) {
-		UserGroupRole userGroupRole = _persistence.fetchByPrimaryKey(
+		UserGroupRole userGroupRole = UserGroupRoleUtil.fetchByPrimaryKey(
 			userGroupRolePK);
 
 		Assert.assertNull(userGroupRole);
 
-		userGroupRole = _persistence.create(userGroupRolePK);
+		userGroupRole = UserGroupRoleUtil.create(userGroupRolePK);
 
-		userGroupRole = _persistence.update(userGroupRole);
+		userGroupRole = UserGroupRoleUtil.update(userGroupRole);
 
 		return userGroupRole;
 	}
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	private final UserGroupRolePersistence _persistence =
-		UserGroupRoleUtil.getPersistence();
 
 	@DeleteAfterTestRun
 	private User _user;

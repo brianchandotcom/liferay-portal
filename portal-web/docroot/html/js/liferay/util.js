@@ -1,4 +1,4 @@
-;(function(A, Liferay) {
+;(function(A, $, _, Liferay) {
 	A.use('aui-base-lang');
 
 	var Lang = A.Lang;
@@ -405,112 +405,88 @@
 			return (instance.getWindowWidth() < Liferay.BREAKPOINTS.TABLET);
 		},
 
-		listChecked: function(form, name) {
-			var buffer = [];
-
-			form = A.one(form);
-
-			if (form) {
-				var selector = 'input[type=checkbox]';
-
-				if (name) {
-					selector += '[name='+ name +']';
-				}
-
-				form.all(selector).each(
-					function(item, index) {
-						var val = item.val();
-
-						if (val && item.get('checked')) {
-							buffer.push(val);
-						}
-					}
-				);
+		listCheckboxesExcept: function(form, except, name, checked) {
+			if (form._node) {
+				form = form.getDOM();
 			}
 
-			return buffer.join();
+			var selector = 'input[type=checkbox]';
+
+			if (name) {
+				selector += '[name=' + name + ']';
+			}
+
+			return _.reduce(
+				$(form).find(selector),
+				function(prev, item, index) {
+					item = $(item);
+
+					var val = item.val();
+
+					if (val && (item.attr('name') != except) && (item.prop('checked') == checked) && !item.prop('disabled')) {
+						prev.push(val);
+					}
+
+					return prev;
+				},
+				[]
+			).join();
+		},
+
+		listChecked: function(form, name) {
+			if (form._node) {
+				form = form.getDOM();
+			}
+
+			var selector = 'input[type=checkbox]';
+
+			if (name) {
+				selector += '[name='+ name +']';
+			}
+
+			return _.reduce(
+				$(form).find(selector),
+				function(prev, item, index) {
+					item = $(item);
+
+					var val = item.val();
+
+					if (val && item.prop('checked')) {
+						prev.push(val);
+					}
+
+					return prev;
+				},
+				[]
+			).join();
 		},
 
 		listCheckedExcept: function(form, except, name) {
-			var buffer = [];
-
-			form = A.one(form);
-
-			if (form) {
-				var selector = 'input[type=checkbox]';
-
-				if (name) {
-					selector += '[name='+ name +']';
-				}
-
-				form.all(selector).each(
-					function(item, index) {
-						var val = item.val();
-
-						if (val && item.get('name') != except && item.get('checked') && !item.get('disabled')) {
-							buffer.push(val);
-						}
-					}
-				);
-			}
-
-			return buffer.join();
+			return Util.listCheckboxesExcept(form, except, name, true);
 		},
 
-		listSelect: function(box, delimeter) {
-			var buffer = [];
-
-			var selectList = '';
-
-			if (box != null) {
-				var select = A.one(box);
-
-				if (select) {
-					var options = select.all('option');
-
-					options.each(
-						function(item, index) {
-							var val = item.val();
-
-							if (val) {
-								buffer.push(val);
-							}
-						}
-					);
-				}
-
-				if (buffer[0] != '.none') {
-					selectList = buffer.join(delimeter || ',');
-				}
+		listSelect: function(select, delimeter) {
+			if (select._node) {
+				select = select.getDOM();
 			}
 
-			return selectList;
+			return _.reduce(
+				$(select).find('option'),
+				function(prev, item, index) {
+					var val = $(item).val();
+
+					if (val) {
+						prev.push(val);
+					}
+
+					return prev;
+				},
+				[]
+			).join(delimeter || ',');
 		},
 
 		listUncheckedExcept: function(form, except, name) {
-			var buffer = [];
-
-			form = A.one(form);
-
-			if (form) {
-				var selector = 'input[type=checkbox]';
-
-				if (name) {
-					selector += '[name='+ name +']';
-				}
-
-				form.all(selector).each(
-					function(item, index) {
-						var val = item.val();
-
-						if (val && item.get('name') != except && !item.get('checked') && !item.get('disabled')) {
-							buffer.push(val);
-						}
-					}
-				);
-			}
-
-			return buffer.join();
+			return Util.listCheckboxesExcept(form, except, name, false);
 		},
 
 		ns: function(namespace, obj) {
@@ -1932,4 +1908,4 @@
 		MENU: 5000,
 		TOOLTIP: 10000
 	};
-})(AUI(), Liferay);
+})(AUI(), AUI.$, AUI._, Liferay);

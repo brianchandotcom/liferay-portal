@@ -122,15 +122,48 @@ public class LiferayWorkflowRepositoryWrapper extends RepositoryWrapper {
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #checkInFileEntry(long, long,
+	 *             boolean, String, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public void checkInFileEntry(
 			long fileEntryId, boolean major, String changeLog,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		super.checkInFileEntry(fileEntryId, major, changeLog, serviceContext);
+		checkInFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
+			fileEntryId, major, changeLog, serviceContext);
+	}
 
-		_checkInFileEntry(fileEntryId, serviceContext);
+	@Override
+	public void checkInFileEntry(
+			long userId, long fileEntryId, boolean major, String changeLog,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		super.checkInFileEntry(
+			userId, fileEntryId, major, changeLog, serviceContext);
+
+		FileEntry fileEntry = super.getFileEntry(fileEntryId);
+
+		_workflowCapability.checkInFileEntry(userId, fileEntry, serviceContext);
+	}
+
+	@Override
+	public void checkInFileEntry(
+			long userId, long fileEntryId, String lockUuid,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		super.checkInFileEntry(userId, fileEntryId, lockUuid, serviceContext);
+
+		FileEntry fileEntry = super.getFileEntry(fileEntryId);
+
+		_workflowCapability.checkInFileEntry(userId, fileEntry, serviceContext);
 	}
 
 	/**
@@ -142,19 +175,26 @@ public class LiferayWorkflowRepositoryWrapper extends RepositoryWrapper {
 	public void checkInFileEntry(long fileEntryId, String lockUuid)
 		throws PortalException {
 
-		super.checkInFileEntry(fileEntryId, lockUuid);
-
-		_checkInFileEntry(fileEntryId, new ServiceContext());
+		checkInFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
+			fileEntryId, lockUuid, new ServiceContext());
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #checkInFileEntry(long, long,
+	 *             String, com.liferay.portal.service.ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public void checkInFileEntry(
 			long fileEntryId, String lockUuid, ServiceContext serviceContext)
 		throws PortalException {
 
-		super.checkInFileEntry(fileEntryId, lockUuid, serviceContext);
-
-		_checkInFileEntry(fileEntryId, serviceContext);
+		checkInFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
+			lockUuid, serviceContext);
 	}
 
 	@Override
@@ -295,19 +335,6 @@ public class LiferayWorkflowRepositoryWrapper extends RepositoryWrapper {
 				getUserId(),
 			fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, is, size, serviceContext);
-	}
-
-	@SuppressWarnings("deprecation")
-	private void _checkInFileEntry(
-			long fileEntryId, ServiceContext serviceContext)
-		throws PortalException {
-
-		FileEntry fileEntry = super.getFileEntry(fileEntryId);
-
-		_workflowCapability.checkInFileEntry(
-			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
-				getUserId(),
-			fileEntry, serviceContext);
 	}
 
 	private final WorkflowCapability _workflowCapability;

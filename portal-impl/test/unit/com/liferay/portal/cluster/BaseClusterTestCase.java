@@ -75,16 +75,16 @@ public class BaseClusterTestCase {
 		public static Object getJGroupsMessagePayload(
 			Receiver receiver, org.jgroups.Address sourceAddress) {
 
-			List<org.jgroups.Message> jgroupsMessageList = _jGroupsMessages.get(
+			List<org.jgroups.Message> jGroupsMessageList = _jGroupsMessages.get(
 				receiver);
 
-			if ((jgroupsMessageList == null) || jgroupsMessageList.isEmpty()) {
+			if ((jGroupsMessageList == null) || jGroupsMessageList.isEmpty()) {
 				return null;
 			}
 
-			for (org.jgroups.Message jgroupsMessage : jgroupsMessageList) {
-				if (sourceAddress.equals(jgroupsMessage.getSrc())) {
-					return jgroupsMessage.getObject();
+			for (org.jgroups.Message jGroupsMessage : jGroupsMessageList) {
+				if (sourceAddress.equals(jGroupsMessage.getSrc())) {
+					return jGroupsMessage.getObject();
 				}
 			}
 
@@ -102,24 +102,24 @@ public class BaseClusterTestCase {
 				"doReceive(org.jgroups.Message))")
 		public void doReceive(ProceedingJoinPoint proceedingJoinPoint) {
 			Receiver receiver = (Receiver)proceedingJoinPoint.getThis();
-			org.jgroups.Message jgroupsMessage =
+			org.jgroups.Message jGroupsMessage =
 				(org.jgroups.Message)proceedingJoinPoint.getArgs()[0];
 
-			List<org.jgroups.Message> jgroupsMessageList = _jGroupsMessages.get(
+			List<org.jgroups.Message> jGroupsMessageList = _jGroupsMessages.get(
 				receiver);
 
-			if (jgroupsMessageList == null) {
-				jgroupsMessageList = new ArrayList<org.jgroups.Message>();
+			if (jGroupsMessageList == null) {
+				jGroupsMessageList = new ArrayList<org.jgroups.Message>();
 
 				List<org.jgroups.Message> previousJgroupsMessageList =
-					_jGroupsMessages.putIfAbsent(receiver, jgroupsMessageList);
+					_jGroupsMessages.putIfAbsent(receiver, jGroupsMessageList);
 
 				if (previousJgroupsMessageList != null) {
-					jgroupsMessageList = previousJgroupsMessageList;
+					jGroupsMessageList = previousJgroupsMessageList;
 				}
 			}
 
-			jgroupsMessageList.add(jgroupsMessage);
+			jGroupsMessageList.add(jGroupsMessage);
 
 			_countDownLatch.countDown();
 		}

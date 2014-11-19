@@ -35,11 +35,11 @@ public class ClusterForwardReceiver extends BaseReceiver {
 	}
 
 	@Override
-	protected void doReceive(org.jgroups.Message jgroupsMessage) {
-		if (!_localTransportAddresses.contains(jgroupsMessage.getSrc()) ||
-			(jgroupsMessage.getDest() != null)) {
+	protected void doReceive(org.jgroups.Message jGroupsMessage) {
+		if (!_localTransportAddresses.contains(jGroupsMessage.getSrc()) ||
+			(jGroupsMessage.getDest() != null)) {
 
-			Message message = (Message)jgroupsMessage.getObject();
+			Message message = (Message)jGroupsMessage.getObject();
 
 			String destinationName = message.getDestinationName();
 
@@ -64,7 +64,7 @@ public class ClusterForwardReceiver extends BaseReceiver {
 		}
 		else {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Block received message " + jgroupsMessage);
+				_log.debug("Block received message " + jGroupsMessage);
 			}
 		}
 	}

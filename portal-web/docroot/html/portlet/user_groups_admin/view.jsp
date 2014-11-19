@@ -51,6 +51,13 @@ String portletURLString = portletURL.toString();
 		<portlet:namespace />doDeleteUserGroup('<%= UserGroup.class.getName() %>', userGroupId);
 	}
 
+	function <portlet:namespace />deleteUserGroups() {
+		<portlet:namespace />doDeleteUserGroup(
+			'<%= UserGroup.class.getName() %>',
+			Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds')
+		);
+	}
+
 	function <portlet:namespace />doDeleteUserGroup(className, ids) {
 		var status = <%= WorkflowConstants.STATUS_INACTIVE %>
 
@@ -126,16 +133,4 @@ String portletURLString = portletURL.toString();
 			}
 		);
 	}
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />deleteUserGroups',
-		function() {
-			<portlet:namespace />doDeleteUserGroup(
-				'<%= UserGroup.class.getName() %>',
-				Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds')
-			);
-		},
-		['liferay-util-list-fields']
-	);
 </aui:script>

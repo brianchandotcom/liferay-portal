@@ -73,7 +73,7 @@ boolean splitThread = false;
 			<aui:input maxlength="<%= ModelHintsConstants.TEXT_MAX_LENGTH %>" name="subject" style="width: 350px;" value="">
 				<aui:validator name="required">
 					function() {
-						return A.one('#<portlet:namespace />addExplanationPost').get('checked');
+						return AUI.$('#<portlet:namespace />addExplanationPost').prop('checked');
 					}
 				</aui:validator>
 			</aui:input>
@@ -116,8 +116,8 @@ MBUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "move-thread"), currentURL);
 %>
 
-<aui:script use="aui-base">
-	A.one('#<portlet:namespace />selectCategoryButton').on(
+<aui:script sandbox="<%= true %>">
+	$('#<portlet:namespace />selectCategoryButton').on(
 		'click',
 		function(event) {
 			Liferay.Util.selectEntity(
@@ -132,9 +132,11 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "move-th
 					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/message_boards/select_category" /><portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getParentCategoryId()) %>" /></portlet:renderURL>'
 				},
 				function(event) {
-					document.<portlet:namespace />fm.<portlet:namespace />mbCategoryId.value = event.categoryid;
+					var form = $(document.<portlet:namespace />fm);
 
-					document.getElementById('<portlet:namespace />categoryName').value = A.Lang.String.unescapeEntities(event.name);
+					form.fm('mbCategoryId').val(event.categoryid);
+
+					form.fm('categoryName').val(_.unescape(event.name));
 				}
 			);
 		}

@@ -133,6 +133,6 @@ else {
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script use="aui-base">
+<aui:script>
 	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectCategoryFm', '<%= HtmlUtil.escapeJS(eventName) %>');
 </aui:script>

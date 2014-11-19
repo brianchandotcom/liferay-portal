@@ -337,7 +337,7 @@ else {
 						for (int i = 0; i < existingAttachmentsFileEntries.size(); i++) {
 							FileEntry fileEntry = existingAttachmentsFileEntries.get(i);
 
-							String taglibDeleteAttachment = "javascript:;";
+							String taglibDeleteAttachment = "javascript:" + renderResponse.getNamespace() + "trashAttachment(" + (i + 1) + ", '" + Constants.MOVE_TO_TRASH + "');";
 
 							if (!TrashUtil.isTrashEnabled(scopeGroupId)) {
 								taglibDeleteAttachment = "javascript:" + renderResponse.getNamespace() + "deleteAttachment(" + (i + 1) + ");";
@@ -514,7 +514,7 @@ else {
 
 <aui:script>
 	function <portlet:namespace />getSuggestionsContent() {
-		return document.<portlet:namespace />fm.<portlet:namespace />subject.value + ' ' + <portlet:namespace />getHTML();
+		return AUI.$(document.<portlet:namespace />fm).fm('subject').val() + ' ' + <portlet:namespace />getHTML();
 	}
 
 	function <portlet:namespace />previewMessage() {
@@ -524,114 +524,65 @@ else {
 			}
 		</c:if>
 
-		document.<portlet:namespace />fm.<portlet:namespace />body.value = <portlet:namespace />getHTML();
-		document.<portlet:namespace />fm.<portlet:namespace />preview.value = 'true';
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		form.fm('body').val(<portlet:namespace />getHTML());
+		form.fm('preview').val('true');
 
 		<portlet:namespace />saveMessage(true);
 	}
 
 	function <portlet:namespace />saveMessage(draft) {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (message == null) ? Constants.ADD : Constants.UPDATE %>';
-		document.<portlet:namespace />fm.<portlet:namespace />body.value = <portlet:namespace />getHTML();
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		form.fm('<%= Constants.CMD %>').val('<%= (message == null) ? Constants.ADD : Constants.UPDATE %>');
+		form.fm('body').val(<portlet:namespace />getHTML());
 
 		if (!draft) {
-			document.<portlet:namespace />fm.<portlet:namespace />preview.value = <%= preview %>;
-			document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = <%= WorkflowConstants.ACTION_PUBLISH %>;
+			form.fm('preview').val(<%= preview %>);
+			form.fm('workflowAction').val(<%= WorkflowConstants.ACTION_PUBLISH %>);
 		}
 
-		submitForm(document.<portlet:namespace />fm);
-	}
-
-	function <portlet:namespace />selectCategory(categoryId, categoryName) {
-		document.<portlet:namespace />fm.<portlet:namespace />mbCategoryId.value = categoryId;
-
-		var nameEl = document.getElementById('<portlet:namespace />categoryName');
-
-		nameEl.href = '<portlet:renderURL><portlet:param name="struts_action" value="/message_boards/view" /></portlet:renderURL>&<portlet:namespace />mbCategoryId=' + categoryId;
-		nameEl.innerHTML = categoryName + '&nbsp;';
+		submitForm(form);
 	}
 
 	<c:choose>
 		<c:when test="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>">
-			Liferay.provide(
-				window,
-				'<portlet:namespace />trashAttachment',
-				function(index, action) {
-					var A = AUI();
+			function <portlet:namespace />trashAttachment(index, action) {
+				var $ = AUI.$;
 
-					var existingPath = A.one('#<portlet:namespace />existingPath' + index);
-					var removeExisting = A.one('#<portlet:namespace />removeExisting' + index);
-					var undoFile = A.one('#<portlet:namespace />undoFile' + index);
-					var undoPath = A.one('#<portlet:namespace />undoPath' + index);
+				var existingPath = $('#<portlet:namespace />existingPath' + index);
+				var removeExisting = $('#<portlet:namespace />removeExisting' + index);
+				var undoFile = $('#<portlet:namespace />undoFile' + index);
 
-					if (action == '<%= Constants.MOVE_TO_TRASH %>') {
-						removeExisting.hide();
-						undoFile.show();
+				if (action == '<%= Constants.MOVE_TO_TRASH %>') {
+					removeExisting.addClass('hide');
+					undoFile.removeClass('hide');
 
-						existingPath.attr('value', '');
-					}
-					else {
-						removeExisting.show();
-						undoFile.hide();
+					existingPath.val('');
+				}
+				else {
+					removeExisting.removeClass('hide');
+					undoFile.addClass('hide');
 
-						existingPath.attr('value', undoPath.get('value'));
-					}
-				},
-				['aui-base']
-			);
+					var undoPath = $('#<portlet:namespace />undoPath' + index);
+
+					existingPath.val(undoPath.val());
+				}
+			}
 		</c:when>
 		<c:otherwise>
-			Liferay.provide(
-				window,
-				'<portlet:namespace />deleteAttachment',
-				function(index) {
-					var A = AUI();
+			function <portlet:namespace />deleteAttachment(index) {
+				var $ = AUI.$;
 
-					var button = A.one('#<portlet:namespace />removeExisting' + index);
-					var span = A.one('#<portlet:namespace />existingFile' + index);
-					var file = A.one('#<portlet:namespace />msgFile' + index);
+				$('#<portlet:namespace />removeExisting' + index).remove();
+				$('#<portlet:namespace />existingFile' + index).remove();
 
-					if (button) {
-						button.remove();
-					}
+				var file = $('#<portlet:namespace />msgFile' + index);
 
-					if (span) {
-						span.remove();
-					}
-
-					if (file) {
-						file.ancestor('.field').show();
-
-						file.ancestor('li').addClass('deleted-input');
-					}
-				},
-				['aui-base']
-			);
+				file.removeClass('hide');
+				file.closest('li').addClass('deleted-input');
+			}
 		</c:otherwise>
 	</c:choose>
 </aui:script>
-
-<c:if test="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>">
-	<aui:script use="aui-base">
-
-		<%
-		for (int i = 1; i <= existingAttachmentsFileEntries.size(); i++) {
-		%>
-
-			var removeExisting = A.one('#<portlet:namespace />removeExisting' + <%= i %>);
-
-			if (removeExisting) {
-				removeExisting.on(
-					'click',
-					function(event) {
-						<portlet:namespace />trashAttachment(<%= i %>, '<%= Constants.MOVE_TO_TRASH %>');
-					}
-				);
-			}
-
-		<%
-		}
-		%>
-
-	</aui:script>
-</c:if>

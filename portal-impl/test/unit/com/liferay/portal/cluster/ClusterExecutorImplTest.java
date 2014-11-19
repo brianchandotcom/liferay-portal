@@ -917,7 +917,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 		try {
 
-			// Test 1,  add ClusterEventListener
+			// Test 1, add ClusterEventListener
 
 			List<ClusterEventListener> fieldClusterEventListeners =
 				ReflectionTestUtil.getFieldValue(
@@ -930,21 +930,21 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			Assert.assertTrue(fieldClusterEventListeners.isEmpty());
 
-			// Test 2,  remove ClusterEventListener
+			// Test 2, remove ClusterEventListener
 
 			clusterExecutorImpl.removeClusterEventListener(
 				clusterEventListener);
 
 			Assert.assertTrue(fieldClusterEventListeners.isEmpty());
 
-			// Test 3,  get ClusterEventListener
+			// Test 3, get ClusterEventListener
 
 			List<ClusterEventListener> clusterEventListeners =
 				clusterExecutorImpl.getClusterEventListeners();
 
 			Assert.assertTrue(clusterEventListeners.isEmpty());
 
-			// Test 4,  set ClusterEventListener
+			// Test 4, set ClusterEventListener
 
 			clusterEventListeners = new ArrayList<ClusterEventListener>();
 
@@ -954,40 +954,40 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			Assert.assertTrue(fieldClusterEventListeners.isEmpty());
 
-			// Test 5,  getClusterNodeAddresses
+			// Test 5, getClusterNodeAddresses
 
 			List<Address> addresses =
 				clusterExecutorImpl.getClusterNodeAddresses();
 
 			Assert.assertTrue(addresses.isEmpty());
 
-			// Test 6,  getClusterNodes
+			// Test 6, getClusterNodes
 
 			List<ClusterNode> clusterNodes =
 				clusterExecutorImpl.getClusterNodes();
 
 			Assert.assertTrue(clusterNodes.isEmpty());
 
-			// Test 7,  getLocalClusterNode
+			// Test 7, getLocalClusterNode
 
 			Assert.assertNull(clusterExecutorImpl.getLocalClusterNode());
 
-			// Test 8,  getLocalClusterNodeAddress
+			// Test 8, getLocalClusterNodeAddress
 
 			Assert.assertNull(clusterExecutorImpl.getLocalClusterNodeAddress());
 
-			// Test 9,  isClusterNodeAlive by address
+			// Test 9, isClusterNodeAlive by address
 
 			Assert.assertFalse(
 				clusterExecutorImpl.isClusterNodeAlive(
 					new AddressImpl(new MockAddress())));
 
-			// Test 10,  isClusterNodeAlive by clusterNodeId
+			// Test 10, isClusterNodeAlive by clusterNodeId
 
 			Assert.assertFalse(
 				clusterExecutorImpl.isClusterNodeAlive("WrongClusterNodeId"));
 
-			// Test 11,  execute clusterRequest
+			// Test 11, execute clusterRequest
 
 			Assert.assertNull(
 				clusterExecutorImpl.execute(

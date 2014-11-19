@@ -313,19 +313,19 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 			clusterLinkImpl1.sendMulticastMessage(message, Priority.LEVEL1);
 
-			org.jgroups.Address sourceAddress = jChannel1.getAddress();
+			org.jgroups.Address sourceJAddress = jChannel1.getAddress();
 
 			BaseReceiverAdvice.awaitMessageReceived();
 
 			Message receivedMessage1 =
 				(Message)BaseReceiverAdvice.getJGroupsMessagePayload(
-					receiver1, sourceAddress);
+					receiver1, sourceJAddress);
 			Message receivedMessage2 =
 				(Message)BaseReceiverAdvice.getJGroupsMessagePayload(
-					receiver2, sourceAddress);
+					receiver2, sourceJAddress);
 			Message receivedMessage3 =
 				(Message)BaseReceiverAdvice.getJGroupsMessagePayload(
-					receiver3, sourceAddress);
+					receiver3, sourceJAddress);
 
 			Assert.assertEquals(
 				message.getPayload(), receivedMessage1.getPayload());
@@ -432,16 +432,16 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 				new AddressImpl(jChannels2.get(0).getAddress()), message,
 				Priority.LEVEL1);
 
-			org.jgroups.Address sourceAddress = jChannel1.getAddress();
+			org.jgroups.Address sourceJAddress = jChannel1.getAddress();
 
 			BaseReceiverAdvice.awaitMessageReceived();
 
 			Message receivedMessage1 =
 				(Message)BaseReceiverAdvice.getJGroupsMessagePayload(
-					receiver1, sourceAddress);
+					receiver1, sourceJAddress);
 			Message receivedMessage2 =
 				(Message)BaseReceiverAdvice.getJGroupsMessagePayload(
-					receiver2, sourceAddress);
+					receiver2, sourceJAddress);
 
 			Assert.assertNull(receivedMessage1);
 			Assert.assertEquals(

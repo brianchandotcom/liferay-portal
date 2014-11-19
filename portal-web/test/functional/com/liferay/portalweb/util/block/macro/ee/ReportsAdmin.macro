@@ -135,6 +135,52 @@
 		<execute action="CPReportsadmin#assertClick" locator-key1="NAVIGATION_SOURCES" value1="Sources" />
 	</command>
 
+	<command name="tearDownConfiguration">
+		<execute macro="ReportsAdmin#gotoConfiguration" />
+
+		<execute action="CPReportsadminConfiguration#assertClick" locator-key1="NAVIGATION_EMAIL_FROM" value1="Email From" />
+		<execute action="CPReportsadminConfiguration#type" locator-key1="EMAIL_FROM_NAME_FIELD" value1="Joe Bloggs" />
+		<execute action="CPReportsadminConfiguration#type" locator-key1="EMAIL_FROM_ADDRESS_FIELD" value1="test@liferay.com" />
+		<execute action="CPReportsadminConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPReportsadminConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="CPReportsadminConfiguration#assertClick" locator-key1="NAVIGATION_DELIVERY_EMAIL" value1="Delivery Email" />
+
+		<var name="deliverySubject"><![CDATA[New Report: [$REPORT_NAME$]]]></var>
+
+		<execute action="CPReportsadminConfiguration#type" locator-key1="DELIVERY_EMAIL_SUBJECT_FIELD" value1="${deliverySubject}" />
+
+		<var name="deliveryBody"><![CDATA[
+Dear [$TO_NAME$],<br /><br />
+
+Please review the attached report.<br /><br />
+
+Sincerely,<br />
+[$FROM_NAME$]<br />
+[$FROM_ADDRESS$]		<br />]]>		</var>
+
+		<execute action="CPReportsadminConfiguration#type" locator-key1="DELIVERY_EMAIL_BODY_FIELD" value1="${deliveryBody}" />
+		<execute action="CPReportsadminConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPReportsadminConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="CPReportsadminConfiguration#assertClick" locator-key1="NAVIGATION_NOTIFICATIONS_EMAIL" value1="Notifications Email" />
+
+		<var name="notificationSubject"><![CDATA[New Report: [$REPORT_NAME$]]]></var>
+
+		<execute action="CPReportsadminConfiguration#type" locator-key1="NOTIFICATIONS_EMAIL_SUBJECT_FIELD" value1="${notificationSubject}" />
+
+		<var name="notificationBody"><![CDATA[
+Dear [$TO_NAME$],<br /><br />
+
+You have a new <a href="[$PAGE_URL$]">report</a>.<br /><br />
+
+Sincerely,<br />
+[$FROM_NAME$]<br />
+[$FROM_ADDRESS$]		<br />]]>		</var>
+
+		<execute action="CPReportsadminConfiguration#type" locator-key1="NOTIFICATIONS_EMAIL_BODY_FIELD" value1="${notificationBody}" />
+		<execute action="CPReportsadminConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPReportsadminConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+
 	<command name="tearDownDefinitions">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Reports Admin" />

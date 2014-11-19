@@ -22,9 +22,8 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.subscriptions.BaseSubscriptionBaseModelTestCase;
-import com.liferay.portal.util.test.ResourcePermissionTestUtil;
+import com.liferay.portal.util.test.RoleTestUtil;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
@@ -68,13 +67,18 @@ public class MBSubscriptionBaseModelTest
 	}
 
 	@Override
-	protected void deleteContainerModelViewPermission() throws Exception {
-		ResourcePermissionTestUtil.unsetResourcePermission(
-			_category.getCompanyId(), MBCategory.class.getName(),
+	protected void removeContainerModelResourceViewPermission()
+		throws Exception {
+
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.GUEST, MBCategory.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(_category.getCategoryId()),
-			PortletKeys.MESSAGE_BOARDS, RoleConstants.SITE_MEMBER,
-			ActionKeys.VIEW);
+			String.valueOf(_category.getCategoryId()), ActionKeys.VIEW);
+
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.SITE_MEMBER, MBCategory.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(_category.getCategoryId()), ActionKeys.VIEW);
 	}
 
 	@Override

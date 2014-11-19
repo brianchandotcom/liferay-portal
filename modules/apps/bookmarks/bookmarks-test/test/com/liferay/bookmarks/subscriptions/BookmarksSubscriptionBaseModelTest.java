@@ -77,12 +77,18 @@ public class BookmarksSubscriptionBaseModelTest
 	}
 
 	@Override
-	protected void deleteContainerModelViewPermission() throws Exception {
-		ResourcePermissionTestUtil.unsetResourcePermission(
-			_folder.getCompanyId(), BookmarksFolder.class.getName(),
+	protected void removeContainerModelResourceViewPermission()
+		throws Exception {
+
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.GUEST, BookmarksFolder.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(_folder.getFolderId()), PortletKeys.BLOGS,
-			RoleConstants.SITE_MEMBER, ActionKeys.VIEW);
+			String.valueOf(_folder.getFolderId()), ActionKeys.VIEW);
+
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.SITE_MEMBER, BookmarksFolder.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(_folder.getFolderId()), ActionKeys.VIEW);
 	}
 
 	@Override

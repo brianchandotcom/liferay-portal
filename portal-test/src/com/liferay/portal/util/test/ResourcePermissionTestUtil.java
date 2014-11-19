@@ -15,15 +15,8 @@
 package com.liferay.portal.util.test;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.model.ResourcePermission;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.service.RoleLocalServiceUtil;
-
-import java.util.List;
 
 /**
  * @author Alberto Chaparro
@@ -67,51 +60,6 @@ public class ResourcePermissionTestUtil {
 
 		return ResourcePermissionLocalServiceUtil.addResourcePermission(
 			resourcePermission);
-	}
-
-	public static void unsetResourcePermission(
-			long companyId, String name, int scope, String primKey,
-			String portletResource, String roleName, String actionId)
-		throws Exception {
-
-		removeGuestPermissions(companyId, name, scope, primKey);
-
-		List<String> actions = ResourceActionsUtil.getResourceActions(
-			portletResource, name);
-
-		Role userRole = RoleLocalServiceUtil.getRole(companyId, roleName);
-
-		List<String> availableResourcePermissionActionIds =
-			ResourcePermissionLocalServiceUtil.
-				getAvailableResourcePermissionActionIds(
-					companyId, name, scope, primKey, userRole.getRoleId(),
-					actions);
-
-		availableResourcePermissionActionIds.remove(actionId);
-
-		String[] actionIds = new String[0];
-
-		for (String availableResourcePermissionActionId :
-				availableResourcePermissionActionIds) {
-
-			actionIds = ArrayUtil.append(
-				actionIds, availableResourcePermissionActionId);
-		}
-
-		ResourcePermissionLocalServiceUtil.setResourcePermissions(
-			companyId, name, scope, primKey, userRole.getRoleId(), actionIds);
-	}
-
-	protected static void removeGuestPermissions(
-			long companyId, String name, int scope, String primKey)
-		throws Exception {
-
-		Role guestRole = RoleLocalServiceUtil.getRole(
-			companyId, RoleConstants.GUEST);
-
-		ResourcePermissionLocalServiceUtil.setResourcePermissions(
-			companyId, name, scope, primKey, guestRole.getRoleId(),
-			new String[0]);
 	}
 
 }

@@ -52,7 +52,7 @@ public abstract class BaseSubscriptionBaseModelTestCase
 
 		addSubscriptionBaseModel(baseModelId);
 
-		deleteContainerModelViewPermission();
+		removeContainerModelResourceViewPermission();
 
 		updateBaseModel(baseModelId);
 
@@ -76,7 +76,7 @@ public abstract class BaseSubscriptionBaseModelTestCase
 	protected abstract void addSubscriptionBaseModel(long baseModelId)
 		throws Exception;
 
-	protected abstract void deleteContainerModelViewPermission()
+	protected abstract void removeContainerModelResourceViewPermission()
 		throws Exception;
 
 }

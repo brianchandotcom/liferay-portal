@@ -160,8 +160,7 @@ public class LiferayLocalRepository
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		throw new UnsupportedOperationException(
-			"This method is not supported by this repository");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -170,8 +169,7 @@ public class LiferayLocalRepository
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		throw new UnsupportedOperationException(
-			"This method is not supported by this repository");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -298,8 +296,7 @@ public class LiferayLocalRepository
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		throw new UnsupportedOperationException(
-			"This method is not supported by this repository");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

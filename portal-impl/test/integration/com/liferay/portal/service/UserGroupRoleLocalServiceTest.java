@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service;
 
-import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.Group;
@@ -22,8 +21,6 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroupRole;
-import com.liferay.portal.model.impl.UserGroupRoleCacheModel;
-import com.liferay.portal.model.impl.UserGroupRoleImpl;
 import com.liferay.portal.service.persistence.UserGroupRolePK;
 import com.liferay.portal.service.persistence.UserGroupRoleUtil;
 import com.liferay.portal.test.DeleteAfterTestRun;
@@ -33,8 +30,6 @@ import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portal.util.test.UserTestUtil;
-
-import java.io.Serializable;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -56,31 +51,21 @@ public class UserGroupRoleLocalServiceTest {
 	public void testAddUserGroupRole() throws Throwable {
 		_group = GroupTestUtil.addGroup();
 
-		Role role = RoleLocalServiceUtil.getRole(
-				TestPropsValues.getCompanyId(),
-				RoleConstants.SITE_ADMINISTRATOR);
-
 		_user = UserTestUtil.addUser(null, _group.getGroupId());
+
+		Role role = RoleLocalServiceUtil.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.SITE_ADMINISTRATOR);
 
 		UserGroupRolePK userGroupRolePK = new UserGroupRolePK(
 			_user.getUserId(), _group.getGroupId(), role.getRoleId());
 
 		UserGroupRole userGroupRole = addUserGroupRole(userGroupRolePK);
 
-		PortalCache<Serializable, Serializable> portalCache =
-			EntityCacheUtil.getPortalCache(UserGroupRoleImpl.class);
-
-		Serializable userGroupRoleCached = portalCache.get(userGroupRolePK);
-
-		Assert.assertEquals(
-			UserGroupRoleCacheModel.class, userGroupRoleCached.getClass());
-
 		EntityCacheUtil.clearLocalCache();
 
-		UserGroupRole userGroupRoleFetched =
-			UserGroupRoleUtil.fetchByPrimaryKey(userGroupRolePK);
-
-		Assert.assertEquals(userGroupRole, userGroupRoleFetched);
+		Assert.assertEquals(
+			userGroupRole,
+			UserGroupRoleUtil.fetchByPrimaryKey(userGroupRolePK));
 	}
 
 	protected UserGroupRole addUserGroupRole(UserGroupRolePK userGroupRolePK) {

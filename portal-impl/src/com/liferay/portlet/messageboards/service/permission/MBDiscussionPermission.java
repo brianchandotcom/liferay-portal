@@ -16,14 +16,17 @@ package com.liferay.portlet.messageboards.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
+import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerUtil;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
@@ -68,6 +71,12 @@ public class MBDiscussionPermission {
 		throws PortalException {
 
 		MBMessage message = MBMessageLocalServiceUtil.getMessage(messageId);
+
+		if (className.equals(WorkflowInstance.class.getName())) {
+			return permissionChecker.hasPermission(
+				message.getGroupId(), PortletKeys.WORKFLOW_DEFINITIONS,
+				message.getGroupId(), ActionKeys.VIEW);
+		}
 
 		if (PropsValues.DISCUSSION_COMMENTS_ALWAYS_EDITABLE_BY_OWNER &&
 			(permissionChecker.getUserId() == message.getUserId())) {

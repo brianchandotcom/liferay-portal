@@ -16,17 +16,13 @@ package com.liferay.portal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
-import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission;
 
 /**
@@ -122,19 +118,10 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 					permissionChecker, classPK, ActionKeys.VIEW);
 			}
 
-			MBThread mbThread = MBThreadLocalServiceUtil.fetchThread(
-				mbDiscussion.getThreadId());
-
-			if (className.equals(WorkflowInstance.class.getName())) {
-				return permissionChecker.hasPermission(
-					mbThread.getGroupId(), PortletKeys.WORKFLOW_DEFINITIONS,
-					mbThread.getGroupId(), ActionKeys.VIEW);
-			}
-
 			return MBDiscussionPermission.contains(
-				permissionChecker, mbThread.getCompanyId(),
-				mbThread.getGroupId(), className, classPK, mbThread.getUserId(),
-				ActionKeys.VIEW);
+				permissionChecker, mbDiscussion.getCompanyId(),
+				mbDiscussion.getGroupId(), className, classPK,
+				mbDiscussion.getUserId(), ActionKeys.VIEW);
 		}
 
 		return PermissionCheckerUtil.containsResourcePermission(

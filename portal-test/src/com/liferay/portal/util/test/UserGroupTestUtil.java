@@ -17,6 +17,8 @@ package com.liferay.portal.util.test;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.test.randomizerbumpers.NumericStringRandomizerBumper;
+import com.liferay.portal.test.randomizerbumpers.UniqueStringRandomizerBumper;
 
 /**
  * @author Roberto Díaz
@@ -33,8 +35,10 @@ public class UserGroupTestUtil {
 
 		return UserGroupLocalServiceUtil.addUserGroup(
 			serviceContext.getUserId(), serviceContext.getCompanyId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(50),
-			serviceContext);
+			RandomTestUtil.randomString(
+				NumericStringRandomizerBumper.INSTANCE,
+				UniqueStringRandomizerBumper.INSTANCE),
+			RandomTestUtil.randomString(50), serviceContext);
 	}
 
 }

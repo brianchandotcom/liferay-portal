@@ -461,7 +461,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			BaseReceiverAdvice.awaitMessageReceived();
 
-			Object object = BaseReceiverAdvice.getJgroupsMessagePayload(
+			Object object = BaseReceiverAdvice.getJGroupsMessagePayload(
 				channel.getReceiver(), channel.getAddress());
 
 			ClusterRequest clusterRequest = (ClusterRequest)object;
@@ -489,7 +489,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			BaseReceiverAdvice.awaitMessageReceived();
 
-			object = BaseReceiverAdvice.getJgroupsMessagePayload(
+			object = BaseReceiverAdvice.getJGroupsMessagePayload(
 				channel.getReceiver(), channel.getAddress());
 
 			clusterRequest = (ClusterRequest)object;
@@ -519,7 +519,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 			BaseReceiverAdvice.awaitMessageReceived();
 
 			Assert.assertNull(
-				BaseReceiverAdvice.getJgroupsMessagePayload(
+				BaseReceiverAdvice.getJGroupsMessagePayload(
 					channel.getReceiver(), channel.getAddress()));
 
 			assertFutureClusterResponsesWithoutException(

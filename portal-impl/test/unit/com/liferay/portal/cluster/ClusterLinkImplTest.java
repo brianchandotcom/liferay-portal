@@ -318,13 +318,13 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 			BaseReceiverAdvice.awaitMessageReceived();
 
 			Message receivedMessage1 =
-				(Message)BaseReceiverAdvice.getJgroupsMessagePayload(
+				(Message)BaseReceiverAdvice.getJGroupsMessagePayload(
 					receiver1, sourceAddress);
 			Message receivedMessage2 =
-				(Message)BaseReceiverAdvice.getJgroupsMessagePayload(
+				(Message)BaseReceiverAdvice.getJGroupsMessagePayload(
 					receiver2, sourceAddress);
 			Message receivedMessage3 =
-				(Message)BaseReceiverAdvice.getJgroupsMessagePayload(
+				(Message)BaseReceiverAdvice.getJGroupsMessagePayload(
 					receiver3, sourceAddress);
 
 			Assert.assertEquals(
@@ -437,10 +437,10 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 			BaseReceiverAdvice.awaitMessageReceived();
 
 			Message receivedMessage1 =
-				(Message)BaseReceiverAdvice.getJgroupsMessagePayload(
+				(Message)BaseReceiverAdvice.getJGroupsMessagePayload(
 					receiver1, sourceAddress);
 			Message receivedMessage2 =
-				(Message)BaseReceiverAdvice.getJgroupsMessagePayload(
+				(Message)BaseReceiverAdvice.getJGroupsMessagePayload(
 					receiver2, sourceAddress);
 
 			Assert.assertNull(receivedMessage1);

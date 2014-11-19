@@ -72,10 +72,10 @@ public class BaseClusterTestCase {
 			}
 		}
 
-		public static Object getJgroupsMessagePayload(
+		public static Object getJGroupsMessagePayload(
 			Receiver receiver, org.jgroups.Address sourceAddress) {
 
-			List<org.jgroups.Message> jgroupsMessageList = _jgroupsMessages.get(
+			List<org.jgroups.Message> jgroupsMessageList = _jGroupsMessages.get(
 				receiver);
 
 			if ((jgroupsMessageList == null) || jgroupsMessageList.isEmpty()) {
@@ -94,7 +94,7 @@ public class BaseClusterTestCase {
 		public static void reset(int expectedMessageNumber) {
 			_countDownLatch = new CountDownLatch(expectedMessageNumber);
 
-			_jgroupsMessages.clear();
+			_jGroupsMessages.clear();
 		}
 
 		@Around(
@@ -105,14 +105,14 @@ public class BaseClusterTestCase {
 			org.jgroups.Message jgroupsMessage =
 				(org.jgroups.Message)proceedingJoinPoint.getArgs()[0];
 
-			List<org.jgroups.Message> jgroupsMessageList = _jgroupsMessages.get(
+			List<org.jgroups.Message> jgroupsMessageList = _jGroupsMessages.get(
 				receiver);
 
 			if (jgroupsMessageList == null) {
 				jgroupsMessageList = new ArrayList<org.jgroups.Message>();
 
 				List<org.jgroups.Message> previousJgroupsMessageList =
-					_jgroupsMessages.putIfAbsent(receiver, jgroupsMessageList);
+					_jGroupsMessages.putIfAbsent(receiver, jgroupsMessageList);
 
 				if (previousJgroupsMessageList != null) {
 					jgroupsMessageList = previousJgroupsMessageList;
@@ -126,7 +126,7 @@ public class BaseClusterTestCase {
 
 		private static CountDownLatch _countDownLatch;
 		private static final ConcurrentMap<Receiver, List<org.jgroups.Message>>
-			_jgroupsMessages =
+			_jGroupsMessages =
 				new ConcurrentHashMap<Receiver, List<org.jgroups.Message>>();
 
 	}

@@ -850,7 +850,6 @@ AUI.add(
 
 						portletURL.setDoAsGroupId(instance.get('doAsGroupId'));
 						portletURL.setParameter('eventName', portletNamespace + 'selectDocumentLibrary');
-						portletURL.setParameter('groupId', themeDisplay.getScopeGroupId());
 						portletURL.setParameter('refererPortletName', '');
 						portletURL.setParameter('struts_action', '/document_selector/view');
 						portletURL.setParameter('tabs1Names', 'documents');

@@ -37,7 +37,7 @@ public class TreePathUtilTest extends PowerMockito {
 			PropsUtil.get(
 				PropsKeys.MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE)
 		).thenReturn(
-			"1000"
+			"10000"
 		);
 	}
 

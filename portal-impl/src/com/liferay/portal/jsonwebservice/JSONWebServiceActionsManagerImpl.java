@@ -191,14 +191,15 @@ public class JSONWebServiceActionsManagerImpl
 	public int getJSONWebServiceActionsCount(String contextName) {
 		int count = 0;
 
-		// LPS-51208: don't use enhanced loop
+		// Do not use enhanced loop in order to prevent possible
+		// ConcurrentModificationException
 
 		for (int i = 0; i < _jsonWebServiceActionConfigs.size(); i++) {
 			JSONWebServiceActionConfig jsonWebServiceActionConfig =
 				_jsonWebServiceActionConfigs.get(i);
 
 			if (contextName.equals(
-				jsonWebServiceActionConfig.getContextName())) {
+					jsonWebServiceActionConfig.getContextName())) {
 
 				count++;
 			}

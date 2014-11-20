@@ -15,9 +15,28 @@
 package com.liferay.journal.content.web.portlet;
 
 import com.liferay.journal.content.web.portlet.upgrade.JournalContentUpgrade;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PrefsParamUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalArticleDisplay;
+import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.portlet.journal.util.JournalContentUtil;
+
+import java.io.IOException;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -58,6 +77,82 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class JournalContentPortlet extends MVCPortlet {
+
+	@Override
+	public void doView(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		PortletPreferences portletPreferences = renderRequest.getPreferences();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long articleGroupId = ParamUtil.getLong(
+			renderRequest, "articleGroupId");
+
+		if (articleGroupId <= 0) {
+			articleGroupId = GetterUtil.getLong(
+				portletPreferences.getValue(
+					"groupId", String.valueOf(themeDisplay.getScopeGroupId())));
+		}
+
+		String articleId = PrefsParamUtil.getString(
+			portletPreferences, renderRequest, "articleId");
+		String ddmTemplateKey = PrefsParamUtil.getString(
+			portletPreferences, renderRequest, "ddmTemplateKey");
+
+		JournalArticle article = null;
+		JournalArticleDisplay articleDisplay = null;
+
+		if ((articleGroupId > 0) && Validator.isNotNull(articleId)) {
+			String viewMode = ParamUtil.getString(renderRequest, "viewMode");
+			String languageId = LanguageUtil.getLanguageId(renderRequest);
+			int page = ParamUtil.getInteger(renderRequest, "page", 1);
+
+			article = JournalArticleLocalServiceUtil.fetchLatestArticle(
+				articleGroupId, articleId, WorkflowConstants.STATUS_APPROVED);
+
+			try {
+				if (article == null) {
+					article = JournalArticleLocalServiceUtil.getLatestArticle(
+						articleGroupId, articleId,
+						WorkflowConstants.STATUS_ANY);
+				}
+
+				double version = article.getVersion();
+
+				articleDisplay = JournalContentUtil.getDisplay(
+					articleGroupId, articleId, version, ddmTemplateKey,
+					viewMode, languageId, page,
+					new PortletRequestModel(renderRequest, renderResponse),
+					themeDisplay);
+			}
+			catch (Exception e) {
+				renderRequest.removeAttribute(WebKeys.JOURNAL_ARTICLE);
+
+				articleDisplay = JournalContentUtil.getDisplay(
+					articleGroupId, articleId, ddmTemplateKey, viewMode,
+					languageId, page,
+					new PortletRequestModel(renderRequest, renderResponse),
+					themeDisplay);
+			}
+		}
+
+		if (article != null) {
+			renderRequest.setAttribute(WebKeys.JOURNAL_ARTICLE, article);
+		}
+
+		if (articleDisplay != null) {
+			renderRequest.setAttribute(
+				WebKeys.JOURNAL_ARTICLE_DISPLAY, articleDisplay);
+		}
+		else {
+			renderRequest.removeAttribute(WebKeys.JOURNAL_ARTICLE_DISPLAY);
+		}
+
+		super.doView(renderRequest, renderResponse);
+	}
 
 	@Reference(unbind = "-")
 	protected void setInvitationUpgrade(

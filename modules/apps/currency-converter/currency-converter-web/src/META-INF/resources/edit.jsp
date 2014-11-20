@@ -59,14 +59,11 @@
 </aui:form>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveCurrency',
-		function() {
-			document.<portlet:namespace />fm.<portlet:namespace />symbols.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />current_actions);
+	function <portlet:namespace />saveCurrency() {
+		var form = AUI.$(document.<portlet:namespace />fm);
 
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['liferay-util-list-fields']
-	);
+		form.fm('symbols').val(Liferay.Util.listSelect(form.fm('current_actions')));
+
+		submitForm(form);
+	}
 </aui:script>

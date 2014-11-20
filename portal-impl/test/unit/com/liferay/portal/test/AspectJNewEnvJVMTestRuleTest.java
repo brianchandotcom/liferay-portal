@@ -26,8 +26,8 @@ import org.junit.Test;
 /**
  * @author Shuyang Zhou
  */
-@NewEnv(type = NewEnv.Type.CLASSLOADER)
-public class AspectJNewEnvClassLoaderMethodRuleTest {
+@NewEnv(type = NewEnv.Type.JVM)
+public class AspectJNewEnvJVMTestRuleTest {
 
 	@NewEnv(type = NewEnv.Type.NONE)
 	@Test
@@ -72,8 +72,8 @@ public class AspectJNewEnvClassLoaderMethodRuleTest {
 	}
 
 	@Rule
-	public final AspectJNewEnvMethodRule aspectJNewEnvMethodRule =
-		new AspectJNewEnvMethodRule();
+	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
+		new AspectJNewEnvTestRule();
 
 	@Aspect
 	private static class AdviceClass1 {

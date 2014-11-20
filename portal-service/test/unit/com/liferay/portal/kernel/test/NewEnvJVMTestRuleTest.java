@@ -32,7 +32,7 @@ import org.junit.Test;
  * @author Shuyang Zhou
  */
 @NewEnv(type = NewEnv.Type.JVM)
-public class NewEnvJVMMethodRuleTest {
+public class NewEnvJVMTestRuleTest {
 
 	@Before
 	public void setUp() {
@@ -64,7 +64,7 @@ public class NewEnvJVMMethodRuleTest {
 	}
 
 	@Rule
-	public final NewEnvMethodRule newEnvMethodRule = new NewEnvMethodRule();
+	public final NewEnvTestRule newEnvTestRule = new NewEnvTestRule();
 
 	protected void assertProcessId() {
 		Assert.assertNotNull(_processId);

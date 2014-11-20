@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetEntryLocalService;
 import com.liferay.portlet.journal.asset.JournalArticleAssetRenderer;
 import com.liferay.portlet.journal.asset.JournalArticleAssetRendererFactory;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -32,6 +32,7 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -70,7 +71,7 @@ public class JournalContentConfigurationAction
 		long assetEntryId = GetterUtil.getLong(
 			getParameter(portletRequest, "assetEntryId"));
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			assetEntryId);
 
 		return assetEntry.getGroupId();
@@ -82,7 +83,7 @@ public class JournalContentConfigurationAction
 		long assetEntryId = GetterUtil.getLong(
 			getParameter(portletRequest, "assetEntryId"));
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			assetEntryId);
 
 		JournalArticleAssetRendererFactory articleAssetRendererFactory =
@@ -99,5 +100,20 @@ public class JournalContentConfigurationAction
 
 		return StringUtil.toUpperCase(article.getArticleId());
 	}
+
+	@Reference
+	protected void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+	}
+
+	protected void unsetAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = null;
+	}
+
+	private AssetEntryLocalService _assetEntryLocalService;
 
 }

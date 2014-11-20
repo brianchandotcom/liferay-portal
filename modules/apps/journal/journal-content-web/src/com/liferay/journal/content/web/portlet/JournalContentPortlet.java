@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleDisplay;
-import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.portlet.journal.service.JournalArticleLocalService;
 import com.liferay.portlet.journal.util.ExportArticleUtil;
 import com.liferay.portlet.journal.util.JournalContentUtil;
 import com.liferay.util.log4j.Log4JUtil;
@@ -113,12 +113,12 @@ public class JournalContentPortlet extends MVCPortlet {
 			String languageId = LanguageUtil.getLanguageId(renderRequest);
 			int page = ParamUtil.getInteger(renderRequest, "page", 1);
 
-			article = JournalArticleLocalServiceUtil.fetchLatestArticle(
+			article = _journalArticleLocalService.fetchLatestArticle(
 				articleGroupId, articleId, WorkflowConstants.STATUS_APPROVED);
 
 			try {
 				if (article == null) {
-					article = JournalArticleLocalServiceUtil.getLatestArticle(
+					article = _journalArticleLocalService.getLatestArticle(
 						articleGroupId, articleId,
 						WorkflowConstants.STATUS_ANY);
 				}
@@ -180,5 +180,20 @@ public class JournalContentPortlet extends MVCPortlet {
 	protected void setInvitationUpgrade(
 		JournalContentUpgrade journalContentUpgrade) {
 	}
+
+	@Reference
+	protected void setJournalContentSearchLocal(
+		JournalArticleLocalService journalArticleLocalService) {
+
+		_journalArticleLocalService = journalArticleLocalService;
+	}
+
+	protected void unsetJournalContentSearchLocal(
+		JournalArticleLocalService journalArticleLocalService) {
+
+		_journalArticleLocalService = null;
+	}
+
+	private JournalArticleLocalService _journalArticleLocalService;
 
 }

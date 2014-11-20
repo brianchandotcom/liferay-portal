@@ -20,11 +20,12 @@ import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 /**
  * @author Eudaldo Alonso
  */
-public class JournalContentConfigurationUtil {
+public class JournalContentWebConfigurationUtil {
 
 	public static final Configuration _configuration =
 		ConfigurationFactoryUtil.getConfiguration(
-			JournalContentConfigurationUtil.class.getClassLoader(), "portlet");
+			JournalContentWebConfigurationUtil.class.getClassLoader(),
+			"portlet");
 
 	public static String get(String key) {
 		return _configuration.get(key);

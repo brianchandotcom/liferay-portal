@@ -14,7 +14,7 @@
 
 package com.liferay.journal.content.web.lar;
 
-import com.liferay.journal.content.web.configuration.JournalContentConfigurationValues;
+import com.liferay.journal.content.web.configuration.JournalContentWebConfigurationValues;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
@@ -92,7 +92,7 @@ public class JournalContentPortletDataHandler
 				null, "selected-web-content", true, true, null,
 				JournalArticle.class.getName()));
 		setPublishToLiveByDefault(
-			JournalContentConfigurationValues.PUBLISH_TO_LIVE_BY_DEFAULT);
+			JournalContentWebConfigurationValues.PUBLISH_TO_LIVE_BY_DEFAULT);
 	}
 
 	@Override

@@ -19,10 +19,11 @@ import com.liferay.portal.kernel.util.GetterUtil;
 /**
  * @author Eudaldo Alonso
  */
-public class JournalContentConfigurationValues {
+public class JournalContentWebConfigurationValues {
 
 	public static final boolean PUBLISH_TO_LIVE_BY_DEFAULT =
 		GetterUtil.getBoolean(
-			JournalContentConfigurationUtil.get("publish.to.live.by.default"));
+			JournalContentWebConfigurationUtil.get(
+				"publish.to.live.by.default"));
 
 }

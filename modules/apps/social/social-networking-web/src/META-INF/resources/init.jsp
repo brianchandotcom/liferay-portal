@@ -14,15 +14,15 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="/META-INF/c.tld" prefix="c" %>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+<%@ taglib uri="/META-INF/liferay-portlet_2_0.tld" prefix="portlet" %>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
-<%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
-<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
-<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
-<%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+<%@ taglib uri="/META-INF/aui.tld" prefix="aui" %>
+<%@ taglib uri="/META-INF/liferay-portlet-ext.tld" prefix="liferay-portlet" %>
+<%@ taglib uri="/META-INF/liferay-theme.tld" prefix="liferay-theme" %>
+<%@ taglib uri="/META-INF/liferay-ui.tld" prefix="liferay-ui" %>
+<%@ taglib uri="/META-INF/liferay-util.tld" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.ipgeocoder.model.IPInfo" %><%@
 page import="com.liferay.ipgeocoder.util.IPGeocoderUtil" %><%@

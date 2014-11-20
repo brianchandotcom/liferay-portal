@@ -47,8 +47,10 @@ else {
 %>
 
 <%
-boolean ipGeocoderInstalled = MessageBusUtil.hasMessageListener(DestinationNames.IP_GEOCODER);
-boolean ipGeocoderConfigured = ipGeocoderInstalled && (IPGeocoderUtil.getIPInfo(request.getRemoteAddr()) != null);
+IPGeocoderHelper ipGeocoderHelper = (IPGeocoderHelper)request.getAttribute(WebKeys.IP_GEOCODER);
+
+boolean ipGeocoderInstalled = ipGeocoderHelper.isIPGeocoderInstalled();
+boolean ipGeocoderConfigured = ipGeocoderInstalled && ipGeocoderHelper.isIPGeocoderConfigured(request.getRemoteUser());
 %>
 
 <c:choose>
@@ -128,7 +130,7 @@ boolean ipGeocoderConfigured = ipGeocoderInstalled && (IPGeocoderUtil.getIPInfo(
 						continue;
 					}
 
-					IPInfo ipInfo = IPGeocoderUtil.getIPInfo(mapUser.getLastLoginIP());
+					IPInfo ipInfo = ipGeocoderHelper.getIPInfo(mapUser.getLastLoginIP());
 
 					if (ipInfo == null) {
 						continue;

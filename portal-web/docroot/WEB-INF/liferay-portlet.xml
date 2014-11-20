@@ -460,29 +460,6 @@
 		<css-class-wrapper>portlet-wiki</css-class-wrapper>
 	</portlet>
 	<portlet>
-		<portlet-name>56</portlet-name>
-		<icon>/html/icons/journal_content.png</icon>
-		<struts-path>journal_content</struts-path>
-		<configuration-action-class>com.liferay.portlet.journalcontent.action.ConfigurationActionImpl</configuration-action-class>
-		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
-		<friendly-url-mapping>journal_content</friendly-url-mapping>
-		<friendly-url-routes>com/liferay/portlet/journalcontent/journal-content-friendly-url-routes.xml</friendly-url-routes>
-		<portlet-data-handler-class>com.liferay.portlet.journal.lar.JournalContentPortletDataHandler</portlet-data-handler-class>
-		<portlet-layout-listener-class>com.liferay.portlet.journalcontent.JournalContentPortletLayoutListener</portlet-layout-listener-class>
-		<ddm-display>com.liferay.portlet.journal.ddm.JournalContentDDMDisplay</ddm-display>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
-		<layout-cacheable>true</layout-cacheable>
-		<instanceable>true</instanceable>
-		<scopeable>true</scopeable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/journal_content/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-journal-content</css-class-wrapper>
-		<add-default-resource>true</add-default-resource>
-	</portlet>
-	<portlet>
 		<portlet-name>58</portlet-name>
 		<icon>/html/icons/login.png</icon>
 		<struts-path>login</struts-path>

@@ -303,8 +303,6 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 			org.jgroups.Address sourceJAddress = jChannel1.getAddress();
 
-			BaseReceiverAdvice.awaitMessageReceived();
-
 			Message receivedMessage1 =
 				(Message)BaseReceiverAdvice.getJGroupsMessagePayload(
 					receiver1, sourceJAddress);
@@ -421,8 +419,6 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 				Priority.LEVEL1);
 
 			org.jgroups.Address sourceJAddress = jChannel1.getAddress();
-
-			BaseReceiverAdvice.awaitMessageReceived();
 
 			Message receivedMessage1 =
 				(Message)BaseReceiverAdvice.getJGroupsMessagePayload(

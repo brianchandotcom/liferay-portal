@@ -462,8 +462,6 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			Channel channel = clusterExecutorImpl.getControlChannel();
 
-			BaseReceiverAdvice.awaitMessageReceived();
-
 			Object object = BaseReceiverAdvice.getJGroupsMessagePayload(
 				channel.getReceiver(), channel.getAddress());
 
@@ -490,8 +488,6 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			clusterExecutorImpl.execute(clusterRequest);
 
-			BaseReceiverAdvice.awaitMessageReceived();
-
 			object = BaseReceiverAdvice.getJGroupsMessagePayload(
 				channel.getReceiver(), channel.getAddress());
 
@@ -506,8 +502,6 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			// Test 3, execute with shortcut local method enabled
 
-			BaseReceiverAdvice.reset(1);
-
 			timestamp = String.valueOf(System.currentTimeMillis());
 
 			clusterRequest = ClusterRequest.createUnicastRequest(
@@ -518,12 +512,6 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			FutureClusterResponses futureClusterResponses =
 				clusterExecutorImpl.execute(clusterRequest);
-
-			BaseReceiverAdvice.awaitMessageReceived();
-
-			Assert.assertNull(
-				BaseReceiverAdvice.getJGroupsMessagePayload(
-					channel.getReceiver(), channel.getAddress()));
 
 			assertFutureClusterResponsesWithoutException(
 				futureClusterResponses.get(), clusterRequest.getUuid(),

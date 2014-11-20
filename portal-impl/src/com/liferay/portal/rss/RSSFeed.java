@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.rss.context;
+package com.liferay.portal.rss;
 
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.rss.util.RSSWebCacheItem;
 
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
@@ -33,9 +32,9 @@ import java.util.List;
 /**
  * @author Eudaldo Alonso
  */
-public class RSSFeedContext {
+public class RSSFeed {
 
-	public RSSFeedContext(String url, String title) {
+	public RSSFeed(String url, String title) {
 		_url = url;
 
 		SyndFeed syndFeed = getSyndFeed();
@@ -105,27 +104,23 @@ public class RSSFeedContext {
 		return _baseURL;
 	}
 
-	public List<RSSFeedEntryDisplayContext> getRSSFeedEntryDisplayContexts(
-		ThemeDisplay themeDisplay) {
-
-		if (_rssFeedEntryDisplayContexts != null) {
-			return _rssFeedEntryDisplayContexts;
+	public List<RSSFeedEntry> getRSSFeedEntries(ThemeDisplay themeDisplay) {
+		if (_rssFeedEntries != null) {
+			return _rssFeedEntries;
 		}
 
-		_rssFeedEntryDisplayContexts =
-			new ArrayList<RSSFeedEntryDisplayContext>();
+		_rssFeedEntries = new ArrayList<RSSFeedEntry>();
 
 		SyndFeed syndFeed = getSyndFeed();
 
 		for (Object syndEntry : syndFeed.getEntries()) {
-			RSSFeedEntryDisplayContext rssFeedEntryDisplayContext =
-				new RSSFeedEntryDisplayContext(
-					(SyndEntry)syndEntry, themeDisplay, this);
+			RSSFeedEntry rssFeedEntry = new RSSFeedEntry(
+				(SyndEntry)syndEntry, themeDisplay, this);
 
-			_rssFeedEntryDisplayContexts.add(rssFeedEntryDisplayContext);
+			_rssFeedEntries.add(rssFeedEntry);
 		}
 
-		return _rssFeedEntryDisplayContexts;
+		return _rssFeedEntries;
 	}
 
 	public SyndFeed getSyndFeed() {
@@ -136,7 +131,7 @@ public class RSSFeedContext {
 		WebCacheItem wci = new RSSWebCacheItem(_url);
 
 		_syndFeed = (SyndFeed)WebCachePoolUtil.get(
-			RSSFeedContext.class.getName() + StringPool.PERIOD + _url, wci);
+			RSSFeed.class.getName() + StringPool.PERIOD + _url, wci);
 
 		return _syndFeed;
 	}
@@ -162,7 +157,7 @@ public class RSSFeedContext {
 	}
 
 	private final String _baseURL;
-	private List<RSSFeedEntryDisplayContext> _rssFeedEntryDisplayContexts;
+	private List<RSSFeedEntry> _rssFeedEntries;
 	private SyndFeed _syndFeed;
 	private final String _syndFeedImageLink;
 	private final String _syndFeedImageURL;

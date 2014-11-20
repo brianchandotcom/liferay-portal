@@ -97,8 +97,8 @@ public class RSSDisplayContext {
 		return _feedImageAlignment;
 	}
 
-	public List<RSSFeedContext> getRSSFeedContexts() {
-		List<RSSFeedContext> rssFeedContexts = new ArrayList<RSSFeedContext>();
+	public List<RSSFeed> getRSSFeeds() {
+		List<RSSFeed> rssFeeds = new ArrayList<RSSFeed>();
 
 		String[] titles = getTitles();
 
@@ -113,10 +113,10 @@ public class RSSDisplayContext {
 				title = titles[i];
 			}
 
-			rssFeedContexts.add(new RSSFeedContext(url, title));
+			rssFeeds.add(new RSSFeed(url, title));
 		}
 
-		return rssFeedContexts;
+		return rssFeeds;
 	}
 
 	public String[] getTitles() {

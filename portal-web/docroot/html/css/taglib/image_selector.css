@@ -60,6 +60,12 @@
 		width: 100%;
 	}
 
+	.change-image-controls {
+		bottom: 10px;
+		position: absolute;
+		right: 10px;
+	}
+
 	.current-image {
 		margin-bottom: 5px;
 	}

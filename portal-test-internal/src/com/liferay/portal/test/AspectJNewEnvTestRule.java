@@ -18,7 +18,7 @@ import com.liferay.portal.aspectj.WeavingClassLoader;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
-import com.liferay.portal.kernel.test.NewEnvMethodRule;
+import com.liferay.portal.kernel.test.NewEnvTestRule;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MethodKey;
@@ -30,24 +30,24 @@ import com.liferay.util.SerializableUtil;
 import java.io.File;
 import java.io.Serializable;
 
-import java.lang.reflect.Method;
-
 import java.net.MalformedURLException;
 
 import java.util.List;
 
 import org.aspectj.lang.annotation.Aspect;
 
+import org.junit.runner.Description;
+
 /**
  * @author Shuyang Zhou
  */
-public class AspectJNewEnvMethodRule extends NewEnvMethodRule {
+public class AspectJNewEnvTestRule extends NewEnvTestRule {
 
 	@Override
-	protected List<String> createArguments(Method method) {
-		List<String> arguments = super.createArguments(method);
+	protected List<String> createArguments(Description description) {
+		List<String> arguments = super.createArguments(description);
 
-		AdviseWith adviseWith = method.getAnnotation(AdviseWith.class);
+		AdviseWith adviseWith = description.getAnnotation(AdviseWith.class);
 
 		if (adviseWith == null) {
 			return arguments;
@@ -83,17 +83,17 @@ public class AspectJNewEnvMethodRule extends NewEnvMethodRule {
 	}
 
 	@Override
-	protected ClassLoader createClassLoader(Method method) {
-		AdviseWith adviseWith = method.getAnnotation(AdviseWith.class);
+	protected ClassLoader createClassLoader(Description description) {
+		AdviseWith adviseWith = description.getAnnotation(AdviseWith.class);
 
 		if (adviseWith == null) {
-			return super.createClassLoader(method);
+			return super.createClassLoader(description);
 		}
 
 		Class<?>[] adviceClasses = adviseWith.adviceClasses();
 
 		if (ArrayUtil.isEmpty(adviceClasses)) {
-			return super.createClassLoader(method);
+			return super.createClassLoader(description);
 		}
 
 		for (Class<?> adviceClass : adviceClasses) {
@@ -105,13 +105,12 @@ public class AspectJNewEnvMethodRule extends NewEnvMethodRule {
 			}
 		}
 
-		Class<?> clazz = method.getDeclaringClass();
-
-		String className = clazz.getName();
+		String className = description.getClassName();
 
 		File dumpDir = new File(
 			System.getProperty("junit.aspectj.dump"),
-			className.concat(StringPool.PERIOD).concat(method.getName()));
+			className.concat(StringPool.PERIOD).concat(
+				description.getMethodName()));
 
 		try {
 			return new WeavingClassLoader(

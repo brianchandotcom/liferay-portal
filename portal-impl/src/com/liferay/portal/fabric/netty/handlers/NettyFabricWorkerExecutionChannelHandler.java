@@ -32,11 +32,13 @@ import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.concurrent.NoticeableFutureConverter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessConfig;
 import com.liferay.portal.kernel.process.ProcessConfig.Builder;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutor;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -51,6 +53,9 @@ import io.netty.util.concurrent.GenericFutureListener;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+
+import java.net.MalformedURLException;
+import java.net.URLClassLoader;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -375,13 +380,27 @@ public class NettyFabricWorkerExecutionChannelHandler
 			return _inputPaths;
 		}
 
-		public ProcessConfig toProcessConfig(ProcessConfig processConfig) {
+		public ProcessConfig toProcessConfig(ProcessConfig processConfig)
+			throws ProcessException {
+
 			Builder builder = new Builder();
 
 			builder.setArguments(processConfig.getArguments());
 			builder.setBootstrapClassPath(_bootstrapClassPath);
 			builder.setJavaExecutable(processConfig.getJavaExecutable());
 			builder.setRuntimeClassPath(_runtimeClassPath);
+
+			try {
+				builder.setReactClassLoader(
+					new URLClassLoader(
+						ArrayUtil.append(
+							ClassPathUtil.getClassPathURLs(_bootstrapClassPath),
+							ClassPathUtil.getClassPathURLs(_runtimeClassPath)))
+				);
+			}
+			catch (MalformedURLException murle) {
+				throw new ProcessException(murle);
+			}
 
 			return builder.build();
 		}

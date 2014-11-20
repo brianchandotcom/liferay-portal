@@ -31,6 +31,7 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesTransformer;
 import com.liferay.portlet.dynamicdatamapping.util.DocumentLibraryDDMFormFieldValueTransformer;
 import com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterUtil;
 import com.liferay.portlet.dynamicdatamapping.util.HTMLSanitizerDDMFormFieldValueTransformer;
+import com.liferay.portlet.dynamicdatamapping.validator.DDMFormValuesValidatorUtil;
 
 import java.util.List;
 import java.util.Map;

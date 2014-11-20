@@ -998,11 +998,6 @@
 			<bean class="com.liferay.portlet.dynamicdatamapping.render.DDMFormRendererImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.dynamicdatamapping.storage.DDMFormValuesValidatorUtil" class="com.liferay.portlet.dynamicdatamapping.storage.DDMFormValuesValidatorUtil">
-		<property name="DDMFormValuesValidator">
-			<bean class="com.liferay.portlet.dynamicdatamapping.storage.DDMFormValuesValidatorImpl" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portlet.dynamicdatamapping.storage.FieldRendererFactory" class="com.liferay.portlet.dynamicdatamapping.storage.FieldRendererFactory">
 		<property name="fieldRenderers">
 			<map>
@@ -1086,6 +1081,16 @@
 	<bean id="com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterUtil" class="com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterUtil">
 		<property name="FieldsToDDMFormValuesConverter">
 			<bean class="com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portlet.dynamicdatamapping.validator.DDMFormValidatorUtil" class="com.liferay.portlet.dynamicdatamapping.validator.DDMFormValidatorUtil">
+		<property name="DDMFormValidator">
+			<bean class="com.liferay.portlet.dynamicdatamapping.validator.DDMFormValidatorImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portlet.dynamicdatamapping.validator.DDMFormValuesValidatorUtil" class="com.liferay.portlet.dynamicdatamapping.validator.DDMFormValuesValidatorUtil">
+		<property name="DDMFormValuesValidator">
+			<bean class="com.liferay.portlet.dynamicdatamapping.validator.DDMFormValuesValidatorImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil" class="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil">

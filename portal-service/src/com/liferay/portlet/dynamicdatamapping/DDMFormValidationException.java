@@ -12,15 +12,31 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.storage;
+package com.liferay.portlet.dynamicdatamapping;
 
-import com.liferay.portlet.dynamicdatamapping.StorageException;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Marcellus Tavares
+ * @author Brian Wing Shun Chan
  */
-public interface DDMFormValuesValidator {
+@ProviderType
+public class DDMFormValidationException extends PortalException {
 
-	public void validate(DDMFormValues ddmFormValues) throws StorageException;
+	public DDMFormValidationException() {
+	}
+
+	public DDMFormValidationException(String msg) {
+		super(msg);
+	}
+
+	public DDMFormValidationException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public DDMFormValidationException(Throwable cause) {
+		super(cause);
+	}
 
 }

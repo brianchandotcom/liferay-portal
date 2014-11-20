@@ -24,6 +24,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.socialnetworking.service.MeetupsEntryLocalService;
 import com.liferay.socialnetworking.service.MeetupsRegistrationLocalService;
+import com.liferay.socialnetworking.service.configuration.SocialNetworkingServiceConfigurator;
 
 import java.io.File;
 
@@ -35,6 +36,7 @@ import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
  * @author Brian Wing Shun Chan
@@ -188,17 +190,28 @@ public class MeetupsPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setMeetupsEntryLocalService(
+		MeetupsEntryLocalService meetupsEntryLocalService) {
+
+		_meetupsEntryLocalService = meetupsEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setMeetupsRegistrationLocalService(
 		MeetupsRegistrationLocalService meetupsRegistrationLocalService) {
 
 		_meetupsRegistrationLocalService = meetupsRegistrationLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setMeetupsEntryLocalService(
-		MeetupsEntryLocalService meetupsEntryLocalService) {
+	@Reference(policy = ReferencePolicy.DYNAMIC)
+	protected void setSocialNetworkingServiceConfigurator(
+		SocialNetworkingServiceConfigurator
+			socialNetworkingServiceConfigurator) {
+	}
 
-		_meetupsEntryLocalService = meetupsEntryLocalService;
+	protected void unsetSocialNetworkingServiceConfigurator(
+		SocialNetworkingServiceConfigurator
+			socialNetworkingServiceConfigurator) {
 	}
 
 	private MeetupsEntryLocalService _meetupsEntryLocalService;

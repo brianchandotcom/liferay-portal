@@ -2,6 +2,7 @@
 
 <classpath>
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="docroot/WEB-INF/src" />
+	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="src" />
 	<classpathentry kind="src" path="/portal-master" />
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER" />
 	<classpathentry kind="lib" path="/portal-master/lib/development/activation.jar" />

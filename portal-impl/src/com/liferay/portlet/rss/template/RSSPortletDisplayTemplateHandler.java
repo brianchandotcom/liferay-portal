@@ -18,11 +18,11 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.rss.RSSFeed;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
-import com.liferay.portlet.rss.context.RSSFeedContext;
 
 import java.util.List;
 import java.util.Locale;
@@ -36,7 +36,7 @@ public class RSSPortletDisplayTemplateHandler
 
 	@Override
 	public String getClassName() {
-		return RSSFeedContext.class.getName();
+		return RSSFeed.class.getName();
 	}
 
 	@Override
@@ -68,8 +68,7 @@ public class RSSPortletDisplayTemplateHandler
 
 		templateVariableGroup.addCollectionVariable(
 			"rss-feeds", List.class, PortletDisplayTemplateConstants.ENTRIES,
-			"rss-feed", RSSFeedContext.class, "curEntry",
-			"getSyndFeed().getTitle()");
+			"rss-feed", RSSFeed.class, "curEntry", "getSyndFeed().getTitle()");
 
 		return templateVariableGroups;
 	}

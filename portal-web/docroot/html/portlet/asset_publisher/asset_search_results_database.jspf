@@ -19,7 +19,7 @@ int assetEntriesTotal = AssetPublisherUtil.getAssetEntriesCount(new long[] {asse
 
 searchContainer.setTotal(assetEntriesTotal);
 
-List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(new long[] {assetRendererFactory.getClassNameId()}, groupIds, searchTerms.getKeywords(), searchTerms.getDescription(), searchTerms.getTitle(), searchTerms.getUserName(), searchTerms.isAdvancedSearch(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd());
+List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(new long[] {assetRendererFactory.getClassNameId()}, groupIds, searchTerms.getKeywords(), searchTerms.getDescription(), searchTerms.getTitle(), searchTerms.getUserName(), searchTerms.isAdvancedSearch(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), "modifiedDate", "title", "DESC", "ASC");
 
 searchContainer.setResults(assetEntries);
 %>

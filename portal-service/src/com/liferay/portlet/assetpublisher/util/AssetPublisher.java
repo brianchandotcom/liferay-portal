@@ -82,7 +82,9 @@ public interface AssetPublisher {
 	public List<AssetEntry> getAssetEntries(
 		long[] classNameIds, long[] groupIds, String keywords,
 		String description, String title, String userName,
-		boolean isAdvancedSearch, boolean isAndOperator, int start, int end);
+		boolean isAdvancedSearch, boolean isAndOperator, int start, int end,
+		String orderByCol1, String orderByCol2, String orderByType1,
+		String orderByType2);
 
 	public List<AssetEntry> getAssetEntries(
 			PortletPreferences portletPreferences, Layout layout,

@@ -61,43 +61,33 @@
 </tr>
 <!--FORM_FIELDS-->
 <tr>
-	<td>FORM_FIELDS_1_HEADER</td>
-	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group')) and contains(.,'${key_form1Title}')]/label[contains(@for,'webformportlet')]</td>
+	<td>FORM_FIELDS_FIELD_HEADER</td>
+	<td>//div[contains(@class,'control') and contains(.,'${key_wfFieldName}')]/label[contains(@for,'webformportlet')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FORM_FIELDS_1_FIELD</td>
-	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group')) and contains(.,'${key_form1Title}')]/input[@type='text']</td>
+	<td>FORM_FIELDS_TEXT_FIELD</td>
+	<td>//div[contains(@class,'control') and contains(.,'${key_wfFieldName}')]/input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FORM_FIELDS_2_HEADER</td>
-	<td>//div[@class='form-group input-select-wrapper' and contains(.,'${key_form2Title}')]/label[contains(@for,'webformportlet')]</td>
+	<td>FORM_FIELDS_SELECT_FIELD</td>
+	<td>//div[contains(@class,'control') and contains(.,'${key_wfFieldName}')]/select</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FORM_FIELDS_2_SELECT</td>
-	<td>//div[@class='form-group input-select-wrapper' and contains(.,'${key_form2Title}')]/select</td>
+	<td>FORM_FIELDS_CHECKBOX_FIELD</td>
+	<td>//label[@class='checkbox' and contains(.,'${key_wfFieldName}')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FORM_FIELDS_2_CHECKBOX</td>
-	<td>//input[@type='checkbox']</td>
+	<td>FORM_FIELDS_CHECKBOX_FIELD_HEADER</td>
+	<td>//label[@class='checkbox' and contains(.,'${key_wfFieldName}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FORM_FIELDS_2_CHECKBOX_NAME</td>
-	<td>//div[contains(@class,'checkbox')]/label[contains(.,'${key_form2Title}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FORM_FIELDS_3_HEADER</td>
-	<td>//div[contains(@class,'form-group') and contains(.,'${key_form3Title}')]/label[contains(@for,'webformportlet')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FORM_FIELDS_3_FIELD</td>
-	<td>//div[contains(@class,'form-group') and contains(.,'${key_form3Title}')]/textarea</td>
+	<td>FORM_FIELDS_TEXT_BOX_FIELD</td>
+	<td>//div[contains(@class,'control') and contains(.,'${key_wfFieldName}')]/textarea</td>
 	<td></td>
 </tr>
 </tbody>

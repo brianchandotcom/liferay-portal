@@ -66,22 +66,53 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SETUP_FORM_FIELDS_1_NAME_FIELD</td>
+	<td>SETUP_FORM_FIELDS</td>
+	<td>//fieldset[contains(@class,'fieldset')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_FORM_FIELDS_NAME_FIELD</td>
+	<td>//div[@class='field-title' and contains(.,'${key_wfFieldName}')]/..//input[contains(@id,'_86_fieldLabel') and @type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_FORM_FIELDS_TYPE_SELECT</td>
+	<td>//div[@class='field-title' and contains(.,'${key_wfNewFieldName}')]/..//select[contains(@id,'_86_fieldType')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_FORM_FIELDS_OPTIONAL_CHECKBOX</td>
+	<td>//div[@class='field-title' and contains(.,'${key_wfNewFieldName}')]/..//input[contains(@id,'_86_fieldOptional') and @type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_FORM_FIELDS_ADD_ROW_BUTTON</td>
+	<td>//div[@class='field-title' and contains(.,'${key_wfPreviousFieldName}')]/../../..//button[contains(@class,'add-row')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_FORM_FIELDS_NEW_ITEM_NAME_FIELD</td>
+	<td>//div[@class='field-title' and contains(.,'New Item')]/..//input[contains(@id,'_86_fieldLabel') and @type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SETUP_FORM_DEFAULT_FIELDS-->
+<tr>
+	<td>SETUP_FORM_DEFAULT_FIELDS_NAME_NAME_FIELD</td>
 	<td>//input[@id='_86_fieldLabel1']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SETUP_FORM_FIELDS_2_NAME_FIELD</td>
+	<td>SETUP_FORM_DEFAULT_FIELDS_RATING_NAME_FIELD</td>
 	<td>//input[@id='_86_fieldLabel2']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SETUP_FORM_FIELDS_2_SELECT</td>
-	<td>//select[@id='_86_fieldType2']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETUP_FORM_FIELDS_3_NAME_FIELD</td>
+	<td>SETUP_FORM_DEFAULT_FIELDS_COMMENTS_NAME_FIELD</td>
 	<td>//input[@id='_86_fieldLabel3']</td>
 	<td></td>
 </tr>

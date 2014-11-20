@@ -25,11 +25,8 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="EditAndSendWebFormWithCheckbox" priority="4">
+	<command name="EditAndSendWebFormWithRequiredCheckbox" priority="4">
 		<execute macro="WebForm#viewPG">
-			<var name="form1Title" value="Name" />
-			<var name="form2Title" value="Rating" />
-			<var name="form3Title" value="Comments" />
 			<var name="formInformationDescription" value="Your input is valuable to us. Please send us your suggestions." />
 			<var name="formInformationTitle" value="Suggestions" />
 		</execute>
@@ -39,61 +36,87 @@
 		</execute>
 
 		<execute macro="WebFormPortlet#configureSetupFormFieldsPG">
-			<var name="checkbox" value="true" />
-			<var name="form1Title" value="Your Name" />
-			<var name="form2Title" value="Rate Us!" />
-			<var name="form3Title" value="Additional Comments" />
 			<var name="formInformationDescription" value="Please let us know what you think!" />
 			<var name="formInformationTitle" value="Feed Back" />
 		</execute>
+
+		<execute macro="WebFormPortlet#editField">
+			<var name="wfFieldName" value="Name" />
+			<var name="wfNewFieldName" value="Your Name" />
+		</execute>
+
+		<execute macro="WebFormPortlet#editField">
+			<var name="wfFieldName" value="Rating" />
+			<var name="wfFieldType" value="Check Box" />
+			<var name="wfNewFieldName" value="Rate Us!" />
+		</execute>
+
+		<execute macro="WebFormPortlet#editField">
+			<var name="wfFieldName" value="Comments" />
+			<var name="wfNewFieldName" value="Additional Comments" />
+		</execute>
+
+		<execute macro="WebFormPortlet#saveConfiguration" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="WebForm#viewPG">
-			<var name="checkbox" value="true" />
-			<var name="form1Title" value="Your Name" />
-			<var name="form2Title" value="Rate Us!" />
-			<var name="form3Title" value="Additional Comments" />
 			<var name="formInformationDescription" value="Please let us know what you think!" />
 			<var name="formInformationTitle" value="Feed Back" />
 		</execute>
 
-		<execute macro="WebForm#sendPG">
-			<var name="checkbox" value="true" />
-			<var name="form1Title" value="Your Name" />
-			<var name="form1Value" value="New Name" />
-			<var name="form2Title" value="Rate Us!" />
-			<var name="form3Title" value="Additional Comments" />
-			<var name="form3Value" value="Page Objects + Hashi = Poshi" />
-			<var name="formInformationDescription" value="Please let us know what you think!" />
-			<var name="formInformationTitle" value="Feed Back" />
+		<execute macro="WebForm#viewFormFieldText">
+			<var name="wfFieldName" value="Your Name" />
 		</execute>
+
+		<execute macro="WebForm#viewFormFieldCheckBox">
+			<var name="wfFieldName" value="Rate Us!" />
+		</execute>
+
+		<execute macro="WebForm#viewFormFieldTextBox">
+			<var name="wfFieldName" value="Additional Comments" />
+		</execute>
+
+		<execute macro="WebForm#populateFieldText">
+			<var name="wfFieldName" value="Your Name" />
+			<var name="wfFieldValue" value="New Name" />
+		</execute>
+
+		<execute macro="WebForm#populateFieldCheckBox">
+			<var name="wfFieldName" value="Rate Us!" />
+			<var name="wfFieldValue" value="true" />
+		</execute>
+
+		<execute macro="WebForm#populateFieldTextBox">
+			<var name="wfFieldName" value="Additional Comments" />
+			<var name="wfFieldValue" value="Page Objects + Hashi = Poshi" />
+		</execute>
+
+		<execute macro="WebForm#sendPG" />
 	</command>
 
 	<command name="EditWebForm" priority="5">
-		<var name="form1TitleDefault" value="Name" />
-		<var name="form1TitleEdit" value="Your Name" />
-		<var name="form2TitleDefault" value="Rating" />
-		<var name="form2TitleEdit" value="Rate Us!" />
-		<var name="form3TitleDefault" value="Comments" />
-		<var name="form3TitleEdit" value="Additional Comments" />
-		<var name="formInformationDescriptionDefault" value="Your input is valuable to us. Please send us your suggestions." />
-		<var name="formInformationDescriptionEdit" value="Please let us know what you think!" />
-		<var name="formInformationTitleDefault" value="Suggestions" />
-		<var name="formInformationTitleEdit" value="Feed Back" />
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="WebForm#viewPG">
-			<var name="form1Title" value="${form1TitleDefault}" />
-			<var name="form2Title" value="${form2TitleDefault}" />
-			<var name="form3Title" value="${form3TitleDefault}" />
-			<var name="formInformationDescription" value="${formInformationDescriptionDefault}" />
-			<var name="formInformationTitle" value="${formInformationTitleDefault}" />
+			<var name="formInformationDescription" value="Your input is valuable to us. Please send us your suggestions." />
+			<var name="formInformationTitle" value="Suggestions" />
+		</execute>
+
+		<execute macro="WebForm#viewFormFieldText">
+			<var name="wfFieldName" value="Name" />
+		</execute>
+
+		<execute macro="WebForm#viewFormFieldSelect">
+			<var name="wfFieldName" value="Rating" />
+		</execute>
+
+		<execute macro="WebForm#viewFormFieldTextBox">
+			<var name="wfFieldName" value="Comments" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -101,61 +124,194 @@
 		</execute>
 
 		<execute macro="WebFormPortlet#configureSetupFormFieldsPG">
-			<var name="form1Title" value="${form1TitleEdit}" />
-			<var name="form2Title" value="${form2TitleEdit}" />
-			<var name="form3Title" value="${form3TitleEdit}" />
-			<var name="formInformationDescription" value="${formInformationDescriptionEdit}" />
-			<var name="formInformationTitle" value="${formInformationTitleEdit}" />
+			<var name="formInformationDescription" value="Please let us know what you think!" />
+			<var name="formInformationTitle" value="Feed Back" />
 		</execute>
+
+		<execute macro="WebFormPortlet#editField">
+			<var name="wfFieldName" value="Name" />
+			<var name="wfNewFieldName" value="Your Name" />
+		</execute>
+
+		<execute macro="WebFormPortlet#editField">
+			<var name="wfFieldName" value="Rating" />
+			<var name="wfFieldType" value="Check Box" />
+			<var name="wfNewFieldName" value="Rate Us!" />
+		</execute>
+
+		<execute macro="WebFormPortlet#editField">
+			<var name="wfFieldName" value="Comments" />
+			<var name="wfNewFieldName" value="Additional Comments" />
+		</execute>
+
+		<execute macro="WebFormPortlet#saveConfiguration" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="WebForm#viewPG">
-			<var name="form1Title" value="${form1TitleEdit}" />
-			<var name="form2Title" value="${form2TitleEdit}" />
-			<var name="form3Title" value="${form3TitleEdit}" />
-			<var name="formInformationDescription" value="${formInformationDescriptionEdit}" />
-			<var name="formInformationTitle" value="${formInformationTitleEdit}" />
+			<var name="formInformationDescription" value="Please let us know what you think!" />
+			<var name="formInformationTitle" value="Feed Back" />
+		</execute>
+
+		<execute macro="WebForm#viewFormFieldText">
+			<var name="wfFieldName" value="Your Name" />
+		</execute>
+
+		<execute macro="WebForm#viewFormFieldCheckBox">
+			<var name="wfFieldName" value="Rate Us!" />
+		</execute>
+
+		<execute macro="WebForm#viewFormFieldTextBox">
+			<var name="wfFieldName" value="Additional Comments" />
+			<var name="wfFieldType" value="Text Box" />
 		</execute>
 	</command>
 
+	<command name="EditWebFormAndViewMultipleFields" priority="3">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebForm#viewPG">
+			<var name="formInformationDescription" value="Your input is valuable to us. Please send us your suggestions." />
+			<var name="formInformationTitle" value="Suggestions" />
+		</execute>
+
+		<execute macro="WebForm#viewFormFieldText">
+			<var name="wfFieldName" value="Name" />
+		</execute>
+
+		<execute macro="WebForm#viewFormFieldSelect">
+			<var name="wfFieldName" value="Rating" />
+		</execute>
+
+		<execute macro="WebForm#viewFormFieldTextBox">
+			<var name="wfFieldName" value="Comments" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebFormPortlet#configureSetupFormFieldsPG">
+			<var name="formInformationDescription" value="Please let us know what you think!" />
+			<var name="formInformationTitle" value="Feed Back" />
+		</execute>
+
+		<execute macro="WebFormPortlet#editField">
+			<var name="wfFieldName" value="Name" />
+			<var name="wfNewFieldName" value="Test 1" />
+		</execute>
+
+		<execute macro="WebFormPortlet#addField">
+			<var name="wfFieldName" value="Name" />
+			<var name="wfNewFieldName" value="Test 2" />
+			<var name="wfPreviousFieldName" value="Test 1" />
+		</execute>
+
+		<execute macro="WebFormPortlet#editField">
+			<var name="wfFieldName" value="Rating" />
+			<var name="wfFieldType" value="Check Box" />
+			<var name="wfNewFieldName" value="Rate Us!" />
+		</execute>
+
+		<execute macro="WebFormPortlet#editField">
+			<var name="wfFieldName" value="Comments" />
+			<var name="wfNewFieldName" value="Additional Comments" />
+		</execute>
+
+		<execute macro="WebFormPortlet#saveConfiguration" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebForm#viewPG">
+			<var name="formInformationDescription" value="Please let us know what you think!" />
+			<var name="formInformationTitle" value="Feed Back" />
+		</execute>
+
+		<execute action="PGWebform#assertTextEquals" locator1="xpath=(//div[contains(@class,'control')]/label[contains(@for,'webformportlet')])[1]" value1="Test 1" />
+		<execute action="PGWebform#assertElementPresent" locator1="xpath=(//fieldset/div/div[contains(@class,'control')]/input[@type='text'])[1]" />
+		<execute action="PGWebform#assertTextEquals" locator1="xpath=(//div[contains(@class,'control')]/label[contains(@for,'webformportlet')])[2]" value1="Test 2" />
+		<execute action="PGWebform#assertElementPresent" locator1="xpath=(//fieldset/div/div[contains(@class,'control')]/input[@type='text'])[2]" />
+		<execute action="PGWebform#assertTextEquals" locator1="xpath=(//div[contains(@class,'control')]/label[contains(@for,'webformportlet')])[3]" value1="Rate Us!" />
+		<execute action="PGWebform#assertElementPresent" locator1="//label[@class='checkbox']/input[@type='checkbox']" />
+		<execute action="PGWebform#assertTextEquals" locator1="xpath=(//div[contains(@class,'control')]/label[contains(@for,'webformportlet')])[4]" value1="Additional Comments" />
+		<execute action="PGWebform#assertElementPresent" locator1="//fieldset/div/div[contains(@class,'control')]/textarea" />
+	</command>
+
 	<command name="SendWebForm" priority="5">
-		<var name="form1TitleDefault" value="Name" />
-		<var name="form1Value" value="Test Test" />
-		<var name="form2TitleDefault" value="Rating" />
-		<var name="form2Value" value="Excellent" />
-		<var name="form3TitleDefault" value="Comments" />
-		<var name="form3Value" value="Page Objects + Hashi = Poshi" />
-		<var name="formInformationDescriptionDefault" value="Your input is valuable to us. Please send us your suggestions." />
-		<var name="formInformationTitleDefault" value="Suggestions" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute action="PGWebformConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+
+		<execute macro="WebFormPortlet#viewField">
+			<var name="wfFieldName" value="Name" />
+		</execute>
+
+		<execute macro="WebFormPortlet#viewField">
+			<var name="wfFieldName" value="Rating" />
+		</execute>
+
+		<execute macro="WebFormPortlet#viewField">
+			<var name="wfFieldName" value="Comments" />
+		</execute>
+
+		<execute action="PGWebformConfiguration#selectFrameTop" value1="relative=top" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WebFormPortlet#viewSetUpFormFieldsPG" />
+		<execute macro="WebForm#populateFieldText">
+			<var name="wfFieldName" value="Name" />
+			<var name="wfFieldValue" value="Test Test" />
+		</execute>
+
+		<execute macro="WebForm#populateFieldSelect">
+			<var name="wfFieldName" value="Rating" />
+			<var name="wfFieldValue" value="Excellent" />
+		</execute>
+
+		<execute macro="WebForm#populateFieldTextBox">
+			<var name="wfFieldName" value="Comments" />
+			<var name="wfFieldValue" value="Page Objects + Hashi = Poshi" />
+		</execute>
+
+		<execute macro="WebForm#sendPG" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WebForm#sendPG">
-			<var name="form1Title" value="${form1TitleDefault}" />
-			<var name="form1Value" value="${form1Value}" />
-			<var name="form2Title" value="${form2TitleDefault}" />
-			<var name="form2Value" value="${form2Value}" />
-			<var name="form3Title" value="${form3TitleDefault}" />
-			<var name="form3Value" value="${form3Value}" />
-			<var name="formInformationDescription" value="${formInformationDescriptionDefault}" />
-			<var name="formInformationTitle" value="${formInformationTitleDefault}" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+		<execute action="PGWebformConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="PGWebformConfiguration#assertTextEquals" locator-key1="SETUP_FORM_FIELDS_INFO_MESSAGE" value1="There is existing form data. Please export and delete it before making changes to the fields." />
+
+		<execute macro="WebFormPortlet#viewFieldNotPresent">
+			<var name="wfFieldName" value="Name" />
 		</execute>
 
-		<execute macro="WebFormPortlet#viewSetUpFormFieldsSentPG" />
+		<execute macro="WebFormPortlet#viewFieldNotPresent">
+			<var name="wfFieldName" value="Rating" />
+		</execute>
+
+		<execute macro="WebFormPortlet#viewFieldNotPresent">
+			<var name="wfFieldName" value="Comments" />
+		</execute>
+
+		<execute action="PGWebformConfiguration#selectFrameTop" value1="relative=top" />
 	</command>
 </definition>

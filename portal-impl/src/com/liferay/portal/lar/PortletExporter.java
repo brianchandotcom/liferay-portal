@@ -178,10 +178,10 @@ public class PortletExporter {
 
 		Date originalStartDate = portletDataContext.getStartDate();
 
-		Date startDate = ExportImportDateUtil.getLastPublishDate(
+		Date portletLastPublishDate = ExportImportDateUtil.getLastPublishDate(
 			portletDataContext, jxPortletPreferences);
 
-		portletDataContext.setStartDate(startDate);
+		portletDataContext.setStartDate(portletLastPublishDate);
 
 		long groupId = portletDataContext.getGroupId();
 
@@ -228,7 +228,7 @@ public class PortletExporter {
 
 		if (updateLastPublishDate) {
 			DateRange adjustedDateRange = new DateRange(
-				startDate, portletDataContext.getEndDate());
+				portletLastPublishDate, portletDataContext.getEndDate());
 
 			TransactionCommitCallbackRegistryUtil.registerCallback(
 				new UpdatePortletLastPublishDateCallable(

@@ -656,10 +656,6 @@
 
 	<definition name="portlet.journal" extends="portlet" />
 
-	<definition name="portlet.journal.asset.add_asset_redirect" extends="portlet.journal">
-		<put name="portlet_content" value="/portlet/journal/asset/add_asset_redirect.jsp" />
-	</definition>
-
 	<definition name="portlet.journal.compare_versions" extends="portlet.journal">
 		<put name="portlet_content" value="/portlet/journal/compare_versions.jsp" />
 	</definition>
@@ -730,6 +726,10 @@
 
 	<definition name="portlet.journal_content.error" extends="portlet.journal_content">
 		<put name="portlet_content" value="/portlet/journal_content/error.jsp" />
+	</definition>
+
+	<definition name="portlet.journal_content.update_journal_article_redirect" extends="portlet.journal_content">
+		<put name="portlet_content" value="/portlet/journal_content/update_journal_article_redirect.jsp" />
 	</definition>
 
 	<definition name="portlet.journal_content.view" extends="portlet.journal_content">

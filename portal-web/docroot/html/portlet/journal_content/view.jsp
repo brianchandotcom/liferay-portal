@@ -202,7 +202,7 @@ journalContentDisplayContext.incrementViewCounter();
 	<div class="icons-container lfr-meta-actions">
 		<div class="lfr-icon-actions">
 			<portlet:renderURL var="redirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="struts_action" value="/journal_content/add_asset_redirect" />
+				<portlet:param name="struts_action" value="/journal_content/update_journal_article_redirect" />
 				<portlet:param name="referringPortletResource" value="<%= portletDisplay.getId() %>" />
 			</portlet:renderURL>
 

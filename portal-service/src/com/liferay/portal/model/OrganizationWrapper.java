@@ -212,6 +212,7 @@ public class OrganizationWrapper implements Organization,
 		return _organization.getAddresses();
 	}
 
+	@Override
 	public long[] getAncestorIds() {
 		return _organization.getAncestorIds();
 	}

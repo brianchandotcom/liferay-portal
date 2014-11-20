@@ -1716,6 +1716,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>uploadURL</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>validExtensions</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

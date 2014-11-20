@@ -16,6 +16,7 @@ package com.liferay.journal.content.web.lar;
 
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -42,6 +43,8 @@ import com.liferay.portlet.journal.service.permission.JournalPermission;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * <p>
@@ -70,6 +73,13 @@ import javax.portlet.PortletPreferences;
  * @see    com.liferay.portlet.journal.lar.JournalCreationStrategy
  * @see    com.liferay.portlet.journal.lar.JournalPortletDataHandler
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=com_liferay_journal_content_web_portlet_JournalContentPortlet"
+	},
+	service = PortletDataHandler.class
+)
 public class JournalContentPortletDataHandler
 	extends JournalPortletDataHandler {
 

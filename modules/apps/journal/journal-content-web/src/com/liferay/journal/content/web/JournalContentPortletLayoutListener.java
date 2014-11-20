@@ -45,10 +45,19 @@ import java.util.Set;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  */
+@Component(
+	immediate = true,
+	property = {
+			"javax.portlet.name=com_liferay_journal_content_web_portlet_JournalContentPortlet"
+	},
+	service = PortletLayoutListener.class
+)
 public class JournalContentPortletLayoutListener
 	implements PortletLayoutListener {
 

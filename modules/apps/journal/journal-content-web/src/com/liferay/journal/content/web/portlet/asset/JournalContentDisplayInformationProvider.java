@@ -14,17 +14,24 @@
 
 package com.liferay.journal.content.web.portlet.asset;
 
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.asset.provider.DisplayInformationProvider;
 import com.liferay.portlet.journal.model.JournalArticle;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eudaldo Alonso
 */
-@OSGiBeanProperties(property = "javax.portlet.name=56")
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=com_liferay_journal_content_web_portlet_JournalContentPortlet"
+	},
+	service = DisplayInformationProvider.class
+)
 public class JournalContentDisplayInformationProvider
 	implements DisplayInformationProvider {
 

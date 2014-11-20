@@ -14,10 +14,9 @@
 
 package com.liferay.journal.content.web.portlet.asset;
 
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.journal.content.web.util.JournalContentPortletKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.provider.DisplayPortletProvider;
@@ -29,20 +28,24 @@ import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eudaldo Alonso
 */
-@OSGiBeanProperties(
+@Component(
+	immediate = true,
 	property = {
 		"model.class.name=com.liferay.portlet.journal.model.JournalArticle"
-	}
+	},
+	service = DisplayPortletProvider.class
 )
 public class JournalContentDisplayPortletProvider
 	implements DisplayPortletProvider {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.JOURNAL_CONTENT;
+		return JournalContentPortletKeys.JOURNAL_CONTENT;
 	}
 
 	@Override

@@ -15,11 +15,21 @@
 package com.liferay.journal.content.web.portlet.ddm;
 
 import com.liferay.journal.content.web.util.JournalContentPortletKeys;
+import com.liferay.portlet.dynamicdatamapping.util.DDMDisplay;
 import com.liferay.portlet.journal.ddm.JournalDDMDisplay;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eduardo Garcia
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=com_liferay_journal_content_web_portlet_JournalContentPortlet"
+	},
+	service = DDMDisplay.class
+)
 public class JournalContentDDMDisplay extends JournalDDMDisplay {
 
 	@Override

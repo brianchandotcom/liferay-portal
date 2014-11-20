@@ -775,10 +775,10 @@ public class JavaClass {
 			JavaTerm javaTerm, List<String> testAnnotationsExclusions)
 		throws Exception {
 
-		if ((_indent.length() == 1) && _fileName.contains("/test/") &&
+		if ((_indent.length() == 1) &&
 			!BaseSourceProcessor.isExcluded(
 				testAnnotationsExclusions, _absolutePath) &&
-			!_fileName.endsWith("TestCase.java")) {
+			_fileName.endsWith("Test.java")) {
 
 			checkTestAnnotations(javaTerm);
 		}

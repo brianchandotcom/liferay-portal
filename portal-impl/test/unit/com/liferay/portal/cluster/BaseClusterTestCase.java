@@ -60,20 +60,11 @@ public class BaseClusterTestCase {
 	@Aspect
 	public static class BaseReceiverAdvice {
 
-		public static void awaitMessageReceived() {
-			if (_countDownLatch == null) {
-				throw new NullPointerException("CountDownLatch is null");
-			}
-
-			try {
-				_countDownLatch.await(1000, TimeUnit.MILLISECONDS);
-			}
-			catch (InterruptedException ie) {
-			}
-		}
-
 		public static Object getJGroupsMessagePayload(
-			Receiver receiver, org.jgroups.Address sourceAddress) {
+				Receiver receiver, org.jgroups.Address sourceAddress)
+			throws InterruptedException {
+
+			_countDownLatch.await(10, TimeUnit.MINUTES);
 
 			List<org.jgroups.Message> jGroupsMessageList = _jGroupsMessages.get(
 				receiver);

@@ -1121,6 +1121,7 @@
 		<property name="journalConverter" ref="com.liferay.portlet.journal.util.JournalConverter" />
 	</bean>
 	<bean id="com.liferay.portlet.journalcontent.JournalContentDisplayInformationProvider" class="com.liferay.portlet.journalcontent.JournalContentDisplayInformationProvider" />
+	<bean id="com.liferay.portlet.journalcontent.JournalContentDisplayPortletProvider" class="com.liferay.portlet.journalcontent.JournalContentDisplayPortletProvider" />
 	<bean id="com.liferay.portlet.layoutsadmin.util.SitemapUtil" class="com.liferay.portlet.layoutsadmin.util.SitemapUtil">
 		<property name="sitemap">
 			<bean class="com.liferay.portlet.layoutsadmin.util.SitemapImpl" />

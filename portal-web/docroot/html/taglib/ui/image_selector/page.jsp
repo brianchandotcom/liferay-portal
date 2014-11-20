@@ -22,6 +22,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_image_
 String draggableImage = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:draggableImage"), "none");
 long fileEntryId = GetterUtil.getLong(request.getAttribute("liferay-ui:image-selector:fileEntryId"));
 String paramName = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:paramName"));
+String uploadURL = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:uploadURL"));
 String validExtensions = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:validExtensions"));
 
 String imageURL = null;
@@ -83,7 +84,7 @@ if (!draggableImage.equals("none")) {
 			namespace: '<%= randomNamespace %>',
 			paramName: '<portlet:namespace /><%= paramName %>',
 			rootNode: '#<%= randomNamespace %>taglibImageSelector',
-			uploadURL: '<%= themeDisplay.getPathMain() %>/portal/image_selector?p_auth=<%= AuthTokenUtil.getToken(request) %>'
+			uploadURL: '<%= uploadURL %>'
 		}
 	);
 

@@ -109,8 +109,12 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 		type="pills"
 	>
 		<liferay-ui:section>
+			<portlet:actionURL var="imageSelectorURL">
+				<portlet:param name="struts_action" value="/blogs/image_selector" />
+			</portlet:actionURL>
+
 			<div class="lfr-blogs-cover-image-selector">
-				<liferay-ui:image-selector draggableImage="vertical" fileEntryId="<%= coverImageFileEntryId %>" paramName="coverImageFileEntry" />
+				<liferay-ui:image-selector draggableImage="vertical" fileEntryId="<%= coverImageFileEntryId %>" paramName="coverImageFileEntry" uploadURL="<%= imageSelectorURL %>" />
 			</div>
 
 			<div class="entry-title">
@@ -164,7 +168,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 				<aui:fieldset cssClass="entry-abstract">
 					<div class="lfr-blogs-small-image-selector">
-						<liferay-ui:image-selector fileEntryId="<%= smallImageFileEntryId %>" paramName="smallImageFileEntry" />
+						<liferay-ui:image-selector fileEntryId="<%= smallImageFileEntryId %>" paramName="smallImageFileEntry" uploadURL="<%= imageSelectorURL %>" />
 					</div>
 
 					<div class="entry-description">

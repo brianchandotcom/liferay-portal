@@ -216,8 +216,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to acquire memory scheduler cluster lock", e);
+					_log.warn("Unable to acquire the cluster master lock", e);
 				}
 			}
 
@@ -226,8 +225,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 					_log.info("Lock currently held by " + owner);
 				}
 
-				_log.info(
-					"Reattempting to acquire memory scheduler cluster lock");
+				_log.info("Reattempting to acquire the cluster master lock");
 			}
 		}
 

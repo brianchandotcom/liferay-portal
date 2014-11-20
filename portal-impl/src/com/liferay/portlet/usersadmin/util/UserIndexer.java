@@ -414,9 +414,7 @@ public class UserIndexer extends BaseIndexer {
 			Organization organization =
 				OrganizationLocalServiceUtil.getOrganization(organizationId);
 
-			long[] ancestorIds = organization.getAncestorIds();
-
-			for (long ancestorId : ancestorIds) {
+			for (long ancestorId : organization.getAncestorIds()) {
 				ancestorOrganizationIds.add(ancestorId);
 			}
 		}

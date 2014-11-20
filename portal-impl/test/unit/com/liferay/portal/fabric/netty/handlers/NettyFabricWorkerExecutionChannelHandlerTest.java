@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ObjectGraphUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.AdviseWith;
 import com.liferay.portal.test.AspectJNewEnvMethodRule;
@@ -63,6 +64,13 @@ import io.netty.util.concurrent.DefaultPromise;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.net.URLConnection;
+import java.net.URLStreamHandler;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -322,7 +330,10 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 	}
 
 	@Test
-	public void testLoadedPaths() {
+	public void testLoadedPaths() throws Exception {
+
+		// Good classpath
+
 		Map<Path, Path> inputPaths = Collections.emptyMap();
 
 		String newBootstrapClassPath = "newBootstrapClassPath";
@@ -349,6 +360,66 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 			newBootstrapClassPath, processConfig.getBootstrapClassPath());
 		Assert.assertEquals(
 			newRuntimeClassPath, processConfig.getRuntimeClassPath());
+
+		ClassLoader classLoader = processConfig.getReactClassLoader();
+
+		Assert.assertSame(URLClassLoader.class, classLoader.getClass());
+
+		URLClassLoader urlClassLoader = (URLClassLoader)classLoader;
+
+		URL[] urls = urlClassLoader.getURLs();
+
+		Assert.assertEquals(2, urls.length);
+
+		File file = new File(newBootstrapClassPath);
+
+		URI uri = file.toURI();
+
+		Assert.assertEquals(urls[0], uri.toURL());
+
+		file = new File(newRuntimeClassPath);
+
+		uri = file.toURI();
+
+		Assert.assertEquals(urls[1], uri.toURL());
+
+		// Broken classpath
+
+		final MalformedURLException malformedURLException =
+			new MalformedURLException();
+
+		Map<Object, Object> handlers = ReflectionTestUtil.getFieldValue(
+			URL.class, "handlers");
+
+		handlers.put(
+			"file",
+			new URLStreamHandler() {
+
+				@Override
+				protected void parseURL(
+					URL url, String spec, int start, int limit) {
+
+					ReflectionUtil.throwException(malformedURLException);
+				}
+
+				@Override
+				protected URLConnection openConnection(URL url) {
+					throw new UnsupportedOperationException();
+				}
+
+			});
+
+		try {
+			loadedPaths.toProcessConfig(builder.build());
+
+			Assert.fail();
+		}
+		catch (ProcessException pe) {
+			Assert.assertSame(malformedURLException, pe.getCause());
+		}
+		finally {
+			handlers.clear();
+		}
 	}
 
 	@Test

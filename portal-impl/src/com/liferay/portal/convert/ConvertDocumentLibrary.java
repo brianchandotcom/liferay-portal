@@ -167,10 +167,6 @@ public class ConvertDocumentLibrary extends BaseConvertProcess {
 
 		migratePortlets();
 
-		if (isDeleteFilesFromSourceStore()) {
-			DLPreviewableProcessor.deleteFiles();
-		}
-
 		StoreFactory.setInstance(_targetStore);
 
 		MaintenanceUtil.appendStatus(
@@ -243,6 +239,10 @@ public class ConvertDocumentLibrary extends BaseConvertProcess {
 			});
 
 		actionableDynamicQuery.performActions();
+
+		if (isDeleteFilesFromSourceStore()) {
+			DLPreviewableProcessor.deleteFiles();
+		}
 	}
 
 	protected void migrateDLFileEntry(

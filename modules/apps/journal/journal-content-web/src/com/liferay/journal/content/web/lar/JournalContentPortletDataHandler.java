@@ -14,6 +14,7 @@
 
 package com.liferay.journal.content.web.lar;
 
+import com.liferay.journal.content.web.configuration.JournalContentConfigurationValues;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
@@ -30,7 +31,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
@@ -91,7 +91,7 @@ public class JournalContentPortletDataHandler
 				null, "selected-web-content", true, true, null,
 				JournalArticle.class.getName()));
 		setPublishToLiveByDefault(
-			PropsValues.JOURNAL_CONTENT_PUBLISH_TO_LIVE_BY_DEFAULT);
+			JournalContentConfigurationValues.PUBLISH_TO_LIVE_BY_DEFAULT);
 	}
 
 	@Override

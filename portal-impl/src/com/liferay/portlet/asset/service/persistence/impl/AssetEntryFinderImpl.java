@@ -295,7 +295,8 @@ public class AssetEntryFinderImpl
 
 		if (Validator.isNotNull(entryQuery.getKeywords())) {
 			sb.append(" AND ((AssetEntry.title LIKE ?) OR");
-			sb.append(" (AssetEntry.description LIKE ?))");
+			sb.append(" (AssetEntry.description LIKE ?) OR");
+			sb.append(" (AssetEntry.userName LIKE ?))");
 		}
 		else if (Validator.isNotNull(entryQuery.getTitle()) ||
 				 Validator.isNotNull(entryQuery.getDescription()) ||
@@ -452,6 +453,8 @@ public class AssetEntryFinderImpl
 		}
 
 		if (Validator.isNotNull(entryQuery.getKeywords())) {
+			qPos.add(
+				StringUtil.quote(entryQuery.getKeywords(), StringPool.PERCENT));
 			qPos.add(
 				StringUtil.quote(entryQuery.getKeywords(), StringPool.PERCENT));
 			qPos.add(

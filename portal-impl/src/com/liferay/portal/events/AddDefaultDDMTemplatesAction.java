@@ -65,6 +65,9 @@ public class AddDefaultDDMTemplatesAction extends SimpleAction {
 			List<Element> templateElements =
 				templateHandler.getDefaultTemplateElements();
 
+			ClassLoader classLoader =
+				templateHandler.getClass().getClassLoader();
+
 			for (Element templateElement : templateElements) {
 				String templateKey = templateElement.elementText(
 					"template-key");
@@ -97,7 +100,7 @@ public class AddDefaultDDMTemplatesAction extends SimpleAction {
 						locale, LanguageUtil.get(locale, description));
 				}
 
-				String script = ContentUtil.get(scriptFileName);
+				String script = ContentUtil.get(classLoader, scriptFileName);
 
 				DDMTemplateLocalServiceUtil.addTemplate(
 					userId, groupId, classNameId, 0, templateKey, nameMap,

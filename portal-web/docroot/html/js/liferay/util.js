@@ -433,34 +433,6 @@
 			).join();
 		},
 
-		listChecked: function(form, name) {
-			if (form._node) {
-				form = form.getDOM();
-			}
-
-			var selector = 'input[type=checkbox]';
-
-			if (name) {
-				selector += '[name='+ name +']';
-			}
-
-			return _.reduce(
-				$(form).find(selector),
-				function(prev, item, index) {
-					item = $(item);
-
-					var val = item.val();
-
-					if (val && item.prop('checked')) {
-						prev.push(val);
-					}
-
-					return prev;
-				},
-				[]
-			).join();
-		},
-
 		listCheckedExcept: function(form, except, name) {
 			return Util.listCheckboxesExcept(form, except, name, true);
 		},

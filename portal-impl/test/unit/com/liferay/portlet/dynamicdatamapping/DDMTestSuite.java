@@ -31,6 +31,7 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMImplTest;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLImplTest;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXSDImplTest;
 import com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterTest;
+import com.liferay.portlet.dynamicdatamapping.validator.DDMFormValidatorTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -44,7 +45,7 @@ import org.junit.runners.Suite.SuiteClasses;
 	{
 		DDMFormFieldValueRendererTest.class, DDMFormJSONDeserializerTest.class,
 		DDMFormJSONSerializerTest.class, DDMFormTemplateSynchonizerTest.class,
-		DDMFormValuesJSONDeserializerTest.class,
+		DDMFormValidatorTest.class, DDMFormValuesJSONDeserializerTest.class,
 		DDMFormValuesJSONSerializerTest.class, DDMFormValuesTest.class,
 		DDMFormValuesToFieldsConverterTest.class,
 		DDMFormValuesTransformerTest.class, DDMFormValuesValidatorTest.class,

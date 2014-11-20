@@ -337,7 +337,7 @@ long orderId = BeanParamUtil.getLong(order, request, "orderId");
 				<td>
 					<%= currencyFormat.format(order.getCouponDiscount()) %>
 
-					<aui:a href="javascript:;" id="viewCoupon" label='<%= "(" + LanguageUtil.get(request, order.getCouponCodes()) + ")" %>' />
+					<aui:a href="javascript:;" label='<%= "(" + LanguageUtil.get(request, order.getCouponCodes()) + ")" %>' onClick='<%= renderResponse.getNamespace() + "viewCoupon();" %>' />
 				</td>
 			</tr>
 		</c:if>
@@ -430,24 +430,19 @@ long orderId = BeanParamUtil.getLong(order, request, "orderId");
 
 		submitForm(document.<portlet:namespace />fm);
 	}
-</aui:script>
 
-<aui:script use="aui-base">
-	A.one('#<portlet:namespace />viewCoupon').on(
-		'click',
-		function(event) {
-			Liferay.Util.openWindow(
-				{
-					dialog: {
-						height: 200,
-						width: 280
-					},
-					id: '<portlet:namespace />viewCoupon',
-					refreshWindow: window,
-					title: '<%= UnicodeLanguageUtil.get(request, "coupons") %>',
-					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/shopping/view_coupon" /><portlet:param name="code" value="<%= order.getCouponCodes() %>" /></portlet:renderURL>'
-				}
-			);
-		}
-	);
+	function <portlet:namespace />viewCoupon() {
+		Liferay.Util.openWindow(
+			{
+				dialog: {
+					height: 200,
+					width: 280
+				},
+				id: '<portlet:namespace />viewCoupon',
+				refreshWindow: window,
+				title: '<%= UnicodeLanguageUtil.get(request, "coupons") %>',
+				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/shopping/view_coupon" /><portlet:param name="code" value="<%= order.getCouponCodes() %>" /></portlet:renderURL>'
+			}
+		);
+	}
 </aui:script>

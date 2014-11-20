@@ -74,7 +74,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 				<aui:button onClick='<%= renderResponse.getNamespace() + "removeCategory();" %>' value="remove" />
 			</div>
 
-			<div id="<portlet:namespace />merge-with-parent-checkbox-div"
+			<div id="<portlet:namespace />mergeParentCheckboxDiv"
 				<c:if test="<%= category.getParentCategoryId() == ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>">
 					style="display: none;"
 				</c:if>
@@ -120,7 +120,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 
 			document.getElementById('<portlet:namespace />parentCategoryName').value = '';
 
-			var mergeWithParent = A.one('#<portlet:namespace />merge-with-parent-checkbox-div');
+			var mergeWithParent = A.one('#<portlet:namespace />mergeParentCheckboxDiv');
 			var mergeWithParentCategory = A.one('#<portlet:namespace />mergeWithParentCategory');
 
 			if (mergeWithParent) {
@@ -157,12 +157,10 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 
 					document.getElementById('<portlet:namespace />parentCategoryName').value = event.name;
 
-					if (parentCategoryId != <%= ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>) {
-						var mergeWithParent = A.one('#<portlet:namespace />merge-with-parent-checkbox-div');
+					var mergeWithParent = A.one('#<portlet:namespace />mergeParentCheckboxDiv');
 
-						if (mergeWithParent) {
-							mergeWithParent.show();
-						}
+					if (mergeWithParent && (parentCategoryId != <%= ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>)) {
+						mergeWithParent.show();
 					}
 				}
 			);

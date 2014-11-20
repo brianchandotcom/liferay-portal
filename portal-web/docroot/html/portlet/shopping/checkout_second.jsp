@@ -298,7 +298,7 @@ ShoppingOrder order = ShoppingOrderLocalServiceUtil.getLatestOrder(user.getUserI
 				<td>
 					<%= currencyFormat.format(ShoppingUtil.calculateCouponDiscount(items, order.getBillingState(), coupon)) %>
 
-					<aui:a href="javascript:;" id="viewCoupon" label='<%= "(" + coupon.getCouponId() + ")" %>' />
+					<aui:a href="javascript:;" label='<%= "(" + coupon.getCouponId() + ")" %>' onClick='<%= renderResponse.getNamespace() + "viewCoupon();" %>' />
 				</td>
 			</tr>
 		</c:if>
@@ -326,22 +326,19 @@ ShoppingOrder order = ShoppingOrderLocalServiceUtil.getLatestOrder(user.getUserI
 	</aui:button-row>
 </aui:form>
 
-<aui:script use="aui-base">
-	A.one('#<portlet:namespace />viewCoupon').on(
-		'click',
-		function(event) {
-			Liferay.Util.openWindow(
-				{
-					dialog: {
-						height: 200,
-						width: 280
-					},
-					id: '<portlet:namespace />viewCoupon',
-					refreshWindow: window,
-					title: '<%= UnicodeLanguageUtil.get(request, "coupon") %>',
-					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/shopping/view_coupon" /><portlet:param name="couponId" value="<%= String.valueOf(coupon.getCouponId()) %>" /></portlet:renderURL>'
-				}
-			);
-		}
-	);
+<aui:script>
+	function <portlet:namespace />viewCoupon() {
+		Liferay.Util.openWindow(
+			{
+				dialog: {
+					height: 200,
+					width: 280
+				},
+				id: '<portlet:namespace />viewCoupon',
+				refreshWindow: window,
+				title: '<%= UnicodeLanguageUtil.get(request, "coupon") %>',
+				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/shopping/view_coupon" /><portlet:param name="couponId" value="<%= String.valueOf(coupon.getCouponId()) %>" /></portlet:renderURL>'
+			}
+		);
+	}
 </aui:script>

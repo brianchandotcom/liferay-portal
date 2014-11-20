@@ -84,7 +84,7 @@ for (int i = values.size() - 1; i >= 0; i--) {
 
 			</liferay-ui:search-container-row>
 
-			<aui:script use="aui-base">
+			<aui:script>
 				var opener = Liferay.Util.getTop();
 				var fieldsQuantities = opener.document.<portlet:namespace />fm.<portlet:namespace />fieldsQuantities.value;
 				var itemQuantities = [];
@@ -137,14 +137,11 @@ for (int i = values.size() - 1; i >= 0; i--) {
 					<portlet:namespace />closeDialog();
 				}
 
-				var pages = A.all('.taglib-page-iterator li a');
-
-				if (pages) {
-					pages.on('click', <portlet:namespace />setItemQuantities);
-				}
-
-				A.one('#<portlet:namespace />updateQuantities').on('click', <portlet:namespace />updateItemQuantities);
-				A.one('#<portlet:namespace />cancelQuantities').on('click', <portlet:namespace />closeDialog);
+				AUI().all('.taglib-page-iterator li a').each(
+					function(node) {
+						node.on('click', <portlet:namespace />setItemQuantities);
+					}
+				);
 			</aui:script>
 
 			<liferay-ui:search-iterator />
@@ -152,9 +149,9 @@ for (int i = values.size() - 1; i >= 0; i--) {
 	</aui:fieldset>
 
 	<aui:button-row>
-		<aui:button id="updateQuantities" value="update" />
+		<aui:button onClick='<%= renderResponse.getNamespace() + "updateItemQuantities();" %>' value="update" />
 
-		<aui:button id="cancelQuantities" type="cancel" />
+		<aui:button onClick='<%= renderResponse.getNamespace() + "closeDialog();" %>' type="cancel" />
 	</aui:button-row>
 </aui:form>
 

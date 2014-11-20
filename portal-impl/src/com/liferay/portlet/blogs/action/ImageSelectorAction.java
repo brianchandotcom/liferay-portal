@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.blogs.action;
 
+import com.liferay.portal.action.BaseImageSelectorAction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -24,8 +25,7 @@ import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 /**
  * @author Sergio González
  */
-public class ImageSelectorAction
-	extends com.liferay.portal.action.ImageSelectorAction {
+public class ImageSelectorAction extends BaseImageSelectorAction {
 
 	@Override
 	public void checkPermission(

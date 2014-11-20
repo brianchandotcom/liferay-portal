@@ -45,7 +45,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Sergio González
  */
-public abstract class ImageSelectorAction extends PortletAction {
+public abstract class BaseImageSelectorAction extends PortletAction {
 
 	@Override
 	public void processAction(

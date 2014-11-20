@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.journalcontent.action;
+package com.liferay.journal.content.web.portlet.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;

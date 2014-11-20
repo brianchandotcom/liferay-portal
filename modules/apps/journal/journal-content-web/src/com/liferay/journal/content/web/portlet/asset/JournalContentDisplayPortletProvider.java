@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.journalcontent.asset.provider;
+package com.liferay.journal.content.web.portlet.asset;
 
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.model.Layout;

@@ -30,8 +30,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.LiferayIntegrationTestRule;
-import com.liferay.portal.test.PersistenceTestRule;
 import com.liferay.portal.test.TransactionalTestRule;
+import com.liferay.portal.test.PersistenceTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.RandomTestUtil;
 
@@ -40,11 +40,8 @@ import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.impl.WikiPageModelImpl;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 
-import org.jboss.arquillian.junit.Arquillian;
-
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Rule;
 import org.junit.Test;
 
 import java.io.Serializable;
@@ -60,6 +57,7 @@ import java.util.Set;
  * @generated
  */
 public class WikiPagePersistenceTest {
+
 	@Rule
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,

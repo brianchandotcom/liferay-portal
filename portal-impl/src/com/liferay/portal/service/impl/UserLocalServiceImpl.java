@@ -6006,12 +6006,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	protected Sort[] getSortsFromOrderByComparator(
 		OrderByComparator<User> obc) {
 
+		String[] orderByClauses = StringUtil.split(obc.getOrderBy());
 		String[] orderByFields = obc.getOrderByFields();
 
-		String orderBy = obc.getOrderBy();
-		String[] orderByClauses = StringUtil.split(orderBy);
-
-		Sort[] sorts = new Sort[orderByClauses.length];
+		Sort[] sorts = new Sort[orderByFields.length];
 
 		for (int i = 0; i < orderByFields.length; i++) {
 			boolean reverse = orderByClauses[i].contains("DESC");

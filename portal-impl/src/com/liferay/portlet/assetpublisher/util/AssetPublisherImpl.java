@@ -371,6 +371,22 @@ public class AssetPublisherImpl implements AssetPublisher {
 
 	@Override
 	public List<AssetEntry> getAssetEntries(
+		long[] classNameIds, long[] groupIds, String keywords,
+		String description, String title, String userName,
+		boolean isAdvancedSearch, boolean isAndOperator, int start, int end,
+		String orderByCol1, String orderByCol2, String orderByType1,
+		String orderByType2) {
+
+		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
+			classNameIds, groupIds, keywords, description, title, userName,
+			isAdvancedSearch, isAndOperator, start, end, orderByCol1,
+			orderByCol2, orderByType1, orderByType2);
+
+		return AssetEntryLocalServiceUtil.getEntries(assetEntryQuery);
+	}
+
+	@Override
+	public List<AssetEntry> getAssetEntries(
 			PortletPreferences portletPreferences, Layout layout,
 			long scopeGroupId, int max, boolean checkPermission)
 		throws PortalException {
@@ -612,6 +628,20 @@ public class AssetPublisherImpl implements AssetPublisher {
 		return getAssetEntries(
 			portletRequest, portletPreferences, permissionChecker, groupIds,
 			deleteMissingAssetEntries, checkPermission);
+	}
+
+	@Override
+	public int getAssetEntriesCount(
+		long[] classNameIds, long[] groupIds, String keywords,
+		String description, String title, String userName,
+		boolean isAdvancedSearch, boolean isAndOperator, int start, int end) {
+
+		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
+			classNameIds, groupIds, keywords, description, title, userName,
+			isAdvancedSearch, isAndOperator, start, end, null, null, null,
+			null);
+
+		return AssetEntryLocalServiceUtil.getEntriesCount(assetEntryQuery);
 	}
 
 	/**
@@ -1393,6 +1423,37 @@ public class AssetPublisherImpl implements AssetPublisher {
 			permissionChecker.getUserId(),
 			com.liferay.portal.model.PortletPreferences.class.getName(),
 			getSubscriptionClassPK(plid, portletId));
+	}
+
+	protected AssetEntryQuery getAssetEntryQuery(
+		long[] classNameIds, long[] groupIds, String keywords,
+		String description, String title, String userName,
+		boolean isAdvancedSearch, boolean isAndOperator, int start, int end,
+		String orderByCol1, String orderByCol2, String orderByType1,
+		String orderByType2) {
+
+		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+
+		if (isAdvancedSearch) {
+			assetEntryQuery.setAndOperator(isAndOperator);
+			assetEntryQuery.setDescription(description);
+			assetEntryQuery.setTitle(title);
+			assetEntryQuery.setUserName(userName);
+		}
+		else {
+			assetEntryQuery.setKeywords(keywords);
+		}
+
+		assetEntryQuery.setClassNameIds(classNameIds);
+		assetEntryQuery.setEnd(end);
+		assetEntryQuery.setGroupIds(groupIds);
+		assetEntryQuery.setOrderByCol1(orderByCol1);
+		assetEntryQuery.setOrderByCol2(orderByCol2);
+		assetEntryQuery.setOrderByType1(orderByType1);
+		assetEntryQuery.setOrderByType2(orderByType2);
+		assetEntryQuery.setStart(start);
+
+		return assetEntryQuery;
 	}
 
 	protected long[] getSiteGroupIds(long[] groupIds) throws PortalException {

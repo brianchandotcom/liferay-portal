@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
@@ -113,6 +115,143 @@ public class AssetEntryQueryTest {
 			_fashionCategoryId, _foodCategoryId, _healthCategoryId,
 			_sportCategoryId
 		};
+	}
+
+	@Test
+	public void testAdvancedSearchAndOperator() throws Exception {
+		testAdvancedSearch(
+			"Cabina14", "Cabina14", "Test", true, "Cabina14 in Madrid",
+			"Cabina14 bla bla bla", 1);
+	}
+
+	@Test
+	public void testAdvancedSearchAndOperatorDescription() throws Exception {
+		testAdvancedSearch(
+			"Cabina14", "Cabina14", "Julio", true, "Concert in Madrid",
+			"Cabina14 bla bla bla", 0);
+	}
+
+	@Test
+	public void testAdvancedSearchAndOperatorDescription2() throws Exception {
+		testAdvancedSearch(
+			null, "Cabina14", "Test", true, "Concert in Madrid",
+			"Cabina14 bla bla bla", 1);
+	}
+
+	@Test
+	public void testAdvancedSearchAndOperatorDescription3() throws Exception {
+		testAdvancedSearch(
+			null, "Cabina14", null, true, "Concert in Madrid",
+			"Cabina14 bla bla bla", 1);
+	}
+
+	@Test
+	public void testAdvancedSearchAndOperatorTitle() throws Exception {
+		testAdvancedSearch(
+			"Cabina14", "Cabina14", "Julio", true, "Cabina14 in Madrid",
+			"Cabina14 bla bla bla", 0);
+	}
+
+	@Test
+	public void testAdvancedSearchAndOperatorTitle2() throws Exception {
+		testAdvancedSearch(
+			"Cabina14", null, "Test", true, "Cabina14 in Madrid", "bla bla bla",
+			1);
+	}
+
+	@Test
+	public void testAdvancedSearchAndOperatorTitle3() throws Exception {
+		testAdvancedSearch(
+			"Cabina14", null, null, true, "Cabina14 in Madrid", "bla bla bla",
+			1);
+	}
+
+	@Test
+	public void testAdvancedSearchAndOperatorUserName() throws Exception {
+		testAdvancedSearch(
+			"Cabina14", "Cabina14", "Julio", true, "Cabina14 in Madrid",
+			"Cabina14 bla bla bla", 0);
+	}
+
+	@Test
+	public void testAdvancedSearchAndOperatorUserName2() throws Exception {
+		testAdvancedSearch(
+			null, "Cabina14", "Test", true, "Concert in Madrid",
+			"Cabina14 bla bla bla", 1);
+	}
+
+	@Test
+	public void testAdvancedSearchAndOperatorUserName3() throws Exception {
+		testAdvancedSearch(
+			null, null, "Test", true, "Concert in Madrid", "bla bla bla", 2);
+	}
+
+	@Test
+	public void testAdvancedSearchOrOperator() throws Exception {
+		testAdvancedSearch(
+			"Cabina14", "Cabina14", "Julio", false, "Concert in Madrid",
+			"bla bla bla", 0);
+	}
+
+	@Test
+	public void testAdvancedSearchOrOperator2() throws Exception {
+		testAdvancedSearch(
+			"Cabina14", "Cabina14", "Julio", false, "Cabina14 in Madrid",
+			"bla bla bla", 1);
+	}
+
+	@Test
+	public void testAdvancedSearchOrOperator3() throws Exception {
+		testAdvancedSearch(
+			"Cabina14", "Cabina14", "Julio", false, "Concert in Madrid",
+			"Cabina14 bla bla bla", 1);
+	}
+
+	@Test
+	public void testAdvancedSearchOrOperator4() throws Exception {
+		testAdvancedSearch(
+			"Cabina14", "Cabina14", "Test", false, "Concert in Madrid",
+			"bla bla bla", 2);
+	}
+
+	@Test
+	public void testAdvancedSearchOrOperator5() throws Exception {
+		testAdvancedSearch(
+			"Cabina14", null, null, false, "Cabina14 in Madrid", "bla bla bla",
+			1);
+	}
+
+	@Test
+	public void testAdvancedSearchOrOperator6() throws Exception {
+		testAdvancedSearch(
+			"Cabina14", null, null, false, "Concert in Madrid", "bla bla bla",
+			0);
+	}
+
+	@Test
+	public void testAdvancedSearchOrOperator7() throws Exception {
+		testAdvancedSearch(
+			null, "Cabina14", null, false, "Concert in Madrid",
+			"Cabina14 bla bla bla", 1);
+	}
+
+	@Test
+	public void testAdvancedSearchOrOperator8() throws Exception {
+		testAdvancedSearch(
+			null, "Cabina14", null, false, "Concert in Madrid", "bla bla bla",
+			0);
+	}
+
+	@Test
+	public void testAdvancedSearchOrOperator9() throws Exception {
+		testAdvancedSearch(
+			null, null, "Test", false, "Concert in Madrid", "bla bla bla", 2);
+	}
+
+	@Test
+	public void testAdvancedSearchOrOperator10() throws Exception {
+		testAdvancedSearch(
+			null, null, "Julio", false, "Concert in Madrid", "bla bla bla", 0);
 	}
 
 	@Test
@@ -212,6 +351,27 @@ public class AssetEntryQueryTest {
 	@Test
 	public void testAnyAssetTags4() throws Exception {
 		testAssetTags(new String[] {"modularity", "osgi"}, true, false, 1);
+	}
+
+	@Test
+	public void testKeywordsDescription() throws Exception {
+		testAssetKeywords(
+			"Cabina14", "Concert in Madrid", "Cabina14 Bla bla bla", 1);
+	}
+
+	@Test
+	public void testKeywordsNotFound() throws Exception {
+		testAssetKeywords("Cabina14", "Concert in Madrid", "Bla bla bla", 0);
+	}
+
+	@Test
+	public void testKeywordsTitle() throws Exception {
+		testAssetKeywords("Cabina14", "Cabina14 in Madrid", "Bla bla bla", 1);
+	}
+
+	@Test
+	public void testKeywordsUserName() throws Exception {
+		testAssetKeywords("Test", "Concert in Madrid", "Bla bla bla", 2);
 	}
 
 	@Test
@@ -387,6 +547,22 @@ public class AssetEntryQueryTest {
 		return assetEntryQuery;
 	}
 
+	protected AssetEntryQuery buildAssetEntryQueryWithAdvancedSearch(
+			long groupId, boolean isAndOperator, String title,
+			String description, String userName)
+		throws PortalException {
+
+		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+
+		assetEntryQuery.setAndOperator(isAndOperator);
+		assetEntryQuery.setDescription(description);
+		assetEntryQuery.setTitle(title);
+		assetEntryQuery.setUserName(userName);
+		assetEntryQuery.setGroupIds(new long[] {groupId});
+
+		return assetEntryQuery;
+	}
+
 	protected AssetEntryQuery buildAssetEntryQueryWithAssetCategoryIds(
 		AssetEntryQuery assetEntryQuery, long[] assetCategoryIds, boolean any,
 		boolean not) {
@@ -425,6 +601,69 @@ public class AssetEntryQueryTest {
 		}
 
 		return assetEntryQuery;
+	}
+
+	protected AssetEntryQuery buildAssetEntryQueryWithKeywords(
+			long groupId, String keywords)
+		throws PortalException {
+
+		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+
+		assetEntryQuery.setKeywords(keywords);
+		assetEntryQuery.setGroupIds(new long[] {groupId});
+
+		return assetEntryQuery;
+	}
+
+	protected void testAdvancedSearch(
+			String searchTitle, String searchDescription, String searchUserName,
+			boolean isAndOperator, String title, String description,
+			int expectedResults)
+		throws Exception {
+
+		// Clear the thread local cache which is populated in AssetPublisherUtil
+
+		ThreadLocalCache<Object[]> threadLocalCache =
+			ThreadLocalCacheManager.getThreadLocalCache(
+				Lifecycle.REQUEST, AssetEntryServiceImpl.class.getName());
+
+		threadLocalCache.removeAll();
+
+		User user = TestPropsValues.getUser();
+
+		AssetEntryQuery assetEntryQuery =
+			buildAssetEntryQueryWithAdvancedSearch(
+				_group.getGroupId(), isAndOperator, searchTitle,
+				searchDescription, searchUserName);
+
+		int initialEntries = AssetEntryServiceUtil.getEntriesCount(
+			assetEntryQuery);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		BlogsEntry entry1 = BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), StringUtil.randomString(),
+			StringPool.BLANK, StringUtil.randomString(),
+			"This is a blog entry for testing purposes", 1, 1, 1965, 0, 0, true,
+			true, null, null, null, serviceContext);
+
+		BlogsEntry entry2 = BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), title, StringPool.BLANK, description,
+			"This is a blog entry for testing purposes", 1, 1, 1965, 0, 0, true,
+			true, null, null, null, serviceContext);
+
+		// Clear the thread local cache which is populated in AssetPublisherUtil
+
+		threadLocalCache.removeAll();
+
+		int entriesCount = AssetEntryServiceUtil.getEntriesCount(
+			assetEntryQuery);
+
+		Assert.assertEquals(initialEntries + expectedResults, entriesCount);
+
+		BlogsEntryLocalServiceUtil.deleteEntry(entry1);
+		BlogsEntryLocalServiceUtil.deleteEntry(entry2);
 	}
 
 	protected void testAssetCategories(
@@ -499,6 +738,49 @@ public class AssetEntryQueryTest {
 			assetEntryQuery);
 
 		Assert.assertEquals(initialEntries + expectedResults, allTagsEntries);
+	}
+
+	protected void testAssetKeywords(
+			String keywords, String title, String description,
+			int expectedResults)
+		throws Exception {
+
+		// Clear the thread local cache which is populated in AssetPublisherUtil
+
+		ThreadLocalCache<Object[]> threadLocalCache =
+			ThreadLocalCacheManager.getThreadLocalCache(
+				Lifecycle.REQUEST, AssetEntryServiceImpl.class.getName());
+
+		threadLocalCache.removeAll();
+
+		AssetEntryQuery assetEntryQuery = buildAssetEntryQueryWithKeywords(
+			_group.getGroupId(), keywords);
+
+		int initialEntries = AssetEntryServiceUtil.getEntriesCount(
+			assetEntryQuery);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), StringUtil.randomString(),
+			StringPool.BLANK, StringUtil.randomString(),
+			"This is a blog entry for testing purposes", 1, 1, 1965, 0, 0, true,
+			true, null, null, null, serviceContext);
+
+		BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), title, StringPool.BLANK, description,
+			"This is a blog entry for testing purposes", 1, 1, 1965, 0, 0, true,
+			true, null, null, null, serviceContext);
+
+		// Clear the thread local cache which is populated in AssetPublisherUtil
+
+		threadLocalCache.removeAll();
+
+		int entriesCount = AssetEntryServiceUtil.getEntriesCount(
+			assetEntryQuery);
+
+		Assert.assertEquals(initialEntries + expectedResults, entriesCount);
 	}
 
 	protected void testAssetTags(

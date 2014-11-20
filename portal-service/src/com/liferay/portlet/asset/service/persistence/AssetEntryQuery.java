@@ -89,6 +89,7 @@ public class AssetEntryQuery {
 	public AssetEntryQuery(AssetEntryQuery assetEntryQuery) {
 		setAllCategoryIds(assetEntryQuery.getAllCategoryIds());
 		setAllTagIdsArray(assetEntryQuery.getAllTagIdsArray());
+		setAndOperator(assetEntryQuery.isAndOperator());
 		setAnyCategoryIds(assetEntryQuery.getAnyCategoryIds());
 		setAnyTagIds(assetEntryQuery.getAnyTagIds());
 		setAttributes(assetEntryQuery.getAttributes());
@@ -115,6 +116,7 @@ public class AssetEntryQuery {
 		setPublishDate(assetEntryQuery.getPublishDate());
 		setStart(assetEntryQuery.getStart());
 		setTitle(assetEntryQuery.getTitle());
+		setUserName(assetEntryQuery.getUserName());
 		setVisible(assetEntryQuery.isVisible());
 	}
 
@@ -316,6 +318,14 @@ public class AssetEntryQuery {
 		return _title;
 	}
 
+	public String getUserName() {
+		return _userName;
+	}
+
+	public boolean isAndOperator() {
+		return _andOperator;
+	}
+
 	public boolean isEnablePermissions() {
 		return _enablePermissions;
 	}
@@ -348,6 +358,10 @@ public class AssetEntryQuery {
 		_allTagIds = _flattenTagIds(allTagIdsArray);
 
 		_toString = null;
+	}
+
+	public void setAndOperator(boolean andOperator) {
+		_andOperator = andOperator;
 	}
 
 	public void setAnyCategoryIds(long[] anyCategoryIds) {
@@ -523,6 +537,10 @@ public class AssetEntryQuery {
 		_title = title;
 	}
 
+	public void setUserName(String userName) {
+		_userName = userName;
+	}
+
 	public void setVisible(Boolean visible) {
 		_visible = visible;
 
@@ -535,12 +553,14 @@ public class AssetEntryQuery {
 			return _toString;
 		}
 
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(59);
 
 		sb.append("{allCategoryIds=");
 		sb.append(StringUtil.merge(_allCategoryIds));
 		sb.append(", allTagIds=");
 		sb.append(StringUtil.merge(_allTagIds));
+		sb.append(", andOperator=");
+		sb.append(_andOperator);
 		sb.append(", anyCategoryIds=");
 		sb.append(StringUtil.merge(_anyCategoryIds));
 		sb.append(", anyTagIds=");
@@ -593,6 +613,8 @@ public class AssetEntryQuery {
 		sb.append(_start);
 		sb.append(", title=");
 		sb.append(_title);
+		sb.append(", userName=");
+		sb.append(_userName);
 		sb.append(", visible=");
 		sb.append(_visible);
 		sb.append("}");
@@ -658,6 +680,7 @@ public class AssetEntryQuery {
 	private long[] _allCategoryIds = new long[0];
 	private long[] _allTagIds = new long[0];
 	private long[][] _allTagIdsArray = new long[0][];
+	private boolean _andOperator;
 	private long[] _anyCategoryIds = new long[0];
 	private long[] _anyTagIds = new long[0];
 	private Map<String, Serializable> _attributes =
@@ -687,6 +710,7 @@ public class AssetEntryQuery {
 	private int _start = QueryUtil.ALL_POS;
 	private String _title;
 	private String _toString;
+	private String _userName;
 	private Boolean _visible = Boolean.TRUE;
 
 }

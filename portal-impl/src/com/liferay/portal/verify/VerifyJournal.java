@@ -125,11 +125,12 @@ public class VerifyJournal extends VerifyProcess {
 			updateDynamicElements(dynamicElement.elements("dynamic-element"));
 
 			String name = dynamicElement.attributeValue("name");
-			String type = dynamicElement.attributeValue("type");
 
 			int index = ddmFieldsCounter.get(name);
 
 			dynamicElement.addAttribute("index", String.valueOf(index));
+
+			String type = dynamicElement.attributeValue("type");
 
 			if (type.equals("image")) {
 				updateImageElement(dynamicElement, name, index);
@@ -190,15 +191,16 @@ public class VerifyJournal extends VerifyProcess {
 
 		Element dynamicContentElement = element.element("dynamic-content");
 
-		long imageId = GetterUtil.getLong(
+		long articleImageId = GetterUtil.getLong(
 			dynamicContentElement.attributeValue("id"));
 
-		JournalArticleImage image =
-			JournalArticleImageLocalServiceUtil.getArticleImage(imageId);
+		JournalArticleImage articleImage =
+			JournalArticleImageLocalServiceUtil.getArticleImage(articleImageId);
 
-		image.setElName(name + StringPool.UNDERLINE + index);
+		articleImage.setElName(name + StringPool.UNDERLINE + index);
 
-		JournalArticleImageLocalServiceUtil.updateJournalArticleImage(image);
+		JournalArticleImageLocalServiceUtil.updateJournalArticleImage(
+			articleImage);
 	}
 
 	protected void updateLinkToLayoutElements(long groupId, Element element) {
@@ -402,7 +404,7 @@ public class VerifyJournal extends VerifyProcess {
 					}
 					catch (Exception e) {
 						_log.error(
-							"Unable to get content for article " +
+							"Unable to update content for article " +
 								article.getId(),
 							e);
 					}

@@ -32,9 +32,9 @@ import org.springframework.context.ApplicationContext;
  * @author Adolfo Pérez
  */
 @Component(
-	immediate = true, service = SocialNetworkingWebUpgrade.class
+	immediate = true, service = SocialNetworkingServiceUpgrade.class
 )
-public class SocialNetworkingWebUpgrade {
+public class SocialNetworkingServiceUpgrade {
 
 	@Reference(
 		target =

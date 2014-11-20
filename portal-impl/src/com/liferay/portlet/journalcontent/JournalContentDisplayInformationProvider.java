@@ -14,9 +14,9 @@
 
 package com.liferay.portlet.journalcontent;
 
-import com.liferay.portal.kernel.search.DisplayInformationProvider;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portlet.asset.provider.DisplayInformationProvider;
 import com.liferay.portlet.journal.model.JournalArticle;
 
 import javax.portlet.PortletPreferences;

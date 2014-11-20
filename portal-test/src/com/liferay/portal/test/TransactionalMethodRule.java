@@ -22,20 +22,20 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 
 import java.util.concurrent.Callable;
 
-import org.junit.rules.TestRule;
-import org.junit.runner.Description;
+import org.junit.rules.MethodRule;
+import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.Statement;
 
 /**
  * @author Shuyang Zhou
  */
-public class TransactionalTestRule implements TestRule {
+public class TransactionalMethodRule implements MethodRule {
 
-	public TransactionalTestRule() {
+	public TransactionalMethodRule() {
 		this(Propagation.SUPPORTS);
 	}
 
-	public TransactionalTestRule(Propagation propagation) {
+	public TransactionalMethodRule(Propagation propagation) {
 		TransactionAttribute.Builder builder =
 			new TransactionAttribute.Builder();
 
@@ -47,7 +47,10 @@ public class TransactionalTestRule implements TestRule {
 	}
 
 	@Override
-	public Statement apply(final Statement statement, Description description) {
+	public Statement apply(
+		final Statement statement, FrameworkMethod frameworkMethod,
+		Object target) {
+
 		return new Statement() {
 
 			@Override

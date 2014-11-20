@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.socialnetworking.hook.upgrade.v1_0_0.util;
+package com.liferay.socialnetworking.upgrade.v1_0_0.util;
 
 import java.sql.Types;
 

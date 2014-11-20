@@ -33,10 +33,13 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
+import com.liferay.portlet.asset.DisplayPortletProvider;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.Date;
 import java.util.Locale;
@@ -58,6 +61,13 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 
 	@Override
 	public String getAddToPagePortletId() throws Exception {
+		DisplayPortletProvider displayPortletProvider =
+			_serviceTrackerMap.getService(getClassName());
+
+		if (displayPortletProvider != null) {
+			return displayPortletProvider.getPortletId();
+		}
+
 		return PortletKeys.ASSET_PUBLISHER;
 	}
 
@@ -347,6 +357,17 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
+		DisplayPortletProvider displayPortletProvider =
+			_serviceTrackerMap.getService(getClassName());
+
+		if (displayPortletProvider != null) {
+			displayPortletProvider.setPreferences(
+				preferences, portletId, getClassName(), getClassPK(),
+				themeDisplay);
+
+			return;
+		}
+
 		preferences.setValue("displayStyle", "full-content");
 		preferences.setValue(
 			"emailAssetEntryAddedEnabled", Boolean.FALSE.toString());
@@ -420,6 +441,13 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 
 	private static final DDMFieldReader _nullDDMFieldReader =
 		new NullDDMFieldReader();
+	private static final ServiceTrackerMap<String, DisplayPortletProvider>
+		_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
+			DisplayPortletProvider.class, "model.class.name");
+
+	static {
+		_serviceTrackerMap.open();
+	}
 
 	private AssetRendererFactory _assetRendererFactory;
 	private int _assetRendererType = AssetRendererFactory.TYPE_LATEST_APPROVED;

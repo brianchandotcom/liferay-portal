@@ -42,9 +42,17 @@ name = namespace + name;
 %>
 
 <c:if test='<%= mapsAPIProvider.equals("Google") %>'>
-	<liferay-util:html-top outputKey="js_maps_google_skip_map_loading">
-		<script src="<%= protocol %>://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places" type="text/javascript"></script>
-	</liferay-util:html-top>
+	<liferay-util:html-bottom outputKey="js_maps_google_skip_map_loading">
+		<script>
+			Liferay.namespace('Maps').onGMapsReady = function(event) {
+				Liferay.Maps.gmapsReady = true;
+
+				Liferay.fire('gmapsReady');
+			};
+		</script>
+
+		<script src="<%= protocol %>://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&callback=Liferay.Maps.onGMapsReady" type="text/javascript"></script>
+	</liferay-util:html-bottom>
 </c:if>
 
 <c:if test='<%= mapsAPIProvider.equals("OpenStreet") %>'>
@@ -82,7 +90,23 @@ name = namespace + name;
 		</c:if>
 	};
 
-	var map = new Liferay['<%= mapsAPIProvider %>Map'](mapConfig).render();
+	var createMap = function() {
+		var map = new Liferay['<%= mapsAPIProvider %>Map'](mapConfig).render();
 
-	Liferay.component('<%= name %>', map);
+		Liferay.MapBase.register('<%= name %>', map);
+	};
+
+	<c:choose>
+		<c:when test='<%= mapsAPIProvider.equals("Google") %>'>
+			if (Liferay.Maps.gmapsReady) {
+				createMap();
+			}
+			else {
+				Liferay.once('gmapsReady', createMap);
+			}
+		</c:when>
+		<c:otherwise>
+			createMap();
+		</c:otherwise>
+	</c:choose>
 </aui:script>

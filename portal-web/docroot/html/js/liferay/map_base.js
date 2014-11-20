@@ -534,7 +534,39 @@ AUI.add(
 							geolocationMarker.setPosition(location);
 						}
 					}
-				}
+				},
+
+				get: function(id, callback) {
+					var instance = this;
+
+					var map = Liferay.component(id);
+
+					if (map) {
+						callback(map);
+					}
+					else {
+						var pendingCallbacks = instance._pendingCallbacks[id] || [];
+
+						pendingCallbacks.push(callback);
+
+						instance._pendingCallbacks[id] = pendingCallbacks;
+					}
+				},
+
+				register: function(id, map) {
+					var instance = this;
+
+					Liferay.component(id, map);
+
+					A.Array.each(
+						instance._pendingCallbacks[id],
+						function(item, index, collection) {
+							item(map);
+						}
+					);
+				},
+
+				_pendingCallbacks: {}
 			},
 			true
 		);

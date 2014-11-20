@@ -235,7 +235,7 @@
 </tr>
 <tr>
 	<td>GMAIL_HTML_MODE_MESSAGE_BODY_LINK</td>
-	<td>//tr[contains(.,'${key_gmailAssetType}')]//td/div[@class='msg']/a[contains(.,'${key_gmailLinkName}')]</td>
+	<td>//tr[contains(.,'${key_gmailAssetType}')]//td/div[@class='msg']/a[contains(.,'${key_pageNameURL}')]</td>
 	<td></td>
 </tr>
 <tr>

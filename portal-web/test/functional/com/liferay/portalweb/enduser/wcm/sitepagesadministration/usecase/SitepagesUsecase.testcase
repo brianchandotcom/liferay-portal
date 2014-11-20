@@ -6,6 +6,11 @@
 	</set-up>
 
 	<tear-down>
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="test test" />
+		</execute>
+
 		<execute macro="Site#tearDownCP" />
 
 		<execute macro="WebContent#tearDownCP" />
@@ -1098,8 +1103,6 @@
 		<execute action="Home#open" locator1="${messageBoardsThreadURL}" />
 
 		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
-
-		<execute macro="User#logoutPG" />
 	</command>
 
 	<command name="WebContentAdministrationSitesPagesPanel" priority="3">
@@ -1151,10 +1154,11 @@
 		<execute action="PGPanel#assertClick" locator-key1="MENU_ITEM" value1="Message Boards" />
 
 		<execute macro="MessageboardsThread#gotoPG">
+			<var name="lastPostUserName" value="Test Test" />
 			<var name="postCount" value="1" />
+			<var name="startedByUserName" value="Test Test" />
 			<var name="threadBody" value="This is Message Boards Thread 1" />
 			<var name="threadSubject" value="Thread 1" />
-			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewPG">

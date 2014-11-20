@@ -245,6 +245,7 @@
 		<execute macro="WebContentTemplates#viewCP">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
+			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="WC Template Name" />
 			<var name="templateScript"><![CDATA[${Text.getData()}]]></var>
 		</execute>
@@ -351,6 +352,7 @@
 			<var name="localizedContent" value="WC Contenido de la web Contenido" />
 			<var name="localizedLanguage" value="Spanish (Spain)" />
 			<var name="localizedTitle" value="WC Contenido de la web Titulo" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -491,6 +493,7 @@
 		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
 			<var name="templateFile" value="xsl_template.xsl" />
 			<var name="templateLanguage" value="xsl" />
@@ -1013,6 +1016,7 @@
 			<var name="permissionDefinitionValue" value="Action" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT" />
 			<var name="permissionNavigationValue" value="Web Content" />
+			<var name="roleName" value="Web Content Administrator Role" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -1024,6 +1028,7 @@
 			<var name="permissionDefinitionValue" value="Action" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT" />
 			<var name="permissionNavigationValue" value="Web Content" />
+			<var name="roleName" value="Web Content Administrator Role" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -1035,6 +1040,7 @@
 			<var name="permissionDefinitionValue" value="Action" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT" />
 			<var name="permissionNavigationValue" value="Web Content" />
+			<var name="roleName" value="Web Content Administrator Role" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -1046,6 +1052,7 @@
 			<var name="permissionDefinitionValue" value="Action" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT" />
 			<var name="permissionNavigationValue" value="Web Content" />
+			<var name="roleName" value="Web Content Administrator Role" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -1084,7 +1091,9 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP" />
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
 
 		<execute macro="WebContent#editCP">
 			<var name="webContentContentEdit" value="WC WebContent Content Edit" />

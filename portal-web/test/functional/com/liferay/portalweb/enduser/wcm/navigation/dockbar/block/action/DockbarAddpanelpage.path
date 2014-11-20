@@ -72,12 +72,12 @@
 </tr>
 <tr>
 	<td>TYPE_PANEL_CHECKBOX</td>
-	<td>//span[contains(.,'${key_componentOrPortletName}')]/../i[contains(@class,'tree-node-checkbox')]</td>
+	<td>//div[contains(.,'${key_componentOrPortletName}')]/span[contains(@class,'tree-node-checkbox')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TYPE_PANEL_CHECKBOX_INPUT</td>
-	<td>//span[contains(.,'${key_componentOrPortletName}')]/../i[contains(@class,'tree-node-checkbox')]/input</td>
+	<td>//div[contains(.,'${key_componentOrPortletName}')]/span[contains(@class,'tree-node-checkbox')]/input</td>
 	<td></td>
 </tr>
 </tbody>

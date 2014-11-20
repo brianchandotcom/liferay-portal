@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>TITLE_LOCALIZATION</td>
-	<td>//img[contains(@class,'localized-flag') and contains(@alt,'${key_localizedLanguage}')]</td>
+	<td>//span[contains(@class,'translation-manager') and contains(.,'${key_localizedLanguage}')]</td>
 	<td></td>
 </tr>
 <tr>

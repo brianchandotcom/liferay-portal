@@ -229,6 +229,12 @@ Thanks,<br/>
 		</execute>
 
 		<execute action="Home#open" locator1="http://localhost:8080" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Reports Admin" />
+		</execute>
+
+		<execute macro="ReportsAdmin#tearDownConfiguration" />
 	</command>
 
 	<command name="ViewReportPG" priority="5">

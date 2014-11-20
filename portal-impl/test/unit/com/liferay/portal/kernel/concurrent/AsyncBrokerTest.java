@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.AdviseWith;
-import com.liferay.portal.test.AspectJNewEnvMethodRule;
+import com.liferay.portal.test.AspectJNewEnvTestRule;
 import com.liferay.portal.test.aspects.ReflectionUtilAdvice;
 
 import java.lang.reflect.Field;
@@ -382,8 +382,8 @@ public class AsyncBrokerTest {
 	}
 
 	@Rule
-	public final AspectJNewEnvMethodRule aspectJNewEnvMethodRule =
-		new AspectJNewEnvMethodRule();
+	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
+		new AspectJNewEnvTestRule();
 
 	private static final String _KEY = "testKey";
 

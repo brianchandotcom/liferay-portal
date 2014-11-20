@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.security;
 import com.liferay.portal.kernel.io.BigEndianCodec;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.NewEnv;
-import com.liferay.portal.kernel.test.NewEnvMethodRule;
+import com.liferay.portal.kernel.test.NewEnvTestRule;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
 import java.security.SecureRandom;
@@ -373,7 +373,7 @@ public class SecureRandomUtilTest {
 	}
 
 	@Rule
-	public final NewEnvMethodRule newEnvMethodRule = new NewEnvMethodRule();
+	public final NewEnvTestRule newEnvTestRule = new NewEnvTestRule();
 
 	protected long getFirstLong() {
 		byte[] bytes = ReflectionTestUtil.getFieldValue(

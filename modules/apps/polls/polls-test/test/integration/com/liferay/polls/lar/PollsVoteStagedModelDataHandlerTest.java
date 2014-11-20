@@ -25,7 +25,7 @@ import com.liferay.polls.util.test.PollsTestUtil;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
-import com.liferay.portal.test.TransactionalMethodRule;
+import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
 
 import java.util.HashMap;
@@ -51,8 +51,8 @@ public class PollsVoteStagedModelDataHandlerTest
 		new DeleteAfterTestRunRule(this);
 
 	@Rule
-	public TransactionalMethodRule transactionalMethodRule =
-		new TransactionalMethodRule();
+	public TransactionalTestRule transactionalTestRule =
+		new TransactionalTestRule();
 
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(

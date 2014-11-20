@@ -24,13 +24,10 @@
 <%@ taglib uri="/META-INF/liferay-ui.tld" prefix="liferay-ui" %>
 <%@ taglib uri="/META-INF/liferay-util.tld" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.ipgeocoder.model.IPInfo" %><%@
-page import="com.liferay.ipgeocoder.util.IPGeocoderUtil" %><%@
+<%@ page import="com.liferay.ip.geocoder.IPInfo" %><%@
 page import="com.liferay.portal.NoSuchUserException" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.messaging.DestinationNames" %><%@
-page import="com.liferay.portal.kernel.messaging.MessageBusUtil" %><%@
 page import="com.liferay.portal.kernel.util.CalendarFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
@@ -39,7 +36,6 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.model.Contact" %><%@
 page import="com.liferay.portal.model.Group" %><%@
@@ -64,8 +60,8 @@ page import="com.liferay.portlet.social.model.SocialRequestConstants" %><%@
 page import="com.liferay.portlet.social.service.SocialActivityLocalServiceUtil" %><%@
 page import="com.liferay.portlet.social.service.SocialRelationLocalServiceUtil" %><%@
 page import="com.liferay.portlet.social.service.SocialRequestLocalServiceUtil" %><%@
-page import="com.liferay.socialnetworking.NoSuchMeetupsEntryException" %><%@
-page import="com.liferay.socialnetworking.NoSuchMeetupsRegistrationException" %><%@
+page import="com.liferay.socialnetworking.exception.NoSuchMeetupsEntryException" %><%@
+page import="com.liferay.socialnetworking.exception.NoSuchMeetupsRegistrationException" %><%@
 page import="com.liferay.socialnetworking.friends.social.FriendsRequestKeys" %><%@
 page import="com.liferay.socialnetworking.meetups.util.MeetupsConstants" %><%@
 page import="com.liferay.socialnetworking.members.social.MembersRequestKeys" %><%@
@@ -75,8 +71,10 @@ page import="com.liferay.socialnetworking.model.WallEntry" %><%@
 page import="com.liferay.socialnetworking.service.MeetupsEntryLocalServiceUtil" %><%@
 page import="com.liferay.socialnetworking.service.MeetupsRegistrationLocalServiceUtil" %><%@
 page import="com.liferay.socialnetworking.service.WallEntryLocalServiceUtil" %><%@
+page import="com.liferay.socialnetworking.util.IPGeocoderHelper" %><%@
 page import="com.liferay.socialnetworking.util.PortletKeys" %><%@
 page import="com.liferay.socialnetworking.util.WallUtil" %><%@
+page import="com.liferay.socialnetworking.util.WebKeys" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.util.RSSUtil" %><%@
 page import="com.liferay.util.portlet.PortletProps" %>

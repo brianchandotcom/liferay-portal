@@ -34,6 +34,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -248,7 +249,11 @@ public class DeleteAfterTestRunRule implements TestRule {
 				PersistedModelLocalServiceRegistryUtil.
 					getPersistedModelLocalService(fieldClass.getName());
 
-			for (Field field : fieldBag.getFields()) {
+			List<Field> fields = fieldBag.getFields();
+
+			Collections.reverse(fields);
+
+			for (Field field : fields) {
 				Object object = field.get(instance);
 
 				if (object == null) {

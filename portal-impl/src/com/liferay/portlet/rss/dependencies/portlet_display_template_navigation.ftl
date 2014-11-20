@@ -65,7 +65,7 @@
 	</div>
 
 	<@aui["script"] use="aui-base,aui-tabview">
-		new Y.TabView(
+		new A.TabView(
 			{
 				srcNode: '#<@liferay_portlet.namespace />feedsTab',
 				stacked: true,

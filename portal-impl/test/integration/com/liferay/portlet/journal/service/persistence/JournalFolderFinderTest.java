@@ -22,7 +22,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.spring.hibernate.LastSessionRecorderUtil;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
-import com.liferay.portal.test.TransactionalTestRule;
+import com.liferay.portal.test.TransactionalMethodRule;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.GroupTestUtil;
@@ -37,7 +37,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -52,10 +52,6 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class JournalFolderFinderTest {
-
-	@ClassRule
-	public static TransactionalTestRule transactionalTestRule =
-		new TransactionalTestRule();
 
 	@Before
 	public void setUp() throws Exception {
@@ -190,6 +186,10 @@ public class JournalFolderFinderTest {
 
 		Assert.assertEquals(_folder2.getFolderId(), folder.getFolderId());
 	}
+
+	@Rule
+	public TransactionalMethodRule transactionalMethodRule =
+		new TransactionalMethodRule();
 
 	private JournalFolder _folder1;
 	private JournalFolder _folder2;

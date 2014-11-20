@@ -26,7 +26,7 @@ import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
-import com.liferay.portal.test.TransactionalTestRule;
+import com.liferay.portal.test.TransactionalMethodRule;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortletKeys;
@@ -40,7 +40,7 @@ import javax.portlet.PortletPreferences;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -55,10 +55,6 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class ExportImportDateUtilTest {
-
-	@ClassRule
-	public static TransactionalTestRule transactionalTestRule =
-		new TransactionalTestRule();
 
 	@Before
 	public void setUp() throws Exception {
@@ -348,6 +344,10 @@ public class ExportImportDateUtilTest {
 
 		Assert.assertEquals(endDate.getTime(), lastPublishDate.getTime());
 	}
+
+	@Rule
+	public TransactionalMethodRule transactionalMethodRule =
+		new TransactionalMethodRule();
 
 	protected void updateLastPublishDate(
 			LayoutSet layoutSet, Date lastPublishDate)

@@ -23,14 +23,14 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.test.TransactionalTestRule;
+import com.liferay.portal.test.TransactionalMethodRule;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -441,10 +441,6 @@ import org.junit.runner.RunWith;
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class SQLNullTest {
-
-	@ClassRule
-	public static TransactionalTestRule transactionalTestRule =
-		new TransactionalTestRule();
 
 	@Test
 	public void testBlankStringEqualsNull() {
@@ -919,6 +915,10 @@ public class SQLNullTest {
 			_sessionFactory.closeSession(session);
 		}
 	}
+
+	@Rule
+	public TransactionalMethodRule transactionalMethodRule =
+		new TransactionalMethodRule();
 
 	protected boolean isDBType(String dBType) {
 		DB db = DBFactoryUtil.getDB();

@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
-import com.liferay.portal.test.TransactionalTestRule;
+import com.liferay.portal.test.TransactionalMethodRule;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
@@ -44,9 +44,9 @@ import org.junit.runner.RunWith;
 public class DLFileEntryTypeStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
-	@ClassRule
-	public static TransactionalTestRule transactionalTestRule =
-		new TransactionalTestRule();
+	@Rule
+	public TransactionalMethodRule transactionalMethodRule =
+		new TransactionalMethodRule();
 
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(

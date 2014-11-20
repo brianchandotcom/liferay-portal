@@ -104,10 +104,10 @@ private String _getURL(long groupId, long plid, PortletURL addPortletURL, String
 
 	String addPortletURLString = addPortletURL.toString();
 
-	String namespace = PortalUtil.getPortletNamespace(portletId);
+	addPortletURLString = HttpUtil.addParameter(addPortletURLString, "doAsGroupId", groupId);
+	addPortletURLString = HttpUtil.addParameter(addPortletURLString, "refererPlid", plid);
 
-	addPortletURLString = HttpUtil.addParameter(addPortletURLString, namespace + "doAsGroupId", groupId);
-	addPortletURLString = HttpUtil.addParameter(addPortletURLString, namespace + "refererPlid", plid);
+	String namespace = PortalUtil.getPortletNamespace(portletId);
 
 	if (defaultAssetPublisher) {
 		addPortletURLString = HttpUtil.addParameter(addPortletURLString, namespace + "layoutUuid", layout.getUuid());

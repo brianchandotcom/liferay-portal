@@ -1,12 +1,12 @@
 <definition>
 	<command name="addField">
-		<var name="key_previousFieldName" value="${previousFieldName}" />
+		<var name="key_wfPreviousFieldName" value="${wfPreviousFieldName}" />
 
 		<execute action="PGWebformConfiguration#click" locator-key1="SETUP_FORM_FIELDS_ADD_ROW_BUTTON" />
 
 		<execute macro="WebFormPortlet#editField">
-			<var name="fieldName" value="New Item" />
-			<var name="newFieldName" value="${newFieldName}" />
+			<var name="wfFieldName" value="New Item" />
+			<var name="wfNewFieldName" value="${wfNewFieldName}" />
 		</execute>
 	</command>
 
@@ -21,24 +21,24 @@
 	</command>
 
 	<command name="editField">
-		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_wfFieldName" value="${wfFieldName}" />
 
-		<execute action="PGWebformConfiguration#type" locator-key1="SETUP_FORM_FIELDS_NAME_FIELD" value1="${newFieldName}" />
+		<execute action="PGWebformConfiguration#type" locator-key1="SETUP_FORM_FIELDS_NAME_FIELD" value1="${wfNewFieldName}" />
 		<execute action="PGWebformConfiguration#click" locator-key1="SETUP_FORM_FIELDS" />
 
 		<if>
-			<isset var="fieldType" />
+			<isset var="wfFieldType" />
 			<then>
-				<var name="key_newFieldName" value="${newFieldName}" />
+				<var name="key_wfNewFieldName" value="${wfNewFieldName}" />
 
-				<execute action="PGWebformConfiguration#select" locator-key1="SETUP_FORM_FIELDS_TYPE_SELECT" value1="${fieldType}" />
+				<execute action="PGWebformConfiguration#select" locator-key1="SETUP_FORM_FIELDS_TYPE_SELECT" value1="${wfFieldType}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${optional}" arg2="true" />
 			<then>
-				<var name="key_newFieldName" value="${newFieldName}" />
+				<var name="key_wfNewFieldName" value="${wfNewFieldName}" />
 
 				<execute action="PGWebformConfiguration#check" locator-key1="SETUP_FORM_FIELDS_OPTIONAL_CHECKBOX" />
 			</then>
@@ -52,13 +52,13 @@
 	</command>
 
 	<command name="viewField">
-		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_wfFieldName" value="${wfFieldName}" />
 
 		<execute action="PGWebformConfiguration#assertElementPresent" locator-key1="SETUP_FORM_FIELDS_NAME_FIELD" />
 	</command>
 
 	<command name="viewFieldNotPresent">
-		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_wfFieldName" value="${wfFieldName}" />
 
 		<execute action="PGWebformConfiguration#assertElementNotPresent" locator-key1="SETUP_FORM_FIELDS_NAME_FIELD" />
 	</command>

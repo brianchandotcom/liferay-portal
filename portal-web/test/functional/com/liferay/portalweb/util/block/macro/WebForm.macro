@@ -1,39 +1,43 @@
 <definition>
-	<command name="populateFormField">
-		<var name="key_fieldName" value="${fieldName}" />
+	<command name="populateFieldCheckBox">
+		<var name="key_wfFieldName" value="${wfFieldName}" />
+
+		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_CHECKBOX_FIELD_HEADER" value1="${wfFieldName}" />
+		<execute action="PGWebform#assertElementPresent" locator-key1="FORM_FIELDS_CHECKBOX_FIELD" />
 
 		<if>
-			<equals arg1="${fieldType}" arg2="Text" />
+			<equals arg1="${wfFieldValue}" arg2="true" />
 			<then>
-				<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_FIELD_HEADER" value1="${fieldName}" />
-				<execute action="PGWebform#type" locator-key1="FORM_FIELDS_TEXT_FIELD" value1="${formFieldValue}" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${fieldType}" arg2="Select" />
-			<then>
-				<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_FIELD_HEADER" value1="${fieldName}" />
-				<execute action="PGWebform#select" locator-key1="FORM_FIELDS_SELECT_FIELD" value1="${formFieldValue}" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${fieldType}" arg2="Check Box" />
-			<then>
-				<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_CHECKBOX_FIELD_HEADER" value1="${fieldName}" />
-				<execute action="PGWebform#assertElementPresent" locator-key1="FORM_FIELDS_CHECKBOX_FIELD" />
 				<execute action="PGWebform#check" locator-key1="FORM_FIELDS_CHECKBOX_FIELD" />
 			</then>
+			<elseif>
+				<equals arg1="${wfFieldValue}" arg2="false" />
+				<then>
+					<execute action="PGWebform#uncheck" locator-key1="FORM_FIELDS_CHECKBOX_FIELD" />
+				</then>
+			</elseif>
 		</if>
+	</command>
 
-		<if>
-			<equals arg1="${fieldType}" arg2="Text Box" />
-			<then>
-				<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_FIELD_HEADER" value1="${fieldName}" />
-				<execute action="PGWebform#type" locator-key1="FORM_FIELDS_TEXT_BOX_FIELD" value1="${formFieldValue}" />
-			</then>
-		</if>
+	<command name="populateFieldSelect">
+		<var name="key_wfFieldName" value="${wfFieldName}" />
+
+		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_FIELD_HEADER" value1="${wfFieldName}" />
+		<execute action="PGWebform#select" locator-key1="FORM_FIELDS_SELECT_FIELD" value1="${wfFieldValue}" />
+	</command>
+
+	<command name="populateFieldText">
+		<var name="key_wfFieldName" value="${wfFieldName}" />
+
+		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_FIELD_HEADER" value1="${wfFieldName}" />
+		<execute action="PGWebform#type" locator-key1="FORM_FIELDS_TEXT_FIELD" value1="${wfFieldValue}" />
+	</command>
+
+	<command name="populateFieldTextBox">
+		<var name="key_wfFieldName" value="${wfFieldName}" />
+
+		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_FIELD_HEADER" value1="${wfFieldName}" />
+		<execute action="PGWebform#type" locator-key1="FORM_FIELDS_TEXT_BOX_FIELD" value1="${wfFieldValue}" />
 	</command>
 
 	<command name="sendPG">
@@ -41,40 +45,32 @@
 		<execute action="PGWebform#assertTextEquals" locator-key1="SUCCESS_MESSAGE_FORM" value1="The form information was sent successfully." />
 	</command>
 
-	<command name="viewFormField">
-		<var name="key_fieldName" value="${fieldName}" />
+	<command name="viewFormFieldCheckBox">
+		<var name="key_wfFieldName" value="${wfFieldName}" />
 
-		<if>
-			<equals arg1="${fieldType}" arg2="Text" />
-			<then>
-				<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_FIELD_HEADER" value1="${fieldName}" />
-				<execute action="PGWebform#assertElementPresent" locator-key1="FORM_FIELDS_TEXT_FIELD" />
-			</then>
-		</if>
+		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_CHECKBOX_FIELD_HEADER" value1="${wfFieldName}" />
+		<execute action="PGWebform#assertElementPresent" locator-key1="FORM_FIELDS_CHECKBOX_FIELD" />
+	</command>
 
-		<if>
-			<equals arg1="${fieldType}" arg2="Select" />
-			<then>
-				<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_FIELD_HEADER" value1="${fieldName}" />
-				<execute action="PGWebform#assertElementPresent" locator-key1="FORM_FIELDS_SELECT_FIELD" />
-			</then>
-		</if>
+	<command name="viewFormFieldSelect">
+		<var name="key_wfFieldName" value="${wfFieldName}" />
 
-		<if>
-			<equals arg1="${fieldType}" arg2="Check Box" />
-			<then>
-				<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_CHECKBOX_FIELD_HEADER" value1="${fieldName}" />
-				<execute action="PGWebform#assertElementPresent" locator-key1="FORM_FIELDS_CHECKBOX_FIELD" />
-			</then>
-		</if>
+		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_FIELD_HEADER" value1="${wfFieldName}" />
+		<execute action="PGWebform#assertElementPresent" locator-key1="FORM_FIELDS_SELECT_FIELD" />
+	</command>
 
-		<if>
-			<equals arg1="${fieldType}" arg2="Text Box" />
-			<then>
-				<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_FIELD_HEADER" value1="${fieldName}" />
-				<execute action="PGWebform#assertElementPresent" locator-key1="FORM_FIELDS_TEXT_BOX_FIELD" />
-			</then>
-		</if>
+	<command name="viewFormFieldText">
+		<var name="key_wfFieldName" value="${wfFieldName}" />
+
+		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_FIELD_HEADER" value1="${wfFieldName}" />
+		<execute action="PGWebform#assertElementPresent" locator-key1="FORM_FIELDS_TEXT_FIELD" />
+	</command>
+
+	<command name="viewFormFieldTextBox">
+		<var name="key_wfFieldName" value="${wfFieldName}" />
+
+		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_FIELD_HEADER" value1="${wfFieldName}" />
+		<execute action="PGWebform#assertElementPresent" locator-key1="FORM_FIELDS_TEXT_BOX_FIELD" />
 	</command>
 
 	<command name="viewPG">

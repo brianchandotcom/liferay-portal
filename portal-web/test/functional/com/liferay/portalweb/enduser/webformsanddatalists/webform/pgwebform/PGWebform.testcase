@@ -41,19 +41,19 @@
 		</execute>
 
 		<execute macro="WebFormPortlet#editField">
-			<var name="fieldName" value="Name" />
-			<var name="newFieldName" value="Your Name" />
+			<var name="wfFieldName" value="Name" />
+			<var name="wfNewFieldName" value="Your Name" />
 		</execute>
 
 		<execute macro="WebFormPortlet#editField">
-			<var name="fieldName" value="Rating" />
-			<var name="fieldType" value="Check Box" />
-			<var name="newFieldName" value="Rate Us!" />
+			<var name="wfFieldName" value="Rating" />
+			<var name="wfFieldType" value="Check Box" />
+			<var name="wfNewFieldName" value="Rate Us!" />
 		</execute>
 
 		<execute macro="WebFormPortlet#editField">
-			<var name="fieldName" value="Comments" />
-			<var name="newFieldName" value="Additional Comments" />
+			<var name="wfFieldName" value="Comments" />
+			<var name="wfNewFieldName" value="Additional Comments" />
 		</execute>
 
 		<execute macro="WebFormPortlet#saveConfiguration" />
@@ -67,36 +67,31 @@
 			<var name="formInformationTitle" value="Feed Back" />
 		</execute>
 
-		<execute macro="WebForm#viewFormField">
-			<var name="fieldName" value="Your Name" />
-			<var name="fieldType" value="Text" />
+		<execute macro="WebForm#viewFormFieldText">
+			<var name="wfFieldName" value="Your Name" />
 		</execute>
 
-		<execute macro="WebForm#viewFormField">
-			<var name="fieldName" value="Rate Us!" />
-			<var name="fieldType" value="Check Box" />
+		<execute macro="WebForm#viewFormFieldCheckBox">
+			<var name="wfFieldName" value="Rate Us!" />
 		</execute>
 
-		<execute macro="WebForm#viewFormField">
-			<var name="fieldName" value="Additional Comments" />
-			<var name="fieldType" value="Text Box" />
+		<execute macro="WebForm#viewFormFieldTextBox">
+			<var name="wfFieldName" value="Additional Comments" />
 		</execute>
 
-		<execute macro="WebForm#populateFormField">
-			<var name="fieldName" value="Your Name" />
-			<var name="fieldType" value="Text" />
-			<var name="formFieldValue" value="New Name" />
+		<execute macro="WebForm#populateFieldText">
+			<var name="wfFieldName" value="Your Name" />
+			<var name="wfFieldValue" value="New Name" />
 		</execute>
 
-		<execute macro="WebForm#populateFormField">
-			<var name="fieldName" value="Rate Us!" />
-			<var name="fieldType" value="Check Box" />
+		<execute macro="WebForm#populateFieldCheckBox">
+			<var name="wfFieldName" value="Rate Us!" />
+			<var name="wfFieldValue" value="true" />
 		</execute>
 
-		<execute macro="WebForm#populateFormField">
-			<var name="fieldName" value="Additional Comments" />
-			<var name="fieldType" value="Text Box" />
-			<var name="formFieldValue" value="Page Objects + Hashi = Poshi" />
+		<execute macro="WebForm#populateFieldTextBox">
+			<var name="wfFieldName" value="Additional Comments" />
+			<var name="wfFieldValue" value="Page Objects + Hashi = Poshi" />
 		</execute>
 
 		<execute macro="WebForm#sendPG" />
@@ -112,19 +107,16 @@
 			<var name="formInformationTitle" value="Suggestions" />
 		</execute>
 
-		<execute macro="WebForm#viewFormField">
-			<var name="fieldName" value="Name" />
-			<var name="fieldType" value="Text" />
+		<execute macro="WebForm#viewFormFieldText">
+			<var name="wfFieldName" value="Name" />
 		</execute>
 
-		<execute macro="WebForm#viewFormField">
-			<var name="fieldName" value="Rating" />
-			<var name="fieldType" value="Select" />
+		<execute macro="WebForm#viewFormFieldSelect">
+			<var name="wfFieldName" value="Rating" />
 		</execute>
 
-		<execute macro="WebForm#viewFormField">
-			<var name="fieldName" value="Comments" />
-			<var name="fieldType" value="Text Box" />
+		<execute macro="WebForm#viewFormFieldTextBox">
+			<var name="wfFieldName" value="Comments" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -137,19 +129,19 @@
 		</execute>
 
 		<execute macro="WebFormPortlet#editField">
-			<var name="fieldName" value="Name" />
-			<var name="newFieldName" value="Your Name" />
+			<var name="wfFieldName" value="Name" />
+			<var name="wfNewFieldName" value="Your Name" />
 		</execute>
 
 		<execute macro="WebFormPortlet#editField">
-			<var name="fieldName" value="Rating" />
-			<var name="fieldType" value="Check Box" />
-			<var name="newFieldName" value="Rate Us!" />
+			<var name="wfFieldName" value="Rating" />
+			<var name="wfFieldType" value="Check Box" />
+			<var name="wfNewFieldName" value="Rate Us!" />
 		</execute>
 
 		<execute macro="WebFormPortlet#editField">
-			<var name="fieldName" value="Comments" />
-			<var name="newFieldName" value="Additional Comments" />
+			<var name="wfFieldName" value="Comments" />
+			<var name="wfNewFieldName" value="Additional Comments" />
 		</execute>
 
 		<execute macro="WebFormPortlet#saveConfiguration" />
@@ -163,19 +155,17 @@
 			<var name="formInformationTitle" value="Feed Back" />
 		</execute>
 
-		<execute macro="WebForm#viewFormField">
-			<var name="fieldName" value="Your Name" />
-			<var name="fieldType" value="Text" />
+		<execute macro="WebForm#viewFormFieldText">
+			<var name="wfFieldName" value="Your Name" />
 		</execute>
 
-		<execute macro="WebForm#viewFormField">
-			<var name="fieldName" value="Rate Us!" />
-			<var name="fieldType" value="Check Box" />
+		<execute macro="WebForm#viewFormFieldCheckBox">
+			<var name="wfFieldName" value="Rate Us!" />
 		</execute>
 
-		<execute macro="WebForm#viewFormField">
-			<var name="fieldName" value="Additional Comments" />
-			<var name="fieldType" value="Text Box" />
+		<execute macro="WebForm#viewFormFieldTextBox">
+			<var name="wfFieldName" value="Additional Comments" />
+			<var name="wfFieldType" value="Text Box" />
 		</execute>
 	</command>
 
@@ -189,19 +179,16 @@
 			<var name="formInformationTitle" value="Suggestions" />
 		</execute>
 
-		<execute macro="WebForm#viewFormField">
-			<var name="fieldName" value="Name" />
-			<var name="fieldType" value="Text" />
+		<execute macro="WebForm#viewFormFieldText">
+			<var name="wfFieldName" value="Name" />
 		</execute>
 
-		<execute macro="WebForm#viewFormField">
-			<var name="fieldName" value="Rating" />
-			<var name="fieldType" value="Select" />
+		<execute macro="WebForm#viewFormFieldSelect">
+			<var name="wfFieldName" value="Rating" />
 		</execute>
 
-		<execute macro="WebForm#viewFormField">
-			<var name="fieldName" value="Comments" />
-			<var name="fieldType" value="Text Box" />
+		<execute macro="WebForm#viewFormFieldTextBox">
+			<var name="wfFieldName" value="Comments" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -214,25 +201,25 @@
 		</execute>
 
 		<execute macro="WebFormPortlet#editField">
-			<var name="fieldName" value="Name" />
-			<var name="newFieldName" value="Test 1" />
+			<var name="wfFieldName" value="Name" />
+			<var name="wfNewFieldName" value="Test 1" />
 		</execute>
 
 		<execute macro="WebFormPortlet#addField">
-			<var name="fieldName" value="Name" />
-			<var name="newFieldName" value="Test 2" />
-			<var name="previousFieldName" value="Test 1" />
+			<var name="wfFieldName" value="Name" />
+			<var name="wfNewFieldName" value="Test 2" />
+			<var name="wfPreviousFieldName" value="Test 1" />
 		</execute>
 
 		<execute macro="WebFormPortlet#editField">
-			<var name="fieldName" value="Rating" />
-			<var name="fieldType" value="Check Box" />
-			<var name="newFieldName" value="Rate Us!" />
+			<var name="wfFieldName" value="Rating" />
+			<var name="wfFieldType" value="Check Box" />
+			<var name="wfNewFieldName" value="Rate Us!" />
 		</execute>
 
 		<execute macro="WebFormPortlet#editField">
-			<var name="fieldName" value="Comments" />
-			<var name="newFieldName" value="Additional Comments" />
+			<var name="wfFieldName" value="Comments" />
+			<var name="wfNewFieldName" value="Additional Comments" />
 		</execute>
 
 		<execute macro="WebFormPortlet#saveConfiguration" />
@@ -250,9 +237,9 @@
 		<execute action="PGWebform#assertElementPresent" locator1="xpath=(//fieldset/div/div[contains(@class,'control')]/input[@type='text'])[1]" />
 		<execute action="PGWebform#assertTextEquals" locator1="xpath=(//div[contains(@class,'control')]/label[contains(@for,'webformportlet')])[2]" value1="Test 2" />
 		<execute action="PGWebform#assertElementPresent" locator1="xpath=(//fieldset/div/div[contains(@class,'control')]/input[@type='text'])[2]" />
-		<execute action="PGWebform#assertTextEquals" locator1="//label[@class='checkbox']" value1="Rate Us!" />
+		<execute action="PGWebform#assertTextEquals" locator1="xpath=(//div[contains(@class,'control')]/label[contains(@for,'webformportlet')])[3]" value1="Rate Us!" />
 		<execute action="PGWebform#assertElementPresent" locator1="//label[@class='checkbox']/input[@type='checkbox']" />
-		<execute action="PGWebform#assertTextEquals" locator1="xpath=(//div[contains(@class,'control')]/label[contains(@for,'webformportlet')])[3]" value1="Additional Comments" />
+		<execute action="PGWebform#assertTextEquals" locator1="xpath=(//div[contains(@class,'control')]/label[contains(@for,'webformportlet')])[4]" value1="Additional Comments" />
 		<execute action="PGWebform#assertElementPresent" locator1="//fieldset/div/div[contains(@class,'control')]/textarea" />
 	</command>
 
@@ -268,15 +255,15 @@
 		<execute action="PGWebformConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 
 		<execute macro="WebFormPortlet#viewField">
-			<var name="fieldName" value="Name" />
+			<var name="wfFieldName" value="Name" />
 		</execute>
 
 		<execute macro="WebFormPortlet#viewField">
-			<var name="fieldName" value="Rating" />
+			<var name="wfFieldName" value="Rating" />
 		</execute>
 
 		<execute macro="WebFormPortlet#viewField">
-			<var name="fieldName" value="Comments" />
+			<var name="wfFieldName" value="Comments" />
 		</execute>
 
 		<execute action="PGWebformConfiguration#selectFrameTop" value1="relative=top" />
@@ -285,22 +272,19 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WebForm#populateFormField">
-			<var name="fieldName" value="Name" />
-			<var name="fieldType" value="Text" />
-			<var name="formFieldValue" value="Test Test" />
+		<execute macro="WebForm#populateFieldText">
+			<var name="wfFieldName" value="Name" />
+			<var name="wfFieldValue" value="Test Test" />
 		</execute>
 
-		<execute macro="WebForm#populateFormField">
-			<var name="fieldName" value="Rating" />
-			<var name="fieldType" value="Select" />
-			<var name="formFieldValue" value="Excellent" />
+		<execute macro="WebForm#populateFieldSelect">
+			<var name="wfFieldName" value="Rating" />
+			<var name="wfFieldValue" value="Excellent" />
 		</execute>
 
-		<execute macro="WebForm#populateFormField">
-			<var name="fieldName" value="Comments" />
-			<var name="fieldType" value="Text Box" />
-			<var name="formFieldValue" value="Page Objects + Hashi = Poshi" />
+		<execute macro="WebForm#populateFieldTextBox">
+			<var name="wfFieldName" value="Comments" />
+			<var name="wfFieldValue" value="Page Objects + Hashi = Poshi" />
 		</execute>
 
 		<execute macro="WebForm#sendPG" />
@@ -317,15 +301,15 @@
 		<execute action="PGWebformConfiguration#assertTextEquals" locator-key1="SETUP_FORM_FIELDS_INFO_MESSAGE" value1="There is existing form data. Please export and delete it before making changes to the fields." />
 
 		<execute macro="WebFormPortlet#viewFieldNotPresent">
-			<var name="fieldName" value="Name" />
+			<var name="wfFieldName" value="Name" />
 		</execute>
 
 		<execute macro="WebFormPortlet#viewFieldNotPresent">
-			<var name="fieldName" value="Rating" />
+			<var name="wfFieldName" value="Rating" />
 		</execute>
 
 		<execute macro="WebFormPortlet#viewFieldNotPresent">
-			<var name="fieldName" value="Comments" />
+			<var name="wfFieldName" value="Comments" />
 		</execute>
 
 		<execute action="PGWebformConfiguration#selectFrameTop" value1="relative=top" />

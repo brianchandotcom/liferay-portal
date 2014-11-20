@@ -72,22 +72,22 @@
 </tr>
 <tr>
 	<td>SETUP_FORM_FIELDS_NAME_FIELD</td>
-	<td>//div[@class='field-title' and contains(.,'${key_fieldName}')]/..//input[contains(@id,'_86_fieldLabel') and @type='text']</td>
+	<td>//div[@class='field-title' and contains(.,'${key_wfFieldName}')]/..//input[contains(@id,'_86_fieldLabel') and @type='text']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETUP_FORM_FIELDS_TYPE_SELECT</td>
-	<td>//div[@class='field-title' and contains(.,'${key_newFieldName}')]/..//select[contains(@id,'_86_fieldType')]</td>
+	<td>//div[@class='field-title' and contains(.,'${key_wfNewFieldName}')]/..//select[contains(@id,'_86_fieldType')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETUP_FORM_FIELDS_OPTIONAL_CHECKBOX</td>
-	<td>//div[@class='field-title' and contains(.,'${key_newFieldName}')]/..//input[contains(@id,'_86_fieldOptional') and @type='checkbox']</td>
+	<td>//div[@class='field-title' and contains(.,'${key_wfNewFieldName}')]/..//input[contains(@id,'_86_fieldOptional') and @type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETUP_FORM_FIELDS_ADD_ROW_BUTTON</td>
-	<td>//div[@class='field-title' and contains(.,'${key_previousFieldName}')]/../../..//button[contains(@class,'add-row')]</td>
+	<td>//div[@class='field-title' and contains(.,'${key_wfPreviousFieldName}')]/../../..//button[contains(@class,'add-row')]</td>
 	<td></td>
 </tr>
 <tr>

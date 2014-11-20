@@ -62,32 +62,32 @@
 <!--FORM_FIELDS-->
 <tr>
 	<td>FORM_FIELDS_FIELD_HEADER</td>
-	<td>//div[contains(@class,'control') and contains(.,'${key_fieldName}')]/label[contains(@for,'webformportlet')]</td>
+	<td>//div[contains(@class,'control') and contains(.,'${key_wfFieldName}')]/label[contains(@for,'webformportlet')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FORM_FIELDS_TEXT_FIELD</td>
-	<td>//div[contains(@class,'control') and contains(.,'${key_fieldName}')]/input[@type='text']</td>
+	<td>//div[contains(@class,'control') and contains(.,'${key_wfFieldName}')]/input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FORM_FIELDS_SELECT_FIELD</td>
-	<td>//div[contains(@class,'control') and contains(.,'${key_fieldName}')]/select</td>
+	<td>//div[contains(@class,'control') and contains(.,'${key_wfFieldName}')]/select</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FORM_FIELDS_CHECKBOX_FIELD</td>
-	<td>//label[@class='checkbox' and contains(.,'${key_fieldName}')]/input[@type='checkbox']</td>
+	<td>//label[@class='checkbox' and contains(.,'${key_wfFieldName}')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FORM_FIELDS_CHECKBOX_FIELD_HEADER</td>
-	<td>//label[@class='checkbox' and contains(.,'${key_fieldName}')]</td>
+	<td>//label[@class='checkbox' and contains(.,'${key_wfFieldName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FORM_FIELDS_TEXT_BOX_FIELD</td>
-	<td>//div[contains(@class,'control') and contains(.,'${key_fieldName}')]/textarea</td>
+	<td>//div[contains(@class,'control') and contains(.,'${key_wfFieldName}')]/textarea</td>
 	<td></td>
 </tr>
 </tbody>

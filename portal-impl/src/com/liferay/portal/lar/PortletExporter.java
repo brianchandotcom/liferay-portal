@@ -178,24 +178,10 @@ public class PortletExporter {
 
 		Date originalStartDate = portletDataContext.getStartDate();
 
-		Date startDate = originalStartDate;
+		Date portletLastPublishDate = ExportImportDateUtil.getLastPublishDate(
+			portletDataContext, jxPortletPreferences);
 
-		String range = MapUtil.getString(
-			portletDataContext.getParameterMap(), "range");
-
-		if (range.equals(ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE)) {
-			Date lastPublishDate = ExportImportDateUtil.getLastPublishDate(
-				jxPortletPreferences);
-
-			if (lastPublishDate == null) {
-				startDate = null;
-			}
-			else if (lastPublishDate.before(startDate)) {
-				startDate = lastPublishDate;
-			}
-		}
-
-		portletDataContext.setStartDate(startDate);
+		portletDataContext.setStartDate(portletLastPublishDate);
 
 		long groupId = portletDataContext.getGroupId();
 
@@ -242,7 +228,7 @@ public class PortletExporter {
 
 		if (updateLastPublishDate) {
 			DateRange adjustedDateRange = new DateRange(
-				startDate, portletDataContext.getEndDate());
+				portletLastPublishDate, portletDataContext.getEndDate());
 
 			TransactionCommitCallbackRegistryUtil.registerCallback(
 				new UpdatePortletLastPublishDateCallable(

@@ -32,9 +32,11 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.ExportImportConfiguration;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -209,6 +211,37 @@ public class ExportImportDateUtil {
 		}
 
 		return new Date(lastPublishDate);
+	}
+
+	public static Date getLastPublishDate(
+			PortletDataContext portletDataContext,
+			PortletPreferences jxPortletPreferences)
+		throws PortalException {
+
+		Group group = GroupLocalServiceUtil.getGroup(
+			portletDataContext.getGroupId());
+
+		String range = MapUtil.getString(
+			portletDataContext.getParameterMap(), "range");
+
+		if (!group.isStagedRemotely() &&
+			range.equals(RANGE_FROM_LAST_PUBLISH_DATE)) {
+
+			Date portletLastPublishDate = getLastPublishDate(
+				jxPortletPreferences);
+
+			if (portletLastPublishDate == null) {
+				return null;
+			}
+
+			if (portletLastPublishDate.before(
+					portletDataContext.getStartDate())) {
+
+				return portletLastPublishDate;
+			}
+		}
+
+		return portletDataContext.getStartDate();
 	}
 
 	public static Date getLastPublishDate(

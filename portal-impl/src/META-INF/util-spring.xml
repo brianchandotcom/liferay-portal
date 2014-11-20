@@ -1092,6 +1092,11 @@
 			<bean class="com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.dynamicdatamapping.validator.DDMFormValidatorUtil" class="com.liferay.portlet.dynamicdatamapping.validator.DDMFormValidatorUtil">
+		<property name="DDMFormValidator">
+			<bean class="com.liferay.portlet.dynamicdatamapping.validator.DDMFormValidatorImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil" class="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil">
 		<property name="expandoColumnPermission">
 			<bean class="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionImpl" />

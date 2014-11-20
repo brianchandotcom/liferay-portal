@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.storage;
+package com.liferay.portlet.dynamicdatamapping.validator;
 
 import com.liferay.portlet.dynamicdatamapping.StorageException;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 /**
  * @author Marcellus Tavares

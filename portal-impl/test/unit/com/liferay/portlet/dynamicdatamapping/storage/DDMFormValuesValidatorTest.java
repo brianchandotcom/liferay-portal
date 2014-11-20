@@ -25,6 +25,8 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
+import com.liferay.portlet.dynamicdatamapping.validator.DDMFormValuesValidatorImpl;
+import com.liferay.portlet.dynamicdatamapping.validator.DDMFormValuesValidatorUtil;
 
 import java.util.List;
 

@@ -86,17 +86,16 @@ public class EditUserAction
 		String currentPassword = actionRequest.getParameter("password0");
 		String newPassword = actionRequest.getParameter("password1");
 
+		User user = PortalUtil.getSelectedUser(actionRequest);
+
 		if (Validator.isNotNull(currentPassword)) {
 			if (Validator.isNull(newPassword)) {
-				throw new UserPasswordException(
-					UserPasswordException.PASSWORD_LENGTH);
+				throw new UserPasswordException.MustNotBeNull(user.getUserId());
 			}
 
 			Company company = PortalUtil.getCompany(actionRequest);
 
 			String authType = company.getAuthType();
-
-			User user = PortalUtil.getSelectedUser(actionRequest);
 
 			String login = null;
 
@@ -114,13 +113,12 @@ public class EditUserAction
 				login, currentPassword, user.getPassword());
 
 			if (!validPassword) {
-				throw new UserPasswordException(
-					UserPasswordException.PASSWORD_INVALID);
+				throw new UserPasswordException.MustMatchCurrentPassword(
+					user.getUserId());
 			}
 		}
 		else if (Validator.isNotNull(newPassword)) {
-			throw new UserPasswordException(
-				UserPasswordException.PASSWORD_INVALID);
+			throw new UserPasswordException.MustNotBeNull(user.getUserId());
 		}
 
 		return super.updateUser(actionRequest, actionResponse);

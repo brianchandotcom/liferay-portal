@@ -29,6 +29,12 @@ Export-Package:\
 	com.liferay.portal.upgrade.v7_0_0,\
 	com.liferay.portal.verify,\
 	com.liferay.portal.xml,\
+	com.liferay.portlet.dynamicdatamapping.service.permission,\
+	com.liferay.portlet.journal.asset,\
+	com.liferay.portlet.journal.ddm,\
+	com.liferay.portlet.journal.lar,\
+	com.liferay.portlet.journal.service.permission,\
+	com.liferay.util.log4j,\
 	\
 	javax.sql,org.hibernate,\
 	\

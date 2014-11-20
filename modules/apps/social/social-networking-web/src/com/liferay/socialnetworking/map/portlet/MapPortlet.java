@@ -14,11 +14,24 @@
 
 package com.liferay.socialnetworking.map.portlet;
 
+import com.liferay.ip.geocoder.IPGeocoder;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.util.Portal;
+import com.liferay.socialnetworking.util.IPGeocoderHelper;
+import com.liferay.socialnetworking.util.WebKeys;
+
+import java.io.IOException;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
 
 /**
  * @author Adolfo Pérez
@@ -45,5 +58,38 @@ public class MapPortlet extends MVCPortlet {
 
 	public static final String JAVAX_PORTLET_NAME =
 		"com_liferay_socialnetworking_map_portlet_MapPortlet";
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		if (_ipGeocoder != null) {
+			HttpServletRequest request = _portal.getHttpServletRequest(
+				renderRequest);
+
+			request.setAttribute(
+				WebKeys.IP_GEOCODER, new IPGeocoderHelper(_ipGeocoder));
+		}
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
+	protected void setIPGeocoder(IPGeocoder ipGeocoder) {
+		_ipGeocoder = ipGeocoder;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortal(Portal portal) {
+		_portal = portal;
+	}
+
+	protected void unsetIPGeocoder(IPGeocoder ipGeocoder) {
+		_ipGeocoder = null;
+	}
+
+	private IPGeocoder _ipGeocoder;
+	private Portal _portal;
 
 }

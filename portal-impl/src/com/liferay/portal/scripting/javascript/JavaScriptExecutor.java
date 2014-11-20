@@ -113,7 +113,8 @@ public class JavaScriptExecutor extends BaseScriptingExecutor {
 	}
 
 	protected Script getCompiledScript(
-		String script, ClassLoader... classLoaders) throws ScriptingException {
+			String script, ClassLoader... classLoaders)
+		throws ScriptingException {
 
 		String key = String.valueOf(script.hashCode());
 

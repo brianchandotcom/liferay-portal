@@ -378,7 +378,7 @@
 		</init-param>
 		<init-param>
 			<param-name>url-regex-ignore-pattern</param-name>
-			<param-value>^/html/.+\.(css|gif|html|ico|jpg|js|png)(\?.*)?$</param-value>
+			<param-value>(^/combo/)|(^/html/.+\.(css|gif|html|ico|jpg|js|png)(\?.*)?$)</param-value>
 		</init-param>
 	</filter>
 	<filter>

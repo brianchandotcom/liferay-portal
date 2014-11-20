@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.socialnetworking.hook.upgrade;
+package com.liferay.socialnetworking.upgrade;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
-import com.liferay.socialnetworking.hook.upgrade.v1_0_0.UpgradeNamespace;
+import com.liferay.socialnetworking.upgrade.v1_0_0.UpgradeNamespace;
 
 import java.util.Collections;
 import java.util.List;
@@ -39,7 +39,7 @@ public class SocialNetworkingWebUpgrade {
 	@Reference(
 		target =
 			"(org.springframework.context.service.name=" +
-				"com.liferay.socialnetworking)",
+				"com.liferay.social.networking.service)",
 		unbind = "-"
 	)
 	protected void setApplicationContext(

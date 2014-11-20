@@ -59,7 +59,6 @@ journalContentDisplayContext.incrementViewCounter();
 										</c:when>
 										<c:otherwise>
 											<portlet:renderURL var="printPageURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-												<portlet:param name="struts_action" value="/journal_content/view" />
 												<portlet:param name="groupId" value="<%= String.valueOf(articleDisplay.getGroupId()) %>" />
 												<portlet:param name="articleId" value="<%= articleDisplay.getArticleId() %>" />
 												<portlet:param name="page" value="<%= String.valueOf(articleDisplay.getCurrentPage()) %>" />
@@ -92,8 +91,7 @@ journalContentDisplayContext.incrementViewCounter();
 											for (String extension : journalContentDisplayContext.getExtensions()) {
 											%>
 
-												<portlet:actionURL var="exportArticleURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-													<portlet:param name="struts_action" value="/journal/export_article" />
+												<portlet:actionURL name="exportArticle" var="exportArticleURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 													<portlet:param name="groupId" value="<%= String.valueOf(articleDisplay.getGroupId()) %>" />
 													<portlet:param name="articleId" value="<%= articleDisplay.getArticleId() %>" />
 													<portlet:param name="targetExtension" value="<%= extension %>" />
@@ -202,7 +200,7 @@ journalContentDisplayContext.incrementViewCounter();
 	<div class="icons-container lfr-meta-actions">
 		<div class="lfr-icon-actions">
 			<portlet:renderURL var="redirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="struts_action" value="/journal_content/update_journal_article_redirect" />
+				<portlet:param name="mvcPath" value="/update_journal_article_redirect.jsp" />
 				<portlet:param name="referringPortletResource" value="<%= portletDisplay.getId() %>" />
 			</portlet:renderURL>
 
@@ -351,9 +349,7 @@ journalContentDisplayContext.incrementViewCounter();
 			/>
 		</c:if>
 
-		<portlet:actionURL var="discussionURL">
-			<portlet:param name="struts_action" value="/journal_content/edit_article_discussion" />
-		</portlet:actionURL>
+		<portlet:actionURL name="invokeTaglibDiscussion" var="discussionURL" />
 
 		<liferay-ui:discussion
 			className="<%= JournalArticle.class.getName() %>"

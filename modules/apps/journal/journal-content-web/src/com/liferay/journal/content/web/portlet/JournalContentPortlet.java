@@ -28,10 +28,13 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleDisplay;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.portlet.journal.util.ExportArticleUtil;
 import com.liferay.portlet.journal.util.JournalContentUtil;
 
 import java.io.IOException;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
@@ -152,6 +155,13 @@ public class JournalContentPortlet extends MVCPortlet {
 		}
 
 		super.doView(renderRequest, renderResponse);
+	}
+
+	public void exportArticle(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ExportArticleUtil.sendFile(actionRequest, actionResponse);
 	}
 
 	@Reference(unbind = "-")

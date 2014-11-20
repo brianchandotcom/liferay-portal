@@ -45,6 +45,7 @@ import java.util.Map;
 import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * <p>
@@ -274,6 +275,10 @@ public class JournalContentPortletDataHandler
 		portletDataContext.setScopeGroupId(previousScopeGroupId);
 
 		return portletPreferences;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortalUtil(PortalUtil portalUtil) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

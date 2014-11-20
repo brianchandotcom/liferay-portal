@@ -1,0 +1,11 @@
+Bundle-Name: Liferay Journal Content Web
+Bundle-SymbolicName: com.liferay.journal.content.web
+Bundle-Version: 1.0.0
+Import-Package:\
+	${bnd.jsp.support.imports},\
+	*
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/META-INF/resources,\
+	@lib/javax.servlet.jsp.jstl.jar!/META-INF/*.tld,\
+	@../../../../util-taglib/util-taglib.jar

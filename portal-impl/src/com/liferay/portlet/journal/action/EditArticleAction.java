@@ -195,27 +195,15 @@ public class EditArticleAction extends PortletAction {
 			if (cmd.equals(Constants.DELETE) &&
 				!ActionUtil.hasArticle(actionRequest)) {
 
-				String referringPortletResource = ParamUtil.getString(
-					actionRequest, "referringPortletResource");
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
-				if (Validator.isNotNull(referringPortletResource)) {
-					setForward(
-						actionRequest,
-						"portlet.journal.asset.add_asset_redirect");
+				PortletURL portletURL = PortletURLFactoryUtil.create(
+					actionRequest, portletConfig.getPortletName(),
+					themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
-					return;
-				}
-				else {
-					ThemeDisplay themeDisplay =
-						(ThemeDisplay)actionRequest.getAttribute(
-							WebKeys.THEME_DISPLAY);
-
-					PortletURL portletURL = PortletURLFactoryUtil.create(
-						actionRequest, portletConfig.getPortletName(),
-						themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
-
-					redirect = portletURL.toString();
-				}
+				redirect = portletURL.toString();
 			}
 
 			if ((article != null) &&

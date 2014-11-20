@@ -362,26 +362,23 @@
 	</command>
 
 	<command name="viewFieldCP">
-		<execute action="CPDynamicdatalists#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${ddlListName}" />
-		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute action="CPDynamicdatalists#assertTextEquals" locator-key1="LIST_TABLE_NAME_1" value1="${ddlListName}" />
-		<execute action="CPDynamicdatalists#click" locator-key1="LIST_TABLE_NAME_1" value1="${ddlListName}" />
-
-		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="HEADER_TITLE" value1="${ddlListName}" />
-
 		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
-
-		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="RECORD_TABLE_ENTRY" value1="${ddlRecordFieldData}" />
-		<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_TABLE_ACTIONS" />
-		<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_MENULIST_VIEW" />
 
 		<if>
 			<equals arg1="${nestedField}" arg2="true" />
 			<then>
+				<execute action="CPDynamicdatalistsList#assertElementNotPresent" locator-key1="RECORD_TABLE_ENTRY" value1="${ddlRecordFieldData}" />
+				<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
+				<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_MENULIST_VIEW" />
+
 				<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator-key1="FIELD_NESTED" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
 			</then>
 			<else>
+				<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="RECORD_TABLE_ENTRY" value1="${ddlRecordFieldData}" />
+				<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_TABLE_ACTIONS" />
+				<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_MENULIST_VIEW" />
+
 				<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator-key1="FIELD" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
 			</else>
 		</if>

@@ -25,7 +25,7 @@ import com.liferay.polls.util.test.PollsTestUtil;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
-import com.liferay.portal.test.TransactionalTestRule;
+import com.liferay.portal.test.TransactionalMethodRule;
 import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
 
 import java.util.HashMap;
@@ -35,7 +35,6 @@ import java.util.Map;
 import org.jboss.arquillian.junit.Arquillian;
 
 import org.junit.Assert;
-import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 
@@ -47,13 +46,13 @@ import org.junit.runner.RunWith;
 public class PollsVoteStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
-	@ClassRule
-	public static TransactionalTestRule transactionalTestRule =
-		new TransactionalTestRule();
-
 	@Rule
 	public DeleteAfterTestRunRule deleteAfterTestRunRule =
 		new DeleteAfterTestRunRule(this);
+
+	@Rule
+	public TransactionalMethodRule transactionalMethodRule =
+		new TransactionalMethodRule();
 
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(

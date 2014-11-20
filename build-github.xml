@@ -292,9 +292,9 @@
 						sb.append(jsonObject.get("name"));
 						sb.append("</a>");
 						sb.append("<pre>");
-						sb.append(fixJSON(jsonObject.get("errorDetails"));
+						sb.append(fixJSON(jsonObject.get("errorDetails")));
 						sb.append("<br /><br />");
-						sb.append(fixJSON(jsonObject.get("errorStackTrace"));
+						sb.append(fixJSON(jsonObject.get("errorStackTrace")));
 						sb.append("</pre>");
 						sb.append("</li>");
 					}

@@ -28,6 +28,7 @@ import com.liferay.portlet.social.model.SocialRelationConstants;
 import com.liferay.portlet.social.service.SocialRelationLocalService;
 import com.liferay.socialnetworking.model.WallEntry;
 import com.liferay.socialnetworking.service.WallEntryLocalService;
+import com.liferay.socialnetworking.service.configuration.SocialNetworkingServiceConfigurator;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -35,11 +36,13 @@ import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @Component(
+	immediate = true,
 	property = {
 		"com.liferay.portlet.icon=/icons/wall.png",
 		"com.liferay.portlet.friendly-url-routes=" +
@@ -158,6 +161,12 @@ public class WallPortlet extends MVCPortlet {
 		_groupLocalService = groupLocalService;
 	}
 
+	@Reference(policy = ReferencePolicy.DYNAMIC)
+	protected void setSocialNetworkingServiceConfigurator(
+		SocialNetworkingServiceConfigurator
+			socialNetworkingServiceConfigurator) {
+	}
+
 	@Reference(unbind = "-")
 	protected void setSocialRelationLocalService(
 		SocialRelationLocalService socialRelationLocalService) {
@@ -175,6 +184,11 @@ public class WallPortlet extends MVCPortlet {
 		WallEntryLocalService wallEntryLocalService) {
 
 		_wallEntryLocalService = wallEntryLocalService;
+	}
+
+	protected void unsetSocialNetworkingServiceConfigurator(
+		SocialNetworkingServiceConfigurator
+			socialNetworkingServiceConfigurator) {
 	}
 
 	private GroupLocalService _groupLocalService;

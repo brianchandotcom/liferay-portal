@@ -452,13 +452,13 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 		})
 	@Test
 	public void testExecuteByShortcutMethod() throws Exception {
+		BaseReceiverAdvice.reset(1);
+
 		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl();
 
 		try {
 
 			// Test 1, send notify message
-
-			BaseReceiverAdvice.reset(1);
 
 			Channel channel = clusterExecutorImpl.getControlChannel();
 

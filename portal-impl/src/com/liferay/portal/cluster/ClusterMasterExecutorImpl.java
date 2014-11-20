@@ -122,26 +122,19 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 			return;
 		}
 
-		try {
-			_localClusterNodeAddress = AddressSerializerUtil.serialize(
-				_clusterExecutor.getLocalClusterNodeAddress());
+		_localClusterNodeAddress = AddressSerializerUtil.serialize(
+			_clusterExecutor.getLocalClusterNodeAddress());
 
-			_clusterEventListener =
-				new ClusterMasterTokenClusterEventListener();
+		_clusterEventListener = new ClusterMasterTokenClusterEventListener();
 
-			_clusterExecutor.addClusterEventListener(_clusterEventListener);
+		_clusterExecutor.addClusterEventListener(_clusterEventListener);
 
-			String masterAddressString = getMasterAddressString();
+		String masterAddressString = getMasterAddressString();
 
-			_enabled = true;
+		_enabled = true;
 
-			notifyMasterTokenTransitionListeners(
-				_localClusterNodeAddress.equals(masterAddressString));
-		}
-		catch (Exception e) {
-			throw new RuntimeException(
-				"Unable to initialize cluster master executor", e);
-		}
+		notifyMasterTokenTransitionListeners(
+			_localClusterNodeAddress.equals(masterAddressString));
 	}
 
 	@Override
@@ -281,12 +274,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 
 		@Override
 		public void processClusterEvent(ClusterEvent clusterEvent) {
-			try {
-				getMasterAddressString();
-			}
-			catch (Exception e) {
-				_log.error("Unable to update the cluster master lock", e);
-			}
+			getMasterAddressString();
 		}
 
 	}

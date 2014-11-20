@@ -338,6 +338,13 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.bookmarks.service"
 		},
 
+		// Journal
+
+		new String[] {
+			"journal.content.publish.to.live.by.default",
+			"publish.to.live.by.default", "com.liferay.journal.content.web"
+		},
+
 		// Polls
 
 		new String[] {

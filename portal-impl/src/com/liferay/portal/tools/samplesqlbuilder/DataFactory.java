@@ -1603,7 +1603,8 @@ public class DataFactory {
 		journalContentSearchModel.setGroupId(journalArticleModel.getGroupId());
 		journalContentSearchModel.setCompanyId(_companyId);
 		journalContentSearchModel.setLayoutId(layoutId);
-		journalContentSearchModel.setPortletId(PortletKeys.JOURNAL_CONTENT);
+		journalContentSearchModel.setPortletId(
+			"com_liferay_journal_content_web_portlet_JournalContentPortlet");
 		journalContentSearchModel.setArticleId(
 			journalArticleModel.getArticleId());
 

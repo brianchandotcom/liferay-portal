@@ -10,6 +10,7 @@
 		<dirset dir="apps/hello-velocity" includes="*" />
 		<dirset dir="apps/iframe" includes="*" />
 		<dirset dir="apps/invitation" includes="*" />
+		<dirset dir="apps/journal" includes="*" />
 		<dirset dir="apps/loan-calculator" includes="*" />
 		<dirset dir="apps/nested-portlets" includes="*" />
 		<dirset dir="apps/network-utilities" includes="*" />

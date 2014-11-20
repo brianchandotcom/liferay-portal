@@ -9,6 +9,7 @@
 		<dirset dir="hello-velocity" includes="*" />
 		<dirset dir="iframe" includes="*" />
 		<dirset dir="invitation" includes="*" />
+		<dirset dir="journal" includes="*" />
 		<dirset dir="loan-calculator" includes="*" />
 		<dirset dir="nested-portlets" includes="*" />
 		<dirset dir="network-utilities" includes="*" />

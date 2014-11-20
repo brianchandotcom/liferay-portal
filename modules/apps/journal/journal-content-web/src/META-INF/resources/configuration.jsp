@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/journal_content/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 JournalArticle article = journalContentDisplayContext.getArticle();

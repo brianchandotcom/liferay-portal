@@ -14,8 +14,21 @@
  */
 --%>
 
-<%@ include file="/html/portlet/journal_content/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
-<liferay-ui:error-header />
+<%
+String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 
-<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />
+Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), referringPortletResource);
+%>
+
+<aui:script>
+	Liferay.fire(
+		'closeWindow',
+		{
+			id: '_<%= HtmlUtil.escapeJS(selPortlet.getPortletId()) %>_editAsset',
+			portletAjaxable: <%= selPortlet.isAjaxable() %>,
+			refresh: '<%= HtmlUtil.escapeJS(selPortlet.getPortletId()) %>'
+		}
+	);
+</aui:script>

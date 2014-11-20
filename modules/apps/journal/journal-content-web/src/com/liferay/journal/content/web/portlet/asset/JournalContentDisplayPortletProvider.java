@@ -20,15 +20,16 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.provider.DisplayPortletProvider;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetEntryLocalService;
 import com.liferay.portlet.journal.asset.JournalArticleAssetRenderer;
 import com.liferay.portlet.journal.asset.JournalArticleAssetRendererFactory;
 import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
+import com.liferay.portlet.journal.service.JournalContentSearchLocalService;
 
 import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -54,7 +55,7 @@ public class JournalContentDisplayPortletProvider
 			String className, long classPK, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 			className, classPK);
 
 		JournalArticleAssetRendererFactory articleAssetRendererFactory =
@@ -75,9 +76,38 @@ public class JournalContentDisplayPortletProvider
 
 		Layout layout = themeDisplay.getLayout();
 
-		JournalContentSearchLocalServiceUtil.updateContentSearch(
+		_journalContentSearchLocal.updateContentSearch(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			portletId, article.getArticleId(), true);
 	}
+
+	@Reference
+	protected void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+	}
+
+	@Reference
+	protected void setJournalContentSearchLocal(
+		JournalContentSearchLocalService journalContentSearchLocal) {
+
+		_journalContentSearchLocal = journalContentSearchLocal;
+	}
+
+	protected void unsetAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = null;
+	}
+
+	protected void unsetJournalContentSearchLocal(
+		JournalContentSearchLocalService journalContentSearchLocal) {
+
+		_journalContentSearchLocal = null;
+	}
+
+	private AssetEntryLocalService _assetEntryLocalService;
+	private JournalContentSearchLocalService _journalContentSearchLocal;
 
 }

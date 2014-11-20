@@ -28,6 +28,12 @@
 			max-width: inherit;
 		}
 
+		&.drop-enabled {
+			.image-wrapper {
+				height : 100px;
+			}
+		}
+
 		.image-wrapper {
 			height : 400px;
 			overflow: hidden;

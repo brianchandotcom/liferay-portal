@@ -1,0 +1,7 @@
+<definition>
+	<command name="close">
+		<case locator-key1="PAGE_TITLE">
+			<execute function="Close#closeWindow" />
+		</case>
+	</command>
+</definition>

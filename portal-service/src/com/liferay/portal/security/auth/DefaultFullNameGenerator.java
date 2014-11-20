@@ -106,9 +106,8 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 
 		Map<String, String> namesMap = new HashMap<String, String>();
 
-		Locale locale = LocaleUtil.getDefault();
-
-		String fieldsString = LanguageUtil.get(locale, "user.name.fields");
+		String fieldsString = LanguageUtil.get(
+			LocaleUtil.getDefault(), "user.name.fields");
 
 		String[] userNameFields = StringUtil.split(fieldsString);
 
@@ -117,7 +116,7 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 				firstName = firstName.substring(0, 1);
 			}
 
-			namesMap.put("firstName", firstName);
+			namesMap.put("first-name", firstName);
 		}
 
 		if (Validator.isNotNull(middleName)) {
@@ -125,11 +124,11 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 				middleName = middleName.substring(0, 1);
 			}
 
-			namesMap.put("middleName", middleName);
+			namesMap.put("middle-name", middleName);
 		}
 
 		if (Validator.isNotNull(lastName)) {
-			namesMap.put("lastName", lastName);
+			namesMap.put("last-name", lastName);
 		}
 
 		for (String userNameField: userNameFields) {

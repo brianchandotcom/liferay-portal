@@ -90,6 +90,10 @@
 		}
 	}
 
+	.lfr-blogs-cover-image-selector {
+		margin: 20px 0 60px;
+	}
+
 	.entry-title {
 		display: block;
 		font-weight: bold;

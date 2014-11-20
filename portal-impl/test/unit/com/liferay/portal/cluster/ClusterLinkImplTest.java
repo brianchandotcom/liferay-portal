@@ -16,7 +16,6 @@ package com.liferay.portal.cluster;
 
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.Priority;
-import com.liferay.portal.kernel.cluster.messaging.ClusterForwardMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
@@ -31,9 +30,6 @@ import com.liferay.portal.test.AspectJNewEnvMethodRule;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
-import java.util.concurrent.Exchanger;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
@@ -43,7 +39,7 @@ import org.aspectj.lang.annotation.Aspect;
 
 import org.jgroups.Channel.State;
 import org.jgroups.JChannel;
-import org.jgroups.View;
+import org.jgroups.Receiver;
 import org.jgroups.util.UUID;
 
 import org.junit.Assert;
@@ -62,14 +58,6 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 	public static CodeCoverageAssertor codeCoverageAssertor =
 		new CodeCoverageAssertor();
 
-	@AdviseWith(adviceClasses = {DisableClusterLinkAdvice.class})
-	@Test
-	public void testDestroy1() throws Exception {
-		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl();
-
-		clusterLinkImpl.destroy();
-	}
-
 	@AdviseWith(
 		adviceClasses = {
 			DisableAutodetectedAddressAdvice.class,
@@ -78,44 +66,25 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		}
 	)
 	@Test
-	public void testDestroy2() {
+	public void testDestroy() {
 		TransportationConfigurationAdvice.setChannelCount(2);
 
-		ClusterLinkImpl clusterLinkImpl = null;
+		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl();
 
 		try {
-			clusterLinkImpl = getClusterLinkImpl();
-
 			List<JChannel> jChannels = getJChannels(clusterLinkImpl);
 
 			Assert.assertEquals(2, jChannels.size());
-
-			JChannel jChannel = jChannels.get(0);
-
-			Assert.assertTrue(isOpen(jChannel));
-
-			jChannel = jChannels.get(1);
-
-			Assert.assertTrue(isOpen(jChannel));
+			Assert.assertTrue(isOpen(jChannels.get(0)));
+			Assert.assertTrue(isOpen(jChannels.get(1)));
 
 			clusterLinkImpl.destroy();
 
-			jChannels = getJChannels(clusterLinkImpl);
-
-			Assert.assertEquals(2, jChannels.size());
-
-			jChannel = jChannels.get(0);
-
-			Assert.assertFalse(isOpen(jChannel));
-
-			jChannel = jChannels.get(1);
-
-			Assert.assertFalse(isOpen(jChannel));
+			Assert.assertFalse(isOpen(jChannels.get(0)));
+			Assert.assertFalse(isOpen(jChannels.get(1)));
 		}
 		finally {
-			if (clusterLinkImpl != null) {
-				clusterLinkImpl.destroy();
-			}
+			clusterLinkImpl.destroy();
 		}
 	}
 
@@ -133,60 +102,38 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			ClusterLinkImpl.class.getName(), Level.FINE);
 
-		ClusterLinkImpl clusterLinkImpl = null;
+		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl();
 
 		try {
-			clusterLinkImpl = getClusterLinkImpl();
-
 			List<JChannel> jChannels = getJChannels(clusterLinkImpl);
 
 			Assert.assertEquals(2, jChannels.size());
-
-			JChannel jChannel = jChannels.get(0);
-
 			Assert.assertSame(
-				jChannel, clusterLinkImpl.getChannel(Priority.LEVEL1));
+				jChannels.get(0), clusterLinkImpl.getChannel(Priority.LEVEL1));
 			Assert.assertSame(
-				jChannel, clusterLinkImpl.getChannel(Priority.LEVEL2));
+				jChannels.get(0), clusterLinkImpl.getChannel(Priority.LEVEL2));
 			Assert.assertSame(
-				jChannel, clusterLinkImpl.getChannel(Priority.LEVEL3));
+				jChannels.get(0), clusterLinkImpl.getChannel(Priority.LEVEL3));
 			Assert.assertSame(
-				jChannel, clusterLinkImpl.getChannel(Priority.LEVEL4));
+				jChannels.get(0), clusterLinkImpl.getChannel(Priority.LEVEL4));
 			Assert.assertSame(
-				jChannel, clusterLinkImpl.getChannel(Priority.LEVEL5));
-
-			jChannel = jChannels.get(1);
-
+				jChannels.get(0), clusterLinkImpl.getChannel(Priority.LEVEL5));
 			Assert.assertSame(
-				jChannel, clusterLinkImpl.getChannel(Priority.LEVEL6));
+				jChannels.get(1), clusterLinkImpl.getChannel(Priority.LEVEL6));
 			Assert.assertSame(
-				jChannel, clusterLinkImpl.getChannel(Priority.LEVEL7));
+				jChannels.get(1), clusterLinkImpl.getChannel(Priority.LEVEL7));
 			Assert.assertSame(
-				jChannel, clusterLinkImpl.getChannel(Priority.LEVEL8));
+				jChannels.get(1), clusterLinkImpl.getChannel(Priority.LEVEL8));
 			Assert.assertSame(
-				jChannel, clusterLinkImpl.getChannel(Priority.LEVEL9));
+				jChannels.get(1), clusterLinkImpl.getChannel(Priority.LEVEL9));
 			Assert.assertSame(
-				jChannel, clusterLinkImpl.getChannel(Priority.LEVEL10));
+				jChannels.get(1), clusterLinkImpl.getChannel(Priority.LEVEL10));
 		}
 		finally {
 			captureHandler.close();
 
-			if (clusterLinkImpl != null) {
-				clusterLinkImpl.destroy();
-			}
+			clusterLinkImpl.destroy();
 		}
-	}
-
-	@AdviseWith(adviceClasses = {DisableClusterLinkAdvice.class})
-	@Test
-	public void testGetLocalTransportAddresses1() throws Exception {
-		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl();
-
-		List<Address> addresses = clusterLinkImpl.getLocalTransportAddresses();
-
-		Assert.assertSame(Collections.emptyList(), addresses);
-
-		clusterLinkImpl.destroy();
 	}
 
 	@AdviseWith(
@@ -197,14 +144,12 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		}
 	)
 	@Test
-	public void testGetLocalTransportAddresses2() {
+	public void testGetLocalTransportAddresses() {
 		TransportationConfigurationAdvice.setChannelCount(2);
 
-		ClusterLinkImpl clusterLinkImpl = null;
+		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl();
 
 		try {
-			clusterLinkImpl = getClusterLinkImpl();
-
 			List<Address> addresses =
 				clusterLinkImpl.getLocalTransportAddresses();
 
@@ -212,29 +157,11 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 			List<JChannel> jChannels = getJChannels(clusterLinkImpl);
 
-			Assert.assertSame(
-				getJGroupsAddress(jChannels, 0), getRealAddress(addresses, 0));
-			Assert.assertSame(
-				getJGroupsAddress(jChannels, 1), getRealAddress(addresses, 1));
+			assertAddresses(addresses, jChannels.get(0), jChannels.get(1));
 		}
 		finally {
-			if (clusterLinkImpl != null) {
-				clusterLinkImpl.destroy();
-			}
+			clusterLinkImpl.destroy();
 		}
-	}
-
-	@AdviseWith(adviceClasses = {DisableClusterLinkAdvice.class})
-	@Test
-	public void testGetTransportAddressesByPriority1() throws Exception {
-		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl();
-
-		List<Address> addresses = clusterLinkImpl.getTransportAddresses(
-			Priority.LEVEL1);
-
-		Assert.assertSame(Collections.emptyList(), addresses);
-
-		clusterLinkImpl.destroy();
 	}
 
 	@AdviseWith(
@@ -245,55 +172,33 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		}
 	)
 	@Test
-	public void testGetTransportAddressesByPriority2() {
+	public void testGetTransportAddressesByPriority() {
 		TransportationConfigurationAdvice.setChannelCount(2);
 
-		ClusterLinkImpl clusterLinkImpl1 = null;
-		ClusterLinkImpl clusterLinkImpl2 = null;
+		ClusterLinkImpl clusterLinkImpl1 = getClusterLinkImpl();
+		ClusterLinkImpl clusterLinkImpl2 = getClusterLinkImpl();
 
 		try {
-			clusterLinkImpl1 = getClusterLinkImpl();
-			clusterLinkImpl2 = getClusterLinkImpl();
-
 			List<JChannel> jChannels1 = getJChannels(clusterLinkImpl1);
-
-			Assert.assertEquals(2, jChannels1.size());
-
 			List<JChannel> jChannels2 = getJChannels(clusterLinkImpl2);
 
+			Assert.assertEquals(2, jChannels1.size());
 			Assert.assertEquals(2, jChannels2.size());
 
 			List<Address> addresses1 = clusterLinkImpl1.getTransportAddresses(
 				Priority.LEVEL1);
-
-			Assert.assertEquals(2, addresses1.size());
-
 			List<Address> addresses2 = clusterLinkImpl1.getTransportAddresses(
 				Priority.LEVEL6);
 
+			Assert.assertEquals(2, addresses1.size());
 			Assert.assertEquals(2, addresses2.size());
 
-			Assert.assertEquals(
-				getJGroupsAddress(jChannels1, 0),
-				getRealAddress(addresses1, 0));
-			Assert.assertEquals(
-				getJGroupsAddress(jChannels1, 1),
-				getRealAddress(addresses2, 0));
-			Assert.assertEquals(
-				getJGroupsAddress(jChannels2, 0),
-				getRealAddress(addresses1, 1));
-			Assert.assertEquals(
-				getJGroupsAddress(jChannels2, 1),
-				getRealAddress(addresses2, 1));
+			assertAddresses(addresses1, jChannels1.get(0), jChannels2.get(0));
+			assertAddresses(addresses2, jChannels1.get(1), jChannels2.get(1));
 		}
 		finally {
-			if (clusterLinkImpl1 != null) {
-				clusterLinkImpl1.destroy();
-			}
-
-			if (clusterLinkImpl2 != null) {
-				clusterLinkImpl2.destroy();
-			}
+			clusterLinkImpl1.destroy();
+			clusterLinkImpl2.destroy();
 		}
 	}
 
@@ -306,113 +211,121 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	)
 	@Test
-	public void testInitChannel1() throws Exception {
-		TransportationConfigurationAdvice.setChannelCount(
-			ClusterLinkImpl.MAX_CHANNEL_COUNT + 1);
+	public void testInitChannel() throws Exception {
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			ClusterLinkImpl.class.getName(), Level.OFF);
 
 		try {
-			getClusterLinkImpl();
 
-			Assert.fail();
+			// Test 1, create ClusterLinkImpl.MAX_CHANNEL_COUNT channels
+
+			TransportationConfigurationAdvice.setChannelCount(
+				ClusterLinkImpl.MAX_CHANNEL_COUNT + 1);
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			try {
+				getClusterLinkImpl();
+
+				Assert.fail();
+			}
+			catch (IllegalStateException ise) {
+				Assert.assertEquals(0, logRecords.size());
+				Assert.assertEquals(
+					"java.lang.IllegalArgumentException: Channel count must " +
+						"be between 1 and " + ClusterLinkImpl.MAX_CHANNEL_COUNT,
+					ise.getMessage());
+			}
+
+			// Test 2, create 0 channel
+
+			TransportationConfigurationAdvice.setChannelCount(0);
+
+			logRecords = captureHandler.resetLogLevel(Level.SEVERE);
+
+			try {
+				getClusterLinkImpl();
+
+				Assert.fail();
+			}
+			catch (IllegalStateException ise) {
+				Assert.assertEquals(1, logRecords.size());
+
+				LogRecord logRecord = logRecords.get(0);
+
+				Assert.assertEquals(
+					"Unable to initialize channels", logRecord.getMessage());
+				Assert.assertEquals(
+					"java.lang.IllegalArgumentException: Channel count must " +
+						"be between 1 and " + ClusterLinkImpl.MAX_CHANNEL_COUNT,
+					ise.getMessage());
+			}
 		}
-		catch (IllegalStateException ise) {
+		finally {
+			captureHandler.close();
 		}
 	}
 
 	@AdviseWith(
 		adviceClasses = {
-			DisableAutodetectedAddressAdvice.class,
+			BaseReceiverAdvice.class, DisableAutodetectedAddressAdvice.class,
 			EnableClusterLinkAdvice.class,
 			TransportationConfigurationAdvice.class
 		}
 
 	)
 	@Test
-	public void testInitChannel2() throws Exception {
-		try {
-			getClusterLinkImpl();
-
-			Assert.fail();
-		}
-		catch (IllegalStateException ise) {
-		}
-	}
-
-	@AdviseWith(adviceClasses = {DisableClusterLinkAdvice.class})
-	@Test
-	public void testSendMulticastMessage1() throws Exception {
-		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl();
-
-		Message message = createMessage();
-
-		clusterLinkImpl.sendMulticastMessage(message, Priority.LEVEL1);
-
-		clusterLinkImpl.destroy();
-	}
-
-	@AdviseWith(
-		adviceClasses = {
-			DisableAutodetectedAddressAdvice.class,
-			EnableClusterLinkAdvice.class,
-			TransportationConfigurationAdvice.class
-		}
-
-	)
-	@Test
-	public void testSendMulticastMessage2() throws Exception {
+	public void testSendMulticastMessage() throws Exception {
 		TransportationConfigurationAdvice.setChannelCount(1);
 
-		ClusterLinkImpl clusterLinkImpl1 = null;
-		ClusterLinkImpl clusterLinkImpl2 = null;
-		ClusterLinkImpl clusterLinkImpl3 = null;
+		BaseReceiverAdvice.reset(3);
+
+		ClusterLinkImpl clusterLinkImpl1 = getClusterLinkImpl();
+		ClusterLinkImpl clusterLinkImpl2 = getClusterLinkImpl();
+		ClusterLinkImpl clusterLinkImpl3 = getClusterLinkImpl();
 
 		try {
-			clusterLinkImpl1 = getClusterLinkImpl();
-			clusterLinkImpl2 = getClusterLinkImpl();
-			clusterLinkImpl3 = getClusterLinkImpl();
-
 			List<JChannel> jChannels1 = getJChannels(clusterLinkImpl1);
 			List<JChannel> jChannels2 = getJChannels(clusterLinkImpl2);
 			List<JChannel> jChannels3 = getJChannels(clusterLinkImpl3);
 
-			TestReceiver testReceiver1 = getTestReceiver(jChannels1, 0);
-			TestReceiver testReceiver2 = getTestReceiver(jChannels2, 0);
-			TestReceiver testReceiver3 = getTestReceiver(jChannels3, 0);
+			JChannel jChannel1 = jChannels1.get(0);
+			JChannel jChannel2 = jChannels2.get(0);
+			JChannel jChannel3 = jChannels3.get(0);
+
+			Receiver receiver1 = jChannel1.getReceiver();
+			Receiver receiver2 = jChannel2.getReceiver();
+			Receiver receiver3 = jChannel3.getReceiver();
 
 			Message message = createMessage();
 
 			clusterLinkImpl1.sendMulticastMessage(message, Priority.LEVEL1);
 
-			String localMessage1 = testReceiver1.waitLocalMessage();
-			String remoteMessage1 = testReceiver1.waitRemoteMessage();
+			org.jgroups.Address sourceJAddress = jChannel1.getAddress();
 
-			String localMessage2 = testReceiver2.waitLocalMessage();
-			String remoteMessage2 = testReceiver2.waitRemoteMessage();
+			BaseReceiverAdvice.awaitMessageReceived();
 
-			String localMessage3 = testReceiver3.waitLocalMessage();
-			String remoteMessage3 = testReceiver3.waitRemoteMessage();
+			Message receivedMessage1 =
+				(Message)BaseReceiverAdvice.getJGroupsMessagePayload(
+					receiver1, sourceJAddress);
+			Message receivedMessage2 =
+				(Message)BaseReceiverAdvice.getJGroupsMessagePayload(
+					receiver2, sourceJAddress);
+			Message receivedMessage3 =
+				(Message)BaseReceiverAdvice.getJGroupsMessagePayload(
+					receiver3, sourceJAddress);
 
-			String messageKey = (String)message.getPayload();
-
-			Assert.assertEquals(messageKey, localMessage1);
-			Assert.assertNull(remoteMessage1);
-			Assert.assertNull(localMessage2);
-			Assert.assertEquals(messageKey, remoteMessage2);
-			Assert.assertNull(localMessage3);
-			Assert.assertEquals(messageKey, remoteMessage3);
+			Assert.assertEquals(
+				message.getPayload(), receivedMessage1.getPayload());
+			Assert.assertEquals(
+				message.getPayload(), receivedMessage2.getPayload());
+			Assert.assertEquals(
+				message.getPayload(), receivedMessage3.getPayload());
 		}
 		finally {
-			if (clusterLinkImpl1 != null) {
-				clusterLinkImpl1.destroy();
-			}
-
-			if (clusterLinkImpl2 != null) {
-				clusterLinkImpl2.destroy();
-			}
-
-			if (clusterLinkImpl3 != null) {
-				clusterLinkImpl3.destroy();
-			}
+			clusterLinkImpl1.destroy();
+			clusterLinkImpl2.destroy();
+			clusterLinkImpl3.destroy();
 		}
 	}
 
@@ -425,24 +338,21 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	)
 	@Test
-	public void testSendMulticastMessage3() {
+	public void testSendMulticastMessageWithError() {
 		TransportationConfigurationAdvice.setChannelCount(1);
 
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			ClusterLinkImpl.class.getName(), Level.WARNING);
 
-		ClusterLinkImpl clusterLinkImpl = null;
+		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl();
 
 		try {
-			clusterLinkImpl = getClusterLinkImpl();
+
+			// Test 1, send message when clusterLinkImpl is destroyed
+
+			clusterLinkImpl.destroy();
 
 			Message message = createMessage();
-
-			List<JChannel> jChannels = getJChannels(clusterLinkImpl);
-
-			JChannel jChannel = jChannels.get(0);
-
-			jChannel.close();
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
@@ -451,45 +361,18 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 			assertLogger(
 				logRecords, "Unable to send multicast message " + message,
 				IllegalStateException.class);
-		}
-		finally {
-			captureHandler.close();
 
-			if (clusterLinkImpl != null) {
-				clusterLinkImpl.destroy();
-			}
-		}
-	}
+			// Test 2, send message when clusterLinkImpl is disconnected
 
-	@AdviseWith(
-		adviceClasses = {
-			DisableAutodetectedAddressAdvice.class,
-			EnableClusterLinkAdvice.class,
-			TransportationConfigurationAdvice.class
-		}
-
-	)
-	@Test
-	public void testSendMulticastMessage4() {
-		TransportationConfigurationAdvice.setChannelCount(1);
-
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			ClusterLinkImpl.class.getName(), Level.WARNING);
-
-		ClusterLinkImpl clusterLinkImpl = null;
-
-		try {
 			clusterLinkImpl = getClusterLinkImpl();
 
 			List<JChannel> jChannels = getJChannels(clusterLinkImpl);
-
-			Message message = createMessage();
 
 			JChannel jChannel = jChannels.get(0);
 
 			jChannel.disconnect();
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			logRecords = captureHandler.resetLogLevel(Level.WARNING);
 
 			clusterLinkImpl.sendMulticastMessage(message, Priority.LEVEL1);
 
@@ -500,49 +383,36 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		finally {
 			captureHandler.close();
 
-			if (clusterLinkImpl != null) {
-				clusterLinkImpl.destroy();
-			}
+			clusterLinkImpl.destroy();
 		}
-	}
-
-	@AdviseWith(adviceClasses = {DisableClusterLinkAdvice.class})
-	@Test
-	public void testSendUnicastMessage1() throws Exception {
-		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl();
-
-		Message message = createMessage();
-
-		clusterLinkImpl.sendUnicastMessage(
-			new AddressImpl(new MockAddress()), message, Priority.LEVEL1);
-
-		clusterLinkImpl.destroy();
 	}
 
 	@AdviseWith(
 		adviceClasses = {
-			DisableAutodetectedAddressAdvice.class,
+			BaseReceiverAdvice.class, DisableAutodetectedAddressAdvice.class,
 			EnableClusterLinkAdvice.class,
 			TransportationConfigurationAdvice.class
 		}
 
 	)
 	@Test
-	public void testSendUnicastMessage2() throws Exception {
+	public void testSendUnicastMessage() throws Exception {
 		TransportationConfigurationAdvice.setChannelCount(1);
 
-		ClusterLinkImpl clusterLinkImpl1 = null;
-		ClusterLinkImpl clusterLinkImpl2 = null;
+		BaseReceiverAdvice.reset(1);
+
+		ClusterLinkImpl clusterLinkImpl1 = getClusterLinkImpl();
+		ClusterLinkImpl clusterLinkImpl2 = getClusterLinkImpl();
 
 		try {
-			clusterLinkImpl1 = getClusterLinkImpl();
-			clusterLinkImpl2 = getClusterLinkImpl();
-
 			List<JChannel> jChannels1 = getJChannels(clusterLinkImpl1);
 			List<JChannel> jChannels2 = getJChannels(clusterLinkImpl2);
 
-			TestReceiver testReceiver1 = getTestReceiver(jChannels1, 0);
-			TestReceiver testReceiver2 = getTestReceiver(jChannels2, 0);
+			JChannel jChannel1 = jChannels1.get(0);
+			JChannel jChannel2 = jChannels2.get(0);
+
+			Receiver receiver1 = jChannel1.getReceiver();
+			Receiver receiver2 = jChannel2.getReceiver();
 
 			Message message = createMessage();
 
@@ -550,26 +420,24 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 				new AddressImpl(jChannels2.get(0).getAddress()), message,
 				Priority.LEVEL1);
 
-			String localMessage1 = testReceiver1.waitLocalMessage();
-			String remoteMessage1 = testReceiver1.waitRemoteMessage();
-			String localMessage2 = testReceiver2.waitLocalMessage();
-			String remoteMessage2 = testReceiver2.waitRemoteMessage();
+			org.jgroups.Address sourceJAddress = jChannel1.getAddress();
 
-			String messageKey = (String)message.getPayload();
+			BaseReceiverAdvice.awaitMessageReceived();
 
-			Assert.assertNull(localMessage1);
-			Assert.assertNull(remoteMessage1);
-			Assert.assertNull(localMessage2);
-			Assert.assertEquals(messageKey, remoteMessage2);
+			Message receivedMessage1 =
+				(Message)BaseReceiverAdvice.getJGroupsMessagePayload(
+					receiver1, sourceJAddress);
+			Message receivedMessage2 =
+				(Message)BaseReceiverAdvice.getJGroupsMessagePayload(
+					receiver2, sourceJAddress);
+
+			Assert.assertNull(receivedMessage1);
+			Assert.assertEquals(
+				message.getPayload(), receivedMessage2.getPayload());
 		}
 		finally {
-			if (clusterLinkImpl1 != null) {
-				clusterLinkImpl1.destroy();
-			}
-
-			if (clusterLinkImpl2 != null) {
-				clusterLinkImpl2.destroy();
-			}
+			clusterLinkImpl1.destroy();
+			clusterLinkImpl2.destroy();
 		}
 	}
 
@@ -582,24 +450,21 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	)
 	@Test
-	public void testSendUnicastMessage3() {
+	public void testSendUnicastMessageWithError() {
 		TransportationConfigurationAdvice.setChannelCount(1);
 
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			ClusterLinkImpl.class.getName(), Level.WARNING);
 
-		ClusterLinkImpl clusterLinkImpl = null;
+		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl();
 
 		try {
-			clusterLinkImpl = getClusterLinkImpl();
 
-			List<JChannel> jChannels = getJChannels(clusterLinkImpl);
+			// Test 1, send message when clusterLinkImpl is destroyed
+
+			clusterLinkImpl.destroy();
 
 			Message message = createMessage();
-
-			JChannel jChannel = jChannels.get(0);
-
-			jChannel.close();
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
@@ -609,45 +474,18 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 			assertLogger(
 				logRecords, "Unable to send unicast message " + message,
 				IllegalStateException.class);
-		}
-		finally {
-			captureHandler.close();
 
-			if (clusterLinkImpl != null) {
-				clusterLinkImpl.destroy();
-			}
-		}
-	}
+			// Test 2, send message when clusterLinkImpl is disconnected
 
-	@AdviseWith(
-		adviceClasses = {
-			DisableAutodetectedAddressAdvice.class,
-			EnableClusterLinkAdvice.class,
-			TransportationConfigurationAdvice.class
-		}
-
-	)
-	@Test
-	public void testSendUnicastMessage4() {
-		TransportationConfigurationAdvice.setChannelCount(1);
-
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			ClusterLinkImpl.class.getName(), Level.WARNING);
-
-		ClusterLinkImpl clusterLinkImpl = null;
-
-		try {
 			clusterLinkImpl = getClusterLinkImpl();
 
 			List<JChannel> jChannels = getJChannels(clusterLinkImpl);
-
-			Message message = createMessage();
 
 			JChannel jChannel = jChannels.get(0);
 
 			jChannel.disconnect();
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			logRecords = captureHandler.resetLogLevel(Level.WARNING);
 
 			clusterLinkImpl.sendUnicastMessage(
 				new AddressImpl(new MockAddress()), message, Priority.LEVEL1);
@@ -659,10 +497,30 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		finally {
 			captureHandler.close();
 
-			if (clusterLinkImpl != null) {
-				clusterLinkImpl.destroy();
-			}
+			clusterLinkImpl.destroy();
 		}
+	}
+
+	@AdviseWith(adviceClasses = {DisableClusterLinkAdvice.class})
+	@Test
+	public void testWithClusterDisabled() throws Exception {
+		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl();
+
+		List<Address> addresses = clusterLinkImpl.getLocalTransportAddresses();
+
+		Assert.assertSame(Collections.emptyList(), addresses);
+
+		addresses = clusterLinkImpl.getTransportAddresses(Priority.LEVEL1);
+
+		Assert.assertSame(Collections.emptyList(), addresses);
+
+		clusterLinkImpl.sendMulticastMessage(createMessage(), Priority.LEVEL1);
+
+		clusterLinkImpl.sendUnicastMessage(
+			new AddressImpl(new MockAddress()), createMessage(),
+			Priority.LEVEL1);
+
+		clusterLinkImpl.destroy();
 	}
 
 	@Rule
@@ -707,10 +565,23 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	}
 
+	protected void assertAddresses(
+		List<Address> addresses, JChannel... jChannels) {
+
+		Assert.assertEquals(addresses.size(), jChannels.length);
+
+		for (JChannel jChannel : jChannels) {
+			Assert.assertTrue(
+				addresses.contains(new AddressImpl(jChannel.getAddress())));
+		}
+	}
+
 	protected Message createMessage() {
 		Message message = new Message();
 
-		message.setPayload(UUID.randomUUID().toString());
+		UUID uuid = UUID.randomUUID();
+
+		message.setPayload(uuid.toString());
 
 		return message;
 	}
@@ -718,22 +589,12 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 	protected ClusterLinkImpl getClusterLinkImpl() {
 		ClusterLinkImpl clusterLinkImpl = new ClusterLinkImpl();
 
-		clusterLinkImpl.setClusterForwardMessageListener(
-			new ClusterForwardMessageListener());
-
 		clusterLinkImpl.afterPropertiesSet();
+
+		clusterLinkImpl.initialize();
 
 		if (clusterLinkImpl.isEnabled()) {
 			Assert.assertNotNull(clusterLinkImpl.getBindInetAddress());
-		}
-
-		List<JChannel> jChannels = getJChannels(clusterLinkImpl);
-
-		if (jChannels != null) {
-			for (JChannel channel : jChannels) {
-				channel.setReceiver(
-					new TestReceiver(new AddressImpl(channel.getAddress())));
-			}
 		}
 
 		return clusterLinkImpl;
@@ -744,94 +605,10 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 			clusterLinkImpl, "_transportJChannels");
 	}
 
-	protected org.jgroups.Address getJGroupsAddress(
-		List<JChannel> jChannels, int index) {
-
-		JChannel jChannel = jChannels.get(index);
-
-		return jChannel.getAddress();
-	}
-
-	protected Object getRealAddress(List<Address> addresses, int index) {
-		Address address = addresses.get(index);
-
-		return address.getRealAddress();
-	}
-
-	protected TestReceiver getTestReceiver(
-		List<JChannel> jChannels, int index) {
-
-		JChannel jChannel = jChannels.get(index);
-
-		return (TestReceiver)jChannel.getReceiver();
-	}
-
 	protected boolean isOpen(JChannel jChannel) {
 		String state = jChannel.getState();
 
 		return !state.equals(State.CLOSED.toString());
-	}
-
-	private class TestReceiver extends BaseReceiver {
-
-		public TestReceiver(Address address) {
-			_localAddress = address;
-		}
-
-		@Override
-		public void receive(org.jgroups.Message message) {
-			org.jgroups.Address sourceJGroupsAddress = message.getSrc();
-
-			Message content = (Message)message.getObject();
-
-			String messageKey = (String)content.getPayload();
-
-			try {
-				if (sourceJGroupsAddress.equals(
-						_localAddress.getRealAddress())) {
-
-					_localMessageExchanger.exchange(messageKey);
-				}
-				else {
-					_remoteMessageExchanger.exchange(messageKey);
-				}
-			}
-			catch (InterruptedException ie) {
-				Assert.fail();
-			}
-		}
-
-		@Override
-		public void viewAccepted(View view) {
-			super.view = view;
-		}
-
-		public String waitLocalMessage() throws Exception {
-			try {
-				return _localMessageExchanger.exchange(
-					null, 1000, TimeUnit.MILLISECONDS);
-			}
-			catch (TimeoutException te) {
-				return null;
-			}
-		}
-
-		public String waitRemoteMessage() throws Exception {
-			try {
-				return _remoteMessageExchanger.exchange(
-					null, 1000, TimeUnit.MILLISECONDS);
-			}
-			catch (TimeoutException te) {
-				return null;
-			}
-		}
-
-		private Address _localAddress;
-		private Exchanger<String> _localMessageExchanger =
-			new Exchanger<String>();
-		private Exchanger<String> _remoteMessageExchanger =
-			new Exchanger<String>();
-
 	}
 
 }

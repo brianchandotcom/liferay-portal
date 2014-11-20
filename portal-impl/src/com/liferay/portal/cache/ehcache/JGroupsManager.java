@@ -76,6 +76,10 @@ public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 		}
 
 		_jChannel = jChannel;
+
+		BaseReceiver baseReceiver = (BaseReceiver)_jChannel.getReceiver();
+
+		baseReceiver.openLatch();
 	}
 
 	@Override
@@ -281,7 +285,7 @@ public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 	private class EhcacheJGroupsReceiver extends BaseReceiver {
 
 		@Override
-		public void receive(Message message) {
+		protected void doReceive(Message message) {
 			Object object = message.getObject();
 
 			if (object == null) {

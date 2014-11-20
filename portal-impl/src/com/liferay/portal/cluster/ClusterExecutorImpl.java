@@ -87,22 +87,6 @@ public class ClusterExecutorImpl
 	}
 
 	@Override
-	public void afterPropertiesSet() {
-		if (PropsValues.CLUSTER_EXECUTOR_DEBUG_ENABLED) {
-			addClusterEventListener(new DebuggingClusterEventListenerImpl());
-		}
-
-		if (PropsValues.LIVE_USERS_ENABLED) {
-			addClusterEventListener(new LiveUsersClusterEventListenerImpl());
-		}
-
-		_secure = StringUtil.equalsIgnoreCase(
-			Http.HTTPS, PropsValues.WEB_SERVER_PROTOCOL);
-
-		super.afterPropertiesSet();
-	}
-
-	@Override
 	public void destroy() {
 		if (!isEnabled()) {
 			return;
@@ -240,23 +224,45 @@ public class ClusterExecutorImpl
 			return;
 		}
 
+		_secure = StringUtil.equalsIgnoreCase(
+			Http.HTTPS, PropsValues.WEB_SERVER_PROTOCOL);
+
 		_executorService = PortalExecutorManagerUtil.getPortalExecutor(
 			CLUSTER_EXECUTOR_CALLBACK_THREAD_POOL);
 
 		PortalUtil.addPortalInetSocketAddressEventListener(this);
 
-		_localAddress = new AddressImpl(_controlJChannel.getAddress());
+		if (PropsValues.CLUSTER_EXECUTOR_DEBUG_ENABLED) {
+			addClusterEventListener(new DebuggingClusterEventListenerImpl());
+		}
 
-		initLocalClusterNode();
+		if (PropsValues.LIVE_USERS_ENABLED) {
+			addClusterEventListener(new LiveUsersClusterEventListenerImpl());
+		}
 
-		memberJoined(_localAddress, _localClusterNode);
+		try {
+			initControlChannel();
 
-		sendNotifyRequest();
+			_localAddress = new AddressImpl(_controlJChannel.getAddress());
 
-		ClusterRequestReceiver clusterRequestReceiver =
-			(ClusterRequestReceiver)_controlJChannel.getReceiver();
+			initLocalClusterNode();
 
-		clusterRequestReceiver.openLatch();
+			memberJoined(_localAddress, _localClusterNode);
+
+			sendNotifyRequest();
+
+			BaseReceiver baseReceiver =
+				(BaseReceiver)_controlJChannel.getReceiver();
+
+			baseReceiver.openLatch();
+		}
+		catch (Exception e) {
+			if (_log.isErrorEnabled()) {
+				_log.error("Unable to initialize", e);
+			}
+
+			throw new IllegalStateException(e);
+		}
 	}
 
 	@Override
@@ -419,8 +425,7 @@ public class ClusterExecutorImpl
 		return _futureClusterResponses.get(uuid);
 	}
 
-	@Override
-	protected void initChannels() throws Exception {
+	protected void initControlChannel() throws Exception {
 		Properties controlProperties = PropsUtil.getProperties(
 			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL, false);
 

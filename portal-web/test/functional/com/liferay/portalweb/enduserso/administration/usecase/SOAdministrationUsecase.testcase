@@ -96,12 +96,18 @@
 		<execute action="SOPage#selectWindow" locator-key1="PAGE_TITLE" />
 
 		<execute action="SOUserBar#assertVisible" locator-key1="USER_BAR" />
+
 		<execute action="Dockbar#click" locator-key1="ADD" />
-		<execute action="Dockbar#assertElementPresent" locator-key1="ADD_CONTENT_LINK" />
+
+		<execute action="DockbarAddpanelcontent#assertElementPresent" locator-key1="NAVIGATION_CONTENT" />
+
 		<execute action="Dockbar#click" locator-key1="EDIT" />
-		<execute action="Dockbar#assertElementPresent" locator-key1="EDIT_DETAILS" />
+
+		<execute action="DockbarEditpanel#assertElementPresent" locator-key1="DETAILS_PANEL_TOGGLE" />
+
 		<execute action="Dockbar#click" locator-key1="PREVIEW" />
-		<execute action="Dockbar#assertElementPresent" locator-key1="PREVIEW_AUTOSIZE" />
+
+		<execute action="DockbarPreviewpanel#assertElementPresent" locator-key1="PREVIEW_AUTOSIZE" />
 
 		<var name="key_pageTitle" value="${pageTemplateName} Edit - Liferay" />
 

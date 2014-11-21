@@ -3247,6 +3247,131 @@
 		</execute>
 	</command>
 
+	<command name="ViewAutocompleteMenuUserAddressInformation" priority="5">
+		<var name="pageName" value="Messages" />
+		<var name="soPage" value="true" />
+		<var name="userAddressCity" value="Fictional City" />
+		<var name="userAddressCountry" value="United States" />
+		<var name="userAddressPostalCode" value="91234" />
+		<var name="userAddressRegion" value="California" />
+		<var name="userAddressStreet1" value="123 Main Street" />
+		<var name="userAddressType" value="Personal" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOProfile#addAddress">
+			<var name="userAddressCity" value="${userAddressCity}" />
+			<var name="userAddressCountry" value="${userAddressCountry}" />
+			<var name="userAddressPostalCode" value="${userAddressPostalCode}" />
+			<var name="userAddressRegion" value="${userAddressRegion}" />
+			<var name="userAddressStreet1" value="${userAddressStreet1}" />
+			<var name="userAddressType" value="${userAddressType}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#viewAutocompleteMenuNull">
+			<var name="recipientName" value="${userName}" />
+			<var name="userInformation" value="${userAddressCity}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#viewAutocompleteMenuNull">
+			<var name="recipientName" value="${userName}" />
+			<var name="userInformation" value="${userAddressCountry}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#viewAutocompleteMenuNull">
+			<var name="recipientName" value="${userName}" />
+			<var name="userInformation" value="${userAddressPostalCode}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#viewAutocompleteMenuNull">
+			<var name="recipientName" value="${userName}" />
+			<var name="userInformation" value="${userAddressRegion}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#viewAutocompleteMenuNull">
+			<var name="recipientName" value="${userName}" />
+			<var name="userInformation" value="${userAddressStreet1}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#viewAutocompleteMenuNull">
+			<var name="recipientName" value="${userName}" />
+			<var name="userInformation" value="${userAddressType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#viewAutocompleteMenuNull">
+			<var name="recipientName" value="${userName}" />
+			<var name="userInformation" value="Primary" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#viewAutocompleteMenuNull">
+			<var name="recipientName" value="${userName}" />
+			<var name="userInformation" value="Mailing" />
+		</execute>
+	</command>
+
 	<command name="ViewMessageGmail" priority="4">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />

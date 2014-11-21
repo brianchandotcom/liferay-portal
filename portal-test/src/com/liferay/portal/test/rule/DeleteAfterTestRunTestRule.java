@@ -50,13 +50,49 @@ import org.junit.runners.model.Statement;
 /**
  * @author Cristina González
  */
-public class DeleteAfterTestRunRule implements TestRule {
+public class DeleteAfterTestRunTestRule implements TestRule {
 
-	public DeleteAfterTestRunRule(Object instance) {
+	public DeleteAfterTestRunTestRule(Object instance) {
 		_instance = instance;
 	}
 
-	public void after(Class<?> testClass) {
+	@Override
+	public Statement apply(
+		final Statement statement, final Description description) {
+
+		return new Statement() {
+
+			@Override
+			public void evaluate() throws Throwable {
+				try {
+					statement.evaluate();
+				}
+				finally {
+					after(description.getTestClass());
+				}
+			}
+
+		};
+	}
+
+	protected void addField(
+		Map<Class<?>, FieldBag> deleteAfterTestRunFieldBags, Class<?> clazz,
+		Field field) {
+
+		FieldBag fieldBag = deleteAfterTestRunFieldBags.get(clazz);
+
+		if (fieldBag == null) {
+			fieldBag = new FieldBag(clazz);
+
+			deleteAfterTestRunFieldBags.put(clazz, fieldBag);
+		}
+
+		field.setAccessible(true);
+
+		fieldBag.addField(field);
+	}
+
+	protected void after(Class<?> testClass) {
 		Map<Class<?>, FieldBag> deleteAfterTestRunFieldBags =
 			new HashMap<Class<?>, FieldBag>();
 
@@ -170,42 +206,6 @@ public class DeleteAfterTestRunRule implements TestRule {
 		}
 	}
 
-	@Override
-	public Statement apply(
-		final Statement statement, final Description description) {
-
-		return new Statement() {
-
-			@Override
-			public void evaluate() throws Throwable {
-				try {
-					statement.evaluate();
-				}
-				finally {
-					after(description.getTestClass());
-				}
-			}
-
-		};
-	}
-
-	protected void addField(
-		Map<Class<?>, FieldBag> deleteAfterTestRunFieldBags, Class<?> clazz,
-		Field field) {
-
-		FieldBag fieldBag = deleteAfterTestRunFieldBags.get(clazz);
-
-		if (fieldBag == null) {
-			fieldBag = new FieldBag(clazz);
-
-			deleteAfterTestRunFieldBags.put(clazz, fieldBag);
-		}
-
-		field.setAccessible(true);
-
-		fieldBag.addField(field);
-	}
-
 	protected Class<? extends PersistedModel> getCollectionType(
 		Collection<?> collection) {
 
@@ -315,7 +315,7 @@ public class DeleteAfterTestRunRule implements TestRule {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DeleteAfterTestRunRule.class);
+		DeleteAfterTestRunTestRule.class);
 
 	private static final Set<Class<?>> _orderedClasses =
 		new LinkedHashSet<Class<?>>(

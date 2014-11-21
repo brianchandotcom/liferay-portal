@@ -16,11 +16,9 @@ package com.liferay.portal.repository;
 
 import com.liferay.portal.kernel.repository.RepositoryFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
-import com.liferay.portal.test.listeners.ResetDatabaseExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
@@ -34,13 +32,8 @@ import org.junit.runner.RunWith;
 /**
  * @author Adolfo Pérez
  */
-@ExecutionTestListeners(
-	listeners = {
-		MainServletExecutionTestListener.class,
-		ResetDatabaseExecutionTestListener.class
-	})
+@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-@Transactional
 public class RepositoryFactoryTest {
 
 	@Before

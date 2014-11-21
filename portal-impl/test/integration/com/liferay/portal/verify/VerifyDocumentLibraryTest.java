@@ -22,7 +22,6 @@ import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
-import com.liferay.portal.test.listeners.ResetDatabaseExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
@@ -44,7 +43,6 @@ import org.junit.runner.RunWith;
 @ExecutionTestListeners(
 	listeners = {
 		MainServletExecutionTestListener.class,
-		ResetDatabaseExecutionTestListener.class,
 		SynchronousDestinationExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)

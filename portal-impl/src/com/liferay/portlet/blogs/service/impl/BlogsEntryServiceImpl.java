@@ -52,7 +52,6 @@ import com.sun.syndication.feed.synd.SyndLink;
 import com.sun.syndication.feed.synd.SyndLinkImpl;
 import com.sun.syndication.io.FeedException;
 
-import java.io.File;
 import java.io.InputStream;
 
 import java.util.ArrayList;
@@ -137,15 +136,15 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 
 	@Override
 	public FileEntry addEntryAttachment(
-			long groupId, long entryId, String fileName, InputStream is,
-			String mimeType)
+			long groupId, long entryId, String fileName, String mimeType,
+			InputStream is)
 		throws PortalException {
 
 		BlogsPermission.check(
 			getPermissionChecker(), groupId, ActionKeys.ADD_ATTACHMENT);
 
 		return blogsEntryLocalService.addEntryAttachment(
-			groupId, getUserId(), entryId, fileName, is, mimeType);
+			groupId, getUserId(), entryId, fileName, mimeType, is);
 	}
 
 	@Override

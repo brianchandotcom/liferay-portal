@@ -3,6 +3,7 @@ package ${packagePath}.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 /**
+ * @author ${author}
  * @generated
  */
 @ProviderType

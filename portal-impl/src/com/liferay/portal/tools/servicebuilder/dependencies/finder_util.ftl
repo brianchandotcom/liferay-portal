@@ -7,6 +7,7 @@ import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
+ * @author ${author}
  * @generated
  */
 @ProviderType

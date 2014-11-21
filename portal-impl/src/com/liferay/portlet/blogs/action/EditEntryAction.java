@@ -500,8 +500,7 @@ public class EditEntryAction extends PortletAction {
 	}
 
 	protected String updateContentAttachmentLinks(
-			long groupId, BlogsEntry entry,
-			List<FileEntry> tempFileEntryAttachments,
+			BlogsEntry entry, List<FileEntry> tempFileEntryAttachments,
 			ActionRequest actionRequest)
 		throws PortalException {
 
@@ -511,8 +510,6 @@ public class EditEntryAction extends PortletAction {
 		String content = ParamUtil.getString(actionRequest, "content");
 
 		for (FileEntry tempAttachment : tempFileEntryAttachments) {
-			String fileName = ParamUtil.getString(
-				actionRequest, "fileName", StringUtil.randomString());
 			InputStream inputStream = tempAttachment.getContentStream();
 
 			File file = null;
@@ -520,11 +517,11 @@ public class EditEntryAction extends PortletAction {
 			try {
 				file = FileUtil.createTempFile(inputStream);
 
-				String mimeType = MimeTypesUtil.getContentType(file, fileName);
-
 				FileEntry fileEntryAttachment =
 					BlogsEntryServiceUtil.addEntryAttachment(
-						groupId, entry.getEntryId(), fileName, file, mimeType);
+						entry.getGroupId(), entry.getEntryId(),
+						tempAttachment.getTitle(), file,
+						tempAttachment.getMimeType());
 
 				fileEntryAttachments.add(fileEntryAttachment);
 
@@ -641,8 +638,7 @@ public class EditEntryAction extends PortletAction {
 
 			if (entry != null && !tempFileEntryAttachments.isEmpty()) {
 				content = updateContentAttachmentLinks(
-					entry.getGroupId(), entry, tempFileEntryAttachments,
-					actionRequest);
+					entry, tempFileEntryAttachments, actionRequest);
 
 				entry = BlogsEntryServiceUtil.updateEntry(
 					entry.getEntryId(), title, subtitle, description, content,
@@ -660,8 +656,7 @@ public class EditEntryAction extends PortletAction {
 
 			if (!tempFileEntryAttachments.isEmpty()) {
 				content = updateContentAttachmentLinks(
-					entry.getGroupId(), entry, tempFileEntryAttachments,
-					actionRequest);
+					entry, tempFileEntryAttachments, actionRequest);
 			}
 
 			boolean sendEmailEntryUpdated = ParamUtil.getBoolean(

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.test.WorkflowHandlerInvocationCounter;
@@ -48,12 +49,14 @@ import com.liferay.portal.test.log.ExpectedLog;
 import com.liferay.portal.test.log.ExpectedLogs;
 import com.liferay.portal.test.log.ExpectedType;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.UserTestUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -66,6 +69,8 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.portlet.PortletPreferences;
 
 import org.hibernate.util.JDBCExceptionReporter;
 
@@ -171,6 +176,37 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		public void shouldFailIfDuplicateNameInFolder() throws Exception {
 			addFileEntry(group.getGroupId(), parentFolder.getFolderId());
 			addFileEntry(group.getGroupId(), parentFolder.getFolderId());
+		}
+
+		@Test(expected = FileSizeException.class)
+		public void shouldFailIfSizeLimitExceeded() throws Exception {
+			long oldValue = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
+
+			PortletPreferences portletPreferences =
+				PrefsPropsUtil.getPreferences(0, false);
+
+			portletPreferences.setValue(
+				PropsKeys.DL_FILE_MAX_SIZE, String.valueOf(1L));
+			portletPreferences.store();
+
+			try {
+				String fileName = RandomTestUtil.randomString();
+
+				ServiceContext serviceContext =
+					ServiceContextTestUtil.getServiceContext(
+						group.getGroupId());
+
+				byte[] bytes = RandomTestUtil.randomBytes();
+
+				DLAppServiceUtil.addFileEntry(
+					group.getGroupId(), parentFolder.getFolderId(), fileName,
+					ContentTypes.TEXT_PLAIN, fileName, StringPool.BLANK,
+					StringPool.BLANK, bytes, serviceContext);
+			} finally {
+				portletPreferences.setValue(
+					PropsKeys.DL_FILE_MAX_SIZE, String.valueOf(oldValue));
+				portletPreferences.store();
+			}
 		}
 
 		@Test
@@ -1102,6 +1138,41 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 					2,
 					workflowHandlerInvocationCounter.getCount(
 						"updateStatus", int.class, Map.class));
+			}
+		}
+
+		@Test(expected = FileSizeException.class)
+		public void shouldFailIfSizeLimitExceeded() throws Exception {
+			String fileName = RandomTestUtil.randomString();
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(), fileName,
+				ContentTypes.TEXT_PLAIN, fileName, StringPool.BLANK,
+				StringPool.BLANK, null, 0, serviceContext);
+
+			long oldValue = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
+
+			PortletPreferences portletPreferences =
+				PrefsPropsUtil.getPreferences(0, false);
+
+			portletPreferences.setValue(
+				PropsKeys.DL_FILE_MAX_SIZE, String.valueOf(1L));
+			portletPreferences.store();
+
+			try {
+				byte[] bytes = RandomTestUtil.randomBytes();
+
+				DLAppServiceUtil.updateFileEntry(
+					fileEntry.getFileEntryId(), fileName,
+					ContentTypes.TEXT_PLAIN, StringPool.BLANK, StringPool.BLANK,
+					StringPool.BLANK, true, bytes, serviceContext);
+			} finally {
+				portletPreferences.setValue(
+					PropsKeys.DL_FILE_MAX_SIZE, String.valueOf(oldValue));
+				portletPreferences.store();
 			}
 		}
 

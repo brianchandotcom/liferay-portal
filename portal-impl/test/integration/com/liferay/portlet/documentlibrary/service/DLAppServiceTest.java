@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.test.PrefsPropsReplacement;
 import com.liferay.portal.kernel.workflow.test.WorkflowHandlerInvocationCounter;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.DoAsUserThread;
@@ -49,7 +50,6 @@ import com.liferay.portal.test.log.ExpectedLog;
 import com.liferay.portal.test.log.ExpectedLogs;
 import com.liferay.portal.test.log.ExpectedType;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.UserTestUtil;
@@ -69,8 +69,6 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import javax.portlet.PortletPreferences;
 
 import org.hibernate.util.JDBCExceptionReporter;
 
@@ -180,16 +178,9 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		@Test(expected = FileSizeException.class)
 		public void shouldFailIfSizeLimitExceeded() throws Exception {
-			long oldValue = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
+			try (PrefsPropsReplacement prefsPropsReplacement =
+					new PrefsPropsReplacement(PropsKeys.DL_FILE_MAX_SIZE, 1L)) {
 
-			PortletPreferences portletPreferences =
-				PrefsPropsUtil.getPreferences(0, false);
-
-			portletPreferences.setValue(
-				PropsKeys.DL_FILE_MAX_SIZE, String.valueOf(1L));
-			portletPreferences.store();
-
-			try {
 				String fileName = RandomTestUtil.randomString();
 
 				ServiceContext serviceContext =
@@ -202,10 +193,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 					group.getGroupId(), parentFolder.getFolderId(), fileName,
 					ContentTypes.TEXT_PLAIN, fileName, StringPool.BLANK,
 					StringPool.BLANK, bytes, serviceContext);
-			} finally {
-				portletPreferences.setValue(
-					PropsKeys.DL_FILE_MAX_SIZE, String.valueOf(oldValue));
-				portletPreferences.store();
 			}
 		}
 
@@ -1153,26 +1140,15 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				ContentTypes.TEXT_PLAIN, fileName, StringPool.BLANK,
 				StringPool.BLANK, null, 0, serviceContext);
 
-			long oldValue = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
+			try (PrefsPropsReplacement prefsPropsReplacement =
+					new PrefsPropsReplacement(PropsKeys.DL_FILE_MAX_SIZE, 1L)) {
 
-			PortletPreferences portletPreferences =
-				PrefsPropsUtil.getPreferences(0, false);
-
-			portletPreferences.setValue(
-				PropsKeys.DL_FILE_MAX_SIZE, String.valueOf(1L));
-			portletPreferences.store();
-
-			try {
 				byte[] bytes = RandomTestUtil.randomBytes();
 
 				DLAppServiceUtil.updateFileEntry(
 					fileEntry.getFileEntryId(), fileName,
 					ContentTypes.TEXT_PLAIN, StringPool.BLANK, StringPool.BLANK,
 					StringPool.BLANK, true, bytes, serviceContext);
-			} finally {
-				portletPreferences.setValue(
-					PropsKeys.DL_FILE_MAX_SIZE, String.valueOf(oldValue));
-				portletPreferences.store();
 			}
 		}
 

@@ -232,6 +232,76 @@ public class PortletFileRepositoryTest {
 
 	}
 
+	@ExecutionTestListeners(
+		listeners = { MainServletExecutionTestListener.class }
+	)
+	@RunWith(LiferayIntegrationJUnitTestRunner.class)
+	public static class WhenDeletingFileEntries {
+
+		@Test
+		public void shouldDeleteAllFileEntries() throws Exception {
+			String portletId = RandomTestUtil.randomString();
+
+			Folder folder = _addPortletFolder(portletId);
+
+			int fileEntriesToAdd = Math.abs(RandomTestUtil.randomInt()) % 10;
+
+			for (int i = 0; i < fileEntriesToAdd; i++) {
+				_addPortletFileEntry(
+					portletId, folder.getFolderId(),
+					RandomTestUtil.randomString());
+			}
+
+			PortletFileRepositoryUtil.deletePortletFileEntries(
+				TestPropsValues.getGroupId(), folder.getFolderId());
+
+			int count = PortletFileRepositoryUtil.getPortletFileEntriesCount(
+				TestPropsValues.getGroupId(), folder.getFolderId());
+
+			Assert.assertEquals(0, count);
+		}
+
+		@Test
+		public void shouldIgnoreErorsIfFileDoesNotExist() throws Exception {
+			String portletId = RandomTestUtil.randomString();
+
+			Folder folder = _addPortletFolder(portletId);
+
+			FileEntry fileEntry = _addPortletFileEntry(
+				portletId, folder.getFolderId(), RandomTestUtil.randomString());
+
+			PortletFileRepositoryUtil.deletePortletFileEntry(
+				fileEntry.getFileEntryId());
+
+			PortletFileRepositoryUtil.deletePortletFileEntry(
+				fileEntry.getFileEntryId());
+
+			int count = PortletFileRepositoryUtil.getPortletFileEntriesCount(
+				TestPropsValues.getGroupId(), folder.getFolderId());
+
+			Assert.assertEquals(0, count);
+		}
+
+		@Test
+		public void shouldSucceedIfFileEntryExists() throws Exception {
+			String portletId = RandomTestUtil.randomString();
+
+			Folder folder = _addPortletFolder(portletId);
+
+			FileEntry fileEntry = _addPortletFileEntry(
+				portletId, folder.getFolderId(), RandomTestUtil.randomString());
+
+			PortletFileRepositoryUtil.deletePortletFileEntry(
+				fileEntry.getFileEntryId());
+
+			int count = PortletFileRepositoryUtil.getPortletFileEntriesCount(
+				TestPropsValues.getGroupId(), folder.getFolderId());
+
+			Assert.assertEquals(0, count);
+		}
+
+	}
+
 	private static FileEntry _addPortletFileEntry(
 			String portletId, long folderId, String name)
 		throws PortalException {

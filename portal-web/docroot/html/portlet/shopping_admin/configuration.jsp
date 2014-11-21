@@ -248,30 +248,29 @@ shoppingSettings = ShoppingSettings.getInstance(themeDisplay.getSiteGroupId(), r
 </aui:form>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveConfiguration',
-		function() {
-			document.<portlet:namespace />fm['<portlet:namespace />preferences--ccTypes--'].value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />current_cc_types);
+	function <portlet:namespace />saveConfiguration() {
+		var form = AUI.$(document.<portlet:namespace />fm);
 
-			<portlet:namespace />saveEmails();
+		form.fm('preferences--ccTypes--').val(Liferay.Util.listSelect(form.fm('current_cc_types')));
 
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['liferay-util-list-fields']
-	);
+		<portlet:namespace />saveEmails();
+
+		submitForm(form);
+	}
 
 	function <portlet:namespace />saveEmails() {
-		try {
-			document.<portlet:namespace />fm['<portlet:namespace />preferences--emailOrderConfirmationBody--'].value = window['<portlet:namespace />emailOrderConfirmation'].getHTML();
-		}
-		catch (e) {
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		var emailOrderConfirmation = window['<portlet:namespace />emailOrderConfirmation'];
+
+		if (emailOrderConfirmation) {
+			form.fm('preferences--emailOrderConfirmationBody--').val(emailOrderConfirmation.getHTML());
 		}
 
-		try {
-			document.<portlet:namespace />fm['<portlet:namespace />preferences--emailOrderShippingBody--'].value = window['<portlet:namespace />emailOrderShipping'].getHTML();
-		}
-		catch (e) {
+		var emailOrderShipping = window['<portlet:namespace />emailOrderShipping'];
+
+		if (emailOrderShipping) {
+			form.fm('preferences--emailOrderShippingBody--').val(emailOrderShipping.getHTML());
 		}
 	}
 </aui:script>

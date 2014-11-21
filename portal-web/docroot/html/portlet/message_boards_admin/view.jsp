@@ -578,61 +578,49 @@ if ((category != null) && layout.isTypeControlPanel()) {
 	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />lockThread', '#<portlet:namespace /><%= searchContainerReference.getId("threadSearchContainer") %>SearchContainer', document.<portlet:namespace />fm1, '<portlet:namespace />allRowIds');
 	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />unlockThread', '#<portlet:namespace /><%= searchContainerReference.getId("threadSearchContainer") %>SearchContainer', document.<portlet:namespace />fm1, '<portlet:namespace />allRowIds');
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />deleteCategories',
-		function() {
-			if (<%= TrashUtil.isTrashEnabled(scopeGroupId) %> || confirm('<%= UnicodeLanguageUtil.get(request, TrashUtil.isTrashEnabled(scopeGroupId) ? "are-you-sure-you-want-to-move-the-selected-entries-to-the-recycle-bin" : "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
-				document.<portlet:namespace />fm.method = 'post';
-				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>';
-				document.<portlet:namespace />fm.<portlet:namespace />deleteCategoryIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+	function <portlet:namespace />deleteCategories() {
+		if (<%= TrashUtil.isTrashEnabled(scopeGroupId) %> || confirm('<%= UnicodeLanguageUtil.get(request, TrashUtil.isTrashEnabled(scopeGroupId) ? "are-you-sure-you-want-to-move-the-selected-entries-to-the-recycle-bin" : "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
+			var form = AUI.$(document.<portlet:namespace />fm);
 
-				submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/message_boards_admin/edit_category" /></portlet:actionURL>');
-			}
-		},
-		['liferay-util-list-fields']
-	);
+			form.attr('method', 'post');
+			form.fm('<%= Constants.CMD %>').val('<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>');
+			form.fm('deleteCategoryIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />deleteThreads',
-		function() {
-			if (<%= TrashUtil.isTrashEnabled(scopeGroupId) %> || confirm('<%= UnicodeLanguageUtil.get(request, TrashUtil.isTrashEnabled(scopeGroupId) ? "are-you-sure-you-want-to-move-the-selected-entries-to-the-recycle-bin" : "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
-				document.<portlet:namespace />fm1.method = 'post';
-				document.<portlet:namespace />fm1.<portlet:namespace /><%= Constants.CMD %>.value = '<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>';
-				document.<portlet:namespace />fm1.<portlet:namespace />threadIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm1, '<portlet:namespace />allRowIds');
+			submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/message_boards_admin/edit_category" /></portlet:actionURL>');
+		}
+	}
 
-				submitForm(document.<portlet:namespace />fm1, '<portlet:actionURL><portlet:param name="struts_action" value="/message_boards_admin/delete_thread" /></portlet:actionURL>');
-			}
-		},
-		['liferay-util-list-fields']
-	);
+	function <portlet:namespace />deleteThreads() {
+		if (<%= TrashUtil.isTrashEnabled(scopeGroupId) %> || confirm('<%= UnicodeLanguageUtil.get(request, TrashUtil.isTrashEnabled(scopeGroupId) ? "are-you-sure-you-want-to-move-the-selected-entries-to-the-recycle-bin" : "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
+			var form = AUI.$(document.<portlet:namespace />fm1);
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />lockThreads',
-		function() {
-			document.<portlet:namespace />fm1.method = 'post';
-			document.<portlet:namespace />fm1.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.LOCK %>';
-			document.<portlet:namespace />fm1.<portlet:namespace />threadIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm1, '<portlet:namespace />allRowIds');
+			form.attr('method', 'post');
+			form.fm('<%= Constants.CMD %>').val('<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>');
+			form.fm('threadIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-			submitForm(document.<portlet:namespace />fm1, '<portlet:actionURL><portlet:param name="struts_action" value="/message_boards_admin/edit_message" /></portlet:actionURL>');
-		},
-		['liferay-util-list-fields']
-	);
+			submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/message_boards_admin/delete_thread" /></portlet:actionURL>');
+		}
+	}
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />unlockThreads',
-		function() {
-			document.<portlet:namespace />fm1.method = 'post';
-			document.<portlet:namespace />fm1.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.UNLOCK %>';
-			document.<portlet:namespace />fm1.<portlet:namespace />threadIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm1, '<portlet:namespace />allRowIds');
+	function <portlet:namespace />lockThreads() {
+		var form = AUI.$(document.<portlet:namespace />fm1);
 
-			submitForm(document.<portlet:namespace />fm1, '<portlet:actionURL><portlet:param name="struts_action" value="/message_boards_admin/edit_message" /></portlet:actionURL>');
-		},
-		['liferay-util-list-fields']
-	);
+		form.attr('method', 'post');
+		form.fm('<%= Constants.CMD %>').val('<%= Constants.LOCK %>');
+		form.fm('threadIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+		submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/message_boards_admin/edit_message" /></portlet:actionURL>');
+	}
+
+	function <portlet:namespace />unlockThreads() {
+		var form = AUI.$(document.<portlet:namespace />fm1);
+
+		form.attr('method', 'post');
+		form.fm('<%= Constants.CMD %>').val('<%= Constants.UNLOCK %>');
+		form.fm('threadIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+		submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/message_boards_admin/edit_message" /></portlet:actionURL>');
+	}
 </aui:script>
 
 <%!

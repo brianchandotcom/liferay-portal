@@ -176,39 +176,33 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 			);
 
 			<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) %>">
-				Liferay.provide(
-					window,
-					'<portlet:namespace />deleteArticles',
-					function() {
-						if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-version") %>')) {
-							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.DELETE %>';
-							document.<portlet:namespace />fm.<portlet:namespace />groupId.value = '<%= scopeGroupId %>';
-							document.<portlet:namespace />fm.<portlet:namespace />articleId.value = '';
-							document.<portlet:namespace />fm.<portlet:namespace />articleIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+				function <portlet:namespace />deleteArticles() {
+					if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-version") %>')) {
+						var form = AUI.$(document.<portlet:namespace />fm);
 
-							submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/journal/edit_article" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
-						}
-					},
-					['liferay-util-list-fields']
-				);
+						form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
+						form.fm('groupId').val('<%= scopeGroupId %>');
+						form.fm('articleId').val('');
+						form.fm('articleIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+						submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/journal/edit_article" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+					}
+				}
 			</c:if>
 
 			<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.EXPIRE) %>">
-				Liferay.provide(
-					window,
-					'<portlet:namespace />expireArticles',
-					function() {
-						if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-expire-the-selected-version") %>')) {
-							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.EXPIRE %>';
-							document.<portlet:namespace />fm.<portlet:namespace />groupId.value = '<%= scopeGroupId %>';
-							document.<portlet:namespace />fm.<portlet:namespace />articleId.value = '';
-							document.<portlet:namespace />fm.<portlet:namespace />expireArticleIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+				function <portlet:namespace />expireArticles() {
+					if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-expire-the-selected-version") %>')) {
+						var form = AUI.$(document.<portlet:namespace />fm);
 
-							submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/journal/edit_article" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
-						}
-					},
-					['liferay-util-list-fields']
-				);
+						form.fm('<%= Constants.CMD %>').val('<%= Constants.EXPIRE %>');
+						form.fm('groupId').val('<%= scopeGroupId %>');
+						form.fm('articleId').val('');
+						form.fm('expireArticleIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+						submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/journal/edit_article" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+					}
+				}
 			</c:if>
 		</aui:script>
 	</c:otherwise>

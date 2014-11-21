@@ -145,18 +145,22 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script use="aui-base,liferay-util-list-fields">
-	A.one('#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer').delegate(
-		'click',
-		function() {
-			var hide = (Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>').length == 0);
+<aui:script sandbox="<%= true %>">
+	var Util = Liferay.Util;
 
-			A.one('#<portlet:namespace />categoriesActionsButton').toggle(!hide);
-		},
-		'input[type=checkbox]'
+	var form = $(document.<portlet:namespace />fm);
+
+	$('#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer').on(
+		'click',
+		'input[type=checkbox]',
+		function() {
+			var hide = (Util.listCheckedExcept(form, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>').length == 0);
+
+			$('#<portlet:namespace />categoriesActionsButton').toggleClass('hide', hide);
+		}
 	);
 
-	A.one('#<portlet:namespace />deleteSelectedCategories').on(
+	$('#<portlet:namespace />deleteSelectedCategories').on(
 		'click',
 		function() {
 			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
@@ -166,9 +170,9 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 				</portlet:actionURL>
 
-				document.<portlet:namespace />fm.<portlet:namespace />deleteCategoryIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+				form.fm('deleteCategoryIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-				submitForm(document.<portlet:namespace />fm, '<%= deleteURL %>');
+				submitForm(form, '<%= deleteURL %>');
 			}
 		}
 	);

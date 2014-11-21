@@ -106,17 +106,16 @@ request.setAttribute("edit_user_group_roles.jsp-portletURL", portletURL);
 </aui:form>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />updateUserGroupGroupRoleUsers',
-		function(redirect) {
-			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'user_group_group_role_users';
-			document.<portlet:namespace />fm.<portlet:namespace />redirect.value = redirect;
-			document.<portlet:namespace />fm.<portlet:namespace />addUserGroupIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
-			document.<portlet:namespace />fm.<portlet:namespace />removeUserGroupIds.value = Liferay.Util.listUncheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+	function <portlet:namespace />updateUserGroupGroupRoleUsers(redirect) {
+		var Util = Liferay.Util;
 
-			submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/sites_admin/edit_user_group_roles" /></portlet:actionURL>');
-		},
-		['liferay-util-list-fields']
-	);
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		form.fm('<%= Constants.CMD %>').val('user_group_group_role_users');
+		form.fm('redirect').val(redirect);
+		form.fm('addUserGroupIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+		form.fm('removeUserGroupIds').val(Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+		submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/sites_admin/edit_user_group_roles" /></portlet:actionURL>');
+	}
 </aui:script>

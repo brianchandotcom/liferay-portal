@@ -100,15 +100,14 @@ catch (NoSuchFolderException nsfe) {
 </aui:form>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveConfiguration',
-		function() {
-			document.<portlet:namespace />fm.<portlet:namespace />folderColumns.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentFolderColumns);
-			document.<portlet:namespace />fm.<portlet:namespace />entryColumns.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentEntryColumns);
+	function <portlet:namespace />saveConfiguration() {
+		var Util = Liferay.Util;
 
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['liferay-util-list-fields']
-	);
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		form.fm('folderColumns').val(Util.listSelect(form.fm('currentFolderColumns')));
+		form.fm('entryColumns').val(Util.listSelect(form.fm('currentEntryColumns')));
+
+		submitForm(form);
+	}
 </aui:script>

@@ -90,18 +90,11 @@ request.setAttribute("websites.classPK", company.getAccountId());
 		$(document.<portlet:namespace />fm).fm('settings--ldap.server.ids--').val(ldapServerIds.join(','));
 	}
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveLocales',
-		function() {
-			var locales = document.<portlet:namespace />fm.<portlet:namespace /><%= PropsKeys.LOCALES %>;
+	function <portlet:namespace />saveLocales() {
+		var form = AUI.$(document.<portlet:namespace />fm);
 
-			if (locales) {
-				locales.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentLanguageIds);
-			}
-		},
-		['liferay-util-list-fields']
-	);
+		form.fm('<%= PropsKeys.LOCALES %>').val(Liferay.Util.listSelect(form.fm('currentLanguageIds')));
+	}
 </aui:script>
 
 <%!

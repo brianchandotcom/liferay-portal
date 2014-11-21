@@ -240,6 +240,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-app-view-move', 'liferay-history-manager', 'liferay-portlet-base', 'liferay-util-list-fields']
+		requires: ['liferay-app-view-move', 'liferay-history-manager', 'liferay-portlet-base']
 	}
 );

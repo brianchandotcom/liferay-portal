@@ -290,52 +290,53 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 
 <aui:script>
 	function <portlet:namespace />chooseSelectionStyle() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'selection-style';
+		var form = AUI.$(document.<portlet:namespace />fm);
 
-		submitForm(document.<portlet:namespace />fm);
+		form.fm('<%= Constants.CMD %>').val('selection-style');
+
+		submitForm(form);
 	}
 
 	function <portlet:namespace />moveSelectionDown(assetEntryOrder) {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'move-selection-down';
-		document.<portlet:namespace />fm.<portlet:namespace />assetEntryOrder.value = assetEntryOrder;
+		var form = AUI.$(document.<portlet:namespace />fm);
 
-		submitForm(document.<portlet:namespace />fm);
+		form.fm('<%= Constants.CMD %>').val('move-selection-down');
+		form.fm('assetEntryOrder').val(assetEntryOrder);
+
+		submitForm(form);
 	}
 
 	function <portlet:namespace />moveSelectionUp(assetEntryOrder) {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'move-selection-up';
-		document.<portlet:namespace />fm.<portlet:namespace />assetEntryOrder.value = assetEntryOrder;
+		var form = AUI.$(document.<portlet:namespace />fm);
 
-		submitForm(document.<portlet:namespace />fm);
+		form.fm('<%= Constants.CMD %>').val('move-selection-up');
+		form.fm('assetEntryOrder').val(assetEntryOrder);
+
+		submitForm(form);
 	}
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveSelectBoxes',
-		function() {
-			if (document.<portlet:namespace />fm.<portlet:namespace />classNameIds) {
-				document.<portlet:namespace />fm.<portlet:namespace />classNameIds.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentClassNameIds);
-			}
+	function <portlet:namespace />saveSelectBoxes() {
+		var Util = Liferay.Util;
 
-			<%
-			for (AssetRendererFactory curRendererFactory : classTypesAssetRendererFactories) {
-				String className = AssetPublisherUtil.getClassName(curRendererFactory);
-			%>
+		var form = AUI.$(document.<portlet:namespace />fm);
 
-				if (document.<portlet:namespace />fm.<portlet:namespace />classTypeIds<%= className %>) {
-					document.<portlet:namespace />fm.<portlet:namespace />classTypeIds<%= className %>.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace /><%= className %>currentClassTypeIds);
-				}
+		form.fm('classNameIds').val(Util.listSelect(form.fm('currentClassNameIds')));
 
-			<%
-			}
-			%>
+		<%
+		for (AssetRendererFactory curRendererFactory : classTypesAssetRendererFactories) {
+			String className = AssetPublisherUtil.getClassName(curRendererFactory);
+		%>
 
-			document.<portlet:namespace />fm.<portlet:namespace />metadataFields.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentMetadataFields);
+			form.fm('classTypeIds<%= className %>').val(Util.listSelect(form.fm('<%= className %>currentClassTypeIds')));
 
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['liferay-util-list-fields']
-	);
+		<%
+		}
+		%>
+
+		form.fm('metadataFields').val(Util.listSelect(form.fm('currentMetadataFields')));
+
+		submitForm(form);
+	}
 
 	Liferay.Util.toggleSelectBox('<portlet:namespace />anyAssetType', 'false', '<portlet:namespace />classNamesBoxes');
 </aui:script>

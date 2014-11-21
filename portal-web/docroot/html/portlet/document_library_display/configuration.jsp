@@ -163,17 +163,16 @@ DLDisplayConfigurationDisplayContext dlDisplayConfigurationDisplayContext = new 
 </aui:script>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveConfiguration',
-		function() {
-			document.<portlet:namespace />fm.<portlet:namespace />folderColumns.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentFolderColumns);
-			document.<portlet:namespace />fm.<portlet:namespace />fileEntryColumns.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentFileEntryColumns);
+	function <portlet:namespace />saveConfiguration() {
+		var Util = Liferay.Util;
 
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['liferay-util-list-fields']
-	);
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		form.fm('folderColumns').val(Util.listSelect(form.fm('currentFolderColumns')));
+		form.fm('fileEntryColumns').val(Util.listSelect(form.fm('currentFileEntryColumns')));
+
+		submitForm(form);
+	}
 </aui:script>
 
 <c:if test="<%= SessionMessages.contains(renderRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_UPDATED_CONFIGURATION) %>">

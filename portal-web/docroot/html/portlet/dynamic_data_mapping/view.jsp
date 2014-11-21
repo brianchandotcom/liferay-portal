@@ -191,18 +191,15 @@ portletURL.setParameter("tabs1", tabs1);
 		);
 	}
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />deleteStructures',
-		function() {
-			if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
-				document.<portlet:namespace />fm.method = 'post';
-				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.DELETE %>';
-				document.<portlet:namespace />fm.<portlet:namespace />deleteStructureIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+	function <portlet:namespace />deleteStructures() {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
+			var form = AUI.$(document.<portlet:namespace />fm);
 
-				submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" /></portlet:actionURL>');
-			}
-		},
-		['liferay-util-list-fields']
-	);
+			form.attr('method', 'post');
+			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
+			form.fm('deleteStructureIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+			submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" /></portlet:actionURL>');
+		}
+	}
 </aui:script>

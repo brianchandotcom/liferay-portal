@@ -216,6 +216,8 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
 
 				method${commandName}("${commandName}", false);
 
+				selenium.assertEmptyLiferayExceptionList();
+
 				testPassed = true;
 			}
 			catch (SeleniumException se) {

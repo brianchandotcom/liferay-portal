@@ -167,6 +167,45 @@ public class LiferaySeleniumHelper {
 			subject, liferaySelenium.getEmailSubject(index));
 	}
 
+	public static void assertEmptyLiferayExceptionList() throws Exception {
+		if (!_liferayExceptionList.isEmpty()) {
+			StringBundler sb = new StringBundler();
+
+			sb.append(_liferayExceptionList.size());
+			sb.append(" Liferay Exception");
+
+			if (_liferayExceptionList.size() > 1) {
+				sb.append("s were");
+			}
+			else {
+				sb.append(" was");
+			}
+
+			sb.append(" thrown!");
+
+			System.out.println();
+			System.out.println("##");
+			System.out.println("## " + sb.toString());
+			System.out.println("##");
+
+			int i = 1;
+
+			for (Exception liferayException : _liferayExceptionList) {
+				System.out.println();
+				System.out.println("##");
+				System.out.println("## Liferay Exception #" + i);
+				System.out.println("##");
+				System.out.println();
+				System.out.println(liferayException.getMessage());
+				System.out.println();
+
+				i++;
+			}
+
+			throw new Exception(sb.toString());
+		}
+	}
+
 	public static void assertHTMLSourceTextNotPresent(
 			LiferaySelenium liferaySelenium, String value)
 		throws Exception {

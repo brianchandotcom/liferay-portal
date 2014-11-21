@@ -132,6 +132,10 @@ public abstract class BaseWebDriverImpl
 		LiferaySeleniumHelper.assertEmailSubject(this, index, subject);
 	}
 
+	public void assertEmptyLiferayExceptionList() throws Exception {
+		LiferaySeleniumHelper.assertEmptyLiferayExceptionList();
+	}
+
 	@Override
 	public void assertHTMLSourceTextNotPresent(String value) throws Exception {
 		LiferaySeleniumHelper.assertHTMLSourceTextPresent(this, value);

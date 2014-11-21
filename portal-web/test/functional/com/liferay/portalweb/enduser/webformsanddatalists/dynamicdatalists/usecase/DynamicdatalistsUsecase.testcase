@@ -1913,24 +1913,10 @@
 		</execute>
 
 		<execute macro="DDLRecord#viewFieldCP">
-			<var name="ddlListName" value="Dynamic Data List" />
 			<var name="ddlRecordFieldData" value="Test Data" />
+			<var name="ddlRecordNestedFieldData" value="253" />
 			<var name="fieldFieldLabel" value="Text" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLRecord#viewCP">
-			<var name="ddlListName" value="Dynamic Data List" />
-		</execute>
-
-		<execute macro="DDLRecord#viewFieldCP">
-			<var name="ddlListName" value="Dynamic Data List" />
-			<var name="ddlRecordFieldData" value="253" />
-			<var name="fieldFieldLabel" value="Integer" />
-			<var name="nestedField" value="true" />
+			<var name="nestedFieldFieldLabel" value="Integer" />
 		</execute>
 	</command>
 
@@ -2000,10 +1986,11 @@
 		</execute>
 
 		<execute macro="DDLRecord#viewFieldCP">
-			<var name="ddlListName" value="Dynamic Data List" />
-			<var name="ddlRecordFieldData" value="253" />
-			<var name="fieldFieldLabel" value="Integer" />
-			<var name="nestedField" value="true" />
+			<var name="ddlRecordFieldData" value="" />
+			<var name="ddlRecordNestedFieldData" value="253" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="nestedFieldFieldLabel" value="Integer" />
+			<var name="parentFieldBlank" value="true" />
 		</execute>
 	</command>
 </definition>

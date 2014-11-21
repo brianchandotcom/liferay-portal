@@ -25,12 +25,12 @@
 </tr>
 <tr>
 	<td>FIELD</td>
-	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${ddlRecordFieldData}')]</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_ddlRecordFieldData}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FIELD_NESTED</td>
-	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${ddlRecordFieldData}')]/div[contains(.,'${fieldFieldLabel}')]</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_ddlRecordFieldData}')]/div[contains(.,'${key_fieldFieldLabel}')]</td>
 	<td></td>
 </tr>
 <tr>

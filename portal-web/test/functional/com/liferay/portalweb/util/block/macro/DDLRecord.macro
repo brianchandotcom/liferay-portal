@@ -365,25 +365,43 @@
 		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
-		<if>
-			<equals arg1="${nestedField}" arg2="true" />
-			<then>
-				<execute action="CPDynamicdatalistsList#assertElementNotPresent" locator-key1="RECORD_TABLE_ENTRY" value1="${ddlRecordFieldData}" />
-				<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
-				<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_MENULIST_VIEW" />
+		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="RECORD_TABLE_ENTRY" value1="${ddlRecordFieldData}" />
 
-				<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator-key1="FIELD_NESTED" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
+		<if>
+			<isset var="ddlRecordNestedFieldData" />
+			<then>
+				<var name="key_ddlRecordFieldData" value="${ddlRecordNestedFieldData}" />
+				<var name="key_fieldFieldLabel" value="${nestedFieldFieldLabel}" />
+
+				<execute action="CPDynamicdatalistsList#assertElementNotPresent" locator-key1="RECORD_TABLE_ENTRY" value1="${ddlRecordFieldData}" />
+			</then>
+		</if>
+
+		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
+		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+
+		<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_TABLE_ACTIONS" />
+		<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_MENULIST_VIEW" />
+
+		<if>
+			<equals arg1="${parentFieldBlank}" arg2="true" />
+			<then>
+				<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator-key1="FIELD" value1="${fieldFieldLabel}${ddlRecordFieldData}" />
 			</then>
 			<else>
-				<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="RECORD_TABLE_ENTRY" value1="${ddlRecordFieldData}" />
-				<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_TABLE_ACTIONS" />
-				<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_MENULIST_VIEW" />
-
 				<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator-key1="FIELD" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
 			</else>
 		</if>
 
-		<execute action="CPDynamicdatalists#selectFrameTop" />
+		<if>
+			<isset var="ddlRecordNestedFieldData" />
+			<then>
+				<var name="key_ddlRecordFieldData" value="${ddlRecordNestedFieldData}" />
+				<var name="key_fieldFieldLabel" value="${nestedFieldFieldLabel}" />
+
+				<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator-key1="FIELD_NESTED" value1="${nestedFieldFieldLabel} ${ddlRecordNestedFieldData}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="viewFieldFormTemplateSpecific">

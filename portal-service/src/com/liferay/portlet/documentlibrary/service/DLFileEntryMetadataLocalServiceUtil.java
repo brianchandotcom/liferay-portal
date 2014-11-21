@@ -281,6 +281,14 @@ public class DLFileEntryMetadataLocalServiceUtil {
 		return getService().getFileVersionFileEntryMetadatasCount(fileVersionId);
 	}
 
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata> getMismatchedCompanyIdFileEntryMetadatas() {
+		return getService().getMismatchedCompanyIdFileEntryMetadatas();
+	}
+
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata> getNoStructureFileEntryMetadatas() {
+		return getService().getNoStructureFileEntryMetadatas();
+	}
+
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {

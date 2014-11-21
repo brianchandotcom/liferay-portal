@@ -306,6 +306,16 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata> getMismatchedCompanyIdFileEntryMetadatas() {
+		return _dlFileEntryMetadataLocalService.getMismatchedCompanyIdFileEntryMetadatas();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata> getNoStructureFileEntryMetadatas() {
+		return _dlFileEntryMetadataLocalService.getNoStructureFileEntryMetadatas();
+	}
+
+	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {

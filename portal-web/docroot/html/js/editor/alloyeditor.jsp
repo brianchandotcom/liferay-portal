@@ -206,6 +206,10 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 		);
 	</c:if>
 
+	<portlet:actionURL var="imageSelectorURL">
+		<portlet:param name="struts_action" value="/blogs/image_selector" />
+	</portlet:actionURL>
+
 	nativeEditor.on(
 		'instanceReady',
 		function(event) {
@@ -221,7 +225,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 				{
 					editor: nativeEditor,
 
-					uploadUrl: '<%= themeDisplay.getPathMain() + "/portal/image_selector?p_auth=" + AuthTokenUtil.getToken(request) %>'
+					uploadUrl: '<%= imageSelectorURL %>'
 				}
 			);
 

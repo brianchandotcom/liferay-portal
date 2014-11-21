@@ -14,12 +14,12 @@
 
 package com.liferay.portal.portletfilerepository;
 
-import com.liferay.portal.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -53,6 +53,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.webserver.WebServerServlet;
+import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -301,9 +302,9 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 			localRepository.deleteFileEntry(fileEntryId);
 		}
-		catch (NoSuchRepositoryEntryException nsree) {
-			if (_log.isErrorEnabled()) {
-				_log.error(nsree, nsree);
+		catch (InvalidRepositoryIdException irie) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(irie, irie);
 			}
 		}
 		finally {
@@ -341,9 +342,9 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 			localRepository.deleteFolder(folderId);
 		}
-		catch (NoSuchRepositoryEntryException nsree) {
-			if (_log.isErrorEnabled()) {
-				_log.error(nsree, nsree);
+		catch (InvalidRepositoryIdException irie) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(irie, irie);
 			}
 		}
 		finally {

@@ -51,9 +51,9 @@ import org.junit.runners.model.Statement;
 /**
  * @author Cristina González
  */
-public class DeleteAfterTestRunRule implements TestRule {
+public class DeleteAfterTestRunTestRule implements TestRule {
 
-	public DeleteAfterTestRunRule(Object instance) {
+	public DeleteAfterTestRunTestRule(Object instance) {
 		_instance = instance;
 	}
 
@@ -322,8 +322,7 @@ public class DeleteAfterTestRunRule implements TestRule {
 
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		DeleteAfterTestRunRule.class);
+	private static final Log _log = LogFactoryUtil.getLog(DeleteAfterTestRunTestRule.class);
 
 	private static final Set<Class<?>> _orderedClasses =
 		new LinkedHashSet<Class<?>>(

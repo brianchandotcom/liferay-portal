@@ -15,10 +15,7 @@
 package com.liferay.portal.test.runners;
 
 import com.liferay.portal.kernel.util.ReflectionUtil;
-import com.liferay.portal.log.CaptureAppender;
-import com.liferay.portal.test.log.ConcurrentAssertUtil;
-import com.liferay.portal.test.log.ExpectedLogsUtil;
-import com.liferay.portal.test.log.LogAssertionUtil;
+import com.liferay.portal.test.log.LogAssertionTestRule;
 import com.liferay.portal.test.randomizerbumpers.UniqueStringRandomizerBumper;
 
 import java.lang.reflect.Field;
@@ -30,7 +27,6 @@ import java.util.List;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runner.notification.RunNotifier;
-import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
 import org.junit.runners.model.Statement;
 
@@ -55,33 +51,6 @@ public class LiferayIntegrationJUnitTestRunner
 	@Override
 	public List<String> getExtraConfigLocations() {
 		return Collections.emptyList();
-	}
-
-	protected static Statement logAssertStatement(
-		final Statement statement, final Method method) {
-
-		return new Statement() {
-
-			@Override
-			public void evaluate() throws Throwable {
-				ConcurrentAssertUtil.startAssert();
-
-				CaptureAppender captureAppender = ExpectedLogsUtil.startAssert(
-					method);
-
-				try {
-					LogAssertionUtil.enableLogAssertion();
-
-					statement.evaluate();
-				}
-				finally {
-					ExpectedLogsUtil.endAssert(method, captureAppender);
-
-					ConcurrentAssertUtil.endAssert();
-				}
-			}
-
-		};
 	}
 
 	@Override
@@ -125,16 +94,19 @@ public class LiferayIntegrationJUnitTestRunner
 	protected List<TestRule> classRules() {
 		List<TestRule> testRules = super.classRules();
 
-		testRules.add(_logAssertTestRule);
+		testRules.add(_logAssertionTestRule);
 		testRules.add(_uniqueStringRandomizerBumperTestRule);
 
 		return testRules;
 	}
 
 	@Override
-	protected Statement methodBlock(FrameworkMethod frameworkMethod) {
-		return logAssertStatement(
-			super.methodBlock(frameworkMethod), frameworkMethod.getMethod());
+	protected List<TestRule> getTestRules(Object target) {
+		List<TestRule> testRules = super.getTestRules(target);
+
+		testRules.add(_logAssertionTestRule);
+
+		return testRules;
 	}
 
 	private static final Method _CREATE_INHERITED_MAP_METHOD;
@@ -164,14 +136,7 @@ public class LiferayIntegrationJUnitTestRunner
 		}
 	}
 
-	private final TestRule _logAssertTestRule = new TestRule() {
-
-		@Override
-		public Statement apply(Statement statement, Description description) {
-			return logAssertStatement(statement, null);
-		}
-
-	};
+	private final TestRule _logAssertionTestRule = new LogAssertionTestRule();
 
 	private final TestRule _uniqueStringRandomizerBumperTestRule =
 		new TestRule() {

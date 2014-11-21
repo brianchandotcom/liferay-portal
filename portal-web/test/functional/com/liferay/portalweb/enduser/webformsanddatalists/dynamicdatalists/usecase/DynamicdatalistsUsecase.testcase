@@ -463,7 +463,7 @@
 
 	<command name="AssertGuestCannotEditRecord" priority="4">
 		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
-		<var name="ddlDataDefinitionName" value="Data Definition Name" />
+		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListDescription" value="List Description" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData1" value="Text" />
@@ -502,6 +502,19 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#editPermissionsCP">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
+			<var name="addOrRemoveViewPermission" value="Add" />
+			<var name="roleList" value="Guest" />
+		</execute>
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
@@ -599,10 +612,8 @@
 		<var name="key_localizedLanguage" value="${localizedLanguage}" />
 
 		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator-key1="ADD_TRANSLATION_MENULIST_LANGUAGE" value1="Catalan (Spain)" />
-
-		<execute action="PGDynamicdatalistsEditrecordRecordtranslation#selectFrame" locator-key1="RECORD_TRANSLATION_IFRAME" />
-		<execute action="PGDynamicdatalistsEditrecordRecordtranslation#assertClick" locator-key1="ADD_TRANSLATION_BUTTON" value1="Add Translation" />
-		<execute action="PGDynamicdatalistsEditrecordRecordtranslation#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
+		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGDynamicdatalistsEditrecord#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
@@ -618,11 +629,17 @@
 		<execute action="Home#open" locator1="${adminEditURL}" />
 
 		<execute action="PGDynamicdatalistsEditrecord#assertTextEquals" locator-key1="FIELD_1" value1="${fieldFieldLabel1}" />
-		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator-key1="FIELD_SELECT_BUTTON" value1="Select" />
+		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator-key1="FIELD_CHOOSE_FROM_DOCUMENT_LIBRARY_BUTTON" value1="Choose from Document Library" />
 
 		<execute action="PGDynamicdatalistsEditrecordSelectdocument#selectFrame" locator-key1="SELECT_DOCUMENT_IFRAME" />
 
 		<execute action="PGLogin#assertTextEquals" locator-key1="SIGN_IN_BUTTON" value1="Sign In" />
+
+		<execute action="Home#open" locator1="${adminEditURL}" />
+
+		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator-key1="FIELD_CLEAR_BUTTON" value1="Clear" />
+		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGDynamicdatalistsEditrecord#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
 
 		<execute action="Home#open" locator1="${adminEditURL}" />
 

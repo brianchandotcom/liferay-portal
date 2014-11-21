@@ -107,8 +107,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FIELD_SELECT_BUTTON</td>
-	<td>//button[contains(.,'Select')]</td>
+	<td>FIELD_CHOOSE_FROM_DOCUMENT_LIBRARY_BUTTON</td>
+	<td>//button[contains(.,'Choose from Document Library')]</td>
 	<td></td>
 </tr>
 <tr>

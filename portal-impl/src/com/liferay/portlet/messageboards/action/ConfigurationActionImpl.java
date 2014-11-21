@@ -104,7 +104,7 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 				}
 			}
 
-			String preferenceName = LocalizationUtil.getPreferencesKey(
+			String preferenceName = LocalizationUtil.getLocalizedName(
 				"priorities", languageId);
 
 			setPreference(
@@ -155,7 +155,7 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 				ranks[count++] = kvpName + StringPool.EQUAL + kvpValue;
 			}
 
-			String preferenceName = LocalizationUtil.getPreferencesKey(
+			String preferenceName = LocalizationUtil.getLocalizedName(
 				"ranks", languageId);
 
 			setPreference(actionRequest, preferenceName, ranks);

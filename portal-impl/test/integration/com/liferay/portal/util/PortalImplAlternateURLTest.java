@@ -32,7 +32,9 @@ import com.liferay.portal.util.test.TestPropsValues;
 
 import java.util.Locale;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -42,6 +44,22 @@ import org.junit.runner.RunWith;
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class PortalImplAlternateURLTest {
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_defaultLocale = LocaleUtil.getDefault();
+
+		LocaleUtil.setDefault(
+			LocaleUtil.US.getLanguage(), LocaleUtil.US.getCountry(),
+			LocaleUtil.US.getVariant());
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		LocaleUtil.setDefault(
+			_defaultLocale.getLanguage(), _defaultLocale.getCountry(),
+			_defaultLocale.getVariant());
+	}
 
 	@Test
 	public void testCustomPortalLocaleAlternateURL() throws Exception {
@@ -168,6 +186,8 @@ public class PortalImplAlternateURLTest {
 
 		Assert.assertEquals(expectedAlternateURL, actualAlternateURL);
 	}
+
+	private static Locale _defaultLocale;
 
 	@DeleteAfterTestRun
 	private Group _group;

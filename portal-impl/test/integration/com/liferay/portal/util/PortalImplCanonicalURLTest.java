@@ -39,8 +39,10 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -50,6 +52,22 @@ import org.junit.runner.RunWith;
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class PortalImplCanonicalURLTest {
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_defaultLocale = LocaleUtil.getDefault();
+
+		LocaleUtil.setDefault(
+			LocaleUtil.US.getLanguage(), LocaleUtil.US.getCountry(),
+			LocaleUtil.US.getVariant());
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		LocaleUtil.setDefault(
+			_defaultLocale.getLanguage(), _defaultLocale.getCountry(),
+			_defaultLocale.getVariant());
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -396,6 +414,8 @@ public class PortalImplCanonicalURLTest {
 
 		Assert.assertEquals(expectedCanonicalURL, actualCanonicalURL);
 	}
+
+	private static Locale _defaultLocale;
 
 	private Group _defaultGroup;
 	private Layout _defaultGrouplayout1;

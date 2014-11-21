@@ -92,8 +92,7 @@ public class TransactionalExecutorImpl implements TransactionalExecutor {
 	protected Transactional getAnnotation(TestEvent testEvent) {
 		Method method = testEvent.getTestMethod();
 
-		Transactional transactional = method.getAnnotation(
-			Transactional.class);
+		Transactional transactional = method.getAnnotation(Transactional.class);
 
 		if (transactional != null) {
 			return transactional;

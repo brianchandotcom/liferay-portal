@@ -14,20 +14,16 @@
 
 package com.liferay.portal.test.runners;
 
-import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.test.log.LogAssertionTestRule;
 import com.liferay.portal.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.test.rule.DeleteAfterTestRunTestRule;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 
 import java.util.Collections;
 import java.util.List;
 
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
-import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.model.InitializationError;
 import org.junit.runners.model.Statement;
 
@@ -55,47 +51,11 @@ public class LiferayIntegrationJUnitTestRunner
 	}
 
 	@Override
-	protected Statement classBlock(RunNotifier notifier) {
-		final Statement statement = super.classBlock(notifier);
-
-		return new Statement() {
-
-			@Override
-			public void evaluate() throws Throwable {
-				Thread currentThread = Thread.currentThread();
-
-				Object inheritableThreadLocals =
-					_INHERITABLE_THREAD_LOCALS_FIELD.get(currentThread);
-
-				if (inheritableThreadLocals != null) {
-					_INHERITABLE_THREAD_LOCALS_FIELD.set(
-						currentThread,
-						_CREATE_INHERITED_MAP_METHOD.invoke(
-							null, inheritableThreadLocals));
-				}
-
-				Object threadLocals = _THREAD_LOCALS_FIELD.get(currentThread);
-
-				_THREAD_LOCALS_FIELD.set(currentThread, null);
-
-				try {
-					statement.evaluate();
-				}
-				finally {
-					_INHERITABLE_THREAD_LOCALS_FIELD.set(
-						currentThread, inheritableThreadLocals);
-					_THREAD_LOCALS_FIELD.set(currentThread, threadLocals);
-				}
-			}
-
-		};
-	}
-
-	@Override
 	protected List<TestRule> classRules() {
 		List<TestRule> testRules = super.classRules();
 
 		testRules.add(_uniqueStringRandomizerBumperTestRule);
+		testRules.add(_clearThreadLocalTestRule);
 		testRules.add(_logAssertionTestRule);
 
 		return testRules;
@@ -111,32 +71,28 @@ public class LiferayIntegrationJUnitTestRunner
 		return testRules;
 	}
 
-	private static final Method _CREATE_INHERITED_MAP_METHOD;
+	private final TestRule _clearThreadLocalTestRule = new TestRule() {
 
-	private static final Field _INHERITABLE_THREAD_LOCALS_FIELD;
+		@Override
+		public Statement apply(
+			final Statement statement, Description description) {
 
-	private static final Class<?> _THREAD_LOCAL_MAP_CLASS;
+			return new Statement() {
 
-	private static final Field _THREAD_LOCALS_FIELD;
+				@Override
+				public void evaluate() throws Throwable {
+					try {
+						statement.evaluate();
+					}
+					finally {
+						CentralizedThreadLocal.clearShortLivedThreadLocals();
+					}
+				}
 
-	static {
-		try {
-			_THREAD_LOCAL_MAP_CLASS = Class.forName(
-				ThreadLocal.class.getName().concat("$ThreadLocalMap"));
-
-			_CREATE_INHERITED_MAP_METHOD = ReflectionUtil.getDeclaredMethod(
-				ThreadLocal.class, "createInheritedMap",
-				_THREAD_LOCAL_MAP_CLASS);
-
-			_INHERITABLE_THREAD_LOCALS_FIELD = ReflectionUtil.getDeclaredField(
-				Thread.class, "inheritableThreadLocals");
-			_THREAD_LOCALS_FIELD = ReflectionUtil.getDeclaredField(
-				Thread.class, "threadLocals");
+			};
 		}
-		catch (Exception e) {
-			throw new ExceptionInInitializerError(e);
-		}
-	}
+
+	};
 
 	private final TestRule _logAssertionTestRule = new LogAssertionTestRule();
 

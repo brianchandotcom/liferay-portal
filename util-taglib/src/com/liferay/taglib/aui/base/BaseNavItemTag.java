@@ -97,6 +97,10 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 		return _state;
 	}
 
+	public java.lang.String getTarget() {
+		return _target;
+	}
+
 	public java.lang.String getTitle() {
 		return _title;
 	}
@@ -213,6 +217,12 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("state", state);
 	}
 
+	public void setTarget(java.lang.String target) {
+		_target = target;
+
+		setScopedAttribute("target", target);
+	}
+
 	public void setTitle(java.lang.String title) {
 		_title = title;
 
@@ -261,6 +271,7 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 		_localizeLabel = true;
 		_selected = false;
 		_state = null;
+		_target = null;
 		_title = null;
 		_toggle = false;
 		_toggleTouch = true;
@@ -296,6 +307,7 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "localizeLabel", _localizeLabel);
 		setNamespacedAttribute(request, "selected", _selected);
 		setNamespacedAttribute(request, "state", _state);
+		setNamespacedAttribute(request, "target", _target);
 		setNamespacedAttribute(request, "title", _title);
 		setNamespacedAttribute(request, "toggle", _toggle);
 		setNamespacedAttribute(request, "toggleTouch", _toggleTouch);
@@ -327,6 +339,7 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 	private boolean _localizeLabel = true;
 	private boolean _selected = false;
 	private java.lang.String _state = null;
+	private java.lang.String _target = null;
 	private java.lang.String _title = null;
 	private boolean _toggle = false;
 	private boolean _toggleTouch = true;

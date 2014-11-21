@@ -40,25 +40,12 @@ import javax.servlet.jsp.JspWriter;
  */
 public class ATag extends BaseATag {
 
-	protected boolean isOpensNewWindow() {
-		String target = getTarget();
-
-		if ((target != null) &&
-			(target.equals("_blank") || target.equals("_new"))) {
-
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
 	@Override
 	protected int processEndTag() throws Exception {
 		JspWriter jspWriter = pageContext.getOut();
 
 		if (Validator.isNotNull(getHref())) {
-			if (isOpensNewWindow()) {
+			if (AUIUtil.isOpensNewWindow(getTarget())) {
 				jspWriter.write("<span class=\"opens-new-window-accessible\">");
 				jspWriter.write(LanguageUtil.get(request, "opens-new-window"));
 				jspWriter.write("</span>");
@@ -138,14 +125,16 @@ public class ATag extends BaseATag {
 			jspWriter.write("\" ");
 		}
 
-		if (Validator.isNotNull(title) || isOpensNewWindow()) {
+		if (Validator.isNotNull(title) ||
+			AUIUtil.isOpensNewWindow(getTarget())) {
+
 			jspWriter.write("title=\"");
 
 			if (Validator.isNotNull(title)) {
 				jspWriter.write(LanguageUtil.get(request, title));
 			}
 
-			if (isOpensNewWindow()) {
+			if (AUIUtil.isOpensNewWindow(getTarget())) {
 				jspWriter.write(LanguageUtil.get(request, "opens-new-window"));
 			}
 

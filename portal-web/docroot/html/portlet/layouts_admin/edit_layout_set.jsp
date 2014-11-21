@@ -72,7 +72,13 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 <aui:nav-bar>
 	<aui:nav cssClass="navbar-nav">
 		<c:if test="<%= hasViewPagesPermission %>">
-			<aui:nav-item iconCssClass="icon-file" id="viewPages" label="view-pages" />
+			<liferay-portlet:actionURL plid="<%= layoutsAdminDisplayContext.getSelPlid() %>" portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="viewPagesURL">
+				<portlet:param name="struts_action" value="/my_sites/view" />
+				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+			</liferay-portlet:actionURL>
+
+			<aui:nav-item href="<%= viewPagesURL %>" iconCssClass="icon-file" label="view-pages" target="_blank" />
 		</c:if>
 		<c:if test="<%= hasAddPageLayoutsPermission %>">
 			<portlet:renderURL var="addPagesURL">
@@ -152,21 +158,6 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 
 		submitForm(form);
 	}
-</aui:script>
-
-<aui:script use="aui-base">
-	A.one('#<portlet:namespace />viewPages').on(
-		'click',
-		function(event) {
-			<liferay-portlet:actionURL plid="<%= layoutsAdminDisplayContext.getSelPlid() %>" portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="viewPagesURL">
-				<portlet:param name="struts_action" value="/my_sites/view" />
-				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-			</liferay-portlet:actionURL>
-
-			window.open('<%= viewPagesURL %>').focus();
-		}
-	);
 </aui:script>
 
 <%!

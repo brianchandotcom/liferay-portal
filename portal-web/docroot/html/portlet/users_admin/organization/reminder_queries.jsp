@@ -111,13 +111,13 @@ Map<Locale, String> reminderQueriesMap = LocalizationUtil.getLocalizedParameter(
 
 			if (<portlet:namespace />lastLanguageId != '<%= defaultLanguageId %>') {
 				if (<portlet:namespace />reminderQueriesChanged) {
-					var reminderQueriesValue = A.one('#<portlet:namespace />reminderQueries_temp').attr('value');
+					var reminderQueriesValue = A.one('#<portlet:namespace />reminderQueries_temp').val();
 
 					if (reminderQueriesValue == null) {
 						reminderQueriesValue = '';
 					}
 
-					A.one('#<portlet:namespace />reminderQueries_' + <portlet:namespace />lastLanguageId).attr('value', reminderQueriesValue);
+					A.one('#<portlet:namespace />reminderQueries_' + <portlet:namespace />lastLanguageId).val(reminderQueriesValue);
 
 					<portlet:namespace />reminderQueriesChanged = false;
 				}
@@ -157,13 +157,13 @@ Map<Locale, String> reminderQueriesMap = LocalizationUtil.getLocalizedParameter(
 				var reminderQueriesLang = A.one('#<portlet:namespace />reminderQueries_' + lang);
 
 				if (reminderQueriesLang) {
-					var reminderQueriesValue = reminderQueriesLang.attr('value');
+					var reminderQueriesValue = reminderQueriesLang.val();
 				}
 
 				var defaultReminderQueriesLang = A.one('#<portlet:namespace />reminderQueries_<%= defaultLanguageId %>');
 
 				if (defaultReminderQueriesLang) {
-					var defaultReminderQueriesValue = defaultReminderQueriesLang.attr('value');
+					var defaultReminderQueriesValue = defaultReminderQueriesLang.val();
 				}
 
 				if (defaultReminderQueriesValue == null) {
@@ -171,10 +171,10 @@ Map<Locale, String> reminderQueriesMap = LocalizationUtil.getLocalizedParameter(
 				}
 
 				if ((reminderQueriesValue == null) || (reminderQueriesValue == '')) {
-					A.one('#<portlet:namespace />reminderQueries_temp').attr('value', defaultReminderQueriesValue);
+					A.one('#<portlet:namespace />reminderQueries_temp').val(defaultReminderQueriesValue);
 				}
 				else {
-					A.one('#<portlet:namespace />reminderQueries_temp').attr('value', reminderQueriesValue);
+					A.one('#<portlet:namespace />reminderQueries_temp').val(reminderQueriesValue);
 				}
 			}
 		},

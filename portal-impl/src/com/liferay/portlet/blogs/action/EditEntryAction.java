@@ -500,14 +500,12 @@ public class EditEntryAction extends PortletAction {
 	}
 
 	protected String updateContentAttachmentLinks(
-			BlogsEntry entry, List<FileEntry> tempFileEntryAttachments,
-			ActionRequest actionRequest)
+			BlogsEntry entry, String content,
+			List<FileEntry> tempFileEntryAttachments, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		List<FileEntry> fileEntryAttachments = new ArrayList<>(
 			tempFileEntryAttachments.size());
-
-		String content = ParamUtil.getString(actionRequest, "content");
 
 		for (FileEntry tempAttachment : tempFileEntryAttachments) {
 			InputStream inputStream = tempAttachment.getContentStream();
@@ -524,10 +522,6 @@ public class EditEntryAction extends PortletAction {
 						tempAttachment.getMimeType());
 
 				fileEntryAttachments.add(fileEntryAttachment);
-
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)actionRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
 
 				content = StringUtil.replace(
 					content,
@@ -548,6 +542,9 @@ public class EditEntryAction extends PortletAction {
 
 	protected Object[] updateEntry(ActionRequest actionRequest)
 		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		long entryId = ParamUtil.getLong(actionRequest, "entryId");
 
@@ -638,7 +635,7 @@ public class EditEntryAction extends PortletAction {
 
 			if (entry != null && !tempFileEntryAttachments.isEmpty()) {
 				content = updateContentAttachmentLinks(
-					entry, tempFileEntryAttachments, actionRequest);
+					entry, content, tempFileEntryAttachments, themeDisplay);
 
 				entry = BlogsEntryServiceUtil.updateEntry(
 					entry.getEntryId(), title, subtitle, description, content,
@@ -656,7 +653,7 @@ public class EditEntryAction extends PortletAction {
 
 			if (!tempFileEntryAttachments.isEmpty()) {
 				content = updateContentAttachmentLinks(
-					entry, tempFileEntryAttachments, actionRequest);
+					entry, content, tempFileEntryAttachments, themeDisplay);
 			}
 
 			boolean sendEmailEntryUpdated = ParamUtil.getBoolean(

@@ -512,8 +512,8 @@ public class EditEntryAction extends PortletAction {
 				BlogsEntryServiceUtil.addEntryAttachment(
 					entry.getGroupId(), entry.getEntryId(),
 					tempAttachment.getTitle(),
-					tempAttachment.getContentStream(),
-					tempAttachment.getMimeType());
+					tempAttachment.getMimeType(),
+					tempAttachment.getContentStream());
 
 			fileEntryAttachments.add(fileEntryAttachment);
 

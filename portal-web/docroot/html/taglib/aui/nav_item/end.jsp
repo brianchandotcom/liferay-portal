@@ -59,6 +59,10 @@ if (Validator.isNull(title)) {
 						<i class="icon-caret-down"></i>
 					</c:if>
 			<c:if test="<%= Validator.isNotNull(href) %>">
+				<c:if test="<%= !useDialog && AUIUtil.isOpensNewWindow(target) %>">
+					<span class="opens-new-window-accessible"><liferay-ui:message key="opens-new-window" /></span>
+				</c:if>
+
 				</a>
 			</c:if>
 		</c:if>

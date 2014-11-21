@@ -419,6 +419,19 @@ public class ParamUtil {
 	}
 
 	public static double getDouble(
+		PortletRequest portletRequest, String param, Locale locale) {
+
+		return GetterUtil.getDouble(portletRequest.getParameter(param), locale);
+	}
+
+	public static double getDouble(
+		PortletRequest portletRequest, String param, Locale locale,
+		double defaultValue) {
+
+		return GetterUtil.getDouble(portletRequest.getParameter(param), locale);
+	}
+
+	public static double getDouble(
 		ServiceContext serviceContext, String param) {
 
 		return GetterUtil.getDouble(serviceContext.getAttribute(param));

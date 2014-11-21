@@ -57,7 +57,43 @@ public class DeleteAfterTestRunTestRule implements TestRule {
 		_instance = instance;
 	}
 
-	public void after(Class<?> testClass) {
+	@Override
+	public Statement apply(
+		final Statement statement, final Description description) {
+
+		return new Statement() {
+
+			@Override
+			public void evaluate() throws Throwable {
+				try {
+					statement.evaluate();
+				}
+				finally {
+					after(description.getTestClass());
+				}
+			}
+
+		};
+	}
+
+	protected void addField(
+		Map<Class<?>, FieldBag> deleteAfterTestRunFieldBags, Class<?> clazz,
+		Field field) {
+
+		FieldBag fieldBag = deleteAfterTestRunFieldBags.get(clazz);
+
+		if (fieldBag == null) {
+			fieldBag = new FieldBag(clazz);
+
+			deleteAfterTestRunFieldBags.put(clazz, fieldBag);
+		}
+
+		field.setAccessible(true);
+
+		fieldBag.addField(field);
+	}
+
+	protected void after(Class<?> testClass) {
 		Map<Class<?>, FieldBag> deleteAfterTestRunFieldBags =
 			new HashMap<Class<?>, FieldBag>();
 
@@ -169,42 +205,6 @@ public class DeleteAfterTestRunTestRule implements TestRule {
 
 			removeField(fieldBag, _instance);
 		}
-	}
-
-	@Override
-	public Statement apply(
-		final Statement statement, final Description description) {
-
-		return new Statement() {
-
-			@Override
-			public void evaluate() throws Throwable {
-				try {
-					statement.evaluate();
-				}
-				finally {
-					after(description.getTestClass());
-				}
-			}
-
-		};
-	}
-
-	protected void addField(
-		Map<Class<?>, FieldBag> deleteAfterTestRunFieldBags, Class<?> clazz,
-		Field field) {
-
-		FieldBag fieldBag = deleteAfterTestRunFieldBags.get(clazz);
-
-		if (fieldBag == null) {
-			fieldBag = new FieldBag(clazz);
-
-			deleteAfterTestRunFieldBags.put(clazz, fieldBag);
-		}
-
-		field.setAccessible(true);
-
-		fieldBag.addField(field);
 	}
 
 	protected Class<? extends PersistedModel> getCollectionType(
@@ -322,7 +322,8 @@ public class DeleteAfterTestRunTestRule implements TestRule {
 
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(DeleteAfterTestRunTestRule.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		DeleteAfterTestRunTestRule.class);
 
 	private static final Set<Class<?>> _orderedClasses =
 		new LinkedHashSet<Class<?>>(

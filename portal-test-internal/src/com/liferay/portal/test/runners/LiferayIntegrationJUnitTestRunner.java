@@ -17,6 +17,7 @@ package com.liferay.portal.test.runners;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.test.log.LogAssertionTestRule;
 import com.liferay.portal.test.randomizerbumpers.UniqueStringRandomizerBumper;
+import com.liferay.portal.test.rule.DeleteAfterTestRunTestRule;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -105,6 +106,7 @@ public class LiferayIntegrationJUnitTestRunner
 		List<TestRule> testRules = super.getTestRules(object);
 
 		testRules.add(_logAssertionTestRule);
+		testRules.add(new DeleteAfterTestRunTestRule(object));
 
 		return testRules;
 	}

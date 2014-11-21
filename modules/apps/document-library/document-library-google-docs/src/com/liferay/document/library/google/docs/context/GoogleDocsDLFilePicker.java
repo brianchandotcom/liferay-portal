@@ -57,7 +57,7 @@ public class GoogleDocsDLFilePicker implements DLFilePicker {
 
 	@Override
 	public String getIconFieldName() {
-		return GoogleDocsConstants.DDM_FIELD_NAME_ICON;
+		return GoogleDocsConstants.DDM_FIELD_NAME_ICON_URL;
 	}
 
 	@Override
@@ -99,7 +99,7 @@ public class GoogleDocsDLFilePicker implements DLFilePicker {
 
 	@Override
 	public String getTitleFieldName() {
-		return GoogleDocsConstants.DDM_FIELD_NAME_TITLE;
+		return GoogleDocsConstants.DDM_FIELD_NAME_NAME;
 	}
 
 	private final GoogleDocsConfigurationHelper _googleDocsConfigurationHelper;

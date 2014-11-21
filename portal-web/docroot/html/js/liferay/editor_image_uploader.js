@@ -15,8 +15,6 @@ AUI.add(
 
 		var TPL_PROGRESS_BAR = '<div class="progressbar"></div>';
 
-		var UPLOAD_PROGRESS_ID = 'blogsEntryUploadImageProgress';
-
 		var BlogsUploader = A.Component.create(
 			{
 				ATTRS: {
@@ -84,9 +82,9 @@ AUI.add(
 
 						image.setAttribute('data-random-id', randomId);
 						image.addClass(CSS_UPLOADING_IMAGE);
-						instance._image = image;
 
-						instance._createProgressBar();
+						file = new A.FileHTML5(file);
+						file.progressbar = instance._createProgressBar(image);
 
 						var uploader = instance._getUploader();
 
@@ -97,27 +95,26 @@ AUI.add(
 							}
 						);
 
-						uploader.upload(new A.FileHTML5(file));
+						uploader.upload(file);
 					},
 
-					_createProgressBar: function(event) {
+					_createProgressBar: function(image) {
 						var instance = this;
 
 						var imageContainerNode = A.Node.create(TPL_IMAGE_CONTAINER);
 						var progressBarNode = A.Node.create(TPL_PROGRESS_BAR);
 
-						A.one(instance._image.$).wrap(imageContainerNode);
+						A.one(image.$).wrap(imageContainerNode);
 
 						imageContainerNode.appendChild(progressBarNode);
 
 						var progressbar = new A.ProgressBar(
 							{
-								boundingBox: progressBarNode,
-								id: UPLOAD_PROGRESS_ID
+								boundingBox: progressBarNode
 							}
 						).render();
 
-						instance._progressbar = progressbar;
+						return progressbar;
 					},
 
 					_getAlert: function() {
@@ -160,8 +157,12 @@ AUI.add(
 					_onUploadComplete: function(event) {
 						var instance = this;
 
-						if (instance._progressbar) {
-							instance._progressbar.destroy();
+						var target = event.details[0].target;
+
+						var progressbar = target.progressbar;
+
+						if (progressbar) {
+							progressbar.destroy();
 						}
 
 						var data = A.JSON.parse(event.data);
@@ -194,10 +195,12 @@ AUI.add(
 
 						var percentLoaded = Math.round(event.percentLoaded);
 
-						var progressbar = instance._progressbar;
+						var target = event.details[0].target;
+
+						var progressbar = target.progressbar;
 
 						if (progressbar) {
-							progressbar.set('label', percentLoaded + '%');
+							progressbar.set('label', percentLoaded + ' %');
 
 							progressbar.set('value', Math.ceil(percentLoaded));
 						}

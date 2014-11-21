@@ -1,6 +1,15 @@
 Bundle-Version: 6.2.0
 Bundle-Name: Liferay Portal Test
 Export-Package:\
+	com.liferay.portal.util.test,\
+	com.liferay.portal.test.randomizerbumpers
+Import-Package:\
+	!org.junit,\
+	!org.junit.internal,\
+	!org.junit.runner.manipulation,\
+	!org.junit.runner.notification,\
+	!org.junit.runners,\
+	!org.junit.runners.model,\
 	*
 Include-Resource:\
 	classes,\

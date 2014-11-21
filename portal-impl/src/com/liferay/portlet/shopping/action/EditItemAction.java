@@ -51,7 +51,6 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -198,21 +197,20 @@ public class EditItemAction extends PortletAction {
 
 		List<ShoppingItemPrice> itemPrices = new ArrayList<>();
 
-		Locale locale = themeDisplay.getLocale();
-
 		for (int i = 0; i < pricesCount; i ++) {
 			int minQuantity = ParamUtil.getInteger(
 				uploadPortletRequest, "minQuantity" + i);
 			int maxQuantity = ParamUtil.getInteger(
 				uploadPortletRequest, "maxQuantity" + i);
 			double price = ParamUtil.getDouble(
-				uploadPortletRequest, "price" + i, locale);
+				uploadPortletRequest, "price" + i, themeDisplay.getLocale());
 			double discount = ParamUtil.getDouble(
-				uploadPortletRequest, "discount" + i, locale) / 100;
+				uploadPortletRequest, "discount" + i,
+				themeDisplay.getLocale()) / 100;
 			boolean taxable = ParamUtil.getBoolean(
 				uploadPortletRequest, "taxable" + i);
 			double shipping = ParamUtil.getDouble(
-				uploadPortletRequest, "shipping" + i, locale);
+				uploadPortletRequest, "shipping" + i, themeDisplay.getLocale());
 			boolean useShippingFormula = ParamUtil.getBoolean(
 				uploadPortletRequest, "useShippingFormula" + i);
 			boolean active = ParamUtil.getBoolean(

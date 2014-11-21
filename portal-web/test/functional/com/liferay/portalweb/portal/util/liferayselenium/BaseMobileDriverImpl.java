@@ -93,6 +93,10 @@ public abstract class BaseMobileDriverImpl
 		throw new UnsupportedOperationException();
 	}
 
+	public void assertEmptyLiferayExceptionList() throws Exception {
+		LiferaySeleniumHelper.assertEmptyLiferayExceptionList();
+	}
+
 	@Override
 	public void assertHTMLSourceTextNotPresent(String value) throws Exception {
 		throw new UnsupportedOperationException();

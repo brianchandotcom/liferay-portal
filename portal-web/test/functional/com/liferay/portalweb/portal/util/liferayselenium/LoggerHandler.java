@@ -78,6 +78,12 @@ public class LoggerHandler implements InvocationHandler {
 		catch (InvocationTargetException ite) {
 			Throwable throwable = ite.getCause();
 
+			if (methodName.equals("assertLiferayErrors")) {
+				_logger.logError(method, arguments, throwable, false);
+
+				return null;
+			}
+
 			if (methodName.equals("stop") || methodName.equals("stopLogger")) {
 				System.out.println("Unable to stop " + throwable.getMessage());
 
@@ -86,7 +92,7 @@ public class LoggerHandler implements InvocationHandler {
 
 			_liferaySelenium.saveScreenshotBeforeAction(true);
 
-			_logger.logError(method, arguments, throwable);
+			_logger.logError(method, arguments, throwable, true);
 
 			throw throwable;
 		}

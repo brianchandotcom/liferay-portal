@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -92,26 +93,26 @@ public abstract class BaseImageSelectorAction extends PortletAction {
 		writeJSON(actionRequest, actionResponse, jsonObject);
 	}
 
+	protected abstract void checkPermission(
+			long groupId, PermissionChecker permissionChecker)
+		throws PortalException;
 
 	protected JSONObject getImageJSONObject(ActionRequest actionRequest)
 		throws Exception {
+
+		UploadPortletRequest uploadPortletRequest =
+			PortalUtil.getUploadPortletRequest(actionRequest);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String randomId = ParamUtil.getString(uploadPortletRequest, "randomId");
 
 		JSONObject imageJSONObject = JSONFactoryUtil.createJSONObject();
 
 		InputStream inputStream = null;
 
 		try {
-			UploadPortletRequest uploadPortletRequest =
-				PortalUtil.getUploadPortletRequest(actionRequest);
-
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			imageJSONObject.put(
-				"dataImageIdAttribute",
-				EditorConstants.DATA_IMAGE_ID_ATTRIBUTE);
-
 			inputStream = uploadPortletRequest.getFileAsStream(
 				"imageSelectorFileName");
 
@@ -126,30 +127,25 @@ public abstract class BaseImageSelectorAction extends PortletAction {
 				_TEMP_FOLDER_NAME, StringUtil.randomString() + fileName,
 				inputStream, mimeType);
 
+			imageJSONObject.put(
+				"dataImageIdAttribute",
+				EditorConstants.DATA_IMAGE_ID_ATTRIBUTE);
+
 			imageJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
 
-			imageJSONObject.put("randomId", uploadPortletRequest.getParameter(
-				"randomId"));
+			imageJSONObject.put("randomId", randomId);
 
 			imageJSONObject.put(
 				"url",
 				PortletFileRepositoryUtil.getPortletFileEntryURL(
-					themeDisplay, fileEntry, StringPool.BLANK)
-			);
+					themeDisplay, fileEntry, StringPool.BLANK));
 
 			return imageJSONObject;
-		}
-		catch (Exception e) {
-			throw e;
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);
 		}
 	}
-
-	protected abstract void checkPermission(
-			long groupId, PermissionChecker permissionChecker)
-		throws PortalException;
 
 	private static final String _TEMP_FOLDER_NAME =
 		BaseImageSelectorAction.class.getName();

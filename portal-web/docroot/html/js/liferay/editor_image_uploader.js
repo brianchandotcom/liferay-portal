@@ -1,32 +1,39 @@
 AUI.add(
-	'liferay-blogs-uploader',
+	'liferay-editor-image-uploader',
 	function(A) {
 		var Lang = A.Lang;
 
 		var CSS_UPLOADING_IMAGE = 'uploading-image';
 
-		var FAILURE_TIMEOUT = 10000;
+		var NAME = 'editorimageupload';
 
 		var STR_BLANK = '';
 
 		var STR_UNDERSCORE = '_';
 
-		var TMPL_IMAGE_CONTAINER = '<div class="uploading-image-container"></div>';
+		var TPL_IMAGE_CONTAINER = '<div class="uploading-image-container"></div>';
 
-		var TMPL_PROGRESS_BAR = '<div class="progressbar"></div>';
+		var TPL_PROGRESS_BAR = '<div class="progressbar"></div>';
 
 		var UPLOAD_PROGRESS_ID = 'blogsEntryUploadImageProgress';
 
 		var BlogsUploader = A.Component.create(
 			{
 				ATTRS: {
-					editor: {},
+					editor: {
+						validator: Lang.isObject
+					},
 
 					strings: {
 						validator: Lang.isObject,
 						value: {
 							uploadingFileError: Liferay.Language.get('an-unexpected-error-occurred-while-uploading-your-file')
 						}
+					},
+
+					timeout: {
+						validator: Lang.isNumber,
+						value: 10000
 					},
 
 					uploadUrl: {
@@ -37,9 +44,9 @@ AUI.add(
 
 				EXTENDS: A.Plugin.Base,
 
-				NAME: 'bloguploader',
+				NAME: NAME,
 
-				NS: 'upload',
+				NS: NAME,
 
 				prototype: {
 					initializer: function() {
@@ -63,13 +70,17 @@ AUI.add(
 							instance._uploader.destroy();
 						}
 
+						if (instance._alert) {
+							instance._alert.destroy();
+						}
+
 						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 
 					uploadImage: function(image, file) {
 						var instance = this;
 
-						var randomId = new Date().getTime() + STR_UNDERSCORE + Liferay.Util.randomInt();
+						var randomId = Lang.now() + STR_UNDERSCORE + Liferay.Util.randomInt();
 
 						image.setAttribute('data-random-id', randomId);
 						image.addClass(CSS_UPLOADING_IMAGE);
@@ -92,10 +103,11 @@ AUI.add(
 					_createProgressBar: function(event) {
 						var instance = this;
 
-						var imageContainerNode = A.Node.create(TMPL_IMAGE_CONTAINER);
+						var imageContainerNode = A.Node.create(TPL_IMAGE_CONTAINER);
+						var progressBarNode = A.Node.create(TPL_PROGRESS_BAR);
+
 						A.one(instance._image.$).wrap(imageContainerNode);
 
-						var progressBarNode = A.Node.create(TMPL_PROGRESS_BAR);
 						imageContainerNode.appendChild(progressBarNode);
 
 						var progressbar = new A.ProgressBar(
@@ -106,6 +118,24 @@ AUI.add(
 						).render();
 
 						instance._progressbar = progressbar;
+					},
+
+					_getAlert: function() {
+						var instance = this;
+
+						if (!instance._alert) {
+							instance._alert = new A.Alert(
+								{
+									animated: true,
+									closeable: true,
+									cssClass: null,
+									duration: instance.get('timeout'),
+									render: true
+								}
+							);
+						}
+
+						return instance._alert;
 					},
 
 					_getUploader: function() {
@@ -134,13 +164,7 @@ AUI.add(
 							instance._progressbar.destroy();
 						}
 
-						var data = event.data;
-
-						try {
-							data = A.JSON.parse(data);
-						}
-						catch (err) {
-						}
+						var data = A.JSON.parse(event.data);
 
 						if (data.success) {
 							var image = A.one(instance._editor.element.$).one('[data-random-id="' + data.image.randomId + '"]');
@@ -153,7 +177,7 @@ AUI.add(
 							}
 						}
 						else {
-							instance._removeTmpImage(data.image);
+							instance._removeTempImage(data.image);
 						}
 					},
 
@@ -162,7 +186,7 @@ AUI.add(
 
 						event.target.cancelUpload();
 
-						instance._removeTmpImage(event);
+						instance._removeTempImage(event);
 					},
 
 					_onUploadProgress: function(event) {
@@ -179,7 +203,7 @@ AUI.add(
 						}
 					},
 
-					_removeTmpImage: function(imageData) {
+					_removeTempImage: function(imageData) {
 						var instance = this;
 
 						if (imageData && imageData.randomId) {
@@ -192,17 +216,9 @@ AUI.add(
 
 						var strings = instance.get('strings');
 
-						new Liferay.Notice(
-							{
-								closeText: false,
-								content: strings.uploadingFileError,
-								noticeClass: 'hide',
-								timeout: FAILURE_TIMEOUT,
-								toggleText: false,
-								type: 'warning',
-								useAnimation: true
-							}
-						).show();
+						var alert = instance._getAlert();
+
+						alert.set('bodyContent', strings.uploadingFileError).show();
 					}
 				}
 			}

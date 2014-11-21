@@ -1570,14 +1570,7 @@ rerun your task.
 
 		<test-cmd
 			junit.forkmode="once"
-			test.excludes="**/*PersistenceTest.class"
 			test.includes="**/*Test.class"
-			test.type="integration"
-		/>
-
-		<test-cmd
-			junit.forkmode="once"
-			test.includes="**/*PersistenceTest.class"
 			test.type="integration"
 		/>
 
@@ -1698,7 +1691,7 @@ rerun your task.
 		<if>
 			<available file="test/integration" type="dir" />
 			<then>
-				<resourcecount property="test.integration.other.count">
+				<resourcecount property="test.integration.count">
 					<fileset
 						dir="test/integration"
 						excludes="**/${test.package.dir}/*PersistenceTest.java"
@@ -1708,37 +1701,12 @@ rerun your task.
 
 				<if>
 					<not>
-						<equals arg1="${test.integration.other.count}" arg2="0" />
+						<equals arg1="${test.integration.count}" arg2="0" />
 					</not>
 					<then>
 						<test-cmd
 							junit.forkmode="once"
-							test.excludes="**/*PersistenceTest.class"
 							test.includes="**/${test.package.dir}/*Test.class"
-							test.type="integration"
-						/>
-
-						<report-test-coverage
-							test.type="integration"
-						/>
-					</then>
-				</if>
-
-				<resourcecount property="test.integration.persistence.count">
-					<fileset
-						dir="test/integration"
-						includes="**/${test.package.dir}/*PersistenceTest.java"
-					/>
-				</resourcecount>
-
-				<if>
-					<not>
-						<equals arg1="${test.integration.persistence.count}" arg2="0" />
-					</not>
-					<then>
-						<test-cmd
-							junit.forkmode="once"
-							test.includes="**/${test.package.dir}/*PersistenceTest.class"
 							test.type="integration"
 						/>
 

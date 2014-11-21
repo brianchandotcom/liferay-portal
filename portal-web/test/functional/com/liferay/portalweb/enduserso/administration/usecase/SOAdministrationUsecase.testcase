@@ -38,6 +38,82 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
+	<command name="AssertLoginURLRedirectsToDashboard" priority="4">
+		<execute action="Home#open" locator1="http://localhost:8080/login" />
+		<execute action="Home#assertLocation" value1="http://localhost:8080/user/test/so/dashboard" />
+
+		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_DASHBOARD" value1="Dashboard" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_CONTACTS_CENTER" value1="Contacts Center" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_MICROBLOGS" value1="Microblogs" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_MESSAGES" value1="Messages" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_MY_DOCUMENTS" value1="My Documents" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+	</command>
+
+	<command name="AssertPageTemplatePreviewWithSOUserBar" priority="4">
+		<var name="pageTemplateName" value="Page Template Name" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Page Templates" />
+		</execute>
+
+		<execute macro="PageTemplate#addCP">
+			<var name="pageTemplateActive" value="Yes" />
+			<var name="pageTemplateName" value="${pageTemplateName}" />
+		</execute>
+
+		<var name="key_pageTemplateName" value="${pageTemplateName}" />
+
+		<execute action="CPPagetemplates#assertClick" locator-key1="PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
+		<execute action="CPPagetemplatesEdit#click" locator-key1="OPEN_PAGE_TEMPLATE" />
+
+		<var name="key_pageTitle" value="${pageTemplateName} - Liferay" />
+
+		<execute action="SOPage#selectWindow" locator-key1="PAGE_TITLE" />
+
+		<execute action="SOUserBar#assertVisible" locator-key1="USER_BAR" />
+
+		<var name="key_pageTitle" value="${pageTemplateName} - Liferay" />
+
+		<execute action="SOPage#close" locator-key1="PAGE_TITLE" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Page Templates" />
+		</execute>
+
+		<execute macro="PageTemplate#editCP">
+			<var name="pageTemplateActive" value="No" />
+			<var name="pageTemplateName" value="${pageTemplateName}" />
+		</execute>
+
+		<var name="key_pageTemplateName" value="${pageTemplateName} Edit" />
+
+		<execute action="CPPagetemplates#assertClick" locator-key1="PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName} Edit" />
+		<execute action="CPPagetemplatesEdit#click" locator-key1="OPEN_PAGE_TEMPLATE" />
+
+		<var name="key_pageTitle" value="${pageTemplateName} Edit - Liferay" />
+
+		<execute action="SOPage#selectWindow" locator-key1="PAGE_TITLE" />
+
+		<execute action="SOUserBar#assertVisible" locator-key1="USER_BAR" />
+
+		<execute action="Dockbar#click" locator-key1="ADD" />
+
+		<execute action="DockbarAddpanelcontent#assertElementPresent" locator-key1="NAVIGATION_CONTENT" />
+
+		<execute action="Dockbar#click" locator-key1="EDIT" />
+
+		<execute action="DockbarEditpanel#assertElementPresent" locator-key1="DETAILS_PANEL_TOGGLE" />
+
+		<execute action="Dockbar#click" locator-key1="PREVIEW" />
+
+		<execute action="DockbarPreviewpanel#assertElementPresent" locator-key1="PREVIEW_AUTOSIZE" />
+
+		<var name="key_pageTitle" value="${pageTemplateName} Edit - Liferay" />
+
+		<execute action="SOPage#close" locator-key1="PAGE_TITLE" />
+	</command>
+
 	<command name="DashboardDemo" priority="5">
 		<var name="adminFirstName" value="Test" />
 		<var name="adminListName" value="Test, Test" />
@@ -610,6 +686,28 @@
 		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_FOLLOWING" value1="Following" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
+	</command>
+
+	<command name="SetHomeURL" priority="4">
+		<execute action="Home#open" locator1="http://localhost:8080/" />
+		<execute action="Home#assertLocation" value1="http://localhost:8080/" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Settings" />
+		</execute>
+
+		<execute action="CPPortalsettings#type" locator-key1="NAVIGATION_HOME_URL_FIELD" value1="/user" />
+		<execute action="CPPortalsettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="Home#open" locator1="http://localhost:8080/" />
+		<execute action="Home#assertLocation" value1="http://localhost:8080/user/test/so/dashboard" />
+
+		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_DASHBOARD" value1="Dashboard" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_CONTACTS_CENTER" value1="Contacts Center" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_MICROBLOGS" value1="Microblogs" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_MESSAGES" value1="Messages" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_MY_DOCUMENTS" value1="My Documents" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
 	</command>
 
 	<command name="SiteDemo" priority="5">

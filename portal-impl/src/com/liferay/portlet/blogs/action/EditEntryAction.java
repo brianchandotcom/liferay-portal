@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -406,10 +405,10 @@ public class EditEntryAction extends PortletAction {
 		return portletURL.toString();
 	}
 
-	protected List<FileEntry> getTempAttachments(String content)
+	protected List<FileEntry> getTempFileEntryAttachments(String content)
 		throws PortalException {
 
-		List<FileEntry> attachments = new ArrayList<>();
+		List<FileEntry> fileEntryAttachments = new ArrayList<>();
 
 		Pattern pattern = Pattern.compile(
 			EditorConstants.DATA_IMAGE_ID_ATTRIBUTE + "=.(\\d+)");
@@ -419,13 +418,13 @@ public class EditEntryAction extends PortletAction {
 		while (matcher.find()) {
 			String fileEntryId = matcher.group(1);
 
-			FileEntry attachment = DLAppServiceUtil.getFileEntry(
+			FileEntry fileEntryAttachment = DLAppServiceUtil.getFileEntry(
 				Long.valueOf(fileEntryId));
 
-			attachments.add(attachment);
+			fileEntryAttachments.add(fileEntryAttachment);
 		}
 
-		return attachments;
+		return fileEntryAttachments;
 	}
 
 	protected void subscribe(ActionRequest actionRequest) throws Exception {
@@ -501,16 +500,17 @@ public class EditEntryAction extends PortletAction {
 	}
 
 	protected String updateContentAttachmentLinks(
-			long groupId, BlogsEntry entry, List<FileEntry> tempAttachments,
+			long groupId, BlogsEntry entry,
+			List<FileEntry> tempFileEntryAttachments,
 			ActionRequest actionRequest)
 		throws PortalException {
 
-		List<FileEntry> entryAttachments = new ArrayList<>(
-			tempAttachments.size());
+		List<FileEntry> fileEntryAttachments = new ArrayList<>(
+			tempFileEntryAttachments.size());
 
 		String content = ParamUtil.getString(actionRequest, "content");
 
-		for (FileEntry tempAttachment : tempAttachments) {
+		for (FileEntry tempAttachment : tempFileEntryAttachments) {
 			String fileName = ParamUtil.getString(
 				actionRequest, "fileName", StringUtil.randomString());
 			InputStream inputStream = tempAttachment.getContentStream();
@@ -522,10 +522,11 @@ public class EditEntryAction extends PortletAction {
 
 				String mimeType = MimeTypesUtil.getContentType(file, fileName);
 
-				FileEntry attachment = BlogsEntryServiceUtil.addEntryAttachment(
-					groupId, entry.getEntryId(), fileName, file, mimeType);
+				FileEntry fileEntryAttachment =
+					BlogsEntryServiceUtil.addEntryAttachment(
+						groupId, entry.getEntryId(), fileName, file, mimeType);
 
-				entryAttachments.add(attachment);
+				fileEntryAttachments.add(fileEntryAttachment);
 
 				ThemeDisplay themeDisplay =
 					(ThemeDisplay)actionRequest.getAttribute(
@@ -534,7 +535,7 @@ public class EditEntryAction extends PortletAction {
 				content = StringUtil.replace(
 					content,
 					getAttachmentLink(tempAttachment, themeDisplay),
-					getAttachmentLink(attachment, themeDisplay));
+					getAttachmentLink(fileEntryAttachment, themeDisplay));
 			}
 			catch (IOException ioe) {
 				throw new SystemException(
@@ -620,7 +621,8 @@ public class EditEntryAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			BlogsEntry.class.getName(), actionRequest);
 
-		List<FileEntry> tempAttachments = getTempAttachments(content);
+		List<FileEntry> tempFileEntryAttachments =
+			getTempFileEntryAttachments(content);
 
 		if (entryId <= 0) {
 
@@ -637,9 +639,10 @@ public class EditEntryAction extends PortletAction {
 				actionRequest, BlogsEntry.class.getName(), entry.getEntryId(),
 				-1);
 
-			if (entry != null && !tempAttachments.isEmpty()) {
+			if (entry != null && !tempFileEntryAttachments.isEmpty()) {
 				content = updateContentAttachmentLinks(
-					entry.getGroupId(), entry, tempAttachments, actionRequest);
+					entry.getGroupId(), entry, tempFileEntryAttachments,
+					actionRequest);
 
 				entry = BlogsEntryServiceUtil.updateEntry(
 					entry.getEntryId(), title, subtitle, description, content,
@@ -655,9 +658,10 @@ public class EditEntryAction extends PortletAction {
 
 			entry = BlogsEntryLocalServiceUtil.getEntry(entryId);
 
-			if (!tempAttachments.isEmpty()) {
+			if (!tempFileEntryAttachments.isEmpty()) {
 				content = updateContentAttachmentLinks(
-					entry.getGroupId(), entry, tempAttachments, actionRequest);
+					entry.getGroupId(), entry, tempFileEntryAttachments,
+					actionRequest);
 			}
 
 			boolean sendEmailEntryUpdated = ParamUtil.getBoolean(

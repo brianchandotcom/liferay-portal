@@ -182,6 +182,7 @@ AUI.add(
 
 						LiferayFormBuilder.superclass.bindUI.apply(instance, arguments);
 
+						instance.translationManager.after('defaultLocaleChange', instance._onDefaultLocaleChange, instance);
 						instance.translationManager.after('editingLocaleChange', instance._afterEditingLocaleChange, instance);
 
 						instance.on('model:change', instance._onPropertyModelChange);
@@ -387,6 +388,24 @@ AUI.add(
 						return fields;
 					},
 
+					_onDefaultLocaleChange: function(event) {
+						var instance = this;
+
+						var fields = instance.get('fields');
+
+						var newDefaultLocale = event.newVal;
+
+						var translationManager = instance.translationManager;
+
+						var availableLanguageIds = translationManager.get('availableLocales');
+
+						if (availableLanguageIds.indexOf(newDefaultLocale) < 0) {
+							translationManager.addAvailableLocale(newDefaultLocale);
+
+							instance._updateLocalizationMaps(fields, newDefaultLocale, event.prevVal);
+						}
+					},
+
 					_onPropertyModelChange: function(event) {
 						var instance = this;
 
@@ -468,6 +487,22 @@ AUI.add(
 
 						BODY.toggleClass('form-builder-ltr-inputs', !rtl);
 						BODY.toggleClass('form-builder-rtl-inputs', rtl);
+					},
+
+					_updateLocalizationMaps: function(fields, newDefaultLocale, prevDefaultLocale) {
+						var instance = this;
+
+						AArray.each(fields._items,
+							function(field) {
+								var localizationMap = field.get('localizationMap');
+
+								var childFields = field.get('fields');
+
+								localizationMap[newDefaultLocale] = localizationMap[prevDefaultLocale];
+
+								instance._updateLocalizationMaps(childFields, newDefaultLocale, prevDefaultLocale);
+							}
+						);
 					}
 				}
 			}

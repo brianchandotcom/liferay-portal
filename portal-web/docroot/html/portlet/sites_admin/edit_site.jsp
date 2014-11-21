@@ -211,7 +211,6 @@ if (!portletName.equals(PortletKeys.SITE_SETTINGS)) {
 
 <aui:script>
 	function <portlet:namespace />saveGroup(forceDisable) {
-	debugger;
 		var $ = AUI.$;
 
 		var form = $(document.<portlet:namespace />fm);

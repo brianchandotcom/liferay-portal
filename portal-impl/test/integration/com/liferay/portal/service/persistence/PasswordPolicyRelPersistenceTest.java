@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.model.PasswordPolicyRel;
 import com.liferay.portal.model.impl.PasswordPolicyRelModelImpl;
 import com.liferay.portal.service.PasswordPolicyRelLocalServiceUtil;
-import com.liferay.portal.test.TransactionalMethodRule;
+import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.PersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.PropsValues;
@@ -61,7 +61,7 @@ import java.util.Set;
 @RunWith(PersistenceIntegrationJUnitTestRunner.class)
 public class PasswordPolicyRelPersistenceTest {
 	@Rule
-	public TransactionalMethodRule transactionalMethodRule = new TransactionalMethodRule(Propagation.REQUIRED);
+	public TransactionalTestRule transactionalTestRule = new TransactionalTestRule(Propagation.REQUIRED);
 
 	@BeforeClass
 	public static void setupClass() throws TemplateException {

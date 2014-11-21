@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.test.TransactionalMethodRule;
+import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 
 import java.util.List;
@@ -204,8 +204,8 @@ public class QueryUtilTest {
 	}
 
 	@Rule
-	public TransactionalMethodRule transactionalMethodRule =
-		new TransactionalMethodRule();
+	public TransactionalTestRule transactionalTestRule =
+		new TransactionalTestRule();
 
 	protected static String[] createInserts(int amount) {
 		String[] sqls = new String[amount];

@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.impl.UserGroupModelImpl;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
-import com.liferay.portal.test.TransactionalMethodRule;
+import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.PersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.PropsValues;
@@ -64,7 +64,7 @@ import java.util.Set;
 @RunWith(PersistenceIntegrationJUnitTestRunner.class)
 public class UserGroupPersistenceTest {
 	@Rule
-	public TransactionalMethodRule transactionalMethodRule = new TransactionalMethodRule(Propagation.REQUIRED);
+	public TransactionalTestRule transactionalTestRule = new TransactionalTestRule(Propagation.REQUIRED);
 
 	@BeforeClass
 	public static void setupClass() throws TemplateException {

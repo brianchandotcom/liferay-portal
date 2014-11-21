@@ -26,7 +26,7 @@ import org.junit.Test;
  * @author Shuyang Zhou
  */
 @NewEnv(type = NewEnv.Type.CLASSLOADER)
-public class NewEnvClassLoaderMethodRuleTest {
+public class NewEnvClassLoaderTestRuleTest {
 
 	@Before
 	public void setUp() {
@@ -78,7 +78,7 @@ public class NewEnvClassLoaderMethodRuleTest {
 	}
 
 	@Rule
-	public final NewEnvMethodRule newEnvMethodRule = new NewEnvMethodRule();
+	public final NewEnvTestRule newEnvTestRule = new NewEnvTestRule();
 
 	private void assertClassLoader() {
 		Assert.assertNotNull(_classLoader);

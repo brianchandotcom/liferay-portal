@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.impl.LayoutRevisionModelImpl;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
-import com.liferay.portal.test.TransactionalMethodRule;
+import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.PersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.PropsValues;
@@ -62,7 +62,7 @@ import java.util.Set;
 @RunWith(PersistenceIntegrationJUnitTestRunner.class)
 public class LayoutRevisionPersistenceTest {
 	@Rule
-	public TransactionalMethodRule transactionalMethodRule = new TransactionalMethodRule(Propagation.REQUIRED);
+	public TransactionalTestRule transactionalTestRule = new TransactionalTestRule(Propagation.REQUIRED);
 
 	@BeforeClass
 	public static void setupClass() throws TemplateException {

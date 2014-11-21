@@ -53,7 +53,7 @@ import com.liferay.portal.nio.intraband.proxy.IntrabandProxyUtil.MethodsBag;
 import com.liferay.portal.nio.intraband.proxy.IntrabandProxyUtil.TemplateSkeleton;
 import com.liferay.portal.nio.intraband.proxy.IntrabandProxyUtil.TemplateStub;
 import com.liferay.portal.test.AdviseWith;
-import com.liferay.portal.test.AspectJNewEnvMethodRule;
+import com.liferay.portal.test.AspectJNewEnvTestRule;
 import com.liferay.portal.test.aspects.ReflectionUtilAdvice;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.PropsValues;
@@ -1013,8 +1013,8 @@ public class IntrabandProxyUtilTest {
 	}
 
 	@Rule
-	public final AspectJNewEnvMethodRule aspectJNewEnvMethodRule =
-		new AspectJNewEnvMethodRule();
+	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
+		new AspectJNewEnvTestRule();
 
 	@Aspect
 	public static class DisableProxyClassesDump {

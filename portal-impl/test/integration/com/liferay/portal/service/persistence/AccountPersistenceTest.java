@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.service.AccountLocalServiceUtil;
-import com.liferay.portal.test.TransactionalMethodRule;
+import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.PersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.test.RandomTestUtil;
@@ -60,7 +60,7 @@ import java.util.Set;
 @RunWith(PersistenceIntegrationJUnitTestRunner.class)
 public class AccountPersistenceTest {
 	@Rule
-	public TransactionalMethodRule transactionalMethodRule = new TransactionalMethodRule(Propagation.REQUIRED);
+	public TransactionalTestRule transactionalTestRule = new TransactionalTestRule(Propagation.REQUIRED);
 
 	@BeforeClass
 	public static void setupClass() throws TemplateException {

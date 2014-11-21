@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.nio.intraband.welder.fifo.FIFOWelder;
 import com.liferay.portal.kernel.nio.intraband.welder.socket.SocketWelder;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.NewEnv;
-import com.liferay.portal.kernel.test.NewEnvMethodRule;
+import com.liferay.portal.kernel.test.NewEnvTestRule;
 import com.liferay.portal.kernel.util.PropsKeys;
 
 import java.io.IOException;
@@ -132,6 +132,6 @@ public class IntrabandFactoryUtilTest {
 	}
 
 	@Rule
-	public final NewEnvMethodRule newEnvMethodRule = new NewEnvMethodRule();
+	public final NewEnvTestRule newEnvTestRule = new NewEnvTestRule();
 
 }

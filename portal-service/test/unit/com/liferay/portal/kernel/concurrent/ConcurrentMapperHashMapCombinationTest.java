@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.concurrent;
 import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.test.GCUtil;
 import com.liferay.portal.kernel.test.NewEnv;
-import com.liferay.portal.kernel.test.NewEnvMethodRule;
+import com.liferay.portal.kernel.test.NewEnvTestRule;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -143,6 +143,6 @@ public class ConcurrentMapperHashMapCombinationTest {
 	}
 
 	@Rule
-	public final NewEnvMethodRule newEnvMethodRule = new NewEnvMethodRule();
+	public final NewEnvTestRule newEnvTestRule = new NewEnvTestRule();
 
 }

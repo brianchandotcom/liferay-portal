@@ -48,7 +48,8 @@ import java.util.concurrent.Future;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.rules.MethodRule;
+import org.junit.rules.TestRule;
+import org.junit.runner.Description;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.Statement;
 import org.junit.runners.model.TestClass;
@@ -56,38 +57,27 @@ import org.junit.runners.model.TestClass;
 /**
  * @author Shuyang Zhou
  */
-public class NewEnvMethodRule implements MethodRule {
+public class NewEnvTestRule implements TestRule {
 
 	@Override
-	public Statement apply(
-		Statement statement, FrameworkMethod frameworkMethod, Object target) {
-
-		Method method = frameworkMethod.getMethod();
-
-		Class<?> targetClass = target.getClass();
-
-		NewEnv newEnv = findNewEnv(method, targetClass);
+	public Statement apply(Statement statement, Description description) {
+		NewEnv newEnv = findNewEnv(description);
 
 		if ((newEnv == null) || (newEnv.type() == NewEnv.Type.NONE)) {
 			return statement;
 		}
 
 		if (NewEnv.Type.CLASSLOADER == newEnv.type()) {
-			return new RunInNewClassLoaderStatement(
-				targetClass.getName(), getMethodKeys(targetClass, Before.class),
-				method, getMethodKeys(targetClass, After.class));
+			return new RunInNewClassLoaderStatement(description);
 		}
 
 		Builder builder = new Builder();
 
-		builder.setArguments(createArguments(method));
+		builder.setArguments(createArguments(description));
 		builder.setBootstrapClassPath(CLASS_PATH);
 		builder.setRuntimeClassPath(CLASS_PATH);
 
-		return new RunInNewJVMStatment(
-			builder.build(), targetClass.getName(),
-			getMethodKeys(targetClass, Before.class), new MethodKey(method),
-			getMethodKeys(targetClass, After.class));
+		return new RunInNewJVMStatment(builder.build(), description);
 	}
 
 	protected static void attachProcess(String message) {
@@ -142,7 +132,7 @@ public class NewEnvMethodRule implements MethodRule {
 		method.invoke(object);
 	}
 
-	protected List<String> createArguments(Method method) {
+	protected List<String> createArguments(Description description) {
 		List<String> arguments = new ArrayList<String>();
 
 		String agentLine = System.getProperty("junit.cobertura.agent");
@@ -191,7 +181,7 @@ public class NewEnvMethodRule implements MethodRule {
 		return arguments;
 	}
 
-	protected ClassLoader createClassLoader(Method method) {
+	protected ClassLoader createClassLoader(Description description) {
 		try {
 			return new URLClassLoader(
 				ClassPathUtil.getClassPathURLs(CLASS_PATH), null);
@@ -201,11 +191,13 @@ public class NewEnvMethodRule implements MethodRule {
 		}
 	}
 
-	protected NewEnv findNewEnv(Method method, Class<?> clazz) {
-		NewEnv newEnv = method.getAnnotation(NewEnv.class);
+	protected NewEnv findNewEnv(Description description) {
+		NewEnv newEnv = description.getAnnotation(NewEnv.class);
 
 		if (newEnv == null) {
-			newEnv = clazz.getAnnotation(NewEnv.class);
+			Class<?> testClass = description.getTestClass();
+
+			newEnv = testClass.getAnnotation(NewEnv.class);
 		}
 
 		return newEnv;
@@ -305,16 +297,16 @@ public class NewEnvMethodRule implements MethodRule {
 
 	private class RunInNewClassLoaderStatement extends Statement {
 
-		public RunInNewClassLoaderStatement(
-			String testClassName, List<MethodKey> beforeMethodKeys,
-			Method testMethod, List<MethodKey> afterMethodKeys) {
+		public RunInNewClassLoaderStatement(Description description) {
+			Class<?> testClass = description.getTestClass();
 
-			_testClassName = testClassName;
-			_beforeMethodKeys = beforeMethodKeys;
-			_testMethodKey = new MethodKey(testMethod);
-			_afterMethodKeys = afterMethodKeys;
+			_testClassName = testClass.getName();
+			_beforeMethodKeys = getMethodKeys(testClass, Before.class);
+			_testMethodKey = new MethodKey(
+				testClass, description.getMethodName());
+			_afterMethodKeys = getMethodKeys(testClass, After.class);
 
-			_newClassLoader = createClassLoader(testMethod);
+			_newClassLoader = createClassLoader(description);
 		}
 
 		@Override
@@ -377,15 +369,17 @@ public class NewEnvMethodRule implements MethodRule {
 	private class RunInNewJVMStatment extends Statement {
 
 		public RunInNewJVMStatment(
-			ProcessConfig processConfig, String testClassName,
-			List<MethodKey> beforeMethodKeys, MethodKey testMethodKey,
-			List<MethodKey> afterMethodKeys) {
+			ProcessConfig processConfig, Description description) {
 
 			_processConfig = processConfig;
-			_testClassName = testClassName;
-			_beforeMethodKeys = beforeMethodKeys;
-			_testMethodKey = testMethodKey;
-			_afterMethodKeys = afterMethodKeys;
+
+			Class<?> testClass = description.getTestClass();
+
+			_testClassName = testClass.getName();
+			_beforeMethodKeys = getMethodKeys(testClass, Before.class);
+			_testMethodKey = new MethodKey(
+				testClass, description.getMethodName());
+			_afterMethodKeys = getMethodKeys(testClass, After.class);
 		}
 
 		@Override

@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.resiliency.spi;
 import com.liferay.portal.kernel.process.local.LocalProcessLauncher;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.NewEnv;
-import com.liferay.portal.kernel.test.NewEnvMethodRule;
+import com.liferay.portal.kernel.test.NewEnvTestRule;
 
 import java.util.concurrent.ConcurrentMap;
 
@@ -70,6 +70,6 @@ public class SPIUtilTest {
 	}
 
 	@Rule
-	public final NewEnvMethodRule newEnvMethodRule = new NewEnvMethodRule();
+	public final NewEnvTestRule newEnvTestRule = new NewEnvTestRule();
 
 }

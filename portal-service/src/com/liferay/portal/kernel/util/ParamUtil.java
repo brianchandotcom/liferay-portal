@@ -401,9 +401,9 @@ public class ParamUtil {
 	}
 
 	public static double getDouble(
-		HttpServletRequest portletRequest, String param, Locale locale) {
+		HttpServletRequest request, String param, Locale locale) {
 
-		return GetterUtil.getDouble(portletRequest.getParameter(param), locale);
+		return GetterUtil.getDouble(request.getParameter(param), locale);
 	}
 
 	public static double getDouble(

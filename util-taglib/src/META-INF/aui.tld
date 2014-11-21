@@ -2080,6 +2080,12 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
+			<name>target</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
 			<name>title</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

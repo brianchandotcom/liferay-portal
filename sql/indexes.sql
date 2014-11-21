@@ -157,9 +157,10 @@ create unique index IX_1AA75CE3 on DDMTemplate (uuid_, groupId);
 
 create unique index IX_FDD1AAA8 on DLContent (companyId, repositoryId, path_, version);
 
-create index IX_4CB1B2B4 on DLFileEntry (companyId);
+create index IX_5444C427 on DLFileEntry (companyId, fileEntryTypeId);
 create index IX_772ECDE7 on DLFileEntry (fileEntryTypeId);
 create index IX_8F6C75D0 on DLFileEntry (folderId, name);
+create index IX_BAF654E5 on DLFileEntry (groupId, fileEntryTypeId);
 create index IX_29D0AF28 on DLFileEntry (groupId, folderId, fileEntryTypeId);
 create unique index IX_DF37D92E on DLFileEntry (groupId, folderId, fileName);
 create unique index IX_5391712 on DLFileEntry (groupId, folderId, name);

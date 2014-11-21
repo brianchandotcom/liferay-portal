@@ -412,6 +412,13 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getCompanyFileEntriesByFileEntryType(
+		long companyId, long fileEntryTypeId) {
+		return _dlFileEntryLocalService.getCompanyFileEntriesByFileEntryType(companyId,
+			fileEntryTypeId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getDDMStructureFileEntries(
 		long[] ddmStructureIds) {
 		return _dlFileEntryLocalService.getDDMStructureFileEntries(ddmStructureIds);

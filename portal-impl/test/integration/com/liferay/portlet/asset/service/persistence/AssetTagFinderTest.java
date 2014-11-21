@@ -391,9 +391,9 @@ public class AssetTagFinderTest {
 	}
 
 	@DeleteAfterTestRun
-	private Group _scopeGroup;
+	private Group _siteGroup;
 
 	@DeleteAfterTestRun
-	private Group _siteGroup;
+	private Group _scopeGroup;
 
 }

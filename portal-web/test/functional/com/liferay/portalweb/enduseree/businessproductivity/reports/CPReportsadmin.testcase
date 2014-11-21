@@ -638,4 +638,20 @@
 
 		<execute action="Home#open" locator1="http://localhost:8080" />
 	</command>
+
+	<command name="ViewReportDefinitionParametersFields" priority="3">
+		<description message="This is a use case for LPS-43389." />
+
+		<var name="reportsDefinitionName" value="Reports Definition Name" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Reports Admin" />
+		</execute>
+
+		<execute macro="ReportsAdmin#gotoDefinitions" />
+
+		<execute action="CPReportsadmin#assertClick" locator-key1="DEFINITIONS_ADD_REPORT_DEFINITION_BUTTON" value1="Add Report Definition" />
+
+		<execute action="CPReportsadminAddreportdefinition#sikuliAssertElementPresent" locator-key1="REPORT_DEFINITION_PARAMETERS_FIELDS_PNG" />
+	</command>
 </definition>

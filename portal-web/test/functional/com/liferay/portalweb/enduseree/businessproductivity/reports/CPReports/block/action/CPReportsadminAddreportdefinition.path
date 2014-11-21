@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REPORT_DEFINITION_PARAMETERS_FIELDS_PNG</td>
+	<td>portal/screenshots/reports/report_definition_parameters_fields.png</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_BUTTON</td>
 	<td>//button[contains(.,'Save')]</td>
 	<td></td>

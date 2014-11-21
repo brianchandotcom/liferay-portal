@@ -939,6 +939,13 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<DLFileEntry> getCompanyFileEntriesByFileEntryType(
+		long companyId, long fileEntryTypeId) {
+
+		return dlFileEntryPersistence.findByC_F(companyId, fileEntryTypeId);
+	}
+
+	@Override
 	public List<DLFileEntry> getDDMStructureFileEntries(
 		long[] ddmStructureIds) {
 

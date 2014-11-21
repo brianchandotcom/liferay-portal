@@ -148,48 +148,45 @@ else {
 		<aui:input label="answer" maxlength="<%= ModelHintsConstants.TEXT_MAX_LENGTH %>" name="reminderQueryAnswer" size="50" value="<%= selUser.getReminderQueryAnswer() %>" />
 	</aui:fieldset>
 
-	<aui:script use="aui-base">
-		var reminderQueryQuestion = A.one('#<portlet:namespace />reminderQueryQuestion');
-		var customQuestionDiv = A.one('#<portlet:namespace />customQuestionDiv');
+	<aui:script sandbox="<%= true %>">
+		var customQuestionDiv = $('#<portlet:namespace />customQuestionDiv');
 
-		if (<%= !hasCustomQuestion %> && customQuestionDiv) {
-			customQuestionDiv.hide();
+		if (<%= !hasCustomQuestion %> && customQuestionDiv.length) {
+			customQuestionDiv.addClass('hide');
 		}
 
-		if (reminderQueryQuestion) {
-			reminderQueryQuestion.on(
-				'change',
-				function(event) {
-					if (event.target.val() == '<%= UsersAdmin.CUSTOM_QUESTION %>') {
-						var reminderQueryCustomQuestion = A.one('#<portlet:namespace />reminderQueryCustomQuestion');
+		$('#<portlet:namespace />reminderQueryQuestion').on(
+			'change',
+			function(event) {
+				if ($(event.target).val() == '<%= UsersAdmin.CUSTOM_QUESTION %>') {
+					var reminderQueryCustomQuestion = $('#<portlet:namespace />reminderQueryCustomQuestion');
 
-						if (customQuestionDiv) {
-							customQuestionDiv.show();
-						}
-
-						<%
-						for (String question : PropsValues.USERS_REMINDER_QUERIES_QUESTIONS) {
-						%>
-
-							if (reminderQueryCustomQuestion && (reminderQueryCustomQuestion.val() == '<%= UnicodeFormatter.toString(question) %>')) {
-								reminderQueryCustomQuestion.val('');
-							}
-
-						<%
-						}
-						%>
-
-						Liferay.Util.focusFormField(reminderQueryCustomQuestion);
+					if (customQuestionDiv.length) {
+						customQuestionDiv.removeClass('hide');
 					}
-					else {
-						if (customQuestionDiv) {
-							customQuestionDiv.hide();
+
+					<%
+					for (String question : PropsValues.USERS_REMINDER_QUERIES_QUESTIONS) {
+					%>
+
+						if (reminderQueryCustomQuestion && (reminderQueryCustomQuestion.val() == '<%= UnicodeFormatter.toString(question) %>')) {
+							reminderQueryCustomQuestion.val('');
 						}
 
-						Liferay.Util.focusFormField(A.one('#<portlet:namespace />reminderQueryAnswer'));
+					<%
 					}
+					%>
+
+					Liferay.Util.focusFormField('#<portlet:namespace />reminderQueryCustomQuestion');
 				}
-			);
-		}
+				else {
+					if (customQuestionDiv.length) {
+						customQuestionDiv.addClass('hide');
+					}
+
+					Liferay.Util.focusFormField('#<portlet:namespace />reminderQueryAnswer');
+				}
+			}
+		);
 	</aui:script>
 </c:if>

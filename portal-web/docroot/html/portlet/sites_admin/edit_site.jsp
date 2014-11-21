@@ -236,7 +236,7 @@ if (!portletName.equals(PortletKeys.SITE_SETTINGS)) {
 
 			var currentValue = stagingTypeEl.val();
 
-			if (currentValue != oldValue) {
+			if (stagingTypeEl.length && (currentValue != oldValue)) {
 				ok = false;
 
 				if (currentValue == 0) {

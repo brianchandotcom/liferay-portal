@@ -213,6 +213,12 @@ public class OrganizationWrapper implements Organization,
 	}
 
 	@Override
+	public long[] getAncestorIds()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _organization.getAncestorIds();
+	}
+
+	@Override
 	public java.util.List<com.liferay.portal.model.Organization> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _organization.getAncestors();

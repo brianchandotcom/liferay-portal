@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
@@ -39,6 +40,7 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
@@ -114,6 +116,39 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 	public List<Address> getAddresses() {
 		return AddressLocalServiceUtil.getAddresses(
 			getCompanyId(), Organization.class.getName(), getOrganizationId());
+	}
+
+	@Override
+	public long[] getAncestorIds() throws PortalException {
+		if (Validator.isNull(getTreePath())) {
+			List<Organization> ancestors = getAncestors();
+
+			Collections.reverse(ancestors);
+
+			long[] ancestorIds = new long[ancestors.size()];
+
+			for (int i = 0; i < ancestors.size(); i++) {
+				Organization organization = ancestors.get(i);
+
+				ancestorIds[i] = organization.getOrganizationId();
+			}
+
+			return ancestorIds;
+		}
+
+		long[] primaryKeys = StringUtil.split(
+			getTreePath(), StringPool.SLASH, 0L);
+
+		if (primaryKeys.length <= 2) {
+			return new long[0];
+		}
+
+		long[] ancestorIds = new long[primaryKeys.length - 2];
+
+		System.arraycopy(
+			primaryKeys, 1, ancestorIds, 0, primaryKeys.length - 2);
+
+		return ancestorIds;
 	}
 
 	@Override

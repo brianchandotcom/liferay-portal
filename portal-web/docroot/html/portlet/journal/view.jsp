@@ -109,7 +109,7 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 
 		var hide = (Liferay.Util.listCheckedExcept(form, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>').length == 0);
 
-		form.fm('actionsButtonContainer').toggleClass('hide', hide);
+		AUI.$('#<portlet:namespace />actionsButtonContainer').toggleClass('hide', hide);
 	}
 
 	<portlet:namespace />toggleActionsButton();

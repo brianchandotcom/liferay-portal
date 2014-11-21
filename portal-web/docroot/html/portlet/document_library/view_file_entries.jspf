@@ -150,7 +150,7 @@
 		if (<%= ((repositoryId == scopeGroupId) && TrashUtil.isTrashEnabled(scopeGroupId)) %> || confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this-entry") %>')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
-			form.prop('method', 'post');
+			form.attr('method', 'post');
 			form.fm('<%= Constants.CMD %>').val('<%= ((repositoryId == scopeGroupId) && TrashUtil.isTrashEnabled(scopeGroupId)) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>');
 			form.fm('fileEntryIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIdsFileEntry'));
 			form.fm('fileShortcutIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIdsDLFileShortcut'));

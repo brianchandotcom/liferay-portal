@@ -190,8 +190,8 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 				function(item, index, collection) {
 					results.push(
 						{
-							node: item.ancestor(),
-							data: trim(item.text())
+							data: trim(item.text()),
+							node: item.ancestor()
 						}
 					);
 				}

@@ -188,7 +188,7 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(PortletKeys.DO
 
 		var hide = (Liferay.Util.listCheckedExcept(form, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>').length == 0);
 
-		form.fm('actionsButtonContainer').toggleClass('hide', hide);
+		$('#<portlet:namespace />actionsButtonContainer').toggleClass('hide', hide);
 	}
 
 	<portlet:namespace />toggleActionsButton();

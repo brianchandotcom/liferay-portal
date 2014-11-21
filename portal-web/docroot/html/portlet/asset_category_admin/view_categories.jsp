@@ -150,17 +150,17 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 
 	var form = $(document.<portlet:namespace />fm);
 
-	form.fm('<%= searchContainerReference.getId() %>SearchContainer').on(
+	$('#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer').on(
 		'click',
 		'input[type=checkbox]',
 		function() {
 			var hide = (Util.listCheckedExcept(form, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>').length == 0);
 
-			form.fm('categoriesActionsButton').toggleClass('hide', hide);
+			$('#<portlet:namespace />categoriesActionsButton').toggleClass('hide', hide);
 		}
 	);
 
-	form.fm('deleteSelectedCategories').on(
+	$('#<portlet:namespace />deleteSelectedCategories').on(
 		'click',
 		function() {
 			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {

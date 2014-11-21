@@ -265,7 +265,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templat
 		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
-			form.fm('method', 'post');
+			form.attr('method', 'post');
 			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
 			form.fm('deleteTemplateIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 

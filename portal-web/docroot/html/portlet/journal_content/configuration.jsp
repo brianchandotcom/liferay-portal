@@ -188,7 +188,7 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 		}
 	);
 
-	form.fm('saveButton').on(
+	$('#<portlet:namespace />saveButton').on(
 		'click',
 		function(event) {
 			event.preventDefault();

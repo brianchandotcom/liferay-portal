@@ -145,17 +145,17 @@
 
 	var form = $(document.<portlet:namespace />fm);
 
-	form.fm('<%= searchContainerReference.getId() %>SearchContainer').on(
+	$('#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer').on(
 		'click',
 		'input[type=checkbox]',
 		function() {
 			var hide = (Util.listCheckedExcept(form, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>').length == 0);
 
-			form.fm('tagsActionsButton').toggleClass('hide', hide);
+			$('#<portlet:namespace />tagsActionsButton').toggleClass('hide', hide);
 		}
 	);
 
-	form.fm('deleteSelectedTags').on(
+	$('#<portlet:namespace />deleteSelectedTags').on(
 		'click',
 		function() {
 			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
@@ -172,7 +172,7 @@
 		}
 	);
 
-	form.fm('mergeSelectedTags').on(
+	$('#<portlet:namespace />mergeSelectedTags').on(
 		'click',
 		function() {
 			if (form.fm('rowIds').filter(':checked').length > 1) {

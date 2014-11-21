@@ -1842,6 +1842,84 @@
 		</execute>
 	</command>
 
+	<command name="ViewNestedFieldDoesNotDisplayInRecordTable" priority="4">
+		<description message="This is a use case for LPS-51538." />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#addCP">
+			<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
+			<var name="ddlDataDefinitionName" value="Data Definition" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addFieldNested">
+			<var name="field" value="Integer" />
+			<var name="fieldFieldLabel" value="Integer" />
+			<var name="fieldName" value="Integer" />
+			<var name="parentField" value="Text" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLList#addCP">
+			<var name="ddlListName" value="Dynamic Data List" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#selectCP">
+			<var name="ddlDataDefinitionName" value="Data Definition" />
+		</execute>
+
+		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#addCP">
+			<var name="ddlDataDefinitionName" value="Data Definition" />
+			<var name="ddlListName" value="Dynamic Data List" />
+		</execute>
+
+		<execute macro="DDLRecord#populateFieldText">
+			<var name="ddlRecordFieldData" value="Test Data" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="DDLRecord#populateFieldInteger">
+			<var name="ddlRecordFieldData" value="253" />
+			<var name="fieldName" value="Integer" />
+		</execute>
+
+		<execute macro="DDLRecord#publishCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#viewCP">
+			<var name="ddlListName" value="Dynamic Data List" />
+		</execute>
+
+		<execute macro="DDLRecord#viewFieldCP">
+			<var name="ddlRecordFieldData" value="Test Data" />
+			<var name="ddlRecordNestedFieldData" value="253" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="nestedFieldFieldLabel" value="Integer" />
+		</execute>
+	</command>
+
 	<command name="ViewNestedFieldEntryWithBlankParentField" priority="4">
 		<description message="This is a use case for LPS-48969." />
 
@@ -1907,15 +1985,12 @@
 			<var name="ddlListName" value="Dynamic Data List" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
-		</execute>
-
 		<execute macro="DDLRecord#viewFieldCP">
-			<var name="ddlListName" value="Dynamic Data List" />
-			<var name="ddlRecordFieldData" value="253" />
-			<var name="fieldFieldLabel" value="Integer" />
-			<var name="nestedField" value="true" />
+			<var name="ddlRecordFieldData" value="" />
+			<var name="ddlRecordNestedFieldData" value="253" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="nestedFieldFieldLabel" value="Integer" />
+			<var name="parentFieldBlank" value="true" />
 		</execute>
 	</command>
 </definition>

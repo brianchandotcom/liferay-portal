@@ -78,7 +78,9 @@ public class LoggerHandler implements InvocationHandler {
 		catch (InvocationTargetException ite) {
 			Throwable throwable = ite.getCause();
 
-			if (methodName.equals("assertLiferayErrors")) {
+			if (methodName.equals("assertJavascriptErrors") ||
+				methodName.equals("assertLiferayErrors")) {
+
 				_logger.logError(method, arguments, throwable, false);
 
 				return null;

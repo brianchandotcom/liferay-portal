@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
+ * @author Edward C. Han
  * @generated
  */
 @ProviderType

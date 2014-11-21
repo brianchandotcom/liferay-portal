@@ -40,7 +40,6 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
@@ -123,15 +122,14 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 		if (Validator.isNull(getTreePath())) {
 			List<Organization> ancestorOrganizations = getAncestors();
 
-			Collections.reverse(ancestorOrganizations);
-
 			long[] ancestorOrganizationIds =
 				new long[ancestorOrganizations.size()];
 
 			for (int i = 0; i < ancestorOrganizations.size(); i++) {
 				Organization organization = ancestorOrganizations.get(i);
 
-				ancestorOrganizationIds[i] = organization.getOrganizationId();
+				ancestorOrganizationIds[ancestorOrganizations.size() - i - 1] =
+					organization.getOrganizationId();
 			}
 
 			return ancestorOrganizationIds;

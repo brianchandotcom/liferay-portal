@@ -34,12 +34,12 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
@@ -251,9 +251,12 @@ public class DeleteAfterTestRunRule implements TestRule {
 
 			List<Field> fields = fieldBag.getFields();
 
-			Collections.reverse(fields);
+			ListIterator<Field> listIterator = fields.listIterator(
+				fields.size());
 
-			for (Field field : fields) {
+			while (listIterator.hasPrevious()) {
+				Field field = listIterator.previous();
+
 				Object object = field.get(instance);
 
 				if (object == null) {

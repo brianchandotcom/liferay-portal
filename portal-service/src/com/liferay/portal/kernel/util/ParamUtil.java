@@ -393,8 +393,8 @@ public class ParamUtil {
 	}
 
 	public static double getDouble(
-		HttpServletRequest request, String param, double defaultValue,
-		Locale locale) {
+		HttpServletRequest request, String param, Locale locale,
+		double defaultValue) {
 
 		return GetterUtil.get(
 			request.getParameter(param), locale, defaultValue);

@@ -237,7 +237,6 @@ AUI.add(
 
 						instance._strings = {
 							invalidFileSize: Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x'),
-							invalidFileType: Liferay.Language.get('please-enter-a-file-with-a-valid-file-type'),
 							zeroByteFile: Liferay.Language.get('the-file-contains-no-data-and-cannot-be-uploaded.-please-use-the-classic-uploader')
 						};
 
@@ -1272,15 +1271,11 @@ AUI.add(
 								var errorMessage;
 
 								var size = item.get(STR_SIZE) || 0;
-								var type = item.get('type') || STR_BLANK;
 
 								var strings = instance._strings;
 
 								if ((maxFileSize !== 0) && (size > maxFileSize)) {
 									errorMessage = sub(strings.invalidFileSize, [instance.formatStorage(instance._maxFileSize)]);
-								}
-								else if (!type) {
-									errorMessage = strings.invalidFileType;
 								}
 								else if (size === 0) {
 									errorMessage = strings.zeroByteFile;

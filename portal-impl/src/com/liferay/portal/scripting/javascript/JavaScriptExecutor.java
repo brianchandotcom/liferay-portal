@@ -113,7 +113,8 @@ public class JavaScriptExecutor extends BaseScriptingExecutor {
 	}
 
 	protected Script getCompiledScript(
-		String script, ClassLoader... classLoaders) {
+			String script, ClassLoader... classLoaders)
+		throws ScriptingException {
 
 		String key = String.valueOf(script.hashCode());
 
@@ -135,6 +136,9 @@ public class JavaScriptExecutor extends BaseScriptingExecutor {
 			}
 
 			compiledScript = context.compileString(script, "script", 0, null);
+		}
+		catch (Exception e) {
+			throw new ScriptingException(e.getMessage() + "\n\n", e);
 		}
 		finally {
 			Context.exit();

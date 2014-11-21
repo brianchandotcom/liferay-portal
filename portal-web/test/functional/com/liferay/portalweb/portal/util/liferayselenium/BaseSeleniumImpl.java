@@ -143,6 +143,11 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
+	public void assertNoJavascriptExceptions() throws Exception {
+		LiferaySeleniumHelper.assertNoJavascriptExceptions();
+	}
+
+	@Override
 	public void assertNoLiferayExceptions() throws Exception {
 		LiferaySeleniumHelper.assertNoLiferayExceptions();
 	}

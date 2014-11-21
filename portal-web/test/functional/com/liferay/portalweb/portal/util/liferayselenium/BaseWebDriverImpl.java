@@ -164,6 +164,11 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void assertNoJavascriptExceptions() throws Exception {
+		LiferaySeleniumHelper.assertNoJavascriptExceptions();
+	}
+
+	@Override
 	public void assertNoLiferayExceptions() throws Exception {
 		LiferaySeleniumHelper.assertNoLiferayExceptions();
 	}

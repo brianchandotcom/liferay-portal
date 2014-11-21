@@ -111,7 +111,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 
 <div class="alloy-editor alloy-editor-placeholder <%= cssClass %>" contenteditable="false" data-placeholder="<%= LanguageUtil.get(request, placeholder) %>" id="<%= name %>" name="<%= name %>"><%= contents %></div>
 
-<aui:script use="aui-base,alloy-editor,liferay-blogs-uploader">
+<aui:script use="aui-base,alloy-editor,liferay-editor-image-uploader">
 	document.getElementById('<%= name %>').setAttribute('contenteditable', true);
 
 	<%

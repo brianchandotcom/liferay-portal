@@ -56,7 +56,7 @@ public class LogAssertionAppender extends AppenderSkeleton {
 				loggingEvent.getThrowableInformation();
 
 			ConcurrentAssertUtil.caughtFailure(
-				new Exception(
+				new AssertionError(
 					sb.toString(), throwableInformation.getThrowable()));
 		}
 	}

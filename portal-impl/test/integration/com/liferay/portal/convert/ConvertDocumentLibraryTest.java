@@ -289,9 +289,8 @@ public class ConvertDocumentLibraryTest {
 			RandomTestUtil.randomString());
 
 		FileEntry folderFileEntry = DLAppTestUtil.addFileEntry(
-			_group.getGroupId(), folder.getFolderId(),
-			"dependencies/liferay.jpg", ContentTypes.IMAGE_JPEG,
-			"dependencies/liferay.jpg",
+			_group.getGroupId(), folder.getFolderId(), "liferay.jpg",
+			ContentTypes.IMAGE_JPEG, "liferay.jpg",
 			FileUtil.getBytes(getClass(), "dependencies/liferay.jpg"),
 			WorkflowConstants.ACTION_PUBLISH);
 
@@ -321,7 +320,7 @@ public class ConvertDocumentLibraryTest {
 		Assert.assertNotEquals(
 			delete,
 			_sourceStore.hasDirectory(
-				folderFileEntry.getCompanyId(),
+				folderDLFileEntry.getCompanyId(),
 				DLPreviewableProcessor.REPOSITORY_ID,
 				DLPreviewableProcessor.THUMBNAIL_PATH));
 	}

@@ -1055,4 +1055,15 @@
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_WEBSITES_TITLE" value1="Websites:" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_WEBSITES_CONTENT" value1="${userWebsiteType} ${userWebsiteURL}" />
 	</command>
+
+	<command name="viewUserLinkViaConnectionRequestNotification">
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_COUNT" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_REQUEST_ENTRY_CONTENT" value1="would like to add you as a connection." />
+		<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_REQUEST_ENTRY_SENDER" value1="${senderName}" />
+
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_NAME" value1="${senderName}" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_EMAIL" value1="${senderEmailAddress}" />
+	</command>
 </definition>

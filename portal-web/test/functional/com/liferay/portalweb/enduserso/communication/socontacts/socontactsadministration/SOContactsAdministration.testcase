@@ -3447,6 +3447,43 @@
 		<execute action="SOContactsProfile#assertTextEquals" locator-key1="CONTACTS_LIST_EMPTY" value1="There are no results." />
 	</command>
 
+	<command name="ViewConnectionRequestNotificationLink" priority="4">
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="test@liferay.com" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#requestToConnect">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userListName" value="${userListName}" />
+			<var name="userName" value="${userName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#viewUserLinkViaConnectionRequestNotification">
+			<var name="senderEmailAddress" value="${adminEmailAddress}" />
+			<var name="senderName" value="${adminName}" />
+		</execute>
+	</command>
+
 	<command name="ViewContactAndUser" priority="3">
 		<var name="contactEmailAddress" value="socialofficecontact01@liferay.com" />
 		<var name="contactName" value="Social01 Office01 Contact01" />

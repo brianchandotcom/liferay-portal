@@ -205,6 +205,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NOTIFICATION_MENU_REQUEST_ENTRY_SITE_LINK</td>
+	<td>//div[@class='actionable']//div[contains(@class,'user-notification')]//div[@class='title']//a[contains(.,'${key_siteName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NOTIFICATION_MENU_REQUEST_CONFIRM</td>
 	<td>//div[@class='actionable']//a[contains(text(),'Confirm')]</td>
 	<td></td>

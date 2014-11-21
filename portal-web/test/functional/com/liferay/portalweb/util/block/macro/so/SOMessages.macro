@@ -116,6 +116,15 @@
 					<execute action="SOMessagesAdd#assertElementNotPresent" locator-key1="TO_FIELD_DROPDOWN_LIST" />
 				</for>
 			</then>
+			<elseif>
+				<isset var="userInformation" />
+				<then>
+					<var name="key_recipientName" value="${recipientName}" />
+
+					<execute action="SOMessagesAdd#type" locator-key1="TO_FIELD" value1="${userInformation}" />
+					<execute action="SOMessagesAdd#assertElementNotPresent" locator-key1="TO_FIELD_DROPDOWN_LIST" />
+				</then>
+			</elseif>
 			<else>
 				<var name="key_recipientName" value="${recipientName}" />
 

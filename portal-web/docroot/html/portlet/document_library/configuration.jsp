@@ -157,15 +157,14 @@ DLConfigurationDisplayContext dlConfigurationDisplayContext = new DLConfiguratio
 </aui:form>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveConfiguration',
-		function() {
-			document.<portlet:namespace />fm.<portlet:namespace />displayViews.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentDisplayViews);
-			document.<portlet:namespace />fm.<portlet:namespace />entryColumns.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentEntryColumns);
+	function <portlet:namespace />saveConfiguration() {
+		var Util = Liferay.Util;
 
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['liferay-util-list-fields']
-	);
+		var form = $(document.<portlet:namespace />fm);
+
+		form.fm('displayViews').val(Util.listSelect(form.fm('currentDisplayViews')));
+		form.fm('entryColumns').val(Util.listSelect(form.fm('currentEntryColumns')));
+
+		submitForm(form);
+	}
 </aui:script>

@@ -68,16 +68,14 @@ wikiConfigurationDisplayContext = new WikiConfigurationDisplayContext(request, w
 </aui:form>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveConfiguration',
-		function() {
-			document.<portlet:namespace />fm.<portlet:namespace />visibleNodes.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentVisibleNodes);
+	function <portlet:namespace />saveConfiguration() {
+		var Util = Liferay.Util;
 
-			document.<portlet:namespace />fm.<portlet:namespace />hiddenNodes.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />availableVisibleNodes);
+		var form = AUI.$(document.<portlet:namespace />fm);
 
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['liferay-util-list-fields']
-	);
+		form.fm('visibleNodes').val(Util.listSelect(form.fm('currentVisibleNodes')));
+		form.fm('hiddenNodes').val(Util.listSelect(form.fm('availableVisibleNodes')));
+
+		submitForm(form);
+	}
 </aui:script>

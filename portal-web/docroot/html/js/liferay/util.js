@@ -1,4 +1,4 @@
-;(function(A, Liferay) {
+;(function(A, $, _, Liferay) {
 	A.use('aui-base-lang');
 
 	var Lang = A.Lang;
@@ -403,6 +403,62 @@
 			var instance = this;
 
 			return (instance.getWindowWidth() < Liferay.BREAKPOINTS.TABLET);
+		},
+
+		listCheckboxesExcept: function(form, except, name, checked) {
+			if (form._node) {
+				form = form.getDOM();
+			}
+
+			var selector = 'input[type=checkbox]';
+
+			if (name) {
+				selector += '[name=' + name + ']';
+			}
+
+			return _.reduce(
+				$(form).find(selector),
+				function(prev, item, index) {
+					item = $(item);
+
+					var val = item.val();
+
+					if (val && (item.attr('name') != except) && (item.prop('checked') == checked) && !item.prop('disabled')) {
+						prev.push(val);
+					}
+
+					return prev;
+				},
+				[]
+			).join();
+		},
+
+		listCheckedExcept: function(form, except, name) {
+			return Util.listCheckboxesExcept(form, except, name, true);
+		},
+
+		listSelect: function(select, delimeter) {
+			if (select._node) {
+				select = select.getDOM();
+			}
+
+			return _.reduce(
+				$(select).find('option'),
+				function(prev, item, index) {
+					var val = $(item).val();
+
+					if (val) {
+						prev.push(val);
+					}
+
+					return prev;
+				},
+				[]
+			).join(delimeter || ',');
+		},
+
+		listUncheckedExcept: function(form, except, name) {
+			return Util.listCheckboxesExcept(form, except, name, false);
 		},
 
 		ns: function(namespace, obj) {
@@ -1702,7 +1758,7 @@
 				);
 			}
 		},
-		['aui-base', 'liferay-util-list-fields']
+		['aui-base']
 	);
 
 	Liferay.provide(
@@ -1824,4 +1880,4 @@
 		MENU: 5000,
 		TOOLTIP: 10000
 	};
-})(AUI(), Liferay);
+})(AUI(), AUI.$, AUI._, Liferay);

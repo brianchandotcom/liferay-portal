@@ -119,19 +119,18 @@ portletURL.setParameter("userGroupId", String.valueOf(userGroup.getUserGroupId()
 </aui:form>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />updateUserGroupUsers',
-		function(assignmentsRedirect) {
-			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'user_group_users';
-			document.<portlet:namespace />fm.<portlet:namespace />assignmentsRedirect.value = assignmentsRedirect;
-			document.<portlet:namespace />fm.<portlet:namespace />addUserIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
-			document.<portlet:namespace />fm.<portlet:namespace />removeUserIds.value = Liferay.Util.listUncheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+	function <portlet:namespace />updateUserGroupUsers(assignmentsRedirect) {
+		var Util = Liferay.Util;
 
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['liferay-util-list-fields']
-	);
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		form.fm('<%= Constants.CMD %>').val('user_group_users');
+		form.fm('assignmentsRedirect').val(assignmentsRedirect);
+		form.fm('addUserIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+		form.fm('removeUserIds').val(Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+		submitForm(form);
+	}
 </aui:script>
 
 <%

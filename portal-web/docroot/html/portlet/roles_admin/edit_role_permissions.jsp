@@ -190,8 +190,8 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 				function(item, index, collection) {
 					results.push(
 						{
-							node: item.ancestor(),
-							data: trim(item.text())
+							data: trim(item.text()),
+							node: item.ancestor()
 						}
 					);
 				}
@@ -395,19 +395,16 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 			processNavigationLinks();
 		}
 	);
+</aui:script>
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />updateActions',
-		function() {
-			var selectedTargets = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+<aui:script>
+	function <portlet:namespace />updateActions() {
+		var form = AUI.$(document.<portlet:namespace />fm);
 
-			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'actions';
-			document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= portletURL.toString() %>';
-			document.<portlet:namespace />fm.<portlet:namespace />selectedTargets.value = selectedTargets;
+		form.fm('<%= Constants.CMD %>').val('actions');
+		form.fm('redirect').val('<%= portletURL.toString() %>');
+		form.fm('selectedTargets').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['liferay-util-list-fields']
-	);
+		submitForm(form);
+	}
 </aui:script>

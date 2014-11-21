@@ -295,7 +295,7 @@ if (hints != null) {
 				double doubleValue = BeanPropertiesUtil.getDoubleSilent(bean, field, GetterUtil.getDouble(defaultString));
 
 				if (!ignoreRequestValue) {
-					doubleValue = ParamUtil.getDouble(request, fieldParam, doubleValue, locale);
+					doubleValue = ParamUtil.getDouble(request, fieldParam, locale, doubleValue);
 				}
 
 				if (format != null) {

@@ -27,6 +27,7 @@ import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -175,6 +176,58 @@ public class PortletFileRepositoryTest {
 				TestPropsValues.getGroupId(), folder.getFolderId());
 
 			Assert.assertEquals(count, 1);
+		}
+
+	}
+
+	@ExecutionTestListeners(
+		listeners = { MainServletExecutionTestListener.class }
+	)
+	@RunWith(LiferayIntegrationJUnitTestRunner.class)
+	public static class WhenDeletingAFolder {
+
+		@Test
+		public void shouldDeleteAllFileEntries() throws Exception {
+			String portletId = RandomTestUtil.randomString();
+
+			Folder folder = _addPortletFolder(portletId);
+
+			int fileEntriesToAdd = Math.abs(RandomTestUtil.randomInt()) % 10;
+
+			for (int i = 0; i < fileEntriesToAdd; i++) {
+				_addPortletFileEntry(
+					portletId, folder.getFolderId(),
+					RandomTestUtil.randomString());
+			}
+
+			PortletFileRepositoryUtil.deletePortletFolder(folder.getFolderId());
+
+			int count = PortletFileRepositoryUtil.getPortletFileEntriesCount(
+				TestPropsValues.getGroupId(), folder.getFolderId());
+
+			Assert.assertEquals(0, count);
+		}
+
+		@Test
+		public void shouldIgnoreErorsIfFolderDoesNotExist() throws Exception {
+			String portletId = RandomTestUtil.randomString();
+
+			Folder folder = _addPortletFolder(portletId);
+
+			PortletFileRepositoryUtil.deletePortletFolder(folder.getFolderId());
+
+			PortletFileRepositoryUtil.deletePortletFolder(folder.getFolderId());
+		}
+
+		@Test(expected = NoSuchFolderException.class)
+		public void shouldSucceedIfFolderExists() throws Exception {
+			String portletId = RandomTestUtil.randomString();
+
+			Folder folder = _addPortletFolder(portletId);
+
+			PortletFileRepositoryUtil.deletePortletFolder(folder.getFolderId());
+
+			PortletFileRepositoryUtil.getPortletFolder(folder.getFolderId());
 		}
 
 	}

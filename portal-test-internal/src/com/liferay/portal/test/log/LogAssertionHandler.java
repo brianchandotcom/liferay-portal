@@ -51,7 +51,7 @@ public class LogAssertionHandler extends Handler {
 			sb.append(logRecord.getMessage());
 
 			ConcurrentAssertUtil.caughtFailure(
-				new Exception(sb.toString(), logRecord.getThrown()));
+				new AssertionError(sb.toString(), logRecord.getThrown()));
 		}
 	}
 

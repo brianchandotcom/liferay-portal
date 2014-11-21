@@ -60,9 +60,7 @@ import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.FileVersionVersionComparator;
 import com.liferay.portlet.documentlibrary.webdav.DLWebDAVStorageImpl;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
@@ -119,54 +117,37 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 	}
 
 	protected void checkDLFileEntryMetadata() throws Exception {
-		ActionableDynamicQuery actionableDynamicQuery =
-			DLFileEntryMetadataLocalServiceUtil.getActionableDynamicQuery();
+		List<DLFileEntryMetadata> dlFileEntryMetadataWithNoStructures =
+			DLFileEntryMetadataLocalServiceUtil.
+				getNoStructureFileEntryMetadatas();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Deleting " + dlFileEntryMetadataWithNoStructures.size() +
+					" file entry metadatas with no structures");
+		}
 
-				@Override
-				public void performAction(Object object) {
-					DLFileEntryMetadata dlFileEntryMetadata =
-						(DLFileEntryMetadata)object;
+		for (DLFileEntryMetadata dlFileEntryMetadata :
+				dlFileEntryMetadataWithNoStructures ) {
 
-					try {
-						DLFileEntry dlFileEntry =
-							DLFileEntryLocalServiceUtil.getFileEntry(
-								dlFileEntryMetadata.getFileEntryId());
+			deleteUnusedDLFileEntryMetadata(dlFileEntryMetadata);
+		}
 
-						DDMStructure ddmStructure =
-							DDMStructureLocalServiceUtil.fetchStructure(
-								dlFileEntryMetadata.getDDMStructureId());
+		List<DLFileEntryMetadata> dlFileEntryMetadataMismatchedCompanyIds =
+			DLFileEntryMetadataLocalServiceUtil.
+				getMismatchedCompanyIdFileEntryMetadatas();
 
-						if (ddmStructure == null) {
-							deleteUnusedDLFileEntryMetadata(
-								dlFileEntryMetadata);
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Deleting " + dlFileEntryMetadataWithNoStructures.size() +
+					" file entry metadatas with mismatched company IDs");
+		}
 
-							return;
-						}
+		for (DLFileEntryMetadata dlFileEntryMetadata :
+				dlFileEntryMetadataMismatchedCompanyIds ) {
 
-						if (dlFileEntry.getCompanyId() !=
-								ddmStructure.getCompanyId()) {
-
-							deleteUnusedDLFileEntryMetadata(
-								dlFileEntryMetadata);
-						}
-					}
-					catch (Exception e) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to delete unused metadata for file " +
-									"entry " +
-										dlFileEntryMetadata.getFileEntryId(),
-								e);
-						}
-					}
-				}
-
-			});
-
-		actionableDynamicQuery.performActions();
+			deleteUnusedDLFileEntryMetadata(dlFileEntryMetadata);
+		}
 	}
 
 	protected void checkDLFileEntryType() throws Exception {

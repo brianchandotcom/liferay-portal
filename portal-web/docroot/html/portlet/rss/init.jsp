@@ -16,9 +16,9 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.rss.context.RSSDisplayContext" %><%@
-page import="com.liferay.portlet.rss.context.RSSFeedContext" %><%@
-page import="com.liferay.portlet.rss.context.RSSFeedEntryDisplayContext" %>
+<%@ page import="com.liferay.portal.rss.RSSFeed" %><%@
+page import="com.liferay.portal.rss.RSSFeedEntry" %><%@
+page import="com.liferay.portlet.rss.context.RSSDisplayContext" %>
 
 <%@ page import="com.sun.syndication.feed.synd.SyndEntry" %><%@
 page import="com.sun.syndication.feed.synd.SyndFeed" %><%@

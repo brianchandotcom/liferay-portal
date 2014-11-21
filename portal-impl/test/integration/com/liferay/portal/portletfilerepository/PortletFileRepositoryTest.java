@@ -125,6 +125,60 @@ public class PortletFileRepositoryTest {
 
 	}
 
+	@ExecutionTestListeners(
+		listeners = { MainServletExecutionTestListener.class }
+	)
+	@RunWith(LiferayIntegrationJUnitTestRunner.class)
+	public static class WhenAddingAFolder {
+
+		@Test(expected = DuplicateFileException.class)
+		public void shouldFailIfDuplicateName() throws Exception {
+			String portletId = RandomTestUtil.randomString();
+
+			Folder folder = _addPortletFolder(portletId);
+
+			String name = RandomTestUtil.randomString();
+
+			_addPortletFileEntry(portletId, folder.getFolderId(), name);
+
+			_addPortletFileEntry(portletId, folder.getFolderId(), name);
+		}
+
+		@Test
+		public void shouldSucceedIfUniqueName() throws Exception {
+			String portletId = RandomTestUtil.randomString();
+
+			Folder folder = _addPortletFolder(portletId);
+
+			_addPortletFileEntry(
+				portletId, folder.getFolderId(), RandomTestUtil.randomString());
+
+			_addPortletFileEntry(
+				portletId, folder.getFolderId(), RandomTestUtil.randomString());
+
+			int count = PortletFileRepositoryUtil.getPortletFileEntriesCount(
+				TestPropsValues.getGroupId(), folder.getFolderId());
+
+			Assert.assertEquals(count, 2);
+		}
+
+		@Test
+		public void shouldSucceedOnEmptyFolder() throws Exception {
+			String portletId = RandomTestUtil.randomString();
+
+			Folder folder = _addPortletFolder(portletId);
+
+			_addPortletFileEntry(
+				portletId, folder.getFolderId(), RandomTestUtil.randomString());
+
+			int count = PortletFileRepositoryUtil.getPortletFileEntriesCount(
+				TestPropsValues.getGroupId(), folder.getFolderId());
+
+			Assert.assertEquals(count, 1);
+		}
+
+	}
+
 	private static FileEntry _addPortletFileEntry(
 			String portletId, long folderId, String name)
 		throws PortalException {

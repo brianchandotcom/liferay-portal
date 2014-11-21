@@ -137,7 +137,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 
 	@Override
 	public FileEntry addEntryAttachment(
-			long groupId, long entryId, String fileName, File file,
+			long groupId, long entryId, String fileName, InputStream is,
 			String mimeType)
 		throws PortalException {
 
@@ -145,7 +145,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			getPermissionChecker(), groupId, ActionKeys.ADD_ATTACHMENT);
 
 		return blogsEntryLocalService.addEntryAttachment(
-			groupId, getUserId(), entryId, fileName, file, mimeType);
+			groupId, getUserId(), entryId, fileName, is, mimeType);
 	}
 
 	@Override

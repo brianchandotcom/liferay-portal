@@ -45,6 +45,7 @@ import java.io.InputStreamReader;
 
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -61,6 +62,10 @@ import org.sikuli.script.Screen;
  * @author Brian Wing Shun Chan
  */
 public class LiferaySeleniumHelper {
+
+	public static void addToLiferayExceptionList(Exception liferayException) {
+		_liferayExceptionList.add(liferayException);
+	}
 
 	public static void antCommand(
 			LiferaySelenium liferaySelenium, String fileName, String target)
@@ -229,12 +234,22 @@ public class LiferaySeleniumHelper {
 
 				Element throwableElement = eventElement.element("throwable");
 
+				Exception exception;
+
 				if (throwableElement != null) {
-					throw new Exception(
+					exception = new Exception(
 						messageText + throwableElement.getText());
+
+					addToLiferayExceptionList(exception);
+
+					throw exception;
 				}
 
-				throw new Exception(messageText);
+				exception = new Exception(messageText);
+
+				addToLiferayExceptionList(exception);
+
+				throw exception;
 			}
 		}
 	}
@@ -1617,6 +1632,8 @@ public class LiferaySeleniumHelper {
 		}
 	}
 
+	private static List<Exception> _liferayExceptionList =
+		new ArrayList<Exception>();
 	private static Screen _screen = new Screen();
 	private static int _screenshotCount = 0;
 	private static int _screenshotErrorCount = 0;

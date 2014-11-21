@@ -314,11 +314,13 @@ public class GetterUtil {
 	}
 
 	public static double get(String value, Locale locale, double defaultValue) {
-		if (value != null) {
-			NumberFormat format = NumberFormat.getInstance(locale);
+		if ((value != null) && (locale != null)) {
+			NumberFormat numberFormat = NumberFormat.getInstance(locale);
 
 			try {
-				return format.parse(value.trim()).doubleValue();
+				Number number = numberFormat.parse(value.trim());
+
+				return number.doubleValue();
 			}
 			catch (Exception e) {
 			}

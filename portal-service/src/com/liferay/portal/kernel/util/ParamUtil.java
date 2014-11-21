@@ -393,13 +393,15 @@ public class ParamUtil {
 	}
 
 	public static double getDouble(
-			HttpServletRequest request, String param, double defaultValue, Locale locale) {
+		HttpServletRequest request, String param, double defaultValue,
+		Locale locale) {
 
-			return GetterUtil.get(request.getParameter(param), locale, defaultValue);
+		return GetterUtil.get(
+			request.getParameter(param), locale, defaultValue);
 	}
 
-	public static double getDouble(HttpServletRequest portletRequest,
-			String param, Locale locale) {
+	public static double getDouble(
+		HttpServletRequest portletRequest, String param, Locale locale) {
 
 		return GetterUtil.getDouble(portletRequest.getParameter(param), locale);
 	}

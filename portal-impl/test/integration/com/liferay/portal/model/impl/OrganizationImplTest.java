@@ -22,6 +22,9 @@ import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.OrganizationTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,6 +49,11 @@ public class OrganizationImplTest {
 		_organization4 = OrganizationTestUtil.addOrganization(
 			_organization3.getOrganizationId(), RandomTestUtil.randomString(),
 			false);
+
+		_organizations.add(_organization4);
+		_organizations.add(_organization3);
+		_organizations.add(_organization2);
+		_organizations.add(_organization1);
 	}
 
 	@Test
@@ -74,16 +82,13 @@ public class OrganizationImplTest {
 			_organization4.getAncestorOrganizationIds());
 	}
 
-	@DeleteAfterTestRun
 	private Organization _organization1;
-
-	@DeleteAfterTestRun
 	private Organization _organization2;
-
-	@DeleteAfterTestRun
 	private Organization _organization3;
+	private Organization _organization4;
 
 	@DeleteAfterTestRun
-	private Organization _organization4;
+	private final List<Organization> _organizations =
+		new ArrayList<Organization>();
 
 }

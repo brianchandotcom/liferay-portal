@@ -63,6 +63,10 @@ import org.sikuli.script.Screen;
  */
 public class LiferaySeleniumHelper {
 
+	public static void addToJavascriptExceptions(Exception exception) {
+		_javascriptExceptions.add(exception);
+	}
+
 	public static void addToLiferayExceptions(Exception exception) {
 		_liferayExceptions.add(exception);
 	}
@@ -258,6 +262,43 @@ public class LiferaySeleniumHelper {
 		LiferaySelenium liferaySelenium, String pattern) {
 
 		BaseTestCase.assertEquals(pattern, liferaySelenium.getLocation());
+	}
+
+	public static void assertNoJavascriptExceptions() throws Exception {
+		if (!_javascriptExceptions.isEmpty()) {
+			StringBundler sb = new StringBundler();
+
+			sb.append(_javascriptExceptions.size());
+			sb.append(" Javascript Exception");
+
+			if (_javascriptExceptions.size() > 1) {
+				sb.append("s were");
+			}
+			else {
+				sb.append(" was");
+			}
+
+			sb.append(" thrown");
+
+			System.out.println();
+			System.out.println("##");
+			System.out.println("## " + sb.toString());
+			System.out.println("##");
+
+			for (int i = 0; i < _javascriptExceptions.size(); i++) {
+				Exception liferayException = _javascriptExceptions.get(i);
+
+				System.out.println();
+				System.out.println("##");
+				System.out.println("## Javascript Exception #" + (i + 1));
+				System.out.println("##");
+				System.out.println();
+				System.out.println(liferayException.getMessage());
+				System.out.println();
+			}
+
+			throw new Exception(sb.toString());
+		}
 	}
 
 	public static void assertNoLiferayExceptions() throws Exception {
@@ -1669,6 +1710,8 @@ public class LiferaySeleniumHelper {
 		}
 	}
 
+	private static List<Exception> _javascriptExceptions =
+		new ArrayList<Exception>();
 	private static List<Exception> _liferayExceptions =
 		new ArrayList<Exception>();
 	private static Screen _screen = new Screen();

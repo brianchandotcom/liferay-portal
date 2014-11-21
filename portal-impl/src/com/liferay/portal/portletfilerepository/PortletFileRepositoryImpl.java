@@ -42,8 +42,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.User;
-import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
+import com.liferay.portal.repository.portletrepository.PortletRepository;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -229,7 +229,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		User user = UserLocalServiceUtil.getDefaultUser(group.getCompanyId());
 
 		long classNameId = PortalUtil.getClassNameId(
-			LiferayRepository.class.getName());
+			PortletRepository.class.getName());
 
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
 

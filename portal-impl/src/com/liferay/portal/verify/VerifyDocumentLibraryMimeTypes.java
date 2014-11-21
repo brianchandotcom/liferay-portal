@@ -15,9 +15,9 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
@@ -39,78 +41,7 @@ import java.io.InputStream;
  */
 public class VerifyDocumentLibraryMimeTypes extends VerifyProcess {
 
-	protected void checkFileEntryMimeTypes(final String originalMimeType)
-		throws Exception {
-
-		ActionableDynamicQuery actionableDynamicQuery =
-			DLFileEntryLocalServiceUtil.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
-
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property property = PropertyFactoryUtil.forName("mimeType");
-
-					dynamicQuery.add(property.eq(originalMimeType));
-				}
-
-			});
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
-
-				@Override
-				public void performAction(Object object)
-					throws PortalException {
-
-					DLFileEntry dlFileEntry = (DLFileEntry)object;
-
-					InputStream inputStream = null;
-
-					try {
-						inputStream =
-							DLFileEntryLocalServiceUtil.getFileAsStream(
-								dlFileEntry.getFileEntryId(),
-								dlFileEntry.getVersion(), false);
-					}
-					catch (Exception e) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to find file entry " +
-									dlFileEntry.getName(),
-								e);
-						}
-
-						return;
-					}
-
-					String title = DLUtil.getTitleWithExtension(
-						dlFileEntry.getTitle(), dlFileEntry.getExtension());
-
-					String mimeType = getMimeType(inputStream, title);
-
-					if (mimeType.equals(originalMimeType)) {
-						return;
-					}
-
-					dlFileEntry.setMimeType(mimeType);
-
-					DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
-
-					DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
-
-					dlFileVersion.setMimeType(mimeType);
-
-					DLFileVersionLocalServiceUtil.updateDLFileVersion(
-						dlFileVersion);
-				}
-
-			});
-
-		actionableDynamicQuery.performActions();
-	}
-
-	protected void checkFileVersionMimeTypes(final String originalMimeType)
+	protected void checkFileVersionMimeTypes(final String[] originalMimeTypes)
 		throws Exception {
 
 		ActionableDynamicQuery actionableDynamicQuery =
@@ -121,12 +52,30 @@ public class VerifyDocumentLibraryMimeTypes extends VerifyProcess {
 
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property property = PropertyFactoryUtil.forName("mimeType");
+					Criterion originalMimeTypeCriterion =
+						RestrictionsFactoryUtil.eq(
+							"mimeType", originalMimeTypes[0]);
 
-					dynamicQuery.add(property.eq(originalMimeType));
+					for (int i = 1; i < originalMimeTypes.length; i++) {
+						originalMimeTypeCriterion =
+							RestrictionsFactoryUtil.or(
+								originalMimeTypeCriterion,
+								RestrictionsFactoryUtil.eq(
+									"mimeType", originalMimeTypes[i]));
+					}
+
+					dynamicQuery.add(originalMimeTypeCriterion);
 				}
 
 			});
+
+		if (_log.isDebugEnabled()) {
+			long count = actionableDynamicQuery.performCount();
+
+			_log.debug(
+				"Processing " + count + " documents for mime types: " +
+					StringUtil.merge(originalMimeTypes, StringPool.COMMA));
+		}
 
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod() {
@@ -176,6 +125,8 @@ public class VerifyDocumentLibraryMimeTypes extends VerifyProcess {
 
 					String mimeType = getMimeType(inputStream, title);
 
+					String originalMimeType = dlFileVersion.getMimeType();
+
 					if (mimeType.equals(originalMimeType)) {
 						return;
 					}
@@ -184,6 +135,27 @@ public class VerifyDocumentLibraryMimeTypes extends VerifyProcess {
 
 					DLFileVersionLocalServiceUtil.updateDLFileVersion(
 						dlFileVersion);
+
+					try {
+						DLFileEntry dlFileEntry = dlFileVersion.getFileEntry();
+
+						if (dlFileEntry.getVersion().equals(
+								dlFileVersion.getVersion())) {
+
+							dlFileEntry.setMimeType(mimeType);
+
+							DLFileEntryLocalServiceUtil.updateDLFileEntry(
+								dlFileEntry);
+						}
+					}
+					catch (PortalException e) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to find file entry " +
+									dlFileVersion.getFileEntryId(),
+								e);
+						}
+					}
 				}
 
 			});
@@ -197,10 +169,7 @@ public class VerifyDocumentLibraryMimeTypes extends VerifyProcess {
 			DLWebDAVStorageImpl.MS_OFFICE_2010_TEXT_XML_UTF8
 		};
 
-		for (String mimeType : mimeTypes) {
-			checkFileEntryMimeTypes(mimeType);
-			checkFileVersionMimeTypes(mimeType);
-		}
+		checkFileVersionMimeTypes(mimeTypes);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Fixed file entries with invalid mime types");

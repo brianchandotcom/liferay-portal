@@ -508,33 +508,19 @@ public class EditEntryAction extends PortletAction {
 			tempFileEntryAttachments.size());
 
 		for (FileEntry tempAttachment : tempFileEntryAttachments) {
-			InputStream inputStream = tempAttachment.getContentStream();
+			FileEntry fileEntryAttachment =
+				BlogsEntryServiceUtil.addEntryAttachment(
+					entry.getGroupId(), entry.getEntryId(),
+					tempAttachment.getTitle(),
+					tempAttachment.getContentStream(),
+					tempAttachment.getMimeType());
 
-			File file = null;
+			fileEntryAttachments.add(fileEntryAttachment);
 
-			try {
-				file = FileUtil.createTempFile(inputStream);
-
-				FileEntry fileEntryAttachment =
-					BlogsEntryServiceUtil.addEntryAttachment(
-						entry.getGroupId(), entry.getEntryId(),
-						tempAttachment.getTitle(), file,
-						tempAttachment.getMimeType());
-
-				fileEntryAttachments.add(fileEntryAttachment);
-
-				content = StringUtil.replace(
-					content,
-					getAttachmentLink(tempAttachment, themeDisplay),
-					getAttachmentLink(fileEntryAttachment, themeDisplay));
-			}
-			catch (IOException ioe) {
-				throw new SystemException(
-					"Unable to write temporary file", ioe);
-			}
-			finally {
-				FileUtil.delete(file);
-			}
+			content = StringUtil.replace(
+				content,
+				getAttachmentLink(tempAttachment, themeDisplay),
+				getAttachmentLink(fileEntryAttachment, themeDisplay));
 		}
 
 		return content;

@@ -1996,6 +1996,7 @@
 	<portlet>
 		<portlet-name>200</portlet-name>
 		<struts-path>document_selector</struts-path>
+		<portlet-data-handler-class>com.liferay.portlet.documentlibrary.lar.DLPortletDataHandler</portlet-data-handler-class>
 		<use-default-template>false</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>

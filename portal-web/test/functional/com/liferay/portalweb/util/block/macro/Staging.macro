@@ -576,9 +576,6 @@
 		<execute action="StagingPublishtolivenow#assertClickNoError" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 		<execute action="StagingPublishtolivenow#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_TABLE_STATUS" value1="Successful" />
 		<execute action="StagingPublishtolivenow#selectFrameTop" value1="relative=top" />
-		<execute action="StagingPublishtolivenow#selectFrameTop" value1="relative=top" />
-		<execute action="StagingPublishtolivenow#selectFrameTop" value1="relative=top" />
-		<execute action="StagingPublishtolivenow#selectFrameTop" value1="relative=top" />
 
 		<execute action="Home#pause" locator1="5000" />
 		<execute action="Home#refresh" />

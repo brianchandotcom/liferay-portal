@@ -384,7 +384,7 @@
 		<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_MENULIST_VIEW" />
 
 		<if>
-			<equals arg1="${parentFieldBlank}" arg2="true" />
+			<equals arg1="${fieldBlank}" arg2="true" />
 			<then>
 				<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator-key1="FIELD" value1="${fieldFieldLabel}${ddlRecordFieldData}" />
 			</then>

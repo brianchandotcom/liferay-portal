@@ -43,7 +43,8 @@ public class WebDAVLitmusBasicTest extends BaseWebDAVTestCase {
 
 	@ClassRule
 	public static final WebDAVEnvironmentConfigTestRule
-		webDAVEnvironmentConfigTestRule = new WebDAVEnvironmentConfigTestRule();
+		webDAVEnvironmentConfigTestRule =
+			WebDAVEnvironmentConfigTestRule.INSTANCE;
 
 	@Test
 	public void test02Options() {

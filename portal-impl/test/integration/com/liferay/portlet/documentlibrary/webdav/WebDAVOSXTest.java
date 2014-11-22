@@ -42,7 +42,8 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 
 	@ClassRule
 	public static final WebDAVEnvironmentConfigTestRule
-		webDAVEnvironmentConfigTestRule = new WebDAVEnvironmentConfigTestRule();
+		webDAVEnvironmentConfigTestRule =
+			WebDAVEnvironmentConfigTestRule.INSTANCE;
 
 	@Test
 	public void testMSOffice0Setup() throws Exception {

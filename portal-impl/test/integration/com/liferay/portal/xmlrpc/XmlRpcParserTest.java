@@ -35,7 +35,7 @@ public class XmlRpcParserTest {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Test
 	public void testFaultResponseGenerator() throws Exception {

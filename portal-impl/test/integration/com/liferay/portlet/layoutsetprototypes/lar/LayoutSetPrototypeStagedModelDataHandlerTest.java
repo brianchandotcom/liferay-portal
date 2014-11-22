@@ -65,7 +65,7 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@After
 	@Override

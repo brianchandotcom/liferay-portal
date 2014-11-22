@@ -28,7 +28,7 @@ public class VerifyPermissionTest extends BaseVerifyProcessTestCase {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Override
 	protected VerifyProcess getVerifyProcess() {

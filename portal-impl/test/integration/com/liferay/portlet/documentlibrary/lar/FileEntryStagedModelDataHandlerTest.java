@@ -58,7 +58,7 @@ public class FileEntryStagedModelDataHandlerTest
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Test
 	public void testCompanyScopeDependencies() throws Exception {

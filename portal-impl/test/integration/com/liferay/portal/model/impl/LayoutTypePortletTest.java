@@ -52,7 +52,7 @@ public class LayoutTypePortletTest {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Test
 	public void testAddModeAboutPortletId() throws Exception {

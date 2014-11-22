@@ -66,7 +66,8 @@ import org.powermock.api.mockito.PowerMockito;
 public class PermissionExportImportTest extends PowerMockito {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule = new MainServletTestRule();
+	public static final MainServletTestRule mainServletTestRule =
+		MainServletTestRule.INSTANCE;
 
 	@Test
 	public void testPortletGuestPermissionsExportImport() throws Exception {

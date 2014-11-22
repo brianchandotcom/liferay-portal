@@ -47,7 +47,7 @@ public class ServiceBeanMethodInvocationFactoryImplTest {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Test
 	public void testRollback() throws Exception {

@@ -49,7 +49,7 @@ public class IndexAccessorImplTest {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {

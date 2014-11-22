@@ -44,7 +44,7 @@ public class MBPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Test
 	public void testDeleteAllFolders() throws Exception {

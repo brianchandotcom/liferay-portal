@@ -37,7 +37,7 @@ public class ThemeServiceTest {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {

@@ -44,7 +44,7 @@ public class AssetCategoryStagedModelDataHandlerTest
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Rule
 	public final TransactionalTestRule transactionalTestRule =

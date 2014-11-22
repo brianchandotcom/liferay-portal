@@ -40,7 +40,7 @@ public class UserGroupMembershipPolicyRowCheckerTest
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Test
 	public void testIsCheckerDisabledWhenSettingForbiddenUserGroupToUser()

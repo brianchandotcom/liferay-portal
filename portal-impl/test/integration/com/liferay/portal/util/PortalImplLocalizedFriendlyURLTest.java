@@ -58,7 +58,8 @@ import org.springframework.mock.web.MockHttpServletRequest;
 public class PortalImplLocalizedFriendlyURLTest {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule = new MainServletTestRule();
+	public static final MainServletTestRule mainServletTestRule =
+		MainServletTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

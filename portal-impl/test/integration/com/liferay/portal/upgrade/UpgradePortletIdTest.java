@@ -60,7 +60,7 @@ public class UpgradePortletIdTest extends UpgradePortletId {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@After
 	public void tearDown() throws Exception {

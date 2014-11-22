@@ -53,7 +53,7 @@ public class JournalTransformerTest {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Test
 	public void testContentTransformerListener() throws Exception {

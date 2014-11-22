@@ -48,7 +48,7 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() {

@@ -44,7 +44,7 @@ public class MBUserNotificationTest extends BaseUserNotificationTestCase {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Override
 	protected BaseModel<?> addBaseModel() throws Exception {

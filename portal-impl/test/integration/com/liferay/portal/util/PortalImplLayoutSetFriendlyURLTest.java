@@ -44,7 +44,7 @@ public class PortalImplLayoutSetFriendlyURLTest
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Test
 	public void testAccessFromVirtualHost() throws Exception {

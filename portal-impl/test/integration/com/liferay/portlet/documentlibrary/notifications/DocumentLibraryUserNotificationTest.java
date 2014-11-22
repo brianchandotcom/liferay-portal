@@ -46,7 +46,7 @@ public class DocumentLibraryUserNotificationTest
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Override
 	protected BaseModel<?> addBaseModel() throws Exception {

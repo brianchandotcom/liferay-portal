@@ -71,7 +71,7 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Test
 	public void testArticleImages() throws Exception {

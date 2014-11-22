@@ -51,7 +51,7 @@ public class WikiActivityInterpreterTest
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Override
 	protected void addActivities() throws Exception {

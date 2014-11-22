@@ -49,7 +49,7 @@ public class MDRRuleGroupInstanceStagedModelDataHandlerTest
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Override
 	public void setUp() throws Exception {

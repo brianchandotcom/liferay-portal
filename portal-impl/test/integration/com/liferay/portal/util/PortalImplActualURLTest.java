@@ -59,7 +59,7 @@ public class PortalImplActualURLTest {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Test
 	public void testChildLayoutFriendlyURL() throws Exception {

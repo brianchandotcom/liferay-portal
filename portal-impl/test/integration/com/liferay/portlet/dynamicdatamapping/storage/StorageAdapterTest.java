@@ -56,7 +56,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Before
 	@Override

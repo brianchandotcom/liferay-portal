@@ -48,7 +48,7 @@ public class ExportImportConfigurationTrashHandlerTest
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Ignore()
 	@Override

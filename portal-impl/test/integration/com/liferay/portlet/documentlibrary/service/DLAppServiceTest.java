@@ -93,7 +93,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		@ClassRule
 		public static final MainServletTestRule mainServletTestRule =
-			new MainServletTestRule();
+			MainServletTestRule.INSTANCE;
 
 		@Test
 		public void assetTagsShouldBeOrdered() throws Exception {
@@ -416,7 +416,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		@ClassRule
 		public static final MainServletTestRule mainServletTestRule =
-			new MainServletTestRule();
+			MainServletTestRule.INSTANCE;
 
 		@Test
 		public void shouldAddAssetEntry() throws PortalException {
@@ -457,7 +457,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		@ClassRule
 		public static final MainServletTestRule mainServletTestRule =
-			new MainServletTestRule();
+			MainServletTestRule.INSTANCE;
 
 		@Test
 		public void shouldCallWorkflowHandler() throws Exception {
@@ -539,7 +539,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		@ClassRule
 		public static final MainServletTestRule mainServletTestRule =
-			new MainServletTestRule();
+			MainServletTestRule.INSTANCE;
 
 		@Test
 		public void shouldFireSyncEvent() throws Exception {
@@ -570,7 +570,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		@ClassRule
 		public static final MainServletTestRule mainServletTestRule =
-			new MainServletTestRule();
+			MainServletTestRule.INSTANCE;
 
 		@Test
 		public void shouldCallWorkflowHandler() throws Exception {
@@ -645,7 +645,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		@ClassRule
 		public static final MainServletTestRule mainServletTestRule =
-			new MainServletTestRule();
+			MainServletTestRule.INSTANCE;
 
 		@Test
 		public void shouldFireSyncEvent() throws Exception {
@@ -672,7 +672,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		@ClassRule
 		public static final MainServletTestRule mainServletTestRule =
-			new MainServletTestRule();
+			MainServletTestRule.INSTANCE;
 
 		@Test
 		public void shouldDeleteImplicitlyTrashedChildFolder()
@@ -738,7 +738,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		@ClassRule
 		public static final MainServletTestRule mainServletTestRule =
-			new MainServletTestRule();
+			MainServletTestRule.INSTANCE;
 
 		@Test
 		public void shouldDeleteImplicitlyTrashedChildFolder()
@@ -799,7 +799,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		@ClassRule
 		public static final MainServletTestRule mainServletTestRule =
-			new MainServletTestRule();
+			MainServletTestRule.INSTANCE;
 
 		@Test
 		public void shouldFireSyncEvent() throws Exception {
@@ -836,7 +836,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		@ClassRule
 		public static final MainServletTestRule mainServletTestRule =
-			new MainServletTestRule();
+			MainServletTestRule.INSTANCE;
 
 		@Test
 		public void shouldFireSyncEvent() throws Exception {
@@ -872,7 +872,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		@ClassRule
 		public static final MainServletTestRule mainServletTestRule =
-			new MainServletTestRule();
+			MainServletTestRule.INSTANCE;
 
 		@Test
 		public void shouldCallWorkflowHandler() throws Exception {
@@ -952,7 +952,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		@ClassRule
 		public static final MainServletTestRule mainServletTestRule =
-			new MainServletTestRule();
+			MainServletTestRule.INSTANCE;
 
 		@Test
 		public void shouldFindFileEntryByAssetTagName() throws Exception {
@@ -1035,7 +1035,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		@ClassRule
 		public static final MainServletTestRule mainServletTestRule =
-			new MainServletTestRule();
+			MainServletTestRule.INSTANCE;
 
 		@Test
 		public void assetTagsShouldBeOrdered() throws Exception {
@@ -1242,7 +1242,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		@ClassRule
 		public static final MainServletTestRule mainServletTestRule =
-			new MainServletTestRule();
+			MainServletTestRule.INSTANCE;
 
 		@Test
 		public void shouldFireSyncEvent() throws Exception {

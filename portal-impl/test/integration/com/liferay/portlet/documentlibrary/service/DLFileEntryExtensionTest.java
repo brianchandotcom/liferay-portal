@@ -186,7 +186,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Test
 	public void testAddFileEntryBasic01() throws Exception {

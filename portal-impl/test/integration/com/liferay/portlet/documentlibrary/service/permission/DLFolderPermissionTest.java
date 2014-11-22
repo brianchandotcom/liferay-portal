@@ -40,7 +40,7 @@ public class DLFolderPermissionTest extends BasePermissionTestCase {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Test
 	public void testContains() throws Exception {

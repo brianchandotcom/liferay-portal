@@ -56,7 +56,7 @@ public class JournalSubscriptionClassTypeTest
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Override
 	protected long addBaseModelWithClassType(long containerId, long classTypeId)

@@ -41,7 +41,7 @@ public class UserLocalServiceTest {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Test
 	public void testGetNoAnnouncementsDeliveries() throws Exception {

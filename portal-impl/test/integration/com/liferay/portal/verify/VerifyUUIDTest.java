@@ -32,7 +32,7 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Test
 	public void testVerifyModel() throws Exception {

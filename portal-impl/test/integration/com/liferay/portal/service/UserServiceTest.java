@@ -67,7 +67,7 @@ public class UserServiceTest {
 
 		@ClassRule
 		public static final MainServletTestRule mainServletTestRule =
-			new MainServletTestRule();
+			MainServletTestRule.INSTANCE;
 
 		@Test(expected = ReservedUserEmailAddressException.class)
 		public void shouldNotAddUser() throws Exception {
@@ -159,7 +159,7 @@ public class UserServiceTest {
 
 		@ClassRule
 		public static final MainServletTestRule mainServletTestRule =
-			new MainServletTestRule();
+			MainServletTestRule.INSTANCE;
 
 		@Test(expected = NoSuchUserException.class)
 		public void shouldFailIfUserDeleted() throws Exception {
@@ -192,7 +192,7 @@ public class UserServiceTest {
 
 		@ClassRule
 		public static final MainServletTestRule mainServletTestRule =
-			new MainServletTestRule();
+			MainServletTestRule.INSTANCE;
 
 		@Before
 		public void setUp() throws Exception {
@@ -272,7 +272,7 @@ public class UserServiceTest {
 
 		@ClassRule
 		public static final MainServletTestRule mainServletTestRule =
-			new MainServletTestRule();
+			MainServletTestRule.INSTANCE;
 
 		@Before
 		public void setUp() throws Exception {
@@ -356,7 +356,7 @@ public class UserServiceTest {
 
 		@ClassRule
 		public static final MainServletTestRule mainServletTestRule =
-			new MainServletTestRule();
+			MainServletTestRule.INSTANCE;
 
 		@Before
 		public void setUp() throws Exception {
@@ -411,7 +411,7 @@ public class UserServiceTest {
 
 		@ClassRule
 		public static final MainServletTestRule mainServletTestRule =
-			new MainServletTestRule();
+			MainServletTestRule.INSTANCE;
 
 		@Before
 		public void setUp() throws Exception {
@@ -462,7 +462,7 @@ public class UserServiceTest {
 
 		@ClassRule
 		public static final MainServletTestRule mainServletTestRule =
-			new MainServletTestRule();
+			MainServletTestRule.INSTANCE;
 
 		@Before
 		public void setUp() throws Exception {
@@ -516,7 +516,7 @@ public class UserServiceTest {
 
 		@ClassRule
 		public static final MainServletTestRule mainServletTestRule =
-			new MainServletTestRule();
+			MainServletTestRule.INSTANCE;
 
 		@Before
 		public void setUp() throws Exception {
@@ -569,7 +569,7 @@ public class UserServiceTest {
 
 		@ClassRule
 		public static final MainServletTestRule mainServletTestRule =
-			new MainServletTestRule();
+			MainServletTestRule.INSTANCE;
 
 		@Before
 		public void setUp() throws Exception {

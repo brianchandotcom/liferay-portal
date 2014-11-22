@@ -46,7 +46,7 @@ public class WikiSubscriptionLocalizedContentTest
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Before
 	@Override

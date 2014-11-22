@@ -40,7 +40,7 @@ public class WikiNodeStagedModelDataHandlerTest
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Rule
 	public final TransactionalTestRule transactionalTestRule =

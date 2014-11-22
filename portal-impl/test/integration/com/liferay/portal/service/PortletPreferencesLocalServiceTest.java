@@ -60,7 +60,8 @@ import org.springframework.aop.framework.AdvisedSupport;
 public class PortletPreferencesLocalServiceTest {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule = new MainServletTestRule();
+	public static final MainServletTestRule mainServletTestRule =
+		MainServletTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {

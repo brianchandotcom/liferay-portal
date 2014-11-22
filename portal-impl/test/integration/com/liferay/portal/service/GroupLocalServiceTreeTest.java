@@ -34,7 +34,7 @@ public class GroupLocalServiceTreeTest extends BaseLocalServiceTreeTestCase {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Override
 	protected TreeModel addTreeModel(TreeModel parentTreeModel)

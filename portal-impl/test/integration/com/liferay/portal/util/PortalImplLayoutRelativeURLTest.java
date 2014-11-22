@@ -38,7 +38,7 @@ public class PortalImplLayoutRelativeURLTest extends PortalImplBaseURLTestCase {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Before
 	@Override

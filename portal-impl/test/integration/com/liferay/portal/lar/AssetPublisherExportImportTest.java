@@ -80,7 +80,7 @@ public class AssetPublisherExportImportTest
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Override
 	public String getPortletId() throws Exception {

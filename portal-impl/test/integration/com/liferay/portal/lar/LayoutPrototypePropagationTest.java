@@ -38,7 +38,7 @@ public class LayoutPrototypePropagationTest
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Override
 	protected void doSetUp() throws Exception {

@@ -60,7 +60,7 @@ public class UpgradeCustomizablePortletsTest
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Test
 	public void testBasicPreferencesExtraction() throws Exception {

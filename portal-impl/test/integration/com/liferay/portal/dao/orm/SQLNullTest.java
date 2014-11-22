@@ -443,7 +443,7 @@ public class SQLNullTest {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Test
 	public void testBlankStringEqualsNull() {

@@ -46,7 +46,7 @@ public class SocialActivityLocalServiceTest extends BaseSocialActivityTestCase {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Test
 	public void testActivityHierarchy() throws Exception {

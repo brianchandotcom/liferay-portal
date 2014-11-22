@@ -35,6 +35,10 @@ public class SyncContext {
 	public static final String PREFERENCE_KEY_POLL_INTERVAL =
 		"sync.client.poll.interval";
 
+	public String getAuthType() {
+		return authType;
+	}
+
 	public String getPluginVersion() {
 		return pluginVersion;
 	}
@@ -57,6 +61,10 @@ public class SyncContext {
 
 	public boolean isSocialOfficeInstalled() {
 		return socialOfficeInstalled;
+	}
+
+	public void setAuthType(String authType) {
+		this.authType = authType;
 	}
 
 	public void setPluginVersion(String pluginVersion) {
@@ -85,6 +93,7 @@ public class SyncContext {
 		this.syncUser = syncUser;
 	}
 
+	protected String authType;
 	protected String pluginVersion;
 	protected int portalBuildNumber;
 	protected Map<String, String> portletPreferencesMap;

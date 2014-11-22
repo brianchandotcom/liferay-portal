@@ -350,8 +350,8 @@ public class ExportImportDateUtilTest {
 	}
 
 	@Rule
-	public TransactionalTestRule transactionalTestRule =
-		new TransactionalTestRule();
+	public final TransactionalTestRule transactionalTestRule =
+		TransactionalTestRule.INSTANCE;
 
 	protected void updateLastPublishDate(
 			LayoutSet layoutSet, Date lastPublishDate)

@@ -278,8 +278,8 @@ public class UserFinderTest {
 	}
 
 	@Rule
-	public TransactionalTestRule transactionalTestRule =
-		new TransactionalTestRule();
+	public final TransactionalTestRule transactionalTestRule =
+		TransactionalTestRule.INSTANCE;
 
 	private static Group _group;
 	private static User _groupUser;

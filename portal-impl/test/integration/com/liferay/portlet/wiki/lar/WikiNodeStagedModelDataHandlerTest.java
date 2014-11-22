@@ -43,8 +43,8 @@ public class WikiNodeStagedModelDataHandlerTest
 		new MainServletTestRule();
 
 	@Rule
-	public TransactionalTestRule transactionalTestRule =
-		new TransactionalTestRule();
+	public final TransactionalTestRule transactionalTestRule =
+		TransactionalTestRule.INSTANCE;
 
 	@Override
 	protected StagedModel addStagedModel(

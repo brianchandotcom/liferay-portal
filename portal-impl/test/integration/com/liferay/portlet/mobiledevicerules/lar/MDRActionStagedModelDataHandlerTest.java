@@ -72,8 +72,8 @@ public class MDRActionStagedModelDataHandlerTest
 	}
 
 	@Rule
-	public TransactionalTestRule transactionalTestRule =
-		new TransactionalTestRule();
+	public final TransactionalTestRule transactionalTestRule =
+		TransactionalTestRule.INSTANCE;
 
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(

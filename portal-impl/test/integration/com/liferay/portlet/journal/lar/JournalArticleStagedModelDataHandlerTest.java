@@ -100,8 +100,8 @@ public class JournalArticleStagedModelDataHandlerTest
 	}
 
 	@Rule
-	public TransactionalTestRule transactionalTestRule =
-		new TransactionalTestRule();
+	public final TransactionalTestRule transactionalTestRule =
+		TransactionalTestRule.INSTANCE;
 
 	protected Map<String, List<StagedModel>> addCompanyDependencies()
 		throws Exception {

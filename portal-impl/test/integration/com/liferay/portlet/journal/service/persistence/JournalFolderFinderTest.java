@@ -192,8 +192,8 @@ public class JournalFolderFinderTest {
 	}
 
 	@Rule
-	public TransactionalTestRule transactionalTestRule =
-		new TransactionalTestRule();
+	public final TransactionalTestRule transactionalTestRule =
+		TransactionalTestRule.INSTANCE;
 
 	private JournalFolder _folder1;
 	private JournalFolder _folder2;

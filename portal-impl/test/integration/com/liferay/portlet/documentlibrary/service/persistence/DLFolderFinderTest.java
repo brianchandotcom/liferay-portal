@@ -303,8 +303,8 @@ public class DLFolderFinderTest {
 	}
 
 	@Rule
-	public TransactionalTestRule transactionalTestRule =
-		new TransactionalTestRule();
+	public final TransactionalTestRule transactionalTestRule =
+		TransactionalTestRule.INSTANCE;
 
 	private DLFileShortcut _dlFileShortcut;
 	private Folder _folder;

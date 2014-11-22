@@ -81,8 +81,8 @@ public class FolderStagedModelDataHandlerTest
 	}
 
 	@Rule
-	public TransactionalTestRule transactionalTestRule =
-		new TransactionalTestRule();
+	public final TransactionalTestRule transactionalTestRule =
+		TransactionalTestRule.INSTANCE;
 
 	protected Map<String, List<StagedModel>> addCompanyDependencies()
 		throws Exception {

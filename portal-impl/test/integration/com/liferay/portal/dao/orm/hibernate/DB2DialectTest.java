@@ -59,8 +59,8 @@ public class DB2DialectTest {
 	}
 
 	@Rule
-	public TransactionalTestRule transactionalTestRule =
-		new TransactionalTestRule();
+	public final TransactionalTestRule transactionalTestRule =
+		TransactionalTestRule.INSTANCE;
 
 	protected void testPaging(String sql, int offset, int limit) {
 		Session session = null;

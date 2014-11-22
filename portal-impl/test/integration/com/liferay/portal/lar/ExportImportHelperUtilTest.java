@@ -639,8 +639,8 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 	}
 
 	@Rule
-	public TransactionalTestRule transactionalTestRule =
-		new TransactionalTestRule();
+	public final TransactionalTestRule transactionalTestRule =
+		TransactionalTestRule.INSTANCE;
 
 	protected void assertLinksToLayouts(
 		String content, Layout layout, long groupId) {

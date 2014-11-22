@@ -197,8 +197,8 @@ public class GroupFinderTest {
 	}
 
 	@Rule
-	public TransactionalTestRule transactionalTestRule =
-		new TransactionalTestRule();
+	public final TransactionalTestRule transactionalTestRule =
+		TransactionalTestRule.INSTANCE;
 
 	protected static ResourceAction getModelResourceAction()
 		throws PortalException {

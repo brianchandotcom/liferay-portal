@@ -39,6 +39,7 @@ import java.io.IOException;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.FileTime;
 
 import java.util.Map;
@@ -290,12 +291,14 @@ public class NettyRepository implements Repository {
 						if (tempLocalFilePath.startsWith(repositoryPath)) {
 							Files.copy(
 								fileResponse.getLocalFile(),
-								targetLocalFilePath);
+								targetLocalFilePath,
+								StandardCopyOption.REPLACE_EXISTING);
 						}
 						else {
 							Files.move(
 								fileResponse.getLocalFile(),
-								targetLocalFilePath);
+								targetLocalFilePath,
+								StandardCopyOption.REPLACE_EXISTING);
 						}
 
 						if (populateCache) {

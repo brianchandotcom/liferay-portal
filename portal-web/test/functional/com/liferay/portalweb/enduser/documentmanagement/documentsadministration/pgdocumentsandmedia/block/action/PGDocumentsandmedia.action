@@ -25,6 +25,12 @@
 		</case>
 	</command>
 
+	<command name="click">
+		<case locator-key1="ENTRY_ICON_DOCUMENT_ACTIONS">
+			<execute function="Click#makeVisibleClickAt" />
+		</case>
+	</command>
+
 	<command name="isElementPresent">
 		<case locator-key1="ENTRY_ICON_DOCUMENT_THUMBNAIL">
 			<execute function="IsElementPresent#isVisible" />

@@ -28,6 +28,9 @@ import org.junit.Assert;
  */
 public class WebDAVEnvironmentConfigTestRule extends MainServletTestRule {
 
+	public static final WebDAVEnvironmentConfigTestRule INSTANCE =
+		new WebDAVEnvironmentConfigTestRule();
+
 	@Override
 	protected void after() {
 		_baseWebDAVTestCase.service(Method.DELETE, "", null, null);
@@ -52,6 +55,9 @@ public class WebDAVEnvironmentConfigTestRule extends MainServletTestRule {
 
 			Assert.assertEquals(HttpServletResponse.SC_CREATED, statusCode);
 		}
+	}
+
+	private WebDAVEnvironmentConfigTestRule() {
 	}
 
 	private final BaseWebDAVTestCase _baseWebDAVTestCase =

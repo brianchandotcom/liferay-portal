@@ -31,6 +31,9 @@ import org.junit.runners.model.Statement;
  */
 public class TransactionalTestRule implements TestRule {
 
+	public static final TransactionalTestRule INSTANCE =
+		new TransactionalTestRule();
+
 	public TransactionalTestRule() {
 		this(Propagation.SUPPORTS);
 	}

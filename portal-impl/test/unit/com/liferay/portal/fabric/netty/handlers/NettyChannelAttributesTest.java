@@ -52,8 +52,8 @@ import org.junit.Test;
 public class NettyChannelAttributesTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@AdviseWith(adviceClasses = AttributeAdvice.class)
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)

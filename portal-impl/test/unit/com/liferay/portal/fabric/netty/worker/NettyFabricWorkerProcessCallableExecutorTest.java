@@ -49,8 +49,8 @@ import org.junit.Test;
 public class NettyFabricWorkerProcessCallableExecutorTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@AdviseWith(adviceClasses = NettyUtilAdvice.class)
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)

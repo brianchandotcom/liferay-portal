@@ -37,8 +37,8 @@ import org.junit.Test;
 public class BaseAsyncDatagramReceiveHandlerTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@AdviseWith(adviceClasses = {PortalExecutorManagerUtilAdvice.class})
 	@Test

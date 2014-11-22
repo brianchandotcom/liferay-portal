@@ -93,8 +93,8 @@ import org.springframework.mock.web.MockHttpServletResponse;
 public class HttpClientSPIAgentTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Before
 	public void setUp() {

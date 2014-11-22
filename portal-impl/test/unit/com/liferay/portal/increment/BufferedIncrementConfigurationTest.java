@@ -46,8 +46,8 @@ import org.junit.Test;
 public class BufferedIncrementConfigurationTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test

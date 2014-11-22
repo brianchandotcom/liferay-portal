@@ -40,8 +40,8 @@ import org.junit.Test;
 public class NettyFabricAgentProcessCallableExecutorTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Test
 	public void testExecute() throws Exception {

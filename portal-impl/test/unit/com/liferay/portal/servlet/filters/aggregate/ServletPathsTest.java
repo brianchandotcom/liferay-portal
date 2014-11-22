@@ -51,8 +51,8 @@ import org.springframework.mock.web.MockServletContext;
 public class ServletPathsTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() {

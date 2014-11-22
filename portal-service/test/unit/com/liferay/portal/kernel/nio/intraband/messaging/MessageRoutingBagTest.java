@@ -35,8 +35,8 @@ import org.junit.Test;
 public class MessageRoutingBagTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Test
 	public void testAutomaticSerialization() throws Exception {

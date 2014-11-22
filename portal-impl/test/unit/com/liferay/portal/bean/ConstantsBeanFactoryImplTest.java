@@ -47,8 +47,8 @@ import org.junit.Test;
 public class ConstantsBeanFactoryImplTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@AdviseWith(adviceClasses = {ReflectionUtilAdvice.class})
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)

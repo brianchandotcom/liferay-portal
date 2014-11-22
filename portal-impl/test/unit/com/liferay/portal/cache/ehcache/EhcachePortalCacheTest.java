@@ -44,8 +44,8 @@ import org.junit.Test;
 public class EhcachePortalCacheTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() {

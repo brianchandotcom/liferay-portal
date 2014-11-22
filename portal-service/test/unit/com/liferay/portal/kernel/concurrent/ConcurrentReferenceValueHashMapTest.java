@@ -38,8 +38,8 @@ public class ConcurrentReferenceValueHashMapTest
 	extends BaseConcurrentReferenceHashMapTestCase {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test

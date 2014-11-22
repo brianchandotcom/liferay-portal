@@ -3858,6 +3858,7 @@
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
+		<description>Displays a list of objects in the UI.</description>
 		<name>search-container</name>
 		<tag-class>com.liferay.taglib.ui.SearchContainerTag</tag-class>
 		<tei-class>com.liferay.taglib.ui.SearchContainerTei</tei-class>
@@ -3888,6 +3889,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the message displayed in the UI when the Search Container is empty.</description>
 			<name>emptyResultsMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

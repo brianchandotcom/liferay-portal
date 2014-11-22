@@ -373,7 +373,7 @@ public class SecureRandomUtilTest {
 	}
 
 	@Rule
-	public final NewEnvTestRule newEnvTestRule = new NewEnvTestRule();
+	public final NewEnvTestRule newEnvTestRule = NewEnvTestRule.INSTANCE;
 
 	protected long getFirstLong() {
 		byte[] bytes = ReflectionTestUtil.getFieldValue(

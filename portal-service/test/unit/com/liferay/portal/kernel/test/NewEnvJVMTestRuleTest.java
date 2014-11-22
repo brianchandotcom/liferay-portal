@@ -64,7 +64,7 @@ public class NewEnvJVMTestRuleTest {
 	}
 
 	@Rule
-	public final NewEnvTestRule newEnvTestRule = new NewEnvTestRule();
+	public final NewEnvTestRule newEnvTestRule = NewEnvTestRule.INSTANCE;
 
 	protected void assertProcessId() {
 		Assert.assertNotNull(_processId);

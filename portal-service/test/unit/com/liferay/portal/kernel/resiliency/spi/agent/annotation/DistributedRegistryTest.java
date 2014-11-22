@@ -287,7 +287,7 @@ public class DistributedRegistryTest {
 	}
 
 	@Rule
-	public final NewEnvTestRule newEnvTestRule = new NewEnvTestRule();
+	public final NewEnvTestRule newEnvTestRule = NewEnvTestRule.INSTANCE;
 
 	private Map<String, Direction> _exactDirections;
 	private Map<String, Direction> _postfixDirections;

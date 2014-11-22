@@ -391,7 +391,7 @@ public class IntrabandBridgeDestinationTest {
 	}
 
 	@Rule
-	public final NewEnvTestRule newEnvTestRule = new NewEnvTestRule();
+	public final NewEnvTestRule newEnvTestRule = NewEnvTestRule.INSTANCE;
 
 	private static void _installSPIs(SPI... spis) throws RemoteException {
 		Map<String, Object> spiProviderContainers =

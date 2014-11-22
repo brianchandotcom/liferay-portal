@@ -78,7 +78,7 @@ public class NewEnvClassLoaderTestRuleTest {
 	}
 
 	@Rule
-	public final NewEnvTestRule newEnvTestRule = new NewEnvTestRule();
+	public final NewEnvTestRule newEnvTestRule = NewEnvTestRule.INSTANCE;
 
 	private void assertClassLoader() {
 		Assert.assertNotNull(_classLoader);

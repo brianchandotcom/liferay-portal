@@ -815,7 +815,7 @@ public class StringBundlerTest {
 	}
 
 	@Rule
-	public final NewEnvTestRule newEnvTestRule = new NewEnvTestRule();
+	public final NewEnvTestRule newEnvTestRule = NewEnvTestRule.INSTANCE;
 
 	protected void assertArray(StringBundler sb, String... prefix) {
 		String[] strings = sb.getStrings();

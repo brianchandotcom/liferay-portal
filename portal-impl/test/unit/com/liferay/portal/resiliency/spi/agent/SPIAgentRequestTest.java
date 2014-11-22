@@ -1011,7 +1011,7 @@ public class SPIAgentRequestTest {
 	}
 
 	@Rule
-	public final NewEnvTestRule newEnvTestRule = new NewEnvTestRule();
+	public final NewEnvTestRule newEnvTestRule = NewEnvTestRule.INSTANCE;
 
 	private static final String _HEADER_NAME_1 = "HEADER_NAME_1";
 

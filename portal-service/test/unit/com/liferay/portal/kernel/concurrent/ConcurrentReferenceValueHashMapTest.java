@@ -87,6 +87,6 @@ public class ConcurrentReferenceValueHashMapTest
 	}
 
 	@Rule
-	public final NewEnvTestRule newEnvTestRule = new NewEnvTestRule();
+	public final NewEnvTestRule newEnvTestRule = NewEnvTestRule.INSTANCE;
 
 }

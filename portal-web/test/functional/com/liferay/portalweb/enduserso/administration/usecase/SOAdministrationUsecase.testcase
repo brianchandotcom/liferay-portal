@@ -1,4 +1,5 @@
 <definition component-name="social-office-administration">
+	<property name="captcha.max.challenges" value="0" />
 	<property name="hook.plugins.includes" value="deploy-listener-hook,portal-compat-hook,so-activities-hook,so-hook" />
 	<property name="portlet.plugins.includes" value="calendar-portlet,chat-portlet,contacts-portlet,events-display-portlet,marketplace-portlet,microblogs-portlet,notifications-portlet,private-messaging-portlet,so-announcements-portlet,so-configurations-portlet,so-portlet,tasks-portlet,wysiwyg-portlet" />
 	<property name="testray.main.component.name" value="Social Office" />
@@ -1295,7 +1296,7 @@
 		<execute action="SOSite#assertTextEquals" locator-key1="NAVIGATION_MEMBERS" value1="Members" />
 	</command>
 
-	<command known-issues="LIFERAYQA-12195" name="ViewCaptchaCheckWithSORole" priority="5">
+	<command name="ViewCaptchaCheckWithSORole" priority="5">
 		<execute macro="User#logoutPG" />
 
 		<execute action="PGLogin#assertClick" locator-key1="CREATE_ACCOUNT_LINK" value1="Create Account" />

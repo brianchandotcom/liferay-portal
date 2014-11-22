@@ -1201,10 +1201,14 @@ public class JavaClass {
 				continue;
 			}
 
-			Matcher matcher = pattern.matcher(curJavaTerm.getContent());
+			String content = curJavaTerm.getContent();
 
-			if (matcher.find()) {
-				return false;
+			Matcher matcher = pattern.matcher(content);
+
+			if (content.contains(javaTerm.getName())) {
+				if (matcher.find()) {
+					return false;
+				}
 			}
 		}
 

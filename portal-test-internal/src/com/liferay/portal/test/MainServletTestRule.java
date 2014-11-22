@@ -40,6 +40,9 @@ import org.springframework.mock.web.MockServletContext;
  */
 public class MainServletTestRule implements TestRule {
 
+	public static final MainServletTestRule INSTANCE =
+		new MainServletTestRule();
+
 	@Override
 	public Statement apply(final Statement statement, Description description) {
 		return new Statement() {
@@ -57,6 +60,9 @@ public class MainServletTestRule implements TestRule {
 			}
 
 		};
+	}
+
+	protected MainServletTestRule() {
 	}
 
 	protected void after() {

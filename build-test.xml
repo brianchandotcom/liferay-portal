@@ -1077,6 +1077,37 @@ create database lportal${database.index} character set utf8;</echo>
 		</if>
 	</target>
 
+	<target name="check-inet-address">
+		<if>
+			<or>
+				<equals arg1="${app.server.jboss.version}" arg2="6.0.1" />
+				<equals arg1="${app.server.jboss.version}" arg2="6.1.0" />
+			</or>
+			<then>
+				<exec executable="/bin/bash" outputproperty="inet.address">
+					<arg value="-c" />
+					<arg value="ifconfig eth0:0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'" />
+				</exec>
+
+				<if>
+					<equals arg1="${inet.address}" arg2="127.0.0.1" />
+					<then>
+						<replace file="${app.server.jboss.instance.dir}/configuration/standalone.xml">
+							<replacefilter>
+								<replacetoken><![CDATA[<inet-address value="${jboss.bind.address:127.0.0.1}"/>]]></replacetoken>
+								<replacevalue><![CDATA[<nic name="eth0:0" />]]></replacevalue>
+							</replacefilter>
+							<replacefilter>
+								<replacetoken><![CDATA[<inet-address value="${jboss.bind.address.management:127.0.0.1}"/>]]></replacetoken>
+								<replacevalue><![CDATA[<nic name="eth0:0" />]]></replacevalue>
+							</replacefilter>
+						</replace>
+					</then>
+				</if>
+			</then>
+		</if>
+	</target>
+
 	<target name="clean-app-server-deploy-dir">
 		<delete includeemptydirs="true" failonerror="false">
 			<fileset
@@ -3850,6 +3881,13 @@ if (ppstate.equals("normal")) {
 			<isset property="app.server.bundles.size" />
 			<then>
 				<prepare-additional-bundles />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${app.server.type}" arg2="jboss" />
+			<then>
+				<antcall target="check-inet-address" />
 			</then>
 		</if>
 

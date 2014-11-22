@@ -37,6 +37,9 @@ import org.junit.runners.model.Statement;
  */
 public class CodeCoverageAssertor implements TestRule {
 
+	public static final CodeCoverageAssertor INSTANCE =
+		new CodeCoverageAssertor();
+
 	public CodeCoverageAssertor() {
 		this(null, null, true);
 	}

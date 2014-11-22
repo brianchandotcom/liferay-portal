@@ -33,6 +33,9 @@ import org.junit.runners.model.Statement;
  */
 public class PersistenceTestRule implements TestRule {
 
+	public static final PersistenceTestRule INSTANCE =
+		new PersistenceTestRule();
+
 	@Override
 	public Statement apply(final Statement statement, Description description) {
 		return new Statement() {
@@ -63,6 +66,9 @@ public class PersistenceTestRule implements TestRule {
 			}
 
 		};
+	}
+
+	private PersistenceTestRule() {
 	}
 
 	static {

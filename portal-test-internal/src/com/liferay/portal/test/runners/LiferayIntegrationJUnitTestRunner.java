@@ -55,7 +55,9 @@ public class LiferayIntegrationJUnitTestRunner
 		List<TestRule> testRules = super.classRules();
 
 		testRules.add(_uniqueStringRandomizerBumperTestRule);
+
 		testRules.add(_clearThreadLocalTestRule);
+
 		testRules.add(_logAssertionTestRule);
 
 		return testRules;
@@ -66,6 +68,7 @@ public class LiferayIntegrationJUnitTestRunner
 		List<TestRule> testRules = super.getTestRules(object);
 
 		testRules.add(new DeleteAfterTestRunTestRule(object));
+
 		testRules.add(_logAssertionTestRule);
 
 		return testRules;

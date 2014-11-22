@@ -14,11 +14,10 @@
 
 package com.liferay.portal.security.membershippolicy;
 
-import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
-import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.UserTestUtil;
 import com.liferay.portlet.usergroupsadmin.search.UserUserGroupChecker;
@@ -26,6 +25,7 @@ import com.liferay.portlet.usergroupsadmin.search.UserUserGroupChecker;
 import javax.portlet.RenderResponse;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -34,10 +34,13 @@ import org.powermock.api.mockito.PowerMockito;
 /**
  * @author Roberto Díaz
  */
-@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class UserGroupMembershipPolicyRowCheckerTest
 	extends BaseUserGroupMembershipPolicyTestCase {
+
+	@ClassRule
+	public static final MainServletTestRule mainServletTestRule =
+		new MainServletTestRule();
 
 	@Test
 	public void testIsCheckerDisabledWhenSettingForbiddenUserGroupToUser()

@@ -945,6 +945,20 @@ public class SeleniumBuilderFileUtil {
 							new String[] {"-Dfile", "-Dtofile"}, "value1");
 					}
 				}
+
+				if (attributeName.equals("value1") &&
+					attributeValue.contains("replace-file")) {
+
+					if (!attributeValue.contains("-Dfile") ||
+						!attributeValue.contains("-Dtoken") ||
+						!attributeValue.contains("-Dvalue")) {
+
+						throwValidationException(
+							1018, fileName, executeElement,
+							new String[] {"-Dfile", "-Dtoken", "-Dvalue"},
+							"value1");
+					}
+				}
 			}
 		}
 		else if (function != null) {

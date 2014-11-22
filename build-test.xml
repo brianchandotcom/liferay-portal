@@ -3664,6 +3664,29 @@ if (ppstate.equals("normal")) {
 		<echo file="test.package.names.properties">${test.package.names.properties.content}</echo>
 	</target>
 
+	<target name="replace-file">
+		<fail message="Please set the property ${file}." unless="file" />
+		<fail message="Please set the property ${token}." unless="token" />
+		<fail message="Please set the property ${value}." unless="value" />
+
+		<fail message="${token} not found in ${file}">
+			<condition>
+				<not>
+					<resourcecontains resource="${file}" substring="${token}" />
+				</not>
+			</condition>
+		</fail>
+
+		<echo>Replacing ${token} with ${value} in ${file}</echo>
+
+		<replace file="${file}">
+			<replacefilter
+				token="${token}"
+				value="${value}"
+			/>
+		</replace>
+	</target>
+
 	<target name="revert-test-properties">
 		<execute>
 			<![CDATA[git checkout -- portal-impl/test/portal-test.properties]]>

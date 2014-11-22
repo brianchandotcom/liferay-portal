@@ -14,7 +14,6 @@
 
 package com.liferay.portal.test;
 
-import com.liferay.portal.kernel.annotation.AnnotationLocator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.messaging.BaseAsyncDestination;
@@ -45,33 +44,21 @@ public class SynchronousDestinationExecutionTestListener
 	extends AbstractExecutionTestListener {
 
 	@Override
-	public void runAfterClass(TestContext testContext) {
-		classSyncHandler.restorePreviousSync();
-	}
-
-	@Override
 	public void runAfterTest(TestContext testContext) {
 		methodSyncHandler.restorePreviousSync();
 	}
 
 	@Override
-	public void runBeforeClass(TestContext testContext) {
-		Class<?> testClass = testContext.getClazz();
-
-		Sync sync = AnnotationLocator.locate(testClass, Sync.class);
-
-		classSyncHandler.setSync(sync);
-		classSyncHandler.setForceSync(ProxyModeThreadLocal.isForceSync());
-
-		classSyncHandler.enableSync();
-	}
-
-	@Override
 	public void runBeforeTest(TestContext testContext) {
 		Method method = testContext.getMethod();
-		Class<?> testClass = testContext.getClazz();
 
-		Sync sync = AnnotationLocator.locate(method, testClass, Sync.class);
+		Sync sync = method.getAnnotation(Sync.class);
+
+		if (sync == null) {
+			Class<?> testClass = testContext.getClazz();
+
+			sync = testClass.getAnnotation(Sync.class);
+		}
 
 		methodSyncHandler.setForceSync(ProxyModeThreadLocal.isForceSync());
 		methodSyncHandler.setSync(sync);

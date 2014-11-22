@@ -591,6 +591,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENT_MENULIST_CHECKIN</td>
+	<td>//a[@role='menuitem' and contains(.,'Checkin')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOCUMENT_MENULIST_PERMISSIONS</td>
 	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
 	<td></td>

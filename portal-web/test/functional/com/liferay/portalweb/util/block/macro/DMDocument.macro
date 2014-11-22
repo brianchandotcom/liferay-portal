@@ -490,6 +490,42 @@
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="checkinViaDocumentActionsPG">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_ACTIONS" />
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="DOCUMENT_MENULIST_CHECKIN" value1="Checkin" />
+
+		<if>
+			<condition action="PGDocumentsandmediaCheckin#isElementPresent" locator-key1="MAJOR_REVISION" />
+			<then>
+				<if>
+					<equals arg1="${revision}" arg2="Major" />
+					<then>
+						<execute action="PGDocumentsandmediaCheckin#click" locator-key1="MAJOR_REVISION" />
+					</then>
+					<elseif>
+						<equals arg1="${revision}" arg2="Minor" />
+						<then>
+							<execute action="PGDocumentsandmediaCheckin#click" locator-key1="MINOR_REVISION" />
+						</then>
+					</elseif>
+				</if>
+
+				<if>
+					<isset var="changeLog" />
+					<then>
+						<execute action="PGDocumentsandmediaCheckin#type" locator-key1="CHANGE_LOG" value1="${changeLog}" />
+					</then>
+				</if>
+
+				<execute action="PGDocumentsandmediaCheckin#assertClick" locator-key1="SAVE_AND_CHECKIN_BUTTON" value1="Save and Checkin" />
+			</then>
+		</if>
+
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="checkoutCP">
 		<execute action="CPDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_CHECKOUT_BUTTON" value1="Checkout" />
 		<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -513,6 +549,14 @@
 		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_CHECKOUT_BUTTON" value1="Checkout" />
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="CHECKOUT_SUCCESS_MESSAGE" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
+	</command>
+
+	<command name="checkoutViaDocumentActionsPG">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_ACTIONS" />
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="DOCUMENT_MENULIST_CHECKOUT" value1="Checkout" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="deleteCommentPG">

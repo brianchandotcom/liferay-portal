@@ -26,15 +26,12 @@ import javax.sql.DataSource;
 import org.hibernate.SessionFactory;
 
 import org.springframework.aop.TargetSource;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.BeanFactoryAware;
 
 /**
  * @author Michael Young
  * @author Alexander Chow
  */
-public class ShardSessionFactoryTargetSource
-	implements BeanFactoryAware, TargetSource {
+public class ShardSessionFactoryTargetSource implements TargetSource {
 
 	public void afterPropertiesSet() throws Exception {
 		Map<String, DataSource> dataSources =
@@ -46,7 +43,6 @@ public class ShardSessionFactoryTargetSource
 			PortalHibernateConfiguration portalHibernateConfiguration =
 				new PortalHibernateConfiguration();
 
-			portalHibernateConfiguration.setBeanFactory(_beanFactory);
 			portalHibernateConfiguration.setDataSource(dataSource);
 
 			SessionFactory sessionFactory =
@@ -83,11 +79,6 @@ public class ShardSessionFactoryTargetSource
 	public void releaseTarget(Object target) throws Exception {
 	}
 
-	@Override
-	public void setBeanFactory(BeanFactory beanFactory) {
-		_beanFactory = beanFactory;
-	}
-
 	public void setSessionFactory(String shardName) {
 		_sessionFactory.set(_sessionFactories.get(shardName));
 	}
@@ -111,7 +102,6 @@ public class ShardSessionFactoryTargetSource
 
 	};
 
-	private BeanFactory _beanFactory;
 	private ShardDataSourceTargetSource _shardDataSourceTargetSource;
 
 }

@@ -892,20 +892,6 @@
 
 		<action path="/journal/view_feeds" forward="portlet.journal.view_feeds" />
 
-		<!-- Journal Content -->
-
-		<action path="/journal_content/edit_article_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
-			<forward name="portlet.message_boards.error" path="portlet.journal_content.error" />
-		</action>
-
-		<action path="/journal_content/export_article" type="com.liferay.portlet.journal.action.ExportArticleAction" />
-
-		<action path="/journal_content/update_journal_article_redirect" forward="portlet.journal_content.update_journal_article_redirect" />
-
-		<action path="/journal_content/view" type="com.liferay.portlet.journalcontent.action.ViewAction">
-			<forward name="portlet.journal_content.view" path="portlet.journal_content.view" />
-		</action>
-
 		<!-- Journal Content Search -->
 
 		<action path="/journal_content_search/search" type="com.liferay.portlet.journalcontentsearch.action.SearchAction">

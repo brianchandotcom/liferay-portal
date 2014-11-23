@@ -49,7 +49,7 @@ public class ShardGloballyAdvice implements MethodInterceptor {
 							methodInvocation.toString());
 				}
 
-				ShardUtil.setTargetSource(shardName);
+				String previousShardName = ShardUtil.setTargetSource(shardName);
 
 				_shardAdvice.pushCompanyService(shardName);
 
@@ -62,6 +62,8 @@ public class ShardGloballyAdvice implements MethodInterceptor {
 				}
 				finally {
 					_shardAdvice.popCompanyService();
+
+					ShardUtil.setTargetSource(previousShardName);
 
 					CacheRegistryUtil.clear();
 				}

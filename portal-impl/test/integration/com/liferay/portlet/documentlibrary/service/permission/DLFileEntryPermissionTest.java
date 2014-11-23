@@ -16,12 +16,11 @@ package com.liferay.portlet.documentlibrary.service.permission;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.permission.BasePermissionTestCase;
-import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.RoleTestUtil;
@@ -29,6 +28,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -36,9 +36,12 @@ import org.junit.runner.RunWith;
  * @author Eric Chin
  * @author Shinn Lok
  */
-@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class DLFileEntryPermissionTest extends BasePermissionTestCase {
+
+	@ClassRule
+	public static final MainServletTestRule mainServletTestRule =
+		new MainServletTestRule();
 
 	@Test
 	public void testContains() throws Exception {

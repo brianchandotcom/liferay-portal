@@ -15,13 +15,12 @@
 package com.liferay.portal.servlet;
 
 import com.liferay.portal.NoSuchGroupException;
-import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.test.DeleteAfterTestRun;
-import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.test.GroupTestUtil;
@@ -35,6 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -43,9 +43,12 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author László Csontos
  */
-@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class FriendlyURLServletTest {
+
+	@ClassRule
+	public static final MainServletTestRule mainServletTestRule =
+		new MainServletTestRule();
 
 	@Before
 	public void setUp() throws Exception {

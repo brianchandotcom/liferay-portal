@@ -14,10 +14,9 @@
 
 package com.liferay.portlet.documentlibrary.webdav;
 
-import com.liferay.portal.kernel.test.TestContext;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.webdav.methods.Method;
-import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.MainServletTestRule;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,20 +24,20 @@ import org.junit.Assert;
 
 /**
  * @author Miguel Pastor
+ * @author Shuyang Zhou
  */
-public class WebDAVEnvironmentConfigTestListener
-	extends MainServletExecutionTestListener {
+public class WebDAVEnvironmentConfigTestRule extends MainServletTestRule {
 
 	@Override
-	public void runAfterClass(TestContext testContext) {
+	protected void after() {
 		_baseWebDAVTestCase.service(Method.DELETE, "", null, null);
 
-		super.runAfterClass(testContext);
+		super.after();
 	}
 
 	@Override
-	public void runBeforeClass(TestContext testContext) {
-		super.runBeforeClass(testContext);
+	protected void before() {
+		super.before();
 
 		Tuple tuple = _baseWebDAVTestCase.service(Method.MKCOL, "", null, null);
 

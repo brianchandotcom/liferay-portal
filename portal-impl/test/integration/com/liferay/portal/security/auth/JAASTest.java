@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.jaas.PortalPrincipal;
 import com.liferay.portal.kernel.security.jaas.PortalRole;
 import com.liferay.portal.kernel.servlet.HttpMethods;
-import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -30,7 +29,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.jaas.JAASHelper;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.servlet.MainServlet;
-import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.mock.AutoDeployMockServletContext;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PropsValues;
@@ -64,6 +63,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -76,9 +76,12 @@ import org.springframework.mock.web.MockServletContext;
 /**
  * @author Raymond Augé
  */
-@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class JAASTest {
+
+	@ClassRule
+	public static final MainServletTestRule mainServletTestRule =
+		new MainServletTestRule();
 
 	@Before
 	public void setUp() throws Exception {

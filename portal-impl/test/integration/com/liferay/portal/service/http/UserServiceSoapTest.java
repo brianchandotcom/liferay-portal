@@ -18,25 +18,28 @@ import com.liferay.client.soap.portal.model.UserSoap;
 import com.liferay.client.soap.portal.service.ServiceContext;
 import com.liferay.client.soap.portal.service.http.UserServiceSoap;
 import com.liferay.client.soap.portal.service.http.UserServiceSoapServiceLocator;
-import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 
 import java.util.Calendar;
 
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class UserServiceSoapTest {
+
+	@ClassRule
+	public static final MainServletTestRule mainServletTestRule =
+		new MainServletTestRule();
 
 	@Test
 	public void testAddUser() throws Exception {

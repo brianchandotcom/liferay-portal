@@ -14,7 +14,6 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -23,7 +22,7 @@ import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.service.EmailAddressLocalServiceUtil;
 import com.liferay.portal.service.persistence.EmailAddressUtil;
 import com.liferay.portal.test.DeleteAfterTestRun;
-import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
@@ -34,6 +33,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -42,9 +42,12 @@ import org.junit.runner.RunWith;
  * @author Wesley Gong
  * @see    OrderByComparatorFactoryImplTest
  */
-@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class ServiceBeanMethodInvocationFactoryImplTest {
+
+	@ClassRule
+	public static final MainServletTestRule mainServletTestRule =
+		new MainServletTestRule();
 
 	@Test
 	public void testRollback() throws Exception {

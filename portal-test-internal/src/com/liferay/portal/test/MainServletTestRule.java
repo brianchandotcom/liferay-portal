@@ -12,14 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.test.listeners;
+package com.liferay.portal.test;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
-import com.liferay.portal.kernel.test.AbstractExecutionTestListener;
-import com.liferay.portal.kernel.test.TestContext;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.servlet.MainServlet;
@@ -28,18 +26,40 @@ import com.liferay.portal.util.test.TestPropsValues;
 
 import javax.servlet.ServletException;
 
+import org.junit.rules.TestRule;
+import org.junit.runner.Description;
+import org.junit.runners.model.Statement;
+
 import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.mock.web.MockServletConfig;
 import org.springframework.mock.web.MockServletContext;
 
 /**
  * @author Miguel Pastor
+ * @author Shuyang Zhou
  */
-public class MainServletExecutionTestListener
-	extends AbstractExecutionTestListener {
+public class MainServletTestRule implements TestRule {
 
 	@Override
-	public void runAfterClass(TestContext testContext) {
+	public Statement apply(final Statement statement, Description description) {
+		return new Statement() {
+
+			@Override
+			public void evaluate() throws Throwable {
+				before();
+
+				try {
+					statement.evaluate();
+				}
+				finally {
+					after();
+				}
+			}
+
+		};
+	}
+
+	protected void after() {
 		ServiceTestUtil.destroyServices();
 
 		try {
@@ -50,37 +70,35 @@ public class MainServletExecutionTestListener
 		}
 	}
 
-	@Override
-	public void runBeforeClass(TestContext testContext) {
+	protected void before() {
 		ServiceTestUtil.initServices();
 
 		ServiceTestUtil.initPermissions();
 
-		if (_mainServlet != null) {
-			return;
-		}
+		if (_mainServlet == null) {
+			MockServletContext mockServletContext =
+				new AutoDeployMockServletContext(
+					new FileSystemResourceLoader());
 
-		MockServletContext mockServletContext =
-			new AutoDeployMockServletContext(new FileSystemResourceLoader());
+			ServletContextPool.put(StringPool.BLANK, mockServletContext);
 
-		ServletContextPool.put(StringPool.BLANK, mockServletContext);
+			MockServletConfig mockServletConfig = new MockServletConfig(
+				mockServletContext);
 
-		MockServletConfig mockServletConfig = new MockServletConfig(
-			mockServletContext);
+			_mainServlet = new MainServlet();
 
-		_mainServlet = new MainServlet();
-
-		try {
-			_mainServlet.init(mockServletConfig);
-		}
-		catch (ServletException se) {
-			throw new RuntimeException(
-				"The main servlet could not be initialized");
+			try {
+				_mainServlet.init(mockServletConfig);
+			}
+			catch (ServletException se) {
+				throw new RuntimeException(
+					"The main servlet could not be initialized");
+			}
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		MainServletExecutionTestListener.class);
+		MainServletTestRule.class);
 
 	private static MainServlet _mainServlet;
 

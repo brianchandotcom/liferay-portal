@@ -26,9 +26,9 @@ import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
+import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
-import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.listeners.ResetDatabaseExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -46,6 +46,7 @@ import javax.portlet.PortletPreferences;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
@@ -59,11 +60,14 @@ public class UserServiceTest {
 
 	@ExecutionTestListeners(
 		listeners = {
-			MainServletExecutionTestListener.class,
 			ResetDatabaseExecutionTestListener.class
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	public static class WhenCompanySecurityStrangersWithMXDisabled {
+
+		@ClassRule
+		public static final MainServletTestRule mainServletTestRule =
+			new MainServletTestRule();
 
 		@Test(expected = ReservedUserEmailAddressException.class)
 		public void shouldNotAddUser() throws Exception {
@@ -148,11 +152,14 @@ public class UserServiceTest {
 
 	@ExecutionTestListeners(
 		listeners = {
-			MainServletExecutionTestListener.class,
 			ResetDatabaseExecutionTestListener.class
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	public static class WhenGettingUserByEmailAddress {
+
+		@ClassRule
+		public static final MainServletTestRule mainServletTestRule =
+			new MainServletTestRule();
 
 		@Test(expected = NoSuchUserException.class)
 		public void shouldFailIfUserDeleted() throws Exception {
@@ -178,11 +185,14 @@ public class UserServiceTest {
 
 	@ExecutionTestListeners(
 		listeners = {
-			MainServletExecutionTestListener.class,
 			ResetDatabaseExecutionTestListener.class
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	public static class WhenGroupAdminUnsetsGroupUsers {
+
+		@ClassRule
+		public static final MainServletTestRule mainServletTestRule =
+			new MainServletTestRule();
 
 		@Before
 		public void setUp() throws Exception {
@@ -255,11 +265,14 @@ public class UserServiceTest {
 
 	@ExecutionTestListeners(
 		listeners = {
-			MainServletExecutionTestListener.class,
 			ResetDatabaseExecutionTestListener.class
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	public static class WhenGroupOwnerUnsetsGroupUsers {
+
+		@ClassRule
+		public static final MainServletTestRule mainServletTestRule =
+			new MainServletTestRule();
 
 		@Before
 		public void setUp() throws Exception {
@@ -336,11 +349,14 @@ public class UserServiceTest {
 
 	@ExecutionTestListeners(
 		listeners = {
-			MainServletExecutionTestListener.class,
 			ResetDatabaseExecutionTestListener.class
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	public static class WhenOrganizationAdminUnsetsUsersForNonSiteOrganization {
+
+		@ClassRule
+		public static final MainServletTestRule mainServletTestRule =
+			new MainServletTestRule();
 
 		@Before
 		public void setUp() throws Exception {
@@ -388,11 +404,14 @@ public class UserServiceTest {
 
 	@ExecutionTestListeners(
 		listeners = {
-			MainServletExecutionTestListener.class,
 			ResetDatabaseExecutionTestListener.class
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	public static class WhenOrganizationAdminUnsetsUsersForSiteOrganization {
+
+		@ClassRule
+		public static final MainServletTestRule mainServletTestRule =
+			new MainServletTestRule();
 
 		@Before
 		public void setUp() throws Exception {
@@ -436,11 +455,14 @@ public class UserServiceTest {
 
 	@ExecutionTestListeners(
 		listeners = {
-			MainServletExecutionTestListener.class,
 			ResetDatabaseExecutionTestListener.class
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	public static class WhenOrganizationOwnerUnsetsUsersForNonSiteOrganization {
+
+		@ClassRule
+		public static final MainServletTestRule mainServletTestRule =
+			new MainServletTestRule();
 
 		@Before
 		public void setUp() throws Exception {
@@ -487,11 +509,14 @@ public class UserServiceTest {
 
 	@ExecutionTestListeners(
 		listeners = {
-			MainServletExecutionTestListener.class,
 			ResetDatabaseExecutionTestListener.class
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	public static class WhenOrganizationOwnerUnsetsUsersForSiteOrganization {
+
+		@ClassRule
+		public static final MainServletTestRule mainServletTestRule =
+			new MainServletTestRule();
 
 		@Before
 		public void setUp() throws Exception {
@@ -535,13 +560,16 @@ public class UserServiceTest {
 
 	@ExecutionTestListeners(
 		listeners = {
-			MainServletExecutionTestListener.class,
 			ResetDatabaseExecutionTestListener.class,
 			SynchronousMailExecutionTestListener.class
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	@Sync
 	public static class WhenPortalSendsPasswordEmail {
+
+		@ClassRule
+		public static final MainServletTestRule mainServletTestRule =
+			new MainServletTestRule();
 
 		@Before
 		public void setUp() throws Exception {

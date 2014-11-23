@@ -15,9 +15,9 @@
 package com.liferay.portlet.messageboards.subscriptions;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
-import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.subscriptions.BaseSubscriptionRootContainerModelTestCase;
 import com.liferay.portlet.messageboards.model.MBCategory;
@@ -26,6 +26,7 @@ import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 
+import org.junit.ClassRule;
 import org.junit.runner.RunWith;
 
 /**
@@ -33,13 +34,16 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(
 	listeners = {
-		MainServletExecutionTestListener.class,
 		SynchronousMailExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class MBSubscriptionRootContainerModelTest
 	extends BaseSubscriptionRootContainerModelTestCase {
+
+	@ClassRule
+	public static final MainServletTestRule mainServletTestRule =
+		new MainServletTestRule();
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {

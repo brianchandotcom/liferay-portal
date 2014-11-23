@@ -36,16 +36,11 @@ import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
 
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.BeanFactoryAware;
-
 /**
  * @author Shuyang Zhou
  * @author Alexander Chow
  */
-public class PortletSessionFactoryImpl
-	extends SessionFactoryImpl implements BeanFactoryAware {
+public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 
 	@Override
 	public void closeSession(Session session) throws ORMException {
@@ -91,11 +86,6 @@ public class PortletSessionFactoryImpl
 		return wrapSession(session);
 	}
 
-	@Override
-	public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
-		_beanFactory = beanFactory;
-	}
-
 	public void setDataSource(DataSource dataSource) {
 		_dataSource = dataSource;
 	}
@@ -113,7 +103,6 @@ public class PortletSessionFactoryImpl
 			PortletHibernateConfiguration portletHibernateConfiguration =
 				new PortletHibernateConfiguration();
 
-			portletHibernateConfiguration.setBeanFactory(_beanFactory);
 			portletHibernateConfiguration.setDataSource(dataSource);
 
 			SessionFactory sessionFactory = null;
@@ -133,10 +122,6 @@ public class PortletSessionFactoryImpl
 		finally {
 			PortletClassLoaderUtil.setServletContextName(servletContextName);
 		}
-	}
-
-	protected BeanFactory getBeanFactory() {
-		return _beanFactory;
 	}
 
 	protected DataSource getDataSource() {
@@ -196,7 +181,6 @@ public class PortletSessionFactoryImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletSessionFactoryImpl.class);
 
-	private BeanFactory _beanFactory;
 	private DataSource _dataSource;
 	private final Map<DataSource, SessionFactory> _sessionFactories =
 		new HashMap<DataSource, SessionFactory>();

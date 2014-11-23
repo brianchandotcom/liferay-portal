@@ -48,7 +48,6 @@ public class ModuleSessionFactory
 		ModuleHibernateConfiguration moduleHibernateConfiguration =
 			new ModuleHibernateConfiguration(_classLoader);
 
-		moduleHibernateConfiguration.setBeanFactory(getBeanFactory());
 		moduleHibernateConfiguration.setDataSource(dataSource);
 
 		try {

@@ -29,9 +29,9 @@ public class SynchronousMailExecutionTestListener
 	public void runAfterClass(TestContext testContext) {
 		super.runAfterClass(testContext);
 
-		MailServiceTestUtil.stop();
+		classSyncHandler.restorePreviousSync();
 
-		methodSyncHandler.replaceDestination(DestinationNames.MAIL);
+		MailServiceTestUtil.stop();
 	}
 
 	@Override

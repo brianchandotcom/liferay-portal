@@ -59,7 +59,7 @@ public class OrganizationStagedModelDataHandlerTest
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@After
 	@Override
@@ -72,8 +72,8 @@ public class OrganizationStagedModelDataHandlerTest
 	}
 
 	@Rule
-	public TransactionalTestRule transactionalTestRule =
-		new TransactionalTestRule();
+	public final TransactionalTestRule transactionalTestRule =
+		TransactionalTestRule.INSTANCE;
 
 	@Override
 	protected StagedModel addStagedModel(

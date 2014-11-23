@@ -55,7 +55,7 @@ public class JournalFeedStagedModelDataHandlerTest
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Override
 	public void setUp() throws Exception {
@@ -76,8 +76,8 @@ public class JournalFeedStagedModelDataHandlerTest
 	}
 
 	@Rule
-	public TransactionalTestRule transactionalTestRule =
-		new TransactionalTestRule();
+	public final TransactionalTestRule transactionalTestRule =
+		TransactionalTestRule.INSTANCE;
 
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(

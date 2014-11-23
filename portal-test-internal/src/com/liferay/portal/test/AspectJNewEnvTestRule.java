@@ -43,6 +43,9 @@ import org.junit.runner.Description;
  */
 public class AspectJNewEnvTestRule extends NewEnvTestRule {
 
+	public static final AspectJNewEnvTestRule INSTANCE =
+		new AspectJNewEnvTestRule();
+
 	@Override
 	protected List<String> createArguments(Description description) {
 		List<String> arguments = super.createArguments(description);
@@ -136,6 +139,9 @@ public class AspectJNewEnvTestRule extends NewEnvTestRule {
 				methodKey.getMethodName()));
 
 		return new SwitchClassLoaderProcessCallable(processCallable, dumpDir);
+	}
+
+	private AspectJNewEnvTestRule() {
 	}
 
 	private static class SwitchClassLoaderProcessCallable

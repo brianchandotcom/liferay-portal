@@ -48,8 +48,8 @@ import org.junit.Test;
 public class NettyFabricWorkerBridgeRPCCallableTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Before
 	public void setUp() {
@@ -159,7 +159,7 @@ public class NettyFabricWorkerBridgeRPCCallableTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 	private final EmbeddedChannel _embeddedChannel =
 		NettyTestUtil.createEmptyEmbeddedChannel();

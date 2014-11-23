@@ -36,7 +36,7 @@ public class SearchContainerTest {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@After
 	public void tearDown() {

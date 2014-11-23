@@ -59,6 +59,8 @@ import org.junit.runners.model.TestClass;
  */
 public class NewEnvTestRule implements TestRule {
 
+	public static final NewEnvTestRule INSTANCE = new NewEnvTestRule();
+
 	@Override
 	public Statement apply(Statement statement, Description description) {
 		NewEnv newEnv = findNewEnv(description);
@@ -130,6 +132,9 @@ public class NewEnvTestRule implements TestRule {
 		Method method = methodKey.getMethod();
 
 		method.invoke(object);
+	}
+
+	protected NewEnvTestRule() {
 	}
 
 	protected List<String> createArguments(Description description) {

@@ -53,7 +53,8 @@ import org.junit.runner.RunWith;
 public class PortalImplCanonicalURLTest {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule = new MainServletTestRule();
+	public static final MainServletTestRule mainServletTestRule =
+		MainServletTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

@@ -54,8 +54,8 @@ import org.junit.Test;
 public class IntrabandProxyInstallationUtilTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Before
 	public void setUp() {
@@ -238,7 +238,7 @@ public class IntrabandProxyInstallationUtilTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 	private static final ClassLoader _classLoader =
 		IntrabandProxyInstallationUtilTest.class.getClassLoader();

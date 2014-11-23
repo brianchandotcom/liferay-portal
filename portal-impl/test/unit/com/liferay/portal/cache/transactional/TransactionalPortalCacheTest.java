@@ -45,7 +45,7 @@ import org.junit.Test;
 public class TransactionalPortalCacheTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
+	public static final CodeCoverageAssertor codeCoverageAssertor =
 		new CodeCoverageAssertor() {
 
 			@Override
@@ -379,7 +379,7 @@ public class TransactionalPortalCacheTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 	@Aspect
 	public static class DisableTransactionalCacheAdvice {

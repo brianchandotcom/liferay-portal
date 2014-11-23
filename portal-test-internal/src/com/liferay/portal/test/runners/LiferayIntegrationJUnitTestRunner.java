@@ -58,7 +58,7 @@ public class LiferayIntegrationJUnitTestRunner
 
 		testRules.add(_clearThreadLocalTestRule);
 
-		testRules.add(_logAssertionTestRule);
+		testRules.add(LogAssertionTestRule.INSTANCE);
 
 		return testRules;
 	}
@@ -69,7 +69,7 @@ public class LiferayIntegrationJUnitTestRunner
 
 		testRules.add(new DeleteAfterTestRunTestRule(object));
 
-		testRules.add(_logAssertionTestRule);
+		testRules.add(LogAssertionTestRule.INSTANCE);
 
 		return testRules;
 	}
@@ -96,8 +96,6 @@ public class LiferayIntegrationJUnitTestRunner
 		}
 
 	};
-
-	private final TestRule _logAssertionTestRule = new LogAssertionTestRule();
 
 	private final TestRule _uniqueStringRandomizerBumperTestRule =
 		new TestRule() {

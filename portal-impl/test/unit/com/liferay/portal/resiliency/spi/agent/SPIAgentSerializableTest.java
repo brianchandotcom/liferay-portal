@@ -81,8 +81,8 @@ import org.springframework.mock.web.MockHttpSession;
 public class SPIAgentSerializableTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Before
 	public void setUp() {
@@ -703,7 +703,7 @@ public class SPIAgentSerializableTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 	@Aspect
 	public static class DeserializerAdvice {

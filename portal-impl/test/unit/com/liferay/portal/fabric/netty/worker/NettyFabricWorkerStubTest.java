@@ -53,8 +53,8 @@ import org.junit.Test;
 public class NettyFabricWorkerStubTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Test
 	public void testConstructor() {
@@ -320,6 +320,6 @@ public class NettyFabricWorkerStubTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 }

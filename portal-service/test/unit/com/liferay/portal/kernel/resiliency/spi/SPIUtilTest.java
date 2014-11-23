@@ -32,8 +32,8 @@ import org.junit.Test;
 public class SPIUtilTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Test
 	public void testConstructor() {
@@ -70,6 +70,6 @@ public class SPIUtilTest {
 	}
 
 	@Rule
-	public final NewEnvTestRule newEnvTestRule = new NewEnvTestRule();
+	public final NewEnvTestRule newEnvTestRule = NewEnvTestRule.INSTANCE;
 
 }

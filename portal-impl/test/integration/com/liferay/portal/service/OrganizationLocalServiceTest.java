@@ -51,7 +51,7 @@ public class OrganizationLocalServiceTest {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Test
 	public void testAddOrganization() throws Exception {

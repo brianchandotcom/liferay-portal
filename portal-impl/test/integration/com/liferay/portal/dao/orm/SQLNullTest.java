@@ -443,7 +443,7 @@ public class SQLNullTest {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Test
 	public void testBlankStringEqualsNull() {
@@ -920,8 +920,8 @@ public class SQLNullTest {
 	}
 
 	@Rule
-	public TransactionalTestRule transactionalTestRule =
-		new TransactionalTestRule();
+	public final TransactionalTestRule transactionalTestRule =
+		TransactionalTestRule.INSTANCE;
 
 	protected boolean isDBType(String dBType) {
 		DB db = DBFactoryUtil.getDB();

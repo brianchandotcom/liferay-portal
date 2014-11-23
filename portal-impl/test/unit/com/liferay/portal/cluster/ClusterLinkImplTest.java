@@ -55,8 +55,8 @@ import org.junit.Test;
 public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@AdviseWith(
 		adviceClasses = {
@@ -521,7 +521,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 	@Aspect
 	public static class TransportationConfigurationAdvice {

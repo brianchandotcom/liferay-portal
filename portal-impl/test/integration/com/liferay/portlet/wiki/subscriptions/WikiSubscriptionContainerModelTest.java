@@ -45,7 +45,8 @@ public class WikiSubscriptionContainerModelTest
 	extends BaseSubscriptionContainerModelTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule = new MainServletTestRule();
+	public static final MainServletTestRule mainServletTestRule =
+		MainServletTestRule.INSTANCE;
 
 	@Ignore
 	@Override

@@ -59,8 +59,8 @@ import org.junit.Test;
 public class IndexSearcherManagerTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {
@@ -256,7 +256,7 @@ public class IndexSearcherManagerTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 	@Aspect
 	public static class IndexReaderAdvice {

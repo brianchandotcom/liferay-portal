@@ -56,7 +56,7 @@ public class UserFinderTest {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -278,8 +278,8 @@ public class UserFinderTest {
 	}
 
 	@Rule
-	public TransactionalTestRule transactionalTestRule =
-		new TransactionalTestRule();
+	public final TransactionalTestRule transactionalTestRule =
+		TransactionalTestRule.INSTANCE;
 
 	private static Group _group;
 	private static User _groupUser;

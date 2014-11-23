@@ -46,8 +46,8 @@ import org.junit.Test;
 public class AsyncBrokerTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@After
 	public void tearDown() {
@@ -383,7 +383,7 @@ public class AsyncBrokerTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 	private static final String _KEY = "testKey";
 

@@ -58,7 +58,7 @@ public class RoleLocalServiceTest {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() {

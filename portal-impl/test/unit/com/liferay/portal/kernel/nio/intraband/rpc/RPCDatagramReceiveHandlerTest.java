@@ -42,7 +42,7 @@ import org.junit.Test;
 public class RPCDatagramReceiveHandlerTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
+	public static final CodeCoverageAssertor codeCoverageAssertor =
 		new CodeCoverageAssertor() {
 
 			@Override
@@ -111,7 +111,7 @@ public class RPCDatagramReceiveHandlerTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 	private static class ErrorTestProcessCallable
 		implements ProcessCallable<String> {

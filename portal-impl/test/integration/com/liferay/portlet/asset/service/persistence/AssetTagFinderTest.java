@@ -62,7 +62,7 @@ public class AssetTagFinderTest {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {
@@ -346,8 +346,8 @@ public class AssetTagFinderTest {
 	}
 
 	@Rule
-	public TransactionalTestRule transactionalTestRule =
-		new TransactionalTestRule();
+	public final TransactionalTestRule transactionalTestRule =
+		TransactionalTestRule.INSTANCE;
 
 	protected void addAssetTag(long groupId, String name, String[] properties)
 		throws Exception {

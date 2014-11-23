@@ -75,7 +75,8 @@ import org.junit.runner.RunWith;
 public class DLFileEntryFinderTest {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule = new MainServletTestRule();
+	public static final MainServletTestRule mainServletTestRule =
+		MainServletTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {

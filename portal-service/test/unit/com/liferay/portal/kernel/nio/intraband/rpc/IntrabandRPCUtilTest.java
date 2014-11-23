@@ -47,7 +47,7 @@ import org.junit.Test;
 public class IntrabandRPCUtilTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
+	public static final CodeCoverageAssertor codeCoverageAssertor =
 		new CodeCoverageAssertor() {
 
 			@Override

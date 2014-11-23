@@ -91,7 +91,7 @@ public class CompanyLocalServiceTest {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Before
 	public void setUp() {
@@ -504,8 +504,8 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Rule
-	public TransactionalTestRule transactionalTestRule =
-		new TransactionalTestRule();
+	public final TransactionalTestRule transactionalTestRule =
+		TransactionalTestRule.INSTANCE;
 
 	protected Company addCompany() throws Exception {
 		String webId = RandomTestUtil.randomString() + "test.com";

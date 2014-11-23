@@ -47,8 +47,8 @@ import org.junit.Test;
 public class ConstantsBeanFactoryImplTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@AdviseWith(adviceClasses = {ReflectionUtilAdvice.class})
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
@@ -338,7 +338,7 @@ public class ConstantsBeanFactoryImplTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 	public static class Constants {
 

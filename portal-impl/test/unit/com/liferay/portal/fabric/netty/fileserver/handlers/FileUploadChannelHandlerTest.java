@@ -73,8 +73,8 @@ import org.junit.Test;
 public class FileUploadChannelHandlerTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@After
 	public void tearDown() {
@@ -231,7 +231,7 @@ public class FileUploadChannelHandlerTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 	@Aspect
 	public static class FileHelperUtilAdvice {

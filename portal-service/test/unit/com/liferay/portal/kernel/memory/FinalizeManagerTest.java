@@ -42,8 +42,8 @@ import org.junit.Test;
 public class FinalizeManagerTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@After
 	public void tearDown() {
@@ -212,7 +212,7 @@ public class FinalizeManagerTest {
 	}
 
 	@Rule
-	public final NewEnvTestRule newEnvTestRule = new NewEnvTestRule();
+	public final NewEnvTestRule newEnvTestRule = NewEnvTestRule.INSTANCE;
 
 	protected void doTestRegister(
 			boolean threadEnabled, ReferenceType referenceType)

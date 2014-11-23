@@ -61,7 +61,7 @@ public class DLFileShortcutTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Ignore()
 	@Override

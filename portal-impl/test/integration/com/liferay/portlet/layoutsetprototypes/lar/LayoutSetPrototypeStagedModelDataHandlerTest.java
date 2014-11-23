@@ -65,7 +65,7 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@After
 	@Override
@@ -91,8 +91,8 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 	}
 
 	@Rule
-	public TransactionalTestRule transactionalTestRule =
-		new TransactionalTestRule();
+	public final TransactionalTestRule transactionalTestRule =
+		TransactionalTestRule.INSTANCE;
 
 	protected void addLayout(Class<?> clazz, Layout layout) throws Exception {
 		List<Layout> layouts = _layouts.get(clazz.getSimpleName());

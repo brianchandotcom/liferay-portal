@@ -39,8 +39,8 @@ import org.junit.Test;
 public class MailboxDatagramReceiveHandlerTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@AdviseWith(
 		adviceClasses = {
@@ -72,6 +72,6 @@ public class MailboxDatagramReceiveHandlerTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 }

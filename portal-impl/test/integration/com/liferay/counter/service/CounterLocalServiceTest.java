@@ -53,7 +53,7 @@ public class CounterLocalServiceTest {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

@@ -75,7 +75,7 @@ import org.junit.Test;
 public class SelectorIntrabandTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
+	public static final CodeCoverageAssertor codeCoverageAssertor =
 		new CodeCoverageAssertor() {
 
 			@Override
@@ -1280,7 +1280,7 @@ public class SelectorIntrabandTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 	@Aspect
 	public static class Jdk14LogImplAdvice {

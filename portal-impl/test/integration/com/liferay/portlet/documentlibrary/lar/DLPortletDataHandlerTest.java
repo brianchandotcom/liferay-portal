@@ -61,7 +61,7 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Test
 	public void testCustomRepositoryEntriesExport() throws Exception {

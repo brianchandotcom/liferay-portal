@@ -35,6 +35,9 @@ import org.junit.runners.model.Statement;
  */
 public class LogAssertionTestRule implements TestRule {
 
+	public static final LogAssertionTestRule INSTANCE =
+		new LogAssertionTestRule();
+
 	public static void caughtFailure(Error error) {
 		Thread currentThread = Thread.currentThread();
 
@@ -172,6 +175,9 @@ public class LogAssertionTestRule implements TestRule {
 		installLog4jAppender();
 
 		return captureAppender;
+	}
+
+	private LogAssertionTestRule() {
 	}
 
 	private static final Map<Thread, Error> _concurrentFailures =

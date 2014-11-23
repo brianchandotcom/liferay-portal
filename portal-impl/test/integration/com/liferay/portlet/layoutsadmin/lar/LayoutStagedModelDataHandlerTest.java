@@ -53,7 +53,7 @@ public class LayoutStagedModelDataHandlerTest
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Test
 	public void testTypeArticle() throws Exception {
@@ -146,8 +146,8 @@ public class LayoutStagedModelDataHandlerTest
 	}
 
 	@Rule
-	public TransactionalTestRule transactionalTestRule =
-		new TransactionalTestRule();
+	public final TransactionalTestRule transactionalTestRule =
+		TransactionalTestRule.INSTANCE;
 
 	protected void addDependentLayoutFriendlyURLs(
 			Map<String, List<StagedModel>> dependentStagedModelsMap,

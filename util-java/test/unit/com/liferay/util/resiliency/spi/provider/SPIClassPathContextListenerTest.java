@@ -70,8 +70,8 @@ import org.springframework.mock.web.MockServletContext;
 public class SPIClassPathContextListenerTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {

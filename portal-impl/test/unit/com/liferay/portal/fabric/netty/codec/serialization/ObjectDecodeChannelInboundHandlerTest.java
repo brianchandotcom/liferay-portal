@@ -42,8 +42,8 @@ import org.junit.Test;
 public class ObjectDecodeChannelInboundHandlerTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Test
 	public void testChannelRead() throws Exception {
@@ -148,7 +148,7 @@ public class ObjectDecodeChannelInboundHandlerTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 	private static class DateChannelHandler
 		extends ObjectDecodeChannelInboundHandler<Date> {

@@ -62,8 +62,8 @@ import org.junit.Test;
 public class IntrabandBridgeDestinationTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Before
 	public void setUp() {
@@ -391,7 +391,7 @@ public class IntrabandBridgeDestinationTest {
 	}
 
 	@Rule
-	public final NewEnvTestRule newEnvTestRule = new NewEnvTestRule();
+	public final NewEnvTestRule newEnvTestRule = NewEnvTestRule.INSTANCE;
 
 	private static void _installSPIs(SPI... spis) throws RemoteException {
 		Map<String, Object> spiProviderContainers =

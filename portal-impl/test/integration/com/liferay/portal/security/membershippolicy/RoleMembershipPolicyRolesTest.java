@@ -48,7 +48,7 @@ public class RoleMembershipPolicyRolesTest
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@After
 	@Override

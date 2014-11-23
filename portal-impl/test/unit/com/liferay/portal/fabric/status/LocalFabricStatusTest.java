@@ -35,8 +35,8 @@ import org.junit.Test;
 public class LocalFabricStatusTest extends BaseFabricStatusTestCase {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Test
 	public void testObjectNames() {

@@ -40,8 +40,8 @@ import org.junit.Test;
 public class ThreadLocalDistributorTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	public ThreadLocalDistributorTest() {
 		_keyValuePairs.add(

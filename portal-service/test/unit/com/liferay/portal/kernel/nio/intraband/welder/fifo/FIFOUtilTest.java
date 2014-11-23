@@ -45,7 +45,7 @@ import org.junit.Test;
 public class FIFOUtilTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
+	public static final CodeCoverageAssertor codeCoverageAssertor =
 		new CodeCoverageAssertor() {
 
 			@Override
@@ -236,7 +236,7 @@ public class FIFOUtilTest {
 	}
 
 	@Rule
-	public final NewEnvTestRule newEnvTestRule = new NewEnvTestRule();
+	public final NewEnvTestRule newEnvTestRule = NewEnvTestRule.INSTANCE;
 
 	private static boolean _shouldTest() {
 		if (OSDetector.isWindows()) {

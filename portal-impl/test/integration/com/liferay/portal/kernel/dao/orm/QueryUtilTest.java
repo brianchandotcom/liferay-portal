@@ -204,8 +204,8 @@ public class QueryUtilTest {
 	}
 
 	@Rule
-	public TransactionalTestRule transactionalTestRule =
-		new TransactionalTestRule();
+	public final TransactionalTestRule transactionalTestRule =
+		TransactionalTestRule.INSTANCE;
 
 	protected static String[] createInserts(int amount) {
 		String[] sqls = new String[amount];

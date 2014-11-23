@@ -43,7 +43,7 @@ public class UserGroupRoleLocalServiceTest {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Test
 	public void testAddUserGroupRoles() throws Exception {

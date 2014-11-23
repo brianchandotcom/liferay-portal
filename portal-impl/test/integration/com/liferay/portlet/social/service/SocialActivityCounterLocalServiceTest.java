@@ -47,7 +47,7 @@ public class SocialActivityCounterLocalServiceTest
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Before
 	@Override

@@ -42,7 +42,7 @@ public class DLFolderLocalServiceTreeTest extends BaseLocalServiceTreeTestCase {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Test
 	public void testFolderTreePathWhenMovingFolderWithSubfolder()

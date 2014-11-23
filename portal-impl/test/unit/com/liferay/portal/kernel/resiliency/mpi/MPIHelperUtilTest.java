@@ -75,8 +75,8 @@ import org.junit.Test;
 public class MPIHelperUtilTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Before
 	public void setUp() {
@@ -1135,7 +1135,7 @@ public class MPIHelperUtilTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 	private static MPI _getMPIImpl() {
 		MPI mpiImpl = ReflectionTestUtil.getFieldValue(

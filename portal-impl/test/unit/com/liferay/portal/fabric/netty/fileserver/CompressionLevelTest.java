@@ -32,8 +32,8 @@ import org.junit.Test;
 public class CompressionLevelTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Test
 	public void testLevels() {

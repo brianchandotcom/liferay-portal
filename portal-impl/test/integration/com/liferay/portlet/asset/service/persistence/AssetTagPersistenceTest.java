@@ -60,9 +60,9 @@ import java.util.Set;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class AssetTagPersistenceTest {
 	@Rule
-	public PersistenceTestRule persistenceTestRule = new PersistenceTestRule();
+	public final PersistenceTestRule persistenceTestRule = PersistenceTestRule.INSTANCE;
 	@Rule
-	public TransactionalTestRule transactionalTestRule = new TransactionalTestRule(Propagation.REQUIRED);
+	public final TransactionalTestRule transactionalTestRule = new TransactionalTestRule(Propagation.REQUIRED);
 
 	@After
 	public void tearDown() throws Exception {

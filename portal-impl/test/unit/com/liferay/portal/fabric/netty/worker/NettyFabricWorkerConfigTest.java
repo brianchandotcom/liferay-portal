@@ -42,8 +42,8 @@ import org.junit.Test;
 public class NettyFabricWorkerConfigTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Test
 	public void testConstructor() throws ProcessException {

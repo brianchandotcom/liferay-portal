@@ -46,7 +46,7 @@ public class MBSubscriptionBaseModelTest
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {

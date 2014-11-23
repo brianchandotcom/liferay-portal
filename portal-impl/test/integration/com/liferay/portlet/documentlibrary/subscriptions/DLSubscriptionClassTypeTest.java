@@ -50,7 +50,7 @@ public class DLSubscriptionClassTypeTest
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Override
 	protected long addBaseModelWithClassType(

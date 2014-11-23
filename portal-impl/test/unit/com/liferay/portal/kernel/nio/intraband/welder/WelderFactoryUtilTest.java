@@ -39,8 +39,8 @@ import org.junit.Test;
 public class WelderFactoryUtilTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@NewEnv(type = NewEnv.Type.NONE)
 	@Test
@@ -143,7 +143,7 @@ public class WelderFactoryUtilTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 	@Aspect
 	public static class FIFOUtilAdvice {

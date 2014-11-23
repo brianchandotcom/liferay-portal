@@ -53,7 +53,7 @@ public class FolderStagedModelDataHandlerTest
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Test
 	public void testCompanyScopeDependencies() throws Exception {
@@ -81,8 +81,8 @@ public class FolderStagedModelDataHandlerTest
 	}
 
 	@Rule
-	public TransactionalTestRule transactionalTestRule =
-		new TransactionalTestRule();
+	public final TransactionalTestRule transactionalTestRule =
+		TransactionalTestRule.INSTANCE;
 
 	protected Map<String, List<StagedModel>> addCompanyDependencies()
 		throws Exception {

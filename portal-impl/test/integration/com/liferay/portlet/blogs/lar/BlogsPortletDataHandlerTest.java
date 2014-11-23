@@ -33,7 +33,7 @@ public class BlogsPortletDataHandlerTest
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Override
 	protected void addStagedModels() throws Exception {

@@ -34,7 +34,7 @@ public class DefaultScreenNameGeneratorTest {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Test
 	public void testGenerate() throws Exception {

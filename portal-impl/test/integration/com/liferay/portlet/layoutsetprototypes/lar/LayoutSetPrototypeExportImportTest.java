@@ -50,7 +50,7 @@ public class LayoutSetPrototypeExportImportTest
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Override
 	public String getNamespace() {

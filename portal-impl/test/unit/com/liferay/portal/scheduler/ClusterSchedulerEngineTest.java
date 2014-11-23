@@ -81,8 +81,8 @@ import org.junit.Test;
 public class ClusterSchedulerEngineTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {
@@ -1625,7 +1625,7 @@ public class ClusterSchedulerEngineTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 	@Aspect
 	public static class ClusterableContextThreadLocalAdvice {

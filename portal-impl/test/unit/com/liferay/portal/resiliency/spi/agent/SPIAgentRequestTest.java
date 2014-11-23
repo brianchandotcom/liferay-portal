@@ -83,8 +83,8 @@ import org.springframework.mock.web.MockHttpSession;
 public class SPIAgentRequestTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {
@@ -1011,7 +1011,7 @@ public class SPIAgentRequestTest {
 	}
 
 	@Rule
-	public final NewEnvTestRule newEnvTestRule = new NewEnvTestRule();
+	public final NewEnvTestRule newEnvTestRule = NewEnvTestRule.INSTANCE;
 
 	private static final String _HEADER_NAME_1 = "HEADER_NAME_1";
 

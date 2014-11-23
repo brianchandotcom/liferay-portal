@@ -43,7 +43,7 @@ public class MBMessageActivityInterpreterTest
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Override
 	protected void addActivities() throws Exception {

@@ -73,7 +73,7 @@ public class AspectJNewEnvJVMTestRuleTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 	@Aspect
 	private static class AdviceClass1 {

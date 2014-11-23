@@ -61,8 +61,8 @@ import org.springframework.mock.web.MockHttpServletResponse;
 public class PortalResiliencyActionTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Before
 	public void setUp() throws IOException {
@@ -286,7 +286,7 @@ public class PortalResiliencyActionTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 	@Aspect
 	public static class LifecycleAdvice {

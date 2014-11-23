@@ -57,8 +57,8 @@ import org.junit.Test;
 public class FileRequestChannelHandlerTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@After
 	public void tearDown() {

@@ -53,7 +53,7 @@ public class DLFolderFinderTest {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {
@@ -303,8 +303,8 @@ public class DLFolderFinderTest {
 	}
 
 	@Rule
-	public TransactionalTestRule transactionalTestRule =
-		new TransactionalTestRule();
+	public final TransactionalTestRule transactionalTestRule =
+		TransactionalTestRule.INSTANCE;
 
 	private DLFileShortcut _dlFileShortcut;
 	private Folder _folder;

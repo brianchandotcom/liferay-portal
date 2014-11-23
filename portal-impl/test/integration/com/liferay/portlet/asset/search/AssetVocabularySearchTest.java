@@ -48,7 +48,7 @@ public class AssetVocabularySearchTest extends BaseSearchTestCase {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Ignore()
 	@Override

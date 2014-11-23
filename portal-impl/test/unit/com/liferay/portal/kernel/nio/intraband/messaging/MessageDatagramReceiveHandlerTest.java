@@ -49,8 +49,8 @@ import org.junit.Test;
 public class MessageDatagramReceiveHandlerTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@AdviseWith(adviceClasses = {PortalExecutorManagerUtilAdvice.class})
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
@@ -255,7 +255,7 @@ public class MessageDatagramReceiveHandlerTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 	protected void assertMessageRoutingBagEquals(
 		MessageRoutingBag expectedMessageRoutingBag,

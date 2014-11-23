@@ -55,7 +55,7 @@ public class RoleFinderTest {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -131,8 +131,8 @@ public class RoleFinderTest {
 	}
 
 	@Rule
-	public TransactionalTestRule transactionalTestRule =
-		new TransactionalTestRule();
+	public final TransactionalTestRule transactionalTestRule =
+		TransactionalTestRule.INSTANCE;
 
 	protected static ResourceAction getModelResourceAction()
 		throws PortalException {

@@ -64,7 +64,7 @@ public class DLFileVersionTest extends BaseDLAppTestCase {
 
 	@ClassRule
 	public static final MainServletTestRule mainServletTestRule =
-		new MainServletTestRule();
+		MainServletTestRule.INSTANCE;
 
 	@Before
 	@Override

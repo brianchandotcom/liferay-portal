@@ -33,8 +33,8 @@ import org.junit.Test;
 public class DistributedRegistryTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Before
 	public void setUp() {
@@ -287,7 +287,7 @@ public class DistributedRegistryTest {
 	}
 
 	@Rule
-	public final NewEnvTestRule newEnvTestRule = new NewEnvTestRule();
+	public final NewEnvTestRule newEnvTestRule = NewEnvTestRule.INSTANCE;
 
 	private Map<String, Direction> _exactDirections;
 	private Map<String, Direction> _postfixDirections;

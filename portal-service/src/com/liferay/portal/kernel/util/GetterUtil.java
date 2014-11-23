@@ -280,9 +280,30 @@ public class GetterUtil {
 	}
 
 	public static double get(String value, double defaultValue) {
-		if (value != null) {
+		return get(value, defaultValue, null);
+	}
+
+	public static double get(String value, double defaultValue, Locale locale) {
+		if (value == null) {
+			return defaultValue;
+		}
+
+		value = value.trim();
+
+		if (locale == null) {
 			try {
-				return Double.parseDouble(value.trim());
+				return Double.parseDouble(value);
+			}
+			catch (Exception e) {
+			}
+		}
+		else {
+			NumberFormat numberFormat = NumberFormat.getInstance(locale);
+
+			try {
+				Number number = numberFormat.parse(value);
+
+				return number.doubleValue();
 			}
 			catch (Exception e) {
 			}
@@ -311,22 +332,6 @@ public class GetterUtil {
 		}
 
 		return _parseInt(value.trim(), defaultValue);
-	}
-
-	public static double get(String value, Locale locale, double defaultValue) {
-		if ((value != null) && (locale != null)) {
-			NumberFormat numberFormat = NumberFormat.getInstance(locale);
-
-			try {
-				Number number = numberFormat.parse(value.trim());
-
-				return number.doubleValue();
-			}
-			catch (Exception e) {
-			}
-		}
-
-		return defaultValue;
 	}
 
 	public static long get(String value, long defaultValue) {
@@ -489,7 +494,7 @@ public class GetterUtil {
 	}
 
 	public static double getDouble(String value, Locale locale) {
-		return get(value, locale, DEFAULT_DOUBLE);
+		return get(value, DEFAULT_DOUBLE, locale);
 	}
 
 	public static double[] getDoubleValues(Object value) {

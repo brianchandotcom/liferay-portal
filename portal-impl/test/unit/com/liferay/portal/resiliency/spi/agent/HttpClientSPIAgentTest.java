@@ -1136,7 +1136,7 @@ public class HttpClientSPIAgentTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 	protected void closePeers(Socket socket, ServerSocket serverSocket)
 		throws IOException {

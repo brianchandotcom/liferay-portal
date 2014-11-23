@@ -1625,7 +1625,7 @@ public class ClusterSchedulerEngineTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 	@Aspect
 	public static class ClusterableContextThreadLocalAdvice {

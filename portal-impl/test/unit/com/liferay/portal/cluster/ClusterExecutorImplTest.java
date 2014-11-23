@@ -1012,6 +1012,6 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 }

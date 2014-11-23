@@ -383,7 +383,7 @@ public class AsyncBrokerTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 	private static final String _KEY = "testKey";
 

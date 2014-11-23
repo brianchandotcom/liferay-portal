@@ -255,7 +255,7 @@ public class MessageDatagramReceiveHandlerTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 	protected void assertMessageRoutingBagEquals(
 		MessageRoutingBag expectedMessageRoutingBag,

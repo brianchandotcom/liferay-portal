@@ -238,7 +238,7 @@ public class IntrabandProxyInstallationUtilTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 	private static final ClassLoader _classLoader =
 		IntrabandProxyInstallationUtilTest.class.getClassLoader();

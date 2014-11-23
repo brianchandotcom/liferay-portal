@@ -82,7 +82,7 @@ public class BaseAsyncDatagramReceiveHandlerTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 	private static class DummyAsyncDatagramReceiveHandler
 		extends BaseAsyncDatagramReceiveHandler {

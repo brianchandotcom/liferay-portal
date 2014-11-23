@@ -111,7 +111,7 @@ public class RPCDatagramReceiveHandlerTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 	private static class ErrorTestProcessCallable
 		implements ProcessCallable<String> {

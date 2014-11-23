@@ -338,7 +338,7 @@ public class ConstantsBeanFactoryImplTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 	public static class Constants {
 

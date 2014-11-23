@@ -117,6 +117,6 @@ public class NettyFabricWorkerProcessCallableExecutorTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 }

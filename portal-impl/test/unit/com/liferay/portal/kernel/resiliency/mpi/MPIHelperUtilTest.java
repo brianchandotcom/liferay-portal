@@ -1135,7 +1135,7 @@ public class MPIHelperUtilTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 	private static MPI _getMPIImpl() {
 		MPI mpiImpl = ReflectionTestUtil.getFieldValue(

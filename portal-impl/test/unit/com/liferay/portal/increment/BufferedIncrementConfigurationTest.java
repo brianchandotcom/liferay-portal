@@ -161,7 +161,7 @@ public class BufferedIncrementConfigurationTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 	@Aspect
 	public static class PropsUtilAdvice {

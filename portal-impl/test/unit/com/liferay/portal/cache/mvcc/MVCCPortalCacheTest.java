@@ -200,7 +200,7 @@ public class MVCCPortalCacheTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 	@Aspect
 	public static class MemoryPortalCacheAdvice {

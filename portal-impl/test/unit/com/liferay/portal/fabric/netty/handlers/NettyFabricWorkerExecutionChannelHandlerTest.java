@@ -1289,7 +1289,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		new AspectJNewEnvTestRule();
+		AspectJNewEnvTestRule.INSTANCE;
 
 	protected NettyFabricWorkerConfig<Serializable>
 		createNettyFabricWorkerConfig() {

@@ -38,7 +38,7 @@ import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.Sync;
-import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
+import com.liferay.portal.test.SynchronousDestinationTestRule;
 import com.liferay.portal.test.listeners.ResetDatabaseExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -65,6 +65,7 @@ import java.util.Locale;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -73,11 +74,7 @@ import org.junit.runner.RunWith;
  * @author Roberto Díaz
  * @author Sergio González
  */
-@ExecutionTestListeners(
-	listeners = {
-		ResetDatabaseExecutionTestListener.class,
-		SynchronousDestinationExecutionTestListener.class
-	})
+@ExecutionTestListeners(listeners = {ResetDatabaseExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class GroupServiceTest {
@@ -795,6 +792,10 @@ public class GroupServiceTest {
 			new Locale[] {LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US},
 			LocaleUtil.GERMANY, false);
 	}
+
+	@Rule
+	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
+		SynchronousDestinationTestRule.INSTANCE;
 
 	protected Group addGroup(
 			boolean site, boolean layout, boolean layoutPrototype)

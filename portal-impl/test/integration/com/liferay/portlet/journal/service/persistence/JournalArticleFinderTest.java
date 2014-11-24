@@ -15,14 +15,14 @@
 package com.liferay.portlet.journal.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
-import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.Sync;
-import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
+import com.liferay.portal.test.SynchronousDestinationTestRule;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortalUtil;
@@ -63,10 +63,6 @@ import org.junit.runner.RunWith;
  * @author Zsolt Berentey
  * @author Laszlo Csontos
  */
-@ExecutionTestListeners(
-	listeners = {
-		SynchronousDestinationExecutionTestListener.class
-	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class JournalArticleFinderTest {
@@ -351,8 +347,9 @@ public class JournalArticleFinderTest {
 	}
 
 	@Rule
-	public final TransactionalTestRule transactionalTestRule =
-		TransactionalTestRule.INSTANCE;
+	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(
+		SynchronousDestinationTestRule.INSTANCE,
+		TransactionalTestRule.INSTANCE);
 
 	protected void prepareSortedArticles() throws Exception {
 		Calendar calendar = new GregorianCalendar();

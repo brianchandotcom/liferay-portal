@@ -15,7 +15,7 @@
 package com.liferay.portal.lar;
 
 import com.liferay.portal.kernel.lar.ExportImportDateUtil;
-import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -26,7 +26,7 @@ import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.Sync;
-import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
+import com.liferay.portal.test.SynchronousDestinationTestRule;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortletKeys;
@@ -48,10 +48,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Mate Thurzo
  */
-@ExecutionTestListeners(
-	listeners = {
-		SynchronousDestinationExecutionTestListener.class
-	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class ExportImportDateUtilTest {
@@ -350,8 +346,9 @@ public class ExportImportDateUtilTest {
 	}
 
 	@Rule
-	public final TransactionalTestRule transactionalTestRule =
-		TransactionalTestRule.INSTANCE;
+	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(
+		SynchronousDestinationTestRule.INSTANCE,
+		TransactionalTestRule.INSTANCE);
 
 	protected void updateLastPublishDate(
 			LayoutSet layoutSet, Date lastPublishDate)

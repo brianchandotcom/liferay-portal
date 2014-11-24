@@ -15,7 +15,7 @@
 package com.liferay.portlet.journal.lar;
 
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.lar.BaseWorkflowedStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -23,7 +23,7 @@ import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.Sync;
-import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
+import com.liferay.portal.test.SynchronousDestinationTestRule;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.RandomTestUtil;
@@ -61,10 +61,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Daniel Kocsis
  */
-@ExecutionTestListeners(
-	listeners = {
-		SynchronousDestinationExecutionTestListener.class
-	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class JournalArticleStagedModelDataHandlerTest
@@ -100,8 +96,9 @@ public class JournalArticleStagedModelDataHandlerTest
 	}
 
 	@Rule
-	public final TransactionalTestRule transactionalTestRule =
-		TransactionalTestRule.INSTANCE;
+	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(
+		SynchronousDestinationTestRule.INSTANCE,
+		TransactionalTestRule.INSTANCE);
 
 	protected Map<String, List<StagedModel>> addCompanyDependencies()
 		throws Exception {

@@ -527,49 +527,47 @@ public class ClusterMasterExecutorImplTest {
 	}
 
 	@Test
-	public void testNotifyMasterTokenTransitionListenersTokenAcquired() {
-		doNotifyMasterTokenTransitionListeners(true);
-	}
+	public void testNotifyMasterTokenTransitionListeners() {
 
-	@Test
-	public void testNotifyMasterTokenTransitionListenersTokenReleased() {
-		doNotifyMasterTokenTransitionListeners(false);
-	}
+		// Test 1, notify when master is required
 
-	protected void doNotifyMasterTokenTransitionListeners(boolean acquired) {
 		ClusterMasterExecutorImpl clusterMasterExecutorImpl =
 			new ClusterMasterExecutorImpl();
 
-		ClusterMasterTokenTransitionListener
-			clusterMasterTokenTransitionListener = null;
-
-		if (acquired) {
-			clusterMasterTokenTransitionListener =
-				new MockClusterMasterTokenTransitionListener() {
-
-				@Override
-				public void masterTokenReleased() {
-					Assert.fail();
-				}
-
-			};
-		}
-		else {
-			clusterMasterTokenTransitionListener =
-				new MockClusterMasterTokenTransitionListener() {
-
-				@Override
-				public void masterTokenAcquired() {
-					Assert.fail();
-				}
-
-			};
-		}
+		MockClusterMasterTokenTransitionListener
+			mockClusterMasterTokenTransitionListener =
+				new MockClusterMasterTokenTransitionListener();
 
 		clusterMasterExecutorImpl.registerClusterMasterTokenTransitionListener(
-			clusterMasterTokenTransitionListener);
-		clusterMasterExecutorImpl.notifyMasterTokenTransitionListeners(
-			acquired);
+			mockClusterMasterTokenTransitionListener);
+
+		clusterMasterExecutorImpl.notifyMasterTokenTransitionListeners(true);
+
+		Assert.assertTrue(
+			mockClusterMasterTokenTransitionListener.
+				isMasterTokenAcquiredNotified());
+		Assert.assertFalse(
+			mockClusterMasterTokenTransitionListener.
+				isMasterTokenReleasedNotified());
+
+		// Test 2, notify when master is released
+
+		clusterMasterExecutorImpl = new ClusterMasterExecutorImpl();
+
+		mockClusterMasterTokenTransitionListener =
+			new MockClusterMasterTokenTransitionListener();
+
+		clusterMasterExecutorImpl.registerClusterMasterTokenTransitionListener(
+			mockClusterMasterTokenTransitionListener);
+
+		clusterMasterExecutorImpl.notifyMasterTokenTransitionListeners(false);
+
+		Assert.assertFalse(
+			mockClusterMasterTokenTransitionListener.
+				isMasterTokenAcquiredNotified());
+		Assert.assertTrue(
+			mockClusterMasterTokenTransitionListener.
+				isMasterTokenReleasedNotified());
 	}
 
 	protected static MethodKey testMethodMethodKey = new MethodKey(
@@ -803,13 +801,26 @@ public class ClusterMasterExecutorImplTest {
 		public MockClusterMasterTokenTransitionListener() {
 		}
 
+		public boolean isMasterTokenAcquiredNotified() {
+			return _masterTokenAcquiredNotified;
+		}
+
+		public boolean isMasterTokenReleasedNotified() {
+			return _masterTokenReleasedNotified;
+		}
+
 		@Override
 		public void masterTokenAcquired() {
+			_masterTokenAcquiredNotified = true;
 		}
 
 		@Override
 		public void masterTokenReleased() {
+			_masterTokenReleasedNotified = true;
 		}
+
+		private boolean _masterTokenAcquiredNotified;
+		private boolean _masterTokenReleasedNotified;
 
 	}
 

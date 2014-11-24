@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
@@ -417,7 +418,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		// Attachments
 
-		long folderId = entry.getAttachmentsFolderId();
+		long folderId = getAttachmentsFolderId(entry.getGroupId());
 
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			PortletFileRepositoryUtil.deletePortletFolder(folderId);
@@ -1471,6 +1472,25 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return entry;
 	}
 
+	protected Folder addAttachmentsFolder(long userId, long groupId)
+		throws PortalException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
+			groupId, PortletKeys.BLOGS, serviceContext);
+
+		Folder folder = PortletFileRepositoryUtil.addPortletFolder(
+			userId, repository.getRepositoryId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, PortletKeys.BLOGS,
+			serviceContext);
+
+		return folder;
+	}
+
 	protected long addCoverImage(
 			long userId, long groupId, long entryId,
 			ImageSelector coverImageImageSelector)
@@ -1513,10 +1533,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.setAddGroupPermissions(true);
 			serviceContext.setAddGuestPermissions(true);
 
-			Folder folder = PortletFileRepositoryUtil.addPortletFolder(
-				groupId, userId, PortletKeys.BLOGS,
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				String.valueOf(entryId), serviceContext);
+			Folder folder = addAttachmentsFolder(userId, groupId);
 
 			FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
 				groupId, userId, BlogsEntry.class.getName(), entryId,
@@ -1557,12 +1574,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			String mimeType, InputStream is)
 		throws PortalException {
 
-		BlogsEntry entry = getEntry(entryId);
-
-		Folder folder = entry.addAttachmentsFolder();
+		Folder folder = addAttachmentsFolder(userId, groupId);
 
 		return PortletFileRepositoryUtil.addPortletFileEntry(
-			groupId, userId, BlogsEntry.class.getName(), entry.getEntryId(),
+			groupId, userId, BlogsEntry.class.getName(), entryId,
 			PortletKeys.BLOGS, folder.getFolderId(), is, fileName, mimeType,
 			true);
 	}
@@ -1577,10 +1592,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		Folder folder = PortletFileRepositoryUtil.addPortletFolder(
-			groupId, userId, PortletKeys.BLOGS,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, String.valueOf(entryId),
-			serviceContext);
+		Folder folder = addAttachmentsFolder(userId, groupId);
 
 		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
 			groupId, userId, BlogsEntry.class.getName(), entryId,
@@ -1602,6 +1614,35 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			null, fileEntryAttachment, StringPool.BLANK);
 
 		return "<img src=\"" + attachmentURL + "\" />";
+	}
+
+	protected long getAttachmentsFolderId(long groupId) {
+		Repository repository =
+			PortletFileRepositoryUtil.fetchPortletRepository(
+				groupId, PortletKeys.BLOGS);
+
+		if (repository == null) {
+			return DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		}
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+		try {
+			Folder folder = PortletFileRepositoryUtil.getPortletFolder(
+				repository.getRepositoryId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, PortletKeys.BLOGS);
+
+			folderId = folder.getFolderId();
+		}
+		catch (Exception e) {
+		}
+
+		return folderId;
 	}
 
 	protected String getEntryURL(

@@ -296,6 +296,13 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		addDiscussion(entry, userId, groupId);
 
+		// Attachments
+
+		for (FileEntry tempFileEntryAttachment : tempFileEntryAttachments) {
+			PortletFileRepositoryUtil.deletePortletFileEntry(
+				tempFileEntryAttachment.getFileEntryId());
+		}
+
 		// Workflow
 
 		if (ArrayUtil.isNotEmpty(trackbacks)) {
@@ -1275,6 +1282,13 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			userId, entry, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds());
+
+		// Attachments
+
+		for (FileEntry tempFileEntryAttachment : tempFileEntryAttachments) {
+			PortletFileRepositoryUtil.deletePortletFileEntry(
+				tempFileEntryAttachment.getFileEntryId());
+		}
 
 		// Workflow
 

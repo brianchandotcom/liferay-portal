@@ -20,8 +20,9 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.test.DeleteAfterTestRun;
+import com.liferay.portal.test.MainServletTestRule;
+import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
-import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -34,6 +35,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -42,11 +44,15 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(
 	listeners = {
-		MainServletExecutionTestListener.class,
 		SynchronousDestinationExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
+@Sync
 public class JournalArticleLocalServiceTest {
+
+	@ClassRule
+	public static final MainServletTestRule mainServletTestRule =
+		MainServletTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {
@@ -55,19 +61,15 @@ public class JournalArticleLocalServiceTest {
 
 	@Test
 	public void testGetByNoPermissions() throws Exception {
-		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		List<ResourcePermission> resourcePermissions =
 			ResourcePermissionLocalServiceUtil.getResourcePermissions(
-				journalArticle2.getCompanyId(), JournalArticle.class.getName(),
+				journalArticle.getCompanyId(), JournalArticle.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(journalArticle2.getResourcePrimKey()));
+				String.valueOf(journalArticle.getResourcePrimKey()));
 
 		for (ResourcePermission resourcePermission : resourcePermissions) {
 			ResourcePermissionLocalServiceUtil.deleteResourcePermission(
@@ -79,17 +81,11 @@ public class JournalArticleLocalServiceTest {
 
 		Assert.assertEquals(1, journalArticles.size());
 
-		Assert.assertEquals(
-			journalArticle2.getArticleId(),
-			journalArticles.get(0).getArticleId());
+		Assert.assertEquals(journalArticle, journalArticles.get(0));
 	}
 
 	@Test
 	public void testGetNoAssetArticles() throws Exception {
-		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
 		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);

@@ -17,6 +17,8 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
+String portletId = PortalUtil.getPortletId(request);
+
 String protocol = HttpUtil.getProtocol(request);
 
 boolean geolocation = GetterUtil.getBoolean(request.getAttribute("liferay-ui:map:geolocation"));
@@ -90,10 +92,20 @@ name = namespace + name;
 		</c:if>
 	};
 
+	var destroyMap = function(event, map) {
+		if (event.portletId === '<%= portletId %>') {
+			map.destroy();
+
+			Liferay.detach('destroyPortlet', destroyMap);
+		}
+	};
+
 	var createMap = function() {
 		var map = new Liferay['<%= mapsAPIProvider %>Map'](mapConfig).render();
 
 		Liferay.MapBase.register('<%= name %>', map);
+
+		Liferay.on('destroyPortlet', A.rbind(destroyMap, destroyMap, map));
 	};
 
 	<c:choose>

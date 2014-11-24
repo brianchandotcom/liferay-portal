@@ -267,7 +267,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchDocumentInHomeFolder" priority="5">
+	<command name="SearchForDocumentInHomeFolder" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>

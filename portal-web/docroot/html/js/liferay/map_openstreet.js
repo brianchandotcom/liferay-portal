@@ -40,7 +40,7 @@ AUI.add(
 
 				EXTENDS: A.Base,
 
-				NAME: 'lfr-map-dialog-openstreet',
+				NAME: 'lfrmapdialogopenstreet',
 
 				prototype: {
 					initializer: function() {
@@ -68,7 +68,7 @@ AUI.add(
 			{
 				EXTENDS: A.Base,
 
-				NAME: 'lfr-map-geocoder-openstreet',
+				NAME: 'lfrmapgeocoderopenstreet',
 
 				prototype: {
 					TPL_FORWARD_GEOCODING_URL: '//nominatim.openstreetmap.org/search?format=json&json_callback={callback}&q={query}',
@@ -147,7 +147,7 @@ AUI.add(
 
 				EXTENDS: A.Base,
 
-				NAME: 'lfr-map-geojson-openstreet',
+				NAME: 'lfrmapgeojsonopenstreet',
 
 				prototype: {
 					initializer: function() {
@@ -225,7 +225,7 @@ AUI.add(
 
 				EXTENDS: A.Base,
 
-				NAME: 'lfr-map-marker-openstreet',
+				NAME: 'lfrmapmarkeropenstreet',
 
 				prototype: {
 					setPosition: function(location) {
@@ -275,7 +275,7 @@ AUI.add(
 
 		var OpenStreetMap = A.Component.create(
 			{
-				ATTRS : {
+				ATTRS: {
 					tileURI: {
 						validator: Lang.isString,
 						value: '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
@@ -286,7 +286,7 @@ AUI.add(
 
 				EXTENDS: A.Widget,
 
-				NAME: 'lfr-map-openstreet',
+				NAME: 'lfrmapopenstreet',
 
 				prototype: {
 					DialogImpl: OpenStreetMapDialog,

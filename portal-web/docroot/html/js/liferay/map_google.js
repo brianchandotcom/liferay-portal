@@ -25,7 +25,7 @@ AUI.add(
 
 				EXTENDS: A.Base,
 
-				NAME: 'lfr-map-dialog-google',
+				NAME: 'lfrmapdialoggoogle',
 
 				prototype: {
 					initializer: function() {
@@ -49,7 +49,7 @@ AUI.add(
 			{
 				EXTENDS: A.Base,
 
-				NAME: 'lfr-map-geocoder-google',
+				NAME: 'lfrmapgeocodergoogle',
 
 				prototype: {
 					initializer: function() {
@@ -122,7 +122,7 @@ AUI.add(
 
 				EXTENDS: A.Base,
 
-				NAME: 'lfr-map-geojson-google',
+				NAME: 'lfrmapgeojson-google',
 
 				prototype: {
 					initializer: function() {
@@ -179,7 +179,7 @@ AUI.add(
 
 				EXTENDS: A.Base,
 
-				NAME: 'lfr-map-marker-google',
+				NAME: 'lfrmapmarkergoogle',
 
 				prototype: {
 					setPosition: function(location) {
@@ -241,7 +241,7 @@ AUI.add(
 
 				EXTENDS: A.Base,
 
-				NAME: 'lfr-map-search-google',
+				NAME: 'lfrmapsearchgoogle',
 
 				prototype: {
 					initializer: function() {
@@ -305,7 +305,7 @@ AUI.add(
 
 				EXTENDS: A.Widget,
 
-				NAME: 'lfr-map-google',
+				NAME: 'lfrmapgoogle',
 
 				prototype: {
 					DialogImpl: GoogleMapDialog,

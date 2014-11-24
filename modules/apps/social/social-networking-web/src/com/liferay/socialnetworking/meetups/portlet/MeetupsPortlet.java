@@ -43,6 +43,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
  */
 @Component(
 	property = {
+		"com.liferay.portlet.category=category.social",
 		"com.liferay.portlet.friendly-url-mapping=meetups",
 		"com.liferay.portlet.friendly-url-routes=" +
 			"com/liferay/socialnetworking/meetups/portlet/" +

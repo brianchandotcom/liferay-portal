@@ -15,39 +15,49 @@
 package com.liferay.portal.test;
 
 import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.test.TestContext;
 import com.liferay.portal.util.test.MailServiceTestUtil;
+
+import org.junit.runner.Description;
 
 /**
  * @author Manuel de la Peña
  * @author Roberto Díaz
+ * @author Shuyang Zhou
  */
-public class SynchronousMailExecutionTestListener
-	extends SynchronousDestinationExecutionTestListener {
+public class SynchronousMailTestRule extends SynchronousDestinationTestRule {
+
+	public static final SynchronousMailTestRule INSTANCE =
+		new SynchronousMailTestRule();
 
 	@Override
-	public void runAfterClass(TestContext testContext) {
-		super.runAfterClass(testContext);
+	protected void after(Description description) {
+		super.after(description);
 
-		MailServiceTestUtil.stop();
+		if (description.getMethodName() == null) {
+			classSyncHandler.restorePreviousSync();
 
-		methodSyncHandler.replaceDestination(DestinationNames.MAIL);
-	}
+			MailServiceTestUtil.stop();
 
-	@Override
-	public void runAfterTest(TestContext testContext) {
-		super.runAfterTest(testContext);
+			return;
+		}
 
 		MailServiceTestUtil.clearMessages();
 	}
 
 	@Override
-	public void runBeforeClass(TestContext testContext) {
-		super.runBeforeClass(testContext);
+	protected void before(Description description) {
+		super.before(description);
 
-		MailServiceTestUtil.start();
+		if (description.getMethodName() == null) {
+			MailServiceTestUtil.start();
 
-		classSyncHandler.replaceDestination(DestinationNames.MAIL);
+			classSyncHandler.replaceDestination(DestinationNames.MAIL);
+		}
+	}
+
+	protected final SyncHandler classSyncHandler = new SyncHandler();
+
+	private SynchronousMailTestRule() {
 	}
 
 }

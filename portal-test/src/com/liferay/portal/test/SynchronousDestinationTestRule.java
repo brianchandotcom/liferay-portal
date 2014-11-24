@@ -14,7 +14,6 @@
 
 package com.liferay.portal.test;
 
-import com.liferay.portal.kernel.annotation.AnnotationLocator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.messaging.BaseAsyncDestination;
@@ -26,61 +25,79 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
-import com.liferay.portal.kernel.test.AbstractExecutionTestListener;
-import com.liferay.portal.kernel.test.TestContext;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
-
-import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.junit.rules.TestRule;
+import org.junit.runner.Description;
+import org.junit.runners.model.Statement;
+
 /**
  * @author Miguel Pastor
+ * @author Shuyang Zhou
  */
-public class SynchronousDestinationExecutionTestListener
-	extends AbstractExecutionTestListener {
+public class SynchronousDestinationTestRule implements TestRule {
+
+	public static final SynchronousDestinationTestRule INSTANCE =
+		new SynchronousDestinationTestRule();
 
 	@Override
-	public void runAfterClass(TestContext testContext) {
-		classSyncHandler.restorePreviousSync();
+	public Statement apply(
+		final Statement statement, final Description description) {
+
+		return new Statement() {
+
+			@Override
+			public void evaluate() throws Throwable {
+				before(description);
+
+				try {
+					statement.evaluate();
+				}
+				finally {
+					after(description);
+				}
+			}
+
+		};
 	}
 
-	@Override
-	public void runAfterTest(TestContext testContext) {
-		methodSyncHandler.restorePreviousSync();
+	protected SynchronousDestinationTestRule() {
 	}
 
-	@Override
-	public void runBeforeClass(TestContext testContext) {
-		Class<?> testClass = testContext.getClazz();
+	protected void after(Description description) {
+		if (description.getMethodName() == null) {
+			return;
+		}
 
-		Sync sync = AnnotationLocator.locate(testClass, Sync.class);
-
-		classSyncHandler.setSync(sync);
-		classSyncHandler.setForceSync(ProxyModeThreadLocal.isForceSync());
-
-		classSyncHandler.enableSync();
+		syncHandler.restorePreviousSync();
 	}
 
-	@Override
-	public void runBeforeTest(TestContext testContext) {
-		Method method = testContext.getMethod();
-		Class<?> testClass = testContext.getClazz();
+	protected void before(Description description) {
+		if (description.getMethodName() == null) {
+			return;
+		}
 
-		Sync sync = AnnotationLocator.locate(method, testClass, Sync.class);
+		Sync sync = description.getAnnotation(Sync.class);
 
-		methodSyncHandler.setForceSync(ProxyModeThreadLocal.isForceSync());
-		methodSyncHandler.setSync(sync);
+		if (sync == null) {
+			Class<?> testClass = description.getTestClass();
 
-		methodSyncHandler.enableSync();
+			sync = testClass.getAnnotation(Sync.class);
+		}
+
+		syncHandler.setForceSync(ProxyModeThreadLocal.isForceSync());
+		syncHandler.setSync(sync);
+
+		syncHandler.enableSync();
 	}
 
-	protected SyncHandler classSyncHandler = new SyncHandler();
-	protected SyncHandler methodSyncHandler = new SyncHandler();
+	protected final SyncHandler syncHandler = new SyncHandler();
 
 	protected class SyncHandler {
 

@@ -107,32 +107,34 @@ public class LegacyGoogleDocsMetadataHelper {
 	}
 
 	protected void initDLFileEntryMetadataAndFields() {
-		if (_fields == null) {
-			_fields = new HashMap<>();
+		if (_fields != null) {
+			return;
+		}
 
-			if (_dlFileVersion == null) {
-				return;
+		if (_dlFileVersion == null) {
+			return;
+		}
+
+		_fields = new HashMap<>();
+
+		try {
+			_dlFileEntryMetadata =
+				DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
+					_ddmStructure.getStructureId(),
+					_dlFileVersion.getFileVersionId());
+
+			Fields fields = _storageEngine.getFields(
+				_dlFileEntryMetadata.getDDMStorageId());
+
+			for (Field field : fields) {
+				_fields.put(field.getName(), field);
 			}
-
-			try {
-				_dlFileEntryMetadata =
-					DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
-						_ddmStructure.getStructureId(),
-						_dlFileVersion.getFileVersionId());
-
-				Fields fields = _storageEngine.getFields(
-					_dlFileEntryMetadata.getDDMStorageId());
-
-				for (Field field : fields) {
-					_fields.put(field.getName(), field);
-				}
-			}
-			catch (PortalException pe) {
-				throw new SystemException(
-					"Unable to load DDM fields for file version " +
-						_dlFileVersion.getFileVersionId(),
-					pe);
-			}
+		}
+		catch (PortalException pe) {
+			throw new SystemException(
+				"Unable to load DDM fields for file version " +
+					_dlFileVersion.getFileVersionId(),
+				pe);
 		}
 	}
 

@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Iván Zaera
  */
 @Component(
-	service = DLEditFileEntryDisplayContextFactory.class
+	immediate = true, service = DLEditFileEntryDisplayContextFactory.class
 )
 public class GoogleDocsDLEditFileEntryDisplayContextFactory
 	implements DLEditFileEntryDisplayContextFactory {

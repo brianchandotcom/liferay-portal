@@ -77,8 +77,6 @@ public class ClusterMasterExecutorImplTest {
 	public void setUp() {
 		ReflectionTestUtil.setFieldValue(
 			LockLocalServiceUtil.class, "_service", new MockLockLocalService());
-
-		_TEST_TIME = System.currentTimeMillis();
 	}
 
 	@After
@@ -252,7 +250,7 @@ public class ClusterMasterExecutorImplTest {
 
 			Assert.assertFalse(clusterMasterExecutorImpl.isEnabled());
 
-			String timeString = String.valueOf(_TEST_TIME);
+			String timeString = String.valueOf(System.currentTimeMillis());
 
 			MethodHandler methodHandler = new MethodHandler(
 				testMethodMethodKey, timeString);
@@ -298,7 +296,7 @@ public class ClusterMasterExecutorImplTest {
 
 		Assert.assertTrue(clusterMasterExecutorImpl.isEnabled());
 
-		String timeString = String.valueOf(_TEST_TIME);
+		String timeString = String.valueOf(System.currentTimeMillis());
 
 		MethodHandler methodHandler = new MethodHandler(
 			testMethodMethodKey, timeString);
@@ -321,7 +319,7 @@ public class ClusterMasterExecutorImplTest {
 		Assert.assertFalse(clusterMasterExecutorImpl.isEnabled());
 
 		MethodHandler methodHandler = new MethodHandler(
-			testMethodMethodKey, _TEST_TIME);
+			testMethodMethodKey, null);
 
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			ClusterMasterExecutorImpl.class.getName(), Level.WARNING);
@@ -352,10 +350,8 @@ public class ClusterMasterExecutorImplTest {
 		clusterMasterExecutorImpl.setClusterExecutor(mockClusterExecutor);
 		clusterMasterExecutorImpl.initialize();
 
-		String timeString = String.valueOf(_TEST_TIME);
-
 		MethodHandler methodHandler = new MethodHandler(
-			testMethodMethodKey, timeString);
+			testMethodMethodKey, null);
 
 		try {
 			MockClusterExecutor.setBreak(true);
@@ -598,8 +594,6 @@ public class ClusterMasterExecutorImplTest {
 
 	private static final Address _OTHER_ADDRESS = new AddressImpl(
 		new MockAddress("_OTHER_ADDRESS"));
-
-	private static long _TEST_TIME;
 
 	private static class MockAddress implements org.jgroups.Address {
 

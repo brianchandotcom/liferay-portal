@@ -16,6 +16,7 @@ package com.liferay.socialnetworking.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.model.Release;
 import com.liferay.portal.service.ReleaseLocalService;
 
 import java.util.Collections;
@@ -54,6 +55,13 @@ public class SocialNetworkingServiceUpgrade_v1_0_0 {
 
 	@Activate
 	protected void upgrade() throws PortalException {
+		Release release = _releaseLocalService.fetchRelease(
+			"social-networking-portlet");
+
+		if (release.getBuildNumber() >= 100) {
+			return;
+		}
+
 		List<UpgradeProcess> upgradeProcesses =
 			Collections.<UpgradeProcess>singletonList(new UpgradeNamespace());
 

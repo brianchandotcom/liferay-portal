@@ -24,9 +24,11 @@ import com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
+import com.liferay.portlet.dynamicdatamapping.storage.StorageEngine;
 
 import java.util.List;
 
@@ -36,15 +38,20 @@ import java.util.List;
 public class LegacyGoogleDocsMigration {
 
 	public LegacyGoogleDocsMigration(
-		Company company,
+		Company company, DDMStructureLocalService ddmStructureLocalService,
 		DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
 		DLFileEntryLocalService dlFileEntryLocalService,
-		GoogleDocsDLFileEntryTypeHelper googleDocsDLFileEntryTypeHelper) {
+		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService,
+		GoogleDocsDLFileEntryTypeHelper googleDocsDLFileEntryTypeHelper,
+		StorageEngine storageEngine) {
 
 		_company = company;
+		_ddmStructureLocalService = ddmStructureLocalService;
 		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
 		_dlFileEntryLocalService = dlFileEntryLocalService;
+		_dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
 		_googleDocsDLFileEntryTypeHelper = googleDocsDLFileEntryTypeHelper;
+		_storageEngine = storageEngine;
 
 		try {
 			_dlFileEntryType = _dlFileEntryTypeLocalService.getFileEntryType(
@@ -96,7 +103,7 @@ public class LegacyGoogleDocsMigration {
 
 		legacyDDMStructure.setDefinition(definition);
 
-		DDMStructureLocalServiceUtil.updateDDMStructure(legacyDDMStructure);
+		_ddmStructureLocalService.updateDDMStructure(legacyDDMStructure);
 	}
 
 	protected void upgradeDLFileEntries() throws PortalException {
@@ -105,9 +112,10 @@ public class LegacyGoogleDocsMigration {
 				_company.getCompanyId(), _dlFileEntryType.getFileEntryTypeId());
 
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
-
 			LegacyGoogleDocsMetadataHelper legacyGoogleDocsMetadataHelper =
-				new LegacyGoogleDocsMetadataHelper(dlFileEntry);
+				new LegacyGoogleDocsMetadataHelper(
+					dlFileEntry, _dlFileEntryMetadataLocalService,
+					_storageEngine);
 
 			String id = legacyGoogleDocsMetadataHelper.getFieldValue(
 				LegacyGoogleDocsConstants.DDM_FIELD_NAME_ID);
@@ -121,7 +129,9 @@ public class LegacyGoogleDocsMigration {
 				LegacyGoogleDocsConstants.DDM_FIELD_NAME_EDIT_URL);
 
 			GoogleDocsMetadataHelper googleDocsMetadataHelper =
-				new GoogleDocsMetadataHelper(dlFileEntry);
+				new GoogleDocsMetadataHelper(
+					dlFileEntry, _dlFileEntryMetadataLocalService,
+					_storageEngine);
 
 			googleDocsMetadataHelper.setFieldValue(
 				GoogleDocsConstants.DDM_FIELD_NAME_ID, id);
@@ -141,10 +151,14 @@ public class LegacyGoogleDocsMigration {
 	}
 
 	private final Company _company;
+	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DLFileEntryLocalService _dlFileEntryLocalService;
+	private final DLFileEntryMetadataLocalService
+		_dlFileEntryMetadataLocalService;
 	private DLFileEntryType _dlFileEntryType;
 	private final DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 	private final GoogleDocsDLFileEntryTypeHelper
 		_googleDocsDLFileEntryTypeHelper;
+	private final StorageEngine _storageEngine;
 
 }

@@ -22,8 +22,10 @@ import com.liferay.portal.service.ClassNameLocalService;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
+import com.liferay.portlet.dynamicdatamapping.storage.StorageEngine;
 
 import java.util.List;
 
@@ -51,8 +53,10 @@ public class GoogleDocsConfigurator {
 
 			LegacyGoogleDocsMigration legacyGoogleDocsMigration =
 				new LegacyGoogleDocsMigration(
-					company, _dlFileEntryTypeLocalService,
-					_dlFileEntryLocalService, googleDocsDLFileEntryTypeHelper);
+					company, _ddmStructureLocalService,
+					_dlFileEntryTypeLocalService, _dlFileEntryLocalService,
+					_dlFileEntryMetadataLocalService,
+					googleDocsDLFileEntryTypeHelper, _storageEngine);
 
 			if (legacyGoogleDocsMigration.isMigrationNeeded()) {
 				legacyGoogleDocsMigration.migrate();
@@ -92,10 +96,22 @@ public class GoogleDocsConfigurator {
 	}
 
 	@Reference
+	public void setDLFileEntryMetadataLocalService(
+		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService) {
+
+		_dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
+	}
+
+	@Reference
 	public void setDLFileEntryTypeLocalService(
 		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
 
 		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
+	}
+
+	@Reference
+	public void setStorageEngine(StorageEngine storageEngine) {
+		_storageEngine = storageEngine;
 	}
 
 	@Reference
@@ -107,7 +123,9 @@ public class GoogleDocsConfigurator {
 	private CompanyLocalService _companyLocalService;
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+	private StorageEngine _storageEngine;
 	private UserLocalService _userLocalService;
 
 }

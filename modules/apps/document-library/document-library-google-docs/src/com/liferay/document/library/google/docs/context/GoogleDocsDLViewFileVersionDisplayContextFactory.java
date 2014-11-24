@@ -19,11 +19,14 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portlet.documentlibrary.context.DLViewFileVersionDisplayContext;
 import com.liferay.portlet.documentlibrary.context.DLViewFileVersionDisplayContextFactory;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService;
+import com.liferay.portlet.dynamicdatamapping.storage.StorageEngine;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Iván Zaera
@@ -43,12 +46,14 @@ public class GoogleDocsDLViewFileVersionDisplayContextFactory
 			FileVersion fileVersion) {
 
 		GoogleDocsMetadataHelper googleDocsMetadataHelper =
-			new GoogleDocsMetadataHelper((DLFileVersion)fileVersion.getModel());
+			new GoogleDocsMetadataHelper(
+				(DLFileVersion)fileVersion.getModel(),
+				_dlFileEntryMetadataLocalService, _storageEngine);
 
 		if (googleDocsMetadataHelper.isGoogleDocs()) {
 			return new GoogleDocsDLViewFileVersionDisplayContext(
 				parentDLFileEntryActionsDisplayContext, request, response,
-				fileVersion);
+				fileVersion, googleDocsMetadataHelper);
 		}
 
 		return parentDLFileEntryActionsDisplayContext;
@@ -66,5 +71,20 @@ public class GoogleDocsDLViewFileVersionDisplayContextFactory
 			parentDLViewFileVersionDisplayContext, request, response,
 			fileVersion);
 	}
+
+	@Reference
+	public void setDLFileEntryMetadataLocalService(
+		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService) {
+
+		_dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
+	}
+
+	@Reference
+	public void setStorageEngine(StorageEngine storageEngine) {
+		_storageEngine = storageEngine;
+	}
+
+	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
+	private StorageEngine _storageEngine;
 
 }

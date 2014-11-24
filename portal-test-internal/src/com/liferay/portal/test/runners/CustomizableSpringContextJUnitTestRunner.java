@@ -14,7 +14,7 @@
 
 package com.liferay.portal.test.runners;
 
-import com.liferay.portal.kernel.test.AbstractIntegrationJUnitTestRunner;
+import com.liferay.portal.kernel.test.DescriptionComparator;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.test.jdbc.ResetDatabaseUtilDataSource;
@@ -23,25 +23,34 @@ import com.liferay.portal.util.PropsUtil;
 
 import java.util.List;
 
+import org.junit.runner.manipulation.Sorter;
+import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.InitializationError;
 
 /**
  * @author Miguel Pastor
  */
 public abstract class CustomizableSpringContextJUnitTestRunner
-	extends AbstractIntegrationJUnitTestRunner {
+	extends BlockJUnit4ClassRunner {
 
 	public CustomizableSpringContextJUnitTestRunner(Class<?> clazz)
 		throws InitializationError {
 
 		super(clazz);
+
+		initApplicationContext();
+
+		if (System.getProperty("external-properties") == null) {
+			System.setProperty("external-properties", "portal-test.properties");
+		}
+
+		sort(new Sorter(new DescriptionComparator()));
 	}
 
 	public abstract void afterApplicationContextInit();
 
 	public abstract List<String> getExtraConfigLocations();
 
-	@Override
 	public void initApplicationContext() {
 		System.setProperty("catalina.base", ".");
 

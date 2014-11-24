@@ -54,11 +54,9 @@ public class LegacyGoogleDocsMigration {
 		_storageEngine = storageEngine;
 
 		try {
-			_dlFileEntryType = _dlFileEntryTypeLocalService.getFileEntryType(
+			_dlFileEntryType = _dlFileEntryTypeLocalService.fetchFileEntryType(
 				_company.getGroupId(),
 				LegacyGoogleDocsConstants.DL_FILE_ENTRY_TYPE_KEY);
-		}
-		catch (NoSuchFileEntryTypeException nsfete) {
 		}
 		catch (PortalException pe) {
 			throw new SystemException(pe);

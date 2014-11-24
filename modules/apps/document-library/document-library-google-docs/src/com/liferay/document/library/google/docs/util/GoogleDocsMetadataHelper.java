@@ -159,6 +159,7 @@ public class GoogleDocsMetadataHelper {
 			long ddmStructureId = _ddmStructure.getStructureId();
 
 			Fields fields = new Fields();
+
 			fields.put(
 				new Field(
 					ddmStructureId,
@@ -213,43 +214,45 @@ public class GoogleDocsMetadataHelper {
 	}
 
 	protected void initDLFileEntryMetadataAndFields() {
-		if (_fieldsMap == null) {
-			_fieldsMap = new HashMap<>();
+		if (_fieldsMap != null) {
+			return;
+		}
 
-			if (_dlFileVersion == null) {
-				return;
-			}
+		if (_dlFileVersion == null) {
+			return;
+		}
 
-			try {
-				_dlFileEntryMetadata =
-					_dlFileEntryMetadataLocalService.getFileEntryMetadata(
-						_ddmStructure.getStructureId(),
-						_dlFileVersion.getFileVersionId());
-			}
-			catch (NoSuchFileEntryMetadataException nsfeme) {
-				addGoogleDocsDLFileEntryMetadata();
-			}
-			catch (PortalException pe) {
-				throw new SystemException(
-					"Unable to load file entry metadatafor file version " +
-						_dlFileVersion.getFileVersionId(),
-					pe);
-			}
+		_fieldsMap = new HashMap<>();
 
-			try {
-				_fields = _storageEngine.getFields(
-					_dlFileEntryMetadata.getDDMStorageId());
+		try {
+			_dlFileEntryMetadata =
+				_dlFileEntryMetadataLocalService.getFileEntryMetadata(
+					_ddmStructure.getStructureId(),
+					_dlFileVersion.getFileVersionId());
+		}
+		catch (NoSuchFileEntryMetadataException nsfeme) {
+			addGoogleDocsDLFileEntryMetadata();
+		}
+		catch (PortalException pe) {
+			throw new SystemException(
+				"Unable to load file entry metadata for file version " +
+					_dlFileVersion.getFileVersionId(),
+				pe);
+		}
 
-				for (Field field : _fields) {
-					_fieldsMap.put(field.getName(), field);
-				}
+		try {
+			_fields = _storageEngine.getFields(
+				_dlFileEntryMetadata.getDDMStorageId());
+
+			for (Field field : _fields) {
+				_fieldsMap.put(field.getName(), field);
 			}
-			catch (PortalException pe) {
-				throw new SystemException(
-					"Unable to load DDM fields for file version " +
-						_dlFileVersion.getFileVersionId(),
-					pe);
-			}
+		}
+		catch (PortalException pe) {
+			throw new SystemException(
+				"Unable to load DDM fields for file version " +
+					_dlFileVersion.getFileVersionId(),
+				pe);
 		}
 	}
 

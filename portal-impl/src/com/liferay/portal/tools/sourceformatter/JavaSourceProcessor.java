@@ -336,14 +336,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return ifClause;
 	}
 
-	protected void checkLogLevel(
-		String content, String fileName, String logLevel) {
-
+	protected void checkLogLevel(String content, String fileName) {
 		if (fileName.contains("Log")) {
 			return;
 		}
 
-		Pattern pattern = Pattern.compile("\n(\t+)_log." + logLevel + "\\(");
+		Pattern pattern = Pattern.compile(
+			"\n(\t+)_log.(debug|info|trace|warn)\\(");
 
 		Matcher matcher = pattern.matcher(content);
 
@@ -363,7 +362,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			String codeBlock = content.substring(pos, matcher.start());
 			String s =
-				"_log.is" + StringUtil.upperCaseFirstLetter(logLevel) +
+				"_log.is" + StringUtil.upperCaseFirstLetter(matcher.group(2)) +
 					"Enabled()";
 
 			if (!codeBlock.contains(s)) {
@@ -865,10 +864,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-41315
 
-		checkLogLevel(newContent, fileName, "debug");
-		checkLogLevel(newContent, fileName, "info");
-		checkLogLevel(newContent, fileName, "trace");
-		checkLogLevel(newContent, fileName, "warn");
+		checkLogLevel(newContent, fileName);
 
 		// LPS-46632
 

@@ -19,12 +19,11 @@ import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
-import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.log.CaptureAppender;
 import com.liferay.portal.log.Log4JLoggerTestUtil;
 import com.liferay.portal.template.TemplateContextHelper;
-import com.liferay.portal.test.listeners.PACLExecutionTestListener;
+import com.liferay.portal.test.PACLTestRule;
 import com.liferay.portal.test.runners.PACLIntegrationJUnitTestRunner;
 
 import org.apache.log4j.Level;
@@ -32,15 +31,18 @@ import org.apache.log4j.Level;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Raymond Augé
  */
-@ExecutionTestListeners(listeners = {PACLExecutionTestListener.class})
 @RunWith(PACLIntegrationJUnitTestRunner.class)
 public class TemplateManagerTest {
+
+	@ClassRule
+	public static final PACLTestRule paclTestRule = PACLTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() {

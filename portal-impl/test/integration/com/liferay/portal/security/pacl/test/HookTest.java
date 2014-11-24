@@ -15,27 +15,29 @@
 package com.liferay.portal.security.pacl.test;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.security.pacl.test.hook.action.FailureStrutsAction;
 import com.liferay.portal.security.pacl.test.hook.action.SuccessStrutsAction;
 import com.liferay.portal.security.pacl.test.hook.indexer.OrganizationIndexerPostProcessor;
 import com.liferay.portal.security.pacl.test.hook.indexer.UserIndexerPostProcessor;
-import com.liferay.portal.test.listeners.PACLExecutionTestListener;
+import com.liferay.portal.test.PACLTestRule;
 import com.liferay.portal.test.runners.PACLIntegrationJUnitTestRunner;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.BlogsStatsUserLocalServiceUtil;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Raymond Augé
  */
-@ExecutionTestListeners(listeners = {PACLExecutionTestListener.class})
 @RunWith(PACLIntegrationJUnitTestRunner.class)
 public class HookTest {
+
+	@ClassRule
+	public static final PACLTestRule paclTestRule = PACLTestRule.INSTANCE;
 
 	@Test
 	public void testIndexer1() throws Exception {

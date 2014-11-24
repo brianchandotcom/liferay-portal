@@ -674,10 +674,6 @@ public class ClusterMasterExecutorImplTest {
 			_break = brk;
 		}
 
-		public static void setOtherAddress(Address address) {
-			_otherAddress = address;
-		}
-
 		public MockClusterExecutor(boolean enabled) {
 			_enabled = enabled;
 
@@ -786,10 +782,6 @@ public class ClusterMasterExecutorImplTest {
 
 		@Override
 		public boolean isClusterNodeAlive(Address address) {
-			if (_break && address.equals(_otherAddress)) {
-				throw new RuntimeException();
-			}
-
 			return _addresses.contains(address);
 		}
 
@@ -813,7 +805,6 @@ public class ClusterMasterExecutorImplTest {
 		private static final List<Address> _addresses =
 			new ArrayList<Address>();
 		private static boolean _break;
-		private static Address _otherAddress;
 
 		private final List<ClusterEventListener> _clusterEventListeners =
 			new ArrayList<ClusterEventListener>();
@@ -850,13 +841,7 @@ public class ClusterMasterExecutorImplTest {
 				Lock lock = new LockImpl();
 
 				lock.setKey(key);
-
-				if (_override) {
-					lock.setOwner(_value);
-				}
-				else {
-					lock.setOwner(owner);
-				}
+				lock.setOwner(owner);
 
 				_lock = lock;
 			}
@@ -877,11 +862,6 @@ public class ClusterMasterExecutorImplTest {
 			_lock = lock;
 
 			return lock;
-		}
-
-		public void override(Boolean override, String value) {
-			_override = override;
-			_value = value;
 		}
 
 		public void setLock(String owner) {
@@ -907,8 +887,6 @@ public class ClusterMasterExecutorImplTest {
 
 		private boolean _errorOnUnlock;
 		private Lock _lock;
-		private boolean _override;
-		private String _value;
 
 	}
 

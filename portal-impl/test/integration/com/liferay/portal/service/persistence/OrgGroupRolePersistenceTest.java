@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.model.OrgGroupRole;
 import com.liferay.portal.test.PersistenceTestRule;
@@ -48,9 +49,8 @@ import java.util.Set;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class OrgGroupRolePersistenceTest {
 	@Rule
-	public final PersistenceTestRule persistenceTestRule = PersistenceTestRule.INSTANCE;
-	@Rule
-	public final TransactionalTestRule transactionalTestRule = new TransactionalTestRule(Propagation.REQUIRED);
+	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@After
 	public void tearDown() throws Exception {

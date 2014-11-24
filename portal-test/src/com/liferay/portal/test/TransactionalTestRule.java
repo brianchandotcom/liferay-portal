@@ -52,6 +52,12 @@ public class TransactionalTestRule implements TestRule {
 
 	@Override
 	public Statement apply(final Statement statement, Description description) {
+		String methodName = description.getMethodName();
+
+		if (methodName == null) {
+			return statement;
+		}
+
 		return new Statement() {
 
 			@Override

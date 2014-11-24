@@ -258,8 +258,7 @@ public class PortletFileRepositoryUtil {
 	}
 
 	public static Folder getPortletFolder(
-			long userId, long repositoryId, long parentFolderId,
-			String folderName, ServiceContext serviceContext)
+			long repositoryId, long parentFolderId, String folderName)
 		throws PortalException {
 
 		return getPortletFileRepository().getPortletFolder(

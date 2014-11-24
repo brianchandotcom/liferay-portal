@@ -1310,10 +1310,23 @@ create database lportal${database.index} character set utf8;</echo>
 	</target>
 
 	<target name="deploy-required-plugins">
-		<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
-			<property name="plugin.types" value="portlets" />
-			<property name="plugins.includes" value="marketplace-portlet" />
-		</ant>
+		<if>
+			<equals arg1="marketplace.staging.enabled" arg2="true" />
+			<then>
+				<mkdir dir="${liferay.home}/deploy" />
+
+				<get
+					dest="${liferay.home}/deploy/marketplace-staging-portlet.war"
+					src="${test.build.marketplace.staging.portlet.war.zip.url}"
+				/>
+			</then>
+			<else>
+				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
+					<property name="plugin.types" value="portlets" />
+					<property name="plugins.includes" value="marketplace-portlet" />
+				</ant>
+			</else>
+		</if>
 	</target>
 
 	<target name="deploy-specified-plugins">

@@ -135,19 +135,6 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	}
 
 	@Override
-	public FileEntry addEntryAttachment(
-			long groupId, long entryId, String fileName, String mimeType,
-			InputStream is)
-		throws PortalException {
-
-		BlogsEntryPermission.check(
-			getPermissionChecker(), entryId, ActionKeys.UPDATE);
-
-		return blogsEntryLocalService.addEntryAttachment(
-			groupId, getUserId(), entryId, fileName, mimeType, is);
-	}
-
-	@Override
 	public void deleteEntry(long entryId) throws PortalException {
 		BlogsEntryPermission.check(
 			getPermissionChecker(), entryId, ActionKeys.DELETE);

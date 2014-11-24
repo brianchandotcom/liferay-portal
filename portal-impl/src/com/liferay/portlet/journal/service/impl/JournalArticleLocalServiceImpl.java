@@ -2388,6 +2388,11 @@ public class JournalArticleLocalServiceImpl
 		return journalArticlePersistence.countByG_A(groupId, articleId);
 	}
 
+	@Override
+	public List<JournalArticle> getByNoPermissions() {
+		return journalArticleFinder.findByNoPermissions();
+	}
+
 	/**
 	 * Returns an ordered range of all the web content articles matching the
 	 * company, version, and workflow status.

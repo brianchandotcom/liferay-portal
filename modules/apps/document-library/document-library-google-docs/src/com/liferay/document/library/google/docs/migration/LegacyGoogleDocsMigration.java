@@ -20,7 +20,6 @@ import com.liferay.document.library.google.docs.util.GoogleDocsMetadataHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Company;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;

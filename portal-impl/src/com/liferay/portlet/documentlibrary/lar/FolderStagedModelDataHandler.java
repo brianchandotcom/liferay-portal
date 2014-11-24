@@ -38,6 +38,7 @@ import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
+import com.liferay.portal.repository.portletrepository.PortletRepository;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -129,8 +130,12 @@ public class FolderStagedModelDataHandler
 
 			long liferayRepositoryClassNameId = PortalUtil.getClassNameId(
 				LiferayRepository.class.getName());
+			long portletRepositoryClassNameId = PortalUtil.getClassNameId(
+				PortletRepository.class.getName());
 
-			if (repository.getClassNameId() != liferayRepositoryClassNameId) {
+			if ((repository.getClassNameId() != liferayRepositoryClassNameId) &&
+				(repository.getClassNameId() != portletRepositoryClassNameId)) {
+
 				return;
 			}
 		}

@@ -335,6 +335,10 @@ AUI.add(
 													instance.one('#entryId').val(message.entryId);
 													instance.one('#redirect').val(message.redirect);
 
+													var contentEditor = window[instance.ns('contentEditor')];
+
+													contentEditor.setHTML(message.content);
+
 													var tabs1BackButton = instance.one('#tabs1TabsBack');
 
 													if (tabs1BackButton) {

@@ -182,6 +182,7 @@ public class EditEntryAction extends PortletAction {
 			if (ajax) {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+				jsonObject.put("content", entry.getContent());
 				jsonObject.put("entryId", entry.getEntryId());
 				jsonObject.put("redirect", redirect);
 				jsonObject.put("updateRedirect", updateRedirect);

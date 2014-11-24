@@ -2103,9 +2103,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			List<FileEntry> tempFileEntryAttachments)
 		throws PortalException {
 
-		List<FileEntry> fileEntryAttachments = new ArrayList<>(
-			tempFileEntryAttachments.size());
-
 		for (FileEntry tempAttachment : tempFileEntryAttachments) {
 			FileEntry fileEntryAttachment =
 				addEntryAttachment(
@@ -2113,11 +2110,16 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 					tempAttachment.getMimeType(),
 					tempAttachment.getContentStream());
 
-			fileEntryAttachments.add(fileEntryAttachment);
+			StringBundler sb = new StringBundler(5);
 
-			content = StringUtil.replace(
-				content, getAttachmentLink(tempAttachment),
-				getAttachmentLink(fileEntryAttachment));
+			sb.append("<img.*");
+			sb.append(EditorConstants.DATA_IMAGE_ID_ATTRIBUTE);
+			sb.append("=\\s?\"");
+			sb.append(tempAttachment.getFileEntryId());
+			sb.append("\".*src=\\s?\"(.*)\".*/>");
+
+			content = content.replaceAll(
+				sb.toString(), getAttachmentLink(fileEntryAttachment));
 		}
 
 		return content;

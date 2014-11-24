@@ -373,16 +373,16 @@
 		<while>
 			<condition action="SOMicroblogs#isElementNotPresent" locator-key1="MICROBLOGS_ENTRY_CONTENT_EDIT_COUNTDOWN_WARNING" />
 			<then>
-				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\08" />
-				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\08" />
-				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\08" />
-				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\08" />
-				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\08" />
-				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\08" />
-				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\08" />
-				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\08" />
-				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\08" />
-				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\08" />
+				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\BACK_SPACE" />
+				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\BACK_SPACE" />
+				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\BACK_SPACE" />
+				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\BACK_SPACE" />
+				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\BACK_SPACE" />
+				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\BACK_SPACE" />
+				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\BACK_SPACE" />
+				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\BACK_SPACE" />
+				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\BACK_SPACE" />
+				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\BACK_SPACE" />
 			</then>
 		</while>
 	</command>

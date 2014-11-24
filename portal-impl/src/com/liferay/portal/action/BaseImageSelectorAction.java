@@ -57,6 +57,9 @@ public abstract class BaseImageSelectorAction extends PortletAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
+		UploadPortletRequest uploadPortletRequest =
+			PortalUtil.getUploadPortletRequest(actionRequest);
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -81,7 +84,7 @@ public abstract class BaseImageSelectorAction extends PortletAction {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		String randomId = ParamUtil.getString(actionRequest, "randomId");
+		String randomId = ParamUtil.getString(uploadPortletRequest, "randomId");
 
 		JSONObject imageJSONObject = null;
 

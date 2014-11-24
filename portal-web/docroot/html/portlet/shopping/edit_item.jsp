@@ -409,7 +409,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 									<aui:input field="price" fieldParam='<%= "price" + i %>' format="<%= doubleFormat %>" ignoreRequestValue="<%= true %>" label="price" model="<%= ShoppingItemPrice.class %>" name="price" value="<%= String.valueOf(price) %>" />
 								</td>
 								<td>
-									<aui:input field="discount" fieldParam='<%= "discount" + i %>' format="<%= doubleFormat %>" ignoreRequestValue="<%= true %>" label="discount" model="<%= ShoppingItemPrice.class %>" name="discount" value="<%= String.valueOf(discount*100) %>" />
+									<aui:input field="discount" fieldParam='<%= "discount" + i %>' ignoreRequestValue="<%= true %>" label="discount" model="<%= ShoppingItemPrice.class %>" name="discount" value="<%= String.valueOf(discount*100) %>" />
 								</td>
 								<td>
 									<aui:input ignoreRequestValue="<%= true %>" label="taxable" name='<%= "taxable" + i %>' param='<%= "taxable" + i %>' type="checkbox" value="<%= taxable %>" />

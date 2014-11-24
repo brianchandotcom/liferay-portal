@@ -15,20 +15,22 @@
 package com.liferay.portal.security.pacl.test;
 
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.test.listeners.PACLExecutionTestListener;
+import com.liferay.portal.test.PACLTestRule;
 import com.liferay.portal.test.runners.PACLIntegrationJUnitTestRunner;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Raymond Augé
  */
-@ExecutionTestListeners(listeners = {PACLExecutionTestListener.class})
 @RunWith(PACLIntegrationJUnitTestRunner.class)
 public class MessageBusTest {
+
+	@ClassRule
+	public static final PACLTestRule paclTestRule = PACLTestRule.INSTANCE;
 
 	@Test
 	public void testListen1() throws Exception {

@@ -33,6 +33,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.naming.Context;
 
 import org.junit.runners.model.InitializationError;
+import org.junit.runners.model.TestClass;
 
 /**
  * @author Raymond Augé
@@ -43,10 +44,18 @@ public class PACLIntegrationJUnitTestRunner
 	public static final String RESOURCE_PATH =
 		"com/liferay/portal/security/pacl/test/dependencies";
 
+	public static Class<?> getCurrentTestClass() {
+		return _testClass;
+	}
+
 	public PACLIntegrationJUnitTestRunner(Class<?> clazz)
 		throws InitializationError {
 
 		super(_wrapTestClass(clazz));
+
+		TestClass testClass = getTestClass();
+
+		_testClass = testClass.getJavaClass();
 	}
 
 	@Override
@@ -101,6 +110,7 @@ public class PACLIntegrationJUnitTestRunner
 		"com.liferay.portal.security.pacl.test.";
 
 	private static boolean _initialized;
+	private static Class<?> _testClass;
 
 	private static class PACLClassLoader extends URLClassLoader {
 

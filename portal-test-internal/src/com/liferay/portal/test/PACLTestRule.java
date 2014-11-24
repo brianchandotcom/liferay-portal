@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.test.listeners;
+package com.liferay.portal.test;
 
 import com.liferay.portal.deploy.hot.HookHotDeployListener;
 import com.liferay.portal.kernel.deploy.hot.DependencyManagementThreadLocal;
@@ -21,8 +21,7 @@ import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterHelper;
-import com.liferay.portal.kernel.test.AbstractExecutionTestListener;
-import com.liferay.portal.kernel.test.TestContext;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.spring.context.PortletContextLoaderListener;
@@ -30,11 +29,12 @@ import com.liferay.portal.test.mock.AutoDeployMockServletContext;
 import com.liferay.portal.test.runners.PACLIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortalUtil;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
+
+import org.junit.rules.TestRule;
+import org.junit.runner.Description;
+import org.junit.runners.model.Statement;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResourceLoader;
@@ -44,18 +44,39 @@ import org.springframework.mock.web.MockServletContext;
 
 /**
  * @author Raymond Augé
+ * @author Shuyang Zhou
  */
-public class PACLExecutionTestListener extends AbstractExecutionTestListener {
+public class PACLTestRule implements TestRule {
+
+	public static final PACLTestRule INSTANCE = new PACLTestRule();
 
 	@Override
-	public void runAfterClass(TestContext testContext) {
-		HotDeployEvent hotDeployEvent = _hotDeployEvents.remove(
-			testContext.getClazz());
+	public Statement apply(
+		final Statement statement, final Description description) {
 
-		if (hotDeployEvent == null) {
-			return;
-		}
+		return new Statement() {
 
+			@Override
+			public void evaluate() throws Throwable {
+				ReflectionTestUtil.setFieldValue(
+					description, "fTestClass",
+					PACLIntegrationJUnitTestRunner.getCurrentTestClass());
+
+				HotDeployEvent hotDeployEvent = before(
+					description.getTestClass());
+
+				try {
+					statement.evaluate();
+				}
+				finally {
+					after(hotDeployEvent);
+				}
+			}
+
+		};
+	}
+
+	protected void after(HotDeployEvent hotDeployEvent) {
 		HotDeployUtil.fireUndeployEvent(hotDeployEvent);
 
 		PortletContextLoaderListener portletContextLoaderListener =
@@ -77,8 +98,7 @@ public class PACLExecutionTestListener extends AbstractExecutionTestListener {
 		}
 	}
 
-	@Override
-	public void runBeforeClass(TestContext testContext) {
+	protected HotDeployEvent before(Class<?> testClass) {
 		ServletContext servletContext = ServletContextPool.get(
 			PortalUtil.getServletContextName());
 
@@ -100,9 +120,7 @@ public class PACLExecutionTestListener extends AbstractExecutionTestListener {
 
 		PortalLifecycleUtil.flushInits();
 
-		Class<?> clazz = testContext.getClazz();
-
-		ClassLoader classLoader = clazz.getClassLoader();
+		ClassLoader classLoader = testClass.getClassLoader();
 
 		MockServletContext mockServletContext = new MockServletContext(
 			new PACLResourceLoader(classLoader));
@@ -132,7 +150,7 @@ public class PACLExecutionTestListener extends AbstractExecutionTestListener {
 			PortletClassLoaderUtil.setServletContextName(null);
 		}
 
-		_hotDeployEvents.put(clazz, hotDeployEvent);
+		return hotDeployEvent;
 	}
 
 	protected HotDeployEvent getHotDeployEvent(
@@ -152,8 +170,8 @@ public class PACLExecutionTestListener extends AbstractExecutionTestListener {
 		}
 	}
 
-	private static final Map<Class<?>, HotDeployEvent> _hotDeployEvents =
-		new HashMap<Class<?>, HotDeployEvent>();
+	private PACLTestRule() {
+	}
 
 	private static class PACLResourceLoader implements ResourceLoader {
 

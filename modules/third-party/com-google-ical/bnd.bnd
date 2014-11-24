@@ -1,4 +1,4 @@
 Bundle-SymbolicName: com.google.ical
 Bundle-Version: 20110304
-Export-Package: *
+Export-Package: com.google.ical.*
 Include-Resource: classes

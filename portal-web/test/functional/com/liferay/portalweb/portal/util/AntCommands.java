@@ -22,10 +22,12 @@ import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+import java.util.concurrent.Callable;
+
 /**
  * @author Brian Wing Shun Chan
  */
-public class AntCommands extends Thread {
+public class AntCommands implements Callable<Void> {
 
 	public AntCommands(
 		LiferaySelenium liferaySelenium, String fileName, String target) {
@@ -36,57 +38,62 @@ public class AntCommands extends Thread {
 	}
 
 	@Override
-	public void run() {
-		try {
-			Runtime runtime = Runtime.getRuntime();
-			StringBundler sb = new StringBundler();
+	public Void call() throws Exception {
+		Runtime runtime = Runtime.getRuntime();
+		StringBundler sb = new StringBundler();
 
-			if (!OSDetector.isWindows()) {
-				String projectDirName = _liferaySelenium.getProjectDirName();
+		if (!OSDetector.isWindows()) {
+			String projectDirName = _liferaySelenium.getProjectDirName();
 
-				projectDirName = StringUtil.replace(projectDirName, "\\", "//");
+			projectDirName = StringUtil.replace(projectDirName, "\\", "//");
 
-				runtime.exec("/bin/bash cd " + projectDirName);
+			runtime.exec("/bin/bash cd " + projectDirName);
 
-				sb.append("/bin/bash ant -f ");
-				sb.append(_fileName);
-				sb.append(" ");
-				sb.append(_target);
-				sb.append(" -Dtest.ant.launched.by.selenium=true");
-			}
-			else {
-				runtime.exec(
-					"cmd /c cd " + _liferaySelenium.getProjectDirName());
+			sb.append("/bin/bash ant -f ");
+			sb.append(_fileName);
+			sb.append(" ");
+			sb.append(_target);
+			sb.append(" -Dtest.ant.launched.by.selenium=true");
+		}
+		else {
+			runtime.exec("cmd /c cd " + _liferaySelenium.getProjectDirName());
 
-				sb.append("cmd /c ant -f ");
-				sb.append(_fileName);
-				sb.append(" ");
-				sb.append(_target);
-				sb.append(" -Dtest.ant.launched.by.selenium=true");
-			}
+			sb.append("cmd /c ant -f ");
+			sb.append(_fileName);
+			sb.append(" ");
+			sb.append(_target);
+			sb.append(" -Dtest.ant.launched.by.selenium=true");
+		}
 
-			Process process = runtime.exec(sb.toString());
+		Process process = runtime.exec(sb.toString());
 
-			InputStreamReader inputStreamReader = new InputStreamReader(
-				process.getInputStream());
+		InputStreamReader inputStreamReader = new InputStreamReader(
+			process.getInputStream());
 
-			BufferedReader bufferedReader = new BufferedReader(
-				inputStreamReader);
+		BufferedReader inputBufferedReader = new BufferedReader(
+			inputStreamReader);
 
-			String line = null;
+		String line = null;
 
-			while ((line = bufferedReader.readLine()) != null) {
+		while ((line = inputBufferedReader.readLine()) != null) {
+			System.out.println(line);
+		}
+
+		InputStreamReader errorStreamReader = new InputStreamReader(
+			process.getErrorStream());
+
+		BufferedReader errorBufferedReader = new BufferedReader(
+			errorStreamReader);
+
+		if (errorBufferedReader.ready()) {
+			while ((line = errorBufferedReader.readLine()) != null) {
 				System.out.println(line);
-
-				if (line.contains("BUILD FAILED") ||
-					line.contains("BUILD SUCCESSFUL")) {
-
-					break;
-				}
 			}
+
+			throw new Exception();
 		}
-		catch (Exception e) {
-		}
+
+		return null;
 	}
 
 	private final String _fileName;

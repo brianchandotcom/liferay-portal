@@ -79,8 +79,6 @@ public class ClusterMasterExecutorImplTest {
 			LockLocalServiceUtil.class, "_service", new MockLockLocalService());
 
 		_TEST_TIME = System.currentTimeMillis();
-
-		_TEST_ADDRESS =  new AddressImpl(new MockAddress(_TEST_TIME));
 	}
 
 	@After
@@ -366,12 +364,11 @@ public class ClusterMasterExecutorImplTest {
 
 			Assert.fail();
 		}
-		catch (SystemException e) {
-			String message = e.getMessage();
-
+		catch (SystemException se) {
 			Assert.assertEquals(
-				"Unable to execute on master " + _TEST_ADDRESS.getDescription(),
-				message);
+				"Unable to execute on master " +
+					_LOCAL_ADDRESS.getDescription(),
+				se.getMessage());
 		}
 		finally {
 			MockClusterExecutor.setBreak(false);
@@ -396,19 +393,14 @@ public class ClusterMasterExecutorImplTest {
 
 			// Set a different lock owner
 
-			long otherTime = _TEST_TIME + 1;
-
-			Address otherAddress =  new AddressImpl(new MockAddress(otherTime));
-
-			String otherOwner = AddressSerializerUtil.serialize(otherAddress);
+			String otherOwner = AddressSerializerUtil.serialize(_OTHER_ADDRESS);
 
 			MockLockLocalService.setLock(otherOwner);
 
 			String owner = clusterMasterExecutorImpl.getMasterAddressString();
 
-			_TEST_OWNER = AddressSerializerUtil.serialize(_TEST_ADDRESS);
-
-			Assert.assertEquals(_TEST_OWNER, owner);
+			Assert.assertEquals(
+				_LOCAL_ADDRESS, AddressSerializerUtil.deserialize(owner));
 			Assert.assertEquals(2, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
@@ -433,7 +425,8 @@ public class ClusterMasterExecutorImplTest {
 
 			owner = clusterMasterExecutorImpl.getMasterAddressString();
 
-			Assert.assertEquals(_TEST_OWNER, owner);
+			Assert.assertEquals(
+				_LOCAL_ADDRESS, AddressSerializerUtil.deserialize(owner));
 			Assert.assertEquals(2, logRecords.size());
 
 			logRecord = logRecords.get(0);
@@ -448,7 +441,8 @@ public class ClusterMasterExecutorImplTest {
 
 			owner = clusterMasterExecutorImpl.getMasterAddressString();
 
-			Assert.assertEquals(_TEST_OWNER, owner);
+			Assert.assertEquals(
+				_LOCAL_ADDRESS, AddressSerializerUtil.deserialize(owner));
 			Assert.assertTrue(logRecords.isEmpty());
 		}
 		finally {
@@ -476,13 +470,9 @@ public class ClusterMasterExecutorImplTest {
 
 		Assert.assertTrue(clusterMasterExecutorImpl.isMaster());
 
-		long otherTime = _TEST_TIME + 1;
+		MockClusterExecutor.addClusterNodeAddress(_OTHER_ADDRESS);
 
-		Address otherAddress =  new AddressImpl(new MockAddress(otherTime));
-
-		MockClusterExecutor.addClusterNodeAddress(otherAddress);
-
-		String otherOwner = AddressSerializerUtil.serialize(otherAddress);
+		String otherOwner = AddressSerializerUtil.serialize(_OTHER_ADDRESS);
 
 		MockLockLocalService.setLock(otherOwner);
 
@@ -518,9 +508,8 @@ public class ClusterMasterExecutorImplTest {
 
 		String owner = clusterMasterExecutorImpl.getMasterAddressString();
 
-		Address address = AddressSerializerUtil.deserialize(owner);
-
-		Assert.assertEquals(_TEST_ADDRESS, address);
+		Assert.assertEquals(
+			_LOCAL_ADDRESS,  AddressSerializerUtil.deserialize(owner));
 	}
 
 	@Test
@@ -604,9 +593,11 @@ public class ClusterMasterExecutorImplTest {
 	protected static MethodKey testMethodMethodKey = new MethodKey(
 		TestBean.class, "testMethod1", String.class);
 
-	private static Address _TEST_ADDRESS;
+	private static final Address _LOCAL_ADDRESS = new AddressImpl(
+		new MockAddress("_LOCAL_ADDRESS"));
 
-	private static String _TEST_OWNER;
+	private static final Address _OTHER_ADDRESS = new AddressImpl(
+		new MockAddress("_OTHER_ADDRESS"));
 
 	private static long _TEST_TIME;
 
@@ -615,8 +606,8 @@ public class ClusterMasterExecutorImplTest {
 		public MockAddress() {
 		}
 
-		public MockAddress(long timestamp) {
-			_timestamp = timestamp;
+		public MockAddress(String name) {
+			_name = name;
 		}
 
 		@Override
@@ -625,33 +616,41 @@ public class ClusterMasterExecutorImplTest {
 		}
 
 		@Override
-		public boolean equals(Object obj) {
-			MockAddress mockAddress = (MockAddress)obj;
+		public boolean equals(Object object) {
+			if (this == object) {
+				return true;
+			}
 
-			if (_timestamp == mockAddress.getTimestamp()) {
+			if (!(object instanceof MockAddress)) {
+				return false;
+			}
+
+			MockAddress mockAddress = (MockAddress)object;
+
+			if (_name.equals(mockAddress._name)) {
 				return true;
 			}
 
 			return false;
 		}
 
-		public long getTimestamp() {
-			return _timestamp;
+		public String getName() {
+			return _name;
 		}
 
 		@Override
 		public int hashCode() {
-			return 11 * (int)_timestamp;
+			return _name.hashCode();
 		}
 
 		@Override
 		public void readExternal(ObjectInput objectInput) throws IOException {
-			_timestamp = objectInput.readLong();
+			_name = objectInput.readUTF();
 		}
 
 		@Override
 		public void readFrom(DataInput dataInput) throws Exception {
-			_timestamp = dataInput.readLong();
+			_name = dataInput.readUTF();
 		}
 
 		@Override
@@ -663,15 +662,15 @@ public class ClusterMasterExecutorImplTest {
 		public void writeExternal(ObjectOutput objectOutput)
 			throws IOException {
 
-			objectOutput.writeLong(_timestamp);
+			objectOutput.writeUTF(_name);
 		}
 
 		@Override
 		public void writeTo(DataOutput dataOutput) throws Exception {
-			dataOutput.writeLong(_timestamp);
+			dataOutput.writeUTF(_name);
 		}
 
-		private long _timestamp;
+		private String _name;
 
 	}
 
@@ -692,7 +691,7 @@ public class ClusterMasterExecutorImplTest {
 		public MockClusterExecutor(boolean enabled) {
 			_enabled = enabled;
 
-			_localAddress = _TEST_ADDRESS;
+			_localAddress = _LOCAL_ADDRESS;
 
 			_addresses.add(_localAddress);
 		}
@@ -742,7 +741,7 @@ public class ClusterMasterExecutorImplTest {
 				try {
 					clusterNodeResponse.setClusterNode(
 						new ClusterNode(
-							String.valueOf(mockAddress.getTimestamp()),
+							String.valueOf(mockAddress.getName()),
 							InetAddress.getLocalHost()));
 
 					clusterNodeResponse.setResult(

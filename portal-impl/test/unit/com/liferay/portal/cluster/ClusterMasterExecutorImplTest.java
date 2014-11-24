@@ -57,7 +57,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -75,13 +74,10 @@ public class ClusterMasterExecutorImplTest {
 
 	@Before
 	public void setUp() {
-		ReflectionTestUtil.setFieldValue(
-			LockLocalServiceUtil.class, "_service", new MockLockLocalService());
-	}
+		_mockLockLocalService = new MockLockLocalService();
 
-	@After
-	public void tearDown() {
-		MockLockLocalService.resetLock();
+		ReflectionTestUtil.setFieldValue(
+			LockLocalServiceUtil.class, "_service", _mockLockLocalService);
 	}
 
 	@Test
@@ -208,7 +204,7 @@ public class ClusterMasterExecutorImplTest {
 
 			Assert.assertTrue(clusterMasterExecutorImpl.isEnabled());
 
-			MockLockLocalService.setUnlockError(true);
+			_mockLockLocalService.setUnlockError(true);
 
 			clusterMasterExecutorImpl.destroy();
 
@@ -228,8 +224,6 @@ public class ClusterMasterExecutorImplTest {
 		}
 		finally {
 			captureHandler.close();
-
-			MockLockLocalService.setUnlockError(false);
 		}
 	}
 
@@ -391,7 +385,7 @@ public class ClusterMasterExecutorImplTest {
 
 			String otherOwner = AddressSerializerUtil.serialize(_OTHER_ADDRESS);
 
-			MockLockLocalService.setLock(otherOwner);
+			_mockLockLocalService.setLock(otherOwner);
 
 			String owner = clusterMasterExecutorImpl.getMasterAddressString();
 
@@ -417,7 +411,7 @@ public class ClusterMasterExecutorImplTest {
 
 			// No lock owner
 
-			MockLockLocalService.setLock(null);
+			_mockLockLocalService.setLock(null);
 
 			owner = clusterMasterExecutorImpl.getMasterAddressString();
 
@@ -433,7 +427,7 @@ public class ClusterMasterExecutorImplTest {
 
 			logRecords = captureHandler.resetLogLevel(Level.OFF);
 
-			MockLockLocalService.setLock(null);
+			_mockLockLocalService.setLock(null);
 
 			owner = clusterMasterExecutorImpl.getMasterAddressString();
 
@@ -470,7 +464,7 @@ public class ClusterMasterExecutorImplTest {
 
 		String otherOwner = AddressSerializerUtil.serialize(_OTHER_ADDRESS);
 
-		MockLockLocalService.setLock(otherOwner);
+		_mockLockLocalService.setLock(otherOwner);
 
 		clusterMasterExecutorImpl.getMasterAddressString();
 
@@ -594,6 +588,8 @@ public class ClusterMasterExecutorImplTest {
 
 	private static final Address _OTHER_ADDRESS = new AddressImpl(
 		new MockAddress("_OTHER_ADDRESS"));
+
+	private MockLockLocalService _mockLockLocalService;
 
 	private static class MockAddress implements org.jgroups.Address {
 
@@ -844,31 +840,8 @@ public class ClusterMasterExecutorImplTest {
 
 	private static class MockLockLocalService extends LockLocalServiceImpl {
 
-		public static Lock getLock() {
+		public Lock getLock() {
 			return _lock;
-		}
-
-		public static void override(Boolean override, String value) {
-			_override = override;
-			_value = value;
-		}
-
-		public static void resetLock() {
-			if (_lock != null) {
-				_lock = null;
-			}
-		}
-
-		public static void setLock(String owner) {
-			Lock lock = new LockImpl();
-
-			lock.setOwner(owner);
-
-			_lock = lock;
-		}
-
-		public static void setUnlockError(boolean error) {
-			_errorOnUnlock = error;
 		}
 
 		@Override
@@ -906,6 +879,23 @@ public class ClusterMasterExecutorImplTest {
 			return lock;
 		}
 
+		public void override(Boolean override, String value) {
+			_override = override;
+			_value = value;
+		}
+
+		public void setLock(String owner) {
+			Lock lock = new LockImpl();
+
+			lock.setOwner(owner);
+
+			_lock = lock;
+		}
+
+		public void setUnlockError(boolean error) {
+			_errorOnUnlock = error;
+		}
+
 		@Override
 		public void unlock(String className, String key, String owner) {
 			if (_errorOnUnlock) {
@@ -915,10 +905,10 @@ public class ClusterMasterExecutorImplTest {
 			_lock = null;
 		}
 
-		private static boolean _errorOnUnlock;
-		private static Lock _lock;
-		private static boolean _override;
-		private static String _value;
+		private boolean _errorOnUnlock;
+		private Lock _lock;
+		private boolean _override;
+		private String _value;
 
 	}
 

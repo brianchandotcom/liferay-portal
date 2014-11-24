@@ -67,12 +67,6 @@ public class AntCommands implements Callable<Void> {
 
 		Process process = runtime.exec(sb.toString());
 
-		InputStreamReader errorStreamReader = new InputStreamReader(
-			process.getErrorStream());
-
-		BufferedReader errorBufferedReader = new BufferedReader(
-			errorStreamReader);
-
 		InputStreamReader inputStreamReader = new InputStreamReader(
 			process.getInputStream());
 
@@ -84,6 +78,12 @@ public class AntCommands implements Callable<Void> {
 		while ((line = inputBufferedReader.readLine()) != null) {
 			System.out.println(line);
 		}
+
+		InputStreamReader errorStreamReader = new InputStreamReader(
+			process.getErrorStream());
+
+		BufferedReader errorBufferedReader = new BufferedReader(
+			errorStreamReader);
 
 		if (errorBufferedReader.ready()) {
 			while ((line = errorBufferedReader.readLine()) != null) {

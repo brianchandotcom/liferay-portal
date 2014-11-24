@@ -84,21 +84,18 @@ public class LiferaySeleniumHelper {
 		AntCommands antCommands = new AntCommands(
 			liferaySelenium, fileName, target);
 
-		ExecutorService executor = Executors.newCachedThreadPool();
+		ExecutorService executorService = Executors.newCachedThreadPool();
 
-		Future future = executor.submit(antCommands);
+		Future future = executorService.submit(antCommands);
 
 		try {
 			future.get(150, TimeUnit.SECONDS);
 		}
-		catch (ExecutionException e) {
-			throw new Exception();
+		catch (ExecutionException ee) {
+			throw ee;
 		}
-		catch (TimeoutException e) {
-			future.cancel(true);
+		catch (TimeoutException te) {
 		}
-
-		executor.shutdownNow();
 	}
 
 	public static void assertAlert(

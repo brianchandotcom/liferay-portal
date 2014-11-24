@@ -14,7 +14,7 @@
 
 package com.liferay.portal.service;
 
-import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -23,7 +23,7 @@ import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.test.MainServletTestRule;
-import com.liferay.portal.test.listeners.ResetDatabaseExecutionTestListener;
+import com.liferay.portal.test.ResetDatabaseTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.OrganizationTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
@@ -35,6 +35,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -42,16 +43,13 @@ import org.junit.runner.RunWith;
  * @author Jorge Ferrer
  * @author Sergio González
  */
-@ExecutionTestListeners(
-	listeners = {
-		ResetDatabaseExecutionTestListener.class
-	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class OrganizationLocalServiceTest {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE);
 
 	@Test
 	public void testAddOrganization() throws Exception {
@@ -315,5 +313,9 @@ public class OrganizationLocalServiceTest {
 		Assert.assertEquals(
 			organizationB.getGroupId(), groupAA.getParentGroupId());
 	}
+
+	@Rule
+	public final ResetDatabaseTestRule resetDatabaseTestRule =
+		ResetDatabaseTestRule.INSTANCE;
 
 }

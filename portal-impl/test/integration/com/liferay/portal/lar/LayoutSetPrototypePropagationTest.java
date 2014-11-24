@@ -16,7 +16,7 @@ package com.liferay.portal.lar;
 
 import com.liferay.portal.LayoutParentLayoutIdException;
 import com.liferay.portal.kernel.staging.MergeLayoutPrototypesThreadLocal;
-import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
@@ -39,9 +39,9 @@ import com.liferay.portal.service.ResourcePermissionServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.test.MainServletTestRule;
+import com.liferay.portal.test.ResetDatabaseTestRule;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationTestRule;
-import com.liferay.portal.test.listeners.ResetDatabaseExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -72,15 +72,15 @@ import org.junit.runner.RunWith;
  * @author Julio Camarero
  * @author Eduardo Garcia
  */
-@ExecutionTestListeners(listeners = {ResetDatabaseExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class LayoutSetPrototypePropagationTest
 	extends BasePrototypePropagationTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE);
 
 	@Test
 	public void testAddChildLayoutWithLinkDisabled() throws Exception {
@@ -344,6 +344,10 @@ public class LayoutSetPrototypePropagationTest
 			layoutPortletPreferences.getValue(
 				"showAvailableLocales", StringPool.BLANK));
 	}
+
+	@Rule
+	public final ResetDatabaseTestRule resetDatabaseTestRule =
+		ResetDatabaseTestRule.INSTANCE;
 
 	@Rule
 	public final SynchronousDestinationTestRule synchronousDestinationTestRule =

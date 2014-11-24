@@ -14,10 +14,10 @@
 
 package com.liferay.portal.service;
 
-import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.model.User;
 import com.liferay.portal.test.MainServletTestRule;
-import com.liferay.portal.test.listeners.ResetDatabaseExecutionTestListener;
+import com.liferay.portal.test.ResetDatabaseTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.UserTestUtil;
 import com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalServiceUtil;
@@ -26,22 +26,20 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Michael C. Han
  */
-@ExecutionTestListeners(
-	listeners = {
-		ResetDatabaseExecutionTestListener.class
-	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class UserLocalServiceTest {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE);
 
 	@Test
 	public void testGetNoAnnouncementsDeliveries() throws Exception {
@@ -94,5 +92,9 @@ public class UserLocalServiceTest {
 		Assert.assertEquals(1, users.size());
 		Assert.assertEquals(user, users.get(0));
 	}
+
+	@Rule
+	public final ResetDatabaseTestRule resetDatabaseTestRule =
+		ResetDatabaseTestRule.INSTANCE;
 
 }

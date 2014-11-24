@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.test.listeners;
+package com.liferay.portal.test;
 
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.Lifecycle;
@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.test.AbstractExecutionTestListener;
-import com.liferay.portal.kernel.test.TestContext;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -46,57 +44,77 @@ import java.util.Queue;
 
 import org.apache.log4j.Level;
 
+import org.junit.rules.TestRule;
+import org.junit.runner.Description;
+import org.junit.runners.model.Statement;
+
 /**
  * @author Shuyang Zhou
  */
-public class ResetDatabaseExecutionTestListener
-	extends AbstractExecutionTestListener {
+public class ResetDatabaseTestRule implements TestRule {
+
+	public static final ResetDatabaseTestRule INSTANCE =
+		new ResetDatabaseTestRule();
 
 	@Override
-	public void runAfterTest(TestContext testContext) {
-		restoreDLStores(false);
-		restoreSearchIndices(false);
+	public Statement apply(
+		final Statement statement, final Description description) {
 
-		ResetDatabaseUtil.resetModifiedTables();
+		return new Statement() {
 
-		Log4JLoggerTestUtil.setLoggerLevel(Table.class.getName(), _level);
+			@Override
+			public void evaluate() throws Throwable {
+				String methodName = description.getMethodName();
 
-		CacheRegistryUtil.clear();
-		SingleVMPoolUtil.clear();
-		MultiVMPoolUtil.clear();
+				Level level = Log4JLoggerTestUtil.setLoggerLevel(
+					Table.class.getName(), Level.WARN);
 
-		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
-	}
+				if (methodName == null) {
+					try {
+						if (ResetDatabaseUtil.initialize()) {
+							backupDLStores(true);
+							backupSearchIndices(true);
+						}
+						else {
+							restoreDLStores(true);
+							restoreSearchIndices(true);
+						}
+					}
+					finally {
+						Log4JLoggerTestUtil.setLoggerLevel(
+							Table.class.getName(), level);
+					}
+				}
+				else {
+					ResetDatabaseUtil.startRecording();
 
-	@Override
-	public void runBeforeClass(TestContext testContext) {
-		_level = Log4JLoggerTestUtil.setLoggerLevel(
-			Table.class.getName(), Level.WARN);
+					backupDLStores(false);
+					backupSearchIndices(false);
+				}
 
-		try {
-			if (ResetDatabaseUtil.initialize()) {
-				backupDLStores(true);
-				backupSearchIndices(true);
+				try {
+					statement.evaluate();
+				}
+				finally {
+					if (methodName != null) {
+						restoreDLStores(false);
+						restoreSearchIndices(false);
+
+						ResetDatabaseUtil.resetModifiedTables();
+
+						Log4JLoggerTestUtil.setLoggerLevel(
+							Table.class.getName(), level);
+
+						CacheRegistryUtil.clear();
+						SingleVMPoolUtil.clear();
+						MultiVMPoolUtil.clear();
+
+						ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
+					}
+				}
 			}
-			else {
-				restoreDLStores(true);
-				restoreSearchIndices(true);
-			}
-		}
-		finally {
-			Log4JLoggerTestUtil.setLoggerLevel(Table.class.getName(), _level);
-		}
-	}
 
-	@Override
-	public void runBeforeTest(TestContext testContext) {
-		_level = Log4JLoggerTestUtil.setLoggerLevel(
-			Table.class.getName(), Level.WARN);
-
-		ResetDatabaseUtil.startRecording();
-
-		backupDLStores(false);
-		backupSearchIndices(false);
+		};
 	}
 
 	protected void backupDLStores(boolean initialize) {
@@ -271,8 +289,11 @@ public class ResetDatabaseExecutionTestListener
 		}
 	}
 
+	private ResetDatabaseTestRule() {
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
-		ResetDatabaseExecutionTestListener.class);
+		ResetDatabaseTestRule.class);
 
 	private static String _initializedDLFileSystemStoreDirName;
 	private static String _initializedDLJCRStoreDirName;
@@ -282,7 +303,6 @@ public class ResetDatabaseExecutionTestListener
 	private String _dlFileSystemStoreDirName;
 	private String _dlJCRStoreDirName;
 	private final Map<Long, String> _indexNames = new HashMap<Long, String>();
-	private Level _level;
 
 	private class DeleteFileShutdownHook extends Thread {
 

@@ -16,10 +16,11 @@ package com.liferay.socialnetworking.upgrade.v1_0_1;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.model.Release;
 import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.socialnetworking.upgrade.v1_0_0.SocialNetworkingServiceUpgrade_v1_0_0;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Activate;
@@ -48,9 +49,15 @@ public class SocialNetworkingServiceUpgrade_v1_0_1 {
 
 	@Activate
 	protected void upgrade() throws PortalException {
-		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
+		Release release = _releaseLocalService.fetchRelease(
+			"social-networking-portlet");
 
-		upgradeProcesses.add(new UpgradePortletId());
+		if (release.getBuildNumber() >= 101) {
+			return;
+		}
+
+		List<UpgradeProcess> upgradeProcesses =
+			Collections.<UpgradeProcess>singletonList(new UpgradePortletId());
 
 		_releaseLocalService.updateRelease(
 			"social-networking-portlet", upgradeProcesses, 101, 0, false);

@@ -146,9 +146,8 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 
 		try {
 			Folder folder = PortletFileRepositoryUtil.getPortletFolder(
-				getUserId(), repository.getRepositoryId(),
-				threadAttachmetsFolderId, String.valueOf(getMessageId()),
-				serviceContext);
+				repository.getRepositoryId(), threadAttachmetsFolderId,
+				String.valueOf(getMessageId()));
 
 			_attachmentsFolderId = folder.getFolderId();
 		}

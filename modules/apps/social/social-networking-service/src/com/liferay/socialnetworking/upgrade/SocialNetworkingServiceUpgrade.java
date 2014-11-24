@@ -14,19 +14,10 @@
 
 package com.liferay.socialnetworking.upgrade;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.service.ReleaseLocalService;
-import com.liferay.socialnetworking.upgrade.v1_0_0.UpgradeNamespace;
+import com.liferay.socialnetworking.upgrade.v1_0_0.SocialNetworkingServiceUpgrade_v1_0_0;
 
-import java.util.Collections;
-import java.util.List;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import org.springframework.context.ApplicationContext;
 
 /**
  * @author Adolfo Pérez
@@ -36,32 +27,9 @@ import org.springframework.context.ApplicationContext;
 )
 public class SocialNetworkingServiceUpgrade {
 
-	@Reference(
-		target =
-			"(org.springframework.context.service.name=" +
-				"com.liferay.social.networking.service)",
-		unbind = "-"
-	)
-	protected void setApplicationContext(
-		ApplicationContext applicationContext) {
-	}
-
 	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = releaseLocalService;
+	protected void setLastServiceUpgrade(
+		SocialNetworkingServiceUpgrade_v1_0_0 lastServiceUpgrade) {
 	}
-
-	@Activate
-	protected void upgrade() throws PortalException {
-		List<UpgradeProcess> upgradeProcesses =
-			Collections.<UpgradeProcess>singletonList(new UpgradeNamespace());
-
-		_releaseLocalService.updateRelease(
-			"social-networking-portlet", upgradeProcesses, 100, 0, false);
-	}
-
-	private ReleaseLocalService _releaseLocalService;
 
 }

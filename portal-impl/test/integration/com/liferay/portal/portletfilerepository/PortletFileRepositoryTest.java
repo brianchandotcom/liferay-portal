@@ -17,11 +17,10 @@ package com.liferay.portal.portletfilerepository;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
-import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
@@ -32,6 +31,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
@@ -44,11 +44,12 @@ import org.testng.Assert;
 @RunWith(Enclosed.class)
 public class PortletFileRepositoryTest {
 
-	@ExecutionTestListeners(
-		listeners = { MainServletExecutionTestListener.class }
-	)
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	public static class WhenAddingAFileEntry {
+
+		@ClassRule
+		public static final MainServletTestRule mainServletTestRule =
+			MainServletTestRule.INSTANCE;
 
 		@Test
 		public void shouldCreateApprovedFileEntry() throws Exception {
@@ -126,11 +127,12 @@ public class PortletFileRepositoryTest {
 
 	}
 
-	@ExecutionTestListeners(
-		listeners = { MainServletExecutionTestListener.class }
-	)
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	public static class WhenAddingAFolder {
+
+		@ClassRule
+		public static final MainServletTestRule mainServletTestRule =
+			MainServletTestRule.INSTANCE;
 
 		@Test(expected = DuplicateFileException.class)
 		public void shouldFailIfDuplicateName() throws Exception {
@@ -180,11 +182,12 @@ public class PortletFileRepositoryTest {
 
 	}
 
-	@ExecutionTestListeners(
-		listeners = { MainServletExecutionTestListener.class }
-	)
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	public static class WhenDeletingAFolder {
+
+		@ClassRule
+		public static final MainServletTestRule mainServletTestRule =
+			MainServletTestRule.INSTANCE;
 
 		@Test
 		public void shouldDeleteAllFileEntries() throws Exception {
@@ -232,11 +235,12 @@ public class PortletFileRepositoryTest {
 
 	}
 
-	@ExecutionTestListeners(
-		listeners = { MainServletExecutionTestListener.class }
-	)
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	public static class WhenDeletingFileEntries {
+
+		@ClassRule
+		public static final MainServletTestRule mainServletTestRule =
+			MainServletTestRule.INSTANCE;
 
 		@Test
 		public void shouldDeleteAllFileEntries() throws Exception {

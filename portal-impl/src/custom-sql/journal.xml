@@ -96,6 +96,35 @@
 				(expirationDate <= ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByNoAssets">
+		<![CDATA[
+			SELECT
+				{JournalArticle.*}
+			FROM
+				JournalArticle
+			LEFT JOIN
+				AssetEntry ON
+					(AssetEntry.classPK = JournalArticle.resourcePrimKey)
+			WHERE
+				AssetEntry.classPK IS NULL
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByNoPermissions">
+		<![CDATA[
+			SELECT
+				{JournalArticle.*}
+			FROM
+				JournalArticle
+			LEFT JOIN
+				ResourcePermission ON
+					(ResourcePermission.companyId = JournalArticle.companyId) AND
+					(ResourcePermission.name = 'com.liferay.portlet.journal.model.JournalArticle') AND
+					(ResourcePermission.primKey = JournalArticle.resourcePrimKey) AND
+					(ResourcePermission.scope = ?)
+			WHERE
+				ResourcePermission.primKey IS NULL
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByReviewDate">
 		<![CDATA[
 			SELECT

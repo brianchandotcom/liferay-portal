@@ -298,6 +298,14 @@ public class JournalArticleFinderUtil {
 			displayDateLT, status, reviewDate, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByNoAssets() {
+		return getFinder().findByNoAssets();
+	}
+
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByNoPermissions() {
+		return getFinder().findByNoPermissions();
+	}
+
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByReviewDate(
 		long classNameId, java.util.Date reviewDateLT,
 		java.util.Date reviewDateGT) {

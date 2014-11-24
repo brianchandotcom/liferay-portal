@@ -82,14 +82,22 @@ public abstract class BaseImageSelectorAction extends PortletAction {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+		String randomId = ParamUtil.getString(actionRequest, "randomId");
+
+		JSONObject imageJSONObject = null;
+
 		try {
-			jsonObject.put("image", getImageJSONObject(actionRequest));
+			imageJSONObject = getImageJSONObject(actionRequest);
 
 			jsonObject.put("success", Boolean.TRUE);
 		}
 		catch (Exception e) {
 			handleUploadException(actionRequest, actionResponse, e, jsonObject);
 		}
+
+		imageJSONObject.put("randomId", randomId);
+
+		jsonObject.put("image", imageJSONObject);
 
 		writeJSON(actionRequest, actionResponse, jsonObject);
 	}
@@ -106,8 +114,6 @@ public abstract class BaseImageSelectorAction extends PortletAction {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		String randomId = ParamUtil.getString(uploadPortletRequest, "randomId");
 
 		JSONObject imageJSONObject = JSONFactoryUtil.createJSONObject();
 
@@ -143,8 +149,6 @@ public abstract class BaseImageSelectorAction extends PortletAction {
 				EditorConstants.DATA_IMAGE_ID_ATTRIBUTE);
 
 			imageJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
-
-			imageJSONObject.put("randomId", randomId);
 
 			imageJSONObject.put(
 				"url",

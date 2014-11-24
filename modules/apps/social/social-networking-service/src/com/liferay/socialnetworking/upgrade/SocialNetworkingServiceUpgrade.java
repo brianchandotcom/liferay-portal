@@ -14,7 +14,7 @@
 
 package com.liferay.socialnetworking.upgrade;
 
-import com.liferay.socialnetworking.upgrade.v1_0_0.SocialNetworkingServiceUpgrade_v1_0_0;
+import com.liferay.socialnetworking.upgrade.v1_0_1.SocialNetworkingServiceUpgrade_v1_0_1;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,7 +29,7 @@ public class SocialNetworkingServiceUpgrade {
 
 	@Reference(unbind = "-")
 	protected void setLastServiceUpgrade(
-		SocialNetworkingServiceUpgrade_v1_0_0 lastServiceUpgrade) {
+		SocialNetworkingServiceUpgrade_v1_0_1 lastServiceUpgrade) {
 	}
 
 }

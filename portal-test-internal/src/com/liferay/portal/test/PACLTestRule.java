@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterHelper;
+import com.liferay.portal.kernel.test.BaseTestRule;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
@@ -32,9 +33,7 @@ import com.liferay.portal.util.PortalUtil;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 
-import org.junit.rules.TestRule;
 import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResourceLoader;
@@ -46,37 +45,14 @@ import org.springframework.mock.web.MockServletContext;
  * @author Raymond Augé
  * @author Shuyang Zhou
  */
-public class PACLTestRule implements TestRule {
+public class PACLTestRule extends BaseTestRule<HotDeployEvent, Object> {
 
 	public static final PACLTestRule INSTANCE = new PACLTestRule();
 
 	@Override
-	public Statement apply(
-		final Statement statement, final Description description) {
+	protected void afterClass(
+		Description description, HotDeployEvent hotDeployEvent) {
 
-		return new Statement() {
-
-			@Override
-			public void evaluate() throws Throwable {
-				ReflectionTestUtil.setFieldValue(
-					description, "fTestClass",
-					PACLIntegrationJUnitTestRunner.getCurrentTestClass());
-
-				HotDeployEvent hotDeployEvent = before(
-					description.getTestClass());
-
-				try {
-					statement.evaluate();
-				}
-				finally {
-					after(hotDeployEvent);
-				}
-			}
-
-		};
-	}
-
-	protected void after(HotDeployEvent hotDeployEvent) {
 		HotDeployUtil.fireUndeployEvent(hotDeployEvent);
 
 		PortletContextLoaderListener portletContextLoaderListener =
@@ -98,7 +74,12 @@ public class PACLTestRule implements TestRule {
 		}
 	}
 
-	protected HotDeployEvent before(Class<?> testClass) {
+	@Override
+	protected HotDeployEvent beforeClass(Description description) {
+		ReflectionTestUtil.setFieldValue(
+			description, "fTestClass",
+			PACLIntegrationJUnitTestRunner.getCurrentTestClass());
+
 		ServletContext servletContext = ServletContextPool.get(
 			PortalUtil.getServletContextName());
 
@@ -119,6 +100,8 @@ public class PACLTestRule implements TestRule {
 		HotDeployUtil.setCapturePrematureEvents(false);
 
 		PortalLifecycleUtil.flushInits();
+
+		Class<?> testClass = description.getTestClass();
 
 		ClassLoader classLoader = testClass.getClassLoader();
 

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.test.runners;
 
+import com.liferay.portal.kernel.test.BaseTestRule;
 import com.liferay.portal.kernel.test.DescriptionComparator;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -32,7 +33,6 @@ import org.junit.runner.Description;
 import org.junit.runner.manipulation.Sorter;
 import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.InitializationError;
-import org.junit.runners.model.Statement;
 
 /**
  * @author Miguel Pastor
@@ -90,46 +90,24 @@ public class LiferayIntegrationJUnitTestRunner extends BlockJUnit4ClassRunner {
 		return testRules;
 	}
 
-	private final TestRule _clearThreadLocalTestRule = new TestRule() {
-
-		@Override
-		public Statement apply(
-			final Statement statement, Description description) {
-
-			return new Statement() {
-
-				@Override
-				public void evaluate() throws Throwable {
-					try {
-						statement.evaluate();
-					}
-					finally {
-						CentralizedThreadLocal.clearShortLivedThreadLocals();
-					}
-				}
-
-			};
-		}
-
-	};
-
-	private final TestRule _uniqueStringRandomizerBumperTestRule =
-		new TestRule() {
+	private final TestRule _clearThreadLocalTestRule =
+		new BaseTestRule<Object, Object>() {
 
 			@Override
-			public Statement apply(
-				final Statement statement, Description description) {
+			protected void afterClass(Description description, Object object) {
+				CentralizedThreadLocal.clearShortLivedThreadLocals();
+			}
 
-				return new Statement() {
+		};
 
-					@Override
-					public void evaluate() throws Throwable {
-						UniqueStringRandomizerBumper.reset();
+	private final TestRule _uniqueStringRandomizerBumperTestRule =
+		new BaseTestRule<Object, Object>() {
 
-						statement.evaluate();
-					}
+			@Override
+			protected Object beforeClass(Description description) {
+				UniqueStringRandomizerBumper.reset();
 
-				};
+				return null;
 			}
 
 		};

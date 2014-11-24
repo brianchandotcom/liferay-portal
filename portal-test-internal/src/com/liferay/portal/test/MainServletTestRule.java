@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.test.BaseTestRule;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.servlet.MainServlet;
@@ -26,9 +27,7 @@ import com.liferay.portal.util.test.TestPropsValues;
 
 import javax.servlet.ServletException;
 
-import org.junit.rules.TestRule;
 import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
 
 import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.mock.web.MockServletConfig;
@@ -38,34 +37,16 @@ import org.springframework.mock.web.MockServletContext;
  * @author Miguel Pastor
  * @author Shuyang Zhou
  */
-public class MainServletTestRule implements TestRule {
+public class MainServletTestRule extends BaseTestRule<Object, Object> {
 
 	public static final MainServletTestRule INSTANCE =
 		new MainServletTestRule();
 
-	@Override
-	public Statement apply(final Statement statement, Description description) {
-		return new Statement() {
-
-			@Override
-			public void evaluate() throws Throwable {
-				before();
-
-				try {
-					statement.evaluate();
-				}
-				finally {
-					after();
-				}
-			}
-
-		};
-	}
-
 	protected MainServletTestRule() {
 	}
 
-	protected void after() {
+	@Override
+	protected void afterClass(Description description, Object object) {
 		ServiceTestUtil.destroyServices();
 
 		try {
@@ -76,7 +57,8 @@ public class MainServletTestRule implements TestRule {
 		}
 	}
 
-	protected void before() {
+	@Override
+	protected Object beforeClass(Description description) {
 		ServiceTestUtil.initServices();
 
 		ServiceTestUtil.initPermissions();
@@ -101,6 +83,8 @@ public class MainServletTestRule implements TestRule {
 					"The main servlet could not be initialized");
 			}
 		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

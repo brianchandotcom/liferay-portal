@@ -28,14 +28,12 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import org.junit.rules.TestRule;
 import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
 
 /**
  * @author Shuyang Zhou
  */
-public class CodeCoverageAssertor implements TestRule {
+public class CodeCoverageAssertor extends BaseTestRule<String, Object> {
 
 	public static final CodeCoverageAssertor INSTANCE =
 		new CodeCoverageAssertor();
@@ -56,52 +54,43 @@ public class CodeCoverageAssertor implements TestRule {
 	}
 
 	@Override
-	public Statement apply(
-		final Statement statement, final Description description) {
+	protected void afterClass(Description description, String className)
+		throws Exception {
 
-		return new Statement() {
+		List<Class<?>> assertClasses = new ArrayList<Class<?>>();
 
-			@Override
-			public void evaluate() throws Throwable {
-				String className = description.getClassName();
+		ClassLoader classLoader = getClassLoader();
 
-				if (className.endsWith("Test")) {
-					className = className.substring(0, className.length() - 4);
-				}
+		Class<?> clazz = classLoader.loadClass(className);
 
-				String[] includes = _includes;
+		assertClasses.add(clazz);
 
-				if (includes == null) {
-					includes = _generateIncludes(className);
-				}
+		appendAssertClasses(assertClasses);
 
-				_DYNAMICALLY_INSTRUMENT_METHOD.invoke(
-					null, includes, _excludes);
+		_purgeSyntheticClasses(assertClasses);
 
-				try {
-					statement.evaluate();
-				}
-				finally {
-					List<Class<?>> assertClasses = new ArrayList<Class<?>>();
+		_ASSERT_COVERAGE_METHOD.invoke(
+			null, _includeInnerClasses,
+			assertClasses.toArray(new Class<?>[assertClasses.size()]));
+	}
 
-					ClassLoader classLoader = getClassLoader();
+	@Override
+	protected String beforeClass(Description description) throws Exception {
+		String className = description.getClassName();
 
-					Class<?> clazz = classLoader.loadClass(className);
+		if (className.endsWith("Test")) {
+			className = className.substring(0, className.length() - 4);
+		}
 
-					assertClasses.add(clazz);
+		String[] includes = _includes;
 
-					appendAssertClasses(assertClasses);
+		if (includes == null) {
+			includes = _generateIncludes(className);
+		}
 
-					_purgeSyntheticClasses(assertClasses);
+		_DYNAMICALLY_INSTRUMENT_METHOD.invoke(null, includes, _excludes);
 
-					_ASSERT_COVERAGE_METHOD.invoke(
-						null, _includeInnerClasses,
-						assertClasses.toArray(
-							new Class<?>[assertClasses.size()]));
-				}
-			}
-
-		};
+		return className;
 	}
 
 	protected ClassLoader getClassLoader() {

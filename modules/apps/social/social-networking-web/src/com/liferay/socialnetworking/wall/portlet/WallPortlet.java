@@ -44,6 +44,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 @Component(
 	immediate = true,
 	property = {
+		"com.liferay.portlet.category=category.social",
 		"com.liferay.portlet.icon=/icons/wall.png",
 		"com.liferay.portlet.friendly-url-routes=" +
 			"com/liferay/socialnetworking/wall/portlet/" +

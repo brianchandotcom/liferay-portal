@@ -16,14 +16,15 @@ package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -31,10 +32,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
-import com.liferay.portlet.trash.model.TrashEntry;
-import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
-
-import java.util.List;
 
 /**
  * @author Michael C. Han
@@ -91,29 +88,57 @@ public class VerifyDocumentLibraryTitles extends VerifyProcess {
 	}
 
 	protected void checkTitles() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DLFileEntry.class);
+		ActionableDynamicQuery actionableDynamicQuery =
+			DLFileEntryLocalServiceUtil.getActionableDynamicQuery();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.like("title", "%\\\\%"));
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
 
-		List<DLFileEntry> dlFileEntries =
-			DLFileEntryLocalServiceUtil.dynamicQuery(dynamicQuery);
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Property titleProperty = PropertyFactoryUtil.forName(
+						"title");
 
-		for (DLFileEntry dlFileEntry : dlFileEntries) {
-			TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(
-				dlFileEntry.getModelClassName(), dlFileEntry.getFileEntryId());
+					dynamicQuery.add(titleProperty.like("%\\\\%"));
 
-			if (trashEntry != null) {
-				continue;
-			}
+					Property statusProperty = PropertyFactoryUtil.forName(
+						"status");
 
-			String title = dlFileEntry.getTitle();
+					dynamicQuery.add(
+						statusProperty.ne(WorkflowConstants.STATUS_IN_TRASH));
+				}
 
-			String newTitle = title.replace(
-				StringPool.BACK_SLASH, StringPool.UNDERLINE);
+			});
 
-			renameTitle(dlFileEntry, newTitle);
-		}
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
+
+				@Override
+				public void performAction(Object object) {
+					DLFileEntry dlFileEntry = (DLFileEntry)object;
+
+					String title = dlFileEntry.getTitle();
+
+					String newTitle = title.replace(
+						StringPool.BACK_SLASH, StringPool.UNDERLINE);
+
+					try {
+						renameTitle(dlFileEntry, newTitle);
+					}
+					catch (Exception e) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to rename duplicate title for " +
+									"file entry " +
+									dlFileEntry.getFileEntryId() +
+									": " + e.getMessage(),
+								e);
+						}
+					}
+				}
+			});
+
+		actionableDynamicQuery.performActions();
 
 		checkDuplicateTitles();
 	}

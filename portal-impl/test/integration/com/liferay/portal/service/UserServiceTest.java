@@ -16,6 +16,7 @@ package com.liferay.portal.service;
 
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.ReservedUserEmailAddressException;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
@@ -28,7 +29,7 @@ import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.Sync;
-import com.liferay.portal.test.SynchronousMailExecutionTestListener;
+import com.liferay.portal.test.SynchronousMailTestRule;
 import com.liferay.portal.test.listeners.ResetDatabaseExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -47,6 +48,7 @@ import javax.portlet.PortletPreferences;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
@@ -559,17 +561,16 @@ public class UserServiceTest {
 	}
 
 	@ExecutionTestListeners(
-		listeners = {
-			ResetDatabaseExecutionTestListener.class,
-			SynchronousMailExecutionTestListener.class
-		})
+		listeners = {ResetDatabaseExecutionTestListener.class}
+	)
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	@Sync
 	public static class WhenPortalSendsPasswordEmail {
 
 		@ClassRule
-		public static final MainServletTestRule mainServletTestRule =
-			MainServletTestRule.INSTANCE;
+		public static final AggregateTestRule aggregateTestRule =
+			new AggregateTestRule(
+				MainServletTestRule.INSTANCE, SynchronousMailTestRule.INSTANCE);
 
 		@Before
 		public void setUp() throws Exception {
@@ -679,6 +680,10 @@ public class UserServiceTest {
 				MailServiceTestUtil.lastMailMessageContains(
 					"email_password_reset_body.tmpl"));
 		}
+
+		@Rule
+		public final SynchronousMailTestRule synchronousMailTestRule =
+			SynchronousMailTestRule.INSTANCE;
 
 		protected void givenThatCompanySendsNewPassword() throws Exception {
 			PortletPreferences portletPreferences =

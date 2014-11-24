@@ -19,7 +19,7 @@ import com.dumbster.smtp.MailMessage;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
-import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -31,7 +31,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.Sync;
-import com.liferay.portal.test.SynchronousMailExecutionTestListener;
+import com.liferay.portal.test.SynchronousMailTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.MailServiceTestUtil;
@@ -45,23 +45,21 @@ import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Sergio González
  */
-@ExecutionTestListeners(
-	listeners = {
-		SynchronousMailExecutionTestListener.class
-	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE, SynchronousMailTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -140,6 +138,10 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 
 		Assert.assertEquals(message.getBody(), StringPool.NEW_LINE);
 	}
+
+	@Rule
+	public final SynchronousMailTestRule synchronousMailTestRule =
+		SynchronousMailTestRule.INSTANCE;
 
 	protected void setUpBlogsSettings() throws Exception {
 		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(

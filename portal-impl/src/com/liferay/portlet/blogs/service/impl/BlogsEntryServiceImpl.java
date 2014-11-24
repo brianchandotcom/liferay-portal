@@ -140,8 +140,8 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			InputStream is)
 		throws PortalException {
 
-		BlogsPermission.check(
-			getPermissionChecker(), groupId, ActionKeys.ADD_ATTACHMENT);
+		BlogsEntryPermission.check(
+			getPermissionChecker(), entryId, ActionKeys.UPDATE);
 
 		return blogsEntryLocalService.addEntryAttachment(
 			groupId, getUserId(), entryId, fileName, mimeType, is);

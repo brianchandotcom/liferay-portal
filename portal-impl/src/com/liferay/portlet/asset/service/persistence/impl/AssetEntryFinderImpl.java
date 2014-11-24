@@ -302,7 +302,7 @@ public class AssetEntryFinderImpl
 				 Validator.isNotNull(entryQuery.getTitle()) ||
 				 Validator.isNotNull(entryQuery.getDescription())) {
 
-			sb.append("AND (");
+			sb.append(" AND (");
 			sb.append(
 				entryQuery.isAndOperator() ? Boolean.TRUE : Boolean.FALSE);
 

@@ -142,9 +142,9 @@ public class PortletFileRepositoryTest {
 
 			String name = RandomTestUtil.randomString();
 
-			_addPortletFileEntry(portletId, folder.getFolderId(), name);
+			_addPortletFolder(portletId, folder.getFolderId(), name);
 
-			_addPortletFileEntry(portletId, folder.getFolderId(), name);
+			_addPortletFolder(portletId, folder.getFolderId(), name);
 		}
 
 		@Test
@@ -153,16 +153,11 @@ public class PortletFileRepositoryTest {
 
 			Folder folder = _addPortletFolder(portletId);
 
-			_addPortletFileEntry(
+			_addPortletFolder(
 				portletId, folder.getFolderId(), RandomTestUtil.randomString());
 
-			_addPortletFileEntry(
+			_addPortletFolder(
 				portletId, folder.getFolderId(), RandomTestUtil.randomString());
-
-			int count = PortletFileRepositoryUtil.getPortletFileEntriesCount(
-				TestPropsValues.getGroupId(), folder.getFolderId());
-
-			Assert.assertEquals(count, 2);
 		}
 
 		@Test
@@ -171,13 +166,8 @@ public class PortletFileRepositoryTest {
 
 			Folder folder = _addPortletFolder(portletId);
 
-			_addPortletFileEntry(
+			_addPortletFolder(
 				portletId, folder.getFolderId(), RandomTestUtil.randomString());
-
-			int count = PortletFileRepositoryUtil.getPortletFileEntriesCount(
-				TestPropsValues.getGroupId(), folder.getFolderId());
-
-			Assert.assertEquals(count, 1);
 		}
 
 	}
@@ -320,10 +310,18 @@ public class PortletFileRepositoryTest {
 	private static Folder _addPortletFolder(String portletId)
 		throws PortalException {
 
+		return _addPortletFolder(
+			portletId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString());
+	}
+
+	private static Folder _addPortletFolder(
+			String portletId, long parentFolderId, String name)
+		throws PortalException {
+
 		return PortletFileRepositoryUtil.addPortletFolder(
 			TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
-			portletId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(),
+			portletId, parentFolderId, name,
 			ServiceContextTestUtil.getServiceContext());
 	}
 

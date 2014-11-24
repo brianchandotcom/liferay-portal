@@ -344,13 +344,8 @@ public class ClusterMasterExecutorImplTest {
 		clusterMasterExecutorImpl.setClusterExecutor(mockClusterExecutor);
 		clusterMasterExecutorImpl.initialize();
 
-		MethodHandler methodHandler = new MethodHandler(
-			testMethodMethodKey, null);
-
 		try {
-			MockClusterExecutor.setBreak(true);
-
-			clusterMasterExecutorImpl.executeOnMaster(methodHandler);
+			clusterMasterExecutorImpl.executeOnMaster(null);
 
 			Assert.fail();
 		}
@@ -359,9 +354,6 @@ public class ClusterMasterExecutorImplTest {
 				"Unable to execute on master " +
 					_LOCAL_ADDRESS.getDescription(),
 				se.getMessage());
-		}
-		finally {
-			MockClusterExecutor.setBreak(false);
 		}
 	}
 
@@ -445,7 +437,7 @@ public class ClusterMasterExecutorImplTest {
 		ClusterMasterExecutorImpl clusterMasterExecutorImpl =
 			new ClusterMasterExecutorImpl();
 
-		ClusterExecutor mockClusterExecutor = new MockClusterExecutor(true);
+		MockClusterExecutor mockClusterExecutor = new MockClusterExecutor(true);
 
 		clusterMasterExecutorImpl.setClusterExecutor(mockClusterExecutor);
 
@@ -460,7 +452,7 @@ public class ClusterMasterExecutorImplTest {
 
 		Assert.assertTrue(clusterMasterExecutorImpl.isMaster());
 
-		MockClusterExecutor.addClusterNodeAddress(_OTHER_ADDRESS);
+		mockClusterExecutor.addClusterNodeAddress(_OTHER_ADDRESS);
 
 		String otherOwner = AddressSerializerUtil.serialize(_OTHER_ADDRESS);
 
@@ -666,14 +658,6 @@ public class ClusterMasterExecutorImplTest {
 
 	private static class MockClusterExecutor implements ClusterExecutor {
 
-		public static void addClusterNodeAddress(Address address) {
-			_addresses.add(address);
-		}
-
-		public static void setBreak(boolean brk) {
-			_break = brk;
-		}
-
 		public MockClusterExecutor(boolean enabled) {
 			_enabled = enabled;
 
@@ -689,6 +673,10 @@ public class ClusterMasterExecutorImplTest {
 			_clusterEventListeners.add(clusterEventListener);
 		}
 
+		public void addClusterNodeAddress(Address address) {
+			_addresses.add(address);
+		}
+
 		@Override
 		public void destroy() {
 			_addresses.clear();
@@ -696,10 +684,6 @@ public class ClusterMasterExecutorImplTest {
 
 		@Override
 		public FutureClusterResponses execute(ClusterRequest clusterRequest) {
-			if (_break) {
-				return null;
-			}
-
 			List<Address> addresses = new ArrayList<Address>();
 
 			Collection<Address> clusterNodeAddresses =
@@ -730,10 +714,13 @@ public class ClusterMasterExecutorImplTest {
 							String.valueOf(mockAddress.getName()),
 							InetAddress.getLocalHost()));
 
-					clusterNodeResponse.setResult(
-						(clusterRequest.getMethodHandler().invoke()));
+					MethodHandler methodHandler =
+						clusterRequest.getMethodHandler();
+
+					clusterNodeResponse.setResult(methodHandler.invoke());
 				}
 				catch (Exception e) {
+					throw new RuntimeException(e);
 				}
 
 				futureClusterResponses.addClusterNodeResponse(
@@ -802,10 +789,7 @@ public class ClusterMasterExecutorImplTest {
 			_clusterEventListeners.remove(clusterEventListener);
 		}
 
-		private static final List<Address> _addresses =
-			new ArrayList<Address>();
-		private static boolean _break;
-
+		private final List<Address> _addresses = new ArrayList<Address>();
 		private final List<ClusterEventListener> _clusterEventListeners =
 			new ArrayList<ClusterEventListener>();
 		private final boolean _enabled;

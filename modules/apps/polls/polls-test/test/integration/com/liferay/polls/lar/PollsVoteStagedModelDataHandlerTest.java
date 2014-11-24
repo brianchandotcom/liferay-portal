@@ -22,11 +22,12 @@ import com.liferay.polls.service.PollsQuestionLocalServiceUtil;
 import com.liferay.polls.service.PollsVoteLocalServiceUtil;
 import com.liferay.polls.service.persistence.PollsChoiceUtil;
 import com.liferay.polls.util.test.PollsTestUtil;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.test.TransactionalTestRule;
-import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
+import com.liferay.portal.test.rule.DeleteAfterTestRunTestRule;
 
 import java.util.HashMap;
 import java.util.List;
@@ -47,12 +48,8 @@ public class PollsVoteStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
 	@Rule
-	public DeleteAfterTestRunRule deleteAfterTestRunRule =
-		new DeleteAfterTestRunRule(this);
-
-	@Rule
-	public final TransactionalTestRule transactionalTestRule =
-		TransactionalTestRule.INSTANCE;
+	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(
+		new DeleteAfterTestRunTestRule(this), TransactionalTestRule.INSTANCE);
 
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(

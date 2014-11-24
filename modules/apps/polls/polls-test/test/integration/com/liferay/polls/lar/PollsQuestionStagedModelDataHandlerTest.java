@@ -17,11 +17,12 @@ package com.liferay.polls.lar;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.service.PollsQuestionLocalServiceUtil;
 import com.liferay.polls.util.test.PollsTestUtil;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.test.TransactionalTestRule;
-import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
+import com.liferay.portal.test.rule.DeleteAfterTestRunTestRule;
 
 import java.util.List;
 import java.util.Map;
@@ -39,12 +40,8 @@ public class PollsQuestionStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
 	@Rule
-	public DeleteAfterTestRunRule deleteAfterTestRunRule =
-		new DeleteAfterTestRunRule(this);
-
-	@Rule
-	public final TransactionalTestRule transactionalTestRule =
-		TransactionalTestRule.INSTANCE;
+	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(
+		new DeleteAfterTestRunTestRule(this), TransactionalTestRule.INSTANCE);
 
 	@Override
 	protected StagedModel addStagedModel(

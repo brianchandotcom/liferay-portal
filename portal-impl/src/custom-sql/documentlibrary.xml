@@ -212,6 +212,38 @@
 					DLFileEntry ON TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryMetadataFinder.findByNoStructures">
+		<![CDATA[
+			SELECT
+				{DLFileEntryMetadata.*}
+			FROM
+				DLFileEntryMetadata
+			LEFT JOIN
+				DLFileEntry ON
+					(DLFileEntry.fileEntryId = DLFileEntryMetadata.fileEntryId)
+			LEFT JOIN
+				DDMStructure ON
+					(DDMStructure.structureId = DLFileEntryMetadata.DDMStructureId)
+			WHERE
+				(DDMStructure.structureId IS NULL)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryMetadataFinder.findByMismatchedCompanyId">
+		<![CDATA[
+			SELECT
+				{DLFileEntryMetadata.*}
+			FROM
+				DLFileEntryMetadata
+			LEFT JOIN
+				DLFileEntry ON
+					(DLFileEntry.fileEntryId = DLFileEntryMetadata.fileEntryId)
+			LEFT JOIN
+				DDMStructure ON
+					(DDMStructure.structureId = DLFileEntryMetadata.DDMStructureId)
+			WHERE
+				(DDMStructure.companyId != DLFileEntry.companyId)
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypeFinder.countByC_G_N_D_S">
 		<![CDATA[
 			SELECT

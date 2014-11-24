@@ -91,7 +91,7 @@ public class ClusterMasterExecutorImplTest {
 	@Test
 	public void testClusterMasterTokenClusterEventListenerSuccess() {
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			_CLASS_NAME, Level.SEVERE);
+			ClusterMasterExecutorImpl.class.getName(), Level.SEVERE);
 
 		try {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
@@ -197,7 +197,7 @@ public class ClusterMasterExecutorImplTest {
 	@Test
 	public void testDestroyLogWarning() throws Exception {
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			_CLASS_NAME, Level.WARNING);
+			ClusterMasterExecutorImpl.class.getName(), Level.WARNING);
 
 		try {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
@@ -240,7 +240,7 @@ public class ClusterMasterExecutorImplTest {
 	@Test
 	public void testExecuteOnMasterDisabled() throws Exception {
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			_CLASS_NAME, Level.WARNING);
+			ClusterMasterExecutorImpl.class.getName(), Level.WARNING);
 
 		try {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
@@ -326,7 +326,7 @@ public class ClusterMasterExecutorImplTest {
 			testMethodMethodKey, _TEST_TIME);
 
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			_CLASS_NAME, Level.WARNING);
+			ClusterMasterExecutorImpl.class.getName(), Level.WARNING);
 
 		try {
 			clusterMasterExecutorImpl.executeOnMaster(methodHandler);
@@ -381,7 +381,7 @@ public class ClusterMasterExecutorImplTest {
 	@Test
 	public void testGetMasterAddressStringOtherOwner() {
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			_CLASS_NAME, Level.INFO);
+			ClusterMasterExecutorImpl.class.getName(), Level.INFO);
 
 		try {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
@@ -603,9 +603,6 @@ public class ClusterMasterExecutorImplTest {
 
 	protected static MethodKey testMethodMethodKey = new MethodKey(
 		TestBean.class, "testMethod1", String.class);
-
-	private static final String _CLASS_NAME =
-		ClusterMasterExecutorImpl.class.getName();
 
 	private static Address _TEST_ADDRESS;
 

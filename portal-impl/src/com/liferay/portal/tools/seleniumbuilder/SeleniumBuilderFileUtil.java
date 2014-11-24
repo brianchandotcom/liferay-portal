@@ -1402,7 +1402,8 @@ public class SeleniumBuilderFileUtil {
 						"description", "echo", "execute", "fail", "for", "if",
 						"take-screenshot", "var", "while",
 					},
-					new String[] {"action", "macro"}, new String[] {"var"},
+					new String[] {"action", "function", "macro"},
+					new String[] {"var"},
 					new String[] {
 						"and", "condition", "contains", "equals", "isset",
 						"not", "or"
@@ -1743,7 +1744,7 @@ public class SeleniumBuilderFileUtil {
 						"description", "echo", "execute", "fail", "for", "if",
 						"property", "take-screenshot", "var", "while"
 					},
-					new String[] {"action", "macro", "test-case"},
+					new String[] {"action", "function", "macro", "test-case"},
 					new String[] {"var"},
 					new String[] {
 						"and", "condition", "contains", "equals", "isset",
@@ -1773,7 +1774,7 @@ public class SeleniumBuilderFileUtil {
 						"description", "echo", "execute", "fail", "if",
 						"take-screenshot", "var", "while"
 					},
-					new String[] {"action", "macro", "test-case"},
+					new String[] {"action", "function", "macro", "test-case"},
 					new String[] {"var"},
 					new String[] {
 						"and", "condition", "contains", "equals", "isset",

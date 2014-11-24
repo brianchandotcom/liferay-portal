@@ -1,7 +1,7 @@
 <definition>
 	<command name="name">
 		<if>
-			<condition locator1="locator1" />
+			<condition value1="value1" />
 			<then>
 				<execute action="action" />
 			</then>

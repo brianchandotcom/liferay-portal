@@ -25,6 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
+		"com.liferay.portlet.category=category.social",
 		"com.liferay.portlet.friendly-url-mapping=friends_activities",
 		"com.liferay.portlet.friendly-url-routes=" +
 			"com/liferay/portal/kernel/portlet/rss-friendly-url-routes.xml",

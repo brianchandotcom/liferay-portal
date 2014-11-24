@@ -975,8 +975,6 @@ public class SeleniumBuilderFileUtil {
 				if (!attributeName.equals("function") &&
 					!attributeName.equals("ignore-javascript-error") &&
 					!attributeName.equals("line-number") &&
-					!attributeName.equals("locator1") &&
-					!attributeName.equals("locator2") &&
 					!attributeName.startsWith("locator") &&
 					!attributeName.startsWith("value")) {
 

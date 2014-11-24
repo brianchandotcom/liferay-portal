@@ -1246,9 +1246,8 @@ public class SeleniumBuilderTest {
 	public void testMacroExecuteFunctionMissingAttribute() throws Exception {
 		test(
 			"MacroExecuteFunctionMissingAttribute.macro",
-			"Error 1004: Missing (action|function|macro) attribute " +
-				"in " + _DIR_NAME +
-				"/MacroExecuteFunctionMissingAttribute.macro:3");
+			"Error 1004: Missing (action|function|macro) attribute in " +
+				_DIR_NAME + "/MacroExecuteFunctionMissingAttribute.macro:3");
 	}
 
 	@Test

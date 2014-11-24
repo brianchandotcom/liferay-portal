@@ -31,7 +31,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.context.BaseDLViewFileVersionDisplayContext;
 import com.liferay.portlet.documentlibrary.context.DLUIItemKeys;
 import com.liferay.portlet.documentlibrary.context.DLViewFileVersionDisplayContext;
-import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
 import java.io.IOException;
@@ -54,12 +53,12 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 	public GoogleDocsDLViewFileVersionDisplayContext(
 		DLViewFileVersionDisplayContext parentDLDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion) {
+		FileVersion fileVersion,
+		GoogleDocsMetadataHelper googleDocsMetadataHelper) {
 
 		super(_UUID, parentDLDisplayContext, request, response, fileVersion);
 
-		_googleDocsMetadataHelper = new GoogleDocsMetadataHelper(
-			(DLFileVersion)fileVersion.getModel());
+		_googleDocsMetadataHelper = googleDocsMetadataHelper;
 	}
 
 	@Override

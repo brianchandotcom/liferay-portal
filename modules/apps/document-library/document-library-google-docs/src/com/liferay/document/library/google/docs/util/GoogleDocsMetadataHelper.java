@@ -23,12 +23,12 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService;
 import com.liferay.portlet.dynamicdatamapping.StorageException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
-import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
+import com.liferay.portlet.dynamicdatamapping.storage.StorageEngine;
 
 import java.io.Serializable;
 
@@ -59,8 +59,15 @@ public class GoogleDocsMetadataHelper {
 		return null;
 	}
 
-	public GoogleDocsMetadataHelper(DLFileEntry dlFileEntry) {
+	public GoogleDocsMetadataHelper(
+		DLFileEntry dlFileEntry,
+		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService,
+		StorageEngine storageEngine) {
+
 		try {
+			_dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
+			_storageEngine = storageEngine;
+
 			_dlFileVersion = dlFileEntry.getFileVersion();
 
 			_ddmStructure = getGoogleDocsDDMStructure(
@@ -71,8 +78,15 @@ public class GoogleDocsMetadataHelper {
 		}
 	}
 
-	public GoogleDocsMetadataHelper(DLFileVersion dlFileVersion) {
+	public GoogleDocsMetadataHelper(
+		DLFileVersion dlFileVersion,
+		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService,
+		StorageEngine storageEngine) {
+
 		_dlFileVersion = dlFileVersion;
+
+		_dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
+		_storageEngine = storageEngine;
 
 		try {
 			_ddmStructure = getGoogleDocsDDMStructure(
@@ -123,7 +137,7 @@ public class GoogleDocsMetadataHelper {
 
 	public void update() {
 		try {
-			StorageEngineUtil.update(
+			_storageEngine.update(
 				_dlFileEntryMetadata.getDDMStorageId(), _fields,
 				new ServiceContext());
 		}
@@ -140,7 +154,7 @@ public class GoogleDocsMetadataHelper {
 			DLFileEntry dlFileEntry = _dlFileVersion.getFileEntry();
 
 			_dlFileEntryMetadata =
-				DLFileEntryMetadataLocalServiceUtil.createDLFileEntryMetadata(
+				_dlFileEntryMetadataLocalService.createDLFileEntryMetadata(
 					CounterLocalServiceUtil.increment());
 
 			long ddmStructureId = _ddmStructure.getStructureId();
@@ -175,7 +189,7 @@ public class GoogleDocsMetadataHelper {
 			serviceContext.setUserId(_dlFileVersion.getUserId());
 			serviceContext.setScopeGroupId(_dlFileVersion.getGroupId());
 
-			long ddmStorageId = StorageEngineUtil.create(
+			long ddmStorageId = _storageEngine.create(
 				_dlFileVersion.getCompanyId(), ddmStructureId, fields,
 				serviceContext);
 
@@ -188,7 +202,7 @@ public class GoogleDocsMetadataHelper {
 				_dlFileVersion.getFileVersionId());
 
 			_dlFileEntryMetadata =
-				DLFileEntryMetadataLocalServiceUtil.addDLFileEntryMetadata(
+				_dlFileEntryMetadataLocalService.addDLFileEntryMetadata(
 					_dlFileEntryMetadata);
 		}
 		catch (PortalException pe) {
@@ -209,7 +223,7 @@ public class GoogleDocsMetadataHelper {
 
 			try {
 				_dlFileEntryMetadata =
-					DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
+					_dlFileEntryMetadataLocalService.getFileEntryMetadata(
 						_ddmStructure.getStructureId(),
 						_dlFileVersion.getFileVersionId());
 			}
@@ -224,7 +238,7 @@ public class GoogleDocsMetadataHelper {
 			}
 
 			try {
-				_fields = StorageEngineUtil.getFields(
+				_fields = _storageEngine.getFields(
 					_dlFileEntryMetadata.getDDMStorageId());
 
 				for (Field field : _fields) {
@@ -254,8 +268,11 @@ public class GoogleDocsMetadataHelper {
 
 	private final DDMStructure _ddmStructure;
 	private DLFileEntryMetadata _dlFileEntryMetadata;
+	private final DLFileEntryMetadataLocalService
+		_dlFileEntryMetadataLocalService;
 	private DLFileVersion _dlFileVersion;
 	private Fields _fields;
 	private Map<String, Field> _fieldsMap;
+	private final StorageEngine _storageEngine;
 
 }

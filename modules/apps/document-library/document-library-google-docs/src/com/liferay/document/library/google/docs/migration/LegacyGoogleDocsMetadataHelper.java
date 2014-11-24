@@ -20,12 +20,13 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
-import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
+import com.liferay.portlet.dynamicdatamapping.storage.StorageEngine;
 
 import java.io.Serializable;
 
@@ -52,8 +53,15 @@ public class LegacyGoogleDocsMetadataHelper {
 		return null;
 	}
 
-	public LegacyGoogleDocsMetadataHelper(DLFileEntry dlFileEntry) {
+	public LegacyGoogleDocsMetadataHelper(
+		DLFileEntry dlFileEntry,
+		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService,
+		StorageEngine storageEngine) {
+
 		try {
+			_dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
+			_storageEngine = storageEngine;
+
 			_dlFileVersion = dlFileEntry.getFileVersion();
 
 			_ddmStructure = getGoogleDocsDDMStructure(
@@ -69,7 +77,7 @@ public class LegacyGoogleDocsMetadataHelper {
 			DLFileEntryMetadataLocalServiceUtil.deleteDLFileEntryMetadata(
 				_dlFileEntryMetadata.getFileEntryMetadataId());
 
-			StorageEngineUtil.deleteByClass(
+			_storageEngine.deleteByClass(
 				_dlFileEntryMetadata.getDDMStorageId());
 		}
 		catch (PortalException pe) {
@@ -112,7 +120,7 @@ public class LegacyGoogleDocsMetadataHelper {
 						_ddmStructure.getStructureId(),
 						_dlFileVersion.getFileVersionId());
 
-				Fields fields = StorageEngineUtil.getFields(
+				Fields fields = _storageEngine.getFields(
 					_dlFileEntryMetadata.getDDMStorageId());
 
 				for (Field field : fields) {
@@ -130,7 +138,10 @@ public class LegacyGoogleDocsMetadataHelper {
 
 	private final DDMStructure _ddmStructure;
 	private DLFileEntryMetadata _dlFileEntryMetadata;
+	private final DLFileEntryMetadataLocalService
+		_dlFileEntryMetadataLocalService;
 	private DLFileVersion _dlFileVersion;
 	private Map<String, Field> _fields;
+	private final StorageEngine _storageEngine;
 
 }

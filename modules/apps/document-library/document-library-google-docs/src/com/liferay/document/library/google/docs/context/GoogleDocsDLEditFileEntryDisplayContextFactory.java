@@ -20,12 +20,15 @@ import com.liferay.portlet.documentlibrary.context.DLEditFileEntryDisplayContext
 import com.liferay.portlet.documentlibrary.context.DLEditFileEntryDisplayContextFactory;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.storage.StorageEngine;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Iván Zaera
@@ -61,7 +64,9 @@ public class GoogleDocsDLEditFileEntryDisplayContextFactory
 		FileEntry fileEntry) {
 
 		GoogleDocsMetadataHelper googleDocsMetadataHelper =
-			new GoogleDocsMetadataHelper((DLFileEntry)fileEntry.getModel());
+			new GoogleDocsMetadataHelper(
+				(DLFileEntry)fileEntry.getModel(),
+				_dlFileEntryMetadataLocalService, _storageEngine);
 
 		if (googleDocsMetadataHelper.isGoogleDocs()) {
 			return new GoogleDocsDLEditFileEntryDisplayContext(
@@ -71,5 +76,20 @@ public class GoogleDocsDLEditFileEntryDisplayContextFactory
 
 		return parentDLEditFileEntryDisplayContext;
 	}
+
+	@Reference
+	public void setDLFileEntryMetadataLocalService(
+		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService) {
+
+		_dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
+	}
+
+	@Reference
+	public void setStorageEngine(StorageEngine storageEngine) {
+		_storageEngine = storageEngine;
+	}
+
+	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
+	private StorageEngine _storageEngine;
 
 }

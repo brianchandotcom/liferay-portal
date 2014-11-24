@@ -17,7 +17,6 @@ package com.liferay.document.library.google.docs.context;
 import com.liferay.document.library.google.docs.util.FreeMarkerRenderer;
 import com.liferay.document.library.google.docs.util.GoogleDocsConfigurationHelper;
 import com.liferay.document.library.google.docs.util.GoogleDocsConstants;
-import com.liferay.document.library.google.docs.util.GoogleDocsMetadataHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.context.DLFilePicker;
@@ -34,11 +33,10 @@ import java.io.IOException;
 public class GoogleDocsDLFilePicker implements DLFilePicker {
 
 	public GoogleDocsDLFilePicker(
-		GoogleDocsMetadataHelper googleDocsMetadataHelper,
-		ThemeDisplay themeDisplay, String namespace,
-		String onFilePickCallback) {
+		DDMStructure ddmStructure, String namespace, String onFilePickCallback,
+		ThemeDisplay themeDisplay) {
 
-		_googleDocsMetadataHelper = googleDocsMetadataHelper;
+		_ddmStructure = ddmStructure;
 		_namespace = namespace;
 		_onFilePickCallback = onFilePickCallback;
 		_googleDocsConfigurationHelper = new GoogleDocsConfigurationHelper(
@@ -47,7 +45,7 @@ public class GoogleDocsDLFilePicker implements DLFilePicker {
 
 	@Override
 	public DDMStructure getDDMStructure() {
-		return _googleDocsMetadataHelper.getDDMStructure();
+		return _ddmStructure;
 	}
 
 	@Override
@@ -102,8 +100,8 @@ public class GoogleDocsDLFilePicker implements DLFilePicker {
 		return GoogleDocsConstants.DDM_FIELD_NAME_NAME;
 	}
 
+	private final DDMStructure _ddmStructure;
 	private final GoogleDocsConfigurationHelper _googleDocsConfigurationHelper;
-	private final GoogleDocsMetadataHelper _googleDocsMetadataHelper;
 	private final String _namespace;
 	private final String _onFilePickCallback;
 

@@ -60,17 +60,14 @@ public class GoogleDocsDLEditFileEntryDisplayContext
 
 	@Override
 	public DLFilePicker getDLFilePicker(String onFilePickCallback) {
-		GoogleDocsMetadataHelper googleDocsMetadataHelper =
-			new GoogleDocsMetadataHelper(dlFileEntryType);
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return new GoogleDocsDLFilePicker(
-			googleDocsMetadataHelper, themeDisplay,
-			portletDisplay.getNamespace(), onFilePickCallback);
+			GoogleDocsMetadataHelper.getGoogleDocsDDMStructure(dlFileEntryType),
+			portletDisplay.getNamespace(), onFilePickCallback, themeDisplay);
 	}
 
 	@Override

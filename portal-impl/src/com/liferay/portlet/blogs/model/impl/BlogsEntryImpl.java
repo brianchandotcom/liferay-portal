@@ -15,88 +15,19 @@
 package com.liferay.portlet.blogs.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Image;
-import com.liferay.portal.model.Repository;
-import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ImageLocalServiceUtil;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.webserver.WebServerServletTokenUtil;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
 import java.util.Date;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Juan Fernández
- * @author Roberto Díaz
  */
 public class BlogsEntryImpl extends BlogsEntryBaseImpl {
-
-	@Override
-	public Folder addAttachmentsFolder() throws PortalException {
-		if (_attachmentsFolderId !=
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
-			return PortletFileRepositoryUtil.getPortletFolder(
-				_attachmentsFolderId);
-		}
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
-		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
-			getGroupId(), PortletKeys.BLOGS, serviceContext);
-
-		Folder folder = PortletFileRepositoryUtil.addPortletFolder(
-			getUserId(), repository.getRepositoryId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			String.valueOf(getEntryId()), serviceContext);
-
-		_attachmentsFolderId = folder.getFolderId();
-
-		return folder;
-	}
-
-	@Override
-	public long getAttachmentsFolderId() {
-		if (_attachmentsFolderId !=
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
-			return _attachmentsFolderId;
-		}
-
-		Repository repository =
-			PortletFileRepositoryUtil.fetchPortletRepository(
-				getGroupId(), PortletKeys.BLOGS);
-
-		if (repository == null) {
-			return DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-		}
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
-		try {
-			Folder folder = PortletFileRepositoryUtil.getPortletFolder(
-				getUserId(), repository.getRepositoryId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				String.valueOf(getEntryId()), serviceContext);
-
-			_attachmentsFolderId = folder.getFolderId();
-		}
-		catch (Exception e) {
-		}
-
-		return _attachmentsFolderId;
-	}
 
 	@Override
 	public String getEntryImageURL(ThemeDisplay themeDisplay) {
@@ -143,7 +74,6 @@ public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 		_smallImageType = smallImageType;
 	}
 
-	private long _attachmentsFolderId;
 	private String _smallImageType;
 
 }

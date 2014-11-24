@@ -222,6 +222,11 @@ public class BaseJSONHandler extends BaseHandler {
 				SyncAccount.UI_EVENT_SYNC_SERVICES_NOT_ACTIVE);
 		}
 		else if (exception.equals(
+					"com.liferay.sync.SyncSiteUnavailableException")) {
+
+			handleSiteDeactivatedException();
+		}
+		else if (exception.equals(
 					"com.liferay.portal.kernel.jsonwebservice." +
 						"NoSuchJSONWebServiceException") ||
 				 exception.equals("java.lang.RuntimeException")) {

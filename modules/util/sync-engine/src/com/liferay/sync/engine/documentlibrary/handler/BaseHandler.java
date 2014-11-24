@@ -19,8 +19,10 @@ import com.liferay.sync.engine.documentlibrary.event.GetSyncContextEvent;
 import com.liferay.sync.engine.documentlibrary.util.ServerEventUtil;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
+import com.liferay.sync.engine.model.SyncSite;
 import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncFileService;
+import com.liferay.sync.engine.service.SyncSiteService;
 import com.liferay.sync.engine.util.ConnectionRetryUtil;
 
 import java.io.FileNotFoundException;
@@ -151,6 +153,29 @@ public class BaseHandler implements Handler<Void> {
 
 	protected long getSyncAccountId() {
 		return _event.getSyncAccountId();
+	}
+
+	protected void handleSiteDeactivatedException() {
+		SyncSite syncSite = (SyncSite)getParameterValue("syncSite");
+
+		if (syncSite == null) {
+			SyncFile syncFile = (SyncFile) getParameterValue("syncFile");
+
+			syncSite = SyncSiteService.fetchSyncSite(
+				syncFile.getRepositoryId(), getSyncAccountId());
+		}
+
+		if (syncSite != null) {
+			_logger.debug(
+				"Sync site {} was deactivated or removed.",
+				syncSite.getName());
+
+			syncSite.setUiEvent(SyncSite.UI_EVENT_SYNC_SITE_DEACTIVATED);
+
+			SyncSiteService.update(syncSite);
+
+			SyncSiteService.deleteSyncSite(syncSite.getSyncSiteId());
+		}
 	}
 
 	protected void retryServerConnection(int uiEvent) {

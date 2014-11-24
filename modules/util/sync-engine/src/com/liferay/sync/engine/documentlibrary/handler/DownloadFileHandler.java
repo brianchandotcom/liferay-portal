@@ -93,12 +93,18 @@ public class DownloadFileHandler extends BaseHandler {
 	protected void doHandleResponse(HttpResponse httpResponse)
 		throws Exception {
 
-		Header header = httpResponse.getFirstHeader("Sync-JWT");
+		Header errorHeader = httpResponse.getFirstHeader("Sync-Error");
 
-		if (header != null) {
+		if (errorHeader != null) {
+			handleSiteDeactivatedException();
+		}
+
+		Header tokenHeader = httpResponse.getFirstHeader("Sync-JWT");
+
+		if (tokenHeader != null) {
 			Session session = SessionManager.getSession(getSyncAccountId());
 
-			session.setToken(header.getValue());
+			session.setToken(tokenHeader.getValue());
 		}
 
 		InputStream inputStream = null;

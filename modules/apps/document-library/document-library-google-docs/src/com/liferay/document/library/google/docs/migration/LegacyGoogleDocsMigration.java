@@ -111,9 +111,7 @@ public class LegacyGoogleDocsMigration {
 
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
 			LegacyGoogleDocsMetadataHelper legacyGoogleDocsMetadataHelper =
-				new LegacyGoogleDocsMetadataHelper(
-					dlFileEntry, _dlFileEntryMetadataLocalService,
-					_storageEngine);
+				new LegacyGoogleDocsMetadataHelper(dlFileEntry, _storageEngine);
 
 			String id = legacyGoogleDocsMetadataHelper.getFieldValue(
 				LegacyGoogleDocsConstants.DDM_FIELD_NAME_ID);

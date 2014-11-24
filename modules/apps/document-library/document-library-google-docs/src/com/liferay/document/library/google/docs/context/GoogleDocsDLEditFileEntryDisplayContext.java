@@ -15,7 +15,6 @@
 package com.liferay.document.library.google.docs.context;
 
 import com.liferay.document.library.google.docs.util.GoogleDocsConstants;
-import com.liferay.document.library.google.docs.util.GoogleDocsMetadataHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -66,7 +65,6 @@ public class GoogleDocsDLEditFileEntryDisplayContext
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return new GoogleDocsDLFilePicker(
-			GoogleDocsMetadataHelper.getGoogleDocsDDMStructure(dlFileEntryType),
 			portletDisplay.getNamespace(), onFilePickCallback, themeDisplay);
 	}
 

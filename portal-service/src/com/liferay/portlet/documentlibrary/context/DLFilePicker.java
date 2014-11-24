@@ -15,14 +15,11 @@
 package com.liferay.portlet.documentlibrary.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
 /**
  * @author Ivan Zaera
  */
 public interface DLFilePicker {
-
-	public DDMStructure getDDMStructure();
 
 	public String getDescriptionFieldName();
 

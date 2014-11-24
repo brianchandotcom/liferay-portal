@@ -84,7 +84,6 @@ public class GoogleDocsMetadataHelper {
 		StorageEngine storageEngine) {
 
 		_dlFileVersion = dlFileVersion;
-
 		_dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
 		_storageEngine = storageEngine;
 

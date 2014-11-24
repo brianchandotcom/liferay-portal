@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.util.concurrent.Callable;
 
@@ -64,7 +65,7 @@ public class TransactionalTestRule implements TestRule {
 							statement.evaluate();
 						}
 						catch (Throwable t) {
-							throw new Exception(t);
+							ReflectionUtil.throwException(t);
 						}
 
 						return null;

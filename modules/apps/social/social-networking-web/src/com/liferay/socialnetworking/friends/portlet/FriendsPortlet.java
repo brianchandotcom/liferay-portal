@@ -25,6 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
+		"com.liferay.portlet.category=category.social",
 		"com.liferay.portlet.icon=/icons/friends.png",
 		"com.liferay.portlet.header-portlet-css=/friends/css/main.css",
 		"com.liferay.portlet.css-class-wrapper=" +

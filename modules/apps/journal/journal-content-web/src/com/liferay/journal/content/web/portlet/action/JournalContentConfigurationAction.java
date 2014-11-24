@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -74,6 +75,10 @@ public class JournalContentConfigurationAction
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			assetEntryId);
 
+		if (assetEntry == null) {
+			return 0;
+		}
+
 		return assetEntry.getGroupId();
 	}
 
@@ -85,6 +90,10 @@ public class JournalContentConfigurationAction
 
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			assetEntryId);
+
+		if (assetEntry == null) {
+			return StringPool.BLANK;
+		}
 
 		JournalArticleAssetRendererFactory articleAssetRendererFactory =
 			(JournalArticleAssetRendererFactory)

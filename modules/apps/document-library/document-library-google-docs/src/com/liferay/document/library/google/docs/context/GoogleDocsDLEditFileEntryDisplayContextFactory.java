@@ -20,6 +20,7 @@ import com.liferay.portlet.documentlibrary.context.DLEditFileEntryDisplayContext
 import com.liferay.portlet.documentlibrary.context.DLEditFileEntryDisplayContextFactory;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,10 +42,10 @@ public class GoogleDocsDLEditFileEntryDisplayContextFactory
 		HttpServletRequest request, HttpServletResponse response,
 		DLFileEntryType dlFileEntryType) {
 
-		GoogleDocsMetadataHelper googleDocsMetadataHelper =
-			new GoogleDocsMetadataHelper(dlFileEntryType);
+		DDMStructure googleDocsDDMStructure =
+			GoogleDocsMetadataHelper.getGoogleDocsDDMStructure(dlFileEntryType);
 
-		if (googleDocsMetadataHelper.isGoogleDocs()) {
+		if (googleDocsDDMStructure != null) {
 			return new GoogleDocsDLEditFileEntryDisplayContext(
 				parentDLEditFileEntryDisplayContext, request, response,
 				dlFileEntryType);

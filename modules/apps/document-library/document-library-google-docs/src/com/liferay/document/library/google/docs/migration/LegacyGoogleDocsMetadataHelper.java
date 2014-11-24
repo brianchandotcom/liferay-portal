@@ -54,12 +54,9 @@ public class LegacyGoogleDocsMetadataHelper {
 	}
 
 	public LegacyGoogleDocsMetadataHelper(
-		DLFileEntry dlFileEntry,
-		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService,
-		StorageEngine storageEngine) {
+		DLFileEntry dlFileEntry, StorageEngine storageEngine) {
 
 		try {
-			_dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
 			_storageEngine = storageEngine;
 
 			_dlFileVersion = dlFileEntry.getFileVersion();
@@ -140,8 +137,6 @@ public class LegacyGoogleDocsMetadataHelper {
 
 	private final DDMStructure _ddmStructure;
 	private DLFileEntryMetadata _dlFileEntryMetadata;
-	private final DLFileEntryMetadataLocalService
-		_dlFileEntryMetadataLocalService;
 	private DLFileVersion _dlFileVersion;
 	private Map<String, Field> _fields;
 	private final StorageEngine _storageEngine;

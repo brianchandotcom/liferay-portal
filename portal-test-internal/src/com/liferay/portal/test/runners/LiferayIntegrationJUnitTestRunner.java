@@ -14,16 +14,23 @@
 
 package com.liferay.portal.test.runners;
 
+import com.liferay.portal.kernel.test.DescriptionComparator;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.test.jdbc.ResetDatabaseUtilDataSource;
 import com.liferay.portal.test.log.LogAssertionTestRule;
 import com.liferay.portal.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.test.rule.DeleteAfterTestRunTestRule;
+import com.liferay.portal.util.InitUtil;
+import com.liferay.portal.util.PropsUtil;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
+import org.junit.runner.manipulation.Sorter;
+import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.InitializationError;
 import org.junit.runners.model.Statement;
 
@@ -32,22 +39,31 @@ import org.junit.runners.model.Statement;
  * @author Carlos Sierra
  * @author Shuyang Zhou
  */
-public class LiferayIntegrationJUnitTestRunner
-	extends CustomizableSpringContextJUnitTestRunner {
+public class LiferayIntegrationJUnitTestRunner extends BlockJUnit4ClassRunner {
 
 	public LiferayIntegrationJUnitTestRunner(Class<?> clazz)
 		throws InitializationError {
 
 		super(clazz);
+
+		initApplicationContext();
+
+		if (System.getProperty("external-properties") == null) {
+			System.setProperty("external-properties", "portal-test.properties");
+		}
+
+		sort(new Sorter(new DescriptionComparator()));
 	}
 
-	@Override
-	public void afterApplicationContextInit() {
-	}
+	public void initApplicationContext() {
+		System.setProperty("catalina.base", ".");
 
-	@Override
-	public List<String> getExtraConfigLocations() {
-		return Collections.emptyList();
+		ResetDatabaseUtilDataSource.initialize();
+
+		List<String> configLocations = ListUtil.fromArray(
+			PropsUtil.getArray(PropsKeys.SPRING_CONFIGS));
+
+		InitUtil.initWithSpring(configLocations, true);
 	}
 
 	@Override

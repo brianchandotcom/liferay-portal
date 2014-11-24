@@ -20,7 +20,7 @@ import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.util.test.PollsTestUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.lar.BasePortletDataHandlerTestCase;
-import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
+import com.liferay.portal.test.rule.DeleteAfterTestRunTestRule;
 
 import org.jboss.arquillian.junit.Arquillian;
 
@@ -35,8 +35,8 @@ public class PollsPortletDataHandlerTest
 	extends BasePortletDataHandlerTestCase {
 
 	@Rule
-	public DeleteAfterTestRunRule deleteAfterTestRunRule =
-		new DeleteAfterTestRunRule(this);
+	public final DeleteAfterTestRunTestRule deleteAfterTestRunTestRule =
+		new DeleteAfterTestRunTestRule(this);
 
 	@Override
 	protected void addStagedModels() throws Exception {

@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
@@ -15,16 +15,13 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -38,7 +35,7 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
  */
 public class VerifyDocumentLibraryTitles extends VerifyProcess {
 
-	protected void checkDuplicateTitles() throws Exception {
+	protected void checkTitles() throws Exception {
 		ActionableDynamicQuery actionableDynamicQuery =
 			DLFileEntryLocalServiceUtil.getActionableDynamicQuery();
 
@@ -51,6 +48,29 @@ public class VerifyDocumentLibraryTitles extends VerifyProcess {
 
 					if (dlFileEntry.isInTrash()) {
 						return;
+					}
+
+					String title = dlFileEntry.getTitle();
+
+					if (StringUtil.contains(
+							title, StringPool.DOUBLE_BACK_SLASH)) {
+
+						String newTitle = title.replace(
+							StringPool.BACK_SLASH, StringPool.UNDERLINE);
+
+						try {
+							dlFileEntry = renameTitle(dlFileEntry, newTitle);
+						}
+						catch (Exception e) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(
+									"Unable to rename duplicate title for " +
+										"file entry " +
+										dlFileEntry.getFileEntryId() +
+										": " + e.getMessage(),
+									e);
+							}
+						}
 					}
 
 					try {
@@ -81,66 +101,9 @@ public class VerifyDocumentLibraryTitles extends VerifyProcess {
 						}
 					}
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
-	}
-
-	protected void checkTitles() throws Exception {
-		ActionableDynamicQuery actionableDynamicQuery =
-			DLFileEntryLocalServiceUtil.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
-
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property titleProperty = PropertyFactoryUtil.forName(
-						"title");
-
-					dynamicQuery.add(titleProperty.like("%\\\\%"));
-
-					Property statusProperty = PropertyFactoryUtil.forName(
-						"status");
-
-					dynamicQuery.add(
-						statusProperty.ne(WorkflowConstants.STATUS_IN_TRASH));
-				}
-
-			});
-
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
-
-				@Override
-				public void performAction(Object object) {
-					DLFileEntry dlFileEntry = (DLFileEntry)object;
-
-					String title = dlFileEntry.getTitle();
-
-					String newTitle = title.replace(
-						StringPool.BACK_SLASH, StringPool.UNDERLINE);
-
-					try {
-						renameTitle(dlFileEntry, newTitle);
-					}
-					catch (Exception e) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to rename duplicate title for " +
-									"file entry " +
-									dlFileEntry.getFileEntryId() +
-									": " + e.getMessage(),
-								e);
-						}
-					}
-				}
-			});
-
-		actionableDynamicQuery.performActions();
-
-		checkDuplicateTitles();
 	}
 
 	@Override
@@ -196,7 +159,7 @@ public class VerifyDocumentLibraryTitles extends VerifyProcess {
 		}
 	}
 
-	protected void renameTitle(DLFileEntry dlFileEntry, String newTitle)
+	protected DLFileEntry renameTitle(DLFileEntry dlFileEntry, String newTitle)
 		throws PortalException {
 
 		String title = dlFileEntry.getTitle();
@@ -208,7 +171,8 @@ public class VerifyDocumentLibraryTitles extends VerifyProcess {
 
 		dlFileEntry.setFileName(fileName);
 
-		DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
+		DLFileEntry renamedFileEntry =
+			DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
 
 		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
@@ -222,6 +186,8 @@ public class VerifyDocumentLibraryTitles extends VerifyProcess {
 				"Invalid title " + title + " renamed to " + newTitle +
 					" for file entry " + dlFileEntry.getFileEntryId());
 		}
+
+		return renamedFileEntry;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

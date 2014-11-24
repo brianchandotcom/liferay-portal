@@ -17,13 +17,12 @@ package com.liferay.wiki.engines.impl;
 import com.liferay.wiki.engines.WikiEngine;
 
 import java.util.Collection;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.ConcurrentSkipListMap;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,19 +37,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 	immediate = true, service = WikiEngineTracker.class
 )
 public class WikiEngineTracker {
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, service = WikiEngine.class,
-		target = "(enabled=true)", unbind = "removedService",
-		updated = "modifiedService"
-	)
-	public void addingService(ServiceReference<WikiEngine> serviceReference) {
-		String format = (String)serviceReference.getProperty("format");
-
-		_serviceReferences.put(format, serviceReference);
-	}
 
 	public Collection<String> getFormats() {
 		return _serviceReferences.keySet();
@@ -67,27 +53,44 @@ public class WikiEngineTracker {
 		return _bundleContext.getService(_serviceReferences.get(format));
 	}
 
-	public void modifiedService(ServiceReference<WikiEngine> serviceReference) {
+	@Activate
+	protected void activate(ComponentContext componentContext) {
+		_bundleContext = componentContext.getBundleContext();
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY, service = WikiEngine.class,
+		target = "(enabled=true)", unbind = "removedService",
+		updated = "modifiedService"
+	)
+	protected void addingService(
+		ServiceReference<WikiEngine> serviceReference) {
+
+		String format = (String)serviceReference.getProperty("format");
+
+		_serviceReferences.put(format, serviceReference);
+	}
+
+	protected void modifiedService(
+		ServiceReference<WikiEngine> serviceReference) {
+
 		removedService(serviceReference);
 
 		addingService(serviceReference);
 	}
 
-	public void removedService(ServiceReference<WikiEngine> serviceReference) {
+	protected void removedService(
+		ServiceReference<WikiEngine> serviceReference) {
+
 		String format = (String)serviceReference.getProperty("format");
 
 		_serviceReferences.remove(format);
 	}
 
-	@Activate
-	protected void activate() {
-		Bundle bundle = FrameworkUtil.getBundle(WikiEngineTracker.class);
-
-		_bundleContext = bundle.getBundleContext();
-	}
-
 	private BundleContext _bundleContext;
 	private final ConcurrentMap<String, ServiceReference<WikiEngine>>
-		_serviceReferences = new ConcurrentSkipListMap<>();
+		_serviceReferences = new ConcurrentHashMap<>();
 
 }

@@ -20,6 +20,10 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.template.TemplateException;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -32,6 +36,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.PersistenceTestRule;
+import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.RandomTestUtil;
 
@@ -42,6 +47,8 @@ import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
 
 import java.io.Serializable;
@@ -1027,6 +1034,7 @@ public class WikiPagePersistenceTest {
 		return wikiPage;
 	}
 
+	private static Log _log = LogFactoryUtil.getLog(WikiPagePersistenceTest.class);
 	private List<WikiPage> _wikiPages = new ArrayList<WikiPage>();
 	private WikiPagePersistence _persistence = WikiPageUtil.getPersistence();
 }

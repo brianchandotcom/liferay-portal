@@ -25,6 +25,11 @@ if (Validator.isNull(cmd)) {
 	cmd = Constants.EXPORT;
 }
 
+if (liveGroup == null) {
+	liveGroup = group;
+	liveGroupId = groupId;
+}
+
 String exportConfigurationButtons = ParamUtil.getString(request, "exportConfigurationButtons", "custom");
 
 long exportImportConfigurationId = 0;

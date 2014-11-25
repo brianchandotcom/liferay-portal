@@ -643,9 +643,7 @@ public class PortletExporter {
 			assetElement.addAttribute("class-name", className);
 			assetElement.addAttribute("key", key);
 
-			if (portletDataContext.isPathNotProcessed(path)) {
-				portletDataContext.addZipEntry(path, lock);
-			}
+			portletDataContext.addZipEntry(path, lock);
 		}
 
 		portletDataContext.addZipEntry(
@@ -895,18 +893,13 @@ public class PortletExporter {
 		element.addAttribute(
 			"portlet-configuration", configurationOptionsSB.toString());
 
-		if (portletDataContext.isPathNotProcessed(path)) {
-			try {
-				portletDataContext.addZipEntry(
-					path, document.formattedString());
+		try {
+			portletDataContext.addZipEntry(path, document.formattedString());
+		}
+		catch (IOException ioe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(ioe.getMessage());
 			}
-			catch (IOException ioe) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(ioe.getMessage());
-				}
-			}
-
-			portletDataContext.addPrimaryKey(String.class, path);
 		}
 	}
 
@@ -1001,10 +994,8 @@ public class PortletExporter {
 
 		portletPreferencesElement.addAttribute("path", path);
 
-		if (portletDataContext.isPathNotProcessed(path)) {
-			portletDataContext.addZipEntry(
-				path, document.formattedString(StringPool.TAB, false, false));
-		}
+		portletDataContext.addZipEntry(
+			path, document.formattedString(StringPool.TAB, false, false));
 	}
 
 	protected void exportPortletPreferences(

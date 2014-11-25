@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.util;
+package com.liferay.portalweb.util;
 
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -23,8 +23,8 @@ import com.liferay.portalweb.portal.util.liferayselenium.DefaultSeleniumImpl;
 import com.liferay.portalweb.portal.util.liferayselenium.FirefoxWebDriverImpl;
 import com.liferay.portalweb.portal.util.liferayselenium.InternetExplorerWebDriverImpl;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
-import com.liferay.portalweb.portal.util.liferayselenium.LoggerHandler;
 import com.liferay.portalweb.portal.util.liferayselenium.SafariWebDriverImpl;
+import com.liferay.portalweb.util.logger.LoggerHandler;
 
 import com.thoughtworks.selenium.Selenium;
 

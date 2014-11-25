@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portal.util;
 
 import com.liferay.portal.kernel.util.OSDetector;
+import com.liferay.portalweb.util.TestPropsValues;
 
 import org.openqa.selenium.WebDriver;
 

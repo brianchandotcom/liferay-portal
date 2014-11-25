@@ -14,7 +14,7 @@
 
 package com.liferay.portalweb.selenium;
 
-import com.liferay.portalweb.portal.util.TestPropsValues;
+import com.liferay.portalweb.util.TestPropsValues;
 
 import org.junit.Test;
 

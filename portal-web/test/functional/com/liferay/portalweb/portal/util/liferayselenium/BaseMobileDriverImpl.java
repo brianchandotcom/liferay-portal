@@ -15,7 +15,7 @@
 package com.liferay.portalweb.portal.util.liferayselenium;
 
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portalweb.portal.util.TestPropsValues;
+import com.liferay.portalweb.util.TestPropsValues;
 
 import io.appium.java_client.MobileDriver;
 

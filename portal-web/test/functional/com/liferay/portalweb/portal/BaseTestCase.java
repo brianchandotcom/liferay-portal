@@ -16,8 +16,8 @@ package com.liferay.portalweb.portal;
 
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portalweb.portal.util.LiferaySeleneseTestCase;
-import com.liferay.portalweb.portal.util.SeleniumUtil;
-import com.liferay.portalweb.portal.util.TestPropsValues;
+import com.liferay.portalweb.util.SeleniumUtil;
+import com.liferay.portalweb.util.TestPropsValues;
 
 import java.util.HashMap;
 import java.util.Map;

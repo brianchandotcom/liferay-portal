@@ -3858,7 +3858,7 @@
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
-		<description>Displays a list of objects in the UI.</description>
+		<description>Creates a Search Container UI component for displaying a list of objects.</description>
 		<name>search-container</name>
 		<tag-class>com.liferay.taglib.ui.SearchContainerTag</tag-class>
 		<tei-class>com.liferay.taglib.ui.SearchContainerTei</tei-class>
@@ -4074,7 +4074,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Inserts a column with the contents of a JSP.</description>
+		<description>Creates a Search Container Column JSP UI component that inserts a column with the contents of a JSP.</description>
 		<name>search-container-column-jsp</name>
 		<tag-class>com.liferay.taglib.ui.SearchContainerColumnJSPTag</tag-class>
 		<body-content>JSP</body-content>
@@ -4117,7 +4117,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Inserts a column for the workflow status.</description>
+		<description>Creates a Search Container Column Status UI component that inserts a column for the workflow status.</description>
 		<name>search-container-column-status</name>
 		<tag-class>com.liferay.taglib.ui.SearchContainerColumnStatusTag</tag-class>
 		<body-content>JSP</body-content>
@@ -4190,7 +4190,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Inserts a text column.</description>
+		<description>Creates a Search Container Column Text UI component that inserts a text column.</description>
 		<name>search-container-column-text</name>
 		<tag-class>com.liferay.taglib.ui.SearchContainerColumnTextTag</tag-class>
 		<tei-class>com.liferay.taglib.ui.SearchContainerColumnTextTei</tei-class>
@@ -4368,7 +4368,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Sets the object to display in rows.</description>
+		<description>Creates a Search Container Row UI Component that sets the object to display in rows.</description>
 		<name>search-container-row</name>
 		<tag-class>com.liferay.taglib.ui.SearchContainerRowTag</tag-class>
 		<tei-class>com.liferay.taglib.ui.SearchContainerRowTei</tei-class>

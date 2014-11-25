@@ -105,7 +105,7 @@ public class ConvertDocumentLibrary extends BaseConvertProcess
 		sb2.append(StringPool.SEMICOLON);
 
 		for (DLStoreConvertProcess dlStoreConvertProcess :
-			dlStoreConvertProcesses) {
+				dlStoreConvertProcesses) {
 
 			sb2.append(dlStoreConvertProcess.getName());
 			sb2.append(StringPool.SEMICOLON);
@@ -358,7 +358,7 @@ public class ConvertDocumentLibrary extends BaseConvertProcess
 					MBMessage mbMessage = (MBMessage)object;
 
 					for (FileEntry fileEntry :
-						mbMessage.getAttachmentsFileEntries()) {
+							mbMessage.getAttachmentsFileEntries()) {
 
 						DLFileEntry dlFileEntry =
 							(DLFileEntry)fileEntry.getModel();
@@ -386,7 +386,7 @@ public class ConvertDocumentLibrary extends BaseConvertProcess
 			_getDLStoreConvertProcesses();
 
 		for (DLStoreConvertProcess dlStoreConvertProcess :
-			dlStoreConvertProcesses) {
+				dlStoreConvertProcesses) {
 
 			dlStoreConvertProcess.migrate(this);
 		}

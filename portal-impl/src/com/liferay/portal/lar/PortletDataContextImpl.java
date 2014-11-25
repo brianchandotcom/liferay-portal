@@ -230,28 +230,26 @@ public class PortletDataContextImpl implements PortletDataContext {
 			}
 		}
 
-		if (isPathProcessed(path)) {
-			return;
+		if (!hasPrimaryKey(String.class, path)) {
+			if (classedModel instanceof AuditedModel) {
+				AuditedModel auditedModel = (AuditedModel)classedModel;
+
+				auditedModel.setUserUuid(auditedModel.getUserUuid());
+			}
+
+			if (isResourceMain(classedModel)) {
+				long classPK = ExportImportClassedModelUtil.getClassPK(
+					classedModel);
+
+				addAssetLinks(clazz, classPK);
+				addAssetTags(clazz, classPK);
+				addExpando(element, path, classedModel, clazz);
+				addLocks(clazz, String.valueOf(classPK));
+				addPermissions(clazz, classPK);
+			}
+
+			_references.add(getReferenceKey(classedModel));
 		}
-
-		if (classedModel instanceof AuditedModel) {
-			AuditedModel auditedModel = (AuditedModel)classedModel;
-
-			auditedModel.setUserUuid(auditedModel.getUserUuid());
-		}
-
-		if (isResourceMain(classedModel)) {
-			long classPK = ExportImportClassedModelUtil.getClassPK(
-				classedModel);
-
-			addAssetLinks(clazz, classPK);
-			addAssetTags(clazz, classPK);
-			addExpando(element, path, classedModel, clazz);
-			addLocks(clazz, String.valueOf(classPK));
-			addPermissions(clazz, classPK);
-		}
-
-		_references.add(getReferenceKey(classedModel));
 
 		addZipEntry(path, classedModel);
 	}
@@ -565,6 +563,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	@Override
 	public void addZipEntry(String path, byte[] bytes) {
+		if (isPathProcessed(path)) {
+			return;
+		}
+
 		if (_portletDataContextListener != null) {
 			_portletDataContextListener.onAddZipEntry(path);
 		}
@@ -581,6 +583,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	@Override
 	public void addZipEntry(String path, InputStream is) {
+		if (isPathProcessed(path)) {
+			return;
+		}
+
 		if (_portletDataContextListener != null) {
 			_portletDataContextListener.onAddZipEntry(path);
 		}
@@ -602,6 +608,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	@Override
 	public void addZipEntry(String path, String s) {
+		if (isPathProcessed(path)) {
+			return;
+		}
+
 		if (_portletDataContextListener != null) {
 			_portletDataContextListener.onAddZipEntry(path);
 		}
@@ -618,6 +628,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	@Override
 	public void addZipEntry(String path, StringBuilder sb) {
+		if (isPathProcessed(path)) {
+			return;
+		}
+
 		if (_portletDataContextListener != null) {
 			_portletDataContextListener.onAddZipEntry(path);
 		}

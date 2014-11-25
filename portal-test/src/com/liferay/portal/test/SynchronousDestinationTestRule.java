@@ -25,64 +25,40 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
+import com.liferay.portal.kernel.test.BaseTestRule;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.test.SynchronousDestinationTestRule.SyncHandler;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import org.junit.rules.TestRule;
 import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
 
 /**
  * @author Miguel Pastor
  * @author Shuyang Zhou
  */
-public class SynchronousDestinationTestRule implements TestRule {
+public class SynchronousDestinationTestRule
+	extends BaseTestRule<SyncHandler, SyncHandler> {
 
 	public static final SynchronousDestinationTestRule INSTANCE =
 		new SynchronousDestinationTestRule();
 
-	@Override
-	public Statement apply(
-		final Statement statement, final Description description) {
-
-		return new Statement() {
-
-			@Override
-			public void evaluate() throws Throwable {
-				before(description);
-
-				try {
-					statement.evaluate();
-				}
-				finally {
-					after(description);
-				}
-			}
-
-		};
-	}
-
 	protected SynchronousDestinationTestRule() {
 	}
 
-	protected void after(Description description) {
-		if (description.getMethodName() == null) {
-			return;
-		}
+	@Override
+	protected void afterMethod(
+		Description description, SyncHandler syncHandler) {
 
 		syncHandler.restorePreviousSync();
 	}
 
-	protected void before(Description description) {
-		if (description.getMethodName() == null) {
-			return;
-		}
-
+	@Override
+	protected SyncHandler beforeMethod(Description description) {
 		Sync sync = description.getAnnotation(Sync.class);
 
 		if (sync == null) {
@@ -91,15 +67,17 @@ public class SynchronousDestinationTestRule implements TestRule {
 			sync = testClass.getAnnotation(Sync.class);
 		}
 
+		SyncHandler syncHandler = new SyncHandler();
+
 		syncHandler.setForceSync(ProxyModeThreadLocal.isForceSync());
 		syncHandler.setSync(sync);
 
 		syncHandler.enableSync();
+
+		return syncHandler;
 	}
 
-	protected final SyncHandler syncHandler = new SyncHandler();
-
-	protected class SyncHandler {
+	protected static class SyncHandler {
 
 		public BaseDestination createSynchronousDestination(
 			String destinationName) {

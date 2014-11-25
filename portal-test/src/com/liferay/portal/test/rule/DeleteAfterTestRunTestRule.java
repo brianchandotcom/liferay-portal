@@ -16,6 +16,7 @@ package com.liferay.portal.test.rule;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.test.BaseTestRule;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.Company;
@@ -43,36 +44,15 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
-import org.junit.rules.TestRule;
 import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
 
 /**
  * @author Cristina González
  */
-public class DeleteAfterTestRunTestRule implements TestRule {
+public class DeleteAfterTestRunTestRule extends BaseTestRule<Object, Object> {
 
 	public DeleteAfterTestRunTestRule(Object instance) {
 		_instance = instance;
-	}
-
-	@Override
-	public Statement apply(
-		final Statement statement, final Description description) {
-
-		return new Statement() {
-
-			@Override
-			public void evaluate() throws Throwable {
-				try {
-					statement.evaluate();
-				}
-				finally {
-					after(description.getTestClass());
-				}
-			}
-
-		};
 	}
 
 	protected void addField(
@@ -92,7 +72,10 @@ public class DeleteAfterTestRunTestRule implements TestRule {
 		fieldBag.addField(field);
 	}
 
-	protected void after(Class<?> testClass) {
+	@Override
+	protected void afterMethod(Description description, Object object) {
+		Class<?> testClass = description.getTestClass();
+
 		Map<Class<?>, FieldBag> deleteAfterTestRunFieldBags =
 			new HashMap<Class<?>, FieldBag>();
 

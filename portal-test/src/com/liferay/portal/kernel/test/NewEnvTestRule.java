@@ -63,6 +63,12 @@ public class NewEnvTestRule implements TestRule {
 
 	@Override
 	public Statement apply(Statement statement, Description description) {
+		String methodName = description.getMethodName();
+
+		if (methodName == null) {
+			return statement;
+		}
+
 		NewEnv newEnv = findNewEnv(description);
 
 		if ((newEnv == null) || (newEnv.type() == NewEnv.Type.NONE)) {

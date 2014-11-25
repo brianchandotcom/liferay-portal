@@ -21,6 +21,7 @@ import com.liferay.portal.test.MainServletTestRule;
 import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Assert;
+import org.junit.runner.Description;
 
 /**
  * @author Miguel Pastor
@@ -32,15 +33,15 @@ public class WebDAVEnvironmentConfigTestRule extends MainServletTestRule {
 		new WebDAVEnvironmentConfigTestRule();
 
 	@Override
-	protected void after() {
+	protected void afterClass(Description description, Object object) {
 		_baseWebDAVTestCase.service(Method.DELETE, "", null, null);
 
-		super.after();
+		super.afterClass(description, object);
 	}
 
 	@Override
-	protected void before() {
-		super.before();
+	protected Object beforeClass(Description description) {
+		Object object = super.beforeClass(description);
 
 		Tuple tuple = _baseWebDAVTestCase.service(Method.MKCOL, "", null, null);
 
@@ -55,6 +56,8 @@ public class WebDAVEnvironmentConfigTestRule extends MainServletTestRule {
 
 			Assert.assertEquals(HttpServletResponse.SC_CREATED, statusCode);
 		}
+
+		return object;
 	}
 
 	private WebDAVEnvironmentConfigTestRule() {

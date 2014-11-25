@@ -14,6 +14,7 @@
 
 package com.liferay.portal.test.log;
 
+import com.liferay.portal.kernel.test.BaseTestRule;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.log.CaptureAppender;
 import com.liferay.portal.log.Log4JLoggerTestUtil;
@@ -26,14 +27,13 @@ import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.Assert;
-import org.junit.rules.TestRule;
 import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
 
 /**
  * @author Shuyang Zhou
  */
-public class LogAssertionTestRule implements TestRule {
+public class LogAssertionTestRule
+	extends BaseTestRule<CaptureAppender, CaptureAppender> {
 
 	public static final LogAssertionTestRule INSTANCE =
 		new LogAssertionTestRule();
@@ -49,30 +49,6 @@ public class LogAssertionTestRule implements TestRule {
 		else {
 			throw error;
 		}
-	}
-
-	@Override
-	public Statement apply(
-		final Statement statement, final Description description) {
-
-		return new Statement() {
-
-			@Override
-			public void evaluate() throws Throwable {
-				ExpectedLogs expectedLogs = description.getAnnotation(
-					ExpectedLogs.class);
-
-				CaptureAppender captureAppender = startAssert(expectedLogs);
-
-				try {
-					statement.evaluate();
-				}
-				finally {
-					endAssert(expectedLogs, captureAppender);
-				}
-			}
-
-		};
 	}
 
 	protected static void endAssert(
@@ -175,6 +151,36 @@ public class LogAssertionTestRule implements TestRule {
 		installLog4jAppender();
 
 		return captureAppender;
+	}
+
+	@Override
+	protected void afterClass(
+		Description description, CaptureAppender captureAppender) {
+
+		ExpectedLogs expectedLogs = description.getAnnotation(
+			ExpectedLogs.class);
+
+		endAssert(expectedLogs, captureAppender);
+	}
+
+	@Override
+	protected void afterMethod(
+		Description description, CaptureAppender captureAppender) {
+
+		afterClass(description, captureAppender);
+	}
+
+	@Override
+	protected CaptureAppender beforeClass(Description description) {
+		ExpectedLogs expectedLogs = description.getAnnotation(
+			ExpectedLogs.class);
+
+		return startAssert(expectedLogs);
+	}
+
+	@Override
+	protected CaptureAppender beforeMethod(Description description) {
+		return beforeClass(description);
 	}
 
 	private LogAssertionTestRule() {

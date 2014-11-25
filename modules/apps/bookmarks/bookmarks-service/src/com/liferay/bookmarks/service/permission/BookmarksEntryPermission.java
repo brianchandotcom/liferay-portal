@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"model.class.name=com.liferay.portlet.bookmarks.model.BookmarksEntry"
+		"model.class.name=com.liferay.bookmarks.model.BookmarksEntry"
 	}
 )
 public class BookmarksEntryPermission implements BaseModelPermissionChecker {

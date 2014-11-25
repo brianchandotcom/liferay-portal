@@ -444,7 +444,6 @@
 				// Set content
 
 				project.setProperty("creole_parser.content", creoleParserContent);
-
 			]]>
 		</script>
 

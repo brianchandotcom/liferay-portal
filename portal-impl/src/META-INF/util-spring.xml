@@ -334,6 +334,11 @@
 						<bean class="com.liferay.portal.freemarker.FreeMarkerTemplateContextHelper" />
 					</property>
 				</bean>
+				<bean class="com.liferay.portal.soy.SoyManager">
+					<property name="templateContextHelper">
+						<bean class="com.liferay.portal.soy.SoyTemplateContextHelper" />
+					</property>
+				</bean>
 				<bean class="com.liferay.portal.velocity.VelocityManager">
 					<property name="templateContextHelper">
 						<bean class="com.liferay.portal.velocity.VelocityTemplateContextHelper" />

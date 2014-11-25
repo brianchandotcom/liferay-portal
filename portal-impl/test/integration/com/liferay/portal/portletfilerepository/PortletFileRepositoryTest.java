@@ -134,17 +134,23 @@ public class PortletFileRepositoryTest {
 		public static final MainServletTestRule mainServletTestRule =
 			MainServletTestRule.INSTANCE;
 
-		@Test(expected = DuplicateFileException.class)
-		public void shouldFailIfDuplicateName() throws Exception {
+		@Test
+		public void shouldReturnExistingFolderIfDuplicateName()
+			throws Exception {
+
 			String portletId = RandomTestUtil.randomString();
 
-			Folder folder = _addPortletFolder(portletId);
+			Folder parentFolder = _addPortletFolder(portletId);
 
 			String name = RandomTestUtil.randomString();
 
-			_addPortletFolder(portletId, folder.getFolderId(), name);
+			Folder folder = _addPortletFolder(
+				portletId, parentFolder.getFolderId(), name);
 
-			_addPortletFolder(portletId, folder.getFolderId(), name);
+			Folder newFolder = _addPortletFolder(
+				portletId, parentFolder.getFolderId(), name);
+
+			Assert.assertEquals(newFolder, folder);
 		}
 
 		@Test

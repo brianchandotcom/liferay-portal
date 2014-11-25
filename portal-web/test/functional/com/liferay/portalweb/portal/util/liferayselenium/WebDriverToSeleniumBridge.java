@@ -930,9 +930,9 @@ public class WebDriverToSeleniumBridge
 
 		Actions actions = new Actions(webDriver);
 
-		String keypress = keySequence.substring(1);
+		String keycode = keySequence.substring(1);
 
-		Keys keys = Keys.valueOf(keypress);
+		Keys keys = Keys.valueOf(keycode);
 
 		actions.keyDown(webElement, keys);
 
@@ -951,10 +951,10 @@ public class WebDriverToSeleniumBridge
 		WebElement webElement = getWebElement(locator);
 
 		if (keySequence.startsWith("\\")) {
-			String keypress = keySequence.substring(1);
+			String keycode = keySequence.substring(1);
 
-			if (_isValidKeys(keypress)) {
-				Keys keys = Keys.valueOf(keypress);
+			if (_isValidKeys(keycode)) {
+				Keys keys = Keys.valueOf(keycode);
 
 				WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
@@ -962,8 +962,8 @@ public class WebDriverToSeleniumBridge
 
 				Actions actions = new Actions(webDriver);
 
-				if (keypress.equals("ALT") || keypress.equals("COMMAND") ||
-					keypress.equals("CONTROL") || keypress.equals("SHIFT")) {
+				if (keycode.equals("ALT") || keycode.equals("COMMAND") ||
+					keycode.equals("CONTROL") || keycode.equals("SHIFT")) {
 
 					actions.keyDown(webElement, keys);
 					actions.keyUp(webElement, keys);
@@ -997,9 +997,9 @@ public class WebDriverToSeleniumBridge
 
 		Actions actions = new Actions(webDriver);
 
-		String keypress = keySequence.substring(1);
+		String keycode = keySequence.substring(1);
 
-		Keys keys = Keys.valueOf(keypress);
+		Keys keys = Keys.valueOf(keycode);
 
 		actions.keyUp(webElement, keys);
 
@@ -1731,11 +1731,11 @@ public class WebDriverToSeleniumBridge
 		select.selectByIndex(index);
 	}
 
-	private boolean _isValidKeys(String keypress) {
+	private boolean _isValidKeys(String keycode) {
 		for (Keys keys : Keys.values()) {
 			String keysName = keys.name();
 
-			if (keysName.equals(keypress)) {
+			if (keysName.equals(keycode)) {
 				return true;
 			}
 		}

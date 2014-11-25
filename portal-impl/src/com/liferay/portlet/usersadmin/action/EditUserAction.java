@@ -40,6 +40,7 @@ import com.liferay.portal.UserSmsException;
 import com.liferay.portal.WebsiteURLException;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.DynamicActionRequest;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -60,6 +61,7 @@ import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.ListTypeConstants;
 import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroupRole;
@@ -67,6 +69,7 @@ import com.liferay.portal.model.Website;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.membershippolicy.MembershipPolicyException;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.service.ListTypeServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -124,6 +127,22 @@ public class EditUserAction extends PortletAction {
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			ActionResponse actionResponse)
 		throws Exception {
+
+		String prefix = ParamUtil.getString(actionRequest, "prefixId");
+		String suffix = ParamUtil.getString(actionRequest, "suffixId");
+
+		int prefixId = ListTypeServiceUtil.addListType(
+			ListTypeConstants.CONTACT_PREFIX, prefix).getPrimaryKey();
+		int suffixId = ListTypeServiceUtil.addListType(
+			ListTypeConstants.CONTACT_SUFFIX, suffix).getPrimaryKey();
+
+		DynamicActionRequest dynamicActionRequest = new DynamicActionRequest(
+			actionRequest);
+
+		dynamicActionRequest.setParameter("prefixId", String.valueOf(prefixId));
+		dynamicActionRequest.setParameter("suffixId", String.valueOf(suffixId));
+
+		actionRequest = dynamicActionRequest;
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 

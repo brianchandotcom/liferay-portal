@@ -89,9 +89,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	protected void checkPoshiCharactersBeforeDefinition(
 		String fileName, String content) {
 
-		Matcher matcher = _poshiCharactersBeforeDefinitionTag.matcher(content);
-
-		if (matcher.find()) {
+		if (!content.startsWith("<definition")) {
 			processErrorMessage(
 				fileName,
 				"Characters found before definition element: " + fileName);

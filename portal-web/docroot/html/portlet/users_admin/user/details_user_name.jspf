@@ -55,21 +55,37 @@ for (Map<String, Object> userField: userFields) {
 
 <c:choose>
 	<c:when test="<%= Validator.isNull(options) %>">
-		<aui:input disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>' name="<%= fieldName %>">
+		<aui:input disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" name="<%= fieldName %>">
 			<c:if test="<%= required %>">
 				<aui:validator name="required" />
 			</c:if>
 		</aui:input>
 	</c:when>
 	<c:otherwise>
-		<aui:select disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>' label="<%= fieldName %>" name="<%= fieldName %>" showEmptyOption="<%= true %>" >
+		<aui:select disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" label="<%= fieldName %>" name='<%= fieldName.concat("Id") %>' showEmptyOption="<%= true %>">
+
 		<%
+		String selected = StringPool.BLANK;
+
+		if (!Validator.isNull(selContact)) {
+			int listTypeId = BeanParamUtil.getInteger(selContact, request, fieldName.concat("Id"));
+
+			try {
+				selected = ListTypeServiceUtil.getListType(listTypeId).getName();
+			}
+			catch (Exception e) {
+			}
+		}
+
 		for (String option: options) {
 		%>
-			<aui:option label='<%= option %>' value="<%= option %>" />
+
+			<aui:option label="<%= option %>" selected="<%= selected.equals(option) %>" value="<%= option %>" />
+
 		<%
 		}
 		%>
+
 		</aui:select>
 	</c:otherwise>
 </c:choose>

@@ -234,8 +234,8 @@ Parse.Simple.Creole = function(options) {
 
         singleLine: { regex: /.+/, capture: 0 },
         paragraph: { tag: 'p', capture: 0,
-            regex: /(^|\n)([ \t]*\S.*(\n|$))+/ },
-        text: { capture: 0, regex: /(^|\n)([ \t]*[^\s].*(\n|$))+/ },
+            regex: /(^|\n)(\s*\S.*(\n|$))/ },
+        text: { capture: 0, regex: /(^|\n)(\s*[^\s].*(\n|$))+/ },
 
         strong: { tag: 'strong', capture: 1,
             regex: /\*\*([^*~]*((\*(?!\*)|~(.|(?=\n)|$))[^*~]*)*)(\*\*|\n|$)/ },

@@ -65,17 +65,14 @@ import org.junit.Test;
 /**
  * @author Matthew Tambara
  */
-
 public class ClusterMasterExecutorImplTest {
 
 	@ClassRule
-	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Before
 	public void setUp() {
-		_mockLockLocalService = new MockLockLocalService();
-
 		ReflectionTestUtil.setFieldValue(
 			LockLocalServiceUtil.class, "_service", _mockLockLocalService);
 	}
@@ -165,7 +162,7 @@ public class ClusterMasterExecutorImplTest {
 	}
 
 	@Test
-	public void testDestroy() throws Exception {
+	public void testDestroy() {
 
 		// Test 1, desctory when cluster link is enabled
 
@@ -270,7 +267,6 @@ public class ClusterMasterExecutorImplTest {
 				clusterMasterExecutorImpl.executeOnMaster(methodHandler);
 
 			Assert.assertSame(timeString, noticeableFuture.get());
-
 			Assert.assertEquals(1, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
@@ -572,7 +568,8 @@ public class ClusterMasterExecutorImplTest {
 	private static final Address _OTHER_ADDRESS = new AddressImpl(
 		new MockAddress("_OTHER_ADDRESS"));
 
-	private MockLockLocalService _mockLockLocalService;
+	private final MockLockLocalService _mockLockLocalService =
+		new MockLockLocalService();
 
 	private static class MockAddress implements org.jgroups.Address {
 
@@ -622,7 +619,7 @@ public class ClusterMasterExecutorImplTest {
 		}
 
 		@Override
-		public void readFrom(DataInput dataInput) throws Exception {
+		public void readFrom(DataInput dataInput) throws IOException {
 			_name = dataInput.readUTF();
 		}
 
@@ -639,7 +636,7 @@ public class ClusterMasterExecutorImplTest {
 		}
 
 		@Override
-		public void writeTo(DataOutput dataOutput) throws Exception {
+		public void writeTo(DataOutput dataOutput) throws IOException {
 			dataOutput.writeUTF(_name);
 		}
 
@@ -652,9 +649,7 @@ public class ClusterMasterExecutorImplTest {
 		public MockClusterExecutor(boolean enabled) {
 			_enabled = enabled;
 
-			_localAddress = _LOCAL_ADDRESS;
-
-			_addresses.add(_localAddress);
+			_addresses.add(_LOCAL_ADDRESS);
 		}
 
 		@Override
@@ -751,7 +746,7 @@ public class ClusterMasterExecutorImplTest {
 
 		@Override
 		public Address getLocalClusterNodeAddress() {
-			return _localAddress;
+			return _LOCAL_ADDRESS;
 		}
 
 		@Override
@@ -784,15 +779,11 @@ public class ClusterMasterExecutorImplTest {
 		private final List<ClusterEventListener> _clusterEventListeners =
 			new ArrayList<ClusterEventListener>();
 		private final boolean _enabled;
-		private final Address _localAddress;
 
 	}
 
 	private static class MockClusterMasterTokenTransitionListener
 		implements ClusterMasterTokenTransitionListener {
-
-		public MockClusterMasterTokenTransitionListener() {
-		}
 
 		public boolean isMasterTokenAcquiredNotified() {
 			return _masterTokenAcquiredNotified;
@@ -826,12 +817,10 @@ public class ClusterMasterExecutorImplTest {
 		@Override
 		public Lock lock(String className, String key, String owner) {
 			if (_lock == null) {
-				Lock lock = new LockImpl();
+				_lock = new LockImpl();
 
-				lock.setKey(key);
-				lock.setOwner(owner);
-
-				_lock = lock;
+				_lock.setKey(key);
+				_lock.setOwner(owner);
 			}
 
 			return _lock;
@@ -842,22 +831,18 @@ public class ClusterMasterExecutorImplTest {
 			String className, String key, String expectedOwner,
 			String updatedOwner) {
 
-			Lock lock = new LockImpl();
+			_lock = new LockImpl();
 
-			lock.setKey(key);
-			lock.setOwner(updatedOwner);
+			_lock.setKey(key);
+			_lock.setOwner(updatedOwner);
 
-			_lock = lock;
-
-			return lock;
+			return _lock;
 		}
 
 		public void setLock(String owner) {
-			Lock lock = new LockImpl();
+			_lock = new LockImpl();
 
-			lock.setOwner(owner);
-
-			_lock = lock;
+			_lock.setOwner(owner);
 		}
 
 		public void setUnlockError(boolean error) {

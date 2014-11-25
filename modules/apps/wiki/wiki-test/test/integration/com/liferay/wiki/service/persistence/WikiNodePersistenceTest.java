@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.PersistenceTestRule;
 import com.liferay.portal.test.TransactionalTestRule;
+import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.RandomTestUtil;
 
@@ -42,10 +44,9 @@ import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.impl.WikiNodeModelImpl;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 
-import org.jboss.arquillian.junit.Arquillian;
-
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -62,6 +63,7 @@ import java.util.Set;
  * @generated
  */
 public class WikiNodePersistenceTest {
+
 	@Rule
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
@@ -594,6 +596,7 @@ public class WikiNodePersistenceTest {
 		return wikiNode;
 	}
 
+	private static Log _log = LogFactoryUtil.getLog(WikiNodePersistenceTest.class);
 	private List<WikiNode> _wikiNodes = new ArrayList<WikiNode>();
 	private WikiNodePersistence _persistence = WikiNodeUtil.getPersistence();
 }

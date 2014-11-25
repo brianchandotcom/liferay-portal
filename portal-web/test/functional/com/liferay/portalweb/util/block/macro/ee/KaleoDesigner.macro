@@ -193,7 +193,7 @@
 		<var name="key_connectorLabel" value="${connectorLabel}" />
 
 		<execute action="Kaleodesigner#click" locator-key1="VIEW_FORM_CONNECTOR" />
-		<execute action="Kaleodesigner#keyPress" locator-key1="VIEW_FORM_CONNECTOR" value1="\46" />
+		<execute action="Kaleodesigner#keyPress" locator-key1="VIEW_FORM_CONNECTOR" value1="\DELETE" />
 		<execute action="Kaleodesigner#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected connector(s)?" />
 		<execute action="Kaleodesigner#pause" locator1="1000" />
 

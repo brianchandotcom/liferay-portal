@@ -32,7 +32,7 @@
 
 		<execute action="SOActivities#click" locator-key1="ACTIVITIES_COMMENT_FIELD" />
 		<execute action="SOActivities#type" locator-key1="ACTIVITIES_COMMENT_INPUT_FIELD" value1="${commentContent}" />
-		<execute action="SOActivities#keyPress" locator-key1="ACTIVITIES_COMMENT_FIELD" value1="\13" />
+		<execute action="SOActivities#keyPress" locator-key1="ACTIVITIES_COMMENT_FIELD" value1="\RETURN" />
 
 		<var name="key_commentContent" value="${commentContent}" />
 
@@ -278,7 +278,8 @@
 		<execute action="SOActivities#pause" value1="1000" />
 		<execute action="SOActivities#click" locator-key1="ACTIVITIES_COMMENT_FIELD" />
 		<execute action="SOActivities#type" locator-key1="ACTIVITIES_COMMENT_INPUT_FIELD" value1="${commentContentEdit}" />
-		<execute action="SOActivities#keyPress" locator-key1="ACTIVITIES_COMMENT_FIELD" value1="\13" />
+		<execute action="SOActivities#keyPress" locator-key1="ACTIVITIES_COMMENT_FIELD" value1="\RETURN" />
+
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT_CONTENT" value1="${commentContentEdit}" />
 	</command>
 
@@ -1450,7 +1451,7 @@
 			<var name="row" value="05" />
 		</execute>
 
-		<execute action="SOActivities#keyPress" locator-key1="ACTIVITIES_PORTLET_TITLE" value1="\32" />
+		<execute action="SOActivities#keyPress" locator-key1="ACTIVITIES_PORTLET_TITLE" value1="\SPACE" />
 
 		<execute macro="SOActivities#viewBookmarksActivityEntry">
 			<var name="action" value="${bookmarkAction}" />

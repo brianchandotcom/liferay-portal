@@ -37,7 +37,7 @@
 		<if>
 			<equals arg1="${searchSocialOffice}" arg2="true" />
 			<then>
-				<execute action="PGSearch#keyPress" locator-key1="SEARCH_FIELD" value1="\13" />
+				<execute action="PGSearch#keyPress" locator-key1="SEARCH_FIELD" value1="\RETURN" />
 			</then>
 			<else>
 				<execute action="PGSearch#click" locator-key1="SEARCH_ICON" />
@@ -80,7 +80,7 @@
 		<if>
 			<equals arg1="${searchSocialOffice}" arg2="true" />
 			<then>
-				<execute action="PGSearch#keyPress" locator-key1="SEARCH_FIELD" value1="\13" />
+				<execute action="PGSearch#keyPress" locator-key1="SEARCH_FIELD" value1="\RETURN" />
 			</then>
 			<else>
 				<execute action="PGSearch#click" locator-key1="SEARCH_ICON" />

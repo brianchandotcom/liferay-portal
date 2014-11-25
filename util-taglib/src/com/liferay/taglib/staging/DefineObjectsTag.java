@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -39,7 +40,21 @@ public class DefineObjectsTag extends IncludeTag {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Group group = themeDisplay.getScopeGroup();
+		long groupId = ParamUtil.getLong(request, "groupId");
+
+		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+		if (group == null) {
+			group = (Group)request.getAttribute(WebKeys.GROUP);
+		}
+
+		if (group == null) {
+			group = themeDisplay.getScopeGroup();
+		}
+
+		if (group == null) {
+			return SKIP_BODY;
+		}
 
 		pageContext.setAttribute("group", group);
 		pageContext.setAttribute("groupId", group.getGroupId());

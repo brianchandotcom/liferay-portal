@@ -147,15 +147,14 @@ public class WorkflowHandlerRegistryUtil {
 			status = WorkflowConstants.STATUS_APPROVED;
 		}
 
-		ServiceContext serviceContextClone =
-			(ServiceContext)serviceContext.clone();
+		serviceContext = (ServiceContext)serviceContext.clone();
 
-		Map<String, String> headers = serviceContextClone.getHeaders();
+		Map<String, String> headers = serviceContext.getHeaders();
 
 		if (headers != null) {
 			headers.remove("cookie");
 
-			serviceContextClone.setHeaders(headers);
+			serviceContext.setHeaders(headers);
 		}
 
 		workflowContext = new HashMap<String, Serializable>(workflowContext);
@@ -174,7 +173,7 @@ public class WorkflowHandlerRegistryUtil {
 			WorkflowConstants.CONTEXT_ENTRY_TYPE,
 			workflowHandler.getType(LocaleUtil.getDefault()));
 		workflowContext.put(
-			WorkflowConstants.CONTEXT_SERVICE_CONTEXT, serviceContextClone);
+			WorkflowConstants.CONTEXT_SERVICE_CONTEXT, serviceContext);
 		workflowContext.put(
 			WorkflowConstants.CONTEXT_TASK_COMMENTS,
 			GetterUtil.getString(serviceContext.getAttribute("comments")));

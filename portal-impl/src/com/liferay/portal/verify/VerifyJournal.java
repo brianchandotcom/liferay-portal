@@ -88,6 +88,7 @@ public class VerifyJournal extends VerifyProcess {
 		verifyOracleNewLine();
 		verifyAssets();
 		verifyPermissionsAndAssets();
+		verifyJournalArticleStructures();
 		verifySearch();
 		verifyTree();
 		verifyURLTitle();
@@ -515,6 +516,57 @@ public class VerifyJournal extends VerifyProcess {
 		JournalArticleLocalServiceUtil.updateJournalArticle(article);
 	}
 
+	protected void verifyJournalArticleStructures() throws PortalException {
+		ActionableDynamicQuery actionableDynamicQuery =
+			JournalArticleLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
+
+				@Override
+				public void performAction(Object object)
+					throws PortalException {
+
+					JournalArticle article = (JournalArticle)object;
+
+					try {
+						JournalArticleLocalServiceUtil.checkStructure(
+							article.getGroupId(), article.getArticleId(),
+							article.getVersion());
+					}
+					catch (NoSuchStructureException nsse) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Removing reference to missing structure for " +
+									"article " + article.getId());
+						}
+
+						article.setDDMStructureKey(StringPool.BLANK);
+						article.setDDMTemplateKey(StringPool.BLANK);
+
+						JournalArticleLocalServiceUtil.updateJournalArticle(
+							article);
+					}
+					catch (Exception e) {
+						_log.error(
+							"Unable to check the structure for article " +
+								article.getId(),
+							e);
+					}
+				}
+			});
+
+		long count = actionableDynamicQuery.performCount();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Processing " + count +
+					" default article versions in draft mode");
+		}
+
+		actionableDynamicQuery.performActions();
+	}
+
 	protected void verifyModifiedDate(JournalArticleResource articleResource) {
 		JournalArticle article =
 			JournalArticleLocalServiceUtil.fetchLatestArticle(
@@ -601,32 +653,7 @@ public class VerifyJournal extends VerifyProcess {
 		}
 	}
 
-	protected void verifyPermissionsAndAssets() throws Exception {
-		ActionableDynamicQuery actionableDynamicQuery =
-			JournalArticleLocalServiceUtil.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
-
-				@Override
-				public void performAction(Object object)
-					throws PortalException {
-
-					JournalArticle article = (JournalArticle)object;
-
-					verifyPermissionsAndAssets(article);
-				}
-
-			});
-
-		actionableDynamicQuery.performActions();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Permissions and assets verified for articles");
-		}
-	}
-
-	protected void verifyPermissionsAndAssets(JournalArticle article)
+	protected void verifyPermissions(JournalArticle article)
 		throws PortalException {
 
 		long groupId = article.getGroupId();
@@ -642,27 +669,30 @@ public class VerifyJournal extends VerifyProcess {
 		ResourceLocalServiceUtil.addResources(
 			article.getCompanyId(), 0, 0, JournalArticle.class.getName(),
 			article.getResourcePrimKey(), false, false, false);
+	}
 
-		try {
-			JournalArticleLocalServiceUtil.checkStructure(
-				groupId, articleId, version);
-		}
-		catch (NoSuchStructureException nsse) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Removing reference to missing structure for article " +
-						article.getId());
-			}
+	protected void verifyPermissionsAndAssets() throws Exception {
+		ActionableDynamicQuery actionableDynamicQuery =
+			JournalArticleLocalServiceUtil.getActionableDynamicQuery();
 
-			article.setDDMStructureKey(StringPool.BLANK);
-			article.setDDMTemplateKey(StringPool.BLANK);
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
 
-			JournalArticleLocalServiceUtil.updateJournalArticle(article);
-		}
-		catch (Exception e) {
-			_log.error(
-				"Unable to check the structure for article " + article.getId(),
-				e);
+				@Override
+				public void performAction(Object object)
+					throws PortalException {
+
+					JournalArticle article = (JournalArticle) object;
+
+					verifyPermissions(article);
+				}
+
+			});
+
+		actionableDynamicQuery.performActions();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Permissions and assets verified for articles");
 		}
 	}
 

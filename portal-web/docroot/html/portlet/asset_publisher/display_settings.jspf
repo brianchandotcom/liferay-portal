@@ -103,12 +103,17 @@
 
 	<aui:input name="preferences--enableFlags--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableFlags() %>" />
 
-	<c:if test="<%= assetPublisherDisplayContext.isShowEnablePermissions() %>">
-		<aui:input name="preferences--enablePermissions--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnablePermissions() %>" />
-	</c:if>
+	<c:choose>
+		<c:when test="<%= !assetPublisherDisplayContext.isShowEnablePermissions() %>">
+			<aui:input name="preferences--enablePermissions--" type="hidden" value="<%= assetPublisherDisplayContext.isEnablePermissions() %>" />
+		</c:when>
+		<c:otherwise>
+			<aui:input name="preferences--enablePermissions--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnablePermissions() %>" />
+		</c:otherwise>
+	</c:choose>
 
 	<c:choose>
-		<c:when test="<%= assetPublisherDisplayContext.isShowEnableRelatedAssets() %>">
+		<c:when test="<%= !assetPublisherDisplayContext.isShowEnableRelatedAssets() %>">
 			<aui:input name="preferences--enableRelatedAssets--" type="hidden" value="<%= assetPublisherDisplayContext.isEnableRelatedAssets() %>" />
 		</c:when>
 		<c:otherwise>

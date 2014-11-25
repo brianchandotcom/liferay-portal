@@ -534,8 +534,8 @@ public class UserFinderImpl
 		if (ArrayUtil.isNotEmpty(groupIds) && inherit &&
 			!socialRelationTypeUnionUserGroups) {
 
-			List<Long> siteGroupIds = new ArrayList<Long>();
 			List<Long> organizationIds = new ArrayList<Long>();
+			List<Long> siteGroupIds = new ArrayList<Long>();
 			List<Long> userGroupIds = new ArrayList<Long>();
 
 			for (long groupId : groupIds) {
@@ -566,39 +566,39 @@ public class UserFinderImpl
 					organizationIds.toArray(new Long[organizationIds.size()]));
 			}
 
-			if (!userGroupIds.isEmpty()) {
+			if (!siteGroupIds.isEmpty()) {
+				Long[] siteGroupIdArray = siteGroupIds.toArray(
+					new Long[siteGroupIds.size()]);
+
 				params3 = new LinkedHashMap<String, Object>(params1);
 
 				params3.remove("usersGroups");
 
-				params3.put(
-					"usersUserGroups",
-					userGroupIds.toArray(new Long[userGroupIds.size()]));
-			}
-
-			if (!siteGroupIds.isEmpty()) {
-				Long[] siteGroupIdArray = siteGroupIds.toArray(
-					new Long[siteGroupIds.size()]);
+				params3.put("groupsOrgs", siteGroupIdArray);
 
 				params4 = new LinkedHashMap<String, Object>(params1);
 
 				params4.remove("usersGroups");
 
-				params4.put("groupsOrgs", siteGroupIdArray);
+				params4.put("groupsUserGroups", siteGroupIdArray);
+			}
 
+			if (!userGroupIds.isEmpty()) {
 				params5 = new LinkedHashMap<String, Object>(params1);
 
 				params5.remove("usersGroups");
 
-				params5.put("groupsUserGroups", siteGroupIdArray);
+				params5.put(
+					"usersUserGroups",
+					userGroupIds.toArray(new Long[userGroupIds.size()]));
 			}
 		}
 
 		if (ArrayUtil.isNotEmpty(roleIds) && inherit &&
 			!socialRelationTypeUnionUserGroups) {
 
-			List<Long> siteGroupIds = new ArrayList<Long>();
 			List<Long> organizationIds = new ArrayList<Long>();
+			List<Long> siteGroupIds = new ArrayList<Long>();
 			List<Long> userGroupIds = new ArrayList<Long>();
 
 			for (long roleId : roleIds) {
@@ -617,47 +617,47 @@ public class UserFinderImpl
 				}
 			}
 
-			if (!siteGroupIds.isEmpty()) {
-				Long[] siteGroupIdArray = siteGroupIds.toArray(
-					new Long[siteGroupIds.size()]);
-
+			if (!organizationIds.isEmpty()) {
 				params2 = new LinkedHashMap<String, Object>(params1);
 
 				params2.remove("usersRoles");
 
-				params2.put("usersGroups", siteGroupIdArray);
+				params2.put(
+					"usersOrgs",
+					organizationIds.toArray(new Long[organizationIds.size()]));
+			}
+
+			if (!siteGroupIds.isEmpty()) {
+				Long[] siteGroupIdArray = siteGroupIds.toArray(
+					new Long[siteGroupIds.size()]);
+
+				params3 = new LinkedHashMap<String, Object>(params1);
+
+				params3.remove("usersRoles");
+
+				params3.put("usersGroups", siteGroupIdArray);
+
+				params4 = new LinkedHashMap<String, Object>(params1);
+
+				params4.remove("usersRoles");
+
+				params4.put("groupsOrgs", siteGroupIdArray);
 
 				params5 = new LinkedHashMap<String, Object>(params1);
 
 				params5.remove("usersRoles");
 
-				params5.put("groupsOrgs", siteGroupIdArray);
+				params5.put("groupsUserGroups", siteGroupIdArray);
+			}
 
+			if (!userGroupIds.isEmpty()) {
 				params6 = new LinkedHashMap<String, Object>(params1);
 
 				params6.remove("usersRoles");
 
-				params6.put("groupsUserGroups", siteGroupIdArray);
-			}
-
-			if (!userGroupIds.isEmpty()) {
-				params3 = new LinkedHashMap<String, Object>(params1);
-
-				params3.remove("usersRoles");
-
-				params3.put(
+				params6.put(
 					"usersUserGroups",
 					userGroupIds.toArray(new Long[userGroupIds.size()]));
-			}
-
-			if (!organizationIds.isEmpty()) {
-				params4 = new LinkedHashMap<String, Object>(params1);
-
-				params4.remove("usersRoles");
-
-				params4.put(
-					"usersOrgs",
-					organizationIds.toArray(new Long[organizationIds.size()]));
 			}
 		}
 

@@ -147,6 +147,8 @@
 
 		${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass");
 	<#elseif name == "if">
+		<#assign variableContext = variableContextStack.peek()>
+
 		executeScopeVariables = new HashMap<String, String>();
 
 		executeScopeVariables.putAll(${variableContext});

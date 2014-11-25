@@ -16,13 +16,44 @@
 		font-size: 30px;
 	}
 
+	.progress-wrapper {
+		display: none;
+		left: 50%;
+		margin-left: -15%;
+		position: absolute;
+		top: 50%;
+		@include transform(translate(0, -50%));
+		width: 30%;
+
+		button {
+			margin-top: 20px;
+		}
+
+		p {
+			color: #2B4259;
+			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+			font-size: 18px;
+			margin: 0;
+			text-align: left;
+
+			&.size {
+				font-size: 14px;
+			}
+		}
+
+		.progressbar {
+			background: #B0B4BB;
+			border-radius: 0;
+			height: 6px;
+			margin: 5px auto;
+			opacity: 0.7;
+			width: 100%;
+		}
+	}
+
 	&.drop-active {
 		outline-color: #32A8E6;
 		outline-width: 4px;
-
-		.image-wrapper {
-			opacity: 0.15;
-		}
 
 		.change-image-controls {
 			display: none;
@@ -34,6 +65,14 @@
 
 		.drop-here-info {
 			display: block;
+		}
+
+		.image-wrapper {
+			opacity: 0.15;
+		}
+
+		.progress-wrapper {
+			display: none;
 		}
 	}
 
@@ -47,8 +86,8 @@
 		}
 
 		&.both .current-image {
-			max-height: inherit;
-			max-width: inherit;
+			max-height: 100%;
+			max-width: 100%;
 		}
 
 		&.drop-enabled {
@@ -62,6 +101,28 @@
 			overflow: hidden;
 			position: relative;
 			width: 100%;
+		}
+	}
+
+	&.progress-active {
+		.image-wrapper {
+			opacity: 0.15;
+		}
+
+		.browse-image-controls {
+			display: none;
+		}
+
+		.change-image-controls {
+			display: none;
+		}
+
+		.drop-here-info {
+			display: none;
+		}
+
+		.progress-wrapper {
+			display: block;
 		}
 	}
 

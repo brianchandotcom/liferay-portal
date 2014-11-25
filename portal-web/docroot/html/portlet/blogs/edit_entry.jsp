@@ -114,7 +114,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 			</portlet:actionURL>
 
 			<div class="lfr-blogs-cover-image-selector">
-				<liferay-ui:image-selector draggableImage="vertical" fileEntryId="<%= coverImageFileEntryId %>" paramName="coverImageFileEntry" uploadURL="<%= imageSelectorURL %>" />
+				<liferay-ui:image-selector draggableImage="both" fileEntryId="<%= coverImageFileEntryId %>" paramName="coverImageFileEntry" uploadURL="<%= imageSelectorURL %>" />
 			</div>
 
 			<div class="entry-title">

@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>ADD_PAGE_BUTTON</td>
-	<td>//div[@id='_156_addLayout']//button[contains(.,'Add Page')]</td>
+	<td>//button[contains(.,'Add Page')]</td>
 	<td></td>
 </tr>
 <tr>

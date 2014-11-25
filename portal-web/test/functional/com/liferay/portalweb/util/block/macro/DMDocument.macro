@@ -1083,7 +1083,7 @@
 	</command>
 
 	<command name="navigateBackViaDocumentViewPG">
-		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="BACK_BUTTON" value1="Up" />
+		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="UP_BUTTON" value1="Up" />
 	</command>
 
 	<command name="populateField">

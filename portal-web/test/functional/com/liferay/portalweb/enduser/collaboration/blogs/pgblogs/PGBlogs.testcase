@@ -1204,7 +1204,7 @@
 
 		<execute macro="ServerAdministration#configureMailServerSettings">
 			<var name="userName" property-value="email.address.1" />
-			<var name="userPassword" property-value="email.address.1" />
+			<var name="userPassword" property-value="email.password.1" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -1245,7 +1245,7 @@
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" property-value="email.address.2" />
-			<var name="userPassword" property-value="email.address.2" />
+			<var name="userPassword" property-value="email.password.2" />
 		</execute>
 
 		<execute macro="Gmail#gotoHtmlMode" />
@@ -1262,7 +1262,7 @@
 
 		<execute macro="Gmail#tearDown">
 			<var name="userEmailAddress" property-value="email.address.2" />
-			<var name="userPassword" value="loveispatient1" />
+			<var name="userPassword" property-value="email.password.2" />
 		</execute>
 	</command>
 
@@ -1275,7 +1275,7 @@
 
 		<execute macro="ServerAdministration#configureMailServerSettings">
 			<var name="userName" property-value="email.address.1" />
-			<var name="userPassword" property-value="email.address.1" />
+			<var name="userPassword" property-value="email.password.1" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -1340,7 +1340,7 @@
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" property-value="email.address.2" />
-			<var name="userPassword" property-value="email.address.2" />
+			<var name="userPassword" property-value="email.password.2" />
 		</execute>
 
 		<execute macro="Gmail#gotoHtmlMode" />
@@ -1348,16 +1348,16 @@
 		<execute macro="Gmail#viewMail">
 			<var name="emailFromUserName" value="Joe Bloggs" />
 			<var name="gmailAssetType" value="Blogs" />
-			<var name="gmailMailTableMessageTitle" value="New Blogs Post" />
-			<var name="gmailMessageBody" value="Test Test created a new blog entry titled Blogs Entry Title." />
+			<var name="gmailMailTableMessageTitle" value="Blogs Entry Title" />
+			<var name="gmailMessageBody" value="Blogs Entry Title" />
 			<var name="gmailMessageBodyClosing" value="Sincerely" />
-			<var name="gmailMessageBodyGreeting" value="Dear userfn userln" />
-			<var name="gmailMessageTitle" value="New Blogs Post by Test Test" />
+			<var name="gmailMessageBodyGreeting" value="Joe Bloggs" />
+			<var name="gmailMessageTitle" value="Test Test Published &quot;Blogs Entry Title&quot; on Liferay Blogs" />
 		</execute>
 
 		<execute macro="Gmail#tearDown">
 			<var name="userEmailAddress" property-value="email.address.2" />
-			<var name="userPassword" property-value="email.address.2" />
+			<var name="userPassword" property-value="email.password.2" />
 		</execute>
 
 		<execute action="Home#open" locator1="http://localhost:8080" />

@@ -56,7 +56,7 @@
 </tr>
 <tr>
 	<td>FOLDERS_TABLE_CHOOSE_BUTTON</td>
-	<td>//div[@id='_28_bookmarksFoldersSearchContainer']//tr[contains(.,'${key_folderName}')]/td[4]/button</td>
+	<td>//button[contains(@data-name,'${key_folderName}')]</td>
 	<td></td>
 </tr>
 <tr>

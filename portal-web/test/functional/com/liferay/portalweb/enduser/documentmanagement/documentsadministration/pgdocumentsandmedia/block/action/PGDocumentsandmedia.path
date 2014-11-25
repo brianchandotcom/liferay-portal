@@ -464,7 +464,7 @@
 </tr>
 <tr>
 	<td>ENTRY_ICON_FOLDER_CHECKBOX</td>
-	<td>//div[contains(.,'${key_dmFolderName}') and a[@data-folder='true']]/input</td>
+	<td>//div[@data-title='${key_dmFolderName}']//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

@@ -1,4 +1,4 @@
-// $ANTLR 3.0.1 Creole10.g 2014-05-16 14:56:48
+// $ANTLR 3.0.1 Creole10.g 2014-11-25 11:19:16
 
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -78,9 +78,10 @@ import java.util.Stack;
 
 
 import org.antlr.runtime.*;
-
+import java.util.Stack;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.HashMap;
 @SuppressWarnings("all")
 public class Creole10Parser extends Parser {
@@ -3048,7 +3049,7 @@ public class Creole10Parser extends Parser {
                     	    _fsp--;
                     	    if (failed) return items;
                     	    if ( backtracking==0 ) {
-                    	       items.add(new ForcedEndOfLineNode());
+                    	       items.add(new ForcedEndOfLineNode()); 
                     	    }
 
                     	    }
@@ -12767,7 +12768,7 @@ public class Creole10Parser extends Parser {
                     match(input,42,FOLLOW_42_in_link_interwiki_uri3296); if (failed) return interwiki;
                     match(input,43,FOLLOW_43_in_link_interwiki_uri3298); if (failed) return interwiki;
                     if ( backtracking==0 ) {
-                       interwiki = new C2InterwikiLinkNode();
+                       interwiki = new C2InterwikiLinkNode(); 
                     }
 
                     }
@@ -12865,7 +12866,7 @@ public class Creole10Parser extends Parser {
                     match(input,46,FOLLOW_46_in_link_interwiki_uri3415); if (failed) return interwiki;
                     match(input,49,FOLLOW_49_in_link_interwiki_uri3417); if (failed) return interwiki;
                     if ( backtracking==0 ) {
-                       interwiki = new MediaWikiInterwikiLinkNode();
+                       interwiki = new MediaWikiInterwikiLinkNode(); 
                     }
 
                     }
@@ -12912,7 +12913,7 @@ public class Creole10Parser extends Parser {
                     match(input,65,FOLLOW_65_in_link_interwiki_uri3472); if (failed) return interwiki;
                     match(input,61,FOLLOW_61_in_link_interwiki_uri3474); if (failed) return interwiki;
                     if ( backtracking==0 ) {
-                       interwiki = new OhanaInterwikiLinkNode();
+                       interwiki = new OhanaInterwikiLinkNode(); 
                     }
 
                     }
@@ -12944,7 +12945,7 @@ public class Creole10Parser extends Parser {
                     match(input,46,FOLLOW_46_in_link_interwiki_uri3511); if (failed) return interwiki;
                     match(input,49,FOLLOW_49_in_link_interwiki_uri3513); if (failed) return interwiki;
                     if ( backtracking==0 ) {
-                       interwiki = new PukiWikiInterwikiLinkNode();
+                       interwiki = new PukiWikiInterwikiLinkNode(); 
                     }
 
                     }
@@ -15880,7 +15881,7 @@ public class Creole10Parser extends Parser {
                 {
                 int LA151_14 = input.LA(2);
 
-                if ( ((( input.LA(2) != STAR && input.LA(2) == EQUAL )|| input.LA(2) != STAR )) ) {
+                if ( (( input.LA(2) != STAR ||( input.LA(2) != STAR && input.LA(2) == EQUAL ))) ) {
                     alt151=1;
                 }
                 else if ( (true) ) {

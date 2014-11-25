@@ -335,9 +335,9 @@ AUI.add(
 													instance.one('#entryId').val(message.entryId);
 													instance.one('#redirect').val(message.redirect);
 
-													var contentEditor = window[instance.ns('contentEditor')];
-
-													contentEditor.setHTML(message.content);
+													if (message.blogsEntryAttachmentReferences) {
+														instance._updateImages(message.blogsEntryAttachmentReferences);
+													}
 
 													var tabs1BackButton = instance.one('#tabs1TabsBack');
 
@@ -411,6 +411,22 @@ AUI.add(
 						}
 
 						return text;
+					},
+
+					_updateImages: function(persistentImages) {
+						var instance = this;
+
+						persistentImages.forEach(
+							function(image) {
+								var el = instance.one('img[' + image.dataImageIdAttribute + '="' + image.fileEntryId + '"]');
+
+								if (el) {
+									el.setAttribute('src', image.fileEntryUrl);
+
+									el.removeAttribute(image.dataImageIdAttribute);
+								}
+							}
+						);
 					},
 
 					_updateStatus: function(text, className) {

@@ -26,19 +26,19 @@ StructureDisplayTerms displayTerms = new StructureDisplayTerms(renderRequest);
 	id="toggle_id_ddm_structure_search"
 >
 	<aui:fieldset cssClass="lfr-ddm-search-form">
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" inlineField="<%= true %>" name="<%= displayTerms.NAME %>" size="20" value="<%= displayTerms.getName() %>" />
+		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" inlineField="<%= true %>" name="<%= StructureDisplayTerms.NAME %>" size="20" value="<%= displayTerms.getName() %>" />
 
-		<aui:input inlineField="<%= true %>" name="<%= displayTerms.DESCRIPTION %>" size="20" value="<%= displayTerms.getDescription() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= StructureDisplayTerms.DESCRIPTION %>" size="20" value="<%= displayTerms.getDescription() %>" />
 
 		<c:choose>
 			<c:when test="<%= scopeClassNameId == 0 %>">
-				<aui:select inlineField="<%= true %>" label="type" name="<%= displayTerms.CLASS_NAME_ID %>">
+				<aui:select inlineField="<%= true %>" label="type" name="<%= StructureDisplayTerms.CLASS_NAME_ID %>">
 					<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, DDLRecordSet.class.getName()) %>" selected='<%= "datalist".equals(displayTerms.getStorageType()) %>' value="<%= PortalUtil.getClassNameId(DDLRecordSet.class.getName()) %>" />
 					<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, DLFileEntryMetadata.class.getName()) %>" selected='<%= "datalist".equals(displayTerms.getStorageType()) %>' value="<%= PortalUtil.getClassNameId(DLFileEntryMetadata.class.getName()) %>" />
 				</aui:select>
 			</c:when>
 			<c:otherwise>
-				<aui:input name="<%= displayTerms.CLASS_NAME_ID %>" type="hidden" value="<%= scopeClassNameId %>" />
+				<aui:input name="<%= StructureDisplayTerms.CLASS_NAME_ID %>" type="hidden" value="<%= scopeClassNameId %>" />
 			</c:otherwise>
 		</c:choose>
 

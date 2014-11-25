@@ -41,15 +41,15 @@ if (displayTerms.getParentOrganizationId() > 0) {
 	id="toggle_id_users_admin_organization_search"
 >
 	<aui:fieldset>
-		<aui:input inlineField="<%= true %>" name="<%= displayTerms.NAME %>" size="20" value="<%= displayTerms.getName() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= OrganizationDisplayTerms.NAME %>" size="20" value="<%= displayTerms.getName() %>" />
 
-		<aui:input inlineField="<%= true %>" name="<%= displayTerms.STREET %>" size="20" value="<%= displayTerms.getStreet() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= OrganizationDisplayTerms.STREET %>" size="20" value="<%= displayTerms.getStreet() %>" />
 
-		<aui:input inlineField="<%= true %>" name="<%= displayTerms.CITY %>" size="20" value="<%= displayTerms.getCity() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= OrganizationDisplayTerms.CITY %>" size="20" value="<%= displayTerms.getCity() %>" />
 	</aui:fieldset>
 
 	<aui:fieldset>
-		<aui:select inlineField="<%= true %>" name="<%= displayTerms.TYPE %>">
+		<aui:select inlineField="<%= true %>" name="<%= OrganizationDisplayTerms.TYPE %>">
 			<aui:option value=""></aui:option>
 
 			<%
@@ -64,13 +64,13 @@ if (displayTerms.getParentOrganizationId() > 0) {
 
 		</aui:select>
 
-		<aui:select inlineField="<%= true %>" label="country" name="<%= displayTerms.COUNTRY_ID %>"></aui:select>
+		<aui:select inlineField="<%= true %>" label="country" name="<%= OrganizationDisplayTerms.COUNTRY_ID %>"></aui:select>
 
-		<aui:select inlineField="<%= true %>" label="region" name="<%= displayTerms.REGION_ID %>"></aui:select>
+		<aui:select inlineField="<%= true %>" label="region" name="<%= OrganizationDisplayTerms.REGION_ID %>"></aui:select>
 	</aui:fieldset>
 
 	<aui:fieldset>
-		<aui:input inlineField="<%= true %>" label="postal-code" name="<%= displayTerms.ZIP %>" size="20" value="<%= displayTerms.getZip() %>" />
+		<aui:input inlineField="<%= true %>" label="postal-code" name="<%= OrganizationDisplayTerms.ZIP %>" size="20" value="<%= displayTerms.getZip() %>" />
 	</aui:fieldset>
 </liferay-ui:search-toggle>
 
@@ -78,15 +78,15 @@ if (displayTerms.getParentOrganizationId() > 0) {
 	new Liferay.DynamicSelect(
 		[
 			{
-				select: '<portlet:namespace /><%= displayTerms.COUNTRY_ID %>',
+				select: '<portlet:namespace /><%= OrganizationDisplayTerms.COUNTRY_ID %>',
 				selectData: Liferay.Address.getCountries,
 				selectDesc: 'nameCurrentValue',
-				selectSort: '<%= true %>',
 				selectId: 'countryId',
+				selectSort: '<%= true %>',
 				selectVal: '<%= displayTerms.getCountryId() %>'
 			},
 			{
-				select: '<portlet:namespace /><%= displayTerms.REGION_ID %>',
+				select: '<portlet:namespace /><%= OrganizationDisplayTerms.REGION_ID %>',
 				selectData: Liferay.Address.getRegions,
 				selectDesc: 'name',
 				selectId: 'regionId',

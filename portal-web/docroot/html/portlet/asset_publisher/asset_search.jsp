@@ -30,15 +30,15 @@ long[] selectedGroupIds = StringUtil.split(ParamUtil.getString(request, "selecte
 	id="toggle_id_asset_search"
 >
 	<aui:fieldset>
-		<aui:input inlineField="<%= true %>" name="<%= displayTerms.TITLE %>" size="20" type="text" value="<%= displayTerms.getTitle() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= AssetDisplayTerms.TITLE %>" size="20" type="text" value="<%= displayTerms.getTitle() %>" />
 
-		<aui:input inlineField="<%= true %>" name="<%= displayTerms.DESCRIPTION %>" size="20" type="text" value="<%= displayTerms.getDescription() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= AssetDisplayTerms.DESCRIPTION %>" size="20" type="text" value="<%= displayTerms.getDescription() %>" />
 
-		<aui:input inlineField="<%= true %>" name="<%= displayTerms.USER_NAME %>" size="20" type="text" value="<%= displayTerms.getUserName() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= AssetDisplayTerms.USER_NAME %>" size="20" type="text" value="<%= displayTerms.getUserName() %>" />
 	</aui:fieldset>
 
 	<aui:fieldset>
-		<aui:select inlineField="<%= true %>" label="my-sites" name="<%= displayTerms.GROUP_ID %>">
+		<aui:select inlineField="<%= true %>" label="my-sites" name="<%= AssetDisplayTerms.GROUP_ID %>">
 
 			<%
 			for (long groupId : selectedGroupIds) {

@@ -88,8 +88,8 @@ public class VerifyJournal extends VerifyProcess {
 		verifyOracleNewLine();
 		verifyAssets();
 		verifyResourcePrimKey();
-		verifyPermissionsAndAssets();
 		verifyJournalArticleStructures();
+		verifyPermissions();
 		verifySearch();
 		verifyTree();
 		verifyURLTitle();
@@ -299,6 +299,14 @@ public class VerifyJournal extends VerifyProcess {
 			}
 		);
 
+		if (_log.isDebugEnabled()) {
+			long count = actionableDynamicQuery.performCount();
+
+			_log.debug(
+				"Processing " + count +
+					" default article versions in draft mode");
+		}
+
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod() {
 
@@ -318,14 +326,6 @@ public class VerifyJournal extends VerifyProcess {
 						null, assetEntry.isVisible());
 				}
 			});
-
-		long count = actionableDynamicQuery.performCount();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Processing " + count +
-					" default article versions in draft mode");
-		}
 
 		actionableDynamicQuery.performActions();
 
@@ -427,6 +427,14 @@ public class VerifyJournal extends VerifyProcess {
 		ActionableDynamicQuery actionableDynamicQuery =
 			JournalArticleResourceLocalServiceUtil.getActionableDynamicQuery();
 
+		if (_log.isDebugEnabled()) {
+			long count = actionableDynamicQuery.performCount();
+
+			_log.debug(
+				"Processing " + count +
+					" journal article resources for create and modified dates");
+		}
+
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod() {
 
@@ -476,6 +484,14 @@ public class VerifyJournal extends VerifyProcess {
 		ActionableDynamicQuery actionableDynamicQuery =
 			JournalArticleLocalServiceUtil.getActionableDynamicQuery();
 
+		if (_log.isDebugEnabled()) {
+			long count = actionableDynamicQuery.performCount();
+
+			_log.debug(
+				"Processing " + count +
+					" journal articles for dynamic elements");
+		}
+
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod() {
 
@@ -520,6 +536,14 @@ public class VerifyJournal extends VerifyProcess {
 	protected void verifyJournalArticleStructures() throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
 			JournalArticleLocalServiceUtil.getActionableDynamicQuery();
+
+		if (_log.isDebugEnabled()) {
+			long count = actionableDynamicQuery.performCount();
+
+			_log.debug(
+				"Processing " + count +
+					" journal articles for bad structures");
+		}
 
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod() {
@@ -654,33 +678,16 @@ public class VerifyJournal extends VerifyProcess {
 		}
 	}
 
-	protected void verifyPermissions(JournalArticle article)
-		throws PortalException {
+	protected void verifyPermissions() throws PortalException {
+		List<JournalArticle> journalArticles =
+			JournalArticleLocalServiceUtil.getNoPermissionArticles();
 
-		ResourceLocalServiceUtil.addResources(
-			article.getCompanyId(), 0, 0, JournalArticle.class.getName(),
-			article.getResourcePrimKey(), false, false, false);
-	}
-
-	protected void verifyPermissionsAndAssets() throws Exception {
-		ActionableDynamicQuery actionableDynamicQuery =
-			JournalArticleLocalServiceUtil.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
-
-				@Override
-				public void performAction(Object object)
-					throws PortalException {
-
-					JournalArticle article = (JournalArticle) object;
-
-					verifyPermissions(article);
-				}
-
-			});
-
-		actionableDynamicQuery.performActions();
+		for (JournalArticle journalArticle : journalArticles) {
+			ResourceLocalServiceUtil.addResources(
+				journalArticle.getCompanyId(), 0, 0,
+				JournalArticle.class.getName(),
+				journalArticle.getResourcePrimKey(), false, false, false);
+		}
 	}
 
 	protected void verifyResourcePrimKey() throws PortalException {
@@ -695,10 +702,18 @@ public class VerifyJournal extends VerifyProcess {
 					Property resourcePrimKey = PropertyFactoryUtil.forName(
 						"resourcePrimKey");
 
-					dynamicQuery.add(resourcePrimKey.le(0));
+					dynamicQuery.add(resourcePrimKey.le(0l));
 				}
 			}
 		);
+
+		if (_log.isDebugEnabled()) {
+			long count = actionableDynamicQuery.performCount();
+
+			_log.debug(
+				"Processing " + count +
+					" default article versions in draft mode");
+		}
 
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod() {
@@ -717,14 +732,6 @@ public class VerifyJournal extends VerifyProcess {
 						groupId, articleId, version);
 				}
 			});
-
-		long count = actionableDynamicQuery.performCount();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Processing " + count +
-					" default article versions in draft mode");
-		}
 
 		actionableDynamicQuery.performActions();
 	}

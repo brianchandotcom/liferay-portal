@@ -266,4 +266,30 @@
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 	</command>
+
+	<command name="SearchForDocumentInHomeFolder" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.txt" />
+			<var name="dmDocumentSize" value="0KB" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#searchCP">
+			<var name="dmDocumentKeyword" value="DM Document Title" />
+		</execute>
+
+		<execute macro="DMDocument#viewSearchResultsCP">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="dmParentFolder" value="Home" />
+		</execute>
+	</command>
 </definition>

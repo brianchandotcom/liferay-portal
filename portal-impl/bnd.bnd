@@ -72,8 +72,6 @@ Export-Package:\
 	com.liferay.portlet.trash.service,\
 	com.liferay.portlet.trash.service.persistence,\
 	com.liferay.portlet.trash.util,\
-	com.liferay.util.dao.orm,\
-	com.liferay.util.log4j,\
 	\
 	javax.sql,org.hibernate,\
 	\

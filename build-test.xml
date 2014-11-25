@@ -3698,6 +3698,67 @@ if (ppstate.equals("normal")) {
 		<echo file="test.package.names.properties">${test.package.names.properties.content}</echo>
 	</target>
 
+	<target name="record-test-plugin-names">
+		<script classpathref="project.classpath" language="beanshell">
+			<![CDATA[
+				import org.apache.tools.ant.DirectoryScanner;
+
+				Set getPluginNames() {
+					Set pluginNames = new TreeSet();
+
+					DirectoryScanner directoryScanner = new DirectoryScanner();
+
+					directoryScanner.setBasedir(project.getProperty("lp.plugins.dir"));
+					directoryScanner.setIncludes(new String[] {"**/hooks/*/build.xml","**/layoutpl/*/build.xml","**/portlets/*/build.xml","**/themes/*/build.xml","**/webs/*/build.xml"});
+
+					directoryScanner.scan();
+
+					String[] fileNames = directoryScanner.getIncludedFiles();
+
+					Arrays.sort(fileNames);
+
+					for (String fileName : fileNames) {
+						int x = fileName.indexOf("/");
+						int y = fileName.lastIndexOf("/");
+
+						if (File.separator.equals("\\")) {
+							x = fileName.indexOf("\\");
+							y = fileName.lastIndexOf("\\");
+						}
+
+						String pluginName = fileName.substring(x + 1, y);
+
+						pluginNames.add(pluginName);
+					}
+
+					return pluginNames;
+				}
+
+				StringBuilder sb = new StringBuilder();
+
+				Set pluginNames = getPluginNames();
+
+				sb.append("TEST_PLUGIN_NAMES=");
+
+				Iterator iterator = pluginNames.iterator();
+
+				while (iterator.hasNext()) {
+					String pluginName = iterator.next();
+
+					sb.append(pluginName);
+
+					if (iterator.hasNext()) {
+						sb.append(" ");
+					}
+				}
+
+				project.setProperty("test.plugin.names.properties.content", sb.toString());
+			]]>
+		</script>
+
+		<echo file="test.plugin.names.properties">${test.plugin.names.properties.content}</echo>
+	</target>
+
 	<target name="replace-file">
 		<fail message="Please set the property ${file}." unless="file" />
 		<fail message="Please set the property ${token}." unless="token" />

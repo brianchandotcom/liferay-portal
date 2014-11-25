@@ -628,22 +628,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	@Override
 	public void addZipEntry(String path, StringBuilder sb) {
-		if (isPathProcessed(path)) {
-			return;
-		}
-
-		if (_portletDataContextListener != null) {
-			_portletDataContextListener.onAddZipEntry(path);
-		}
-
-		try {
-			ZipWriter zipWriter = getZipWriter();
-
-			zipWriter.addEntry(path, sb);
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
+		addZipEntry(path, sb.toString());
 	}
 
 	@Override

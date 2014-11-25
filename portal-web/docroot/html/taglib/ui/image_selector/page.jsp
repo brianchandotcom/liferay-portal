@@ -58,6 +58,16 @@ if (fileEntryId != 0) {
 		<liferay-ui:message key="drop-files-here" />
 	</div>
 
+	<div class="progress-wrapper">
+		<p id="file-name"></p>
+
+		<div class="progressbar"></div>
+
+		<p id="progress-data" class="size"></p>
+
+		<aui:button cssClass="btn-primary" id='<%= randomNamespace + "cancelUpload" %>' useNamespace="<%= false %>" value="cancel"/>
+	</div>
+
 	<div class="change-image-controls <%= (fileEntryId != 0) ? StringPool.BLANK : "hide" %>">
 		<aui:button cssClass="btn-primary" value="change-picture" />
 
@@ -102,4 +112,14 @@ if (!draggableImage.equals("none")) {
 			}
 		);
 	</c:if>
+
+	var destroyInstance = function(event) {
+		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+			imageSelector.destroy();
+
+			Liferay.detach('destroyPortlet', destroyInstance);
+		}
+	};
+
+	Liferay.on('destroyPortlet', destroyInstance);
 </aui:script>

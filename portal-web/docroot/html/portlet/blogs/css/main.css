@@ -158,6 +158,12 @@
 		}
 	}
 
+	@-moz-document url-prefix() {
+		fieldset.input-container {
+			display: table-column;
+		}
+	}
+
 	.preview {
 		background: #FFC;
 		border: 1px dotted gray;

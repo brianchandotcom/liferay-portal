@@ -39,59 +39,59 @@ scope CountLevel {
  * details.
  */
 
-package com.liferay.portal.parsers.creole.parser;
+package com.liferay.wiki.parsers.creole.parser;
 
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.parsers.creole.ast.ASTNode;
-import com.liferay.portal.parsers.creole.ast.BaseListNode;
-import com.liferay.portal.parsers.creole.ast.BaseParentableNode;
-import com.liferay.portal.parsers.creole.ast.BoldTextNode;
-import com.liferay.portal.parsers.creole.ast.CollectionNode;
-import com.liferay.portal.parsers.creole.ast.extension.TableOfContentsNode;
-import com.liferay.portal.parsers.creole.ast.ForcedEndOfLineNode;
-import com.liferay.portal.parsers.creole.ast.FormattedTextNode;
-import com.liferay.portal.parsers.creole.ast.HeadingNode;
-import com.liferay.portal.parsers.creole.ast.HorizontalNode;
-import com.liferay.portal.parsers.creole.ast.ImageNode;
-import com.liferay.portal.parsers.creole.ast.ItalicTextNode;
-import com.liferay.portal.parsers.creole.ast.ItemNode;
-import com.liferay.portal.parsers.creole.ast.LineNode;
-import com.liferay.portal.parsers.creole.ast.ListNode;
-import com.liferay.portal.parsers.creole.ast.link.interwiki.C2InterwikiLinkNode;
-import com.liferay.portal.parsers.creole.ast.link.interwiki.DokuWikiInterwikiLinkNode;
-import com.liferay.portal.parsers.creole.ast.link.interwiki.FlickrInterwikiLinkNode;
-import com.liferay.portal.parsers.creole.ast.link.interwiki.GoogleInterwikiLinkNode;
-import com.liferay.portal.parsers.creole.ast.link.interwiki.InterwikiLinkNode;
-import com.liferay.portal.parsers.creole.ast.link.interwiki.JSPWikiInterwikiLinkNode;
-import com.liferay.portal.parsers.creole.ast.link.interwiki.MeatballInterwikiLinkNode;
-import com.liferay.portal.parsers.creole.ast.link.interwiki.MediaWikiInterwikiLinkNode;
-import com.liferay.portal.parsers.creole.ast.link.interwiki.MoinMoinInterwikiLinkNode;
-import com.liferay.portal.parsers.creole.ast.link.interwiki.OddmuseInterwikiLinkNode;
-import com.liferay.portal.parsers.creole.ast.link.interwiki.OhanaInterwikiLinkNode;
-import com.liferay.portal.parsers.creole.ast.link.interwiki.PmWikiInterwikiLinkNode;
-import com.liferay.portal.parsers.creole.ast.link.interwiki.PukiWikiInterwikiLinkNode;
-import com.liferay.portal.parsers.creole.ast.link.interwiki.PurpleWikiInterwikiLinkNode;
-import com.liferay.portal.parsers.creole.ast.link.interwiki.RadeoxInterwikiLinkNode;
-import com.liferay.portal.parsers.creole.ast.link.interwiki.SnipSnapInterwikiLinkNode;
-import com.liferay.portal.parsers.creole.ast.link.interwiki.TWikiInterwikiLinkNode;
-import com.liferay.portal.parsers.creole.ast.link.interwiki.TiddlyWikiInterwikiLinkNode;
-import com.liferay.portal.parsers.creole.ast.link.interwiki.UsemodInterwikiLinkNode;
-import com.liferay.portal.parsers.creole.ast.link.interwiki.WikipediaInterwikiLinkNode;
-import com.liferay.portal.parsers.creole.ast.link.interwiki.XWikiInterwikiLinkNode;
-import com.liferay.portal.parsers.creole.ast.link.LinkNode;
-import com.liferay.portal.parsers.creole.ast.NoWikiSectionNode;
-import com.liferay.portal.parsers.creole.ast.OrderedListItemNode;
-import com.liferay.portal.parsers.creole.ast.OrderedListNode;
-import com.liferay.portal.parsers.creole.ast.ParagraphNode;
-import com.liferay.portal.parsers.creole.ast.ScapedNode;
-import com.liferay.portal.parsers.creole.ast.table.TableCellNode;
-import com.liferay.portal.parsers.creole.ast.table.TableDataNode;
-import com.liferay.portal.parsers.creole.ast.table.TableHeaderNode;
-import com.liferay.portal.parsers.creole.ast.table.TableNode;
-import com.liferay.portal.parsers.creole.ast.UnorderedListItemNode;
-import com.liferay.portal.parsers.creole.ast.UnorderedListNode;
-import com.liferay.portal.parsers.creole.ast.UnformattedTextNode;
-import com.liferay.portal.parsers.creole.ast.WikiPageNode;
+import com.liferay.wiki.parsers.creole.ast.ASTNode;
+import com.liferay.wiki.parsers.creole.ast.BaseListNode;
+import com.liferay.wiki.parsers.creole.ast.BaseParentableNode;
+import com.liferay.wiki.parsers.creole.ast.BoldTextNode;
+import com.liferay.wiki.parsers.creole.ast.CollectionNode;
+import com.liferay.wiki.parsers.creole.ast.extension.TableOfContentsNode;
+import com.liferay.wiki.parsers.creole.ast.ForcedEndOfLineNode;
+import com.liferay.wiki.parsers.creole.ast.FormattedTextNode;
+import com.liferay.wiki.parsers.creole.ast.HeadingNode;
+import com.liferay.wiki.parsers.creole.ast.HorizontalNode;
+import com.liferay.wiki.parsers.creole.ast.ImageNode;
+import com.liferay.wiki.parsers.creole.ast.ItalicTextNode;
+import com.liferay.wiki.parsers.creole.ast.ItemNode;
+import com.liferay.wiki.parsers.creole.ast.LineNode;
+import com.liferay.wiki.parsers.creole.ast.ListNode;
+import com.liferay.wiki.parsers.creole.ast.link.interwiki.C2InterwikiLinkNode;
+import com.liferay.wiki.parsers.creole.ast.link.interwiki.DokuWikiInterwikiLinkNode;
+import com.liferay.wiki.parsers.creole.ast.link.interwiki.FlickrInterwikiLinkNode;
+import com.liferay.wiki.parsers.creole.ast.link.interwiki.GoogleInterwikiLinkNode;
+import com.liferay.wiki.parsers.creole.ast.link.interwiki.InterwikiLinkNode;
+import com.liferay.wiki.parsers.creole.ast.link.interwiki.JSPWikiInterwikiLinkNode;
+import com.liferay.wiki.parsers.creole.ast.link.interwiki.MeatballInterwikiLinkNode;
+import com.liferay.wiki.parsers.creole.ast.link.interwiki.MediaWikiInterwikiLinkNode;
+import com.liferay.wiki.parsers.creole.ast.link.interwiki.MoinMoinInterwikiLinkNode;
+import com.liferay.wiki.parsers.creole.ast.link.interwiki.OddmuseInterwikiLinkNode;
+import com.liferay.wiki.parsers.creole.ast.link.interwiki.OhanaInterwikiLinkNode;
+import com.liferay.wiki.parsers.creole.ast.link.interwiki.PmWikiInterwikiLinkNode;
+import com.liferay.wiki.parsers.creole.ast.link.interwiki.PukiWikiInterwikiLinkNode;
+import com.liferay.wiki.parsers.creole.ast.link.interwiki.PurpleWikiInterwikiLinkNode;
+import com.liferay.wiki.parsers.creole.ast.link.interwiki.RadeoxInterwikiLinkNode;
+import com.liferay.wiki.parsers.creole.ast.link.interwiki.SnipSnapInterwikiLinkNode;
+import com.liferay.wiki.parsers.creole.ast.link.interwiki.TWikiInterwikiLinkNode;
+import com.liferay.wiki.parsers.creole.ast.link.interwiki.TiddlyWikiInterwikiLinkNode;
+import com.liferay.wiki.parsers.creole.ast.link.interwiki.UsemodInterwikiLinkNode;
+import com.liferay.wiki.parsers.creole.ast.link.interwiki.WikipediaInterwikiLinkNode;
+import com.liferay.wiki.parsers.creole.ast.link.interwiki.XWikiInterwikiLinkNode;
+import com.liferay.wiki.parsers.creole.ast.link.LinkNode;
+import com.liferay.wiki.parsers.creole.ast.NoWikiSectionNode;
+import com.liferay.wiki.parsers.creole.ast.OrderedListItemNode;
+import com.liferay.wiki.parsers.creole.ast.OrderedListNode;
+import com.liferay.wiki.parsers.creole.ast.ParagraphNode;
+import com.liferay.wiki.parsers.creole.ast.ScapedNode;
+import com.liferay.wiki.parsers.creole.ast.table.TableCellNode;
+import com.liferay.wiki.parsers.creole.ast.table.TableDataNode;
+import com.liferay.wiki.parsers.creole.ast.table.TableHeaderNode;
+import com.liferay.wiki.parsers.creole.ast.table.TableNode;
+import com.liferay.wiki.parsers.creole.ast.UnorderedListItemNode;
+import com.liferay.wiki.parsers.creole.ast.UnorderedListNode;
+import com.liferay.wiki.parsers.creole.ast.UnformattedTextNode;
+import com.liferay.wiki.parsers.creole.ast.WikiPageNode;
 
 import java.util.Stack;
 
@@ -117,7 +117,7 @@ import java.util.Stack;
  * details.
  */
 
- package com.liferay.portal.parsers.creole.parser;
+ package com.liferay.wiki.parsers.creole.parser;
 }
 
 @members{

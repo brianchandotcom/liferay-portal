@@ -46,6 +46,8 @@ public interface ListTypeService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ListTypeServiceUtil} to access the list type remote service. Add custom service methods to {@link com.liferay.portal.service.impl.ListTypeServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public com.liferay.portal.model.ListType addListType(
+		java.lang.String type, java.lang.String name);
 
 	/**
 	* Returns the Spring bean ID for this bean.

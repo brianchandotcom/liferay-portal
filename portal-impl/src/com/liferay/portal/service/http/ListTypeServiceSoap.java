@@ -64,6 +64,21 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class ListTypeServiceSoap {
+	public static com.liferay.portal.model.ListTypeSoap addListType(
+		java.lang.String type, java.lang.String name) throws RemoteException {
+		try {
+			com.liferay.portal.model.ListType returnValue = ListTypeServiceUtil.addListType(type,
+					name);
+
+			return com.liferay.portal.model.ListTypeSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portal.model.ListTypeSoap getListType(
 		int listTypeId) throws RemoteException {
 		try {

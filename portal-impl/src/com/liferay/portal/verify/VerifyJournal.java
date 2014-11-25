@@ -81,14 +81,11 @@ public class VerifyJournal extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		verifyContent();
-		verifyCreateAndModifiedDates();
-		verifyDynamicElements();
-		updateFolderAssets();
-		verifyOracleNewLine();
 		verifyAssets();
-		verifyResourcePrimKey();
-		verifyJournalArticleStructures();
+		verifyContent();
+		updateFolderAssets();
+		verifyJournalArticles();
+		verifyOracleNewLine();
 		verifyPermissions();
 		verifySearch();
 		verifyTree();
@@ -256,7 +253,7 @@ public class VerifyJournal extends VerifyProcess {
 		}
 	}
 
-	protected void verifyAssets() throws PortalException {
+	protected void verifyAssets() throws Exception {
 		List<JournalArticle> journalArticles =
 			JournalArticleLocalServiceUtil.getNoAssetArticles();
 
@@ -332,6 +329,9 @@ public class VerifyJournal extends VerifyProcess {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Assets verified for articles");
 		}
+
+		verifyCreateAndModifiedDates();
+		verifyResourcePrimKey();
 	}
 
 	protected void verifyContent() throws Exception {
@@ -480,45 +480,6 @@ public class VerifyJournal extends VerifyProcess {
 		}
 	}
 
-	protected void verifyDynamicElements() throws PortalException {
-		ActionableDynamicQuery actionableDynamicQuery =
-			JournalArticleLocalServiceUtil.getActionableDynamicQuery();
-
-		if (_log.isDebugEnabled()) {
-			long count = actionableDynamicQuery.performCount();
-
-			_log.debug(
-				"Processing " + count +
-					" journal articles for dynamic elements");
-		}
-
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
-
-				@Override
-				public void performAction(Object object) {
-					JournalArticle article = (JournalArticle)object;
-
-					try {
-						verifyDynamicElements(article);
-					}
-					catch (Exception e) {
-						_log.error(
-							"Unable to update content for article " +
-								article.getId(),
-							e);
-					}
-				}
-
-			});
-
-		actionableDynamicQuery.performActions();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Dynamic elements verified for articles");
-		}
-	}
-
 	protected void verifyDynamicElements(JournalArticle article)
 		throws Exception {
 
@@ -533,7 +494,7 @@ public class VerifyJournal extends VerifyProcess {
 		JournalArticleLocalServiceUtil.updateJournalArticle(article);
 	}
 
-	protected void verifyJournalArticleStructures() throws PortalException {
+	protected void verifyJournalArticles() throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
 			JournalArticleLocalServiceUtil.getActionableDynamicQuery();
 
@@ -541,8 +502,8 @@ public class VerifyJournal extends VerifyProcess {
 			long count = actionableDynamicQuery.performCount();
 
 			_log.debug(
-				"Processing " + count +
-					" journal articles for bad structures");
+				"Processing " + count + " journal articles for bad " +
+					"structures and dynamic elements.");
 		}
 
 		actionableDynamicQuery.setPerformActionMethod(
@@ -578,16 +539,18 @@ public class VerifyJournal extends VerifyProcess {
 								article.getId(),
 							e);
 					}
+
+					try {
+						verifyDynamicElements(article);
+					}
+					catch (Exception e) {
+						_log.error(
+							"Unable to update content for article " +
+								article.getId(),
+							e);
+					}
 				}
 			});
-
-		long count = actionableDynamicQuery.performCount();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Processing " + count +
-					" default article versions in draft mode");
-		}
 
 		actionableDynamicQuery.performActions();
 	}

@@ -682,8 +682,12 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 	}
 
 	protected void exportImportLayouts(boolean privateLayout) throws Exception {
+		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+			_stagingGroup.getGroupId(), privateLayout);
+
 		File larFile = LayoutLocalServiceUtil.exportLayoutsAsFile(
-			_stagingGroup.getGroupId(), privateLayout, null,
+			_stagingGroup.getGroupId(), privateLayout,
+			ExportImportHelperUtil.getLayoutIds(layouts),
 			new HashMap<String, String[]>(), null, null);
 
 		LayoutLocalServiceUtil.importLayouts(

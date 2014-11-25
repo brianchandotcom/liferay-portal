@@ -417,8 +417,7 @@ public class LayoutExporter {
 			// Scoped data
 
 			for (Layout layout : layouts) {
-				if ((!ArrayUtil.contains(layoutIds, layout.getLayoutId()) &&
-					 ArrayUtil.isNotEmpty(layoutIds)) ||
+				if (!ArrayUtil.contains(layoutIds, layout.getLayoutId()) ||
 					!layout.isTypePortlet() || !layout.hasScopeGroup()) {
 
 					continue;
@@ -584,9 +583,7 @@ public class LayoutExporter {
 			Map<String, Object[]> portletIds, Layout layout)
 		throws Exception {
 
-		if (!ArrayUtil.contains(layoutIds, layout.getLayoutId()) &&
-			ArrayUtil.isNotEmpty(layoutIds)) {
-
+		if (!ArrayUtil.contains(layoutIds, layout.getLayoutId())) {
 			Element layoutElement = portletDataContext.getExportDataElement(
 				layout);
 

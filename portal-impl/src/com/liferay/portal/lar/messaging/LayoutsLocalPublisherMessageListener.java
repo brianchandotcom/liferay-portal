@@ -69,18 +69,9 @@ public class LayoutsLocalPublisherMessageListener
 		initThreadLocals(userId, parameterMap);
 
 		try {
-			if (layoutIds == null) {
-				StagingUtil.publishLayouts(
-					userId, sourceGroupId, targetGroupId, privateLayout,
-					parameterMap, dateRange.getStartDate(),
-					dateRange.getEndDate());
-			}
-			else {
-				StagingUtil.publishLayouts(
-					userId, sourceGroupId, targetGroupId, privateLayout,
-					layoutIds, parameterMap, dateRange.getStartDate(),
-					dateRange.getEndDate());
-			}
+			StagingUtil.publishLayouts(
+				userId, sourceGroupId, targetGroupId, privateLayout, layoutIds,
+				parameterMap, dateRange.getStartDate(), dateRange.getEndDate());
 		}
 		finally {
 			resetThreadLocals();

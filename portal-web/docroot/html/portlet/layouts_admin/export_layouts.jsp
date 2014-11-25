@@ -76,7 +76,22 @@ else {
 String treeId = "layoutsExportTree" + liveGroupId + privateLayout;
 
 if (!cmd.equals(Constants.UPDATE)) {
-	selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(SessionTreeJSClicks.getOpenNodes(request, treeId + "SelectedNode"), ','));
+	String openNodes = SessionTreeJSClicks.getOpenNodes(request, treeId + "SelectedNode");
+
+	if (openNodes == null) {
+		List<Layout> liveGroupLayouts = LayoutLocalServiceUtil.getLayouts(liveGroupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		selectedLayoutIds = new long[liveGroupLayouts.size()];
+
+		int i = 0;
+
+		for (Layout liveGroupLayout : liveGroupLayouts) {
+			selectedLayoutIds[i++] = liveGroupLayout.getLayoutId();
+		}
+	}
+	else {
+		selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(openNodes, ','));
+	}
 }
 
 PortletURL portletURL = renderResponse.createRenderURL();

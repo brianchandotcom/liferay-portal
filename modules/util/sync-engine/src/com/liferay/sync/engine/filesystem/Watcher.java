@@ -241,7 +241,9 @@ public class Watcher implements Runnable {
 						_logger.trace("Unregistered file path {}", filePath);
 					}
 
-					processMissingFilePath(filePath);
+					if (Files.notExists(filePath)) {
+						processMissingFilePath(filePath);
+					}
 
 					if (_filePaths.isEmpty()) {
 						break;

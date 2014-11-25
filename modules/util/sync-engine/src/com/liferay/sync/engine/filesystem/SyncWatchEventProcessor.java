@@ -391,7 +391,7 @@ public class SyncWatchEventProcessor implements Runnable {
 		SyncWatchEventProcessor.class);
 
 	private static final ExecutorService _executorService =
-		SyncEngine.getExecutorService();
+		SyncEngine.getEventProcessorExecutorService();
 
 	private boolean _inProgress;
 	private final Set<Long> _processedSyncWatchEventIds = new HashSet<Long>();

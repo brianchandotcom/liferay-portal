@@ -14,6 +14,7 @@
 
 package com.liferay.sync.engine.documentlibrary.handler;
 
+import com.liferay.sync.engine.SyncEngine;
 import com.liferay.sync.engine.documentlibrary.event.Event;
 import com.liferay.sync.engine.documentlibrary.event.GetSyncContextEvent;
 import com.liferay.sync.engine.documentlibrary.util.ServerEventUtil;
@@ -32,6 +33,7 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -67,7 +69,20 @@ public class BaseHandler implements Handler<Void> {
 		if (e instanceof FileNotFoundException) {
 			SyncFile syncFile = (SyncFile)getParameterValue("syncFile");
 
-			if (syncFile.getVersion() == null) {
+			String message = e.getMessage();
+
+			if (message.contains("The process cannot access the file")) {
+				if (_logger.isTraceEnabled()) {
+					_logger.trace(
+						"Retrying event {} for sync file {}", _event, syncFile);
+				}
+
+				ExecutorService executorService =
+					SyncEngine.getEventProcessorExecutorService();
+
+				executorService.execute(_event);
+			}
+			else if (syncFile.getVersion() == null) {
 				SyncFileService.deleteSyncFile(syncFile);
 			}
 		}
@@ -166,9 +181,11 @@ public class BaseHandler implements Handler<Void> {
 		}
 
 		if (syncSite != null) {
-			_logger.debug(
-				"Sync site {} was deactivated or removed.",
-				syncSite.getName());
+			if (_logger.isDebugEnabled()) {
+				_logger.debug(
+					"Sync site {} was deactivated or removed.",
+					syncSite.getName());
+			}
 
 			syncSite.setUiEvent(SyncSite.UI_EVENT_SYNC_SITE_DEACTIVATED);
 

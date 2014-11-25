@@ -73,7 +73,12 @@
 	<classpathentry kind="lib" path="lib/development/p6spy.jar"/>
 	<classpathentry kind="lib" path="lib/development/persistence.jar"/>
 	<classpathentry kind="lib" path="lib/development/postgresql.jar"/>
-	<classpathentry kind="lib" path="lib/development/powermock-mockito.jar"/>
+	<classpathentry kind="lib" path="lib/development/powermock-api-mockito.jar"/>
+	<classpathentry kind="lib" path="lib/development/powermock-api-support.jar"/>
+	<classpathentry kind="lib" path="lib/development/powermock-core.jar"/>
+	<classpathentry kind="lib" path="lib/development/powermock-module-junit4-common.jar"/>
+	<classpathentry kind="lib" path="lib/development/powermock-module-junit4.jar"/>
+	<classpathentry kind="lib" path="lib/development/powermock-reflect.jar"/>
 	<classpathentry kind="lib" path="lib/development/qdox.jar"/>
 	<classpathentry kind="lib" path="lib/development/resin.jar"/>
 	<classpathentry kind="lib" path="lib/development/sap.jar"/>

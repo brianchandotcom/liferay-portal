@@ -46,6 +46,8 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 	*/
 	public com.liferay.portal.model.ColorScheme getColorScheme();
 
+	public java.lang.String getCompanyFallbackVirtualHostname();
+
 	/**
 	* Returns the layout set's group.
 	*
@@ -105,6 +107,9 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 	public boolean isLayoutSetPrototypeLinkActive();
 
 	public boolean isLogo();
+
+	public void setCompanyFallbackVirtualHostname(
+		java.lang.String companyFallbackVirtualHostname);
 
 	public void setSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties);

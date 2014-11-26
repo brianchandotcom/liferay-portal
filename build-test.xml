@@ -72,6 +72,15 @@
 						</copy>
 
 						<if>
+	  					 	<available file="${liferay.home}/deploy" />
+							<then>
+								<copy todir="${test.app.server.parent.dir}/deploy">
+									<fileset dir="${liferay.home}/deploy" />
+								</copy>
+							</then>
+						</if>
+
+						<if>
 	  					 	<available file="${liferay.home}/osgi" />
 							<then>
 								<copy todir="${test.app.server.parent.dir}/osgi">
@@ -1385,38 +1394,6 @@ ${marketplace.portlet.properties}</echo>
 					<property name="plugin.types" value="webs" />
 					<property name="plugins.includes" value="${web.plugins.includes}" />
 				</ant>
-			</then>
-		</if>
-
-		<!--
-		Copy plugin files to additional deploy directories if additional bundles
-		are present.
-		-->
-
-		<if>
-			<isset property="app.server.bundles.size" />
-			<then>
-				<var name="app.server.bundle.index" value="1" />
-
-				<antelope:repeat count="${app.server.bundles.size}">
-					<set-app-server-properties
-						app.server.bundle.index="${app.server.bundle.index}"
-					/>
-
-					<copy todir="${test.app.server.parent.dir}/deploy">
-						<fileset dir="${liferay.home}/deploy" />
-					</copy>
-
-					<math
-						datatype="int"
-						operand1="${app.server.bundle.index}"
-						operand2="1"
-						operation="+"
-						result="app.server.bundle.index"
-					/>
-				</antelope:repeat>
-
-				<var name="app.server.bundle.index" unset="true" />
 			</then>
 		</if>
 	</target>
@@ -3947,21 +3924,7 @@ if (ppstate.equals("normal")) {
 			</then>
 		</if>
 
-		<if>
-			<isset property="app.server.bundles.size" />
-			<then>
-				<prepare-additional-bundles />
-			</then>
-		</if>
-
 		<antcall target="check-inet-address" />
-
-		<if>
-			<equals arg1="${cluster.enabled}" arg2="true" />
-			<then>
-				<prepare-test-cluster-properties />
-			</then>
-		</if>
 
 		<if>
 			<equals arg1="${database.jndi.enabled}" arg2="true" />
@@ -3978,6 +3941,17 @@ if (ppstate.equals("normal")) {
 				<antcall target="start-android-device" />
 
 				<antcall target="start-appium" />
+			</then>
+		</if>
+
+		<if>
+			<isset property="web.xml.timeout" />
+			<then>
+				<replace
+					file="${app.server.dir}/webapps/ROOT/WEB-INF/web.xml"
+					token="&lt;session-timeout&gt;30&lt;/session-timeout&gt;"
+					value="&lt;session-timeout&gt;${web.xml.timeout}&lt;/session-timeout&gt;"
+				/>
 			</then>
 		</if>
 
@@ -4020,13 +3994,16 @@ if (ppstate.equals("normal")) {
 		<antcall target="deploy-specified-plugins" />
 
 		<if>
-			<isset property="web.xml.timeout" />
+			<isset property="app.server.bundles.size" />
 			<then>
-				<replace
-					file="${app.server.dir}/webapps/ROOT/WEB-INF/web.xml"
-					token="&lt;session-timeout&gt;30&lt;/session-timeout&gt;"
-					value="&lt;session-timeout&gt;${web.xml.timeout}&lt;/session-timeout&gt;"
-				/>
+				<prepare-additional-bundles />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${cluster.enabled}" arg2="true" />
+			<then>
+				<prepare-test-cluster-properties />
 			</then>
 		</if>
 

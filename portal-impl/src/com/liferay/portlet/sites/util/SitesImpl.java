@@ -1758,7 +1758,11 @@ public class SitesImpl implements Sites {
 
 		File cacheFile = new File(sb.toString());
 
-		if (cacheFile.exists()) {
+		// Need to check importData to bypass cache file usage or not because
+		// data addition does not change the layout set prototype's modified
+		// date
+
+		if (cacheFile.exists() && !importData) {
 			Date modifiedDate = layoutSetPrototype.getModifiedDate();
 
 			if (cacheFile.lastModified() >= modifiedDate.getTime()) {

@@ -83,7 +83,7 @@ public class VerifyJournal extends VerifyProcess {
 	protected void doVerify() throws Exception {
 		verifyAssets();
 		verifyContent();
-		updateFolderAssets();
+		verifyFolderAssets();
 		verifyJournalArticles();
 		verifyOracleNewLine();
 		verifyPermissions();
@@ -158,34 +158,6 @@ public class VerifyJournal extends VerifyProcess {
 		}
 		else if (type.equals("link_to_layout")) {
 			updateLinkToLayoutElements(groupId, element);
-		}
-	}
-
-	protected void updateFolderAssets() throws Exception {
-		List<JournalFolder> folders =
-			JournalFolderLocalServiceUtil.getNoAssetFolders();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Processing " + folders.size() + " folders with no asset");
-		}
-
-		for (JournalFolder folder : folders) {
-			try {
-				JournalFolderLocalServiceUtil.updateAsset(
-					folder.getUserId(), folder, null, null, null);
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to update asset for folder " +
-							folder.getFolderId() + ": " + e.getMessage());
-				}
-			}
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Assets verified for folders");
 		}
 	}
 
@@ -492,6 +464,34 @@ public class VerifyJournal extends VerifyProcess {
 		article.setContent(document.asXML());
 
 		JournalArticleLocalServiceUtil.updateJournalArticle(article);
+	}
+
+	protected void verifyFolderAssets() throws Exception {
+		List<JournalFolder> folders =
+			JournalFolderLocalServiceUtil.getNoAssetFolders();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Processing " + folders.size() + " folders with no asset");
+		}
+
+		for (JournalFolder folder : folders) {
+			try {
+				JournalFolderLocalServiceUtil.updateAsset(
+					folder.getUserId(), folder, null, null, null);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to update asset for folder " +
+							folder.getFolderId() + ": " + e.getMessage());
+				}
+			}
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Assets verified for folders");
+		}
 	}
 
 	protected void verifyJournalArticles() throws PortalException {

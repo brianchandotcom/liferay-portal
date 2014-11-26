@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/sites_directory/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <liferay-ui:sites-directory
 	displayStyle="<%= displayStyle %>"

@@ -82,7 +82,8 @@ public class GroupServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE);
+			MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -793,10 +794,6 @@ public class GroupServiceTest {
 			new Locale[] {LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US},
 			LocaleUtil.GERMANY, false);
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	protected Group addGroup(
 			boolean site, boolean layout, boolean layoutPrototype)

@@ -20,6 +20,7 @@ import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.bookmarks.util.BookmarksTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.lar.BasePortletExportImportTestCase;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
@@ -44,8 +45,11 @@ import org.junit.runner.RunWith;
 public class BookmarksExportImportTest extends BasePortletExportImportTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
 	public String getNamespace() {
@@ -56,10 +60,6 @@ public class BookmarksExportImportTest extends BasePortletExportImportTestCase {
 	public String getPortletId() {
 		return BookmarksPortletKeys.BOOKMARKS;
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	@Override
 	protected StagedModel addStagedModel(long groupId) throws Exception {

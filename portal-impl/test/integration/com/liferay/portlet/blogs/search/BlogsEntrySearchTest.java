@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.blogs.search;
 
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.search.BaseSearchTestCase;
 import com.liferay.portal.service.ServiceContext;
@@ -40,8 +41,11 @@ import org.junit.runner.RunWith;
 public class BlogsEntrySearchTest extends BaseSearchTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Ignore()
 	@Override
@@ -114,10 +118,6 @@ public class BlogsEntrySearchTest extends BaseSearchTestCase {
 	@Test
 	public void testSearchWithinDDMStructure() throws Exception {
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(

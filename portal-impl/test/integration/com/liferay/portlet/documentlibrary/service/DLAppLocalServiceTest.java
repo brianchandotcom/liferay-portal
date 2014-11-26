@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
@@ -61,8 +62,11 @@ public class DLAppLocalServiceTest {
 	public static class WhenAddingAFolder {
 
 		@ClassRule
-		public static final MainServletTestRule mainServletTestRule =
-			MainServletTestRule.INSTANCE;
+		@Rule
+		public static final AggregateTestRule aggregateTestRule =
+			new AggregateTestRule(
+				MainServletTestRule.INSTANCE,
+				SynchronousDestinationTestRule.INSTANCE);
 
 		@Before
 		public void setUp() throws Exception {
@@ -103,11 +107,6 @@ public class DLAppLocalServiceTest {
 			Assert.assertTrue(folder != null);
 		}
 
-		@Rule
-		public final SynchronousDestinationTestRule
-			synchronousDestinationTestRule =
-				SynchronousDestinationTestRule.INSTANCE;
-
 		@DeleteAfterTestRun
 		private Group _group;
 
@@ -118,8 +117,11 @@ public class DLAppLocalServiceTest {
 	public static class WhenDeletingALocalRepository {
 
 		@ClassRule
-		public static final MainServletTestRule mainServletTestRule =
-			MainServletTestRule.INSTANCE;
+		@Rule
+		public static final AggregateTestRule aggregateTestRule =
+			new AggregateTestRule(
+				MainServletTestRule.INSTANCE,
+				SynchronousDestinationTestRule.INSTANCE);
 
 		@Before
 		public void setUp() throws Exception {
@@ -143,11 +145,6 @@ public class DLAppLocalServiceTest {
 			Assert.assertEquals(3, counter.get());
 		}
 
-		@Rule
-		public final SynchronousDestinationTestRule
-			synchronousDestinationTestRule =
-				SynchronousDestinationTestRule.INSTANCE;
-
 		@DeleteAfterTestRun
 		private Group _group;
 
@@ -158,8 +155,11 @@ public class DLAppLocalServiceTest {
 	public static class WhenUpdatingAFileEntry {
 
 		@ClassRule
-		public static final MainServletTestRule mainServletTestRule =
-			MainServletTestRule.INSTANCE;
+		@Rule
+		public static final AggregateTestRule aggregateTestRule =
+			new AggregateTestRule(
+				MainServletTestRule.INSTANCE,
+				SynchronousDestinationTestRule.INSTANCE);
 
 		@Before
 		public void setUp() throws Exception {
@@ -197,11 +197,6 @@ public class DLAppLocalServiceTest {
 			Assert.assertEquals("New Title", assetEntry.getTitle());
 		}
 
-		@Rule
-		public final SynchronousDestinationTestRule
-			synchronousDestinationTestRule =
-				SynchronousDestinationTestRule.INSTANCE;
-
 		@DeleteAfterTestRun
 		private Group _group;
 
@@ -212,8 +207,11 @@ public class DLAppLocalServiceTest {
 	public static class WhenUpdatingAFolder {
 
 		@ClassRule
-		public static final MainServletTestRule mainServletTestRule =
-			MainServletTestRule.INSTANCE;
+		@Rule
+		public static final AggregateTestRule aggregateTestRule =
+			new AggregateTestRule(
+				MainServletTestRule.INSTANCE,
+				SynchronousDestinationTestRule.INSTANCE);
 
 		@Before
 		public void setUp() throws Exception {
@@ -248,11 +246,6 @@ public class DLAppLocalServiceTest {
 
 			Assert.assertEquals("New Name", assetEntry.getTitle());
 		}
-
-		@Rule
-		public final SynchronousDestinationTestRule
-			synchronousDestinationTestRule =
-				SynchronousDestinationTestRule.INSTANCE;
 
 		@DeleteAfterTestRun
 		private Group _group;

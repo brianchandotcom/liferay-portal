@@ -63,7 +63,8 @@ public class FindActionTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE);
+			MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Test
 	public void testGetPlidAndPortletIdViewInContext() throws Exception {
@@ -122,10 +123,6 @@ public class FindActionTest {
 
 		Assert.assertNull(layout);
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	protected void addLayouts(
 			boolean portletExists, boolean blogEntryWithDifferentGroup)

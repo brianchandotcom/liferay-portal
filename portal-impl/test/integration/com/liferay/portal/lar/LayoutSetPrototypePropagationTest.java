@@ -81,7 +81,8 @@ public class LayoutSetPrototypePropagationTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE);
+			MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Test
 	public void testAddChildLayoutWithLinkDisabled() throws Exception {
@@ -345,10 +346,6 @@ public class LayoutSetPrototypePropagationTest
 			layoutPortletPreferences.getValue(
 				"showAvailableLocales", StringPool.BLANK));
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	@Override
 	protected void doSetUp() throws Exception {

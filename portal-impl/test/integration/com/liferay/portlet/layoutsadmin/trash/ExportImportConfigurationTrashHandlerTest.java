@@ -15,6 +15,7 @@
 package com.liferay.portlet.layoutsadmin.trash;
 
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationConstants;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.Group;
@@ -43,8 +44,11 @@ public class ExportImportConfigurationTrashHandlerTest
 	extends BaseTrashHandlerTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Ignore()
 	@Override
@@ -167,10 +171,6 @@ public class ExportImportConfigurationTrashHandlerTest
 	@Test
 	public void testTrashVersionParentBaseModelAndRestore() throws Exception {
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(

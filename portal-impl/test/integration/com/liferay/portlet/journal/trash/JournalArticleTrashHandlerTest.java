@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.trash;
 
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -66,8 +67,11 @@ import org.junit.runner.RunWith;
 public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Test
 	public void testArticleImages() throws Exception {
@@ -129,10 +133,6 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 			JournalArticleImageLocalServiceUtil.getArticleImagesCount(
 				group.getGroupId()));
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(

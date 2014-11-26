@@ -18,6 +18,7 @@ import com.liferay.portal.LARTypeException;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -54,8 +55,11 @@ import org.junit.runner.RunWith;
 public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Test
 	public void testDeleteMissingLayouts() throws Exception {
@@ -437,10 +441,6 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 		exportImportLayouts(layoutIds, getImportParameterMap());
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	protected void exportImportLayouts(
 			long[] layoutIds, Map<String, String[]> parameterMap)

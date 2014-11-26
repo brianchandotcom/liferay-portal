@@ -15,6 +15,7 @@
 package com.liferay.portlet.blogs.lar;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.lar.BasePortletExportImportTestCase;
 import com.liferay.portal.model.StagedModel;
@@ -46,8 +47,11 @@ import org.junit.runner.RunWith;
 public class BlogsExportImportTest extends BasePortletExportImportTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
 	public String getNamespace() {
@@ -58,10 +62,6 @@ public class BlogsExportImportTest extends BasePortletExportImportTestCase {
 	public String getPortletId() {
 		return PortletKeys.BLOGS;
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	@Override
 	protected StagedModel addStagedModel(long groupId) throws Exception {

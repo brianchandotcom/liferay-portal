@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.layoutsetprototypes.lar;
 
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.lar.BasePortletExportImportTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutPrototype;
@@ -45,8 +46,11 @@ public class LayoutSetPrototypeExportImportTest
 	extends BasePortletExportImportTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
 	public String getNamespace() {
@@ -75,10 +79,6 @@ public class LayoutSetPrototypeExportImportTest
 
 		exportImportLayoutSetPrototype(true);
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	protected void exportImportLayoutSetPrototype(boolean layoutPrototype)
 		throws Exception {

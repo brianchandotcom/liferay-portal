@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.service;
 
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
@@ -62,8 +63,11 @@ import org.junit.runner.RunWith;
 public class JournalArticleScheduledTest {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -89,10 +93,6 @@ public class JournalArticleScheduledTest {
 	public void testScheduleDraftArticleToThePast() throws Exception {
 		testScheduleArticle(false, _WHEN_PAST);
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	protected JournalArticle addArticle(
 			long groupId, Date displayDate, int when, boolean approved)

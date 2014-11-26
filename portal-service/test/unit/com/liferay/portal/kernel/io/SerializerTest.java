@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.io.Serializer.BufferNode;
 import com.liferay.portal.kernel.io.Serializer.BufferQueue;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.kernel.test.NewEnvTestRule;
@@ -54,16 +55,19 @@ import org.junit.Test;
 public class SerializerTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor() {
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new CodeCoverageAssertor() {
 
-			@Override
-			public void appendAssertClasses(List<Class<?>> assertClasses) {
-				assertClasses.add(AnnotatedObjectInputStream.class);
-				assertClasses.add(AnnotatedObjectOutputStream.class);
-			}
+				@Override
+				public void appendAssertClasses(List<Class<?>> assertClasses) {
+					assertClasses.add(AnnotatedObjectInputStream.class);
+					assertClasses.add(AnnotatedObjectOutputStream.class);
+				}
 
-		};
+			},
+			NewEnvTestRule.INSTANCE);
 
 	@Before
 	public void setUp() {
@@ -897,9 +901,6 @@ public class SerializerTest {
 			Assert.assertEquals(byteBuffer.get(), data[i]);
 		}
 	}
-
-	@Rule
-	public final NewEnvTestRule newEnvTestRule = NewEnvTestRule.INSTANCE;
 
 	private static final int _COUNT = 1024;
 

@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.memory;
 
 import com.liferay.portal.kernel.memory.FinalizeManager.ReferenceFactory;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.GCUtil;
 import com.liferay.portal.kernel.test.NewEnv;
@@ -42,8 +43,10 @@ import org.junit.Test;
 public class FinalizeManagerTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			CodeCoverageAssertor.INSTANCE, NewEnvTestRule.INSTANCE);
 
 	@After
 	public void tearDown() {
@@ -210,9 +213,6 @@ public class FinalizeManagerTest {
 	public void testRegisterWeakWithThread() throws InterruptedException {
 		doTestRegister(true, ReferenceType.WEAK);
 	}
-
-	@Rule
-	public final NewEnvTestRule newEnvTestRule = NewEnvTestRule.INSTANCE;
 
 	protected void doTestRegister(
 			boolean threadEnabled, ReferenceType referenceType)

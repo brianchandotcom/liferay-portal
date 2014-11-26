@@ -148,6 +148,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testParametersWithAnnotation() throws Throwable {
+		test("JavaClassMethodParameterAnnotated.testjava");
+	}
+
+	@Test
 	public void testSecureRandomNumberGeneration() throws Exception {
 		test(
 			"SecureRandomNumberGeneration.testjava",

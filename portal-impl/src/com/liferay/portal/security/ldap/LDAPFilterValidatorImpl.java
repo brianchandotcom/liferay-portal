@@ -15,8 +15,8 @@
 package com.liferay.portal.security.ldap;
 
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.parsers.ldapfilter.parser.LDAPFilterLexer;
-import com.liferay.portal.parsers.ldapfilter.parser.LDAPFilterParser;
+import com.liferay.portal.parsers.ldap.parser.LDAPFilterLexer;
+import com.liferay.portal.parsers.ldap.parser.LDAPFilterParser;
 
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CharStream;

@@ -424,7 +424,7 @@ public class Creole10Parser]]></replacevalue>
 	<target name="build-ldapfilter-parser">
 			<delete>
 				<fileset
-					dir="src/com/liferay/portal/parsers/ldapfilter/parser"
+					dir="src/com/liferay/portal/parsers/ldap/parser"
 					includes="*.*"
 				/>
 			</delete>
@@ -436,7 +436,7 @@ public class Creole10Parser]]></replacevalue>
 			<java
 				classname="org.antlr.Tool"
 				classpathref="antlr.classpath"
-				dir="src/com/liferay/portal/parsers/ldapfilter/grammar"
+				dir="src/com/liferay/portal/parsers/ldap/grammar"
 				fork="true"
 				maxmemory="1024m"
 				newenvironment="true"
@@ -446,13 +446,13 @@ public class Creole10Parser]]></replacevalue>
 				<arg value="LDAPFilter.g" />
 			</java>
 
-			<replace file="src/com/liferay/portal/parsers/ldapfilter/parser/LDAPFilterLexer.java">
+			<replace file="src/com/liferay/portal/parsers/ldap/parser/LDAPFilterLexer.java">
 				<replacetoken>public class LDAPFilterLexer</replacetoken>
 				<replacevalue><![CDATA[@SuppressWarnings("all")
 public class LDAPFilterLexer]]></replacevalue>
 			</replace>
 
-			<replace file="src/com/liferay/portal/parsers/ldapfilter/parser/LDAPFilterParser.java">
+			<replace file="src/com/liferay/portal/parsers/ldap/parser/LDAPFilterParser.java">
 				<replacetoken>public class LDAPFilterParser</replacetoken>
 				<replacevalue><![CDATA[@SuppressWarnings("all")
 public class LDAPFilterParser]]></replacevalue>
@@ -461,7 +461,7 @@ public class LDAPFilterParser]]></replacevalue>
 			<fixcrlf
 				includes="*.java"
 				javafiles="yes"
-				srcdir="src/com/liferay/portal/parsers/ldapfilter/parser"
+				srcdir="src/com/liferay/portal/parsers/ldap/parser"
 				tab="add"
 			/>
 		</target>

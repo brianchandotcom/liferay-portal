@@ -24,7 +24,7 @@ import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.impl.ClassNameImpl;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.persistence.ClassNameUtil;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.LiferayIntegrationTestRule;
 
 import java.util.List;
 
@@ -32,8 +32,9 @@ import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
@@ -43,8 +44,12 @@ import org.springframework.transaction.TransactionStatus;
 /**
  * @author Shuyang Zhou
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class TransactionInterceptorTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testFailOnCommit() {

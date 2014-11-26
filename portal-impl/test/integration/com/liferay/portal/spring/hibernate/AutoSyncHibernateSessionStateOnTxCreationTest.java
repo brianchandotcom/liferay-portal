@@ -15,16 +15,21 @@
 package com.liferay.portal.spring.hibernate;
 
 import com.liferay.portal.service.PortalServiceUtil;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.LiferayIntegrationTestRule;
 
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Shuyang Zhou
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class AutoSyncHibernateSessionStateOnTxCreationTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testAutoSyncHibernateSessionStateOnTxCreation()

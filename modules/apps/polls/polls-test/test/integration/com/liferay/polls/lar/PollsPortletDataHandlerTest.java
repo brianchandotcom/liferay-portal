@@ -36,7 +36,7 @@ public class PollsPortletDataHandlerTest
 
 	@Rule
 	public final DeleteAfterTestRunTestRule deleteAfterTestRunTestRule =
-		new DeleteAfterTestRunTestRule(this);
+		new DeleteAfterTestRunTestRule();
 
 	@Override
 	protected void addStagedModels() throws Exception {

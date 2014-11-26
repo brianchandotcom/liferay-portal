@@ -83,7 +83,7 @@ public class LiferayIntegrationJUnitTestRunner extends BlockJUnit4ClassRunner {
 	protected List<TestRule> getTestRules(Object object) {
 		List<TestRule> testRules = super.getTestRules(object);
 
-		testRules.add(new DeleteAfterTestRunTestRule(object));
+		testRules.add(new DeleteAfterTestRunTestRule());
 
 		testRules.add(LogAssertionTestRule.INSTANCE);
 

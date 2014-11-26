@@ -731,7 +731,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 
 		assetEntryQuery.setAllCategoryIds(allAssetCategoryIds);
 
-		if (overrideAllAssetCategoryIds != null) {
+		if (overrideAllAssetTagNames != null) {
 			allAssetTagNames = overrideAllAssetTagNames;
 		}
 

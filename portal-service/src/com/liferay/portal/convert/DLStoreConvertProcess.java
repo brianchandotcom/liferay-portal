@@ -1,6 +1,5 @@
 package com.liferay.portal.convert;
 
-
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**

@@ -623,6 +623,12 @@
 			<finder-column name="liveGroupId" />
 			<finder-column name="name" />
 		</finder>
+		<finder name="C_P_S_I" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="parentGroupId" />
+			<finder-column name="site" />
+			<finder-column name="inheritContent" />
+		</finder>
 
 		<!-- References -->
 

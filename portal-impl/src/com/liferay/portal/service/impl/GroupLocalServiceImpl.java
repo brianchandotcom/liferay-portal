@@ -1321,6 +1321,15 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		return groupPersistence.findByC_P_S(companyId, parentGroupId, site);
 	}
 
+	@Override
+	public List<Group> getGroups(
+		long companyId, long parentGroupId, boolean site,
+		boolean inheritContent) {
+
+		return groupPersistence.findByC_P_S_I(
+			companyId, parentGroupId, site, inheritContent);
+	}
+
 	/**
 	 * Returns all the groups that are direct children of the parent group with
 	 * the matching className.

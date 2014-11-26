@@ -15,7 +15,7 @@
 package com.liferay.portalweb.util.block.action;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
+import com.liferay.portalweb.util.liferayselenium.LiferaySelenium;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.util;
+package com.liferay.portalweb.util.liferayselenium.service;
 
 import com.sun.mail.imap.IMAPFolder;
 

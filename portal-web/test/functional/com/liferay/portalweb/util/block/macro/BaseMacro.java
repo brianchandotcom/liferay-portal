@@ -14,7 +14,7 @@
 
 package com.liferay.portalweb.util.block.macro;
 
-import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
+import com.liferay.portalweb.util.liferayselenium.LiferaySelenium;
 
 import java.util.HashMap;
 import java.util.Map;

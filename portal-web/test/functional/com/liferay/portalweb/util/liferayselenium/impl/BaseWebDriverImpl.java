@@ -12,28 +12,42 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.util.liferayselenium;
+package com.liferay.portalweb.util.liferayselenium.impl;
 
-import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portalweb.util.RuntimeVariables;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portalweb.portal.util.liferayselenium.WebDriverHelper;
+import com.liferay.portalweb.portal.util.liferayselenium.WebDriverToSeleniumBridge;
 import com.liferay.portalweb.util.TestPropsValues;
+import com.liferay.portalweb.util.liferayselenium.LiferaySelenium;
+import com.liferay.portalweb.util.liferayselenium.service.LiferaySeleniumHelper;
 
-import com.thoughtworks.selenium.CommandProcessor;
-import com.thoughtworks.selenium.Selenium;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
 
-import java.lang.reflect.Field;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.internal.WrapsDriver;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public abstract class BaseSeleniumImpl
-	extends SeleniumWrapper implements LiferaySelenium {
+public abstract class BaseWebDriverImpl
+	extends WebDriverToSeleniumBridge implements LiferaySelenium {
 
-	public BaseSeleniumImpl(String projectDirName, Selenium selenium) {
-		super(selenium);
+	public BaseWebDriverImpl(
+		String projectDirName, String browserURL, WebDriver webDriver) {
+
+		super(webDriver);
 
 		_projectDirName = projectDirName;
 
@@ -51,9 +65,18 @@ public abstract class BaseSeleniumImpl
 				_sikuliImagesDirName, "linux", "windows");
 		}
 
-		initCommandProcessor();
+		if (!TestPropsValues.MOBILE_DEVICE_ENABLED) {
+			WebDriver.Options options = webDriver.manage();
 
-		selenium.start();
+			WebDriver.Window window = options.window();
+
+			int x = 1280;
+			int y = 1040;
+
+			window.setSize(new Dimension(x, y));
+		}
+
+		webDriver.get(browserURL);
 	}
 
 	@Override
@@ -115,7 +138,7 @@ public abstract class BaseSeleniumImpl
 
 	@Override
 	public void assertHTMLSourceTextNotPresent(String value) throws Exception {
-		LiferaySeleniumHelper.assertHTMLSourceTextNotPresent(this, value);
+		LiferaySeleniumHelper.assertHTMLSourceTextPresent(this, value);
 	}
 
 	@Override
@@ -126,6 +149,8 @@ public abstract class BaseSeleniumImpl
 	@Override
 	public void assertJavaScriptErrors(String ignoreJavaScriptError)
 		throws Exception {
+
+		WebDriverHelper.assertJavaScriptErrors(this, ignoreJavaScriptError);
 	}
 
 	@Override
@@ -285,17 +310,23 @@ public abstract class BaseSeleniumImpl
 
 	@Override
 	public String getCurrentDay() {
-		return _commandProcessor.getString("getCurrentDay", new String[0]);
+		Calendar calendar = Calendar.getInstance();
+
+		return StringUtil.valueOf(calendar.get(Calendar.DATE));
 	}
 
 	@Override
 	public String getCurrentMonth() {
-		return _commandProcessor.getString("getCurrentMonth", new String[0]);
+		Calendar calendar = Calendar.getInstance();
+
+		return StringUtil.valueOf(calendar.get(Calendar.MONTH) + 1);
 	}
 
 	@Override
 	public String getCurrentYear() {
-		return _commandProcessor.getString("getCurrentYear", new String[0]);
+		Calendar calendar = Calendar.getInstance();
+
+		return StringUtil.valueOf(calendar.get(Calendar.YEAR));
 	}
 
 	@Override
@@ -315,14 +346,42 @@ public abstract class BaseSeleniumImpl
 
 	@Override
 	public String getFirstNumber(String locator) {
-		return _commandProcessor.getString(
-			"getFirstNumber", new String[] {locator,});
+		WebElement webElement = getWebElement(locator);
+
+		String text = webElement.getText();
+
+		if (text == null) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler();
+
+		char[] chars = text.toCharArray();
+
+		for (char c : chars) {
+			boolean digit = false;
+
+			if (Validator.isDigit(c)) {
+				sb.append(c);
+
+				digit = true;
+			}
+
+			String s = sb.toString();
+
+			if (Validator.isNotNull(s) && !digit) {
+				return s;
+			}
+		}
+
+		return sb.toString();
 	}
 
 	@Override
 	public String getFirstNumberIncrement(String locator) {
-		return _commandProcessor.getString(
-			"getFirstNumberIncrement", new String[] {locator,});
+		String firstNumber = getFirstNumber(locator);
+
+		return StringUtil.valueOf(GetterUtil.getInteger(firstNumber) + 1);
 	}
 
 	@Override
@@ -398,7 +457,15 @@ public abstract class BaseSeleniumImpl
 
 	@Override
 	public boolean isNotSelectedLabel(String selectLocator, String pattern) {
-		return !pattern.equals(getSelectedLabel(selectLocator));
+		if (isElementNotPresent(selectLocator)) {
+			return false;
+		}
+
+		String[] selectedLabels = getSelectedLabels(selectLocator);
+
+		List<String> selectedLabelsList = Arrays.asList(selectedLabels);
+
+		return !selectedLabelsList.contains(pattern);
 	}
 
 	@Override
@@ -418,15 +485,20 @@ public abstract class BaseSeleniumImpl
 
 	@Override
 	public boolean isPartialText(String locator, String value) {
-		value = RuntimeVariables.replace(value);
+		WebElement webElement = getWebElement(locator, "1");
 
-		return _commandProcessor.getBoolean(
-			"isPartialText", new String[] {locator, value,});
+		String text = webElement.getText();
+
+		return text.contains(value);
 	}
 
 	@Override
 	public boolean isSelectedLabel(String selectLocator, String pattern) {
-		return pattern.equals(getSelectedLabel(selectLocator));
+		if (isElementNotPresent(selectLocator)) {
+			return false;
+		}
+
+		return pattern.equals(getSelectedLabel(selectLocator, "1"));
 	}
 
 	@Override
@@ -436,7 +508,7 @@ public abstract class BaseSeleniumImpl
 
 	@Override
 	public boolean isText(String locator, String value) {
-		return value.equals(getText(locator));
+		return value.equals(getText(locator, "1"));
 	}
 
 	@Override
@@ -446,7 +518,7 @@ public abstract class BaseSeleniumImpl
 
 	@Override
 	public boolean isValue(String locator, String value) {
-		return value.equals(getValue(locator));
+		return value.equals(getValue(locator, "1"));
 	}
 
 	@Override
@@ -469,28 +541,24 @@ public abstract class BaseSeleniumImpl
 
 	@Override
 	public void makeVisible(String locator) {
-		StringBundler sb = new StringBundler(10);
-
-		sb.append("var xpathResult = document.evaluate(");
-		sb.append(locator);
-		sb.append(", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, ");
-		sb.append("null);");
-
-		sb.append("if (xpathResult.singleNodeValue) {");
-		sb.append("var element = xpathResult.singleNodeValue;");
-		sb.append("element.style.cssText = 'display:inline !important';");
-		sb.append("element.style.overflow = 'visible';");
-		sb.append("element.style.minHeight = '1px';");
-		sb.append("element.style.minWidth = '1px';");
-		sb.append("element.style.opacity = '1';");
-		sb.append("element.style.visibility = 'visible';");
-		sb.append("}");
-
-		super.runScript(sb.toString());
+		WebDriverHelper.makeVisible(this, locator);
 	}
 
 	@Override
 	public void mouseRelease() {
+		WebElement bodyWebElement = getWebElement("//body");
+
+		WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
+
+		WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+		Actions actions = new Actions(webDriver);
+
+		actions.release();
+
+		Action action = actions.build();
+
+		action.perform();
 	}
 
 	@Override
@@ -529,19 +597,6 @@ public abstract class BaseSeleniumImpl
 
 	@Override
 	public void saveScreenshotAndSource() throws Exception {
-		String screenshotName = null;
-
-		screenshotName = getScreenshotFileName();
-
-		captureEntirePageScreenshot(
-			_OUTPUT_SCREENSHOTS_DIR + screenshotName + ".jpg", "");
-
-		String content = getHtmlSource();
-
-		screenshotName = getScreenshotFileName();
-
-		FileUtil.write(
-			_OUTPUT_SCREENSHOTS_DIR + screenshotName + ".html", content);
 	}
 
 	@Override
@@ -557,6 +612,9 @@ public abstract class BaseSeleniumImpl
 
 	@Override
 	public void scrollWebElementIntoView(String locator) throws Exception {
+		WebElement webElement = getWebElement(locator);
+
+		super.scrollWebElementIntoView(webElement);
 	}
 
 	@Override
@@ -583,11 +641,15 @@ public abstract class BaseSeleniumImpl
 
 	@Override
 	public void sendKeys(String locator, String value) {
-		_commandProcessor.doCommand("sendKeys", new String[] {locator, value});
+		typeKeys(locator, value);
 	}
 
 	@Override
 	public void sendKeysAceEditor(String locator, String value) {
+		WebElement webElement = getWebElement(locator);
+
+		webElement.sendKeys(Keys.chord(Keys.CONTROL, Keys.END));
+
 		LiferaySeleniumHelper.typeAceEditor(this, locator, value);
 	}
 
@@ -609,13 +671,6 @@ public abstract class BaseSeleniumImpl
 
 	@Override
 	public void setDefaultTimeout() {
-		int timeout = TestPropsValues.TIMEOUT_EXPLICIT_WAIT * 1000;
-
-		setTimeout(String.valueOf(timeout));
-	}
-
-	@Override
-	public void setDefaultTimeoutImplicit() {
 	}
 
 	@Override
@@ -624,18 +679,23 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
-	public void setTimeout(String timeout) {
-		super.setTimeout(timeout);
-
-		_timeout = timeout;
-	}
-
-	@Override
-	public void setTimeoutImplicit(String timeout) {
-	}
-
-	@Override
 	public void setWindowSize(String coordString) {
+		WebElement bodyWebElement = getWebElement("//body");
+
+		WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
+
+		WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+		WebDriver.Options options = webDriver.manage();
+
+		WebDriver.Window window = options.window();
+
+		String[] screenResolution = StringUtil.split(coordString, ",");
+
+		int x = GetterUtil.getInteger(screenResolution[0]);
+		int y = GetterUtil.getInteger(screenResolution[1]);
+
+		window.setSize(new Dimension(x, y));
 	}
 
 	@Override
@@ -726,17 +786,20 @@ public abstract class BaseSeleniumImpl
 
 	@Override
 	public void typeAceEditor(String locator, String value) {
+		WebElement webElement = getWebElement(locator);
+
+		webElement.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+
 		LiferaySeleniumHelper.typeAceEditor(this, locator, value);
+
+		webElement.sendKeys(Keys.chord(Keys.CONTROL, Keys.SHIFT, Keys.END));
+
+		webElement.sendKeys(Keys.DELETE);
 	}
 
 	@Override
 	public void typeFrame(String locator, String value) {
 		LiferaySeleniumHelper.typeFrame(this, locator, value);
-	}
-
-	@Override
-	public void typeKeys(String locator, String value) {
-		sendKeys(locator, value);
 	}
 
 	@Override
@@ -746,25 +809,37 @@ public abstract class BaseSeleniumImpl
 
 	@Override
 	public void uploadCommonFile(String location, String value) {
-		super.type(location, _projectDirName + _dependenciesDirName + value);
+		uploadFile(location, _projectDirName + _dependenciesDirName + value);
 	}
 
 	@Override
 	public void uploadFile(String location, String value) {
 		makeVisible(location);
 
-		super.type(location, value);
+		WebElement webElement = getWebElement(location);
+
+		webElement.sendKeys(value);
 	}
 
 	@Override
 	public void uploadTempFile(String location, String value) {
-		super.type(location, TestPropsValues.OUTPUT_DIR_NAME + value);
+		String slash = "/";
+
+		if (OSDetector.isWindows()) {
+			slash = "\\";
+		}
+
+		uploadFile(location, _outputDirName + slash + value);
 	}
 
 	@Override
 	public void waitForConfirmation(String pattern) throws Exception {
+		int timeout =
+			TestPropsValues.TIMEOUT_EXPLICIT_WAIT /
+				TestPropsValues.TIMEOUT_IMPLICIT_WAIT;
+
 		for (int second = 0;; second++) {
-			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
+			if (second >= timeout) {
 				assertConfirmation(pattern);
 			}
 
@@ -775,8 +850,6 @@ public abstract class BaseSeleniumImpl
 			}
 			catch (Exception e) {
 			}
-
-			Thread.sleep(1000);
 		}
 	}
 
@@ -818,11 +891,6 @@ public abstract class BaseSeleniumImpl
 	@Override
 	public void waitForNotVisible(String locator) throws Exception {
 		LiferaySeleniumHelper.waitForNotVisible(this, locator);
-	}
-
-	@Override
-	public void waitForPageToLoad(String timeout) {
-		super.waitForPageToLoad(_timeout);
 	}
 
 	@Override
@@ -871,60 +939,7 @@ public abstract class BaseSeleniumImpl
 		super.waitForPageToLoad("30000");
 	}
 
-	protected String getScreenshotFileName() {
-		Thread currentThread = Thread.currentThread();
-
-		StackTraceElement[] stackTraceElements = currentThread.getStackTrace();
-
-		for (int i = 1; i < stackTraceElements.length; i++) {
-			StackTraceElement stackTraceElement = stackTraceElements[i];
-
-			String className = stackTraceElement.getClassName();
-
-			if ((className.startsWith("com.liferay.portalweb.plugins") ||
-				 className.startsWith("com.liferay.portalweb.portal") ||
-				 className.startsWith("com.liferay.portalweb.portlet") ||
-				 className.startsWith("com.liferay.portalweb.properties")) &&
-				className.endsWith("Test")) {
-
-				String dirName = className.substring(22);
-
-				dirName = StringUtil.replace(dirName, ".", "/") + "/";
-
-				String fileName = stackTraceElement.getFileName();
-				int lineNumber = stackTraceElement.getLineNumber();
-
-				FileUtil.mkdirs(_OUTPUT_SCREENSHOTS_DIR + dirName);
-
-				return dirName + fileName + "-" + lineNumber;
-			}
-		}
-
-		throw new RuntimeException("Unable to find screenshot file name");
-	}
-
-	protected void initCommandProcessor() {
-		try {
-			Selenium selenium = getWrappedSelenium();
-
-			Class<?> clazz = selenium.getClass();
-
-			Field field = clazz.getDeclaredField("commandProcessor");
-
-			field.setAccessible(true);
-
-			_commandProcessor = (CommandProcessor)field.get(selenium);
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	private static final String _OUTPUT_SCREENSHOTS_DIR =
-		TestPropsValues.OUTPUT_DIR_NAME + "screenshots/";
-
 	private String _clipBoard = "";
-	private CommandProcessor _commandProcessor;
 	private String _dependenciesDirName =
 		"portal-web//test//functional//com//liferay//portalweb//dependencies//";
 	private String _outputDirName = TestPropsValues.OUTPUT_DIR_NAME;
@@ -932,6 +947,5 @@ public abstract class BaseSeleniumImpl
 	private String _projectDirName;
 	private String _sikuliImagesDirName =
 		_dependenciesDirName + "sikuli//linux//";
-	private String _timeout = "90000";
 
 }

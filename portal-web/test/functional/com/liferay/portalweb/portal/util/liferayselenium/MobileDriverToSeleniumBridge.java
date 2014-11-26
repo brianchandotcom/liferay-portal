@@ -14,6 +14,8 @@
 
 package com.liferay.portalweb.portal.util.liferayselenium;
 
+import com.liferay.portalweb.util.liferayselenium.service.LiferaySeleniumHelper;
+
 import com.thoughtworks.selenium.Selenium;
 
 import io.appium.java_client.MobileDriver;

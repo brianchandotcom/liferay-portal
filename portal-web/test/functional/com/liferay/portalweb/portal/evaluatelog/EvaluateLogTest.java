@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portalweb.portal.BaseTestCase;
-import com.liferay.portalweb.portal.util.liferayselenium.LiferaySeleniumHelper;
+import com.liferay.portalweb.util.liferayselenium.service.LiferaySeleniumHelper;
 
 /**
  * @author Brian Wing Shun Chan

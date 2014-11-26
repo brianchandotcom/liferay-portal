@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.util.liferayselenium;
+package com.liferay.portalweb.util.liferayselenium.service;
 
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -28,10 +28,9 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portalweb.portal.BaseTestCase;
-import com.liferay.portalweb.portal.util.AntCommands;
-import com.liferay.portalweb.portal.util.EmailCommands;
 import com.liferay.portalweb.util.RuntimeVariables;
 import com.liferay.portalweb.util.TestPropsValues;
+import com.liferay.portalweb.util.liferayselenium.LiferaySelenium;
 
 import java.awt.Rectangle;
 import java.awt.Robot;

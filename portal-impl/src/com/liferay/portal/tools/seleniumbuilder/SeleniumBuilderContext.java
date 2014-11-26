@@ -40,9 +40,7 @@ public class SeleniumBuilderContext {
 			SeleniumBuilderFileUtil seleniumBuilderFileUtil)
 		throws Exception {
 
-		this(
-			seleniumBuilderFileUtil,
-			"com/liferay/portalweb/portal/util/liferayselenium/");
+		this(seleniumBuilderFileUtil, "com/liferay/portalweb/");
 	}
 
 	public SeleniumBuilderContext(
@@ -70,8 +68,10 @@ public class SeleniumBuilderContext {
 		}
 
 		String[] seleniumFileNames = {
-			liferaySeleniumDirName + "LiferaySelenium.java",
-			liferaySeleniumDirName + "SeleniumWrapper.java"
+			liferaySeleniumDirName +
+				"util/liferayselenium/LiferaySelenium.java",
+			liferaySeleniumDirName +
+				"portal/util/liferayselenium/SeleniumWrapper.java"
 		};
 
 		for (String seleniumFileName : seleniumFileNames) {

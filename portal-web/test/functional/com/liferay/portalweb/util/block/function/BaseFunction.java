@@ -14,7 +14,7 @@
 
 package com.liferay.portalweb.util.block.function;
 
-import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
+import com.liferay.portalweb.util.liferayselenium.LiferaySelenium;
 
 /**
  * @author Michael Hashimoto

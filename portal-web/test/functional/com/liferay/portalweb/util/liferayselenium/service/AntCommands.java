@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.util;
+package com.liferay.portalweb.util.liferayselenium.service;
 
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
+import com.liferay.portalweb.util.liferayselenium.LiferaySelenium;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

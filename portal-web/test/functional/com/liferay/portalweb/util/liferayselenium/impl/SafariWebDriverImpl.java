@@ -12,26 +12,17 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.util.liferayselenium;
+package com.liferay.portalweb.util.liferayselenium.impl;
+
+import org.openqa.selenium.safari.SafariDriver;
 
 /**
- * @author Michael Hashimoto
+ * @author Brian Wing Shun Chan
  */
-public class SeleniumException extends Exception {
+public class SafariWebDriverImpl extends BaseWebDriverImpl {
 
-	public SeleniumException() {
-	}
-
-	public SeleniumException(String msg) {
-		super(msg);
-	}
-
-	public SeleniumException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-
-	public SeleniumException(Throwable cause) {
-		super(cause);
+	public SafariWebDriverImpl(String projectDirName, String browserURL) {
+		super(projectDirName, browserURL, new SafariDriver());
 	}
 
 }

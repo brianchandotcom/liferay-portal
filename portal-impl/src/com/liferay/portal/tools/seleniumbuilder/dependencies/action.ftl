@@ -1,8 +1,8 @@
 package ${seleniumBuilderContext.getActionPackageName(actionName)};
 
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 import com.liferay.portalweb.util.block.action.BaseAction;
+import com.liferay.portalweb.util.liferayselenium.LiferaySelenium;
 
 import ${seleniumBuilderContext.getActionClassName("BaseLiferay")};
 

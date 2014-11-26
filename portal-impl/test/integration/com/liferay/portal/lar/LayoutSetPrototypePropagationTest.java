@@ -78,6 +78,7 @@ public class LayoutSetPrototypePropagationTest
 	extends BasePrototypePropagationTestCase {
 
 	@ClassRule
+	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE);
@@ -344,10 +345,6 @@ public class LayoutSetPrototypePropagationTest
 			layoutPortletPreferences.getValue(
 				"showAvailableLocales", StringPool.BLANK));
 	}
-
-	@Rule
-	public final ResetDatabaseTestRule resetDatabaseTestRule =
-		ResetDatabaseTestRule.INSTANCE;
 
 	@Rule
 	public final SynchronousDestinationTestRule synchronousDestinationTestRule =

@@ -50,6 +50,7 @@ import org.junit.runner.RunWith;
 public class PortalImplGetSitesTest {
 
 	@ClassRule
+	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE);
@@ -128,10 +129,6 @@ public class PortalImplGetSitesTest {
 
 		Assert.assertFalse(set.size() < groupIds.length);
 	}
-
-	@Rule
-	public final ResetDatabaseTestRule resetDatabaseTestRule =
-		ResetDatabaseTestRule.INSTANCE;
 
 	protected long[] getSharedContentSiteGroupIds() throws Exception {
 		return PortalUtil.getSharedContentSiteGroupIds(

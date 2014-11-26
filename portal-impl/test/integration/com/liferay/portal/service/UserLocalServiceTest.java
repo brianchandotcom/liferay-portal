@@ -37,6 +37,7 @@ import org.junit.runner.RunWith;
 public class UserLocalServiceTest {
 
 	@ClassRule
+	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE);
@@ -92,9 +93,5 @@ public class UserLocalServiceTest {
 		Assert.assertEquals(1, users.size());
 		Assert.assertEquals(user, users.get(0));
 	}
-
-	@Rule
-	public final ResetDatabaseTestRule resetDatabaseTestRule =
-		ResetDatabaseTestRule.INSTANCE;
 
 }

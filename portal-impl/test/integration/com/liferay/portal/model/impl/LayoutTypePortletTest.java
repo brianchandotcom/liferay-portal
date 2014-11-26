@@ -48,6 +48,7 @@ import org.junit.runner.RunWith;
 public class LayoutTypePortletTest {
 
 	@ClassRule
+	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE);
@@ -307,10 +308,6 @@ public class LayoutTypePortletTest {
 
 		Assert.assertEquals(0, portlets.size());
 	}
-
-	@Rule
-	public final ResetDatabaseTestRule resetDatabaseTestRule =
-		ResetDatabaseTestRule.INSTANCE;
 
 	protected LayoutTypePortlet getLayoutTypePortlet() throws Exception {
 		Group group = GroupTestUtil.addGroup();

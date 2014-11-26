@@ -79,7 +79,8 @@ import org.junit.runner.RunWith;
 public class GroupServiceTest {
 
 	@ClassRule
-	public static final AggregateTestRule classAggregateTestRule =
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE);
 
@@ -794,10 +795,8 @@ public class GroupServiceTest {
 	}
 
 	@Rule
-	public final AggregateTestRule methodAggregateTestRule =
-		new AggregateTestRule(
-			ResetDatabaseTestRule.INSTANCE,
-			SynchronousDestinationTestRule.INSTANCE);
+	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
+		SynchronousDestinationTestRule.INSTANCE;
 
 	protected Group addGroup(
 			boolean site, boolean layout, boolean layoutPrototype)

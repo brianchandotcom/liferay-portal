@@ -63,6 +63,7 @@ public class UserServiceTest {
 	public static class WhenCompanySecurityStrangersWithMXDisabled {
 
 		@ClassRule
+		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
 				MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE);
@@ -146,16 +147,13 @@ public class UserServiceTest {
 			}
 		}
 
-		@Rule
-		public final ResetDatabaseTestRule resetDatabaseTestRule =
-			ResetDatabaseTestRule.INSTANCE;
-
 	}
 
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	public static class WhenGettingUserByEmailAddress {
 
 		@ClassRule
+		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
 				MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE);
@@ -180,16 +178,13 @@ public class UserServiceTest {
 			Assert.assertEquals(user, retrievedUser);
 		}
 
-		@Rule
-		public final ResetDatabaseTestRule resetDatabaseTestRule =
-			ResetDatabaseTestRule.INSTANCE;
-
 	}
 
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	public static class WhenGroupAdminUnsetsGroupUsers {
 
 		@ClassRule
+		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
 				MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE);
@@ -257,10 +252,6 @@ public class UserServiceTest {
 					organizationOwnerUser.getUserId()));
 		}
 
-		@Rule
-		public final ResetDatabaseTestRule resetDatabaseTestRule =
-			ResetDatabaseTestRule.INSTANCE;
-
 		private Group _group;
 		private User _groupAdminUser;
 		private Organization _organization;
@@ -271,6 +262,7 @@ public class UserServiceTest {
 	public static class WhenGroupOwnerUnsetsGroupUsers {
 
 		@ClassRule
+		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
 				MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE);
@@ -341,10 +333,6 @@ public class UserServiceTest {
 					organizationOwnerUser.getUserId()));
 		}
 
-		@Rule
-		public final ResetDatabaseTestRule resetDatabaseTestRule =
-			ResetDatabaseTestRule.INSTANCE;
-
 		private Group _group;
 		private User _groupOwnerUser;
 		private Organization _organization;
@@ -356,6 +344,7 @@ public class UserServiceTest {
 	public static class WhenOrganizationAdminUnsetsUsersForNonSiteOrganization {
 
 		@ClassRule
+		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
 				MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE);
@@ -398,10 +387,6 @@ public class UserServiceTest {
 					_organizationOwnerUser.getUserId()));
 		}
 
-		@Rule
-		public final ResetDatabaseTestRule resetDatabaseTestRule =
-			ResetDatabaseTestRule.INSTANCE;
-
 		private Organization _organization;
 		private User _organizationAdminUser;
 		private User _organizationOwnerUser;
@@ -412,6 +397,7 @@ public class UserServiceTest {
 	public static class WhenOrganizationAdminUnsetsUsersForSiteOrganization {
 
 		@ClassRule
+		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
 				MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE);
@@ -451,10 +437,6 @@ public class UserServiceTest {
 					_group.getGroupId(), groupOwnerUser.getUserId()));
 		}
 
-		@Rule
-		public final ResetDatabaseTestRule resetDatabaseTestRule =
-			ResetDatabaseTestRule.INSTANCE;
-
 		private Group _group;
 		private User _organizationAdminUser;
 
@@ -464,6 +446,7 @@ public class UserServiceTest {
 	public static class WhenOrganizationOwnerUnsetsUsersForNonSiteOrganization {
 
 		@ClassRule
+		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
 				MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE);
@@ -506,10 +489,6 @@ public class UserServiceTest {
 					otherOrganizationOwnerUser.getUserId()));
 		}
 
-		@Rule
-		public final ResetDatabaseTestRule resetDatabaseTestRule =
-			ResetDatabaseTestRule.INSTANCE;
-
 		private Organization _organization;
 		private User _organizationOwnerUser;
 
@@ -519,6 +498,7 @@ public class UserServiceTest {
 	public static class WhenOrganizationOwnerUnsetsUsersForSiteOrganization {
 
 		@ClassRule
+		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
 				MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE);
@@ -558,10 +538,6 @@ public class UserServiceTest {
 					_group.getGroupId(), groupOwnerUser.getUserId()));
 		}
 
-		@Rule
-		public final ResetDatabaseTestRule resetDatabaseTestRule =
-			ResetDatabaseTestRule.INSTANCE;
-
 		private Group _group;
 		private User _organizationOwnerUser;
 
@@ -572,7 +548,8 @@ public class UserServiceTest {
 	public static class WhenPortalSendsPasswordEmail {
 
 		@ClassRule
-		public static final AggregateTestRule classAggregateTestRule =
+		@Rule
+		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
 				MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE,
 				SynchronousMailTestRule.INSTANCE);
@@ -687,10 +664,8 @@ public class UserServiceTest {
 		}
 
 		@Rule
-		public final AggregateTestRule methodAggregateTestRule =
-			new AggregateTestRule(
-				ResetDatabaseTestRule.INSTANCE,
-				SynchronousMailTestRule.INSTANCE);
+		public final SynchronousMailTestRule synchronousMailTestRule =
+			SynchronousMailTestRule.INSTANCE;
 
 		protected void givenThatCompanySendsNewPassword() throws Exception {
 			PortletPreferences portletPreferences =

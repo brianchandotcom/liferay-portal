@@ -60,7 +60,8 @@ import org.springframework.mock.web.MockHttpServletRequest;
 public class FindActionTest {
 
 	@ClassRule
-	public static final AggregateTestRule classAggregateTestRule =
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE);
 
@@ -123,10 +124,8 @@ public class FindActionTest {
 	}
 
 	@Rule
-	public final AggregateTestRule methodAggregateTestRule =
-		new AggregateTestRule(
-			ResetDatabaseTestRule.INSTANCE,
-			SynchronousDestinationTestRule.INSTANCE);
+	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
+		SynchronousDestinationTestRule.INSTANCE;
 
 	protected void addLayouts(
 			boolean portletExists, boolean blogEntryWithDifferentGroup)

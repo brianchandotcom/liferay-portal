@@ -77,9 +77,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	protected void checkPoshiCharactersAfterDefinition(
 		String fileName, String content) {
 
-		Matcher matcher = _poshiCharactersAfterDefinitionTag.matcher(content);
+		if (content.contains("/definition>") &&
+			!content.endsWith("/definition>")) {
 
-		if (matcher.find()) {
 			processErrorMessage(
 				fileName,
 				"Characters found after definition element: " + fileName);
@@ -1201,8 +1201,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private List<String> _columnNames;
 	private List<String> _friendlyUrlRoutesSortExclusions;
 	private List<String> _numericalPortletNameElementExclusions;
-	private Pattern _poshiCharactersAfterDefinitionTag = Pattern.compile(
-		"</definition>([\\w\\s\\t\\n\\<\\>]+)");
 	private Pattern _poshiClosingTagPattern = Pattern.compile("</[^>/]*>");
 	private Pattern _poshiCommandsPattern = Pattern.compile(
 		"\\<command.*name=\\\"([^\\\"]*)\\\".*\\>[\\s\\S]*?\\</command\\>" +

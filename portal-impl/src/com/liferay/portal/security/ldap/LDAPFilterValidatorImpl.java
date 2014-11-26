@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.ldap;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.parsers.ldap.parser.LDAPFilterLexer;
 import com.liferay.portal.parsers.ldap.parser.LDAPFilterParser;
@@ -35,21 +37,28 @@ public class LDAPFilterValidatorImpl implements LDAPFilterValidator {
 		}
 
 		CharStream charStream = new ANTLRStringStream(filter);
+
 		LDAPFilterLexer ldapFilterLexer = new LDAPFilterLexer(charStream);
+
 		TokenStream tokenStream = new CommonTokenStream(ldapFilterLexer);
+
 		LDAPFilterParser ldapFilterParser = new LDAPFilterParser(tokenStream);
 
 		try {
 			ldapFilterParser.parse();
+		}
+		catch (RecognitionException|RuntimeException re) {
+			if (_log.isErrorEnabled()) {
+				_log.error("Unable to parse filter " + filter, re);
+			}
 
-			return true;
-		}
-		catch (RecognitionException re) {
 			return false;
 		}
-		catch (RuntimeException re) {
-			return false;
-		}
+
+		return true;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LDAPFilterValidatorImpl.class);
 
 }

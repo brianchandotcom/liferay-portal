@@ -86,8 +86,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SETUP_FORM_FIELDS_OPTIONS_FIELD</td>
+	<td>//div[@class='field-title' and contains(.,'${key_wfNewFieldName}')]/..//input[contains(@id,'_86_fieldOptions') and @type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SETUP_FORM_FIELDS_ADD_ROW_BUTTON</td>
 	<td>//div[@class='field-title' and contains(.,'${key_wfPreviousFieldName}')]/../../..//button[contains(@class,'add-row')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_FORM_FIELDS_DELETE_ROW_BUTTON</td>
+	<td>//div[@class='field-title' and contains(.,'${key_wfFieldName}')]/../../..//button[contains(@class,'delete-row')]</td>
 	<td></td>
 </tr>
 <tr>

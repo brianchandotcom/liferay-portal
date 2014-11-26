@@ -810,8 +810,8 @@ public class LiferayRepository
 		throws PortalException {
 
 		return dlFileEntryService.search(
-			getGroupId(), creatorUserId, folderId, mimeTypes, status, start,
-			end);
+			getGroupId(), creatorUserId, toFolderId(folderId), mimeTypes,
+			status, start, end);
 	}
 
 	@Override

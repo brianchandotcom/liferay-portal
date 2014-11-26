@@ -92,8 +92,14 @@ public class LiferayTrashCapability implements TrashCapability {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		long newFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+		if (newFolder != null) {
+			newFolderId = newFolder.getFolderId();
+		}
+
 		return DLAppHelperLocalServiceUtil.moveFileEntryFromTrash(
-			userId, fileEntry, newFolder.getFolderId(), serviceContext);
+			userId, fileEntry, newFolderId, serviceContext);
 	}
 
 	@Override
@@ -110,8 +116,14 @@ public class LiferayTrashCapability implements TrashCapability {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		long destinationFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+		if (destinationFolder != null) {
+			destinationFolderId = destinationFolder.getFolderId();
+		}
+
 		return DLAppHelperLocalServiceUtil.moveFolderFromTrash(
-			userId, folder, destinationFolder.getFolderId(), serviceContext);
+			userId, folder, destinationFolderId, serviceContext);
 	}
 
 	@Override

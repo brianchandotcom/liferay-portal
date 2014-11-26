@@ -2426,7 +2426,11 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		TrashCapability trashCapability = repository.getCapability(
 			TrashCapability.class);
 
-		Folder destinationFolder = repository.getFolder(parentFolderId);
+		Folder destinationFolder = null;
+
+		if (parentFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			destinationFolder = repository.getFolder(parentFolderId);
+		}
 
 		return trashCapability.moveFolderFromTrash(
 			getUserId(), folder, destinationFolder, serviceContext);

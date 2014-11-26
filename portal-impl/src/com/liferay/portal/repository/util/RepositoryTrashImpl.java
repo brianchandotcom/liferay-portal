@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.util.RepositoryTrash;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
 /**
  * @author Adolfo Pérez
@@ -44,7 +45,12 @@ public class RepositoryTrashImpl implements RepositoryTrash {
 			TrashCapability.class);
 
 		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
-		Folder newFolder = localRepository.getFolder(newFolderId);
+
+		Folder newFolder = null;
+
+		if (newFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			newFolder = localRepository.getFolder(newFolderId);
+		}
 
 		return trashCapability.moveFileEntryFromTrash(
 			userId, fileEntry, newFolder, serviceContext);

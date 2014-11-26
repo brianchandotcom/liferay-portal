@@ -26,9 +26,9 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.PersistenceTestRule;
 import com.liferay.portal.test.TransactionalTestRule;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.RandomTestUtil;
 
@@ -42,8 +42,6 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.junit.runner.RunWith;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -56,10 +54,10 @@ import java.util.Set;
 /**
  * @generated
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class DDMStorageLinkPersistenceTest {
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(PersistenceTestRule.INSTANCE,
+	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@After

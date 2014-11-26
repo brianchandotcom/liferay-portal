@@ -85,6 +85,7 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 				<portlet:param name="struts_action" value="/layouts_admin/add_layout" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+				<portlet:param name="tabs1" value="<%= layoutsAdminDisplayContext.getTabs1() %>" />
 			</portlet:renderURL>
 
 			<aui:nav-item href="<%= addPagesURL %>" iconCssClass="icon-plus" label="add-page" />

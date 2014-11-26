@@ -16,9 +16,6 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.NoSuchListTypeException;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.ListType;
@@ -32,21 +29,16 @@ import java.util.List;
 public class ListTypeServiceImpl extends ListTypeServiceBaseImpl {
 
 	public ListType addListType(String type, String name) {
-		DynamicQuery query = DynamicQueryFactoryUtil.forClass(ListType.class);
+		ListType listType = listTypePersistence.fetchByT_N(type, name);
 
-		query.add(PropertyFactoryUtil.forName("type").eq(type));
-		query.add(PropertyFactoryUtil.forName("name").eq(name));
-
-		List<ListType> list = listTypePersistence.findWithDynamicQuery(query);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
+		if (listType != null) {
+			return listType;
 		}
 
 		int listTypeId = (int)CounterLocalServiceUtil.increment(
 			ListType.class.getName());
 
-		ListType listType = listTypePersistence.create(listTypeId);
+		listType = listTypePersistence.create(listTypeId);
 
 		listType.setType(type);
 		listType.setName(name);

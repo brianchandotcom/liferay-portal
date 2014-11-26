@@ -15,6 +15,7 @@
 package com.liferay.portlet.layoutsetprototypes.lar;
 
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -64,8 +65,10 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE, TransactionalTestRule.INSTANCE);
 
 	@After
 	@Override
@@ -89,10 +92,6 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 
 		LayoutPrototypeLocalServiceUtil.deleteLayoutPrototype(_layoutPrototype);
 	}
-
-	@Rule
-	public final TransactionalTestRule transactionalTestRule =
-		TransactionalTestRule.INSTANCE;
 
 	protected void addLayout(Class<?> clazz, Layout layout) throws Exception {
 		List<Layout> layouts = _layouts.get(clazz.getSimpleName());

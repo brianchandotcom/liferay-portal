@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.layoutprototypes.lar;
 
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
@@ -47,8 +48,10 @@ public class LayoutPrototypeStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE, TransactionalTestRule.INSTANCE);
 
 	@After
 	@Override
@@ -63,10 +66,6 @@ public class LayoutPrototypeStagedModelDataHandlerTest
 
 		LayoutPrototypeLocalServiceUtil.deleteLayoutPrototype(_layoutPrototype);
 	}
-
-	@Rule
-	public final TransactionalTestRule transactionalTestRule =
-		TransactionalTestRule.INSTANCE;
 
 	@Override
 	protected StagedModel addStagedModel(

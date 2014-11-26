@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.lar;
 
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -54,8 +55,10 @@ public class JournalFeedStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE, TransactionalTestRule.INSTANCE);
 
 	@Override
 	public void setUp() throws Exception {
@@ -74,10 +77,6 @@ public class JournalFeedStagedModelDataHandlerTest
 			_layout.getType(), _layout.getHidden(), _layout.getFriendlyURL(),
 			serviceContext);
 	}
-
-	@Rule
-	public final TransactionalTestRule transactionalTestRule =
-		TransactionalTestRule.INSTANCE;
 
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(

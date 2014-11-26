@@ -15,6 +15,7 @@
 package com.liferay.portlet.layoutsadmin.lar;
 
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -52,8 +53,10 @@ public class LayoutStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE, TransactionalTestRule.INSTANCE);
 
 	@Test
 	public void testTypeArticle() throws Exception {
@@ -144,10 +147,6 @@ public class LayoutStagedModelDataHandlerTest
 		LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLByUuidAndGroupId(
 			layoutFriendlyURL.getUuid(), liveGroup.getGroupId());
 	}
-
-	@Rule
-	public final TransactionalTestRule transactionalTestRule =
-		TransactionalTestRule.INSTANCE;
 
 	protected void addDependentLayoutFriendlyURLs(
 			Map<String, List<StagedModel>> dependentStagedModelsMap,

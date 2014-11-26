@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.lar;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Company;
@@ -57,8 +58,10 @@ public class FileEntryStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE, TransactionalTestRule.INSTANCE);
 
 	@Test
 	public void testCompanyScopeDependencies() throws Exception {
@@ -102,10 +105,6 @@ public class FileEntryStagedModelDataHandlerTest
 
 		Assert.assertEquals(importedFileEntry.getExtension(), "pdf");
 	}
-
-	@Rule
-	public final TransactionalTestRule transactionalTestRule =
-		TransactionalTestRule.INSTANCE;
 
 	protected Map<String, List<StagedModel>> addCompanyDependencies()
 		throws Exception {

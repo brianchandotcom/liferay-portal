@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.usergroupsadmin.lar;
 
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
@@ -41,8 +42,10 @@ public class UserGroupStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE, TransactionalTestRule.INSTANCE);
 
 	@After
 	@Override
@@ -52,10 +55,6 @@ public class UserGroupStagedModelDataHandlerTest
 		_userGroup = UserGroupLocalServiceUtil.fetchUserGroupByUuidAndCompanyId(
 			_userGroup.getUuid(), _userGroup.getCompanyId());
 	}
-
-	@Rule
-	public final TransactionalTestRule transactionalTestRule =
-		TransactionalTestRule.INSTANCE;
 
 	@Override
 	protected StagedModel addStagedModel(

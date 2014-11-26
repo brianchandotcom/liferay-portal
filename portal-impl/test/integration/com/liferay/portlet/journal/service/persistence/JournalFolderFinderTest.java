@@ -50,8 +50,12 @@ import org.junit.runner.RunWith;
 public class JournalFolderFinderTest {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE,
+			TransactionalTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -186,11 +190,6 @@ public class JournalFolderFinderTest {
 
 		Assert.assertEquals(_folder2.getFolderId(), folder.getFolderId());
 	}
-
-	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(
-		SynchronousDestinationTestRule.INSTANCE,
-		TransactionalTestRule.INSTANCE);
 
 	private JournalFolder _folder1;
 	private JournalFolder _folder2;

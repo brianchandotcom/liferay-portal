@@ -14,12 +14,12 @@
 
 package com.liferay.portal.convert;
 
-import com.liferay.portal.SystemException;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -52,8 +52,6 @@ import com.liferay.portlet.documentlibrary.util.DLPreviewableProcessor;
 import com.liferay.portlet.documentlibrary.util.comparator.FileVersionVersionComparator;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.wiki.model.WikiPage;
-import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
@@ -102,6 +100,29 @@ public class ConvertDocumentLibrary extends BaseConvertProcess
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+
+	@Override
+	public void migrateDLFileEntry(
+		long companyId, long repositoryId, DLFileEntry dlFileEntry) {
+
+		String fileName = dlFileEntry.getName();
+
+		List<DLFileVersion> dlFileVersions = getDLFileVersions(dlFileEntry);
+
+		if (dlFileVersions.isEmpty()) {
+			String versionNumber = Store.VERSION_DEFAULT;
+
+			migrateFile(companyId, repositoryId, fileName, versionNumber);
+
+			return;
+		}
+
+		for (DLFileVersion dlFileVersion : dlFileVersions) {
+			String versionNumber = dlFileVersion.getVersion();
+
+			migrateFile(companyId, repositoryId, fileName, versionNumber);
+		}
 	}
 
 	@Override
@@ -250,29 +271,6 @@ public class ConvertDocumentLibrary extends BaseConvertProcess
 		}
 	}
 
-	@Override
-	public void migrateDLFileEntry(
-		long companyId, long repositoryId, DLFileEntry dlFileEntry) {
-
-		String fileName = dlFileEntry.getName();
-
-		List<DLFileVersion> dlFileVersions = getDLFileVersions(dlFileEntry);
-
-		if (dlFileVersions.isEmpty()) {
-			String versionNumber = Store.VERSION_DEFAULT;
-
-			migrateFile(companyId, repositoryId, fileName, versionNumber);
-
-			return;
-		}
-
-		for (DLFileVersion dlFileVersion : dlFileVersions) {
-			String versionNumber = dlFileVersion.getVersion();
-
-			migrateFile(companyId, repositoryId, fileName, versionNumber);
-		}
-	}
-
 	protected void migrateFile(
 		long companyId, long repositoryId, String fileName,
 		String versionNumber) {
@@ -369,12 +367,11 @@ public class ConvertDocumentLibrary extends BaseConvertProcess
 		migrateDL();
 		migrateMB();
 
-
 		Collection<DLStoreConvertProcess> dlStoreConvertProcesses =
 			_getDLStoreConvertProcesses();
 
 		for (DLStoreConvertProcess dlStoreConvertProcess :
-			dlStoreConvertProcesses) {
+				dlStoreConvertProcesses) {
 
 			dlStoreConvertProcess.migrate(this);
 		}

@@ -16,6 +16,7 @@ package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.MainServletTestRule;
@@ -46,8 +47,11 @@ import org.junit.runner.RunWith;
 public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -176,10 +180,6 @@ public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 
 		doVerify();
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	@Override
 	protected VerifyProcess getVerifyProcess() {

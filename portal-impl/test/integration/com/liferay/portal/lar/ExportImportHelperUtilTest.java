@@ -99,8 +99,12 @@ import org.powermock.api.mockito.PowerMockito;
 public class ExportImportHelperUtilTest extends PowerMockito {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE,
+			TransactionalTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -634,11 +638,6 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		zipReader.close();
 	}
-
-	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(
-		SynchronousDestinationTestRule.INSTANCE,
-		TransactionalTestRule.INSTANCE);
 
 	protected void assertLinksToLayouts(
 		String content, Layout layout, long groupId) {

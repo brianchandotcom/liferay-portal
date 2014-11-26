@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.service;
 
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
@@ -47,8 +48,11 @@ import org.junit.runner.RunWith;
 public class JournalArticleLocalServiceTest {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -106,10 +110,6 @@ public class JournalArticleLocalServiceTest {
 		Assert.assertEquals(1, articles.size());
 		Assert.assertEquals(article, articles.get(0));
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	@DeleteAfterTestRun
 	private Group _group;

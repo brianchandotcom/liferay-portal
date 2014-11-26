@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.resiliency.spi.MockSPI;
 import com.liferay.portal.kernel.resiliency.spi.MockSPIProvider;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIConfiguration;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.kernel.test.NewEnvTestRule;
@@ -62,8 +63,10 @@ import org.junit.Test;
 public class IntrabandBridgeDestinationTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			CodeCoverageAssertor.INSTANCE, NewEnvTestRule.INSTANCE);
 
 	@Before
 	public void setUp() {
@@ -389,9 +392,6 @@ public class IntrabandBridgeDestinationTest {
 
 		Assert.assertNull(message.get(_RECEIVE_KEY));
 	}
-
-	@Rule
-	public final NewEnvTestRule newEnvTestRule = NewEnvTestRule.INSTANCE;
 
 	private static void _installSPIs(SPI... spis) throws RemoteException {
 		Map<String, Object> spiProviderContainers =

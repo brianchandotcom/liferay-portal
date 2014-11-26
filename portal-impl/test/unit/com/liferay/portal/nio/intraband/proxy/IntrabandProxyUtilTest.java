@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.nio.intraband.proxy.annotation.Proxy;
 import com.liferay.portal.kernel.nio.intraband.rpc.RPCResponse;
 import com.liferay.portal.kernel.nio.intraband.test.MockIntraband;
 import com.liferay.portal.kernel.nio.intraband.test.MockRegistrationReference;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
@@ -124,8 +125,10 @@ import org.objectweb.asm.tree.VarInsnNode;
 public class IntrabandProxyUtilTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			CodeCoverageAssertor.INSTANCE, AspectJNewEnvTestRule.INSTANCE);
 
 	@Before
 	public void setUp() {
@@ -1011,10 +1014,6 @@ public class IntrabandProxyUtilTest {
 		_doTestValidate(true);
 		_doTestValidate(false);
 	}
-
-	@Rule
-	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		AspectJNewEnvTestRule.INSTANCE;
 
 	@Aspect
 	public static class DisableProxyClassesDump {

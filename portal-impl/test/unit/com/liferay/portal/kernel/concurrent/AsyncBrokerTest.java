@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.concurrent;
 
 import com.liferay.portal.kernel.memory.FinalizeManager;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.GCUtil;
@@ -46,8 +47,10 @@ import org.junit.Test;
 public class AsyncBrokerTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			CodeCoverageAssertor.INSTANCE, AspectJNewEnvTestRule.INSTANCE);
 
 	@After
 	public void tearDown() {
@@ -380,10 +383,6 @@ public class AsyncBrokerTest {
 		Assert.assertTrue(defaultNoticeableFutures.isEmpty());
 		Assert.assertFalse(asyncBroker.takeWithResult(_KEY, _VALUE));
 	}
-
-	@Rule
-	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		AspectJNewEnvTestRule.INSTANCE;
 
 	private static final String _KEY = "testKey";
 

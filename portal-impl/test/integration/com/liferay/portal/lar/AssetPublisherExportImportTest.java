@@ -16,6 +16,7 @@ package com.liferay.portal.lar;
 
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -77,8 +78,11 @@ public class AssetPublisherExportImportTest
 	extends BasePortletExportImportTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
 	public String getPortletId() throws Exception {
@@ -662,10 +666,6 @@ public class AssetPublisherExportImportTest
 	public void testSortByGlobalAssetVocabulary() throws Exception {
 		testSortByAssetVocabulary(true);
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	@Override
 	protected void exportImportPortlet(String portletId) throws Exception {

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -65,8 +66,11 @@ import org.junit.runner.RunWith;
 public class JournalIndexerTest {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -454,10 +458,6 @@ public class JournalIndexerTest {
 	public void testUpdateStructuredContent() throws Exception {
 		updateContent();
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	protected void addArticle(boolean approve) throws Exception {
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(

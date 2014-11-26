@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.social.service;
 
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationTestRule;
@@ -42,8 +43,11 @@ public class SocialActivityCounterLocalServiceTest
 	extends BaseSocialActivityTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
 	@Override
@@ -177,9 +181,5 @@ public class SocialActivityCounterLocalServiceTest
 
 		Assert.assertEquals(1, counters.size());
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 }

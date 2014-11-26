@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -73,8 +74,11 @@ import org.junit.runner.RunWith;
 public class DLFileEntrySearchTest extends BaseSearchTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Ignore()
 	@Override
@@ -127,10 +131,6 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 				getBaseModelClass(), group.getGroupId(), "Word",
 				searchContext));
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	@Override
 	protected BaseModel<?> addBaseModelWithDDMStructure(

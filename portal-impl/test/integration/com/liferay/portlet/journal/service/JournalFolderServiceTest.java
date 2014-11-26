@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.service;
 
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -58,8 +59,11 @@ import org.junit.runner.RunWith;
 public class JournalFolderServiceTest {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -565,10 +569,6 @@ public class JournalFolderServiceTest {
 		catch (InvalidDDMStructureException iddmse) {
 		}
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	@DeleteAfterTestRun
 	private Group _group;

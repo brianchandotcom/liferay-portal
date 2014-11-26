@@ -17,6 +17,7 @@ package com.liferay.portlet.trash.service;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.util.RepositoryTrashUtil;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -70,8 +71,11 @@ import org.junit.runner.RunWith;
 public class TrashEntryLocalServiceCheckEntriesTest {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -204,10 +208,6 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 		Assert.assertEquals(
 			0, TrashEntryLocalServiceUtil.getTrashEntriesCount());
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	protected long createCompany() throws Exception {
 		Company company = CompanyTestUtil.addCompany(

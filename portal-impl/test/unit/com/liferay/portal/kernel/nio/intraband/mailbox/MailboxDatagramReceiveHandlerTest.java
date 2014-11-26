@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.nio.intraband.PortalExecutorManagerUtilAdvice;
 import com.liferay.portal.kernel.nio.intraband.SystemDataType;
 import com.liferay.portal.kernel.nio.intraband.test.MockIntraband;
 import com.liferay.portal.kernel.nio.intraband.test.MockRegistrationReference;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.kernel.util.PropsUtilAdvice;
@@ -39,8 +40,10 @@ import org.junit.Test;
 public class MailboxDatagramReceiveHandlerTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			CodeCoverageAssertor.INSTANCE, AspectJNewEnvTestRule.INSTANCE);
 
 	@AdviseWith(
 		adviceClasses = {
@@ -69,9 +72,5 @@ public class MailboxDatagramReceiveHandlerTest {
 
 		Assert.assertEquals(0, deserializer.readLong());
 	}
-
-	@Rule
-	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		AspectJNewEnvTestRule.INSTANCE;
 
 }

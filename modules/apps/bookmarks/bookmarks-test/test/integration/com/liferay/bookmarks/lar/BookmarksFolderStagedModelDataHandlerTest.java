@@ -17,6 +17,7 @@ package com.liferay.bookmarks.lar;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.bookmarks.util.BookmarksTestUtil;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
@@ -42,12 +43,10 @@ public class BookmarksFolderStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
-
 	@Rule
-	public final TransactionalTestRule transactionalTestRule =
-		TransactionalTestRule.INSTANCE;
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE, TransactionalTestRule.INSTANCE);
 
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(

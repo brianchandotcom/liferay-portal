@@ -43,6 +43,7 @@ public class BlogsSubscriptionRootContainerModelTest
 	extends BaseSubscriptionRootContainerModelTestCase {
 
 	@ClassRule
+	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			MainServletTestRule.INSTANCE, SynchronousMailTestRule.INSTANCE);
@@ -70,10 +71,6 @@ public class BlogsSubscriptionRootContainerModelTest
 	@Test
 	public void testSubscriptionRootContainerModelWhenUpdatingBaseModelInSubcontainerModel() {
 	}
-
-	@Rule
-	public final SynchronousMailTestRule synchronousMailTestRule =
-		SynchronousMailTestRule.INSTANCE;
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {

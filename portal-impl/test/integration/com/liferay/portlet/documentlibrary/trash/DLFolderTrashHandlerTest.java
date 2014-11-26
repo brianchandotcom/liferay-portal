@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.trash;
 
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
@@ -49,8 +50,11 @@ import org.junit.runner.RunWith;
 public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Ignore()
 	@Override
@@ -99,10 +103,6 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Test
 	public void testTrashVersionParentBaseModelAndRestore() throws Exception {
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(

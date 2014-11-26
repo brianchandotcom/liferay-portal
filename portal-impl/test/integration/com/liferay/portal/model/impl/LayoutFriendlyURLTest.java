@@ -50,6 +50,7 @@ import org.junit.runner.RunWith;
 public class LayoutFriendlyURLTest {
 
 	@ClassRule
+	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE);
@@ -550,10 +551,6 @@ public class LayoutFriendlyURLTest {
 			Assert.fail();
 		}
 	}
-
-	@Rule
-	public final ResetDatabaseTestRule resetDatabaseTestRule =
-		ResetDatabaseTestRule.INSTANCE;
 
 	protected void addLayout(
 			long groupId, boolean privateLayout,

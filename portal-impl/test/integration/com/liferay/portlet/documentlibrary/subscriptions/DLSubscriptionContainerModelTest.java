@@ -39,13 +39,10 @@ public class DLSubscriptionContainerModelTest
 	extends BaseSubscriptionContainerModelTestCase {
 
 	@ClassRule
+	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			MainServletTestRule.INSTANCE, SynchronousMailTestRule.INSTANCE);
-
-	@Rule
-	public final SynchronousMailTestRule synchronousMailTestRule =
-		SynchronousMailTestRule.INSTANCE;
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {

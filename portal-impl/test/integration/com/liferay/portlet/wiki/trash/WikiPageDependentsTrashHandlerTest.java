@@ -15,6 +15,7 @@
 package com.liferay.portlet.wiki.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -53,8 +54,11 @@ import org.junit.runner.RunWith;
 public class WikiPageDependentsTrashHandlerTest {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -971,10 +975,6 @@ public class WikiPageDependentsTrashHandlerTest {
 			initialTrashVersionCount,
 			TrashVersionLocalServiceUtil.getTrashVersionsCount());
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	protected RelatedPages buildRelatedPages() throws Exception {
 		WikiPage parentPage = WikiTestUtil.addPage(

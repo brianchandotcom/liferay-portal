@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.service;
 
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.MainServletTestRule;
@@ -45,8 +46,11 @@ import org.junit.runner.RunWith;
 public class DLFolderLocalServiceTest {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -73,10 +77,6 @@ public class DLFolderLocalServiceTest {
 		Assert.assertEquals(1, dlFolders.size());
 		Assert.assertEquals(dlFolder, dlFolders.get(0));
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	@DeleteAfterTestRun
 	private Group _group;

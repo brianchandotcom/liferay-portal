@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.process.ProcessConfig;
 import com.liferay.portal.kernel.process.ProcessConfig.Builder;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.local.ReturnProcessCallable;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
@@ -102,8 +103,10 @@ import org.junit.Test;
 public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			CodeCoverageAssertor.INSTANCE, AspectJNewEnvTestRule.INSTANCE);
 
 	@Before
 	public void setUp() {
@@ -1286,10 +1289,6 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 			Assert.assertSame(throwable, ee.getCause());
 		}
 	}
-
-	@Rule
-	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		AspectJNewEnvTestRule.INSTANCE;
 
 	protected NettyFabricWorkerConfig<Serializable>
 		createNettyFabricWorkerConfig() {

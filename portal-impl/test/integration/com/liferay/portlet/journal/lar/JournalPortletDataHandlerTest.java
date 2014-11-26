@@ -15,6 +15,7 @@
 package com.liferay.portlet.journal.lar;
 
 import com.liferay.portal.kernel.lar.PortletDataHandler;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.lar.BasePortletDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -56,8 +57,11 @@ public class JournalPortletDataHandlerTest
 	extends BasePortletDataHandlerTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Test
 	public void testDeleteAllFolders() throws Exception {
@@ -85,10 +89,6 @@ public class JournalPortletDataHandlerTest
 
 		Assert.assertEquals(0, folders.size());
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	@Override
 	protected void addParameters(Map<String, String[]> parameterMap) {

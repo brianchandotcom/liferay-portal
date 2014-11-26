@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.nio.intraband.welder.fifo;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
@@ -45,17 +46,20 @@ import org.junit.Test;
 public class FIFOUtilTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor() {
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new CodeCoverageAssertor() {
 
-			@Override
-			public void appendAssertClasses(List<Class<?>> assertClasses) {
-				if (!_shouldTest()) {
-					assertClasses.clear();
+				@Override
+				public void appendAssertClasses(List<Class<?>> assertClasses) {
+					if (!_shouldTest()) {
+						assertClasses.clear();
+					}
 				}
-			}
 
-		};
+			},
+			NewEnvTestRule.INSTANCE);
 
 	@NewEnv(type = NewEnv.Type.NONE)
 	@Test
@@ -234,9 +238,6 @@ public class FIFOUtilTest {
 			captureHandler.close();
 		}
 	}
-
-	@Rule
-	public final NewEnvTestRule newEnvTestRule = NewEnvTestRule.INSTANCE;
 
 	private static boolean _shouldTest() {
 		if (OSDetector.isWindows()) {

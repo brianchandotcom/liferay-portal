@@ -63,6 +63,7 @@ import org.powermock.api.mockito.PowerMockito;
 public class PermissionExportImportTest extends PowerMockito {
 
 	@ClassRule
+	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE);
@@ -107,10 +108,6 @@ public class PermissionExportImportTest extends PowerMockito {
 		validateImportedPortletPermissions(
 			importGroup, role, importResourcePrimKey);
 	}
-
-	@Rule
-	public final ResetDatabaseTestRule resetDatabaseTestRule =
-		ResetDatabaseTestRule.INSTANCE;
 
 	protected void addPortletPermissions(
 			Group exportGroup, Role role, String exportResourcePrimKey)

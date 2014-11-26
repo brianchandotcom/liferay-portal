@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIConfiguration;
 import com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil;
 import com.liferay.portal.kernel.resiliency.spi.provider.SPIProvider;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
@@ -75,8 +76,10 @@ import org.junit.Test;
 public class MPIHelperUtilTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			CodeCoverageAssertor.INSTANCE, AspectJNewEnvTestRule.INSTANCE);
 
 	@Before
 	public void setUp() {
@@ -1132,10 +1135,6 @@ public class MPIHelperUtilTest {
 			captureHandler.close();
 		}
 	}
-
-	@Rule
-	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		AspectJNewEnvTestRule.INSTANCE;
 
 	private static MPI _getMPIImpl() {
 		MPI mpiImpl = ReflectionTestUtil.getFieldValue(

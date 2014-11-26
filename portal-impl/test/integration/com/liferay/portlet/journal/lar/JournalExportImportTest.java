@@ -17,6 +17,7 @@ package com.liferay.portlet.journal.lar;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -66,8 +67,11 @@ import org.junit.runner.RunWith;
 public class JournalExportImportTest extends BasePortletExportImportTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
 	public String getNamespace() {
@@ -90,10 +94,6 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 	public void testExportImportStructuredJournalArticle() throws Exception {
 		exportImportJournalArticle(false);
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	@Override
 	protected StagedModel addStagedModel(long groupId) throws Exception {

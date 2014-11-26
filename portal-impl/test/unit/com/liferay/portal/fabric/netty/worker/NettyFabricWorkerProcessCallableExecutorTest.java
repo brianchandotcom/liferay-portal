@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.kernel.util.StringPool;
@@ -49,8 +50,10 @@ import org.junit.Test;
 public class NettyFabricWorkerProcessCallableExecutorTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			CodeCoverageAssertor.INSTANCE, AspectJNewEnvTestRule.INSTANCE);
 
 	@AdviseWith(adviceClasses = NettyUtilAdvice.class)
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
@@ -114,9 +117,5 @@ public class NettyFabricWorkerProcessCallableExecutorTest {
 			Assert.assertSame(processException, ee.getCause());
 		}
 	}
-
-	@Rule
-	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		AspectJNewEnvTestRule.INSTANCE;
 
 }

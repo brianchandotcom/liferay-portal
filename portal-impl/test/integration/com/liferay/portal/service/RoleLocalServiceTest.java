@@ -54,6 +54,7 @@ import org.junit.runner.RunWith;
 public class RoleLocalServiceTest {
 
 	@ClassRule
+	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE);
@@ -184,10 +185,6 @@ public class RoleLocalServiceTest {
 
 		testGetTeamRoleMap(teamRoleMap, team, true);
 	}
-
-	@Rule
-	public final ResetDatabaseTestRule resetDatabaseTestRule =
-		ResetDatabaseTestRule.INSTANCE;
 
 	protected Object[] getOrganizationAndTeam() throws Exception {
 		User user = TestPropsValues.getUser();

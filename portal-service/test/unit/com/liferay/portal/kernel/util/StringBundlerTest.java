@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.kernel.test.NewEnvTestRule;
@@ -38,8 +39,10 @@ import org.junit.Test;
 public class StringBundlerTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			CodeCoverageAssertor.INSTANCE, NewEnvTestRule.INSTANCE);
 
 	@Test
 	public void testAppendBoolean() {
@@ -813,9 +816,6 @@ public class StringBundlerTest {
 		Assert.assertEquals(
 			"test1test2test3test4test5", stringWriter.toString());
 	}
-
-	@Rule
-	public final NewEnvTestRule newEnvTestRule = NewEnvTestRule.INSTANCE;
 
 	protected void assertArray(StringBundler sb, String... prefix) {
 		String[] strings = sb.getStrings();

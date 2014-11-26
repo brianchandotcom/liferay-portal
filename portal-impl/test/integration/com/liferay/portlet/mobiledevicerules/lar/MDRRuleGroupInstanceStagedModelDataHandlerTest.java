@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.mobiledevicerules.lar;
 
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -48,8 +49,10 @@ public class MDRRuleGroupInstanceStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE, TransactionalTestRule.INSTANCE);
 
 	@Override
 	public void setUp() throws Exception {
@@ -68,10 +71,6 @@ public class MDRRuleGroupInstanceStagedModelDataHandlerTest
 			layout.getType(), layout.getHidden(), layout.getFriendlyURL(),
 			serviceContext);
 	}
-
-	@Rule
-	public final TransactionalTestRule transactionalTestRule =
-		TransactionalTestRule.INSTANCE;
 
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(

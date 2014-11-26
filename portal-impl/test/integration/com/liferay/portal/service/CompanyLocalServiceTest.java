@@ -86,8 +86,12 @@ import org.springframework.mock.web.MockServletContext;
 public class CompanyLocalServiceTest {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE,
+			TransactionalTestRule.INSTANCE);
 
 	@Before
 	public void setUp() {
@@ -498,11 +502,6 @@ public class CompanyLocalServiceTest {
 	public void testUpdateValidVirtualHostNames() throws Exception {
 		testUpdateVirtualHostNames(new String[] {"abc.com"}, false);
 	}
-
-	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(
-		SynchronousDestinationTestRule.INSTANCE,
-		TransactionalTestRule.INSTANCE);
 
 	protected Company addCompany() throws Exception {
 		String webId = RandomTestUtil.randomString() + "test.com";

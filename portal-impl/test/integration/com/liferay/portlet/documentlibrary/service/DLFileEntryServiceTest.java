@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
@@ -54,8 +55,11 @@ import org.junit.runner.RunWith;
 public class DLFileEntryServiceTest {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -293,10 +297,6 @@ public class DLFileEntryServiceTest {
 			DLUtil.getSanitizedFileName(fileName, dlFileEntry.getExtension()),
 			dlFileEntry.getFileName());
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	protected DLFileEntry addDLFileEntry(long folderId, boolean appendExtension)
 		throws Exception {

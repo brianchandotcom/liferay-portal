@@ -68,8 +68,12 @@ import org.junit.runner.RunWith;
 public class JournalArticleFinderTest {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE,
+			TransactionalTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -345,11 +349,6 @@ public class JournalArticleFinderTest {
 			_group.getGroupId(), _USER_ID, Collections.<Long>emptyList(),
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, queryDefinition, 0);
 	}
-
-	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(
-		SynchronousDestinationTestRule.INSTANCE,
-		TransactionalTestRule.INSTANCE);
 
 	protected void prepareSortedArticles() throws Exception {
 		Calendar calendar = new GregorianCalendar();

@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.concurrent;
 
 import com.liferay.portal.kernel.memory.FinalizeManager;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.kernel.test.NewEnvTestRule;
@@ -38,8 +39,10 @@ public class ConcurrentReferenceValueHashMapTest
 	extends BaseConcurrentReferenceHashMapTestCase {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			CodeCoverageAssertor.INSTANCE, NewEnvTestRule.INSTANCE);
 
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
@@ -85,8 +88,5 @@ public class ConcurrentReferenceValueHashMapTest
 		new ConcurrentReferenceValueHashMap<String, Object>(
 			10, 0.75F, 4, FinalizeManager.WEAK_REFERENCE_FACTORY);
 	}
-
-	@Rule
-	public final NewEnvTestRule newEnvTestRule = NewEnvTestRule.INSTANCE;
 
 }

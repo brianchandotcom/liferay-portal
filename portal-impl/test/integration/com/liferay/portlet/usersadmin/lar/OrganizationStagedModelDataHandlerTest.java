@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.usersadmin.lar;
 
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.EmailAddress;
@@ -58,8 +59,10 @@ public class OrganizationStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE, TransactionalTestRule.INSTANCE);
 
 	@After
 	@Override
@@ -70,10 +73,6 @@ public class OrganizationStagedModelDataHandlerTest
 			OrganizationLocalServiceUtil.fetchOrganizationByUuidAndCompanyId(
 				_organization.getUuid(), _organization.getCompanyId());
 	}
-
-	@Rule
-	public final TransactionalTestRule transactionalTestRule =
-		TransactionalTestRule.INSTANCE;
 
 	@Override
 	protected StagedModel addStagedModel(

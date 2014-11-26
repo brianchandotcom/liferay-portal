@@ -79,9 +79,11 @@ import org.junit.runner.RunWith;
 public class GroupServiceTest {
 
 	@ClassRule
-	public static final AggregateTestRule classAggregateTestRule =
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE);
+			MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -792,12 +794,6 @@ public class GroupServiceTest {
 			new Locale[] {LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US},
 			LocaleUtil.GERMANY, false);
 	}
-
-	@Rule
-	public final AggregateTestRule methodAggregateTestRule =
-		new AggregateTestRule(
-			ResetDatabaseTestRule.INSTANCE,
-			SynchronousDestinationTestRule.INSTANCE);
 
 	protected Group addGroup(
 			boolean site, boolean layout, boolean layoutPrototype)

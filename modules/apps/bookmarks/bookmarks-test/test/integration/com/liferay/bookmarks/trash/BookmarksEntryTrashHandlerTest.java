@@ -21,6 +21,7 @@ import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.bookmarks.service.BookmarksEntryServiceUtil;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.bookmarks.service.BookmarksFolderServiceUtil;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
@@ -50,8 +51,11 @@ import org.junit.runner.RunWith;
 public class BookmarksEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Ignore()
 	@Override
@@ -94,10 +98,6 @@ public class BookmarksEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Test
 	public void testTrashVersionParentBaseModelAndRestore() throws Exception {
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(

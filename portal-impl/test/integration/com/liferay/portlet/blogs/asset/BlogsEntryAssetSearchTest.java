@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.blogs.asset;
 
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.MainServletTestRule;
@@ -39,8 +40,11 @@ import org.junit.runner.RunWith;
 public class BlogsEntryAssetSearchTest extends BaseAssetSearchTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Ignore()
 	@Override
@@ -65,10 +69,6 @@ public class BlogsEntryAssetSearchTest extends BaseAssetSearchTestCase {
 	@Test
 	public void testOrderByExpirationDateDesc() throws Exception {
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	@Override
 	protected BaseModel<?> addBaseModel(

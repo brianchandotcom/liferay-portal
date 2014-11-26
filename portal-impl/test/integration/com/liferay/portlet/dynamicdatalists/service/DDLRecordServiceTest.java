@@ -15,6 +15,7 @@
 package com.liferay.portlet.dynamicdatalists.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -63,8 +64,11 @@ import org.skyscreamer.jsonassert.JSONAssert;
 public class DDLRecordServiceTest extends BaseDDLServiceTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
 	public void setUp() throws Exception {
@@ -227,10 +231,6 @@ public class DDLRecordServiceTest extends BaseDDLServiceTestCase {
 
 		Assert.assertTrue(recordVersion.isApproved());
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	protected DDLRecordSet addRecordSet(DDMForm ddmForm) throws Exception {
 		String definition = DDMFormXSDSerializerUtil.serialize(ddmForm);

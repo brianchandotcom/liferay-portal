@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.blogs.lar;
 
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.lar.BaseWorkflowedStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
@@ -40,12 +41,10 @@ public class BlogsEntryStagedModelDataHandlerTest
 	extends BaseWorkflowedStagedModelDataHandlerTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
-
 	@Rule
-	public final TransactionalTestRule transactionalTestRule =
-		TransactionalTestRule.INSTANCE;
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE, TransactionalTestRule.INSTANCE);
 
 	@Override
 	protected StagedModel addStagedModel(

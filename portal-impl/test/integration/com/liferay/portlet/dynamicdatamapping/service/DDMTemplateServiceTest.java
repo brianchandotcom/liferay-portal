@@ -15,6 +15,7 @@
 package com.liferay.portlet.dynamicdatamapping.service;
 
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.Sync;
@@ -51,8 +52,11 @@ import org.junit.runner.RunWith;
 public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Test
 	public void testAddTemplateWithDuplicateKey() throws Exception {
@@ -244,10 +248,6 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 		Assert.assertEquals(initialCount + 1, count);
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	protected DDMTemplate copyTemplate(DDMTemplate template) throws Exception {
 		return DDMTemplateLocalServiceUtil.copyTemplate(

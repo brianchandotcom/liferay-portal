@@ -15,6 +15,7 @@
 package com.liferay.portlet.wiki.social;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationTestRule;
@@ -46,12 +47,11 @@ public class WikiActivityInterpreterTest
 	extends BaseSocialActivityInterpreterTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
-
 	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
 	protected void addActivities() throws Exception {

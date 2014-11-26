@@ -39,6 +39,7 @@ import org.junit.runner.RunWith;
 public class MailEngineTest {
 
 	@ClassRule
+	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			MainServletTestRule.INSTANCE, SynchronousMailTestRule.INSTANCE);
@@ -68,9 +69,5 @@ public class MailEngineTest {
 
 		Assert.assertEquals(1, mailMessages.size());
 	}
-
-	@Rule
-	public final SynchronousMailTestRule synchronousMailTestRule =
-		SynchronousMailTestRule.INSTANCE;
 
 }

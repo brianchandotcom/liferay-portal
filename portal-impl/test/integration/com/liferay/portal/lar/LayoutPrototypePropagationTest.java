@@ -34,13 +34,10 @@ public class LayoutPrototypePropagationTest
 	extends BasePrototypePropagationTestCase {
 
 	@ClassRule
+	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE);
-
-	@Rule
-	public final ResetDatabaseTestRule resetDatabaseTestRule =
-		ResetDatabaseTestRule.INSTANCE;
 
 	@Override
 	protected void doSetUp() throws Exception {

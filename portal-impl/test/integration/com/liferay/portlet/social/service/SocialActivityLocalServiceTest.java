@@ -15,6 +15,7 @@
 package com.liferay.portlet.social.service;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationTestRule;
@@ -41,8 +42,11 @@ import org.junit.runner.RunWith;
 public class SocialActivityLocalServiceTest extends BaseSocialActivityTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Test
 	public void testActivityHierarchy() throws Exception {
@@ -77,9 +81,5 @@ public class SocialActivityLocalServiceTest extends BaseSocialActivityTestCase {
 			SocialActivityLocalServiceUtil.getGroupActivitiesCount(
 				_group.getGroupId()));
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 }

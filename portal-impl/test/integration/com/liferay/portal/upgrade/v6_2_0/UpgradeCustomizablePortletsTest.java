@@ -56,6 +56,7 @@ public class UpgradeCustomizablePortletsTest
 	extends UpgradeCustomizablePortlets {
 
 	@ClassRule
+	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			MainServletTestRule.INSTANCE, ResetDatabaseTestRule.INSTANCE);
@@ -194,10 +195,6 @@ public class UpgradeCustomizablePortletsTest
 		GroupLocalServiceUtil.deleteGroup(layout1.getGroup());
 		GroupLocalServiceUtil.deleteGroup(layout2.getGroup());
 	}
-
-	@Rule
-	public final ResetDatabaseTestRule resetDatabaseTestRule =
-		ResetDatabaseTestRule.INSTANCE;
 
 	protected void addPortletPreferences(Layout layout, String portletId)
 		throws Exception {

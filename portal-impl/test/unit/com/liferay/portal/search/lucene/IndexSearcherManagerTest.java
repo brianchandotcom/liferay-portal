@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.lucene;
 
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.test.AdviseWith;
@@ -59,8 +60,10 @@ import org.junit.Test;
 public class IndexSearcherManagerTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			CodeCoverageAssertor.INSTANCE, AspectJNewEnvTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -253,10 +256,6 @@ public class IndexSearcherManagerTest {
 
 		Assert.assertEquals(referenceCount - 1, indexReader.getRefCount());
 	}
-
-	@Rule
-	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		AspectJNewEnvTestRule.INSTANCE;
 
 	@Aspect
 	public static class IndexReaderAdvice {

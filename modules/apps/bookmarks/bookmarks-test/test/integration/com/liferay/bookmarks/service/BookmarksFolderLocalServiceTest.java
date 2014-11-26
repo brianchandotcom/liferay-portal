@@ -17,6 +17,7 @@ package com.liferay.bookmarks.service;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.util.BookmarksTestUtil;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
@@ -50,8 +51,11 @@ import org.junit.runner.RunWith;
 public class BookmarksFolderLocalServiceTest {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -125,10 +129,6 @@ public class BookmarksFolderLocalServiceTest {
 			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			_group.getGroupId());
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	protected void testSubscribeFolder(
 			long folderId, long expectedSubscriptionClassPK)

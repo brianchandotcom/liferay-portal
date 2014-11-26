@@ -16,6 +16,7 @@ package com.liferay.bookmarks.service;
 
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.util.BookmarksTestUtil;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.MainServletTestRule;
@@ -43,8 +44,11 @@ import org.junit.runner.RunWith;
 public class BookmarksEntryLocalServiceTest {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -69,10 +73,6 @@ public class BookmarksEntryLocalServiceTest {
 		Assert.assertEquals(1, bookmarksEntries.size());
 		Assert.assertEquals(entry, bookmarksEntries.get(0));
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	@DeleteAfterTestRun
 	private Group _group;

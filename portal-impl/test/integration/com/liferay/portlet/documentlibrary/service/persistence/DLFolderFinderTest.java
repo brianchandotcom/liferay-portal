@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.service.persistence;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -52,8 +53,10 @@ import org.junit.runner.RunWith;
 public class DLFolderFinderTest {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE, TransactionalTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -301,10 +304,6 @@ public class DLFolderFinderTest {
 			}
 		}
 	}
-
-	@Rule
-	public final TransactionalTestRule transactionalTestRule =
-		TransactionalTestRule.INSTANCE;
 
 	private DLFileShortcut _dlFileShortcut;
 	private Folder _folder;

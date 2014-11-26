@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.io.BigEndianCodec;
 import com.liferay.portal.kernel.nio.intraband.Datagram;
 import com.liferay.portal.kernel.nio.intraband.test.MockIntraband;
 import com.liferay.portal.kernel.nio.intraband.test.MockRegistrationReference;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -52,8 +53,10 @@ import org.junit.Test;
 public class MailboxUtilTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			CodeCoverageAssertor.INSTANCE, AspectJNewEnvTestRule.INSTANCE);
 
 	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
 	@Test
@@ -252,10 +255,6 @@ public class MailboxUtilTest {
 				new MockRegistrationReference(mockIntraband),
 				ByteBuffer.allocate(0)));
 	}
-
-	@Rule
-	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		AspectJNewEnvTestRule.INSTANCE;
 
 	@Aspect
 	public static class ReceiptStubAdvice {

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.trash;
 
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
@@ -54,8 +55,11 @@ import org.junit.runner.RunWith;
 public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Test
 	public void testCategoryMessageCount() throws Exception {
@@ -134,10 +138,6 @@ public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Test
 	public void testTrashVersionParentBaseModelAndRestore() throws Exception {
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(

@@ -15,6 +15,7 @@
 package com.liferay.portlet.wiki.service;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -69,8 +70,11 @@ import org.junit.runner.RunWith;
 public class WikiPageLocalServiceTest {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -634,10 +638,6 @@ public class WikiPageLocalServiceTest {
 	public void testRevertPageWithExpando() throws Exception {
 		testRevertPage(true);
 	}
-
-	@Rule
-	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
-		SynchronousDestinationTestRule.INSTANCE;
 
 	protected void addExpandoValueToPage(WikiPage page) throws Exception {
 		ExpandoValue value = ExpandoTestUtil.addValue(

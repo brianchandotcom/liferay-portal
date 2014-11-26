@@ -67,8 +67,12 @@ public class JournalArticleStagedModelDataHandlerTest
 	extends BaseWorkflowedStagedModelDataHandlerTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE,
+			TransactionalTestRule.INSTANCE);
 
 	@Test
 	public void testCompanyScopeDependencies() throws Exception {
@@ -94,11 +98,6 @@ public class JournalArticleStagedModelDataHandlerTest
 
 		validateCompanyDependenciesImport(dependentStagedModelsMap, liveGroup);
 	}
-
-	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(
-		SynchronousDestinationTestRule.INSTANCE,
-		TransactionalTestRule.INSTANCE);
 
 	protected Map<String, List<StagedModel>> addCompanyDependencies()
 		throws Exception {

@@ -16,6 +16,7 @@ package com.liferay.portlet.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -61,8 +62,10 @@ import org.junit.runner.RunWith;
 public class GroupFinderTest {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			MainServletTestRule.INSTANCE, TransactionalTestRule.INSTANCE);
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -195,10 +198,6 @@ public class GroupFinderTest {
 
 		Assert.assertTrue(groups.isEmpty());
 	}
-
-	@Rule
-	public final TransactionalTestRule transactionalTestRule =
-		TransactionalTestRule.INSTANCE;
 
 	protected static ResourceAction getModelResourceAction()
 		throws PortalException {

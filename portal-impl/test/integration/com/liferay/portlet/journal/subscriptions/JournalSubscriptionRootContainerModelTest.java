@@ -43,6 +43,7 @@ public class JournalSubscriptionRootContainerModelTest
 	extends BaseSubscriptionRootContainerModelTestCase {
 
 	@ClassRule
+	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			MainServletTestRule.INSTANCE, SynchronousMailTestRule.INSTANCE);
@@ -54,10 +55,6 @@ public class JournalSubscriptionRootContainerModelTest
 
 		user = UserTestUtil.addOmniAdminUser();
 	}
-
-	@Rule
-	public final SynchronousMailTestRule synchronousMailTestRule =
-		SynchronousMailTestRule.INSTANCE;
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {

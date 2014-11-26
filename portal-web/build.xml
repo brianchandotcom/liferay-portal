@@ -496,9 +496,9 @@
 		<java
 			classname="com.liferay.portal.tools.SassToCssBuilder"
 			classpathref="project.classpath"
-			failonerror="true"
 			fork="true"
 			newenvironment="true"
+			outputproperty="build-css.output"
 		>
 			<jvmarg value="-Xmx1024m" />
 			<jvmarg value="-Djava.io.tmpdir=${sass.tmp.dir}" />
@@ -512,6 +512,15 @@
 		</java>
 
 		<delete dir="${sass.tmp.dir}" />
+
+		<echo>${build-css.output}</echo>
+
+		<if>
+			<contains string="${build-css.output}" substring="Error" />
+			<then>
+				<fail>CSS Builder generated exceptions.</fail>
+			</then>
+		</if>
 	</target>
 
 	<target name="build-dtd">

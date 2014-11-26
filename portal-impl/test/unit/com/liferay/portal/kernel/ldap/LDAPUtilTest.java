@@ -29,6 +29,7 @@ public class LDAPUtilTest {
 	@BeforeClass
 	public static void setUpClass() {
 		_ldapUtil = new LDAPUtil();
+
 		_ldapUtil.setLDAPFilterValidator(new LDAPFilterValidatorImpl());
 	}
 

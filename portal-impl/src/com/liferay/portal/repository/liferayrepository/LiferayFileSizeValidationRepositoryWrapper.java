@@ -41,7 +41,9 @@ public class LiferayFileSizeValidationRepositoryWrapper
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DLValidatorUtil.validateFileSize(sourceFileName, file);
+		if (file != null) {
+			DLValidatorUtil.validateFileSize(sourceFileName, file);
+		}
 
 		return super.addFileEntry(
 			userId, folderId, sourceFileName, mimeType, title, description,
@@ -71,7 +73,9 @@ public class LiferayFileSizeValidationRepositoryWrapper
 			boolean majorVersion, File file, ServiceContext serviceContext)
 		throws PortalException {
 
-		DLValidatorUtil.validateFileSize(sourceFileName, file);
+		if (file != null) {
+			DLValidatorUtil.validateFileSize(sourceFileName, file);
+		}
 
 		return super.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,

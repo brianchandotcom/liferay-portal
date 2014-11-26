@@ -1310,10 +1310,16 @@ create database lportal${database.index} character set utf8;</echo>
 	</target>
 
 	<target name="deploy-required-plugins">
-		<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
-			<property name="plugin.types" value="portlets" />
-			<property name="plugins.includes" value="marketplace-portlet" />
-		</ant>
+		<ant dir="${lp.plugins.dir}/portlets/marketplace-portlet" target="direct-deploy" />
+
+		<if>
+			<equals arg1="${marketplace.staging.enabled}" arg2="true" />
+			<then>
+				<echo append="true" file="${app.server.deploy.dir}/marketplace-portlet/WEB-INF/classes/portlet.properties">
+
+${marketplace.portlet.properties}</echo>
+			</then>
+		</if>
 	</target>
 
 	<target name="deploy-specified-plugins">

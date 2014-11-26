@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -51,11 +52,12 @@ import com.liferay.portlet.documentlibrary.util.DLPreviewableProcessor;
 import com.liferay.portlet.documentlibrary.util.comparator.FileVersionVersionComparator;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.wiki.model.WikiPage;
-import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 import java.io.InputStream;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -63,7 +65,8 @@ import java.util.List;
  * @author Alexander Chow
  * @author László Csontos
  */
-public class ConvertDocumentLibrary extends BaseConvertProcess {
+public class ConvertDocumentLibrary extends BaseConvertProcess
+	implements DLStoreConverter {
 
 	@Override
 	public String getDescription() {
@@ -97,6 +100,29 @@ public class ConvertDocumentLibrary extends BaseConvertProcess {
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+
+	@Override
+	public void migrateDLFileEntry(
+		long companyId, long repositoryId, DLFileEntry dlFileEntry) {
+
+		String fileName = dlFileEntry.getName();
+
+		List<DLFileVersion> dlFileVersions = getDLFileVersions(dlFileEntry);
+
+		if (dlFileVersions.isEmpty()) {
+			String versionNumber = Store.VERSION_DEFAULT;
+
+			migrateFile(companyId, repositoryId, fileName, versionNumber);
+
+			return;
+		}
+
+		for (DLFileVersion dlFileVersion : dlFileVersions) {
+			String versionNumber = dlFileVersion.getVersion();
+
+			migrateFile(companyId, repositoryId, fileName, versionNumber);
+		}
 	}
 
 	@Override
@@ -245,28 +271,6 @@ public class ConvertDocumentLibrary extends BaseConvertProcess {
 		}
 	}
 
-	protected void migrateDLFileEntry(
-		long companyId, long repositoryId, DLFileEntry dlFileEntry) {
-
-		String fileName = dlFileEntry.getName();
-
-		List<DLFileVersion> dlFileVersions = getDLFileVersions(dlFileEntry);
-
-		if (dlFileVersions.isEmpty()) {
-			String versionNumber = Store.VERSION_DEFAULT;
-
-			migrateFile(companyId, repositoryId, fileName, versionNumber);
-
-			return;
-		}
-
-		for (DLFileVersion dlFileVersion : dlFileVersions) {
-			String versionNumber = dlFileVersion.getVersion();
-
-			migrateFile(companyId, repositoryId, fileName, versionNumber);
-		}
-	}
-
 	protected void migrateFile(
 		long companyId, long repositoryId, String fileName,
 		String versionNumber) {
@@ -362,54 +366,26 @@ public class ConvertDocumentLibrary extends BaseConvertProcess {
 		migrateImages();
 		migrateDL();
 		migrateMB();
-		migrateWiki();
+
+		Collection<DLStoreConvertProcess> dlStoreConvertProcesses =
+			_getDLStoreConvertProcesses();
+
+		for (DLStoreConvertProcess dlStoreConvertProcess :
+			dlStoreConvertProcesses) {
+
+			dlStoreConvertProcess.migrate(this);
+		}
 	}
 
-	protected void migrateWiki() throws PortalException {
-		int count = WikiPageLocalServiceUtil.getWikiPagesCount();
+	private Collection<DLStoreConvertProcess> _getDLStoreConvertProcesses() {
+		try {
+			Registry registry = RegistryUtil.getRegistry();
 
-		MaintenanceUtil.appendStatus(
-			"Migrating wiki page attachments in " + count + " pages");
-
-		ActionableDynamicQuery actionableDynamicQuery =
-			WikiPageLocalServiceUtil.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
-
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property property = PropertyFactoryUtil.forName("head");
-
-					dynamicQuery.add(property.eq(true));
-				}
-
-			});
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
-
-				@Override
-				public void performAction(Object object) {
-					WikiPage wikiPage = (WikiPage)object;
-
-					for (FileEntry fileEntry :
-							wikiPage.getAttachmentsFileEntries()) {
-
-						DLFileEntry dlFileEntry =
-							(DLFileEntry)fileEntry.getModel();
-
-						migrateDLFileEntry(
-							wikiPage.getCompanyId(),
-							DLFolderConstants.getDataRepositoryId(
-								dlFileEntry.getRepositoryId(),
-								dlFileEntry.getFolderId()),
-							dlFileEntry);
-					}
-				}
-
-			});
-
-		actionableDynamicQuery.performActions();
+			return registry.getServices(DLStoreConvertProcess.class, null);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
 	}
 
 	private static final String _FILE_SYSTEM_STORE_SUFFIX = "FileSystemStore";

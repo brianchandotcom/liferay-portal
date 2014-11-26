@@ -46,11 +46,9 @@ for (String userNameField: userNameFields) {
 
 <%
 for (Map<String, Object> userField: userFields) {
-	String fieldName = (String)userField.get("fieldName");
+	String fieldName = CamelCaseUtil.toCamelCase((String)userField.get("fieldName"));
 	boolean required = Boolean.valueOf((Boolean)userField.get("required"));
 	String[] options = (String[])userField.get("options");
-
-	fieldName = CamelCaseUtil.toCamelCase(fieldName);
 %>
 
 <c:choose>

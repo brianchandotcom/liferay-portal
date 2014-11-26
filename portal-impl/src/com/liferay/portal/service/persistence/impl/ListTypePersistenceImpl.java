@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ListType;
@@ -602,6 +603,300 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	private static final String _FINDER_COLUMN_TYPE_TYPE_1 = "listType.type IS NULL";
 	private static final String _FINDER_COLUMN_TYPE_TYPE_2 = "listType.type = ?";
 	private static final String _FINDER_COLUMN_TYPE_TYPE_3 = "(listType.type IS NULL OR listType.type = '')";
+	public static final FinderPath FINDER_PATH_FETCH_BY_T_N = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
+			ListTypeModelImpl.FINDER_CACHE_ENABLED, ListTypeImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByT_N",
+			new String[] { String.class.getName(), String.class.getName() },
+			ListTypeModelImpl.TYPE_COLUMN_BITMASK |
+			ListTypeModelImpl.NAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_T_N = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
+			ListTypeModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_N",
+			new String[] { String.class.getName(), String.class.getName() });
+
+	/**
+	 * Returns the list type where type = &#63; and name = &#63; or throws a {@link com.liferay.portal.NoSuchListTypeException} if it could not be found.
+	 *
+	 * @param type the type
+	 * @param name the name
+	 * @return the matching list type
+	 * @throws com.liferay.portal.NoSuchListTypeException if a matching list type could not be found
+	 */
+	@Override
+	public ListType findByT_N(String type, String name)
+		throws NoSuchListTypeException {
+		ListType listType = fetchByT_N(type, name);
+
+		if (listType == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("type=");
+			msg.append(type);
+
+			msg.append(", name=");
+			msg.append(name);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchListTypeException(msg.toString());
+		}
+
+		return listType;
+	}
+
+	/**
+	 * Returns the list type where type = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param type the type
+	 * @param name the name
+	 * @return the matching list type, or <code>null</code> if a matching list type could not be found
+	 */
+	@Override
+	public ListType fetchByT_N(String type, String name) {
+		return fetchByT_N(type, name, true);
+	}
+
+	/**
+	 * Returns the list type where type = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param type the type
+	 * @param name the name
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching list type, or <code>null</code> if a matching list type could not be found
+	 */
+	@Override
+	public ListType fetchByT_N(String type, String name,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { type, name };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_T_N,
+					finderArgs, this);
+		}
+
+		if (result instanceof ListType) {
+			ListType listType = (ListType)result;
+
+			if (!Validator.equals(type, listType.getType()) ||
+					!Validator.equals(name, listType.getName())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_LISTTYPE_WHERE);
+
+			boolean bindType = false;
+
+			if (type == null) {
+				query.append(_FINDER_COLUMN_T_N_TYPE_1);
+			}
+			else if (type.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_T_N_TYPE_3);
+			}
+			else {
+				bindType = true;
+
+				query.append(_FINDER_COLUMN_T_N_TYPE_2);
+			}
+
+			boolean bindName = false;
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_T_N_NAME_1);
+			}
+			else if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_T_N_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				query.append(_FINDER_COLUMN_T_N_NAME_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindType) {
+					qPos.add(type);
+				}
+
+				if (bindName) {
+					qPos.add(name);
+				}
+
+				List<ListType> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_T_N,
+						finderArgs, list);
+				}
+				else {
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"ListTypePersistenceImpl.fetchByT_N(String, String, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					ListType listType = list.get(0);
+
+					result = listType;
+
+					cacheResult(listType);
+
+					if ((listType.getType() == null) ||
+							!listType.getType().equals(type) ||
+							(listType.getName() == null) ||
+							!listType.getName().equals(name)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_T_N,
+							finderArgs, listType);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_T_N,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (ListType)result;
+		}
+	}
+
+	/**
+	 * Removes the list type where type = &#63; and name = &#63; from the database.
+	 *
+	 * @param type the type
+	 * @param name the name
+	 * @return the list type that was removed
+	 */
+	@Override
+	public ListType removeByT_N(String type, String name)
+		throws NoSuchListTypeException {
+		ListType listType = findByT_N(type, name);
+
+		return remove(listType);
+	}
+
+	/**
+	 * Returns the number of list types where type = &#63; and name = &#63;.
+	 *
+	 * @param type the type
+	 * @param name the name
+	 * @return the number of matching list types
+	 */
+	@Override
+	public int countByT_N(String type, String name) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_T_N;
+
+		Object[] finderArgs = new Object[] { type, name };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_LISTTYPE_WHERE);
+
+			boolean bindType = false;
+
+			if (type == null) {
+				query.append(_FINDER_COLUMN_T_N_TYPE_1);
+			}
+			else if (type.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_T_N_TYPE_3);
+			}
+			else {
+				bindType = true;
+
+				query.append(_FINDER_COLUMN_T_N_TYPE_2);
+			}
+
+			boolean bindName = false;
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_T_N_NAME_1);
+			}
+			else if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_T_N_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				query.append(_FINDER_COLUMN_T_N_NAME_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindType) {
+					qPos.add(type);
+				}
+
+				if (bindName) {
+					qPos.add(name);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_T_N_TYPE_1 = "listType.type IS NULL AND ";
+	private static final String _FINDER_COLUMN_T_N_TYPE_2 = "listType.type = ? AND ";
+	private static final String _FINDER_COLUMN_T_N_TYPE_3 = "(listType.type IS NULL OR listType.type = '') AND ";
+	private static final String _FINDER_COLUMN_T_N_NAME_1 = "listType.name IS NULL";
+	private static final String _FINDER_COLUMN_T_N_NAME_2 = "listType.name = ?";
+	private static final String _FINDER_COLUMN_T_N_NAME_3 = "(listType.name IS NULL OR listType.name = '')";
 
 	public ListTypePersistenceImpl() {
 		setModelClass(ListType.class);
@@ -616,6 +911,9 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	public void cacheResult(ListType listType) {
 		EntityCacheUtil.putResult(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
 			ListTypeImpl.class, listType.getPrimaryKey(), listType);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_T_N,
+			new Object[] { listType.getType(), listType.getName() }, listType);
 
 		listType.resetOriginalValues();
 	}
@@ -673,6 +971,8 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache(listType);
 	}
 
 	@Override
@@ -683,6 +983,53 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		for (ListType listType : listTypes) {
 			EntityCacheUtil.removeResult(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
 				ListTypeImpl.class, listType.getPrimaryKey());
+
+			clearUniqueFindersCache(listType);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(ListType listType) {
+		if (listType.isNew()) {
+			Object[] args = new Object[] { listType.getType(), listType.getName() };
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_T_N, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_T_N, args, listType);
+		}
+		else {
+			ListTypeModelImpl listTypeModelImpl = (ListTypeModelImpl)listType;
+
+			if ((listTypeModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_T_N.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						listType.getType(), listType.getName()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_T_N, args,
+					Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_T_N, args,
+					listType);
+			}
+		}
+	}
+
+	protected void clearUniqueFindersCache(ListType listType) {
+		ListTypeModelImpl listTypeModelImpl = (ListTypeModelImpl)listType;
+
+		Object[] args = new Object[] { listType.getType(), listType.getName() };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_N, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_T_N, args);
+
+		if ((listTypeModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_T_N.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					listTypeModelImpl.getOriginalType(),
+					listTypeModelImpl.getOriginalName()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_N, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_T_N, args);
 		}
 	}
 
@@ -840,6 +1187,9 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 
 		EntityCacheUtil.putResult(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
 			ListTypeImpl.class, listType.getPrimaryKey(), listType, false);
+
+		clearUniqueFindersCache(listType);
+		cacheUniqueFindersCache(listType);
 
 		listType.resetOriginalValues();
 

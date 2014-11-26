@@ -14,14 +14,15 @@
 
 package com.liferay.portlet.documentlibrary.webdav;
 
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.webdav.methods.Method;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.LiferayIntegrationTestRule;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * <p>
@@ -31,13 +32,14 @@ import org.junit.runner.RunWith;
  *
  * @author Alexander Chow
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class WebDAVLitmusCopyMoveTest extends BaseWebDAVTestCase {
 
 	@ClassRule
-	public static final WebDAVEnvironmentConfigTestRule
-		webDAVEnvironmentConfigTestRule =
-			WebDAVEnvironmentConfigTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			WebDAVEnvironmentConfigTestRule.INSTANCE);
 
 	@Test
 	public void test02CopyInit() {

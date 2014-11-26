@@ -163,6 +163,20 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 			membershipRestriction, friendlyURL, site, active, serviceContext);
 	}
 
+	@Override
+	public com.liferay.portal.model.Group addGroup(long userId,
+		long parentGroupId, java.lang.String className, long classPK,
+		long liveGroupId, java.lang.String name, java.lang.String description,
+		int type, boolean manualMembership, int membershipRestriction,
+		java.lang.String friendlyURL, boolean site, boolean inheritContent,
+		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _groupLocalService.addGroup(userId, parentGroupId, className,
+			classPK, liveGroupId, name, description, type, manualMembership,
+			membershipRestriction, friendlyURL, site, inheritContent, active,
+			serviceContext);
+	}
+
 	/**
 	* Adds the group using the default live group.
 	*
@@ -831,6 +845,13 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	public java.util.List<com.liferay.portal.model.Group> getGroups(
 		long companyId, long parentGroupId, boolean site) {
 		return _groupLocalService.getGroups(companyId, parentGroupId, site);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Group> getGroups(
+		long companyId, long parentGroupId, boolean site, boolean inheritContent) {
+		return _groupLocalService.getGroups(companyId, parentGroupId, site,
+			inheritContent);
 	}
 
 	/**

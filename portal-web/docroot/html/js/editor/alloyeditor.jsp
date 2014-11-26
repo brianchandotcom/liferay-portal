@@ -127,9 +127,17 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 
 	var alloyEditor = new A.AlloyEditor(
 		{
+			<c:if test='<%= alloyEditorMode.equals("text") %>'>
+				allowedContent: 'p',
+			</c:if>
+
 			contentsLangDirection: '<%= HtmlUtil.escapeJS(contentsLanguageDir) %>',
 
 			contentsLanguage: '<%= contentsLanguageId.replace("iw_", "he_") %>',
+
+			<c:if test='<%= alloyEditorMode.equals("text") %>'>
+				disallowedContent: 'br',
+			</c:if>
 
 			language: '<%= languageId.replace("iw_", "he_") %>',
 

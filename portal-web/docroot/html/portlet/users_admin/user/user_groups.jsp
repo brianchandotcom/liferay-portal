@@ -126,7 +126,9 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 			function(event) {
 				event.selectors.each(
 					function(item, index, collection) {
-						if (A.Array.indexOf(deleteUserGroupIds, item.attr('data-usergroupid')) != -1) {
+						var userGroupId = item.attr('data-usergroupid');
+
+						if (A.Array.indexOf(deleteUserGroupIds, userGroupId) != -1) {
 							Util.toggleDisabled(item, false);
 						}
 					}

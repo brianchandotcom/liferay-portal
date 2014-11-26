@@ -105,6 +105,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 	/>
 
 	<aui:script use="liferay-search-container">
+		var AArray = A.Array;
 		var Util = Liferay.Util;
 
 		var addOrganizationIds = [];
@@ -133,7 +134,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 
 				searchContainer.deleteRow(tr, rowId);
 
-				A.Array.removeItem(addOrganizationIds, rowId);
+				AArray.removeItem(addOrganizationIds, rowId);
 
 				deleteOrganizationIds.push(rowId);
 
@@ -148,7 +149,9 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 			function(event) {
 				event.selectors.each(
 					function(item, index, collection) {
-						if (A.Array.indexOf(deleteOrganizationIds, item.attr('data-organizationid')) != -1) {
+						var organizationId = item.attr('data-organizationid');
+
+						if (AArray.indexOf(deleteOrganizationIds, organizationId) != -1) {
 							Util.toggleDisabled(item, false);
 						}
 					}
@@ -184,7 +187,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 
 							searchContainer.updateDataStore();
 
-							A.Array.removeItem(deleteOrganizationIds, event.organizationid);
+							AArray.removeItem(deleteOrganizationIds, event.organizationid);
 
 							addOrganizationIds.push(event.organizationid);
 

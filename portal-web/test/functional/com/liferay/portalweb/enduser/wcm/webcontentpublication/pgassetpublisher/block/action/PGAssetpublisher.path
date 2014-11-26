@@ -224,7 +224,7 @@
 </tr>
 <tr>
 	<td>ASSET_ABSTRACT_VIEW</td>
-	<td>//a[contains(.,'View')]</td>
+	<td>//h4[@class='asset-title']/a[contains(.,'${key_assetTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -456,7 +456,7 @@
 </tr>
 <tr>
 	<td>DISPLAY_ICON_EDIT</td>
-	<td>//div[contains(@class,'asset-actions')]/span/a[contains(.,'Edit')]/span</td>
+	<td>//div[contains(@class,'asset-actions')]/span/a[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>

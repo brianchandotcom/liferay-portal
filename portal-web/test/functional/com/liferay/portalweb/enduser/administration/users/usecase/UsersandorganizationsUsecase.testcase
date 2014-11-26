@@ -507,7 +507,7 @@
 		<execute action="Home#assertTextEquals" locator-key1="PAGE_TEMPLATE_1" value1="Home" />
 		<execute action="Home#assertTextEquals" locator-key1="PAGE_TEMPLATE_2" value1="Wiki" />
 
-		<for list="Message Boards,Polls Display,User Statistics,Upcoming Events" param="portletTitleName">
+		<for list="Message Boards,User Statistics,Upcoming Events" param="portletTitleName">
 			<var name="key_portletTitleName" value="${portletTitleName}" />
 
 			<execute action="BasePortlet#assertTextEquals" locator-key1="SPECIFIC_TITLE" value1="${portletTitleName}" />

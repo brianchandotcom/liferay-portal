@@ -34,12 +34,6 @@
 				<equals arg1="${siteType}" arg2="Community" />
 				<then>
 					<execute action="CPSites#assertClick" locator-key1="ADD_COMMUNITY_SITE" value1="Community Site" />
-					<if>
-						<equals arg1="${uncheckPropagation}" arg2="true" />
-						<then>
-							<execute action="CPSitesAdd#uncheck" locator-key1="ENABLE_PROPAGATION_CHECKBOX" />
-						</then>
-					</if>
 				</then>
 			</elseif>
 			<elseif>
@@ -54,17 +48,28 @@
 					<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
 					<execute action="CPSites#click" locator-key1="ADD_SITE_TEMPLATE_SITE" />
-					<if>
-						<equals arg1="${uncheckPropagation}" arg2="true" />
-						<then>
-							<execute action="CPSitesAdd#uncheck" locator-key1="ENABLE_PROPAGATION_CHECKBOX" />
-						</then>
-					</if>
 				</then>
 			</elseif>
 			<else>
 				<fail message="Invalid var siteType. Must be (Blank|Community|Intranet|Site Template)." />
 			</else>
+		</if>
+
+		<execute action="CPSitesAdd#type" locator-key1="DETAILS_NAME" value1="${siteName}" />
+
+		<if>
+			<or>
+				<equals arg1="${siteType}" arg2="Community" />
+				<equals arg1="${siteType}" arg2="Site Template" />
+			</or>
+			<then>
+				<if>
+					<equals arg1="${uncheckPropagation}" arg2="true" />
+					<then>
+						<execute action="CPSitesAdd#uncheck" locator-key1="ENABLE_PROPAGATION_CHECKBOX" />
+					</then>
+				</if>
+			</then>
 		</if>
 
 		<if>
@@ -103,7 +108,6 @@
 			</then>
 		</if>
 
-		<execute action="CPSitesAdd#type" locator-key1="DETAILS_NAME" value1="${siteName}" />
 		<execute action="CPSitesAdd#click" locator-key1="MENU_SAVE" value1="Save" />
 
 		<execute action="CPSitesEdit#assertTextEquals" locator-key1="SITE_TITLE" value1="${siteName}" />

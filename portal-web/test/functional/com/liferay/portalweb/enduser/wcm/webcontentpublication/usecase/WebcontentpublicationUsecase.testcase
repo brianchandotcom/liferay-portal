@@ -947,6 +947,7 @@
 			<var name="otherSiteName" value="Liferay" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteNameHidden" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1037,6 +1038,7 @@
 			<var name="otherSiteName" value="Liferay" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteNameHidden" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1068,6 +1070,7 @@
 			<var name="globalSite" value="Global" />
 			<var name="otherSiteName" value="Liferay" />
 			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

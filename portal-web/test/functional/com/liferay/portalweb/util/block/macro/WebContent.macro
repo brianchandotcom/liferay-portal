@@ -907,7 +907,7 @@
 	<command name="editDisplayPagePGViaAP">
 		<var name="key_assetTitle" value="${assetTitle}" />
 
-		<execute action="PGAssetpublisher#assertClick" locator-key1="DISPLAY_ICON_EDIT" value1="Edit" />
+		<execute action="PGAssetpublisher#click" locator-key1="DISPLAY_ICON_EDIT" />
 
 		<execute action="PGAssetpublisherAddnewwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
 		<execute action="PGAssetpublisherAddnewwebcontent#assertClick" locator-key1="MENU_DISPLAY_PAGE" value1="Display Page" />
@@ -915,9 +915,13 @@
 		<var name="key_displayPageSelection" value="${displayPageSelection}" />
 
 		<execute action="PGAssetpublisherAddnewwebcontentDisplaypage#click" locator-key1="SELECT_DISPLAY_PAGE_BUTTON" />
+		<execute action="PGAssetpublisherAddnewwebcontentDisplaypage#selectFrame" value1="relative=top" />
+		<execute action="PGAssetpublisherAddnewwebcontentDisplaypage#selectFrame" locator-key1="SELECT_DISPLAY_PAGE_IFRAME" />
 		<execute action="PGAssetpublisherAddnewwebcontentDisplaypage#assertClick" locator-key1="PUBLIC_DISPLAY_PAGE_SELECTION" value1="${displayPageSelection}" />
-		<execute action="PGAssetpublisherAddnewwebcontentDisplaypage#assertClick" locator-key1="OK_BUTTON" value1="OK" />
+		<execute action="PGAssetpublisherAddnewwebcontentDisplaypage#assertClick" locator-key1="CHOOSE_BUTTON" value1="Choose" />
 
+		<execute action="PGAssetpublisherAddnewwebcontent#selectFrame" value1="relative=top" />
+		<execute action="PGAssetpublisherAddnewwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
 		<execute action="PGAssetpublisherAddnewwebcontent#assertClick" locator-key1="MENU_CONTENT" value1="Content" />
 		<execute action="PGAssetpublisherAddnewwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
@@ -1436,7 +1440,7 @@
 	<command name="viewLinkedAssetPGViaAP">
 		<var name="key_assetTitle" value="${webContentTitle}" />
 
-		<execute action="PGAssetpublisher#assertClick" locator-key1="ASSET_ABSTRACT_VIEW" value1="View" />
+		<execute action="PGAssetpublisher#assertClick" locator-key1="ASSET_ABSTRACT_VIEW" value1="${webContentTitle}" />
 
 		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_TITLE" value1="${webContentTitle}" />
 		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_CONTENT" value1="${webContentContent}" />

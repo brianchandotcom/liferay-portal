@@ -19,8 +19,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_DISPLAY_PAGE_IFRAME</td>
+	<td>//iframe[contains(@id,'selectDisplayPage')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_DISPLAY_PAGE_BUTTON</td>
-	<td>//div[contains(@id,'displayPageToolbar')]/div/button[contains(.,'Select')]</td>
+	<td>//button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -34,8 +39,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>OK_BUTTON</td>
-	<td>//button[contains(.,'OK')]</td>
+	<td>CHOOSE_BUTTON</td>
+	<td>//button[contains(@class,'selector-button') and contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 <tr>

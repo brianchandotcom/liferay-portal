@@ -27,7 +27,7 @@
 		<if>
 			<isset var="vocabularyDescription" />
 			<then>
-				<execute action="CPVocabulariesAdd#type" locator-key1="DESCRIPTION_FIELD" value1="${localizationName}" />
+				<execute action="CPVocabulariesAdd#type" locator-key1="DESCRIPTION_FIELD" value1="${vocabularyDescription}" />
 			</then>
 		</if>
 

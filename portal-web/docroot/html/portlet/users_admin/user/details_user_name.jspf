@@ -20,6 +20,8 @@ List<Map<String,Object>> userFields = new ArrayList<Map<String, Object>>();
 String[] userNameFields = StringUtil.split(LanguageUtil.get(locale, "user.name.fields"));
 String userNameRequiredFields = LanguageUtil.get(locale, "user.name.required.fields");
 
+List<String> existingFields = new ArrayList<String>();
+
 for (String userNameField: userNameFields) {
 	Map<String, Object> userFieldMap = new HashMap<String, Object>();
 
@@ -50,43 +52,49 @@ for (Map<String, Object> userField: userFields) {
 	boolean required = Boolean.valueOf((Boolean)userField.get("required"));
 	String[] options = (String[])userField.get("options");
 %>
+<c:if test="<%= !existingFields.contains(fieldName) %>">
+	<c:choose>
+		<c:when test="<%= Validator.isNull(options) %>">
+			<aui:input disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" name="<%= fieldName %>">
+				<c:if test="<%= required %>">
+					<aui:validator name="required" />
+				</c:if>
+			</aui:input>
+		</c:when>
+		<c:otherwise>
+			<aui:select disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" label="<%= fieldName %>" name='<%= fieldName.concat("Id") %>' showEmptyOption="<%= true %>">
 
-<c:choose>
-	<c:when test="<%= Validator.isNull(options) %>">
-		<aui:input disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" name="<%= fieldName %>">
-			<c:if test="<%= required %>">
-				<aui:validator name="required" />
-			</c:if>
-		</aui:input>
-	</c:when>
-	<c:otherwise>
-		<aui:select disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" label="<%= fieldName %>" name='<%= fieldName.concat("Id") %>' showEmptyOption="<%= true %>">
+			<%
+			String selected = StringPool.BLANK;
 
-		<%
-		String selected = StringPool.BLANK;
+			if (!Validator.isNull(selContact)) {
+				int listTypeId = BeanParamUtil.getInteger(selContact, request, fieldName.concat("Id"));
 
-		if (!Validator.isNull(selContact)) {
-			int listTypeId = BeanParamUtil.getInteger(selContact, request, fieldName.concat("Id"));
-
-			try {
-				selected = ListTypeServiceUtil.getListType(listTypeId).getName();
+				try {
+					selected = ListTypeServiceUtil.getListType(listTypeId).getName();
+				}
+				catch (Exception e) {
+				}
 			}
-			catch (Exception e) {
+
+			for (String option: options) {
+			%>
+
+				<aui:option label="<%= option %>" selected="<%= selected.equals(option) %>" value="<%= option %>" />
+
+			<%
 			}
-		}
+			%>
 
-		for (String option: options) {
-		%>
+			</aui:select>
+		</c:otherwise>
+	</c:choose>
 
-			<aui:option label="<%= option %>" selected="<%= selected.equals(option) %>" value="<%= option %>" />
+	<%
+	existingFields.add(fieldName);
+	%>
 
-		<%
-		}
-		%>
-
-		</aui:select>
-	</c:otherwise>
-</c:choose>
+</c:if>
 
 <%
 }

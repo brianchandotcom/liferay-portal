@@ -47,6 +47,7 @@ import org.junit.runner.RunWith;
 public class CommentsSubscriptionTest {
 
 	@ClassRule
+	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			MainServletTestRule.INSTANCE, SynchronousMailTestRule.INSTANCE);
@@ -95,10 +96,6 @@ public class CommentsSubscriptionTest {
 
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 	}
-
-	@Rule
-	public final SynchronousMailTestRule synchronousMailTestRule =
-		SynchronousMailTestRule.INSTANCE;
 
 	@DeleteAfterTestRun
 	private Group _group;

@@ -42,13 +42,10 @@ import org.junit.runner.RunWith;
 public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
 
 	@ClassRule
+	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			MainServletTestRule.INSTANCE, SynchronousMailTestRule.INSTANCE);
-
-	@Rule
-	public final SynchronousMailTestRule synchronousMailTestRule =
-		SynchronousMailTestRule.INSTANCE;
 
 	@Override
 	protected BaseModel<?> addBaseModel() throws Exception {

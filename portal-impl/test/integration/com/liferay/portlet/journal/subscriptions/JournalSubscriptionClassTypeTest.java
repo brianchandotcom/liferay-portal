@@ -52,13 +52,10 @@ public class JournalSubscriptionClassTypeTest
 	extends BaseSubscriptionClassTypeTestCase {
 
 	@ClassRule
+	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			MainServletTestRule.INSTANCE, SynchronousMailTestRule.INSTANCE);
-
-	@Rule
-	public final SynchronousMailTestRule synchronousMailTestRule =
-		SynchronousMailTestRule.INSTANCE;
 
 	@Override
 	protected long addBaseModelWithClassType(long containerId, long classTypeId)

@@ -42,6 +42,7 @@ public class WikiSubscriptionLocalizedContentTest
 	extends BaseSubscriptionLocalizedContentTestCase {
 
 	@ClassRule
+	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			MainServletTestRule.INSTANCE, SynchronousMailTestRule.INSTANCE);
@@ -53,10 +54,6 @@ public class WikiSubscriptionLocalizedContentTest
 
 		_node = WikiTestUtil.addNode(group.getGroupId());
 	}
-
-	@Rule
-	public final SynchronousMailTestRule synchronousMailTestRule =
-		SynchronousMailTestRule.INSTANCE;
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {

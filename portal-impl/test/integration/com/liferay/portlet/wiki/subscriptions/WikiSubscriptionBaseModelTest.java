@@ -45,6 +45,7 @@ public class WikiSubscriptionBaseModelTest
 	extends BaseSubscriptionBaseModelTestCase {
 
 	@ClassRule
+	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			MainServletTestRule.INSTANCE, SynchronousMailTestRule.INSTANCE);
@@ -54,10 +55,6 @@ public class WikiSubscriptionBaseModelTest
 	@Test
 	public void testSubscriptionBaseModelWhenInRootContainerModel() {
 	}
-
-	@Rule
-	public final SynchronousMailTestRule synchronousMailTestRule =
-		SynchronousMailTestRule.INSTANCE;
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {

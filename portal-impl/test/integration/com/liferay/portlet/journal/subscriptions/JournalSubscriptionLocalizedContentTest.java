@@ -48,6 +48,7 @@ public class JournalSubscriptionLocalizedContentTest
 	extends BaseSubscriptionLocalizedContentTestCase {
 
 	@ClassRule
+	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			MainServletTestRule.INSTANCE, SynchronousMailTestRule.INSTANCE);
@@ -59,10 +60,6 @@ public class JournalSubscriptionLocalizedContentTest
 
 		user = UserTestUtil.addOmniAdminUser();
 	}
-
-	@Rule
-	public final SynchronousMailTestRule synchronousMailTestRule =
-		SynchronousMailTestRule.INSTANCE;
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {

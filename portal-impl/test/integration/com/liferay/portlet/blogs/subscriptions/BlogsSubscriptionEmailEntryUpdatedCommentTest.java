@@ -57,6 +57,7 @@ import org.junit.runner.RunWith;
 public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 
 	@ClassRule
+	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			MainServletTestRule.INSTANCE, SynchronousMailTestRule.INSTANCE);
@@ -138,10 +139,6 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 
 		Assert.assertEquals(message.getBody(), StringPool.NEW_LINE);
 	}
-
-	@Rule
-	public final SynchronousMailTestRule synchronousMailTestRule =
-		SynchronousMailTestRule.INSTANCE;
 
 	protected void setUpBlogsSettings() throws Exception {
 		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(

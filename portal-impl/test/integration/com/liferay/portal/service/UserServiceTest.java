@@ -663,10 +663,6 @@ public class UserServiceTest {
 					"email_password_reset_body.tmpl"));
 		}
 
-		@Rule
-		public final SynchronousMailTestRule synchronousMailTestRule =
-			SynchronousMailTestRule.INSTANCE;
-
 		protected void givenThatCompanySendsNewPassword() throws Exception {
 			PortletPreferences portletPreferences =
 				PrefsPropsUtil.getPreferences(_user.getCompanyId(), false);

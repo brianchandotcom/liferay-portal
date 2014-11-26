@@ -1203,8 +1203,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private List<String> _numericalPortletNameElementExclusions;
 	private Pattern _poshiCharactersAfterDefinitionTag = Pattern.compile(
 		"</definition>([\\w\\s\\t\\n\\<\\>]+)");
-	private Pattern _poshiCharactersBeforeDefinitionTag = Pattern.compile(
-		"([\\w\\s\\t\\n\\<\\>]+)<definition");
 	private Pattern _poshiClosingTagPattern = Pattern.compile("</[^>/]*>");
 	private Pattern _poshiCommandsPattern = Pattern.compile(
 		"\\<command.*name=\\\"([^\\\"]*)\\\".*\\>[\\s\\S]*?\\</command\\>" +

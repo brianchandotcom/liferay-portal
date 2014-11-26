@@ -51,10 +51,6 @@ import org.junit.runner.Description;
  */
 public class DeleteAfterTestRunTestRule extends BaseTestRule<Object, Object> {
 
-	public DeleteAfterTestRunTestRule(Object instance) {
-		_instance = instance;
-	}
-
 	protected void addField(
 		Map<Class<?>, FieldBag> deleteAfterTestRunFieldBags, Class<?> clazz,
 		Field field) {
@@ -274,6 +270,11 @@ public class DeleteAfterTestRunTestRule extends BaseTestRule<Object, Object> {
 		}
 	}
 
+	@Override
+	protected void setInstance(Object instance) {
+		_instance = instance;
+	}
+
 	protected static class FieldBag {
 
 		public FieldBag(Class<?> fieldClass) {
@@ -306,6 +307,6 @@ public class DeleteAfterTestRunTestRule extends BaseTestRule<Object, Object> {
 				User.class, Organization.class, Role.class, UserGroup.class,
 				Group.class, Company.class));
 
-	private final Object _instance;
+	private Object _instance;
 
 }

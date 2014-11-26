@@ -44,9 +44,9 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.PersistenceTestRule;
 import com.liferay.portal.test.TransactionalTestRule;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.RandomTestUtil;
 
@@ -80,13 +80,15 @@ import org.junit.runner.RunWith;
  */
 <#if osgiModule>
 	@RunWith(Arquillian.class)
-<#else>
-	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 </#if>
 public class ${entity.name}PersistenceTest {
 
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(PersistenceTestRule.INSTANCE, new TransactionalTestRule(Propagation.REQUIRED));
+	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(
+		<#if !osgiModule>
+		new LiferayIntegrationTestRule(),
+		</#if>
+		PersistenceTestRule.INSTANCE, new TransactionalTestRule(Propagation.REQUIRED));
 
 	@After
 	public void tearDown() throws Exception {

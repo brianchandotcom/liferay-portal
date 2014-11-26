@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>NOTIFICATION_DELIVERY_CHECKBOX_2</td>
-	<td>//table[contains(.,'${key_contentType}')]//tr/td[3]//input</td>
+	<td>//table[contains(.,'${key_contentType}')]//div[2]/div/label/input</td>
 	<td></td>
 </tr>
 <tr>
@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2</td>
-	<td>//table[contains(.,'${key_contentType}')]//tr/td[3]//label</td>
+	<td>//table[contains(.,'${key_contentType}')]//div[2]/div/label</td>
 	<td></td>
 </tr>
 <tr>

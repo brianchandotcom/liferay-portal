@@ -43,10 +43,6 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 
 <div class="hide" id="<portlet:namespace />pages">
 	<aui:fieldset cssClass="portlet-data-section" label="pages-to-export">
-		<div class="alert alert-info">
-			<liferay-ui:message key="note-that-selecting-no-pages-from-tree-reverts-to-implicit-selection-of-all-pages" />
-		</div>
-
 		<div class="selected-pages" id="<portlet:namespace />pane">
 
 			<%

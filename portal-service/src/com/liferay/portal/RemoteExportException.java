@@ -27,8 +27,6 @@ public class RemoteExportException extends PortalException {
 
 	public static final int NO_GROUP = 3;
 
-	public static final int NO_LAYOUTS = 4;
-
 	public static final int NO_PERMISSIONS = 5;
 
 	public RemoteExportException(int type) {

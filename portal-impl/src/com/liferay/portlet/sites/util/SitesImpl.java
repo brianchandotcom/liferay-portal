@@ -18,6 +18,7 @@ import com.liferay.portal.RequiredLayoutException;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.log.Log;
@@ -563,11 +564,16 @@ public class SitesImpl implements Sites {
 
 		LayoutSet layoutSet = layoutSetPrototype.getLayoutSet();
 
+		List<Layout> layoutSetPrototypeLayouts =
+			LayoutLocalServiceUtil.getLayouts(
+				layoutSet.getGroupId(), layoutSet.isPrivateLayout());
+
 		Map<String, String[]> parameterMap = getLayoutSetPrototypeParameters(
 			serviceContext);
 
 		return LayoutLocalServiceUtil.exportLayoutsAsFile(
-			layoutSet.getGroupId(), layoutSet.isPrivateLayout(), null,
+			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
+			ExportImportHelperUtil.getLayoutIds(layoutSetPrototypeLayouts),
 			parameterMap, null, null);
 	}
 
@@ -1752,7 +1758,7 @@ public class SitesImpl implements Sites {
 
 		File cacheFile = new File(sb.toString());
 
-		if (cacheFile.exists()) {
+		if (cacheFile.exists() && !importData) {
 			Date modifiedDate = layoutSetPrototype.getModifiedDate();
 
 			if (cacheFile.lastModified() >= modifiedDate.getTime()) {
@@ -1769,9 +1775,14 @@ public class SitesImpl implements Sites {
 		boolean newFile = false;
 
 		if (file == null) {
+			List<Layout> layoutSetPrototypeLayouts =
+				LayoutLocalServiceUtil.getLayouts(
+					layoutSetPrototype.getGroupId(), true);
+
 			file = LayoutLocalServiceUtil.exportLayoutsAsFile(
-				layoutSetPrototype.getGroupId(), true, null, parameterMap, null,
-				null);
+				layoutSetPrototype.getGroupId(), true,
+				ExportImportHelperUtil.getLayoutIds(layoutSetPrototypeLayouts),
+				parameterMap, null, null);
 
 			newFile = true;
 		}

@@ -24,9 +24,9 @@
 	var Util = Liferay.Util;
 
 	var advancedNode = A.one('#<%= id %>advanced');
-	var advancedSearchNode = A.one('#<%= id + displayTerms.ADVANCED_SEARCH %>');
+	var advancedSearchNode = A.one('#<%= id + DisplayTerms.ADVANCED_SEARCH %>');
 	var closeAdvancedNode = A.one('#<portlet:namespace />closeAdvancedSearch');
-	var keywordsNode = A.one('#<%= id + displayTerms.KEYWORDS %>');
+	var keywordsNode = A.one('#<%= id + DisplayTerms.KEYWORDS %>');
 	var simpleNode = A.one('#<%= id %>simple');
 	var toggleAdvancedNode = A.one('#<%= id %>toggleAdvanced');
 
@@ -72,6 +72,6 @@
 
 <c:if test="<%= autoFocus %>">
 	<aui:script>
-		Liferay.Util.focusFormField('#<%= id + displayTerms.KEYWORDS %>');
+		Liferay.Util.focusFormField('#<%= id + DisplayTerms.KEYWORDS %>');
 	</aui:script>
 </c:if>

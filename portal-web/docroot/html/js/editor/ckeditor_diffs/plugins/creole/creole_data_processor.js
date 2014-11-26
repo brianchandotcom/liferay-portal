@@ -1,9 +1,9 @@
 (function() {
 	var CKTools = CKEDITOR.tools;
 
-	var CSS_ESCAPED = 'escaped';
-
 	var NEW_LINE = '\n';
+
+	var REGEX_CREOLE_RESERVED_CHARACTERS = /(\/{1,2}|={1,6}|\[{1,2}|\]{1,2}|\\{1,2}|\*{1,}|----|{{2,3}|}{2,3}|#{1,})/g;
 
 	var REGEX_HEADER = /^h([1-6])$/i;
 
@@ -24,8 +24,6 @@
 	var STR_PIPE = '|';
 
 	var STR_SPACE = ' ';
-
-	var STR_TILDE = '~';
 
 	var TAG_BOLD = '**';
 
@@ -54,7 +52,7 @@
 	CreoleDataProcessor.prototype = {
 		constructor: CreoleDataProcessor,
 
-		toDataFormat: function(html, fixForBody ) {
+		toDataFormat: function(html, config) {
 			var instance = this;
 
 			var data = instance._convert(html);
@@ -62,22 +60,35 @@
 			return data;
 		},
 
-		toHtml: function(data, fixForBody) {
+		toHtml: function(data, config) {
 			var instance = this;
 
-			var div = document.createElement('div');
+			if (config) {
+				var fragment = CKEDITOR.htmlParser.fragment.fromHtml(data);
 
-			if (!instance._creoleParser) {
-				instance._creoleParser = new CKEDITOR.CreoleParser(
-					{
-						imagePrefix: attachmentURLPrefix
-					}
-				);
+				var writer = new CKEDITOR.htmlParser.basicWriter();
+
+				config.filter.applyTo(fragment);
+
+				fragment.writeHtml(writer);
+
+				data = writer.getHtml();
 			}
+			else {
+				var div = document.createElement('div');
 
-			instance._creoleParser.parse(div, data);
+				if (!instance._creoleParser) {
+					instance._creoleParser = new CKEDITOR.CreoleParser(
+						{
+							imagePrefix: attachmentURLPrefix
+						}
+					);
+				}
 
-			data = div.innerHTML;
+				instance._creoleParser.parse(div, data);
+
+				data = div.innerHTML;
+			}
 
 			return data;
 		},
@@ -138,7 +149,12 @@
 
 				var child = children[i];
 
-				if (instance._isIgnorable(child) && !instance._skipParse) {
+				if (instance._skipParse) {
+					instance._handleData(child.data || child.outerHTML, node);
+
+					continue;
+				}
+				else if (instance._isIgnorable(child)) {
 					continue;
 				}
 
@@ -180,6 +196,45 @@
 			if (data) {
 				if (!instance._skipParse) {
 					data = data.replace(REGEX_NEWLINE, STR_BLANK);
+
+					var isHeader;
+
+					if (instance._isParentNode(element, 'h1') ||
+						instance._isParentNode(element, 'h2') ||
+						instance._isParentNode(element, 'h3') ||
+						instance._isParentNode(element, 'h4') ||
+						instance._isParentNode(element, 'h5') ||
+						instance._isParentNode(element, 'h6')) {
+
+						isHeader = true;
+					}
+
+					if (!isHeader) {
+						data = data.replace(
+							REGEX_CREOLE_RESERVED_CHARACTERS,
+							function(match, p1, offset, string) {
+								var res = '';
+
+								if (!instance._endResult.length) {
+									res += '~' + p1;
+								}
+								else {
+									var lastResultString = instance._endResult[instance._endResult.length - 1];
+
+									var lastResultCharacter = lastResultString.charAt(lastResultString.length - 1);
+
+									if ( lastResultCharacter !== '~' && lastResultCharacter !== p1.charAt(0)) {
+										res += '~';
+									}
+
+									res += p1;
+
+								}
+
+								return res;
+							}
+						);
+					}
 				}
 
 				instance._endResult.push(data);
@@ -243,9 +298,6 @@
 				}
 				else if (tagName == 'a') {
 					instance._handleLink(element, listTagsIn, listTagsOut);
-				}
-				else if (tagName == 'span') {
-					instance._handleSpan(element, listTagsIn, listTagsOut);
 				}
 				else if (tagName == 'strong' || tagName == 'b') {
 					instance._handleStrong(element, listTagsIn, listTagsOut);
@@ -400,14 +452,6 @@
 			listTagsOut.push('}}}', NEW_LINE);
 		},
 
-		_handleSpan: function(element, listTagsIn, listTagsOut) {
-			var instance = this;
-
-			if (instance._hasClass(element, CSS_ESCAPED)) {
-				listTagsIn.push(STR_TILDE);
-			}
-		},
-
 		_handleStrong: function(element, listTagsIn, listTagsOut) {
 			var instance = this;
 
@@ -489,7 +533,9 @@
 			var tagName = parentNode && parentNode.tagName && parentNode.tagName.toLowerCase();
 
 			if (tagName) {
-				for (var i = 0, length = tags.length; i < length; i++) {
+				var length = tags.length;
+
+				for (var i = 0; i < length; i++) {
 					result = instance._tagNameMatch(tagName, tags[i]);
 
 					if (result) {
@@ -576,20 +622,6 @@
 				attachmentURLPrefix = editor.config.attachmentURLPrefix;
 
 				editor.dataProcessor = new CreoleDataProcessor(editor);
-
-				editor.on(
-					'paste',
-					function(event) {
-						var data = event.data;
-
-						var htmlData = data.dataValue;
-
-						htmlData = editor.dataProcessor.toDataFormat(htmlData);
-
-						data.dataValue = htmlData;
-					},
-					editor.element.$
-				);
 
 				editor.fire('customDataProcessorLoaded');
 			}

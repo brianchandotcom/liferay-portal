@@ -53,6 +53,12 @@
 		<tag-class>com.liferay.taglib.staging.DefineObjectsTag</tag-class>
 		<tei-class>com.liferay.taglib.staging.DefineObjectsTei</tei-class>
 		<body-content>empty</body-content>
+		<attribute>
+			<name>portletId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
 	</tag>
 	<tag>
 		<name>menu</name>

@@ -306,7 +306,12 @@
 				<classpath mode="compile">lib/development/p6spy.jar</classpath>
 				<classpath mode="compile">lib/development/persistence.jar</classpath>
 				<classpath mode="compile">lib/development/postgresql.jar</classpath>
-				<classpath mode="compile">lib/development/powermock-mockito.jar</classpath>
+				<classpath mode="compile">lib/development/powermock-api-mockito.jar</classpath>
+				<classpath mode="compile">lib/development/powermock-api-support.jar</classpath>
+				<classpath mode="compile">lib/development/powermock-core.jar</classpath>
+				<classpath mode="compile">lib/development/powermock-module-junit4-common.jar</classpath>
+				<classpath mode="compile">lib/development/powermock-module-junit4.jar</classpath>
+				<classpath mode="compile">lib/development/powermock-reflect.jar</classpath>
 				<classpath mode="compile">lib/development/qdox.jar</classpath>
 				<classpath mode="compile">lib/development/resin.jar</classpath>
 				<classpath mode="compile">lib/development/sap.jar</classpath>

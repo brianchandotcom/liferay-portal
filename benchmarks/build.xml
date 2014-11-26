@@ -16,8 +16,8 @@
 	</target>
 
 	<target name="clean">
-		<delete>
-			<fileset dir="." includes="*.csv,*.sql" />
+		<delete includeemptydirs="true">
+			<fileset dir="." includes="*.csv,*.sql,benchmarks-actual.properties,output/**,temp/**" />
 		</delete>
 	</target>
 </project>

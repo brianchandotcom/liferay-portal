@@ -29,6 +29,6 @@ DisplayTerms displayTerms = searchContainer.getDisplayTerms();
 	id="toggle_id_dynamic_data_lists_record_search"
 >
 	<aui:fieldset>
-		<aui:input name="<%= displayTerms.KEYWORDS %>" size="30" value="<%= displayTerms.getKeywords() %>" />
+		<aui:input name="<%= DisplayTerms.KEYWORDS %>" size="30" value="<%= displayTerms.getKeywords() %>" />
 	</aui:fieldset>
 </liferay-ui:search-toggle>

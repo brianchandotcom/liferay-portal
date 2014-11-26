@@ -15,19 +15,22 @@
 package com.liferay.taglib.staging;
 
 import com.liferay.portal.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.tagext.TagSupport;
 
 /**
  * @author Levente Hudák
  */
-public class DefineObjectsTag extends TagSupport {
+public class DefineObjectsTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() {
@@ -53,19 +56,65 @@ public class DefineObjectsTag extends TagSupport {
 			return SKIP_BODY;
 		}
 
+		pageContext.setAttribute("group", group);
+		pageContext.setAttribute("groupId", group.getGroupId());
+		pageContext.setAttribute("liveGroup", null);
+		pageContext.setAttribute("liveGroupId", 0L);
+
+		Layout layout = themeDisplay.getLayout();
+
+		boolean privateLayout = GetterUtil.getBoolean(
+			ParamUtil.getBoolean(
+				request, "privateLayout", layout.isPrivateLayout()));
+
+		pageContext.setAttribute("privateLayout", privateLayout);
+
+		pageContext.setAttribute("stagingGroup", null);
+		pageContext.setAttribute("stagingGroupId", 0L);
+
+		if (!group.isStaged() && !group.isStagedRemotely() &&
+			!group.hasLocalOrRemoteStagingGroup()) {
+
+			return SKIP_BODY;
+		}
+
 		Group liveGroup = StagingUtil.getLiveGroup(group.getGroupId());
 		Group stagingGroup = StagingUtil.getStagingGroup(group.getGroupId());
 
-		pageContext.setAttribute("group", group);
-		pageContext.setAttribute("groupId", group.getGroupId());
 		pageContext.setAttribute("liveGroup", liveGroup);
 		pageContext.setAttribute("liveGroupId", liveGroup.getGroupId());
-		pageContext.setAttribute(
-			"privateLayout", ParamUtil.getBoolean(request, "privateLayout"));
 		pageContext.setAttribute("stagingGroup", stagingGroup);
 		pageContext.setAttribute("stagingGroupId", stagingGroup.getGroupId());
 
+		if (Validator.isNotNull(_portletId)) {
+			boolean stagedPortlet = liveGroup.isStagedPortlet(_portletId);
+
+			if (group.isStagedRemotely()) {
+				stagedPortlet = stagingGroup.isStagedPortlet(_portletId);
+			}
+
+			if (stagedPortlet) {
+				pageContext.setAttribute("group", stagingGroup);
+				pageContext.setAttribute("groupId", stagingGroup.getGroupId());
+				pageContext.setAttribute("scopeGroup", stagingGroup);
+				pageContext.setAttribute(
+					"scopeGroupId", stagingGroup.getGroupId());
+			}
+		}
+
 		return SKIP_BODY;
 	}
+
+	@Override
+	public void setPortletId(String portletId) {
+		_portletId = portletId;
+	}
+
+	@Override
+	protected void cleanUp() {
+		_portletId = null;
+	}
+
+	private String _portletId;
 
 }

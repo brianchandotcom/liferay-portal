@@ -24,16 +24,16 @@ CouponDisplayTerms displayTerms = (CouponDisplayTerms)searchContainer.getDisplay
 
 <aui:fieldset column="<%= true %>">
 	<aui:col width="<%= 33 %>">
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="<%= displayTerms.CODE %>" size="20" type="text" value="<%= displayTerms.getCode() %>" />
+		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="<%= CouponDisplayTerms.CODE %>" size="20" type="text" value="<%= displayTerms.getCode() %>" />
 
-		<aui:select label="" name="<%= displayTerms.AND_OPERATOR %>" title="and-or-operator">
+		<aui:select label="" name="<%= CouponDisplayTerms.AND_OPERATOR %>" title="and-or-operator">
 			<aui:option label="and" selected="<%= displayTerms.isAndOperator() %>" value="1" />
 			<aui:option label="or" selected="<%= !displayTerms.isAndOperator() %>" value="0" />
 		</aui:select>
 	</aui:col>
 
 	<aui:col width="<%= 33 %>">
-		<aui:select name="<%= displayTerms.DISCOUNT_TYPE %>" showEmptyOption="<%= true %>">
+		<aui:select name="<%= CouponDisplayTerms.DISCOUNT_TYPE %>" showEmptyOption="<%= true %>">
 
 			<%
 			for (int i = 0; i < ShoppingCouponConstants.DISCOUNT_TYPES.length; i++) {
@@ -49,7 +49,7 @@ CouponDisplayTerms displayTerms = (CouponDisplayTerms)searchContainer.getDisplay
 	</aui:col>
 
 	<aui:col width="<%= 33 %>">
-		<aui:select name="<%= displayTerms.ACTIVE %>">
+		<aui:select name="<%= CouponDisplayTerms.ACTIVE %>">
 			<aui:option label="yes" selected="<%= displayTerms.isActive() %>" value="1" />
 			<aui:option label="no" selected="<%= !displayTerms.isActive() %>" value="0" />
 		</aui:select>

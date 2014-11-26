@@ -106,7 +106,24 @@ catch (NoSuchLayoutException nsle) {
 
 treeId = treeId + privateLayout + layoutSetBranchId;
 
-long[] selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(SessionTreeJSClicks.getOpenNodes(request, treeId + "SelectedNode"), ','));
+long[] selectedLayoutIds = null;
+
+String openNodes = SessionTreeJSClicks.getOpenNodes(request, treeId + "SelectedNode");
+
+if (openNodes == null) {
+	List<Layout> stagingGroupLayouts = LayoutLocalServiceUtil.getLayouts(stagingGroupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+	selectedLayoutIds = new long[stagingGroupLayouts.size()];
+
+	for (int i = 0; i < stagingGroupLayouts.size(); i++) {
+		Layout stagingGroupLayout = stagingGroupLayouts.get(i);
+
+		selectedLayoutIds[i] = stagingGroupLayout.getLayoutId();
+	}
+}
+else {
+	selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(openNodes, ','));
+}
 
 UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
 

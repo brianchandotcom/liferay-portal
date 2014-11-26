@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portalweb.portal.BaseTestCase;
 
@@ -75,7 +74,6 @@ public class WebDriverToSeleniumBridge
 	public WebDriverToSeleniumBridge(WebDriver webDriver) {
 		super(webDriver);
 
-		initKeys();
 		initKeysSpecialChars();
 
 		WebDriverHelper.setDefaultWindowHandle(webDriver.getWindowHandle());
@@ -926,34 +924,21 @@ public class WebDriverToSeleniumBridge
 	public void keyDown(String locator, String keySequence) {
 		WebElement webElement = getWebElement(locator);
 
-		if (keySequence.startsWith("\\")) {
-			int index = GetterUtil.getInteger(keySequence.substring(1));
+		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
-			Keys keys = _keysArray[index];
+		WebDriver webDriver = wrapsDriver.getWrappedDriver();
 
-			if ((index >= 48) && (index <= 90)) {
-				webElement.sendKeys(StringPool.ASCII_TABLE[index]);
-			}
-			else if ((index == 16) || (index == 17) || (index == 18)) {
-				WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+		Actions actions = new Actions(webDriver);
 
-				WebDriver webDriver = wrapsDriver.getWrappedDriver();
+		String keycode = keySequence.substring(1);
 
-				Actions actions = new Actions(webDriver);
+		Keys keys = Keys.valueOf(keycode);
 
-				actions.keyDown(webElement, keys);
+		actions.keyDown(webElement, keys);
 
-				Action action = actions.build();
+		Action action = actions.build();
 
-				action.perform();
-			}
-			else {
-				webElement.sendKeys(keys);
-			}
-		}
-		else {
-			webElement.sendKeys(keySequence);
-		}
+		action.perform();
 	}
 
 	@Override
@@ -966,29 +951,30 @@ public class WebDriverToSeleniumBridge
 		WebElement webElement = getWebElement(locator);
 
 		if (keySequence.startsWith("\\")) {
-			int index = GetterUtil.getInteger(keySequence.substring(1));
+			String keycode = keySequence.substring(1);
 
-			Keys keys = _keysArray[index];
+			if (isValidKeycode(keycode)) {
+				Keys keys = Keys.valueOf(keycode);
 
-			if ((index >= 48) && (index <= 90)) {
-				webElement.sendKeys(StringPool.ASCII_TABLE[index]);
-			}
-			else if ((index == 16) || (index == 17) || (index == 18)) {
 				WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
 				WebDriver webDriver = wrapsDriver.getWrappedDriver();
 
 				Actions actions = new Actions(webDriver);
 
-				actions = actions.keyDown(webElement, keys);
-				actions = actions.keyUp(webElement, keys);
+				if (keycode.equals("ALT") || keycode.equals("COMMAND") ||
+					keycode.equals("CONTROL") || keycode.equals("SHIFT")) {
 
-				Action action = actions.build();
+					actions.keyDown(webElement, keys);
+					actions.keyUp(webElement, keys);
 
-				action.perform();
-			}
-			else {
-				webElement.sendKeys(keys);
+					Action action = actions.build();
+
+					action.perform();
+				}
+				else {
+					webElement.sendKeys(keys);
+				}
 			}
 		}
 		else {
@@ -1005,34 +991,21 @@ public class WebDriverToSeleniumBridge
 	public void keyUp(String locator, String keySequence) {
 		WebElement webElement = getWebElement(locator);
 
-		if (keySequence.startsWith("\\")) {
-			int index = GetterUtil.getInteger(keySequence.substring(1));
+		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
-			Keys keys = _keysArray[index];
+		WebDriver webDriver = wrapsDriver.getWrappedDriver();
 
-			if ((index >= 48) && (index <= 90)) {
-				webElement.sendKeys(StringPool.ASCII_TABLE[index]);
-			}
-			else if ((index == 16) || (index == 17) || (index == 18)) {
-				WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+		Actions actions = new Actions(webDriver);
 
-				WebDriver webDriver = wrapsDriver.getWrappedDriver();
+		String keycode = keySequence.substring(1);
 
-				Actions actions = new Actions(webDriver);
+		Keys keys = Keys.valueOf(keycode);
 
-				actions.keyUp(webElement, keys);
+		actions.keyUp(webElement, keys);
 
-				Action action = actions.build();
+		Action action = actions.build();
 
-				action.perform();
-			}
-			else {
-				webElement.sendKeys(keys);
-			}
-		}
-		else {
-			webElement.sendKeys(keySequence);
-		}
+		action.perform();
 	}
 
 	@Override
@@ -1689,74 +1662,6 @@ public class WebDriverToSeleniumBridge
 		return WebDriverHelper.getWebElements(this, locator, timeout);
 	}
 
-	protected void initKeys() {
-
-		// ASCII to WebDriver
-
-		_keysArray[107] = Keys.ADD;
-		_keysArray[18] = Keys.ALT;
-		_keysArray[40] = Keys.ARROW_DOWN;
-		_keysArray[37] = Keys.ARROW_LEFT;
-		_keysArray[39] = Keys.ARROW_RIGHT;
-		_keysArray[38] = Keys.ARROW_UP;
-		_keysArray[8] = Keys.BACK_SPACE;
-		//keyTable[] = Keys.CANCEL;
-		//keyTable[] = Keys.CLEAR;
-		//keyTable[] = Keys.COMMAND;
-		_keysArray[17] = Keys.CONTROL;
-		_keysArray[110] = Keys.DECIMAL;
-		_keysArray[46] = Keys.DELETE;
-		_keysArray[111] = Keys.DIVIDE;
-		//keyTable[] = Keys.DOWN;
-		//keyTable[] = Keys.END;
-		_keysArray[13] = Keys.RETURN;
-		//keyTable[] = Keys.EQUALS;
-		_keysArray[27] = Keys.ESCAPE;
-		_keysArray[112] = Keys.F1;
-		_keysArray[121] = Keys.F10;
-		_keysArray[122] = Keys.F11;
-		_keysArray[123] = Keys.F12;
-		_keysArray[113] = Keys.F2;
-		_keysArray[114] = Keys.F3;
-		_keysArray[115] = Keys.F4;
-		_keysArray[116] = Keys.F5;
-		_keysArray[117] = Keys.F6;
-		_keysArray[118] = Keys.F7;
-		_keysArray[119] = Keys.F8;
-		_keysArray[120] = Keys.F9;
-		//keyTable[] = Keys.HELP;
-		_keysArray[36] = Keys.HOME;
-		_keysArray[45] = Keys.INSERT;
-		//keyTable[] = Keys.LEFT;
-		//keyTable[] = Keys.LEFT_ALT;
-		//keyTable[] = Keys.LEFT_CONTROL;
-		//keyTable[] = Keys.LEFT_SHIFT;
-		//keyTable[] = Keys.META;
-		//keyTable[] = Keys.NULL;
-		_keysArray[96] = Keys.NUMPAD0;
-		_keysArray[97] = Keys.NUMPAD1;
-		_keysArray[98] = Keys.NUMPAD2;
-		_keysArray[99] = Keys.NUMPAD3;
-		_keysArray[100] = Keys.NUMPAD4;
-		_keysArray[101] = Keys.NUMPAD5;
-		_keysArray[102] = Keys.NUMPAD6;
-		_keysArray[103] = Keys.NUMPAD7;
-		_keysArray[104] = Keys.NUMPAD8;
-		_keysArray[105] = Keys.NUMPAD9;
-		_keysArray[34] = Keys.PAGE_DOWN;
-		_keysArray[33] = Keys.PAGE_UP;
-		_keysArray[19] = Keys.PAUSE;
-		//keyTable[] = Keys.RETURN;
-		//keyTable[] = Keys.RIGHT;
-		//keyTable[] = Keys.SEMICOLON;
-		//keyTable[] = Keys.SEPARATOR;
-		_keysArray[16] = Keys.SHIFT;
-		_keysArray[32] = Keys.SPACE;
-		_keysArray[109] = Keys.SUBTRACT;
-		_keysArray[9] = Keys.TAB;
-		//keyTable[] = Keys.UP;
-	}
-
 	protected void initKeysSpecialChars() {
 		_keysSpecialChars.put("!", "1");
 		_keysSpecialChars.put("#", "3");
@@ -1767,6 +1672,18 @@ public class WebDriverToSeleniumBridge
 		_keysSpecialChars.put(")", "0");
 		_keysSpecialChars.put("<", ",");
 		_keysSpecialChars.put(">", ".");
+	}
+
+	protected boolean isValidKeycode(String keycode) {
+		for (Keys keys : Keys.values()) {
+			String keysName = keys.name();
+
+			if (keysName.equals(keycode)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	protected void scrollWebElementIntoView(WebElement webElement) {
@@ -1829,7 +1746,6 @@ public class WebDriverToSeleniumBridge
 	private static Log _log = LogFactoryUtil.getLog(
 		WebDriverToSeleniumBridge.class);
 
-	private Keys[] _keysArray = new Keys[128];
 	private Map<String, String> _keysSpecialChars =
 		new HashMap<String, String>();
 

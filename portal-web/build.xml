@@ -435,6 +435,12 @@
 
 				creoleParserContent = creoleParserContent.replace("= Parse.Simple.Creole;", "= Parse.Simple.Creole;\n\nCKEDITOR.CreoleParser = Parse.Simple.Creole;");
 
+				// Fix paragraphs
+
+				creoleParserContent = creoleParserContent.replace("regex: /(^|\\n)([ \\t]*\\S.*(\\n|$))+/ },", "regex: /(^|\\n)(\\s*\\S.*(\\n|$))/ },");
+				creoleParserContent = creoleParserContent.replace("text: { capture: 0, regex: /(^|\\n)([ \\t]*[^\\s].*(\\n|$))+/ },", "text: { capture: 0, regex: /(^|\\n)(\\s*[^\\s].*(\\n|$))+/ },");
+
+
 				// Set content
 
 				project.setProperty("creole_parser.content", creoleParserContent);
@@ -490,9 +496,9 @@
 		<java
 			classname="com.liferay.portal.tools.SassToCssBuilder"
 			classpathref="project.classpath"
-			failonerror="true"
 			fork="true"
 			newenvironment="true"
+			outputproperty="build-css.output"
 		>
 			<jvmarg value="-Xmx1024m" />
 			<jvmarg value="-Djava.io.tmpdir=${sass.tmp.dir}" />
@@ -506,6 +512,15 @@
 		</java>
 
 		<delete dir="${sass.tmp.dir}" />
+
+		<echo>${build-css.output}</echo>
+
+		<if>
+			<contains string="${build-css.output}" substring="Error" />
+			<then>
+				<fail>Sass to CSS Builder generated exceptions.</fail>
+			</then>
+		</if>
 	</target>
 
 	<target name="build-dtd">

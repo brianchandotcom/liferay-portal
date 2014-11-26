@@ -528,7 +528,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/junit.jar</file-name>
-				<version>4.11</version>
+				<version>4.12 B3</version>
 				<project-name>JUnit</project-name>
 				<project-url>http://www.junit.org/index.htm</project-url>
 				<licenses>
@@ -612,7 +612,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/objenesis.jar</file-name>
-				<version>1.2</version>
+				<version>2.1</version>
 				<project-name>Objenesis</project-name>
 				<project-url>http://code.google.com/p/objenesis</project-url>
 				<licenses>
@@ -671,8 +671,68 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/powermock-mockito.jar</file-name>
-				<version>1.5.5</version>
+				<file-name>lib/development/powermock-api.jar</file-name>
+				<version>1.5.6</version>
+				<project-name>Powermock</project-name>
+				<project-url>http://code.google.com/p/powermock</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/development/powermock-api-support.jar</file-name>
+				<version>1.5.6</version>
+				<project-name>Powermock</project-name>
+				<project-url>http://code.google.com/p/powermock</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/development/powermock-core.jar</file-name>
+				<version>1.5.6</version>
+				<project-name>Powermock</project-name>
+				<project-url>http://code.google.com/p/powermock</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/development/powermock-module-junit4.jar</file-name>
+				<version>1.5.6</version>
+				<project-name>Powermock</project-name>
+				<project-url>http://code.google.com/p/powermock</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/development/powermock-module-junit4-common.jar</file-name>
+				<version>1.5.6</version>
+				<project-name>Powermock</project-name>
+				<project-url>http://code.google.com/p/powermock</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/development/powermock-reflect.jar</file-name>
+				<version>1.5.6</version>
 				<project-name>Powermock</project-name>
 				<project-url>http://code.google.com/p/powermock</project-url>
 				<licenses>

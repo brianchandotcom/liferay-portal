@@ -86,7 +86,7 @@ public class LiferaySeleniumHelper {
 
 		ExecutorService executorService = Executors.newCachedThreadPool();
 
-		Future future = executorService.submit(antCommands);
+		Future<Void> future = executorService.submit(antCommands);
 
 		try {
 			future.get(150, TimeUnit.SECONDS);
@@ -1364,7 +1364,7 @@ public class LiferaySeleniumHelper {
 
 		liferaySelenium.typeKeys(locator, line.trim());
 
-		liferaySelenium.keyPress(locator, "\\13");
+		liferaySelenium.keyPress(locator, "\\RETURN");
 
 		while (y != -1) {
 			x = value.indexOf("}", x) + 1;
@@ -1379,7 +1379,7 @@ public class LiferaySeleniumHelper {
 
 			liferaySelenium.typeKeys(locator, line.trim());
 
-			liferaySelenium.keyPress(locator, "\\13");
+			liferaySelenium.keyPress(locator, "\\RETURN");
 		}
 	}
 

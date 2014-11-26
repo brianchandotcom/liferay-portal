@@ -49,7 +49,7 @@ public class LDAPFilterValidatorImpl implements LDAPFilterValidator {
 		}
 		catch (RecognitionException|RuntimeException re) {
 			if (_log.isErrorEnabled()) {
-				_log.error("Unable to parse filter " + filter, re);
+				_log.error("Unable to parse filter " + filter);
 			}
 
 			return false;

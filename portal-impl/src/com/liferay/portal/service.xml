@@ -544,6 +544,7 @@
 		<column name="friendlyURL" type="String" />
 		<column name="site" type="boolean" />
 		<column name="remoteStagingGroupCount" type="int" />
+		<column name="inheritContent" type="boolean" />
 		<column name="active" type="boolean" />
 
 		<!-- Relationships -->

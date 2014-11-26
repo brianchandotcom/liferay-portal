@@ -14,6 +14,7 @@
 
 package com.liferay.portal.convert;
 
+import com.liferay.portal.SystemException;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -53,9 +54,12 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 import java.io.InputStream;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -63,7 +67,8 @@ import java.util.List;
  * @author Alexander Chow
  * @author László Csontos
  */
-public class ConvertDocumentLibrary extends BaseConvertProcess {
+public class ConvertDocumentLibrary extends BaseConvertProcess
+	implements DLStoreConverter {
 
 	@Override
 	public String getDescription() {
@@ -245,7 +250,8 @@ public class ConvertDocumentLibrary extends BaseConvertProcess {
 		}
 	}
 
-	protected void migrateDLFileEntry(
+	@Override
+	public void migrateDLFileEntry(
 		long companyId, long repositoryId, DLFileEntry dlFileEntry) {
 
 		String fileName = dlFileEntry.getName();
@@ -362,54 +368,27 @@ public class ConvertDocumentLibrary extends BaseConvertProcess {
 		migrateImages();
 		migrateDL();
 		migrateMB();
-		migrateWiki();
+
+
+		Collection<DLStoreConvertProcess> dlStoreConvertProcesses =
+			_getDLStoreConvertProcesses();
+
+		for (DLStoreConvertProcess dlStoreConvertProcess :
+			dlStoreConvertProcesses) {
+
+			dlStoreConvertProcess.migrate(this);
+		}
 	}
 
-	protected void migrateWiki() throws PortalException {
-		int count = WikiPageLocalServiceUtil.getWikiPagesCount();
+	private Collection<DLStoreConvertProcess> _getDLStoreConvertProcesses() {
+		try {
+			Registry registry = RegistryUtil.getRegistry();
 
-		MaintenanceUtil.appendStatus(
-			"Migrating wiki page attachments in " + count + " pages");
-
-		ActionableDynamicQuery actionableDynamicQuery =
-			WikiPageLocalServiceUtil.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
-
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property property = PropertyFactoryUtil.forName("head");
-
-					dynamicQuery.add(property.eq(true));
-				}
-
-			});
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
-
-				@Override
-				public void performAction(Object object) {
-					WikiPage wikiPage = (WikiPage)object;
-
-					for (FileEntry fileEntry :
-							wikiPage.getAttachmentsFileEntries()) {
-
-						DLFileEntry dlFileEntry =
-							(DLFileEntry)fileEntry.getModel();
-
-						migrateDLFileEntry(
-							wikiPage.getCompanyId(),
-							DLFolderConstants.getDataRepositoryId(
-								dlFileEntry.getRepositoryId(),
-								dlFileEntry.getFolderId()),
-							dlFileEntry);
-					}
-				}
-
-			});
-
-		actionableDynamicQuery.performActions();
+			return registry.getServices(DLStoreConvertProcess.class, null);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
 	}
 
 	private static final String _FILE_SYSTEM_STORE_SUFFIX = "FileSystemStore";

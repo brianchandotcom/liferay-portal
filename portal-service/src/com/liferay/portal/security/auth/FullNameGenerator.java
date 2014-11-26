@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.auth;
 
+import java.util.Locale;
+
 /**
  * @author Michael C. Han
  */
@@ -21,6 +23,10 @@ public interface FullNameGenerator {
 
 	public String getFullName(
 		String firstName, String middleName, String lastName);
+
+	public String getLocalizedFullName(
+		String firstName, String middleName, String lastName, Locale locale,
+		int prefixId, int suffixId);
 
 	public String[] splitFullName(String fullName);
 

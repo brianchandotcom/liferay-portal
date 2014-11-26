@@ -15,6 +15,7 @@
 package com.liferay.portal.fabric.netty.codec.serialization;
 
 import com.liferay.portal.fabric.netty.util.NettyUtil;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -42,8 +43,10 @@ import org.junit.Test;
 public class ObjectDecodeChannelInboundHandlerTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			CodeCoverageAssertor.INSTANCE, AspectJNewEnvTestRule.INSTANCE);
 
 	@Test
 	public void testChannelRead() throws Exception {
@@ -145,10 +148,6 @@ public class ObjectDecodeChannelInboundHandlerTest {
 		Assert.assertSame(
 			dateChannelHandler, annotatedObjectDecoder.removeLast());
 	}
-
-	@Rule
-	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		AspectJNewEnvTestRule.INSTANCE;
 
 	private static class DateChannelHandler
 		extends ObjectDecodeChannelInboundHandler<Date> {

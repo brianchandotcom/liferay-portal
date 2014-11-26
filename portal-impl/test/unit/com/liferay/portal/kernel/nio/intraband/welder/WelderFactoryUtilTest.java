@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.nio.intraband.Intraband;
 import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.welder.fifo.FIFOWelder;
 import com.liferay.portal.kernel.nio.intraband.welder.socket.SocketWelder;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -39,8 +40,10 @@ import org.junit.Test;
 public class WelderFactoryUtilTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			CodeCoverageAssertor.INSTANCE, AspectJNewEnvTestRule.INSTANCE);
 
 	@NewEnv(type = NewEnv.Type.NONE)
 	@Test
@@ -140,10 +143,6 @@ public class WelderFactoryUtilTest {
 		Assert.assertSame(
 			SocketWelder.class, WelderFactoryUtil.getWelderClass());
 	}
-
-	@Rule
-	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		AspectJNewEnvTestRule.INSTANCE;
 
 	@Aspect
 	public static class FIFOUtilAdvice {

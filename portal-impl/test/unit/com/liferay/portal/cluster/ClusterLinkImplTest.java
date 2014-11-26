@@ -17,6 +17,7 @@ package com.liferay.portal.cluster;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.Priority;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
@@ -55,8 +56,10 @@ import org.junit.Test;
 public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			CodeCoverageAssertor.INSTANCE, AspectJNewEnvTestRule.INSTANCE);
 
 	@AdviseWith(
 		adviceClasses = {
@@ -518,10 +521,6 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 		clusterLinkImpl.destroy();
 	}
-
-	@Rule
-	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		AspectJNewEnvTestRule.INSTANCE;
 
 	@Aspect
 	public static class TransportationConfigurationAdvice {

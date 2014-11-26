@@ -21,6 +21,7 @@ import com.liferay.portal.cache.memory.MemoryPortalCache;
 import com.liferay.portal.kernel.cache.LowLevelCache;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.model.MVCCModel;
@@ -47,8 +48,10 @@ import org.junit.Test;
 public class MVCCPortalCacheTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			CodeCoverageAssertor.INSTANCE, AspectJNewEnvTestRule.INSTANCE);
 
 	@Before
 	public void setUp() {
@@ -197,10 +200,6 @@ public class MVCCPortalCacheTest {
 	public void testMVCCCacheWithTTL() {
 		doTestMVCCCache(true);
 	}
-
-	@Rule
-	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		AspectJNewEnvTestRule.INSTANCE;
 
 	@Aspect
 	public static class MemoryPortalCacheAdvice {

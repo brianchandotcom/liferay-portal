@@ -22,6 +22,7 @@ import com.liferay.portal.fabric.repository.MockRepository;
 import com.liferay.portal.fabric.worker.FabricWorker;
 import com.liferay.portal.kernel.concurrent.AsyncBroker;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.test.AdviseWith;
@@ -52,8 +53,10 @@ import org.junit.Test;
 public class NettyChannelAttributesTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			CodeCoverageAssertor.INSTANCE, AspectJNewEnvTestRule.INSTANCE);
 
 	@AdviseWith(adviceClasses = AttributeAdvice.class)
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
@@ -195,10 +198,6 @@ public class NettyChannelAttributesTest {
 		Assert.assertEquals(0, NettyChannelAttributes.nextId(_embeddedChannel));
 		Assert.assertEquals(1, NettyChannelAttributes.nextId(_embeddedChannel));
 	}
-
-	@Rule
-	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		AspectJNewEnvTestRule.INSTANCE;
 
 	@Aspect
 	public static class AttributeAdvice {

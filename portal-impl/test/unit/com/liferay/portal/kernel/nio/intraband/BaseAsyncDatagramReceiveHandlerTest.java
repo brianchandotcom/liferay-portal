@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.nio.intraband;
 
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
@@ -37,8 +38,10 @@ import org.junit.Test;
 public class BaseAsyncDatagramReceiveHandlerTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			CodeCoverageAssertor.INSTANCE, AspectJNewEnvTestRule.INSTANCE);
 
 	@AdviseWith(adviceClasses = {PortalExecutorManagerUtilAdvice.class})
 	@Test
@@ -79,10 +82,6 @@ public class BaseAsyncDatagramReceiveHandlerTest {
 
 		Assert.assertTrue(dummyAsyncDatagramReceiveHandler._received);
 	}
-
-	@Rule
-	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		AspectJNewEnvTestRule.INSTANCE;
 
 	private static class DummyAsyncDatagramReceiveHandler
 		extends BaseAsyncDatagramReceiveHandler {

@@ -20,6 +20,7 @@ import com.liferay.portal.cache.TestCacheReplicator;
 import com.liferay.portal.cache.memory.MemoryPortalCache;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.test.AdviseWith;
@@ -45,19 +46,23 @@ import org.junit.Test;
 public class TransactionalPortalCacheTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor() {
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new CodeCoverageAssertor() {
 
-			@Override
-			public void appendAssertClasses(List<Class<?>> assertClasses) {
-				Class<TransactionalPortalCacheHelper> clazz =
-					TransactionalPortalCacheHelper.class;
+				@Override
+				public void appendAssertClasses(List<Class<?>> assertClasses) {
+					Class<TransactionalPortalCacheHelper> clazz =
+						TransactionalPortalCacheHelper.class;
 
-				assertClasses.add(clazz);
-				assertClasses.addAll(Arrays.asList(clazz.getDeclaredClasses()));
-			}
+					assertClasses.add(clazz);
+					assertClasses.addAll(
+						Arrays.asList(clazz.getDeclaredClasses()));
+				}
 
-		};
+			},
+			AspectJNewEnvTestRule.INSTANCE);
 
 	@Before
 	public void setUp() {
@@ -376,10 +381,6 @@ public class TransactionalPortalCacheTest {
 	public void testTransactionalCacheWithTTL() {
 		doTestTransactionalCache(true);
 	}
-
-	@Rule
-	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		AspectJNewEnvTestRule.INSTANCE;
 
 	@Aspect
 	public static class DisableTransactionalCacheAdvice {

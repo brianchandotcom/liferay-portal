@@ -1192,6 +1192,7 @@
 	<bean id="com.liferay.portlet.usersadmin.util.UsersAdminUtil" class="com.liferay.portlet.usersadmin.util.UsersAdminUtil">
 		<property name="usersAdmin" ref="com.liferay.portlet.usersadmin.util.UsersAdmin" />
 	</bean>
+	<bean class="com.liferay.portlet.wiki.convert.WikiDLStoreConvertProcess" />
 	<bean id="com.liferay.portlet.wiki.service.permission.WikiNodePermission" class="com.liferay.portlet.wiki.service.permission.WikiNodePermission" />
 	<bean id="com.liferay.portlet.wiki.service.permission.WikiPagePermission" class="com.liferay.portlet.wiki.service.permission.WikiPagePermission" />
 </beans>

@@ -21,8 +21,10 @@ import com.liferay.portal.test.LiferayIntegrationTestRule;
 import javax.servlet.http.HttpServletResponse;
 
 import org.junit.ClassRule;
+import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  * <p>
@@ -32,6 +34,7 @@ import org.junit.Test;
  *
  * @author Alexander Chow
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class WebDAVLitmusCopyMoveTest extends BaseWebDAVTestCase {
 
 	@ClassRule

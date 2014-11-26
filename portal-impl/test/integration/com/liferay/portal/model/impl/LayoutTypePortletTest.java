@@ -37,12 +37,15 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  * @author Raymond Augé
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class LayoutTypePortletTest {
 
 	@ClassRule

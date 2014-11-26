@@ -81,8 +81,8 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portal.model.ListType"),
 			true);
-	public static final long TYPE_COLUMN_BITMASK = 1L;
-	public static final long NAME_COLUMN_BITMASK = 2L;
+	public static final long NAME_COLUMN_BITMASK = 1L;
+	public static final long TYPE_COLUMN_BITMASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -240,7 +240,15 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 	public void setName(String name) {
 		_columnBitmask = -1L;
 
+		if (_originalName == null) {
+			_originalName = _name;
+		}
+
 		_name = name;
+	}
+
+	public String getOriginalName() {
+		return GetterUtil.getString(_originalName);
 	}
 
 	@JSON
@@ -351,6 +359,8 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 	public void resetOriginalValues() {
 		ListTypeModelImpl listTypeModelImpl = this;
 
+		listTypeModelImpl._originalName = listTypeModelImpl._name;
+
 		listTypeModelImpl._originalType = listTypeModelImpl._type;
 
 		listTypeModelImpl._columnBitmask = 0;
@@ -437,6 +447,7 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 	private long _mvccVersion;
 	private int _listTypeId;
 	private String _name;
+	private String _originalName;
 	private String _type;
 	private String _originalType;
 	private long _columnBitmask;

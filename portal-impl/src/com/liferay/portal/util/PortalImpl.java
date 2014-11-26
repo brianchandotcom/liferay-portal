@@ -5812,25 +5812,8 @@ public class PortalImpl implements Portal {
 	public String getVirtualHostname(LayoutSet layoutSet) {
 		String virtualHostname = layoutSet.getVirtualHostname();
 
-		if (Validator.isNull(virtualHostname) &&
-			Validator.isNotNull(PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME) &&
-			!layoutSet.isPrivateLayout()) {
-
-			try {
-				Group group = GroupLocalServiceUtil.getGroup(
-					layoutSet.getCompanyId(),
-					PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
-
-				if (layoutSet.getGroupId() == group.getGroupId()) {
-					Company company = CompanyLocalServiceUtil.getCompany(
-						layoutSet.getCompanyId());
-
-					virtualHostname = company.getVirtualHostname();
-				}
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+		if (Validator.isNull(virtualHostname)) {
+			virtualHostname = layoutSet.getCompanyFallbackVirtualHostname();
 		}
 
 		return virtualHostname;

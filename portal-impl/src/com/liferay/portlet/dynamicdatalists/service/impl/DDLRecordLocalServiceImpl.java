@@ -494,7 +494,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			}
 		}
 
-		boolean visible = false;
+		boolean visible = true;
 
 		if ((recordVersion != null) && !recordVersion.isApproved()) {
 			visible = false;

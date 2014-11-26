@@ -19,11 +19,21 @@
 		</if>
 	</command>
 
-	<command name="populateFieldSelect">
+	<command name="populateFieldOptions">
 		<var name="key_wfFieldName" value="${wfFieldName}" />
 
 		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_FIELD_HEADER" value1="${wfFieldName}" />
-		<execute action="PGWebform#select" locator-key1="FORM_FIELDS_SELECT_FIELD" value1="${wfFieldValue}" />
+		<execute action="PGWebform#select" locator-key1="FORM_FIELDS_OPTIONS_FIELD" value1="${wfFieldValue}" />
+	</command>
+
+	<command name="populateFieldRadio">
+		<var name="key_wfFieldName" value="${wfFieldName}" />
+
+		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_FIELD_HEADER" value1="${wfFieldName}" />
+
+		<var name="key_wfRadioFieldOption" value="${wfFieldValue}" />
+
+		<execute action="PGWebform#click" locator-key1="FORM_FIELDS_RADIO_FIELD_OPTION" />
 	</command>
 
 	<command name="populateFieldText">
@@ -40,9 +50,15 @@
 		<execute action="PGWebform#type" locator-key1="FORM_FIELDS_TEXT_BOX_FIELD" value1="${wfFieldValue}" />
 	</command>
 
+	<command name="sendBlankPG">
+		<execute action="PGWebform#assertClick" locator-key1="SEND_BUTTON" value1="Send" />
+		<execute action="PGWebform#assertElementNotPresent" locator-key1="SUCCESS_MESSAGE" />
+		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_FIELD_MANDATORY_MESSAGE" value1="This field is mandatory." />
+	</command>
+
 	<command name="sendPG">
 		<execute action="PGWebform#assertClick" locator-key1="SEND_BUTTON" value1="Send" />
-		<execute action="PGWebform#assertTextEquals" locator-key1="SUCCESS_MESSAGE_FORM" value1="The form information was sent successfully." />
+		<execute action="PGWebform#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="The form information was sent successfully." />
 	</command>
 
 	<command name="viewFormFieldCheckBox">
@@ -52,11 +68,23 @@
 		<execute action="PGWebform#assertElementPresent" locator-key1="FORM_FIELDS_CHECKBOX_FIELD" />
 	</command>
 
-	<command name="viewFormFieldSelect">
+	<command name="viewFormFieldOptions">
 		<var name="key_wfFieldName" value="${wfFieldName}" />
 
 		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_FIELD_HEADER" value1="${wfFieldName}" />
-		<execute action="PGWebform#assertElementPresent" locator-key1="FORM_FIELDS_SELECT_FIELD" />
+		<execute action="PGWebform#assertElementPresent" locator-key1="FORM_FIELDS_OPTIONS_FIELD" />
+	</command>
+
+	<command name="viewFormFieldRadio">
+		<var name="key_wfFieldName" value="${wfFieldName}" />
+
+		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_FIELD_HEADER" value1="${wfFieldName}" />
+
+		<for list="${optionsList}" param="wfRadioFieldOption">
+			<var name="key_wfRadioFieldOption" value="${wfRadioFieldOption}" />
+
+			<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_RADIO_FIELD_OPTION_LABEL" value1="${wfRadioFieldOption}" />
+		</for>
 	</command>
 
 	<command name="viewFormFieldText">
@@ -74,7 +102,7 @@
 	</command>
 
 	<command name="viewPG">
-		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_INFORMATION_TITLE" value1="${formInformationTitle}" />
-		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_INFORMATION_DESCRIPTION" value1="${formInformationDescription}" />
+		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_INFORMATION_TITLE" value1="${wfInformationTitle}" />
+		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_INFORMATION_DESCRIPTION" value1="${wfInformationDescription}" />
 	</command>
 </definition>

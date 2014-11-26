@@ -16,8 +16,30 @@
 		</execute>
 
 		<execute action="PGWebformConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
-		<execute action="PGWebformConfiguration#type" locator-key1="SETUP_FORM_INFORMATION_TITLE_FIELD" value1="${formInformationTitle}" />
-		<execute action="PGWebformConfiguration#type" locator-key1="SETUP_FORM_INFORMATION_DESCRIPTION_FIELD" value1="${formInformationDescription}" />
+
+		<if>
+			<isset var="wfInformationTitle" />
+			<then>
+				<execute action="PGWebformConfiguration#type" locator-key1="SETUP_FORM_INFORMATION_TITLE_FIELD" value1="${wfInformationTitle}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="wfInformationDescription" />
+			<then>
+				<execute action="PGWebformConfiguration#type" locator-key1="SETUP_FORM_INFORMATION_DESCRIPTION_FIELD" value1="${wfInformationDescription}" />
+			</then>
+		</if>
+	</command>
+
+	<command name="deleteField">
+		<execute macro="WebFormPortlet#viewField" />
+
+		<var name="key_wfFieldName" value="${wfFieldName}" />
+
+		<execute action="PGWebformConfiguration#click" locator-key1="SETUP_FORM_FIELDS_DELETE_ROW_BUTTON" />
+
+		<execute macro="WebFormPortlet#viewFieldNotPresent" />
 	</command>
 
 	<command name="editField">
@@ -32,6 +54,21 @@
 				<var name="key_wfNewFieldName" value="${wfNewFieldName}" />
 
 				<execute action="PGWebformConfiguration#select" locator-key1="SETUP_FORM_FIELDS_TYPE_SELECT" value1="${wfFieldType}" />
+			</then>
+		</if>
+
+		<if>
+			<and>
+				<or>
+					<equals arg1="${wfFieldType}" arg2="Options" />
+					<equals arg1="${wfFieldType}" arg2="Radio Buttons" />
+				</or>
+				<isset var="optionsList" />
+			</and>
+			<then>
+				<var name="key_wfNewFieldName" value="${wfNewFieldName}" />
+
+				<execute action="PGWebformConfiguration#type" locator-key1="SETUP_FORM_FIELDS_OPTIONS_FIELD" value1="${optionsList}" />
 			</then>
 		</if>
 

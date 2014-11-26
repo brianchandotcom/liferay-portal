@@ -16,6 +16,7 @@ package com.liferay.portal.test;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.test.BaseTestRule.StatementWrapper;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -51,14 +52,14 @@ public class TransactionalTestRule implements TestRule {
 	}
 
 	@Override
-	public Statement apply(final Statement statement, Description description) {
+	public Statement apply(Statement statement, Description description) {
 		String methodName = description.getMethodName();
 
 		if (methodName == null) {
 			return statement;
 		}
 
-		return new Statement() {
+		return new StatementWrapper(statement) {
 
 			@Override
 			public void evaluate() throws Throwable {

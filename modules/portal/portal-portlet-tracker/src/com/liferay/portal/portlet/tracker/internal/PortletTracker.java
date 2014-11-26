@@ -1018,6 +1018,7 @@ public class PortletTracker
 		properties.put(
 			"servlet.init.compilerClassName",
 			"com.liferay.portal.servlet.jsp.compiler.compiler.JspCompiler");
+		properties.put("servlet.init.development", "false");
 		properties.put("servlet.init.httpMethods", "GET,POST,HEAD");
 		properties.put("servlet.init.keepgenerated", "true");
 		properties.put("servlet.init.logVerbosityLevel", "DEBUG");

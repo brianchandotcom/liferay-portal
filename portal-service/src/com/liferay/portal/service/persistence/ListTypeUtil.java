@@ -247,6 +247,69 @@ public class ListTypeUtil {
 	}
 
 	/**
+	* Returns the list type where type = &#63; and name = &#63; or throws a {@link com.liferay.portal.NoSuchListTypeException} if it could not be found.
+	*
+	* @param type the type
+	* @param name the name
+	* @return the matching list type
+	* @throws com.liferay.portal.NoSuchListTypeException if a matching list type could not be found
+	*/
+	public static com.liferay.portal.model.ListType findByT_N(
+		java.lang.String type, java.lang.String name)
+		throws com.liferay.portal.NoSuchListTypeException {
+		return getPersistence().findByT_N(type, name);
+	}
+
+	/**
+	* Returns the list type where type = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param type the type
+	* @param name the name
+	* @return the matching list type, or <code>null</code> if a matching list type could not be found
+	*/
+	public static com.liferay.portal.model.ListType fetchByT_N(
+		java.lang.String type, java.lang.String name) {
+		return getPersistence().fetchByT_N(type, name);
+	}
+
+	/**
+	* Returns the list type where type = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param type the type
+	* @param name the name
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching list type, or <code>null</code> if a matching list type could not be found
+	*/
+	public static com.liferay.portal.model.ListType fetchByT_N(
+		java.lang.String type, java.lang.String name, boolean retrieveFromCache) {
+		return getPersistence().fetchByT_N(type, name, retrieveFromCache);
+	}
+
+	/**
+	* Removes the list type where type = &#63; and name = &#63; from the database.
+	*
+	* @param type the type
+	* @param name the name
+	* @return the list type that was removed
+	*/
+	public static com.liferay.portal.model.ListType removeByT_N(
+		java.lang.String type, java.lang.String name)
+		throws com.liferay.portal.NoSuchListTypeException {
+		return getPersistence().removeByT_N(type, name);
+	}
+
+	/**
+	* Returns the number of list types where type = &#63; and name = &#63;.
+	*
+	* @param type the type
+	* @param name the name
+	* @return the number of matching list types
+	*/
+	public static int countByT_N(java.lang.String type, java.lang.String name) {
+		return getPersistence().countByT_N(type, name);
+	}
+
+	/**
 	* Caches the list type in the entity cache if it is enabled.
 	*
 	* @param listType the list type

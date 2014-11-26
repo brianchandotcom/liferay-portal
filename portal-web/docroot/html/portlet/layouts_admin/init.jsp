@@ -16,7 +16,9 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.DuplicateLockException" %><%@
+<%@ page import="com.liferay.portal.DuplicateGroupException" %><%@
+page import="com.liferay.portal.DuplicateLockException" %><%@
+page import="com.liferay.portal.GroupNameException" %><%@
 page import="com.liferay.portal.ImageTypeException" %><%@
 page import="com.liferay.portal.LARFileException" %><%@
 page import="com.liferay.portal.LARFileNameException" %><%@

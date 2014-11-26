@@ -776,6 +776,10 @@
 
 	<definition name="portlet.layouts_admin" extends="portlet" />
 
+	<definition name="portlet.layouts_admin.add_group" extends="portlet.layouts_admin">
+		<put name="portlet_content" value="/portlet/layouts_admin/add_group.jsp" />
+	</definition>
+
 	<definition name="portlet.layouts_admin.add_layout" extends="portlet.layouts_admin">
 		<put name="portlet_content" value="/portlet/layouts_admin/add_layout.jsp" />
 	</definition>

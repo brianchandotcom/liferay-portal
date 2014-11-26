@@ -199,6 +199,15 @@ Group selGroup = layoutsAdminDisplayContext.getSelGroup();
 					selectedLayoutIds="<%= selectedLayoutIds %>"
 					treeId="layoutsTree"
 				/>
+
+				<portlet:renderURL var="addGroupURL">
+					<portlet:param name="struts_action" value="/layouts_admin/add_group" />
+					<portlet:param name="parentGroupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+				</portlet:renderURL>
+
+				<aui:button-row>
+					<aui:button href="<%= addGroupURL %>" type="submit" value="add-new-group" />
+				</aui:button-row>
 			</div>
 		</c:if>
 

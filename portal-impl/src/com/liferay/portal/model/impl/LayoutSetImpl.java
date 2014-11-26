@@ -23,16 +23,19 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheField;
 import com.liferay.portal.model.ColorScheme;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.model.VirtualHost;
+import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.ThemeLocalServiceUtil;
 import com.liferay.portal.service.VirtualHostLocalServiceUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
@@ -65,6 +68,35 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	public ColorScheme getColorScheme() {
 		return ThemeLocalServiceUtil.getColorScheme(
 			getCompanyId(), getTheme().getThemeId(), getColorSchemeId(), false);
+	}
+
+	@Override
+	public String getCompanyFallbackVirtualHostname() {
+		if (_companyFallbackVirtualHostname != null) {
+			return _companyFallbackVirtualHostname;
+		}
+
+		_companyFallbackVirtualHostname = StringPool.BLANK;
+
+		if (Validator.isNotNull(
+				PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME) &&
+			!isPrivateLayout()) {
+
+			Group group = GroupLocalServiceUtil.fetchGroup(
+				getCompanyId(), PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
+
+			if ((group != null) && (getGroupId() == group.getGroupId())) {
+				Company company = CompanyLocalServiceUtil.fetchCompany(
+					getCompanyId());
+
+				if (company != null) {
+					_companyFallbackVirtualHostname =
+						company.getVirtualHostname();
+				}
+			}
+		}
+
+		return _companyFallbackVirtualHostname;
 	}
 
 	/**
@@ -222,20 +254,14 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 			return _virtualHostname;
 		}
 
-		try {
-			VirtualHost virtualHost =
-				VirtualHostLocalServiceUtil.fetchVirtualHost(
-					getCompanyId(), getLayoutSetId());
+		VirtualHost virtualHost = VirtualHostLocalServiceUtil.fetchVirtualHost(
+			getCompanyId(), getLayoutSetId());
 
-			if (virtualHost == null) {
-				_virtualHostname = StringPool.BLANK;
-			}
-			else {
-				_virtualHostname = virtualHost.getHostname();
-			}
-		}
-		catch (Exception e) {
+		if (virtualHost == null) {
 			_virtualHostname = StringPool.BLANK;
+		}
+		else {
+			_virtualHostname = virtualHost.getHostname();
 		}
 
 		return _virtualHostname;
@@ -268,6 +294,13 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	@Override
 	public boolean isLogo() {
 		return getLogo();
+	}
+
+	@Override
+	public void setCompanyFallbackVirtualHostname(
+		String companyFallbackVirtualHostname) {
+
+		_companyFallbackVirtualHostname = companyFallbackVirtualHostname;
 	}
 
 	@Override
@@ -323,6 +356,9 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(LayoutSetImpl.class);
+
+	@CacheField
+	private String _companyFallbackVirtualHostname;
 
 	private UnicodeProperties _settingsProperties;
 

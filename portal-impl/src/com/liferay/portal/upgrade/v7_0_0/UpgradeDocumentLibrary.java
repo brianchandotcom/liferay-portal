@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.portletrepository.PortletRepository;
-import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
@@ -103,10 +102,10 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	}
 
 	protected void updateClassNameIds() throws Exception {
-		long liferayRepositoryClassNameId =
-			ClassNameLocalServiceUtil.getClassNameId(LiferayRepository.class);
-		long portletRepositoryClassNameId =
-			ClassNameLocalServiceUtil.getClassNameId(PortletRepository.class);
+		long liferayRepositoryClassNameId = PortalUtil.getClassNameId(
+			LiferayRepository.class);
+		long portletRepositoryClassNameId = PortalUtil.getClassNameId(
+			PortletRepository.class);
 
 		Connection con = null;
 		PreparedStatement ps = null;

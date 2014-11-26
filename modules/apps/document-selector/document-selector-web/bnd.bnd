@@ -1,4 +1,25 @@
 Bundle-Name: Liferay Document Selector Web
 Bundle-SymbolicName: com.liferay.document.selector.web
 Bundle-Version: 1.0.0
-Include-Resource: classes
+Import-Package: \
+	${bnd.jsp.support.imports},\
+	\
+	org.apache.struts.action,\
+	org.apache.struts.action.*,\
+	org.apache.struts.config,\
+	org.apache.struts.config.*,\
+	org.apache.struts.util,\
+	\
+	javax.portlet,\
+	javax.portlet.filter,\
+	javax.portlet.*,\
+	*
+Include-Resource:\
+	WEB-INF/classes/portlet.properties=docroot/WEB-INF/src/portlet.properties
+Web-ContextPath: /document-selector-web
+
+-donotcopy=(docroot/WEB-INF/src|.*\.jar|.*\.java)
+-wab: docroot
+-wablib:\
+	${app.server.lib.portal.dir}/util-java.jar,\
+	${app.server.lib.portal.dir}/util-taglib.jar

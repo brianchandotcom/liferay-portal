@@ -1970,17 +1970,6 @@
 		<footer-portlet-javascript>/html/portlet/document_library/js/upload.js</footer-portlet-javascript>
 		<css-class-wrapper>portlet-document-library</css-class-wrapper>
 	</portlet>
-	<portlet>
-		<portlet-name>200</portlet-name>
-		<struts-path>document_selector</struts-path>
-		<use-default-template>false</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<css-class-wrapper>portlet-document-selector</css-class-wrapper>
-		<add-default-resource>true</add-default-resource>
-		<system>true</system>
-	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>
 		<role-link>Administrator</role-link>

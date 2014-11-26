@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.documentselector.action;
+package com.liferay.documentselector.web.documentselector.portlet.action;
 
+import com.liferay.documentselector.util.DocumentSelectorUtil;
 import com.liferay.portal.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -52,7 +53,7 @@ import com.liferay.portlet.documentlibrary.action.ActionUtil;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
-import com.liferay.portlet.documentselector.util.DocumentSelectorUtil;
+import com.liferay.documentselector.util.DocumentSelectorUtil;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
 
 import java.io.InputStream;

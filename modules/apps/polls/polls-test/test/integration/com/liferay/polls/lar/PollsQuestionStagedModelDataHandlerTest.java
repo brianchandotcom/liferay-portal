@@ -41,7 +41,7 @@ public class PollsQuestionStagedModelDataHandlerTest
 
 	@Rule
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(
-		new DeleteAfterTestRunTestRule(this), TransactionalTestRule.INSTANCE);
+		new DeleteAfterTestRunTestRule(), TransactionalTestRule.INSTANCE);
 
 	@Override
 	protected StagedModel addStagedModel(

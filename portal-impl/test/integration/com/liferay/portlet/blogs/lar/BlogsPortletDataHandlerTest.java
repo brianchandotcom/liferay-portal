@@ -15,25 +15,27 @@
 package com.liferay.portlet.blogs.lar;
 
 import com.liferay.portal.kernel.lar.PortletDataHandler;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.lar.BasePortletDataHandlerTestCase;
+import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 
 import org.junit.ClassRule;
-import org.junit.runner.RunWith;
+import org.junit.Rule;
 
 /**
  * @author Zsolt Berentey
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class BlogsPortletDataHandlerTest
 	extends BasePortletDataHandlerTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
 	@Override
 	protected void addStagedModels() throws Exception {

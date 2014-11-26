@@ -19,10 +19,10 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.test.DeleteAfterTestRun;
+import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailTestRule;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.MailServiceTestUtil;
 import com.liferay.portal.util.test.UserTestUtil;
@@ -37,12 +37,10 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Roberto Díaz
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class CommentsSubscriptionTest {
 
@@ -50,7 +48,8 @@ public class CommentsSubscriptionTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			MainServletTestRule.INSTANCE, SynchronousMailTestRule.INSTANCE);
+			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			SynchronousMailTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {

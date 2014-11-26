@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.diff.Diff;
 import com.liferay.portal.kernel.diff.DiffResult;
 import com.liferay.portal.kernel.diff.DiffUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.LiferayIntegrationTestRule;
 
 import java.io.Reader;
 
@@ -26,14 +26,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Bruno Farache
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class DiffImplTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testEight() {

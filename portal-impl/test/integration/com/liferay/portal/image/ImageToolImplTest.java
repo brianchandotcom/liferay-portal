@@ -17,10 +17,11 @@ package com.liferay.portal.image;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.image.ImageToolUtil;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
@@ -35,19 +36,20 @@ import javax.imageio.ImageIO;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Shuyang Zhou
  * @author Sampsa Sohlman
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class ImageToolImplTest {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
 	@Test
 	public void testCropBMP() throws Exception {

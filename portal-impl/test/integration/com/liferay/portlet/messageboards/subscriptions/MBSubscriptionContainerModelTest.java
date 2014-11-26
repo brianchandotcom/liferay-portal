@@ -15,10 +15,10 @@
 package com.liferay.portlet.messageboards.subscriptions;
 
 import com.liferay.portal.kernel.test.AggregateTestRule;
+import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailTestRule;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.subscriptions.BaseSubscriptionContainerModelTestCase;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -28,12 +28,10 @@ import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
-import org.junit.runner.RunWith;
 
 /**
  * @author Roberto Díaz
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class MBSubscriptionContainerModelTest
 	extends BaseSubscriptionContainerModelTestCase {
@@ -42,7 +40,8 @@ public class MBSubscriptionContainerModelTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			MainServletTestRule.INSTANCE, SynchronousMailTestRule.INSTANCE);
+			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			SynchronousMailTestRule.INSTANCE);
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {

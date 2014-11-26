@@ -22,17 +22,15 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.model.OrgGroupRole;
+import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.PersistenceTestRule;
 import com.liferay.portal.test.TransactionalTestRule;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.RandomTestUtil;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
-
-import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
@@ -46,10 +44,10 @@ import java.util.Set;
 /**
  * @generated
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class OrgGroupRolePersistenceTest {
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(PersistenceTestRule.INSTANCE,
+	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@After

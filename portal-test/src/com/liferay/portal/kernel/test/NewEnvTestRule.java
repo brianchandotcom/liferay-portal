@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.process.local.LocalProcessExecutor;
 import com.liferay.portal.kernel.process.local.LocalProcessLauncher.ProcessContext;
 import com.liferay.portal.kernel.process.local.LocalProcessLauncher.ShutdownHook;
+import com.liferay.portal.kernel.test.BaseTestRule.StatementWrapper;
 import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -76,7 +77,7 @@ public class NewEnvTestRule implements TestRule {
 		}
 
 		if (NewEnv.Type.CLASSLOADER == newEnv.type()) {
-			return new RunInNewClassLoaderStatement(description);
+			return new RunInNewClassLoaderStatement(statement, description);
 		}
 
 		Builder builder = new Builder();
@@ -85,7 +86,7 @@ public class NewEnvTestRule implements TestRule {
 		builder.setBootstrapClassPath(CLASS_PATH);
 		builder.setRuntimeClassPath(CLASS_PATH);
 
-		return new RunInNewJVMStatment(builder.build(), description);
+		return new RunInNewJVMStatment(builder.build(), statement, description);
 	}
 
 	protected static void attachProcess(String message) {
@@ -306,9 +307,13 @@ public class NewEnvTestRule implements TestRule {
 
 	}
 
-	private class RunInNewClassLoaderStatement extends Statement {
+	private class RunInNewClassLoaderStatement extends StatementWrapper {
 
-		public RunInNewClassLoaderStatement(Description description) {
+		public RunInNewClassLoaderStatement(
+			Statement statement, Description description) {
+
+			super(statement);
+
 			Class<?> testClass = description.getTestClass();
 
 			_afterMethodKeys = getMethodKeys(testClass, After.class);
@@ -376,10 +381,13 @@ public class NewEnvTestRule implements TestRule {
 
 	}
 
-	private class RunInNewJVMStatment extends Statement {
+	private class RunInNewJVMStatment extends StatementWrapper {
 
 		public RunInNewJVMStatment(
-			ProcessConfig processConfig, Description description) {
+			ProcessConfig processConfig, Statement statement,
+			Description description) {
+
+			super(statement);
 
 			_processConfig = processConfig;
 

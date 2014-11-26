@@ -16,10 +16,10 @@ package com.liferay.portlet.documentlibrary.subscriptions;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.AggregateTestRule;
+import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailTestRule;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.subscriptions.BaseSubscriptionClassTypeTestCase;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -34,13 +34,11 @@ import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
-import org.junit.runner.RunWith;
 
 /**
  * @author Sergio González
  * @author Roberto Díaz
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class DLSubscriptionClassTypeTest
 	extends BaseSubscriptionClassTypeTestCase {
@@ -49,7 +47,8 @@ public class DLSubscriptionClassTypeTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			MainServletTestRule.INSTANCE, SynchronousMailTestRule.INSTANCE);
+			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			SynchronousMailTestRule.INSTANCE);
 
 	@Override
 	protected long addBaseModelWithClassType(

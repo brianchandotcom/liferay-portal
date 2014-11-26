@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.test.runners;
+package com.liferay.portal.test;
 
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.test.BaseTestRule;
-import com.liferay.portal.kernel.test.DescriptionComparator;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -30,32 +30,18 @@ import java.util.List;
 
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
-import org.junit.runner.manipulation.Sorter;
-import org.junit.runners.BlockJUnit4ClassRunner;
-import org.junit.runners.model.InitializationError;
 
 /**
- * @author Miguel Pastor
- * @author Carlos Sierra
  * @author Shuyang Zhou
  */
-public class LiferayIntegrationJUnitTestRunner extends BlockJUnit4ClassRunner {
+public class LiferayIntegrationTestRule extends AggregateTestRule {
 
-	public LiferayIntegrationJUnitTestRunner(Class<?> clazz)
-		throws InitializationError {
+	public LiferayIntegrationTestRule() {
+		super(
+			LogAssertionTestRule.INSTANCE, _clearThreadLocalTestRule,
+			_uniqueStringRandomizerBumperTestRule,
+			new DeleteAfterTestRunTestRule());
 
-		super(clazz);
-
-		initApplicationContext();
-
-		if (System.getProperty("external-properties") == null) {
-			System.setProperty("external-properties", "portal-test.properties");
-		}
-
-		sort(new Sorter(new DescriptionComparator()));
-	}
-
-	public void initApplicationContext() {
 		System.setProperty("catalina.base", ".");
 
 		ResetDatabaseUtilDataSource.initialize();
@@ -64,33 +50,13 @@ public class LiferayIntegrationJUnitTestRunner extends BlockJUnit4ClassRunner {
 			PropsUtil.getArray(PropsKeys.SPRING_CONFIGS));
 
 		InitUtil.initWithSpring(configLocations, true);
+
+		if (System.getProperty("external-properties") == null) {
+			System.setProperty("external-properties", "portal-test.properties");
+		}
 	}
 
-	@Override
-	protected List<TestRule> classRules() {
-		List<TestRule> testRules = super.classRules();
-
-		testRules.add(_uniqueStringRandomizerBumperTestRule);
-
-		testRules.add(_clearThreadLocalTestRule);
-
-		testRules.add(LogAssertionTestRule.INSTANCE);
-
-		return testRules;
-	}
-
-	@Override
-	protected List<TestRule> getTestRules(Object object) {
-		List<TestRule> testRules = super.getTestRules(object);
-
-		testRules.add(new DeleteAfterTestRunTestRule(object));
-
-		testRules.add(LogAssertionTestRule.INSTANCE);
-
-		return testRules;
-	}
-
-	private final TestRule _clearThreadLocalTestRule =
+	private static final TestRule _clearThreadLocalTestRule =
 		new BaseTestRule<Object, Object>() {
 
 			@Override
@@ -100,7 +66,7 @@ public class LiferayIntegrationJUnitTestRunner extends BlockJUnit4ClassRunner {
 
 		};
 
-	private final TestRule _uniqueStringRandomizerBumperTestRule =
+	private static final TestRule _uniqueStringRandomizerBumperTestRule =
 		new BaseTestRule<Object, Object>() {
 
 			@Override

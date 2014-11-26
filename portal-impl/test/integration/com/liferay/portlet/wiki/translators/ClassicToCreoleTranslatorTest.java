@@ -14,17 +14,22 @@
 
 package com.liferay.portlet.wiki.translators;
 
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Jorge Ferrer
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class ClassicToCreoleTranslatorTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
+		new LiferayIntegrationTestRule();
 
 	public ClassicToCreoleTranslatorTest() {
 		_classicToCreoleTranslator = new ClassicToCreoleTranslator();

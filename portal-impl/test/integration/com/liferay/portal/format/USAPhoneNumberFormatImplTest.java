@@ -15,17 +15,22 @@
 package com.liferay.portal.format;
 
 import com.liferay.portal.kernel.format.PhoneNumberFormat;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.LiferayIntegrationTestRule;
 
-import org.junit.runner.RunWith;
+import org.junit.ClassRule;
+import org.junit.Rule;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Manuel de la Peña
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class USAPhoneNumberFormatImplTest
 	extends BasePhoneNumberFormatImplTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Override
 	public String[] getInvalidPhoneNumbers() {

@@ -14,6 +14,11 @@
 
 package com.liferay.portal.kernel.test;
 
+import org.junit.internal.runners.statements.ExpectException;
+import org.junit.internal.runners.statements.FailOnTimeout;
+import org.junit.internal.runners.statements.InvokeMethod;
+import org.junit.internal.runners.statements.RunAfters;
+import org.junit.internal.runners.statements.RunBefores;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
@@ -25,9 +30,9 @@ public class BaseTestRule<C, M> implements TestRule {
 
 	@Override
 	public final Statement apply(
-		final Statement statement, final Description description) {
+		Statement statement, final Description description) {
 
-		return new Statement() {
+		return new StatementWrapper(statement) {
 
 			@Override
 			public void evaluate() throws Throwable {
@@ -40,6 +45,8 @@ public class BaseTestRule<C, M> implements TestRule {
 					c = beforeClass(description);
 				}
 				else {
+					setInstance(inspectTarget(statement));
+
 					m = beforeMethod(description);
 				}
 
@@ -59,6 +66,20 @@ public class BaseTestRule<C, M> implements TestRule {
 		};
 	}
 
+	public static abstract class StatementWrapper extends Statement {
+
+		public StatementWrapper(Statement statement) {
+			this.statement = statement;
+		}
+
+		public Statement getStatement() {
+			return statement;
+		}
+
+		protected final Statement statement;
+
+	}
+
 	protected void afterClass(Description description, C c) throws Throwable {
 	}
 
@@ -71,6 +92,35 @@ public class BaseTestRule<C, M> implements TestRule {
 
 	protected M beforeMethod(Description description) throws Throwable {
 		return null;
+	}
+
+	protected Object inspectTarget(Statement statement) {
+		while (statement instanceof StatementWrapper) {
+			StatementWrapper statementWrapper = (StatementWrapper)statement;
+
+			statement = statementWrapper.getStatement();
+		}
+
+		if ((statement instanceof InvokeMethod) ||
+			(statement instanceof RunAfters) ||
+			(statement instanceof RunBefores)) {
+
+			return ReflectionTestUtil.getFieldValue(statement, "target");
+		}
+		else if (statement instanceof ExpectException) {
+			return inspectTarget(
+				ReflectionTestUtil.<Statement>getFieldValue(statement, "next"));
+		}
+		else if (statement instanceof FailOnTimeout) {
+			return inspectTarget(
+				ReflectionTestUtil.<Statement>getFieldValue(
+					statement, "originalStatement"));
+		}
+
+		throw new IllegalStateException("Unknow statement " + statement);
+	}
+
+	protected void setInstance(Object instance) {
 	}
 
 }

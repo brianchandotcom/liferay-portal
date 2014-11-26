@@ -15,24 +15,26 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.exception.BulkException;
+import com.liferay.portal.kernel.test.AggregateTestRule;
+import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.verify.model.LayoutVerifiableModel;
 import com.liferay.portal.verify.model.VerifiableUUIDModel;
 
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Manuel de la Peña
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
 	@Test
 	public void testVerifyModel() throws Exception {

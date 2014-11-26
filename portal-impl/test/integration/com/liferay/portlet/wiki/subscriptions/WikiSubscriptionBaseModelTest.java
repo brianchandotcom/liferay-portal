@@ -18,10 +18,10 @@ import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailTestRule;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.subscriptions.BaseSubscriptionBaseModelTestCase;
 import com.liferay.portal.util.test.RoleTestUtil;
 import com.liferay.portlet.wiki.model.WikiNode;
@@ -33,13 +33,11 @@ import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Sergio González
  * @author Roberto Díaz
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class WikiSubscriptionBaseModelTest
 	extends BaseSubscriptionBaseModelTestCase {
@@ -48,7 +46,8 @@ public class WikiSubscriptionBaseModelTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			MainServletTestRule.INSTANCE, SynchronousMailTestRule.INSTANCE);
+			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			SynchronousMailTestRule.INSTANCE);
 
 	@Ignore
 	@Override

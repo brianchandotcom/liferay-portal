@@ -18,9 +18,9 @@ import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.TransactionalTestRule;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.portlet.wiki.util.test.WikiTestUtil;
@@ -30,12 +30,10 @@ import java.util.Map;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
-import org.junit.runner.RunWith;
 
 /**
  * @author Zsolt Berentey
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class WikiNodeStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
@@ -43,7 +41,8 @@ public class WikiNodeStagedModelDataHandlerTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			MainServletTestRule.INSTANCE, TransactionalTestRule.INSTANCE);
+			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			TransactionalTestRule.INSTANCE);
 
 	@Override
 	protected StagedModel addStagedModel(

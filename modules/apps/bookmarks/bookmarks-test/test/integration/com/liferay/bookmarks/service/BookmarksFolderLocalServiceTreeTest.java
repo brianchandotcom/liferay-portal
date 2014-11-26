@@ -17,10 +17,11 @@ package com.liferay.bookmarks.service;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.util.BookmarksTestUtil;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.model.TreeModel;
 import com.liferay.portal.service.BaseLocalServiceTreeTestCase;
+import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 
@@ -29,19 +30,20 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Shinn Lok
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class BookmarksFolderLocalServiceTreeTest
 	extends BaseLocalServiceTreeTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
 	@Test
 	public void testFolderTreePathWhenMovingFolderWithSubfolder()

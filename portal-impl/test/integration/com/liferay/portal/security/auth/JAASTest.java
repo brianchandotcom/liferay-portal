@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.jaas.PortalPrincipal;
 import com.liferay.portal.kernel.security.jaas.PortalRole;
 import com.liferay.portal.kernel.servlet.HttpMethods;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -29,9 +30,9 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.jaas.JAASHelper;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.servlet.MainServlet;
+import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.mock.AutoDeployMockServletContext;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.TestPropsValues;
 
@@ -64,8 +65,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -76,12 +77,13 @@ import org.springframework.mock.web.MockServletContext;
 /**
  * @author Raymond Augé
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class JAASTest {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {

@@ -19,12 +19,13 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.model.Lock;
+import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.log.ExpectedLog;
 import com.liferay.portal.test.log.ExpectedLogs;
 import com.liferay.portal.test.log.ExpectedType;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 
 import java.sql.BatchUpdateException;
 
@@ -42,18 +43,19 @@ import org.hibernate.util.JDBCExceptionReporter;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Shuyang Zhou
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class LockLocalServiceTest {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
 	@Before
 	public void setUp() {

@@ -14,29 +14,31 @@
 
 package com.liferay.portlet.messageboards.service.permission;
 
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.permission.BasePermissionTestCase;
+import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Eric Chin
  * @author Shinn Lok
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class MBMessagePermissionTest extends BasePermissionTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
 	@Test
 	public void testContains() throws Exception {

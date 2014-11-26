@@ -49,7 +49,7 @@ public class PollsVoteStagedModelDataHandlerTest
 
 	@Rule
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(
-		new DeleteAfterTestRunTestRule(this), TransactionalTestRule.INSTANCE);
+		new DeleteAfterTestRunTestRule(), TransactionalTestRule.INSTANCE);
 
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(

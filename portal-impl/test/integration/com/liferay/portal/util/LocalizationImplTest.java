@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
 
@@ -42,8 +42,9 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.portlet.MockPortletRequest;
 
@@ -51,8 +52,12 @@ import org.springframework.mock.web.portlet.MockPortletRequest;
  * @author Connor McKay
  * @author Peter Borkuti
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class LocalizationImplTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
+		new LiferayIntegrationTestRule();
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

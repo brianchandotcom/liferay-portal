@@ -44,13 +44,13 @@ import com.liferay.portal.security.permission.DoAsUserThread;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.DeleteAfterTestRun;
+import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationTestRule;
 import com.liferay.portal.test.log.ExpectedLog;
 import com.liferay.portal.test.log.ExpectedLogs;
 import com.liferay.portal.test.log.ExpectedType;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.UserTestUtil;
@@ -87,7 +87,6 @@ import org.junit.runner.RunWith;
 @RunWith(Enclosed.class)
 public class DLAppServiceTest extends BaseDLAppTestCase {
 
-	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	@Sync
 	public static class WhenAddingAFileEntry extends BaseDLAppTestCase {
 
@@ -95,7 +94,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
-				MainServletTestRule.INSTANCE,
+				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test
@@ -430,7 +429,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	}
 
-	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	@Sync
 	public static class WhenAddingAFolder extends BaseDLAppTestCase {
 
@@ -438,7 +436,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
-				MainServletTestRule.INSTANCE,
+				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test
@@ -470,7 +468,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	}
 
-	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	@Sync
 	public static class WhenCheckingInAFileEntry extends BaseDLAppTestCase {
 
@@ -478,7 +475,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
-				MainServletTestRule.INSTANCE,
+				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test
@@ -551,7 +548,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	}
 
-	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	@Sync
 	public static class WhenCheckingOutAFileEntry extends BaseDLAppTestCase {
 
@@ -559,7 +555,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
-				MainServletTestRule.INSTANCE,
+				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test
@@ -581,7 +577,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	}
 
-	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	@Sync
 	public static class WhenCopyingAFolder extends BaseDLAppTestCase {
 
@@ -589,7 +584,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
-				MainServletTestRule.INSTANCE,
+				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test
@@ -655,7 +650,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	}
 
-	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	@Sync
 	public static class WhenDeletingAFileEntry extends BaseDLAppTestCase {
 
@@ -663,7 +657,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
-				MainServletTestRule.INSTANCE,
+				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test
@@ -681,7 +675,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	}
 
-	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	@Sync
 	public static class WhenDeletingAFolder extends BaseDLAppTestCase {
 
@@ -689,7 +682,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
-				MainServletTestRule.INSTANCE,
+				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test
@@ -746,7 +739,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	}
 
-	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	@Sync
 	public static class WhenDeletingAFolderByName extends BaseDLAppTestCase {
 
@@ -754,7 +746,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
-				MainServletTestRule.INSTANCE,
+				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test
@@ -806,7 +798,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	}
 
-	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	@Sync
 	public static class WhenMovingAFileEntry extends BaseDLAppTestCase {
 
@@ -814,7 +805,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
-				MainServletTestRule.INSTANCE,
+				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test
@@ -842,7 +833,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	}
 
-	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	@Sync
 	public static class WhenMovingAFolder extends BaseDLAppTestCase {
 
@@ -850,7 +840,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
-				MainServletTestRule.INSTANCE,
+				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test
@@ -877,7 +867,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	}
 
-	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	@Sync
 	public static class WhenRevertingAFileEntry extends BaseDLAppTestCase {
 
@@ -885,7 +874,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
-				MainServletTestRule.INSTANCE,
+				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test
@@ -956,7 +945,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	}
 
-	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	@Sync
 	public static class WhenSearchingFileEntries extends BaseDLAppTestCase {
 
@@ -964,7 +952,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
-				MainServletTestRule.INSTANCE,
+				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test
@@ -1038,7 +1026,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	}
 
-	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	@Sync
 	public static class WhenUpdatingAFileEntry extends BaseDLAppTestCase {
 
@@ -1046,7 +1033,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
-				MainServletTestRule.INSTANCE,
+				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test
@@ -1269,7 +1256,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	}
 
-	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	@Sync
 	public static class WhenUpdatingAFolder extends BaseDLAppTestCase {
 
@@ -1277,7 +1263,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
-				MainServletTestRule.INSTANCE,
+				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test

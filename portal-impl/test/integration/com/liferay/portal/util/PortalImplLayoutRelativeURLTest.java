@@ -15,30 +15,32 @@
 package com.liferay.portal.util;
 
 import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.service.VirtualHostLocalServiceUtil;
+import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Akos Thurzo
  * @author Manuel de la Peña
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class PortalImplLayoutRelativeURLTest extends PortalImplBaseURLTestCase {
 
 	@ClassRule
-	public static final MainServletTestRule mainServletTestRule =
-		MainServletTestRule.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
 	@Before
 	@Override

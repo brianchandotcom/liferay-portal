@@ -29,6 +29,27 @@ import java.util.Map;
 
 public class ${seleniumBuilderContext.getPathSimpleClassName(pathName)} {
 
+	public static String getPathDescription(String locator) {
+		<#list trElements as trElement>
+			<#assign tdElements = trElement.elements("td")>
+
+			<#if
+				(tdElements[0].getText() != "") &&
+				(tdElements[0].getText() != "EXTEND_ACTION_PATH")
+				>
+				if (locator.equals("${tdElements[0].getText()}")) {
+					<#if tdElements[2].getText() = "">
+						return "${seleniumBuilderFileUtil.escapeJava(tdElements[0].getText())}";
+					<#elseif tdElements[2].getText() != pathName>
+						return "${seleniumBuilderFileUtil.escapeJava(tdElements[2].getText())}";
+					</#if>
+				}
+			</#if>
+		</#list>
+
+		return null;
+	}
+
 	public static Map<String, String> getPathDescriptions() {
 		Map<String, String> pathDescriptions = new HashMap<String, String>();
 
@@ -48,6 +69,24 @@ public class ${seleniumBuilderContext.getPathSimpleClassName(pathName)} {
 		</#list>
 
 		return pathDescriptions;
+	}
+
+	public static String getPathLocator(String locator) {
+		<#list trElements as trElement>
+			<#assign tdElements = trElement.elements("td")>
+
+			<#if
+				(tdElements[0].getText() != "") &&
+				(tdElements[0].getText() != "EXTEND_ACTION_PATH")
+				>
+
+				if (locator.equals("${tdElements[0].getText()}")) {
+					return "${seleniumBuilderFileUtil.escapeJava(tdElements[1].getText())}";
+				}
+			</#if>
+		</#list>
+
+		return null;
 	}
 
 	public static Map<String, String> getPathLocators() {
@@ -72,5 +111,7 @@ public class ${seleniumBuilderContext.getPathSimpleClassName(pathName)} {
 
 		return pathLocators;
 	}
+
+
 
 }

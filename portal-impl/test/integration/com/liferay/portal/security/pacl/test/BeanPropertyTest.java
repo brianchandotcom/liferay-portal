@@ -24,23 +24,22 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.test.PACLTestRule;
-import com.liferay.portal.test.runners.PACLIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.journal.util.JournalContentUtil;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Raymond Augé
  */
-@RunWith(PACLIntegrationJUnitTestRunner.class)
 public class BeanPropertyTest {
 
 	@ClassRule
-	public static final PACLTestRule paclTestRule = PACLTestRule.INSTANCE;
+	@Rule
+	public static final PACLTestRule paclTestRule = new PACLTestRule();
 
 	@Test
 	public void testGet1() throws Exception {

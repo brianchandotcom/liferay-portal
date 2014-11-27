@@ -51,7 +51,7 @@ public class BaseTestRule<C, M> implements TestRule {
 				}
 
 				try {
-					statement.evaluate();
+					invokeStatement(statement, description);
 				}
 				finally {
 					if (methodName == null) {
@@ -118,6 +118,12 @@ public class BaseTestRule<C, M> implements TestRule {
 		}
 
 		throw new IllegalStateException("Unknow statement " + statement);
+	}
+
+	protected void invokeStatement(Statement statement, Description description)
+		throws Throwable {
+
+		statement.evaluate();
 	}
 
 	protected void setInstance(Object instance) {

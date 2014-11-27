@@ -172,6 +172,20 @@ public class GroupLocalServiceUtil {
 			membershipRestriction, friendlyURL, site, active, serviceContext);
 	}
 
+	public static com.liferay.portal.model.Group addGroup(long userId,
+		long parentGroupId, java.lang.String className, long classPK,
+		long liveGroupId, java.lang.String name, java.lang.String description,
+		int type, boolean manualMembership, int membershipRestriction,
+		java.lang.String friendlyURL, boolean site, boolean inheritContent,
+		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addGroup(userId, parentGroupId, className, classPK,
+			liveGroupId, name, description, type, manualMembership,
+			membershipRestriction, friendlyURL, site, inheritContent, active,
+			serviceContext);
+	}
+
 	/**
 	* Adds the group using the default live group.
 	*
@@ -774,6 +788,12 @@ public class GroupLocalServiceUtil {
 	public static java.util.List<com.liferay.portal.model.Group> getGroups(
 		long companyId, long parentGroupId, boolean site) {
 		return getService().getGroups(companyId, parentGroupId, site);
+	}
+
+	public static java.util.List<com.liferay.portal.model.Group> getGroups(
+		long companyId, long parentGroupId, boolean site, boolean inheritContent) {
+		return getService()
+				   .getGroups(companyId, parentGroupId, site, inheritContent);
 	}
 
 	/**

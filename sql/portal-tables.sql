@@ -798,6 +798,7 @@ create table Group_ (
 	friendlyURL VARCHAR(255) null,
 	site BOOLEAN,
 	remoteStagingGroupCount INTEGER,
+	inheritContent BOOLEAN,
 	active_ BOOLEAN
 );
 

@@ -69,6 +69,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 		attributes.put("friendlyURL", getFriendlyURL());
 		attributes.put("site", getSite());
 		attributes.put("remoteStagingGroupCount", getRemoteStagingGroupCount());
+		attributes.put("inheritContent", getInheritContent());
 		attributes.put("active", getActive());
 
 		return attributes;
@@ -190,6 +191,12 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 
 		if (remoteStagingGroupCount != null) {
 			setRemoteStagingGroupCount(remoteStagingGroupCount);
+		}
+
+		Boolean inheritContent = (Boolean)attributes.get("inheritContent");
+
+		if (inheritContent != null) {
+			setInheritContent(inheritContent);
 		}
 
 		Boolean active = (Boolean)attributes.get("active");
@@ -410,6 +417,16 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	public java.lang.String getIconURL(
 		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
 		return _group.getIconURL(themeDisplay);
+	}
+
+	/**
+	* Returns the inherit content of this group.
+	*
+	* @return the inherit content of this group
+	*/
+	@Override
+	public boolean getInheritContent() {
+		return _group.getInheritContent();
 	}
 
 	@Override
@@ -748,6 +765,16 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 		return _group.isInStagingPortlet(portletId);
 	}
 
+	/**
+	* Returns <code>true</code> if this group is inherit content.
+	*
+	* @return <code>true</code> if this group is inherit content; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInheritContent() {
+		return _group.isInheritContent();
+	}
+
 	@Override
 	public boolean isLayout() {
 		return _group.isLayout();
@@ -972,6 +999,16 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	@Override
 	public void setGroupId(long groupId) {
 		_group.setGroupId(groupId);
+	}
+
+	/**
+	* Sets whether this group is inherit content.
+	*
+	* @param inheritContent the inherit content of this group
+	*/
+	@Override
+	public void setInheritContent(boolean inheritContent) {
+		_group.setInheritContent(inheritContent);
 	}
 
 	/**

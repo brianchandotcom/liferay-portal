@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.layoutsadmin.action;
 
+import com.liferay.portal.DuplicateGroupException;
+import com.liferay.portal.GroupNameException;
 import com.liferay.portal.ImageTypeException;
 import com.liferay.portal.LayoutFriendlyURLException;
 import com.liferay.portal.LayoutFriendlyURLsException;
@@ -54,6 +56,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ColorScheme;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutPrototype;
@@ -68,6 +71,7 @@ import com.liferay.portal.model.impl.ThemeSettingImpl;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeServiceUtil;
@@ -219,6 +223,9 @@ public class EditLayoutsAction extends PortletAction {
 					redirect, actionResponse.getNamespace() + "closeRedirect",
 					closeRedirect);
 			}
+			else if (cmd.equals("add_group")) {
+				addGroup(actionRequest);
+			}
 			else if (cmd.equals("display_order")) {
 				updateDisplayOrder(actionRequest);
 			}
@@ -271,7 +278,9 @@ public class EditLayoutsAction extends PortletAction {
 
 				setForward(actionRequest, "portlet.layouts_admin.error");
 			}
-			else if (e instanceof ImageTypeException ||
+			else if (e instanceof DuplicateGroupException ||
+					 e instanceof ImageTypeException ||
+					 e instanceof GroupNameException ||
 					 e instanceof LayoutFriendlyURLException ||
 					 e instanceof LayoutFriendlyURLsException ||
 					 e instanceof LayoutNameException ||
@@ -342,6 +351,22 @@ public class EditLayoutsAction extends PortletAction {
 
 		return actionMapping.findForward(
 			getForward(renderRequest, "portlet.layouts_admin.edit_layouts"));
+	}
+
+	protected void addGroup(ActionRequest actionRequest) throws Exception {
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		long parentGroupId = ParamUtil.getLong(actionRequest, "parentGroupId");
+		String name = ParamUtil.getString(actionRequest, "name");
+		String description = ParamUtil.getString(actionRequest, "description");
+		String friendlyURL = ParamUtil.getString(actionRequest, "friendlyURL");
+
+		GroupServiceUtil.addGroup(
+			parentGroupId, GroupConstants.DEFAULT_LIVE_GROUP_ID, name,
+			description, GroupConstants.TYPE_SITE_OPEN, true,
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, friendlyURL, false,
+			true, true, serviceContext);
 	}
 
 	protected void checkPermission(

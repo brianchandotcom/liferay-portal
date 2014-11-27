@@ -21,6 +21,7 @@ printAssetURL.setParameter("struts_action", "/asset_publisher/view_content");
 printAssetURL.setParameter("assetEntryId", String.valueOf(assetEntry.getEntryId()));
 printAssetURL.setParameter("viewMode", Constants.PRINT);
 printAssetURL.setParameter("type", assetRendererFactory.getType());
+printAssetURL.setParameter("languageId", languageId);
 
 if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
 	if (assetRenderer.getGroupId() != scopeGroupId) {

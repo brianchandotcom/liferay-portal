@@ -15,6 +15,7 @@
 package com.liferay.portal.lar;
 
 import com.liferay.portal.LayoutParentLayoutIdException;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Portlet;
@@ -31,6 +33,7 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
@@ -150,6 +153,27 @@ public class LayoutSetPrototypePropagationTest
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(layout.getPrimaryKey()), role.getRoleId(),
 				ActionKeys.CUSTOMIZE));
+	}
+
+	@Test
+	public void testLayoutPropagationWhenLoadingLayoutsTreeWithLinkEnabled()
+		throws Exception {
+
+		setLinkEnabled(true);
+
+		LayoutTestUtil.addLayout(_layoutSetPrototypeGroup, true);
+
+		Assert.assertEquals(
+			_initialPrototypeLayoutCount, getGroupLayoutCount());
+
+		LayoutServiceUtil.getLayouts(
+			group.getGroupId(), false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			false, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Thread.sleep(2000);
+
+		Assert.assertEquals(
+			_initialPrototypeLayoutCount + 1, getGroupLayoutCount());
 	}
 
 	@Test

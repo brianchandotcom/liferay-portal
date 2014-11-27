@@ -1,4 +1,9 @@
-alter table AssetEntry add listable BOOLEAN default true;
+alter table AssetEntry add listable BOOLEAN;
+
+COMMIT_TRANSACTION;
+
+update AssetEntry set listable = TRUE;
+
 alter table BlogsEntry add subtitle STRING null;
 alter table BlogsEntry add coverImageFileEntryId LONG;
 alter table BlogsEntry add coverImageURL STRING null;

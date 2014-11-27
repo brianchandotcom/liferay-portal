@@ -393,16 +393,22 @@ AUI.add(
 
 						var fields = instance.get('fields');
 
-						var newDefaultLocale = event.newVal;
+						var newVal = event.newVal;
 
 						var translationManager = instance.translationManager;
 
 						var availableLanguageIds = translationManager.get('availableLocales');
 
-						if (availableLanguageIds.indexOf(newDefaultLocale) < 0) {
-							translationManager.addAvailableLocale(newDefaultLocale);
+						if (availableLanguageIds.indexOf(newVal) < 0) {
+							var config = {
+								fields: fields,
+								newVal: newVal,
+								prevVal: event.prevVal
+							};
 
-							instance._updateLocalizationMaps(fields, newDefaultLocale, event.prevVal);
+							translationManager.addAvailableLocale(newVal);
+
+							instance._updateLocalizationMaps(config);
 						}
 					},
 
@@ -489,18 +495,28 @@ AUI.add(
 						BODY.toggleClass('form-builder-rtl-inputs', rtl);
 					},
 
-					_updateLocalizationMaps: function(fields, newDefaultLocale, prevDefaultLocale) {
+					_updateLocalizationMaps: function(config) {
 						var instance = this;
 
-						AArray.each(fields._items,
+						var fields = config.fields;
+						var newVal = config.newVal;
+						var prevVal = config.prevVal;
+
+						AArray.each(
+							fields._items,
 							function(field) {
+								var childFields = field.get('fields');
 								var localizationMap = field.get('localizationMap');
 
-								var childFields = field.get('fields');
+								var config = {
+									fields: childFields,
+									newVal: newVal,
+									prevVal: prevVal
+								};
 
-								localizationMap[newDefaultLocale] = localizationMap[prevDefaultLocale];
+								localizationMap[newVal] = localizationMap[prevVal];
 
-								instance._updateLocalizationMaps(childFields, newDefaultLocale, prevDefaultLocale);
+								instance._updateLocalizationMaps(config);
 							}
 						);
 					}

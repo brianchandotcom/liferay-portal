@@ -7,6 +7,8 @@ AUI.add(
 
 		var CSS_DROP_ACTIVE = 'drop-active';
 
+		var CSS_CHECK_ACTIVE = 'check-active';
+
 		var CSS_PROGRESS_ACTIVE = 'progress-active';
 
 		var PROGRESS_HEIGHT = '6';
@@ -32,8 +34,18 @@ AUI.add(
 						validator: Lang.isString
 					},
 
+					fileNameNode: {
+						validator: Lang.isString,
+						value: '#file-name'
+					},
+
 					paramName: {
 						validator: Lang.isString
+					},
+
+					progressDataNode: {
+						validator: Lang.isString,
+						value: '#progress-data'
 					},
 
 					uploadURL: {
@@ -51,13 +63,11 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
+						instance._fileEntryImageNode = instance.one('#image');
+
 						instance._bindUI();
 
 						instance._renderUploader();
-
-						instance._filenameNode = instance.rootNode.one('#file-name');
-
-						instance._progressDataNode = instance.rootNode.one('#progress-data');
 					},
 
 					destructor: function() {
@@ -81,6 +91,7 @@ AUI.add(
 						);
 
 						instance._eventHandles = [
+							instance._fileEntryImageNode.on('load', instance._onImageLoaded, instance),
 							instance.rootNode.delegate(STR_CLICK, instance._onBrowseClick, '.browse-image', instance),
 							instance.one('#removeImage').on(STR_CLICK, instance._updateImageData, instance),
 							instance.one('#cancelUpload').on(STR_CLICK, instance._cancelUpload, instance)
@@ -111,28 +122,18 @@ AUI.add(
 					_defImageDataFn: function(event) {
 						var instance = this;
 
-						var fileEntryIdNode = instance.rootNode.one('#' + instance.get('paramName') + 'Id');
-
-						var fileEntryImage = instance.one('#image');
-
-						var browseImageControls = instance.one('.browse-image-controls');
-						var changeImageControls = instance.one('.change-image-controls');
-
 						var fileEntryId = event.imageData.fileEntryId;
 						var fileEntryUrl = event.imageData.url;
 
+						var fileEntryIdNode = instance.rootNode.one('#' + instance.get('paramName') + 'Id');
+
 						fileEntryIdNode.val(fileEntryId);
 
-						fileEntryImage.attr('src', fileEntryUrl);
+						instance._fileEntryImageNode.attr('src', fileEntryUrl);
 
-						var showImageControls = (fileEntryId !== 0 && fileEntryUrl !== '');
+						instance._fileEntryId = fileEntryId;
 
-						fileEntryImage.toggle(showImageControls);
-
-						changeImageControls.toggle(showImageControls);
-						browseImageControls.toggle(!showImageControls);
-
-						instance.rootNode.toggleClass('drop-enabled', !showImageControls);
+						instance._fileEntryUrl = fileEntryUrl;
 					},
 
 					_onBrowseClick: function() {
@@ -157,7 +158,9 @@ AUI.add(
 					_onFileSelect: function(event) {
 						var instance = this;
 
-						if (instance._filenameNode) {
+						var fileNameNode = instance.rootNode.one(instance.get('fileNameNode'));
+
+						if (fileNameNode) {
 							var filename = event.fileList[0].get('name');
 
 							var fileDataTemplate = A.Lang.sub(
@@ -168,7 +171,7 @@ AUI.add(
 								}
 							);
 
-							instance._filenameNode.html(fileDataTemplate);
+							fileNameNode.html(fileDataTemplate);
 						}
 
 						instance.rootNode.removeClass(CSS_DROP_ACTIVE);
@@ -180,6 +183,33 @@ AUI.add(
 						}
 
 						instance._uploader.uploadThese(event.fileList);
+					},
+
+					_onImageLoaded: function() {
+						var instance = this;
+
+						var browseImageControls = instance.one('.browse-image-controls');
+
+						var changeImageControls = instance.one('.change-image-controls');
+
+						var showImageControls = (instance._fileEntryId !== 0 && instance._fileEntryUrl !== '');
+
+						instance._fileEntryImageNode.toggle(showImageControls);
+
+						browseImageControls.toggle(!showImageControls);
+
+						instance.rootNode.toggleClass('drop-enabled', !showImageControls);
+
+						instance.rootNode.addClass(CSS_CHECK_ACTIVE);
+
+						setTimeout(
+							function() {
+								instance.rootNode.removeClass(CSS_CHECK_ACTIVE);
+
+								changeImageControls.toggle(showImageControls);
+							},
+							3000
+						);
 					},
 
 					_onUploadComplete: function(event) {
@@ -208,13 +238,17 @@ AUI.add(
 					_onUploadProgress: function(event) {
 						var instance = this;
 
-						if (instance._progressbar) {
+						var progressbar = instance._progressbar;
+
+						if (progressbar) {
 							var percentLoaded = Math.round(event.percentLoaded);
 
-							instance._progressbar.set(STR_VALUE, Math.ceil(percentLoaded));
+							progressbar.set(STR_VALUE, Math.ceil(percentLoaded));
 						}
 
-						if (instance._progressDataNode) {
+						var progressDataNode = instance.rootNode.one(instance.get('progressDataNode'));
+
+						if (progressDataNode) {
 							var bytesLoaded = instance._parseBytesToSize(event.bytesLoaded);
 
 							var bytesTotal = instance._parseBytesToSize(event.bytesTotal);
@@ -229,7 +263,7 @@ AUI.add(
 								}
 							);
 
-							instance._progressDataNode.html(progressDataTemplate);
+							progressDataNode.html(progressDataTemplate);
 						}
 					},
 

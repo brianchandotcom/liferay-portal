@@ -16,6 +16,19 @@
 		@include opacity(0);
 	}
 
+	.glyphicon-ok {
+		background: #FFF;
+		border-radius: 30px;
+		left: 50%;
+		margin: 0 auto;
+		@include opacity(0);
+		padding: 20px;
+		position: absolute;
+		top: 50%;
+		@include transform(translate(-10px, 0));
+		@include transform(translate(0, -50%));
+	}
+
 	.progress-wrapper {
 		display: none;
 		left: 50%;
@@ -65,6 +78,10 @@
 
 		.drop-here-info {
 			@include opacity(1);
+		}
+
+		.glyphicon-ok {
+			@include opacity(0);
 		}
 
 		.image-wrapper {
@@ -121,9 +138,17 @@
 			@include opacity(0);
 		}
 
+		.glyphicon-ok {
+			@include opacity(0);
+		}
+
 		.progress-wrapper {
 			display: block;
 		}
+	}
+
+	&.check-active .glyphicon-ok{
+		@include opacity(1);
 	}
 
 	.browse-image-controls, .current-image {

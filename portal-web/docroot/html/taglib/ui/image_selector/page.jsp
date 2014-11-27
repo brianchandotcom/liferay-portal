@@ -54,6 +54,8 @@ if (fileEntryId != 0) {
 		<a class="browse-image" href="javascript:;" id="<%= randomNamespace + "browseImage" %>"><liferay-ui:message key="browse" /></a>
 	</div>
 
+	<i class="glyphicon glyphicon-ok"></i>
+
 	<div class="drop-here-info">
 		<liferay-ui:message key="drop-files-here" />
 	</div>
@@ -63,7 +65,7 @@ if (fileEntryId != 0) {
 
 		<div class="progressbar"></div>
 
-		<p id="progress-data" class="size"></p>
+		<p class="size" id="progress-data"></p>
 
 		<aui:button cssClass="btn-primary" id='<%= randomNamespace + "cancelUpload" %>' useNamespace="<%= false %>" value="cancel"/>
 	</div>

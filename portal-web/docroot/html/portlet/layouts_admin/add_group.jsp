@@ -34,11 +34,11 @@ PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 <liferay-ui:error exception="<%= DuplicateGroupException.class %>" message="please-enter-a-unique-name" />
 <liferay-ui:error exception="<%= GroupNameException.class %>" message="please-enter-a-valid-name" />
 
-<portlet:actionURL var="addPageSetActionURL">
+<portlet:actionURL var="editLayoutsURL">
 	<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
 </portlet:actionURL>
 
-<aui:form action="<%= addPageSetActionURL %>" method="post">
+<aui:form action="<%= editLayoutsURL %>" method="post">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="add_group" />
 	<aui:input name="redirect" type="hidden" value="<%= redirectURL.toString() %>" />
 	<aui:input name="parentGroupId" type="hidden" value="<%= parentGroupId %>" />

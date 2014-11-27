@@ -978,7 +978,7 @@
 
 		<action path="/layouts_admin/add_layout" forward="portlet.layouts_admin.add_layout" />
 
-		<action path="/layouts_admin/add_pages_set" forward="portlet.layouts_admin.add_pages_set" />
+		<action path="/layouts_admin/add_group" forward="portlet.layouts_admin.add_group" />
 
 		<action path="/layouts_admin/confirmation" type="com.liferay.portlet.layoutsadmin.action.ConfirmationExportImportConfigurationAction">
 			<forward name="portlet.layouts_admin.confirmation" path="portlet.layouts_admin.confirmation" />

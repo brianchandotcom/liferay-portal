@@ -572,7 +572,11 @@ public class JournalArticleIndexer extends BaseIndexer {
 				ddmStructureKeys);
 
 		for (JournalArticle article : articles) {
-			doReindex(article, false);
+			if (PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS ||
+				isHead(article)) {
+
+				doReindex(article, false);
+			}
 		}
 	}
 

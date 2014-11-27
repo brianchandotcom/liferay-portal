@@ -136,34 +136,38 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 </aui:script>
 
 <aui:script use="aui-base">
-	A.one('#<portlet:namespace />selectCategoryButton').on(
-		'click',
-		function(event) {
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						modal: true,
-						width: 680
+	var categoryButton = A.one('#<portlet:namespace />selectCategoryButton');
+
+	if (categoryButton) {
+		categoryButton.on(
+			'click',
+			function(event) {
+				Liferay.Util.selectEntity(
+					{
+						dialog: {
+							constrain: true,
+							modal: true,
+							width: 680
+						},
+						id: '<portlet:namespace />selectCategory',
+						title: '<liferay-ui:message arguments="category" key="select-x" />',
+						uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/shopping/select_category" /><portlet:param name="categoryId" value="<%= String.valueOf(parentCategoryId) %>" /></portlet:renderURL>'
 					},
-					id: '<portlet:namespace />selectCategory',
-					title: '<liferay-ui:message arguments="category" key="select-x" />',
-					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/shopping/select_category" /><portlet:param name="categoryId" value="<%= String.valueOf(parentCategoryId) %>" /></portlet:renderURL>'
-				},
-				function(event) {
-					var parentCategoryId = event.categoryid;
+					function(event) {
+						var parentCategoryId = event.categoryid;
 
-					document.<portlet:namespace />fm.<portlet:namespace />parentCategoryId.value = parentCategoryId;
+						document.<portlet:namespace />fm.<portlet:namespace />parentCategoryId.value = parentCategoryId;
 
-					document.getElementById('<portlet:namespace />parentCategoryName').value = event.name;
+						document.getElementById('<portlet:namespace />parentCategoryName').value = event.name;
 
-					var mergeWithParent = A.one('#<portlet:namespace />mergeParentCheckboxDiv');
+						var mergeWithParent = A.one('#<portlet:namespace />mergeParentCheckboxDiv');
 
-					if (mergeWithParent && (parentCategoryId != <%= ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>)) {
-						mergeWithParent.show();
+						if (mergeWithParent && (parentCategoryId != <%= ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>)) {
+							mergeWithParent.show();
+						}
 					}
-				}
-			);
-		}
-	);
+				);
+			}
+		);
+	}
 </aui:script>

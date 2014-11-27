@@ -132,28 +132,32 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 			</div>
 
 			<aui:script use="aui-base">
-				A.one('#<portlet:namespace />selectCategoryButton').on(
-					'click',
-					function(event) {
-						Liferay.Util.selectEntity(
-							{
-								dialog: {
-									constrain: true,
-									modal: true,
-									width: 680
-								},
-								id: '<portlet:namespace />selectCategory',
-								title: '<liferay-ui:message arguments="category" key="select-x" />',
-								uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/shopping/select_category" /><portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" /></portlet:renderURL>'
-							},
-							function(event) {
-								document.<portlet:namespace />fm.<portlet:namespace />categoryId.value = event.categoryid;
+				var categoryButton = A.one('#<portlet:namespace />selectCategoryButton');
 
-								document.getElementById('<portlet:namespace />categoryName').value = A.Lang.String.unescapeEntities(event.name);
-							}
-						);
-					}
-				);
+				if (categoryButton) {
+					categoryButton.on(
+						'click',
+						function(event) {
+							Liferay.Util.selectEntity(
+								{
+									dialog: {
+										constrain: true,
+										modal: true,
+										width: 680
+									},
+									id: '<portlet:namespace />selectCategory',
+									title: '<liferay-ui:message arguments="category" key="select-x" />',
+									uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/shopping/select_category" /><portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" /></portlet:renderURL>'
+								},
+								function(event) {
+									document.<portlet:namespace />fm.<portlet:namespace />categoryId.value = event.categoryid;
+
+									document.getElementById('<portlet:namespace />categoryName').value = A.Lang.String.unescapeEntities(event.name);
+								}
+							);
+						}
+					);
+				}
 			</aui:script>
 		</c:if>
 

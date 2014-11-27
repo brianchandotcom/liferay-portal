@@ -97,6 +97,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 	/>
 
 	<aui:script use="liferay-search-container">
+		var AArray = A.Array;
 		var Util = Liferay.Util;
 
 		var addGroupIds = [];
@@ -139,7 +140,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 
 						addGroupIds.push(event.groupid);
 
-						A.Array.removeItem(deleteGroupIds, event.groupid);
+						AArray.removeItem(deleteGroupIds, event.groupid);
 
 						document.<portlet:namespace />fm.<portlet:namespace />addGroupIds.value = addGroupIds.join(',');
 						document.<portlet:namespace />fm.<portlet:namespace />deleteGroupIds.value = deleteGroupIds.join(',');
@@ -166,7 +167,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 
 				searchContainer.deleteRow(tr, rowId);
 
-				A.Array.removeItem(addGroupIds, event.rowId);
+				AArray.removeItem(addGroupIds, event.rowId);
 
 				<portlet:namespace />deleteGroupIds.push(rowId);
 
@@ -181,9 +182,9 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 			function(event) {
 				event.selectors.each(
 					function(item, index, collection) {
-						var modifyLink = searchContainerContentBox.one('.modify-link[data-rowid="' + item.attr('data-groupid') + '"]');
+						var groupId = item.attr('data-groupid');
 
-						if (!modifyLink) {
+						if (AArray.indexOf(deleteGroupIds, groupId) != -1) {
 							Util.toggleDisabled(item, false);
 						}
 					}

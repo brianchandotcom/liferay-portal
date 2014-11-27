@@ -111,8 +111,8 @@ public class BlogsEntryAttachmentHelper {
 	}
 
 	protected FileEntry addBlogsEntryAttachment(
-		long groupId, long userId, long entryId, String fileName,
-		String mimeType, InputStream is)
+			long groupId, long userId, long entryId, String fileName,
+			String mimeType, InputStream is)
 		throws PortalException {
 
 		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(

@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
+import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesScope;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
@@ -79,7 +80,7 @@ public class TempFileEntryUtil {
 			_getTemporaryFileEntriesCapability(groupId);
 
 		return temporaryFileEntriesCapability.addTemporaryFileEntry(
-			_UUID, userId, _getFolderPath(userId, folderName), fileName,
+			new TemporaryFileEntriesScope(_UUID, userId, folderName), fileName,
 			mimeType, inputStream);
 	}
 
@@ -104,7 +105,7 @@ public class TempFileEntryUtil {
 			_getTemporaryFileEntriesCapability(groupId);
 
 		temporaryFileEntriesCapability.deleteTemporaryFileEntry(
-			_UUID, _getFolderPath(userId, folderName), fileName);
+			new TemporaryFileEntriesScope(_UUID, userId, folderName), fileName);
 	}
 
 	public static FileEntry getTempFileEntry(
@@ -114,8 +115,8 @@ public class TempFileEntryUtil {
 		TemporaryFileEntriesCapability temporaryFileEntriesCapability =
 			_getTemporaryFileEntriesCapability(groupId);
 
-		return temporaryFileEntriesCapability.getTemporaryFileEntries(
-			_UUID, _getFolderPath(userId, folderName), fileName);
+		return temporaryFileEntriesCapability.getTemporaryFileEntry(
+			new TemporaryFileEntriesScope(_UUID, userId, folderName), fileName);
 	}
 
 	public static String[] getTempFileNames(
@@ -127,7 +128,7 @@ public class TempFileEntryUtil {
 
 		List<FileEntry> fileEntries =
 			temporaryFileEntriesCapability.getTemporaryFileEntries(
-				_UUID, _getFolderPath(userId, folderName));
+				new TemporaryFileEntriesScope(_UUID, userId, folderName));
 
 		List<String> fileNames = new ArrayList<>();
 
@@ -177,11 +178,6 @@ public class TempFileEntryUtil {
 		finally {
 			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
 		}
-	}
-
-	private static String _getFolderPath(long userId, String tempFolderName) {
-		return
-			String.valueOf(userId) + StringPool.FORWARD_SLASH + tempFolderName;
 	}
 
 	private static TemporaryFileEntriesCapability

@@ -51,7 +51,10 @@ public class SampleSQLBuilderTest {
 		try {
 			new SampleSQLBuilder(properties, new DataFactory(properties));
 
-			_loadHypersonic("sql", tempDir.getAbsolutePath());
+			_loadHypersonic(
+				"test/unit/com/liferay/portal/tools/"+
+					"samplesqlbuilder/dependencies",
+				tempDir.getAbsolutePath());
 		}
 		finally {
 			FileUtil.deltree(tempDir);
@@ -119,9 +122,9 @@ public class SampleSQLBuilderTest {
 				"");
 
 			DBLoader.loadHypersonic(
-				connection, sqlDir + "/portal/portal-hypersonic.sql");
+				connection, sqlDir + "/portal-hypersonic.sql");
 			DBLoader.loadHypersonic(
-				connection, sqlDir + "/indexes/indexes-hypersonic.sql");
+				connection, sqlDir + "/indexes-hypersonic.sql");
 			DBLoader.loadHypersonic(
 				connection, outputDir + "/sample-hypersonic.sql");
 

@@ -1,9 +1,7 @@
 <#include "../init.ftl">
 
-<#assign latitude = "">
-<#assign longitude = "">
-
-<#assign coordinatesContainerCssClass = "hide">
+<#assign latitude = 0>
+<#assign longitude = 0>
 
 <#assign fieldRawValue = paramUtil.getString(request, "${namespacedFieldName}", fieldRawValue)>
 
@@ -12,24 +10,16 @@
 
 	<#assign latitude = geolocationJSONObject.getDouble("latitude")>
 	<#assign longitude = geolocationJSONObject.getDouble("longitude")>
-
-	<#assign coordinatesContainerCssClass = "">
 </#if>
 
 <@aui["field-wrapper"] cssClass="geolocation-field" data=data label=label required=required>
 	<@aui.input name=namespacedFieldName type="hidden" value=fieldRawValue />
 
-	<@aui["button-row"]>
-		<@aui.button cssClass="geolocate-button" value="geolocate" />
-	</@>
+	<div id="${portletNamespace}${namespacedFieldName}CoordinatesContainer">
+		<div class="glyphicon glyphicon-map-marker" id="${portletNamespace}${namespacedFieldName}Location"></div>
 
-	<p class="${coordinatesContainerCssClass}" id="${portletNamespace}${namespacedFieldName}CoordinatesContainer">
-		<strong><@liferay_ui.message key="location" />:</strong>
-
-		<span id="${portletNamespace}${namespacedFieldName}Coordinates">
-		    <@fmt.formatNumber value=latitude type="NUMBER" />, <@fmt.formatNumber value=longitude type="NUMBER" />
-		</span>
-	</p>
+		<@liferay_ui["map"] geolocation=true latitude=latitude longitude=longitude name=namespacedFieldName />
+	</div>
 
 	${fieldStructure.children}
 </@>

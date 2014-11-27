@@ -209,6 +209,7 @@
 							'aui-datatype',
 							'aui-io-request',
 							'aui-parse-content',
+							'liferay-map-base',
 							'liferay-translation-manager'
 						]
 					},

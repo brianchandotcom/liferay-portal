@@ -23,9 +23,9 @@ AUI.add(
 					}
 				},
 
-				NAME: 'lfr-map-geojson-base',
+				NAME: 'lfrmapgeojsonbase',
 
-				NS: 'lfr-map-geojson-base',
+				NS: 'lfrmapgeojsonbase',
 
 				prototype: {
 					addData: function(data) {
@@ -83,9 +83,9 @@ AUI.add(
 					}
 				},
 
-				NAME: 'lfr-map-marker-base',
+				NAME: 'lfrmapmarkerbase',
 
-				NS: 'lfr-map-marker-base',
+				NS: 'lfrmapmarkerbase',
 
 				prototype: {
 					initializer: function() {
@@ -183,9 +183,9 @@ AUI.add(
 					ZOOM: 'zoom'
 				},
 
-				NAME: 'lfr-map-base',
+				NAME: 'lfrmapbase',
 
-				NS: 'lfr-map-base',
+				NS: 'lfrmapbase',
 
 				POSITION: {
 					BOTTOM: 11,
@@ -296,14 +296,26 @@ AUI.add(
 								function(event) {
 									var bounds = instance.getBounds();
 
-									AArray.each(
-										event.features,
-										function(item, index, collection) {
-											bounds.extend(item.getGeometry().get());
-										}
-									);
+									var features = event.features;
 
-									instance.fitBounds(bounds);
+									if (features.length > 1) {
+										AArray.each(
+											event.features,
+											function(item, index, collection) {
+												bounds.extend(item.getGeometry().get());
+											}
+										);
+
+										instance.fitBounds(bounds);
+									}
+									else {
+										instance.set(
+											'position',
+											{
+												location: features[0].getGeometry().get()
+											}
+										);
+									}
 								}
 							);
 
@@ -506,11 +518,11 @@ AUI.add(
 							);
 						}
 
+						instance.set('position', position);
+
 						instance._createCustomControls();
 						instance._bindUIMB();
 						instance._initializeGeojsonData();
-
-						instance.set('position', position);
 					},
 
 					_onHomeButtonClick: function(event) {
@@ -534,7 +546,39 @@ AUI.add(
 							geolocationMarker.setPosition(location);
 						}
 					}
-				}
+				},
+
+				get: function(id, callback) {
+					var instance = this;
+
+					var map = Liferay.component(id);
+
+					if (map) {
+						callback(map);
+					}
+					else {
+						var pendingCallbacks = instance._pendingCallbacks[id] || [];
+
+						pendingCallbacks.push(callback);
+
+						instance._pendingCallbacks[id] = pendingCallbacks;
+					}
+				},
+
+				register: function(id, map) {
+					var instance = this;
+
+					Liferay.component(id, map);
+
+					A.Array.each(
+						instance._pendingCallbacks[id],
+						function(item, index, collection) {
+							item(map);
+						}
+					);
+				},
+
+				_pendingCallbacks: {}
 			},
 			true
 		);

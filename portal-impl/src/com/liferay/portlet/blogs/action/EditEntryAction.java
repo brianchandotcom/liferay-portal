@@ -19,11 +19,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -39,6 +42,8 @@ import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
+import com.liferay.portal.spring.transaction.TransactionalCallableUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -67,6 +72,7 @@ import com.liferay.portlet.trash.util.TrashUtil;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -81,6 +87,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.springframework.transaction.interceptor.TransactionAttribute;
 
 /**
  * @author Brian Wing Shun Chan
@@ -124,7 +131,11 @@ public class EditEntryAction extends PortletAction {
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.UPDATE)) {
 
-				Object[] returnValue = updateEntry(actionRequest);
+				Callable<Object[]> updateEntryCallable = new UpdateEntryCallable(
+					actionRequest);
+
+				Object[] returnValue = TransactionalCallableUtil.call(
+					_transactionAttribute, updateEntryCallable);
 
 				entry = (BlogsEntry)returnValue[0];
 				oldUrlTitle = ((String)returnValue[1]);
@@ -302,6 +313,11 @@ public class EditEntryAction extends PortletAction {
 					throw e;
 				}
 			}
+		}
+		catch (Throwable t) {
+			_log.error(t);
+
+			setForward(actionRequest, "portlet.blogs.error");
 		}
 	}
 
@@ -684,6 +700,27 @@ public class EditEntryAction extends PortletAction {
 		return new Object[] {
 			entry, oldUrlTitle, blogsEntryAttachmentReferences
 		};
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(EditEntryAction.class);
+
+	private TransactionAttribute _transactionAttribute =
+		TransactionAttributeBuilder.build(
+			Propagation.REQUIRED, new Class<?>[]{Exception.class});
+
+	private class UpdateEntryCallable implements Callable<Object[]> {
+
+		@Override
+		public Object[] call() throws Exception {
+			return updateEntry(_actionRequest);
+		}
+
+		private UpdateEntryCallable(ActionRequest actionRequest) {
+			_actionRequest = actionRequest;
+		}
+
+		private ActionRequest _actionRequest;
+
 	}
 
 }

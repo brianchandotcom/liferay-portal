@@ -87,6 +87,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
 import org.springframework.transaction.interceptor.TransactionAttribute;
 
 /**
@@ -131,8 +132,8 @@ public class EditEntryAction extends PortletAction {
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.UPDATE)) {
 
-				Callable<Object[]> updateEntryCallable = new UpdateEntryCallable(
-					actionRequest);
+				Callable<Object[]> updateEntryCallable =
+					new UpdateEntryCallable(actionRequest);
 
 				Object[] returnValue = TransactionalCallableUtil.call(
 					_transactionAttribute, updateEntryCallable);
@@ -608,10 +609,9 @@ public class EditEntryAction extends PortletAction {
 
 			if (!tempBlogsEntryAttachments.isEmpty()) {
 				blogsEntryAttachmentReferences =
-					blogsEntryAttachmentHelper.
-						addBlogsEntryAttachments(
-							entry.getGroupId(), themeDisplay.getUserId(),
-							entry.getEntryId(), tempBlogsEntryAttachments);
+					blogsEntryAttachmentHelper.addBlogsEntryAttachments(
+						entry.getGroupId(), themeDisplay.getUserId(),
+						entry.getEntryId(), tempBlogsEntryAttachments);
 
 				content = blogsEntryAttachmentHelper.updateContent(
 					content, blogsEntryAttachmentReferences);
@@ -663,10 +663,9 @@ public class EditEntryAction extends PortletAction {
 
 			if (!tempBlogsEntryAttachments.isEmpty()) {
 				blogsEntryAttachmentReferences =
-					blogsEntryAttachmentHelper.
-						addBlogsEntryAttachments(
-							entry.getGroupId(), themeDisplay.getUserId(),
-							entry.getEntryId(), tempBlogsEntryAttachments);
+					blogsEntryAttachmentHelper.addBlogsEntryAttachments(
+						entry.getGroupId(), themeDisplay.getUserId(),
+						entry.getEntryId(), tempBlogsEntryAttachments);
 
 				content = blogsEntryAttachmentHelper.updateContent(
 					content, blogsEntryAttachmentReferences);

@@ -24,7 +24,6 @@ import com.liferay.portal.log.CaptureAppender;
 import com.liferay.portal.log.Log4JLoggerTestUtil;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.test.PACLTestRule;
-import com.liferay.portal.test.runners.PACLIntegrationJUnitTestRunner;
 
 import org.apache.log4j.Level;
 
@@ -32,17 +31,17 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Raymond Augé
  */
-@RunWith(PACLIntegrationJUnitTestRunner.class)
 public class TemplateManagerTest {
 
 	@ClassRule
-	public static final PACLTestRule paclTestRule = PACLTestRule.INSTANCE;
+	@Rule
+	public static final PACLTestRule paclTestRule = new PACLTestRule();
 
 	@BeforeClass
 	public static void setUpClass() {

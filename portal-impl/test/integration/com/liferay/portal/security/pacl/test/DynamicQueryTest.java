@@ -20,21 +20,20 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.PACLTestRule;
-import com.liferay.portal.test.runners.PACLIntegrationJUnitTestRunner;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Raymond Augé
  */
-@RunWith(PACLIntegrationJUnitTestRunner.class)
 public class DynamicQueryTest {
 
 	@ClassRule
-	public static final PACLTestRule paclTestRule = PACLTestRule.INSTANCE;
+	@Rule
+	public static final PACLTestRule paclTestRule = new PACLTestRule();
 
 	@Test
 	public void test1() throws Exception {

@@ -21,7 +21,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.PACLTestRule;
-import com.liferay.portal.test.runners.PACLIntegrationJUnitTestRunner;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.TestPropsValues;
@@ -33,17 +32,17 @@ import java.net.URLClassLoader;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Raymond Augé
  */
-@RunWith(PACLIntegrationJUnitTestRunner.class)
 public class ClassLoaderTest {
 
 	@ClassRule
-	public static final PACLTestRule paclTestRule = PACLTestRule.INSTANCE;
+	@Rule
+	public static final PACLTestRule paclTestRule = new PACLTestRule();
 
 	@Test
 	public void testCreate1() throws Exception {

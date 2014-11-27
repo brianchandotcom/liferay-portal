@@ -20,25 +20,24 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.PACLTestRule;
-import com.liferay.portal.test.runners.PACLIntegrationJUnitTestRunner;
 
 import java.lang.reflect.Field;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Raymond Augé
  */
-@RunWith(PACLIntegrationJUnitTestRunner.class)
 public class ReflectionTest {
 
 	public static final String TEST_FIELD_1 = "TEST_FIELD_1";
 
 	@ClassRule
-	public static final PACLTestRule paclTestRule = PACLTestRule.INSTANCE;
+	@Rule
+	public static final PACLTestRule paclTestRule = new PACLTestRule();
 
 	@Test
 	public void testPlugin1() throws Exception {

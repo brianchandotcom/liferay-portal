@@ -34,11 +34,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SUCCESS_MESSAGE_FORM</td>
-	<td>//fieldset/div/div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -61,6 +56,11 @@
 </tr>
 <!--FORM_FIELDS-->
 <tr>
+	<td>FORM_FIELDS_FIELD_MANDATORY_MESSAGE</td>
+	<td>//div[contains(@id,'Errorfield')]/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORM_FIELDS_FIELD_HEADER</td>
 	<td>//div[contains(@class,'control') and contains(.,'${key_wfFieldName}')]/label[contains(@for,'webformportlet')]</td>
 	<td></td>
@@ -71,8 +71,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FORM_FIELDS_SELECT_FIELD</td>
-	<td>//div[contains(@class,'control') and contains(.,'${key_wfFieldName}')]/select</td>
+	<td>FORM_FIELDS_OPTIONS_FIELD</td>
+	<td>//div/div[contains(.,'${key_wfFieldName}')]/select</td>
 	<td></td>
 </tr>
 <tr>
@@ -88,6 +88,16 @@
 <tr>
 	<td>FORM_FIELDS_TEXT_BOX_FIELD</td>
 	<td>//div[contains(@class,'control') and contains(.,'${key_wfFieldName}')]/textarea</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELDS_RADIO_FIELD_OPTION</td>
+	<td>//div/div[contains(.,'${key_wfFieldName}')]/label[@class='radio' and contains(.,'${key_wfRadioFieldOption}')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELDS_RADIO_FIELD_OPTION_LABEL</td>
+	<td>//div/div[contains(.,'${key_wfFieldName}')]/label[@class='radio' and contains(.,'${key_wfRadioFieldOption}')]</td>
 	<td></td>
 </tr>
 </tbody>

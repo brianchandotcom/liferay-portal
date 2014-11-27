@@ -1296,87 +1296,29 @@ rerun your task.
 			<if>
 				<available file="test/${current.test.dir}" type="dir" />
 				<then>
-					<resourcecount property="test.with.security.count">
-						<fileset
-							dir="test-classes/${current.test.dir}"
-							includes="@{test.includes}"
-						>
-							<filename regex=".*/pacl/test/[\w]+Test.class" negate="false" />
-						</fileset>
-					</resourcecount>
-
-					<if>
-						<not>
-							<equals arg1="${test.with.security.count}" arg2="0" />
-						</not>
-						<then>
-							<junit-cmd
-								forkmode="once"
-								test.type="@{test.type}"
-							>
-								<misc>
-									<jvmarg value="-Djava.security.manager" />
-									<jvmarg value="-Djava.security.policy=${basedir}/test-classes/@{test.type}/com/liferay/portal/security/pacl/security.policy" />
-									<jvmarg value="-Dliferay.lib.portal.dir=${project.dir}/lib/portal" />
-									<jvmarg value="-Dliferay.mode=test" />
-								</misc>
-								<test.classes>
-									<batchtest todir="test-results/@{test.type}">
-										<fileset dir="test-classes/${current.test.dir}" includes="@{test.includes}">
-											<exclude name="**/DLAppServiceHttpTest.class" />
-											<exclude name="**/DLAppServiceJsonTest.class" />
-											<exclude name="**/DLAppServiceSoapTest.class" />
-											<exclude name="**/UserServiceHttpTest.class" />
-											<exclude name="**/UserServiceSoapTest.class" />
-											<exclude name="${test.excludes}" />
-											<filename regex="${junit.test.excludes}" negate="true" />
-											<filename regex=".*/pacl/test/[\w]+Test.class" negate="false" />
-										</fileset>
-									</batchtest>
-								</test.classes>
-							</junit-cmd>
-						</then>
-					</if>
-
-					<resourcecount property="test.without.security.count">
-						<fileset
-							dir="test-classes/${current.test.dir}"
-							includes="@{test.includes}"
-						>
-							<filename regex=".*/pacl/test/[\w]+Test.class" negate="true" />
-						</fileset>
-					</resourcecount>
-
-					<if>
-						<not>
-							<equals arg1="${test.without.security.count}" arg2="0" />
-						</not>
-						<then>
-							<junit-cmd
-								forkmode="@{junit.forkmode}"
-								test.type="@{test.type}"
-							>
-								<misc>
-									<jvmarg value="-Dliferay.lib.portal.dir=${project.dir}/lib/portal" />
-									<jvmarg value="-Dliferay.mode=test" />
-								</misc>
-								<test.classes>
-									<batchtest todir="test-results/@{test.type}">
-										<fileset dir="test-classes/${current.test.dir}" includes="@{test.includes}">
-											<exclude name="**/DLAppServiceHttpTest.class" />
-											<exclude name="**/DLAppServiceJsonTest.class" />
-											<exclude name="**/DLAppServiceSoapTest.class" />
-											<exclude name="**/UserServiceHttpTest.class" />
-											<exclude name="**/UserServiceSoapTest.class" />
-											<exclude name="${test.excludes}" />
-											<filename regex="${junit.test.excludes}" negate="true" />
-											<filename regex=".*/pacl/test/[\w]+Test.class" negate="true" />
-										</fileset>
-									</batchtest>
-								</test.classes>
-							</junit-cmd>
-						</then>
-					</if>
+					<junit-cmd
+						forkmode="@{junit.forkmode}"
+						test.type="@{test.type}"
+					>
+						<misc>
+							<jvmarg value="-Dliferay.lib.portal.dir=${project.dir}/lib/portal" />
+							<jvmarg value="-Dliferay.mode=test" />
+						</misc>
+						<test.classes>
+							<batchtest todir="test-results/@{test.type}">
+								<fileset dir="test-classes/${current.test.dir}" includes="@{test.includes}">
+									<exclude name="**/DLAppServiceHttpTest.class" />
+									<exclude name="**/DLAppServiceJsonTest.class" />
+									<exclude name="**/DLAppServiceSoapTest.class" />
+									<exclude name="**/UserServiceHttpTest.class" />
+									<exclude name="**/UserServiceSoapTest.class" />
+									<exclude name="${test.excludes}" />
+									<filename regex="${junit.test.excludes}" negate="true" />
+									<filename regex=".*/pacl/test/[\w]+Test.class" negate="true" />
+								</fileset>
+							</batchtest>
+						</test.classes>
+					</junit-cmd>
 				</then>
 			</if>
 		</sequential>
@@ -1694,8 +1636,7 @@ rerun your task.
 				<resourcecount property="test.integration.count">
 					<fileset
 						dir="test/integration"
-						excludes="**/${test.package.dir}/*PersistenceTest.java"
-						includes="**/${test.package.dir}/*Test.java"
+						includes="**/${test.package.dir}/*Test.class"
 					/>
 				</resourcecount>
 

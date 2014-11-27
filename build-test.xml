@@ -1452,7 +1452,7 @@ create database lportal${database.index} character set utf8;</echo>
 		<antcall target="clean-up-logs" />
 	</target>
 
-	<target name="generate-backup-results-xml">
+	<target name="generate-backup-results-xml" depends="generate-test-properties">
 		<if>
 			<and>
 				<isset property="env.JENKINS_HOME" />
@@ -1460,8 +1460,6 @@ create database lportal${database.index} character set utf8;</echo>
 			</and>
 			<then>
 				<ant target="record-git-commit-portal" />
-
-				<antcallback return="test.method.name,test.simple.class.name" target="parse-test-class" />
 
 				<if>
 					<not>
@@ -1472,53 +1470,13 @@ create database lportal${database.index} character set utf8;</echo>
 					</then>
 				</if>
 
-				<propertyregex
-					input="${test.simple.class.name}"
-					property="test.simple.shortened.class.name"
-					regexp="(.*)TestCase"
-					replace="\1"
-				/>
-
-				<pathconvert property="test.class.name" setonempty="false">
-					<path>
-						<fileset
-							dir="portal-web/test/functional"
-							includes="**/${test.simple.shortened.class.name}.testcase"
-						/>
-					</path>
-				</pathconvert>
-
-				<propertyregex
-					input="${test.class.name}"
-					override="true"
-					property="test.class.name"
-					regexp="\.testcase"
-					replace="TestCase"
-				/>
-
-				<propertyregex
-					input="${test.class.name}"
-					override="true"
-					property="test.class.name"
-					regexp="[\\/]"
-					replace="."
-				/>
-
-				<propertyregex
-					input="${test.class.name}"
-					override="true"
-					property="test.class.name"
-					regexp=".*\.com\."
-					replace="com."
-				/>
-
 				<property name="results.xml.file" value="portal-web/test-results/functional/TEST-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}_${test.class}.xml" />
 
 				<echo file="${results.xml.file}"><![CDATA[<?xml version="1.0" encoding="UTF-8" ?>
 <testsuite>
-<property name="env.TERMCAP" value="SC|screen|VT 100/ANSI X3.64 virtual terminal:\&#xa;&#x9;:DO=\E[%dB:LE=\E[%dD:RI=\E[%dC:UP=\E[%dA:bs:bt=\E[Z:\&#xa;&#x9;:cd=\E[J:ce=\E[K:cl=\E[H\E[J:cm=\E[%i%d;%dH:ct=\E[3g:\&#xa;&#x9;:do=^J:nd=\E[C:pt:rc=\E8:rs=\Ec:sc=\E7:st=\EH:up=\EM:\&#xa;&#x9;:le=^H:bl=^G:cr=^M:it#8:ho=\E[H:nw=\EE:ta=^I:is=\E)0:\&#xa;&#x9;:li#24:co#80:am:xn:xv:LP:sr=\EM:al=\E[L:AL=\E[%dL:\&#xa;&#x9;:cs=\E[%i%d;%dr:dl=\E[M:DL=\E[%dM:dc=\E[P:DC=\E[%dP:\&#xa;&#x9;:im=\E[4h:ei=\E[4l:mi:IC=\E[%d@:ks=\E[?1h\E=:\&#xa;&#x9;:ke=\E[?1l\E&gt;:vi=\E[?25l:ve=\E[34h\E[?25h:vs=\E[34l:\&#xa;&#x9;:ti=\E[?1049h:te=\E[?1049l:k0=\E[10~:k1=\EOP:k2=\EOQ:\&#xa;&#x9;:k3=\EOR:k4=\EOS:k5=\E[15~:k6=\E[17~:k7=\E[18~:\&#xa;&#x9;:k8=\E[19~:k9=\E[20~:k;=\E[21~:F1=\E[23~:F2=\E[24~:\&#xa;&#x9;:kh=\E[1~:@1=\E[1~:kH=\E[4~:@7=\E[4~:kN=\E[6~:kP=\E[5~:\&#xa;&#x9;:kI=\E[2~:kD=\E[3~:ku=\EOA:kd=\EOB:kr=\EOC:kl=\EOD:" />
-<testcase classname="${test.class.name}" name="${test.method.name}" time="0.00" />
+<testcase classname="${test.class.name}" name="${test.method.name}" time="0.00">
 <failure message="Jenkins failure prior to running test">Jenkins failure prior to running test<failure>
+</testcase>
 <system-out>
 <![CDATA[]]]]><![CDATA[>
 </system-out>
@@ -1527,42 +1485,7 @@ create database lportal${database.index} character set utf8;</echo>
 </system-err>
 </testsuite>]]></echo>
 
-				<property name="testcase.testray.attributes" value="testray.component.names,testray.main.component.name,testray.testcase.description,testray.testcase.name,testray.testcase.priority,testray.testcase.product.edition" />
-
-				<for list="${testcase.testray.attributes}" param="testcase.testray.attribute">
-					<sequential>
-						<if>
-							<isset property="${test.simple.class.name}.${test.method.name}.@{testcase.testray.attribute}" />
-							<then>
-								<propertycopy from="${test.simple.class.name}.${test.method.name}.@{testcase.testray.attribute}" property="@{testcase.testray.attribute}" />
-							</then>
-							<elseif>
-								<isset property="${test.simple.class.name}.all.@{testcase.testray.attribute}" />
-								<then>
-									<propertycopy from="${test.simple.class.name}.all.@{testcase.testray.attribute}" property="@{testcase.testray.attribute}" />
-								</then>
-							</elseif>
-						</if>
-					</sequential>
-				</for>
-
-				<if>
-					<not>
-						<isset property="testray.main.component.name" />
-					</not>
-					<then>
-						<property name="testray.main.component.name" value="" />
-					</then>
-				</if>
-
-				<if>
-					<not>
-						<isset property="testray.component.names" />
-					</not>
-					<then>
-						<property name="testray.component.names" value="${testray.main.component.name}" />
-					</then>
-				</if>
+				<record-testray-components />
 
 				<antcall target="build-test-results-xml" />
 
@@ -1826,12 +1749,12 @@ create database lportal${database.index} character set utf8;</echo>
 		<if>
 			<contains string="${test.class}" substring="#" />
 			<then>
-				<antcallback return="test.method.name,test.simple.class.name" target="parse-test-class" />
+				<antcallback return="test.class.name,test.method.name,test.simple.class.name" target="parse-test-class" />
 			</then>
 			<elseif>
 				<isset property="test.class" />
 				<then>
-					<antcallback return="test.simple.class.name" target="parse-test-class" />
+					<antcallback return="test.class.name,test.simple.class.name" target="parse-test-class" />
 
 					<property name="test.method.name" value="[A-Za-z]*" />
 				</then>
@@ -2038,6 +1961,8 @@ create database lportal${database.index} character set utf8;</echo>
 
 	<target name="parse-test-class">
 		<script classpathref="project.classpath" language="beanshell">
+			import org.apache.tools.ant.DirectoryScanner;
+
 			String testClass = project.getProperty("test.class");
 
 			String testSimpleClassName = testClass;
@@ -2061,7 +1986,37 @@ create database lportal${database.index} character set utf8;</echo>
 			}
 
 			project.setProperty("test.simple.class.name", testSimpleClassName);
+
+			String testName = testSimpleClassName.substring(0, testSimpleClassName.length() - 8);
+
+			project.setProperty("test.name", testName);
+
+			try {
+				DirectoryScanner directoryScanner = new DirectoryScanner();
+
+				directoryScanner.setBasedir(project.getBaseDir());
+				directoryScanner.setIncludes(new String[] {"**/test/functional/**/" + testName + ".testcase"});
+
+				directoryScanner.scan();
+
+				String[] fileNames = directoryScanner.getIncludedFiles();
+
+				String fileName = fileNames[0];
+
+				int x = fileName.indexOf("/test/functional/") + 17;
+
+				String className = fileName.substring(x);
+
+				className = className.replaceAll("/", ".");
+				className = className.replaceAll(".testcase", "TestCase");
+
+				project.setProperty("test.class.name", className);
+			}
+			catch (Exception e) {
+			}
 		</script>
+
+		<fail message="'${test.name}.testcase' does not exist." unless="test.class.name" />
 
 		<if>
 			<not>

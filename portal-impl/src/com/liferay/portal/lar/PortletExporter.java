@@ -172,7 +172,7 @@ public class PortletExporter {
 
 		String path = sb.toString();
 
-		if (portletDataContext.isPathProcessed(path)) {
+		if (portletDataContext.hasPrimaryKey(String.class, path)) {
 			return;
 		}
 
@@ -464,7 +464,7 @@ public class PortletExporter {
 				String path = getAssetLinkPath(
 					portletDataContext, assetLink.getLinkId());
 
-				if (!portletDataContext.isPathNotProcessed(path)) {
+				if (portletDataContext.hasPrimaryKey(String.class, path)) {
 					return;
 				}
 
@@ -496,7 +496,7 @@ public class PortletExporter {
 
 		String path = getAssetTagPath(portletDataContext, assetTag.getTagId());
 
-		if (!portletDataContext.isPathNotProcessed(path)) {
+		if (portletDataContext.hasPrimaryKey(String.class, path)) {
 			return;
 		}
 

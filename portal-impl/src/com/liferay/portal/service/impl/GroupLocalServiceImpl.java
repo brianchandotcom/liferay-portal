@@ -210,42 +210,13 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		initImportLARFile();
 	}
 
-	/**
-	 * Adds a group.
-	 *
-	 * @param  userId the primary key of the group's creator/owner
-	 * @param  parentGroupId the primary key of the parent group
-	 * @param  className the entity's class name
-	 * @param  classPK the primary key of the entity's instance
-	 * @param  liveGroupId the primary key of the live group
-	 * @param  name the entity's name
-	 * @param  description the group's description (optionally
-	 *         <code>null</code>)
-	 * @param  type the group's type. For more information see {@link
-	 *         GroupConstants}.
-	 * @param  manualMembership whether manual membership is allowed for the
-	 *         group
-	 * @param  membershipRestriction the group's membership restriction. For
-	 *         more information see {@link GroupConstants}.
-	 * @param  friendlyURL the group's friendlyURL (optionally
-	 *         <code>null</code>)
-	 * @param  site whether the group is to be associated with a main site
-	 * @param  active whether the group is active
-	 * @param  serviceContext the service context to be applied (optionally
-	 *         <code>null</code>). Can set asset category IDs and asset tag
-	 *         names for the group, and whether the group is for staging.
-	 * @return the group
-	 * @throws PortalException if a creator could not be found, if the group's
-	 *         information was invalid, if a layout could not be found, or if a
-	 *         valid friendly URL could not be created for the group
-	 */
 	@Override
 	public Group addGroup(
 			long userId, long parentGroupId, String className, long classPK,
 			long liveGroupId, String name, String description, int type,
 			boolean manualMembership, int membershipRestriction,
-			String friendlyURL, boolean site, boolean active,
-			ServiceContext serviceContext)
+			String friendlyURL, boolean site, boolean inheritContent,
+			boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Group
@@ -312,7 +283,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		if (className.equals(Group.class.getName())) {
-			if (!site && (liveGroupId == 0) &&
+			if (!site && !inheritContent && (liveGroupId == 0) &&
 				!name.equals(GroupConstants.CONTROL_PANEL)) {
 
 				throw new IllegalArgumentException();
@@ -320,7 +291,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 		else if (!className.equals(Company.class.getName()) &&
 				 !className.equals(Organization.class.getName()) &&
-				 className.startsWith("com.liferay.portal.model.")) {
+			 	className.startsWith("com.liferay.portal.model.")) {
 
 			if (site) {
 				throw new IllegalArgumentException();
@@ -355,6 +326,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		group.setManualMembership(manualMembership);
 		group.setMembershipRestriction(membershipRestriction);
 		group.setFriendlyURL(friendlyURL);
+		group.setInheritContent(inheritContent);
 		group.setSite(site);
 		group.setActive(active);
 
@@ -414,6 +386,50 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		addPortletDefaultData(group);
 
 		return group;
+	}
+
+	/**
+	 * Adds a group.
+	 *
+	 * @param  userId the primary key of the group's creator/owner
+	 * @param  parentGroupId the primary key of the parent group
+	 * @param  className the entity's class name
+	 * @param  classPK the primary key of the entity's instance
+	 * @param  liveGroupId the primary key of the live group
+	 * @param  name the entity's name
+	 * @param  description the group's description (optionally
+	 *         <code>null</code>)
+	 * @param  type the group's type. For more information see {@link
+	 *         GroupConstants}.
+	 * @param  manualMembership whether manual membership is allowed for the
+	 *         group
+	 * @param  membershipRestriction the group's membership restriction. For
+	 *         more information see {@link GroupConstants}.
+	 * @param  friendlyURL the group's friendlyURL (optionally
+	 *         <code>null</code>)
+	 * @param  site whether the group is to be associated with a main site
+	 * @param  active whether the group is active
+	 * @param  serviceContext the service context to be applied (optionally
+	 *         <code>null</code>). Can set asset category IDs and asset tag
+	 *         names for the group, and whether the group is for staging.
+	 * @return the group
+	 * @throws PortalException if a creator could not be found, if the group's
+	 *         information was invalid, if a layout could not be found, or if a
+	 *         valid friendly URL could not be created for the group
+	 */
+	@Override
+	public Group addGroup(
+			long userId, long parentGroupId, String className, long classPK,
+			long liveGroupId, String name, String description, int type,
+			boolean manualMembership, int membershipRestriction,
+			String friendlyURL, boolean site, boolean active,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addGroup(
+			userId, parentGroupId, className, classPK, liveGroupId, name,
+			description, type, manualMembership, membershipRestriction,
+			friendlyURL, site, false, active, serviceContext);
 	}
 
 	/**

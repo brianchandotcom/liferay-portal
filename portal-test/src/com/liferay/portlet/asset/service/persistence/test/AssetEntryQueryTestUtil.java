@@ -30,15 +30,66 @@ public class AssetEntryQueryTestUtil {
 		throws Exception {
 
 		return createAssetEntryQuery(
-			groupId, classNameIds, null, null, null, null, null, null, null,
-			null, null);
+			new long[] {groupId}, classNameIds, null, null, null, null, null,
+			null, null, null, null);
 	}
 
 	public static AssetEntryQuery createAssetEntryQuery(
-			long groupId, long[] classNameIds, long[] classTypeIds,
-			long[] notAllCategories, long[] notAnyCategories,
-			long[] allCategories, long[] anyCategories, String[] notAllTags,
-			String[] notAnyTags, String[] allTags, String[] anyTags)
+			long groupId, String className, long[] notAllCategoryIds,
+			long[] notAnyCategoryIds, long[] allCategoryIds,
+			long[] anyCategoryIds)
+		throws Exception {
+
+		return createAssetEntryQuery(
+			new long[] {groupId}, className, notAllCategoryIds,
+			notAnyCategoryIds, allCategoryIds, anyCategoryIds);
+	}
+
+	public static AssetEntryQuery createAssetEntryQuery(
+			long groupId, String className, String[] notAllTagNames,
+			String[] notAnyTagNames, String[] allTagNames, String[] anyTagNames)
+		throws Exception {
+
+		return createAssetEntryQuery(
+			new long[] {groupId}, className, notAllTagNames, notAnyTagNames,
+			allTagNames, anyTagNames);
+	}
+
+	public static AssetEntryQuery createAssetEntryQuery(
+			long groupId, String[] classNames)
+		throws Exception {
+
+		return createAssetEntryQuery(new long[] {groupId}, classNames);
+	}
+
+	public static AssetEntryQuery createAssetEntryQuery(
+			long groupId, String[] classNames, long[] classTypeIds)
+		throws Exception {
+
+		return createAssetEntryQuery(
+			new long[] {groupId}, classNames, classTypeIds);
+	}
+
+	public static AssetEntryQuery createAssetEntryQuery(
+			long groupId, String[] classNames, long[] classTypeIds,
+			long[] notAllCategoryIds, long[] notAnyCategoryIds,
+			long[] allCategoryIds, long[] anyCategoryIds,
+			String[] notAllTagNames, String[] notAnyTagNames,
+			String[] allTagNames, String[] anyTagNames)
+		throws Exception {
+
+		return createAssetEntryQuery(
+			new long[] {groupId}, classNames, classTypeIds, notAllCategoryIds,
+			notAnyCategoryIds, allCategoryIds, anyCategoryIds, notAllTagNames,
+			notAnyTagNames, allTagNames, anyTagNames);
+	}
+
+	public static AssetEntryQuery createAssetEntryQuery(
+			long[] groupIds, long[] classNameIds, long[] classTypeIds,
+			long[] notAllCategoryIds, long[] notAnyCategoryIds,
+			long[] allCategoryIds, long[] anyCategoryIds,
+			String[] notAllTagNames, String[] notAnyTagNames,
+			String[] allTagNames, String[] anyTagNames)
 		throws Exception {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
@@ -55,93 +106,105 @@ public class AssetEntryQueryTestUtil {
 
 		// Categories
 
-		if (Validator.isNotNull(notAllCategories)) {
-			assetEntryQuery.setNotAllCategoryIds(notAllCategories);
+		if (Validator.isNotNull(notAllCategoryIds)) {
+			assetEntryQuery.setNotAllCategoryIds(notAllCategoryIds);
 		}
 
-		if (Validator.isNotNull(notAnyCategories)) {
-			assetEntryQuery.setNotAnyCategoryIds(notAnyCategories);
+		if (Validator.isNotNull(notAnyCategoryIds)) {
+			assetEntryQuery.setNotAnyCategoryIds(notAnyCategoryIds);
 		}
 
-		if (Validator.isNotNull(anyCategories)) {
-			assetEntryQuery.setAnyCategoryIds(anyCategories);
+		if (Validator.isNotNull(anyCategoryIds)) {
+			assetEntryQuery.setAnyCategoryIds(anyCategoryIds);
 		}
 
-		if (Validator.isNotNull(allCategories)) {
-			assetEntryQuery.setAllCategoryIds(allCategories);
+		if (Validator.isNotNull(allCategoryIds)) {
+			assetEntryQuery.setAllCategoryIds(allCategoryIds);
 		}
 
 		// Tags
 
-		if (ArrayUtil.isNotEmpty(notAllTags)) {
-			assetEntryQuery.setNotAllTagIds(
-				getAssetTagsIds(groupId, notAllTags));
+		if (ArrayUtil.isNotEmpty(notAllTagNames)) {
+			for (String assetTagName : notAllTagNames) {
+				long[] notAllAssetTagIds = AssetTagLocalServiceUtil.getTagIds(
+					groupIds, assetTagName);
+
+				assetEntryQuery.addNotAllTagIdsArray(notAllAssetTagIds);
+			}
 		}
 
-		if (ArrayUtil.isNotEmpty(notAnyTags)) {
+		if (ArrayUtil.isNotEmpty(notAnyTagNames)) {
 			assetEntryQuery.setNotAnyTagIds(
-				getAssetTagsIds(groupId, notAnyTags));
+				getAssetTagsIds(groupIds, notAnyTagNames));
 		}
 
-		if (ArrayUtil.isNotEmpty(anyTags)) {
-			assetEntryQuery.setAnyTagIds(getAssetTagsIds(groupId, anyTags));
+		if (ArrayUtil.isNotEmpty(anyTagNames)) {
+			assetEntryQuery.setAnyTagIds(
+				getAssetTagsIds(groupIds, anyTagNames));
 		}
 
-		if (ArrayUtil.isNotEmpty(allTags)) {
-			assetEntryQuery.setAllTagIds(getAssetTagsIds(groupId, allTags));
+		if (ArrayUtil.isNotEmpty(allTagNames)) {
+			for (String assetTagName : allTagNames) {
+				long[] allAssetTagIds = AssetTagLocalServiceUtil.getTagIds(
+					groupIds, assetTagName);
+
+				assetEntryQuery.addAllTagIdsArray(allAssetTagIds);
+			}
 		}
 
 		// Group IDs
 
-		assetEntryQuery.setGroupIds(new long[] {groupId});
+		assetEntryQuery.setGroupIds(groupIds);
 
 		return assetEntryQuery;
 	}
 
 	public static AssetEntryQuery createAssetEntryQuery(
-			long groupId, String className, long[] notAllCategories,
-			long[] notAnyCategories, long[] allCategories, long[] anyCategories)
+			long[] groupIds, String className, long[] notAllCategoryIds,
+			long[] notAnyCategoryIds, long[] allCategoryIds,
+			long[] anyCategoryIds)
 		throws Exception {
 
 		return createAssetEntryQuery(
-			groupId, new String[] {className}, null, notAllCategories,
-			notAnyCategories, allCategories, anyCategories, null, null, null,
+			groupIds, new String[] {className}, null, notAllCategoryIds,
+			notAnyCategoryIds, allCategoryIds, anyCategoryIds, null, null, null,
 			null);
 	}
 
 	public static AssetEntryQuery createAssetEntryQuery(
-			long groupId, String className, String[] notAllTags,
-			String[] notAnyTags, String[] allTags, String[] anyTags)
+			long[] groupIds, String className, String[] notAllTagNames,
+			String[] notAnyTagNames, String[] allTagNames, String[] anyTagNames)
 		throws Exception {
 
 		return createAssetEntryQuery(
-			groupId, new String[] {className}, null, null, null, null, null,
-			notAllTags, notAnyTags, allTags, anyTags);
+			groupIds, new String[] {className}, null, null, null, null, null,
+			notAllTagNames, notAnyTagNames, allTagNames, anyTagNames);
 	}
 
 	public static AssetEntryQuery createAssetEntryQuery(
-			long groupId, String[] classNames)
+			long[] groupIds, String[] classNames)
 		throws Exception {
 
 		return createAssetEntryQuery(
-			groupId, classNames, null, null, null, null, null, null, null, null,
-			null);
+			groupIds, classNames, null, null, null, null, null, null, null,
+			null, null);
 	}
 
 	public static AssetEntryQuery createAssetEntryQuery(
-			long groupId, String[] classNames, long[] classTypeIds)
+			long[] groupIds, String[] classNames, long[] classTypeIds)
 		throws Exception {
 
 		return createAssetEntryQuery(
-			groupId, classNames, classTypeIds, null, null, null, null, null,
+			groupIds, classNames, classTypeIds, null, null, null, null, null,
 			null, null, null);
 	}
 
 	public static AssetEntryQuery createAssetEntryQuery(
-			long groupId, String[] classNames, long[] classTypeIds,
-			long[] notAllCategories, long[] notAnyCategories,
-			long[] allCategories, long[] anyCategories, String[] notAllTags,
-			String[] notAnyTags, String[] allTags, String[] anyTags)
+			long[] groupIds, String[] classNames, long[] classTypeIds,
+			long[] notAllCategoryIds, long[] notAnyCategoryIds,
+			long[] allCategoryIds, long[] anyCategoryIds,
+			String[] notAllTagNames, String[] notAnyTagNames,
+			String[] allTagNames, String[] anyTagNames)
 		throws Exception {
 
 		long[] classNameIds = new long[classNames.length];
@@ -151,20 +214,20 @@ public class AssetEntryQueryTestUtil {
 		}
 
 		return createAssetEntryQuery(
-			groupId, classNameIds, classTypeIds, notAllCategories,
-			notAnyCategories, allCategories, anyCategories, notAllTags,
-			notAnyTags, allTags, anyTags);
+			groupIds, classNameIds, classTypeIds, notAllCategoryIds,
+			notAnyCategoryIds, allCategoryIds, anyCategoryIds, notAllTagNames,
+			notAnyTagNames, allTagNames, anyTagNames);
 	}
 
 	protected static long[] getAssetTagsIds(
-			long groupId, String[] assetTagNames)
+			long[] groupIds, String[] assetTagNames)
 		throws Exception {
 
 		if (ArrayUtil.isEmpty(assetTagNames)) {
 			return new long[0];
 		}
 
-		return AssetTagLocalServiceUtil.getTagIds(groupId, assetTagNames);
+		return AssetTagLocalServiceUtil.getTagIds(groupIds, assetTagNames);
 	}
 
 }

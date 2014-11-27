@@ -568,6 +568,11 @@
 						<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryFactory" />
 					</property>
 				</bean>
+				<bean class="com.liferay.portal.repository.portletrepository.PortletRepositoryDefiner">
+					<property name="repositoryFactory">
+						<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryFactory" />
+					</property>
+				</bean>
 			</list>
 		</property>
 	</bean>

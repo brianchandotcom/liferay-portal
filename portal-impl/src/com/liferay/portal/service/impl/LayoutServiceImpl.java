@@ -878,11 +878,14 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 	@Override
 	public List<Layout> getLayouts(
-		long groupId, boolean privateLayout, long parentLayoutId,
-		boolean incomplete, int start, int end) {
+			long groupId, boolean privateLayout, long parentLayoutId,
+			boolean incomplete, int start, int end)
+		throws PortalException {
 
-		return layoutPersistence.filterFindByG_P_P(
-			groupId, privateLayout, parentLayoutId, start, end);
+		List<Layout> layouts = layoutLocalService.getLayouts(
+			groupId, privateLayout, parentLayoutId, incomplete, start, end);
+
+		return filterLayouts(layouts);
 	}
 
 	@Override

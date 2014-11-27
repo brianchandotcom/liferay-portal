@@ -124,26 +124,22 @@ public final class DLValidatorImpl implements DLValidator {
 	public void validateFileSize(String fileName, byte[] bytes)
 		throws FileSizeException {
 
-		if ((bytes == null) ||
-			((PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
-			 (bytes.length >
-					PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE)))) {
-
+		if (bytes == null) {
 			throw new FileSizeException(fileName);
 		}
+
+		validateFileSize(fileName, bytes.length);
 	}
 
 	@Override
 	public void validateFileSize(String fileName, File file)
 		throws FileSizeException {
 
-		if ((file == null) ||
-			((PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
-			 (file.length() >
-					PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE)))) {
-
+		if (file == null) {
 			throw new FileSizeException(fileName);
 		}
+
+		validateFileSize(fileName, file.length());
 	}
 
 	@Override
@@ -151,16 +147,25 @@ public final class DLValidatorImpl implements DLValidator {
 		throws FileSizeException {
 
 		try {
-			if ((is == null) ||
-				((PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
-				 (is.available() >
-						PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE)))) {
-
+			if (is == null) {
 				throw new FileSizeException(fileName);
 			}
+
+			validateFileSize(fileName, is.available());
 		}
 		catch (IOException ioe) {
-			throw new FileSizeException(ioe.getMessage());
+			new FileSizeException(ioe);
+		}
+	}
+
+	@Override
+	public void validateFileSize(String fileName, long size)
+		throws FileSizeException {
+
+		long maxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
+
+		if ((maxSize > 0) && (size > maxSize)) {
+			throw new FileSizeException(fileName);
 		}
 	}
 

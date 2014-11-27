@@ -76,6 +76,12 @@ public class DLValidatorUtil {
 		getDLValidator().validateFileSize(fileName, is);
 	}
 
+	public static void validateFileSize(String fileName, long size)
+		throws FileSizeException {
+
+		getDLValidator().validateFileSize(fileName, size);
+	}
+
 	public static void validateSourceFileExtension(
 			String fileExtension, String sourceFileName)
 		throws SourceFileNameException {

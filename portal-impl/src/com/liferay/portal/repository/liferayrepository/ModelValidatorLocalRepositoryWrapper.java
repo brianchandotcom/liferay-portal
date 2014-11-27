@@ -16,10 +16,11 @@ package com.liferay.portal.repository.liferayrepository;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.model.ContentReference;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.ModelValidator;
 import com.liferay.portal.repository.util.LocalRepositoryWrapper;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.documentlibrary.util.DLValidatorUtil;
 
 import java.io.File;
 import java.io.InputStream;
@@ -27,13 +28,16 @@ import java.io.InputStream;
 /**
  * @author Adolfo Pérez
  */
-public class LiferayFileSizeValidationLocalRepositoryWrapper
+public class ModelValidatorLocalRepositoryWrapper
 	extends LocalRepositoryWrapper {
 
-	public LiferayFileSizeValidationLocalRepositoryWrapper(
-		LocalRepository localRepository) {
+	public ModelValidatorLocalRepositoryWrapper(
+		LocalRepository localRepository,
+		ModelValidator<ContentReference> modelValidator) {
 
 		super(localRepository);
+
+		_modelValidator = modelValidator;
 	}
 
 	@Override
@@ -43,9 +47,10 @@ public class LiferayFileSizeValidationLocalRepositoryWrapper
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (file != null) {
-			DLValidatorUtil.validateFileSize(sourceFileName, file);
-		}
+		ContentReference contentReference = ContentReference.fromFile(
+			sourceFileName, mimeType, file);
+
+		_modelValidator.validate(contentReference);
 
 		return super.addFileEntry(
 			userId, folderId, sourceFileName, mimeType, title, description,
@@ -59,9 +64,10 @@ public class LiferayFileSizeValidationLocalRepositoryWrapper
 			long size, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (is != null) {
-			DLValidatorUtil.validateFileSize(sourceFileName, is);
-		}
+		ContentReference contentReference = ContentReference.fromInputStream(
+			sourceFileName, mimeType, is, size);
+
+		_modelValidator.validate(contentReference);
 
 		return super.addFileEntry(
 			userId, folderId, sourceFileName, mimeType, title, description,
@@ -75,9 +81,10 @@ public class LiferayFileSizeValidationLocalRepositoryWrapper
 			boolean majorVersion, File file, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (file != null) {
-			DLValidatorUtil.validateFileSize(sourceFileName, file);
-		}
+		ContentReference contentReference = ContentReference.fromFile(
+			sourceFileName, mimeType, file);
+
+		_modelValidator.validate(contentReference);
 
 		return super.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
@@ -92,13 +99,16 @@ public class LiferayFileSizeValidationLocalRepositoryWrapper
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (is != null) {
-			DLValidatorUtil.validateFileSize(sourceFileName, is);
-		}
+		ContentReference contentReference = ContentReference.fromInputStream(
+			sourceFileName, mimeType, is, size);
+
+		_modelValidator.validate(contentReference);
 
 		return super.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, is, size, serviceContext);
 	}
+
+	private final ModelValidator<ContentReference> _modelValidator;
 
 }

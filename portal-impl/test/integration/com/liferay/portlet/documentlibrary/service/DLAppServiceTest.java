@@ -51,12 +51,15 @@ import com.liferay.portal.test.SynchronousDestinationTestRule;
 import com.liferay.portal.test.log.ExpectedLog;
 import com.liferay.portal.test.log.ExpectedLogs;
 import com.liferay.portal.test.log.ExpectedType;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.UserTestUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.FileExtensionException;
+import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
@@ -198,6 +201,90 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 					ContentTypes.TEXT_PLAIN, fileName, StringPool.BLANK,
 					StringPool.BLANK, bytes, serviceContext);
 			}
+		}
+
+		@Test(expected = FileNameException.class)
+		public void shouldFailIfSourceFileNameContainsBlacklistedChar()
+			throws Exception {
+
+			int i =
+				RandomTestUtil.randomInt() %
+					PropsValues.DL_CHAR_BLACKLIST.length;
+
+			String blackListedChar = PropsValues.DL_CHAR_BLACKLIST[i];
+
+			String sourceFileName =
+				RandomTestUtil.randomString() + blackListedChar +
+					RandomTestUtil.randomString();
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+			DLAppServiceUtil.addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(), sourceFileName,
+				ContentTypes.TEXT_PLAIN, sourceFileName, StringPool.BLANK,
+				StringPool.BLANK, RandomTestUtil.randomBytes(), serviceContext);
+		}
+
+		@Test(expected = FileNameException.class)
+		public void shouldFailIfSourceFileNameEndsWithBlacklistedChar()
+			throws Exception {
+
+			int i =
+				RandomTestUtil.randomInt() %
+					PropsValues.DL_CHAR_LAST_BLACKLIST.length;
+
+			String blackListedChar = PropsValues.DL_CHAR_LAST_BLACKLIST[i];
+
+			String sourceFileName =
+				RandomTestUtil.randomString() + blackListedChar;
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+			DLAppServiceUtil.addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(), sourceFileName,
+				ContentTypes.TEXT_PLAIN, sourceFileName, StringPool.BLANK,
+				StringPool.BLANK, RandomTestUtil.randomBytes(), serviceContext);
+		}
+
+		@Test(expected = FileExtensionException.class)
+		public void shouldFailIfSourceFileNameExtensionNotSupported()
+			throws Exception {
+
+			try (PrefsPropsTemporarySwapper prefsPropsTemporarySwapper =
+					new PrefsPropsTemporarySwapper(
+						PropsKeys.DL_FILE_EXTENSIONS, "")) {
+
+				String sourceFileName = "file.jpg";
+
+				ServiceContext serviceContext =
+					ServiceContextTestUtil.getServiceContext(
+						group.getGroupId());
+
+				DLAppServiceUtil.addFileEntry(
+					group.getGroupId(), parentFolder.getFolderId(),
+					sourceFileName, ContentTypes.TEXT_PLAIN, sourceFileName,
+					StringPool.BLANK, StringPool.BLANK,
+					RandomTestUtil.randomBytes(), serviceContext);
+			}
+		}
+
+		@Test(expected = FileNameException.class)
+		public void shouldFailIfSourceFileNameIsBlacklisted() throws Exception {
+			int i =
+				RandomTestUtil.randomInt() %
+					PropsValues.DL_NAME_BLACKLIST.length;
+
+			String blackListedName = PropsValues.DL_NAME_BLACKLIST[i];
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+			DLAppServiceUtil.addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(), blackListedName,
+				ContentTypes.TEXT_PLAIN, blackListedName, StringPool.BLANK,
+				StringPool.BLANK, RandomTestUtil.randomBytes(), serviceContext);
 		}
 
 		@Test

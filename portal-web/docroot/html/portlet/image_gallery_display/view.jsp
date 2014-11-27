@@ -50,237 +50,223 @@ if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
 	status = WorkflowConstants.STATUS_ANY;
 }
 
-long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(displayStyleGroupId, displayStyle);
-
 DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request, dlPortletInstanceSettings);
+
+String[] mediaGalleryMimeTypes = dlPortletInstanceSettings.getMimeTypes();
+
+List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderId, mediaGalleryMimeTypes, status, 0, SearchContainer.MAX_DELTA, null);
 %>
 
-<c:choose>
-	<c:when test="<%= portletDisplayDDMTemplateId > 0 %>">
+<liferay-ui:ddm-template-renderer displayStyle="<%= displayStyle %>" displayStyleGroupId="<%= displayStyleGroupId %>" entries="<%= fileEntries %>">
 
-		<%
-		String[] mediaGalleryMimeTypes = dlPortletInstanceSettings.getMimeTypes();
+	<%
+	String topLink = ParamUtil.getString(request, "topLink", "home");
 
-		List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderId, mediaGalleryMimeTypes, status, 0, SearchContainer.MAX_DELTA, null);
-		%>
+	long assetCategoryId = ParamUtil.getLong(request, "categoryId");
+	String assetTagName = ParamUtil.getString(request, "tag");
 
-		<%= PortletDisplayTemplateUtil.renderDDMTemplate(request, response, portletDisplayDDMTemplateId, fileEntries) %>
-	</c:when>
-	<c:otherwise>
+	boolean useAssetEntryQuery = (assetCategoryId > 0) || Validator.isNotNull(assetTagName);
 
-		<%
-		String topLink = ParamUtil.getString(request, "topLink", "home");
+	PortletURL portletURL = renderResponse.createRenderURL();
 
-		long assetCategoryId = ParamUtil.getLong(request, "categoryId");
-		String assetTagName = ParamUtil.getString(request, "tag");
+	portletURL.setParameter("struts_action", "/image_gallery_display/view");
+	portletURL.setParameter("topLink", topLink);
+	portletURL.setParameter("folderId", String.valueOf(folderId));
 
-		boolean useAssetEntryQuery = (assetCategoryId > 0) || Validator.isNotNull(assetTagName);
+	request.setAttribute("view.jsp-folder", folder);
 
-		PortletURL portletURL = renderResponse.createRenderURL();
+	request.setAttribute("view.jsp-defaultFolderId", String.valueOf(defaultFolderId));
 
-		portletURL.setParameter("struts_action", "/image_gallery_display/view");
-		portletURL.setParameter("topLink", topLink);
-		portletURL.setParameter("folderId", String.valueOf(folderId));
+	request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 
-		request.setAttribute("view.jsp-folder", folder);
+	request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 
-		request.setAttribute("view.jsp-defaultFolderId", String.valueOf(defaultFolderId));
+	request.setAttribute("view.jsp-viewFolder", Boolean.TRUE.toString());
 
-		request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
+	request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntryQuery));
 
-		request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
+	request.setAttribute("view.jsp-portletURL", portletURL);
+	%>
 
-		request.setAttribute("view.jsp-viewFolder", Boolean.TRUE.toString());
+	<liferay-ui:trash-undo />
 
-		request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntryQuery));
+	<liferay-util:include page="/html/portlet/document_library/top_links.jsp" />
 
-		request.setAttribute("view.jsp-portletURL", portletURL);
-		%>
+	<c:choose>
+		<c:when test="<%= useAssetEntryQuery %>">
+			<liferay-ui:categorization-filter
+				assetType="images"
+				portletURL="<%= portletURL %>"
+			/>
 
-		<liferay-ui:trash-undo />
+			<%
+			SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
-		<liferay-util:include page="/html/portlet/document_library/top_links.jsp" />
+			long[] classNameIds = {PortalUtil.getClassNameId(DLFileEntryConstants.getClassName()), PortalUtil.getClassNameId(DLFileShortcut.class.getName())};
 
-		<c:choose>
-			<c:when test="<%= useAssetEntryQuery %>">
-				<liferay-ui:categorization-filter
-					assetType="images"
-					portletURL="<%= portletURL %>"
-				/>
+			AssetEntryQuery assetEntryQuery = new AssetEntryQuery(classNameIds, searchContainer);
+
+			assetEntryQuery.setExcludeZeroViewCount(false);
+
+			int total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
+
+			searchContainer.setTotal(total);
+
+			List results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
+
+			searchContainer.setResults(results);
+
+			mediaGalleryMimeTypes = null;
+
+			request.setAttribute("view.jsp-mediaGalleryMimeTypes", mediaGalleryMimeTypes);
+			request.setAttribute("view.jsp-searchContainer", searchContainer);
+			%>
+
+			<liferay-util:include page="/html/portlet/image_gallery_display/view_images.jsp" />
+		</c:when>
+		<c:when test='<%= topLink.equals("home") %>'>
+			<aui:row>
+				<c:if test="<%= folder != null %>">
+					<liferay-ui:header
+						localizeTitle="<%= false %>"
+						title="<%= folder.getName() %>"
+					/>
+				</c:if>
 
 				<%
 				SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
-				long[] classNameIds = {PortalUtil.getClassNameId(DLFileEntryConstants.getClassName()), PortalUtil.getClassNameId(DLFileShortcut.class.getName())};
+				int foldersCount = DLAppServiceUtil.getFoldersCount(repositoryId, folderId, true);
 
-				AssetEntryQuery assetEntryQuery = new AssetEntryQuery(classNameIds, searchContainer);
+				int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, mediaGalleryMimeTypes, true);
 
-				assetEntryQuery.setExcludeZeroViewCount(false);
-
-				int total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
+				int imagesCount = total - foldersCount;
 
 				searchContainer.setTotal(total);
 
-				List results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
+				List results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, mediaGalleryMimeTypes, true, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
 				searchContainer.setResults(results);
-
-				String[] mediaGalleryMimeTypes = null;
 
 				request.setAttribute("view.jsp-mediaGalleryMimeTypes", mediaGalleryMimeTypes);
 				request.setAttribute("view.jsp-searchContainer", searchContainer);
 				%>
 
-				<liferay-util:include page="/html/portlet/image_gallery_display/view_images.jsp" />
-			</c:when>
-			<c:when test='<%= topLink.equals("home") %>'>
-				<aui:row>
-					<c:if test="<%= folder != null %>">
-						<liferay-ui:header
-							localizeTitle="<%= false %>"
-							title="<%= folder.getName() %>"
-						/>
-					</c:if>
+				<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= dlActionsDisplayContext.isFolderMenuVisible() ? 75 : 100 %>">
+					<div id="<portlet:namespace />imageGalleryAssetInfo">
+						<c:if test="<%= folder != null %>">
+							<div class="lfr-asset-description">
+								<%= HtmlUtil.escape(folder.getDescription()) %>
+							</div>
 
-					<%
-					SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
-
-					String[] mediaGalleryMimeTypes = dlPortletInstanceSettings.getMimeTypes();
-
-					int foldersCount = DLAppServiceUtil.getFoldersCount(repositoryId, folderId, true);
-
-					int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, mediaGalleryMimeTypes, true);
-
-					int imagesCount = total - foldersCount;
-
-					searchContainer.setTotal(total);
-
-					List results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, mediaGalleryMimeTypes, true, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-
-					searchContainer.setResults(results);
-
-					request.setAttribute("view.jsp-mediaGalleryMimeTypes", mediaGalleryMimeTypes);
-					request.setAttribute("view.jsp-searchContainer", searchContainer);
-					%>
-
-					<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= dlActionsDisplayContext.isFolderMenuVisible() ? 75 : 100 %>">
-						<div id="<portlet:namespace />imageGalleryAssetInfo">
-							<c:if test="<%= folder != null %>">
-								<div class="lfr-asset-description">
-									<%= HtmlUtil.escape(folder.getDescription()) %>
+							<div class="lfr-asset-metadata">
+								<div class="icon-calendar lfr-asset-icon">
+									<%= LanguageUtil.format(request, "last-updated-x", dateFormatDate.format(folder.getModifiedDate()), false) %>
 								</div>
 
-								<div class="lfr-asset-metadata">
-									<div class="icon-calendar lfr-asset-icon">
-										<%= LanguageUtil.format(request, "last-updated-x", dateFormatDate.format(folder.getModifiedDate()), false) %>
-									</div>
+								<%
+								AssetRendererFactory dlFolderAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
+								%>
 
-									<%
-									AssetRendererFactory dlFolderAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
-									%>
-
-									<div class="<%= dlFolderAssetRendererFactory.getIconCssClass() %> lfr-asset-icon">
-										<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
-									</div>
-
-									<%
-									AssetRendererFactory dlFileEntryAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
-									%>
-
-									<div class="<%= dlFileEntryAssetRendererFactory.getIconCssClass() %> last lfr-asset-icon">
-										<%= imagesCount %> <liferay-ui:message key='<%= (imagesCount == 1) ? "image" : "images" %>' />
-									</div>
+								<div class="<%= dlFolderAssetRendererFactory.getIconCssClass() %> lfr-asset-icon">
+									<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
 								</div>
 
-								<liferay-ui:custom-attributes-available className="<%= DLFolderConstants.getClassName() %>">
-									<liferay-ui:custom-attribute-list
-										className="<%= DLFolderConstants.getClassName() %>"
-										classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
-										editable="<%= false %>"
-										label="<%= true %>"
-									/>
-								</liferay-ui:custom-attributes-available>
-							</c:if>
+								<%
+								AssetRendererFactory dlFileEntryAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+								%>
 
-							<liferay-util:include page="/html/portlet/image_gallery_display/view_images.jsp" />
-						</div>
-					</aui:col>
-
-					<c:if test="<%= dlActionsDisplayContext.isFolderMenuVisible() %>">
-						<aui:col cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= true %>" width="<%= 25 %>">
-							<div class="lfr-asset-summary">
-								<liferay-ui:icon
-									cssClass="lfr-asset-avatar"
-									image='<%= "../file_system/large/" + ((total > 0) ? "folder_full_image" : "folder_empty") %>'
-									message='<%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(request, "home") %>'
-								/>
-
-								<div class="lfr-asset-name">
-									<h4><%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(request, "home") %></h4>
+								<div class="<%= dlFileEntryAssetRendererFactory.getIconCssClass() %> last lfr-asset-icon">
+									<%= imagesCount %> <liferay-ui:message key='<%= (imagesCount == 1) ? "image" : "images" %>' />
 								</div>
 							</div>
 
-							<%
-							request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-							%>
+							<liferay-ui:custom-attributes-available className="<%= DLFolderConstants.getClassName() %>">
+								<liferay-ui:custom-attribute-list
+									className="<%= DLFolderConstants.getClassName() %>"
+									classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
+									editable="<%= false %>"
+									label="<%= true %>"
+								/>
+							</liferay-ui:custom-attributes-available>
+						</c:if>
 
-							<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
-						</aui:col>
-					</c:if>
-				</aui:row>
+						<liferay-util:include page="/html/portlet/image_gallery_display/view_images.jsp" />
+					</div>
+				</aui:col>
 
-				<%
-				if (folder != null) {
-					IGUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
+				<c:if test="<%= dlActionsDisplayContext.isFolderMenuVisible() %>">
+					<aui:col cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= true %>" width="<%= 25 %>">
+						<div class="lfr-asset-summary">
+							<liferay-ui:icon
+								cssClass="lfr-asset-avatar"
+								image='<%= "../file_system/large/" + ((total > 0) ? "folder_full_image" : "folder_empty") %>'
+								message='<%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(request, "home") %>'
+							/>
 
-					if (!defaultFolderView && portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
-						PortalUtil.setPageSubtitle(folder.getName(), request);
-						PortalUtil.setPageDescription(folder.getDescription(), request);
-					}
+							<div class="lfr-asset-name">
+								<h4><%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(request, "home") %></h4>
+							</div>
+						</div>
+
+						<%
+						request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+						%>
+
+						<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
+					</aui:col>
+				</c:if>
+			</aui:row>
+
+			<%
+			if (folder != null) {
+				IGUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
+
+				if (!defaultFolderView && portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
+					PortalUtil.setPageSubtitle(folder.getName(), request);
+					PortalUtil.setPageDescription(folder.getDescription(), request);
 				}
-				%>
+			}
+			%>
 
-			</c:when>
-			<c:when test='<%= topLink.equals("mine") || topLink.equals("recent") %>'>
+		</c:when>
+		<c:when test='<%= topLink.equals("mine") || topLink.equals("recent") %>'>
 
-				<%
-				long groupImagesUserId = 0;
+			<%
+			long groupImagesUserId = 0;
 
-				if (topLink.equals("mine") && themeDisplay.isSignedIn()) {
-					groupImagesUserId = user.getUserId();
-				}
+			if (topLink.equals("mine") && themeDisplay.isSignedIn()) {
+				groupImagesUserId = user.getUserId();
+			}
 
-				SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, null);
+			SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
-				String[] mediaGalleryMimeTypes = dlPortletInstanceSettings.getMimeTypes();
+			int total = DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupImagesUserId, defaultFolderId, mediaGalleryMimeTypes, status);
 
-				int total = DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupImagesUserId, defaultFolderId, mediaGalleryMimeTypes, status);
+			searchContainer.setTotal(total);
 
-				searchContainer.setTotal(total);
+			List results = DLAppServiceUtil.getGroupFileEntries(repositoryId, groupImagesUserId, defaultFolderId, mediaGalleryMimeTypes, status, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
-				List results = DLAppServiceUtil.getGroupFileEntries(repositoryId, groupImagesUserId, defaultFolderId, mediaGalleryMimeTypes, status, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+			searchContainer.setResults(results);
 
-				searchContainer.setResults(results);
+			request.setAttribute("view.jsp-mediaGalleryMimeTypes", mediaGalleryMimeTypes);
+			request.setAttribute("view.jsp-searchContainer", searchContainer);
+			%>
 
-				request.setAttribute("view.jsp-mediaGalleryMimeTypes", mediaGalleryMimeTypes);
-				request.setAttribute("view.jsp-searchContainer", searchContainer);
-				%>
+			<aui:row>
+				<liferay-ui:header
+					title="<%= topLink %>"
+				/>
 
-				<aui:row>
-					<liferay-ui:header
-						title="<%= topLink %>"
-					/>
+				<liferay-util:include page="/html/portlet/image_gallery_display/view_images.jsp" />
+			</aui:row>
 
-					<liferay-util:include page="/html/portlet/image_gallery_display/view_images.jsp" />
-				</aui:row>
+			<%
+			PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, topLink), currentURL);
 
-				<%
-				PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, topLink), currentURL);
+			PortalUtil.setPageSubtitle(LanguageUtil.get(request, topLink), request);
+			%>
 
-				PortalUtil.setPageSubtitle(LanguageUtil.get(request, topLink), request);
-				%>
-
-			</c:when>
-		</c:choose>
-	</c:otherwise>
-</c:choose>
+		</c:when>
+	</c:choose>
+</liferay-ui:ddm-template-renderer>

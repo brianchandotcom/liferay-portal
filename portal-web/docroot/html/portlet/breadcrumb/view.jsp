@@ -17,48 +17,38 @@
 <%@ include file="/html/portlet/breadcrumb/init.jsp" %>
 
 <%
-long portletDisplayTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(displayStyleGroupId, displayStyle);
+List<Integer> breadcrumbEntryTypes = new ArrayList<Integer>();
+
+if (showCurrentGroup) {
+	breadcrumbEntryTypes.add(BreadcrumbUtil.ENTRY_TYPE_CURRENT_GROUP);
+}
+
+if (showGuestGroup) {
+	breadcrumbEntryTypes.add(BreadcrumbUtil.ENTRY_TYPE_GUEST_GROUP);
+}
+
+if (showLayout) {
+	breadcrumbEntryTypes.add(BreadcrumbUtil.ENTRY_TYPE_LAYOUT);
+}
+
+if (showParentGroups) {
+	breadcrumbEntryTypes.add(BreadcrumbUtil.ENTRY_TYPE_PARENT_GROUP);
+}
+
+if (showPortletBreadcrumb) {
+	breadcrumbEntryTypes.add(BreadcrumbUtil.ENTRY_TYPE_PORTLET);
+}
+
+List<BreadcrumbEntry> breadcrumbEntries = BreadcrumbUtil.getBreadcrumbEntries(request, ArrayUtil.toIntArray(breadcrumbEntryTypes));
 %>
 
-<c:choose>
-	<c:when test="<%= portletDisplayTemplateId > 0 %>">
-
-		<%
-		List<Integer> breadcrumbEntryTypes = new ArrayList<Integer>();
-
-		if (showCurrentGroup) {
-			breadcrumbEntryTypes.add(BreadcrumbUtil.ENTRY_TYPE_CURRENT_GROUP);
-		}
-
-		if (showGuestGroup) {
-			breadcrumbEntryTypes.add(BreadcrumbUtil.ENTRY_TYPE_GUEST_GROUP);
-		}
-
-		if (showLayout) {
-			breadcrumbEntryTypes.add(BreadcrumbUtil.ENTRY_TYPE_LAYOUT);
-		}
-
-		if (showParentGroups) {
-			breadcrumbEntryTypes.add(BreadcrumbUtil.ENTRY_TYPE_PARENT_GROUP);
-		}
-
-		if (showPortletBreadcrumb) {
-			breadcrumbEntryTypes.add(BreadcrumbUtil.ENTRY_TYPE_PORTLET);
-		}
-
-		List<BreadcrumbEntry> breadcrumbEntries = BreadcrumbUtil.getBreadcrumbEntries(request, ArrayUtil.toIntArray(breadcrumbEntryTypes));
-		%>
-
-		<%= PortletDisplayTemplateUtil.renderDDMTemplate(request, response, portletDisplayTemplateId, breadcrumbEntries) %>
-	</c:when>
-	<c:otherwise>
-		<liferay-ui:breadcrumb
-			displayStyle="<%= displayStyle %>"
-			showCurrentGroup="<%= showCurrentGroup %>"
-			showGuestGroup="<%= showGuestGroup %>"
-			showLayout="<%= showLayout %>"
-			showParentGroups="<%= showParentGroups %>"
-			showPortletBreadcrumb="<%= showPortletBreadcrumb %>"
-		/>
-	</c:otherwise>
-</c:choose>
+<liferay-ui:ddm-template-renderer displayStyle="<%= displayStyle %>" displayStyleGroupId="<%= displayStyleGroupId %>" entries="<%= breadcrumbEntries %>">
+	<liferay-ui:breadcrumb
+		displayStyle="<%= displayStyle %>"
+		showCurrentGroup="<%= showCurrentGroup %>"
+		showGuestGroup="<%= showGuestGroup %>"
+		showLayout="<%= showLayout %>"
+		showParentGroups="<%= showParentGroups %>"
+		showPortletBreadcrumb="<%= showPortletBreadcrumb %>"
+	/>
+</liferay-ui:ddm-template-renderer>

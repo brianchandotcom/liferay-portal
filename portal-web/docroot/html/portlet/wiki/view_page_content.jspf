@@ -15,8 +15,6 @@
 --%>
 
 <%
-String formattedContent = null;
-
 try {
 	formattedContent = WikiUtil.getFormattedContent(renderRequest, renderResponse, wikiPage, viewPageURL, editPageURL, title, preview);
 %>

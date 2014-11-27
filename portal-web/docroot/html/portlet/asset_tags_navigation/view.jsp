@@ -17,39 +17,29 @@
 <%@ include file="/html/portlet/asset_tags_navigation/init.jsp" %>
 
 <%
-long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(displayStyleGroupId, displayStyle);
+List<AssetTag> assetTags = null;
+
+if (showAssetCount && (classNameId > 0)) {
+	assetTags = AssetTagServiceUtil.getTags(scopeGroupId, classNameId, null, 0, maxAssetTags, new AssetTagCountComparator());
+}
+else {
+	assetTags = AssetTagServiceUtil.getGroupTags(themeDisplay.getSiteGroupId(), 0, maxAssetTags, new AssetTagCountComparator());
+}
+
+assetTags = ListUtil.sort(assetTags);
+
+Map<String, Object> contextObjects = new HashMap<String, Object>();
+
+contextObjects.put("scopeGroupId", new Long(scopeGroupId));
 %>
 
-<c:choose>
-	<c:when test="<%= portletDisplayDDMTemplateId > 0 %>">
-
-		<%
-		List<AssetTag> assetTags = null;
-
-		if (showAssetCount && (classNameId > 0)) {
-			assetTags = AssetTagServiceUtil.getTags(scopeGroupId, classNameId, null, 0, maxAssetTags, new AssetTagCountComparator());
-		}
-		else {
-			assetTags = AssetTagServiceUtil.getGroupTags(themeDisplay.getSiteGroupId(), 0, maxAssetTags, new AssetTagCountComparator());
-		}
-
-		assetTags = ListUtil.sort(assetTags);
-
-		Map<String, Object> contextObjects = new HashMap<String, Object>();
-
-		contextObjects.put("scopeGroupId", new Long(scopeGroupId));
-		%>
-
-		<%= PortletDisplayTemplateUtil.renderDDMTemplate(request, response, portletDisplayDDMTemplateId, assetTags, contextObjects) %>
-	</c:when>
-	<c:otherwise>
-		<liferay-ui:asset-tags-navigation
-			classNameId="<%= classNameId %>"
-			displayStyle="<%= displayStyle %>"
-			hidePortletWhenEmpty="<%= true %>"
-			maxAssetTags="<%= maxAssetTags %>"
-			showAssetCount="<%= showAssetCount %>"
-			showZeroAssetCount="<%= showZeroAssetCount %>"
-		/>
-	</c:otherwise>
-</c:choose>
+<liferay-ui:ddm-template-renderer contextObjects="<%= contextObjects %>" displayStyle="<%= displayStyle %>" displayStyleGroupId="<%= displayStyleGroupId %>" entries="<%= assetTags %>">
+	<liferay-ui:asset-tags-navigation
+		classNameId="<%= classNameId %>"
+		displayStyle="<%= displayStyle %>"
+		hidePortletWhenEmpty="<%= true %>"
+		maxAssetTags="<%= maxAssetTags %>"
+		showAssetCount="<%= showAssetCount %>"
+		showZeroAssetCount="<%= showZeroAssetCount %>"
+	/>
+</liferay-ui:ddm-template-renderer>

@@ -420,14 +420,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		imageLocalService.deleteImage(entry.getSmallImageId());
 
-		// Attachments
-
-		long folderId = getAttachmentsFolderId(entry.getGroupId());
-
-		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			PortletFileRepositoryUtil.deletePortletFolder(folderId);
-		}
-
 		// Subscriptions
 
 		subscriptionLocalService.deleteSubscriptions(
@@ -1566,35 +1558,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	protected void deleteDiscussion(BlogsEntry entry) throws PortalException {
 		commentManager.deleteDiscussion(
 			BlogsEntry.class.getName(), entry.getEntryId());
-	}
-
-	protected long getAttachmentsFolderId(long groupId) {
-		Repository repository =
-			PortletFileRepositoryUtil.fetchPortletRepository(
-				groupId, PortletKeys.BLOGS);
-
-		if (repository == null) {
-			return DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-		}
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
-		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-
-		try {
-			Folder folder = PortletFileRepositoryUtil.getPortletFolder(
-				repository.getRepositoryId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, PortletKeys.BLOGS);
-
-			folderId = folder.getFolderId();
-		}
-		catch (Exception e) {
-		}
-
-		return folderId;
 	}
 
 	protected String getEntryURL(

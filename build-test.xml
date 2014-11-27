@@ -1435,6 +1435,51 @@ ${marketplace.portlet.properties}</echo>
 		<antcall target="clean-up-logs" />
 	</target>
 
+	<target name="generate-backup-results-xml" depends="generate-test-properties">
+		<if>
+			<and>
+				<isset property="env.JENKINS_HOME" />
+				<isset property="jenkins.shared.user.content.dir" />
+			</and>
+			<then>
+				<ant target="record-git-commit-portal" />
+
+				<if>
+					<not>
+						<isset property="test.method.name" />
+					</not>
+					<then>
+						<property name="test.method.name" value="" />
+					</then>
+				</if>
+
+				<property name="results.xml.file" value="portal-web/test-results/functional/TEST-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}_${test.class}.xml" />
+
+				<echo file="${results.xml.file}"><![CDATA[<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite>
+<testcase classname="${test.class.name}" name="${test.method.name}" time="0.00">
+<failure message="Jenkins failure prior to running test">Jenkins failure prior to running test<failure>
+</testcase>
+<system-out>
+<![CDATA[]]]]><![CDATA[>
+</system-out>
+<system-err>
+<![CDATA[]]]]><![CDATA[>
+</system-err>
+</testsuite>]]></echo>
+
+				<record-testray-components />
+
+				<antcall target="build-test-results-xml" />
+
+				<copy
+					file="${results.xml.file}"
+					tofile="${jenkins.shared.user.content.dir}/jobs/${env.BUILD_FLOW_JOB_NAME}/builds/${env.BUILD_FLOW_BUILD_NUMBER}/test-results/TEST-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}_${test.class}.xml"
+				/>
+			</then>
+		</if>
+	</target>
+
 	<target name="generate-changelog" depends="record-git-commit-plugins,record-git-commit-portal">
 		<tstamp>
 			<format property="build.tstamp.value" pattern="EEEE, d MMMM yyyy, hh:mm aa" />
@@ -1687,12 +1732,12 @@ ${marketplace.portlet.properties}</echo>
 		<if>
 			<contains string="${test.class}" substring="#" />
 			<then>
-				<antcallback return="test.method.name,test.simple.class.name" target="parse-test-class" />
+				<antcallback return="test.class.name,test.method.name,test.simple.class.name" target="parse-test-class" />
 			</then>
 			<elseif>
 				<isset property="test.class" />
 				<then>
-					<antcallback return="test.simple.class.name" target="parse-test-class" />
+					<antcallback return="test.class.name,test.simple.class.name" target="parse-test-class" />
 
 					<property name="test.method.name" value="[A-Za-z]*" />
 				</then>
@@ -1899,6 +1944,8 @@ ${marketplace.portlet.properties}</echo>
 
 	<target name="parse-test-class">
 		<script classpathref="project.classpath" language="beanshell">
+			import org.apache.tools.ant.DirectoryScanner;
+
 			String testClass = project.getProperty("test.class");
 
 			String testSimpleClassName = testClass;
@@ -1922,7 +1969,37 @@ ${marketplace.portlet.properties}</echo>
 			}
 
 			project.setProperty("test.simple.class.name", testSimpleClassName);
+
+			String testName = testSimpleClassName.substring(0, testSimpleClassName.length() - 8);
+
+			project.setProperty("test.name", testName);
+
+			try {
+				DirectoryScanner directoryScanner = new DirectoryScanner();
+
+				directoryScanner.setBasedir(project.getBaseDir());
+				directoryScanner.setIncludes(new String[] {"**/test/functional/**/" + testName + ".testcase"});
+
+				directoryScanner.scan();
+
+				String[] fileNames = directoryScanner.getIncludedFiles();
+
+				String fileName = fileNames[0];
+
+				int x = fileName.indexOf("/test/functional/") + 17;
+
+				String className = fileName.substring(x);
+
+				className = className.replaceAll("/", ".");
+				className = className.replaceAll(".testcase", "TestCase");
+
+				project.setProperty("test.class.name", className);
+			}
+			catch (Exception e) {
+			}
 		</script>
+
+		<fail message="'${test.name}.testcase' does not exist." unless="test.class.name" />
 
 		<if>
 			<not>

@@ -16,6 +16,10 @@
 			height: 230px;
 		}
 
+		.form-group {
+			margin-bottom: 0;
+		}
+
 		.entry-title {
 			clear: both;
 			font-size: 1em;

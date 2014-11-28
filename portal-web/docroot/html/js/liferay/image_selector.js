@@ -11,6 +11,8 @@ AUI.add(
 
 		var CSS_PROGRESS_ACTIVE = 'progress-active';
 
+		var CHANGE_IMAGE_CONTROLS_DELAY = 5000;
+
 		var PROGRESS_HEIGHT = '6';
 
 		var STR_CLICK = 'click';
@@ -64,6 +66,10 @@ AUI.add(
 						var instance = this;
 
 						instance._fileEntryImageNode = instance.one('#image');
+
+						instance._fileNameNode = instance.rootNode.one(instance.get('fileNameNode'));
+
+						instance._progressDataNode = instance.rootNode.one(instance.get('progressDataNode'));
 
 						instance._bindUI();
 
@@ -124,16 +130,27 @@ AUI.add(
 
 						var fileEntryId = event.imageData.fileEntryId;
 						var fileEntryUrl = event.imageData.url;
-
 						var fileEntryIdNode = instance.rootNode.one('#' + instance.get('paramName') + 'Id');
 
 						fileEntryIdNode.val(fileEntryId);
 
-						instance._fileEntryImageNode.attr('src', fileEntryUrl);
+						instance._fileEntryImageNode.setAttribute('src', fileEntryUrl);
 
-						instance._fileEntryId = fileEntryId;
+						var showImageControls = (fileEntryId !== 0 && fileEntryUrl !== '');
 
-						instance._fileEntryUrl = fileEntryUrl;
+						instance._fileEntryImageNode.toggle(showImageControls);
+
+						var browseImageControls = instance.one('.browse-image-controls');
+
+						var changeImageControls = instance.one('.change-image-controls');
+
+						instance.rootNode.toggleClass('drop-enabled', !showImageControls);
+
+						browseImageControls.toggle(!showImageControls);
+
+						if (!showImageControls) {
+							changeImageControls.toggle(showImageControls);
+						}
 					},
 
 					_onBrowseClick: function() {
@@ -158,7 +175,7 @@ AUI.add(
 					_onFileSelect: function(event) {
 						var instance = this;
 
-						var fileNameNode = instance.rootNode.one(instance.get('fileNameNode'));
+						var fileNameNode = instance._fileNameNode;
 
 						if (fileNameNode) {
 							var filename = event.fileList[0].get('name');
@@ -188,17 +205,7 @@ AUI.add(
 					_onImageLoaded: function() {
 						var instance = this;
 
-						var browseImageControls = instance.one('.browse-image-controls');
-
 						var changeImageControls = instance.one('.change-image-controls');
-
-						var showImageControls = (instance._fileEntryId !== 0 && instance._fileEntryUrl !== '');
-
-						instance._fileEntryImageNode.toggle(showImageControls);
-
-						browseImageControls.toggle(!showImageControls);
-
-						instance.rootNode.toggleClass('drop-enabled', !showImageControls);
 
 						instance.rootNode.addClass(CSS_CHECK_ACTIVE);
 
@@ -206,9 +213,9 @@ AUI.add(
 							function() {
 								instance.rootNode.removeClass(CSS_CHECK_ACTIVE);
 
-								changeImageControls.toggle(showImageControls);
+								changeImageControls.toggle(true);
 							},
-							3000
+							CHANGE_IMAGE_CONTROLS_DELAY
 						);
 					},
 
@@ -219,11 +226,7 @@ AUI.add(
 
 						var data = event.data;
 
-						try {
-							data = A.JSON.parse(data);
-						}
-						catch (err) {
-						}
+						data = A.JSON.parse(data);
 
 						if (data.success) {
 							instance.fire(
@@ -246,7 +249,7 @@ AUI.add(
 							progressbar.set(STR_VALUE, Math.ceil(percentLoaded));
 						}
 
-						var progressDataNode = instance.rootNode.one(instance.get('progressDataNode'));
+						var progressDataNode = instance._progressDataNode;
 
 						if (progressDataNode) {
 							var bytesLoaded = instance._parseBytesToSize(event.bytesLoaded);
@@ -273,22 +276,22 @@ AUI.add(
 							unit: ''
 						};
 
-					    if (bytes === 0) {
-					    	return data;
-					    }
+						if (bytes === 0) {
+							return data;
+						}
 
-					    var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+						var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
 
-					    if (i === 0) {
-					    	data.size = bytes;
-					    }
-					    else {
-					    	data.size = (bytes / Math.pow(1024, i)).toFixed(1);
-					    }
+						if (i === 0) {
+							data.size = bytes;
+						}
+						else {
+							data.size = (bytes / Math.pow(1024, i)).toFixed(1);
+						}
 
-					    data.unit = BYTE_SIZES[i];
+						data.unit = BYTE_SIZES[i];
 
-					    return data;
+						return data;
 					},
 
 					_renderUploader: function() {

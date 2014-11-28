@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tags.form;
+package com.liferay.portal.taglib.aui.form.extension.sample;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.servlet.taglib.TagKeyFactory;
@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {"tagClassName=com.liferay.taglib.aui.FormTag"},
 	service = TagKeyFactory.class
 )
-public class FormTagKeyFactory implements TagKeyFactory {
+public class SampleFormTagKeyFactory implements TagKeyFactory {
 
 	@Override
 	public String getKey(

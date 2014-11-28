@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tags.form;
+package com.liferay.portal.taglib.aui.form.extension.sample;
 
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.util.PortletKeys;
@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 		{"key=com.liferay.taglib.aui.FormTag#doStartTag#before#" +
 			PortletKeys.LOGIN + "-fm"}
 )
-public class FormTagDynamicInclude implements DynamicInclude {
+public class SampleFormTagDynamicInclude implements DynamicInclude {
 
 	@Override
 	public void include(

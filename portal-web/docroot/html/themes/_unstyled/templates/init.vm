@@ -206,7 +206,7 @@
 
 	#set ($community_name = $site_name)
 
-	#set ($is_guest_group = $page_group.getName() == "Guest")
+	#set ($is_guest_group = $page_group.getGroupKey() == "Guest")
 
 	#if ($is_guest_group)
 		#set ($css_class = $css_class + " guest-site")

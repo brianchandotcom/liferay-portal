@@ -17,11 +17,12 @@ package com.liferay.portal.portletfilerepository;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
@@ -32,6 +33,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
@@ -44,12 +46,13 @@ import org.testng.Assert;
 @RunWith(Enclosed.class)
 public class PortletFileRepositoryTest {
 
-	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	public static class WhenAddingAFileEntry {
 
 		@ClassRule
-		public static final MainServletTestRule mainServletTestRule =
-			MainServletTestRule.INSTANCE;
+		@Rule
+		public static final AggregateTestRule aggregateTestRule =
+			new AggregateTestRule(
+				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
 		@Test
 		public void shouldCreateApprovedFileEntry() throws Exception {
@@ -127,12 +130,13 @@ public class PortletFileRepositoryTest {
 
 	}
 
-	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	public static class WhenAddingAFolder {
 
 		@ClassRule
-		public static final MainServletTestRule mainServletTestRule =
-			MainServletTestRule.INSTANCE;
+		@Rule
+		public static final AggregateTestRule aggregateTestRule =
+			new AggregateTestRule(
+				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
 		@Test
 		public void shouldReturnExistingFolderIfDuplicateName()
@@ -178,12 +182,13 @@ public class PortletFileRepositoryTest {
 
 	}
 
-	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	public static class WhenDeletingAFolder {
 
 		@ClassRule
-		public static final MainServletTestRule mainServletTestRule =
-			MainServletTestRule.INSTANCE;
+		@Rule
+		public static final AggregateTestRule aggregateTestRule =
+			new AggregateTestRule(
+				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
 		@Test
 		public void shouldDeleteAllFileEntries() throws Exception {
@@ -231,12 +236,13 @@ public class PortletFileRepositoryTest {
 
 	}
 
-	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	public static class WhenDeletingFileEntries {
 
 		@ClassRule
-		public static final MainServletTestRule mainServletTestRule =
-			MainServletTestRule.INSTANCE;
+		@Rule
+		public static final AggregateTestRule aggregateTestRule =
+			new AggregateTestRule(
+				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
 		@Test
 		public void shouldDeleteAllFileEntries() throws Exception {

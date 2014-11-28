@@ -21,7 +21,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.service.base.VirtualHostLocalServiceBaseImpl;
-import com.liferay.portal.service.persistence.GroupUtil;
 import com.liferay.portal.util.PropsValues;
 
 /**
@@ -84,7 +83,7 @@ public class VirtualHostLocalServiceImpl
 		if ((layoutSet == null) &&
 			Validator.isNotNull(PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME)) {
 
-			Group group = GroupUtil.fetchByC_N(
+			Group group = groupPersistence.fetchByC_N(
 				companyId, PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
 
 			if (group != null) {

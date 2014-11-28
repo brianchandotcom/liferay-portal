@@ -38,8 +38,8 @@ public class GroupNameComparator extends OrderByComparator<Group> {
 
 	@Override
 	public int compare(Group group1, Group group2) {
-		String name1 = group1.getName();
-		String name2 = group2.getName();
+		String name1 = group1.getGroupKey();
+		String name2 = group2.getGroupKey();
 
 		int value = name1.compareTo(name2);
 

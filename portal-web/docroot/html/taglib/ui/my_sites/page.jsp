@@ -40,8 +40,6 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 		portletURL.setWindowState(WindowState.NORMAL);
 
 		for (Group mySiteGroup : mySiteGroups) {
-			String escapedSiteName = HtmlUtil.escape(mySiteGroup.getName());
-
 			boolean showPublicSite = mySiteGroup.isShowSite(permissionChecker, false);
 			boolean showPrivateSite = mySiteGroup.isShowSite(permissionChecker, true);
 		%>
@@ -133,7 +131,7 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 									if (mySiteGroup.isUser()) {
 										siteName = LanguageUtil.get(request, "my-profile");
 									}
-									else if (escapedSiteName.equals(GroupConstants.GUEST)) {
+									else if (mySiteGroup.getGroupKey().equals(GroupConstants.GUEST)) {
 										siteName = themeDisplay.getAccount().getName();
 									}
 									else {
@@ -194,7 +192,7 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 									if (mySiteGroup.isUser()) {
 										siteName = LanguageUtil.get(request, "my-dashboard");
 									}
-									else if (escapedSiteName.equals(GroupConstants.GUEST)) {
+									else if (mySiteGroup.getGroupKey().equals(GroupConstants.GUEST)) {
 										siteName = themeDisplay.getAccount().getName();
 									}
 									else {

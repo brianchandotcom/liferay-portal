@@ -71,7 +71,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 	@Override
 	public Group addGroup(
-			long parentGroupId, long liveGroupId, String name,
+			long parentGroupId, long liveGroupId, String groupKey,
 			String description, int type, boolean manualMembership,
 			int membershipRestriction, String friendlyURL, boolean site,
 			boolean inheritContent, boolean active,
@@ -89,9 +89,9 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		}
 
 		Group group = groupLocalService.addGroup(
-			getUserId(), parentGroupId, null, 0, liveGroupId, name, description,
-			type, manualMembership, membershipRestriction, friendlyURL, site,
-			inheritContent, active, serviceContext);
+			getUserId(), parentGroupId, null, 0, liveGroupId, groupKey,
+			description, type, manualMembership, membershipRestriction,
+			friendlyURL, site, inheritContent, active, serviceContext);
 
 		if (site) {
 			SiteMembershipPolicyUtil.verifyPolicy(group);
@@ -105,7 +105,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *
 	 * @param  parentGroupId the primary key of the parent group
 	 * @param  liveGroupId the primary key of the live group
-	 * @param  name the entity's name
+	 * @param  groupKey the entity's groupKey
 	 * @param  description the group's description (optionally
 	 *         <code>null</code>)
 	 * @param  type the group's type. For more information see {@link
@@ -129,14 +129,14 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 */
 	@Override
 	public Group addGroup(
-			long parentGroupId, long liveGroupId, String name,
+			long parentGroupId, long liveGroupId, String groupKey,
 			String description, int type, boolean manualMembership,
 			int membershipRestriction, String friendlyURL, boolean site,
 			boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
 		return addGroup(
-			parentGroupId, liveGroupId, name, description, type,
+			parentGroupId, liveGroupId, groupKey, description, type,
 			manualMembership, membershipRestriction, friendlyURL, site, false,
 			active, serviceContext);
 	}
@@ -145,7 +145,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * Adds the group using the group default live group ID.
 	 *
 	 * @param      parentGroupId the primary key of the parent group
-	 * @param      name the entity's name
+	 * @param      groupKey the entity's groupKey
 	 * @param      description the group's description (optionally
 	 *             <code>null</code>)
 	 * @param      type the group's type. For more information see {@link
@@ -169,13 +169,13 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	@Deprecated
 	@Override
 	public Group addGroup(
-			long parentGroupId, String name, String description, int type,
+			long parentGroupId, String groupKey, String description, int type,
 			String friendlyURL, boolean site, boolean active,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return addGroup(
-			parentGroupId, GroupConstants.DEFAULT_LIVE_GROUP_ID, name,
+			parentGroupId, GroupConstants.DEFAULT_LIVE_GROUP_ID, groupKey,
 			description, type, true,
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, friendlyURL, site,
 			active, serviceContext);
@@ -188,12 +188,12 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	@Deprecated
 	@Override
 	public Group addGroup(
-			String name, String description, int type, String friendlyURL,
+			String groupKey, String description, int type, String friendlyURL,
 			boolean site, boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
 		return addGroup(
-			GroupConstants.DEFAULT_PARENT_GROUP_ID, name, description, type,
+			GroupConstants.DEFAULT_PARENT_GROUP_ID, groupKey, description, type,
 			friendlyURL, site, active, serviceContext);
 	}
 
@@ -321,14 +321,16 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * Returns the group with the name.
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  name the group's name
-	 * @return the group with the name
+	 * @param  groupKey the group's key
+	 * @return the group with the groupKey
 	 * @throws PortalException if a matching group could not be found or if the
 	 *         current user did not have permission to view the group
 	 */
 	@Override
-	public Group getGroup(long companyId, String name) throws PortalException {
-		Group group = groupLocalService.getGroup(companyId, name);
+	public Group getGroup(long companyId, String groupKey)
+		throws PortalException {
+
+		Group group = groupLocalService.getGroup(companyId, groupKey);
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), group, ActionKeys.VIEW);
@@ -1056,7 +1058,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  parentGroupId the primary key of the parent group
-	 * @param  name the group's new name
+	 * @param  groupKey the group's key
 	 * @param  description the group's new description (optionally
 	 *         <code>null</code>)
 	 * @param  type the group's new type. For more information see {@link
@@ -1078,9 +1080,10 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 */
 	@Override
 	public Group updateGroup(
-			long groupId, long parentGroupId, String name, String description,
-			int type, boolean manualMembership, int membershipRestriction,
-			String friendlyURL, boolean active, ServiceContext serviceContext)
+			long groupId, long parentGroupId, String groupKey,
+			String description, int type, boolean manualMembership,
+			int membershipRestriction, String friendlyURL, boolean active,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		Group group = groupPersistence.findByPrimaryKey(groupId);
@@ -1116,7 +1119,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 				oldExpandoBridge.getAttributes();
 
 			group = groupLocalService.updateGroup(
-				groupId, parentGroupId, name, description, type,
+				groupId, parentGroupId, groupKey, description, type,
 				manualMembership, membershipRestriction, friendlyURL, active,
 				serviceContext);
 
@@ -1128,7 +1131,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		}
 		else {
 			return groupLocalService.updateGroup(
-				groupId, parentGroupId, name, description, type,
+				groupId, parentGroupId, groupKey, description, type,
 				manualMembership, membershipRestriction, friendlyURL, active,
 				serviceContext);
 		}

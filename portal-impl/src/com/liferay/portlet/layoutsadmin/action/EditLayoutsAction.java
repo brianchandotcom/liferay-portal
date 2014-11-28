@@ -15,7 +15,7 @@
 package com.liferay.portlet.layoutsadmin.action;
 
 import com.liferay.portal.DuplicateGroupException;
-import com.liferay.portal.GroupNameException;
+import com.liferay.portal.GroupKeyException;
 import com.liferay.portal.ImageTypeException;
 import com.liferay.portal.LayoutFriendlyURLException;
 import com.liferay.portal.LayoutFriendlyURLsException;
@@ -279,7 +279,7 @@ public class EditLayoutsAction extends PortletAction {
 				setForward(actionRequest, "portlet.layouts_admin.error");
 			}
 			else if (e instanceof DuplicateGroupException ||
-					 e instanceof GroupNameException ||
+					 e instanceof GroupKeyException ||
 					 e instanceof ImageTypeException ||
 					 e instanceof LayoutFriendlyURLException ||
 					 e instanceof LayoutFriendlyURLsException ||

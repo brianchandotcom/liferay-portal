@@ -219,7 +219,7 @@
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByC_G_F_C_A_V_T_D_C_S_T_D_R">
 		<![CDATA[
 			SELECT
-				DISTINCT {JournalArticle.*}
+				JournalArticle.*
 			FROM
 				JournalArticle
 			LEFT JOIN JournalArticle tempJournalArticle ON

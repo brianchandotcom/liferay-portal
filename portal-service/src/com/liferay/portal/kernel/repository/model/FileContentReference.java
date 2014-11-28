@@ -21,28 +21,34 @@ import java.io.InputStream;
 /**
  * @author Adolfo Pérez
  */
-public class ContentReference {
+public class FileContentReference {
 
-	public static final ContentReference fromBytes(
-		String sourceFileName, String mimeType, byte[] bytes) {
+	public static final FileContentReference fromBytes(
+		String sourceFileName, String extension, String mimeType,
+		byte[] bytes) {
 
 		return fromInputStream(
-			sourceFileName, mimeType, new ByteArrayInputStream(bytes),
-			bytes.length);
+			sourceFileName, extension, mimeType,
+			new ByteArrayInputStream(bytes), bytes.length);
 	}
 
-	public static final ContentReference fromFile(
-		String sourceFileName, String mimeType, File file) {
+	public static final FileContentReference fromFile(
+		String sourceFileName, String extension, String mimeType, File file) {
 
-		return new ContentReference(sourceFileName, mimeType, file, null, 0);
+		return new FileContentReference(
+			sourceFileName, extension, mimeType, file, null, 0);
 	}
 
-	public static final ContentReference fromInputStream(
-		String sourceFileName, String mimeType, InputStream inputStream,
-		long size) {
+	public static final FileContentReference fromInputStream(
+		String sourceFileName, String extension, String mimeType,
+		InputStream inputStream, long size) {
 
-		return new ContentReference(
-			sourceFileName, mimeType, null, inputStream, size);
+		return new FileContentReference(
+			sourceFileName, extension, mimeType, null, inputStream, size);
+	}
+
+	public String getExtension() {
+		return _extension;
 	}
 
 	public String getMimeType() {
@@ -65,17 +71,19 @@ public class ContentReference {
 		return _sourceFileName;
 	}
 
-	protected ContentReference(
-		String sourceFileName, String mimeType, File file,
+	protected FileContentReference(
+		String sourceFileName, String extension, String mimeType, File file,
 		InputStream inputStream, long size) {
 
 		_sourceFileName = sourceFileName;
+		_extension = extension;
 		_mimeType = mimeType;
 		_file = file;
 		_inputStream = inputStream;
 		_size = size;
 	}
 
+	private final String _extension;
 	private final File _file;
 	private final InputStream _inputStream;
 	private final String _mimeType;

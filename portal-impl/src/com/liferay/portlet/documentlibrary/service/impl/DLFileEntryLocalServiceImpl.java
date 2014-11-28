@@ -97,6 +97,7 @@ import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.documentlibrary.util.DL;
 import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
+import com.liferay.portlet.documentlibrary.util.DLValidatorUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifiedDateComparator;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
@@ -2669,14 +2670,9 @@ public class DLFileEntryLocalServiceImpl
 			String title)
 		throws PortalException {
 
-		if (Validator.isNotNull(sourceFileName)) {
-			DLStoreUtil.validate(
-				sourceFileName, extension, sourceFileName, true);
-		}
+		DLValidatorUtil.validateFileName(title);
 
 		validateFileExtension(extension);
-
-		DLStoreUtil.validate(title, false);
 
 		validateFile(groupId, folderId, fileEntryId, fileName, title);
 	}

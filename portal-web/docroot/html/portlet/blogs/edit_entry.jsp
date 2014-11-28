@@ -45,6 +45,8 @@ long smallImageFileEntryId = BeanParamUtil.getLong(entry, request, "smallImageFi
 
 boolean preview = ParamUtil.getBoolean(request, "preview");
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
+
+String[] imageExtensions = PrefsPropsUtil.getStringArray(PropsKeys.BLOGS_IMAGE_EXTENSIONS, StringPool.COMMA);
 %>
 
 <c:if test="<%= showHeader %>">
@@ -114,7 +116,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 			</portlet:actionURL>
 
 			<div class="lfr-blogs-cover-image-selector">
-				<liferay-ui:image-selector draggableImage="vertical" fileEntryId="<%= coverImageFileEntryId %>" paramName="coverImageFileEntry" uploadURL="<%= imageSelectorURL %>" />
+				<liferay-ui:image-selector draggableImage="vertical" fileEntryId="<%= coverImageFileEntryId %>" paramName="coverImageFileEntry" uploadURL="<%= imageSelectorURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
 			</div>
 
 			<div class="entry-title">
@@ -137,11 +139,6 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 			<div class="entry-abstract-wrapper">
 				<liferay-ui:error exception="<%= EntrySmallImageNameException.class %>">
-
-					<%
-					String[] imageExtensions = PrefsPropsUtil.getStringArray(PropsKeys.BLOGS_IMAGE_EXTENSIONS, StringPool.COMMA);
-					%>
-
 					<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= StringUtil.merge(imageExtensions, ", ") %>.
 				</liferay-ui:error>
 

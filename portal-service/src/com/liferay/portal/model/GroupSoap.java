@@ -52,6 +52,7 @@ public class GroupSoap implements Serializable {
 		soapModel.setFriendlyURL(model.getFriendlyURL());
 		soapModel.setSite(model.getSite());
 		soapModel.setRemoteStagingGroupCount(model.getRemoteStagingGroupCount());
+		soapModel.setInheritContent(model.getInheritContent());
 		soapModel.setActive(model.getActive());
 
 		return soapModel;
@@ -265,6 +266,18 @@ public class GroupSoap implements Serializable {
 		_remoteStagingGroupCount = remoteStagingGroupCount;
 	}
 
+	public boolean getInheritContent() {
+		return _inheritContent;
+	}
+
+	public boolean isInheritContent() {
+		return _inheritContent;
+	}
+
+	public void setInheritContent(boolean inheritContent) {
+		_inheritContent = inheritContent;
+	}
+
 	public boolean getActive() {
 		return _active;
 	}
@@ -296,5 +309,6 @@ public class GroupSoap implements Serializable {
 	private String _friendlyURL;
 	private boolean _site;
 	private int _remoteStagingGroupCount;
+	private boolean _inheritContent;
 	private boolean _active;
 }

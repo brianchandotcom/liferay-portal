@@ -375,6 +375,27 @@ public interface GroupModel extends AttachedModel, BaseModel<Group>, MVCCModel {
 	public void setRemoteStagingGroupCount(int remoteStagingGroupCount);
 
 	/**
+	 * Returns the inherit content of this group.
+	 *
+	 * @return the inherit content of this group
+	 */
+	public boolean getInheritContent();
+
+	/**
+	 * Returns <code>true</code> if this group is inherit content.
+	 *
+	 * @return <code>true</code> if this group is inherit content; <code>false</code> otherwise
+	 */
+	public boolean isInheritContent();
+
+	/**
+	 * Sets whether this group is inherit content.
+	 *
+	 * @param inheritContent the inherit content of this group
+	 */
+	public void setInheritContent(boolean inheritContent);
+
+	/**
 	 * Returns the active of this group.
 	 *
 	 * @return the active of this group

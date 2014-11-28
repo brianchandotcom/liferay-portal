@@ -274,6 +274,7 @@
 		</field>
 		<field name="site" type="boolean" />
 		<field name="remoteStagingGroupCount" type="int" />
+		<field name="inheritContent" type="boolean" />
 		<field name="active" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.model.Image">

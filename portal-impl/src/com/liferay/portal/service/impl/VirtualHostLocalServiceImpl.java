@@ -15,10 +15,13 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.service.base.VirtualHostLocalServiceBaseImpl;
+import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Alexander Chow
@@ -76,6 +79,18 @@ public class VirtualHostLocalServiceImpl
 
 		LayoutSet layoutSet = layoutSetPersistence.fetchByPrimaryKey(
 			layoutSetId);
+
+		if ((layoutSet == null) &&
+			Validator.isNotNull(PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME)) {
+
+			Group group = groupPersistence.fetchByC_N(
+				companyId, PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
+
+			if (group != null) {
+				layoutSet = layoutSetPersistence.fetchByG_P(
+					group.getGroupId(), false);
+			}
+		}
 
 		if (layoutSet != null) {
 			layoutSetPersistence.clearCache(layoutSet);

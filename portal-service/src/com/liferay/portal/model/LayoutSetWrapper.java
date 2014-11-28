@@ -216,6 +216,11 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 		return _layoutSet.getColorSchemeId();
 	}
 
+	@Override
+	public java.lang.String getCompanyFallbackVirtualHostname() {
+		return _layoutSet.getCompanyFallbackVirtualHostname();
+	}
+
 	/**
 	* Returns the company ID of this layout set.
 	*
@@ -553,6 +558,12 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 	@Override
 	public void setColorSchemeId(java.lang.String colorSchemeId) {
 		_layoutSet.setColorSchemeId(colorSchemeId);
+	}
+
+	@Override
+	public void setCompanyFallbackVirtualHostname(
+		java.lang.String companyFallbackVirtualHostname) {
+		_layoutSet.setCompanyFallbackVirtualHostname(companyFallbackVirtualHostname);
 	}
 
 	/**

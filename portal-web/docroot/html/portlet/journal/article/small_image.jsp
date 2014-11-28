@@ -20,13 +20,11 @@
 JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
 
 boolean smallImage = BeanParamUtil.getBoolean(article, request, "smallImage");
-
-String defaultLanguageId = (String)request.getAttribute("edit_article.jsp-defaultLanguageId");
 %>
 
 <liferay-ui:error-marker key="errorSection" value="small_image" />
 
-<aui:model-context bean="<%= article %>" defaultLanguageId="<%= defaultLanguageId %>" model="<%= JournalArticle.class %>" />
+<aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />
 
 <h3><liferay-ui:message key="small-image" /></h3>
 

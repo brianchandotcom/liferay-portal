@@ -1954,7 +1954,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         modification date, expando bridge attributes, asset category IDs,
 	 *         asset tag names, asset link entry IDs, workflow actions, the
-	 *         "defaultLanguageId" and "urlTitle" attributes, and can set
+	 *         and "urlTitle" attributes, and can set
 	 *         whether to add the default command update for the web content
 	 *         article. With respect to social activities, by setting the
 	 *         service context's command to {@link
@@ -2046,7 +2046,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         modification date, expando bridge attributes, asset category IDs,
 	 *         asset tag names, asset link entry IDs, workflow actions, the
-	 *         "defaultLanguageId" and "urlTitle" attributes, and can set
+	 *         and "urlTitle" attributes, and can set
 	 *         whether to add the default command update for the web content
 	 *         article. With respect to social activities, by setting the
 	 *         service context's command to {@link
@@ -2106,7 +2106,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         modification date, expando bridge attributes, asset category IDs,
 	 *         asset tag names, asset link entry IDs, workflow actions, the
-	 *         "defaultLanguageId" and "urlTitle" attributes, and can set
+	 *         and "urlTitle" attributes, and can set
 	 *         whether to add the default command update for the web content
 	 *         article. With respect to social activities, by setting the
 	 *         service context's command to {@link

@@ -82,15 +82,10 @@ if (ddmTemplate == null) {
 	}
 }
 
-String defaultLanguageId = ParamUtil.getString(request, "defaultLanguageId");
+String defaultLanguageId = LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale());
 
-if (Validator.isNull(defaultLanguageId) || !LanguageUtil.isAvailableLocale(themeDisplay.getSiteGroupId(), defaultLanguageId)) {
-	if (article != null) {
-		defaultLanguageId = article.getDefaultLanguageId();
-	}
-	else {
-		defaultLanguageId = LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale());
-	}
+if (article != null) {
+	defaultLanguageId = LocalizationUtil.getDefaultLanguageId(article.getContent(), LocaleUtil.getSiteDefault());
 }
 
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
@@ -150,7 +145,6 @@ request.setAttribute("edit_article.jsp-defaultLanguageId", defaultLanguageId);
 		<aui:input name="articleId" type="hidden" value="<%= articleId %>" />
 		<aui:input name="articleIds" type="hidden" value="<%= articleId + EditArticleAction.VERSION_SEPARATOR + version %>" />
 		<aui:input name="version" type="hidden" value="<%= ((article == null) || article.isNew()) ? version : article.getVersion() %>" />
-		<aui:input name="languageId" type="hidden" value="<%= defaultLanguageId %>" />
 		<aui:input name="articleURL" type="hidden" value="<%= editArticleRenderURL %>" />
 		<aui:input name="ddmStructureId" type="hidden" />
 		<aui:input name="ddmTemplateId" type="hidden" />
@@ -176,7 +170,7 @@ request.setAttribute("edit_article.jsp-defaultLanguageId", defaultLanguageId);
 			<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(LiferayFileItem.THRESHOLD_SIZE, locale) %>" key="please-enter-valid-content-with-valid-content-size-no-larger-than-x" translateArguments="<%= false %>" />
 		</liferay-ui:error>
 
-		<aui:model-context bean="<%= article %>" defaultLanguageId="<%= defaultLanguageId %>" model="<%= JournalArticle.class %>" />
+		<aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />
 
 		<div class="journal-article-wrapper" id="<portlet:namespace />journalArticleWrapper">
 			<div class="journal-article-wrapper-content">
@@ -311,7 +305,6 @@ request.setAttribute("edit_article.jsp-defaultLanguageId", defaultLanguageId);
 	new Liferay.Portlet.Journal(
 		{
 			article: {
-				defaultLanguageId: '<%= HtmlUtil.escapeJS(defaultLanguageId) %>',
 				editUrl: '<%= editArticleURL %>',
 				id: '<%= (article != null) ? HtmlUtil.escape(articleId) : StringPool.BLANK %>',
 
@@ -348,9 +341,5 @@ request.setAttribute("edit_article.jsp-defaultLanguageId", defaultLanguageId);
 </c:if>
 
 <%!
-private String _getSectionJsp(String name) {
-	return TextFormatter.format(name, TextFormatter.N);
-}
-
 private static final String[] _CATEGORY_NAMES = {""};
 %>

@@ -170,6 +170,18 @@
 	}
 
 	.browse-image-controls {
+		.drag-drop-label, .browse-image {
+			font-size: 16px;
+		}
+
+		.drag-drop-label {
+			line-height: 35px;
+		}
+
+		.file-validation-info {
+			margin-top: 15px;
+		}
+
 		z-index: 2;
 	}
 

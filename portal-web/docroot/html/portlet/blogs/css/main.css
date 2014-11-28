@@ -48,6 +48,18 @@
 				float: left;
 				margin-bottom: 30px;
 				width: 200px;
+
+				.taglib-image-selector {
+					min-height: 150px;
+
+					.drag-drop-label {
+				    	font-size: 15px;
+					}
+
+					.file-validation-info {
+				    	font-size: 13px;
+					}
+				}
 			}
 
 			.entry-description {

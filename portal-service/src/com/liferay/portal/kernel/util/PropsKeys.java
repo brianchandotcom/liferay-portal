@@ -283,6 +283,8 @@ public interface PropsKeys {
 
 	public static final String BLOGS_IMAGE_EXTENSIONS = "blogs.image.extensions";
 
+	public static final String BLOGS_IMAGE_COVER_MAX_SIZE = "blogs.image.cover.max.size";
+
 	public static final String BLOGS_IMAGE_SMALL_MAX_SIZE = "blogs.image.small.max.size";
 
 	public static final String BLOGS_LINKBACK_EXCERPT_LENGTH = "blogs.linkback.excerpt.length";

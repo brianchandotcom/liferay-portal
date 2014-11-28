@@ -21,6 +21,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_image_
 
 String draggableImage = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:draggableImage"), "none");
 long fileEntryId = GetterUtil.getLong(request.getAttribute("liferay-ui:image-selector:fileEntryId"));
+long maxFileSize = GetterUtil.getLong(request.getAttribute("liferay-ui:image-selector:maxFileSize"));
 String paramName = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:paramName"));
 String uploadURL = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:uploadURL"));
 String validExtensions = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:validExtensions"));
@@ -54,6 +55,10 @@ if (fileEntryId != 0) {
 		<div class="file-validation-info">
 			<c:if test="<%= Validator.isNotNull(validExtensions) %>">
 				<strong><%= validExtensions %></strong>
+			</c:if>
+
+			<c:if test="<%= maxFileSize != 0 %>">
+				<liferay-ui:message key="maximum-size-x" arguments="<%= TextFormatter.formatStorageSize(maxFileSize, locale) %>" />
 			</c:if>
 		</div>
 	</div>

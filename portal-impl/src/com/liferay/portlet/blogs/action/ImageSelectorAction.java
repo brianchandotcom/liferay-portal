@@ -25,6 +25,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourcePermissionCheckerUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portlet.blogs.CoverImageNameException;
+import com.liferay.portlet.blogs.CoverImageSizeException;
 import com.liferay.portlet.blogs.EntrySmallImageNameException;
 import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 
@@ -37,6 +38,13 @@ public class ImageSelectorAction extends BaseImageSelectorAction {
 	public void validateFile(
 			String fileName, String contentType, long size)
 		throws PortalException {
+
+		long coverImageMaxFileSize = PrefsPropsUtil.getLong(
+			PropsKeys.BLOGS_IMAGE_COVER_MAX_SIZE);
+
+		if (size > coverImageMaxFileSize) {
+			throw new CoverImageSizeException();
+		}
 
 		String extension = FileUtil.getExtension(fileName);
 

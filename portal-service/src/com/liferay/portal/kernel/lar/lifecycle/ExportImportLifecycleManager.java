@@ -37,9 +37,9 @@ public class ExportImportLifecycleManager {
 		message.put("event", exportImportLifecycleEvent);
 
 		MessageBusUtil.sendMessage(
-			DestinationNames.EXPORT_IMPORT_LIFECYCLE_EVENT_SYNC, message);
-		MessageBusUtil.sendMessage(
 			DestinationNames.EXPORT_IMPORT_LIFECYCLE_EVENT_ASYNC, message);
+		MessageBusUtil.sendMessage(
+			DestinationNames.EXPORT_IMPORT_LIFECYCLE_EVENT_SYNC, message);
 	}
 
 }

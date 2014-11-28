@@ -169,6 +169,14 @@
 		width: 100%;
 	}
 
+	.browse-image-controls {
+		z-index: 2;
+	}
+
+	.drop-here-info {
+		z-index: 1;
+	}
+
 	.change-image-controls {
 		bottom: 10px;
 		position: absolute;

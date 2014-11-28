@@ -29,24 +29,25 @@ import org.osgi.service.component.annotations.Component;
  * @author Carlos Sierra Andrés
  */
 @Component(
-	immediate = true, service = DynamicInclude.class, property =
-		{"key=com.liferay.taglib.aui.FormTag#doStartTag#before#" +
-			PortletKeys.LOGIN + "-fm"}
+	immediate = true,
+	property = {
+		"key=com.liferay.taglib.aui.FormTag#doStartTag#before#" +
+			PortletKeys.LOGIN + "-fm"
+	},
+	service = DynamicInclude.class
 )
 public class SampleFormTagDynamicInclude implements DynamicInclude {
 
 	@Override
 	public void include(
-		HttpServletRequest request, HttpServletResponse response, String key) {
+			HttpServletRequest request, HttpServletResponse response,
+			String key)
+		throws IOException {
 
-		try {
-			PrintWriter writer = response.getWriter();
+		PrintWriter printWriter = response.getWriter();
 
-			writer.println("<h2>extension</h2><br/>");
-		}
-		catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+		printWriter.println(
+			"<h2>Liferay Portal Taglib AUI Form Extension Sample</h2><br />");
 	}
 
 }

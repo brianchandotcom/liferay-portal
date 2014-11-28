@@ -16,6 +16,7 @@ package com.liferay.portal.taglib.aui.form.extension.sample;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.servlet.taglib.TagKeyFactory;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 
@@ -36,17 +37,21 @@ public class SampleFormTagKeyFactory implements TagKeyFactory {
 
 	@Override
 	public String getKey(
-		HttpServletRequest request, HttpServletResponse response,
-		Object jspTag) {
+		HttpServletRequest request, HttpServletResponse response, Object tag) {
 
 		String portletId = PortalUtil.getPortletId(request);
-		String name = BeanPropertiesUtil.getStringSilent(jspTag, "name");
 
-		if (Validator.isNull(portletId) || Validator.isNull(name)) {
+		if (Validator.isNull(portletId)) {
 			return null;
 		}
 
-		return portletId.concat("-").concat(name);
+		String name = BeanPropertiesUtil.getStringSilent(tag, "name");
+
+		if (Validator.isNull(name)) {
+			return null;
+		}
+
+		return portletId.concat(StringPool.DASH).concat(name);
 	}
 
 }

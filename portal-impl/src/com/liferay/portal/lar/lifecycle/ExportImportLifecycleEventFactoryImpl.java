@@ -32,11 +32,8 @@ public class ExportImportLifecycleEventFactoryImpl
 		ExportImportLifecycleEvent exportImportLifecycleEvent =
 			new ExportImportLifecycleEventImpl();
 
+		exportImportLifecycleEvent.setEventAttributes(attributes);
 		exportImportLifecycleEvent.setEventCode(eventCode);
-
-		for (Serializable attribute : attributes) {
-			exportImportLifecycleEvent.addEventAttribute(attribute);
-		}
 
 		return exportImportLifecycleEvent;
 	}

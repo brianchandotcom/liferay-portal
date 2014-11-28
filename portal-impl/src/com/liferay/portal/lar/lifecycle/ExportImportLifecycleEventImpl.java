@@ -15,6 +15,7 @@
 package com.liferay.portal.lar.lifecycle;
 
 import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleEvent;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.io.Serializable;
 
@@ -28,11 +29,6 @@ public class ExportImportLifecycleEventImpl
 	implements ExportImportLifecycleEvent {
 
 	@Override
-	public void addEventAttribute(Serializable serializable) {
-		_attributes.add(serializable);
-	}
-
-	@Override
 	public List<Serializable> getEventAttributes() {
 		return _attributes;
 	}
@@ -40,6 +36,11 @@ public class ExportImportLifecycleEventImpl
 	@Override
 	public int getEventCode() {
 		return _eventCode;
+	}
+
+	@Override
+	public void setEventAttributes(Serializable... attributes) {
+		_attributes.addAll(ListUtil.fromArray(attributes));
 	}
 
 	@Override

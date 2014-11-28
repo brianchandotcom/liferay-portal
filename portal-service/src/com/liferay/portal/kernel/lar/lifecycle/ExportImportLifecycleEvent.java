@@ -23,11 +23,11 @@ import java.util.List;
  */
 public interface ExportImportLifecycleEvent extends Serializable {
 
-	public void addEventAttribute(Serializable serializable);
-
 	public List<Serializable> getEventAttributes();
 
 	public int getEventCode();
+
+	public void setEventAttributes(Serializable... attributes);
 
 	public void setEventCode(int eventCode);
 

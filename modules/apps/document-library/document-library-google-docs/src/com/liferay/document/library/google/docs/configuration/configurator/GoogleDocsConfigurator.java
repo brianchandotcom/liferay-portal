@@ -16,6 +16,7 @@ package com.liferay.document.library.google.docs.configuration.configurator;
 
 import com.liferay.document.library.google.docs.migration.LegacyGoogleDocsMigration;
 import com.liferay.document.library.google.docs.util.GoogleDocsDLFileEntryTypeHelper;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.service.ClassNameLocalService;
@@ -26,8 +27,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServi
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngine;
-
-import java.util.List;
+import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -43,28 +43,12 @@ public class GoogleDocsConfigurator {
 
 	@Activate
 	public void activate() throws PortalException {
-		List<Company> companies = _companyLocalService.getCompanies();
+		ActionableDynamicQuery actionableDynamicQuery =
+			_companyLocalService.getActionableDynamicQuery();
 
-		for (Company company : companies) {
-			GoogleDocsDLFileEntryTypeHelper googleDocsDLFileEntryTypeHelper =
-				new GoogleDocsDLFileEntryTypeHelper(
-					company, _classNameLocalService, _ddmStructureLocalService,
-					_dlFileEntryTypeLocalService, _userLocalService);
+		actionableDynamicQuery.setPerformActionMethod(_performActionMethod);
 
-			LegacyGoogleDocsMigration legacyGoogleDocsMigration =
-				new LegacyGoogleDocsMigration(
-					company, _ddmStructureLocalService,
-					_dlFileEntryTypeLocalService, _dlFileEntryLocalService,
-					_dlFileEntryMetadataLocalService,
-					googleDocsDLFileEntryTypeHelper, _storageEngine);
-
-			if (legacyGoogleDocsMigration.isMigrationNeeded()) {
-				legacyGoogleDocsMigration.migrate();
-			}
-			else {
-				googleDocsDLFileEntryTypeHelper.addGoogleDocsDLFileEntryType();
-			}
-		}
+		actionableDynamicQuery.performActions();
 	}
 
 	@Reference
@@ -127,5 +111,34 @@ public class GoogleDocsConfigurator {
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 	private StorageEngine _storageEngine;
 	private UserLocalService _userLocalService;
+
+	private final ActionableDynamicQuery.PerformActionMethod _performActionMethod =
+		new ActionableDynamicQuery.PerformActionMethod() {
+			@Override
+			public void performAction(Object object) throws PortalException {
+				Company company = (Company)object;
+
+				GoogleDocsDLFileEntryTypeHelper
+					googleDocsDLFileEntryTypeHelper =
+						new GoogleDocsDLFileEntryTypeHelper(
+							company, _classNameLocalService,
+							_ddmStructureLocalService,
+							_dlFileEntryTypeLocalService, _userLocalService);
+
+				LegacyGoogleDocsMigration legacyGoogleDocsMigration =
+					new LegacyGoogleDocsMigration(
+						company, _ddmStructureLocalService,
+						_dlFileEntryTypeLocalService, _dlFileEntryLocalService,
+						_dlFileEntryMetadataLocalService,
+						googleDocsDLFileEntryTypeHelper, _storageEngine);
+
+				if (legacyGoogleDocsMigration.isMigrationNeeded()) {
+					legacyGoogleDocsMigration.migrate();
+				}
+				else {
+					googleDocsDLFileEntryTypeHelper.
+						addGoogleDocsDLFileEntryType();
+				}
+			}};
 
 }

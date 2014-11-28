@@ -17,6 +17,7 @@ package com.liferay.document.library.google.docs.migration;
 import com.liferay.document.library.google.docs.util.GoogleDocsConstants;
 import com.liferay.document.library.google.docs.util.GoogleDocsDLFileEntryTypeHelper;
 import com.liferay.document.library.google.docs.util.GoogleDocsMetadataHelper;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Company;
@@ -28,8 +29,6 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngine;
-
-import java.util.List;
 
 /**
  * @author Ivan Zaera
@@ -104,45 +103,12 @@ public class LegacyGoogleDocsMigration {
 	}
 
 	protected void upgradeDLFileEntries() throws PortalException {
-		List<DLFileEntry> dlFileEntries =
-			_dlFileEntryLocalService.getCompanyFileEntriesByFileEntryType(
-				_company.getCompanyId(), _dlFileEntryType.getFileEntryTypeId());
+		ActionableDynamicQuery actionableDynamicQuery =
+			_dlFileEntryLocalService.getActionableDynamicQuery();
 
-		for (DLFileEntry dlFileEntry : dlFileEntries) {
-			LegacyGoogleDocsMetadataHelper legacyGoogleDocsMetadataHelper =
-				new LegacyGoogleDocsMetadataHelper(dlFileEntry, _storageEngine);
+		actionableDynamicQuery.setPerformActionMethod(_performActionMethod);
 
-			String id = legacyGoogleDocsMetadataHelper.getFieldValue(
-				LegacyGoogleDocsConstants.DDM_FIELD_NAME_ID);
-			String name = legacyGoogleDocsMetadataHelper.getFieldValue(
-				LegacyGoogleDocsConstants.DDM_FIELD_NAME_NAME);
-			String iconURL = legacyGoogleDocsMetadataHelper.getFieldValue(
-				LegacyGoogleDocsConstants.DDM_FIELD_NAME_ICON_URL);
-			String viewURL = legacyGoogleDocsMetadataHelper.getFieldValue(
-				LegacyGoogleDocsConstants.DDM_FIELD_NAME_VIEW_URL);
-			String editURL = legacyGoogleDocsMetadataHelper.getFieldValue(
-				LegacyGoogleDocsConstants.DDM_FIELD_NAME_EDIT_URL);
-
-			GoogleDocsMetadataHelper googleDocsMetadataHelper =
-				new GoogleDocsMetadataHelper(
-					dlFileEntry, _dlFileEntryMetadataLocalService,
-					_storageEngine);
-
-			googleDocsMetadataHelper.setFieldValue(
-				GoogleDocsConstants.DDM_FIELD_NAME_ID, id);
-			googleDocsMetadataHelper.setFieldValue(
-				GoogleDocsConstants.DDM_FIELD_NAME_NAME, name);
-			googleDocsMetadataHelper.setFieldValue(
-				GoogleDocsConstants.DDM_FIELD_NAME_ICON_URL, iconURL);
-			googleDocsMetadataHelper.setFieldValue(
-				GoogleDocsConstants.DDM_FIELD_NAME_EMBEDDABLE_URL, viewURL);
-			googleDocsMetadataHelper.setFieldValue(
-				GoogleDocsConstants.DDM_FIELD_NAME_URL, editURL);
-
-			googleDocsMetadataHelper.update();
-
-			legacyGoogleDocsMetadataHelper.delete();
-		}
+		actionableDynamicQuery.performActions();
 	}
 
 	private final Company _company;
@@ -154,6 +120,49 @@ public class LegacyGoogleDocsMigration {
 	private final DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 	private final GoogleDocsDLFileEntryTypeHelper
 		_googleDocsDLFileEntryTypeHelper;
+
+	private final ActionableDynamicQuery.PerformActionMethod _performActionMethod =
+		new ActionableDynamicQuery.PerformActionMethod() {
+			@Override
+			public void performAction(Object object) throws PortalException {
+				DLFileEntry dlFileEntry = (DLFileEntry)object;
+
+				LegacyGoogleDocsMetadataHelper legacyGoogleDocsMetadataHelper =
+					new LegacyGoogleDocsMetadataHelper(
+						dlFileEntry, _storageEngine);
+
+				String id = legacyGoogleDocsMetadataHelper.getFieldValue(
+					LegacyGoogleDocsConstants.DDM_FIELD_NAME_ID);
+				String name = legacyGoogleDocsMetadataHelper.getFieldValue(
+					LegacyGoogleDocsConstants.DDM_FIELD_NAME_NAME);
+				String iconURL = legacyGoogleDocsMetadataHelper.getFieldValue(
+					LegacyGoogleDocsConstants.DDM_FIELD_NAME_ICON_URL);
+				String viewURL = legacyGoogleDocsMetadataHelper.getFieldValue(
+					LegacyGoogleDocsConstants.DDM_FIELD_NAME_VIEW_URL);
+				String editURL = legacyGoogleDocsMetadataHelper.getFieldValue(
+					LegacyGoogleDocsConstants.DDM_FIELD_NAME_EDIT_URL);
+
+				GoogleDocsMetadataHelper googleDocsMetadataHelper =
+					new GoogleDocsMetadataHelper(
+						dlFileEntry, _dlFileEntryMetadataLocalService,
+						_storageEngine);
+
+				googleDocsMetadataHelper.setFieldValue(
+					GoogleDocsConstants.DDM_FIELD_NAME_ID, id);
+				googleDocsMetadataHelper.setFieldValue(
+					GoogleDocsConstants.DDM_FIELD_NAME_NAME, name);
+				googleDocsMetadataHelper.setFieldValue(
+					GoogleDocsConstants.DDM_FIELD_NAME_ICON_URL, iconURL);
+				googleDocsMetadataHelper.setFieldValue(
+					GoogleDocsConstants.DDM_FIELD_NAME_EMBEDDABLE_URL, viewURL);
+				googleDocsMetadataHelper.setFieldValue(
+					GoogleDocsConstants.DDM_FIELD_NAME_URL, editURL);
+
+				googleDocsMetadataHelper.update();
+
+				legacyGoogleDocsMetadataHelper.delete();
+			}};
+
 	private final StorageEngine _storageEngine;
 
 }

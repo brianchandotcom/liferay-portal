@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability
 import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
-import com.liferay.portal.kernel.repository.model.ContentReference;
+import com.liferay.portal.kernel.repository.model.FileContentReference;
 import com.liferay.portal.kernel.repository.model.ModelValidator;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
@@ -116,8 +116,8 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 			LocalRepository localRepository =
 				_repositoryFactory.createLocalRepository(repositoryId);
 
-			ModelValidator<ContentReference> modelValidator =
-				ModelValidatorUtil.getDefaultDLModelValidator();
+			ModelValidator<FileContentReference> modelValidator =
+				ModelValidatorUtil.getDefaultDLFileModelValidator();
 
 			LocalRepository localRepositoryWrapper =
 				new ModelValidatorLocalRepositoryWrapper(
@@ -134,8 +134,8 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 			Repository repository = _repositoryFactory.createRepository(
 				repositoryId);
 
-			ModelValidator<ContentReference> modelValidator =
-				ModelValidatorUtil.getDefaultDLModelValidator();
+			ModelValidator<FileContentReference> modelValidator =
+				ModelValidatorUtil.getDefaultDLFileModelValidator();
 
 			Repository repositoryWrapper = new ModelValidatorRepositoryWrapper(
 				repository, modelValidator);

@@ -16,7 +16,7 @@ package com.liferay.portal.repository.liferayrepository;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.Repository;
-import com.liferay.portal.kernel.repository.model.ContentReference;
+import com.liferay.portal.kernel.repository.model.FileContentReference;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.ModelValidator;
 import com.liferay.portal.repository.util.RepositoryWrapper;
@@ -33,7 +33,7 @@ public class ModelValidatorRepositoryWrapper extends RepositoryWrapper {
 
 	public ModelValidatorRepositoryWrapper(
 		Repository repository,
-		ModelValidator<ContentReference> modelValidator) {
+		ModelValidator<FileContentReference> modelValidator) {
 
 		super(repository);
 
@@ -47,11 +47,12 @@ public class ModelValidatorRepositoryWrapper extends RepositoryWrapper {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		ContentReference contentReference = ContentReference.fromFile(
-			sourceFileName, DLAppUtil.getExtension(title, sourceFileName),
-			mimeType, file);
+		FileContentReference fileContentReference =
+			FileContentReference.fromFile(
+				sourceFileName, DLAppUtil.getExtension(title, sourceFileName),
+				mimeType, file);
 
-		_modelValidator.validate(contentReference);
+		_modelValidator.validate(fileContentReference);
 
 		return super.addFileEntry(
 			userId, folderId, sourceFileName, mimeType, title, description,
@@ -65,11 +66,12 @@ public class ModelValidatorRepositoryWrapper extends RepositoryWrapper {
 			long size, ServiceContext serviceContext)
 		throws PortalException {
 
-		ContentReference contentReference = ContentReference.fromInputStream(
-			sourceFileName, DLAppUtil.getExtension(title, sourceFileName),
-			mimeType, is, size);
+		FileContentReference fileContentReference =
+			FileContentReference.fromInputStream(
+				sourceFileName, DLAppUtil.getExtension(title, sourceFileName),
+				mimeType, is, size);
 
-		_modelValidator.validate(contentReference);
+		_modelValidator.validate(fileContentReference);
 
 		return super.addFileEntry(
 			userId, folderId, sourceFileName, mimeType, title, description,
@@ -83,11 +85,12 @@ public class ModelValidatorRepositoryWrapper extends RepositoryWrapper {
 			boolean majorVersion, File file, ServiceContext serviceContext)
 		throws PortalException {
 
-		ContentReference contentReference = ContentReference.fromFile(
-			sourceFileName, DLAppUtil.getExtension(title, sourceFileName),
-			mimeType, file);
+		FileContentReference fileContentReference =
+			FileContentReference.fromFile(
+				sourceFileName, DLAppUtil.getExtension(title, sourceFileName),
+				mimeType, file);
 
-		_modelValidator.validate(contentReference);
+		_modelValidator.validate(fileContentReference);
 
 		return super.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
@@ -102,17 +105,18 @@ public class ModelValidatorRepositoryWrapper extends RepositoryWrapper {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		ContentReference contentReference = ContentReference.fromInputStream(
-			sourceFileName, DLAppUtil.getExtension(title, sourceFileName),
-			mimeType, is, size);
+		FileContentReference fileContentReference =
+			FileContentReference.fromInputStream(
+				sourceFileName, DLAppUtil.getExtension(title, sourceFileName),
+				mimeType, is, size);
 
-		_modelValidator.validate(contentReference);
+		_modelValidator.validate(fileContentReference);
 
 		return super.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, is, size, serviceContext);
 	}
 
-	private final ModelValidator<ContentReference> _modelValidator;
+	private final ModelValidator<FileContentReference> _modelValidator;
 
 }

@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.repository.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.model.ContentReference;
+import com.liferay.portal.kernel.repository.model.FileContentReference;
 import com.liferay.portal.kernel.repository.model.ModelValidator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.documentlibrary.util.DLValidatorUtil;
@@ -31,8 +31,8 @@ public class ModelValidatorUtil {
 		return new CompositeModelValidator<>(modelValidators);
 	}
 
-	public static final ModelValidator<ContentReference>
-		getDefaultDLModelValidator() {
+	public static final ModelValidator<FileContentReference>
+		getDefaultDLFileModelValidator() {
 
 		return compose(
 			getDefaultFileNameModelValidator(),
@@ -40,71 +40,71 @@ public class ModelValidatorUtil {
 			getDefaultFileSizeModelValidator());
 	}
 
-	public static final ModelValidator<ContentReference>
+	public static final ModelValidator<FileContentReference>
 		getDefaultFileExtensionModelValidator() {
 
 		return _defaultFileExtensionModelValidator;
 	}
 
-	public static final ModelValidator<ContentReference>
+	public static final ModelValidator<FileContentReference>
 		getDefaultFileNameModelValidator() {
 
 		return _defaultFileNameModelValidator;
 	}
 
-	public static final ModelValidator<ContentReference>
+	public static final ModelValidator<FileContentReference>
 		getDefaultFileSizeModelValidator() {
 
 		return _defaultFileSizeModelValidator;
 	}
 
-	private static final ModelValidator<ContentReference>
+	private static final ModelValidator<FileContentReference>
 		_defaultFileExtensionModelValidator =
-			new ModelValidator<ContentReference>() {
+			new ModelValidator<FileContentReference>() {
 
 				@Override
-				public void validate(ContentReference contentReference)
+				public void validate(FileContentReference fileContentReference)
 					throws PortalException {
 
 					DLValidatorUtil.validateFileExtension(
-						contentReference.getSourceFileName());
+						fileContentReference.getSourceFileName());
 
 					DLValidatorUtil.validateSourceFileExtension(
-						contentReference.getExtension(),
-						contentReference.getSourceFileName());
+						fileContentReference.getExtension(),
+						fileContentReference.getSourceFileName());
 				}
 
 			};
 
-	private static final ModelValidator<ContentReference>
+	private static final ModelValidator<FileContentReference>
 		_defaultFileNameModelValidator =
-			new ModelValidator<ContentReference>() {
+			new ModelValidator<FileContentReference>() {
 
 				@Override
-				public void validate(ContentReference contentReference)
+				public void validate(FileContentReference fileContentReference)
 					throws PortalException {
 
 					if (!Validator.isNull(
-							contentReference.getSourceFileName())) {
+							fileContentReference.getSourceFileName())) {
 
 						DLValidatorUtil.validateFileName(
-							contentReference.getSourceFileName());
+							fileContentReference.getSourceFileName());
 					}
 				}
 
 			};
 
-	private static final ModelValidator<ContentReference>
+	private static final ModelValidator<FileContentReference>
 		_defaultFileSizeModelValidator =
-			new ModelValidator<ContentReference>() {
+			new ModelValidator<FileContentReference>() {
 
 				@Override
-				public void validate(ContentReference contentReference)
+				public void validate(FileContentReference fileContentReference)
 					throws PortalException {
 
 					DLValidatorUtil.validateFileSize(
-						contentReference.getSourceFileName(),
-						contentReference.getSize());
+						fileContentReference.getSourceFileName(),
+						fileContentReference.getSize());
 				}
 
 			};

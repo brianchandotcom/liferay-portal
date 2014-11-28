@@ -21,9 +21,9 @@ import java.io.InputStream;
 /**
  * @author Adolfo Pérez
  */
-public class ContentReference {
+public class FileContentReference {
 
-	public static final ContentReference fromBytes(
+	public static final FileContentReference fromBytes(
 		String sourceFileName, String extension, String mimeType,
 		byte[] bytes) {
 
@@ -32,18 +32,18 @@ public class ContentReference {
 			new ByteArrayInputStream(bytes), bytes.length);
 	}
 
-	public static final ContentReference fromFile(
+	public static final FileContentReference fromFile(
 		String sourceFileName, String extension, String mimeType, File file) {
 
-		return new ContentReference(
+		return new FileContentReference(
 			sourceFileName, extension, mimeType, file, null, 0);
 	}
 
-	public static final ContentReference fromInputStream(
+	public static final FileContentReference fromInputStream(
 		String sourceFileName, String extension, String mimeType,
 		InputStream inputStream, long size) {
 
-		return new ContentReference(
+		return new FileContentReference(
 			sourceFileName, extension, mimeType, null, inputStream, size);
 	}
 
@@ -71,7 +71,7 @@ public class ContentReference {
 		return _sourceFileName;
 	}
 
-	protected ContentReference(
+	protected FileContentReference(
 		String sourceFileName, String extension, String mimeType, File file,
 		InputStream inputStream, long size) {
 

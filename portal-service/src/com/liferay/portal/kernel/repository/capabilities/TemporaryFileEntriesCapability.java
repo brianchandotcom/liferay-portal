@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import java.io.InputStream;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @author Iván Zaera
@@ -28,25 +27,27 @@ import java.util.UUID;
 public interface TemporaryFileEntriesCapability extends Capability {
 
 	public FileEntry addTemporaryFileEntry(
-			UUID callerUuid, long userId, String folderPath, String fileName,
-			String mimeType, InputStream inputStream)
+			TemporaryFileEntriesScope temporaryFileEntriesScope,
+			String fileName, String mimeType, InputStream inputStream)
 		throws PortalException;
 
 	public void deleteExpiredTemporaryFileEntries() throws PortalException;
 
 	public void deleteTemporaryFileEntry(
-			UUID callerUuid, String folderPath, String fileName)
+			TemporaryFileEntriesScope temporaryFileEntriesScope,
+			String fileName)
 		throws PortalException;
 
 	public List<FileEntry> getTemporaryFileEntries(
-			UUID callerUuid, String folderPath)
-		throws PortalException;
-
-	public FileEntry getTemporaryFileEntries(
-			UUID callerUuid, String folderPath, String fileName)
+			TemporaryFileEntriesScope temporaryFileEntriesScope)
 		throws PortalException;
 
 	public long getTemporaryFileEntriesTimeout();
+
+	public FileEntry getTemporaryFileEntry(
+			TemporaryFileEntriesScope temporaryFileEntriesScope,
+			String fileName)
+		throws PortalException;
 
 	public void setTemporaryFileEntriesTimeout(
 		long temporaryFileEntriesTimeout);

@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.blogs.action;
 
-import com.liferay.portal.action.BaseImageSelectorAction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -45,36 +44,7 @@ public class SmallImageSelectorAction extends BaseImageSelectorAction {
 			throw new CoverImageSizeException();
 		}
 
-		String extension = FileUtil.getExtension(fileName);
-
-		String[] imageExtensions = PrefsPropsUtil.getStringArray(
-			PropsKeys.BLOGS_IMAGE_EXTENSIONS, StringPool.COMMA);
-
-		for (String imageExtension : imageExtensions) {
-			if (StringPool.STAR.equals(imageExtension) ||
-				imageExtension.equals(StringPool.PERIOD + extension)) {
-
-				return;
-			}
-		}
-
-		throw new CoverImageNameException(
-			"Invalid cover image for fileName " + fileName);
-	}
-
-	@Override
-	public void checkPermission(
-			long groupId, PermissionChecker permissionChecker)
-		throws PortalException {
-
-		boolean containsResourcePermission =
-			ResourcePermissionCheckerUtil.containsResourcePermission(
-				permissionChecker, BlogsPermission.RESOURCE_NAME, groupId,
-				ActionKeys.ADD_ENTRY);
-
-		if (!containsResourcePermission) {
-			throw new PrincipalException();
-		}
+		super.validateFile(fileName, contentType, size);
 	}
 
 }

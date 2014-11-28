@@ -112,7 +112,7 @@ else if (group != null) {
 
 <liferay-ui:error exception="<%= DuplicateGroupException.class %>" message="please-enter-a-unique-name" />
 <liferay-ui:error exception="<%= GroupInheritContentException.class %>" message="this-site-cannot-inherit-content-from-its-parent-site" />
-<liferay-ui:error exception="<%= GroupNameException.class %>" message="please-enter-a-valid-name" />
+<liferay-ui:error exception="<%= GroupKeyException.class %>" message="please-enter-a-valid-name" />
 
 <liferay-ui:error exception="<%= GroupParentException.class %>">
 
@@ -154,14 +154,14 @@ else if (group != null) {
 
 <aui:fieldset>
 	<c:choose>
-		<c:when test="<%= ((liveGroup != null) && (liveGroup.isCompany() || PortalUtil.isSystemGroup(liveGroup.getName()))) %>">
-			<aui:input name="name" type="hidden" />
+		<c:when test="<%= ((liveGroup != null) && (liveGroup.isCompany() || PortalUtil.isSystemGroup(liveGroup.getGroupKey()))) %>">
+			<aui:input label="name" name="groupKey" type="hidden" />
 		</c:when>
 		<c:when test="<%= (liveGroup != null) && liveGroup.isOrganization() %>">
-			<aui:input helpMessage="the-name-of-this-site-cannot-be-edited-because-it-belongs-to-an-organization" name="name" type="resource" value="<%= liveGroup.getDescriptiveName(locale) %>" />
+			<aui:input helpMessage="the-name-of-this-site-cannot-be-edited-because-it-belongs-to-an-organization" label="name" name="groupKey" type="resource" value="<%= liveGroup.getDescriptiveName(locale) %>" />
 		</c:when>
 		<c:otherwise>
-			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
+			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" label="name" name="groupKey" />
 		</c:otherwise>
 	</c:choose>
 

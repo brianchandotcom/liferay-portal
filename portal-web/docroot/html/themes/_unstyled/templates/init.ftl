@@ -209,7 +209,7 @@
 
 	<#assign community_name = site_name />
 
-	<#assign is_guest_group = page_group.getName() == "Guest" />
+	<#assign is_guest_group = page_group.getGroupKey() == "Guest" />
 
 	<#if is_guest_group>
 		<#assign css_class = css_class + " guest-site" />

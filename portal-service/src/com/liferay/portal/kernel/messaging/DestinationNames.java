@@ -60,6 +60,12 @@ public interface DestinationNames {
 	public static final String DOCUMENT_LIBRARY_VIDEO_PROCESSOR =
 		"liferay/document_library_video_processor";
 
+	public static final String EXPORT_IMPORT_LIFECYCLE_EVENT_ASYNC =
+		"liferay/export_import_lifecycle_event_async";
+
+	public static final String EXPORT_IMPORT_LIFECYCLE_EVENT_SYNC =
+		"liferay/export_import_lifecycle_event_sync";
+
 	public static final String FLAGS = "liferay/flags";
 
 	/**

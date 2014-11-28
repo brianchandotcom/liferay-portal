@@ -199,6 +199,10 @@ public interface Localization {
 	public Map<Locale, String> getLocalizationMap(
 		PortletRequest portletRequest, String parameter);
 
+	public Map<Locale, String> getLocalizationMap(
+		PortletRequest portletRequest, String parameter,
+		Map<Locale, String> defaultValues);
+
 	/**
 	 * Returns a map of locales and localized strings from the localizations
 	 * XML.

@@ -403,6 +403,15 @@ public class LocalizationImpl implements Localization {
 	public Map<Locale, String> getLocalizationMap(
 		PortletRequest portletRequest, String parameter) {
 
+		return getLocalizationMap(
+			portletRequest, parameter, new HashMap<Locale, String>());
+	}
+
+	@Override
+	public Map<Locale, String> getLocalizationMap(
+		PortletRequest portletRequest, String parameter,
+		Map<Locale, String> defaultValues) {
+
 		Locale[] locales = LanguageUtil.getAvailableLocales();
 
 		Map<Locale, String> map = new HashMap<Locale, String>();
@@ -413,7 +422,9 @@ public class LocalizationImpl implements Localization {
 
 			map.put(
 				locale,
-				ParamUtil.getString(portletRequest, localizedParameter));
+				ParamUtil.getString(
+					portletRequest, localizedParameter,
+					defaultValues.get(locale)));
 		}
 
 		return map;

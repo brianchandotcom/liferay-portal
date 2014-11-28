@@ -153,6 +153,14 @@ public class LocalizationUtil {
 		return getLocalization().getLocalizationMap(portletRequest, parameter);
 	}
 
+	public static Map<Locale, String> getLocalizationMap(
+		PortletRequest portletRequest, String parameter,
+		Map<Locale, String> defaultValues) {
+
+		return getLocalization().getLocalizationMap(
+			portletRequest, parameter, defaultValues);
+	}
+
 	public static Map<Locale, String> getLocalizationMap(String xml) {
 		return getLocalization().getLocalizationMap(xml);
 	}

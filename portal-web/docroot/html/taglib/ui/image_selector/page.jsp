@@ -44,14 +44,18 @@ if (fileEntryId != 0) {
 
 	<div class="browse-image-controls <%= (fileEntryId != 0) ? "hide" : StringPool.BLANK %>">
 		<div class="drag-drop-label">
-			<liferay-ui:message arguments="<%= validExtensions %>" key="drag-and-drop-images" />
+			<liferay-util:buffer var="selectFileLink">
+				<a class="browse-image btn btn-primary" href="javascript:;" id="<%= randomNamespace + "browseImage" %>"><liferay-ui:message key="select-file" /></a>
+			</liferay-util:buffer>
 
-			<c:if test="<%= Validator.isNotNull(validExtensions) %>">
-				(<%= validExtensions %>)
-			</c:if>
+			<liferay-ui:message arguments="<%= selectFileLink %>" key="drag-and-drop-to-upload-or-x" />
 		</div>
 
-		<a class="browse-image" href="javascript:;" id="<%= randomNamespace + "browseImage" %>"><liferay-ui:message key="browse" /></a>
+		<div class="file-validation-info">
+			<c:if test="<%= Validator.isNotNull(validExtensions) %>">
+				<strong><%= validExtensions %></strong>
+			</c:if>
+		</div>
 	</div>
 
 	<i class="glyphicon glyphicon-ok"></i>

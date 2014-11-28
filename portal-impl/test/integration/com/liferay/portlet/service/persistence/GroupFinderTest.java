@@ -239,7 +239,7 @@ public class GroupFinderTest {
 
 		long[] classNameIds = {PortalUtil.getClassNameId(Group.class)};
 
-		return GroupFinderUtil.findByC_C_PG_N_D(
+		return GroupFinderUtil.findByC_C_PG_GK_D(
 			TestPropsValues.getCompanyId(), classNameIds,
 			GroupConstants.ANY_PARENT_GROUP_ID, new String[] {null},
 			new String[] {null}, groupParams, true, QueryUtil.ALL_POS,

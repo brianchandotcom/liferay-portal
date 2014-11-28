@@ -580,7 +580,7 @@ public class GroupServiceTest {
 
 		try {
 			GroupLocalServiceUtil.updateGroup(
-				group1.getGroupId(), group11.getGroupId(), group1.getName(),
+				group1.getGroupId(), group11.getGroupId(), group1.getGroupKey(),
 				group1.getDescription(), group1.getType(),
 				group1.isManualMembership(), group1.getMembershipRestriction(),
 				group1.getFriendlyURL(), group1.isActive(),
@@ -608,8 +608,8 @@ public class GroupServiceTest {
 
 		try {
 			GroupLocalServiceUtil.updateGroup(
-				group1.getGroupId(), group1111.getGroupId(), group1.getName(),
-				group1.getDescription(), group1.getType(),
+				group1.getGroupId(), group1111.getGroupId(),
+				group1.getGroupKey(), group1.getDescription(), group1.getType(),
 				group1.isManualMembership(), group1.getMembershipRestriction(),
 				group1.getFriendlyURL(), group1.isActive(),
 				ServiceContextTestUtil.getServiceContext());
@@ -635,7 +635,7 @@ public class GroupServiceTest {
 
 			GroupLocalServiceUtil.updateGroup(
 				stagingGroup.getGroupId(), group.getGroupId(),
-				stagingGroup.getName(), stagingGroup.getDescription(),
+				stagingGroup.getGroupKey(), stagingGroup.getDescription(),
 				stagingGroup.getType(), stagingGroup.isManualMembership(),
 				stagingGroup.getMembershipRestriction(),
 				stagingGroup.getFriendlyURL(), stagingGroup.isActive(),
@@ -655,7 +655,7 @@ public class GroupServiceTest {
 
 		try {
 			GroupLocalServiceUtil.updateGroup(
-				group.getGroupId(), group.getGroupId(), group.getName(),
+				group.getGroupId(), group.getGroupId(), group.getGroupKey(),
 				group.getDescription(), group.getType(),
 				group.isManualMembership(), group.getMembershipRestriction(),
 				group.getFriendlyURL(), group.isActive(),

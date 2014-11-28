@@ -1388,10 +1388,8 @@ public class PortalImpl implements Portal {
 			canonicalLayoutFriendlyURL = defaultLayoutFriendlyURL;
 		}
 
-		Group group = layout.getGroup();
-
 		groupFriendlyURL = getGroupFriendlyURL(
-			group, layout.isPrivateLayout(), themeDisplay, true);
+			layout.getLayoutSet(), themeDisplay, true);
 
 		return groupFriendlyURL.concat(canonicalLayoutFriendlyURL).concat(
 			parametersURL);
@@ -2454,8 +2452,10 @@ public class PortalImpl implements Portal {
 			Group group, boolean privateLayoutSet, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		return getGroupFriendlyURL(
-			group, privateLayoutSet, themeDisplay, false);
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			group.getGroupId(), privateLayoutSet);
+
+		return getGroupFriendlyURL(layoutSet, themeDisplay, false);
 	}
 
 	@Override
@@ -2876,7 +2876,7 @@ public class PortalImpl implements Portal {
 		}
 
 		String groupFriendlyURL = getGroupFriendlyURL(
-			layout.getGroup(), layout.isPrivateLayout(), themeDisplay);
+			layout.getLayoutSet(), themeDisplay, false);
 
 		return groupFriendlyURL.concat(
 			layout.getFriendlyURL(themeDisplay.getLocale()));
@@ -7735,12 +7735,13 @@ public class PortalImpl implements Portal {
 	}
 
 	protected String getGroupFriendlyURL(
-			Group group, boolean privateLayoutSet, ThemeDisplay themeDisplay,
+			LayoutSet layoutSet, ThemeDisplay themeDisplay,
 			boolean canonicalURL)
 		throws PortalException {
 
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			group.getGroupId(), privateLayoutSet);
+		Group group = layoutSet.getGroup();
+
+		boolean privateLayoutSet = layoutSet.getPrivateLayout();
 
 		String portalURL = themeDisplay.getPortalURL();
 

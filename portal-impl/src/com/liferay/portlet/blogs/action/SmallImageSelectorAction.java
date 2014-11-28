@@ -26,23 +26,22 @@ import com.liferay.portal.security.permission.ResourcePermissionCheckerUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portlet.blogs.CoverImageNameException;
 import com.liferay.portlet.blogs.CoverImageSizeException;
-import com.liferay.portlet.blogs.EntrySmallImageNameException;
 import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 
 /**
  * @author Sergio González
  */
-public class ImageSelectorAction extends BaseImageSelectorAction {
+public class SmallImageSelectorAction extends BaseImageSelectorAction {
 
 	@Override
 	public void validateFile(
 			String fileName, String contentType, long size)
 		throws PortalException {
 
-		long coverImageMaxFileSize = PrefsPropsUtil.getLong(
-			PropsKeys.BLOGS_IMAGE_COVER_MAX_SIZE);
+		long smallImageMaxFileSize = PrefsPropsUtil.getLong(
+			PropsKeys.BLOGS_IMAGE_SMALL_MAX_SIZE);
 
-		if (size > coverImageMaxFileSize) {
+		if (size > smallImageMaxFileSize) {
 			throw new CoverImageSizeException();
 		}
 

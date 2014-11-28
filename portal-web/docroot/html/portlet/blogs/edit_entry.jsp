@@ -111,8 +111,8 @@ String[] imageExtensions = PrefsPropsUtil.getStringArray(PropsKeys.BLOGS_IMAGE_E
 		type="pills"
 	>
 		<liferay-ui:section>
-			<portlet:actionURL var="imageSelectorURL">
-				<portlet:param name="struts_action" value="/blogs/image_selector" />
+			<portlet:actionURL var="coverImageSelectorURL">
+				<portlet:param name="struts_action" value="/blogs/cover_image_selector" />
 			</portlet:actionURL>
 
 			<%
@@ -120,7 +120,7 @@ String[] imageExtensions = PrefsPropsUtil.getStringArray(PropsKeys.BLOGS_IMAGE_E
 			%>
 
 			<div class="lfr-blogs-cover-image-selector">
-				<liferay-ui:image-selector draggableImage="vertical" fileEntryId="<%= coverImageFileEntryId %>" maxFileSize="<%= coverImageMaxFileSize %>" paramName="coverImageFileEntry" uploadURL="<%= imageSelectorURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
+				<liferay-ui:image-selector draggableImage="vertical" fileEntryId="<%= coverImageFileEntryId %>" maxFileSize="<%= coverImageMaxFileSize %>" paramName="coverImageFileEntry" uploadURL="<%= coverImageSelectorURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
 			</div>
 
 			<div class="entry-title">
@@ -142,16 +142,15 @@ String[] imageExtensions = PrefsPropsUtil.getStringArray(PropsKeys.BLOGS_IMAGE_E
 			<aui:input name="content" type="hidden" />
 
 			<div class="entry-abstract-wrapper">
+				<%
+				long smallImageMaxFileSize = PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_SMALL_MAX_SIZE);
+				%>
+
 				<liferay-ui:error exception="<%= EntrySmallImageNameException.class %>">
 					<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= StringUtil.merge(imageExtensions, ", ") %>.
 				</liferay-ui:error>
 
 				<liferay-ui:error exception="<%= EntrySmallImageSizeException.class %>">
-
-				<%
-				long smallImageMaxFileSize = PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_SMALL_MAX_SIZE);
-				%>
-
 					<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(smallImageMaxFileSize, locale) %>" key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
 				</liferay-ui:error>
 
@@ -168,8 +167,12 @@ String[] imageExtensions = PrefsPropsUtil.getStringArray(PropsKeys.BLOGS_IMAGE_E
 				</div>
 
 				<aui:fieldset cssClass="entry-abstract">
+					<portlet:actionURL var="smallImageSelectorURL">
+						<portlet:param name="struts_action" value="/blogs/small_image_selector" />
+					</portlet:actionURL>
+
 					<div class="lfr-blogs-small-image-selector">
-						<liferay-ui:image-selector fileEntryId="<%= smallImageFileEntryId %>" paramName="smallImageFileEntry" uploadURL="<%= imageSelectorURL %>" />
+						<liferay-ui:image-selector fileEntryId="<%= smallImageFileEntryId %>" maxFileSize="<%= smallImageMaxFileSize %>" paramName="smallImageFileEntry" uploadURL="<%= smallImageSelectorURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
 					</div>
 
 					<div class="entry-description">

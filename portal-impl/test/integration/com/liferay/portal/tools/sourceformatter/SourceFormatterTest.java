@@ -14,12 +14,14 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
+import com.liferay.portal.test.SlowTest;
 import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Hugo Huijser
  */
+@SlowTest
 public class SourceFormatterTest {
 
 	@Test

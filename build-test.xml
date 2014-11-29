@@ -3141,9 +3141,10 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 					/>
 				</delete>
 			</then>
+			<else>
+				<ant dir="portal-impl" target="build-selenium-block" inheritAll="false" />
+			</else>
 		</if>
-
-		<ant dir="portal-impl" target="build-selenium-block" inheritAll="false" />
 
 		<antcall target="compile-test" inheritAll="false" />
 

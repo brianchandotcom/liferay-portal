@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
+import com.liferay.portal.test.SlowTest;
 import com.liferay.portal.util.InitUtil;
 
 import java.util.ArrayList;
@@ -49,6 +50,7 @@ import org.junit.Test;
 /**
  * @author Shuyang Zhou
  */
+@SlowTest
 public class CounterLocalServiceTest {
 
 	@ClassRule

@@ -149,7 +149,7 @@ public class SocketTest {
 	@Test
 	public void testConnect1() throws Exception {
 		try {
-			HttpUtil.URLtoString("http://www.abc.com");
+			HttpUtil.URLtoString("http://www.cnn.com");
 
 			Assert.fail();
 		}

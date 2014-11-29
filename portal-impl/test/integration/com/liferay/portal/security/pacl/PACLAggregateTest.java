@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.process.local.LocalProcessLauncher.ProcessConte
 import com.liferay.portal.kernel.process.log.ProcessOutputStream;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.ThreadUtil;
+import com.liferay.portal.test.SlowTest;
 import com.liferay.portal.util.InitUtil;
 
 import java.io.File;
@@ -51,6 +53,7 @@ import org.junit.runners.model.InitializationError;
  * @author Shuyang Zhou
  */
 @RunWith(PACLAggregateTest.PACLAggregateTestRunner.class)
+@SlowTest
 public class PACLAggregateTest {
 
 	@Test
@@ -248,6 +251,28 @@ public class PACLAggregateTest {
 
 		@Override
 		public Result call() {
+			Thread thread = new Thread(
+				new Runnable() {
+
+					@Override
+					public void run() {
+						for (int i = 0; i < 100; i++) {
+							System.out.println(ThreadUtil.threadDump());
+
+							try {
+								Thread.sleep(60000);
+							}
+							catch (InterruptedException ie) {
+							}
+						}
+					}
+
+				}, "Thread dumpper");
+
+			thread.setDaemon(true);
+
+			thread.start();
+
 			try {
 				JUnitCore junitCore = new JUnitCore();
 

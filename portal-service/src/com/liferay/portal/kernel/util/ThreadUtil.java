@@ -146,6 +146,8 @@ public class ThreadUtil {
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
 
+			sb.append(", daemon=");
+			sb.append(thread.isDaemon());
 			sb.append(", priority=");
 			sb.append(thread.getPriority());
 			sb.append(", id=");

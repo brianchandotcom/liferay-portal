@@ -3740,6 +3740,11 @@ if (ppstate.equals("normal")) {
 		<echo file="test.class.filenames.properties">${test.class.filenames.properties.content}</echo>
 	</target>
 
+	<target name="record-test-package-names">
+		<!-- Empty target for hardcoded CI server invocation -->
+		<echo file="test.package.names.properties"></echo>
+	</target>
+
 	<target name="record-test-plugin-names">
 		<script classpathref="project.classpath" language="beanshell">
 			<![CDATA[

@@ -39,6 +39,7 @@ import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.ResetDatabaseTestRule;
+import com.liferay.portal.test.SlowTest;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationTestRule;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -73,6 +74,7 @@ import org.junit.Test;
  * @author Roberto Díaz
  * @author Sergio González
  */
+@SlowTest
 @Sync
 public class GroupServiceTest {
 

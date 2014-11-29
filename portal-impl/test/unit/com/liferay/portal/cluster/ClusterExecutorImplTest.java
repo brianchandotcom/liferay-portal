@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.test.AdviseWith;
 import com.liferay.portal.test.AspectJNewEnvTestRule;
+import com.liferay.portal.test.SlowTest;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsImpl;
@@ -65,6 +66,7 @@ import org.junit.Test;
  * @author Tina Tian
  */
 @NewEnv(type = NewEnv.Type.JVM)
+@SlowTest
 public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 	@ClassRule

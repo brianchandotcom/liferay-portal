@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.process.ProcessConfig.Builder;
 import com.liferay.portal.kernel.process.local.LocalProcessExecutor;
 import com.liferay.portal.kernel.process.local.LocalProcessLauncher.ProcessContext;
 import com.liferay.portal.kernel.process.log.ProcessOutputStream;
+import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.util.InitUtil;
@@ -258,6 +259,8 @@ public class PACLAggregateTest {
 			}
 			finally {
 				InitUtil.stopModuleFramework();
+
+				MPIHelperUtil.shutdown();
 			}
 		}
 

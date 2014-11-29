@@ -3147,7 +3147,7 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 
 		<antcall target="compile-test" inheritAll="false" />
 
-		<antcall target="record-test-package-names" inheritAll="false" />
+		<antcall target="record-test-class-filenames" inheritAll="false" />
 	</target>
 
 	<target name="prepare-test-build-tomcat-dependents">
@@ -3603,139 +3603,140 @@ if (ppstate.equals("normal")) {
 		<echo>Updated ${app.server.dir}/webapps/ROOT/html/common/themes/bottom-test.jsp.</echo>
 	</target>
 
-	<target name="record-test-package-names">
+	<target name="record-test-class-filenames">
 		<script classpathref="project.classpath" language="beanshell">
 			<![CDATA[
+				import java.nio.file.Files;
+				import java.nio.file.Paths;
+
 				import org.apache.tools.ant.DirectoryScanner;
 
-				Map getPackageGroups(Set packageNames, int packageGroupsSize) {
-					Map packageGroups = new HashMap();
+				List getClassGroups(List classFileNames, int groupSize) {
+					List classFileNameGroups = new ArrayList(groupSize);
+
+					for (int i = 0; i < groupSize; i++) {
+						classFileNameGroups.add(new ArrayList());
+					}
 
 					int i = 0;
 
-					for (String packageName : packageNames) {
-						int index = i++ % packageGroupsSize;
+					for (String classFileName : classFileNames) {
+						List classFileNameGroup = classFileNameGroups.get(i++ % groupSize);
 
-						Set packageGroup = packageGroups.get(index);
-
-						if (packageGroup == null) {
-							packageGroup = new TreeSet();
-
-							packageGroups.put(index, packageGroup);
-						}
-
-						packageGroup.add(packageName);
+						classFileNameGroup.add(classFileName);
 					}
 
-					return packageGroups;
+					return classFileNameGroups;
 				}
 
-				Set getPackageNames() {
-					Set packageNames = new TreeSet();
-
+				List getClassFileNames(List slowClassFileNames) {
 					DirectoryScanner directoryScanner = new DirectoryScanner();
 
-					directoryScanner.setBasedir(project.getBaseDir());
+					File baseDir = project.getBaseDir();
+
+					directoryScanner.setBasedir(baseDir);
 					directoryScanner.setExcludes(new String[] {"*/pacl/test/[\\w]+Test.class", "**/*ServiceHttpTest.java", "**/*ServiceJsonTest.java", "**/*ServiceSoapTest.java"});
 					directoryScanner.setIncludes(new String[] {"**/test/integration/**/*Test.java", "**/test/unit/**/*Test.java"});
 
 					directoryScanner.scan();
 
+					String[] fileNames = directoryScanner.getIncludedFiles();
+
+					List fastClassFileNames = new ArrayList();
+
+					String baseDirAbsolutePath = baseDir.getAbsolutePath();
+
 					for (String fileName : directoryScanner.getIncludedFiles()) {
-						int x = fileName.indexOf("com" + File.separator);
-						int y = fileName.lastIndexOf(File.separatorChar);
+						String fileContent = new String(Files.readAllBytes(Paths.get(baseDirAbsolutePath, new String[] {fileName})), "UTF-8");
 
-						String packageName = fileName.substring(x, y);
+						String fileName = fileName.substring(fileName.indexOf("com" + File.separator), fileName.length() - 4);
 
-						packageNames.add(packageName.replace(File.separatorChar, '.'));
+						fileName = fileName.concat("class");
+
+						if (fileContent.contains("@SlowTest")) {
+							slowClassFileNames.add(fileName);
+						}
+						else {
+							fastClassFileNames.add(fileName);
+						}
 					}
 
-					return packageNames;
+					Collections.sort(fastClassFileNames);
+					Collections.sort(slowClassFileNames);
+
+					return fastClassFileNames;
 				}
 
 				StringBuilder sb = new StringBuilder();
 
-				int allPackageGroupsSize = Integer.parseInt(project.getProperty("test.package.groups.size"));
+				int allTestClassGroupsSize = Integer.parseInt(project.getProperty("test.class.groups.size"));
 
-				String longRunningPackageNamesString = project.getProperty("test.package.names.long.running");
+				int slowTestClassGroupSize = Integer.parseInt(project.getProperty("test.class.slow.groups.size"));
 
-				String[] longRunningPackageNames = longRunningPackageNamesString.split(",");
+				int fastTestClassGroupSize = allTestClassGroupsSize - slowTestClassGroupSize;
 
-				int longRunningPackageGroupsSize = longRunningPackageNames.length;
+				List slowClassFileNames = new ArrayList();
 
-				if (longRunningPackageNamesString.equals("")) {
-					longRunningPackageGroupsSize = 0;
-				}
+				List fastClassFileNames = getClassFileNames(slowClassFileNames);
 
-				int shortRunningPackageGroupsSize = allPackageGroupsSize - longRunningPackageGroupsSize;
+				List fastTestClassGroups = getClassGroups(fastClassFileNames, fastTestClassGroupSize);
 
-				Set shortRunningPackageNames = new TreeSet();
+				for (i = 0; i < fastTestClassGroupSize; i++) {
+					List testClassGroup = fastTestClassGroups.get(i);
 
-				Set allPackageNames = getPackageNames();
-
-				shortRunningPackageNames.addAll(allPackageNames);
-
-				for (String longRunningPackageName : longRunningPackageNames) {
-					shortRunningPackageNames.remove(longRunningPackageName);
-				}
-
-				Map packageGroups = getPackageGroups(shortRunningPackageNames, shortRunningPackageGroupsSize);
-
-				for (int i = 0; i < shortRunningPackageGroupsSize; i++) {
-					Set packageGroup = packageGroups.get(i);
-
-					sb.append("TEST_PACKAGE_GROUP_");
+					sb.append("TEST_CLASS_GROUP_");
 					sb.append(i);
 					sb.append("=");
 
-					for (String packageName : packageGroup) {
-						sb.append(packageName);
+					for (String testClass : testClassGroup) {
+						sb.append(testClass);
 						sb.append(",");
 					}
 
-					if (!packageGroup.isEmpty()) {
+					if (!testClassGroup.isEmpty()) {
 						sb.setLength(sb.length() - 1);
 					}
 
 					sb.append("\n\n");
 				}
 
-				for (int i = 0; i < longRunningPackageGroupsSize; i++) {
-					sb.append("TEST_PACKAGE_GROUP_");
-					sb.append(shortRunningPackageGroupsSize + i);
+				List slowTestClassGroups = getClassGroups(slowClassFileNames, slowTestClassGroupSize);
+
+				for (int i = 0; i < slowTestClassGroupSize; i++) {
+					List testClassGroup = slowTestClassGroups.get(i);
+
+					sb.append("TEST_CLASS_GROUP_");
+					sb.append(i + fastTestClassGroupSize);
 					sb.append("=");
-					sb.append(longRunningPackageNames[i]);
+
+					for (String testClass : testClassGroup) {
+						sb.append(testClass);
+						sb.append(",");
+					}
+
+					if (!testClassGroup.isEmpty()) {
+						sb.setLength(sb.length() - 1);
+					}
+
 					sb.append("\n\n");
 				}
 
-				sb.append("TEST_PACKAGE_GROUPS=");
+				sb.append("TEST_CLASS_GROUPS=");
 
-				for (int i = 0; i < allPackageGroupsSize; i++) {
+				for (int i = 0; i < allTestClassGroupsSize; i++) {
 					sb.append(i);
 					sb.append(" ");
 				}
 
-				if (allPackageGroupsSize > 0) {
+				if (allTestClassGroupsSize > 0) {
 					sb.setLength(sb.length() - 1);
 				}
 
-				sb.append("\n\n");
-				sb.append("TEST_PACKAGE_NAMES=");
-
-				for (String packageName : allPackageNames) {
-					sb.append(packageName);
-					sb.append(" ");
-				}
-
-				if (!allPackageNames.isEmpty()) {
-					sb.setLength(sb.length() - 1);
-				}
-
-				project.setProperty("test.package.names.properties.content", sb.toString());
+				project.setProperty("test.class.filenames.properties.content", sb.toString());
 			]]>
 		</script>
 
-		<echo file="test.package.names.properties">${test.package.names.properties.content}</echo>
+		<echo file="test.class.filenames.properties">${test.class.filenames.properties.content}</echo>
 	</target>
 
 	<target name="record-test-plugin-names">
@@ -4521,6 +4522,12 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		<ant dir="portal-service" target="test-package" inheritAll="false" />
 		<ant dir="portal-impl" target="test-package" inheritAll="false" />
 		<ant dir="util-java" target="test-package" inheritAll="false" />
+	</target>
+
+	<target name="test-package-group">
+		<ant dir="portal-service" target="test-package-group" inheritAll="false" />
+		<ant dir="portal-impl" target="test-package-group" inheritAll="false" />
+		<ant dir="util-java" target="test-package-group" inheritAll="false" />
 	</target>
 
 	<target name="test-unit">

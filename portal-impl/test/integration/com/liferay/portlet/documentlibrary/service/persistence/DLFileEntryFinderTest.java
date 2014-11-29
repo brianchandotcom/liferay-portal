@@ -35,6 +35,7 @@ import com.liferay.portal.spring.hibernate.LastSessionRecorderUtil;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
+import com.liferay.portal.test.SlowTest;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationTestRule;
 import com.liferay.portal.util.PortalUtil;
@@ -66,6 +67,7 @@ import org.junit.Test;
 /**
  * @author Zsolt Berentey
  */
+@SlowTest
 @Sync
 public class DLFileEntryFinderTest {
 

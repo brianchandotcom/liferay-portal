@@ -42,6 +42,7 @@ import com.liferay.portal.service.persistence.PortalPreferencesUtil;
 import com.liferay.portal.service.persistence.PortletUtil;
 import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
+import com.liferay.portal.test.SlowTest;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationTestRule;
 import com.liferay.portal.test.TransactionalTestRule;
@@ -80,6 +81,7 @@ import org.springframework.mock.web.MockServletContext;
  * @author Mika Koivisto
  * @author Dale Shan
  */
+@SlowTest
 @Sync
 public class CompanyLocalServiceTest {
 

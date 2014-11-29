@@ -12,31 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.tools.sourceformatter;
+package com.liferay.portal.test;
 
-import com.liferay.portal.test.SlowTest;
-import org.junit.Assert;
-import org.junit.Test;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * @author Hugo Huijser
+ * @author Shuyang Zhou
  */
-@SlowTest
-public class SourceFormatterTest {
-
-	@Test
-	public void testSourceFormatter() throws Throwable {
-		SourceFormatter sourceFormatter = SourceFormatterUtil.create(
-			false, true, false, false);
-
-		try {
-			sourceFormatter.format();
-		}
-		catch (SourceMismatchException sme) {
-			Assert.assertEquals(
-				sme.getFileName(), sme.getFormattedSource(),
-				sme.getOriginalSource());
-		}
-	}
-
+@Retention(RetentionPolicy.SOURCE)
+@Target(ElementType.TYPE)
+public @interface SlowTest {
 }

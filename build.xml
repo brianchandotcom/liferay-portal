@@ -1077,6 +1077,10 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 		<ant antfile="build-test.xml" target="test-package" inheritAll="false" />
 	</target>
 
+	<target name="test-package-group">
+		<ant antfile="build-test.xml" target="test-package-group" inheritAll="false" />
+	</target>
+
 	<target name="test-unit">
 		<ant antfile="build-test.xml" target="test-unit" inheritAll="false" />
 	</target>

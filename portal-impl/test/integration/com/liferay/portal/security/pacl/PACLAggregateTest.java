@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.process.log.ProcessOutputStream;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.test.SlowTest;
 import com.liferay.portal.util.InitUtil;
 
 import java.io.File;
@@ -52,6 +53,7 @@ import org.junit.runners.model.InitializationError;
  * @author Shuyang Zhou
  */
 @RunWith(PACLAggregateTest.PACLAggregateTestRunner.class)
+@SlowTest
 public class PACLAggregateTest {
 
 	@Test

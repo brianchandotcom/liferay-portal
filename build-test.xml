@@ -3641,11 +3641,7 @@ if (ppstate.equals("normal")) {
 
 					directoryScanner.scan();
 
-					String[] fileNames = directoryScanner.getIncludedFiles();
-
-					Arrays.sort(fileNames);
-
-					for (String fileName : fileNames) {
+					for (String fileName : directoryScanner.getIncludedFiles()) {
 						int x = fileName.indexOf("com" + File.separator);
 						int y = fileName.lastIndexOf(File.separatorChar);
 

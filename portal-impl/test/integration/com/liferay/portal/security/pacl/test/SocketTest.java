@@ -120,10 +120,9 @@ public class SocketTest {
 	public void testConnect1() throws IOException {
 		try {
 			HttpUtil.URLtoString("http://www.cbs.com");
-
-			Assert.fail();
 		}
 		catch (SecurityException se) {
+			Assert.fail();
 		}
 	}
 
@@ -131,9 +130,10 @@ public class SocketTest {
 	public void testConnect2() throws IOException {
 		try {
 			HttpUtil.URLtoString("http://www.cnn.com");
+
+			Assert.fail();
 		}
 		catch (SecurityException se) {
-			Assert.fail();
 		}
 	}
 

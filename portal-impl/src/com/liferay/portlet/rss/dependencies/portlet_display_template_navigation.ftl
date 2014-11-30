@@ -22,20 +22,20 @@
 
 			<div class="col-xs-8 tab-content">
 				<#list entries as curEntry>
-					<#assign rssFeedEntryDisplayContexts = curEntry.getRSSFeedEntryDisplayContexts(themeDisplay) />
+					<#assign rssFeedEntries = curEntry.getRSSFeedEntries(themeDisplay) />
 
-					<#if rssFeedEntryDisplayContexts??>
+					<#if rssFeedEntries??>
 						<div id="tab-${curEntry_index}" class="tab-pane">
-							<#list rssFeedEntryDisplayContexts as rssFeedEntryDisplayContext>
-								<#if (rssFeedEntryDisplayContext_index > entriesPerFeed?number)>
+							<#list rssFeedEntries as rssFeedEntry>
+								<#if (rssFeedEntry_index > entriesPerFeed?number)>
 									<#break>
 								</#if>
 
-								<#assign syndEntry = rssFeedEntryDisplayContext.getSyndEntry() />
+								<#assign syndEntry = rssFeedEntry.getSyndEntry() />
 
 								<div class="feed-entry-content">
 									<div class="feed-title">
-										<@aui["a"] href="${htmlUtil.escapeJSLink(rssFeedEntryDisplayContext.getSyndEntryLink())}">${htmlUtil.escape(syndEntry.getTitle())}</@>
+										<@aui["a"] href="${htmlUtil.escapeJSLink(rssFeedEntry.getSyndEntryLink())}">${htmlUtil.escape(syndEntry.getTitle())}</@>
 									</div>
 
 									<#if getterUtil.getBoolean(showFeedItemAuthor) && syndEntry.getAuthor()??>
@@ -54,7 +54,7 @@
 										</div>
 									</#if>
 
-									${rssFeedEntryDisplayContext.getSanitizedContent()}
+									${rssFeedEntry.getSanitizedContent()}
 								</div>
 							</#list>
 						</div>

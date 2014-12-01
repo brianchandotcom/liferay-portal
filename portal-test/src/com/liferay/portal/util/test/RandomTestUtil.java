@@ -20,6 +20,9 @@ import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.randomizerbumpers.RandomizerBumper;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -56,6 +59,10 @@ public class RandomTestUtil {
 		String string = randomString();
 
 		return string.getBytes();
+	}
+
+	public static InputStream randomInputStream() {
+		return new ByteArrayInputStream(randomBytes());
 	}
 
 	public static int randomInt() {

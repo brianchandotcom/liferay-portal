@@ -15,17 +15,9 @@
 package com.liferay.portlet.blogs.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.ResourcePermissionCheckerUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portlet.blogs.CoverImageNameException;
 import com.liferay.portlet.blogs.CoverImageSizeException;
-import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 
 /**
  * @author Sergio González
@@ -37,14 +29,16 @@ public class SmallImageSelectorAction extends BaseImageSelectorAction {
 			String fileName, String contentType, long size)
 		throws PortalException {
 
-		long smallImageMaxFileSize = PrefsPropsUtil.getLong(
-			PropsKeys.BLOGS_IMAGE_SMALL_MAX_SIZE);
-
-		if (size > smallImageMaxFileSize) {
+		if (size > getMaxFileSize()) {
 			throw new CoverImageSizeException();
 		}
 
 		super.validateFile(fileName, contentType, size);
+	}
+
+	@Override
+	protected long getMaxFileSize() {
+		return PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_COVER_MAX_SIZE);
 	}
 
 }

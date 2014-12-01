@@ -43,12 +43,12 @@ if (fileEntryId != 0) {
 		<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="current-image" />" class="current-image <%= Validator.isNull(imageURL) ? "hide" : StringPool.BLANK %>" id="<%= randomNamespace %>image" src="<%= HtmlUtil.escape(Validator.isNotNull(imageURL) ? imageURL : StringPool.BLANK) %>" />
 	</div>
 
+	<liferay-util:buffer var="selectFileLink">
+		<a class="browse-image btn btn-primary" href="javascript:;" id="<%= randomNamespace + "browseImage" %>"><liferay-ui:message key="select-file" /></a>
+	</liferay-util:buffer>
+
 	<div class="browse-image-controls <%= (fileEntryId != 0) ? "hide" : StringPool.BLANK %>">
 		<div class="drag-drop-label">
-			<liferay-util:buffer var="selectFileLink">
-				<a class="browse-image btn btn-primary" href="javascript:;" id="<%= randomNamespace + "browseImage" %>"><liferay-ui:message key="select-file" /></a>
-			</liferay-util:buffer>
-
 			<liferay-ui:message arguments="<%= selectFileLink %>" key="drag-and-drop-to-upload-or-x" />
 		</div>
 
@@ -67,6 +67,14 @@ if (fileEntryId != 0) {
 
 	<div class="drop-here-info">
 		<liferay-ui:message key="drop-files-here" />
+	</div>
+
+	<div class="error-wrapper hide">
+		<aui:alert closeable="<%= true %>" id='<%= randomNamespace + "errorAlert" %>' type="danger">
+			<span class="error-message"></span>
+
+			<%= selectFileLink %>
+		</aui:alert>
 	</div>
 
 	<div class="progress-wrapper">
@@ -106,10 +114,13 @@ if (!draggableImage.equals("none")) {
 	var imageSelector = new Liferay.ImageSelector(
 		{
 			documentSelectorURL: '<%= documentSelectorURL.toString() %>',
+			errorNode: '#<%= randomNamespace + "errorAlert" %>',
 			namespace: '<%= randomNamespace %>',
+			maxFileSize: <%= maxFileSize %>,
 			paramName: '<portlet:namespace /><%= paramName %>',
 			rootNode: '#<%= randomNamespace %>taglibImageSelector',
-			uploadURL: '<%= uploadURL %>'
+			uploadURL: '<%= uploadURL %>',
+			validExtensions: '<%= validExtensions %>'
 		}
 	);
 

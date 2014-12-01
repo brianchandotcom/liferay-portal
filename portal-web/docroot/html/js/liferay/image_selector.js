@@ -15,9 +15,13 @@ AUI.add(
 
 		var PROGRESS_HEIGHT = '6';
 
+		var STATUS_CODE = Liferay.STATUS_CODE;
+
 		var STR_CLICK = 'click';
 
 		var STR_DOT = '.';
+
+		var STR_ERROR_MESSAGE = 'errorMessage';
 
 		var STR_IMAGE_DATA = 'imageData';
 
@@ -36,9 +40,18 @@ AUI.add(
 						validator: Lang.isString
 					},
 
+					errorNode: {
+						validator: Lang.isString
+					},
+
 					fileNameNode: {
 						validator: Lang.isString,
 						value: '#file-name'
+					},
+
+					maxFileSize: {
+						setter: Lang.toInt,
+						value: 0
 					},
 
 					paramName: {
@@ -52,10 +65,14 @@ AUI.add(
 
 					uploadURL: {
 						validator: Lang.isString
+					},
+
+					validExtensions: {
+						validator: Lang.isString
 					}
 				},
 
-				AUGMENTS: [Liferay.PortletBase],
+				AUGMENTS: [Liferay.PortletBase, Liferay.StorageFormatter],
 
 				EXTENDS: A.Base,
 
@@ -70,6 +87,10 @@ AUI.add(
 						instance._fileNameNode = instance.rootNode.one(instance.get('fileNameNode'));
 
 						instance._progressDataNode = instance.rootNode.one(instance.get('progressDataNode'));
+
+						var errorNode = instance.rootNode.one(instance.get('errorNode'));
+
+						instance._errorNodeAlert = A.Widget.getByNode(errorNode);
 
 						instance._bindUI();
 
@@ -88,6 +109,13 @@ AUI.add(
 						var instance = this;
 
 						instance._updateImageDataFn = A.bind('_updateImageData', instance);
+
+						instance.publish(
+							STR_ERROR_MESSAGE,
+							{
+								defaultFn: A.bind('_showErrorMessage', instance)
+							}
+						);
 
 						instance.publish(
 							STR_IMAGE_DATA,
@@ -236,6 +264,15 @@ AUI.add(
 								}
 							);
 						}
+						else if (!data.success) {
+							instance.fire(
+								STR_ERROR_MESSAGE,
+								{
+									error: data.error
+								}
+							);
+
+						}
 					},
 
 					_onUploadProgress: function(event) {
@@ -268,6 +305,14 @@ AUI.add(
 
 							progressDataNode.html(progressDataTemplate);
 						}
+					},
+
+					_onUploadStart: function(event) {
+						var instance = this;
+
+						instance.rootNode.addClass(CSS_PROGRESS_ACTIVE);
+
+						instance._errorNodeAlert.hide();
 					},
 
 					_parseBytesToSize: function(bytes) {
@@ -308,13 +353,58 @@ AUI.add(
 									fileselect: A.bind('_onFileSelect', instance),
 									uploadcomplete: A.bind('_onUploadComplete', instance),
 									uploadprogress: A.bind('_onUploadProgress', instance),
-									uploadstart: A.bind('addClass', instance.rootNode, CSS_PROGRESS_ACTIVE)
+									uploadstart: A.bind('_onUploadStart', instance)
 								},
 								uploadURL: instance.get('uploadURL')
 							}
 						).render();
 
 						instance._createProgressBar();
+					},
+
+					_showErrorMessage: function(event) {
+						var instance = this;
+
+						var error = event.error;
+
+						var errorType = error.errorType;
+						var message = Liferay.Language.get('an-unexpected-error-occurred-while-uploading-your-file');
+
+						if (errorType === STATUS_CODE.SC_FILE_ANTIVIRUS_EXCEPTION) {
+							message = error.message;
+						}
+						else if (errorType === STATUS_CODE.SC_FILE_EXTENSION_EXCEPTION) {
+							message = Lang.sub(Liferay.Language.get('please-enter-a-file-with-a-valid-extension-x'), [instance.get('validExtensions')]);
+						}
+						else if (errorType === STATUS_CODE.SC_FILE_NAME_EXCEPTION) {
+							message = Liferay.Language.get('please-enter-a-file-with-a-valid-file-name');
+						}
+						else if (errorType === STATUS_CODE.SC_FILE_SIZE_EXCEPTION) {
+							message = Lang.sub(Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x'), [instance.formatStorage(instance.get('maxFileSize'))]);
+						}
+
+						var errorWrapper = instance.rootNode.one('.error-wrapper');
+
+						var errorMessage = errorWrapper.one('.error-message');
+
+						errorMessage.html(message);
+
+						errorWrapper.show();
+
+						instance._errorNodeAlert.show();
+
+						instance._errorNodeAlert.on(
+							'visibleChange',
+							function(event) {
+								if (!event.newVal) {
+									browseImageControls.show();
+								}
+							}
+						);
+
+						var browseImageControls = instance.one('.browse-image-controls');
+
+						browseImageControls.hide();
 					},
 
 					_stopProgress: function(event) {
@@ -331,6 +421,8 @@ AUI.add(
 
 					_updateImageData: function(event) {
 						var instance = this;
+
+						instance._errorNodeAlert.hide();
 
 						instance.fire(
 							STR_IMAGE_DATA,
@@ -350,6 +442,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-progressbar', 'liferay-portlet-base', 'uploader']
+		requires: ['aui-base', 'aui-progressbar', 'liferay-portlet-base', 'liferay-storage-formatter', 'uploader']
 	}
 );

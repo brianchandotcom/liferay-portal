@@ -15,22 +15,34 @@
 package com.liferay.portlet.blogs.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourcePermissionCheckerUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portlet.blogs.CoverImageNameException;
 import com.liferay.portlet.blogs.CoverImageSizeException;
 import com.liferay.portlet.blogs.service.permission.BlogsPermission;
+import com.liferay.portlet.documentlibrary.FileNameException;
+import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 /**
  * @author Sergio González
  */
-public class BaseImageSelectorAction
+public abstract class BaseImageSelectorAction
 	extends com.liferay.portal.action.BaseImageSelectorAction {
 
 	@Override
@@ -56,6 +68,60 @@ public class BaseImageSelectorAction
 	}
 
 	@Override
+	protected void handleUploadException(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			Exception e, JSONObject jsonObject)
+		throws Exception {
+
+		jsonObject.put("success", Boolean.FALSE);
+
+		if (e instanceof AntivirusScannerException ||
+			e instanceof CoverImageNameException ||
+			e instanceof CoverImageSizeException ||
+			e instanceof FileNameException) {
+
+			String errorMessage = StringPool.BLANK;
+			int errorType = 0;
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			if (e instanceof AntivirusScannerException) {
+				errorType =
+					ServletResponseConstants.SC_FILE_ANTIVIRUS_EXCEPTION;
+				AntivirusScannerException ase =
+					(AntivirusScannerException)e;
+
+				errorMessage = themeDisplay.translate(ase.getMessageKey());
+
+			}
+			else if (e instanceof CoverImageNameException) {
+				errorType =
+					ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION;
+			}
+			else if (e instanceof CoverImageSizeException) {
+				errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
+			}
+			else if (e instanceof FileNameException) {
+				errorType = ServletResponseConstants.SC_FILE_NAME_EXCEPTION;
+			}
+
+			JSONObject errorJSONObject = JSONFactoryUtil.createJSONObject();
+
+			errorJSONObject.put("errorType", errorType);
+			errorJSONObject.put("message", errorMessage);
+
+			jsonObject.put("error", errorJSONObject);
+
+			writeJSON(actionRequest, actionResponse, jsonObject);
+		}
+		else {
+			throw e;
+		}
+	}
+
+	@Override
 	public void checkPermission(
 			long groupId, PermissionChecker permissionChecker)
 		throws PortalException {
@@ -69,5 +135,7 @@ public class BaseImageSelectorAction
 			throw new PrincipalException();
 		}
 	}
+
+	protected abstract long getMaxFileSize();
 
 }

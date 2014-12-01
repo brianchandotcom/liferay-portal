@@ -16,8 +16,6 @@ package com.liferay.portlet.usersadmin.action;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -45,7 +43,6 @@ import com.liferay.portlet.ActionResponseImpl;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.usersadmin.search.UserSearch;
 import com.liferay.portlet.usersadmin.search.UserSearchTerms;
-import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -196,26 +193,6 @@ public class ExportUsersAction extends PortletAction {
 			PropsValues.USERS_SEARCH_WITH_INDEX) {
 
 			params.put("expandoAttributes", searchTerms.getKeywords());
-
-			Hits hits = null;
-
-			if (searchTerms.isAdvancedSearch()) {
-				hits = UserLocalServiceUtil.search(
-					themeDisplay.getCompanyId(), searchTerms.getFirstName(),
-					searchTerms.getMiddleName(), searchTerms.getLastName(),
-					searchTerms.getScreenName(), searchTerms.getEmailAddress(),
-					searchTerms.getStatus(), params,
-					searchTerms.isAndOperator(), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, (Sort)null);
-			}
-			else {
-				hits = UserLocalServiceUtil.search(
-					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-					searchTerms.getStatus(), params, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, (Sort)null);
-			}
-
-			return UsersAdminUtil.getUsers(hits);
 		}
 
 		if (searchTerms.isAdvancedSearch()) {

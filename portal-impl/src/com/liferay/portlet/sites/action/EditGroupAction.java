@@ -516,7 +516,9 @@ public class EditGroupAction extends PortletAction {
 			}
 			else {
 				closeRedirect = PortalUtil.getGroupFriendlyURL(
-					group, false, themeDisplay);
+					LayoutSetLocalServiceUtil.getLayoutSet(
+						group.getGroupId(), false),
+					themeDisplay);
 			}
 		}
 
@@ -540,7 +542,8 @@ public class EditGroupAction extends PortletAction {
 			}
 			else {
 				closeRedirect = PortalUtil.getGroupFriendlyURL(
-					group, false, themeDisplay);
+					LayoutSetLocalServiceUtil.getLayoutSet(
+						group.getGroupId(), false), themeDisplay);
 			}
 		}
 

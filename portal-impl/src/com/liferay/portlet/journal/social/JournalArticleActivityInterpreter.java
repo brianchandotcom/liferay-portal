@@ -54,8 +54,7 @@ public class JournalArticleActivityInterpreter
 
 		if (layout != null) {
 			String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
-				layout.getGroup(), layout.isPrivateLayout(),
-				serviceContext.getThemeDisplay());
+				layout.getLayoutSet(), serviceContext.getThemeDisplay());
 
 			return groupFriendlyURL.concat(
 				JournalArticleConstants.CANONICAL_URL_SEPARATOR).concat(

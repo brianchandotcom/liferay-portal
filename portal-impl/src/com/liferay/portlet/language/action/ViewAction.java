@@ -130,15 +130,13 @@ public class ViewAction extends PortletAction {
 
 		Layout layout = themeDisplay.getLayout();
 
-		Group group = layout.getGroup();
-
-		if (isGroupFriendlyURL(group, layout, layoutURL, locale)) {
+		if (isGroupFriendlyURL(layout.getGroup(), layout, layoutURL, locale)) {
 			if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 0) {
 				redirect = layoutURL;
 			}
 			else {
 				redirect = PortalUtil.getGroupFriendlyURL(
-					group, layout.isPrivateLayout(), themeDisplay, locale);
+					layout.getLayoutSet(), themeDisplay, locale);
 			}
 		}
 		else {

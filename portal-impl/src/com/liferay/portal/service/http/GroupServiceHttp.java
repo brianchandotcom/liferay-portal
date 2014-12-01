@@ -55,55 +55,17 @@ import com.liferay.portal.service.GroupServiceUtil;
 public class GroupServiceHttp {
 	public static com.liferay.portal.model.Group addGroup(
 		HttpPrincipal httpPrincipal, long parentGroupId, long liveGroupId,
-		java.lang.String name, java.lang.String description, int type,
-		boolean manualMembership, int membershipRestriction,
-		java.lang.String friendlyURL, boolean site, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
-					"addGroup", _addGroupParameterTypes0);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					parentGroupId, liveGroupId, name, description, type,
-					manualMembership, membershipRestriction, friendlyURL, site,
-					active, serviceContext);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (com.liferay.portal.model.Group)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static com.liferay.portal.model.Group addGroup(
-		HttpPrincipal httpPrincipal, long parentGroupId, long liveGroupId,
-		java.lang.String name, java.lang.String description, int type,
+		java.lang.String groupKey, java.lang.String description, int type,
 		boolean manualMembership, int membershipRestriction,
 		java.lang.String friendlyURL, boolean site, boolean inheritContent,
 		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
-					"addGroup", _addGroupParameterTypes1);
+					"addGroup", _addGroupParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					parentGroupId, liveGroupId, name, description, type,
+					parentGroupId, liveGroupId, groupKey, description, type,
 					manualMembership, membershipRestriction, friendlyURL, site,
 					inheritContent, active, serviceContext);
 
@@ -130,17 +92,19 @@ public class GroupServiceHttp {
 	}
 
 	public static com.liferay.portal.model.Group addGroup(
-		HttpPrincipal httpPrincipal, long parentGroupId, java.lang.String name,
-		java.lang.String description, int type, java.lang.String friendlyURL,
-		boolean site, boolean active,
+		HttpPrincipal httpPrincipal, long parentGroupId, long liveGroupId,
+		java.lang.String groupKey, java.lang.String description, int type,
+		boolean manualMembership, int membershipRestriction,
+		java.lang.String friendlyURL, boolean site, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
-					"addGroup", _addGroupParameterTypes2);
+					"addGroup", _addGroupParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					parentGroupId, name, description, type, friendlyURL, site,
+					parentGroupId, liveGroupId, groupKey, description, type,
+					manualMembership, membershipRestriction, friendlyURL, site,
 					active, serviceContext);
 
 			Object returnObj = null;
@@ -166,7 +130,43 @@ public class GroupServiceHttp {
 	}
 
 	public static com.liferay.portal.model.Group addGroup(
-		HttpPrincipal httpPrincipal, java.lang.String name,
+		HttpPrincipal httpPrincipal, long parentGroupId,
+		java.lang.String groupKey, java.lang.String description, int type,
+		java.lang.String friendlyURL, boolean site, boolean active,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
+					"addGroup", _addGroupParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					parentGroupId, groupKey, description, type, friendlyURL,
+					site, active, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portal.model.Group)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.portal.model.Group addGroup(
+		HttpPrincipal httpPrincipal, java.lang.String groupKey,
 		java.lang.String description, int type, java.lang.String friendlyURL,
 		boolean site, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -175,8 +175,9 @@ public class GroupServiceHttp {
 			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
 					"addGroup", _addGroupParameterTypes3);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, name,
-					description, type, friendlyURL, site, active, serviceContext);
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					groupKey, description, type, friendlyURL, site, active,
+					serviceContext);
 
 			Object returnObj = null;
 
@@ -397,14 +398,14 @@ public class GroupServiceHttp {
 	}
 
 	public static com.liferay.portal.model.Group getGroup(
-		HttpPrincipal httpPrincipal, long companyId, java.lang.String name)
+		HttpPrincipal httpPrincipal, long companyId, java.lang.String groupKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
 					"getGroup", _getGroupParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, name);
+					companyId, groupKey);
 
 			Object returnObj = null;
 
@@ -1235,7 +1236,7 @@ public class GroupServiceHttp {
 
 	public static com.liferay.portal.model.Group updateGroup(
 		HttpPrincipal httpPrincipal, long groupId, long parentGroupId,
-		java.lang.String name, java.lang.String description, int type,
+		java.lang.String groupKey, java.lang.String description, int type,
 		boolean manualMembership, int membershipRestriction,
 		java.lang.String friendlyURL, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -1245,8 +1246,9 @@ public class GroupServiceHttp {
 					"updateGroup", _updateGroupParameterTypes37);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					parentGroupId, name, description, type, manualMembership,
-					membershipRestriction, friendlyURL, active, serviceContext);
+					parentGroupId, groupKey, description, type,
+					manualMembership, membershipRestriction, friendlyURL,
+					active, serviceContext);
 
 			Object returnObj = null;
 
@@ -1336,13 +1338,13 @@ public class GroupServiceHttp {
 	private static final Class<?>[] _addGroupParameterTypes0 = new Class[] {
 			long.class, long.class, java.lang.String.class,
 			java.lang.String.class, int.class, boolean.class, int.class,
-			java.lang.String.class, boolean.class, boolean.class,
+			java.lang.String.class, boolean.class, boolean.class, boolean.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addGroupParameterTypes1 = new Class[] {
 			long.class, long.class, java.lang.String.class,
 			java.lang.String.class, int.class, boolean.class, int.class,
-			java.lang.String.class, boolean.class, boolean.class, boolean.class,
+			java.lang.String.class, boolean.class, boolean.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addGroupParameterTypes2 = new Class[] {

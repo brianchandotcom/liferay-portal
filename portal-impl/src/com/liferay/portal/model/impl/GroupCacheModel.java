@@ -49,7 +49,7 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -71,6 +71,8 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable,
 		sb.append(liveGroupId);
 		sb.append(", treePath=");
 		sb.append(treePath);
+		sb.append(", groupKey=");
+		sb.append(groupKey);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", description=");
@@ -124,6 +126,13 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable,
 		}
 		else {
 			groupImpl.setTreePath(treePath);
+		}
+
+		if (groupKey == null) {
+			groupImpl.setGroupKey(StringPool.BLANK);
+		}
+		else {
+			groupImpl.setGroupKey(groupKey);
 		}
 
 		if (name == null) {
@@ -181,6 +190,7 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable,
 		parentGroupId = objectInput.readLong();
 		liveGroupId = objectInput.readLong();
 		treePath = objectInput.readUTF();
+		groupKey = objectInput.readUTF();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		type = objectInput.readInt();
@@ -219,6 +229,13 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable,
 		}
 		else {
 			objectOutput.writeUTF(treePath);
+		}
+
+		if (groupKey == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(groupKey);
 		}
 
 		if (name == null) {
@@ -270,6 +287,7 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable,
 	public long parentGroupId;
 	public long liveGroupId;
 	public String treePath;
+	public String groupKey;
 	public String name;
 	public String description;
 	public int type;

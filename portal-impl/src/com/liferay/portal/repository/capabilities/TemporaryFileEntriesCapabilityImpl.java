@@ -18,7 +18,7 @@ import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
 import com.liferay.portal.kernel.repository.capabilities.ConfigurationCapability;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
@@ -49,8 +49,10 @@ import java.util.List;
 public class TemporaryFileEntriesCapabilityImpl
 	implements TemporaryFileEntriesCapability {
 
-	public TemporaryFileEntriesCapabilityImpl(LocalRepository localRepository) {
-		_localRepository = localRepository;
+	public TemporaryFileEntriesCapabilityImpl(
+		DocumentRepository documentRepository) {
+
+		_documentRepository = documentRepository;
 	}
 
 	@Override
@@ -71,7 +73,7 @@ public class TemporaryFileEntriesCapabilityImpl
 			serviceContext.setAddGroupPermissions(true);
 			serviceContext.setAddGuestPermissions(true);
 
-			return _localRepository.addFileEntry(
+			return _documentRepository.addFileEntry(
 				temporaryFileEntriesScope.getUserId(), folder.getFolderId(),
 				fileName, mimeType, fileName, StringPool.BLANK,
 				StringPool.BLANK, file, serviceContext);
@@ -87,7 +89,7 @@ public class TemporaryFileEntriesCapabilityImpl
 	@Override
 	public void deleteExpiredTemporaryFileEntries() throws PortalException {
 		BulkOperationCapability bulkOperationCapability =
-			_localRepository.getCapability(BulkOperationCapability.class);
+			_documentRepository.getCapability(BulkOperationCapability.class);
 
 		BulkOperationCapability.Filter<Date> bulkFilter =
 			new BulkOperationCapability.Filter<>(
@@ -112,7 +114,7 @@ public class TemporaryFileEntriesCapabilityImpl
 			FileEntry fileEntry = getTemporaryFileEntry(
 				temporaryFileEntriesScope, fileName);
 
-			_localRepository.deleteFileEntry(fileEntry.getFileEntryId());
+			_documentRepository.deleteFileEntry(fileEntry.getFileEntryId());
 		}
 		catch (NoSuchModelException nsme) {
 		}
@@ -126,7 +128,7 @@ public class TemporaryFileEntriesCapabilityImpl
 		try {
 			Folder folder = addTempFolder(temporaryFileEntriesScope);
 
-			return _localRepository.getRepositoryFileEntries(
+			return _documentRepository.getRepositoryFileEntries(
 				temporaryFileEntriesScope.getUserId(), folder.getFolderId(),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 		}
@@ -138,7 +140,7 @@ public class TemporaryFileEntriesCapabilityImpl
 	@Override
 	public long getTemporaryFileEntriesTimeout() {
 		ConfigurationCapability configurationCapability =
-			_localRepository.getCapability(ConfigurationCapability.class);
+			_documentRepository.getCapability(ConfigurationCapability.class);
 
 		String temporaryFileEntriesTimeout =
 			configurationCapability.getProperty(
@@ -159,7 +161,7 @@ public class TemporaryFileEntriesCapabilityImpl
 
 		Folder folder = getTempFolder(temporaryFileEntriesScope);
 
-		return _localRepository.getFileEntry(folder.getFolderId(), fileName);
+		return _documentRepository.getFileEntry(folder.getFolderId(), fileName);
 	}
 
 	@Override
@@ -167,7 +169,7 @@ public class TemporaryFileEntriesCapabilityImpl
 		long temporaryFileEntriesTimeout) {
 
 		ConfigurationCapability configurationCapability =
-			_localRepository.getCapability(ConfigurationCapability.class);
+			_documentRepository.getCapability(ConfigurationCapability.class);
 
 		configurationCapability.setProperty(
 			getClass(), _PROPERTY_TEMPORARY_FILE_ENTRIES_TIMEOUT,
@@ -180,10 +182,10 @@ public class TemporaryFileEntriesCapabilityImpl
 		throws PortalException {
 
 		try {
-			return _localRepository.getFolder(parentFolderId, folderName);
+			return _documentRepository.getFolder(parentFolderId, folderName);
 		}
 		catch (NoSuchFolderException nsfe) {
-			return _localRepository.addFolder(
+			return _documentRepository.addFolder(
 				userId, parentFolderId, folderName, StringPool.BLANK,
 				serviceContext);
 		}
@@ -230,7 +232,7 @@ public class TemporaryFileEntriesCapabilityImpl
 		String[] folderNames = StringUtil.split(folderPath, StringPool.SLASH);
 
 		for (String folderName : folderNames) {
-			folder = _localRepository.getFolder(parentFolderId, folderName);
+			folder = _documentRepository.getFolder(parentFolderId, folderName);
 
 			parentFolderId = folder.getFolderId();
 		}
@@ -276,14 +278,14 @@ public class TemporaryFileEntriesCapabilityImpl
 	private static final long _TEMPORARY_FILE_ENTRIES_TIMEOUT_DEFAULT =
 		12 * 60 * 60 * 1000;
 
-	private final LocalRepository _localRepository;
+	private final DocumentRepository _documentRepository;
 
 	private class DeleteExpiredTemporaryFilesRepositoryModelOperation
 		extends BaseRepositoryModelOperation {
 
 		@Override
 		public void execute(FileEntry fileEntry) throws PortalException {
-			_localRepository.deleteFileEntry(fileEntry.getFileEntryId());
+			_documentRepository.deleteFileEntry(fileEntry.getFileEntryId());
 		}
 
 	}

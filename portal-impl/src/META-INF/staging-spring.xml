@@ -8,6 +8,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
+	<bean id="com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleEventFactoryUtil" class="com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleEventFactoryUtil">
+		<property name="exportImportLifecycleEventFactory">
+			<bean class="com.liferay.portal.lar.lifecycle.ExportImportLifecycleEventFactoryImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil" class="com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil">
 		<property name="portletDataContextFactory">
 			<bean class="com.liferay.portal.lar.PortletDataContextFactoryImpl" />

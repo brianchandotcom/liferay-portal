@@ -14,8 +14,6 @@
 
 package com.liferay.portal.scripting.groovy;
 
-import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.concurrent.ConcurrentReferenceKeyHashMap;
 import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.scripting.BaseScriptingExecutor;
@@ -41,11 +39,6 @@ import java.util.concurrent.ConcurrentMap;
 public class GroovyExecutor extends BaseScriptingExecutor {
 
 	@Override
-	public void clearCache() {
-		_portalCache.removeAll();
-	}
-
-	@Override
 	public Map<String, Object> eval(
 			Set<String> allowedClasses, Map<String, Object> inputObjects,
 			Set<String> outputNames, String script, ClassLoader... classLoaders)
@@ -56,7 +49,9 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 				"Constrained execution not supported for Groovy");
 		}
 
-		Script compiledScript = getCompiledScript(script, classLoaders);
+		GroovyShell groovyShell = getGroovyShell(classLoaders);
+
+		Script compiledScript = groovyShell.parse(script);
 
 		Binding binding = new Binding(inputObjects);
 
@@ -80,24 +75,6 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 	@Override
 	public String getLanguage() {
 		return _LANGUAGE;
-	}
-
-	protected Script getCompiledScript(
-		String script, ClassLoader[] classLoaders) {
-
-		GroovyShell groovyShell = getGroovyShell(classLoaders);
-
-		String key = String.valueOf(script.hashCode());
-
-		Script compiledScript = _portalCache.get(key);
-
-		if (compiledScript == null) {
-			compiledScript = groovyShell.parse(script);
-
-			_portalCache.put(key, compiledScript);
-		}
-
-		return compiledScript;
 	}
 
 	protected GroovyShell getGroovyShell(ClassLoader[] classLoaders) {
@@ -133,15 +110,11 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 		return groovyShell;
 	}
 
-	private static final String _CACHE_NAME = GroovyExecutor.class.getName();
-
 	private static final String _LANGUAGE = "groovy";
 
 	private volatile GroovyShell _groovyShell = new GroovyShell();
 	private final ConcurrentMap<ClassLoader, GroovyShell> _groovyShells =
 		new ConcurrentReferenceKeyHashMap<ClassLoader, GroovyShell>(
 			FinalizeManager.WEAK_REFERENCE_FACTORY);
-	private final PortalCache<String, Script> _portalCache =
-		SingleVMPoolUtil.getCache(_CACHE_NAME);
 
 }

@@ -1,29 +1,13 @@
 Bundle-Activator: com.liferay.portal.servlet.jsp.compiler.compiler.internal.JspResolverFactory
+Bundle-Name: Liferay JSP Compiler
 Bundle-SymbolicName: com.liferay.portal.servlet.jsp.compiler
 Bundle-Version: 1.0.0
 Export-Package:\
-	com.liferay.portal.servlet.jsp.compiler.compiler;version='1.0.0',\
-	com.liferay.portal.servlet.jsp.compiler.el;version='1.0.0',\
-	com.liferay.portal.servlet.jsp.compiler.jsp;version='1.0.0',\
-	javax.servlet.jsp.resources;version='2.2.0',\
-	org.apache.jasper;version='2.3.3.b01',\
-	org.apache.jasper.compiler;version='2.3.3.b01',\
-	org.apache.jasper.compiler.tagplugin;version='2.3.3.b01',\
-	org.apache.jasper.resources;version='2.3.3.b01',\
-	org.apache.jasper.runtime;version='2.3.3.b01',\
-	org.apache.jasper.security;version='2.3.3.b01',\
-	org.apache.jasper.tagplugins.jstl;version='2.3.3.b01',\
-	org.glassfish.jsp.api;version='2.3.3.b01',\
-	org.apache.jasper.servlet;version='2.3.3.b01',\
-	org.apache.jasper.xmlparser;version='2.3.3.b01'
-Import-Package: com.liferay.portal.bootstrap,\
-	com.liferay.portal.kernel.log,\
-	com.liferay.portal.kernel.util,\
-	com.liferay.portal.module.framework,\
-	com.liferay.portal.servlet.jsp.compiler.compiler;version='1.0.0',\
-	com.liferay.portal.servlet.jsp.compiler.el;version='1.0.0',\
-	com.liferay.portal.servlet.jsp.compiler.jsp;version='1.0.0',\
-	com.liferay.portal.util,\
+	com.liferay.portal.servlet.jsp,\
+	com.liferay.portal.servlet.jsp.compiler.compiler,\
+	com.liferay.portal.servlet.jsp.compiler.el,\
+	com.liferay.portal.servlet.jsp.compiler.jsp
+Import-Package:\
 	com.sun.el;version='[3.0.0,4.0)',\
 	com.sun.el.lang;version='[3.0.0,4.0)',\
 	com.sun.el.parser;version='[3.0.0,4.0)',\
@@ -41,22 +25,12 @@ Import-Package: com.liferay.portal.bootstrap,\
 	javax.servlet.jsp.jstl.fmt;version='[1.2.1,2.0)',\
 	javax.servlet.jsp.jstl.sql;version='[1.2.1,2.0)',\
 	javax.servlet.jsp.jstl.tlv;version='[1.2.1,2.0)',\
-	javax.servlet.resources,\
 	javax.tools,\
 	javax.xml.parsers,\
 	javax.xml.transform,\
 	javax.xml.transform.dom,\
 	javax.xml.transform.stream,\
 	javax.xml.validation,\
-	org.apache.jasper;version='2.3.3.b01',\
-	org.apache.jasper.compiler;version='2.3.3.b01',\
-	org.apache.jasper.compiler.tagplugin;version='2.3.3.b01',\
-	org.apache.jasper.resources;version='2.3.3.b01',\
-	org.apache.jasper.runtime;version='2.3.3.b01',\
-	org.apache.jasper.security;version='2.3.3.b01',\
-	org.apache.jasper.servlet;version='2.3.3.b01',\
-	org.apache.jasper.tagplugins.jstl;version='2.3.3.b01',\
-	org.apache.jasper.xmlparser;version='2.3.3.b01',\
 	org.apache.taglibs.standard;version='[1.2.3,2.0)',\
 	org.apache.taglibs.standard.extra.spath;version='[1.2.3,2.0)',\
 	org.apache.taglibs.standard.functions;version='[1.2.3,2.0)',\
@@ -80,18 +54,18 @@ Import-Package: com.liferay.portal.bootstrap,\
 	org.apache.taglibs.standard.tag.rt.xml;version='[1.2.3,2.0)',\
 	org.apache.taglibs.standard.tei;version='[1.2.3,2.0)',\
 	org.apache.taglibs.standard.tlv;version='[1.2.3,2.0)',\
-	org.glassfish.jsp.api;version='2.3.3.b01',\
 	org.w3c.dom,\
 	org.w3c.dom.ls,\
 	org.xml.sax,\
 	org.xml.sax.ext,\
 	org.xml.sax.helpers,\
-	org.osgi.framework,\
-	org.osgi.framework.wiring,\
-	org.phidias.compile,\
-	*;resolution:=optional
-Include-Resource:\
+	*
+
+Provide-Capability: liferay.extender;\
+	liferay.extender="jsp.extender";version:Version="${Bundle-Version}"
+
+-includeresource:\
 	@lib/javax.servlet.jsp.jar,\
-	classes,\
-	@../../../util-taglib/util-taglib.jar
-Private-Package: com.liferay.portal.servlet.jsp.compiler.compiler.internal
+	@lib/javax.servlet.jsp.jstl.jar!/META-INF/*.tld,\
+	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/log/*,\
+	classes

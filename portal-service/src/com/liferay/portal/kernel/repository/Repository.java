@@ -202,11 +202,6 @@ public interface Repository extends DocumentRepository {
 	public int getMountFoldersCount(long parentFolderId) throws PortalException;
 
 	public List<FileEntry> getRepositoryFileEntries(
-			long userId, long rootFolderId, int start, int end,
-			OrderByComparator<FileEntry> obc)
-		throws PortalException;
-
-	public List<FileEntry> getRepositoryFileEntries(
 			long userId, long rootFolderId, String[] mimeTypes, int status,
 			int start, int end, OrderByComparator<FileEntry> obc)
 		throws PortalException;

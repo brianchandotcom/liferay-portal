@@ -1,22 +1,22 @@
 <html>
 <head>
-<title>PGDocumentsandmediaManageDocumenttypesAdd</title>
+<title>CPDocumentsandmediaManageDocumenttypesAdd</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">PGDocumentsandmediaManageDocumenttypesAdd</td></tr>
+<tr><td rowspan="1" colspan="3">CPDocumentsandmediaManageDocumenttypesAdd</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>PGDocumentsandmediaManageDocumenttypesAdd</td>
+	<td>CPDocumentsandmediaManageDocumenttypesAdd</td>
 </tr>
 <tr>
 	<td></td>
 	<td></td>
-<td></td>
+	<td></td>
 </tr>
 <tr>
 	<td>BACK_BUTTON</td>
@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>DETAILS</td>
-	<td>//div[@id='structureDetailsSectionPanel']/div/div</td>
+	<td>//div[@id='detailsMetadataFields']/div/div</td>
 	<td></td>
 </tr>
 <tr>
@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>CANCEL_BUTTON</td>
-	<td>//div[@class='button-holder ']/button[contains(.,'Cancel')]</td>
+	<td>//a[contains(@class,'btn-cancel')]</td>
 	<td></td>
 </tr>
 <tr>

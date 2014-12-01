@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>PGDocumentsandmediaAdddocumenttype</title>
+<title>CPDocumentsandmediaAdddocumenttype</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">PGDocumentsandmediaAdddocumenttype</td></tr>
+<tr><td rowspan="1" colspan="3">CPDocumentsandmediaAdddocumenttype</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>PGDocumentsandmediaAdddocumenttype</td>
+	<td>CPDocumentsandmediaAdddocumenttype</td>
 </tr>
 <tr>
 	<td></td>

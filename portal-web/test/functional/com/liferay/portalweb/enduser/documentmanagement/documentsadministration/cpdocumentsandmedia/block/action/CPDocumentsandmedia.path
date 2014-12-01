@@ -54,18 +54,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ICON_VIEW_BUTTON</td>
-	<td>//a[@data-displaystyle='icon']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DESCRIPTIVE_VIEW_BUTTON</td>
-	<td>//a[@data-displaystyle='descriptive']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LIST_VIEW_BUTTON</td>
-	<td>//a[@data-displaystyle='list']</td>
+	<td>TOOLBAR_DISPLAY_STYLE_BUTTON</td>
+	<td>//div[contains(@id,'displayStyleButtons')]/li/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -202,6 +192,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_MENULIST_DOCUMENT_TYPE</td>
+	<td>//li[contains(@id,'addButtonContainer')]/ul/li/a[@role='menuitem' and contains(.,'${key_dmDocumentTypeName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -242,6 +237,27 @@
 <tr>
 	<td>MANAGE_MENULIST_METADATA_SETS</td>
 	<td>//a[@role='menuitem' and contains(.,'Metadata Sets')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DISPLAY_STYLE_MENULIST-->
+<tr>
+	<td>DISPLAY_STYLE_MENULIST_ICON</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Icon')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_STYLE_MENULIST_DESCRIPTIVE</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Descriptive')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_STYLE_MENULIST_LIST</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'List')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -371,6 +387,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENT_CONTAINER_DOCUMENT_THUMBNAIL</td>
+	<td>//div[@data-title='${key_dmDocumentTitle}']//div[@class='entry-thumbnail']/img</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOCUMENT_CONTAINER_DOCUMENT_ICON_LOCKED</td>
 	<td>//div[contains(@id,'entriesContainer')]//div[contains(.,'${key_dmDocumentTitle}')]//img[@alt='Locked']</td>
 	<td></td>
@@ -393,6 +414,11 @@
 <tr>
 	<td>DOCUMENT_CONTAINER_DOCUMENT_TITLE</td>
 	<td>//div[contains(@id,'entriesContainer')]//div[contains(.,'${key_dmDocumentTitle}')]/a/span/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONTAINER_DOCUMENT_WORKFLOW_STATUS</td>
+	<td>//tr[@data-title='${key_dmDocumentTitle}']//span[@class='workflow-status']/strong</td>
 	<td></td>
 </tr>
 <tr>

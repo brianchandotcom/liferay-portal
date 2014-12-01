@@ -3985,12 +3985,19 @@
 	</command>
 
 	<command name="ViewPageOrderWithStaging" priority="4">
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute> 
+
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Liferay" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -3998,7 +4005,7 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="siteName" value="Liferay" />
+			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="Test Page 1" />
 			<var name="sitePagePrivacy" value="Public" />
 		</execute>
@@ -4008,29 +4015,31 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="siteName" value="Liferay" />
+			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="Test Page 2" />
 			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoPagesCP">
 			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="${siteName}" />
 		</execute>
 
 		<execute macro="SitePage#viewPagesOrderCP">
-			<var name="pageName1" value="Welcome" />
+			<var name="pageName1" value="Staging Test Page" />
 			<var name="pageName2" value="Test Page 1" />
 			<var name="pageName3" value="Test Page 2" />
 		</execute>
 
 		<execute macro="Staging#publishToLiveNow" />
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Welcome" />
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Page#viewPageOrderStagingLivePG">
-			<var name="pageName1" value="Welcome" />
+			<var name="pageName1" value="Staging Test Page" />
 			<var name="pageName2" value="Test Page 1" />
 			<var name="pageName3" value="Test Page 2" />
 		</execute>

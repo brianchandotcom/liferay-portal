@@ -121,47 +121,55 @@ public class LegacyGoogleDocsMigration {
 	private final GoogleDocsDLFileEntryTypeHelper
 		_googleDocsDLFileEntryTypeHelper;
 
-	private final ActionableDynamicQuery.PerformActionMethod _performActionMethod =
-		new ActionableDynamicQuery.PerformActionMethod() {
-			@Override
-			public void performAction(Object object) throws PortalException {
-				DLFileEntry dlFileEntry = (DLFileEntry)object;
+	private final ActionableDynamicQuery.PerformActionMethod
+		_performActionMethod =
+			new ActionableDynamicQuery.PerformActionMethod() {
+				@Override
+				public void performAction(Object object)
+					throws PortalException {
 
-				LegacyGoogleDocsMetadataHelper legacyGoogleDocsMetadataHelper =
-					new LegacyGoogleDocsMetadataHelper(
-						dlFileEntry, _storageEngine);
+					DLFileEntry dlFileEntry = (DLFileEntry)object;
 
-				String id = legacyGoogleDocsMetadataHelper.getFieldValue(
-					LegacyGoogleDocsConstants.DDM_FIELD_NAME_ID);
-				String name = legacyGoogleDocsMetadataHelper.getFieldValue(
-					LegacyGoogleDocsConstants.DDM_FIELD_NAME_NAME);
-				String iconURL = legacyGoogleDocsMetadataHelper.getFieldValue(
-					LegacyGoogleDocsConstants.DDM_FIELD_NAME_ICON_URL);
-				String viewURL = legacyGoogleDocsMetadataHelper.getFieldValue(
-					LegacyGoogleDocsConstants.DDM_FIELD_NAME_VIEW_URL);
-				String editURL = legacyGoogleDocsMetadataHelper.getFieldValue(
-					LegacyGoogleDocsConstants.DDM_FIELD_NAME_EDIT_URL);
+					LegacyGoogleDocsMetadataHelper
+						legacyGoogleDocsMetadataHelper =
+							new LegacyGoogleDocsMetadataHelper(
+								dlFileEntry, _storageEngine);
 
-				GoogleDocsMetadataHelper googleDocsMetadataHelper =
-					new GoogleDocsMetadataHelper(
-						dlFileEntry, _dlFileEntryMetadataLocalService,
-						_storageEngine);
+					String id = legacyGoogleDocsMetadataHelper.getFieldValue(
+						LegacyGoogleDocsConstants.DDM_FIELD_NAME_ID);
+					String name = legacyGoogleDocsMetadataHelper.getFieldValue(
+						LegacyGoogleDocsConstants.DDM_FIELD_NAME_NAME);
+					String iconURL =
+						legacyGoogleDocsMetadataHelper.getFieldValue(
+							LegacyGoogleDocsConstants.DDM_FIELD_NAME_ICON_URL);
+					String viewURL =
+						legacyGoogleDocsMetadataHelper.getFieldValue(
+							LegacyGoogleDocsConstants.DDM_FIELD_NAME_VIEW_URL);
+					String editURL =
+						legacyGoogleDocsMetadataHelper.getFieldValue(
+							LegacyGoogleDocsConstants.DDM_FIELD_NAME_EDIT_URL);
 
-				googleDocsMetadataHelper.setFieldValue(
-					GoogleDocsConstants.DDM_FIELD_NAME_ID, id);
-				googleDocsMetadataHelper.setFieldValue(
-					GoogleDocsConstants.DDM_FIELD_NAME_NAME, name);
-				googleDocsMetadataHelper.setFieldValue(
-					GoogleDocsConstants.DDM_FIELD_NAME_ICON_URL, iconURL);
-				googleDocsMetadataHelper.setFieldValue(
-					GoogleDocsConstants.DDM_FIELD_NAME_EMBEDDABLE_URL, viewURL);
-				googleDocsMetadataHelper.setFieldValue(
-					GoogleDocsConstants.DDM_FIELD_NAME_URL, editURL);
+					GoogleDocsMetadataHelper googleDocsMetadataHelper =
+						new GoogleDocsMetadataHelper(
+							dlFileEntry, _dlFileEntryMetadataLocalService,
+							_storageEngine);
 
-				googleDocsMetadataHelper.update();
+					googleDocsMetadataHelper.setFieldValue(
+						GoogleDocsConstants.DDM_FIELD_NAME_ID, id);
+					googleDocsMetadataHelper.setFieldValue(
+						GoogleDocsConstants.DDM_FIELD_NAME_NAME, name);
+					googleDocsMetadataHelper.setFieldValue(
+						GoogleDocsConstants.DDM_FIELD_NAME_ICON_URL, iconURL);
+					googleDocsMetadataHelper.setFieldValue(
+						GoogleDocsConstants.DDM_FIELD_NAME_EMBEDDABLE_URL,
+						viewURL);
+					googleDocsMetadataHelper.setFieldValue(
+						GoogleDocsConstants.DDM_FIELD_NAME_URL, editURL);
 
-				legacyGoogleDocsMetadataHelper.delete();
-			}};
+					googleDocsMetadataHelper.update();
+
+					legacyGoogleDocsMetadataHelper.delete();
+				}};
 
 	private final StorageEngine _storageEngine;
 

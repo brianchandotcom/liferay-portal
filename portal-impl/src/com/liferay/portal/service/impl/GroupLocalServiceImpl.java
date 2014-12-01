@@ -3293,7 +3293,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			groupKey = String.valueOf(classPK);
 		}
 
-		if (PortalUtil.isSystemGroup(group.getGroupKey())) {
+		if (PortalUtil.isSystemGroup(group.getGroupKey()) &&
+			!groupKey.equals(group.getGroupKey())) {
+
 			throw new RequiredGroupException(
 				String.valueOf(group.getGroupId()),
 				RequiredGroupException.SYSTEM_GROUP);
@@ -3699,7 +3701,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			// Filter by name and description
 
-			String name = "";
+			String name = group.getGroupKey();
 
 			boolean containsName = matches(name, names);
 			boolean containsDescription = matches(

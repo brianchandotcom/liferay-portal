@@ -1588,7 +1588,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 						Group group = (Group)object;
 
-						if (!PortalUtil.isSystemGroup(group.getName()) &&
+						if (!PortalUtil.isSystemGroup(group.getGroupKey()) &&
 							!group.isCompany()) {
 
 							deleteGroup(group);

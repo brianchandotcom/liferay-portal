@@ -255,7 +255,7 @@
 		<field name="treePath" type="String">
 			<hint name="max-length">4000</hint>
 		</field>
-		<field name="name" type="String">
+		<field name="groupKey" type="String">
 			<hint name="display-width">210</hint>
 			<hint name="max-length">150</hint>
 			<validator name="required" />

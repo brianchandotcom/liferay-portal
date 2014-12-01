@@ -142,6 +142,7 @@ String[] imageExtensions = PrefsPropsUtil.getStringArray(PropsKeys.BLOGS_IMAGE_E
 			<aui:input name="content" type="hidden" />
 
 			<div class="entry-abstract-wrapper">
+
 				<%
 				long smallImageMaxFileSize = PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_SMALL_MAX_SIZE);
 				%>

@@ -370,17 +370,6 @@ AUI.add(
 				EXTENDS: Ratings,
 
 				prototype: {
-					_buildLabel: function() {
-						var instance = this;
-
-						var totalEntries = instance.get('totalEntries');
-						var totalScore = instance.get('totalScore');
-
-						var description = instance._fixScore(totalScore - (totalEntries - totalScore));
-
-						return instance._getLabel(description, totalEntries);
-					},
-
 					_createRating: function() {
 						var instance = this;
 
@@ -389,10 +378,21 @@ AUI.add(
 						instance.ratings = new A.ThumbRating(
 							{
 								boundingBox: '#' + namespace + 'ratingThumb',
-								label: instance._buildLabel(),
 								srcNode: '#' + namespace + 'ratingThumbContent'
 							}
 						).render();
+					},
+
+					_getThumbScores: function(entries, score) {
+						var instance = this;
+
+						var positiveVotes = Math.floor(score);
+						var negativeVotes = entries - positiveVotes;
+
+						return {
+							positiveVotes : positiveVotes,
+							negativeVotes : negativeVotes
+						};
 					},
 
 					_itemSelect: function(event) {
@@ -435,12 +435,24 @@ AUI.add(
 
 						var json = xhr.get(STR_RESPONSE_DATA);
 
-						var score = Math.round(json.totalScore - (json.totalEntries - json.totalScore));
+						var thumbScore = instance._getThumbScores(json.totalEntries, json.totalScore);
 
-						var description = instance._fixScore(score);
-						var label = instance._getLabel(description, json.totalEntries);
+						instance._updateScores(thumbScore);
+					},
 
-						instance.ratings.set('label', label);
+					_updateScores: function(thumbScore) {
+						var instance = this;
+
+						var elements = instance.ratings.get('elements');
+
+						var ratingThumbUp = elements.item(0);
+						var ratingThumbDown = elements.item(1);
+
+						ratingThumbUp.setHTML(thumbScore.positiveVotes);
+
+						if (ratingThumbDown) {
+							ratingThumbDown.setHTML(thumbScore.negativeVotes);
+						}
 					}
 				}
 			}
@@ -484,19 +496,17 @@ AUI.add(
 						instance.ratings = new LikeRatingImpl(
 							{
 								boundingBox: '#' + namespace + 'ratingLike',
-								label: instance._buildLabel(),
 								srcNode: '#' + namespace + 'ratingLikeContent'
 							}
 						).render();
 					},
 
-					_getLabel: function(desc, totalEntries) {
-						return Lang.sub(
-							'{desc}',
-							{
-								desc: desc
-							}
-						);
+					_getThumbScores: function(entries, score) {
+						var instance = this;
+
+						return {
+							positiveVotes : entries
+						};
 					}
 				}
 			}

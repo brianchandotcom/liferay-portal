@@ -28,11 +28,6 @@
 		.thumbrating {
 			height: 20px;
 
-			.rating-label {
-				display: inline-block;
-				padding: 0 5px;
-			}
-
 			@include respond-to(phone, tablet) {
 				a {
 					font-size: 1.5em;

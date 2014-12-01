@@ -58,17 +58,10 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 	<aui:fieldset id="searchContainer">
 		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" inlineField="<%= true %>" label="" name="keywords" size="30" title="search" value="<%= HtmlUtil.escape(keywords) %>" />
 
-		<liferay-ui:icon
-			iconCssClass="icon-search"
-			id="searchButton"
-			url="javascript:;"
-		/>
-
-		<liferay-ui:icon
-			iconCssClass="icon-remove"
-			id="clearSearch"
-			url="javascript:;"
-		/>
+		<aui:field-wrapper inlineField="<%= true %>">
+			<aui:button icon="icon-search" onClick='<%= renderResponse.getNamespace() + "search();" %>' value="search" />
+			<aui:button icon="icon-remove" onClick='<%= renderResponse.getNamespace() + "clearSearch();" %>' value="clear" />
+		</aui:field-wrapper>
 	</aui:fieldset>
 
 	<div class="lfr-token-list" id="<portlet:namespace />searchTokens">
@@ -122,25 +115,6 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 </aui:form>
 
 <aui:script sandbox="<%= true %>">
-	$('#<portlet:namespace />searchContainer').on(
-		'click',
-		'a',
-		function(event) {
-			var targetId = $(event.currentTarget).attr('id');
-
-			if (targetId === '<portlet:namespace />searchButton') {
-				<portlet:namespace />search();
-			}
-			else if (targetId === '<portlet:namespace />clearSearch') {
-				<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="clearSearchURL">
-					<portlet:param name="groupId" value="0" />
-				</portlet:renderURL>
-
-				window.location.href = '<%= clearSearchURL %>';
-			}
-		}
-	);
-
 	$('#<portlet:namespace />keywords').on(
 		'keydown',
 		function(event) {
@@ -176,6 +150,14 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 <aui:script>
 	function <portlet:namespace />addSearchProvider() {
 		window.external.AddSearchProvider('<%= themeDisplay.getPortalURL() %><%= PortalUtil.getPathMain() %>/search/open_search_description.xml?p_l_id=<%= themeDisplay.getPlid() %>&groupId=<%= groupId %>');
+	}
+
+	function <portlet:namespace />clearSearch() {
+		<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="clearSearchURL">
+			<portlet:param name="groupId" value="0" />
+		</portlet:renderURL>
+
+		window.location.href = '<%= clearSearchURL %>';
 	}
 
 	function <portlet:namespace />search() {

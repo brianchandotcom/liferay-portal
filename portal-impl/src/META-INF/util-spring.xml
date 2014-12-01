@@ -1032,10 +1032,9 @@
 	<bean id="com.liferay.portlet.dynamicdatamapping.storage.StorageAdapterRegistryUtil" class="com.liferay.portlet.dynamicdatamapping.storage.StorageAdapterRegistryUtil">
 		<property name="storageAdapterRegistry" ref="com.liferay.portlet.dynamicdatamapping.storage.StorageAdapterRegistry" />
 	</bean>
+	<bean id="com.liferay.portlet.dynamicdatamapping.storage.StorageEngine" class="com.liferay.portlet.dynamicdatamapping.storage.StorageEngineImpl" />
 	<bean id="com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil" class="com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil">
-		<property name="storageEngine">
-			<bean class="com.liferay.portlet.dynamicdatamapping.storage.StorageEngineImpl" />
-		</property>
+		<property name="storageEngine" ref="com.liferay.portlet.dynamicdatamapping.storage.StorageEngine" />
 	</bean>
 	<bean id="com.liferay.portlet.dynamicdatamapping.storage.query.ConditionFactoryUtil" class="com.liferay.portlet.dynamicdatamapping.storage.query.ConditionFactoryUtil">
 		<property name="conditionFactory">

@@ -3705,6 +3705,141 @@ if (ppstate.equals("normal")) {
 		<echo file="test.class.filenames.properties">${test.class.filenames.properties.content}</echo>
 	</target>
 
+	<target name="record-test-package-names">
+		<script classpathref="project.classpath" language="beanshell">
+			<![CDATA[
+				import org.apache.tools.ant.DirectoryScanner;
+
+				Map getPackageGroups(Set packageNames, int packageGroupsSize) {
+					Map packageGroups = new HashMap();
+
+					int i = 0;
+
+					for (String packageName : packageNames) {
+						int index = i++ % packageGroupsSize;
+
+						Set packageGroup = packageGroups.get(index);
+
+						if (packageGroup == null) {
+							packageGroup = new TreeSet();
+
+							packageGroups.put(index, packageGroup);
+						}
+
+						packageGroup.add(packageName);
+					}
+
+					return packageGroups;
+				}
+
+				Set getPackageNames() {
+					Set packageNames = new TreeSet();
+
+					DirectoryScanner directoryScanner = new DirectoryScanner();
+
+					directoryScanner.setBasedir(project.getBaseDir());
+					directoryScanner.setExcludes(new String[] {"*/pacl/test/[\\w]+Test.class", "**/*ServiceHttpTest.java", "**/*ServiceJsonTest.java", "**/*ServiceSoapTest.java"});
+					directoryScanner.setIncludes(new String[] {"**/test/integration/**/*Test.java", "**/test/unit/**/*Test.java"});
+
+					directoryScanner.scan();
+
+					for (String fileName : directoryScanner.getIncludedFiles()) {
+						int x = fileName.indexOf("com" + File.separator);
+						int y = fileName.lastIndexOf(File.separatorChar);
+
+						String packageName = fileName.substring(x, y);
+
+						packageNames.add(packageName.replace(File.separatorChar, '.'));
+					}
+
+					return packageNames;
+				}
+
+				StringBuilder sb = new StringBuilder();
+
+				int allPackageGroupsSize = Integer.parseInt(project.getProperty("test.package.groups.size"));
+
+				String longRunningPackageNamesString = project.getProperty("test.package.names.long.running");
+
+				String[] longRunningPackageNames = longRunningPackageNamesString.split(",");
+
+				int longRunningPackageGroupsSize = longRunningPackageNames.length;
+
+				if (longRunningPackageNamesString.equals("")) {
+					longRunningPackageGroupsSize = 0;
+				}
+
+				int shortRunningPackageGroupsSize = allPackageGroupsSize - longRunningPackageGroupsSize;
+
+				Set shortRunningPackageNames = new TreeSet();
+
+				Set allPackageNames = getPackageNames();
+
+				shortRunningPackageNames.addAll(allPackageNames);
+
+				for (String longRunningPackageName : longRunningPackageNames) {
+					shortRunningPackageNames.remove(longRunningPackageName);
+				}
+
+				Map packageGroups = getPackageGroups(shortRunningPackageNames, shortRunningPackageGroupsSize);
+
+				for (int i = 0; i < shortRunningPackageGroupsSize; i++) {
+					Set packageGroup = packageGroups.get(i);
+
+					sb.append("TEST_PACKAGE_GROUP_");
+					sb.append(i);
+					sb.append("=");
+
+					for (String packageName : packageGroup) {
+						sb.append(packageName);
+						sb.append(",");
+					}
+
+					if (!packageGroup.isEmpty()) {
+						sb.setLength(sb.length() - 1);
+					}
+
+					sb.append("\n\n");
+				}
+
+				for (int i = 0; i < longRunningPackageGroupsSize; i++) {
+					sb.append("TEST_PACKAGE_GROUP_");
+					sb.append(shortRunningPackageGroupsSize + i);
+					sb.append("=");
+					sb.append(longRunningPackageNames[i]);
+					sb.append("\n\n");
+				}
+
+				sb.append("TEST_PACKAGE_GROUPS=");
+
+				for (int i = 0; i < allPackageGroupsSize; i++) {
+					sb.append(i);
+					sb.append(" ");
+				}
+
+				if (allPackageGroupsSize > 0) {
+					sb.setLength(sb.length() - 1);
+				}
+
+				sb.append("\n\n");
+				sb.append("TEST_PACKAGE_NAMES=");
+
+				for (String packageName : allPackageNames) {
+					sb.append(packageName);
+					sb.append(" ");
+				}
+
+				if (!allPackageNames.isEmpty()) {
+					sb.setLength(sb.length() - 1);
+				}
+
+				project.setProperty("test.package.names.properties.content", sb.toString());
+			]]>
+		</script>
+
+		<echo file="test.package.names.properties">${test.package.names.properties.content}</echo>
+	</target>
+
 	<target name="record-test-plugin-names">
 		<script classpathref="project.classpath" language="beanshell">
 			<![CDATA[

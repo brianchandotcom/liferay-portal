@@ -131,9 +131,6 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 									if (mySiteGroup.isUser()) {
 										siteName = LanguageUtil.get(request, "my-profile");
 									}
-									else if (mySiteGroup.getGroupKey().equals(GroupConstants.GUEST)) {
-										siteName = themeDisplay.getAccount().getName();
-									}
 									else {
 										siteName = mySiteGroup.getDescriptiveName(locale);
 									}
@@ -191,9 +188,6 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 
 									if (mySiteGroup.isUser()) {
 										siteName = LanguageUtil.get(request, "my-dashboard");
-									}
-									else if (mySiteGroup.getGroupKey().equals(GroupConstants.GUEST)) {
-										siteName = themeDisplay.getAccount().getName();
 									}
 									else {
 										siteName = mySiteGroup.getDescriptiveName(locale);

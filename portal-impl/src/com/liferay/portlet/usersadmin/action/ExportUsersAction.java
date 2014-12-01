@@ -196,26 +196,6 @@ public class ExportUsersAction extends PortletAction {
 			PropsValues.USERS_SEARCH_WITH_INDEX) {
 
 			params.put("expandoAttributes", searchTerms.getKeywords());
-
-			Hits hits = null;
-
-			if (searchTerms.isAdvancedSearch()) {
-				hits = UserLocalServiceUtil.search(
-					themeDisplay.getCompanyId(), searchTerms.getFirstName(),
-					searchTerms.getMiddleName(), searchTerms.getLastName(),
-					searchTerms.getScreenName(), searchTerms.getEmailAddress(),
-					searchTerms.getStatus(), params,
-					searchTerms.isAndOperator(), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, (Sort)null);
-			}
-			else {
-				hits = UserLocalServiceUtil.search(
-					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-					searchTerms.getStatus(), params, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, (Sort)null);
-			}
-
-			return UsersAdminUtil.getUsers(hits);
 		}
 
 		if (searchTerms.isAdvancedSearch()) {

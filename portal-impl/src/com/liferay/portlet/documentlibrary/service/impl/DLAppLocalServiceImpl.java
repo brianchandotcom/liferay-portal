@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Repository;
+import com.liferay.portal.model.UserConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
@@ -493,7 +494,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		LocalRepository localRepository = getFolderLocalRepository(folderId);
 
 		List<FileEntry> fileEntries = localRepository.getRepositoryFileEntries(
-			folderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			UserConstants.USER_ID_DEFAULT, folderId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 
 		for (FileEntry fileEntry : fileEntries) {
 			dlAppHelperLocalService.deleteFileEntry(fileEntry);

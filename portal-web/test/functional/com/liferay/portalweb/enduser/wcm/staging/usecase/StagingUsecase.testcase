@@ -3988,7 +3988,7 @@
 		<execute macro="Page#openURL">
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
-		</execute> 
+		</execute>
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />

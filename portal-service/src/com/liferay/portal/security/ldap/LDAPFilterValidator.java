@@ -19,6 +19,6 @@ package com.liferay.portal.security.ldap;
  */
 public interface LDAPFilterValidator {
 
-	public boolean isValidFilter(String filter);
+	public boolean isValid(String filter);
 
 }

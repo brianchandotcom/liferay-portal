@@ -44,6 +44,7 @@ import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.ResetDatabaseTestRule;
+import com.liferay.portal.test.SlowTest;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationTestRule;
 import com.liferay.portal.util.PortletKeys;
@@ -74,6 +75,7 @@ import org.junit.Test;
  * @author Julio Camarero
  * @author Eduardo Garcia
  */
+@SlowTest
 @Sync
 public class LayoutSetPrototypePropagationTest
 	extends BasePrototypePropagationTestCase {

@@ -14,19 +14,28 @@
 
 package com.liferay.portal.repository.registry;
 
+import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
+import com.liferay.portal.kernel.repository.capabilities.ConfigurationCapability;
+import com.liferay.portal.kernel.repository.capabilities.RepositoryEventTriggerCapability;
+import com.liferay.portal.kernel.repository.cmis.CMISRepositoryHandler;
 import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
 import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.portal.repository.capabilities.BaseCapabilityRepository;
 import com.liferay.portal.repository.capabilities.CapabilityLocalRepository;
 import com.liferay.portal.repository.capabilities.CapabilityRepository;
+import com.liferay.portal.repository.capabilities.ConfigurationCapabilityImpl;
+import com.liferay.portal.repository.capabilities.LiferayRepositoryEventTriggerCapability;
+import com.liferay.portal.repository.proxy.BaseRepositoryProxyBean;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,14 +47,14 @@ import java.util.Map;
  */
 public class RepositoryClassDefinition
 	implements RepositoryEventRegistry, RepositoryEventTrigger,
-		RepositoryFactoryRegistry {
+		RepositoryFactory, RepositoryFactoryRegistry {
 
 	public RepositoryClassDefinition(RepositoryDefiner repositoryDefiner) {
 		_repositoryDefiner = repositoryDefiner;
 	}
 
-	public CapabilityLocalRepository createCapabilityLocalRepository(
-			long repositoryId)
+	@Override
+	public LocalRepository createLocalRepository(long repositoryId)
 		throws PortalException {
 
 		LocalRepository localRepository =
@@ -56,10 +65,13 @@ public class RepositoryClassDefinition
 
 		_repositoryDefiner.registerCapabilities(capabilityLocalRepository);
 
+		setupCommonCapabilities(capabilityLocalRepository);
+
 		return capabilityLocalRepository;
 	}
 
-	public CapabilityRepository createCapabilityRepository(long repositoryId)
+	@Override
+	public Repository createRepository(long repositoryId)
 		throws PortalException {
 
 		Repository repository = _repositoryFactory.createRepository(
@@ -70,15 +82,11 @@ public class RepositoryClassDefinition
 
 		_repositoryDefiner.registerCapabilities(capabilityRepository);
 
+		setupCommonCapabilities(capabilityRepository);
+
+		setupCapabilityRepositoryCapabilities(capabilityRepository);
+
 		return capabilityRepository;
-	}
-
-	public RepositoryEventTrigger getRepositoryEventTrigger() {
-		return this;
-	}
-
-	public RepositoryFactory getRepositoryFactory() {
-		return _repositoryFactory;
 	}
 
 	@Override
@@ -132,6 +140,61 @@ public class RepositoryClassDefinition
 
 				repositoryEventListener.execute(model);
 			}
+		}
+	}
+
+	protected CMISRepositoryHandler getCMISRepositoryHandler(
+		Repository repository) {
+
+		if (repository instanceof BaseRepositoryProxyBean) {
+			BaseRepositoryProxyBean baseRepositoryProxyBean =
+				(BaseRepositoryProxyBean)repository;
+
+			ClassLoaderBeanHandler classLoaderBeanHandler =
+				(ClassLoaderBeanHandler)ProxyUtil.getInvocationHandler(
+					baseRepositoryProxyBean.getProxyBean());
+
+			Object bean = classLoaderBeanHandler.getBean();
+
+			if (bean instanceof CMISRepositoryHandler) {
+				return (CMISRepositoryHandler)bean;
+			}
+		}
+
+		return null;
+	}
+
+	protected void setupCapabilityRepositoryCapabilities(
+		CapabilityRepository capabilityRepository) {
+
+		Repository repository = capabilityRepository.getRepository();
+
+		CMISRepositoryHandler cmisRepositoryHandler = getCMISRepositoryHandler(
+			repository);
+
+		if (cmisRepositoryHandler != null) {
+			capabilityRepository.addExportedCapability(
+				CMISRepositoryHandler.class, cmisRepositoryHandler);
+		}
+	}
+
+	protected void setupCommonCapabilities(
+		BaseCapabilityRepository<?> baseCapabilityRepository) {
+
+		if (!baseCapabilityRepository.isCapabilityProvided(
+				ConfigurationCapability.class)) {
+
+			baseCapabilityRepository.addExportedCapability(
+				ConfigurationCapability.class,
+				new ConfigurationCapabilityImpl(baseCapabilityRepository));
+		}
+
+		if (!baseCapabilityRepository.isCapabilityProvided(
+				RepositoryEventTriggerCapability.class)) {
+
+			baseCapabilityRepository.addExportedCapability(
+				RepositoryEventTriggerCapability.class,
+				new LiferayRepositoryEventTriggerCapability(this));
 		}
 	}
 

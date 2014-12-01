@@ -3141,13 +3141,14 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 					/>
 				</delete>
 			</then>
+			<else>
+				<ant dir="portal-impl" target="build-selenium-block" inheritAll="false" />
+			</else>
 		</if>
-
-		<ant dir="portal-impl" target="build-selenium-block" inheritAll="false" />
 
 		<antcall target="compile-test" inheritAll="false" />
 
-		<antcall target="record-test-package-names" inheritAll="false" />
+		<antcall target="record-test-class-filenames" inheritAll="false" />
 	</target>
 
 	<target name="prepare-test-build-tomcat-dependents">
@@ -3601,6 +3602,142 @@ if (ppstate.equals("normal")) {
 %>]]></echo>
 
 		<echo>Updated ${app.server.dir}/webapps/ROOT/html/common/themes/bottom-test.jsp.</echo>
+	</target>
+
+	<target name="record-test-class-filenames">
+		<script classpathref="project.classpath" language="beanshell">
+			<![CDATA[
+				import java.nio.file.Files;
+				import java.nio.file.Paths;
+
+				import org.apache.tools.ant.DirectoryScanner;
+
+				List getClassGroups(List classFileNames, int groupSize) {
+					List classFileNameGroups = new ArrayList(groupSize);
+
+					for (int i = 0; i < groupSize; i++) {
+						classFileNameGroups.add(new ArrayList());
+					}
+
+					int i = 0;
+
+					for (String classFileName : classFileNames) {
+						List classFileNameGroup = classFileNameGroups.get(i++ % groupSize);
+
+						classFileNameGroup.add(classFileName);
+					}
+
+					return classFileNameGroups;
+				}
+
+				List getClassFileNames(List slowClassFileNames) {
+					DirectoryScanner directoryScanner = new DirectoryScanner();
+
+					File baseDir = project.getBaseDir();
+
+					directoryScanner.setBasedir(baseDir);
+					directoryScanner.setExcludes(new String[] {"*/pacl/test/[\\w]+Test.class", "**/*ServiceHttpTest.java", "**/*ServiceJsonTest.java", "**/*ServiceSoapTest.java"});
+					directoryScanner.setIncludes(new String[] {"**/test/integration/**/*Test.java", "**/test/unit/**/*Test.java"});
+
+					directoryScanner.scan();
+
+					String[] fileNames = directoryScanner.getIncludedFiles();
+
+					List fastClassFileNames = new ArrayList();
+
+					String baseDirAbsolutePath = baseDir.getAbsolutePath();
+
+					for (String fileName : directoryScanner.getIncludedFiles()) {
+						String fileContent = new String(Files.readAllBytes(Paths.get(baseDirAbsolutePath, new String[] {fileName})), "UTF-8");
+
+						String fileName = fileName.substring(fileName.indexOf("com" + File.separator), fileName.length() - 4);
+
+						fileName = fileName.concat("class");
+
+						if (fileContent.contains("@SlowTest")) {
+							slowClassFileNames.add(fileName);
+						}
+						else {
+							fastClassFileNames.add(fileName);
+						}
+					}
+
+					Collections.sort(fastClassFileNames);
+					Collections.sort(slowClassFileNames);
+
+					return fastClassFileNames;
+				}
+
+				StringBuilder sb = new StringBuilder();
+
+				int allTestClassGroupsSize = Integer.parseInt(project.getProperty("test.class.groups.size"));
+
+				int slowTestClassGroupSize = Integer.parseInt(project.getProperty("test.class.slow.groups.size"));
+
+				int fastTestClassGroupSize = allTestClassGroupsSize - slowTestClassGroupSize;
+
+				List slowClassFileNames = new ArrayList();
+
+				List fastClassFileNames = getClassFileNames(slowClassFileNames);
+
+				List fastTestClassGroups = getClassGroups(fastClassFileNames, fastTestClassGroupSize);
+
+				for (i = 0; i < fastTestClassGroupSize; i++) {
+					List testClassGroup = fastTestClassGroups.get(i);
+
+					sb.append("TEST_CLASS_GROUP_");
+					sb.append(i);
+					sb.append("=");
+
+					for (String testClass : testClassGroup) {
+						sb.append(testClass);
+						sb.append(",");
+					}
+
+					if (!testClassGroup.isEmpty()) {
+						sb.setLength(sb.length() - 1);
+					}
+
+					sb.append("\n\n");
+				}
+
+				List slowTestClassGroups = getClassGroups(slowClassFileNames, slowTestClassGroupSize);
+
+				for (int i = 0; i < slowTestClassGroupSize; i++) {
+					List testClassGroup = slowTestClassGroups.get(i);
+
+					sb.append("TEST_CLASS_GROUP_");
+					sb.append(i + fastTestClassGroupSize);
+					sb.append("=");
+
+					for (String testClass : testClassGroup) {
+						sb.append(testClass);
+						sb.append(",");
+					}
+
+					if (!testClassGroup.isEmpty()) {
+						sb.setLength(sb.length() - 1);
+					}
+
+					sb.append("\n\n");
+				}
+
+				sb.append("TEST_CLASS_GROUPS=");
+
+				for (int i = 0; i < allTestClassGroupsSize; i++) {
+					sb.append(i);
+					sb.append(" ");
+				}
+
+				if (allTestClassGroupsSize > 0) {
+					sb.setLength(sb.length() - 1);
+				}
+
+				project.setProperty("test.class.filenames.properties.content", sb.toString());
+			]]>
+		</script>
+
+		<echo file="test.class.filenames.properties">${test.class.filenames.properties.content}</echo>
 	</target>
 
 	<target name="record-test-package-names">
@@ -4521,6 +4658,12 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		<ant dir="portal-service" target="test-package" inheritAll="false" />
 		<ant dir="portal-impl" target="test-package" inheritAll="false" />
 		<ant dir="util-java" target="test-package" inheritAll="false" />
+	</target>
+
+	<target name="test-package-group">
+		<ant dir="portal-service" target="test-package-group" inheritAll="false" />
+		<ant dir="portal-impl" target="test-package-group" inheritAll="false" />
+		<ant dir="util-java" target="test-package-group" inheritAll="false" />
 	</target>
 
 	<target name="test-unit">

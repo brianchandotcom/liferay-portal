@@ -3087,7 +3087,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *         <code>null</code>)
 	 * @return the matching users
 	 * @see    com.liferay.portlet.usersadmin.util.UserIndexer
-	 *
 	 */
 	@Override
 	public Hits search(
@@ -3257,7 +3256,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *         <code>null</code>)
 	 * @return the matching users
 	 * @see    com.liferay.portlet.usersadmin.util.UserIndexer
-	 *
 	 */
 	@Override
 	public Hits search(

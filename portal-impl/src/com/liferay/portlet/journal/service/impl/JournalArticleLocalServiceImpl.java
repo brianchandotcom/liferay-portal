@@ -2316,6 +2316,24 @@ public class JournalArticleLocalServiceImpl
 			groupId, articleId, start, end, orderByComparator);
 	}
 
+	@Override
+	public List<JournalArticle> getArticlesByDDMStructureKey(
+		String[] ddmStructureKeys) {
+
+		if (PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
+			return getStructureArticles(ddmStructureKeys);
+		}
+
+		QueryDefinition<JournalArticle> queryDefinition =
+			new QueryDefinition<JournalArticle>(
+				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, new ArticleVersionComparator());
+
+		return journalArticleFinder.findByG_C_S(
+			0, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			ListUtil.toList(ddmStructureKeys), queryDefinition);
+	}
+
 	/**
 	 * Returns all the web content articles matching the resource primary key.
 	 *

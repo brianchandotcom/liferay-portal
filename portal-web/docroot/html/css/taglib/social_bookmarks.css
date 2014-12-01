@@ -1,6 +1,17 @@
 .taglib-social-bookmarks {
 	margin-top: 1.5em;
 
+	.horizontal, .simple {
+		.taglib-social-bookmark {
+			display: inline-block;
+			vertical-align: top;
+
+			img {
+				vertical-align: baseline;
+			}
+		}
+	}
+
 	a.social-bookmark-link {
 		background-repeat: no-repeat;
 		padding-left: 20px;

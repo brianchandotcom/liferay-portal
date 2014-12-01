@@ -31,7 +31,7 @@ import org.antlr.runtime.TokenStream;
  */
 public class LDAPFilterValidatorImpl implements LDAPFilterValidator {
 
-	public boolean isValidFilter(String filter) {
+	public boolean isValid(String filter) {
 		if (Validator.isNull(filter)) {
 			return true;
 		}
@@ -47,7 +47,7 @@ public class LDAPFilterValidatorImpl implements LDAPFilterValidator {
 		try {
 			ldapFilterParser.parse();
 		}
-		catch (RecognitionException|RuntimeException re) {
+		catch (RecognitionException | RuntimeException re) {
 			if (_log.isErrorEnabled()) {
 				_log.error("Unable to parse filter " + filter);
 			}

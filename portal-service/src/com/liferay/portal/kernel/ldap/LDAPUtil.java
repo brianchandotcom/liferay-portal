@@ -191,7 +191,7 @@ public class LDAPUtil {
 	}
 
 	public static boolean isValidFilter(String filter) {
-		return getLDAPFilterValidator().isValidFilter(filter);
+		return getLDAPFilterValidator().isValid(filter);
 	}
 
 	public static Date parseDate(String date) throws Exception {

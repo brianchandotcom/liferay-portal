@@ -106,24 +106,9 @@ public class LegacyGoogleDocsMigration {
 		ActionableDynamicQuery actionableDynamicQuery =
 			_dlFileEntryLocalService.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(_performActionMethod);
-
-		actionableDynamicQuery.performActions();
-	}
-
-	private final Company _company;
-	private final DDMStructureLocalService _ddmStructureLocalService;
-	private final DLFileEntryLocalService _dlFileEntryLocalService;
-	private final DLFileEntryMetadataLocalService
-		_dlFileEntryMetadataLocalService;
-	private DLFileEntryType _dlFileEntryType;
-	private final DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
-	private final GoogleDocsDLFileEntryTypeHelper
-		_googleDocsDLFileEntryTypeHelper;
-
-	private final ActionableDynamicQuery.PerformActionMethod
-		_performActionMethod =
+		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod() {
+
 				@Override
 				public void performAction(Object object)
 					throws PortalException {
@@ -169,8 +154,23 @@ public class LegacyGoogleDocsMigration {
 					googleDocsMetadataHelper.update();
 
 					legacyGoogleDocsMetadataHelper.delete();
-				}};
+				}
+			}
 
+		);
+
+		actionableDynamicQuery.performActions();
+	}
+
+	private final Company _company;
+	private final DDMStructureLocalService _ddmStructureLocalService;
+	private final DLFileEntryLocalService _dlFileEntryLocalService;
+	private final DLFileEntryMetadataLocalService
+		_dlFileEntryMetadataLocalService;
+	private DLFileEntryType _dlFileEntryType;
+	private final DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+	private final GoogleDocsDLFileEntryTypeHelper
+		_googleDocsDLFileEntryTypeHelper;
 	private final StorageEngine _storageEngine;
 
 }

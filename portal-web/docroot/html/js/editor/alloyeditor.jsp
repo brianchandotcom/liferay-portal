@@ -221,6 +221,32 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 		}
 	);
 
+	var contentFilter = new CKEDITOR.filter(
+		{
+			$1: {
+				attributes: ['alt', 'aria-*', 'height', 'href', 'src', 'width'],
+				classes: false,
+				elements: CKEDITOR.dtd,
+				styles: false
+			}
+		}
+	);
+
+	nativeEditor.on(
+		'paste',
+		function(event) {
+			var fragment = CKEDITOR.htmlParser.fragment.fromHtml(event.data.dataValue);
+
+			var writer = new CKEDITOR.htmlParser.basicWriter();
+
+			contentFilter.applyTo(fragment);
+
+			fragment.writeHtml(writer);
+
+			event.data.dataValue = writer.getHtml();
+		}
+	);
+
 	<c:if test='<%= alloyEditorMode.equals("text") %>'>
 		nativeEditor.on(
 			'key',

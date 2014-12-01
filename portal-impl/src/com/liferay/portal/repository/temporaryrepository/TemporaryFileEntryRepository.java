@@ -30,9 +30,9 @@ import com.liferay.portlet.documentlibrary.service.DLFolderService;
 /**
  * @author Iván Zaera
  */
-public class TemporaryRepository extends LiferayRepository {
+public class TemporaryFileEntryRepository extends LiferayRepository {
 
-	public TemporaryRepository(
+	public TemporaryFileEntryRepository(
 		RepositoryLocalService repositoryLocalService,
 		RepositoryService repositoryService,
 		DLAppHelperLocalService dlAppHelperLocalService,

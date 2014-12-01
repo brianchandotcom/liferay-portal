@@ -35,11 +35,11 @@ import com.liferay.portal.repository.liferayrepository.LiferayWorkflowRepository
 /**
  * @author Iván Zaera
  */
-public class TemporaryRepositoryDefiner extends BaseRepositoryDefiner {
+public class TemporaryFileEntryRepositoryDefiner extends BaseRepositoryDefiner {
 
 	@Override
 	public String getClassName() {
-		return TemporaryRepository.class.getName();
+		return TemporaryFileEntryRepository.class.getName();
 	}
 
 	@Override
@@ -80,16 +80,20 @@ public class TemporaryRepositoryDefiner extends BaseRepositoryDefiner {
 	}
 
 	public void setRepositoryFactory(RepositoryFactory repositoryFactory) {
-		_repositoryFactory = new TemporaryRepositoryFactory(repositoryFactory);
+		_repositoryFactory = new TemporaryFileEntryRepositoryFactory(
+			repositoryFactory);
 	}
 
 	private RepositoryFactory _repositoryFactory;
 	private final WorkflowCapability _workflowCapability =
 		new MinimalWorkflowCapability();
 
-	private class TemporaryRepositoryFactory implements RepositoryFactory {
+	private class TemporaryFileEntryRepositoryFactory
+		implements RepositoryFactory {
 
-		public TemporaryRepositoryFactory(RepositoryFactory repositoryFactory) {
+		public TemporaryFileEntryRepositoryFactory(
+			RepositoryFactory repositoryFactory) {
+
 			_repositoryFactory = repositoryFactory;
 		}
 

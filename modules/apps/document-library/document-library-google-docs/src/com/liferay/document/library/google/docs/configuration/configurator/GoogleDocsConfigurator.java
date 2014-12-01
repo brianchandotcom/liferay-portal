@@ -27,7 +27,6 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServi
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngine;
-import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -109,36 +108,42 @@ public class GoogleDocsConfigurator {
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+
+	private final ActionableDynamicQuery.PerformActionMethod
+		_performActionMethod =
+			new ActionableDynamicQuery.PerformActionMethod() {
+				@Override
+				public void performAction(Object object)
+					throws PortalException {
+
+					Company company = (Company)object;
+
+					GoogleDocsDLFileEntryTypeHelper
+						googleDocsDLFileEntryTypeHelper =
+							new GoogleDocsDLFileEntryTypeHelper(
+								company, _classNameLocalService,
+								_ddmStructureLocalService,
+								_dlFileEntryTypeLocalService,
+								_userLocalService);
+
+					LegacyGoogleDocsMigration legacyGoogleDocsMigration =
+						new LegacyGoogleDocsMigration(
+							company, _ddmStructureLocalService,
+							_dlFileEntryTypeLocalService,
+							_dlFileEntryLocalService,
+							_dlFileEntryMetadataLocalService,
+							googleDocsDLFileEntryTypeHelper, _storageEngine);
+
+					if (legacyGoogleDocsMigration.isMigrationNeeded()) {
+						legacyGoogleDocsMigration.migrate();
+					}
+					else {
+						googleDocsDLFileEntryTypeHelper.
+							addGoogleDocsDLFileEntryType();
+					}
+				}};
+
 	private StorageEngine _storageEngine;
 	private UserLocalService _userLocalService;
-
-	private final ActionableDynamicQuery.PerformActionMethod _performActionMethod =
-		new ActionableDynamicQuery.PerformActionMethod() {
-			@Override
-			public void performAction(Object object) throws PortalException {
-				Company company = (Company)object;
-
-				GoogleDocsDLFileEntryTypeHelper
-					googleDocsDLFileEntryTypeHelper =
-						new GoogleDocsDLFileEntryTypeHelper(
-							company, _classNameLocalService,
-							_ddmStructureLocalService,
-							_dlFileEntryTypeLocalService, _userLocalService);
-
-				LegacyGoogleDocsMigration legacyGoogleDocsMigration =
-					new LegacyGoogleDocsMigration(
-						company, _ddmStructureLocalService,
-						_dlFileEntryTypeLocalService, _dlFileEntryLocalService,
-						_dlFileEntryMetadataLocalService,
-						googleDocsDLFileEntryTypeHelper, _storageEngine);
-
-				if (legacyGoogleDocsMigration.isMigrationNeeded()) {
-					legacyGoogleDocsMigration.migrate();
-				}
-				else {
-					googleDocsDLFileEntryTypeHelper.
-						addGoogleDocsDLFileEntryType();
-				}
-			}};
 
 }

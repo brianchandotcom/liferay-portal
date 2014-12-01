@@ -3088,11 +3088,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @return the matching users
 	 * @see    com.liferay.portlet.usersadmin.util.UserIndexer
 	 *
-	 * @deprecated As of 7.0.0, replaced by {@link #search(long, String, int,
-	 *         java.util.LinkedHashMap, int, int,
-	 *         com.liferay.portal.kernel.search.Sort[])}
 	 */
-	@Deprecated
 	@Override
 	public Hits search(
 		long companyId, String keywords, int status,
@@ -3262,11 +3258,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @return the matching users
 	 * @see    com.liferay.portlet.usersadmin.util.UserIndexer
 	 *
-	 * @deprecated As of 7.0.0, replaced by {@link #search(long, String, String,
-	 *         String, String, String, int, java.util.LinkedHashMap, boolean,
-	 *         int, int, com.liferay.portal.kernel.search.Sort[])}
 	 */
-	@Deprecated
 	@Override
 	public Hits search(
 		long companyId, String firstName, String middleName, String lastName,
@@ -3503,12 +3495,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			params, start, end, null);
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #searchUsers(long, String,
-	 *         int, java.util.LinkedHashMap, int, int,
-	 *         com.liferay.portal.kernel.search.Sort[])}
-	 */
-	@Deprecated
 	@Override
 	public BaseModelSearchResult<User> searchUsers(
 			long companyId, String keywords, int status,
@@ -3568,12 +3554,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return searchUsers(searchContext);
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #searchUsers(long, String,
-	 *         int, java.util.LinkedHashMap, int, int,
-	 *         com.liferay.portal.kernel.search.Sort[])}
-	 */
-	@Deprecated
 	@Override
 	public BaseModelSearchResult<User> searchUsers(
 			long companyId, String firstName, String middleName,

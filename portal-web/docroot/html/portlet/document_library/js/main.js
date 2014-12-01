@@ -165,6 +165,7 @@ AUI.add(
 								listViewContainer: instance.byId('listViewContainer'),
 								maxFileSize: config.maxFileSize,
 								redirect: config.redirect,
+								scopeGroupId: config.scopeGroupId,
 								uploadURL: config.uploadURL,
 								viewFileEntryURL: config.viewFileEntryURL
 							}

@@ -4,10 +4,4 @@
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 	</command>
-
-	<command name="assertElementNotPresent">
-		<case locator-key1="SETUP_FORM_FIELDS_NAME_FIELD">
-			<execute function="AssertElementNotPresent#assertNotVisible" />
-		</case>
-	</command>
 </definition>

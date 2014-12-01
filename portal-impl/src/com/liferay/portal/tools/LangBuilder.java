@@ -212,6 +212,9 @@ public class LangBuilder {
 
 			String line = null;
 
+			Boolean hasPrefix = true;
+			Boolean hasSuffix = true;
+
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				line = line.trim();
 
@@ -266,6 +269,15 @@ public class LangBuilder {
 						}
 						else if (translatedText.endsWith(AUTOMATIC_COPY)) {
 							translatedText = value + AUTOMATIC_COPY;
+						}
+						else if (key.equals("user.name.fields")) {
+							if (!translatedText.contains("prefix")) {
+								hasPrefix = false;
+							}
+
+							if (!translatedText.contains("suffix")) {
+								hasSuffix = false;
+							}
 						}
 					}
 
@@ -347,6 +359,15 @@ public class LangBuilder {
 							throw new IOException(
 								"IP was blocked because of over usage. " +
 									"Please use another IP.");
+						}
+
+						if (key.equals("user.name.prefix.options") &&
+							!hasPrefix) {
+							translatedText = "";
+						}
+						else if (key.equals("user.name.suffix.options") &&
+							!hasSuffix) {
+							translatedText = "";
 						}
 
 						translatedText = _fixTranslation(translatedText);

@@ -18,25 +18,19 @@
 
 <%
 List<Layout> rootLayouts = LayoutLocalServiceUtil.getLayouts(layout.getGroupId(), layout.isPrivateLayout(), rootLayoutId);
-
-long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(displayStyleGroupId, displayStyle);
 %>
 
-<c:choose>
-	<c:when test="<%= portletDisplayDDMTemplateId > 0 %>">
-		<%= PortletDisplayTemplateUtil.renderDDMTemplate(request, response, portletDisplayDDMTemplateId, rootLayouts) %>
-	</c:when>
-	<c:otherwise>
+<liferay-ui:ddm-template-renderer displayStyle="<%= displayStyle %>" displayStyleGroupId="<%= displayStyleGroupId %>" entries="<%= rootLayouts %>">
 
-		<%
-		StringBundler sb = new StringBundler();
+	<%
+	StringBundler sb = new StringBundler();
 
-		_buildSiteMap(layout, rootLayouts, rootLayout, includeRootInTree, displayDepth, showCurrentPage, useHtmlTitle, showHiddenPages, 1, themeDisplay, sb);
-		%>
+	_buildSiteMap(layout, rootLayouts, rootLayout, includeRootInTree, displayDepth, showCurrentPage, useHtmlTitle, showHiddenPages, 1, themeDisplay, sb);
+	%>
 
-		<%= sb.toString() %>
-	</c:otherwise>
-</c:choose>
+	<%= sb.toString() %>
+
+</liferay-ui:ddm-template-renderer>
 
 <%!
 private void _buildLayoutView(Layout layout, String cssClass, boolean useHtmlTitle, ThemeDisplay themeDisplay, StringBundler sb) throws Exception {

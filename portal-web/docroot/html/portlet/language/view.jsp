@@ -17,16 +17,9 @@
 <%@ include file="/html/portlet/language/init.jsp" %>
 
 <%
-long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(displayStyleGroupId, displayStyle);
-
 Locale[] locales = LocaleUtil.fromLanguageIds(languageIds);
 %>
 
-<c:choose>
-	<c:when test="<%= portletDisplayDDMTemplateId > 0 %>">
-		<%= PortletDisplayTemplateUtil.renderDDMTemplate(request, response, portletDisplayDDMTemplateId, ListUtil.fromArray(locales)) %>
-	</c:when>
-	<c:otherwise>
-		<liferay-ui:language displayCurrentLocale="<%= displayCurrentLocale %>" displayStyle="<%= displayStyle %>" languageIds="<%= languageIds %>" />
-	</c:otherwise>
-</c:choose>
+<liferay-ui:ddm-template-renderer displayStyle="<%= displayStyle %>" displayStyleGroupId="<%= displayStyleGroupId %>" entries="<%= ListUtil.fromArray(locales) %>">
+	<liferay-ui:language displayCurrentLocale="<%= displayCurrentLocale %>" displayStyle="<%= displayStyle %>" languageIds="<%= languageIds %>" />
+</liferay-ui:ddm-template-renderer>

@@ -26,48 +26,43 @@ searchContainer.setResults(assetEntries);
 request.setAttribute("view.jsp-results", assetEntries);
 %>
 
-<c:choose>
-	<c:when test="<%= assetPublisherDisplayContext.getPortletDisplayDDMTemplateId() > 0 %>">
-		<%= PortletDisplayTemplateUtil.renderDDMTemplate(request, response, assetPublisherDisplayContext.getPortletDisplayDDMTemplateId(), assetEntries, contextObjects) %>
-	</c:when>
-	<c:otherwise>
+<liferay-ui:ddm-template-renderer contextObjects="<%= contextObjects %>" displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>" entries="<%= assetEntries %>">
 
-		<%
-		for (int assetEntryIndex = 0; assetEntryIndex < assetEntries.size(); assetEntryIndex++) {
-			AssetEntry assetEntry = assetEntries.get(assetEntryIndex);
+	<%
+	for (int assetEntryIndex = 0; assetEntryIndex < assetEntries.size(); assetEntryIndex++) {
+		AssetEntry assetEntry = assetEntries.get(assetEntryIndex);
 
-			AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetEntry.getClassName());
+		AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetEntry.getClassName());
 
-			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
+		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
 
-			String title = assetRenderer.getTitle(locale);
+		String title = assetRenderer.getTitle(locale);
 
-			boolean show = true;
-			boolean print = false;
+		boolean show = true;
+		boolean print = false;
 
-			request.setAttribute("view.jsp-assetEntryIndex", new Integer(assetEntryIndex));
+		request.setAttribute("view.jsp-assetEntryIndex", new Integer(assetEntryIndex));
 
-			request.setAttribute("view.jsp-assetEntry", assetEntry);
-			request.setAttribute("view.jsp-assetRendererFactory", assetRendererFactory);
-			request.setAttribute("view.jsp-assetRenderer", assetRenderer);
+		request.setAttribute("view.jsp-assetEntry", assetEntry);
+		request.setAttribute("view.jsp-assetRendererFactory", assetRendererFactory);
+		request.setAttribute("view.jsp-assetRenderer", assetRenderer);
 
-			request.setAttribute("view.jsp-title", title);
+		request.setAttribute("view.jsp-title", title);
 
-			request.setAttribute("view.jsp-show", new Boolean(show));
-			request.setAttribute("view.jsp-print", new Boolean(print));
+		request.setAttribute("view.jsp-show", new Boolean(show));
+		request.setAttribute("view.jsp-print", new Boolean(print));
 
-			try {
-		%>
+		try {
+	%>
 
-				<%@ include file="/html/portlet/asset_publisher/view_display.jspf" %>
+			<%@ include file="/html/portlet/asset_publisher/view_display.jspf" %>
 
-		<%
-			}
-			catch (Exception e) {
-				_log.error(e.getMessage());
-			}
+	<%
 		}
-		%>
+		catch (Exception e) {
+			_log.error(e.getMessage());
+		}
+	}
+	%>
 
-	</c:otherwise>
-</c:choose>
+</liferay-ui:ddm-template-renderer>

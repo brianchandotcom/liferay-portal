@@ -155,6 +155,11 @@ if (Validator.isNull(redirect)) {
 	<liferay-ui:message key="preview" />:
 
 	<div class="preview">
+
+		<%
+		String formattedContent = null;
+		%>
+
 		<%@ include file="/html/portlet/wiki/view_page_content.jspf" %>
 	</div>
 

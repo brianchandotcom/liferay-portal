@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.bi.rules;
 
-import com.liferay.portal.kernel.messaging.proxy.ExecutingClassLoaders;
 import com.liferay.portal.kernel.messaging.proxy.MessagingProxy;
 import com.liferay.portal.kernel.messaging.proxy.ProxyMode;
 
@@ -30,7 +29,7 @@ public interface RulesEngine {
 	@MessagingProxy(mode = ProxyMode.SYNC)
 	public void add(
 			String domainName, RulesResourceRetriever rulesResourceRetriever,
-			@ExecutingClassLoaders ClassLoader... classloaders)
+			ClassLoader... classloaders)
 		throws RulesEngineException;
 
 	@MessagingProxy(mode = ProxyMode.SYNC)
@@ -40,25 +39,24 @@ public interface RulesEngine {
 	@MessagingProxy(mode = ProxyMode.ASYNC)
 	public void execute(
 			RulesResourceRetriever rulesResourceRetriever, List<Fact<?>> facts,
-			@ExecutingClassLoaders ClassLoader... classloaders)
+			ClassLoader... classloaders)
 		throws RulesEngineException;
 
 	@MessagingProxy(mode = ProxyMode.SYNC)
 	public Map<String, ?> execute(
 			RulesResourceRetriever rulesResourceRetriever, List<Fact<?>> facts,
-			Query query, @ExecutingClassLoaders ClassLoader... classloaders)
+			Query query, ClassLoader... classloaders)
 		throws RulesEngineException;
 
 	@MessagingProxy(mode = ProxyMode.ASYNC)
 	public void execute(
-			String domainName, List<Fact<?>> facts,
-			@ExecutingClassLoaders ClassLoader... classloaders)
+			String domainName, List<Fact<?>> facts, ClassLoader... classloaders)
 		throws RulesEngineException;
 
 	@MessagingProxy(mode = ProxyMode.SYNC)
 	public Map<String, ?> execute(
 			String domainName, List<Fact<?>> facts, Query query,
-			@ExecutingClassLoaders ClassLoader... classloaders)
+			ClassLoader... classloaders)
 		throws RulesEngineException;
 
 	@MessagingProxy(mode = ProxyMode.SYNC)
@@ -67,7 +65,7 @@ public interface RulesEngine {
 	@MessagingProxy(mode = ProxyMode.SYNC)
 	public void update(
 			String domainName, RulesResourceRetriever rulesResourceRetriever,
-			@ExecutingClassLoaders ClassLoader... classloaders)
+			ClassLoader... classloaders)
 		throws RulesEngineException;
 
 }

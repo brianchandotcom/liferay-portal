@@ -166,6 +166,27 @@
 	<td>//div[@class='entry-content']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SCREENSHOTS-->
+<tr>
+	<td>SCREENSHOTS_ANNOUNCEMENTS_ADD_DISTRUBTION_SCOPE_REQUIRED_PNG</td>
+	<td>so/screenshots/announcements/announcements_add_distribution_scope_required.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCREENSHOTS_ANNOUNCEMENTS_ADD_TITLE_REQUIRED_PNG</td>
+	<td>so/screenshots/announcements/announcements_add_title_required.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

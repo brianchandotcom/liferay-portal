@@ -89,6 +89,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANNOUNCEMENTS_ENTRY_VIEW_MORE_LINK</td>
+	<td>//div[contains(@class,'entry') and contains(.,'${key_entryTitle}')]//span[@class='toggle action']/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ANNOUNCEMENTS_ENTRY_GENERIC_DELETE_LINK</td>
 	<td>//span[@class='action delete-entry']/a</td>
 	<td></td>
@@ -167,6 +172,21 @@
 <tr>
 	<td>SCREENSHOTS_ANNOUNCEMENTS_ENTRY_UNDERLINE_PNG</td>
 	<td>so/screenshots/announcements/announcements_entry_underline.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCREENSHOTS_ANNOUNCEMENTS_ENTRY_CONTENT_LIPSUM_FULL_PNG</td>
+	<td>so/screenshots/announcements/announcements_entry_content_lipsum_full.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCREENSHOTS_ANNOUNCEMENTS_ENTRY_CONTENT_LIPSUM_PREVIEW_UNREAD_PNG</td>
+	<td>so/screenshots/announcements/announcements_entry_content_lipsum_preview_unread.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCREENSHOTS_ANNOUNCEMENTS_ENTRY_CONTENT_LIPSUM_PREVIEW_READ_PNG</td>
+	<td>so/screenshots/announcements/announcements_entry_content_lipsum_preview_read.png</td>
 	<td></td>
 </tr>
 <tr>

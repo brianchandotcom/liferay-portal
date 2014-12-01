@@ -254,7 +254,7 @@ public class LiferayLocalRepository
 
 	@Override
 	public List<FileEntry> getRepositoryFileEntries(
-		long rootFolderId, int start, int end,
+		long userId, long rootFolderId, int start, int end,
 		OrderByComparator<FileEntry> obc) {
 
 		List<DLFileEntry> dlFileEntries =

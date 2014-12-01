@@ -127,8 +127,8 @@ public class TemporaryFileEntriesCapabilityImpl
 			Folder folder = addTempFolder(temporaryFileEntriesScope);
 
 			return _localRepository.getRepositoryFileEntries(
-				folder.getFolderId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				null);
+				temporaryFileEntriesScope.getUserId(), folder.getFolderId(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 		}
 		catch (NoSuchModelException nsme) {
 			return Collections.emptyList();

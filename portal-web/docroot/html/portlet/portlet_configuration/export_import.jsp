@@ -30,19 +30,6 @@ portletURL.setParameter("returnToFullPageURL", returnToFullPageURL);
 portletURL.setParameter("portletResource", portletResource);
 
 String tabs2Names = "export,import";
-
-Group scopeGroup = themeDisplay.getScopeGroup();
-
-if (scopeGroup.isStagingGroup()) {
-	tabs2Names += ",staging";
-}
-else if (scopeGroup.isLayout()) {
-	Group parentScopeGroup = GroupServiceUtil.getGroup(scopeGroup.getParentGroupId());
-
-	if (parentScopeGroup.isStagingGroup()) {
-		tabs2Names += ",staging";
-	}
-}
 %>
 
 <liferay-ui:tabs
@@ -121,8 +108,5 @@ else if (scopeGroup.isLayout()) {
 	</c:when>
 	<c:when test='<%= tabs2.equals("import") %>'>
 		<liferay-util:include page="/html/portlet/portlet_configuration/import_portlet.jsp" />
-	</c:when>
-	<c:when test='<%= tabs2.equals("staging") %>'>
-		<liferay-util:include page="/html/portlet/portlet_configuration/publish_portlet.jsp" />
 	</c:when>
 </c:choose>

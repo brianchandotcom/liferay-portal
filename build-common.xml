@@ -1651,19 +1651,19 @@ rerun your task.
 		/>
 	</target>
 
-	<target name="test-package-group" depends="compile,compile-test">
+	<target name="test-class-group" depends="compile,compile-test">
 		<if>
 			<not>
-				<isset property="test.package.group.index" />
+				<isset property="test.class.group.index" />
 			</not>
 			<then>
-				<fail>Use "ant test-package-group -Dtest.package.group.index=0".</fail>
+				<fail>Use "ant test-class-group -Dtest.class.group.index=0".</fail>
 			</then>
 		</if>
 
 		<property file="${project.dir}/test.class.file.names.properties" />
 
-		<propertycopy from="TEST_CLASS_GROUP_${test.package.group.index}" name="test.classes" />
+		<propertycopy from="TEST_CLASS_GROUP_${test.class.group.index}" name="test.classes" />
 
 		<test-cmd
 			junit.forkmode="once"

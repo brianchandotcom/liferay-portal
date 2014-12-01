@@ -145,10 +145,10 @@ if (ratingsEntry != null) {
 
 							<c:choose>
 								<c:when test="<%= TrashUtil.isInTrash(className, classPK) || !themeDisplay.isSignedIn() %>">
-									<span class="rating-element rating-thumb-up glyphicon glyphicon-thumbs-up rating-<%= (yourScore > 0) ? "on" : "off" %>" title="<liferay-ui:message key="ratings-are-disabled-because-this-entry-is-in-the-recycle-bin" />"><%= positiveVotes %></span>
+									<span class="icon-thumbs-up rating-element rating-thumb-up glyphicon glyphicon-thumbs-up rating-<%= (yourScore > 0) ? "on" : "off" %>" title="<liferay-ui:message key="ratings-are-disabled-because-this-entry-is-in-the-recycle-bin" />"><%= positiveVotes %></span>
 
 									<c:if test='<%= type.equals("thumbs") %>'>
-										<span class="rating-element rating-thumb-down glyphicon glyphicon-thumbs-down rating-<%= (yourScore == 0) ? "on" : "off" %>" title="<liferay-ui:message key="ratings-are-disabled-because-this-entry-is-in-the-recycle-bin" />"><%= negativeVotes %></span>
+										<span class="icon-thumbs-down rating-element rating-thumb-down glyphicon glyphicon-thumbs-down rating-<%= (yourScore == 0) ? "on" : "off" %>" title="<liferay-ui:message key="ratings-are-disabled-because-this-entry-is-in-the-recycle-bin" />"><%= negativeVotes %></span>
 									</c:if>
 								</c:when>
 								<c:otherwise>

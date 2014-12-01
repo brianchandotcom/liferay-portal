@@ -132,7 +132,7 @@ public abstract class BaseImageSelectorAction extends PortletAction {
 		throws Exception;
 
 	protected abstract void validateFile(
-		String fileName, String contentType, long size)
+			String fileName, String contentType, long size)
 		throws PortalException;
 
 }

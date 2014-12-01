@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -46,8 +44,22 @@ public abstract class BaseImageSelectorAction
 	extends com.liferay.portal.action.BaseImageSelectorAction {
 
 	@Override
-	public void validateFile(
-			String fileName, String contentType, long size)
+	public void checkPermission(
+			long groupId, PermissionChecker permissionChecker)
+		throws PortalException {
+
+		boolean containsResourcePermission =
+			ResourcePermissionCheckerUtil.containsResourcePermission(
+				permissionChecker, BlogsPermission.RESOURCE_NAME, groupId,
+				ActionKeys.ADD_ENTRY);
+
+		if (!containsResourcePermission) {
+			throw new PrincipalException();
+		}
+	}
+
+	@Override
+	public void validateFile(String fileName, String contentType, long size)
 		throws PortalException {
 
 		String extension = FileUtil.getExtension(fileName);
@@ -67,6 +79,8 @@ public abstract class BaseImageSelectorAction
 			"Invalid cover image for fileName " + fileName);
 	}
 
+	protected abstract long getMaxFileSize();
+
 	@Override
 	protected void handleUploadException(
 			ActionRequest actionRequest, ActionResponse actionResponse,
@@ -84,17 +98,14 @@ public abstract class BaseImageSelectorAction
 			int errorType = 0;
 
 			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			if (e instanceof AntivirusScannerException) {
 				errorType =
 					ServletResponseConstants.SC_FILE_ANTIVIRUS_EXCEPTION;
-				AntivirusScannerException ase =
-					(AntivirusScannerException)e;
+				AntivirusScannerException ase = (AntivirusScannerException)e;
 
 				errorMessage = themeDisplay.translate(ase.getMessageKey());
-
 			}
 			else if (e instanceof CoverImageNameException) {
 				errorType =
@@ -120,22 +131,5 @@ public abstract class BaseImageSelectorAction
 			throw e;
 		}
 	}
-
-	@Override
-	public void checkPermission(
-			long groupId, PermissionChecker permissionChecker)
-		throws PortalException {
-
-		boolean containsResourcePermission =
-			ResourcePermissionCheckerUtil.containsResourcePermission(
-				permissionChecker, BlogsPermission.RESOURCE_NAME, groupId,
-				ActionKeys.ADD_ENTRY);
-
-		if (!containsResourcePermission) {
-			throw new PrincipalException();
-		}
-	}
-
-	protected abstract long getMaxFileSize();
 
 }

@@ -58,7 +58,7 @@ if (fileEntryId != 0) {
 			</c:if>
 
 			<c:if test="<%= maxFileSize != 0 %>">
-				<liferay-ui:message key="maximum-size-x" arguments="<%= TextFormatter.formatStorageSize(maxFileSize, locale) %>" />
+				<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(maxFileSize, locale) %>" key="maximum-size-x" />
 			</c:if>
 		</div>
 	</div>
@@ -84,7 +84,7 @@ if (fileEntryId != 0) {
 
 		<p class="size" id="progress-data"></p>
 
-		<aui:button cssClass="btn-primary" id='<%= randomNamespace + "cancelUpload" %>' useNamespace="<%= false %>" value="cancel"/>
+		<aui:button cssClass="btn-primary" id='<%= randomNamespace + "cancelUpload" %>' useNamespace="<%= false %>" value="cancel" />
 	</div>
 
 	<div class="change-image-controls <%= (fileEntryId != 0) ? StringPool.BLANK : "hide" %>">

@@ -25,8 +25,7 @@ import com.liferay.portlet.blogs.CoverImageSizeException;
 public class SmallImageSelectorAction extends BaseImageSelectorAction {
 
 	@Override
-	public void validateFile(
-			String fileName, String contentType, long size)
+	public void validateFile(String fileName, String contentType, long size)
 		throws PortalException {
 
 		if (size > getMaxFileSize()) {

@@ -71,8 +71,8 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable,
 		sb.append(liveGroupId);
 		sb.append(", treePath=");
 		sb.append(treePath);
-		sb.append(", name=");
-		sb.append(name);
+		sb.append(", groupKey=");
+		sb.append(groupKey);
 		sb.append(", description=");
 		sb.append(description);
 		sb.append(", type=");
@@ -126,11 +126,11 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable,
 			groupImpl.setTreePath(treePath);
 		}
 
-		if (name == null) {
-			groupImpl.setName(StringPool.BLANK);
+		if (groupKey == null) {
+			groupImpl.setGroupKey(StringPool.BLANK);
 		}
 		else {
-			groupImpl.setName(name);
+			groupImpl.setGroupKey(groupKey);
 		}
 
 		if (description == null) {
@@ -181,7 +181,7 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable,
 		parentGroupId = objectInput.readLong();
 		liveGroupId = objectInput.readLong();
 		treePath = objectInput.readUTF();
-		name = objectInput.readUTF();
+		groupKey = objectInput.readUTF();
 		description = objectInput.readUTF();
 		type = objectInput.readInt();
 		typeSettings = objectInput.readUTF();
@@ -221,11 +221,11 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable,
 			objectOutput.writeUTF(treePath);
 		}
 
-		if (name == null) {
+		if (groupKey == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(name);
+			objectOutput.writeUTF(groupKey);
 		}
 
 		if (description == null) {
@@ -270,7 +270,7 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable,
 	public long parentGroupId;
 	public long liveGroupId;
 	public String treePath;
-	public String name;
+	public String groupKey;
 	public String description;
 	public int type;
 	public String typeSettings;

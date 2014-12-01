@@ -34,14 +34,14 @@ public class GroupFinderUtil {
 		return getFinder().countByG_U(groupId, userId, inherit);
 	}
 
-	public static int countByC_C_PG_N_D(long companyId, long[] classNameIds,
-		long parentGroupId, java.lang.String[] names,
+	public static int countByC_C_PG_GK_D(long companyId, long[] classNameIds,
+		long parentGroupId, java.lang.String[] groupKeys,
 		java.lang.String[] descriptions,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator) {
 		return getFinder()
-				   .countByC_C_PG_N_D(companyId, classNameIds, parentGroupId,
-			names, descriptions, params, andOperator);
+				   .countByC_C_PG_GK_D(companyId, classNameIds, parentGroupId,
+			groupKeys, descriptions, params, andOperator);
 	}
 
 	public static java.util.List<com.liferay.portal.model.Group> findByLayouts(
@@ -91,20 +91,21 @@ public class GroupFinderUtil {
 				   .findByC_P(companyId, parentGroupId, previousGroupId, size);
 	}
 
-	public static com.liferay.portal.model.Group findByC_N(long companyId,
-		java.lang.String name) throws com.liferay.portal.NoSuchGroupException {
-		return getFinder().findByC_N(companyId, name);
+	public static com.liferay.portal.model.Group findByC_GK(long companyId,
+		java.lang.String groupKey)
+		throws com.liferay.portal.NoSuchGroupException {
+		return getFinder().findByC_GK(companyId, groupKey);
 	}
 
-	public static java.util.List<com.liferay.portal.model.Group> findByC_C_PG_N_D(
+	public static java.util.List<com.liferay.portal.model.Group> findByC_C_PG_GK_D(
 		long companyId, long[] classNameIds, long parentGroupId,
-		java.lang.String[] names, java.lang.String[] descriptions,
+		java.lang.String[] groupKeys, java.lang.String[] descriptions,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> obc) {
 		return getFinder()
-				   .findByC_C_PG_N_D(companyId, classNameIds, parentGroupId,
-			names, descriptions, params, andOperator, start, end, obc);
+				   .findByC_C_PG_GK_D(companyId, classNameIds, parentGroupId,
+			groupKeys, descriptions, params, andOperator, start, end, obc);
 	}
 
 	public static GroupFinder getFinder() {

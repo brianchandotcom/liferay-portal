@@ -64,6 +64,10 @@
 		}
 	}
 
+	&.check-active .glyphicon-ok{
+		@include opacity(1);
+	}
+
 	&.drop-active {
 		outline-color: #32A8E6;
 		outline-width: 2px;
@@ -78,8 +82,6 @@
 
 		.drop-here-info {
 			@include opacity(1);
-
-			z-index: 3;
 		}
 
 		.glyphicon-ok {
@@ -88,6 +90,10 @@
 
 		.image-wrapper {
 			@include opacity(0.15);
+		}
+
+		.error-wrapper {
+			@include opacity(0);
 		}
 
 		.progress-wrapper {
@@ -149,10 +155,6 @@
 		}
 	}
 
-	&.check-active .glyphicon-ok{
-		@include opacity(1);
-	}
-
 	.browse-image-controls, .current-image {
 		margin: auto;
 		max-height: 100%;
@@ -187,13 +189,6 @@
 		z-index: 1;
 	}
 
-	.error-wrapper {
-		position: absolute;
-		top: 0;
-		z-index: 2;
-		width: 100%;
-	}
-
 	.change-image-controls {
 		bottom: 10px;
 		position: absolute;
@@ -202,6 +197,13 @@
 
 	.current-image {
 		margin-bottom: 5px;
+	}
+
+	.error-wrapper {
+		position: absolute;
+		top: 0;
+		width: 100%;
+		z-index: 2;
 	}
 
 	.yui3-uploader-content {

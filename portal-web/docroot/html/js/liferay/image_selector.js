@@ -203,6 +203,8 @@ AUI.add(
 					_onFileSelect: function(event) {
 						var instance = this;
 
+						clearTimeout(instance._timeout);
+
 						var fileNameNode = instance._fileNameNode;
 
 						if (fileNameNode) {
@@ -237,7 +239,7 @@ AUI.add(
 
 						instance.rootNode.addClass(CSS_CHECK_ACTIVE);
 
-						setTimeout(
+						instance._timeout = setTimeout(
 							function() {
 								instance.rootNode.removeClass(CSS_CHECK_ACTIVE);
 

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.struts.StrutsUtil;
 import com.liferay.portlet.RenderResponseImpl;
 import com.liferay.web.proxy.web.upgrade.WebProxyWebUpgrade;
 
@@ -118,8 +117,7 @@ public class WebProxyPortlet extends PortletBridgePortlet {
 			PortletContext portletContext = getPortletContext();
 
 			PortletRequestDispatcher portletRequestDispatcher =
-				portletContext.getRequestDispatcher(
-					StrutsUtil.TEXT_HTML_DIR + "/portal/portlet_not_setup.jsp");
+				portletContext.getRequestDispatcher("/portlet_not_setup.jsp");
 
 			portletRequestDispatcher.include(renderRequest, renderResponse);
 		}

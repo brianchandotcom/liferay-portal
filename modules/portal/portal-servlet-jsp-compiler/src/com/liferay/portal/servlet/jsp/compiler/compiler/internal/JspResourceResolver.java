@@ -14,14 +14,11 @@
 
 package com.liferay.portal.servlet.jsp.compiler.compiler.internal;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
-import com.liferay.portal.util.ClassLoaderUtil;
-
 import java.net.JarURLConnection;
 import java.net.URL;
+
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,8 +28,15 @@ import java.util.Map;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 
+import org.apache.felix.utils.log.Logger;
+
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Filter;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.wiring.BundleWiring;
+import org.osgi.util.tracker.ServiceTracker;
 
 import org.phidias.compile.ResourceResolver;
 
@@ -43,6 +47,27 @@ public class JspResourceResolver implements ResourceResolver {
 
 	public JspResourceResolver(JspResourceCache jspResourceCache) {
 		_jspResourceCache = jspResourceCache;
+
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		Filter filter;
+
+		try {
+			filter = bundleContext.createFilter(
+				"(&(jsp.compiler.resource.map=*)(objectClass=" +
+					Map.class.getName() + "))");
+		}
+		catch (InvalidSyntaxException ise) {
+			throw new RuntimeException(ise);
+		}
+
+		_resourceMapTracker = new ServiceTracker<>(bundleContext, filter, null);
+
+		_resourceMapTracker.open();
+
+		_logger = new Logger(bundle.getBundleContext());
 	}
 
 	@Override
@@ -52,9 +77,7 @@ public class JspResourceResolver implements ResourceResolver {
 		URL url = bundle.getResource(name);
 
 		if ((url == null) && (bundle.getBundleId() == 0)) {
-			ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
-
-			return classLoader.getResource(name);
+			return _frameworkClassLoader.getResource(name);
 		}
 
 		return bundle.getResource(name);
@@ -83,7 +106,7 @@ public class JspResourceResolver implements ResourceResolver {
 		BundleWiring bundleWiring, final String path, final String fileRegex,
 		int options) {
 
-		String key = path + StringPool.SLASH + fileRegex;
+		String key = path + '/' + fileRegex;
 
 		Collection<String> resources = _jspResourceCache.getResources(
 			bundleWiring, key);
@@ -95,7 +118,11 @@ public class JspResourceResolver implements ResourceResolver {
 		resources = new ArrayList<String>();
 
 		Map<String, List<URL>> extraPackageMap =
-			ModuleFrameworkUtilAdapter.getExtraPackageMap();
+			_resourceMapTracker.getService();
+
+		if (extraPackageMap == null) {
+			return resources;
+		}
 
 		String packageName = path.replace('/', '.');
 
@@ -107,7 +134,7 @@ public class JspResourceResolver implements ResourceResolver {
 			return resources;
 		}
 
-		String matcherRegex = fileRegex.replace(StringPool.STAR, "[^/]*");
+		String matcherRegex = fileRegex.replace("*", "[^/]*");
 
 		matcherRegex = matcherRegex.replace(".", "\\.");
 
@@ -133,7 +160,7 @@ public class JspResourceResolver implements ResourceResolver {
 				}
 			}
 			catch (Exception e) {
-				_log.error(e, e);
+				_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
 			}
 		}
 
@@ -142,9 +169,29 @@ public class JspResourceResolver implements ResourceResolver {
 		return resources;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		JspResourceResolver.class);
+	private static final ClassLoader _frameworkClassLoader;
+
+	static {
+		if (System.getSecurityManager() != null) {
+			_frameworkClassLoader = AccessController.doPrivileged(
+				new PrivilegedAction<ClassLoader>() {
+
+					@Override
+					public ClassLoader run() {
+						return Bundle.class.getClassLoader();
+					}
+
+				}
+			);
+		}
+		else {
+			_frameworkClassLoader = Bundle.class.getClassLoader();
+		}
+	}
 
 	private final JspResourceCache _jspResourceCache;
+	private final Logger _logger;
+	private final ServiceTracker<Map<String, List<URL>>, Map<String, List<URL>>>
+		_resourceMapTracker;
 
 }

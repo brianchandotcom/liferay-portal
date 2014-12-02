@@ -14,20 +14,14 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
-
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
-<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
-
-<%@ page contentType="text/html; charset=UTF-8" %>
-
-<%@ page import="javax.portlet.WindowState" %>
-
-<liferay-theme:defineObjects />
-<portlet:defineObjects />
+<%@ include file="/init.jsp" %>
 
 <%
-WindowState windowState = liferayPortletRequest.getWindowState();
+renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 %>
 
-<%@ include file="/init-ext.jsp" %>
+<div class="alert alert-info portlet-configuration">
+	<a href="<%= portletDisplay.getURLConfiguration() %>" onClick="<%= portletDisplay.getURLConfigurationJS() %>">
+		<liferay-ui:message key="please-configure-this-portlet-to-make-it-visible-to-all-users" />
+	</a>
+</div>

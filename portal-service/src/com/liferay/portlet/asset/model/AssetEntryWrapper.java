@@ -64,6 +64,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 		attributes.put("classUuid", getClassUuid());
 		attributes.put("classTypeId", getClassTypeId());
 		attributes.put("visible", getVisible());
+		attributes.put("listable", getListable());
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
 		attributes.put("publishDate", getPublishDate());
@@ -154,6 +155,12 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 
 		if (visible != null) {
 			setVisible(visible);
+		}
+
+		Boolean listable = (Boolean)attributes.get("listable");
+
+		if (listable != null) {
+			setListable(listable);
 		}
 
 		Date startDate = (Date)attributes.get("startDate");
@@ -495,6 +502,16 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	}
 
 	/**
+	* Returns the listable of this asset entry.
+	*
+	* @return the listable of this asset entry
+	*/
+	@Override
+	public boolean getListable() {
+		return _assetEntry.getListable();
+	}
+
+	/**
 	* Returns the mime type of this asset entry.
 	*
 	* @return the mime type of this asset entry
@@ -809,6 +826,16 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 		return _assetEntry.isEscapedModel();
 	}
 
+	/**
+	* Returns <code>true</code> if this asset entry is listable.
+	*
+	* @return <code>true</code> if this asset entry is listable; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isListable() {
+		return _assetEntry.isListable();
+	}
+
 	@Override
 	public boolean isNew() {
 		return _assetEntry.isNew();
@@ -1052,6 +1079,16 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	@Override
 	public void setLayoutUuid(java.lang.String layoutUuid) {
 		_assetEntry.setLayoutUuid(layoutUuid);
+	}
+
+	/**
+	* Sets whether this asset entry is listable.
+	*
+	* @param listable the listable of this asset entry
+	*/
+	@Override
+	public void setListable(boolean listable) {
+		_assetEntry.setListable(listable);
 	}
 
 	/**

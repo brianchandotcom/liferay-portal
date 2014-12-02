@@ -1292,6 +1292,7 @@
 		<field name="classUuid" type="String" />
 		<field name="classTypeId" type="long" />
 		<field name="visible" type="boolean" />
+		<field name="listable" type="boolean" />
 		<field name="startDate" type="Date" />
 		<field name="endDate" type="Date" />
 		<field name="publishDate" type="Date" />

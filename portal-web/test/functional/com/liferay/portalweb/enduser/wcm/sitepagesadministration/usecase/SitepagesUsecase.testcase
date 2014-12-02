@@ -1218,6 +1218,7 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="componentName" value="Community" />
 			<var name="siteName" value="Page Type Test Site Name" />
 			<var name="sitePageName" value="Panel Page" />
 			<var name="sitePagePrivacy" value="Public" />

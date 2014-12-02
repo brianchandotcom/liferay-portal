@@ -1,0 +1,112 @@
+<html>
+<head>
+<title>CPDocumentsandmediaManageDocumenttypes</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPDocumentsandmediaManageDocumenttypes</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPDocumentsandmediaManageDocumenttypes</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_TYPES_IFRAME</td>
+	<td>//iframe[contains(@id,'_openFileEntryTypeView_iframe_')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_ADD</td>
+	<td>//div[contains(@id,'Navbar')]/ul[@aria-label='Documents and Media']/li/a/span[contains(.,'Add')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BASIC_SEARCH-->
+<tr>
+	<td>BASIC_SEARCH_BUTTON</td>
+	<td>//button[contains(.,' Search ')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BASIC_SEARCH_FIELD</td>
+	<td>//input[contains(@id,'keywords') and contains(@class,'search-query')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DOCUMENT_TYPES_TABLE-->
+<tr>
+	<td>DOCUMENT_TYPES_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_dmDocumentTypeName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_TYPES_TABLE_SCOPE</td>
+	<td>//tr[contains(.,'${key_dmDocumentTypeName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_TYPES_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_dmDocumentTypeName}')]/td[4]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_TYPES_TABLE_ACTIONS_1</td>
+	<td>//tr[1]//div[contains(@class,'lfr-icon-menu')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ACTIONS_MENULIST-->
+<tr>
+	<td>ACTIONS_MENULIST_EDIT</td>
+	<td>//ul[contains(@class,'dropdown-menu') and contains(@class,'lfr-menu-list')]/li[contains(.,'Edit')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS_MENULIST_PERMISSIONS</td>
+	<td>//ul[contains(@class,'dropdown-menu') and contains(@class,'lfr-menu-list')]/li[contains(.,'Permissions')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS_MENULIST_DELETE</td>
+	<td>//ul[contains(@class,'dropdown-menu') and contains(@class,'lfr-menu-list')]/li[contains(.,'Delete')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

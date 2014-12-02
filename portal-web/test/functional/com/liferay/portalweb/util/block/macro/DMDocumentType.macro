@@ -5,10 +5,10 @@
 
 		<execute macro="DMDocumentType#selectDocumentTypeFrame" />
 
-		<execute action="PGDocumentsandmediaManageDocumenttypes#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
+		<execute action="CPDocumentsandmediaManageDocumenttypes#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
 
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#type" locator-key1="NAME_FIELD" value1="${dmDocumentTypeName}" />
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#type" locator-key1="DETAILS_DESCRIPTION_FIELD" value1="${dmDocumentTypeDescription}" />
+		<execute action="CPDocumentsandmediaManageDocumenttypesAdd#type" locator-key1="NAME_FIELD" value1="${dmDocumentTypeName}" />
+		<execute action="CPDocumentsandmediaManageDocumenttypesAdd#type" locator-key1="DETAILS_DESCRIPTION_FIELD" value1="${dmDocumentTypeDescription}" />
 
 		<for list="${dmDocumentTypeFieldNames}" param="dmDocumentTypeFieldName">
 			<execute macro="DMDocumentType#addField">
@@ -18,10 +18,10 @@
 			</execute>
 		</for>
 
-		<execute action="PGDocumentsandmediaManageDocumenttypes#selectFrame" locator-key1="DOCUMENT_TYPES_IFRAME" />
+		<execute action="CPDocumentsandmediaManageDocumenttypes#selectFrame" locator-key1="DOCUMENT_TYPES_IFRAME" />
 
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGDocumentsandmediaManageDocumenttypes#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPDocumentsandmediaManageDocumenttypesAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPDocumentsandmediaManageDocumenttypes#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addField">

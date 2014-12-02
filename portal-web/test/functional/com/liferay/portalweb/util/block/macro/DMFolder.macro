@@ -111,6 +111,51 @@
 		<execute action="CPDocumentsandmedia#assertElementNotPresent" locator-key1="DOCUMENT_CONTAINER_FOLDER" />
 	</command>
 
+	<command name="configureWorkflowCP">
+		<execute macro="DMFolder#gotoEditCP">
+			<var name="folderName" value="${dmFolderName}" />
+		</execute>
+
+		<if>
+			<equals arg1="${workflowRestriction}" arg2="Parent Folder" />
+			<then>
+				<execute action="CPDocumentsandmediaEditfolder#click" locator-key1="WORKFLOW_PARENT_FOLDER_RADIO" />
+
+				<execute action="CPDocumentsandmediaEditfolder#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+			</then>
+			<elseif>
+				<equals arg1="${workflowRestriction}" arg2="Specific Restrictions" />
+				<then>
+					<execute action="CPDocumentsandmediaEditfolder#click" locator-key1="WORKFLOW_SPECIFIC_RESTRICTIONS_RADIO" />
+					<execute action="CPDocumentsandmediaEditfolder#assertClick" locator-key1="WORKFLOW_SPECIFIC_RESTRICTIONS_SELECT_DOCUMENT_TYPE_BUTTON" value1="Select Document Type" />
+
+					<execute action="CPDocumentsandmediaAdddocumenttype#selectFrame" value1="relative=top" />
+
+					<execute action="CPDocumentsandmediaAdddocumenttypeSelect#selectFrame" locator-key1="SELECT_DOCUMENT_IFRAME" />
+
+					<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
+
+					<execute action="CPDocumentsandmediaAdddocumenttypeSelect#assertClick" locator-key1="DOCUMENTS_TABLE_CHOOSE" value1="Choose" />
+
+					<execute action="CPDocumentsandmediaEditfolder#selectFrameTop" value1="relative=top" />
+					<execute action="CPDocumentsandmediaEditfolder#select" locator-key1="WORKFLOW_SPECIFIC_RESTRICTIONS_TYPE_WORKFLOW_SELECT" value1="${workflowDefinition}" />
+					<execute action="CPDocumentsandmediaEditfolder#assertClickNoError" locator-key1="SAVE_BUTTON" value1="Save" />
+					<execute action="CPDocumentsandmediaEditfolder#confirm" locator-key1="CONFIRMATION" value1="You are making changes to the document types. If a document in this folder or its subfolders is currently in draft or pending workflow states, you may lose some or all of its metadata. A new version will be created for all other documents. Are you sure you wish to continue?" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${workflowRestriction}" arg2="Default Workflow" />
+				<then>
+					<execute action="CPDocumentsandmediaEditfolder#click" locator-key1="WORKFLOW_DEFAULT_WORKFLOW_RADIO" />
+					<execute action="CPDocumentsandmediaEditfolder#select" locator-key1="WORKFLOW_DEFAULT_WORKFLOW_WORKFLOW_SELECT" value1="${workflowDefinition}" />
+					<execute action="CPDocumentsandmediaEditfolder#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+				</then>
+			</elseif>
+		</if>
+
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="deleteCP">
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
@@ -195,6 +240,14 @@
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
 		<execute action="CPDocumentsandmedia#assertClick" locator-key1="DOCUMENT_CONTAINER_FOLDER_TITLE" value1="${dmFolderName}" />
+	</command>
+
+	<command name="gotoEditCP">
+		<var name="key_dmFolderName" value="${folderName}" />
+
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_CONTAINER_FOLDER_TITLE" value1="${folderName}" />
+		<execute action="CPDocumentsandmedia#click" locator-key1="DOCUMENT_CONTAINER_FOLDER_DROPDOWN" />
+		<execute action="CPDocumentsandmedia#assertClick" locator-key1="FOLDER_MENULIST_EDIT" value1="Edit" />
 	</command>
 
 	<command name="gotoPG">

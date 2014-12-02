@@ -100,6 +100,60 @@
 		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 	</command>
 
+	<command name="addDocumentTypeCmdCP">
+		<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
+
+		<execute action="CPDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
+		<execute action="CPDocumentsandmedia#assertClick" locator-key1="ADD_MENULIST_DOCUMENT_TYPE" value1="${dmDocumentTypeName}" />
+
+		<execute action="CPDocumentsandmediaAdddocument#uploadCommonFile" locator-key1="FILE_FIELD" value1="${dmDocumentFile}" />
+		<execute action="CPDocumentsandmediaAdddocument#type" locator-key1="TITLE_FIELD" value1="${dmDocumentTitle}" />
+		<execute action="CPDocumentsandmediaAdddocument#type" locator-key1="DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
+
+		<if>
+			<isset var="selectOption" />
+			<then>
+				<execute action="CPDocumentsandmediaAdddocumenttype#select" locator-key1="SELECT_OPTIONS_SELECT" value1="${selectOption}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="textField" />
+			<then>
+				<var name="key_fieldName" value="Text" />
+
+				<execute action="CPDocumentsandmediaAdddocumenttype#type" locator-key1="TEXT_FIELD" value1="${textField}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="numberField" />
+			<then>
+				<var name="key_fieldName" value="Number" />
+
+				<execute action="CPDocumentsandmediaAdddocumenttype#type" locator-key1="NUMBER_FIELD" value1="${numberField}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="booleanField" />
+			<then>
+				<var name="key_fieldName" value="Boolean" />
+
+				<execute action="CPDocumentsandmediaAdddocumenttype#check" locator-key1="BOOLEAN_CHECKBOX" value1="${booleanField}" />
+			</then>
+		</if>
+	</command>
+
+	<command name="addDocumentTypeCP">
+		<execute macro="DMDocument#addDocumentTypeCmdCP">
+			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
+		</execute>
+
+		<execute action="CPDocumentsandmediaAdddocumenttype#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="CPDocumentsandmediaAdddocumenttype#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="addDocumentTypePG">
 		<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
 
@@ -146,6 +200,15 @@
 
 		<execute action="PGDocumentsandmediaAdddocumenttype#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 		<execute action="PGDocumentsandmediaAdddocumenttype#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="addDocumentTypeWithWorkflowCP">
+		<execute macro="DMDocument#addDocumentTypeCmdCP">
+			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
+		</execute>
+
+		<execute action="CPDocumentsandmediaAdddocumenttype#assertClick" locator-key1="SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
+		<execute action="CPDocumentsandmediaAdddocumenttype#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addMultiplePG">
@@ -1503,6 +1566,31 @@
 				<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator-key1="VERSION_HISTORY_TABLE_SIZE" value1="${dmDocumentSize}" />
 			</then>
 		</if>
+	</command>
+
+	<command name="viewCPStatus">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<if>
+			<equals arg1="${dmDocumentStatus}" arg2="Approved" />
+			<then>
+				<execute action="CPDocumentsandmedia#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
+				<execute action="CPDocumentsandmedia#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_LIST" value1="List" />
+				<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_WORKFLOW_STATUS" value1="Approved" />
+			</then>
+			<else>
+				<execute action="CPDocumentsandmedia#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
+				<execute action="CPDocumentsandmedia#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
+				<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_THUMBNAIL" />
+				<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_WORKFLOW_STATUS" value1="${dmDocumentStatus}" />
+				<execute action="CPDocumentsandmedia#assertClick" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+
+				<execute action="CPDocumentsandmediaAdddocument#assertTextEquals" locator-key1="TITLE_FIELD" value1="${dmDocumentTitle}" />
+			</else>
+		</if>
+
+		<execute action="CPDocumentsandmedia#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
+		<execute action="CPDocumentsandmedia#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_ICON" value1="Icon" />
 	</command>
 
 	<command name="viewDefaultCP">

@@ -41,6 +41,7 @@ import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
+import com.liferay.portal.util.test.TestResourceConstants;
 import com.liferay.portlet.documentlibrary.NoSuchContentException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -228,7 +229,8 @@ public class ConvertDocumentLibraryTest {
 	protected MBMessage addMBMessageAttachment() throws Exception {
 		List<ObjectValuePair<String, InputStream>> objectValuePairs =
 			MBTestUtil.getInputStreamOVPs(
-				"OSX_Test.docx", getClass(), StringPool.BLANK);
+				TestResourceConstants.OSX_TEST_DOCX, getClass(),
+				StringPool.BLANK);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());

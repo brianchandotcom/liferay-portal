@@ -28,6 +28,7 @@ import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
+import com.liferay.portal.util.test.TestResourceConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
@@ -358,7 +359,8 @@ public class MBAttachmentsTest {
 
 			List<ObjectValuePair<String, InputStream>> objectValuePairs =
 				MBTestUtil.getInputStreamOVPs(
-					"OSX_Test.docx", getClass(), StringPool.BLANK);
+					TestResourceConstants.OSX_TEST_DOCX, getClass(),
+					StringPool.BLANK);
 
 			List<String> existingFiles = new ArrayList<String>();
 
@@ -391,7 +393,7 @@ public class MBAttachmentsTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		String fileName = "OSX_Test.docx";
+		String fileName = TestResourceConstants.OSX_TEST_DOCX;
 
 		List<ObjectValuePair<String, InputStream>> objectValuePairs =
 			MBTestUtil.getInputStreamOVPs(

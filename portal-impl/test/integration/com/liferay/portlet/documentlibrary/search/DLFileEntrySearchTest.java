@@ -38,6 +38,7 @@ import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.SearchContextTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
+import com.liferay.portal.util.test.TestResourceConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -104,7 +105,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 		String fileName = "OSX_Test.docx";
 
 		InputStream inputStream = getClass().getResourceAsStream(
-			"dependencies/" + fileName);
+			TestResourceConstants.OSX_TEST_DOCX);
 
 		File file = null;
 

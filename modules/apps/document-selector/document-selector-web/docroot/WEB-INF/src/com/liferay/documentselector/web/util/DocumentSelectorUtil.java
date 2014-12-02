@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.util.AudioProcessorUtil;
 import com.liferay.portlet.documentlibrary.util.ImageProcessorUtil;
 import com.liferay.portlet.documentlibrary.util.VideoProcessorUtil;
@@ -37,11 +36,7 @@ public class DocumentSelectorUtil {
 		String ckEditorFuncNum = ParamUtil.getString(
 			request, "ckEditorFuncNum");
 
-		HttpServletRequest originalRequest =
-			PortalUtil.getOriginalServletRequest(request);
-
-		return ParamUtil.getString(
-			originalRequest, "CKEditorFuncNum", ckEditorFuncNum);
+		return ParamUtil.getString(request, "CKEditorFuncNum", ckEditorFuncNum);
 	}
 
 	public static String[] getMimeTypes(HttpServletRequest request) {
@@ -65,12 +60,7 @@ public class DocumentSelectorUtil {
 	}
 
 	public static String getType(HttpServletRequest request) {
-		String type = ParamUtil.getString(request, "type");
-
-		HttpServletRequest originalRequest =
-			PortalUtil.getOriginalServletRequest(request);
-
-		return ParamUtil.getString(originalRequest, "Type", type);
+		return ParamUtil.getString(request, "type");
 	}
 
 	private static Set<String> _getMimeTypes(String type) {

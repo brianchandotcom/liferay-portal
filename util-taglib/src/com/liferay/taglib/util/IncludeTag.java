@@ -82,6 +82,8 @@ public class IncludeTag extends AttributesTagSupport {
 			}
 
 			if (!FileAvailabilityUtil.isAvailable(servletContext, page)) {
+				logWarnForNotFoundPage(page);
+
 				return processEndTag();
 			}
 
@@ -122,6 +124,8 @@ public class IncludeTag extends AttributesTagSupport {
 			}
 
 			if (!FileAvailabilityUtil.isAvailable(servletContext, page)) {
+				logWarnForNotFoundPage(page);
+
 				return processStartTag();
 			}
 
@@ -365,6 +369,73 @@ public class IncludeTag extends AttributesTagSupport {
 
 	protected boolean isUseCustomPage() {
 		return _useCustomPage;
+	}
+
+	protected void logWarnForNotFoundPage(String page) {
+		if ((page!=null) && _log.isWarnEnabled()) {
+			String contextPath = servletContext.getContextPath();
+
+			if (contextPath.equals("")) {
+				contextPath = "/";
+			}
+
+			String message =
+				"Unable to find " + page + " in context " + contextPath + ".";
+
+			if (_isPortalTaglibPage(page)) {
+				if (contextPath.equals("/")) {
+					message = null;
+				}
+				else {
+					message +=
+						" It seems that you are trying to use an include-" +
+						"derived taglib from a module and setting the " +
+						"servletContext at the same time, which is not " +
+						"supported. Please consider inlining the nested " +
+						"content of the tag directly in the JSP where the " +
+						"tag is invoked, instead of using the file and " +
+						"servletContext attributes.";
+				}
+			}
+			else {
+				if (contextPath.equals("/")) {
+					if (getClass() == IncludeTag.class) {
+						message +=
+							" It seems that you are trying to use an include " +
+							"taglib from a module without specifying the " +
+							"servletContext attribute, which is " +
+							"unsupported and will not render anything in the " +
+							"page. Please set the servletContext attribute " +
+							"of the tag to the value <%= application %> to " +
+							"make it work.";
+					}
+					else {
+						message +=
+							" It seems that you are trying to use an include-" +
+							"derived taglib from a module using the file " +
+							"attribute of the taglib, which is unsupported " +
+							"and will not render anything in the page. " +
+							"Please consider nesting the content directly " +
+							"inside the tag.";
+					}
+				}
+			}
+
+			if (message != null) {
+				_log.warn(message);
+			}
+		}
+	}
+
+	private boolean _isPortalTaglibPage(String page) {
+		if (page.startsWith("/html/taglib/") &&
+			(page.endsWith("/start.jsp") || page.endsWith("/end.jsp") ||
+			page.endsWith("/page.jsp"))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected int processEndTag() throws Exception {

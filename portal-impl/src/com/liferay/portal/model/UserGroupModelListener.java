@@ -15,9 +15,9 @@
 package com.liferay.portal.model;
 
 import com.liferay.portal.ModelListenerException;
+import com.liferay.portal.security.PortalUserExporterUtil;
 import com.liferay.portal.security.ldap.LDAPOperation;
 import com.liferay.portal.security.ldap.LDAPUserTransactionThreadLocal;
-import com.liferay.portal.security.ldap.PortalLDAPExporterUtil;
 
 /**
  * @author Marcellus Tavares
@@ -68,7 +68,7 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 			return;
 		}
 
-		PortalLDAPExporterUtil.exportToLDAP(userId, userGroupId, ldapOperation);
+		PortalUserExporterUtil.exportUser(userId, userGroupId, ldapOperation);
 	}
 
 }

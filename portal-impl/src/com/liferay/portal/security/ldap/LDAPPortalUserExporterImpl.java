@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
+import com.liferay.portal.security.PortalUserExporter;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -51,10 +52,10 @@ import javax.naming.ldap.LdapContext;
  * @author Vilmos Papp
  */
 @DoPrivileged
-public class PortalLDAPExporterImpl implements PortalLDAPExporter {
+public class LDAPPortalUserExporterImpl implements PortalUserExporter {
 
 	@Override
-	public void exportToLDAP(
+	public void exportUser(
 			Contact contact, Map<String, Serializable> contactExpandoAttributes)
 		throws Exception {
 
@@ -133,7 +134,7 @@ public class PortalLDAPExporterImpl implements PortalLDAPExporter {
 	}
 
 	@Override
-	public void exportToLDAP(
+	public void exportUser(
 			long userId, long userGroupId, LDAPOperation ldapOperation)
 		throws Exception {
 
@@ -219,7 +220,7 @@ public class PortalLDAPExporterImpl implements PortalLDAPExporter {
 	}
 
 	@Override
-	public void exportToLDAP(
+	public void exportUser(
 			User user, Map<String, Serializable> userExpandoAttributes)
 		throws Exception {
 
@@ -292,7 +293,7 @@ public class PortalLDAPExporterImpl implements PortalLDAPExporter {
 				UserGroupLocalServiceUtil.getUserUserGroups(user.getUserId());
 
 			for (UserGroup userGroup : userGroups) {
-				exportToLDAP(
+				exportUser(
 					user.getUserId(), userGroup.getUserGroupId(),
 					LDAPOperation.ADD);
 			}
@@ -376,7 +377,7 @@ public class PortalLDAPExporterImpl implements PortalLDAPExporter {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortalLDAPExporterImpl.class);
+		LDAPPortalUserExporterImpl.class);
 
 	private PortalToLDAPConverter _portalToLDAPConverter;
 

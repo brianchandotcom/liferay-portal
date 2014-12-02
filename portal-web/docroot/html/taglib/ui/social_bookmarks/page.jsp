@@ -52,14 +52,14 @@
 				</aui:script>
 			</c:when>
 			<c:otherwise>
-				<ul class="list-unstyled">
+				<ul class="list-unstyled <%= displayStyle %>">
 
 					<%
 					for (int i = 0; i < typesArray.length; i++) {
 						String styleClass = "taglib-social-bookmark-" + typesArray[i];
 					%>
 
-						<li class="<%= styleClass %>">
+						<li class="taglib-social-bookmark <%= styleClass %>">
 							<liferay-ui:social-bookmark contentId="<%= contentId %>" displayStyle="<%= displayStyle %>"  target="<%= target %>" title="<%= title %>" type="<%= typesArray[i] %>" url="<%= url %>" />
 						</li>
 

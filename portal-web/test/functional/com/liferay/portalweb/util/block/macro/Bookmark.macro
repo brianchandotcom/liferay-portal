@@ -338,9 +338,10 @@
 	<command name="moveToRecycleBinPG">
 		<var name="key_bookmarkName" value="${bookmarkName}" />
 
-		<execute action="PGBookmarksBookmark#assertTextEquals" locator-key1="BOOKMARKS_NAME" value1="${bookmarkName}" />
-		<execute action="PGBookmarksBookmark#assertClick" locator-key1="BOOKMARK_MENU_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute action="PGBookmarksFolder#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
+		<execute action="PGBookmarksSubfolder#click" locator-key1="BOOKMARK_TABLE_DROPDOWN" />
+
+		<execute action="PGBookmarksSubfolder#assertClick" locator-key1="FOLDER_MENU_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute action="PGBookmarksSubfolder#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
 	</command>
 
 	<command name="searchCP">

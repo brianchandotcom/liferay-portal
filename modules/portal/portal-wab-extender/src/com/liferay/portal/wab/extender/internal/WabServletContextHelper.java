@@ -14,12 +14,11 @@
 
 package com.liferay.portal.wab.extender.internal;
 
+import java.io.IOException;
+
 import java.net.URL;
 
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Set;
-
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,16 +33,9 @@ public class WabServletContextHelper extends ServletContextHelper {
 	public WabServletContextHelper(Bundle bundle) {
 		super(bundle);
 
-		_bundle = bundle;
-
 		Class<?> clazz = getClass();
 
 		_string = clazz.getSimpleName() + '[' + bundle.getBundleId() + ']';
-	}
-
-	@Override
-	public String getMimeType(String name) {
-		return super.getMimeType(name);
 	}
 
 	@Override
@@ -58,50 +50,45 @@ public class WabServletContextHelper extends ServletContextHelper {
 	}
 
 	@Override
-	public URL getResource(String name) {
-		if ((name == null) || (_bundle == null)) {
-			return null;
-		}
-
-		if (name.startsWith("/")) {
-			name = name.substring(1);
-		}
-
-		URL url = _bundle.getEntry(name);
-
-		if (url == null) {
-			url = _bundle.getResource(name);
-		}
-
-		return url;
-	}
-
-	@Override
-	public Set<String> getResourcePaths(String path) {
-		if ((path == null) || (_bundle == null)) {
-			return null;
-		}
-
-		Enumeration<URL> enumeration = _bundle.findEntries(path, null, false);
-
-		if (enumeration == null) {
-			return null;
-		}
-
-		Set<String> paths = new HashSet<String>();
-
-		while (enumeration.hasMoreElements()) {
-			URL url = enumeration.nextElement();
-
-			paths.add(url.getPath());
-		}
-
-		return paths;
-	}
-
-	@Override
 	public boolean handleSecurity(
 		HttpServletRequest request, HttpServletResponse response) {
+
+		// Prevent access to WAB metadata.
+
+		String pathInfo;
+
+		if (request.getAttribute(
+				RequestDispatcher.INCLUDE_REQUEST_URI) != null) {
+
+			pathInfo = (String)request.getAttribute(
+				RequestDispatcher.INCLUDE_PATH_INFO);
+		}
+		else {
+			pathInfo = request.getPathInfo();
+		}
+
+		if (pathInfo == null) {
+			return true;
+		}
+
+		if (pathInfo.startsWith("/")) {
+			pathInfo = pathInfo.substring(1);
+		}
+
+		if (pathInfo.startsWith("META-INF/") ||
+			pathInfo.startsWith("OSGI-INF/") ||
+			pathInfo.startsWith("OSGI-OPT/") ||
+			pathInfo.startsWith("WEB-INF/")) {
+
+			try {
+				response.sendError(HttpServletResponse.SC_FORBIDDEN, pathInfo);
+			}
+			catch (IOException e) {
+				response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+			}
+
+			return false;
+		}
 
 		return true;
 	}
@@ -111,7 +98,6 @@ public class WabServletContextHelper extends ServletContextHelper {
 		return _string;
 	}
 
-	private Bundle _bundle;
 	private final String _string;
 
 }

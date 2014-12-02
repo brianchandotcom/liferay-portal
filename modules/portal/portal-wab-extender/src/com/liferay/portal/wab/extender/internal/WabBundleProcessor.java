@@ -14,12 +14,6 @@
 
 package com.liferay.portal.wab.extender.internal;
 
-import com.liferay.portal.kernel.deploy.hot.DependencyManagementThreadLocal;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.wab.extender.internal.definition.FilterDefinition;
 import com.liferay.portal.wab.extender.internal.definition.ListenerDefinition;
 import com.liferay.portal.wab.extender.internal.definition.ServletDefinition;
@@ -28,37 +22,88 @@ import com.liferay.portal.wab.extender.internal.definition.WebXMLDefinitionLoade
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Dictionary;
+import java.util.EventListener;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.servlet.Servlet;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+import javax.servlet.http.HttpServlet;
+
+import javax.xml.parsers.SAXParserFactory;
+
+import org.apache.felix.utils.log.Logger;
 
 import org.eclipse.equinox.http.servlet.ExtendedHttpService;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.http.context.ServletContextHelper;
+import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 
 /**
  * @author Raymond Augé
  * @author Miguel Pastor
  */
-public class WabBundleProcessor {
+public class WabBundleProcessor implements ServletContextListener {
 
 	public WabBundleProcessor(
-			Bundle bundle, String servletContextName, String contextPath,
-			ExtendedHttpService extendedHttpService)
-		throws DocumentException {
+		Bundle bundle, String contextPath,
+		ExtendedHttpService extendedHttpService,
+		SAXParserFactory saxParserFactory, Logger logger) {
 
 		_bundle = bundle;
-		_servletContextName = servletContextName;
 		_contextPath = contextPath;
+
+		if (_contextPath.indexOf('/') != 0) {
+			throw new IllegalArgumentException(
+				"contextPath must start with '/'");
+		}
+
+		_contextName = _contextPath.substring(1).replaceAll("[^a-zA-Z0-9]", "");
 		_extendedHttpService = extendedHttpService;
+		_logger = logger;
+
+		_bundleContext = _bundle.getBundleContext();
+
+		_webXMLDefinitionLoader = new WebXMLDefinitionLoader(
+			_bundle, saxParserFactory, _logger);
 
 		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
 
 		_bundleClassLoader = bundleWiring.getClassLoader();
+	}
+
+	@Override
+	public void contextDestroyed(ServletContextEvent servletContextEvent) {
+		_servletContextRegistration.unregister();
+	}
+
+	@Override
+	public void contextInitialized(ServletContextEvent servletContextEvent) {
+		ServletContext servletContext = servletContextEvent.getServletContext();
+
+		Dictionary<String, Object> properties = new Hashtable<>();
+
+		properties.put("osgi.web.symbolicname", _bundle.getSymbolicName());
+		properties.put("osgi.web.version", _bundle.getVersion());
+		properties.put("osgi.web.contextpath", servletContext.getContextPath());
+
+		servletContext.setAttribute(
+			"jsp.taglib.mappings", _webXMLDefinition.getJspTaglibMappings());
+		servletContext.setAttribute("osgi-bundlecontext", _bundleContext);
+		servletContext.setAttribute("osgi-runtime-vendor", _VENDOR);
+
+		_servletContextRegistration = _bundleContext.registerService(
+			ServletContext.class, servletContext, properties);
 	}
 
 	public void destroy() throws Exception {
@@ -67,6 +112,12 @@ public class WabBundleProcessor {
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		try {
+			if (_jspServletServiceRegistration != null) {
+				_jspServletServiceRegistration.unregister();
+			}
+
+			_defaultServletServiceRegistration.unregister();
+
 			currentThread.setContextClassLoader(_bundleClassLoader);
 
 			destroyServlets();
@@ -74,6 +125,8 @@ public class WabBundleProcessor {
 			destroyFilters();
 
 			destroyListeners();
+
+			_thisEventListenerRegistration.unregister();
 
 			destroyContext();
 		}
@@ -87,43 +140,91 @@ public class WabBundleProcessor {
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-		Boolean enabled = DependencyManagementThreadLocal.isEnabled();
-
 		try {
-			DependencyManagementThreadLocal.setEnabled(false);
-
 			currentThread.setContextClassLoader(_bundleClassLoader);
 
-			_webXML = _webXMLDefinitionLoader.loadWebXML(_bundle);
+			_webXMLDefinition = _webXMLDefinitionLoader.loadWebXML();
 
 			initContext();
+
+			registerThisAsEventListener();
 
 			initListeners();
 
 			initFilters();
 
+			try {
+				currentThread.setContextClassLoader(contextClassLoader);
+
+				_defaultServletServiceRegistration = createDefaultServlet();
+				_jspServletServiceRegistration = createJspServlet();
+			}
+			finally {
+				currentThread.setContextClassLoader(_bundleClassLoader);
+			}
+
 			initServlets();
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);
-
-			DependencyManagementThreadLocal.setEnabled(enabled);
 		}
 	}
 
-	protected void destroyContext() {
+	protected ServiceRegistration<Servlet> createDefaultServlet() {
+		Dictionary<String, Object> properties = new Hashtable<String, Object>();
+
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
+			_contextName);
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PREFIX, "/");
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN, "/*");
+
+		return _bundleContext.registerService(
+			Servlet.class, new HttpServlet() {}, properties);
+	}
+
+	protected ServiceRegistration<Servlet> createJspServlet() {
+		Servlet servlet = null;
+
 		try {
-			_extendedHttpService.unregisterServletContextHelper(
-				_servletContextHelper);
+			Class<? extends Servlet> clazz = Class.forName(
+				"com.liferay.portal.servlet.jsp.JspServlet").asSubclass(
+					Servlet.class);
+
+			servlet = clazz.newInstance();
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			_logger.log(
+				Logger.LOG_WARNING,
+				"No JSP Servlet was deployed for WAB " + _contextName +
+					" due to: " + e.getMessage());
+
+			return null;
 		}
+
+		Dictionary<String, Object> properties = new Hashtable<String, Object>();
+
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
+			_contextName);
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME, "jsp");
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN, "*.jsp");
+
+		return _bundleContext.registerService(
+			Servlet.class, servlet, properties);
+	}
+
+	protected void destroyContext() {
+		_serviceRegistration.unregister();
 	}
 
 	protected void destroyFilters() {
 		Map<String, FilterDefinition> filterDefinitions =
-			_webXML.getFilterDefinitions();
+			_webXMLDefinition.getFilterDefinitions();
 
 		List<FilterDefinition> filterDefinitionsList =
 			new ArrayList<FilterDefinition>(filterDefinitions.values());
@@ -133,10 +234,10 @@ public class WabBundleProcessor {
 		for (FilterDefinition filterDefinition : filterDefinitionsList) {
 			try {
 				_extendedHttpService.unregisterFilter(
-					filterDefinition.getFilter(), _servletContextName);
+					filterDefinition.getFilter(), _contextName);
 			}
 			catch (Exception e) {
-				_log.error(e, e);
+				_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
 			}
 		}
 
@@ -145,17 +246,17 @@ public class WabBundleProcessor {
 
 	protected void destroyListeners() {
 		List<ListenerDefinition> listenerDefinitions =
-			_webXML.getListenerDefinitions();
+			_webXMLDefinition.getListenerDefinitions();
 
 		Collections.reverse(listenerDefinitions);
 
 		for (ListenerDefinition listenerDefinition : listenerDefinitions) {
 			try {
 				_extendedHttpService.unregisterListener(
-					listenerDefinition.getEventListener(), _servletContextName);
+					listenerDefinition.getEventListener(), _contextName);
 			}
 			catch (Exception e) {
-				_log.error(e, e);
+				_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
 			}
 		}
 
@@ -164,7 +265,7 @@ public class WabBundleProcessor {
 
 	protected void destroyServlets() {
 		Map<String, ServletDefinition> servletDefinitions =
-			_webXML.getServletDefinitions();
+			_webXMLDefinition.getServletDefinitions();
 
 		List<ServletDefinition> servletDefinitionsList =
 			new ArrayList<ServletDefinition>(servletDefinitions.values());
@@ -175,35 +276,39 @@ public class WabBundleProcessor {
 			Servlet servlet = servletDefinition.getServlet();
 
 			try {
-				if (servlet instanceof WabResourceServlet) {
-					_extendedHttpService.unregister(
-						servletDefinition.getURLPatterns().get(0),
-						_servletContextName);
-				}
-				else {
-					_extendedHttpService.unregisterServlet(
-						servlet, _servletContextName);
-				}
+				_extendedHttpService.unregisterServlet(servlet, _contextName);
 			}
 			catch (Exception e) {
-				_log.error(e, e);
+				_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
 			}
 		}
 	}
 
 	protected void initContext() throws Exception {
-		Map<String, String> contextParameters = _webXML.getContextParameters();
+		Map<String, String> contextParameters =
+			_webXMLDefinition.getContextParameters();
 
-		_servletContextHelper = new WabServletContextHelper(_bundle);
+		_wabServletContextHelper = new WabServletContextHelper(_bundle);
 
-		_extendedHttpService.registerServletContextHelper(
-			_servletContextHelper, _bundle, new String[] {_servletContextName},
-			_contextPath, contextParameters);
+		Dictionary<String, Object> properties = new Hashtable<String, Object>();
+
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME, _contextName);
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH, _contextPath);
+		properties.put(Constants.SERVICE_RANKING, 1000);
+
+		for (String key : contextParameters.keySet()) {
+			properties.put(key, contextParameters.get(key));
+		}
+
+		_serviceRegistration = _bundleContext.registerService(
+			ServletContextHelper.class, _wabServletContextHelper, properties);
 	}
 
 	protected void initFilters() {
 		Map<String, FilterDefinition> filterDefinitions =
-			_webXML.getFilterDefinitions();
+			_webXMLDefinition.getFilterDefinitions();
 
 		for (Map.Entry<String, FilterDefinition> entry :
 				filterDefinitions.entrySet()) {
@@ -218,22 +323,22 @@ public class WabBundleProcessor {
 					filterDefinition.getDispatchers().toArray(new String[0]),
 					filterDefinition.isAsyncSupported(),
 					filterDefinition.getPriority(),
-					filterDefinition.getInitParameters(), _servletContextName);
+					filterDefinition.getInitParameters(), _contextName);
 			}
 			catch (Exception e) {
-				_log.error(e, e);
+				_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
 			}
 		}
 	}
 
 	protected void initListeners() throws Exception {
 		List<ListenerDefinition> listenerDefinitions =
-			_webXML.getListenerDefinitions();
+			_webXMLDefinition.getListenerDefinitions();
 
 		for (ListenerDefinition listenerDefinition : listenerDefinitions) {
 			try {
 				_extendedHttpService.registerListener(
-					listenerDefinition.getEventListener(), _servletContextName);
+					listenerDefinition.getEventListener(), _contextName);
 			}
 			catch (Exception e1) {
 				try {
@@ -249,7 +354,7 @@ public class WabBundleProcessor {
 
 	protected void initServlets() {
 		Map<String, ServletDefinition> servletDefinitions =
-			_webXML.getServletDefinitions();
+			_webXMLDefinition.getServletDefinitions();
 
 		for (Entry<String, ServletDefinition> entry :
 				servletDefinitions.entrySet()) {
@@ -259,45 +364,49 @@ public class WabBundleProcessor {
 			Servlet servlet = servletDefinition.getServlet();
 
 			try {
-				if (servlet instanceof WabResourceServlet) {
-					List<String> urlPatterns =
-						servletDefinition.getURLPatterns();
-
-					String prefix = MapUtil.getString(
-						servletDefinition.getInitParameters(), "prefix",
-						StringPool.SLASH);
-
-					_extendedHttpService.registerResources(
-						urlPatterns.toArray(new String[0]), prefix,
-						_servletContextName);
-
-					continue;
-				}
+				Map<String, String> initParameters =
+					servletDefinition.getInitParameters();
 
 				_extendedHttpService.registerServlet(
 					servlet, servletDefinition.getName(),
 					servletDefinition.getURLPatterns().toArray(new String[0]),
 					servletDefinition.getErrorPages().toArray(new String[0]),
-					servletDefinition.isAsyncSupported(),
-					servletDefinition.getInitParameters(), _servletContextName);
+					servletDefinition.isAsyncSupported(), initParameters,
+					_contextName);
 			}
 			catch (Exception e) {
-				_log.error(e, e);
+				_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
 			}
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		WabBundleProcessor.class);
+	protected void registerThisAsEventListener() {
+		Dictionary<String, Object> properties = new Hashtable<>();
+
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
+			_contextName);
+
+		_thisEventListenerRegistration = _bundleContext.registerService(
+			EventListener.class, this, properties);
+	}
+
+	private static final String _VENDOR = "Liferay, Inc.";
 
 	private final Bundle _bundle;
 	private final ClassLoader _bundleClassLoader;
+	private final BundleContext _bundleContext;
+	private final String _contextName;
 	private final String _contextPath;
+	private ServiceRegistration<Servlet> _defaultServletServiceRegistration;
 	private final ExtendedHttpService _extendedHttpService;
-	private ServletContextHelper _servletContextHelper;
-	private final String _servletContextName;
-	private WebXMLDefinition _webXML;
-	private final WebXMLDefinitionLoader _webXMLDefinitionLoader =
-		new WebXMLDefinitionLoader();
+	private ServiceRegistration<Servlet> _jspServletServiceRegistration;
+	private final Logger _logger;
+	private ServiceRegistration<ServletContextHelper> _serviceRegistration;
+	private ServiceRegistration<ServletContext> _servletContextRegistration;
+	private ServiceRegistration<EventListener> _thisEventListenerRegistration;
+	private WabServletContextHelper _wabServletContextHelper;
+	private WebXMLDefinition _webXMLDefinition;
+	private final WebXMLDefinitionLoader _webXMLDefinitionLoader;
 
 }

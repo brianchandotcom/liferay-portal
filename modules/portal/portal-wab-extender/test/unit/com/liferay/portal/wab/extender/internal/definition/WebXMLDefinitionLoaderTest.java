@@ -14,11 +14,6 @@
 
 package com.liferay.portal.wab.extender.internal.definition;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.xml.DocumentException;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.xml.SAXReaderImpl;
-
 import java.net.URL;
 
 import java.util.EventListener;
@@ -28,8 +23,11 @@ import java.util.Map;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
 
+import javax.xml.parsers.SAXParserFactory;
+
+import org.apache.felix.utils.log.Logger;
+
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -45,42 +43,34 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @RunWith(PowerMockRunner.class)
 public class WebXMLDefinitionLoaderTest {
 
-	@BeforeClass
-	public static void setUpClass() {
-		SAXReaderUtil saxReaderUtil = new SAXReaderUtil();
-
-		saxReaderUtil.setSAXReader(SAXReaderImpl.getInstance());
-	}
-
-	public WebXMLDefinitionLoaderTest() throws DocumentException {
-		_webXMLDefinitionLoader = new WebXMLDefinitionLoader();
-	}
-
 	@Test
 	public void testLoadCustomDependencies() throws Exception {
 		Bundle bundle = new EntryLoaderMockBundle();
 
-		testLoadDependencies(
-			bundle, _LISTENER_DEFAULT_CLASS_NAMES.length + 1, 1,
-			_SERVLET_DEFAULT_CLASSE_NAMES.length + 1);
+		WebXMLDefinitionLoader webXMLDefinitionLoader =
+			new WebXMLDefinitionLoader(
+				bundle, SAXParserFactory.newInstance(), new Logger(null));
+
+		testLoadDependencies(webXMLDefinitionLoader, 1, 1, 1);
 	}
 
 	@Test
 	public void testLoadDefaultDependencies() throws Exception {
-		Bundle bundle = new CustomClassLoaderMockBundle();
+		Bundle bundle = new MockBundle();
 
-		testLoadDependencies(
-			bundle, _LISTENER_DEFAULT_CLASS_NAMES.length, 0,
-			_SERVLET_DEFAULT_CLASSE_NAMES.length);
+		WebXMLDefinitionLoader webXMLDefinitionLoader =
+			new WebXMLDefinitionLoader(
+				bundle, SAXParserFactory.newInstance(), new Logger(null));
+
+		testLoadDependencies(webXMLDefinitionLoader, 0, 0, 0);
 	}
 
 	protected void testLoadDependencies(
-			Bundle bundle, int numfOfListeners, int numOfFilters,
-			int numfOfServlets)
+			WebXMLDefinitionLoader webXMLDefinitionLoader, int numfOfListeners,
+			int numOfFilters, int numfOfServlets)
 		throws Exception {
 
-		WebXMLDefinition webXMLDefinition = _webXMLDefinitionLoader.loadWebXML(
-			bundle);
+		WebXMLDefinition webXMLDefinition = webXMLDefinitionLoader.loadWebXML();
 
 		List<ListenerDefinition> listenerDefinitions =
 			webXMLDefinition.getListenerDefinitions();
@@ -104,43 +94,13 @@ public class WebXMLDefinitionLoaderTest {
 		Assert.assertEquals(numOfFilters, filterDefinitions.size());
 	}
 
-	private static final String[] _LISTENER_DEFAULT_CLASS_NAMES = {};
-
-	private static final String[] _SERVLET_DEFAULT_CLASSE_NAMES = {
-		"com.liferay.portal.wab.extender.internal.WabResourceServlet",
-		"org.apache.jasper.servlet.JspServlet"
-	};
-
 	@Mock
 	private Servlet _servlet;
 
 	@Mock
 	private ServletContextListener _servletContextListener;
 
-	private final WebXMLDefinitionLoader _webXMLDefinitionLoader;
-
-	private class CustomClassLoaderMockBundle extends MockBundle {
-
-		@Override
-		public Class<?> loadClass(String className)
-			throws ClassNotFoundException {
-
-			if (ArrayUtil.contains(_LISTENER_DEFAULT_CLASS_NAMES, className)) {
-				return _servletContextListener.getClass();
-			}
-			else if (ArrayUtil.contains(
-						_SERVLET_DEFAULT_CLASSE_NAMES, className)) {
-
-				return _servlet.getClass();
-			}
-			else {
-				return super.loadClass(className);
-			}
-		}
-
-	}
-
-	private class EntryLoaderMockBundle extends CustomClassLoaderMockBundle {
+	private class EntryLoaderMockBundle extends MockBundle {
 
 		@Override
 		public URL getEntry(String path) {

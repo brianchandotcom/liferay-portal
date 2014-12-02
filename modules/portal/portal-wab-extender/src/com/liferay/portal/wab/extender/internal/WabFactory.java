@@ -14,10 +14,18 @@
 
 package com.liferay.portal.wab.extender.internal;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.wab.extender.internal.event.EventUtil;
+
+import java.util.Dictionary;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
+import javax.xml.parsers.SAXParserFactory;
+
+import org.apache.felix.utils.extender.AbstractExtender;
+import org.apache.felix.utils.extender.Extension;
+import org.apache.felix.utils.log.Logger;
 
 import org.eclipse.equinox.http.servlet.ExtendedHttpService;
 
@@ -26,6 +34,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
@@ -34,71 +43,66 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  */
 @Component(
-	immediate = true
+	immediate = true, configurationPid = "com.liferay.portal.wab.extender",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL,
+	property = {
+		"com.liferay.portal.wab.extender.stop.timeout=60000"
+	}
 )
-public class WabFactory {
+public class WabFactory extends AbstractExtender {
 
 	@Activate
 	public void activate(ComponentContext componentContext) {
 		_bundleContext = componentContext.getBundleContext();
 
-		EventUtil.start(_bundleContext);
+		Dictionary<String, Object> properties =
+			componentContext.getProperties();
+
+		_stopTimeout = GetterUtil.getLong(
+			properties.get("com.liferay.portal.wab.extender.stop.timeout"),
+			60000);
+
+		_logger = new Logger(_bundleContext);
+		_eventUtil = new EventUtil(_bundleContext);
 
 		try {
 			_webBundleDeployer = new WebBundleDeployer(
-				_bundleContext, _extendedHttpService);
+				_bundleContext, _extendedHttpService, _saxParserFactory,
+				_eventUtil, _logger);
 
-			_startedBundleListener = new StartedBundleListener(
-				_webBundleDeployer);
-
-			_bundleContext.addBundleListener(_startedBundleListener);
-
-			_stoppedBundleListener = new StoppedBundleListener(
-				_webBundleDeployer);
-
-			_bundleContext.addBundleListener(_stoppedBundleListener);
+			super.start(_bundleContext);
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
 		}
-
-		checkStartableBundles();
 	}
 
 	@Deactivate
-	public void deactivate() {
+	public void deactivate() throws Exception {
+		super.stop(_bundleContext);
+
 		_webBundleDeployer.close();
+		_eventUtil.close();
 
-		_webBundleDeployer = null;
-
-		_bundleContext.removeBundleListener(_startedBundleListener);
-
-		_startedBundleListener = null;
-
-		_bundleContext.removeBundleListener(_stoppedBundleListener);
-
-		_stoppedBundleListener = null;
-
+		_eventUtil = null;
+		_logger = null;
 		_bundleContext = null;
-
-		EventUtil.close();
+		_webBundleDeployer = null;
 	}
 
-	protected void checkStartableBundles() {
-		for (Bundle bundle : _bundleContext.getBundles()) {
-			String servletContextName = WabUtil.getWebContextName(bundle);
+	@Override
+	protected void debug(Bundle bundle, String message) {
+		_logger.log(Logger.LOG_DEBUG, "[" + bundle + "] " + message);
+	}
 
-			if (Validator.isNull(servletContextName)) {
-				continue;
-			}
+	@Override
+	protected Extension doCreateExtension(Bundle bundle) throws Exception {
+		return new WABExtension(bundle);
+	}
 
-			try {
-				_webBundleDeployer.doStart(bundle, servletContextName);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
+	@Override
+	protected void error(String message, Throwable t) {
+		_logger.log(Logger.LOG_ERROR, message, t);
 	}
 
 	@Reference
@@ -108,18 +112,64 @@ public class WabFactory {
 		_extendedHttpService = extendedHttpService;
 	}
 
-	protected void unsetExtendedHttpService(
-		ExtendedHttpService extendedHttpService) {
+	@Reference(unbind = "-")
+	protected void setSAXParserFactory(SAXParserFactory saxParserFactory) {
+		_saxParserFactory = saxParserFactory;
 
-		_extendedHttpService = null;
+		_saxParserFactory.setValidating(false);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(WabFactory.class);
+	@Override
+	protected void warn(Bundle bundle, String message, Throwable t) {
+		_logger.log(Logger.LOG_WARNING, "[" + bundle + "] " + message, t);
+	}
 
 	private BundleContext _bundleContext;
+	private EventUtil _eventUtil;
 	private ExtendedHttpService _extendedHttpService;
-	private StartedBundleListener _startedBundleListener;
-	private StoppedBundleListener _stoppedBundleListener;
+	private Logger _logger;
+	private SAXParserFactory _saxParserFactory;
+	private long _stopTimeout;
 	private WebBundleDeployer _webBundleDeployer;
+
+	private class WABExtension implements Extension {
+
+		public WABExtension(Bundle bundle) {
+			_bundle = bundle;
+			_started = new CountDownLatch(1);
+		}
+
+		@Override
+		public void destroy() throws Exception {
+			try {
+				_started.await(_stopTimeout, TimeUnit.MILLISECONDS);
+			}
+			catch (InterruptedException ie) {
+				_logger.log(
+					Logger.LOG_ERROR,
+					String.format(
+						"The wait for bundle {0}/{1} being started " +
+							"before destruction has been interrupted.",
+						_bundle.getSymbolicName(), _bundle.getBundleId()),
+					ie);
+			}
+
+			_webBundleDeployer.doStop(_bundle);
+		}
+
+		@Override
+		public void start() throws Exception {
+			try {
+				_webBundleDeployer.doStart(_bundle);
+			}
+			finally {
+				_started.countDown();
+			}
+		}
+
+		private final Bundle _bundle;
+		private final CountDownLatch _started;
+
+	}
 
 }

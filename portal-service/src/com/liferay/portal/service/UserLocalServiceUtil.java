@@ -2099,6 +2099,19 @@ public class UserLocalServiceUtil {
 			sort);
 	}
 
+	public static com.liferay.portal.kernel.search.Hits search(long companyId,
+		java.lang.String firstName, java.lang.String middleName,
+		java.lang.String lastName, java.lang.String screenName,
+		java.lang.String emailAddress, int status,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andSearch, int start, int end,
+		com.liferay.portal.kernel.search.Sort[] sorts) {
+		return getService()
+				   .search(companyId, firstName, middleName, lastName,
+			screenName, emailAddress, status, params, andSearch, start, end,
+			sorts);
+	}
+
 	/**
 	* Returns an ordered range of all the users who match the keywords and
 	* status, without using the indexer. It is preferable to use the indexed
@@ -2175,6 +2188,15 @@ public class UserLocalServiceUtil {
 		int start, int end, com.liferay.portal.kernel.search.Sort sort) {
 		return getService()
 				   .search(companyId, keywords, status, params, start, end, sort);
+	}
+
+	public static com.liferay.portal.kernel.search.Hits search(long companyId,
+		java.lang.String keywords, int status,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end, com.liferay.portal.kernel.search.Sort[] sorts) {
+		return getService()
+				   .search(companyId, keywords, status, params, start, end,
+			sorts);
 	}
 
 	/**
@@ -2267,6 +2289,20 @@ public class UserLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.model.User> searchUsers(
+		long companyId, java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName,
+		java.lang.String screenName, java.lang.String emailAddress, int status,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andSearch, int start, int end,
+		com.liferay.portal.kernel.search.Sort[] sorts)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchUsers(companyId, firstName, middleName, lastName,
+			screenName, emailAddress, status, params, andSearch, start, end,
+			sorts);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.model.User> searchUsers(
 		long companyId, java.lang.String keywords, int status,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		int start, int end, com.liferay.portal.kernel.search.Sort sort)
@@ -2274,6 +2310,16 @@ public class UserLocalServiceUtil {
 		return getService()
 				   .searchUsers(companyId, keywords, status, params, start,
 			end, sort);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.model.User> searchUsers(
+		long companyId, java.lang.String keywords, int status,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end, com.liferay.portal.kernel.search.Sort[] sorts)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchUsers(companyId, keywords, status, params, start,
+			end, sorts);
 	}
 
 	/**

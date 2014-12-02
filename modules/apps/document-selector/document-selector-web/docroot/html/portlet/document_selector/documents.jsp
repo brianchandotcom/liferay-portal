@@ -316,7 +316,7 @@ portletURL.setParameter("type", type);
 			searchContext.setAttribute("mimeTypes", DocumentSelectorUtil.getMimeTypes(request));
 			searchContext.setAttribute("paginationType", "regular");
 
-			int entryEnd = ParamUtil.getInteger(request, "entryEnd", PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
+			int entryEnd = ParamUtil.getInteger(request, "entryEnd", GetterUtil.getInteger(PropsUtil.get(PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA), 20));
 
 			searchContext.setEnd(entryEnd);
 
@@ -364,7 +364,7 @@ portletURL.setParameter("type", type);
 				value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>"
 			/>
 
-			<c:if test="<%= PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED %>">
+			<c:if test="<%= GetterUtil.getBoolean(PropsUtil.get(PropsKeys.BUFFERED_INCREMENT_ENABLED, new Filter("DLFileEntry"))) %>">
 				<liferay-ui:search-container-column-text
 					name="downloads"
 					value="<%= String.valueOf(fileEntry.getReadCount()) %>"

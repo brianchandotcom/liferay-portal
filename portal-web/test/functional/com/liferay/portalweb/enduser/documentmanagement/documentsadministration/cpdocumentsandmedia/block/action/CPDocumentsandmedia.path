@@ -403,7 +403,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_CONTAINER_DOCUMENT_CHECKBOX</td>
-	<td>//div[contains(@id,'entriesContainer')]//div[contains(.,'${key_dmDocumentTitle}')]/input[contains(@name,'_199_rowIdsFileEntry')]</td>
+	<td>//div[contains(@id,'entriesContainer')]//div[contains(.,'${key_dmDocumentTitle}')]/div/input[contains(@name,'_199_rowIdsFileEntry')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -434,7 +434,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_CONTAINER_FOLDER_CHECKBOX</td>
-	<td>//div[contains(@id,'entriesContainer')]//div[contains(.,'${key_dmFolderName}')]/input[contains(@name,'_199_rowIdsFolder')]</td>
+	<td>//div[contains(@id,'entriesContainer')]//div[contains(.,'${key_dmFolderName}')]/div/input[contains(@name,'_199_rowIdsFolder')]</td>
 	<td></td>
 </tr>
 <tr>

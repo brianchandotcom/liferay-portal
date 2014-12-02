@@ -1044,7 +1044,8 @@ public class JavaClass {
 
 		line = StringUtil.replace(line, " synchronized " , StringPool.SPACE);
 
-		int pos = line.indexOf(StringPool.OPEN_PARENTHESIS);
+		int x = line.indexOf(StringPool.EQUAL);
+		int y = line.indexOf(StringPool.OPEN_PARENTHESIS);
 
 		if (line.startsWith(_indent + "public static ")) {
 			if (line.contains(" class ") || line.contains(" enum ")) {
@@ -1052,17 +1053,17 @@ public class JavaClass {
 					getClassName(line), JavaTerm.TYPE_CLASS_PUBLIC_STATIC);
 			}
 
-			if (line.contains(StringPool.EQUAL) ||
-				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
+			if (((x > 0) && ((y == -1) || (y > x))) ||
+				(line.endsWith(StringPool.SEMICOLON) && (y == -1))) {
 
 				return new Tuple(
 					getVariableName(line),
 					JavaTerm.TYPE_VARIABLE_PUBLIC_STATIC);
 			}
 
-			if (pos != -1) {
+			if (y != -1) {
 				return new Tuple(
-					getConstructorOrMethodName(line, pos),
+					getConstructorOrMethodName(line, y),
 					JavaTerm.TYPE_METHOD_PUBLIC_STATIC);
 			}
 		}
@@ -1074,26 +1075,26 @@ public class JavaClass {
 					getClassName(line), JavaTerm.TYPE_CLASS_PUBLIC);
 			}
 
-			if (line.contains(StringPool.EQUAL) ||
-				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
+			if (((x > 0) && ((y == -1) || (y > x))) ||
+				(line.endsWith(StringPool.SEMICOLON) && (y == -1))) {
 
 				return new Tuple(
 					getVariableName(line), JavaTerm.TYPE_VARIABLE_PUBLIC);
 			}
 
-			if (pos != -1) {
+			if (y != -1) {
 				int spaceCount = StringUtil.count(
-					line.substring(0, pos), StringPool.SPACE);
+					line.substring(0, y), StringPool.SPACE);
 
 				if (spaceCount == 1) {
 					return new Tuple(
-						getConstructorOrMethodName(line, pos),
+						getConstructorOrMethodName(line, y),
 						JavaTerm.TYPE_CONSTRUCTOR_PUBLIC);
 				}
 
 				if (spaceCount > 1) {
 					return new Tuple(
-						getConstructorOrMethodName(line, pos),
+						getConstructorOrMethodName(line, y),
 						JavaTerm.TYPE_METHOD_PUBLIC);
 				}
 			}
@@ -1104,17 +1105,17 @@ public class JavaClass {
 					getClassName(line), JavaTerm.TYPE_CLASS_PROTECTED_STATIC);
 			}
 
-			if (line.contains(StringPool.EQUAL) ||
-				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
+			if (((x > 0) && ((y == -1) || (y > x))) ||
+				(line.endsWith(StringPool.SEMICOLON) && (y == -1))) {
 
 				return new Tuple(
 					getVariableName(line),
 					JavaTerm.TYPE_VARIABLE_PROTECTED_STATIC);
 			}
 
-			if (pos != -1) {
+			if (y != -1) {
 				return new Tuple(
-					getConstructorOrMethodName(line, pos),
+					getConstructorOrMethodName(line, y),
 					JavaTerm.TYPE_METHOD_PROTECTED_STATIC);
 			}
 		}
@@ -1126,27 +1127,29 @@ public class JavaClass {
 					getClassName(line), JavaTerm.TYPE_CLASS_PROTECTED);
 			}
 
-			if (pos != -1) {
-				if (!line.contains(StringPool.EQUAL)) {
-					int spaceCount = StringUtil.count(
-						line.substring(0, pos), StringPool.SPACE);
+			if (((x > 0) && ((y == -1) || (y > x))) ||
+				(line.endsWith(StringPool.SEMICOLON) && (y == -1))) {
 
-					if (spaceCount == 1) {
-						return new Tuple(
-							getConstructorOrMethodName(line, pos),
-							JavaTerm.TYPE_CONSTRUCTOR_PROTECTED);
-					}
-
-					if (spaceCount > 1) {
-						return new Tuple(
-							getConstructorOrMethodName(line, pos),
-							JavaTerm.TYPE_METHOD_PROTECTED);
-					}
-				}
+				return new Tuple(
+					getVariableName(line), JavaTerm.TYPE_VARIABLE_PROTECTED);
 			}
 
-			return new Tuple(
-				getVariableName(line), JavaTerm.TYPE_VARIABLE_PROTECTED);
+			if (y != -1) {
+				int spaceCount = StringUtil.count(
+					line.substring(0, y), StringPool.SPACE);
+
+				if (spaceCount == 1) {
+					return new Tuple(
+						getConstructorOrMethodName(line, y),
+						JavaTerm.TYPE_CONSTRUCTOR_PROTECTED);
+				}
+
+				if (spaceCount > 1) {
+					return new Tuple(
+						getConstructorOrMethodName(line, y),
+						JavaTerm.TYPE_METHOD_PROTECTED);
+				}
+			}
 		}
 		else if (line.startsWith(_indent + "private static ")) {
 			if (line.contains(" class ") || line.contains(" enum ")) {
@@ -1154,17 +1157,17 @@ public class JavaClass {
 					getClassName(line), JavaTerm.TYPE_CLASS_PRIVATE_STATIC);
 			}
 
-			if (line.contains(StringPool.EQUAL) ||
-				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
+			if (((x > 0) && ((y == -1) || (y > x))) ||
+				(line.endsWith(StringPool.SEMICOLON) && (y == -1))) {
 
 				return new Tuple(
 					getVariableName(line),
 					JavaTerm.TYPE_VARIABLE_PRIVATE_STATIC);
 			}
 
-			if (pos != -1) {
+			if (y != -1) {
 				return new Tuple(
-					getConstructorOrMethodName(line, pos),
+					getConstructorOrMethodName(line, y),
 					JavaTerm.TYPE_METHOD_PRIVATE_STATIC);
 			}
 		}
@@ -1176,26 +1179,26 @@ public class JavaClass {
 					getClassName(line), JavaTerm.TYPE_CLASS_PRIVATE);
 			}
 
-			if (line.contains(StringPool.EQUAL) ||
-				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
+			if (((x > 0) && ((y == -1) || (y > x))) ||
+				(line.endsWith(StringPool.SEMICOLON) && (y == -1))) {
 
 				return new Tuple(
 					getVariableName(line), JavaTerm.TYPE_VARIABLE_PRIVATE);
 			}
 
-			if (pos != -1) {
+			if (y != -1) {
 				int spaceCount = StringUtil.count(
-					line.substring(0, pos), StringPool.SPACE);
+					line.substring(0, y), StringPool.SPACE);
 
 				if (spaceCount == 1) {
 					return new Tuple(
-						getConstructorOrMethodName(line, pos),
+						getConstructorOrMethodName(line, y),
 						JavaTerm.TYPE_CONSTRUCTOR_PRIVATE);
 				}
 
 				if (spaceCount > 1) {
 					return new Tuple(
-						getConstructorOrMethodName(line, pos),
+						getConstructorOrMethodName(line, y),
 						JavaTerm.TYPE_METHOD_PRIVATE);
 				}
 			}

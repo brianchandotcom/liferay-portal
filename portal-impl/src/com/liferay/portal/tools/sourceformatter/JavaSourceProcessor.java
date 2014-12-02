@@ -1427,7 +1427,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							StringPool.SPACE);
 					}
 
-					if (!line.contains(StringPool.QUOTE)) {
+					if (!line.contains(StringPool.AT) &&
+						!line.contains(StringPool.QUOTE)) {
+
 						int pos = line.indexOf(") ");
 
 						if (pos != -1) {

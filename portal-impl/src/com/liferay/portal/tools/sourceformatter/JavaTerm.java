@@ -16,12 +16,9 @@ package com.liferay.portal.tools.sourceformatter;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -185,6 +182,22 @@ public class JavaTerm {
 		}
 	}
 
+	public boolean isPublic() {
+		if ((_type == TYPE_CLASS_PUBLIC) ||
+			(_type == TYPE_CLASS_PUBLIC_STATIC) ||
+			(_type == TYPE_CONSTRUCTOR_PUBLIC) ||
+			(_type == TYPE_METHOD_PUBLIC) ||
+			(_type == TYPE_METHOD_PUBLIC_STATIC) ||
+			(_type == TYPE_VARIABLE_PUBLIC) ||
+			(_type == TYPE_VARIABLE_PUBLIC_STATIC)) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	public boolean isStatic() {
 		if ((_type == TYPE_CLASS_PRIVATE_STATIC) ||
 			(_type == TYPE_CLASS_PROTECTED_STATIC) ||
@@ -246,24 +259,57 @@ public class JavaTerm {
 			return;
 		}
 
-		Matcher matcher = _parameterTypesPattern.matcher(_content);
+		int x = -1;
 
-		if (!matcher.find()) {
+		if (isPrivate()) {
+			x = _content.indexOf("\tprivate ");
+		}
+		else if (isProtected()) {
+			x = _content.indexOf("\tprotected ");
+		}
+		else if (isPublic()) {
+			x = _content.indexOf("\tpublic ");
+		}
+
+		if (x == -1) {
 			return;
 		}
 
-		String parameters = matcher.group(3);
+		x = _content.indexOf(StringPool.OPEN_PARENTHESIS, x);
 
-		if (Validator.isNull(parameters)) {
-			return;
+		int y = x;
+
+		String parameters = StringPool.BLANK;
+
+		while (true) {
+			y = _content.indexOf(StringPool.CLOSE_PARENTHESIS, y + 1);
+
+			if (y == -1) {
+				return;
+			}
+
+			parameters = _content.substring(x + 1, y);
+
+			int closeParenthesesCount = StringUtil.count(
+				parameters, StringPool.CLOSE_PARENTHESIS);
+			int openParenthesesCount = StringUtil.count(
+				parameters, StringPool.OPEN_PARENTHESIS);
+
+			if (closeParenthesesCount == openParenthesesCount) {
+				break;
+			}
 		}
 
 		parameters = StringUtil.replace(
 			parameters, new String[] {StringPool.TAB, StringPool.NEW_LINE},
 			new String[] {StringPool.BLANK, StringPool.SPACE});
 
-		for (int x = 0;;) {
+		for (x = 0;;) {
 			parameters = StringUtil.trim(parameters);
+
+			if (parameters.startsWith(StringPool.AT)) {
+				parameters = stripAnnotation(parameters);
+			}
 
 			if (parameters.startsWith("final ")) {
 				parameters = parameters.substring(6);
@@ -288,7 +334,7 @@ public class JavaTerm {
 
 			_parameterTypes.add(parameterType);
 
-			int y = parameters.indexOf(StringPool.COMMA, x);
+			y = parameters.indexOf(StringPool.COMMA, x);
 
 			if (y == -1) {
 				_parameterNames.add(parameters.substring(x + 1));
@@ -304,13 +350,40 @@ public class JavaTerm {
 		}
 	}
 
+	protected String stripAnnotation(String parameters) {
+		int pos = -1;
+
+		while (true) {
+			pos = parameters.indexOf(StringPool.SPACE, pos + 1);
+
+			if (pos == -1) {
+				return parameters;
+			}
+
+			String annotation = parameters.substring(0, pos);
+
+			int closeParenthesesCount = StringUtil.count(
+				annotation, StringPool.CLOSE_PARENTHESIS);
+			int greaterThanCount = StringUtil.count(
+				annotation, StringPool.GREATER_THAN);
+			int lessThanCount = StringUtil.count(
+				annotation, StringPool.LESS_THAN);
+			int openParenthesesCount = StringUtil.count(
+				annotation, StringPool.OPEN_PARENTHESIS);
+
+			if ((closeParenthesesCount == openParenthesesCount) &&
+				(greaterThanCount == lessThanCount)) {
+
+				return parameters.substring(pos + 1);
+			}
+		}
+	}
+
 	private String _content;
 	private int _lineCount;
 	private String _name;
 	private List<String> _parameterNames;
 	private List<String> _parameterTypes;
-	private final Pattern _parameterTypesPattern = Pattern.compile(
-		"\t(private |protected |public )([\\s\\S]*?)\\(([\\s\\S]*?)\\)");
 	private int _type;
 
 }

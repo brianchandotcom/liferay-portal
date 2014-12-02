@@ -249,10 +249,10 @@ public class JavaClass {
 		String accessModifier = getAccessModifier();
 
 		if ((javaTerm.isPrivate() &&
-			 !accessModifier.equals(_MODIFIER_PRIVATE)) ||
+			 !accessModifier.equals(_ACCESS_MODIFIER_PRIVATE)) ||
 			(javaTerm.isProtected() &&
-			 !accessModifier.equals(_MODIFIER_PRIVATE) &&
-			 !accessModifier.equals(_MODIFIER_PROTECTED))) {
+			 !accessModifier.equals(_ACCESS_MODIFIER_PRIVATE) &&
+			 !accessModifier.equals(_ACCESS_MODIFIER_PROTECTED))) {
 
 			return;
 		}
@@ -799,15 +799,15 @@ public class JavaClass {
 		if (matcher.find()) {
 			String accessModifier = matcher.group(1);
 
-			if (accessModifier.equals(_MODIFIER_PRIVATE) ||
-				accessModifier.equals(_MODIFIER_PROTECTED) ||
-				accessModifier.equals(_MODIFIER_PUBLIC)) {
+			if (accessModifier.equals(_ACCESS_MODIFIER_PRIVATE) ||
+				accessModifier.equals(_ACCESS_MODIFIER_PROTECTED) ||
+				accessModifier.equals(_ACCESS_MODIFIER_PUBLIC)) {
 
 				return accessModifier;
 			}
 		}
 
-		return _MODIFIER_UNKNOWN;
+		return _ACCESS_MODIFIER_UNKNOWN;
 	}
 
 	protected String getClassName(String line) {
@@ -1017,6 +1017,86 @@ public class JavaClass {
 		return _javaTerms;
 	}
 
+	protected Tuple getJavaTermTuple(String line, String accessModifier) {
+		if (!line.startsWith(_indent + accessModifier + StringPool.SPACE)) {
+			return null;
+		}
+
+		int x = line.indexOf(StringPool.EQUAL);
+		int y = line.indexOf(StringPool.OPEN_PARENTHESIS);
+
+		if (line.startsWith(_indent + accessModifier + " static ")) {
+			if (line.contains(" class ") || line.contains(" enum ")) {
+				return getJavaTermTuple(
+					getClassName(line), accessModifier,
+					JavaTerm.TYPE_CLASS_PRIVATE_STATIC,
+					JavaTerm.TYPE_CLASS_PROTECTED_STATIC,
+					JavaTerm.TYPE_CLASS_PUBLIC_STATIC);
+			}
+
+			if (((x > 0) && ((y == -1) || (y > x))) ||
+				(line.endsWith(StringPool.SEMICOLON) && (y == -1))) {
+
+				return getJavaTermTuple(
+					getVariableName(line), accessModifier,
+					JavaTerm.TYPE_VARIABLE_PRIVATE_STATIC,
+					JavaTerm.TYPE_VARIABLE_PROTECTED_STATIC,
+					JavaTerm.TYPE_VARIABLE_PUBLIC_STATIC);
+			}
+
+			if (y != -1) {
+				return getJavaTermTuple(
+					getConstructorOrMethodName(line, y), accessModifier,
+					JavaTerm.TYPE_METHOD_PRIVATE_STATIC,
+					JavaTerm.TYPE_METHOD_PROTECTED_STATIC,
+					JavaTerm.TYPE_METHOD_PUBLIC_STATIC);
+			}
+
+			return null;
+		}
+
+		if (line.contains(" @interface ") || line.contains(" class ") ||
+			line.contains(" enum ") || line.contains(" interface ")) {
+
+			return getJavaTermTuple(
+				getClassName(line), accessModifier, JavaTerm.TYPE_CLASS_PRIVATE,
+				JavaTerm.TYPE_CLASS_PROTECTED, JavaTerm.TYPE_CLASS_PUBLIC);
+		}
+
+		if (((x > 0) && ((y == -1) || (y > x))) ||
+			(line.endsWith(StringPool.SEMICOLON) && (y == -1))) {
+
+			return getJavaTermTuple(
+				getVariableName(line), accessModifier,
+				JavaTerm.TYPE_VARIABLE_PRIVATE,
+				JavaTerm.TYPE_VARIABLE_PROTECTED,
+				JavaTerm.TYPE_VARIABLE_PUBLIC);
+		}
+
+		if (y != -1) {
+			int spaceCount = StringUtil.count(
+				line.substring(0, y), StringPool.SPACE);
+
+			if (spaceCount == 1) {
+				return getJavaTermTuple(
+					getConstructorOrMethodName(line, y), accessModifier,
+					JavaTerm.TYPE_CONSTRUCTOR_PRIVATE,
+					JavaTerm.TYPE_CONSTRUCTOR_PROTECTED,
+					JavaTerm.TYPE_CONSTRUCTOR_PUBLIC);
+			}
+
+			if (spaceCount > 1) {
+				return getJavaTermTuple(
+					getConstructorOrMethodName(line, y), accessModifier,
+					JavaTerm.TYPE_METHOD_PRIVATE,
+					JavaTerm.TYPE_METHOD_PROTECTED,
+					JavaTerm.TYPE_METHOD_PUBLIC);
+			}
+		}
+
+		return null;
+	}
+
 	protected Tuple getJavaTermTuple(String line, String content, int index) {
 		int posStartNextLine = index;
 
@@ -1044,167 +1124,34 @@ public class JavaClass {
 
 		line = StringUtil.replace(line, " synchronized " , StringPool.SPACE);
 
-		int pos = line.indexOf(StringPool.OPEN_PARENTHESIS);
+		for (String accessModifier : _ACCESS_MODIFIERS) {
+			Tuple tuple = getJavaTermTuple(line, accessModifier);
 
-		if (line.startsWith(_indent + "public static ")) {
-			if (line.contains(" class ") || line.contains(" enum ")) {
-				return new Tuple(
-					getClassName(line), JavaTerm.TYPE_CLASS_PUBLIC_STATIC);
-			}
-
-			if (line.contains(StringPool.EQUAL) ||
-				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
-
-				return new Tuple(
-					getVariableName(line),
-					JavaTerm.TYPE_VARIABLE_PUBLIC_STATIC);
-			}
-
-			if (pos != -1) {
-				return new Tuple(
-					getConstructorOrMethodName(line, pos),
-					JavaTerm.TYPE_METHOD_PUBLIC_STATIC);
+			if (tuple != null) {
+				return tuple;
 			}
 		}
-		else if (line.startsWith(_indent + "public ")) {
-			if (line.contains(" @interface ") || line.contains(" class ") ||
-				line.contains(" enum ") || line.contains(" interface ")) {
 
-				return new Tuple(
-					getClassName(line), JavaTerm.TYPE_CLASS_PUBLIC);
-			}
-
-			if (line.contains(StringPool.EQUAL) ||
-				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
-
-				return new Tuple(
-					getVariableName(line), JavaTerm.TYPE_VARIABLE_PUBLIC);
-			}
-
-			if (pos != -1) {
-				int spaceCount = StringUtil.count(
-					line.substring(0, pos), StringPool.SPACE);
-
-				if (spaceCount == 1) {
-					return new Tuple(
-						getConstructorOrMethodName(line, pos),
-						JavaTerm.TYPE_CONSTRUCTOR_PUBLIC);
-				}
-
-				if (spaceCount > 1) {
-					return new Tuple(
-						getConstructorOrMethodName(line, pos),
-						JavaTerm.TYPE_METHOD_PUBLIC);
-				}
-			}
-		}
-		else if (line.startsWith(_indent + "protected static ")) {
-			if (line.contains(" class ") || line.contains(" enum ")) {
-				return new Tuple(
-					getClassName(line), JavaTerm.TYPE_CLASS_PROTECTED_STATIC);
-			}
-
-			if (line.contains(StringPool.EQUAL) ||
-				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
-
-				return new Tuple(
-					getVariableName(line),
-					JavaTerm.TYPE_VARIABLE_PROTECTED_STATIC);
-			}
-
-			if (pos != -1) {
-				return new Tuple(
-					getConstructorOrMethodName(line, pos),
-					JavaTerm.TYPE_METHOD_PROTECTED_STATIC);
-			}
-		}
-		else if (line.startsWith(_indent + "protected ")) {
-			if (line.contains(" @interface ") || line.contains(" class ") ||
-				line.contains(" enum ") || line.contains(" interface ")) {
-
-				return new Tuple(
-					getClassName(line), JavaTerm.TYPE_CLASS_PROTECTED);
-			}
-
-			if (pos != -1) {
-				if (!line.contains(StringPool.EQUAL)) {
-					int spaceCount = StringUtil.count(
-						line.substring(0, pos), StringPool.SPACE);
-
-					if (spaceCount == 1) {
-						return new Tuple(
-							getConstructorOrMethodName(line, pos),
-							JavaTerm.TYPE_CONSTRUCTOR_PROTECTED);
-					}
-
-					if (spaceCount > 1) {
-						return new Tuple(
-							getConstructorOrMethodName(line, pos),
-							JavaTerm.TYPE_METHOD_PROTECTED);
-					}
-				}
-			}
-
-			return new Tuple(
-				getVariableName(line), JavaTerm.TYPE_VARIABLE_PROTECTED);
-		}
-		else if (line.startsWith(_indent + "private static ")) {
-			if (line.contains(" class ") || line.contains(" enum ")) {
-				return new Tuple(
-					getClassName(line), JavaTerm.TYPE_CLASS_PRIVATE_STATIC);
-			}
-
-			if (line.contains(StringPool.EQUAL) ||
-				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
-
-				return new Tuple(
-					getVariableName(line),
-					JavaTerm.TYPE_VARIABLE_PRIVATE_STATIC);
-			}
-
-			if (pos != -1) {
-				return new Tuple(
-					getConstructorOrMethodName(line, pos),
-					JavaTerm.TYPE_METHOD_PRIVATE_STATIC);
-			}
-		}
-		else if (line.startsWith(_indent + "private ")) {
-			if (line.contains(" @interface ") || line.contains(" class ") ||
-				line.contains(" enum ") || line.contains(" interface ")) {
-
-				return new Tuple(
-					getClassName(line), JavaTerm.TYPE_CLASS_PRIVATE);
-			}
-
-			if (line.contains(StringPool.EQUAL) ||
-				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
-
-				return new Tuple(
-					getVariableName(line), JavaTerm.TYPE_VARIABLE_PRIVATE);
-			}
-
-			if (pos != -1) {
-				int spaceCount = StringUtil.count(
-					line.substring(0, pos), StringPool.SPACE);
-
-				if (spaceCount == 1) {
-					return new Tuple(
-						getConstructorOrMethodName(line, pos),
-						JavaTerm.TYPE_CONSTRUCTOR_PRIVATE);
-				}
-
-				if (spaceCount > 1) {
-					return new Tuple(
-						getConstructorOrMethodName(line, pos),
-						JavaTerm.TYPE_METHOD_PRIVATE);
-				}
-			}
-		}
-		else if (line.startsWith(_indent + "static {")) {
+		if (line.startsWith(_indent + "static {")) {
 			return new Tuple("static", JavaTerm.TYPE_STATIC_BLOCK);
 		}
 
 		return null;
+	}
+
+	protected Tuple getJavaTermTuple(
+		String javaTermName, String accessModifier, int privateJavaTermType,
+		int protectedJavaTermType, int publicJavaTermType) {
+
+		if (accessModifier.equals(_ACCESS_MODIFIER_PRIVATE)) {
+			return new Tuple(javaTermName, privateJavaTermType);
+		}
+
+		if (accessModifier.equals(_ACCESS_MODIFIER_PROTECTED)) {
+			return new Tuple(javaTermName, protectedJavaTermType);
+		}
+
+		return new Tuple(javaTermName, publicJavaTermType);
 	}
 
 	protected String getVariableName(String line) {
@@ -1359,13 +1306,18 @@ public class JavaClass {
 		}
 	}
 
-	private static final String _MODIFIER_PRIVATE = "private";
+	private static final String _ACCESS_MODIFIER_PRIVATE = "private";
 
-	private static final String _MODIFIER_PROTECTED = "protected";
+	private static final String _ACCESS_MODIFIER_PROTECTED = "protected";
 
-	private static final String _MODIFIER_PUBLIC = "public";
+	private static final String _ACCESS_MODIFIER_PUBLIC = "public";
 
-	private static final String _MODIFIER_UNKNOWN = "unknown";
+	private static final String _ACCESS_MODIFIER_UNKNOWN = "unknown";
+
+	private static final String[] _ACCESS_MODIFIERS = {
+		_ACCESS_MODIFIER_PRIVATE, _ACCESS_MODIFIER_PROTECTED,
+		_ACCESS_MODIFIER_PUBLIC
+	};
 
 	private String _absolutePath;
 	private Pattern _camelCasePattern = Pattern.compile("([a-z])([A-Z0-9])");

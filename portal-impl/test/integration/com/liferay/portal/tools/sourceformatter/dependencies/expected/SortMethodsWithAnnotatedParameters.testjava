@@ -17,9 +17,17 @@ package com.liferay.portal.tools.sourceformatter.dependencies;
 /**
  * @author Cristina González
  */
-public class JavaClassMehodParameterAnnotated {
+public class SortMethodsWithAnnotatedParameters {
 
-	public static void method(@Annotation(parameter = 1) String parameter) {
+	public static void method(
+		int parameter1, @Annotation(parameter = 1) String parameter) {
+	}
+
+	public static void method(@Annotation(parameter = 1) Object parameter) {
+	}
+
+	public static void method(
+		@Annotation(parameter = 1) String parameter1, int parameter2) {
 	}
 
 	public void method1(@Annotation(parameter = 1) String parameter) {

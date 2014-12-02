@@ -89,9 +89,7 @@ public class IFramePortlet extends MVCPortlet {
 		if (Validator.isNull(src) || src.equals(Http.HTTP_WITH_SLASH) ||
 			src.equals(Http.HTTPS_WITH_SLASH)) {
 
-			include(
-				"/html/portal/portlet_not_setup.jsp", renderRequest,
-				renderResponse);
+			include("/portlet_not_setup.jsp", renderRequest, renderResponse);
 		}
 		else {
 			super.doView(renderRequest, renderResponse);

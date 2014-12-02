@@ -86,7 +86,8 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		['Bold', 'Italic', 'Underline'],
 		['NumberedList', 'BulletedList'],
 		['Link', 'Unlink'],
-		['Image']
+		['Image'],
+		['Source']
 	];
 
 	config.toolbar_tablet = [
@@ -95,7 +96,8 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		['NumberedList', 'BulletedList'],
 		['Styles', 'FontSize'],
 		['Link', 'Unlink'],
-		['Image']
+		['Image'],
+		['Source']
 	];
 
 	config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';

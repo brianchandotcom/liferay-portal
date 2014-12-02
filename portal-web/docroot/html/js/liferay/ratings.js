@@ -448,10 +448,10 @@ AUI.add(
 						var ratingThumbUp = elements.item(0);
 						var ratingThumbDown = elements.item(1);
 
-						ratingThumbUp.setHTML(thumbScore.positiveVotes);
+						ratingThumbUp.html(thumbScore.positiveVotes);
 
 						if (ratingThumbDown) {
-							ratingThumbDown.setHTML(thumbScore.negativeVotes);
+							ratingThumbDown.html(thumbScore.negativeVotes);
 						}
 					}
 				}

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -41,6 +42,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -91,20 +93,26 @@ public class ServiceContext implements Cloneable, Serializable {
 
 		serviceContext.setAddGroupPermissions(isAddGroupPermissions());
 		serviceContext.setAddGuestPermissions(isAddGuestPermissions());
-		serviceContext.setAssetCategoryIds(getAssetCategoryIds());
+		serviceContext.setAssetCategoryIds(
+			ArrayUtil.clone(getAssetCategoryIds()));
 		serviceContext.setAssetEntryVisible(isAssetEntryVisible());
-		serviceContext.setAssetLinkEntryIds(getAssetLinkEntryIds());
-		serviceContext.setAssetTagNames(getAssetTagNames());
-		serviceContext.setAttributes(getAttributes());
+		serviceContext.setAssetLinkEntryIds(
+			ArrayUtil.clone(getAssetLinkEntryIds()));
+		serviceContext.setAssetTagNames(ArrayUtil.clone(getAssetTagNames()));
+		serviceContext.setAttributes(
+			new HashMap<String, Serializable>(getAttributes()));
 		serviceContext.setCommand(getCommand());
 		serviceContext.setCompanyId(getCompanyId());
 		serviceContext.setCreateDate(getCreateDate());
 		serviceContext.setCurrentURL(getCurrentURL());
-		serviceContext.setExpandoBridgeAttributes(getExpandoBridgeAttributes());
+		serviceContext.setExpandoBridgeAttributes(
+			new HashMap<String, Serializable>(getExpandoBridgeAttributes()));
 		serviceContext.setFailOnPortalException(isFailOnPortalException());
-		serviceContext.setGroupPermissions(getGroupPermissions());
-		serviceContext.setGuestPermissions(getGuestPermissions());
-		serviceContext.setHeaders(getHeaders());
+		serviceContext.setGroupPermissions(
+			ArrayUtil.clone(getGroupPermissions()));
+		serviceContext.setGuestPermissions(
+			ArrayUtil.clone(getGuestPermissions()));
+		serviceContext.setHeaders(new HashMap<String, String>(getHeaders()));
 		serviceContext.setIndexingEnabled(isIndexingEnabled());
 		serviceContext.setLanguageId(getLanguageId());
 		serviceContext.setLayoutFullURL(getLayoutFullURL());
@@ -130,6 +138,18 @@ public class ServiceContext implements Cloneable, Serializable {
 		serviceContext.setWorkflowAction(getWorkflowAction());
 
 		return serviceContext;
+	}
+
+	public ServiceContext cloneSecure() {
+		ServiceContext secureServiceContext = (ServiceContext)clone();
+
+		Map<String, String> headers = secureServiceContext.getHeaders();
+
+		if (headers != null) {
+			headers.remove(WebKeys.COOKIE);
+		}
+
+		return secureServiceContext;
 	}
 
 	/**
